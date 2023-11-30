@@ -20,6 +20,7 @@ import { HybridPartnerPM } from '../../../../Common/EntityPMs/HybridPartnerPM';
 import { getLocaleDateTimeFormat } from '@angular/common';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadManager';
+import { TenantManagmentPrivateLabelsListService } from '../../../../Infrastructure/Services/StandardLists/TenantManagmentPrivateLabelsListService';
 
 declare var UploadLogoFile, HideImage, SetImage, ArrayBufferToBase64: any;
 declare var querySelection, StringToBase64, resultToUnitArray: any;
@@ -44,9 +45,23 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     mainColorOpacity: number = 100;
     private mainColorCode: string;
     wrongMainColor: boolean = false;
+
+    queryFiltersHighlightColorOpacity: number = 100;
+    private queryFiltersHighlightColorCode: string;
+    wrongQueryFiltersHighlightColor: boolean = false;
+
     secondaryColorOpacity: number = 100;
     private secondaryColorCode: string;
     wrongSecondaryColor: boolean = false;
+
+    mainTabHighlightColorOpacity: number = 100;
+    private mainTabHighlightColorCode: string;
+    wrongMainTabHighlightColor: boolean = false;
+
+    documentTypeHighlightColorOpacity: number = 100;
+    private documentTypeHighlightColorCode: string;
+    wrongDocumentTypeHighlightColor: boolean = false;
+
     public BackgroundImageId: string;
     public LoginImageId: string;
     public LoginProgressImageId: string;
@@ -57,18 +72,23 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     TermsofUseSelectedViewModel: TermsofUsePMViewModel;
     private termsofUseService: TermsofUseService = new TermsofUseService(); 
     private entityResourceService: EntityResourceService = new EntityResourceService();
+    private tenantManagmentPrivateLabelsListService: TenantManagmentPrivateLabelsListService = new TenantManagmentPrivateLabelsListService();
     IsVisibile: boolean;
     public EntityId: number;
     public hybridPartner: HybridPartnerPM;
     public ParentTenant: number;
 
     public TermsOfUsePM: TermsofUsePM;
-     
+    public AllActiveTenantManagementPrivateLabels: any[] = [];
+
     VersionDocumentId: string = Guid.NewRandomString();
 
 
     @ViewChildren(LocationDirective) public AllLocations: LocationDirective; 
     private CurrentSession = SessionLocator.SelectedSession;
+
+     
+
 
     constructor() {
         super();
@@ -82,11 +102,28 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
 
     ngOnInit() {
         this.SelectedTabCode = "TMM";
-        this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true); 
+        this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true);
+        this.StartLoadingData();
         this.GetTermsOfUse();
  
     }
 
+    StartLoadingData() {
+        this.CurrentSession.StartBusyIndicator("Loading...");
+        this.tenantManagmentPrivateLabelsListService.getAll().subscribe((serviceResult: any) => {
+            if (serviceResult.HasError || !serviceResult.Result) {
+                this.HandleServiceResultError(serviceResult);
+                return;
+            }
+            this.AllActiveTenantManagementPrivateLabels = serviceResult.Result.filter(tenantManagementPrivateLabel => !tenantManagementPrivateLabel.InActive);
+            this.GetTermsOfUse();
+        });
+    }
+
+    private HandleServiceResultError(serviceResult: any) {
+        this.ValidationErrorsList = serviceResult.ErrorsArray;
+        this.CurrentSession.StopBusyIndicator();
+    }
 
     // Upload Terms Of Use
     OpenUpLoadTemplateFile() {
@@ -199,7 +236,8 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
             }
                 else {
                     this.HandleServiceError(serviceResponse)
-                }
+            }
+            this.CurrentSession.StopBusyIndicator();
             });
     }
 
@@ -253,14 +291,47 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         }
     }
     private SetColorsFromEntity() {
+        this.setMainColor();
+        this.setSecondaryColor();
+        this.setMainTabHighlightColor();
+        this.setDocumentTypeHighlightColor();
+        this.SetQueryFiltersHighlightColor();
+    }
+
+
+    private setDocumentTypeHighlightColor() {
+        if (this.EntityPM.DocumentTypeHighlightColor) {
+            this.documentTypeHighlightColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.DocumentTypeHighlightColor);
+            this.documentTypeHighlightColorCode = this.ConvertRGBAToHexColor(this.EntityPM.DocumentTypeHighlightColor);
+        }
+    }
+
+    private setMainTabHighlightColor() {
+        if (this.EntityPM.MainTabHighlightColor) {
+            this.mainTabHighlightColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.MainTabHighlightColor);
+            this.mainTabHighlightColorCode = this.ConvertRGBAToHexColor(this.EntityPM.MainTabHighlightColor);
+        }
+    }
+
+    private setSecondaryColor() {
+        if (this.EntityPM.SecondaryColor) {
+            this.secondaryColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.SecondaryColor);
+            this.secondaryColorCode = this.ConvertRGBAToHexColor(this.EntityPM.SecondaryColor);
+        }
+    }
+
+    private setMainColor() {
         if (this.EntityPM.MainColor) {
             this.mainColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.MainColor);
             this.mainColorCode = this.ConvertRGBAToHexColor(this.EntityPM.MainColor);
         }
-        if (this.EntityPM.SecondaryColor) {
-            this.secondaryColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.SecondaryColor);
-            this.secondaryColorCode = this.ConvertRGBAToHexColor(this.EntityPM.SecondaryColor);
-        } 
+    }
+
+    private SetQueryFiltersHighlightColor() {
+        if (this.EntityPM.QueryFiltersHighlightColor) {
+            this.queryFiltersHighlightColorOpacity = this.GetOpacityFromRGBA(this.EntityPM.QueryFiltersHighlightColor);
+            this.queryFiltersHighlightColorCode = this.ConvertRGBAToHexColor(this.EntityPM.QueryFiltersHighlightColor);
+        }
     }
 
     GetOpacityFromRGBA(rgba: string) {
@@ -308,6 +379,14 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         }
     }
 
+    get QueryFiltersHighlightColorOpacity() {
+        return this.queryFiltersHighlightColorOpacity;
+    }
+    set QueryFiltersHighlightColorOpacity(value: number) {
+        this.queryFiltersHighlightColorOpacity = value;
+        this.UpdateEntityQueryFiltersHighlightColor();
+    }
+
     get MainColorOpacity() {
         return this.mainColorOpacity;
     }
@@ -315,10 +394,73 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         this.mainColorOpacity = value;
         this.UpdateEntityMainColor();
     }
-     
+
+    get MainTabHighlightColorOpacity() {
+        return this.mainTabHighlightColorOpacity;
+    }
+    set MainTabHighlightColorOpacity(value: number) {
+        this.mainTabHighlightColorOpacity = value;
+        this.UpdateEntityMainTabHighlightColor();
+    }
+
+    get DocumentTypeHighlightColorOpacity() {
+        return this.documentTypeHighlightColorOpacity;
+    }
+    set DocumentTypeHighlightColorOpacity(value: number) {
+        this.documentTypeHighlightColorOpacity = value;
+        this.UpdateEntityDocumentTypeHighlightColor();
+    }
+
+    private UpdateEntityQueryFiltersHighlightColor() {
+        this.EntityQueryFiltersHighlightColor = this.ConvertHexToRGBColor(this.QueryFiltersHighlightColorCode, this.QueryFiltersHighlightColorOpacity);
+    }
+
     private UpdateEntityMainColor() {
         this.EntityMainColor = this.ConvertHexToRGBColor(this.MainColorCode, this.MainColorOpacity);
     }
+
+    private UpdateEntityMainTabHighlightColor() {
+        this.EntityMainTabHighlightColor = this.ConvertHexToRGBColor(this.MainTabHighlightColorCode, this.MainTabHighlightColorOpacity);
+    }
+
+    private UpdateEntityDocumentTypeHighlightColor() {
+        this.EntityDocumentTypeHighlightColor = this.ConvertHexToRGBColor(this.DocumentTypeHighlightColorCode, this.DocumentTypeHighlightColorOpacity);
+    }
+
+
+
+    public get MainTabHighlightColorCode(): string {
+        return this.mainTabHighlightColorCode;
+    }
+    public set MainTabHighlightColorCode(hexColor: string) {
+        this.mainTabHighlightColorCode = hexColor;
+        this.ValidateMainTabHighlightColorCode(hexColor);
+        this.UpdateEntityMainTabHighlightColor();
+    }
+
+
+
+    public get DocumentTypeHighlightColorCode(): string {
+        return this.documentTypeHighlightColorCode;
+    }
+    public set DocumentTypeHighlightColorCode(hexColor: string) {
+        this.documentTypeHighlightColorCode = hexColor;
+        this.ValidateDocumentTypeHighlightColorCode(hexColor);
+        this.UpdateEntityDocumentTypeHighlightColor();
+    }
+
+
+     
+
+    public get QueryFiltersHighlightColorCode(): string {
+        return this.queryFiltersHighlightColorCode;
+    }
+    public set QueryFiltersHighlightColorCode(hexColor: string) {
+        this.queryFiltersHighlightColorCode = hexColor;
+        this.ValidatequeryFiltersHighlightColorCode(hexColor);
+        this.UpdateEntityQueryFiltersHighlightColor();
+    }
+
 
     public get MainColorCode(): string {
         return this.mainColorCode;
@@ -365,6 +507,15 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     }
 
 
+    private ValidateMainTabHighlightColorCode(hexColor: string) {
+        if (!this.ValidateHexCode(hexColor, "MainTabHighlightColorCode"))
+            this.wrongMainTabHighlightColor = true;
+        else
+            this.wrongMainTabHighlightColor = false;
+         
+    }
+
+     
     private ValidateMainColorCode(hexColor: string) {
         if (!this.ValidateHexCode(hexColor, "MainColorCode"))
             this.wrongMainColor = true;
@@ -372,6 +523,15 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
             this.wrongMainColor = false;
 
       //  this.UpdateEditComponentValidationErrors();
+    }
+
+    private ValidatequeryFiltersHighlightColorCode(hexColor: string) {
+        if (!this.ValidateHexCode(hexColor, "QueryFiltersHighlightColorCode"))
+            this.wrongQueryFiltersHighlightColor = true;
+        else
+            this.wrongQueryFiltersHighlightColor = false;
+
+        //  this.UpdateEditComponentValidationErrors();
     }
 
     private UpdateEditComponentValidationErrors() {
@@ -384,11 +544,44 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         }
     }
 
+    get EntityQueryFiltersHighlightColor() {
+        return this.EntityPM.QueryFiltersHighlightColor;
+    }
+    set EntityQueryFiltersHighlightColor(value: string) {
+        this.EntityPM.QueryFiltersHighlightColor = value;
+
+    }
+
     get EntityMainColor() {
         return this.EntityPM.MainColor;
     }
     set EntityMainColor(value: string) {
         this.EntityPM.MainColor = value;
+
+    } 
+
+    private ValidateDocumentTypeHighlightColorCode(hexColor: string) {
+        if (!this.ValidateHexCode(hexColor, "DocumentTypeHighlightColorCode"))
+            this.wrongDocumentTypeHighlightColor = true;
+        else
+            this.wrongDocumentTypeHighlightColor = false;
+
+    }
+
+
+    get EntityMainTabHighlightColor() {
+        return this.EntityPM.MainTabHighlightColor;
+    }
+    set EntityMainTabHighlightColor(value: string) {
+        this.EntityPM.MainTabHighlightColor = value;
+
+    }
+
+    get EntityDocumentTypeHighlightColor() {
+        return this.EntityPM.DocumentTypeHighlightColor;
+    }
+    set EntityDocumentTypeHighlightColor(value: string) {
+        this.EntityPM.DocumentTypeHighlightColor = value;
 
     }
 
@@ -576,6 +769,7 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         this.imageParameter.Base64String = imageIndex == 1 ? this.MainLogoData : this.SmallLogoData;
         this.imageParameter.Width = 239;
         this.imageParameter.Height = 85 ;
+        this.imageParameter.KeepOriginalSize = true;
         service.PostImageAfterResize(this.imageParameter).subscribe((Result: ServiceResponse) => {
             if (!Result.HasError) {
                 var image = "data:image/" + "jpg" + ";base64," + Result.Result.Base64String;
@@ -644,6 +838,15 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         }
     }
 
+    get FilingInboxDomain() {
+        return this.EntityPM.FilingInboxDomain;
+    }
+    set FilingInboxDomain(value: string) {
+        if (value != this.EntityPM.FilingInboxDomain) {
+            this.EntityPM.FilingInboxDomain = value;
+
+        }
+    }
    
 
      get ContactUsEmail() {
@@ -667,7 +870,15 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
                  this.UIProperties.SetRequired("HybridPartnerId", this.ObjectTableName, true);                 
              }
          }
-     }
+    }
+
+    get DistributorCode() {
+        return this.EntityPM.DistributorCode;
+    }
+    set DistributorCode(value: string) {
+        if (value == this.EntityPM.DistributorCode) return;
+        this.EntityPM.DistributorCode = value;
+    }
 
      get ReceiveAllStatuses() {
          return this.EntityPM.ReceiveAllStatuses;
@@ -692,6 +903,34 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         if (value != this.EntityPM.HasLogboxAccess)
             this.EntityPM.HasLogboxAccess = value;
     }
+    get CreateShipmentsWithoutDocs() {
+        return this.EntityPM.CreateShipmentsWithoutDocs;
+    }
+    set CreateShipmentsWithoutDocs(value: boolean) {
+        if (value != this.EntityPM.CreateShipmentsWithoutDocs)
+            this.EntityPM.CreateShipmentsWithoutDocs = value;
+    }
+    get CreateOShipmentsWithoutDocs() {
+        return this.EntityPM.CreateOShipmentsWithoutDocs;
+    }
+    set CreateOShipmentsWithoutDocs(value: boolean) {
+        if (value != this.EntityPM.CreateOShipmentsWithoutDocs)
+            this.EntityPM.CreateOShipmentsWithoutDocs = value;
+    }
+    get IsCustomsActivated() {
+        return this.EntityPM.IsCustomsActivated;
+    }
+    set IsCustomsActivated(value: boolean) {
+        if (value != this.EntityPM.IsCustomsActivated)
+            this.EntityPM.IsCustomsActivated = value;
+    }
+    get IsExportActivated() {
+        return this.EntityPM.IsExportActivated;
+    }
+    set IsExportActivated(value: boolean) {
+        if (value != this.EntityPM.IsExportActivated)
+            this.EntityPM.IsExportActivated = value;
+    }
 
      get MainLogo() {
          return this.EntityPM.MainLogo;
@@ -712,7 +951,17 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
              this.EntityPM.SmallLogo = value;
          }
      }
-   
+
+    get QueryFiltersHighlightColor() {
+        return this.EntityPM.QueryFiltersHighlightColor;
+    }
+
+    set QueryFiltersHighlightColor(value: string) {
+        if (value != this.EntityPM.QueryFiltersHighlightColor) {
+            this.EntityPM.QueryFiltersHighlightColor = value;
+        }
+    }
+
     get MainColor() {
         return this.EntityPM.MainColor;
     }
@@ -722,7 +971,29 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
             this.EntityPM.MainColor = value;
         }
     }
- 
+
+    get MainTabHighlightColor() {
+        return this.EntityPM.MainTabHighlightColor;
+    }
+
+    set MainTabHighlightColor(value: string) {
+        if (value != this.EntityPM.MainTabHighlightColor) {
+            this.EntityPM.MainTabHighlightColor = value;
+        }
+    }
+
+
+    get DocumentTypeHighlightColor() {
+        return this.EntityPM.DocumentTypeHighlightColor;
+    }
+
+    set DocumentTypeHighlightColor(value: string) {
+        if (value != this.EntityPM.DocumentTypeHighlightColor) {
+            this.EntityPM.DocumentTypeHighlightColor = value;
+        }
+    }
+
+
     get SecondaryColor() {
         return this.EntityPM.SecondaryColor;
     }
@@ -741,16 +1012,10 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
         this.ValidationErrorsList = [];
         var errors: string[] = [];
         Validator.TryValidateObject(this.EntityPM, this.ObjectTableName, errors);
-        if (this.HybridPartnerId == null || this.HybridPartnerId == "") {
-            errors.push("Hybrid Partner Field is Required");
-        }
-        if (this.wrongMainColor) {
-            errors.push("Please Enter Valid Main Color");
-        }
+        this.ValidateSelectedHybridPartner(errors);
+        this.ValidateDirectionsOptions(errors);
 
-        if (this.wrongSecondaryColor) {
-            errors.push("Please Enter Valid Secondary Color");
-        }
+        this.ValidateColors(errors);
 
         this.ValidationErrorsList = errors;
 
@@ -788,6 +1053,47 @@ export class AddEditPrivateLabelsComponent extends BaseComponent implements OnIn
     }
 
     private myCloner: Cloner;
+
+    private ValidateSelectedHybridPartner(errors: string[]) {
+        if (this.HybridPartnerId == null || this.HybridPartnerId == "") {
+            errors.push("Hybrid Partner Field is Required");
+            return;
+        }
+        if (!this.AllActiveTenantManagementPrivateLabels) return;
+        if (this.AllActiveTenantManagementPrivateLabels.some(tenantManagementPrivateLabel => tenantManagementPrivateLabel.HybridPartnerId == this.HybridPartnerId && tenantManagementPrivateLabel.Id != this.EntityPM.Id)) {
+            errors.push("This hybrid partner is used in another private label");
+            return;
+        }
+    }
+
+    private ValidateDirectionsOptions(errors: string[]) {
+        if (!this.IsCustomsActivated && !this.IsExportActivated) {
+            errors.push("You need to fill either Is Customs or Is Export Activated Fields");
+        }
+    }
+
+    private ValidateColors(errors: string[]) {
+        if (this.wrongMainColor) {
+            errors.push("Please Enter Valid Main Color");
+        }
+
+        if (this.wrongSecondaryColor) {
+            errors.push("Please Enter Valid Secondary Color");
+        }
+
+
+        if (this.wrongMainTabHighlightColor) {
+            errors.push("Please Enter Valid Main Tab Highlight Color");
+        }
+        if (this.wrongQueryFiltersHighlightColor) {
+            errors.push("Please Enter Valid Query Filters Highlight Color");
+        }
+
+        if (this.wrongDocumentTypeHighlightColor) {
+            errors.push("Please Enter Valid Document Type Highlight Color");
+        }
+    }
+
     private Clone() {
         this.myCloner = new Cloner(this.DataContext);
         this.myCloner.AddField('PackageCode');

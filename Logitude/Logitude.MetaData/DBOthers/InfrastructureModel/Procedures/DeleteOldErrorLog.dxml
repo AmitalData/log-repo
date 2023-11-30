@@ -4,14 +4,25 @@
   Name="DeleteOldErrorLog"
   Schema="dbo"
   Module="Infrastructure">
-  <SqlScript><![CDATA[
-Create procedure [dbo].[DeleteOldErrorLog]
-as 
-
+  <SqlScript>
+	  <![CDATA[
+CREATE procedure [dbo].[DeleteOldErrorLog]
+as
 begin
+declare @Rows int
+set @Rows = 11
 
-delete from [dbo].[ErrorLogs] where [LogDate] < GETDATE() - 30
- 
+while (@Rows > 10)
+BEGIN
+
+DELETE
+FROM [dbo].[DBA_View_ErrorLogs_ToBeDeleted]
+
+set @Rows= @@ROWCOUNT
+
+WAITFOR DELAY '00:00:05'
+END
+
 end
 ]]></SqlScript>
   <OracleScript>

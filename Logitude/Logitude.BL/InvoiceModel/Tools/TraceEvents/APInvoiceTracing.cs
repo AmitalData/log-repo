@@ -13,15 +13,20 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
         public static void Trace(APInvoicePM entityPM, APInvoice invoice, bool isNewState)
         {
             ContactPM loggedContact = new ContactQuery(entityPM.Tenant).GetContactByEmailOnly(SecurityUtility.GetAuthenticatedUser(), entityPM.Tenant);
-                       
+            bool showLocals = !loggedContact.DontShowLocal;
             // UPPI : Updated
             // CRPI : Created
             // APIA : Approved
             // APIC : Canceled
             // APIV : Voided
             // COIN : Connected
-
-            if (isNewState)
+            // CPIN : Copied
+            var isCreatedAPInvoiceCopied = isNewState && entityPM.IsNew && entityPM.IsCopied;
+            if (isCreatedAPInvoiceCopied)
+            {
+                CreateEventForCopyInvoice(entityPM, loggedContact, showLocals);
+            }
+            if (isNewState && !isCreatedAPInvoiceCopied)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
@@ -33,16 +38,23 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 });
             }
 
-            else
+            else if(!isCreatedAPInvoiceCopied)
             {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                if(entityPM.IsEquipment != invoice.IsEquipment)
                 {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "UPPI",
-                    UserId = loggedContact.Id,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = "APInvoice",
-                });
+                    CreateEventForUpdateIsEquipment(entityPM, invoice, loggedContact, showLocals);
+                }
+
+                else {
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = entityPM.Tenant,
+                        EventTypeCode = "UPPI",
+                        UserId = loggedContact.Id,
+                        EntityId = entityPM.Id,
+                        ObjectTableName = "APInvoice",
+                    });
+                }
             }
 
             if (entityPM.SetApproved)
@@ -90,5 +102,53 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 }
             }
         }
+
+        private static void CreateEventForCopyInvoice(APInvoicePM entityPM, ContactPM loggedContact, bool showLocals)
+        {
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = entityPM.Tenant,
+                EventTypeCode = "CPIN",
+                UserId = loggedContact.Id,
+                EntityId = entityPM.Id,
+                ObjectTableName = "APInvoice",
+                Notes = string.Concat(TranslateTextsClass.Translate("APInvoice.M.CopiedFromAPInvoiceNumber", entityPM.Tenant, showLocals), ' ', entityPM.CopiedFrom)
+            });
+        }
+        private static void CreateEventForUpdateIsEquipment(APInvoicePM entityPM, APInvoice invoice, ContactPM loggedContact, bool showLocals)
+        {
+            string notes = GetTraceEventNotesForUpdateIsEquipment(entityPM, invoice, showLocals);
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = entityPM.Tenant,
+                EventTypeCode = "UPPI",
+                UserId = loggedContact.Id,
+                EntityId = entityPM.Id,
+                ObjectTableName = "APInvoice",
+                Notes = notes,
+            });
+        }
+
+        private static string GetTraceEventNotesForUpdateIsEquipment(APInvoicePM entityPM, APInvoice invoice, bool showLocals)
+        {
+            string oldValue = GetBooleanText(invoice.IsEquipment, showLocals);
+            string newValue = GetBooleanText(entityPM.IsEquipment, showLocals);
+            return string.Concat(TranslateTextsClass.Translate("APInvoice.F.IsEquipment", entityPM.Tenant, showLocals), " ", TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant, showLocals), oldValue, TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant, showLocals), newValue);
+        }
+
+        private static string GetBooleanText(bool? value, bool showLocals)
+        {
+            if (value == true)
+            {
+                return TranslateTextsClass.Translate("Accounting.General.O.True", 0, showLocals);
+            }
+            else if (value == false || value == null)
+            {
+                return TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+            }
+            else return TranslateTextsClass.Translate("Accounting.General.O.False", 0, showLocals);
+        }
+
+ 
     }
 }

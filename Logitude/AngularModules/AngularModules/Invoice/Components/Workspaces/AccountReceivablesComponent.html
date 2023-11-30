@@ -60,7 +60,9 @@
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:OpenConstituent')">{{'ARInvoice.Q.OpenConstituentInvoices'|TextCodeTranslationPipe}} ({{ARInvoicesOpenConstituentCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Unpaid Invoices')">{{'ARInvoice.Q.UnpaidInvoices'|TextCodeTranslationPipe}} ({{ARInvoicesUnpaidCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:Invoices Failed to Open in SAT')" *ngIf="ARInvoicesSATFailedVisibility">{{'ARInvoice.Q.FailedSAT'|TextCodeTranslationPipe}} ({{ARInvoicesSATFailedCount}})</p>
+                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:SATVoidedNotTransferred')" *ngIf="SATVoidedNotTransferredVisibility">{{'ARInvoice.Q.SATVoidedNotTransferred'|TextCodeTranslationPipe}} ({{ARInvoicesSATVoidedNotTransferredCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:ErrorInTransfer')" *ngIf="ARInvoiceErrorInTransferVisibility">{{'ARInvoice.Q.ErrorInTransfer'|TextCodeTranslationPipe}} ({{ARInvoiceErrorInTransferCount}})</p>
+                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:SATInvoicesWaitingCancellation')" *ngIf="ARInvoiceSATWaitingCancellationVisibility">{{'ARInvoice.Q.SATInvoicesWaitingCancellation'|TextCodeTranslationPipe}} ({{ARInvoiceSATWaitingCancellationCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARInvoice:All Invoices')">{{'ARInvoice.Q.AllInvoices'|TextCodeTranslationPipe}}</p>
                                         </div>
                                     </div>
@@ -98,6 +100,7 @@
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Open Payments')">{{'ARPayment.Q.OpenPayments'|TextCodeTranslationPipe}} ({{ARPaymentsOpenedCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:Payments Failed to Open in SAT')" *ngIf="ARPaymentsSATFailedVisibility">{{'ARPayment.Q.FailedSAT'|TextCodeTranslationPipe}} ({{ARPaymentsSATFailedCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:ErrorInTransfer')" *ngIf="ARPaymentErrorInTransferVisibility">{{'ARPayment.Q.ErrorInTransfer'|TextCodeTranslationPipe}} ({{ARPaymentErrorInTransferCount}})</p>
+                                            <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:SATPaymentsWaitingCancellation')" *ngIf="ARPaymentSATWaitingCancellationVisibility">{{'ARPayment.Q.SATPaymentsWaitingCancellation'|TextCodeTranslationPipe}} ({{ARPaymentSATWaitingCancellationCount}})</p>
                                             <p class="QueryLink" (click)="ViewInvoiceQuery('ARPayment:All Payments')">{{'ARPayment.Q.AllPayments'|TextCodeTranslationPipe}}</p>
                                             <p class="QueryLink" (click)="NewEntityClicked('ARPayment')">{{'General.O.NewPayment'|TextCodeTranslationPipe}}</p>
                                         </div>

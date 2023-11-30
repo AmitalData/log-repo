@@ -64,6 +64,7 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.SaleTotalAmount = itemPM.SaleTotalAmount;
             itemPoco.SaleTotalAmountLocal = itemPM.SaleTotalAmountLocal;
 
+            itemPoco.MarkUpCurrencyId = itemPM.MarkUpCurrencyId;
             itemPoco.MarkUpValue = itemPM.MarkUpValue;
             itemPoco.MarkUpTypeCode = itemPM.MarkUpTypeCode;
             itemPoco.ContainerType1MarkUpValue = itemPM.ContainerType1MarkUpValue;
@@ -92,7 +93,17 @@ namespace Logitude.BL.QuoteModel.Tools.DataMapping
             itemPoco.TariffNumber = itemPM.TariffNumber;
             itemPoco.TariffLineId = itemPM.TariffLineId;
             itemPoco.TariffVersion = itemPM.TariffVersion;
+            itemPoco.SaleTariffId = itemPM.SaleTariffId;
+            itemPoco.SaleTariffNumber = itemPM.SaleTariffNumber;
+            itemPoco.SaleTariffLineId = itemPM.SaleTariffLineId;
+            itemPoco.SaleTariffVersion = itemPM.SaleTariffVersion;
             itemPoco.IsRegionalTax = itemPM.IsRegionalTax;
+            itemPoco.VATAmountInLocalCurrency = itemPM.VATAmountInLocalCurrency;
+            itemPoco.VATAmountInQuoteSaleCurrency = itemPM.VATAmountInQuoteSaleCurrency;
+            itemPoco.VATAmountInLineSaleCurrency = itemPM.VATAmountInLineSaleCurrency;
+            itemPoco.SaleTotalAmountLocalIncludingVAT = itemPM.SaleTotalAmountLocalIncludingVAT;
+            itemPoco.SaleAmountInSaleCurrencyIncludingVAT = itemPM.SaleAmountInSaleCurrencyIncludingVAT;
+            itemPoco.SaleTotalAmountIncludingVAT = itemPM.SaleTotalAmountIncludingVAT;
         }
     }
 }

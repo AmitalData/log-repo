@@ -1,3 +1,4 @@
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
@@ -30,12 +31,10 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
-
         public string GetShipmentIdByNumber(string shipmentNumber, int tenant)
         {
             return query.GetEntitiyIdByShipmentNumber(shipmentNumber, tenant);
         }
-
         public ShipmentPM DirectCustomDataMappingAndValidatin(Direct MyEntity, int Tenant, string ComputingPartnerCode = "")
         {
             try
@@ -51,9 +50,14 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.NewConcurrencyGUID = Guid.NewGuid().ToString();
                 temp.Tenant = Tenant;
                 temp.ShipmentLevelCode = "D";
-                temp.MainCarriageFromPortId = temp.FromPortId;
-                temp.MainCarriageToPortId = temp.ToPortId;
-                temp.FinalDistenationPortId = temp.ToPortId;
+
+                if (!IsInlandDomesticShipment(temp))
+                {
+                    temp.MainCarriageFromPortId = temp.FromPortId;
+                    temp.MainCarriageToPortId = temp.ToPortId;
+                    temp.FinalDistenationPortId = temp.ToPortId;
+                }
+
                 temp.MainCarriageFinalDestinationPortId = temp.ToPortId;
                 temp.FHLStatusCode = "NSEN";
                 temp.FWBStatusCode = "NSEN";
@@ -157,52 +161,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 {
                     temp.DepartmentId = MyUserPM.DepartmentId;
                 }
-                
-                foreach (ShipmentPickUpPM item in temp.ShipmentPickUps)
-                {
-                    item.PickUpDeliveryTypeCode = "PICK";
 
-                    if (!string.IsNullOrEmpty(item.FromPartnerCardId))
-                    {
-                        item.PickUpDeliveryFromTypeCode = "PART";
-                    }
-                    else if (!string.IsNullOrEmpty(item.FromPortId))
-                    {
-                        item.PickUpDeliveryFromTypeCode = "PORT";
-                    }
-
-                    if (!string.IsNullOrEmpty(item.ToPartnerCardId))
-                    {
-                        item.PickUpDeliveryToTypeCode = "PART";
-                    }
-                    else if (!string.IsNullOrEmpty(item.ToPortId))
-                    {
-                        item.PickUpDeliveryToTypeCode = "PORT";
-                    }
-                }
-
-                foreach (ShipmentDeliveryPM item in temp.ShipmentDeliveries)
-                {
-                    item.PickUpDeliveryTypeCode = "DELV";
-
-                    if (!string.IsNullOrEmpty(item.FromPartnerCardId))
-                    {
-                        item.PickUpDeliveryFromTypeCode = "PART";
-                    }
-                    else if (!string.IsNullOrEmpty(item.FromPortId))
-                    {
-                        item.PickUpDeliveryFromTypeCode = "PORT";
-                    }
-
-                    if (!string.IsNullOrEmpty(item.ToPartnerCardId))
-                    {
-                        item.PickUpDeliveryToTypeCode = "PART";
-                    }
-                    else if (!string.IsNullOrEmpty(item.ToPortId))
-                    {
-                        item.PickUpDeliveryToTypeCode = "PORT";
-                    }
-                }
+                this.UpdatePickups(temp);
+                this.UpdateDeliveries(temp);
                 
                 foreach (ShipmentReceivablePM item in temp.ShipmentReceivables)
                 {
@@ -236,7 +197,68 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 throw ex;
             }
         }
-        
+        public void UpdatePickups(ShipmentPM shipment)
+        {
+            if (shipment == null)
+                return;
+
+            if (shipment.ShipmentPickUps == null)
+                return;
+
+            if (shipment.ShipmentPickUps.Count == 0)
+                return;
+
+            this.UpdateNotDeletedShipmentPickUps(shipment);
+        }
+        public void UpdateDeliveries(ShipmentPM shipment)
+        {
+            if (shipment == null)
+                return;
+
+            if (shipment.ShipmentDeliveries == null)
+                return;
+
+            if (shipment.ShipmentDeliveries.Count == 0)
+                return;
+
+            this.UpdateNotDeletedShipmentDeliveries(shipment);
+        }
+        private void UpdateNotDeletedShipmentPickUps(ShipmentPM shipment)
+        {
+            List<ShipmentPickUpPM> updatedShipmentPickUps = shipment.ShipmentPickUps.FindAll(pickUp => pickUp.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete);
+            foreach (ShipmentPickUpPM pickUp in updatedShipmentPickUps)
+            {
+                this.MapAndValidateShipmentPickUp(pickUp);
+            }
+        }
+        private void MapAndValidateShipmentPickUp(ShipmentPickUpPM pickUp)
+        {
+            pickUp.PickUpDeliveryTypeCode = "PICK";
+            this.IntializePickupDeliveryFrom(pickUp);
+            this.IntializePickupDeliveryTo(pickUp);
+            this.ValidateAndSetPickupFromSide(pickUp);
+            this.ValidateAndSetPickupToSide(pickUp);
+        }
+        private void UpdateNotDeletedShipmentDeliveries(ShipmentPM shipment)
+        {
+            List<ShipmentDeliveryPM> updatedShipmentDelivery = shipment.ShipmentDeliveries.FindAll(delivery => delivery.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete);
+            foreach (ShipmentDeliveryPM delivery in updatedShipmentDelivery)
+            {
+                this.MapAndValidateShipmentDelivery(delivery);
+            }
+        }
+        private void MapAndValidateShipmentDelivery(ShipmentDeliveryPM delivery)
+        {
+            delivery.PickUpDeliveryTypeCode = "DELV";
+            this.IntializePickupDeliveryFrom(delivery);
+            this.IntializePickupDeliveryTo(delivery);
+            this.ValidateAndSetDeliveryFromSide(delivery);
+            this.ValidateAndSetDeliveryToSide(delivery);
+        }
+        private bool IsInlandDomesticShipment(ShipmentPM entityPM)
+        {
+            return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
+        }
         private double? GetRatio(string directionId, string transportModeId, string shipmentTypeId, string countryCode)
         {
             double? myResult = null;
@@ -355,5 +377,262 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 
             return myResult;
         }
+
+        private void IntializePickupDeliveryFrom(dynamic item)
+        {
+            if (string.IsNullOrEmpty(item.PickUpDeliveryFromTypeCode))
+                return;
+
+            if (item.PickUpDeliveryFromTypeCode == "CASL")
+            {
+                item.FromPartnerCardId = null;
+                item.FromPortId = null;
+            }
+            else if (item.PickUpDeliveryFromTypeCode == "PART")
+            {
+                item.FromAddressCity = null;
+                item.FromAddressCountryId = null;
+                item.FromPortId = null;
+            }
+            else if (item.PickUpDeliveryFromTypeCode == "PORT")
+            {
+                item.FromAddressCity = null;
+                item.FromAddressCountryId = null;
+                item.FromPartnerCardId = null;
+            }    
+        }
+
+        private void IntializePickupDeliveryTo(dynamic item)
+        {
+            if (string.IsNullOrEmpty(item.PickUpDeliveryFromTypeCode))
+                return;
+
+            if (item.PickUpDeliveryToTypeCode == "CASL")
+            {
+                item.ToPartnerCardId = null;
+                item.ToPortId = null;
+            }
+            else if (item.PickUpDeliveryToTypeCode == "PART")
+            {
+                item.ToAddressCity = null;
+                item.ToAddressCountryId = null;
+                item.ToPortId = null;
+            }
+            else if (item.PickUpDeliveryFromTypeCode == "PORT")
+            {
+                item.ToAddressCity = null;
+                item.ToAddressCountryId = null;
+                item.ToPartnerCardId = null;
+            }
+        }
+
+        private void ValidateAndSetPickupFromSide(ShipmentPickUpPM item)
+        {
+            if (!string.IsNullOrEmpty(item.PickUpDeliveryFromTypeCode))
+            {
+                switch (item.PickUpDeliveryFromTypeCode)
+                {
+                    case "PART":
+                        {
+                            if (string.IsNullOrEmpty(item.FromPartnerCardId))
+                            {
+                                throw new ApplicationException("Pickup from partner is missing");
+                            }
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (string.IsNullOrEmpty(item.FromPortId))
+                            {
+                                throw new ApplicationException("Pickup from port is missing");
+                            }
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            if (string.IsNullOrEmpty(item.FromAddressCity) || string.IsNullOrEmpty(item.FromAddressCountryId))
+                            {
+                                throw new ApplicationException("Pickup from city or country is missing");
+                            }
+                            break;
+                        }
+                }
+            }
+
+            else
+            {
+                if (!string.IsNullOrEmpty(item.FromPartnerCardId))
+                {
+                    item.PickUpDeliveryFromTypeCode = "PART";
+                }
+                else if (!string.IsNullOrEmpty(item.FromPortId))
+                {
+                    item.PickUpDeliveryFromTypeCode = "PORT";
+                }
+
+                else if (!string.IsNullOrEmpty(item.FromAddressCity) && !string.IsNullOrEmpty(item.FromAddressCountryId))
+                {
+                    item.PickUpDeliveryFromTypeCode = "CASL";
+                }
+            }
+        }
+        private void ValidateAndSetPickupToSide(ShipmentPickUpPM item)
+        {
+            if (!string.IsNullOrEmpty(item.PickUpDeliveryToTypeCode))
+            {
+                switch (item.PickUpDeliveryToTypeCode)
+                {
+                    case "PART":
+                        {
+                            if (string.IsNullOrEmpty(item.ToPartnerCardId))
+                            {
+                                throw new ApplicationException("Pickup to partner is missing");
+                            }
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (string.IsNullOrEmpty(item.ToPortId))
+                            {
+                                throw new ApplicationException("Pickup to port is missing");
+                            }
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            if (string.IsNullOrEmpty(item.ToAddressCity) || string.IsNullOrEmpty(item.ToAddressCountryId))
+                            {
+                                throw new ApplicationException("Pickup to city or country is missing");
+                            }
+                            break;
+                        }
+                }
+            }
+
+            else
+            {
+                if (!string.IsNullOrEmpty(item.ToPartnerCardId))
+                {
+                    item.PickUpDeliveryToTypeCode = "PART";
+                }
+                else if (!string.IsNullOrEmpty(item.ToPortId))
+                {
+                    item.PickUpDeliveryToTypeCode = "PORT";
+                }
+
+                else if (!string.IsNullOrEmpty(item.ToAddressCity) && !string.IsNullOrEmpty(item.ToAddressCountryId))
+                {
+                    item.PickUpDeliveryToTypeCode = "CASL";
+                }
+            }
+        }
+        private void ValidateAndSetDeliveryFromSide(ShipmentDeliveryPM item)
+        {
+            if (!string.IsNullOrEmpty(item.PickUpDeliveryFromTypeCode))
+            {
+                switch (item.PickUpDeliveryFromTypeCode)
+                {
+                    case "PART":
+                        {
+                            if (string.IsNullOrEmpty(item.FromPartnerCardId))
+                            {
+                                throw new ApplicationException("Delivery from partner is missing");
+                            }
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (string.IsNullOrEmpty(item.FromPortId))
+                            {
+                                throw new ApplicationException("Delivery from port is missing");
+                            }
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            if (string.IsNullOrEmpty(item.FromAddressCity) || string.IsNullOrEmpty(item.FromAddressCountryId))
+                            {
+                                throw new ApplicationException("Delivery from city or country is missing");
+                            }
+                            break;
+                        }
+                }
+            }
+
+            else
+            {
+                if (!string.IsNullOrEmpty(item.FromPartnerCardId))
+                {
+                    item.PickUpDeliveryFromTypeCode = "PART";
+                }
+                else if (!string.IsNullOrEmpty(item.FromPortId))
+                {
+                    item.PickUpDeliveryFromTypeCode = "PORT";
+                }
+
+                else if (!string.IsNullOrEmpty(item.FromAddressCity) && !string.IsNullOrEmpty(item.FromAddressCountryId))
+                {
+                    item.PickUpDeliveryFromTypeCode = "CASL";
+                }
+            }
+        }
+        private void ValidateAndSetDeliveryToSide(ShipmentDeliveryPM item)
+        {
+            if (!string.IsNullOrEmpty(item.PickUpDeliveryToTypeCode))
+            {
+                switch (item.PickUpDeliveryToTypeCode)
+                {
+                    case "PART":
+                        {
+                            if (string.IsNullOrEmpty(item.ToPartnerCardId))
+                            {
+                                throw new ApplicationException("Delivery to partner is missing");
+                            }
+                            break;
+                        }
+
+                    case "PORT":
+                        {
+                            if (string.IsNullOrEmpty(item.ToPortId))
+                            {
+                                throw new ApplicationException("Delivery to port is missing");
+                            }
+                            break;
+                        }
+
+                    case "CASL":
+                        {
+                            if (string.IsNullOrEmpty(item.ToAddressCity) || string.IsNullOrEmpty(item.ToAddressCountryId))
+                            {
+                                throw new ApplicationException("Delivery to city or country is missing");
+                            }
+                            break;
+                        }
+                }
+            }
+
+            else
+            {
+                if (!string.IsNullOrEmpty(item.ToPartnerCardId))
+                {
+                    item.PickUpDeliveryToTypeCode = "PART";
+                }
+                else if (!string.IsNullOrEmpty(item.ToPortId))
+                {
+                    item.PickUpDeliveryToTypeCode = "PORT";
+                }
+
+                else if (!string.IsNullOrEmpty(item.ToAddressCity) && !string.IsNullOrEmpty(item.ToAddressCountryId))
+                {
+                    item.PickUpDeliveryToTypeCode = "CASL";
+                }
+            }
+        }              
     }
 }

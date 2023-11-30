@@ -87,6 +87,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string TransferStatusName { get; set; }
         public bool ReadyForTransfer { get; set; }
         public string ExternalAccountingEntityId { get; set; }
+        public bool IsTransferStatusSetManually { get; set; }
         public string InvoiceNumber { get; set; }
         public string ShipmentNumber { get; set; }
         public string TransmissionError { get; set; }
@@ -116,7 +117,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
                 }
             }
         }
-
+       
 
         //Dummy Fields
         public bool SetVoided { get; set; }
@@ -203,6 +204,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
             }
         }
 
+        public List<ARPaymentBankTranferPM> ARPaymentBankTranfers { get; set; }
+
         public bool IsPaymentNumberManuallySet { get; set; }
 
 
@@ -250,6 +253,17 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string PaymentCurrencySign { get; set; }
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PartnerId { get; set; }
+        public bool ForceUsingBankTransferMethod { get; set; }
+        public string ReconcileExternalPagesIds { get; set; }
 
+        public bool UpdateAmountAndStatuses { get; set; }
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string BillToCode { get; set; }
+        public bool IsUpdatedByQBO { get; set; }
+        public bool IsUpdatedBySAT { get; set; }
+        public string SATAdditionalFieldsXML { get; set; }
+        public string TransferStatusCode_Original { get; set; }
+        public bool IsTransferStarted_Original { get; set; }
+        public string TransferError_Original { get; set; }
     }
 }

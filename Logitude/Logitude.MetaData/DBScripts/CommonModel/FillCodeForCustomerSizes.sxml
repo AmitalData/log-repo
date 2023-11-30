@@ -1,0 +1,13 @@
+﻿
+
+<Script DBType="Main" Module="Common" TargetTableName="CustomerSizes">
+  <Sql Version="1">
+    <![CDATA[
+
+       update CustomerSizes set Code = 'S' where Name like '%small%'
+       update CustomerSizes set Code = 'M' where Name like '%medium%'
+       update CustomerSizes set Code = 'L' where Name like '%large%'
+      
+    ]]>
+  </Sql>
+</Script>

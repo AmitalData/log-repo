@@ -42,6 +42,8 @@ export class ShippingAgentList {
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
 		StateName: string;
+		RegimenFiscalCode: string;
+		SATReceptorName: string;
 		GLAccountNumber: string;
 	
 }

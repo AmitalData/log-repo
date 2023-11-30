@@ -56,7 +56,7 @@
   <Column
     Name="Type"
     Type="varchar"
-    Size="10">
+    Size="20">
     <Constraints
       Nullable="false" />
   </Column>

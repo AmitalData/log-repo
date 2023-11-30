@@ -81,7 +81,7 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool IsDocumentsArchive { get; set; }
         public string CustomerId { get; set; }
         public string CustomerName { get; set; }
-        public bool IsCustomerTenantShare { get; set; }
+        public bool CustomerTenantShareCustomsFile { get; set; }
         public bool CustomerTenantShareImportFile { get; set; }
         public bool CustomerTenantShareExportFile { get; set; }
         public bool AllowAgentInCustomersLOV { get; set; }
@@ -110,8 +110,14 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool AllowCustomersInAgentsLOV { get; set; }
         public string VatUniquePartnerTypeCode { get; set; }
         public bool SharedLogisMasterMessageLink { get; set; }
+        public bool ShowMultiUnitsOfMeasurements { get; set; }
         public bool IsQuotesRequestActivatedInShared { get; set; }
-
-        
+        public bool IsCargoTrackWebAccessActivated { get; set; }
+        public bool EnableDeliveryOptions { get; set; }
+        public int? EmptyReturnClosingDays { get; set; }
+        public int? ShipmentATAClosingDays { get; set; }
+        public bool IsDigitalPortalAccessActivated { get; set; }
+        public bool UseNewTermsOfUse { get; set; }
+        public bool ApproveUploadedDocuments { get; set; }
     }
 }

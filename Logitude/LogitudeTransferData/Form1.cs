@@ -1,8 +1,13 @@
 ﻿using Confluent.Kafka;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.KafkaConfigurations;
 using Newtonsoft.Json;
+using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -41,9 +46,9 @@ namespace LogitudeTransferData
         private void button1_Click(object sender, EventArgs e)
         {
             var tenant = int.Parse(textBox1.Text);
-            List<ContactPM> contactPMs = GetAllContacts(tenant);
+            List<ExtendedContactPM> contactPMs = GetAllContacts(tenant);
 
-            ProduceKafkaMessages<ContactPM>(contactPMs, KakaMessageTypes.Contact);
+            ProduceKafkaMessages<ExtendedContactPM>(contactPMs, KakaMessageTypes.Contact);
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -61,6 +66,179 @@ namespace LogitudeTransferData
 
             ProduceKafkaMessages<PortPM>(portPMs, KakaMessageTypes.Port);
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<VesselPM> vesselPMs = GetAllVessels(tenant);
+
+            ProduceKafkaMessages<VesselPM>(vesselPMs, KakaMessageTypes.Vessel);
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<DocumentTypePM> documentTypePMs = GetAllDocumentTypes(tenant);
+
+            ProduceKafkaMessages<DocumentTypePM>(documentTypePMs, KakaMessageTypes.DocumentType);
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<CurrencyPM> currencyPMs = GetAllCurrencies(tenant);
+
+            ProduceKafkaMessages<CurrencyPM>(currencyPMs, KakaMessageTypes.Currency);
+        }
+
+        private void button8_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<SpecialServicesTypePM> specialServicesTypePMs = GetAllSpecialServicesTypes(tenant);
+
+            ProduceKafkaMessages<SpecialServicesTypePM>(specialServicesTypePMs, KakaMessageTypes.SpecialServicesType);
+        }
+
+        private void button9_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<EntityStatusPM> entityStatusPMs = GetAllEntityStatus(tenant);
+
+            ProduceKafkaMessages<EntityStatusPM>(entityStatusPMs, KakaMessageTypes.EntityStatus);
+        }
+
+        private void button10_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<PackageTypePM> packageTypePMs = GetAllPackageTypes(tenant);
+
+            ProduceKafkaMessages<PackageTypePM>(packageTypePMs, KakaMessageTypes.PackageType);
+        }
+
+        private void button11_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<ObjectFieldPM> AllObjectFieldPMs = GetAllCustomObjectFields("Shipment", tenant);
+            // Here we get all CustomFields except PickList
+            List<ObjectFieldPM> notPickListObjectFieldPMs = AllObjectFieldPMs.FindAll(o => o.DataTypeCode != "PickList");
+            ProduceKafkaMessages<ObjectFieldPM>(notPickListObjectFieldPMs, KakaMessageTypes.CustomField);
+
+            // Here we want to get CustomPickList values
+            List<CustomPickListPM> customPickListPMs = GetAllCustomPickLists(tenant);
+            ProduceKafkaMessages<CustomPickListPM>(customPickListPMs, KakaMessageTypes.CustomPickList);
+
+            // Then send PickList object fields
+            List<ObjectFieldPM> pickListObjectFieldPMs = AllObjectFieldPMs.FindAll(o => o.DataTypeCode == "PickList");
+            ProduceKafkaMessages<ObjectFieldPM>(pickListObjectFieldPMs, KakaMessageTypes.CustomField);
+        }
+
+        private void button14_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<ObjectFieldPM> AllObjectFieldPMs = GetAllCustomObjectFields("Container", tenant);
+            // Here we get all CustomFields except PickList
+            List<ObjectFieldPM> notPickListObjectFieldPMs = AllObjectFieldPMs.FindAll(o => o.DataTypeCode != "PickList");
+            ProduceKafkaMessages<ObjectFieldPM>(notPickListObjectFieldPMs, KakaMessageTypes.CustomField);
+
+            // Here we want to get CustomPickList values
+            List<CustomPickListPM> customPickListPMs = GetAllCustomPickLists(tenant);
+            ProduceKafkaMessages<CustomPickListPM>(customPickListPMs, KakaMessageTypes.CustomPickList);
+
+            // Then send PickList object fields
+            List<ObjectFieldPM> pickListObjectFieldPMs = AllObjectFieldPMs.FindAll(o => o.DataTypeCode == "PickList");
+            ProduceKafkaMessages<ObjectFieldPM>(pickListObjectFieldPMs, KakaMessageTypes.CustomField);
+        }
+
+        private void button12_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<DepartmentPM> departmentPMs = GetAllDepartments(tenant);
+
+            ProduceKafkaMessages<DepartmentPM>(departmentPMs, KakaMessageTypes.Department);
+        }
+
+        private void button13_Click(object sender, EventArgs e)
+        {
+            var tenant = int.Parse(textBox1.Text);
+            List<CustomerTeamPM> customerTeamPMs = GetAllCustomerTeams(tenant);
+
+            ProduceKafkaMessages<CustomerTeamPM>(customerTeamPMs, KakaMessageTypes.CustomerTeam);
+        }
+
+        private List<CustomerTeamPM> GetAllCustomerTeams(int tenant)
+        {
+            CustomerTeamQuery customerTeamQuery = new CustomerTeamQuery(tenant);
+            List<CustomerTeamPM> customerTeamPMs = customerTeamQuery.GetCustomerTeamPMsByTenant(tenant).ToList();
+            return customerTeamPMs;
+        }
+
+        private List<DepartmentPM> GetAllDepartments(int tenant)
+        {
+            DepartmentQuery departmentQuery = new DepartmentQuery(tenant);
+            List<DepartmentPM> departmentPMs = departmentQuery.GetDepartmentPMsByTenant(tenant).ToList();
+            return departmentPMs;
+        }
+
+        private List<CustomPickListPM> GetAllCustomPickLists(int tenant)
+        {
+            CustomPickListQuery customPickListQuery = new CustomPickListQuery(tenant);
+            List<CustomPickListPM> customPickListPMs = customPickListQuery.GetCustomPickListPMsByTenantCash(tenant);
+            return customPickListPMs;
+        }
+
+        private List<ObjectFieldPM> GetAllCustomObjectFields(string objectTableName, int tenant)
+        {
+            ObjectTablePM shipmentObject = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
+            string shipmentObjectId = shipmentObject.Id;
+
+            ObjectFieldRepository ObjectFieldsRepository = new ObjectFieldRepository(tenant);
+            ObjectFieldQuery objectFieldsQuery = new ObjectFieldQuery(ObjectFieldsRepository);
+            List<ObjectFieldPM> objectFieldPMs = objectFieldsQuery.GetCustomFieldsByTableIdForCTool(shipmentObjectId, tenant).ToList();
+            return objectFieldPMs;
+        }
+
+        private List<PackageTypePM> GetAllPackageTypes(int tenant)
+        {
+            PackageTypeQuery packageTypeQuery = new PackageTypeQuery(tenant);
+            List<PackageTypePM> packageTypePMs = packageTypeQuery.GetPackageTypePMsByTenant(tenant).ToList();
+            return packageTypePMs;
+        }
+
+        private List<CurrencyPM> GetAllCurrencies(int tenant)
+        {
+            CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
+            List<CurrencyPM> currencyPMs = currencyQuery.GetCurrencyPMsByTenant(tenant).ToList();
+            return currencyPMs;
+        }
+        private List<EntityStatusPM> GetAllEntityStatus(int tenant)
+        {
+            EntityStatusQuery entityStatusQuery = new EntityStatusQuery(tenant);
+            List<EntityStatusPM> entityStatusPMs = entityStatusQuery.GetEntityStatusPMsByTenant(tenant).ToList();
+            return entityStatusPMs;
+        }
+        private List<SpecialServicesTypePM> GetAllSpecialServicesTypes(int tenant)
+        {
+            SpecialServicesTypeQuery specialServicesTypeQuery = new SpecialServicesTypeQuery(tenant);
+            List<SpecialServicesTypePM> specialServicesTypePMs = specialServicesTypeQuery.GetSpecialServicesTypePMsByTenant(tenant).ToList();
+            return specialServicesTypePMs;
+        }
+
+        private List<DocumentTypePM> GetAllDocumentTypes(int tenant)
+        {
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+            List<DocumentTypePM> documentTypePMs = documentTypeQuery.GetDocumentTypePMsByTenant(tenant)
+                                                                    .Where(d => d.IsDocIn.Equals(true))
+                                                                    .ToList();
+            return documentTypePMs;
+        }
+
+        private List<VesselPM> GetAllVessels(int tenant)
+        {
+            VesselQuery vesselQuery = new VesselQuery(tenant);
+            List<VesselPM> vesselPMs = vesselQuery.GetVesselPMsByTenant(tenant).ToList();
+            return vesselPMs;
+        }
+
         private List<CardPM> GetAllCards(int tenant)
         {
             CardQuery cardQuery = new CardQuery(tenant);
@@ -68,10 +246,10 @@ namespace LogitudeTransferData
             return cardPMs;
         }
 
-        private List<ContactPM> GetAllContacts(int tenant)
+        private List<ExtendedContactPM> GetAllContacts(int tenant)
         {
             ContactQuery contactQuery = new ContactQuery(tenant);
-            List<ContactPM> contactPMs = contactQuery.GetContactPMsWithoutPassWordsByTenant(tenant);
+            List<ExtendedContactPM> contactPMs = contactQuery.GetExtendedContactPMsByTenant(tenant);
             return contactPMs;
         }
 
@@ -101,11 +279,11 @@ namespace LogitudeTransferData
                 {
                     foreach (T PM in PMs)
                     {
+
                         counter++;
                         var serializedContact = JsonConvert.SerializeObject(PM, Formatting.Indented);
-                        var deliveryReport = producer.ProduceAsync(KafkaTopics.LookupsTopic, new Message<long, string> { Key = kakaMessageTypes, Value = serializedContact });
-                        deliveryReport.Wait();
-                        Console.WriteLine($"Upsert Country: {counter}");
+                        var deliveryReport = producer.ProduceAsync(KafkaTopics.LookupsTopic, new Message<long, string> { Key = kakaMessageTypes, Value = serializedContact }).GetAwaiter().GetResult();
+                        Console.WriteLine($"Upsert Lookup: {counter}");
                     }
                 }
             }

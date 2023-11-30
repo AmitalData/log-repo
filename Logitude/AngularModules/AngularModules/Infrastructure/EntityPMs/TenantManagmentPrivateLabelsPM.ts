@@ -20,7 +20,7 @@ export class TenantManagmentPrivateLabelsPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -123,6 +123,51 @@ export class TenantManagmentPrivateLabelsPM {
     private hasLogboxAccess: boolean;
     public get HasLogboxAccess() { return this.hasLogboxAccess; }
     public set HasLogboxAccess(newValue: boolean) { if (this.hasLogboxAccess != newValue) { this.hasLogboxAccess = newValue; this.MarkAsDirty("HasLogboxAccess"); } }
+       
+	 
+    private mainTabHighlightColor: string;
+    public get MainTabHighlightColor() { return this.mainTabHighlightColor; }
+    public set MainTabHighlightColor(newValue: string) { if (this.mainTabHighlightColor != newValue) { this.mainTabHighlightColor = newValue; this.MarkAsDirty("MainTabHighlightColor"); } }
+       
+	 
+    private documentTypeHighlightColor: string;
+    public get DocumentTypeHighlightColor() { return this.documentTypeHighlightColor; }
+    public set DocumentTypeHighlightColor(newValue: string) { if (this.documentTypeHighlightColor != newValue) { this.documentTypeHighlightColor = newValue; this.MarkAsDirty("DocumentTypeHighlightColor"); } }
+       
+	 
+    private isExportActivated: boolean;
+    public get IsExportActivated() { return this.isExportActivated; }
+    public set IsExportActivated(newValue: boolean) { if (this.isExportActivated != newValue) { this.isExportActivated = newValue; this.MarkAsDirty("IsExportActivated"); } }
+       
+	 
+    private isCustomsActivated: boolean;
+    public get IsCustomsActivated() { return this.isCustomsActivated; }
+    public set IsCustomsActivated(newValue: boolean) { if (this.isCustomsActivated != newValue) { this.isCustomsActivated = newValue; this.MarkAsDirty("IsCustomsActivated"); } }
+       
+	 
+    private queryFiltersHighlightColor: string;
+    public get QueryFiltersHighlightColor() { return this.queryFiltersHighlightColor; }
+    public set QueryFiltersHighlightColor(newValue: string) { if (this.queryFiltersHighlightColor != newValue) { this.queryFiltersHighlightColor = newValue; this.MarkAsDirty("QueryFiltersHighlightColor"); } }
+       
+	 
+    private createShipmentsWithoutDocs: boolean;
+    public get CreateShipmentsWithoutDocs() { return this.createShipmentsWithoutDocs; }
+    public set CreateShipmentsWithoutDocs(newValue: boolean) { if (this.createShipmentsWithoutDocs != newValue) { this.createShipmentsWithoutDocs = newValue; this.MarkAsDirty("CreateShipmentsWithoutDocs"); } }
+       
+	 
+    private createOShipmentsWithoutDocs: boolean;
+    public get CreateOShipmentsWithoutDocs() { return this.createOShipmentsWithoutDocs; }
+    public set CreateOShipmentsWithoutDocs(newValue: boolean) { if (this.createOShipmentsWithoutDocs != newValue) { this.createOShipmentsWithoutDocs = newValue; this.MarkAsDirty("CreateOShipmentsWithoutDocs"); } }
+       
+	 
+    private filingInboxDomain: string;
+    public get FilingInboxDomain() { return this.filingInboxDomain; }
+    public set FilingInboxDomain(newValue: string) { if (this.filingInboxDomain != newValue) { this.filingInboxDomain = newValue; this.MarkAsDirty("FilingInboxDomain"); } }
+       
+	 
+    private distributorCode: string;
+    public get DistributorCode() { return this.distributorCode; }
+    public set DistributorCode(newValue: string) { if (this.distributorCode != newValue) { this.distributorCode = newValue; this.MarkAsDirty("DistributorCode"); } }
        
 	 
 

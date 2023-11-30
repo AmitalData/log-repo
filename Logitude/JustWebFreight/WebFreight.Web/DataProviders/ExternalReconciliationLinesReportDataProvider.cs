@@ -20,7 +20,9 @@ namespace WebFreight.Web.DataProviders
         public bool IncludesTransferGlaccount { get; set; }
         public int? ExternalReconciliationNumber { get; set; }
         public decimal BankPagesClosingBalance { get; set; }
-         public List<BankDetails> BankDetails { get; set; }
+        public string CrossYearReconcile { get; set; }
+
+        public List<BankDetails> BankDetails { get; set; }
     }
     public class ExternalReconciliationPeriod
     {
@@ -73,9 +75,8 @@ namespace WebFreight.Web.DataProviders
 
         public decimal? BankTotalClosed { get; set; }
         public decimal BankPagesClosingBalance { get; set; }
-
-
         public decimal? TotalInLocalCurrency { get; set; }
+        public decimal? TotalInForiegnCurrency { get; set; }
 
     }
 

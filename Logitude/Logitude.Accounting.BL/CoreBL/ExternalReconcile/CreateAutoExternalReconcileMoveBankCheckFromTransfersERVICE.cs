@@ -19,7 +19,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             this.ExternalReconciliationList = new List<ExternalReconciliationPM>();
             if (_JournalPM.JournalExternalReconciles.Count > 1)
             {
-                throw new Exception("Sorry (MoveBankCheckFromTransfer) meanwhile only one Adjust Allowed !!!");
+                throw new ApplicationException("Sorry (MoveBankCheckFromTransfer) meanwhile only one Adjust Allowed !!!");
                 //errorsList.Add(TranslateMyTextCode("Sorry meanwhile only one Adjust Allowed !!!", myJournalPM.Tenant));
             }
             var myJournalExternalReconcile = _JournalPM.JournalExternalReconciles[0];//meanwhile only one Adjust Allowed !!!
@@ -30,7 +30,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             var myLedgerTransactionTransferInCredit = myOldTransToReconcile.FirstOrDefault(r => r.Id == myJournalExternalReconcile.LedgerTransactionId);
             if (_JournalPM.Tenant != myLedgerTransactionTransferInCredit.Tenant)
             {
-                throw new Exception("_JournalPM.Tenant!= myLedgerTransactionTransferInCredit.Tenant");
+                throw new ApplicationException("_JournalPM.Tenant!= myLedgerTransactionTransferInCredit.Tenant");
             }
 
 
@@ -38,7 +38,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             BankAccountPM bankAccountFromPage = _ExternalReconcileDataProvider.GetBankAccountFromReconcileExternalPageLineId(myJournalExternalReconcile.ReconcileExternalPageLineId, _JournalPM.Tenant);
             if (bankAccountFromTransfer.Id != bankAccountFromPage.Id)
             {
-                throw new Exception("bankAccountFromTransfer.Id != bankAccountFromPage.Id");
+                throw new ApplicationException("bankAccountFromTransfer.Id != bankAccountFromPage.Id");
             }
 
 
@@ -106,11 +106,11 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             List<LedgerTransactionPM> myOldTransToReconcile = _ExternalReconcileDataProvider.GetLedgerTransactionList(theReconcileAgainstLTranIdList, _JournalPM.Tenant);
             if (!myOldTransToReconcile.Any())
             {
-                throw new Exception("!myOldTransToReconcile.Any()");
+                throw new ApplicationException("!myOldTransToReconcile.Any()");
             }
             if (myOldTransToReconcile.Any(r => !r.InProgressExternalReconcile))
             {
-                throw new Exception("_JournalPM.JournalReconciles have  myOldTransToReconcile.Any( r=> !r.InProgressExternalReconcile) ");
+                throw new ApplicationException("_JournalPM.JournalReconciles have  myOldTransToReconcile.Any( r=> !r.InProgressExternalReconcile) ");
             }
 
             return myOldTransToReconcile;
@@ -121,7 +121,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             var myNewLedgerTransactionBankGLAccountInCredit = _NewLedgerTransactionsWithCounters.FirstOrDefault(r => r.AccountId == bankAccountPM.GLAccountId && r.LocalAmountCredit > 0);
             if (myNewLedgerTransactionBankGLAccountInCredit == null)
             {
-                throw new Exception("Could not found the new Ledger in BankGLAccount In credit !?  התנועה לא נוצרה ");
+                throw new ApplicationException("Could not found the new Ledger in BankGLAccount In credit !?  התנועה לא נוצרה ");
             }
 
             return myNewLedgerTransactionBankGLAccountInCredit;
@@ -132,7 +132,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             var myNewLedgerTransactionTransferInDebit = _NewLedgerTransactionsWithCounters.FirstOrDefault(r => r.AccountId == myLedgerTransactionTransferInCredit.AccountId && r.LocalAmountDebit > 0);
             if (myNewLedgerTransactionTransferInDebit == null)
             {
-                throw new Exception("Could not found the new Ledger in TransferGL In Debit !?   התנועה לא נוצרה ");
+                throw new ApplicationException("Could not found the new Ledger in TransferGL In Debit !?   התנועה לא נוצרה ");
             }
 
             return myNewLedgerTransactionTransferInDebit;

@@ -16,13 +16,13 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class JournalLinePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(this); 
-          this.IsDirty = false;
+	  		                        this.EntityParentPM = _entityParentPM;
+                this.UIProperties = new UIProperties(this);
+                this.IsDirty = false;
       }
 
 	 
@@ -210,6 +210,31 @@ export class JournalLinePM {
     private actionId: string;
     public get ActionId() { return this.actionId; }
     public set ActionId(newValue: string) { if (this.actionId != newValue) { this.actionId = newValue; this.MarkAsDirty("ActionId"); } }
+       
+	 
+    private creditAccountCOACode: string;
+    public get CreditAccountCOACode() { return this.creditAccountCOACode; }
+    public set CreditAccountCOACode(newValue: string) { if (this.creditAccountCOACode != newValue) { this.creditAccountCOACode = newValue; this.MarkAsDirty("CreditAccountCOACode"); } }
+       
+	 
+    private debitAccountCOACode: string;
+    public get DebitAccountCOACode() { return this.debitAccountCOACode; }
+    public set DebitAccountCOACode(newValue: string) { if (this.debitAccountCOACode != newValue) { this.debitAccountCOACode = newValue; this.MarkAsDirty("DebitAccountCOACode"); } }
+       
+	 
+    private debitAccountEnglishName: string;
+    public get DebitAccountEnglishName() { return this.debitAccountEnglishName; }
+    public set DebitAccountEnglishName(newValue: string) { if (this.debitAccountEnglishName != newValue) { this.debitAccountEnglishName = newValue; this.MarkAsDirty("DebitAccountEnglishName"); } }
+       
+	 
+    private creditAccountEnglishName: string;
+    public get CreditAccountEnglishName() { return this.creditAccountEnglishName; }
+    public set CreditAccountEnglishName(newValue: string) { if (this.creditAccountEnglishName != newValue) { this.creditAccountEnglishName = newValue; this.MarkAsDirty("CreditAccountEnglishName"); } }
+       
+	 
+    private confirmationNumber: string;
+    public get ConfirmationNumber() { return this.confirmationNumber; }
+    public set ConfirmationNumber(newValue: string) { if (this.confirmationNumber != newValue) { this.confirmationNumber = newValue; this.MarkAsDirty("ConfirmationNumber"); } }
        
 	 
 

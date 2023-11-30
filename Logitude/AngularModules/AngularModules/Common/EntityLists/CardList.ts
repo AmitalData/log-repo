@@ -15,6 +15,8 @@ export class CardList {
 		LocalName: string;
 		InActive: boolean;
 		PaymentTermName: string;
+		PaymentTermEnglishName: string;
+		PaymentTermLocalName: string;
 		PartnerTypeName: string;
 		ReceivablesAccountingCard: string;
 		PayablesAccountingCard: string;
@@ -44,8 +46,11 @@ export class CardList {
 		InUse: boolean;
 		RecentlyAdded: string;
 		InvitationDate: Date;
+		CargoTrackingInvitationDate: Date;
 		SharedLogisticsInvitationStatusCode: number;
 		SharedLogisticsInvitationStatusName: string;
+		CargoTrackingInvitationStatusCode: number;
+		CargoTrackingInvitationStatusName: string;
 		LastLoginDate: Date;
 		AirlineAccountNumber: string;
 		ContactId: string;
@@ -65,6 +70,8 @@ export class CardList {
 		SalesmanUserEnglishName: string;
 		AccountManagerUserName: string;
 		AccountManagerUserId: string;
+		TeamId: string;
+		TeamName: string;
 		CASSCode: string;
 		IATACode: string;
 		RegulatedAgentCode: string;
@@ -87,6 +94,7 @@ export class CardList {
 		SATForeignRFC: string;
 		MetodoPagoCode: string;
 		UsoCFDICode: string;
+		RegimenFiscalCode: string;
 		FirmCode: string;
 		StateName: string;
 		IsInternationalPartner: boolean;
@@ -113,5 +121,12 @@ export class CardList {
 		SearchWeight: number;
 		RecordDate: Date;
 		BillToId: string;
+		AccountingPartnerCreditLimit: number;
+		SATCustomerName: string;
+		EORInumber: string;
+		SingleInvoiceTemplateId: string;
+		CustomsInvoiceTemplateId: string;
+		ConsolidationInvoiceTemplateId: string;
+		ManifestInvoiceTemplateId: string;
 	
 }

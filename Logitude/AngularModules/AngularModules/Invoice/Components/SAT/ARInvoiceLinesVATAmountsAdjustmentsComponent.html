@@ -1,0 +1,60 @@
+<div class="MediaFillAbsolute">
+    <div class="MediaFillRelative">
+        <div style="height:100%;">
+            <table style="height:100%;">
+                <tr style="height:100%;">
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+                    <td>
+                        <div class="MediaFillAbsolute">
+                            <table class="FixedTable">
+                                <tr>
+                                    <td style="width: 10px;">
+                                        <div></div>
+                                    </td>
+                                    <td style="vertical-align: middle;color: #6E7172;">
+                                        <div style="width: 100%; color: #6E7172; white-space:pre-line; overflow-x: hidden; overflow-y:auto; font-size: 11px;">{{MessageHeader}}</div>
+                                        <div style="width: 100%; color: #6E7172; white-space:pre-line; overflow-x: hidden; overflow-y:auto; font-size: 11px;" *ngFor="let messageLine of MessageLines;">
+                                            &nbsp;&nbsp;<span title="{{messageLine.Description}}">line</span> with amount <span style="color:red;">{{messageLine.OriginalAmount}}</span> will be adjusted to <span style="color:red;">{{messageLine.NewAmount}}</span> (<span style="color:deepskyblue;" title="{{messageLine.Description}}">{{messageLine.DifferenceAmount}}</span>).
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                    <td style="width: 10px;">
+                        <div></div>
+                    </td>
+                </tr>
+                <tr style="height: 32px;">
+                    <td colspan="3" style="vertical-align: bottom">
+                        <table style="height: 22px;">
+                            <tr>
+                                <td style="width: 10px;">
+                                    <div></div>
+                                </td>
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td style="width: 57px;">
+                                    <button class="Button" (click)="CancelClicked()">Cancel</button>
+                                </td>
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+                                <td style="width: 57px;">
+                                    <button class="RedButton" (click)="ContinueClicked()">Continue</button>
+                                </td>
+                                <td style="width: 10px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+

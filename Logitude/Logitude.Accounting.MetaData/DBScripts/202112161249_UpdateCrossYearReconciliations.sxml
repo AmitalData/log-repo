@@ -1,0 +1,17 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="false">
+  <Sql Version="1">
+    <![CDATA[
+	update ExternalReconciliations set CrossYearReconcile =  CASE WHEN (CrossYearReconciliations.FromCrossYearCount > 1) THEN 1 ELSE 0 END
+	from ExternalReconciliations inner join 
+	(
+		SELECT ReconWithAccountingYear.ReconciliationId, Count(*) as FromCrossYearCount from (
+			SELECT extRecLines.ReconciliationId as ReconciliationId, YEAR(ledgTrans.AccountingDate) AccountingYear
+			FROM ExternalReconciliationLines as extRecLines
+			inner join LedgerTransactions ledgTrans on extRecLines.LedgerTransactionId = ledgTrans.Id
+			GROUP BY extRecLines.ReconciliationId, YEAR(ledgTrans.AccountingDate)
+		) as ReconWithAccountingYear
+		GROUP BY ReconWithAccountingYear.ReconciliationId
+	) as CrossYearReconciliations ON ExternalReconciliations.Id = CrossYearReconciliations.ReconciliationId
+     ]]>
+ </Sql>
+</Script>

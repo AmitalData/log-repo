@@ -4,14 +4,53 @@
   Name="DeleteOldAuthenticationTokens"
   Schema="dbo"
   Module="Common">
-  <SqlScript><![CDATA[
-Create procedure [dbo].[DeleteOldAuthenticationTokens]
-as 
-
+  <SqlScript>
+	  <![CDATA[
+CREATE procedure [dbo].[DeleteOldAuthenticationTokens]
+as
 begin
 
-delete from [dbo].[AuthenticationTokens] where [ExpirationDate] < GETDATE() - 14 and ClientType = 'DocumentDownload'
- 
+declare @Rows int
+set @Rows = 11
+
+while (@Rows >10)
+BEGIN
+
+DELETE
+FROM dbo.DBA_View_AuthenticationTokens_ToBeDeleted
+
+set @Rows= @@ROWCOUNT
+
+WAITFOR DELAY '00:00:01'
+END
+WAITFOR DELAY '00:00:05'
+set @Rows = 11
+
+while (@Rows >10)
+BEGIN
+
+DELETE
+FROM [dbo].[DBA_View_AuthenticationTokens_ToBeDeleted_IsAPIToken]
+
+set @Rows= @@ROWCOUNT
+
+WAITFOR DELAY '00:00:01'
+END
+
+WAITFOR DELAY '00:00:05'
+set @Rows = 11
+
+while (@Rows >10)
+BEGIN
+
+DELETE
+FROM [dbo].[DBA_View_AuthenticationTokens_ToBeDeleted_WebIsInActive]
+
+set @Rows= @@ROWCOUNT
+
+WAITFOR DELAY '00:00:01'
+END
+
 end
 ]]></SqlScript>
   <OracleScript>

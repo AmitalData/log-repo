@@ -55,7 +55,7 @@ export class SchedulerDateListTemplate {
         else {
             var pmDate = new Date(rowData[fieldName]);
             if (pmDate.getFullYear() > 1970) {
-                this.dateValue = pmDate;
+                this.dateValue = rowData[fieldName];
             }
         }
         var isDestroyed: boolean = this.CD['destroyed'];

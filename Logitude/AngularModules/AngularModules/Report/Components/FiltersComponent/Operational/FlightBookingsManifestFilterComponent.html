@@ -44,6 +44,15 @@
                                     <LogTextBox [NoObjectField]="true" [ObjectFieldName]="'FlightNumber'" [DataContext]="DataContext"></LogTextBox>
                                 </td>
 
+                                <td style="width:20px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width:90px;">Cut Off Date:</td>
+                                <td style="width:150px;">
+                                    <LogDatePicker [NoObjectField]="true" [HideColumns]="true" [ObjectFieldName]="'CutOffDate'" [DataContext]="DataContext"></LogDatePicker>
+                                </td>
+
                                 <!--run button-->
                                 <td style="width:20px;">
                                     <div></div>
@@ -111,6 +120,20 @@
                                 <td style="width: 1px; padding-right: 5px;">Consignee:</td>
                                 <td style="width: 180px;">
                                     <LogLov [ObjectFieldName]="'ConsigneeId'"
+                                            [NoObjectField]="true"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'"
+                                            [DependencyFilter1Value]="'CS'">
+                                    </LogLov>
+                                </td>
+
+                                <td style="width:20px">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 1px; padding-right: 5px;">Shipper:</td>
+                                <td style="width: 180px;">
+                                    <LogLov [ObjectFieldName]="'ShipperId'"
                                             [NoObjectField]="true"
                                             [DataContext]="DataContext"
                                             [LookUpTableName]="'Card'"

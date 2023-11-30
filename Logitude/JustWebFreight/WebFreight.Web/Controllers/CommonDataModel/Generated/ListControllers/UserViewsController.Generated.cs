@@ -48,6 +48,8 @@ using Logitude.Social.BL.EntityQueryServices;
 using Logitude.CRM.Data.Repsitories;
 using System.Transactions;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Logitude.Server.Tools.TreeFilterQuery;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
 
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 {
@@ -248,6 +250,15 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                {
+                    AdditionalTreeFilter = filters.TreeFilters,
+                    ObjectTableName = "User",
+                    ParentEntityId = filters.ParentEntityId,
+                    ParentObjectTableName = filters.ParentObjectTableName,
+                    Tenant = tenant,
+                    ParentEntity = filters.ParentEntity
+                };
 
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
                 UserRepository userRepository = new UserRepository(MyContext);
@@ -264,6 +275,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
 
                 entityPocos = genericFilter.GetFilteredQuery<User>(nonListQueryOperation, entityPocos);
+
+
+
+
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<UserList> entityLists = null;
 
@@ -292,8 +307,13 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                     }
 
                     entityLists = genericFilter.GetFilteredQuery<UserList>(listQueryOperation, entityLists);
+                    entityLists = new TreeFilterQueryService().Apply<UserList>(entityLists, treeFilterQueryArgs);
+
                     scope.Complete();
                 }
+
+
+         
 
                 if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
                 {

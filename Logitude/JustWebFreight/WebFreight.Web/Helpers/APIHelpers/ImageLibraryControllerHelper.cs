@@ -59,12 +59,12 @@ namespace WebFreight.Web.Helpers.APIHelpers
                     imageDetailRep.SubmitChanges();
                 }
                 imagedetailid = imagedetail.Id;
-                result = uploaderService.UploadFile(filter.FileName, filter.buffer, filter.FileSize, filter.SentSize, blockIdlist, filter.BufferNumber, null, filter.Tenant, "images", null);
+                result = uploaderService.UploadFile(filter.FileName, filter.buffer, filter.FileSize, filter.SentSize, blockIdlist, filter.BufferNumber, null, filter.Tenant, "images", null, false, null);
             }
             #region Company Logos
             else if (filter.UploadMode == "CompanyLogos" || string.IsNullOrEmpty(filter.UploadMode))
             {
-                result = uploaderService.UploadFile(filter.FileName, filter.buffer, filter.FileSize, filter.SentSize, blockIdlist, filter.BufferNumber, null, filter.Tenant, "logos", null);
+                result = uploaderService.UploadFile(filter.FileName, filter.buffer, filter.FileSize, filter.SentSize, blockIdlist, filter.BufferNumber, null, filter.Tenant, "logos", null, false, null);
             }
             return result;
             #endregion
@@ -96,11 +96,18 @@ namespace WebFreight.Web.Helpers.APIHelpers
                 filter.IsFirstTry = false;
                 filter.BlocksNumber = Math.Ceiling(Convert.ToDouble(filter.FileSize) / filter.Buffersize);
             }
-            filter.Result = uploaderService.UploadFile(filter.EncodedFileName + "." + filter.Extension, filter.buffer, filter.FileSize, filter.SentSize, filter.BlockIdsList.ToArray(), filter.BufferNumber, filter.EntityId, filter.Tenant, "", filter.FileName);
+            string documentId = GetDocumentId(filter.Result);
+            filter.Result = uploaderService.UploadFile(filter.EncodedFileName + "." + filter.Extension, filter.buffer, filter.FileSize, filter.SentSize, filter.BlockIdsList.ToArray(), filter.BufferNumber, filter.EntityId, filter.Tenant, filter.FileLocation, filter.FileName, filter.ForceCreateDocument, documentId);
             filter.buffer = null;
             return filter;
 
             #endregion
+        }
+
+        private string GetDocumentId(string result)
+        {
+            if (string.IsNullOrEmpty(result)) return null;
+            return result.Split('.')[0];
         }
 
         public byte[] ResizeImage(byte[] image, int width, int height, string extension)

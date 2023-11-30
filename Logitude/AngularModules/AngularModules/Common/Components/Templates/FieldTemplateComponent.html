@@ -33,7 +33,7 @@
                     </tr>
                 </table>
 
-                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'SharedLogisticsInvitationStatusName'">
+                <div *ngIf="(ObjectTableName == 'Customer' || ObjectTableName == 'Card') && (FieldName == 'SharedLogisticsInvitationStatusName' || FieldName == 'CargoTrackingInvitationStatusName')">
                     <span [ngStyle]="{color: SharedLogisticsInvitationStatusColor}">{{FieldValue}}</span>
                 </div>
 
@@ -41,7 +41,7 @@
                     <span [style.color]="Entity['StatusName'] | LogBoxStatusForegroundPipe">{{FieldValue}}</span>
                 </div>
 
-                <div *ngIf="ObjectTableName == 'Customer' && FieldName == 'LastLoginDate'">
+                <div *ngIf="ObjectTableName == 'Customer' && (FieldName == 'LastLoginDate' || FieldName == 'LastLoginDateViaPC' || FieldName == 'LastLoginDateViaMobile')">
                     <span>{{FieldValue | DateTimeToDatePipe}}</span>
                 </div>
 
@@ -156,7 +156,7 @@
                                 <div></div>
                             </td>
                             <td *ngIf="Entity['EmailDeliveryError'] != null && Entity['CommunicationStatusTypeCode'] = 'D'" style="width:25px;">
-                                <HelpIcon [IconSize]='25' [Header]="'Email Delivery Error'" [Text]="Entity['EmailDeliveryError']" [IconPath]="'./Images/Warning_icon_24.png'"></HelpIcon>
+                                <HelpIcon [Position]="Entity['$id']" [V2Grid]="true" [IconSize]='25' [Header]="'Email Delivery Error'" [Text]="Entity['EmailDeliveryError']" [IconPath]="'./Images/Warning_icon_24.png'"></HelpIcon>
                             </td>
                             <td>
                                 <div></div>

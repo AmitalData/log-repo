@@ -26,7 +26,7 @@ import { timeInterval } from 'rxjs/operators';
 
 export class ApplicationTimersManager {
 
-     
+
     logService: ErrorsLogPMService;
     performanceLogService: PerformanceLogService;
 
@@ -45,7 +45,7 @@ export class ApplicationTimersManager {
         this.userLastLoginPMService = new UserLastLoginPMService();
         this.performanceLogService = new PerformanceLogService();
         //this.signalRGeneralService = new SignalRGeneralService();
-       
+
     }
 
     public StartApplicationTimers() {
@@ -105,7 +105,7 @@ export class ApplicationTimersManager {
 
 
             //Observable.Interval(TimeSpan.FromSeconds(1.0));
-            //var timerId = setTimeout(this.AddErrorLogs, 2000)  
+            //var timerId = setTimeout(this.AddErrorLogs, 2000)
             // setInterval(SaveErrorLogs, delay);//60000
 
             //this.signalRGeneralService.messageReceived.subscribe((ms: ChannelEvent) => {
@@ -134,7 +134,7 @@ export class ApplicationTimersManager {
         return interval(period).pipe(timeInterval());
     }
 
-    
+
 
 
 
@@ -164,52 +164,64 @@ export class ApplicationTimersManager {
     IsUserUnlock: boolean = false;
 
     private CheckUserLastLogin() {
-        this.userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant).subscribe((response:any) => {
+        this.userLastLoginPMService.GetUserLastLogin(SessionInfo.LoggedUserPM.Id, SessionInfo.LoggedUserTenant).subscribe((response: any) => {
             if (!response.HasError && response.Result) {
-
-                var lastloginPM: UserLastLoginPM = response.Result;
-
-                var computerId: string = SessionLocator.GetComputerIdFromStorage();
-                if (!AppTool.IsNullOrEmpty(computerId) && lastloginPM.ComputerId != computerId && !ObjectsLocator.GlobalSetting.SameUserLoginEnabled) {
-
-                    if (!this.IsUserUnlock) {//
-                        this.IsUserUnlock = true;
-
-                        if (this.CurrentSession) {
-                            this.CurrentSession.StopBusyIndicator();
-                            if (this.CurrentSession.CurrentWindow) {
-                                this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            }
-                        }
-                        var args = "";
-
-                        var logWindow = new LogitudeWindow();
-                        logWindow.IsOverAll = true;
-                        logWindow.Title = "";
-                        logWindow.WindowArgs = args;
-                        logWindow.Width = 1000;
-                        logWindow.Height = 250;
-                        logWindow.IsHideWindowMargin = true;
-                        logWindow.IsHideHeader = true;
-                        SessionLocator.HomeComponent.ShowLockIndicator = true;
-                        logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/UserUnlockComponent/UserUnlockComponent');
-                        logWindow.WindowClosed.subscribe(($event: any) => {
-                            SessionLocator.HomeComponent.ShowLockIndicator = false;
-                            this.IsUserUnlock = false;
-
-                    });
-
-                }
-
-
+                let lastloginPM: UserLastLoginPM = response.Result;
+                this.HandleComputerIdChangedForLoggedUser(lastloginPM);
             }
-
-
-        }
-
         });
     }
 
+    private HandleComputerIdChangedForLoggedUser(lastloginPM: UserLastLoginPM) {
+        let computerId: string = SessionLocator.GetComputerIdFromStorage();
+        if (AppTool.IsNullOrEmpty(computerId)) return;
+        if (lastloginPM.ComputerId == computerId) return;
+        if (ObjectsLocator.GlobalSetting.SameUserLoginEnabled) return;
+        let workEnvironment: string = this.GetWorkEnvironment();
+        if (this.IsSameUserLoginEnabledWithDifferentEnvironmentToggle() && lastloginPM.ComputerId != computerId && lastloginPM.WorkEnvironment?.toLowerCase() != workEnvironment?.toLowerCase()) return;
+        this.HandleUserUnlocked();
+    }
+
+    private GetWorkEnvironment(): string {
+        if (AppTool.IsNullOrEmpty(ObjectsLocator?.GlobalSetting?.WorkEnvironment)) return "logitude";
+        return ObjectsLocator?.GlobalSetting?.WorkEnvironment?.toLowerCase() == "logbox" ? location.href.toLowerCase().indexOf('.logbox.') > -1 ? "logbox" : "privatelabel" : ObjectsLocator?.GlobalSetting?.WorkEnvironment;
+    }
+
+    private IsSameUserLoginEnabledWithDifferentEnvironmentToggle() {
+        let SameUserLoginEnabledWithDifferentEnvironmentToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ULE")[0];
+        if (SameUserLoginEnabledWithDifferentEnvironmentToggle)
+            return true;
+        return false;
+    }
+
+    private HandleUserUnlocked() {
+        if (this.IsUserUnlock) return;
+
+        this.IsUserUnlock = true;
+
+        if (this.CurrentSession) {
+            this.CurrentSession.StopBusyIndicator();
+            if (this.CurrentSession.CurrentWindow) {
+                this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            }
+        }
+
+        var args = "";
+        var logWindow = new LogitudeWindow();
+        logWindow.IsOverAll = true;
+        logWindow.Title = "";
+        logWindow.WindowArgs = args;
+        logWindow.Width = 1000;
+        logWindow.Height = 250;
+        logWindow.IsHideWindowMargin = true;
+        logWindow.IsHideHeader = true;
+        SessionLocator.HomeComponent.ShowLockIndicator = true;
+        logWindow.Show('./InfrastructureModules/InfrastructureUser/Components/UserUnlockComponent/UserUnlockComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            SessionLocator.HomeComponent.ShowLockIndicator = false;
+            this.IsUserUnlock = false;
+        });
+    }
 
     IsUpgradingEnd: boolean = false;
     private CheckIsupgradingSystem() {
@@ -247,7 +259,7 @@ export class ApplicationTimersManager {
 
             }
         }
-        
+
         catch (e) { console.error(e); }
     }
 
@@ -259,7 +271,7 @@ export class ApplicationTimersManager {
             this.logitudeApplicationService.GetCurrenctUserValidity().subscribe((res: ServiceResponse) => {
 
                 var response: ServiceResponse = res;
-                 
+
 
                 if (!response.HasError) {
                     var myResult = response.Result;
@@ -277,7 +289,7 @@ export class ApplicationTimersManager {
                                 }
 
                                 if (myResult.ErrorCode == "SUPG") {
-                                    errorMessage = "The site is upgrading right now and you will be logged out , sorry for disturbing you!"; 
+                                    errorMessage = "The site is upgrading right now and you will be logged out , sorry for disturbing you!";
 
                                     if (this.IsUpgradingEnd) {
                                         isShowMessage = false;
@@ -285,7 +297,7 @@ export class ApplicationTimersManager {
                                         this.IsUpgradingEnd = true;
                                     }
                                 }
-                                
+
                                 if (isShowMessage) {
                                     var messageWindow: MessageWindow = new MessageWindow();
                                     messageWindow.Width = 450;
@@ -316,7 +328,7 @@ export class ApplicationTimersManager {
     OnSignoutClicked() {
         SessionLocator.HomeComponent.SignoutClicked();
     }
-    
+
     private AddErrorLogs() {
         try {
             for (var key in sessionStorage) {
@@ -326,7 +338,7 @@ export class ApplicationTimersManager {
                     var errorLog: ErrorLogPM = JSON.parse(logJson);
 
                     this.logService.insert(errorLog).subscribe((response: ServiceResponse) => {
-                      
+
                         window.sessionStorage.removeItem(["ErrorLogs", response.Result.Id]);
 
                     }, error=> {
@@ -384,7 +396,7 @@ export class ApplicationTimersManager {
         catch (e) { console.error(e); }
     }
 
-    
+
 
 
 //    private AtomicLong lastTick = new AtomicLong(0L);
@@ -402,7 +414,7 @@ export class ApplicationTimersManager {
 //         timerObs.un
 //     }
 
-         
+
 //    //if (subscription != null && !subscription.isUnsubscribed()) {
 //    //    System.out.println("stopped");
 //    //    subscription.unsubscribe();

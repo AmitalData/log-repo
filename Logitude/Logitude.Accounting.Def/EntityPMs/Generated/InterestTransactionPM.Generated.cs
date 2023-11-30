@@ -11,545 +11,617 @@ using Logitude.Server.Tools;
 using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure.DataContracts; 
 using Logitude.Accounting.Def.Validators;
-  
+
 namespace Logitude.Accounting.Def.EntityPMs
 {
-   [CustomValidation(typeof(AccountingClassLevelValidator), "ValidateClass")]
-   [DataContract]
-   public partial class InterestTransactionPM : EntityPM
-   {
-   	  private string id ;
-	  
-       [Key]
-	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Id  
-	   {
-	    
-	     get
+	[CustomValidation(typeof(AccountingClassLevelValidator), "ValidateClass")]
+	[DataContract]
+	public partial class InterestTransactionPM : EntityPM
+	{
+		private string id;
+
+		[Key]
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string Id
 		{
-		   return id;
-		 }
-		 set
-		 {
-		   if(id != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   id=value;
-		   }
-			
-		 }
-	   }
-	  private int tenant ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int Tenant  
-	   {
-	    
-	     get
+
+			get
+			{
+				return id;
+			}
+			set
+			{
+				if (id != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "Id", OldValue = id, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					id = value;
+				}
+
+			}
+		}
+		private int tenant;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public int Tenant
 		{
-		   return tenant;
-		 }
-		 set
-		 {
-		   if(tenant != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Tenant",OldValue=tenant,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   tenant=value;
-		   }
-			
-		 }
-	   }
-	  private DateTime createDateTime ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime CreateDateTime  
-	   {
-	    
-	     get
+
+			get
+			{
+				return tenant;
+			}
+			set
+			{
+				if (tenant != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "Tenant", OldValue = tenant, NewValue = value, PropertyType = "int" };
+					NotifyPropertyChanged(values);
+					tenant = value;
+				}
+
+			}
+		}
+		private DateTime createDateTime;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public DateTime CreateDateTime
 		{
-		   return createDateTime;
-		 }
-		 set
-		 {
-		   if(createDateTime != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDateTime",OldValue=createDateTime,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   createDateTime=value;
-		   }
-			
-		 }
-	   }
-	  private DateTime updateDateTime ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime UpdateDateTime  
-	   {
-	    
-	     get
+
+			get
+			{
+				return createDateTime;
+			}
+			set
+			{
+				if (createDateTime != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CreateDateTime", OldValue = createDateTime, NewValue = value, PropertyType = "DateTime" };
+					NotifyPropertyChanged(values);
+					createDateTime = value;
+				}
+
+			}
+		}
+		private DateTime updateDateTime;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public DateTime UpdateDateTime
 		{
-		   return updateDateTime;
-		 }
-		 set
-		 {
-		   if(updateDateTime != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDateTime",OldValue=updateDateTime,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   updateDateTime=value;
-		   }
-			
-		 }
-	   }
-	  private string searchFields ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string SearchFields  
-	   {
-	    
-	     get
+
+			get
+			{
+				return updateDateTime;
+			}
+			set
+			{
+				if (updateDateTime != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "UpdateDateTime", OldValue = updateDateTime, NewValue = value, PropertyType = "DateTime" };
+					NotifyPropertyChanged(values);
+					updateDateTime = value;
+				}
+
+			}
+		}
+		private string searchFields;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string SearchFields
 		{
-		   return searchFields;
-		 }
-		 set
-		 {
-		   if(searchFields != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SearchFields",OldValue=searchFields,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   searchFields=value;
-		   }
-			
-		 }
-	   }
-	  private string gLAccountId ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string GLAccountId  
-	   {
-	    
-	     get
+
+			get
+			{
+				return searchFields;
+			}
+			set
+			{
+				if (searchFields != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "SearchFields", OldValue = searchFields, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					searchFields = value;
+				}
+
+			}
+		}
+		private string gLAccountId;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string GLAccountId
 		{
-		   return gLAccountId;
-		 }
-		 set
-		 {
-		   if(gLAccountId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="GLAccountId",OldValue=gLAccountId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   gLAccountId=value;
-		   }
-			
-		 }
-	   }
-	  private string interestEntityTypeCode ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string InterestEntityTypeCode  
-	   {
-	    
-	     get
+
+			get
+			{
+				return gLAccountId;
+			}
+			set
+			{
+				if (gLAccountId != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "GLAccountId", OldValue = gLAccountId, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					gLAccountId = value;
+				}
+
+			}
+		}
+		private string interestEntityTypeCode;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string InterestEntityTypeCode
 		{
-		   return interestEntityTypeCode;
-		 }
-		 set
-		 {
-		   if(interestEntityTypeCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestEntityTypeCode",OldValue=interestEntityTypeCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   interestEntityTypeCode=value;
-		   }
-			
-		 }
-	   }
-	  private string entityId ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string EntityId  
-	   {
-	    
-	     get
+
+			get
+			{
+				return interestEntityTypeCode;
+			}
+			set
+			{
+				if (interestEntityTypeCode != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "InterestEntityTypeCode", OldValue = interestEntityTypeCode, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					interestEntityTypeCode = value;
+				}
+
+			}
+		}
+		private string entityId;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string EntityId
 		{
-		   return entityId;
-		 }
-		 set
-		 {
-		   if(entityId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EntityId",OldValue=entityId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   entityId=value;
-		   }
-			
-		 }
-	   }
-	  private int originalEntityLineNumber ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int OriginalEntityLineNumber  
-	   {
-	    
-	     get
+
+			get
+			{
+				return entityId;
+			}
+			set
+			{
+				if (entityId != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "EntityId", OldValue = entityId, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					entityId = value;
+				}
+
+			}
+		}
+		private int originalEntityLineNumber;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public int OriginalEntityLineNumber
 		{
-		   return originalEntityLineNumber;
-		 }
-		 set
-		 {
-		   if(originalEntityLineNumber != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginalEntityLineNumber",OldValue=originalEntityLineNumber,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   originalEntityLineNumber=value;
-		   }
-			
-		 }
-	   }
-	  private decimal localAmount ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal LocalAmount  
-	   {
-	    
-	     get
+
+			get
+			{
+				return originalEntityLineNumber;
+			}
+			set
+			{
+				if (originalEntityLineNumber != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "OriginalEntityLineNumber", OldValue = originalEntityLineNumber, NewValue = value, PropertyType = "int" };
+					NotifyPropertyChanged(values);
+					originalEntityLineNumber = value;
+				}
+
+			}
+		}
+		private decimal localAmount;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public decimal LocalAmount
 		{
-		   return localAmount;
-		 }
-		 set
-		 {
-		   if(localAmount != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LocalAmount",OldValue=localAmount,NewValue=value,PropertyType="decimal"};
-		    NotifyPropertyChanged(values);
-		   localAmount=value;
-		   }
-			
-		 }
-	   }
-	  private decimal? foreignAmount ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public decimal? ForeignAmount  
-	   {
-	    
-	     get
+
+			get
+			{
+				return localAmount;
+			}
+			set
+			{
+				if (localAmount != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "LocalAmount", OldValue = localAmount, NewValue = value, PropertyType = "decimal" };
+					NotifyPropertyChanged(values);
+					localAmount = value;
+				}
+
+			}
+		}
+		private decimal? foreignAmount;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public decimal? ForeignAmount
 		{
-		   return foreignAmount;
-		 }
-		 set
-		 {
-		   if(foreignAmount != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ForeignAmount",OldValue=foreignAmount,NewValue=value,PropertyType="decimal?"};
-		    NotifyPropertyChanged(values);
-		   foreignAmount=value;
-		   }
-			
-		 }
-	   }
-	  private string currencyId ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CurrencyId  
-	   {
-	    
-	     get
+
+			get
+			{
+				return foreignAmount;
+			}
+			set
+			{
+				if (foreignAmount != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "ForeignAmount", OldValue = foreignAmount, NewValue = value, PropertyType = "decimal?" };
+					NotifyPropertyChanged(values);
+					foreignAmount = value;
+				}
+
+			}
+		}
+		private string currencyId;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string CurrencyId
 		{
-		   return currencyId;
-		 }
-		 set
-		 {
-		   if(currencyId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyId",OldValue=currencyId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   currencyId=value;
-		   }
-			
-		 }
-	   }
-	  private DateTime interestValueDate ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime InterestValueDate  
-	   {
-	    
-	     get
+
+			get
+			{
+				return currencyId;
+			}
+			set
+			{
+				if (currencyId != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CurrencyId", OldValue = currencyId, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					currencyId = value;
+				}
+
+			}
+		}
+		private DateTime interestValueDate;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public DateTime InterestValueDate
 		{
-		   return interestValueDate;
-		 }
-		 set
-		 {
-		   if(interestValueDate != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestValueDate",OldValue=interestValueDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   interestValueDate=value;
-		   }
-			
-		 }
-	   }
-	  private string interestReportId ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string InterestReportId  
-	   {
-	    
-	     get
+
+			get
+			{
+				return interestValueDate;
+			}
+			set
+			{
+				if (interestValueDate != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "InterestValueDate", OldValue = interestValueDate, NewValue = value, PropertyType = "DateTime" };
+					NotifyPropertyChanged(values);
+					interestValueDate = value;
+				}
+
+			}
+		}
+		private string interestReportId;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string InterestReportId
 		{
-		   return interestReportId;
-		 }
-		 set
-		 {
-		   if(interestReportId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestReportId",OldValue=interestReportId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   interestReportId=value;
-		   }
-			
-		 }
-	   }
-	  private bool isClosed ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsClosed  
-	   {
-	    
-	     get
+
+			get
+			{
+				return interestReportId;
+			}
+			set
+			{
+				if (interestReportId != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "InterestReportId", OldValue = interestReportId, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					interestReportId = value;
+				}
+
+			}
+		}
+		private bool isClosed;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public bool IsClosed
 		{
-		   return isClosed;
-		 }
-		 set
-		 {
-		   if(isClosed != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsClosed",OldValue=isClosed,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isClosed=value;
-		   }
-			
-		 }
-	   }
-	  private string currencyCode ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string CurrencyCode  
-	   {
-	    
-	     get
+
+			get
+			{
+				return isClosed;
+			}
+			set
+			{
+				if (isClosed != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsClosed", OldValue = isClosed, NewValue = value, PropertyType = "bool" };
+					NotifyPropertyChanged(values);
+					isClosed = value;
+				}
+
+			}
+		}
+		private string currencyCode;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string CurrencyCode
 		{
-		   return currencyCode;
-		 }
-		 set
-		 {
-		   if(currencyCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CurrencyCode",OldValue=currencyCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   currencyCode=value;
-		   }
-			
-		 }
-	   }
-	  private string interestEntityNumber ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string InterestEntityNumber  
-	   {
-	    
-	     get
+
+			get
+			{
+				return currencyCode;
+			}
+			set
+			{
+				if (currencyCode != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "CurrencyCode", OldValue = currencyCode, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					currencyCode = value;
+				}
+
+			}
+		}
+		private string interestEntityNumber;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string InterestEntityNumber
 		{
-		   return interestEntityNumber;
-		 }
-		 set
-		 {
-		   if(interestEntityNumber != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestEntityNumber",OldValue=interestEntityNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   interestEntityNumber=value;
-		   }
-			
-		 }
-	   }
-	  private string journalNumber ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string JournalNumber  
-	   {
-	    
-	     get
+
+			get
+			{
+				return interestEntityNumber;
+			}
+			set
+			{
+				if (interestEntityNumber != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "InterestEntityNumber", OldValue = interestEntityNumber, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					interestEntityNumber = value;
+				}
+
+			}
+		}
+		private string journalNumber;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string JournalNumber
 		{
-		   return journalNumber;
-		 }
-		 set
-		 {
-		   if(journalNumber != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JournalNumber",OldValue=journalNumber,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   journalNumber=value;
-		   }
-			
-		 }
-	   }
-	  private string interestEntityType ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string InterestEntityType  
-	   {
-	    
-	     get
+
+			get
+			{
+				return journalNumber;
+			}
+			set
+			{
+				if (journalNumber != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "JournalNumber", OldValue = journalNumber, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					journalNumber = value;
+				}
+
+			}
+		}
+		private string interestEntityType;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string InterestEntityType
 		{
-		   return interestEntityType;
-		 }
-		 set
-		 {
-		   if(interestEntityType != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestEntityType",OldValue=interestEntityType,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   interestEntityType=value;
-		   }
-			
-		 }
-	   }
-	  private string interestEntityIconCode ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string InterestEntityIconCode  
-	   {
-	    
-	     get
+
+			get
+			{
+				return interestEntityType;
+			}
+			set
+			{
+				if (interestEntityType != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "InterestEntityType", OldValue = interestEntityType, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					interestEntityType = value;
+				}
+
+			}
+		}
+		private string interestEntityIconCode;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string InterestEntityIconCode
 		{
-		   return interestEntityIconCode;
-		 }
-		 set
-		 {
-		   if(interestEntityIconCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InterestEntityIconCode",OldValue=interestEntityIconCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   interestEntityIconCode=value;
-		   }
-			
-		 }
-	   }
-	  private string journalId ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string JournalId  
-	   {
-	    
-	     get
+
+			get
+			{
+				return interestEntityIconCode;
+			}
+			set
+			{
+				if (interestEntityIconCode != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "InterestEntityIconCode", OldValue = interestEntityIconCode, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					interestEntityIconCode = value;
+				}
+
+			}
+		}
+		private string journalId;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string JournalId
 		{
-		   return journalId;
-		 }
-		 set
-		 {
-		   if(journalId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="JournalId",OldValue=journalId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   journalId=value;
-		   }
-			
-		 }
-	   }
-	  private string accountEntityCode ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string AccountEntityCode  
-	   {
-	    
-	     get
+
+			get
+			{
+				return journalId;
+			}
+			set
+			{
+				if (journalId != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "JournalId", OldValue = journalId, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					journalId = value;
+				}
+
+			}
+		}
+		private string accountEntityCode;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string AccountEntityCode
 		{
-		   return accountEntityCode;
-		 }
-		 set
-		 {
-		   if(accountEntityCode != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountEntityCode",OldValue=accountEntityCode,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   accountEntityCode=value;
-		   }
-			
-		 }
-	   }
-	  private bool isCancelled ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool IsCancelled  
-	   {
-	    
-	     get
+
+			get
+			{
+				return accountEntityCode;
+			}
+			set
+			{
+				if (accountEntityCode != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "AccountEntityCode", OldValue = accountEntityCode, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					accountEntityCode = value;
+				}
+
+			}
+		}
+		private bool isCancelled;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public bool IsCancelled
 		{
-		   return isCancelled;
-		 }
-		 set
-		 {
-		   if(isCancelled != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCancelled",OldValue=isCancelled,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   isCancelled=value;
-		   }
-			
-		 }
-	   }
-   }
-   
+
+			get
+			{
+				return isCancelled;
+			}
+			set
+			{
+				if (isCancelled != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "IsCancelled", OldValue = isCancelled, NewValue = value, PropertyType = "bool" };
+					NotifyPropertyChanged(values);
+					isCancelled = value;
+				}
+
+			}
+		}
+
+
+
+
+		private string accountingEntityCode;
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string AccountingEntityCode
+		{
+
+			get
+			{
+				return accountingEntityCode;
+			}
+			set
+			{
+				if (accountingEntityCode != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "AccountingEntityCode", OldValue = accountingEntityCode, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					accountingEntityCode = value;
+				}
+
+			}
+		}
+		private string notes;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string Notes
+		{
+
+			get
+			{
+				return notes;
+			}
+			set
+			{
+				if (notes != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "Notes", OldValue = notes, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					notes = value;
+				}
+
+			}
+		}
+		private string updatedByUserName;
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public string UpdatedByUserName
+		{
+
+			get
+			{
+				return updatedByUserName;
+			}
+			set
+			{
+				if (updatedByUserName != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "UpdatedByUserName", OldValue = updatedByUserName, NewValue = value, PropertyType = "string" };
+					NotifyPropertyChanged(values);
+					updatedByUserName = value;
+				}
+
+			}
+		}
+
+
+	}
+
 }
 	 

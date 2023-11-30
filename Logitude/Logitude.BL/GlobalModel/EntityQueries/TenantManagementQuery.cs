@@ -36,19 +36,52 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             domain = TrimDomainByRegex(domain);
             TenantManagementPM TenantManagement = (from a in repository.context.TenantManagements
-                                                   where a.EnableBranding && a.CustomerURL == domain && a.Id !=0 && a.GlobalTenant.IsActive
+                                                   where a.EnableBranding && a.CustomerURL == domain && a.Id != 0 && a.GlobalTenant.IsActive
                                                    select new TenantManagementPM()
                                                    {
                                                        Id = a.Id,
-                                                       MainColor = a.MainColor, 
-                                                       SecondaryColor = a.SecondaryColor, 
+                                                       MainColor = a.MainColor,
+                                                       SecondaryColor = a.SecondaryColor,
+                                                       TertiaryColor  =a.TertiaryColor,
                                                        BackgroundId = a.BackgroundId,
+                                                       MobileBackgroundId = a.MobileBackgroundId,
                                                        ShipmentHeaderImageId = a.ShipmentHeaderImageId,
                                                        ComapnylogoId = a.ComapnylogoId,
                                                        InvertedLogoId = a.InvertedLogoId,
                                                        BrowserIconId = a.BrowserIconId,
                                                        CustomerURL = a.CustomerURL,
+                                                       ActivatePrivateSite = a.ActivatePrivateSite,
+                                                       EnableExportToExcel = a.EnableExportToExcel,
+                                                       ContactEmail = a.ContactEmail
+                                                   }).FirstOrDefault();
 
+
+            return TenantManagement;
+        }
+
+        public TenantManagementPM GetTenantBrandingDataByDomain(string domain)
+        {
+
+            domain = TrimDomainByRegex(domain);
+            TenantManagementPM TenantManagement = (from a in repository.context.TenantManagements
+                                                   where a.CustomerURL == domain && a.Id != 0 && a.GlobalTenant.IsActive
+                                                   select new TenantManagementPM()
+                                                   {
+                                                       Id = a.Id,
+                                                       MainColor = a.MainColor,
+                                                       SecondaryColor = a.SecondaryColor,
+                                                       TertiaryColor = a.TertiaryColor,
+                                                       BackgroundId = a.BackgroundId,
+                                                       MobileBackgroundId = a.MobileBackgroundId,
+                                                       ShipmentHeaderImageId = a.ShipmentHeaderImageId,
+                                                       ComapnylogoId = a.ComapnylogoId,
+                                                       InvertedLogoId = a.InvertedLogoId,
+                                                       BrowserIconId = a.BrowserIconId,
+                                                       CustomerURL = a.CustomerURL,
+                                                       ActivatePrivateSite = a.ActivatePrivateSite,
+                                                       ContactEmail = a.ContactEmail,
+                                                       EnableBranding = a.EnableBranding,
+                                                       EnableExportToExcel = a.EnableExportToExcel
                                                    }).FirstOrDefault();
 
 
@@ -60,8 +93,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             domain = TrimDomainByRegex(domain);
             int Tenant = (from a in repository.context.TenantManagements
-                                                   where a.CustomerURL == domain  && a.Id !=0 && a.GlobalTenant.IsActive
-                                                   select a.Id
+                          where a.CustomerURL == domain && a.Id != 0 && a.GlobalTenant.IsActive
+                          select a.Id
                                                   ).FirstOrDefault();
 
             return Tenant;
@@ -72,7 +105,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             string domain = TrimDomainByRegex(tenantManagement.CustomerURL);
             bool IsExist = (from a in repository.context.TenantManagements
-                          where a.CustomerURL == domain  && a.Id!= tenantManagement.Id
+                            where a.CustomerURL == domain && a.Id != tenantManagement.Id
                             select a.Id).Any();
 
             return IsExist;
@@ -86,6 +119,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             return domain;
         }
+
+        public int GetShipmentBuildMonth(int tenant)
+        {
+            double? res = (from a in repository.context.TenantManagements 
+            where a.Id == tenant && a.ActivatePrivateSite
+            select a.PermissionBuildMonths).ToList().FirstOrDefault();
+            
+            return res != null ? (int)res.Value : 6;
+        }
+
         public TenantManagementPM GetSinglePM(int id)
         {
             string entityName = "TenantManagementPM" + id;
@@ -207,6 +250,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      RegisteredAirlines = a.RegisteredAirlines,
                                                      PendingAirlines = a.PendingAirlines,
                                                      EnableBranding = a.EnableBranding,
+                                                     EnableExportToExcel = a.EnableExportToExcel,
+                                                     ActivatePrivateSite = a.ActivatePrivateSite,
+                                                     ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
+                                                     DeclarationMessage = a.DeclarationMessage,
                                                      ContactEmail = a.ContactEmail,
                                                      CustomerURL = a.CustomerURL,
                                                      HideSharedlogistics = a.HideSharedlogistics,
@@ -218,6 +265,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      AgentSharedLogisticsStatisticsLastWeek = a.AgentSharedLogisticsStatisticsLastWeek,
                                                      AgentSharedLogisticsStatisticsLastMonth = a.AgentSharedLogisticsStatisticsLastMonth,
                                                      ChangeHeaderColor = a.ChangeHeaderColor,
+                                                     HeaderColor = a.HeaderColor,
                                                      StockTypeCode = a.StockTypeCode,
                                                      IsINTTRAStockPrepaid = a.IsINTTRAStockPrepaid,
                                                      PackageCodeSearchField = a.PackageCodeSearchField,
@@ -231,9 +279,11 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      TotalPaymentamount = a.TotalPaymentamount,
                                                      MainColor = a.MainColor,// != null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
                                                      SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
-
+                                                     TertiaryColor = a.TertiaryColor,
                                                      BackgroundId = a.BackgroundId,
+                                                     MobileBackgroundId = a.MobileBackgroundId,
                                                      ShipmentHeaderImageId = a.ShipmentHeaderImageId,
+                                                     PermissionBuildMonths = a.PermissionBuildMonths,
                                                      ComapnylogoId = a.ComapnylogoId,
                                                      InvertedLogoId = a.InvertedLogoId,
                                                      BrowserIconId = a.BrowserIconId,
@@ -248,6 +298,23 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                                                      LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                                                      ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
+                                                     WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
+                                                     CargoTokenTimeout = a.CargoTokenTimeout,
+                                                     IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                                                     ShowMoneyOrder=a.ShowMoneyOrder,
+                                                     DigitalPortalLastDate = a.DigitalPortalLastDate,
+                                                     DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
+                                                     DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
+                                                     DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
+                                                     DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                                                     DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
+                                                     DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
+                                                     DPArchiveShipmentArrivalFilter= a.DPArchiveShipmentArrivalFilter, 
+                                                     DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+                                                     CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
+                                                     CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
+                                                     LogoURL = a.LogoURL,
+                                                     ServiceAgreementURL = a.ServiceAgreementURL,
                                                  }).FirstOrDefault();
                     if (tenant != null)
                     {
@@ -266,8 +333,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                             tenant.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                             tenant.DocumentShareAsDefault = tens.DocumentShareAsDefault;
                             tenant.AutoArchiveOnInvoice = tens.AutoArchiveOnInvoice;
+                            tenant.AutoArchiveOnPODExport = tens.AutoArchiveOnPODExport;
                             tenant.IsTestTenant = ten.IsTestTenant;
                             tenant.IsHybrid = ten.IsHybrid;
+                            tenant.EcommerceSupportEmail = ten.EcommerceSupportEmail;
                         }
 
                         GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -404,6 +473,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   RegisteredAirlines = a.RegisteredAirlines,
                                                   PendingAirlines = a.PendingAirlines,
                                                   EnableBranding = a.EnableBranding,
+                                                  EnableExportToExcel = a.EnableExportToExcel,
+                                                  ActivatePrivateSite = a.ActivatePrivateSite,
+                                                  ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
+                                                  DeclarationMessage = a.DeclarationMessage,
                                                   ContactEmail = a.ContactEmail,
                                                   CustomerURL = a.CustomerURL,
                                                   HideSharedlogistics = a.HideSharedlogistics,
@@ -426,14 +499,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   TotalFreeUsers = a.TotalFreeUsers,
                                                   AveragePrice = a.AveragePrice,
                                                   TotalPaymentamount = a.TotalPaymentamount,
-                                                  MainColor = a.MainColor ,//!= null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
+                                                  MainColor = a.MainColor,//!= null && a.MainColor.Length > 7) ? "#" + a.MainColor.Substring(3, 6) : null,
                                                   SecondaryColor = a.SecondaryColor,// != null && a.SecondaryColor.Length > 7) ? "#" + a.SecondaryColor.Substring(3, 6) : null,
-
+                                                  TertiaryColor = a.TertiaryColor,
                                                   BackgroundId = a.BackgroundId,
+                                                  MobileBackgroundId = a.MobileBackgroundId,
                                                   ComapnylogoId = a.ComapnylogoId,
                                                   InvertedLogoId = a.InvertedLogoId,
                                                   BrowserIconId = a.BrowserIconId,
                                                   ShipmentHeaderImageId = a.ShipmentHeaderImageId,
+                                                  PermissionBuildMonths = a.PermissionBuildMonths,
                                                   NoPaymentForChildTenants = a.NoPaymentForChildTenants,
                                                   LastEbookingSentDate = a.LastEbookingSentDate,
                                                   LastSISentDate = a.LastSISentDate,
@@ -445,6 +520,24 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                                                   LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                                                   ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
+                                                  WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
+                                                  CargoTokenTimeout = a.CargoTokenTimeout,
+                                                  IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                                                  ShowMoneyOrder = a.ShowMoneyOrder,
+
+                                                  DigitalPortalLastDate = a.DigitalPortalLastDate,
+                                                  DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
+                                                  DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
+                                                  DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
+                                                  DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                                                  DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
+                                                  DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
+                                                  DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
+                                                  DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+                                                  CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
+                                                  CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
+                                                  LogoURL = a.LogoURL,
+                                                  ServiceAgreementURL = a.ServiceAgreementURL,
 
                                               }).FirstOrDefault();
 
@@ -466,8 +559,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         tenant1.TimeZone = "(UTC) + " + ten.TimeZoneOffset;
                         tenant1.DocumentShareAsDefault = tens.DocumentShareAsDefault;
                         tenant1.AutoArchiveOnInvoice = tens.AutoArchiveOnInvoice;
+                        tenant1.AutoArchiveOnPODExport = tens.AutoArchiveOnPODExport;
                         tenant1.IsTestTenant = ten.IsTestTenant;
                         tenant1.IsHybrid = ten.IsHybrid;
+                        tenant1.EcommerceSupportEmail = ten.EcommerceSupportEmail;
                     }
 
                     GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -602,6 +697,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         RegisteredAirlines = a.RegisteredAirlines,
                         PendingAirlines = a.PendingAirlines,
                         EnableBranding = a.EnableBranding,
+                        EnableExportToExcel = a.EnableExportToExcel,
+                        ActivatePrivateSite = a.ActivatePrivateSite,
+                        ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
+                        DeclarationMessage = a.DeclarationMessage,
                         ContactEmail = a.ContactEmail,
                         CustomerURL = a.CustomerURL,
                         HideSharedlogistics = a.HideSharedlogistics,
@@ -635,7 +734,24 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                         LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                         ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
+                        WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
+                        CargoTokenTimeout = a.CargoTokenTimeout,
+                        IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                        ShowMoneyOrder = a.ShowMoneyOrder,
 
+                        DigitalPortalLastDate = a.DigitalPortalLastDate,
+                        DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
+                        DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
+                        DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
+                        DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                        DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
+                        DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
+                        DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
+                        DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+                        CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
+                        CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
+                        LogoURL = a.LogoURL,
+                        ServiceAgreementURL = a.ServiceAgreementURL,
                     });
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
@@ -748,6 +864,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     RegisteredAirlines = entity.RegisteredAirlines,
                     PendingAirlines = entity.PendingAirlines,
                     EnableBranding = entity.EnableBranding,
+                    EnableExportToExcel = entity.EnableExportToExcel,
+                    ActivatedforDeclarationApprove = entity.ActivatedforDeclarationApprove,
+                    DeclarationMessage = entity.DeclarationMessage,
                     ContactEmail = entity.ContactEmail,
                     CustomerURL = entity.CustomerURL,
                     HideSharedlogistics = entity.HideSharedlogistics,
@@ -774,7 +893,25 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     LastWeekCreatedTariffs = entity.LastWeekCreatedTariffs,
                     LastMonthCreatedTariffs = entity.LastMonthCreatedTariffs,
                     ScheduledTasksLimitPerReport = entity.ScheduledTasksLimitPerReport,
+                    WhatsAppMessagingPhoneNumber = entity.WhatsAppMessagingPhoneNumber,
+                    IsContainerTrackingPrepaid = entity.IsContainerTrackingPrepaid,
 
+
+                    DigitalPortalLastDate = entity.DigitalPortalLastDate,
+                    DigitalPortalTotalLastWeek = entity.DigitalPortalTotalLastWeek,
+                    DigitalPortalTotalLastMonth = entity.DigitalPortalTotalLastMonth,
+                    DigitalPortalMobileLastDate = entity.DigitalPortalMobileLastDate,
+                    DigitalPortalMobTotalLastWeek = entity.DigitalPortalMobTotalLastWeek,
+
+                    DPArchiveShipmentCreateFilter = entity.DPArchiveShipmentCreateFilter,
+                    DPArchiveShipmentArrivalFilter = entity.DPArchiveShipmentArrivalFilter,
+                    DPArchiveShipmentDepartFilter = entity.DPArchiveShipmentDepartFilter,
+                    DigitalPortalMobTotalLastMonth = entity.DigitalPortalMobTotalLastMonth,
+                    ShowMoneyOrder = entity.ShowMoneyOrder,
+                    CargoTrackingPublicShowEvents = entity.CargoTrackingPublicShowEvents,
+                    CargoTrackingPrivateShowEvents = entity.CargoTrackingPrivateShowEvents,
+                     LogoURL = entity.LogoURL,
+                    ServiceAgreementURL = entity.ServiceAgreementURL,
                 };
             }
 
@@ -885,6 +1022,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        ShardLogisticTotalLastWeek = a.ShardLogisticTotalLastWeek,
                        ShardLogisticTotalLastMonth = a.ShardLogisticTotalLastMonth,
                        EnableBranding = a.EnableBranding,
+                       EnableExportToExcel = a.EnableExportToExcel,
+                       ActivatePrivateSite = a.ActivatePrivateSite,
+                       ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
+                       DeclarationMessage = a.DeclarationMessage,
                        ContactEmail = a.ContactEmail,
                        CustomerURL = a.CustomerURL,
                        HideSharedlogistics = a.HideSharedlogistics,
@@ -912,6 +1053,24 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                        LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                        ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
+                       WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
+                       IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                       PrivateLabelId = a.GlobalTenant != null ? a.GlobalTenant.PrivateLabelId : "",
+                       PrivateLabelName = a.GlobalTenant != null ? a.GlobalTenant.TenantManagmentPrivateLabel != null ? a.GlobalTenant.TenantManagmentPrivateLabel.PrivateLabelName : "" : "",
+                       ShowMoneyOrder = a.ShowMoneyOrder,
+                       DigitalPortalLastDate = a.DigitalPortalLastDate,
+                       DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
+                       DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
+                       DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
+                       DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                       DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
+                       DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
+                       DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
+                       DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+                       CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
+                       CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
+                       LogoURL = a.LogoURL,
+                       ServiceAgreementURL = a.ServiceAgreementURL,
                    };
         }
 
@@ -961,7 +1120,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                 {
                     PackageRepository pckgRep = new PackageRepository(entityPM.Id);
                     Package pckg = pckgRep.GetSinglePackage(entityPM.PackageCode);
-                    
+
                     if (pckg.FeaturePackageTypeCode == "BS")
                     {
                         entityPM.PackagesCodes_BS.Add(pckg.Code);
@@ -981,16 +1140,16 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     }
                 }
 
-                if(entityPM.IsMultiPackage)
+                if (entityPM.IsMultiPackage)
                 {
                     List<string> licensesCodes = entityPM.TenantManagementLicenses.Select(s => s.PackageCode).ToList();
                     entityPM.PackagesCodes_PK.AddRange(licensesCodes);
 
                     PackageConnectedPackageRepository connectedPackageRepository = new PackageConnectedPackageRepository(entityPM.Id);
                     entityPM.PackagesCodes_BS.AddRange((from a in connectedPackageRepository.context.PackageConnectedPackages
-                                                 where licensesCodes.Contains(a.PackageCode)
-                                                 group a by a.ConnectedPackageCode into g
-                                                 select g.Key).ToList());
+                                                        where licensesCodes.Contains(a.PackageCode)
+                                                        group a by a.ConnectedPackageCode into g
+                                                        select g.Key).ToList());
                 }
             }
 
@@ -1155,6 +1314,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              RegisteredAirlines = a.RegisteredAirlines,
                                              PendingAirlines = a.PendingAirlines,
                                              EnableBranding = a.EnableBranding,
+                                             EnableExportToExcel = a.EnableExportToExcel,
+                                             ActivatePrivateSite = a.ActivatePrivateSite,
+                                             ActivatedforDeclarationApprove = a.ActivatedforDeclarationApprove,
+                                             DeclarationMessage = a.DeclarationMessage,
                                              ContactEmail = a.ContactEmail,
                                              CustomerURL = a.CustomerURL,
                                              HideSharedlogistics = a.HideSharedlogistics,
@@ -1186,6 +1349,28 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              LastWeekCreatedTariffs = a.LastWeekCreatedTariffs,
                                              LastMonthCreatedTariffs = a.LastMonthCreatedTariffs,
                                              ScheduledTasksLimitPerReport = a.ScheduledTasksLimitPerReport,
+                                             WhatsAppMessagingPhoneNumber = a.WhatsAppMessagingPhoneNumber,
+                                             CargoTokenTimeout = a.CargoTokenTimeout,
+                                             SecondaryColor = a.SecondaryColor,
+                                             TertiaryColor = a.TertiaryColor,
+
+                                             IsContainerTrackingPrepaid = a.IsContainerTrackingPrepaid,
+                                             ComapnylogoId = a.ComapnylogoId,
+                                             ShowMoneyOrder=a.ShowMoneyOrder,
+                                             DigitalPortalLastDate = a.DigitalPortalLastDate,
+                                             DigitalPortalTotalLastWeek = a.DigitalPortalTotalLastWeek,
+                                             DigitalPortalTotalLastMonth = a.DigitalPortalTotalLastMonth,
+                                             DigitalPortalMobileLastDate = a.DigitalPortalMobileLastDate,
+                                             DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
+                                             DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
+                                             DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
+                                             DPArchiveShipmentArrivalFilter = a.DPArchiveShipmentArrivalFilter,
+                                             DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
+                                             CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
+                                             CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
+                                             LogoURL = a.LogoURL,
+                                             ServiceAgreementURL = a.ServiceAgreementURL,
+
                                          }).FirstOrDefault();
 
             return tenant;
@@ -1353,8 +1538,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             if (!string.IsNullOrEmpty(id))
             {
                 privateLabelDomain = (from a in repository.context.TenantManagmentPrivateLabels
-                                             where a.Id == id
-                                             select a.PrivateLabelDomain).FirstOrDefault();
+                                      where a.Id == id
+                                      select a.PrivateLabelDomain).FirstOrDefault();
             }
 
             return privateLabelDomain;
@@ -1365,6 +1550,59 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             return (from a in repository.context.GlobalTenants
                     where a.Id == tenant
                     select a.PrivateLabelId).FirstOrDefault();
+        }
+
+        public List<TenantManagementPM> GetByTenantNumbers(List<int> tenantNumbers)
+        {
+            IQueryable<TenantManagementLicensePM> tenantManagementLicenses = GetTenantManagementLicensesByTenantNumbers(tenantNumbers);
+
+            List<TenantManagementPM> tenantManagements = repository.context.TenantManagements.Where(a => tenantNumbers.Contains(a.Id))
+                .Select(a => new TenantManagementPM()
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    PackageCode = a.PackageCode,
+                    PackageName = a.PackageName,
+                    TotalPrice = a.TotalPrice,
+                    SupportDomain = a.SupportDomain,
+                    TotalNumberOfUsers = a.TotalNumberOfUsers,
+                    TotalFreeUsers = a.TotalFreeUsers,
+                    AveragePrice = a.AveragePrice,
+                    TotalPaymentamount = a.TotalPaymentamount,
+                    ResellerCommission = a.ResellerCommission,
+                    PaymentCurrencyCode = a.PaymentCurrencyCode,
+                    MainAdditionalPackageApplied = a.MainAdditionalPackageApplied,
+                    IsMultiPackage = a.IsMultiPackage,
+                    NumberOfUsers = a.NumberOfUsers,
+                    TenantManagementLicenses = tenantManagementLicenses.Where(b => b.Tenant == a.Id).ToList(),
+                    PaymentChannelCode = a.PaymentChannelCode
+                }).ToList();
+
+            return tenantManagements;
+        }
+
+        private IQueryable<TenantManagementLicensePM> GetTenantManagementLicensesByTenantNumbers(List<int> tenantNumbers)
+        {
+            return repository.context.TenantManagementLicenses.Where(a => tenantNumbers.Contains(a.Tenant))
+                .Select(a => new TenantManagementLicensePM()
+                {
+                    Id = a.Id,
+                    Tenant = a.Tenant,
+                    PackageCode = a.PackageCode,
+                    NumberOfUsers = a.NumberOfUsers,
+                    FreeUsers = a.FreeUsers,
+                    Price = a.Price,
+                    TotalPrice = a.TotalPrice,
+                });
+        }
+
+        public List<TenantManagement> GetWhereHavePermissionBuildMonths()
+        {
+            var q = from a in repository.context.TenantManagements
+                    where a.PermissionBuildMonths != null
+            select a;
+
+            return q.ToList();
         }
     }
 }

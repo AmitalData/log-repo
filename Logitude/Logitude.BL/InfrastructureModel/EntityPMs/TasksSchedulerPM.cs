@@ -60,9 +60,10 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ResultType { get; set; }
         public string Format { get; set; }
         public string AdvancedFormat { get; set; }
+        public string ExecutedByServerName { get; set; }
         [DataMember]
         public SchedulerDetails SchedulerDetailsData { get; set; }
-        
 
+        public List<string> DocumentTypeTemplateIds { get; set; }
     }
 }

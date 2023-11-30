@@ -1,8 +1,7 @@
 ﻿using LLogitude.ShipmentTests.Services;
-using Logitude.Test.Base.Models.BillingsPreparation;
-using Logitude.Test.Base.Models.PartnersPreparation;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Simplog.Data.Helpers;
+using Logitude.Base.Models.Billings;
+using Logitude.Base.Models.Partners;
+using Logitude.Base.Models.UserTenant;
 using System;
 using System.Collections.Generic;
 
@@ -185,7 +184,7 @@ namespace Logitude.ShipmentTests.Models.Accounting.ARInvoice
                 UpdatedByUserId = UserTenant.UserId,
                 IssuedByUserId = UserTenant.UserId,
                 ARInvoiceTypeCode = "IN",
-                CreateDate = TenantServerConfigration.GetCurrentDateTime(UserTenant.Tenant),
+                CreateDate = DateTime.Now,
                 ConcurrencyGUID = Guid.NewGuid().ToString(),
                 NewConcurrencyGUID = Guid.NewGuid().ToString()
             };

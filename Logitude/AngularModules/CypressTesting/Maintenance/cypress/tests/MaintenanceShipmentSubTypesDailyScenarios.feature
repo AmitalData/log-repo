@@ -1,11 +1,11 @@
-@release @all @dev @daily
+@stable @daily
 Feature: Shipment Sub Type fake Create and Edit in Maintenance Module
     The user creates a Shipment Sub Type fake create and edit another one from the Maintenance Module.
 
     Scenario:Add Shipment Sub Type Code with lenght more than 6
         Given the user logged in and navigate to "Shipment Sub Types" in maintenance menu
         When add "123456" as shipment sub type code
-        Then a validation message with "Code Field must be less than 5" error should appear
+        Then a validation message with "Code Field length must be less than 5" error should appear
 
     Scenario: Create a new shipment sub type with already exists code
         Given a shipment sub type with the following details
@@ -34,8 +34,9 @@ Feature: Shipment Sub Type fake Create and Edit in Maintenance Module
 
     Scenario: Edit the shipment sub type
         Given "Testing Edit Shipment Sub Type Daily Scenario" as shipment sub type name
+        And the user inactivate the shipment sub type
         When update shipment sub type
         Then the shipment sub type should update successfully
         And the following event should appear in events tab
-            | Event   |
-            | Updated |
+            | Event   | Notes |
+            | Updated |       |

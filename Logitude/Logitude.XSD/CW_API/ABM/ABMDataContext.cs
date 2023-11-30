@@ -401,7 +401,7 @@ namespace Logitude.XSD.CW_API.ABM
                     CWXSD.Reference iRefrenceBTW = new CWXSD.Reference()
                     {
                         RefCode = "EORI",
-                        RefText = customer.EORInumber,
+                        RefText = customer.Card?.EORInumber,
                     };
 
                     list.Add(iRefrenceBTW);

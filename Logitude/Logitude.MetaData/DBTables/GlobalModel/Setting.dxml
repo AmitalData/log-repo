@@ -518,4 +518,79 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ReleaseDateString"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+	<Column
+        Name="AzurePrincipalSecretKey"
+        Type="varchar"
+        Size="1000"
+        DefaultValue="''">
+		    <Constraints
+		      Nullable="true" />
+	</Column>
+	
+	<Column
+        Name="DNSZone"
+        Type="varchar"
+        Size="1000"
+        DefaultValue="''">
+		    <Constraints
+		      Nullable="true" />
+	</Column>
+	
+	<Column
+        Name="DNSIPAddress"
+        Type="varchar"
+        Size="1000"
+        DefaultValue="''">
+		    <Constraints
+		      Nullable="true" />
+	</Column>
+  <Column
+      Name="QboBaseUrl"
+      Type="varchar"
+      Size="1000"
+      DefaultValue="'https://quickbooks.api.intuit.com/'">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+      Name="QboEnvironment"
+      Type="varchar"
+      Size="1000"
+      DefaultValue="'production'">
+    <Constraints
+      Nullable="true" />
+  </Column>
+
+  <Column
+      Name="WorkflowStorageAccountName"
+      Type="varchar"
+      Size="100"
+      DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
+
+  <Column
+    Name="WorkflowStorageAccountKey"
+    Type="varchar"
+    Size="1000"
+    DefaultValue="''">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+   Name="WindWardSettings"
+   Type="varchar"
+   Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  
 </Table>

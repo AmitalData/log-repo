@@ -51,8 +51,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
             };
 
             this.InitializeComponent();
-
-            MessagingStockTracing.Trace(entityPM, entityPoco, loggedContact.Id, isNewEntity);
+            
+            MessagingStockTracing.Trace(entityPM, entityPoco, entityPM.CreatedByUserId, isNewEntity);
             ShipmentMapping.MapEntity(entityPM, entityPoco, isNewEntity);
 
             entityRepository.Add(entityPoco);
@@ -77,8 +77,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.EntityService
         {
             if (isNewEntity)
             {
-                entityPM.CreatedByUserId = loggedContact.Id;
-                entityPM.UpdatedByUserId = loggedContact.Id;
+                entityPM.CreatedByUserId = entityPM.CreatedByUserId != null ? entityPM.CreatedByUserId: loggedContact.Id;
+                entityPM.UpdatedByUserId = entityPM.UpdatedByUserId != null ? entityPM.UpdatedByUserId : loggedContact.Id;
                 entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                 entityPM.UpdateDate = entityPM.CreateDate;
                 entityPM.Remaining = entityPM.Amount;

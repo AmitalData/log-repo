@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CargoReferencesSyncQueues"
+  Schema="dbo"
+  DBType="CargoTracking"
+  Module="CargoTracking">
+  <Column
+    Name="Id"
+    Type="int"
+	Identity="true">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShipmentId"
+    OldNames="ForwardingShipmentId"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShipmentType"
+    OldNames="ShipmentNeedUpdateType"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SyncTo"
+    OldNames="test"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="false" />
+  </Column>
+</Table>

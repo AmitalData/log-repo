@@ -46,7 +46,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
             List<string> linesArray = new List<string>();
             //GLAccountQueryService queryService = new GLAccountQueryService(tenant);
-            TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM,tenant);
+            TaxDeductionReportDataProvider deductionReportDataProvider = new TaxDeductionReportDataProvider(taxDeductionReportPM,tenant,null);
             TaxDeductionReportData data = deductionReportDataProvider.GetTaxDeductionReportData();
             //TaxDeductionReportData data = queryService.GetTaxDeductionReportData(taxDeductionReportPM.TaxYear, tenant);
             string xml = LogitudeXmlSerializer.SerializeObjectToXmlString(data);
@@ -142,7 +142,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     if (item.GLAccountLocalName != null)
                     {
                         if (item.GLAccountLocalName.Length > 22) item.GLAccountLocalName = item.GLAccountLocalName.Substring(0, 22);
-                        myStringBuilder.AppendFormat(item.GLAccountLocalName.PadLeft(22, ' '));
+                        myStringBuilder.AppendFormat(item.GLAccountLocalName.ToUpper().PadLeft(22, ' '));
                     }
 
                     else
@@ -640,15 +640,7 @@ namespace Logitude.Accounting.BL.CoreBL
             DocumentType docType = docTypeReposioty.GetSingleDocumentTypeByCode("TDR856", tenant);
 
             string _code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
-            string deductionfilenumber;
-            if (DeductionFileNumber == null)
-            {
-                deductionfilenumber = "000000000";
-            }
-            else {
-                deductionfilenumber = DeductionFileNumber;
-            }
-
+            string deductionfilenumber = GetDeductionFileNumber(DeductionFileNumber);
             string name = "A856." + deductionfilenumber + "." + taxDeductionReport.TaxYear.ToString().Substring(1, 3);
             DocumentsFilingPM document = new DocumentsFilingPM()
             {
@@ -665,12 +657,13 @@ namespace Logitude.Accounting.BL.CoreBL
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 UpdatedByUserId = loggedUser.Id,
                 UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
-                FileExtension = "txt",
+                FileExtension = "",
                 SecurityId = "100",
                 FileName = name,
             };
-
-            byte[] bytearray = Encoding.Unicode.GetBytes(file);
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+            var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
+            byte[] bytearray = winHebrewEncoding.GetBytes(file);
             document.FileData = bytearray;
             docService.Create(document, document.FileData, loggedUser.Id);
 
@@ -682,6 +675,21 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
             return docFiling;
+        }
+
+        private static string GetDeductionFileNumber(string DeductionFileNumber)
+        {
+            string deductionfilenumber;
+            if (DeductionFileNumber == null)
+            {
+                deductionfilenumber = "000000000";
+            }
+            else
+            {
+                deductionfilenumber = DeductionFileNumber;
+            }
+            deductionfilenumber = deductionfilenumber.Length > 8 ? deductionfilenumber.Substring(deductionfilenumber.Length - 8) : deductionfilenumber;
+            return deductionfilenumber;
         }
 
         private static Contact GetLoggedContact(int tenant)
@@ -826,7 +834,7 @@ namespace Logitude.Accounting.BL.CoreBL
         //            ip = currentIP;
         //        }
         //      //  ExceptionHandler.HandleException(new Exception(Error), DateTime.Now, 0, "", authenticateduser, "", ip);
-        //        throw new Exception(Error);
+        //        throw new ApplicationException(Error);
         //    }
         //}
 

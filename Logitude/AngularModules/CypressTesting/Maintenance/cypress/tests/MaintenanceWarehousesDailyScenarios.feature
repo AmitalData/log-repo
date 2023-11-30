@@ -1,4 +1,4 @@
-@dev @daily
+@stable @daily
 Feature: Warehouse fake Create, Search and Edit from Maintenance
     The user creates a warehouse, searches for and edits it from the Maintenance Module.
 
@@ -39,14 +39,13 @@ Feature: Warehouse fake Create, Search and Edit from Maintenance
 
     Scenario: Add Terminal Code with lenght more than 25
         When add "01234567890123456789012345" as warehouse terminal code
-        Then a validation message with "Terminal Code Field must be less than 25" error should appear
+        Then a validation message with "Terminal Code Field length must be less than 25" error should appear
 
     Scenario: Edit the warehouse
         Given the user fill the following warehouse details
             | Notes               | edit warehouse |
             | Type                | Bonded         |
             | TerminalCode        | 1391           |
-            | InactiveCheckBox    | Yes            |
             | MyWarehouseCheckBox | Yes            |
         And fill the following warehouse Billing details
             | VatNumber   | Zero             |

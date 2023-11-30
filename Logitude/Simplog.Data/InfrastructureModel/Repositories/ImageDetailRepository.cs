@@ -67,6 +67,13 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return extension;
         }
 
+        public string GetImageExtensionbyIdForDigital(string id)
+        {
+            string extension = (from a in context.ImageDetails
+                                where a.Id == id
+                                select a.Extension).FirstOrDefault();
+            return extension;
+        }
 
         public List<ImageDetail> GetMulti(Simplog.Server.Infrastructure.EntityKeyFields entityKeys)
         {

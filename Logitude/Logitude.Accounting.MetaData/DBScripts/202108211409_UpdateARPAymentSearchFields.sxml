@@ -1,0 +1,21 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="false">
+  <Sql Version="5">
+    <![CDATA[
+
+  
+
+
+ --UPDATE ARPayments SET SearchFields =  ARPayments.SearchFields + ','+ paymentsWithChequesNumbers.chequeNumbers
+  --  FROM ARPayments inner join
+  --( SELECT id,  STUFF(
+  --           (SELECT ',' + chequeNumber 
+   --           FROM ARPAymentCheques t1
+   --           WHERE t1.PAymentId = t2.Id
+   --           FOR XML PATH (''))
+    --         , 1, 1, '') as chequeNumbers from ARPayments t2 group by id)
+ --AS paymentsWithChequesNumbers ON ARPayments.Id = paymentsWithChequesNumbers.id 
+    
+
+     ]]>
+ </Sql>
+</Script>

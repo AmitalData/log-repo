@@ -25,9 +25,15 @@ namespace Logitude.BL.Security
 {
     public class SecurityUtility
     {
+        [ThreadStatic]
         public static bool IsWorkerRoleCall = false;
         public static string GetAuthenticatedUser()
         {
+            if (IsWorkerRoleCall && !string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail)) //for calling the excel export data from WR 
+            {
+                return AuthenticationUtil.AuthenticatedUserEmail;
+            }
+
             if (IsWorkerRoleCall && HttpContext.Current == null) //for calling the excel export data from WR 
             {
                 var loggedContact = LoggedContactResolver.GetLoggedContact(0);
@@ -562,10 +568,6 @@ namespace Logitude.BL.Security
             throw new AutenticationException("Sorry! this user is not authorized!");
         }
 
-        public static void AuthenticationOnTenant(int tenant)
-        {
-            throw new NotImplementedException();
-        }
 
         public static bool CheckSharedContactAuthentication(int tenant, string partnerId)
         {
@@ -602,6 +604,42 @@ namespace Logitude.BL.Security
             return true;
         }
 
+        public static void AuthenticationOnTenant(int tenant)
+        {
+            throw new NotImplementedException();
+        }
 
+        public static bool CheckPackageFeature(string objectTableName, string featureCode, int tenant)
+        {
+            bool exists = false;
+
+            ICommonDataContext context = CommonDataContext.GetContext(tenant);
+            PackagesCodesManager iManager = new PackagesCodesManager(tenant, null, false);
+            List<string> allowedPackages = iManager.BasePackagesCodes;
+
+            ObjectTablePM objectTable = ObjectTableQuery.GetObjectTableByCode(objectTableName, tenant);
+
+            if (objectTable != null)
+            {
+                FeatureQuery featuresQuery = new FeatureQuery(tenant);
+                FeaturePM myFeature = featuresQuery.GetSingleFeaturePMByCodeAndObjectTable(featureCode, objectTable.Id, tenant);
+
+                if (myFeature != null)
+                {
+                    List<PackageFeature> packageFeatures = (from a in context.PackageFeatures
+                                                            where allowedPackages.Contains(a.PackageCode)
+                                                            && (a.Tenant == tenant || a.Tenant == 0)
+                                                            && a.FeatureUniqeCode == myFeature.FeatureUniqeCode
+                                                            select a).ToList();
+
+                    if (packageFeatures.Count > 0)
+                    {
+                        exists = true;
+                    }
+                }
+            }
+
+            return exists;
+        }
     }
 }

@@ -137,6 +137,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 XmlDocument xmldoc = new XmlDocument();
                 xmldoc.LoadXml(data_out);
 
+                CustomData.IsImporterApprovalRequried = data.IsImporterApprovalRequried;
                 CustomData.ApprovedByUserName = data.ApprovedByUserName;
                 CustomData.VersionApproved = data.VersionApproved;
                 CustomData.ApproveDateTime = data.ApproveDateTime;
@@ -144,7 +145,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 CustomData.DocumentsApprovedByUserName = data.DocumentsApprovedByUserName;
                 CustomData.GoodsValueDetails = new List<GoodsValueDetails>();
                 CustomData.TaxesDetails = new List<TaxesDetails>();
-                MapIsImporterApprovalRequriedField(data, CustomData, xmldoc);
 
                 XmlNodeList CustomsFileNo = xmldoc.GetElementsByTagName("customs_file_num");
                 if (CustomsFileNo[0] != null)
@@ -366,19 +366,6 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             return CustomData;
         }
 
-        private static void MapIsImporterApprovalRequriedField(ShipmentAdditionalCloudData data, ShipmentAdditionalCloudCustomData CustomData, XmlDocument xmldoc)
-        {
-            XmlNodeList IsImporterApprovalRequired = xmldoc.GetElementsByTagName("IsImporterApprovalRequired");
-            if (IsImporterApprovalRequired[0]?.InnerText?.ToLower() == "false")
-            {
-                CustomData.IsImporterApprovalRequried = false;
-            }
-            else
-            {
-                CustomData.IsImporterApprovalRequried = data.IsImporterApprovalRequried;
-            }
-        }
-
         public HttpResponseMessage GetSingleData(string id)
         {
             try
@@ -412,6 +399,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(entity.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("ShipmentAdditionalCloudData", entity.Tenant, authToken.Tenant);
 
                     ShipmentAdditionalCloudDataRepository Repository = new ShipmentAdditionalCloudDataRepository(authToken.Tenant);
                     ShipmentRepository SHRepository = new ShipmentRepository(authToken.Tenant);
@@ -572,7 +561,8 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 data.UserIdNumber = entity.UserIdNumber;
                 data.UserIdNumberUpdateDate = TenantServerConfigration.GetCurrentDateTime(data.Tenant);
                 data.ApprovedByUserName = entity.ApprovedByUserName;
-
+                data.UserAcceptSaveID = entity.UserAcceptSaveID;
+                 
                 Repository.Update(data);
                 Repository.SubmitChanges();
 
@@ -610,9 +600,9 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
             {
                 Action = "UserIdNumber",
                 Parameters = new List<Logitude.Server.Tools.Parameter>() {
-                new Logitude.Server.Tools.Parameter { Name = "ForwarderShipmentNumber", Value = MyShipment.ForwarderShipmentNumber},
-                new Logitude.Server.Tools.Parameter { Name = "UserIdNumber", Value = entity.UserIdNumber}
-
+                    new Logitude.Server.Tools.Parameter { Name = "ForwarderShipmentNumber", Value = MyShipment.ForwarderShipmentNumber},
+                    new Logitude.Server.Tools.Parameter { Name = "UserIdNumber", Value = entity.UserIdNumber},
+                    new Logitude.Server.Tools.Parameter { Name = "UserAcceptSaveID", Value = entity.UserAcceptSaveID.ToString()}
                 }
             });
 

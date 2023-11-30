@@ -20,7 +20,7 @@ export class ObjectTablePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -325,16 +325,77 @@ export class ObjectTablePM {
     public set LovDisplayMemberPathLocal(newValue: string) { if (this.lovDisplayMemberPathLocal != newValue) { this.lovDisplayMemberPathLocal = newValue; this.MarkAsDirty("LovDisplayMemberPathLocal"); } }
        
 	 
-    private displayName: string;
-    public get DisplayName() { return this.displayName; }
-    public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
-       
-	 
     private isTabsHidden: boolean;
     public get IsTabsHidden() { return this.isTabsHidden; }
     public set IsTabsHidden(newValue: boolean) { if (this.isTabsHidden != newValue) { this.isTabsHidden = newValue; this.MarkAsDirty("IsTabsHidden"); } }
        
 	 
+    private parentObjectTableName: string;
+    public get ParentObjectTableName() { return this.parentObjectTableName; }
+    public set ParentObjectTableName(newValue: string) { if (this.parentObjectTableName != newValue) { this.parentObjectTableName = newValue; this.MarkAsDirty("ParentObjectTableName"); } }
+       
+	 
+    private availableInCustomization: boolean;
+    public get AvailableInCustomization() { return this.availableInCustomization; }
+    public set AvailableInCustomization(newValue: boolean) { if (this.availableInCustomization != newValue) { this.availableInCustomization = newValue; this.MarkAsDirty("AvailableInCustomization"); } }
+       
+	 
+    private parentObjectTableId: string;
+    public get ParentObjectTableId() { return this.parentObjectTableId; }
+    public set ParentObjectTableId(newValue: string) { if (this.parentObjectTableId != newValue) { this.parentObjectTableId = newValue; this.MarkAsDirty("ParentObjectTableId"); } }
+       
+	 
+    private isCustom: boolean;
+    public get IsCustom() { return this.isCustom; }
+    public set IsCustom(newValue: boolean) { if (this.isCustom != newValue) { this.isCustom = newValue; this.MarkAsDirty("IsCustom"); } }
+       
+	 
+    private description: string;
+    public get Description() { return this.description; }
+    public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
+       
+	 
+    private defaultText: string;
+    public get DefaultText() { return this.defaultText; }
+    public set DefaultText(newValue: string) { if (this.defaultText != newValue) { this.defaultText = newValue; this.MarkAsDirty("DefaultText"); } }
+       
+	 
+    private defaultTextPlural: string;
+    public get DefaultTextPlural() { return this.defaultTextPlural; }
+    public set DefaultTextPlural(newValue: string) { if (this.defaultTextPlural != newValue) { this.defaultTextPlural = newValue; this.MarkAsDirty("DefaultTextPlural"); } }
+
+    private isNew: boolean;
+    public get IsNew() { return this.isNew; }
+    public set IsNew(newValue: boolean) { if (this.isNew != newValue) { this.isNew = newValue; this.MarkAsDirty("IsNew"); } }
+	 
+    private supportSubEntity: boolean;
+    public get SupportSubEntity() { return this.supportSubEntity; }
+    public set SupportSubEntity(newValue: boolean) { if (this.supportSubEntity != newValue) { this.supportSubEntity = newValue; this.MarkAsDirty("SupportSubEntity"); } }
+       
+	 
+    private applyGenericCustomFields: boolean;
+    public get ApplyGenericCustomFields() { return this.applyGenericCustomFields; }
+    public set ApplyGenericCustomFields(newValue: boolean) { if (this.applyGenericCustomFields != newValue) { this.applyGenericCustomFields = newValue; this.MarkAsDirty("ApplyGenericCustomFields"); } }
+       
+	 
+    private fullNameTextCodeId: string;
+    public get FullNameTextCodeId() { return this.fullNameTextCodeId; }
+    public set FullNameTextCodeId(newValue: string) { if (this.fullNameTextCodeId != newValue) { this.fullNameTextCodeId = newValue; this.MarkAsDirty("FullNameTextCodeId"); } }
+       
+	 
+    private fullNameTextCodeCode: string;
+    public get FullNameTextCodeCode() { return this.fullNameTextCodeCode; }
+    public set FullNameTextCodeCode(newValue: string) { if (this.fullNameTextCodeCode != newValue) { this.fullNameTextCodeCode = newValue; this.MarkAsDirty("FullNameTextCodeCode"); } }
+       
+	 
+    private fullNameTextCodeDefaultText: string;
+    public get FullNameTextCodeDefaultText() { return this.fullNameTextCodeDefaultText; }
+    public set FullNameTextCodeDefaultText(newValue: string) { if (this.fullNameTextCodeDefaultText != newValue) { this.fullNameTextCodeDefaultText = newValue; this.MarkAsDirty("FullNameTextCodeDefaultText"); } }
+       
+    private availableInDocumentTypes: boolean;
+    public get AvailableInDocumentTypes() { return this.availableInDocumentTypes }
+    public set AvailableInDocumentTypes(newValue: boolean) { if (this.availableInDocumentTypes != newValue) { this.availableInDocumentTypes = newValue; this.MarkAsDirty("AvailableInDocumentTypes"); }}
+
 
     public OldEntityPM: ObjectTablePM;
 		

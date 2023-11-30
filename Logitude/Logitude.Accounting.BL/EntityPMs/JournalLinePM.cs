@@ -10,20 +10,20 @@ namespace Logitude.Accounting.BL
 {
     public static class JournalLinePMExt
     {
-        public static MyJournalActionTypeEnum EnsureSettingActionTypeCodeEnum(this JournalLinePM @this)
+        public static JournalActionTypeEnum EnsureSettingActionTypeCodeEnum(this JournalLinePM @this)
         {
             if (String.IsNullOrWhiteSpace(@this.ActionTypeCode))
                 {
-                    if (!String.IsNullOrWhiteSpace(@this.ActionCode))
+                    if (!String.IsNullOrWhiteSpace(@this.ActionId))
                     {
                         var journalActionTypeQueryService = new JournalActionTypeQueryService(@this.Tenant);
-                        JournalActionTypePM action = journalActionTypeQueryService.GetSingle(@this.ActionCode, false, true);
-                        @this.ActionName = action.EnglishName;
-                        @this.ActionTypeCode = action.Code;
+                        JournalActionTypePM action = journalActionTypeQueryService.GetSingle(@this.ActionId, false, true);
+                        @this.ActionName = action?.EnglishName;
+                        @this.ActionTypeCode = action?.Code;
                     }
                 }
-                var codeEnum = MyJournalActionTypeEnum.NotValid;
-                Enum.TryParse<MyJournalActionTypeEnum>(@this.ActionTypeCode, out codeEnum);
+                var codeEnum = JournalActionTypeEnum.NotValid;
+                Enum.TryParse<JournalActionTypeEnum>(@this.ActionTypeCode, out codeEnum);
                 return codeEnum;
         }
     }

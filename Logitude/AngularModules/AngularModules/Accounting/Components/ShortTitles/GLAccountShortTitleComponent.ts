@@ -14,7 +14,7 @@ import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMServic
 import { CardList } from '../../../Common/EntityLists/CardList';
 import { PartnerTypeList } from '../../../Common/EntityLists/PartnerTypeList';
 @Component({
-    
+
     templateUrl: "./GLAccountShortTitleComponent.html",
 })
 
@@ -42,11 +42,8 @@ export class GLAccountShortTitleComponent {
         this.Listen();
 
         this.SetObjectTableNameAndTabCode();
-        this.CheckIsConnectedCard(this.EntityPM.CustomerGLAccountId || this.EntityPM.Id);
-        this.GetConnectedCards(this.EntityPM.CustomerGLAccountId || this.EntityPM.Id);
-
-        console.log("[GLAccountShortTitleComponent]");
-
+        this.CheckIsConnectedCard(this.EntityPM.Id);
+        this.GetConnectedCards(this.EntityPM.Id);
     }
 
     private Listen() {
@@ -82,12 +79,12 @@ export class GLAccountShortTitleComponent {
       //  var accountId = this.EntityPM.CustomerGLAccountId || this.EntityPM.Id; // if GLAccount is splitted, (EntityPM.CustomerGLAccountId) is filled
        // this.GetConnectedCards(accountId).then((connectedCards: CardList[]) => {
           //  var firstConnectedCard = connectedCards[0];
-          
+
            // var partnerTypeObjectTableName = this.GetPartnerTypeObjectTableName(firstConnectedCard.PartnerTypeId);
          //   this.OpenCard(firstConnectedCard.Id, partnerTypeObjectTableName);
 
       //  });
-      
+
       var partnerTypeObjectTableName = this.GetPartnerTypeObjectTableName(selectedCard.PartnerTypeId);
       this.OpenCard(selectedCard.Id, partnerTypeObjectTableName);
 
@@ -100,7 +97,7 @@ export class GLAccountShortTitleComponent {
                 .then(cmpRef =>
                 {
                     cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: connectedCardId, ObjectTableName: partnerTypeName, SelectedTabCode: this.SelectedTabCode });
+                    cmpRef.instance.Run({ EntityId: connectedCardId, ObjectTableName: partnerTypeName == "Others" || partnerTypeName == "Coloader" ? "Vendor" : partnerTypeName, SelectedTabCode: this.SelectedTabCode });
                     cmpRef.instance.BackCompleted.subscribe(bk =>
                     {
                     });
@@ -109,18 +106,37 @@ export class GLAccountShortTitleComponent {
     }
 
     private SetObjectTableNameAndTabCode() {
+        enum AccountType{
+            Card="1",
+            Customer="2",
+            Vendor="3" ,
+            Job="4",
+            File="5"
+        }
 
-        if (this.EntityPM.AccountTypeCode == "3") {
+        if (this.EntityPM.AccountTypeCode == AccountType.Vendor) {
             this.ObjectTableName = "Vendor";
             this.SelectedTabCode = null;
         }
-        else if (this.EntityPM.AccountTypeCode == "2") {
+        else if (this.EntityPM.AccountTypeCode == AccountType.Card) {
+            this.ObjectTableName = "Card";
+            this.SelectedTabCode = "CARC";
+        }
+        else if (this.EntityPM.AccountTypeCode == AccountType.Job) {
+            this.ObjectTableName = "Job";
+            this.SelectedTabCode = "CARC";
+        }
+        else if (this.EntityPM.AccountTypeCode == AccountType.File) {
+            this.ObjectTableName = "File";
+            this.SelectedTabCode = "SHCF";
+        }
+        else if (this.EntityPM.AccountTypeCode == AccountType.Customer) {
             this.ObjectTableName = "Customer";
             this.SelectedTabCode = "CLOV";
         }
 
     }
-    
+
     GetConnectedCards(accountId: string)
     {
 
@@ -132,7 +148,7 @@ export class GLAccountShortTitleComponent {
                 {
                     this.CurrentSession.StopBusyIndicator();
                    this.ConnectedCards = myResponse.Result;
-                   
+
                     if ( this.ConnectedCards)
                         resolve( this.ConnectedCards);
                 });

@@ -100,8 +100,10 @@ namespace Logitude.DBMigrations.Models
             }
             else
             {
-                if (!ToolArguments.IsArgumentProvided(Arguments.EXCLUDEINDEX))
+            
+                if (ToolArguments.IsArgumentProvided(Arguments.INCLUDEINDEXDROP) || !ToolArguments.IsArgumentProvided(Arguments.EXCLUDEINDEX))
                 {
+
                     foreach (var index in CurrentTable.Indexes)
                     {
                         if (!IsIndexInDXMLTable(index))

@@ -1,5 +1,4 @@
-﻿using Logitude.BL.Security;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
@@ -11,6 +10,7 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using WebFreight.Web.Helpers;
+using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
 using Logitude.Customs.BL.BL;
 using Logitude.Customs.BL.Helpers;
@@ -25,15 +25,16 @@ namespace WebFreight.Web.Controllers.WebServices
             {
                 //using (TransactionScope scope = TransactionFactory.GetTransaction())
                 //{
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    int tenant = authToken.Tenant;
-                    
-                    QueueMessagesWebService myService = new QueueMessagesWebService();
-                    myService.UpdateTenantManagementStatistics(tenantId);
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.AuthenticationOnTenant(tenantId);
+                QueueMessagesWebService myService = new QueueMessagesWebService();
+                myService.UpdateTenantManagementStatistics(tenantId);
 
-                    //scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, "Ok");
+                //scope.Complete();
+                return Request.CreateResponse(HttpStatusCode.OK, "Ok");
                 //}
             }
 

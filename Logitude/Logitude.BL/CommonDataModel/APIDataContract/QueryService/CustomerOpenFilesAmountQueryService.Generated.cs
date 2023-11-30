@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,21 +42,21 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public CustomerOpenFilesAmount GetCustomerOpenFilesAmountByCustomerId(string CustomerId,int Tenant,string ComputingPartnerName = "")
+		public CustomerOpenFilesAmount GetCustomerOpenFilesAmountByCustomerId(string CustomerId,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByCustomerId(CustomerId,Tenant);				
+				var temp = query.GetSinglePMByCustomerId(CustomerId, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("CustomerOpenFilesAmount with CustomerId " + CustomerId + " doesn't exist");
 
 				return CustomerOpenFilesAmountDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -85,41 +87,43 @@ using Simplog.Data.CommonDataModel;
 				   					var temp = new CustomerOpenFilesAmountPM();
 					if (!string.IsNullOrEmpty(MyEntity.CustomerId))
 					{
-						temp = query.GetSinglePMByCustomerId(MyEntity.CustomerId, Tenant);
-					} 					   
-					if(temp == null)
+						temp = query.GetSinglePMByCustomerId(MyEntity.CustomerId, Tenant  );
+					} 
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("CustomerOpenFilesAmount with CustomerId " + MyEntity.CustomerId + " doesn't exist");
 					} 
+				 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.CustomerId))
-					{							//throw new ApplicationException("CustomerId Can't be update"); 
-							temp.CustomerId = MyEntity.CustomerId;
+					if(!IsUpdate)
+					{							
+						temp.CustomerId = MyEntity.CustomerId;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.TotalOpenFilesAmount != null)
-					{							//throw new ApplicationException("TotalOpenFilesAmount Can't be update"); 
-							temp.TotalOpenFilesAmount = MyEntity.TotalOpenFilesAmount;
+					if(!IsUpdate)
+					{							
+						temp.TotalOpenFilesAmount = MyEntity.TotalOpenFilesAmount;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.Tenant != null)
-					{							//throw new ApplicationException("Tenant Can't be update"); 
-							temp.Tenant = MyEntity.Tenant;
+					if(!IsUpdate)
+					{							
+						temp.Tenant = MyEntity.Tenant;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Customer))
-					{							//throw new ApplicationException("Customer Can't be update"); 
-							temp.CustomerCode = MyEntity.Customer;
+					if(!IsUpdate)
+					{							
+						temp.CustomerCode = MyEntity.Customer;
 
 										}  
 
@@ -132,6 +136,8 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

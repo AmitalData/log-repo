@@ -17,6 +17,7 @@ import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
 import {WarehouseEntryPM} from '../../EntityPMs/WarehouseEntryPM';
@@ -167,10 +168,11 @@ export class WarehouseEntryPMService {
         if (!entityPM) {
             
             entityPM = new WarehouseEntryPM();
+			entityPM.DisableMarkAsDirty = true;
         }
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
+        for (var i = 1; i < 51; i++) {
             customFields.push("Field" + i);
         }
             var jsonPMKeys = Object.keys(jsonPM);
@@ -196,7 +198,9 @@ export class WarehouseEntryPMService {
             }
 			
                this.MapWarehouseEntryPackages(entityPM, jsonPM, mapParent); // Call composition tables map methods
-			 
+		 let customChildObjectPMService: CustomChildObjectPMService = new CustomChildObjectPMService(entityPM, "WarehouseEntry");
+		 customChildObjectPMService.MapCustomChildEntities(jsonPM, mapParent);
+		 			 
             
 
 		if (mapParent) {
@@ -217,6 +221,8 @@ export class WarehouseEntryPMService {
             entityPM.OldEntityPM = null;
         }
 		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
         return entityPM;
     }
 
@@ -242,13 +248,14 @@ export class WarehouseEntryPMService {
             {
                 newWarehouseEntryPackagePM = new WarehouseEntryPackagePM(null);
             }
-                
+ 			newWarehouseEntryPackagePM.DisableMarkAsDirty = true;
+               
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newWarehouseEntryPackagePM[pmProperty] = jItem[pmProperty];
             }
            
@@ -274,7 +281,7 @@ export class WarehouseEntryPMService {
                 newWarehouseEntryPackagePM.OldEntityPM = null;
                 newWarehouseEntryPackagePM.EntityParentPM = null;
             }
-			
+			 newWarehouseEntryPackagePM.DisableMarkAsDirty = false;
 			 newWarehouseEntryPackagePM.IsDirty = false;
             entityPM.WarehouseEntryPackages.push(newWarehouseEntryPackagePM);
         }
@@ -288,6 +295,7 @@ export class WarehouseEntryPMService {
                         //entityPM.WarehouseEntryPackages.push(oldWarehouseEntryPackages[itemKey]);
 						var oldItemJson = oldWarehouseEntryPackages[itemKey];
                         var deletedPM: WarehouseEntryPackagePM = new WarehouseEntryPackagePM(null);
+						deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -299,7 +307,7 @@ export class WarehouseEntryPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-                      
+					    deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         

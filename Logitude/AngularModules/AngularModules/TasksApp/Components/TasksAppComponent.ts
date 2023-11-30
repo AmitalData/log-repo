@@ -1,101 +1,61 @@
-// import { Component, OnInit } from "@angular/core";
-// import { BaseComponent } from "../../Infrastructure/Components/LogitudeComponents/BaseComponent";
-// import { SessionLocator } from "../../Infrastructure/Utilities/SessionLocator";
-// import { ShipmentPMService } from "../../Shipment/Services/StandardPMs/ShipmentPMService";
-// @Component({
-//     templateUrl: "./TasksAppComponent.html"
-// })
-// export class TasksAppComponent extends BaseComponent implements OnInit {
-//     private CurrentSession = SessionLocator.SelectedSession;
-//     public _ShipmentPMService: ShipmentPMService;
-//     myUser: User;
-//     constructor() {
-//         super(); 
-//         this._ShipmentPMService = new ShipmentPMService();
-//     }
-//     ngOnInit() {
-//         var user = new User();
-//         user.Email = SessionLocator.LoggedUserPM.Email;
-//         user.Tenant = SessionLocator.Tenant;
-//         this.myUser = user;
-//     }
-
-//     openShipmentEditScreen(event) {
-//         var ShipmentNumber = event.detail;
-//         this._ShipmentPMService.getSingleByShipmentNumber(ShipmentNumber).subscribe((myResult: any) => {
-//             if (!myResult.HasError) {
-//                 var backLabel = "Tasks";// + this.fatherComponent.EntityPM.QuoteNumber;
-//                 var myEntityId = myResult.Result;
-//                 SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditComponent", this.CurrentSession.SessionLocation.viewContainerRef)
-//                     .then(cmpRef => {
-//                         cmpRef.instance.ComponentRef = cmpRef;
-//                         cmpRef.instance.Run({ EntityId: myEntityId, ObjectTableName: "Shipment", BackButtonLabel: backLabel });
-//                         let isEditComponentSaved = false;
-//                         //cmpRef.instance.BackCompleted.subscribe(bk => {
-//                         //    if (isEditComponentSaved) {
-//                         //        //this.fatherComponent.entityArgs.EditComponent.ReloadEntityPM();
-//                         //    }
-//                         //});
-//                         //cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-//                         //    if (isSaveSuccess) {
-//                         //        isEditComponentSaved = true;
-//                         //    }
-//                         //});
-//                     });
-//             }
-//         });
-//     }
-// }
-
-// export class User {
-//     Id: number;
-//     Tenant: number;
-//     FirstName: string;
-//     LastName: string;
-//     Email: string;
-//     Password: string;
-// }
-
-
-
+import { AfterViewInit, Component, ElementRef, OnChanges, OnDestroy, ViewChild } from "@angular/core";
 import { BaseComponent } from "../../Infrastructure/Components/LogitudeComponents/BaseComponent";
-import { Component, OnChanges, AfterViewInit } from "@angular/core";
+import TasksList from "collaboration-tool-tasks-list";
+import { SessionInfo } from "../../Infrastructure/Utilities/SessionInfo";
+import { SessionLocator } from "../../Infrastructure/Utilities/SessionLocator";
+import { ShipmentPMService } from "../../Shipment/Services/StandardPMs/ShipmentPMService";
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { LoggedUser } from "collaboration-tool-core";
-import { SessionLocator } from '../../Infrastructure/Utilities/SessionLocator';
-import TasksList from "collaboration-tool-tasks-list";
 
+const tasksAppComponentContainer = "TasksAppComponentContainer";
 
 @Component({
     selector: "tasks-list",
-    template: "<div [id]='rootId' class='prime-web-component'></div>"
+    template: `<div #${tasksAppComponentContainer} class="prime-web-component"></div>`,
 })
-export class TasksAppComponent extends BaseComponent implements OnChanges, AfterViewInit {
 
-    public rootId = "tasks-list-root";
-    private hasViewLoaded = false; 
-    public ngOnChanges() {
-        this.renderComponent();
+export class TasksAppComponent extends BaseComponent implements OnChanges, AfterViewInit, OnDestroy {
+    @ViewChild(tasksAppComponentContainer, { static: false }) containerRef: ElementRef;
+
+    constructor() {
+        super();
     }
 
-    public ngAfterViewInit() {
-        this.hasViewLoaded = true;
-        this.renderComponent();
+    ngOnChanges() {
+        this.render();
     }
 
-    private renderComponent() {
-        if (!this.hasViewLoaded) {
-            return;
-        }
+    ngAfterViewInit() {
+        this.render();
+    }
 
+    ngOnDestroy() {
+        ReactDOM.unmountComponentAtNode(this.containerRef.nativeElement);
+    }
+
+    private render() {
         const props: any = {
-            loggedUserEmail: SessionLocator.LoggedUserPM.Email
+            logitudeAuthentication: { Tenant: SessionLocator.Tenant, Token: SessionInfo.Token },
+            enableUncLink: true,
+            uncLinkClickCallback: this.uncNumberClicked
         };
 
-        ReactDOM.render(
-            React.createElement(TasksList, props),
-            document.getElementById(this.rootId)
-        );
+        ReactDOM.render(React.createElement(TasksList, props), this.containerRef.nativeElement);
+    }
+
+    private uncNumberClicked(entityNumber: string) {
+        let shipmentPMService = new ShipmentPMService();
+        let CurrentSession = SessionLocator.SelectedSession;
+        shipmentPMService.getSingleByShipmentNumber(entityNumber).subscribe((getByShipmentNumberResult: any) => {
+            if (!getByShipmentNumberResult.HasError) {
+                let backButtonLabel = "Tasks";
+                let entityId = getByShipmentNumberResult.Result;
+                SessionLocator.DynamicLoader.Load("./Infrastructure/Components/EditComponent/EditComponent", CurrentSession.SessionLocation.viewContainerRef)
+                    .then((cmpRef: any) => {
+                        cmpRef.instance.ComponentRef = cmpRef;
+                        cmpRef.instance.Run({ EntityId: entityId, ObjectTableName: "Shipment", BackButtonLabel: backButtonLabel });
+                    });
+            }
+        });
     }
 }

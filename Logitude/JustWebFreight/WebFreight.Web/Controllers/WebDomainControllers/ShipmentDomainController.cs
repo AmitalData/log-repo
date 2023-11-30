@@ -1,9 +1,11 @@
-﻿using Logitude.BL.CommonDataModel.EntityPMs;
+﻿using Logitude.BL.CommonDataModel.EntityLists;
+using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
+using Logitude.BL.ShipmentsModel.APIDataContract;
 using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityOtherServices;
 using Logitude.BL.ShipmentsModel.EntityPMs;
@@ -18,21 +20,16 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.StorageService;
-using Logitude.WarehouseLib.BL.EntityQueryServices;
 using Logitude.WarehouseLib.Data;
-using Logitude.WarehouseLib.Data.EntityLists;
 using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.Data.Repositories;
 using Logitude.XSD.Artemus;
 using Microsoft.Practices.Unity;
-using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InvoiceModel;
-using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Data.QuoteModel;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Simplog.Data.QuoteModel.Repositories;
@@ -59,10 +56,18 @@ using System.Transactions;
 using System.Web;
 using System.Web.Http;
 using System.Web.Script.Serialization;
+using System.Xml.Serialization;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Helpers.APIHelpers;
 using WebFreight.Web.Security;
 using WebFreight.Web.ShipmentsModel.DomainServices;
+using Logitude.BL.ShipmentsModel.Tools.ContainerTracking;
+using Newtonsoft.Json;
+using Logitude.Infrastructure.BL.EntityPMs;
+using Logitude.Infrastructure.Data;
+using Logitude.Infrastructure.BL.EntityUpdateServices;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools.QueueService;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -81,7 +86,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 
                 return Request.CreateResponse(HttpStatusCode.OK, limitWarningMsg);
             }
-
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
@@ -185,6 +189,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     bool hasShippingInstructionsLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ShippingInstructionsLast7Days", tenant);
                     bool hasContainerStatusLast7DaysFeature = SecurityUtility.CheckTableContactFeature("Shipment", "ContainerStatusLast7Days", tenant);
                     bool hasEBookingInProgressFeature = SecurityUtility.CheckTableContactFeature("Shipment", "Shipment.Q.EBookingInProgress", tenant);
+                    bool hasPendingApprovalDocumentsFeature = SecurityUtility.CheckTableContactFeature("Shipment", "Shipment.Q.PendingApprovalDocuments", tenant);
 
                     //ShipmentsSummary myResult= RunStoredProcedureClass.GetShipmentsCounts(tenant, myDirectionId, myTransportModeId, loggedUserEmail, hasETDFeature, hasFollowupsFeature);
 
@@ -198,7 +203,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
-                    myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature, hasEBookingInProgressFeature);
+                    myResult = shipmentQuery.GetShipmentsDashBoardSummary(tenant, myDirectionId, myTransportModeId, loggedContactId, hasETDFeature, hasFollowupsFeature, hasExpDepNotTransmittedFeature, hasShippingInstructionsLast7DaysFeature, hasContainerStatusLast7DaysFeature, hasEBookingInProgressFeature, hasPendingApprovalDocumentsFeature);
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -275,13 +280,14 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage CheckHousesOpenAmounts(string masterId)
+        public HttpResponseMessage GetCheckHousesOpenAmounts(string masterId)
         {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentsDomainService shipmentDomainService = new ShipmentsDomainService();
                 var myResult = shipmentDomainService.CheckHousesOpenAmounts(masterId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
@@ -356,6 +362,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int myTenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(myTenant);
 
                 try
                 {
@@ -559,6 +566,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                 OpenDate = myQuote.OpenDate,
                                 AcceptedDate = myQuote.AcceptedDate,
                                 Salesman = salesman,
+                                ExpirationDate = myQuote.ExpirationDate,
                             });
                         }
                     }
@@ -566,7 +574,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     ICRMContext crmContext = CRMContext.GetContext(tenant);
                     TicketListQueryService listService = new TicketListQueryService(crmContext);
                     List<TicketList> myTickets = listService.GetTicketListByShipmentIdList(shipmentId, tenant);
-                    CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                    CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                     customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myTickets.Cast<object>().ToList());
 
                     foreach (TicketList item in myTickets)
@@ -580,9 +588,83 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             EntityStatus = crmContext.TicketStages.Where(d => d.Id == item.StageId).FirstOrDefault().Name,
                         });
                     }
+
+                    var standaloneShipmentDetails = this.GetStandaloneShipmentDetails(myShipment);
+                    if (standaloneShipmentDetails != null)
+                        myResult.AddRange(standaloneShipmentDetails);
+
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        private List<ShipmentConnectedEntity> GetStandaloneShipmentDetails(Shipment myShipment)
+        {
+            if (!myShipment.IsStandalonePickupDelivery)
+            {
+                return null;
+            }
+
+            int tenant = myShipment.Tenant;
+            string standaloneShipmentId = myShipment.Id;
+            List<ShipmentConnectedEntity> shipmentConnectedEntityDetails = new List<ShipmentConnectedEntity>();
+            ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
+            ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(standaloneShipmentId, tenant);
+
+            if(shipmentPickUpDelivery == null)
+            {
+                return null;
+            }
+
+            shipmentConnectedEntityDetails.Add(new ShipmentConnectedEntity()
+            {
+                EntityId = shipmentPickUpDelivery.ShipmentId,
+                Reference = shipmentPickUpDelivery.PickUpDeliveryNumber,
+                EntityType = shipmentPickUpDelivery.PickUpDeliveryTypeCode == "PICK" ? "PickUp" : "Delivery",
+                ObjectTableName = "Shipment",
+            });
+
+            return shipmentConnectedEntityDetails;
+        }
+        public HttpResponseMessage GetDisconnectStandaloneShipment(string shipmentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                SecurityUtility.CheckContactFeature("Shipment", "UPDATE", tenant);
+
+                IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(0);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
+                ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(shipmentsContext);
+                ShipmentPickUpDelivery shipmentPickUpDelivery = shipmentPickUpDeliveryRepository.GetSingleShipmentPickUpDeliveryByStandaloneShipmentId(shipmentId, tenant);
+                if (shipmentPickUpDelivery != null)
+                {
+                    shipmentPickUpDelivery.StandaloneShipmentId = null;
+                    shipmentPickUpDelivery.StandaloneShipmentId = null;
+                    shipmentPickUpDelivery.StandaloneShipmentNumber = null;
+                    shipmentPickUpDeliveryRepository.Update(shipmentPickUpDelivery);
+                }
+
+                ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(shipmentId, tenant);
+                shipmentPM.IsStandalonePickupDelivery = false;
+                shipmentPM.ParentShipmentNumber = null;
+                shipmentPM.ParentShipmentDirectionId = null;
+                shipmentPM.ParentShipmentType = null;
+                shipmentPM.ForwarderStandaloneShipmentId = null;
+                shipmentPM.StandalonePickupDeliveryId = null;
+                ShipmentService shipmentService = new ShipmentService(shipmentsContext, shipmentPM, authToken.Email);
+                shipmentService.Update();
+                return Request.CreateResponse(HttpStatusCode.OK, true);
             }
 
             catch (Exception ex)
@@ -590,6 +672,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        
         public HttpResponseMessage GetShipmentsQueriesCounts([FromUri] ShipmentsQueriesCountsArgs shipmentsQueriesCountsArgs)
         {
             try
@@ -710,13 +793,35 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+        public HttpResponseMessage GetShipmentReceivablePMsByShipmentId(string shipmentId, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("", authToken.Tenant, tenant);
+
+                ShipmentReceivableQuery shipmentReceivableQuery = new ShipmentReceivableQuery(tenant);
+                List<ShipmentReceivablePM> shipmentReceivablePMs = shipmentReceivableQuery.GetShipmentReceivablePMsByShipmentId(shipmentId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, shipmentReceivablePMs);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
         public HttpResponseMessage GetMasterConnectedHouseShipments(string entityId, int tenant)
         {
             try
             {
+                //used in sharedmasterdocumentspage dont add security
                 //SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Shipment", "READ", tenant); 
-                
+
                 IShipmentsContext myContext = ShipmentsContext.GetContext(tenant);
                 ShipmentConsoleShipmentQuery shipmentConsoleShipmentQuery = new ShipmentConsoleShipmentQuery(myContext);
                 List<Shipment> housesShipments = shipmentConsoleShipmentQuery.GetMasterConnectedHouseShipments(entityId, tenant);
@@ -1117,9 +1222,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Master", "READ", tenant);
 
-                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                SecurityUtility.AuthenticationOnTenant(tenant);
-                SecurityUtility.CheckContactFeature("Master", "READ", tenant);
+                ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);      
                 var myResult = shipmentQuery.GetShipmentPMsByMasterIdAndTenant(masterId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
@@ -1241,6 +1344,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                                                       ShipmentType = !string.IsNullOrEmpty(f.ShipmentTypeName) ? f.ShipmentTypeName + " " + f.ShipmentLevelName : f.ShipmentLevelName,
                                                       CreateDateTime = f.CreateDateTime,
                                                       Shipper = f.ShipperName,
+                                                      ShipperCountryCode = f.ShipperCountryCode,
+                                                      ConsigneeCountryCode = f.ConsigneeCountryCode,
                                                       Consignee = f.ConsigneeName,
                                                       DirectionId = f.DirectionId,
                                                       DirectionName = f.DirectionName,
@@ -1315,7 +1420,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetSingleShipmentPMWithoutComposition(string id)
+        public HttpResponseMessage GetSingleShipmentPMWithoutComposition(string id, bool includePackages)
         {
             try
             {
@@ -1327,7 +1432,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Shipment", "READ", tenant);
 
                 ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
-                ShipmentPM myResult = shipmentQuery.GetSinglePMWithoutComposition(id, tenant);
+                ShipmentPM myResult = shipmentQuery.GetSinglePMWithoutComposition(id, tenant, includePackages);
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }
 
@@ -1372,6 +1477,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 QueryOperations queryOperations = new QueryOperations()
                 {
@@ -1476,6 +1582,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ShipmentsDomainService service = new ShipmentsDomainService();
                 List<MessagingStockList> result = service.GetMessagingStockListForTenantManagmentTab(tenantManagementId).Where(d => d.StockType == "Champ").ToList();
@@ -1496,7 +1603,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 string fileName = "aes.txt";
 
                 FlatFileHelper helper = new FlatFileHelper(tenant);
@@ -1518,6 +1625,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentCustomsTransmissionQuery query = new ShipmentCustomsTransmissionQuery(tenant);
                 var temp = query.GetShipmentCustomsTransmissionPMsByShipmentId(shipmentId, tenant);
                 List<ShipmentCustomsTransmissionPM> result = new List<ShipmentCustomsTransmissionPM>();
@@ -1541,6 +1649,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 string xmlString1 = @"
                         <AMSResponse>
@@ -1624,8 +1733,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
                 ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
                 Shipment myShipment = shipmentRepository.GetSingleShipment(shipmentId, tenant);
+                string loggedContactId = null;
                 if (myShipment != null)
                 {
+                    #region Update Quote
                     IQuotesContext quotesContext = QuotesContext.GetContext(tenant);
                     QuoteRepository quoteRepository = new QuoteRepository(quotesContext);
                     QuoteComputedFieldRepository quoteComputedFieldRepository = new QuoteComputedFieldRepository(quotesContext);
@@ -1655,7 +1766,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         quoteRepository.SubmitChanges();
 
                         ContactQuery contactQuery = new ContactQuery(tenant);
-                        string loggedContactId = null;
                         ContactPM contact = contactQuery.GetContactByEmailOnly(authToken.Email, tenant);
                         if (contact != null)
                         {
@@ -1672,22 +1782,23 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                             Notes = "Disconnected from Shipment#: " + myShipment.ShipmentNumber,
                         });
                     }
+                    #endregion
 
                     ShipmentReceivableRepository receivableRepository = new ShipmentReceivableRepository(shipmentsContext);
                     ShipmentPayableRepository payableRepository = new ShipmentPayableRepository(shipmentsContext);
 
                     List<ShipmentReceivable> receivables = receivableRepository.GetShipmentReceivablesByShipmentId(myShipment.Id, tenant);
-                    List<ShipmentPayable> payables = payableRepository.GetShipemntPayablesByShipmentId(myShipment.Id, tenant);
+                    List<ShipmentReceivable> originalReceivables = receivables.Where(a => string.IsNullOrEmpty(a.QuoteChargeId)).ToList();
+                    receivables = receivables.Where(a => !string.IsNullOrEmpty(a.QuoteChargeId)).ToList();                    
 
+                    List<ShipmentPayable> payables = payableRepository.GetShipemntPayablesByShipmentId(myShipment.Id, tenant);
+                    List<ShipmentPayable> originalPayables = payables.Where(a => string.IsNullOrEmpty(a.QuoteChargeId)).ToList();
+                    payables = payables.Where(a => !string.IsNullOrEmpty(a.QuoteChargeId)).ToList();
                     if (receivables.Count > 0)
                     {
                         foreach (ShipmentReceivable item in receivables)
                         {
-                            item.IsFromQuote = false;
-                            item.QuoteChargeId = null;
-                            item.QuoteSaleMinAmount = null;
-                            item.QuoteSaleMaxAmount = null;
-                            receivableRepository.Update(item);
+                            receivableRepository.Remove(item);
                         }
                     }
 
@@ -1695,20 +1806,32 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         foreach (ShipmentPayable item in payables)
                         {
-                            item.IsFromQuote = false;
-                            item.QuoteChargeId = null;
-                            item.QuoteCostMinAmount = null;
-                            item.QuoteCostMaxAmount = null;
-
-                            payableRepository.Update(item);
+                            payableRepository.Remove(item);
                         }
                     }
 
+                    myShipment.OpenReceivablesInLocalCurrency = originalReceivables.Sum(s => s.TotalAmountLocal);
+                    myShipment.OpenReceivablesInProfitCurrency = originalReceivables.Sum(s => s.AmountInProfitCurrency);
+                    myShipment.OpenPayablesInLocalCurrency = originalPayables.Sum(s => s.OpenAmountInLocalCurrency);
+                    myShipment.OpenPayablesInProfitCurrency = originalPayables.Sum(s => s.OpenAmountInProfitCurrency);
+                    myShipment.ProfitInLocalCurrency = (myShipment.OpenReceivablesInLocalCurrency - myShipment.OpenPayablesInLocalCurrency) == null ? 0 : (double)(myShipment.OpenReceivablesInLocalCurrency - myShipment.OpenPayablesInLocalCurrency);
+                    myShipment.ProfitInProfitCurrency = myShipment.OpenReceivablesInProfitCurrency - myShipment.OpenPayablesInProfitCurrency;
                     myShipment.QuoteId = null;
                     myShipment.QuoteNumber = null;
+                    myShipment.QuoteFreightExpirationDate = null;
                     shipmentRepository.Update(myShipment);
 
                     shipmentsContext.SaveChanges();
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        Tenant = tenant,
+                        EventTypeCode = "DTQT",
+                        UserId = loggedContactId,
+                        EntityId = myShipment.Id,
+                        ObjectTableName = "Shipment",
+                        Notes = "Disconnected from Quote#: " + myQuote.QuoteNumber,
+                    });
                 }
 
                 return Request.CreateResponse(HttpStatusCode.OK, true);
@@ -1728,7 +1851,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 {
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-
+                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                     IShipmentsContext iContext = ShipmentsContext.GetContext(0);
                     ShipmentRepository iShipmentRepository = new ShipmentRepository(iContext);
                     ShipmentQuery iShipmentQuery = new ShipmentQuery(iShipmentRepository);
@@ -1930,7 +2053,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 IWarehouseContext warehouseContext = WarehouseContext.GetContext(tenant);
                 WarehouseEntryRepository warehouseEntryRepository = new WarehouseEntryRepository(warehouseContext);
-                IQueryable<WarehouseEntry> warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentId, tenant);
+                const string cancelledEntityStatusCode = "CAEA";
+                IQueryable<WarehouseEntry> warehouseEntries = warehouseEntryRepository.GetWarehouseEntriesByshipmentId(shipmentId, tenant).Where(entry => entry.StatusCode != cancelledEntityStatusCode);
 
                 bool myResult = false;
                 if (warehouseEntries.Count() > 0)
@@ -1941,7 +2065,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (!myResult)
                 {
                     WarehouseReleaseRepository warehouseReleaseRepository = new WarehouseReleaseRepository(warehouseContext);
-                    IQueryable<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentId, tenant);
+                    const string cancelledReleaseStatusCode = "CARE";
+                    IQueryable<WarehouseRelease> warehouseReleases = warehouseReleaseRepository.GetWarehouseReleasesByshipmentId(shipmentId, tenant).Where(release => release.StatusCode != cancelledReleaseStatusCode);
 
                     if (warehouseReleases.Count() > 0)
                     {
@@ -2198,6 +2323,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ShipmentRepository shipmentRepository = new ShipmentRepository(tenant);
                 Shipment houseShipment = shipmentRepository.GetSingleShipment(houseId, tenant);
@@ -2569,8 +2695,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int myTenant = authToken.Tenant;
-
-                if(myEntity.CustomsTransferLines.Count > 0)
+                SecurityUtility.AuthenticationOnTenant(myTenant);
+                SecurityUtility.AuthenticationOnEntityTenant("",myEntity.Tenant,myTenant);
+                if (myEntity.CustomsTransferLines.Count > 0)
                 {
                     List<string> ids = myEntity.CustomsTransferLines.Select(s => s.ShipmentId).ToList();
                     ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
@@ -2822,25 +2949,6 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             return myResult;
         }
 
-        public HttpResponseMessage GetNumberOfShipmentPackages(string shipmentId)
-        {
-            try
-            {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = authToken.Tenant;
-                ShipmentQuery query = new ShipmentQuery(tenant);
-                var result = query.GetNumberOfShipmentPackages(tenant ,shipmentId);
-
-                return Request.CreateResponse(HttpStatusCode.OK, result);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
-
-        }
-
         public HttpResponseMessage GetPickupDeliveryValidForInlandDomestic(string pickupDeliveryId)
         {
             try
@@ -2848,6 +2956,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 bool isValid = true;
                 ShipmentPickUpDeliveryRepository shipmentPickUpDeliveryRepository = new ShipmentPickUpDeliveryRepository(tenant);
@@ -2861,8 +2970,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         bool isAllPortsEC = iDomesticCountries.Where(d => d.CountryIsEC == false).Any() ? false : true;
                         bool isAllPortsNA = iDomesticCountries.Where(d => d.CountryIsNorthAmerica == false).Any() ? false : true;
+                        bool isAllPortsChina = iDomesticCountries.Where(d => d.CountryIsGreaterChinese == false).Any() ? false : true;
 
-                        if (!isAllPortsEC && !isAllPortsNA)
+                        if (!isAllPortsEC && !isAllPortsNA && !isAllPortsChina)
                         {
                             isValid = false;
                         }
@@ -2881,8 +2991,47 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         private List<DomesticCountry> GetDomesticCountries(ShipmentPickUpDelivery pickUpDelivery, int tenant)
         {
             List<DomesticCountry> iDomesticCountries = new List<DomesticCountry>();
-            AddDomesticAddress(iDomesticCountries, pickUpDelivery.FromAddressId, tenant);
-            AddDomesticAddress(iDomesticCountries, pickUpDelivery.ToAddressId, tenant);
+            switch (pickUpDelivery.PickUpDeliveryFromTypeCode)
+            {
+                case "PART":
+                    {
+                        AddDomesticAddress(iDomesticCountries, pickUpDelivery.FromAddressId, tenant);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        AddDomesticPort(iDomesticCountries, pickUpDelivery.FromPortId, tenant);
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        AddDomesticCountry(iDomesticCountries, pickUpDelivery.FromAddressCountryId, tenant);
+                        break;
+                    }
+            }
+
+            switch (pickUpDelivery.PickUpDeliveryToTypeCode)
+            {
+                case "PART":
+                    {
+                        AddDomesticAddress(iDomesticCountries, pickUpDelivery.ToAddressId, tenant);
+                        break;
+                    }
+
+                case "PORT":
+                    {
+                        AddDomesticPort(iDomesticCountries, pickUpDelivery.ToPortId, tenant);
+                        break;
+                    }
+
+                case "CASL":
+                    {
+                        AddDomesticCountry(iDomesticCountries, pickUpDelivery.ToAddressCountryId, tenant);
+                        break;
+                    }
+            }
 
             return iDomesticCountries;
         }
@@ -2899,16 +3048,63 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     {
                         iDomesticCountries.Add(new DomesticCountry()
                         {
-                            Id = iAddress.Id,
+                            Id = iAddress.Id + "A",
                             CountryId = iAddress.CountryId,
                             CountryIsEC = iAddress.Country.EC,
                             CountryIsNorthAmerica = iAddress.Country.IsNorthAmerica,
+                            CountryIsGreaterChinese = iAddress.Country.IsGreaterChina,
+
                         });
                     }
                 }
             }
         }
-       
+        private static void AddDomesticCountry(List<DomesticCountry> iDomesticCountries, string iCountryId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iCountryId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iCountryId).Any())
+                {
+                    CountryRepository countryRepository = new CountryRepository(iTenant);
+                    Country iCountry = countryRepository.GetSingleCountry(iCountryId, iTenant);
+
+                    if (iCountry != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iCountry.Id + "C",
+                            CountryId = iCountry.Id,
+                            CountryIsEC = iCountry.EC,
+                            CountryIsNorthAmerica = iCountry.IsNorthAmerica,
+                            CountryIsGreaterChinese = iCountry.IsGreaterChina,
+                        });
+                    }
+                }
+            }
+        }
+        private static void AddDomesticPort(List<DomesticCountry> iDomesticCountries, string iPortId, int iTenant)
+        {
+            if (!string.IsNullOrEmpty(iPortId))
+            {
+                if (!iDomesticCountries.Where(d => d.Id == iPortId).Any())
+                {
+                    PortPM iPort = PortQuery.GetSinglePort(iTenant, iPortId, true);
+
+                    if (iPort != null)
+                    {
+                        iDomesticCountries.Add(new DomesticCountry()
+                        {
+                            Id = iPort.Id + "P",
+                            CountryId = iPort.CountryId,
+                            CountryIsEC = iPort.CountryEC,
+                            CountryIsNorthAmerica = iPort.CountryIsNorthAmerica,
+                            CountryIsGreaterChinese = iPort.CountryIsGreaterChinese,
+                        });
+                    }
+                }
+            }
+        }
+
         public HttpResponseMessage GetIfShipmentPackageConnectedToPickUpDeliveryPackage(string containerId)
         {
             try
@@ -2916,6 +3112,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentPickUpDeliveryPackageRepository shipmentPickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(tenant);
                 var shipmentPickUpDeliveryPackage = shipmentPickUpDeliveryPackageRepository.GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(containerId,tenant);
                 var result = shipmentPickUpDeliveryPackage.Count == 0 ? false : true;
@@ -2940,6 +3137,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         string loggedUserEmail = authToken.Email;
                         int tenant = authToken.Tenant;
+                        SecurityUtility.AuthenticationOnTenant(tenant);
 
                         ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
                         List<ShipmentList> myResult = shipmentQuery.GetShipmentsForMultipleAPInvoice(invoiceId, vendorId, tenant);                      
@@ -2968,6 +3166,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentQuery query = new ShipmentQuery(tenant);
                 bool result = query.IsShipmentPackagesConnectedToStandAlonePackage(shipmentId,tenant);
 
@@ -2979,6 +3178,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             }
         }
 
+
         public HttpResponseMessage GetFilteredForwarderShipmentPackages(string shipmentId, string stanAloneShipmentId)
         {
             try
@@ -2986,6 +3186,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 ShipmentQuery query = new ShipmentQuery(tenant);
                 var result = query.GetFilteredForwarderShipmentPackages(shipmentId, tenant, stanAloneShipmentId);
 
@@ -2995,6 +3196,202 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+        private CountryRepository countryRepository;
+        private StateRepository stateRepository;
+        private int myTenant;
+        public HttpResponseMessage GetAddressFromUnassignedXML(string shipmentId, string fieldName)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                myTenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(myTenant);
+                countryRepository = new CountryRepository(myTenant);
+                stateRepository = new StateRepository(myTenant);
+
+                IQueryable<ShipmentUnassignedField> shipmentUnassignedFields = this.GetShipmentUnassignedField(shipmentId);
+                ShipmentUnassignedField myUnassignedField = shipmentUnassignedFields.Where(d => d.FieldName == fieldName).FirstOrDefault();
+
+                AddressList myResult = null;
+                if (!string.IsNullOrEmpty(myUnassignedField.ReceivedData))
+                {
+                    Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address = LogitudeXmlSerializer.DeserializeObject<Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address>(myUnassignedField.ReceivedData);
+                    myResult = this.CreateAddressList(address);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private IQueryable<ShipmentUnassignedField> GetShipmentUnassignedField(string shipmentId)
+        {
+            ShipmentUnassignedFieldRepository shipmentUnassignedFieldRepository = new ShipmentUnassignedFieldRepository(myTenant);
+            return shipmentUnassignedFieldRepository.GetShipmentUnassignedFieldsByShipmentId(shipmentId, myTenant);
+        }
+        private AddressList CreateAddressList(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address)
+        {
+            string countryId = this.GetCountryId(address);
+            string stateId = this.GetStateId(address);
+
+            return new AddressList()
+            {
+                Name = address.Name,
+                City = address.City,
+                CountryId = countryId,
+                CountryCode = address.Country == null ? null : address.Country.Code,
+                StateId = stateId,
+                Address1 = address.Address1,
+                Address2 = address.Address2,
+                ZipCode = address.ZipCode,
+                PhoneNumber = address.PhoneNumber,
+                FaxNumber = address.FaxNumber,
+            };
+        }
+        private string GetCountryId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address)
+        {
+            if(address.Country == null)
+            {
+                return null;
+            }
+
+            Country country = countryRepository.GetSingleCountryByCode(address.Country.Code, myTenant);
+            if(country == null)
+            {
+                return null;
+            }
+
+            return country.Id;
+        }
+        private string GetStateId(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.Address address)
+        {
+            if (address.State == null)
+            {
+                return null;
+            }
+
+            State state = stateRepository.GetSingleStateByCode(address.State.Code, myTenant);
+            if (state == null)
+            {
+                return null;
+            }
+
+            return state.Id;
+        }
+
+        public HttpResponseMessage GetShipmentsForAutomaticRequest()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                myTenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(myTenant);
+
+                List<ShipmentsForAutomaticRequest> myResult = this.GetShipmentsForAutomaticRequest(myTenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, myResult);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private List<ShipmentsForAutomaticRequest> GetShipmentsForAutomaticRequest(int tenant)
+        {
+            List<ShipmentsForAutomaticRequest> myResult = new List<ShipmentsForAutomaticRequest>();
+            myTenant = tenant;
+            ShipmentRepository shipmentRepository = new ShipmentRepository(myTenant);
+
+            List<string> supportedCarriers = this.GetVizionCarriers();
+
+            DateTime myDateFilter = DateTime.Now.AddDays(14);
+
+            IQueryable<ContainerTrackingRequest> previousReqesuts = shipmentRepository.context.ContainerTrackingRequests
+            .Where(e => e.Tenant == myTenant && e.Status == "Active");
+
+            IQueryable<Shipment> myShipments = shipmentRepository.GetShipmentsWithoutIncludes(myTenant);
+            myShipments = myShipments.Where(d => !previousReqesuts.Where(r => !string.IsNullOrEmpty(r.Master) && string.IsNullOrEmpty(r.ContainerId)).Select(s => s.ShipmentId).Contains(d.Id));
+
+            return (from shipment in myShipments
+                    join sm in shipmentRepository.context.ShipmentMasterDatas
+                    on shipment.MasterShipmentDataId equals sm.Id into shipmentJoin
+                    from master in shipmentJoin.DefaultIfEmpty()
+                    join sc in shipmentRepository.context.Containers
+                    on shipment.Id equals sc.ShipmentId into containerJoin
+                    from container in containerJoin.DefaultIfEmpty()
+                    where shipment.NumberOfContainers > 0
+                    && (shipment.ShipmentTypeId == "FCLD" || shipment.ShipmentTypeId == "MyGO")
+                    && !shipment.IsCancelled
+                    && !shipment.IsOperationalClosed
+                    && master.MainCarriageATA == null
+                    && master.MainCarriageETA != null
+                    && master.MainCarriageETA >= DateTime.Now
+                    && master.MainCarriageETA <= myDateFilter
+                    && !string.IsNullOrEmpty(container.ContainerNumber)
+                    && supportedCarriers.Contains(master.MainCarriageCarrierCard.ShippingLine.SCACCode)
+                    && !previousReqesuts.Where(r => !string.IsNullOrEmpty(r.ContainerId)).Select(s => s.ContainerId).Contains(container.Id)
+                    select new ShipmentsForAutomaticRequest()
+                    {
+                        ShipmentId = shipment.Id,
+                        ShipmentNumber = shipment.ShipmentNumber,
+                        NumberOfContainers = shipment.NumberOfContainers,
+                    }).Distinct().ToList();
+        }
+        private List<string> GetVizionCarriers()
+        {
+            VizionService vizionService = new VizionService();
+            List<VizionCarrier> supportedCarriers = vizionService.GetAllCarriers();
+            return supportedCarriers.Select(s => s.scac).ToList();
+        }
+
+        public HttpResponseMessage GetSendVizionAutomaticRequests(string request)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                myTenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(myTenant);
+
+                BatchTaskExecutionPM batchPrintTask = CreateBatchTask(request);
+                IInfrastructureContext MyContext = InfrastructureContext.GetContext(myTenant);
+                BatchTaskExecutionUpdateService bteUpdateService = new BatchTaskExecutionUpdateService(MyContext, new Dictionary<string, IContext>(), myTenant);
+                bteUpdateService.Update(batchPrintTask, true);
+
+                IQueueService queueservice = new DbQueueService();
+                queueservice.InitializeQueue("batchtaskexecutionqueue", 0);
+                queueservice.Send(new Dictionary<string, string>()
+                {
+                    { "BatchTaskExecutionId", batchPrintTask.Id },
+                    { "Tenant", myTenant.ToString() }
+                }, myTenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, batchPrintTask.Id);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+        private BatchTaskExecutionPM CreateBatchTask(string xmlParameters)
+        {
+            return new BatchTaskExecutionPM()
+            {
+                Subject = "Container Tracking - Pilot Customer",
+                Tenant = myTenant,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                ClassName = "WebFreight.Web.Helpers.VizionPilotCustomerDataGenerator,WebFreight.Web",
+                CreateDate = DateTime.Now,
+                PrametersXml = xmlParameters,
+                StatusCode = "C",
+                ProgressPercentage = 0
+            };
         }
     }
 }
@@ -3015,12 +3412,21 @@ public class ExcelPackage
     public bool IsRefrigerated { get; set; }
     public bool HasErrors { get; set; }
 }
+
 public class ExcelPackageFilter
 {
     public int Tenant { get; set; }
     public string FileData{ get; set; }
     public string ShipmentId{ get; set; }
 }
+
+public class ExcelPackageTextCodeFilter
+{
+    public int Tenant { get; set; }
+    public string FileData { get; set; }
+    public string LanguageCode { get; set; }
+}
+
 public class ExcelPackageType
 {
     public string Code { get; set; }
@@ -3038,8 +3444,8 @@ public class ShipmentConnectedEntity
     public DateTime? OpenDate { get; set; }
     public DateTime? AcceptedDate { get; set; }
     public string Salesman { get; set; }
+    public DateTime? ExpirationDate { get; set; }
 }
-
 public class ShipmentTransferSummary
 {
     public int BlockedOceanShipmentsCount { get; set; }

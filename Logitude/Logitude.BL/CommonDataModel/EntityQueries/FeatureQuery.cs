@@ -455,7 +455,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     (from a in repository.context.RoleFeatures
                      where a.Tenant == tenant || a.Tenant == 0
                      select a);
-
                 if (myRole.IsCustomRole)
                 {
                     allRoleFeatures = (from a in iQueryable where a.RoleId == myRole.ParentRoleId select a).ToList();
@@ -855,6 +854,28 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return myResult;
         }
+
+        public FeaturePM GetSingleFeaturePMByCodeAndObjectTable(string code, string objectTableId, int tenant)
+        {
+            return (from a in repository.context.Features.Include("NameTextCode")
+                    where a.Code == code && a.ObjectTableId == objectTableId
+                    select new FeaturePM()
+                    {
+                        Code = a.Code,
+                        Id = a.Id,
+                        NameTextCodeId = a.NameTextCodeId,
+                        ObjectTableId = a.ObjectTableId,
+                        Tenant = a.Tenant,
+                        NameTextCodeCode = a.NameTextCodeCode,
+                        Packagable = a.Packagable,
+                        FeatureTypeCode = a.FeatureTypeCode,
+                        IsBusinessUnitEnabled = a.IsBusinessUnitEnabled,
+                        IsOld = a.IsOld,
+                        IsCoreFeature = a.IsCoreFeature,
+                        ToggleCode = a.ToggleCode,
+                        FeatureUniqeCode = a.FeatureUniqeCode
+                    }).FirstOrDefault();
+        }
     }
 
     public class LoggedUserFeatures
@@ -1018,11 +1039,24 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         private List<string> FilterPackagesUserLicenses(List<string> iPackagesCodes)
         {
-            List<string> allUserLicenses = (from a in iCommonContext.UserLicenses
-                                            where a.Tenant == this.Tenant
-                                            && a.UserId == this.LoggedUserId
-                                            group a by a.PackageCode into g
-                                            select g.Key).ToList();
+            List<string> allUserLicenses = new List<string>();
+
+            if (string.IsNullOrEmpty(this.LoggedUserId))
+            {
+                allUserLicenses = (from a in iCommonContext.UserLicenses
+                                   where a.Tenant == this.Tenant
+                                   group a by a.PackageCode into g
+                                   select g.Key).ToList();
+            }
+
+            else
+            {
+                allUserLicenses = (from a in iCommonContext.UserLicenses
+                                                where a.Tenant == this.Tenant
+                                                && a.UserId == this.LoggedUserId
+                                                group a by a.PackageCode into g
+                                                select g.Key).ToList();
+            }
 
             iPackagesCodes = (from a in iPackagesCodes where allUserLicenses.Contains(a) select a).ToList();
 

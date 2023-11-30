@@ -160,7 +160,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                       new JournalLinePM()
                       {
                           Line=1,
-                          ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                          ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                           DebitAccountId = myBankAccountPM.TransferGLAcccountId,
                           CreditAccountId= myBankAccountPM.GLAccountId,
 
@@ -171,7 +171,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                     new JournalLinePM()
                       {
                         Line=2,
-                          ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                          ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
                           DebitAccountId = myBankAccountPM.TransferGLAcccountId,
                           CreditAccountId= myBankAccountPM.GLAccountId,
 

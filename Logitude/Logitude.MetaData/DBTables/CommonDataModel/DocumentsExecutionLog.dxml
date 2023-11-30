@@ -19,44 +19,17 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="CreatedByUserId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="StatusCode"
-    Type="varchar"
-    Size="4">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ExceptionMessage"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="CreateDate"
     Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="DoneDate"
-    Type="datetime">
+    Name="CreatedByUserId"
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="RequestXML"
-    Type="nvarchar"
-    Size="-1">
-    <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="DocumentTypeId"
@@ -73,19 +46,21 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="RetryNumber"
-    Type="int">
+    Name="StatusCode"
+    Type="varchar"
+    Size="4">
     <Constraints
       Nullable="false" />
   </Column>
   <Column
-    Name="StartDate"
-    Type="datetime">
+    Name="ExceptionMessage"
+    Type="nvarchar"
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="Logs"
+    Name="RequestXML"
     Type="nvarchar"
     Size="-1">
     <Constraints
@@ -98,6 +73,43 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="Logs"
+    Type="nvarchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RetryNumber"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StartDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DoneDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExecutedByServerName"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+
+  <Index
+    Columns="ExecutedByServerName,StatusCode" />
+  <Index
+	Columns="CreateDate" />
   <Relation
     ForeignKeyColumn="CreatedByUserId"
     ReferencedTable="Users"

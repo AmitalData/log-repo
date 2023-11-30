@@ -209,6 +209,7 @@ namespace WebFreight.Web.Controllers.QuoteModel
                                                         IncotermCode = f.IncotermCode,
                                                         ValueOfGoods = f.ValueOfGoods,
                                                         CreatedByUserId = f.CreatedByUserId,
+                                                        UpdatedByUserId = f.UpdatedByUserId,
                                                     };
 
                 entityLists = filter.GetFilteredQuery<QuoteList>(queryOperations, entityLists);
@@ -388,6 +389,7 @@ namespace WebFreight.Web.Controllers.QuoteModel
                     IncotermCode = f.IncotermCode,
                     ValueOfGoods = f.ValueOfGoods,
                     CreatedByUserId = f.CreatedByUserId,
+                    UpdatedByUserId = f.UpdatedByUserId,
                 };
 
                 ServiceResponse response = new ServiceResponse();

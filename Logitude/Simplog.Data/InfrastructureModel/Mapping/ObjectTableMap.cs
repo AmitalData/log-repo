@@ -41,7 +41,11 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.DescriptionTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.NewButtonTextCodeCode).HasMaxLength(100).IsUnicode(false);
             this.Property(t => t.SplitComponentPath).HasMaxLength(500).IsUnicode(true);
-
+            this.Property(t => t.ParentObjectTableName).HasMaxLength(50).IsUnicode(false);
+            this.Property(t => t.ParentObjectTableId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.IsCustom);
+            this.Property(t => t.FullNameTextCodeId).HasMaxLength(30).IsUnicode(false);
+            this.Property(t => t.FullNameTextCodeCode).HasMaxLength(100).IsUnicode(false);
 
             //this.Property(t => t.FilterMenuComponentPath).HasMaxLength(250).IsUnicode(false);
             //this.Property(t => t.ShortTitleComponentPath).HasMaxLength(250).IsUnicode(false);
@@ -114,6 +118,15 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.IsTabsHidden).HasColumnName("IsTabsHidden");
             this.Property(t => t.DescriptionTextCodeCode).HasColumnName("DescriptionTextCodeCode");
             this.Property(t => t.NewButtonTextCodeCode).HasColumnName("NewButtonTextCodeCode");
+            this.Property(t => t.ParentObjectTableName).HasColumnName("ParentObjectTableName");
+            this.Property(t => t.AvailableInCustomization).HasColumnName("AvailableInCustomization");
+            this.Property(t => t.ParentObjectTableId).HasColumnName("ParentObjectTableId");
+            this.Property(t => t.IsCustom).HasColumnName("IsCustom");
+            this.Property(t => t.SupportSubEntity).HasColumnName("SupportSubEntity");
+            this.Property(t => t.ApplyGenericCustomFields).HasColumnName("ApplyGenericCustomFields");
+            this.Property(t => t.FullNameTextCodeId).HasColumnName("FullNameTextCodeId");
+            this.Property(t => t.FullNameTextCodeCode).HasColumnName("FullNameTextCodeCode");
+            this.Property(t => t.AvailableInDocumentTypes).HasColumnName("AvailableInDocumentTypes");
 
             // Relationships
             this.HasOptional(t => t.DescriptionTextCode).WithMany().HasForeignKey(d => d.DescriptionTextCodeId);

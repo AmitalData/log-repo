@@ -95,6 +95,10 @@ export class NewCustomerComponent {
                             if (!AppTool.IsNullOrEmpty(this.args.DefaultValues)) {
                                 this.PartnerTamplate.DefaultValues = this.args.DefaultValues;
                             }
+
+                            if (this.args.Address) {
+                                this.SetPartnerTamplateProperties();
+                            }
                         }
 
                         this.PartnerTamplate.InitTemplate();
@@ -102,6 +106,19 @@ export class NewCustomerComponent {
                     });
             });
         });
+    }
+
+    private SetPartnerTamplateProperties() {
+        this.PartnerTamplate.City = this.args.Address.City;
+        this.PartnerTamplate.CountryId = this.args.Address.CountryId;
+        this.PartnerTamplate.CountryCode = this.args.Address.CountryCode;
+        this.PartnerTamplate.StateId = this.args.Address.StateId;
+        this.PartnerTamplate.Address1 = this.args.Address.Address1;
+        this.PartnerTamplate.Address2 = this.args.Address.Address2;
+        this.PartnerTamplate.ZipCode = this.args.Address.ZipCode;
+        this.PartnerTamplate.PhoneNumber = this.args.Address.PhoneNumber;
+        this.PartnerTamplate.FaxNumber = this.args.Address.FaxNumber;
+        this.PartnerTamplate.Name = this.args.Address.Name;
     }
 
     public IsCustomerRadioEnabled: boolean = true;

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewChild, ViewContainerRef} from '@angular/core';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {QuotePackagePM} from '../../../../Quote/EntityPMs/QuotePackagePM';
@@ -17,11 +17,43 @@ export class AddEditPackageComponent {
     public DataContext: QuotePackageItem;
     public ObjectTableName: string = "QuotePackage";
     public ValidationErrorsList: string[];
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
+        this.RunComponent();
+    }
+    private Retries: number = 0;
+    private timerToken: any;
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
 
+        else {
+            this.RunComponentTimer();
+        }
+    }
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
     }
 
+    LoadChildComponent() {
+        let screenCode: string = "QuotePackage.AdditionalFields";
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.HideLastColumn = true;
+                cmpRef.instance.LabelWidth = 120;
+                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+            });
+    }
     SetDataContext(dataContext: QuotePackageItem) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;

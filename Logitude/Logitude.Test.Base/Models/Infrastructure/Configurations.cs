@@ -1,4 +1,4 @@
-﻿namespace Logitude.Test.Base.Models.Infrastructure
+﻿namespace Logitude.Base.Models.Infrastructure
 {
     [System.SerializableAttribute()]
     [System.ComponentModel.DesignerCategoryAttribute("code")]

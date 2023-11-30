@@ -26,7 +26,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                      LocalName = a.LocalName,
                      EnglishName = a.EnglishName,
                      Inactive = a.Inactive,
-                 
+                     Order = a.Order,
 
                      SearchFields = a.SearchFields,
                  }).FirstOrDefault();
@@ -46,7 +46,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                      LocalName = a.LocalName,
                      EnglishName = a.EnglishName,
                      Inactive = a.Inactive,
-
+                     Order = a.Order,
 
                      SearchFields = a.SearchFields,
                  }).FirstOrDefault();
@@ -67,7 +67,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                      LocalName = a.LocalName,
                      EnglishName = a.EnglishName,
                      Inactive = a.Inactive,
-
+                     Order = a.Order,
 
                      SearchFields = a.SearchFields,
                  }).ToList();
@@ -75,5 +75,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return entityPMs;
         }
 
+
+
+
+       
     }
 }

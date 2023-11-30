@@ -198,8 +198,11 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 				InterestTransactionListQueryService interestTransactionQuery = new InterestTransactionListQueryService(MyContext);
 
                 List<InterestTransactionList> entityLists = interestTransactionQuery.GetList(queryOperations, tenant);
-				
-				ServiceResponse response = new ServiceResponse();
+
+                InterestTransactionListQueryService queryService = new InterestTransactionListQueryService(MyContext);
+                entityLists = queryService.MapListQuery(entityLists, tenant);
+
+                ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
                     int count = interestTransactionQuery.GetListCount(queryOperations, tenant);
@@ -219,9 +222,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
         }
 
-		 
-		
-      
+
     }
 }
 	 

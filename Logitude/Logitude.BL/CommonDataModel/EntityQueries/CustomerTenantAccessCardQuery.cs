@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.Helpers;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -24,7 +25,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
             repository = new CustomerTenantAccessCardRepository(tenant);
         }
-
+         
         public CustomerTenantAccessCardQuery(CustomerTenantAccessCardRepository CustomerTenantAccessCardRepository)
         {
             repository = CustomerTenantAccessCardRepository;
@@ -46,7 +47,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                   UpdateDateTime = a.UpdateDateTime,
                                                                   StatusTypeCode = a.StatusTypeCode,
                                                                   StatusType = a.StatusType,
-
+                                                                  IsCustomsActivated = a.IsCustomsActivated,
+                                                                  IsExportActivated = a.IsExportActivated,
                                                               };
 
             return entity;
@@ -70,6 +72,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      UpdateDateTime = a.UpdateDateTime,
                                                      StatusTypeCode = a.StatusTypeCode,
                                                      StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
+                                                     IsCustomsActivated = a.IsCustomsActivated,
+                                                     IsExportActivated = a.IsExportActivated,
 
                                                  }).FirstOrDefault();
 
@@ -96,7 +100,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      UpdateDateTime = a.UpdateDateTime,
                                                      StatusTypeCode = a.StatusTypeCode,
                                                      StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
-
+                                                     IsCustomsActivated = a.IsCustomsActivated,
+                                                     IsExportActivated = a.IsExportActivated,
                                                  }).FirstOrDefault();
 
 
@@ -150,6 +155,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                   UpdateDateTime = a.UpdateDateTime,
                                                                   StatusTypeCode = a.StatusTypeCode,
                                                                   StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
+                                                                  IsCustomsActivated = a.IsCustomsActivated,
+                                                                  IsExportActivated = a.IsExportActivated,
                                                               }).ToList();
             return CustomerTenantAccessCards.ToList();
         }
@@ -173,6 +180,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                               UpdateDateTime = a.UpdateDateTime,
                                                                               StatusTypeCode = a.StatusTypeCode,
                                                                               StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
+                                                                              IsCustomsActivated = a.IsCustomsActivated,
+                                                                              IsExportActivated = a.IsExportActivated,
                                                                           }).ToList();
             return CustomerTenantAccessCards.ToList();
         }
@@ -195,7 +204,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                               LastMappingDateTime = a.LastMappingDateTime,
                                                                               UpdateDateTime = a.UpdateDateTime,
                                                                               StatusTypeCode = a.StatusTypeCode,
-                                                                              StatusType = a.StatusType != null ? a.StatusType.EnglishName : null,
+                                                                              IsCustomsActivated = a.IsCustomsActivated,
+                                                                              IsExportActivated = a.IsExportActivated,
                                                                           }).FirstOrDefault();
             return temp;
         }

@@ -1,0 +1,54 @@
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
+    </tr>
+    <tr>
+        <td style="height: 51px;">
+            <div style="display:flex">
+                <div style="width:100px;">Source:</div>
+                <div style="width:200px;">
+                    <LogLov [ObjectFieldName]="'sourceCode'" [ObjectTableName]="'ContainerTrackingProvider'"
+                        [DataContext]="DataContext" [LookUpTableName]="'ContainerTrackingProvider'">
+                    </LogLov>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div style="width:100px;">Response:</div>
+            <textarea [(ngModel)]="generalContainerStatusSimulatorArgs.Data"></textarea>
+        </td>
+    </tr>
+
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div style="width: 100%;">
+                            <button style="width: 150px;" class="Button" (click)="ViziionUnsubscribe()">Viziion Unsubscribe</button>
+                        </div>
+                       
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="Button" (click)="CancelClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SimulateClicked()">Simulate</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

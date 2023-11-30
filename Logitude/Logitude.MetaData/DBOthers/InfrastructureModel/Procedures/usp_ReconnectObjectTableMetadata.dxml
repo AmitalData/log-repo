@@ -89,7 +89,7 @@ tc.SpellCheckedByUserId = temp.SpellCheckedByUserId,tc.LocalDefaultText = temp.L
 from TextCodes tc
 Join TempIsSpellCheckedTextCodes temp
 on tc.Code = temp.Code
-where tc.ObjectTableId = temp.ObjectTableId
+where tc.ObjectTableId = temp.ObjectTableId and tc.Tenant = temp.Tenant
 
  End
 ]]>
@@ -387,11 +387,12 @@ temp.SpellCheckedByUserId,
 temp.LocalDefaultText,
 temp.IsSpellChecked
 FROM TempIsSpellCheckedTextCodes temp
-WHERE tc.CODE = temp.CODE)
+                        WHERE tc.CODE = temp.CODE and tc.Tenant = temp.Tenant)
 WHERE EXISTS (
 SELECT 1
 FROM TempIsSpellCheckedTextCodes temp
-WHERE tc.CODE = temp.CODE);
+
+     WHERE tc.CODE = temp.CODE and tc.Tenant = temp.Tenant);
 END;
 END;
     ]]>

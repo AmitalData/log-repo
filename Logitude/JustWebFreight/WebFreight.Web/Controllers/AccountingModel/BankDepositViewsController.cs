@@ -67,9 +67,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 BankDepositListQueryService bankDepositQuery = new BankDepositListQueryService(MyContext);
-                IQueryable<BankDepositList> myResult = bankDepositQuery.GetLastActivityBankDeposits(tenant, contact.Id, objectTable.Id).AsQueryable();
+                IQueryable<BankDepositList> myResult = bankDepositQuery.GetLastActivityBankDeposits(tenant, contact?.Id, objectTable.Id).AsQueryable();
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetCustomFieldsValues("BankDeposit", tenant, myResult.Cast<object>().ToList());
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult.ToList());

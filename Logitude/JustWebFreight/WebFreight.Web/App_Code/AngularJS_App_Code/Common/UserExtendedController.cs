@@ -6,6 +6,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -37,6 +38,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
         public HttpResponseMessage GetUsersWorkspaceSummary(int tenant, string type)
         {
             Authentication();
+            SecurityUtility.AuthenticationOnTenant(tenant);
 
             UsersWorkspaceSummary myResult = new UsersWorkspaceSummary() { Id = tenant };
 
@@ -64,6 +66,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
         public HttpResponseMessage GetUsersWorkspaceRecentLogins(int tenant)
         {
+            SecurityUtility.AuthenticationOnTenant(tenant);
             List<UsersWorkspaceRecentItem> myResult = new List<UsersWorkspaceRecentItem>();
 
             UserLoginLogRepository userLoginLogRepository = new UserLoginLogRepository(tenant);
@@ -98,11 +101,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
             if (lastLoginsList.Count > 0)
             {
-                List<string> lastLoginsUserIdsList = lastLoginsList.Select(s => s.Id).ToList();
-
-                List<UserLoginLog> allLoginLogs = (from d in userLoginLogRepository.context.UserLoginLogs.Include("User")
-                                                   where d.Tenant == tenant && lastLoginsUserIdsList.Contains(d.UserId)
-                                                   select d).ToList();
 
                 foreach (UserLastLogin item in lastLoginsList)
                 {
@@ -118,17 +116,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                     {
                         myRecord.BlockEditUser = true;
                     }
+                    myRecord.LastAccessDate = item.LoginDateTime;
+                    myRecord.IP = item.IP;
 
-                    UserLoginLog myLog = (from d in allLoginLogs
-                                          where d.Tenant == tenant && d.UserId == item.Id
-                                          orderby d.LocalDateTime descending
-                                          select d).FirstOrDefault();
-
-                    if (myLog != null)
-                    {
-                        myRecord.IP = myLog.IP;
-                        myRecord.LastAccessDate = myLog.LocalDateTime;
-                    }
+                   
 
                     myResult.Add(myRecord);
                 }
@@ -140,6 +131,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
         public HttpResponseMessage GetCustomQueriesList(string userId, string objectTableId, int tenant)
         {
             Authentication();
+            SecurityUtility.AuthenticationOnTenant(tenant);
             QueryQuery queryQuery = new QueryQuery(tenant);
             List<QueryPM> queryPM = queryQuery.GetQueriesByObjectTableAndUserId(userId, objectTableId, tenant);
 
@@ -148,6 +140,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
         public HttpResponseMessage GetUserLoginHistory(string userId, int tenant)
         {
+            SecurityUtility.AuthenticationOnTenant(tenant);
             UserLoginLogQuery userLoginLogQuery = new UserLoginLogQuery(tenant);
             List<UserLoginLogList> iQueryable = userLoginLogQuery.GetUserLoginLogListsByTenant(userId, tenant).OrderByDescending(d => d.GMTDateTime).Take(1000).ToList();
             return Request.CreateResponse(HttpStatusCode.OK, iQueryable.OrderByDescending(o => o.LocalDateTime));
@@ -155,6 +148,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
 
         public HttpResponseMessage GetUpdateUser(string userId, bool setAngularAsDefault, int tenant)
         {
+            SecurityUtility.AuthenticationOnTenant(tenant);
             UserRepository userRepository = new UserRepository(tenant);
             User user = userRepository.GetSingleUser(userId, tenant);
             bool isSaveUser = false;
@@ -205,7 +199,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
         public HttpResponseMessage GetUsersTwoFactorAuthenticationEnabled(int tenant)
         {
             Authentication();
-
+            SecurityUtility.AuthenticationOnTenant(tenant);
             UserRepository userRepository = new UserRepository(tenant);
             List<string> iQueryableData = userRepository.GetUsersTwoFactorAuthenticationEnabled(tenant).Select(a => a.Id).ToList();
 
@@ -215,6 +209,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
         public HttpResponseMessage PostUpdateTwoFactorAuthenticationEnabled(int tenant, string userIds)
         {
             Authentication();
+            SecurityUtility.AuthenticationOnTenant(tenant);
             UserRepository userRepository = new UserRepository(tenant);
 
             string[] ids = userIds.Split(',');
@@ -649,6 +644,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("", entityPM.Tenant, authToken.Tenant);
                     SecurityUtility.CheckContactFeature("User", "UPDATE", authToken.Tenant);
 
                     string entityName = "User" + entityPM.Id + entityPM.Tenant;
@@ -818,6 +814,29 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetMarkShowDashboardToolTip(string userId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+
+                UserRepository userRepository = new UserRepository(tenant);
+                var user = userRepository.GetSingleUserById(userId);
+                //user.HideDashboardToolTip = true;
+                userRepository.Update(user);
+                userRepository.SubmitChanges();
+                return Request.CreateResponse(HttpStatusCode.OK, userId);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
 
         public HttpResponseMessage GetCheckUserReleaseNotesToolTip(string userId)
         {

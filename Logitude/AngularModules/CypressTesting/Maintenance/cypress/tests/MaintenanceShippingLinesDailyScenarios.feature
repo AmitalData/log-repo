@@ -1,4 +1,4 @@
-@dev @daily
+@stable @daily
 Feature: Shipping Line fake Create, Search and Edit from Maintenance
     The user creates a ShippingLine, searches for and edits it from the Maintenance Module.
 
@@ -10,11 +10,11 @@ Feature: Shipping Line fake Create, Search and Edit from Maintenance
     Scenario: Add Shipping Line Code with lenght more than 4
         Given the user navigate shipping line wizerd
         When add "12345" as shipping line code
-        Then a validation message with "Code Field must be less than 4" error should appear
+        Then a validation message with "Code Field length must be less than 4" error should appear
 
     Scenario: Add Shipping Line SCAC Code with lenght more than 4
         When add "12345" as shipping line SCAC code
-        Then a validation message with "SCAC Code Field must be less than 4" error should appear
+        Then a validation message with "SCAC Code Field length must be less than 4" error should appear
 
     Scenario: Create new Shipping Line
         Given a shipping line with the following details
@@ -66,7 +66,7 @@ Feature: Shipping Line fake Create, Search and Edit from Maintenance
     Scenario: Add Shipping Line Tariff Partner Code with lenght more than 50
         Given the user navigate shipping line tariff wizerd
         When add "012345678901234567890123456789012345678901234567891" as shipping line tariff partner code
-        Then a validation message with "Partner Code Field must be less than 50" error should appear
+        Then a validation message with "Partner Code Field length must be less than 50" error should appear
 
     Scenario: Add Shipping Line Tariff
         Given fill the following Tariff Translation details

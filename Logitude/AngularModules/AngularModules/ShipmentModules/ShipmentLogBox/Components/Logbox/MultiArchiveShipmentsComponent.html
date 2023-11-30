@@ -1,4 +1,4 @@
-﻿
+
 <style>
     .MenuFilters {
         color: #909293;
@@ -108,8 +108,17 @@
                     </td>
 
                     <td style="width: 142px; vertical-align: middle; position:relative;">
-                        <TransportsFilter (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
+                        <TransportsFilter  (SelectedValueChanged)="SelectedTransportFilter = $event"></TransportsFilter>
                     </td>
+
+                    <td style="width: 3px;">
+                        <div></div>
+                    </td>
+
+                    <td style="width: 142px; vertical-align: middle; position:relative;"> 
+                        <DirectionsFilter *ngIf="ShowDirectionFilters" [HideExport]="isLogbox || !IsExportActivated" [ShowCustomFilter]="isLogbox|| IsCustomsActivated" [HideImportDomistic]="isLogbox|| IsPrivateLabel" [HideAMANACFilters]="true" (SelectedValueChanged)="SelectedDirectionFilter = $event"></DirectionsFilter>
+                    </td>
+                   
 
                     <td>
                         <div></div>
@@ -182,7 +191,7 @@
             <div style="height:30px;float:right;">
 
                 <button class="RedButton" (click)="SaveData()" style="width:80px;float: right;margin: 4px;">Archive</button>
-                <button class="Button" (click)="CloseButtonClicked()" style="width:80px;float: right;margin:4px;">Close</button>
+                <button class="Button" (click)="CloseButtonClicked()" style="width:80px;float: right;margin:4px;">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
             </div>
         </td>
     </tr>

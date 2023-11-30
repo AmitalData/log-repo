@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="DigitalProfiles"
+  Schema="dbo"
+  DBType="Main"
+  Module="DigitalProfile">
+  <Column
+    Name="Id"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Name"
+    Type="nvarchar"
+    Size="255">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Code"
+    Type="nvarchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
+  </Column>
+</Table>

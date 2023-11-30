@@ -1,0 +1,60 @@
+<div class="TabHolder"  >   
+    <table style="position: unset;height:20px;">
+        <tr class="TabTitleRow" >
+            <td>View Remarks </td>
+        </tr>
+        <tr style="height: 30px;" class="TabTitleRow">
+
+            <td>
+                <span class="Label">Select partners to view event remarks</span>
+            </td>
+
+            <td style="padding: 4px;width: 57px;">
+                <button class="Button" (click)="ClearAllClicked()">Clear All</button>
+            </td>
+
+            <td style="padding: 4px;width: 57px;">
+                <button class="Button" (click)="SelectAllClicked()">Select All</button>
+            </td>
+
+            <td style="padding: 4px; width: 150px;" >
+                <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'General.O.Search' | TextCodeTranslationPipe" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
+            </td>
+
+        </tr>
+    </table>  
+<div>
+    <div class="SimpleGridView">
+        <div class="SimpleGridViewHeader" style="position: unset;height:23px;" >
+            <table style="width:100%;">
+                <tr>
+                    <td style="height:23px;width: 50%;">partner type</td>
+                    <td style="width: 50%;">choose</td>
+                </tr>
+            </table>
+        </div>
+        <div>
+            <table *ngFor="let item of tempPartnerTypesEvent" style="width:100%;position: unset;height:23px;"> 
+                <tr class="SimpleGridViewRow RowHover">
+
+                    <td style="width: 50%;height:23px;">
+                        {{item.PartnerTypeName}}
+                    </td>  
+                    <div></div>
+                    <td class="GridViewCell" style="width: 50%;border-bottom:1px solid #E4E3E1;">
+                        <div class="MediaFill">
+                            <div class="MediaFillRelative">
+                                <div class="CenterCenter" style="vertical-align:central">
+                                    <CheckBox [IsChecked]="item.IsChoose" (Checked)="CheckboxIsSelectedByDefaultClick(item,$event)"></CheckBox>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>   
+    </div>
+</div>    
+
+
+

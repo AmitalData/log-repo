@@ -54,5 +54,7 @@ namespace WebFreight.Web.Helpers
         public string DeviceName { get; set; }
         public string SecurityKey { get; set; }
         public bool KeepOriginalSize { get; set; }
-    }
+        public bool ForceCreateDocument { get; set; }
+		public int TokenTenant { get; set; }
+	}
 }

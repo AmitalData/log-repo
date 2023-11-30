@@ -119,6 +119,7 @@ export class NewTruckerComponent {
             args.Trucker = this.EntityPM;
             args.Address = this.PartnerTamplate.Address;
             if (this.PartnerTamplate.IsAddContactChecked) {
+                this.PartnerTamplate.Contact.SetAsPrimaryForCard = true;
                 args.Contact = this.PartnerTamplate.Contact;
             }
 

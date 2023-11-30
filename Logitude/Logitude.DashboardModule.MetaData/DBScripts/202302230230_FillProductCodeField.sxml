@@ -1,0 +1,8 @@
+﻿<Script DBType="Main" Module="Dashboard" Env="test,local">
+  <Sql Version="1">
+    <![CDATA[
+	update ShipmentAnalytics set ProductCode = (select ProductCode from Shipments where ShipmentAnalytics.Id = Shipments.Id)
+	update QuoteAnalytics set ProductCode = (select ProductCode from Quotes where QuoteAnalytics.Id = Quotes.Id)  
+    ]]>       
+  </Sql>
+</Script>

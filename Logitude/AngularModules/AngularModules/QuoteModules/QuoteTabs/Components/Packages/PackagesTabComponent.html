@@ -13,7 +13,7 @@
                                     <td>{{'Quote.TH.Packages' | TextCodeTranslationPipe}}</td>
 
                                     <td style="width: 90px" *ngIf="!QuoteIsFCL">
-                                        <button id="{{ 'AddPackage' | IdGeneratorPipe}}" [disabled]="!IsAddButtonEnabled" class="Button" (click)="AddPackageClicked()">{{'Quote.B.AddPackage' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'AddPackage' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsAddButtonEnabled" class="Button" (click)="AddPackageClicked()">{{'Quote.B.AddPackage' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width:5px;">
@@ -83,7 +83,7 @@
 
                                         <div style="width: 80px; display: block; float:left; margin-left: 15px;">
                                             <LogLabel [HideColumns]="true" [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled"></RatioBox>
+                                            <RatioBox [ObjectFieldName]="'Ratio'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [EntityPM]="EntityPM" [IsEnabled]="IsEditingEnabled" [SelectedValue]="Ratio"></RatioBox>
                                         </div>
 
                                         <div *ngIf="IsHybrid" style="width: 120px; display: block; float:left; margin-left: 15px;">
@@ -123,7 +123,7 @@
                             <div class="MediaFill">
 
                                 <!-- LCL -->
-                                <logitude-edit-grid *ngIf="!QuoteIsFCL" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                <logitude-edit-grid *ngIf="!QuoteIsFCL" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <!-- Icon -->
                                     <log-column [width]="'25'">

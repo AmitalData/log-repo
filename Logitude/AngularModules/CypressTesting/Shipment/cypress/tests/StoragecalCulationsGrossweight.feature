@@ -1,4 +1,5 @@
-@release  @FeatureToggle 
+@devrelease 
+#@release @FeatureToggle
 Feature: Storage Calculations Gross Weight without Rounding
 
     The user sets up a warehouse with storage charges, creates a Direct Import Air shipment,
@@ -8,8 +9,8 @@ Feature: Storage Calculations Gross Weight without Rounding
     Scenario: Set up a warehouse with storage charges
         Given the user logged in and navigate to warehouse workspace
         And open warehouse with "Testwarehouse" warehouse
-        And fill with the following storage details for "CFS" Type
-            | Currency        | USD |
+        And fill the following storage details
+            | Currency        | NIS |
             | StorageFreeDays | 2   |
         And "Air" weight details as following
             | Measurement | Gross Weight |
@@ -68,4 +69,3 @@ Feature: Storage Calculations Gross Weight without Rounding
             | VATType         | Zero        |
         When create invoice
         Then the invoice should create successfully
-

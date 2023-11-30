@@ -39,6 +39,8 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public double? ContainerType3MarkUpValue { get; set; }
         public double? ContainerType4MarkUpValue { get; set; }
         public double? ContainerType5MarkUpValue { get; set; }
+        public string MarkUpCurrencyId { get; set; }
+
         public string SaleMeasurementId { get; set; }
         public string SaleMeasurementCode { get; set; }
         public string SaleMeasurementShortName { get; set; }
@@ -84,5 +86,10 @@ namespace Logitude.BL.QuoteModel.EntityPMs
         public bool IsChargeBySteps { get; set; }
         public double? SalesWithVATAmount { get; set; }
         public bool IsRegionalTax { get; set; }
+        public string QuoteChargesGroupCode { get; set; }
+        public double? VATAmountInLocalCurrency { get; set; }
+        public double? VATAmountInLineSaleCurrency { get; set; }
+        public double? SaleTotalAmountIncludingVAT { get; set; }
+        public double? SaleTotalAmountLocalIncludingVAT { get; set; }
     }
 }

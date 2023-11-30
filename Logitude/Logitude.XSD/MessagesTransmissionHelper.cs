@@ -410,7 +410,7 @@ namespace Logitude.XSD
             LogitudeMessagesTransmissionLogPM myLog = query.GetSinglePM(this.TransmissionLog.Id, tenant);
             if (myLog != null)
             {
-                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = myLog,  ProcessType = "OnCreate",  ObjectTableName = "LogitudeMessagesTransmissionLog", EntityId = myLog.Id, Tenant = tenant});
+                var mainEntityChangeService = new MainEntityChangeService(new EntityChangeArgs() { EntityPM = myLog,  ProcessType = "OnCreate",  ObjectTableName = "LogitudeMessagesTransmissionLog", EntityId = myLog.Id, Tenant = tenant, EntityReference = myLog.AWBNumber });
                 mainEntityChangeService.AddEntityChange();
 
 

@@ -1,6 +1,10 @@
 ﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
+using System.Text.Json;
 
 namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
 {
@@ -97,6 +101,17 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectField.AdditionalQuerySections = objectFieldPM.AdditionalQuerySections;
             objectField.DisplayInRequiredFields = objectFieldPM.DisplayInRequiredFields;
 
+            objectField.LeftKey = objectFieldPM.LeftKey;
+            objectField.RightKey = objectFieldPM.RightKey;
+            objectField.IsForeignKey = objectFieldPM.IsForeignKey;
+            objectField.ForeignEntity = objectFieldPM.ForeignEntity;
+            objectField.NavigationPropertyName = objectFieldPM.NavigationPropertyName;
+            objectFieldPM.DefaultAdditionalFilters = GetDefaultAdditionalFilters(objectFieldPM);
+            objectField.DefaultAdditionalFilters = objectFieldPM.DefaultAdditionalFilters;
+            objectField.ForMetaDataOnly = objectFieldPM.ForMetaDataOnly;
+            objectField.IsListFilter = objectFieldPM.IsListFilter;
+            objectField.NumberOfDigits = objectFieldPM.NumberOfDigits;
+            objectField.DigitsAfterPoint = objectFieldPM.DigitsAfterPoint;
 
             if (objectFieldModification != null)
             {
@@ -112,6 +127,18 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
                 objectField.MaxLength = objectFieldPM.MaxLength;
                 objectField.MinLength = objectFieldPM.MinLength;
             }
+        }
+
+        private static string GetDefaultAdditionalFilters(ObjectFieldPM objectFieldPM)
+        {
+            QueryFilterItem defaultAdditionalTreeFilters = objectFieldPM.DefaultAdditionalTreeFilters;
+
+            if (defaultAdditionalTreeFilters == null)
+            {
+                return "";
+            }
+
+            return JsonSerializer.Serialize(defaultAdditionalTreeFilters);
         }
     }
 }

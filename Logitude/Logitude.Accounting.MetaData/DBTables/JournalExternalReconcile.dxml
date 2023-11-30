@@ -39,6 +39,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SkipAccountsValidation"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="JournalId"
     ReferencedTable="Journals"

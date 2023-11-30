@@ -1,0 +1,21 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="false">
+	<Sql Version="3">
+		<![CDATA[
+
+    update JournalLines set DebitAccountId = JournlaLinesGlAccountCurrencies.GLAccountId, CreditControlAccountId = ControlAccountId from JournalLines
+    inner join(
+    Select GLAccountCurrencies.GLAccountId, GLA2.ControlAccountId, journallines.DebitAccountId, BillToGLAccountId ,Journals.Id as JournalId, journallines.Line,Journals.JournalNumber, journallines.CreditAccountId
+    , journallines.LocalAmount, journallines.ForeignAmount, journallines.CurrencyId, journallines.ActionCode, journallines.Tenant
+    from Journals
+    inner join journallines on journallines.JournalId = Journals.Id AND journallines.Tenant = Journals.Tenant 
+    inner join ARInvoices on ARInvoices.Id = Journals.AccountingEntityId AND ARInvoices.Tenant = Journals.Tenant
+    inner join GLAccounts as GLA1 on ARInvoices.BillToGLAccountId = GLA1.Id AND ARInvoices.Tenant = GLA1.Tenant 
+    inner join GLAccountCurrencies on ARInvoices.BillToGLAccountId = GLAccountCurrencies.MainGLAccountId AND ARInvoices.Tenant = GLAccountCurrencies.Tenant 
+    inner join GLAccounts as GLA2 on GLAccountCurrencies.GLAccountId = GLA2.Id AND GLAccountCurrencies.Tenant = GLA2.Tenant 
+    where  AccountingEntityCode = 2 AND GLA1.IsMultiCurrency = 1 and GLAccountCurrencies.CurrencyId = journallines.CurrencyId and ActionCode = '1' AND journallines.DebitAccountId != GLAccountCurrencies.GLAccountId) as JournlaLinesGlAccountCurrencies
+    on JournlaLinesGlAccountCurrencies.JournalId = JournalLines.JournalId AND JournlaLinesGlAccountCurrencies.Line = JournalLines.Line
+    AND JournlaLinesGlAccountCurrencies.Tenant = JournalLines.Tenant
+
+     ]]>
+ </Sql>
+</Script>

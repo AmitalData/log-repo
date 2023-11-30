@@ -323,6 +323,11 @@ export class APInvoicePM {
     public set MasterNumber(newValue: string) { if (this.masterNumber != newValue) { this.masterNumber = newValue; this.MarkAsDirty("MasterNumber"); } }
        
 	 
+    private mainEntityMasterShipmentNumbers: string;
+    public get MainEntityMasterShipmentNumbers() { return this.mainEntityMasterShipmentNumbers; }
+    public set MainEntityMasterShipmentNumbers(newValue: string) { if (this.mainEntityMasterShipmentNumbers != newValue) { this.mainEntityMasterShipmentNumbers = newValue; this.MarkAsDirty("MainEntityMasterShipmentNumbers"); } }
+       
+	 
     private description: string;
     public get Description() { return this.description; }
     public set Description(newValue: string) { if (this.description != newValue) { this.description = newValue; this.MarkAsDirty("Description"); } }
@@ -501,6 +506,21 @@ export class APInvoicePM {
     private shipmentsNumbers: string;
     public get ShipmentsNumbers() { return this.shipmentsNumbers; }
     public set ShipmentsNumbers(newValue: string) { if (this.shipmentsNumbers != newValue) { this.shipmentsNumbers = newValue; this.MarkAsDirty("ShipmentsNumbers"); } }
+       
+	 
+    private masterNumbers: string;
+    public get MasterNumbers() { return this.masterNumbers; }
+    public set MasterNumbers(newValue: string) { if (this.masterNumbers != newValue) { this.masterNumbers = newValue; this.MarkAsDirty("MasterNumbers"); } }
+       
+	 
+    private masterShipmentNumbers: string;
+    public get MasterShipmentNumbers() { return this.masterShipmentNumbers; }
+    public set MasterShipmentNumbers(newValue: string) { if (this.masterShipmentNumbers != newValue) { this.masterShipmentNumbers = newValue; this.MarkAsDirty("MasterShipmentNumbers"); } }
+       
+	 
+    private houseNumbers: string;
+    public get HouseNumbers() { return this.houseNumbers; }
+    public set HouseNumbers(newValue: string) { if (this.houseNumbers != newValue) { this.houseNumbers = newValue; this.MarkAsDirty("HouseNumbers"); } }
        
 	 
      
@@ -792,6 +812,56 @@ export class APInvoicePM {
     private paidDate: Date;
     public get PaidDate() { return this.paidDate; }
     public set PaidDate(newValue: Date) { if (this.paidDate != newValue) { this.paidDate = newValue; this.MarkAsDirty("PaidDate"); } }
+       
+	 
+    private isNew: boolean;
+    public get IsNew() { return this.isNew; }
+    public set IsNew(newValue: boolean) { if (this.isNew != newValue) { this.isNew = newValue; this.MarkAsDirty("IsNew"); } }
+       
+	 
+    private isCopied: boolean;
+    public get IsCopied() { return this.isCopied; }
+    public set IsCopied(newValue: boolean) { if (this.isCopied != newValue) { this.isCopied = newValue; this.MarkAsDirty("IsCopied"); } }
+       
+	 
+    private copiedFrom: string;
+    public get CopiedFrom() { return this.copiedFrom; }
+    public set CopiedFrom(newValue: string) { if (this.copiedFrom != newValue) { this.copiedFrom = newValue; this.MarkAsDirty("CopiedFrom"); } }
+       
+	 
+    private globalTaxCalculation: string;
+    public get GlobalTaxCalculation() { return this.globalTaxCalculation; }
+    public set GlobalTaxCalculation(newValue: string) { if (this.globalTaxCalculation != newValue) { this.globalTaxCalculation = newValue; this.MarkAsDirty("GlobalTaxCalculation"); } }
+       
+	 
+    private isUpdateFromPaymentService: boolean;
+    public get IsUpdateFromPaymentService() { return this.isUpdateFromPaymentService; }
+    public set IsUpdateFromPaymentService(newValue: boolean) { if (this.isUpdateFromPaymentService != newValue) { this.isUpdateFromPaymentService = newValue; this.MarkAsDirty("IsUpdateFromPaymentService"); } }
+       
+	 
+    private concurrencyGUID: string;
+    public get ConcurrencyGUID() { return this.concurrencyGUID; }
+    public set ConcurrencyGUID(newValue: string) { if (this.concurrencyGUID != newValue) { this.concurrencyGUID = newValue; this.MarkAsDirty("ConcurrencyGUID"); } }
+       
+	 
+    private newConcurrencyGUID: string;
+    public get NewConcurrencyGUID() { return this.newConcurrencyGUID; }
+    public set NewConcurrencyGUID(newValue: string) { if (this.newConcurrencyGUID != newValue) { this.newConcurrencyGUID = newValue; this.MarkAsDirty("NewConcurrencyGUID"); } }
+       
+	 
+    private isEquipment: boolean;
+    public get IsEquipment() { return this.isEquipment; }
+    public set IsEquipment(newValue: boolean) { if (this.isEquipment != newValue) { this.isEquipment = newValue; this.MarkAsDirty("IsEquipment"); } }
+       
+	 
+    private connectedPaymentsNumbers: string;
+    public get ConnectedPaymentsNumbers() { return this.connectedPaymentsNumbers; }
+    public set ConnectedPaymentsNumbers(newValue: string) { if (this.connectedPaymentsNumbers != newValue) { this.connectedPaymentsNumbers = newValue; this.MarkAsDirty("ConnectedPaymentsNumbers"); } }
+       
+	 
+    private totalEquation: string;
+    public get TotalEquation() { return this.totalEquation; }
+    public set TotalEquation(newValue: string) { if (this.totalEquation != newValue) { this.totalEquation = newValue; this.MarkAsDirty("TotalEquation"); } }
        
 	 
 

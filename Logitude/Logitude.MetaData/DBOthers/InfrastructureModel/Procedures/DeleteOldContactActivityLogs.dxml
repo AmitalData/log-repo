@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Procedure
+  DBType="SystemLogs"
+  Name="DeleteOldContactActivityLogs"
+  Schema="dbo"
+  Module="Common">
+  <SqlScript>
+    <![CDATA[
+CREATE procedure [dbo].[DeleteOldContactActivityLogs] as
+
+
+
+IF OBJECT_ID('tempdb..#tblContactsActivityLogs') IS NOT NULL
+  DROP TABLE #tblContactsActivityLogs
+
+
+
+CREATE TABLE #tblContactsActivityLogs
+        (
+            Id varchar(40) NOT NULL PRIMARY KEY
+        )
+
+
+
+
+        INSERT #tblContactsActivityLogs (Id)
+            SELECT Id
+            FROM [dbo].[ContactActivityLogs]  
+            WHERE [LogDateTime] < DATEADD(MONTH,-6,GETDATE())
+  if(@@ROWCOUNT >0 )
+  begin
+            declare @skiprows int
+            declare @Rows int
+            set @Rows = 1
+            set @skiprows = 0
+
+
+
+         while (@Rows <> 0)
+                BEGIN
+                    DELETE
+                    FROM [dbo].[ContactActivityLogs]
+                    where [Id] in (
+                    select  id
+                    from #tblContactsActivityLogs
+                    order by Id
+                    OFFSET ( @skiprows * 10000) ROWS FETCH NEXT 10000 ROWS ONLY
+
+
+
+                   )
+                    SET @Rows = @@ROWCOUNT
+                    print @Rows  
+                    
+                     set @skiprows = @skiprows + 1
+                    print @skiprows
+                    WAITFOR DELAY '00:00:02'
+                END
+
+
+
+               end
+
+
+
+       DROP TABLE #tblContactsActivityLogs
+
+]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</Procedure>

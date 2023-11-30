@@ -93,7 +93,7 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
 
             this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
                 if (isLoadSuccess) {
-                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;                 
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
                     this.UpdateFiltersFields();
                     this.SetUIProperties();
@@ -106,12 +106,23 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
 
                 this.isLoadHousesRequested = false;
             });
+
+            this.TabSelectedEvent = this.entityArgs.EditComponent.TabSelected.subscribe((tabCode: string) => {
+                if (tabCode == "SHCO") {
+                    this.BuildSummary();
+                }
+            });
         }
 
         this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
             if (s == "ReloadHouses") {
                 this.IsLCLEntity = AppTool.IsLCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
                 this.IsFCLEntity = AppTool.IsFCLEntity(this.EntityPM.TransportModeId, this.EntityPM.ShipmentTypeId);
+
+                if (this.isLoadHousesRequested) {
+                    this.isLoadHousesRequested = false;
+                    this.CurrentSession.SessionEvent.emit("RefreshConnections");
+                }
 
                 this.UpdateFiltersFields();
                 this.LoadAllHouses();
@@ -121,11 +132,13 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
     
     private SessionEvent: any = null;
     private SaveCompletedEvent: any = null;
-    private LoadCompletedEvent: any = null; 
+    private LoadCompletedEvent: any = null;
+    private TabSelectedEvent: any = null;
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
+        AppTool.KillEventEmitter(this.TabSelectedEvent);
     }
 
     private allShipmentSubTypes: ShipmentSubTypeList[] = [];
@@ -423,11 +436,45 @@ export class ShipmentsTabComponent extends BaseComponent implements OnDestroy {
     public SummaryGrossWeight: number = 0;
     public SummaryVolumetricWeight: number = 0;
     public SummaryChargeableWeight: number = 0;
+
+    public SummaryGrossWeightUnitCode: string = "KG";
+    public SummaryVolumetricWeightUnitCode: string = "KG";
+    public SummaryChargeableWeightUnitCode: string = "KG";
     private BuildSummary() {
         this.SummaryQuantity = ArrayTool.Sum(this.ItemsSource1, "Quantity");
-        this.SummaryGrossWeight = ArrayTool.Sum(this.ItemsSource1, "GrossWeight");
-        this.SummaryChargeableWeight = ArrayTool.Sum(this.ItemsSource1, "ChargeableWeight");
-        this.SummaryVolumetricWeight = ArrayTool.Sum(this.ItemsSource1, "VolumetricWeight");
+        this.ComputeSummaryGrossWeight();
+        this.ComputeSummaryChargeableWeight();
+        this.ComputeSummaryVolumetricWeight();
+    }
+
+    ComputeSummaryGrossWeight() {
+        this.SummaryGrossWeightUnitCode = this.EntityPM.GrossWeightUnitCode;
+        this.SummaryGrossWeight = 0;
+        this.ItemsSource1.forEach(item => {
+            var grossWeight = item.GrossWeight;
+            var grossWeightUnit = item.GrossWeightUnitCode;
+            this.SummaryGrossWeight = this.SummaryGrossWeight + AppTool.GetWeightFromWeight(grossWeightUnit, this.EntityPM.GrossWeightUnitCode, grossWeight);
+        });
+    }
+
+    ComputeSummaryChargeableWeight() {
+        this.SummaryVolumetricWeightUnitCode = this.EntityPM.ChargeableWeightUnitCode;
+        this.SummaryChargeableWeight = 0;
+        this.ItemsSource1.forEach(item => {
+            var chargeableWeight = item.ChargeableWeight;
+            var chargeableWeightUnit = item.ChargeableWeightUnitCode;
+            this.SummaryChargeableWeight = this.SummaryChargeableWeight + AppTool.GetWeightFromWeight(chargeableWeightUnit, this.EntityPM.ChargeableWeightUnitCode, chargeableWeight);
+        });
+    }
+
+    ComputeSummaryVolumetricWeight() {
+        this.SummaryChargeableWeightUnitCode = this.EntityPM.ChargeableWeightUnitCode;
+        this.SummaryVolumetricWeight = 0;
+        this.ItemsSource1.forEach(item => {
+            var volumetricWeight = item.VolumetricWeight;
+            var chargeableWeightUnit = item.ChargeableWeightUnitCode;
+            this.SummaryVolumetricWeight = this.SummaryVolumetricWeight + AppTool.GetWeightFromWeight(chargeableWeightUnit, this.EntityPM.ChargeableWeightUnitCode, volumetricWeight);
+        });
     }
 
     Save() {
@@ -619,7 +666,7 @@ class HAWBItem {
             this.SetIsMatched();
             this.SetCellNotes();
 
-            if (fatherComponent.IsFCLEntity) {
+            if (AppTool.IsFCLEntity(item.TransportModeId, item.ShipmentTypeId)) {
                 this.Quantity = item.NumberOfContainers;                
             }
 
@@ -634,6 +681,7 @@ class HAWBItem {
     get ShipmentType() { return this.item.ShipmentType; }
     get CreateDateTime() { return this.item.CreateDateTime; }
     get StatusName() { return this.item.StatusName; }
+    get ExactStatusName() { return this.item.ExactStatusName; }
     get BranchName() { return this.item.BranchName; }
     get House() { return this.item.House; }
     get CustomerName() { return this.item.CustomerName; }
@@ -642,6 +690,8 @@ class HAWBItem {
     get GrossWeight() { return this.item.GrossWeight; }
     get VolumetricWeight() { return this.item.VolumetricWeight; }
     get ChargeableWeight() { return this.item.ChargeableWeight; }    
+    get GrossWeightUnitCode() { return this.item.GrossWeightUnitCode; }
+    get ChargeableWeightUnitCode() { return this.item.ChargeableWeightUnitCode; }
 
     get JobNumber() { return (this.item.ShipmentNumber == this.item.MasterShipmentNumber) ? "" : this.item.MasterShipmentNumber;; }
     public CellNotes: string = null;

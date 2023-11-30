@@ -331,6 +331,19 @@ export class WebFreightDomainService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetGenerateDigitalPortalDomain(customerURL: string, tenant) {
+        customerURL = encodeURIComponent(customerURL);
+        var url = this._apiUrl + '/GetGenerateDigitalPortalDomainAsync?customerURL=' + JSON.stringify(customerURL) + '&tenant=' + tenant;
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var report = response;
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = report;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class TraceEventsServiceArgs {

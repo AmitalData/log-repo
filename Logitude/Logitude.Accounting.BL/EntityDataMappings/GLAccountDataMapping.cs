@@ -28,6 +28,7 @@ using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
 using Logitude.Accounting.BL.EntityUpdateServices;
+using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
@@ -154,12 +155,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
 
             //(showLocals ? xxxxx.LocalName: xxxxx.EnglishName);
-            if (!SuppressFetchOpenReconcilation)
-            {
-                LedgerTransactionRepository LedgerTransactionreop = new LedgerTransactionRepository(entityPOCO.Tenant);
-                entityPM.ReconcilationCount = LedgerTransactionreop.getRecoCount(entityPM.Id);
+            //if (!SuppressFetchOpenReconcilation)
+            //{
+            //    LedgerTransactionRepository LedgerTransactionreop = new LedgerTransactionRepository(entityPOCO.Tenant);
+            //    entityPM.ReconcilationCount = LedgerTransactionreop.getRecoCount(entityPM.Id);
 
-            }
+            //}
 
             if (entityPOCO.AccountTypeCode != null)
             {
@@ -228,6 +229,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
                     entityPM.ChartOfAccountsName = (showLocals ? chartOfAccounts.LocalName : chartOfAccounts.EnglishName);
                     entityPM.ChartOfAccountsCode = chartOfAccounts.Code;
+                    entityPM.ChartOfAccountSecurityLevel = chartOfAccounts.ChartOfAccountSecurityLevel;
                 }
 
                 if (entityPOCO.ChartOfAccountsTypeCode != null)
@@ -278,7 +280,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 {
                     entityPM.IsSplitted = true;
                     entityPM.ParentCurrencyId = gLAccountCurrency.MainGLAccountId;
-
+                    CardRepository repo = new CardRepository(entityPOCO.Tenant);
+                    List<string> partnerTypes = new List<string>() { "AC", "CS", "AG", "AL", "CG", "SG", "SL", "TR", "VD", "WH" };
+                    Card card = repo.GetCardByGLAccountId(gLAccountCurrency.MainGLAccountId, entityPOCO.Tenant, false, partnerTypes);
+                    entityPM.ParentCurrencyGLAccountCardId = card?.Id;
                 }
 
                 //if (entityPOCO.ClientId != null)
@@ -618,23 +623,68 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 }
                 SetPaymentTermToMulti(CardLists, FirstPaymentTermId);
             }
-           GetGLaccountFollowUpDataFields(entityPM);
+            entityPM = GetGLaccountFollowUpDataFields(entityPM);
             if (entityPM.ParentCurrencyId != null)
             {
                 SetVariblesFromParentCurrencyGLAccount(entityPM);
             }
+
+            if(FeatureToggleHelper.HasFeatureToggle("SAL", entityPM.Tenant))
+            {
+                entityPM.Access = CheckIfUserHasSecurityAccessToGLAccount(entityPM.Tenant, entityPM.ChartOfAccountSecurityLevel);
+
+                if (entityPM.Access == false)
+                    ResetAccountBalances(entityPM);
+            }
+
+           
         }
-        private void GetGLaccountFollowUpDataFields(GLAccountPM accountPM)
+        private static void ResetAccountBalances(GLAccountPM account)
+        {
+            account.BalanceInForeignCurrency = 0;
+            account.BalanceInLocalCurrency = 0;
+            account.LocalBalanceInDue = 0;
+            account.ForeignBalanceInDue = 0;
+            account.Period0 = 0;
+            account.Period1 = 0;
+            account.Period2 = 0;
+            account.Period3 = 0;
+            account.Period4 = 0;
+            account.Period5 = 0;
+            account.PeriodFuture = 0;
+            account.PeriodPast = 0;
+            account.CalculatedAgingPeriod1 = 0;
+            account.CalculatedAgingPeriod2 = 0;
+            account.CalculatedAgingPeriod3 = 0;
+            account.TotalOpenChequesInLocalCur = 0;
+            account.TotFutureOpenChequesInLocalCur = 0;
+        }
+
+        private GLAccountPM GetGLaccountFollowUpDataFields(GLAccountPM accountPM)
         {
             GLAccountFollowUpDataPM gLAccountFollowUpData = GetGLAccountFollowUpDataPM(accountPM);
             if(gLAccountFollowUpData != null)
             {
+                accountPM = MapFollowUpDataFields(accountPM, gLAccountFollowUpData);
+            }
+            return accountPM;
+        }
+
+        private GLAccountPM MapFollowUpDataFields(GLAccountPM accountPM, GLAccountFollowUpDataPM gLAccountFollowUpData)
+        {
+            if (accountPM.AccountTypeCode == GLAccountTypes.Client)
+            {
                 accountPM.GLAccountFollowUpDate = gLAccountFollowUpData.FollowUpDate;
                 accountPM.GLAccountFollowUpRemarks = gLAccountFollowUpData.FollowUpRemarks;
             }
-           
+            else if (accountPM.AccountTypeCode == GLAccountTypes.Card || accountPM.AccountTypeCode == GLAccountTypes.Vendor)
+            {
+                accountPM.FollowupDate = gLAccountFollowUpData.FollowUpDate;
+                accountPM.FollowupNotes = gLAccountFollowUpData.FollowUpRemarks;
+            }
+            return accountPM;
         }
-       
+
         private GLAccountFollowUpDataPM GetGLAccountFollowUpDataPM(GLAccountPM account)
         {
             GLAccountFollowUpDataQueryService accountFollowUpDataQueryService = new GLAccountFollowUpDataQueryService(account.Tenant);
@@ -694,7 +744,41 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             return loggedcontact;
         }
 
-        
+
+        private bool CheckIfUserHasSecurityAccessToGLAccount(int tenant, int? chartOfAccountSecurityLevel)
+        {
+            var settings = GetFullAccountingSettings(tenant);
+            var loggedUser = GetLoggedUser(tenant);
+
+            bool hasSecurityAccess =
+                (settings.IsSecurityLevelActivated && chartOfAccountSecurityLevel  <= (loggedUser?.SecurityLevel ?? 0))
+                || (settings.IsSecurityLevelActivated && chartOfAccountSecurityLevel == null)
+                || !settings.IsSecurityLevelActivated;
+            return hasSecurityAccess;
+        }
+        public FullAccountingSettingPM GetFullAccountingSettings(int tenant)
+        {
+            FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(tenant);
+            return fullAccountingSettingQueryService.GetSingle(tenant.ToString(),false,true);
+        }
+        private UserPM GetLoggedUser(int tenant)
+        {
+            UserPM loggedUser;
+            UserQuery userQuery = new UserQuery(tenant);
+            if (!string.IsNullOrEmpty(AuthenticationUtil.AuthenticatedUserEmail))
+            { // user set and passed from from WR
+                loggedUser = userQuery.GetSinglePMByEmail(AuthenticationUtil.AuthenticatedUserEmail, tenant);
+            }
+            else
+            {
+                ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
+                loggedUser = userQuery.GetSinglePM(loggedContact.Id, tenant);
+            }
+            return loggedUser;
+        }
+
+
+
     }
 
 

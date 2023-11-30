@@ -43,6 +43,14 @@ using WebFreight.Web.DataContracts;
 using Simplog.Data.Helpers;
 using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.CoreBL.Reconcile;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.Server.Tools.StorageService;
+using Logitude.Server.Tools.QueueService;
+using Newtonsoft.Json;
+using Simplog.Data.CommonDataModel;
+using Logitude.Accounting.Data.EntityMapping;
+using Intuit.Ipp.Data;
+using System.Collections;
 
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
 {
@@ -64,6 +72,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
 
                 LedgerTransactionRepository repoLedgerTransaction = new LedgerTransactionRepository(tenant);
@@ -82,25 +91,79 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
 
 
 
+        public HttpResponseMessage GetCommunicationLog(string id)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                int tenant = authToken.Tenant;
+
+                ICommonDataContext context = CommonDataContext.GetContext(tenant);
+                CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+                CommunicationLog commLog = communicationLogRep.GetSingleCommunicationLog(id, tenant);
+
+
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, commLog);
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         //[Route("{obj:ReconciliationPM}/InsertReconciliation")]
         public HttpResponseMessage PostInsertReconciliation(ReconciliationPM entityPm)
         {
             try
             {
-                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                if (FeatureToggleHelper.HasFeatureToggle("WRR", entityPm.Tenant) && entityPm.ReconciliationLines != null && entityPm.ReconciliationLines.Count() >= 500)// toggle feature
                 {
+                    //LedgerTransactionRepository repoLedgerTransaction = new LedgerTransactionRepository(entityPm.Tenant);
+                    //var transactionsIds = entityPm.ReconciliationLines.Select(x => x.TransactionId).ToList();
+                    //if (transactionsIds.Count > 0) {
 
-                    string token = HttpContext.Current.Request.Headers["Token"];
-                    AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                    SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                    SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
+                    //    var AreTranscationsInProgress = repoLedgerTransaction.CheckTransactionsInReconcileProgress(transactionsIds, entityPm.Tenant);
+                    //    if (AreTranscationsInProgress) {
+                    //        throw new Exception("Ledger Transaction was found InReconcileProgress");
+                    //    }
+                    //}
+                    var anotherReconciliationInProgress = CheckIfAnotherReconciliationInProgress(entityPm);
+                    if (anotherReconciliationInProgress)
+                    {
+                        throw new Exception("There is already another reconciliation in progress");
+                    }
 
-                    CreateReconciliationService recoService = new CreateReconciliationService();
-                    entityPm.Tenant = authToken.Tenant;
-                    RecoCallback recoCallback = recoService.CreateReconciliation(entityPm);
+                    string communicationLogId = WriteEntityPMOnCommunicationLog(entityPm);
+                    // StorageDataArgs storageDataArgs = new StorageDataArgs() { FileName = fileName, FolderName = "Others", Tenant = entityPm.Tenant };
+                    IQueueService queueservice = new DbQueueService();
+                    queueservice.InitializeQueue("ReconciliationWorkerRole", entityPm.Tenant);
+                    queueservice.Send(new Dictionary<string, string>() { { "tenant", entityPm.Tenant.ToString() }, { "communicationLogId", communicationLogId } }, entityPm.Tenant, null, null);
+                    RecoCallback recoCallBack = new RecoCallback();
+                    recoCallBack.communicationLogId = communicationLogId;
+                    return Request.CreateResponse(HttpStatusCode.OK, recoCallBack);
+                }
+                else
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
 
-                    scope.Complete();
-                    return Request.CreateResponse(HttpStatusCode.OK, recoCallback);
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ReconciliationPM", entityPm.Tenant, authToken.Tenant);
+                        SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
+
+                        CreateReconciliationService recoService = new CreateReconciliationService();
+                        entityPm.Tenant = authToken.Tenant;
+                        RecoCallback recoCallback = recoService.CreateReconciliation(entityPm);
+
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK, recoCallback);
+                    }
                 }
             }
             catch (Exception ex)
@@ -108,6 +171,36 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        private bool CheckIfAnotherReconciliationInProgress(ReconciliationPM entityPm)
+        {
+            ICommonDataContext context = CommonDataContext.GetContext(entityPm.Tenant);
+            CommunicationLogRepository communicationLogRep = new CommunicationLogRepository(context);
+            CommunicationLog commLog = communicationLogRep.GetCommunicationLogByEntityIdAndSubject(entityPm.AccountId, "Create internal Reconciliation", entityPm.Tenant);
+            if (commLog != null && commLog.CommunicationStatusTypeCode == "W")
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private string WriteEntityPMOnCommunicationLog(ReconciliationPM reconciliationPM)
+        {
+            string jsonString = JsonConvert.SerializeObject(reconciliationPM);
+            byte[] xmlFile = Encoding.UTF8.GetBytes(jsonString);
+            return Communications.AddCommunicationLog(new CommunicationsParams()
+            {
+                LoggingEntityId = reconciliationPM.AccountId,
+                Tenant = reconciliationPM.Tenant,
+                CommunicationLogTypeCode = "Q",
+                Priority = 1,
+                InOut = "O",
+                Status = "W",
+                Subject = "Create internal Reconciliation",
+                FolderName = "Other",
+                ByteData = xmlFile
+            });
         }
 
 
@@ -123,6 +216,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnTenant(tenant);
                     SecurityUtility.CheckContactFeature("Reconciliation", "NEW", authToken.Tenant);
                     var accountingContext = AccountingContext.GetContext(authToken.Tenant);
                     var service = new ReconciliationUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
@@ -166,6 +260,7 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
             var accountingContext = AccountingContext.GetContext(tenant);
             var qs = new LedgerTransactionListQueryService(accountingContext);
             GenericCallBack ReconciliationFilterCallBack = null;
@@ -193,7 +288,10 @@ tenant);
             try
             {
                 int tenant = GetAuthinticatedTenant();
-
+                foreach (var item in transactions)
+                {
+                    SecurityUtility.AuthenticationOnEntityTenant("LedgerTransaction", item.Tenant, tenant);
+                }
                 BlockEmptyTransactions(transactions);
 
                 UpdateDraftReconciliationTransactions(transactions, tenant);
@@ -228,6 +326,7 @@ tenant);
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
 
                 var automaticReconcileService = new AutomaticReconcileService();
@@ -253,7 +352,7 @@ tenant);
 
 
                 LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
-
+                transactionQuery.displayNotReconciledOnly = true;
                 GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, true);
 
 
@@ -278,7 +377,7 @@ tenant);
 
         }
 
-      
+
         [HttpGet]
         public HttpResponseMessage GetReconciliationsByFilter(string gLAccountId, [FromUri] ApiQueryFilters filters)
         {
@@ -530,6 +629,45 @@ tenant);
 
         }
 
+        [HttpGet]
+        public HttpResponseMessage GetFirstXLedgerForReconciliationByParam(string gLAccountId, [FromUri] ApiQueryFilters filters)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                QueryOperations queryOperations = GetQueryOperationsFromFilter(filters, tenant);
+
+                LedgerTransactionListQueryService transactionQuery = new LedgerTransactionListQueryService(AccountingContext.GetContext(tenant));
+
+                GenericCallBack callback = transactionQuery.GetReconciliationFilterCallBack(queryOperations, gLAccountId, tenant, true);
+
+
+                List<LedgerTransactionList> openTransactions = transactionQuery.GetOpenReconciliationFilterList(queryOperations, callback, gLAccountId, tenant);
+
+                ServiceResponse response = new ServiceResponse();
+                if (filters.GetCount)
+                {
+                    int count = callback.TotalRecord;
+                    response.Count = count;
+                }
+                int firstX = 500;  // preparation fo a possible future parameter 
+                if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("SML", tenant))
+                {
+                    firstX = 2000;
+                }
+                //response.Result = openTransactions.Take(5000);
+                response.Result = openTransactions.Take(firstX);
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         private static int GetAuthinticatedTenant()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
@@ -601,8 +739,9 @@ tenant);
 
                         string valuestring2 = filter.FieldValue2 != null ? filter.FieldValue2.ToString() : null;
                         object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
-
-                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
+                        bool displayInList = field.DisplayInList;
+                        if (displayInList && !filter.DisplayInList) displayInList = false;
+                        queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, displayInList);
                     }
                     else
                     {
@@ -645,11 +784,12 @@ tenant);
             string TheAccountId,
             string AdjustAccountId,
             DateTime AccountDate,
+            DateTime? DueDate,
+            DateTime? RefDate,
             string Ref1,
             string Ref2,
             string Ref3,
             string Remarks
-
             )
         {
             try
@@ -657,20 +797,12 @@ tenant);
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-
                 int tenant = authToken.Tenant;
-
                 var accountingContext = AccountingContext.GetContext(authToken.Tenant);
                 var createJournalReconcileService = new CreateJournalReconcileService();
-                var pm = createJournalReconcileService
-                    .Create(
-                    accountingContext, authToken.Tenant
-                    , ReconciliationLines, TheAccountId, AdjustAccountId,
-                    AccountDate, Ref1, Ref2, Ref3, Remarks);
-
+                var pm = createJournalReconcileService.Create(accountingContext, authToken.Tenant, ReconciliationLines, TheAccountId
+                    , AdjustAccountId, AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, pm);
-
-
                 return reponseMessage;
             }
             catch (Exception ex)
@@ -678,6 +810,41 @@ tenant);
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
 
+        }
+
+        public HttpResponseMessage PostCreateSplitJournalReconcile(
+            List<ReconciliationLinePM> ReconciliationLines,
+            string TheAccountId,
+            string AdjustAccountId,
+            DateTime? AccountDate,
+            DateTime? DueDate,
+            DateTime? RefDate,
+            string Ref1,
+            string Ref2,
+            string Ref3,
+            string Remarks
+            )
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                int tenant = authToken.Tenant;
+                var accountingContext = AccountingContext.GetContext(authToken.Tenant);
+
+                var createJournalReconcileService = new CreateJournalReconcileService();
+                var journals = createJournalReconcileService
+                    .CreateSplitJournals(accountingContext, authToken.Tenant, ReconciliationLines, TheAccountId, AdjustAccountId
+                    , AccountDate, DueDate, RefDate, Ref1, Ref2, Ref3, Remarks);
+
+                HttpResponseMessage responseMessage = Request.CreateResponse(HttpStatusCode.OK, journals);
+                return responseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
         }
 
         public HttpResponseMessage GetByNumber(string number)
@@ -731,6 +898,103 @@ tenant);
 
         }
 
+        public HttpResponseMessage CancelSelectedReco([FromBody] CancelRecoRequest request)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                int tenant = authToken.Tenant;
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+
+                ReconciliationQueryService reconciliationQuery = new ReconciliationQueryService(MyContext);
+                var recoUpdateservice = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                foreach (var id in request?.SelectedIds)
+                {
+                    ReconciliationPM reconciliationPM = reconciliationQuery.GetSingle(id, false, false);
+                    if (!reconciliationPM.IsCancelled)
+                    {
+                        reconciliationPM.IsCancelled = true;
+                        reconciliationPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        recoUpdateservice.Update(reconciliationPM, true);
+                    }
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
+        public HttpResponseMessage PostReconcileExcelData(ReconcileExcelDataArgs args)
+        {
+            SecurityUtility.AuthenticationOnTenant(args.Tenant);
+
+            ExportToExcelArgs excelArgs = BuildExportToExcelArguments(args);
+            var excelFile = new ExportToExcelHelper().ExportDataToExcel(excelArgs);
+            BlobFileInfo fileInfo = SaveFileToStorage(args.Tenant, excelFile);
+
+            return Request.CreateResponse(HttpStatusCode.OK, fileInfo.FileName);
+        }
+        public HttpResponseMessage PostReconcileExtExcelData(ReconcileExtExcelDataArgs args)
+        {
+            SecurityUtility.AuthenticationOnTenant(args.Tenant);
+
+            ExportToExcelArgs excelArgs = BuildExportToExtExcelArguments(args);
+            var excelFile = new ExportToExcelHelper().ExportDataToExcel(excelArgs);
+            BlobFileInfo fileInfo = SaveFileToStorage(args.Tenant, excelFile);
+
+            return Request.CreateResponse(HttpStatusCode.OK, fileInfo.FileName);
+        }
+        private static BlobFileInfo SaveFileToStorage(int tenant, byte[] excelFile)
+        {
+            BlobFileInfo fileInfo = new BlobFileInfo()
+            {
+                FileName = "DraftReconciliation-" + DateTime.Now.ToShortDateString(),
+                FolderName = "others",
+                Extension = "xls",
+                Tenant = tenant,
+                FileSize = excelFile.Length,
+            };
+            IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+            storageservice.Write(excelFile, fileInfo);
+            return fileInfo;
+        }
+
+        private static ExportToExcelArgs BuildExportToExcelArguments(ReconcileExcelDataArgs args)
+        {
+            return new ExportToExcelArgs()
+            {
+                Data = args.Data.GetEnumerator(),
+                QueryColumns = args.QueryColumns,
+                Tenant = args.Tenant,
+                QueryPM = new QueryPM()
+                {
+                    ObjectTableName = "Reconciliation",
+                    DisplayText = args.Title,
+                    Tenant = args.Tenant
+                }
+            };
+        }
+        private static ExportToExcelArgs BuildExportToExtExcelArguments(ReconcileExtExcelDataArgs args)
+        {
+            return new ExportToExcelArgs()
+            {
+                Data = args.Data.GetEnumerator(),
+                QueryColumns = args.QueryColumns,
+                Tenant = args.Tenant,
+                QueryPM = new QueryPM()
+                {
+                    ObjectTableName = "Reconciliation",
+                    DisplayText = args.Title,
+                    Tenant = args.Tenant
+                }
+            };
+        }
     }
 
 
@@ -741,5 +1005,25 @@ tenant);
 
         public List<LedgerTransactionList> OpenReconciliation { get; set; }
         public List<LedgerTransactionList> OpenReconciliationDraft { get; set; }
+    }
+
+
+    public class ReconcileExcelDataArgs
+    {
+        public string Title { get; set; } = "Draft Reconciliation";
+        public List<LedgerTransactionPM> Data { get; set; }
+        public List<QueryColumnPM> QueryColumns { get; set; }
+        public int Tenant { get; set; }
+    }
+    public class CancelRecoRequest
+    {
+        public List<string> SelectedIds { get; set; }
+    }
+    public class ReconcileExtExcelDataArgs
+    {
+        public string Title { get; set; } = "Draft Reconciliation";
+        public List<ReconcileExternalPageLinePM> Data { get; set; }
+        public List<QueryColumnPM> QueryColumns { get; set; }
+        public int Tenant { get; set; }
     }
 }

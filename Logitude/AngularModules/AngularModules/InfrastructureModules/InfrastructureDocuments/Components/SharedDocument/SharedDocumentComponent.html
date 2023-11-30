@@ -1,4 +1,4 @@
-﻿<table>
+<table>
   
 
     <tr style="height:30px;vertical-align:top">
@@ -77,7 +77,7 @@
                                                                                     <div style="font-size:13px;">{{shipmentShareDocumentsData.ShipmentLevelName}}  Shipment#  {{shipmentShareDocumentsData.ShipmentNumber}}    </div>
 
                                                                                 </td>
-                                                                                <td><div><span *ngIf="!shipmentShareDocumentsData.AgentSharedManifestRef" style="margin-left:3px;font-style:italic;color:gray">(Can't share these documents because this house is not being shared)</span> </div></td>
+                                                                                <td><div><span *ngIf="!shipmentShareDocumentsData.AgentSharedManifestRef && !IsShareDocumentsViaEmail" style="margin-left:3px;font-style:italic;color:gray">(Can't share these documents because this house is not being shared)</span> </div></td>
                                                                             </tr>
 
 
@@ -91,7 +91,7 @@
                                                                                                 <div class="MediaFill">
                                                                                                     <div class="MediaFillRelative">
                                                                                                         <div class="CenterCenter" style="width: 16px;">
-                                                                                                            <CheckBox [IsChecked]="item.Included"  (Checked)="item.Included = $event" [IsEnabled]="item.IsReady && shipmentShareDocumentsData.AgentSharedManifestRef"></CheckBox>
+                                                                                                            <CheckBox [IsChecked]="item.Included"  (Checked)="item.Included = $event" [IsEnabled]="item.IsReady && (shipmentShareDocumentsData.AgentSharedManifestRef || IsShareDocumentsViaEmail)"></CheckBox>
                                                                                                         </div>
                                                                                                     </div> 
                                                                                                 </div>
@@ -131,10 +131,10 @@
 
                                                                                             <td class="CellStretched" style="width: 140px; min-width: 140px; max-width: 140px; position: relative;">
 
-                                                                                                <button id="{{item.DocumentTypeCode+'-S-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisibleViewButton" style="width: 40px;display:inline" class="Button" (click)="ViewButtonClick(item)">View</button>
+                                                                                                <button id="{{item.DocumentTypeCode+'-S-DocsOut' | IdGeneratorAsyncPipe | async}}" *ngIf="item.VisibleViewButton" style="width: 40px;display:inline" class="Button" (click)="ViewButtonClick(item)">View</button>
 
-                                                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisibleBliudDocumentButton" style="width: 75px;display:inline" class="Button" (click)="BuildButtonClick(item)">{{item.ActionButtonLabel}}</button>
-                                                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorPipe}}" *ngIf="item.VisibleUploadButton" style="width: 75px;display:inline" class="Button" (click)="UploadButtonClick(item,shipmentShareDocumentsData)">{{item.ActionButtonLabel}}</button>
+                                                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorAsyncPipe | async}}" *ngIf="item.VisibleBliudDocumentButton" style="width: 75px;display:inline" class="Button" (click)="BuildButtonClick(item)">{{item.ActionButtonLabel}}</button>
+                                                                                                <button id="{{item.DocumentTypeCode+'-P-DocsOut' | IdGeneratorAsyncPipe | async}}" *ngIf="item.VisibleUploadButton" style="width: 75px;display:inline" class="Button" (click)="UploadButtonClick(item,shipmentShareDocumentsData)">{{item.ActionButtonLabel}}</button>
                                                                                             
                                                                                              </td>
 

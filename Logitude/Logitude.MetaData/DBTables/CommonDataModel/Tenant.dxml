@@ -434,7 +434,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsCustomerTenantShare"
+    Name="CustomerTenantShareCustomsFile"
+    OldNames="IsCustomerTenantShare"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -747,8 +748,69 @@
   </Column>
   <Column
     Name="IsQuotesRequestActivatedInShared"
-    ShortName="IsQuotesRequestActivated"
-  Type="bit">
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCargoTrackWebAccessActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="EmptyReturnClosingDays"
+    OldNames="AutomaticallyCloseDays"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EnableDeliveryOptions"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShipmentATAClosingDays"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsDigitalPortalAccessActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UseNewTermsOfUse"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ShipmentATADateIndicator"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ShowMultiUnitsOfMeasurements"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ApproveUploadedDocuments"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="JouranlApprovalIsIdle"
+    Type="bit">
     <Constraints
       Nullable="false" />
   </Column>

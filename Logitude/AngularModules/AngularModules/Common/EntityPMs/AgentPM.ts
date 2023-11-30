@@ -19,13 +19,15 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
 
-export class AgentPM {
+export class AgentPM extends ObjectCustomFieldPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
+		  super("Agent");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
@@ -194,6 +196,11 @@ export class AgentPM {
     private sharedLogisticsInvitationStatusName: string;
     public get SharedLogisticsInvitationStatusName() { return this.sharedLogisticsInvitationStatusName; }
     public set SharedLogisticsInvitationStatusName(newValue: string) { if (this.sharedLogisticsInvitationStatusName != newValue) { this.sharedLogisticsInvitationStatusName = newValue; this.MarkAsDirty("SharedLogisticsInvitationStatusName"); } }
+       
+	 
+    private cargoTrackingInvitationStatusName: string;
+    public get CargoTrackingInvitationStatusName() { return this.cargoTrackingInvitationStatusName; }
+    public set CargoTrackingInvitationStatusName(newValue: string) { if (this.cargoTrackingInvitationStatusName != newValue) { this.cargoTrackingInvitationStatusName = newValue; this.MarkAsDirty("CargoTrackingInvitationStatusName"); } }
        
 	 
     private lastLoginDate: Date;
@@ -432,9 +439,34 @@ export class AgentPM {
     public set BillToId(newValue: string) { if (this.billToId != newValue) { this.billToId = newValue; this.MarkAsDirty("BillToId"); } }
        
 	 
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
+       
+	 
+    private sATReceptorName: string;
+    public get SATReceptorName() { return this.sATReceptorName; }
+    public set SATReceptorName(newValue: string) { if (this.sATReceptorName != newValue) { this.sATReceptorName = newValue; this.MarkAsDirty("SATReceptorName"); } }
+       
+	 
     private imageDetailId: string;
     public get ImageDetailId() { return this.imageDetailId; }
     public set ImageDetailId(newValue: string) { if (this.imageDetailId != newValue) { this.imageDetailId = newValue; this.MarkAsDirty("ImageDetailId"); } }
+       
+	 
+    private importLocalCustomerGroupId: string;
+    public get ImportLocalCustomerGroupId() { return this.importLocalCustomerGroupId; }
+    public set ImportLocalCustomerGroupId(newValue: string) { if (this.importLocalCustomerGroupId != newValue) { this.importLocalCustomerGroupId = newValue; this.MarkAsDirty("ImportLocalCustomerGroupId"); } }
+       
+	 
+    private exportLocalCustomerGroupId: string;
+    public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
+    public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
+       
+	 
+    private eORInumber: string;
+    public get EORInumber() { return this.eORInumber; }
+    public set EORInumber(newValue: string) { if (this.eORInumber != newValue) { this.eORInumber = newValue; this.MarkAsDirty("EORInumber"); } }
        
 	 
 

@@ -1,0 +1,7 @@
+.tooltip,.tooltip-trigger{
+    display: inline-block;
+
+}
+.tooltip-trigger{
+    cursor: default;
+}

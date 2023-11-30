@@ -31,14 +31,17 @@ export class DownloadManager {
     }
 
 
-    public static DownloadPage(id: string, securityId: string=null ) {
+    public static DownloadPage(id: string, securityId: string = null, forceDownload: boolean = false, requestArea: string = null) {
 
         var url: string = !AppTool.IsNullOrEmpty(securityId) ? "securityId=" + securityId: "id=" + id;
         if (!AppTool.IsNullOrEmpty(id) && !AppTool.IsNullOrEmpty(securityId)  ) {
             url += ("~" + id );
         }
         var token = ServiceHelper.GetLDocumentDownloadToken();
-        var link = AppTool.GetLogitudeURL() + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + token;
+        var link = AppTool.GetLogitudeURL() + "WebPages/DownloadPage.aspx?" + url + "&tempId=" + token + "&forceDownload=" + forceDownload;
+        if(requestArea != null) {
+            link += "&requestArea=" + requestArea ;
+        }
         var win = window.open(link, '_blank');
         
         if (win) {
@@ -62,9 +65,13 @@ export class DownloadManager {
     }
 
 
-    public static DownloadTermsOfUse(privateLabalId: string) {
+    public static DownloadTermsOfUse(privateLabalId: string, documentId:string = null) {
         const token = ServiceHelper.GetLDocumentDownloadToken();
         let link = AppTool.GetLogitudeURL() + "WebPages/TermsOfUseDownloadPage.aspx?PrivateLableId=" + privateLabalId + "&tempId=" + token;
+        if (!AppTool.IsNullOrEmpty(documentId)) {
+            link += "&DocumentId=" + documentId;
+        }
+
         let win = window.open(link, '_blank');
         if (win) {
             win.focus();

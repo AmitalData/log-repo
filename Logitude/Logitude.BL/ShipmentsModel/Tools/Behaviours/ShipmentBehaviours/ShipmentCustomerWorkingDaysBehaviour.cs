@@ -123,6 +123,16 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     Customer customer = customerRepository.GetSingleCustomerWithCardOnly(entityPM.CustomerId, initializer.Tenant, false);
                     if (customer != null)
                     {
+                        if (customer.StartWorkingDate == null && !entityPM.IsHybrid && !initializer.LoggedTenant.IsHybrid)
+                        {
+                            customer.StartWorkingDate = initializer.TodayDate;
+                        }
+
+                        if (customer.FirstShipmentDate == null)
+                        {
+                            customer.FirstShipmentDate = initializer.LoggedTenant.IsHybrid ? entityPM.CreateDateTime : initializer.TodayDate;
+                        }
+
                         customer.LastShipmentDate = this.entityPM.CreateDateTime;
                         customerRepository.Update(customer);
                         customerRepository.SubmitChanges();
@@ -144,7 +154,6 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                     }
                 }
             }
-
         }
     }
 }

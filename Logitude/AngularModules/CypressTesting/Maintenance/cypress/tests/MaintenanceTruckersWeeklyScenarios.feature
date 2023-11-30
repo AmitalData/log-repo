@@ -1,11 +1,20 @@
-@release @all @dev @weekly 
+@release @stable @weekly
 Feature: Trucker Create and Edit in Maintenance Module
     The user creates a trucker and edits it from the Maintenance Module.
 
     Scenario:Add Trucker Code with lenght more than 7
         Given the user logged in and navigate to "Truckers" in maintenance menu
-        When add "12345678" as trucker code
+        When navigate trucker wizard and add "12345678" as trucker code
         Then a validation message with "Code field must be less than 7 and more than 0" error should appear
+
+    Scenario:Add Trucker Code already exists
+        When add "TLON" as trucker code
+        Then a validation code message with "This trucker already exists" should appear
+
+    Scenario: Assert create Trucker without Code
+        Given the user fill the required fields except the code
+        When create trucker
+        Then a validation single message with "Code Field is Required" error should appear
 
     Scenario: Create a new trucker
         Given a trucker with the following details
@@ -53,11 +62,12 @@ Feature: Trucker Create and Edit in Maintenance Module
 
     Scenario: Edit the trucker
         Given "Test edit trucker" as trucker notes
+        And inactivate the trucker
         And fill the following trucker Billing details
             | BankName | trucker Bank |
             | IBANNo   | zero Bank    |
         When update trucker
         Then the trucker should update successfully
         And the following event should appear in events tab
-            | Event           |
-            | Trucker Updated |
+            | Event           | Notes               |
+            | Trucker Updated | Trucker Inactivated |

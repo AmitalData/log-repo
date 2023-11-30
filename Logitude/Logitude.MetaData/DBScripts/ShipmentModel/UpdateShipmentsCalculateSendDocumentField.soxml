@@ -1,0 +1,72 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="CommunicationLogs">
+  <Sql Version="7">
+    <![CDATA[
+	
+	
+declare @ObjectTableId as VARCHAR(15)   set @ObjectTableId = (select id from ObjectTables where Name = 'Shipment')
+
+  declare @Id as varchar(15)
+       declare @FieldName as VARCHAR(200) 
+	   declare @FieldValue as datetime 
+	    declare @DocumentTypeId as VARCHAR(15) 
+			    declare @Tenant as int
+ 
+
+    DECLARE CommunicationLogCursor CURSOR READ_ONLY
+    FOR
+    select CommunicationLogs.EntityId,DocumentsFilings.DocumentTypeId , DocumentTypes.OnSendPopulateDateFieldName ,max(CommunicationLogs.DoneDate) , CommunicationLogs.Tenant
+    from CommunicationLogs
+    inner join DocumentOuts on CommunicationLogs.DocumentOutId = DocumentOuts.Id
+    inner join DocumentsFilings on DocumentOuts.Id = DocumentsFilings.Id
+    inner join DocumentTypes on DocumentsFilings.DocumentTypeId = DocumentTypes.Id
+  where $LastCounterWhere$ and CommunicationLogs.ObjectTableId = @ObjectTableId and CommunicationLogs.CommunicationLogTypeCode = 'E' AND CommunicationLogs.InOut = 'O'  
+  AND DocumentsFilings.DirectionCode = 'O' AND  DocumentTypes.OnSendPopulateDateFieldName is not null AND CommunicationLogs.CommunicationStatusTypeCode = 'D'
+  GROUP BY DocumentTypes.OnSendPopulateDateFieldName, DocumentsFilings.DocumentTypeId , CommunicationLogs.EntityId ,CommunicationLogs.Tenant
+
+   OPEN CommunicationLogCursor FETCH NEXT FROM CommunicationLogCursor INTO  @Id,@DocumentTypeId ,@FieldName  , @FieldValue , @Tenant
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+
+		 declare @functionring as varchar(3000)
+		 	declare @TableName varchar(100) 
+ 
+			set @TableName ='Shipments'
+
+
+		set @FieldName =  REPLACE(@FieldName,'Shipment.', '');
+
+	  IF COL_LENGTH('ShipmentComputedFields',@FieldName) IS  NULL
+	  begin 
+	   IF COL_LENGTH('ShipmentComputedFields',REPLACE(@FieldName, 'Date', '')) IS not NULL
+	   begin  set @FieldName = REPLACE(@FieldName, 'Date', ''); set @TableName = 'ShipmentComputedFields' end
+	  end
+	  else set @TableName = 'ShipmentComputedFields'
+	 set @functionring = 'update ' +@TableName +' set ' + @FieldName +'= ' + ''''+ CONVERT(varchar, @FieldValue,113) +'''' +'  where id = ' + ''''+ @Id +'''' 
+
+    if(CHARINDEX('.Field', @FieldName) <= 0)
+	  begin 
+	  EXEC(@functionring)
+	  end  
+  
+    FETCH NEXT FROM CommunicationLogCursor INTO @Id,@DocumentTypeId ,@FieldName ,@FieldValue , @Tenant
+    END
+    CLOSE CommunicationLogCursor
+    DEALLOCATE CommunicationLogCursor
+
+ 
+       
+			 
+			
+
+     
+
+ 
+
+    
+
+    ]]>
+  </Sql>
+</Script>
+
+
+

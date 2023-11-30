@@ -87,9 +87,10 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             if (interestReportArguments.AllSelected)
             {
                 List<InterestReportPM> interestReports = interestReportQueryService.GetNotInvoicedInterestReportsByDates(interestReportArguments.FromDate, interestReportArguments.ToDate, interestReportArguments.Tenant, interestReportArguments.ExcludedIds == null ? new List<string>() : interestReportArguments.ExcludedIds);
-                List<InterestReportLinesByDatePM> LinesByDatesForSelectedReports = interestReportQueryService.GetFirstAndLastInterestReportLineByDatesForInterestReports(interestReports.Select(s=>s.Id).ToList()).ToList();
+                List<InterestReportPM> interestReportsFillteredByCategory = interestReportQueryService.GetNotInvoicedInterestReportsByCategory(interestReports, interestReportArguments);
+                List<InterestReportLinesByDatePM> LinesByDatesForSelectedReports = interestReportQueryService.GetFirstAndLastInterestReportLineByDatesForInterestReports(interestReportsFillteredByCategory.Select(s=>s.Id).ToList()).ToList();
              
-                foreach (InterestReportPM report in interestReports)
+                foreach (InterestReportPM report in interestReportsFillteredByCategory)
                 {
 
                     report.InterestReportLinesByDates = LinesByDatesForSelectedReports.Where(s=>s.InterestReportId == report.Id).ToList();
@@ -167,8 +168,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
                 UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
             }
-        }
-
+        }  
         private void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM , InterestReportPM interestReport)
         {
             string ARInvoiceChildEntityReference = !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) ? aRInvoicePM.InvoiceNumber : "Draft: " + aRInvoicePM.DraftNumber;

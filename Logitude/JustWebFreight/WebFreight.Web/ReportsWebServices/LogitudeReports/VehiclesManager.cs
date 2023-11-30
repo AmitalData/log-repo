@@ -22,6 +22,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -126,17 +127,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public byte[] GetData()
         {
             VehiclesDataProvider myDataProvider = new VehiclesDataProvider();
-
             myDataProvider = this.LoadDataProvider();
-
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(VehiclesDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(VehiclesDataProvider), tenant);
         }
 
         private VehiclesDataProvider LoadDataProvider()
@@ -215,7 +207,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                              where (dept.PackageType.IsVehicle || insidepackages.PackageType.IsVehicle) && (dept.PackageTypeId == Packagetype || insidepackages.PackageTypeId == Packagetype)
                                              select new ShipmentPackageData()
                                              {
-
                                                  ShipmentNumber = shipment.ShipmentNumber,
                                                  CustomerId = shipment.CustomerId,
                                                  StatusId = shipment.StatusId,
@@ -226,15 +217,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                  ArrivalDate = master.Transshipment3ATA != null ? master.Transshipment3ATA : (master.Transshipment3ETA != null ? master.Transshipment3ETA : (master.Transshipment2ATA != null ? master.Transshipment2ATA : (master.Transshipment2ETA != null ? master.Transshipment2ETA : (master.Transshipment1ATA != null ? master.Transshipment1ATA : (master.Transshipment1ETA != null ? master.Transshipment1ETA : (master.MainCarriageATA != null ? master.MainCarriageATA : master.MainCarriageETA)))))),
                                                  ArrivalDateIndication = master.Transshipment3ATA != null ? "(Actual)" : master.Transshipment3ETA != null ? "(Expected)" : master.Transshipment2ATA != null ? "(Actual)" : master.Transshipment2ETA != null ? "(Expected)" : master.Transshipment1ATA != null ? "(Actual)" : master.Transshipment1ETA != null ? "(Expected)" : master.MainCarriageATA != null ? "(Actual)" : "(Expected)",
 
-                                                 //POL = shipment.ShipmentLevelCode == "H" ? shipment.FromPortId : master.Transshipment3FromPortId != null ? master.Transshipment3FromPortId : master.Transshipment2FromPortId != null ? master.Transshipment2FromPortId : master.Transshipment1FromPortId != null ? master.Transshipment1FromPortId : master.MainCarriageFromPortId,
-                                                 //POD = shipment.ShipmentLevelCode == "H" ? shipment.ToPortId : master.Transshipment3ToPortId != null ? master.Transshipment3ToPortId : master.Transshipment2ToPortId != null ? master.Transshipment2ToPortId : master.Transshipment1ToPortId != null ? master.Transshipment1ToPortId : master.MainCarriageFinalDestinationPortId,
-                                                 //DepartualDate = master.Transshipment3ATD != null ? master.Transshipment3ATD : master.Transshipment2ATD != null ? master.Transshipment2ATD : master.Transshipment1ATD != null ? master.Transshipment1ATD : master.MainCarriageATD != null ? master.MainCarriageATD : master.Transshipment3ETD != null ? master.Transshipment3ETD : master.Transshipment2ETD != null ? master.Transshipment2ETD : master.Transshipment1ETD != null ? master.Transshipment1ETD : master.MainCarriageETD,
-                                                 //DepartualDateIndication = master.Transshipment3ATD != null ? "(Actual)" : master.Transshipment2ATD != null ? "(Actual)" : master.Transshipment1ATD != null ? "(Actual)" : master.MainCarriageATD != null ? "(Actual)" : "(Expected)",
-                                                 //ArrivalDate = master.Transshipment3ATA != null ? master.Transshipment3ATA : master.Transshipment2ATA != null ? master.Transshipment2ATA : master.Transshipment1ATA != null ? master.Transshipment1ATA : master.MainCarriageATA != null ? master.MainCarriageATA : master.Transshipment3ETA != null ? master.Transshipment3ETA : master.Transshipment2ETA != null ? master.Transshipment2ETA : master.Transshipment1ETA != null ? master.Transshipment1ETA : master.MainCarriageETA,
-                                                 //ArrivalDateIndication = master.Transshipment3ATA != null ? "(Actual)" : master.Transshipment2ATA != null ? "(Actual)" : master.Transshipment1ATA != null ? "(Actual)" : master.MainCarriageATA != null ? "(Actual)" : "(Expected)",
                                                  TransportModeId = shipment.TransportModeId,
                                                  Carrier = master.MainCarriageCarrierId,
-                                                 VesselId = master.MainCarriageVesselId,
+                                                 VesselName = master.MainCarriageVesselName,
                                                  CarrierNumber = master.MainCarriageCarrierNumber,
                                                  CarrierPrefix = master.MainCarriageCarrierPrefix,
                                                  MasterNumber = shipment.TransportModeId == "A" ? master.AirlinePrefix + master.Master : master.Master,
@@ -277,7 +262,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                                  ArrivalDateIndication = master.Transshipment3ATA != null ? "(Actual)" : master.Transshipment3ETA != null ? "(Expected)" : master.Transshipment2ATA != null ? "(Actual)" : master.Transshipment2ETA != null ? "(Expected)" : master.Transshipment1ATA != null ? "(Actual)" : master.Transshipment1ETA != null ? "(Expected)" : master.MainCarriageATA != null ? "(Actual)" : "(Expected)",
                                                  TransportModeId = shipment.TransportModeId,
                                                  Carrier = master.MainCarriageCarrierId,
-                                                 VesselId = master.MainCarriageVesselId,
+                                                 VesselName = master.MainCarriageVesselName,
                                                  CarrierNumber = master.MainCarriageCarrierNumber,
                                                  CarrierPrefix = master.MainCarriageCarrierPrefix,
                                                  MasterNumber = shipment.TransportModeId == "A" ? master.AirlinePrefix + master.Master : master.Master,
@@ -399,18 +384,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 
                 if (item.TransportModeId=="O")
                 {
-
-                    Vessel vessel = (from a in Commoncontext.Vessels where a.Id == item.VesselId && a.Tenant == tenant select a).FirstOrDefault();
-                     //package.CarrierNumber =( vessel!=null?( vessel.EnglishName + " / "):"")+(item.CarrierPrefix!=null? item.CarrierPrefix :"" )+ (item.CarrierNumber!=null? item.CarrierNumber:"");
-                    package.CarrierNumber = vessel != null ? (vessel.EnglishName+"/"+""+( (item.CarrierPrefix != null ? item.CarrierPrefix : "")+(item.CarrierNumber != null ? item.CarrierNumber : ""))): (item.CarrierNumber != null ? item.CarrierNumber : "");
-                    
+                    package.CarrierNumber = item.VesselName != null ? (item.VesselName+"/"+""+( (item.CarrierPrefix != null ? item.CarrierPrefix : "")+(item.CarrierNumber != null ? item.CarrierNumber : ""))): (item.CarrierNumber != null ? item.CarrierNumber : "");                    
                 }
+
                 else
                 {
                     package.CarrierNumber = item.CarrierPrefix+item.CarrierNumber;
                 }
-                myDataProvider.ShipmentPackages.Add(package);
 
+                myDataProvider.ShipmentPackages.Add(package);
             });
 
 
@@ -434,7 +416,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public string ArrivalDateIndication { get; set; }
         public string TransportModeId { get; set; }
         public string Carrier { get; set; }
-        public string VesselId { get; set; }
+        public string VesselName { get; set; }
         public string CarrierNumber { get; set; }
         public string CarrierPrefix { get; set; }
         public string MasterNumber { get; set; }

@@ -1,4 +1,5 @@
-﻿using Simplog.Data.Helpers;
+﻿using Logitude.Server.Tools.Helpers;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -19,6 +20,21 @@ namespace Logitude.Server.Tools.QueueService
         {
             int waitingStatus = 0;
             string workerName = GetCurrentWorkerName();
+            if (FeatureToggleHelper.HasFeatureToggle("NWR", tenant))
+            {
+                 waitingStatus = -1030;
+                if (!string.IsNullOrEmpty(workerName))
+                {
+                    if (workerName.ToLower() == "staging")
+                    {
+                        workerName = "stagingnew";
+                    }
+                    else if (workerName.ToLower() == "production")
+                    {
+                        workerName = "productionnew";
+                    }
+                }
+            }
             if (!string.IsNullOrEmpty(workerName))
             { 
                 waitingStatus = GetWatingStatusByWorkerRoleName(tenant, workerName);

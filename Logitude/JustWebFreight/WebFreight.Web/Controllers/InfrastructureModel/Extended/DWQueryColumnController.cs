@@ -56,6 +56,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("DWQueryColumn", entityPM.Tenant, authToken.Tenant);
+
+
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 DWQueryColumnService service = new DWQueryColumnService(objectContext, entityPM.Tenant);
                 service.Create(entityPM);
@@ -76,6 +79,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("DWQueryColumn", entityPM.Tenant, authToken.Tenant);
+
+
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 DWQueryColumnService service = new DWQueryColumnService(objectContext, entityPM.Tenant);
                 DWQueryColumnRepository Repo = new DWQueryColumnRepository(entityPM.Tenant);
@@ -105,6 +111,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
                 DWQueryColumnRepository repo = new DWQueryColumnRepository(tenant);
                 var temp = repo.GetSingleDWQueryColumn(id, tenant);
@@ -126,7 +134,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
         [WebGet(UriTemplate = "getDWQueryColumnpms/{tenant}/{dwqueryid}/{dwobjecttableid}/{userid}")]
         public List<DWQueryColumnPM> GetDWQueryColumnPMs(int tenant, string dwqueryid, string dwobjecttableid, string userid)
         {
-            //SecurityUtility.AuthenticationOnTenant(tenant);
+
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
             DWQueryColumnRepository dWQueryColumnRepository = new DWQueryColumnRepository(tenant);
             DWQueryColumnQuery DWQueryColumnQuery = new DWQueryColumnQuery(dWQueryColumnRepository);
             var DWQueryColumns = DWQueryColumnQuery.GetDWQueryColumnsBydWQueryIdAndUserAngular(tenant, userid, dwqueryid);//.ToList();

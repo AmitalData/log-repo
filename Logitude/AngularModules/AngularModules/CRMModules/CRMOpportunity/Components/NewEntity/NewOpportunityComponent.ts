@@ -1,5 +1,5 @@
 
-import { Component, AfterViewInit, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, AfterViewInit, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
 import {OpportunityPM} from '../../../../CRM/EntityPMs/OpportunityPM';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {OpportunityPMService} from '../../../../CRM/Services/StandardPMs/OpportunityPMService';
@@ -28,7 +28,7 @@ import {OpportunityArgs} from '../../../../CRM/Args';
     templateUrl: './NewOpportunityComponent.html',
 })
 
-export class NewOpportunityComponent extends BaseComponent implements AfterViewInit {
+export class NewOpportunityComponent extends BaseComponent implements OnInit, AfterViewInit {
     public ObjectTableName: string = "Opportunity";
     public DataContext: NewOpportunityComponent = this;
     public EntityPM: OpportunityPM = new OpportunityPM();
@@ -53,16 +53,40 @@ export class NewOpportunityComponent extends BaseComponent implements AfterViewI
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this._entityResourceService.getEntityResourceByTableName("Card", 0).subscribe((response: any) => {
-
+            this.ComputeCustomerDependency();
         });
 
+    }
+
+    ngOnInit() {
+        this.ComputeCustomerDependency();
     }
 
     ngAfterViewInit() {
         this.SetUIProperties();
         this.AddCustomerVisibility = AppTool.IsNullOrEmpty(this.EntityPM.CustomerId) ? true : false;
         OpportunityPMInitService.InitValues(this.EntityPM, this.IsNew);
-        this.LoadChildComponent();   
+        this.LoadChildComponent();
+    }
+
+
+    //Customer
+    //Customer
+    public CustomerDependencyProperty1: string = "PO,CS";
+    public CustomerDependencyProperty1IsList: boolean = true;
+    public CustomerDependencyProperty2: string = "True";
+
+    private ComputeCustomerDependency() {
+        var allowAgentFeatureToggle = this.IsAllowAgentFeatureToggle();
+        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV && allowAgentFeatureToggle != null) {
+            this.CustomerDependencyProperty1 = "PO,CS,AG";
+            this.CustomerDependencyProperty2 = null;
+        }
+    }
+
+    IsAllowAgentFeatureToggle() {
+        var isAllowAgentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAC")[0];
+        return isAllowAgentFeatureToggle;
     }
 
 
@@ -80,7 +104,7 @@ export class NewOpportunityComponent extends BaseComponent implements AfterViewI
 
                 });
 
-                }
+                } 
             }
 
     }

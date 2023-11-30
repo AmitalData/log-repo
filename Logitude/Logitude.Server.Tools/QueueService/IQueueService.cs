@@ -1,9 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace Logitude.Server.Tools.QueueService
 {
@@ -13,6 +9,8 @@ namespace Logitude.Server.Tools.QueueService
         void Send(Dictionary<string, string> messageValues, int tenant, TimeSpan? delayTime = null, string CustomerId = null, string BatchNumber = null, DateTime? NextRunDate = null);
         //QueueResponse Receive();
         QueueResponse Receive(TimeSpan? serverWaitTime = null);
+
+        QueueResponse ReceiveJournal(TimeSpan? serverWaitTime = null);
         void Complete();
         void Delay(TimeSpan delayTime);
         void Return();
@@ -27,13 +25,14 @@ namespace Logitude.Server.Tools.QueueService
         //public string ErrorMessage { get; set; }
         public string MessageId { get; set; }
         public int RetryNumber { get; set; }
+        public int Tenant { get; set; }
         public IDictionary<string, string> MessageValues { get; set; }
     }
+
     public partial class QueueResponse
     {
         public DateTime? MessageCreatedServerTime { get; set; }
     }
-
 
     public partial class CustomDBQueueMessage //: QueueResponse//Oracle Extention
     {
@@ -62,8 +61,9 @@ namespace Logitude.Server.Tools.QueueService
             
             this.CustomDbQueueParams = CustomDbQueueParams;
         }
-        public QueueResponse MyQueueResponse { get; private set; }
-        public DateTime? MessageCreatedServerTime { get; set; }
+         public QueueResponse MyQueueResponse { get; private set; }
+ 
+         public DateTime? MessageCreatedServerTime { get; set; }
         public QueueStatusEnum QueueStatus { get; set; }
 
         public IDictionary<string, string> Properties { get; set; }

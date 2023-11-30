@@ -466,6 +466,68 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MasterNumbers"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MasterShipmentNumbers"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HouseNumbers"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GlobalTaxCalculation"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConcurrencyGUID"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsEquipment"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ConnectedPaymentsNumbers"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TotalEquation"
+    Type="varchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConfirmationNumber"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="Cards"
@@ -521,10 +583,20 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="GlobalTaxCalculation"
+    ReferencedTable="QBOGlobalTaxCalculations"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,StatusCode" />
   <Index
     Columns="VendorGLAccountId" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+  <Index
+    Columns="Tenant,IsClosed" />
+  <Index
+    Columns="Tenant"
+    Include="SearchFields" />
 </Table>

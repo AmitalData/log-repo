@@ -30,6 +30,15 @@ namespace Logitude.Accounting.Data.Repositories
                                       select a ).FirstOrDefault();
             return interestReport;
         }
+
+        public InterestReport GetSingleByARInvoiceId(string invoiceId, int tenant)
+        {
+            InterestReport interestReport = (from a in context.InterestReports
+                                             where a.Tenant == tenant && a.ARinvoiceId==invoiceId
+                                             select a).FirstOrDefault();
+            return interestReport;
+        }
+
         public InterestReport GetSingleByCusstomerAndStatudNotCancelledOrFailed(string ReportNumber, string CustomerId, int tenant)
         {
             InterestReport interestReport = (from a in context.InterestReports
@@ -89,7 +98,7 @@ namespace Logitude.Accounting.Data.Repositories
             return result;
         }
 
-        public InterestReport GetDraftInterestReportForCustomer(string customerId,string glAccount, int tenant)
+        public InterestReport GetDraftInterestReportForCustomer(string customerId, string glAccount, int tenant)
         {
             InterestReport interestReport = (from a in context.InterestReports
                                              where a.Tenant == tenant && a.InterestReportStatusCode == "1"
@@ -97,6 +106,15 @@ namespace Logitude.Accounting.Data.Repositories
                                              && a.GLAccountId == glAccount
                                              select a).FirstOrDefault();
             return interestReport;
+        }
+        public List<InterestReport> GetInterestReportsForCustomer(string customerId, string glAccount, int tenant)
+        {
+            var interestReports = (from a in context.InterestReports
+                                             where a.Tenant == tenant
+                                             && a.CustomerId == customerId
+                                             && a.GLAccountId == glAccount
+                                             select a).ToList();
+            return interestReports;
         }
 
         public InterestReport GetPreviousInvoicedOrCloseWithoutInvoicedtInterestReportForCustomer(string customerId, int tenant, DateTime CalculationDate)

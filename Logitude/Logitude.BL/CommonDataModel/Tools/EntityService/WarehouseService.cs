@@ -21,6 +21,8 @@ using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.Helpers;
 using Logitude.BL.DataContracts;
+using Logitude.Server.Tools.QueueService;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -140,7 +142,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
-            
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Warehouse", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<WarehousePM> { entityPM }.Cast<object>().ToList() }).Update();
+
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
                 this.UpdateContactSearchField(itemPM);
@@ -150,6 +153,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             {
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
+            AddCardKafkaQueueMessage();
         }
 
         public void Update(WarehousePM entityPM, bool mapComposition = false)
@@ -196,12 +200,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Warehouse", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<WarehousePM> { entityPM }.Cast<object>().ToList() }).Update();
 
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (!LogitudeSettings.IsCostomsDeploy)
             {
                 RunStoredProcedureClass.UpdateCardSearcsRecords(entityPM.Id, entityPM.Tenant);
             }
+            AddCardKafkaQueueMessage();
         }
 
         private void InitializeComponent()
@@ -453,6 +459,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             itemContactPM.CardId = this.entityPM.Id;
             itemContactPM.CompanyName = this.entityPM.EnglishName;
+            itemContactPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             if (itemContactPM.IsCreatedWithPartner)
             {
@@ -543,6 +550,23 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                     #endregion
                 }
+                else
+                {
+                    Contact newContact = contactRepository.GetSingleContact(itemContactPM.Id, itemContactPM.Tenant);
+
+                    ContactMapping.MapEntity(itemContactPM, newContact, isNewEntity);
+                    contactRepository.Update(newContact);
+                }
+
+                if (isNewEntity)
+                {
+                    if (itemContactPM.SetAsPrimaryForCard)
+                    {
+                        entityPM.PrimaryContactId = itemContactPM.Id;
+                        entityPM.PrimaryContactPhone = itemContactPM.BusinessPhone;
+                        entityPM.PrimaryContactName = itemContactPM.EnglishName;
+                    }
+                }
 
                 CardContact newCardContact = new CardContact()
                 {
@@ -604,6 +628,26 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
+        }
+
+        private void AddCardKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "Card" },
+                { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
 
         public void Submit()

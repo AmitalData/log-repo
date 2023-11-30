@@ -21,6 +21,7 @@ declare var insertAtSubject: any;
 import {CountryList} from '../../../../Common/EntityLists/CountryList';
 import {CountryListService} from '../../../../Common/Services/StandardLists/CountryListService';
 import {DocumentTypeTemplatePM} from '../../../../Common/EntityPMs/DocumentTypeTemplatePM';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     
@@ -52,6 +53,10 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
      CountryLists: CountryList[] = [];
      DocumentTypeTemplates: DocumentTypeTemplatePM[];
      IsDisableObjectTable: boolean = false;
+
+    public IsLogLovReady: boolean = false;
+    public ObjectTablesFilterItems: ApiQueryFilters;
+    public IsCustomObject: boolean = false;
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
@@ -130,67 +135,10 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         } 
 
 
-
-
-
-        var tempList: ObjectTablePM[] = [];
-
-        window.ObjectTables.forEach(item => {
-            switch (item.Name) {
-                case "Shipment":
-                case "Master":
-                case "Quote":
-                case "Opportunity":
-                case "Ticket":
-                case "APInvoice":
-                case "ARInvoice":
-                case "APPayment":
-                case "ARPayment":
-                case "Agent":
-                case "Customer":
-                case "Customs.Declaration":
-                case "Customs.CheckRepresentativeType":
-                case "LogitudeMessagesTransmissionLog":
-                case "SharedLogistics":
-                case "ShipmentPickUpDelivery":
-                case "Journal":
-                case "BankDeposit":
-                case "GLAccount":
-                case "WarehouseEntry":
-                case "TaxReport":
-                case "PaymentCheque":
-                case "WarehouseRelease":
-                case "Airline":
-                case "CustomAgent":
-                case "Participant":
-                case "ShippingAgent":
-                case "ShippingLine":
-                case "Trucker":
-                case "Vendor":
-                case "AccountingPartner":
-                case "Warehouse":
-                case "Occasion":
-                    {
-
-                    if (tempList.filter(f => f.Name == item.Name).length == 0) {
-                        tempList.push(item);
-                    }
-
-                    break;
-                }
-            }
-        });
-
-        this.ObjectTablesList = tempList.sort((a, b) => { return (a.Name === b.Name) ? 0 : (a.Name < b.Name) ? -1 : 1 });
-
-        this.ObjectTablesList.forEach((item) => {
-
-            // if (item.Name == "WarehouseEntry" || item.Name == "WarehouseRelease") {
-            //     item.DisplayName = item.Name == "WarehouseEntry" ? "CrossDockEntry" : "CrossDockRelease";
-            // }
-            // else item.DisplayName = item.Name;
-
-        });
+ 
+        this.InitLOVFilters();
+        this.IsLogLovReady = true;
+        this.SetSelectedObjectTable();
 
         this.SelectedObjectTable = window.ObjectTables.filter((d: any) => d.Id == this.EntityPM.ObjectTableId)[0];
         if (!this.SelectedObjectTable) {
@@ -228,15 +176,44 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
         if (FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPEPROPERTIES")) this.ShowFeildTenant0 = true;
         else this.ShowFeildTenant0 = false;
 
-        if (this.SelectedObjectTable.Name == "Shipment" || this.SelectedObjectTable.Name == "Quote") {
-            this.IsShowAdvanceLink = true;
-        }
-        else this.IsShowAdvanceLink = false;
+        //if (this.SelectedObjectTable.Name == "Shipment" || this.SelectedObjectTable.Name == "Quote") {
+        //    this.IsShowAdvanceLink = true;
+        //}
+        //else this.IsShowAdvanceLink = false;
 
         if (this.EntityPM.IsDocOut) {
             this.IsEnableFormat = true;
         }
+    }
 
+    InitLOVFilters() {
+        this.ObjectTablesFilterItems = new ApiQueryFilters();
+        this.ObjectTablesFilterItems.addAdditionalFilter("AvailableInDocumentTypes", true, null, null, "Equals", true, false, false, "string");
+        this.ObjectTablesFilterItems.Tenant = SessionLocator.Tenant;
+    }
+    SetSelectedObjectTable() {
+        this.SelectedObjectTableId = this.EntityPM.ObjectTableId;
+    }
+
+    public get IsDocOut() { return this.EntityPM.IsDocOut }
+    public set IsDocOut(value: boolean) {
+        if (value == this.EntityPM.IsDocOut) return;
+        this.EntityPM.IsDocOut = value;
+    }
+    private selectedObjectTableId: string;
+    public get SelectedObjectTableId() { return this.selectedObjectTableId; }
+    public set SelectedObjectTableId(value: string) {
+        if (this.selectedObjectTableId == value) return;
+        this.selectedObjectTableId = value;
+        let objectTable = window.ObjectTables.filter(table => table.Id == value)[0];
+        this.SetIsDocOutProperties(objectTable);
+        this.ObjectTableValueChanged(objectTable);
+    }
+    private SetIsDocOutProperties(objectTable: any) {
+        this.IsCustomObject = objectTable?.IsCustom && AppTool.IsNullOrEmpty(objectTable?.ParentObjectTableId);
+        this.IsDocOut = this.IsCustomObject ? false : this.IsDocOut;
+        this.IsDocOutChange(this.IsDocOut);
+        this.EntityPM.UIProperties.SetEnabled("IsDocOut", "DocumentType", !this.IsCustomObject);
     }
 
     AdvanceLinkMethod() {
@@ -288,6 +265,7 @@ export class DocumentTypeGeneralTabComponent extends BaseComponent implements On
             else this.IsShowAdvanceLink = false;
         } else {
             this.EntityPM.ObjectTableId = null;
+            this.EntityPM.ObjectTableName = null
             this.SelectedObjectTable = null;
         }
 

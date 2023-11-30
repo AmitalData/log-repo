@@ -20,12 +20,46 @@ export class FieldTemplateComponent implements AfterViewInit {
     public IsHeaderScreenTemplate: boolean = false;
     public localCurrency: string = "(" + SessionLocator.LocalCurrencyCode + ")";
     public ProfitCurrency: string = "(" + SessionLocator.TenantPM.ProfitCurrencyCode + ")";
+    public NumberFieldRightPadding = "20px";
     @ViewChild(ChildDirective) Child: ChildDirective;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
 
     }
-
+    public containerEstimatedDates = [{estimatedDate: 'MainCarriageETA', actaulDate: 'MainCarriageATA'},
+                                      {estimatedDate: 'MainCarriageETD', actaulDate: 'MainCarriageATD'},
+                                      {estimatedDate: 'EstimatedEmptyPickupDate', actaulDate: 'ActualEmptyPickupDate'},
+                                      {estimatedDate: 'EstimatedPOLArrival', actaulDate: 'ActualPOLArrival'},
+                                      {estimatedDate: 'EstimatedPOLLoaded', actaulDate: 'ActualPOLLoaded'},
+                                      {estimatedDate: 'EstimatedPOLVesselDeparture', actaulDate: 'ActualPOLVesselDeparture'},
+                                      {estimatedDate: 'EstimatedTrans1VesselArrival', actaulDate: 'ActualTransshipment1VesselArrival'},
+                                      {estimatedDate: 'EstimatedTransshipment1Discharge', actaulDate: 'ActualTransshipment1Discharge'},
+                                      {estimatedDate: 'EstimatedTransshipment1Loaded', actaulDate: 'ActualTransshipment1Loaded'},
+                                      {estimatedDate: 'EstimatedTrans1VesselDeparture', actaulDate: 'ActualTrans1VesselDeparture'},
+                                      {estimatedDate: 'EstimatedTrans2VesselArrival', actaulDate: 'ActualTransshipment2VesselArrival'},
+                                      {estimatedDate: 'EstimatedTransshipment2Discharge', actaulDate: 'ActualTransshipment2Discharge'},
+                                      {estimatedDate: 'EstimatedTransshipment2Loaded', actaulDate: 'ActualTransshipment2Loaded'},
+                                      {estimatedDate: 'EstimatedTrans2VesselDeparture', actaulDate: 'ActualTrans1Vesse2Departure'},
+                                      {estimatedDate: 'EstimatedTrans3VesselArrival', actaulDate: 'ActualTransshipment3VesselArrival'},
+                                      {estimatedDate: 'EstimatedTransshipment3Discharge', actaulDate: 'ActualTransshipment3Discharge'},
+                                      {estimatedDate: 'EstimatedTransshipment3Loaded', actaulDate: 'ActualTransshipment3Loaded'},
+                                      {estimatedDate: 'EstimatedTrans3VesselDeparture', actaulDate: 'ActualTrans1Vesse3Departure'},
+                                      {estimatedDate: 'EstimatedTrans4VesselArrival', actaulDate: 'ActualTransshipment4VesselArrival'},
+                                      {estimatedDate: 'EstimatedTransshipment4Discharge', actaulDate: 'ActualTransshipment4Discharge'},
+                                      {estimatedDate: 'EstimatedTransshipment4Loaded', actaulDate: 'ActualTransshipment4Loaded'},
+                                      {estimatedDate: 'EstimatedTrans1Vesse4Departure', actaulDate: 'ActualTrans4VesselDeparture'},
+                                      {estimatedDate: 'EstimatedPODVesselArrival', actaulDate: 'ActualPODVesselArrival'},
+                                      {estimatedDate: 'EstimatedPODDischarge', actaulDate: 'ActualPODDischarge'},
+                                      {estimatedDate: 'EstimatedPODDeparture', actaulDate: 'ActualPODDeparture'},
+                                      {estimatedDate: 'OnCarriageETD', actaulDate: 'OnCarriageATD'},
+                                      {estimatedDate: 'EstimatedLIFArrival', actaulDate: 'ActualLIFArrival'},
+                                      {estimatedDate: 'EstimatedOnCarriageDeparture', actaulDate: 'ActualOnCarriageDeparture'},
+                                      {estimatedDate: 'EstimatedEmptyReturn', actaulDate: 'ActualEmptyReturn'},
+                                      {estimatedDate: 'ShipmentDeliveryETA', actaulDate: 'ShipmentDeliveryATA'},
+                                      {estimatedDate: 'ShipmentDeliveryETD', actaulDate: 'ShipmentDeliveryATD'},
+                                      {estimatedDate: 'PreCarriageETD', actaulDate: 'PreCarriageATD'},
+                                      {estimatedDate: 'OnCarriageETA', actaulDate: 'OnCarriageATA'},
+                                    ]; 
     public Run(args: any) {
         this.Entity = args['Entity'];
         this.FieldName = args['FieldName'];

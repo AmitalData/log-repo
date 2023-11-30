@@ -16,10 +16,10 @@
             cursor: pointer;
         }
 
-        .selectedemptyticket {
-            background: #8C8C8C;
-            cursor: pointer;
-        }
+    .selectedemptyticket {
+        background: #8C8C8C;
+        cursor: pointer;
+    }
 
     .infoColor {
         background: -moz-linear-gradient(50.55% 126.37% 91.55deg,rgba(255, 255, 255, 1) 0%,rgba(242, 242, 242, 1) 51.84%,rgba(212, 212, 212, 1) 100%);
@@ -69,59 +69,58 @@
         overflow: hidden;
     }
     .Disable {
-       opacity:0.5;
-       pointer-events:none;
+        opacity:0.5;
+        pointer-events:none;
     }
-   .tooltip {
-    position: relative;
-    display: inline-block;
-    
-}
+    .tooltip {
+        position: relative;
+        display: inline-block;
+    }
 
-.tooltip .tooltiptext {
-    visibility: hidden;
-    width: 350px;
-    background-color: #6A8299;
-    color: #fff;
-    text-align: left;
-    border-radius: 6px;
-    padding: 5px 5px;
-    position: absolute;
-    z-index: 1;
-    bottom: 0;
-    right: 110%;
-    margin-left: 5px;
-    opacity: 0;
-    transition: opacity 0.3s;
-}
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 350px;
+            background-color: #6A8299;
+            color: #fff;
+            text-align: left;
+            border-radius: 6px;
+            padding: 5px 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 0;
+            right: 110%;
+            margin-left: 5px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
 
-.tooltip .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: 80%;
-    left: 98%;
-    margin-left: 5px;
-    border-width: 5px;
-    border-style: solid;
-    border-color: transparent transparent transparent #6A8299;
-}
+            .tooltip .tooltiptext::after {
+                content: "";
+                position: absolute;
+                top: 80%;
+                left: 98%;
+                margin-left: 5px;
+                border-width: 5px;
+                border-style: solid;
+                border-color: transparent transparent transparent #6A8299;
+            }
 
-.tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-}
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
 </style>
 <table>
     <tr *ngIf="ValidationWarningsList != null && ValidationWarningsList != ''" style="height:1px;">
         <td>
-           <div [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'" class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
+            <div [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'" class="WarningSummary" style="margin-bottom: 3px;">{{ValidationWarningsList}}</div>
         </td>
     </tr>
     <tr>
         <td>
-            <table [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'"> 
+            <table [style.direction]="Language == 'HB' ? 'rtl' : 'ltr'">
                 <tr style="height:50px;">
-                    <td>
+                    <td style="width:185px; max-width: 185px;">
                         <table>
                             <tr>
                                 <td>
@@ -132,9 +131,10 @@
                                                     {{'Shipment.O.DeclarationNo' | TextCodeTranslationPipe}}
                                                 </label>
                                             </td>
-                                            <td style="height: 22px;">
+                                            <td style="height: 22px;min-width:140px;">
                                                 <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                                    {{DeclarationNo}}
+                                                    <span *ngIf="DeclarationNo">{{DeclarationNo}}</span>
+                                                    <span *ngIf="!DeclarationNo">---</span>
                                                 </label>
                                             </td>
                                         </tr>
@@ -144,9 +144,10 @@
                                                     {{'Shipment.O.GoodsValue' | TextCodeTranslationPipe}}
                                                 </label>
                                             </td>
-                                            <td style="height: 22px;">
+                                            <td style="height: 22px;min-width:140px;">
                                                 <label style="padding-left:10px;color: rgb(110, 113, 114);">
-                                                    {{GoodsValue}}
+                                                    <span *ngIf="GoodsValue">{{GoodsValue}}</span>
+                                                    <span *ngIf="!GoodsValue">---</span>
                                                 </label>
                                             </td>
                                         </tr>
@@ -168,9 +169,10 @@
                                                     {{'Shipment.O.TotalTax' | TextCodeTranslationPipe}}
                                                 </label>
                                             </td>
-                                            <td style="height: 22px;">
+                                            <td style="height: 22px;min-width:140px;">
                                                 <label style="padding-left:10px;color: blue;text-decoration: underline;cursor:pointer;" (click)="TotalTaxClick()">
-                                                    {{TotalTax}}
+                                                    <span *ngIf="TotalTax">{{TotalTax}}</span>
+                                                    <span *ngIf="!TotalTax">0</span>
                                                 </label>
                                             </td>
                                         </tr>
@@ -181,76 +183,78 @@
                     </td>
                 </tr>
                 <tr style="min-height: 458px;height: 100%;border: 1px solid #BCBEC0;border-radius: 4px;">
-                    <td style="overflow-y: auto;overflow-x: hidden;width:193px;top:1px;bottom:4px;position:relative" class="MediaFill">
-                        <div style="overflow-y:auto;overflow-x:hidden;">
-                            <div *ngFor="let item of externalDocs let i = index" (click)="SelectTicket(item)" class="emptyticket" [class.selectedemptyticket]="item == SelectedTicket" style="max-width:164px;margin-top:10px;direction:ltr;" [style.float]="Language == 'HB' ? 'right' : 'left'">
-                                <table *ngIf="!item.hasFile" style="height:162px;">
-                                    <tr>
-                                        <td style="height:40px;">
-                                            <div style="margin:5px;float:left;width:10%;" class="MyIconButton">
-                                                <IconButton [Name]="'Delete'" [Width]="'18'" [Height]="'18'" (click)="DeleteDocumentClicked(item)"></IconButton>
-                                            </div>
-                                            <div style="margin:5px;float:right;">
-                                                <span *ngIf="item.IsRequested" style="color:orange;text-align:right;">Requested Document</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:1px;">
-                                        <td>
-                                            <img *ngIf="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" src="./Images/DocSearchResult.png" style="float:right;" />
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <img src="./Images/Plus.png" style="margin-left:70px;" />
-                                        </td>
-                                    </tr>
-                                    <tr style="height:55px;">
-                                        <td>
-                                            <div class="infoColor" style="height:55px;max-width:162px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
-                                                <span style="text-align:left;margin-left:5px;vertical-align:middle;font-size: 14px;white-space:nowrap;line-height:50px;" [title]="item.DocumentTypeName">{{item.DocumentTypeName}}</span>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
-                                <table *ngIf="item.hasFile" style="height:162px;max-width:162px;">
-                                    <tr style="max-width:162px;">
-                                        <td style="height:40px;max-width:162px;">
-                                            <div style="margin:2px;border: 1px solid #5AACE5;border-radius:30px;width:98%;background-color:#5AACE5;text-align:center;height:18px;color:white;float:left;" class="TextTrimming" [title]="item.DocumentTypeName">
-                                                <span style="text-align:center;color: white;">{{item.DocumentTypeName}}</span>
-                                            </div>
-                                            <img *ngIf="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" src="./Images/DocSearchResult.png" style="float:right;" />
-                                        </td>
-                                    </tr>
-                                    <tr style="max-width:162px;">
-                                        <td style="max-width:162px;">
-                                            <span style="white-space:pre-wrap;margin-left:2px;text-align:center;color: #45494A;font-size: 13px;word-wrap: break-word;">{{item.Description}}</span>
-                                        </td>
-                                    </tr>
-                                    <tr style="height:40px;max-width:162px;">
-                                        <td style="max-width:162px;">
-                                            <div class="infoColor" style="height:40px;">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <img [src]="item.FileExtension | AttatchmentIconPipe" style="width:22px;height:25px;margin-left:5px;cursor:pointer;" (click)="DownloadDocumentFile(item)" />
-                                                        </td>
-                                                        <td>
-                                                            <div>
-                                                                <div style="float:right;margin:3px;">
-                                                                    <img *ngIf="item.IsDigitallySigned" src="./Images/DigitallySigned.png" [title]="item.SignersList" />
-                                                                    <img *ngIf="!item.IsDigitallySigned" src="./Images/DigitallySignedG.png" />
+                    <td style="overflow-y: auto;overflow-x: hidden;width:185px;top:1px;bottom:4px;position:relative;vertical-align:top" class="MediaFill">
+                        <div style="height: 562px;">
+                            <div *ngFor="let item of externalDocs let i = index" style="overflow-y:auto;overflow-x:hidden;">
+                                <div (click)="SelectTicket(item)" class="emptyticket" [class.selectedemptyticket]="item == SelectedTicket" style="max-width:164px;margin-top:10px;direction:ltr;" [style.float]="Language == 'HB' ? 'right' : 'left'">
+                                    <table *ngIf="!item.hasFile" style="height:162px;">
+                                        <tr>
+                                            <td style="height:40px;">
+                                                <div style="margin:5px;float:left;width:10%;" class="MyIconButton">
+                                                    <IconButton [Name]="'Delete'" [Width]="'18'" [Height]="'18'" (click)="DeleteDocumentClicked(item)"></IconButton>
+                                                </div>
+                                                <div style="margin:5px;float:right;">
+                                                    <span *ngIf="item.IsRequested" style="color:orange;text-align:right;">Requested Document</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr style="height:1px;">
+                                            <td>
+                                                <img *ngIf="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" src="./Images/DocSearchResult.png" style="float:right;" />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <img src="./Images/Plus.png" style="margin-left:70px;" />
+                                            </td>
+                                        </tr>
+                                        <tr style="height:55px;">
+                                            <td>
+                                                <div class="infoColor" style="height:55px;max-width:162px;text-overflow: ellipsis;overflow: hidden;white-space: nowrap;">
+                                                    <span style="text-align:left;margin-left:5px;vertical-align:middle;font-size: 14px;white-space:nowrap;line-height:50px;" [title]="item.DocumentTypeName">{{item.DocumentTypeName}}</span>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <table *ngIf="item.hasFile" style="height:162px;max-width:162px;">
+                                        <tr style="max-width:162px;">
+                                            <td style="height:40px;max-width:162px;">
+                                                <div style="margin:2px;border: 1px solid #5AACE5;border-radius:30px;width:98%;background-color:#5AACE5;text-align:center;height:18px;color:white;float:left;" class="TextTrimming" [title]="item.DocumentTypeName">
+                                                    <span style="text-align:center;color: white;">{{item.DocumentTypeName}}</span>
+                                                </div>
+                                                <img *ngIf="(SearchText != null && SearchText != '' && item.SearchFields.toLowerCase().indexOf(SearchText.toLowerCase()) > -1)" src="./Images/DocSearchResult.png" style="float:right;" />
+                                            </td>
+                                        </tr>
+                                        <tr style="max-width:162px;">
+                                            <td style="max-width:162px;">
+                                                <span style="white-space:pre-wrap;margin-left:2px;text-align:center;color: #45494A;font-size: 13px;word-wrap: break-word;">{{item.Description}}</span>
+                                            </td>
+                                        </tr>
+                                        <tr style="height:40px;max-width:162px;">
+                                            <td style="max-width:162px;">
+                                                <div class="infoColor" style="height:40px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td>
+                                                                <img [src]="item.FileExtension | AttatchmentIconPipe" style="width:22px;height:25px;margin-left:5px;cursor:pointer;" (click)="DownloadDocumentFile(item)" />
+                                                            </td>
+                                                            <td>
+                                                                <div>
+                                                                    <div style="float:right;margin:3px;">
+                                                                        <img *ngIf="item.IsDigitallySigned" src="./Images/DigitallySigned.png" [title]="item.SignersList" />
+                                                                        <img *ngIf="!item.IsDigitallySigned" src="./Images/DigitallySignedG.png" />
+                                                                    </div>
                                                                 </div>
-                                                            </div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                </table>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <!--</div>-->
                             </div>
-                            <!--</div>-->
                         </div>
                     </td>
                     <td [style.width.px]="Language == 'HB' ? 534 : 530">

@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,40 +42,38 @@ using Simplog.Data.ShipmentsModel;
         }
 
 		
-		public House GetHouseById(string Id,int Tenant,string ComputingPartnerName = "")
+		public House GetHouseById(string Id,int Tenant, string include, string ComputingPartnerName = "")
         { 
 		    try
             {
-
-				
-				var temp = query.GetSinglePM(Id,Tenant);				
+								
+				var temp = query.GetSinglePMWithInclude(Id, Tenant, include);
 				 if (temp == null)
                     throw new ApplicationException("Shipment with Id " + Id + " doesn't exist");
 
 				return HouseDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public House GetHouseByShipmentNumber(string ShipmentNumber,int Tenant,string ComputingPartnerName = "")
+		public House GetHouseByShipmentNumber(string ShipmentNumber,int Tenant, string include, string ComputingPartnerName = "")
         { 
 		    try
             {
-
-				
-				var temp = query.GetSinglePMByShipmentNumber(ShipmentNumber,Tenant);				
+								
+				var temp = query.GetSinglePMWithIncludeByShipmentNumber(ShipmentNumber, Tenant, include);
 				 if (temp == null)
                     throw new ApplicationException("Shipment with ShipmentNumber " + ShipmentNumber + " doesn't exist");
 
 				return HouseDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -406,7 +406,193 @@ using Simplog.Data.ShipmentsModel;
 				   temp.BookingConfirmationNumber = MyEntityPM.BookingConfirmationNumber;
 				   temp.EstimatedFinalArrivalDate = MyEntityPM.EstimatedFinalArrivalDate;
 				   temp.ActualFinalArrivalDate = MyEntityPM.ActualFinalArrivalDate;
-				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;					
+				   temp.IsHTSMissing = MyEntityPM.IsHTSMissing;
+				   temp.PlannedCargoReadyDate = MyEntityPM.PlannedCargoReadyDate;
+				   temp.ApprovedCargoReadyDate = MyEntityPM.ApprovedCargoReadyDate; 
+
+			  
+				   if(MyEntityPM.HandlerUserId != null)
+				   {
+					   UserQueryService UserService27 = new UserQueryService(Tenant);
+					   					   temp.HandlerUser = UserService27.GetUserById(MyEntityPM.HandlerUserId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.Notify1Reference = MyEntityPM.Notify1Reference;
+				   temp.Notify1Reference2 = MyEntityPM.Notify1Reference2;
+				   temp.ShipperNotExporterReference1 = MyEntityPM.ShipperNotExporterReference1;
+				   temp.ShipperNotExporterReference2 = MyEntityPM.ShipperNotExporterReference2;
+				   temp.CustomsClearanceDate = MyEntityPM.CustomsClearanceDate; 
+
+			  
+				   if(MyEntityPM.Notify1Id != null)
+				   {
+					   CardQueryService CardService28 = new CardQueryService(Tenant);
+					   					   temp.Notify1 = CardService28.GetCardById(MyEntityPM.Notify1Id,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				if(MyEntityPM.EventList != null && MyEntityPM.EventList.Count > 0)
+				{
+					 EventQueryService EventService29 = new EventQueryService(Tenant);
+					 temp.EventList = EventService29.EventCustomDataMapping(MyEntityPM,MyEntityPM.EventList,Tenant,ComputingPartnerName);
+				}
+
+							 
+				if(MyEntityPM.AddManualEvents != null && MyEntityPM.AddManualEvents.Count > 0)
+				{
+					 EventQueryService EventService29 = new EventQueryService(Tenant);
+					 temp.AddManualEvents = EventService29.EventCustomDataMapping(MyEntityPM,MyEntityPM.AddManualEvents,Tenant,ComputingPartnerName);
+				}
+
+							  
+
+			  
+				   if(MyEntityPM.UnassignedShipperAddressId != null)
+				   {
+					   AddressQueryService AddressService29 = new AddressQueryService(Tenant);
+					   					   temp.UnassignedShipperAddress = AddressService29.AddressCustomDataMapping(MyEntityPM.UnassignedShipperAddressId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.UnassignedConsigneeAddressId != null)
+				   {
+					   AddressQueryService AddressService30 = new AddressQueryService(Tenant);
+					   					   temp.UnassignedConsigneeAddress = AddressService30.AddressCustomDataMapping(MyEntityPM.UnassignedConsigneeAddressId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.FullMaster = MyEntityPM.LongMaster; 
+
+			  
+				   if(MyEntityPM.Notify2Id != null)
+				   {
+					   CardQueryService CardService31 = new CardQueryService(Tenant);
+					   					   temp.Notify2 = CardService31.GetCardById(MyEntityPM.Notify2Id,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.Notify2Reference = MyEntityPM.Notify2Reference; 
+
+			  
+				   if(MyEntityPM.PreForwardingTransportModeId != null)
+				   {
+					   TransportModeQueryService TransportModeService32 = new TransportModeQueryService(Tenant);
+					   					   temp.PreForwardingTransportMode = TransportModeService32.GetTransportModeById(MyEntityPM.PreForwardingTransportModeId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.PreForwardingFromPortId != null)
+				   {
+					   PortQueryService PortService33 = new PortQueryService(Tenant);
+					   					   temp.PreForwardingFromPort = PortService33.GetPortById(MyEntityPM.PreForwardingFromPortId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.PreForwardingToPortId != null)
+				   {
+					   PortQueryService PortService34 = new PortQueryService(Tenant);
+					   					   temp.PreForwardingToPort = PortService34.GetPortById(MyEntityPM.PreForwardingToPortId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.PreForwardingATD = MyEntityPM.PreForwardingATD;
+				   temp.PreForwardingATA = MyEntityPM.PreForwardingATA;
+				   temp.PreForwardingETD = MyEntityPM.PreForwardingETD;
+				   temp.PreForwardingETA = MyEntityPM.PreForwardingETA;
+				   temp.PreForwardingCarrierNumber = MyEntityPM.PreForwardingCarrierNumber; 
+
+			  
+				   if(MyEntityPM.PreForwardingCarrierId != null)
+				   {
+					   CardQueryService CardService35 = new CardQueryService(Tenant);
+					   					   temp.PreForwardingCarrier = CardService35.GetCardById(MyEntityPM.PreForwardingCarrierId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.PreForwardingVesselId != null)
+				   {
+					   VesselQueryService VesselService36 = new VesselQueryService(Tenant);
+					   					   temp.PreForwardingVessel = VesselService36.GetVesselById(MyEntityPM.PreForwardingVesselId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.OnForwardingTransportModeId != null)
+				   {
+					   TransportModeQueryService TransportModeService37 = new TransportModeQueryService(Tenant);
+					   					   temp.OnForwardingTransportMode = TransportModeService37.GetTransportModeById(MyEntityPM.OnForwardingTransportModeId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.OnForwardingFromPortId != null)
+				   {
+					   PortQueryService PortService38 = new PortQueryService(Tenant);
+					   					   temp.OnForwardingFromPort = PortService38.GetPortById(MyEntityPM.OnForwardingFromPortId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.OnForwardingToPortId != null)
+				   {
+					   PortQueryService PortService39 = new PortQueryService(Tenant);
+					   					   temp.OnForwardingToPort = PortService39.GetPortById(MyEntityPM.OnForwardingToPortId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   
+				   temp.OnForwardingATD = MyEntityPM.OnForwardingATD;
+				   temp.OnForwardingATA = MyEntityPM.OnForwardingATA;
+				   temp.OnForwardingETD = MyEntityPM.OnForwardingETD;
+				   temp.OnForwardingETA = MyEntityPM.OnForwardingETA;
+				   temp.OnForwardingCarrierNumber = MyEntityPM.OnForwardingCarrierNumber; 
+
+			  
+				   if(MyEntityPM.OnForwardingCarrierId != null)
+				   {
+					   CardQueryService CardService40 = new CardQueryService(Tenant);
+					   					   temp.OnForwardingCarrier = CardService40.GetCardById(MyEntityPM.OnForwardingCarrierId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.OnForwardingVesselId != null)
+				   {
+					   VesselQueryService VesselService41 = new VesselQueryService(Tenant);
+					   					   temp.OnForwardingVessel = VesselService41.GetVesselById(MyEntityPM.OnForwardingVesselId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.OtherPrepaidCollectId != null)
+				   {
+					   PrepaidCollectQueryService PrepaidCollectService42 = new PrepaidCollectQueryService(Tenant);
+					   					   temp.OtherPrepaidCollect = PrepaidCollectService42.GetPrepaidCollectById(MyEntityPM.OtherPrepaidCollectId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				    
+
+			  
+				   if(MyEntityPM.FreightPrepaidCollectId != null)
+				   {
+					   PrepaidCollectQueryService PrepaidCollectService43 = new PrepaidCollectQueryService(Tenant);
+					   					   temp.FreightPrepaidCollect = PrepaidCollectService43.GetPrepaidCollectById(MyEntityPM.FreightPrepaidCollectId,Tenant,ComputingPartnerName); 
+			       
+					   				   }
+				   					
 				   return temp;
 			}
             catch (Exception ex)
@@ -428,12 +614,14 @@ using Simplog.Data.ShipmentsModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.ShipmentNumber))
 					{
-						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant);
-					} 					   
-					if(temp == null)
+						temp = query.GetSinglePMByShipmentNumber(MyEntity.ShipmentNumber, Tenant  );
+					} 
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("Shipment with ShipmentNumber " + MyEntity.ShipmentNumber + " doesn't exist");
 					} 
+				 
 										 
 					if(IsUpdate == true)
 					{
@@ -467,7 +655,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("ShipmentType Can't be update"); 
+							{								
 								temp.ShipmentTypeId = myShipmentTypePM.Id;
 						  
 							}  
@@ -488,7 +676,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("TransportMode Can't be update"); 
+							{								
 								temp.TransportModeId = myTransportModePM.Id;
 						  
 							}  
@@ -507,7 +695,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myShipperPM != null)
 						{ 
 
-						 								//throw new ApplicationException("Shipper Can't be update"); 
+						 								
 								temp.ShipperId = myShipperPM.Id;
 						  
 
@@ -517,14 +705,14 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    							//throw new ApplicationException("ShipperReference1 Can't be update"); 
-							temp.ShipperReference1 = MyEntity.ShipperReference1;
+                    							
+						temp.ShipperReference1 = MyEntity.ShipperReference1;
 
 					 
 
 					
-                    							//throw new ApplicationException("ShipperReference2 Can't be update"); 
-							temp.ShipperReference2 = MyEntity.ShipperReference2;
+                    							
+						temp.ShipperReference2 = MyEntity.ShipperReference2;
 
 					 
 
@@ -537,7 +725,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myConsigneePM != null)
 						{ 
 
-						 								//throw new ApplicationException("Consignee Can't be update"); 
+						 								
 								temp.ConsigneeId = myConsigneePM.Id;
 						  
 
@@ -547,14 +735,14 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    							//throw new ApplicationException("ConsigneeReference1 Can't be update"); 
-							temp.ConsigneeReference1 = MyEntity.ConsigneeReference1;
+                    							
+						temp.ConsigneeReference1 = MyEntity.ConsigneeReference1;
 
 					 
 
 					
-                    							//throw new ApplicationException("ConsigneeReference2 Can't be update"); 
-							temp.ConsigneeReference2 = MyEntity.ConsigneeReference2;
+                    							
+						temp.ConsigneeReference2 = MyEntity.ConsigneeReference2;
 
 					 
 
@@ -567,7 +755,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myCustomerPM != null)
 						{ 
 
-						 								//throw new ApplicationException("Customer Can't be update"); 
+						 								
 								temp.CustomerId = myCustomerPM.Id;
 						  
 
@@ -587,7 +775,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("FromPort Can't be update"); 
+							{								
 								temp.FromPortId = myFromPortPM.Id;
 						  
 							}  
@@ -608,7 +796,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("ToPort Can't be update"); 
+							{								
 								temp.ToPortId = myToPortPM.Id;
 						  
 							}  
@@ -629,7 +817,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("GrossWeightUnit Can't be update"); 
+							{								
 								temp.GrossWeightUnitCode = myGrossWeightUnitPM.Code;
 						  
 							}  
@@ -650,7 +838,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("ChargeableWeightUnit Can't be update"); 
+							{								
 								temp.ChargeableWeightUnitCode = myChargeableWeightUnitPM.Code;
 						  
 							}  
@@ -671,7 +859,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("VolumeUnit Can't be update"); 
+							{								
 								temp.VolumeUnitCode = myVolumeUnitPM.Code;
 						  
 							}  
@@ -690,7 +878,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myIncotermPM != null)
 						{ 
 
-						 								//throw new ApplicationException("Incoterm Can't be update"); 
+						 								
 								temp.IncotermId = myIncotermPM.Id;
 						  
 
@@ -700,34 +888,32 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    							//throw new ApplicationException("HouseNo Can't be update"); 
-							temp.House = MyEntity.HouseNo;
+                    							
+						temp.House = MyEntity.HouseNo;
 
 					 
 
 					
-                    							//throw new ApplicationException("HouseDate Can't be update"); 
-							temp.HAWBDate = MyEntity.HouseDate;
+                    							
+						temp.HAWBDate = MyEntity.HouseDate;
 
 					 
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.DescriptionOfGoods))
-					{							//throw new ApplicationException("DescriptionOfGoods Can't be update"); 
-							temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
+                    							
+						temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
 
-										}  
+					 
 
 					 
 
 					if(MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
 					{
-						AirPackageQueryService AirPackageService27 = new AirPackageQueryService(Tenant);
+						AirPackageQueryService AirPackageService44 = new AirPackageQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("AirPackages Can't be update"); 
-								temp.ShipmentPackages = AirPackageService27.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName);
+						{								
+							temp.ShipmentPackages = AirPackageService44.AirPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.AirPackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -739,11 +925,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
 					{
-						OceanOrInlandPackageQueryService OceanOrInlandPackageService27 = new OceanOrInlandPackageQueryService(Tenant);
+						OceanOrInlandPackageQueryService OceanOrInlandPackageService44 = new OceanOrInlandPackageQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("OceanOrInlandPackages Can't be update"); 
-								temp.ShipmentPackages = OceanOrInlandPackageService27.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName);
+						{								
+							temp.ShipmentPackages = OceanOrInlandPackageService44.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity,MyEntity.OceanOrInlandPackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -755,11 +941,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Containers != null && MyEntity.Containers.Count > 0)
 					{
-						ContainerQueryService ContainerService27 = new ContainerQueryService(Tenant);
+						ContainerQueryService ContainerService44 = new ContainerQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("Containers Can't be update"); 
-								temp.ShipmentPackages = ContainerService27.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName);
+						{								
+							temp.ShipmentPackages = ContainerService44.ContainerCustomDataMappingAndValidatin(MyEntity,MyEntity.Containers,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -769,9 +955,9 @@ using Simplog.Data.ShipmentsModel;
 
 								 
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Commodity))
-					{							//throw new ApplicationException("Commodity Can't be update"); 
-							temp.AWBCommodityItemNumber = MyEntity.Commodity;
+					if(!IsUpdate)
+					{							
+						temp.AWBCommodityItemNumber = MyEntity.Commodity;
 
 										}  
 
@@ -784,7 +970,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myBranchPM != null)
 						{ 
 
-						 								//throw new ApplicationException("Branch Can't be update"); 
+						 								
 								temp.BranchId = myBranchPM.Id;
 						  
 
@@ -802,7 +988,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myDepartmentPM != null)
 						{ 
 
-						 								//throw new ApplicationException("Department Can't be update"); 
+						 								
 								temp.DepartmentId = myDepartmentPM.Id;
 						  
 
@@ -813,57 +999,57 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && MyEntity.TEU != null)
-					{							//throw new ApplicationException("TEU Can't be update"); 
-							temp.TEU = MyEntity.TEU;
+					if(!IsUpdate)
+					{							
+						temp.TEU = MyEntity.TEU;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.NumberOfPackages != null)
-					{							//throw new ApplicationException("NumberOfPackages Can't be update"); 
-							temp.NumberOfPackages = MyEntity.NumberOfPackages;
+					if(!IsUpdate)
+					{							
+						temp.NumberOfPackages = MyEntity.NumberOfPackages;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.GrossWeight != null)
-					{							//throw new ApplicationException("GrossWeight Can't be update"); 
-							temp.GrossWeight = MyEntity.GrossWeight;
+					if(!IsUpdate)
+					{							
+						temp.GrossWeight = MyEntity.GrossWeight;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.Volume != null)
-					{							//throw new ApplicationException("Volume Can't be update"); 
-							temp.Volume = MyEntity.Volume;
+					if(!IsUpdate)
+					{							
+						temp.Volume = MyEntity.Volume;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.VolumetricWeight != null)
-					{							//throw new ApplicationException("VolumetricWeight Can't be update"); 
-							temp.VolumetricWeight = MyEntity.VolumetricWeight;
+					if(!IsUpdate)
+					{							
+						temp.VolumetricWeight = MyEntity.VolumetricWeight;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.ChargeableWeight != null)
-					{							//throw new ApplicationException("ChargeableWeight Can't be update"); 
-							temp.ChargeableWeight = MyEntity.ChargeableWeight;
+					if(!IsUpdate)
+					{							
+						temp.ChargeableWeight = MyEntity.ChargeableWeight;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ShipmentNumber))
-					{							//throw new ApplicationException("ShipmentNumber Can't be update"); 
-							temp.ShipmentNumber = MyEntity.ShipmentNumber;
+					if(!IsUpdate)
+					{							
+						temp.ShipmentNumber = MyEntity.ShipmentNumber;
 
 										}  
 
@@ -878,7 +1064,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Direction Can't be update"); 
+							{								
 								temp.DirectionId = myDirectionPM.Id;
 						  
 							}  
@@ -890,33 +1076,33 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && (MyEntity.IsCancelled != temp.IsCancelled))
-					{							//throw new ApplicationException("IsCancelled Can't be update"); 
-							temp.IsCancelled = MyEntity.IsCancelled;
+					if(!IsUpdate)
+					{							
+						temp.IsCancelled = MyEntity.IsCancelled;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && (MyEntity.IsOperationalClosed != temp.IsOperationalClosed))
-					{							//throw new ApplicationException("IsOperationalClosed Can't be update"); 
-							temp.IsOperationalClosed = MyEntity.IsOperationalClosed;
+					if(!IsUpdate)
+					{							
+						temp.IsOperationalClosed = MyEntity.IsOperationalClosed;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && (MyEntity.IsAccountingClosed != temp.IsAccountingClosed))
-					{							//throw new ApplicationException("IsAccountingClosed Can't be update"); 
-							temp.IsAccountingClosed = MyEntity.IsAccountingClosed;
+					if(!IsUpdate)
+					{							
+						temp.IsAccountingClosed = MyEntity.IsAccountingClosed;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.MasterShipmentDataId))
-					{							//throw new ApplicationException("MasterShipmentDataId Can't be update"); 
-							temp.MasterShipmentDataId = MyEntity.MasterShipmentDataId;
+					if(!IsUpdate)
+					{							
+						temp.MasterShipmentDataId = MyEntity.MasterShipmentDataId;
 
 										}  
 
@@ -931,7 +1117,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("CreatedByUser Can't be update"); 
+							{								
 								temp.CreatedByUserId = myCreatedByUserPM.Id;
 						  
 							}  
@@ -945,9 +1131,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.PickUps != null && MyEntity.PickUps.Count > 0)
 					{
-						PickUpQueryService PickUpService27 = new PickUpQueryService(Tenant);
-						 								//throw new ApplicationException("PickUps Can't be update"); 
-								temp.ShipmentPickUps = PickUpService27.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
+						PickUpQueryService PickUpService44 = new PickUpQueryService(Tenant);
+						 								
+							temp.ShipmentPickUps = PickUpService44.PickUpDataMappingAndValidatin(MyEntity.PickUps,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -958,9 +1144,9 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Deliveries != null && MyEntity.Deliveries.Count > 0)
 					{
-						DeliveryQueryService DeliveryService27 = new DeliveryQueryService(Tenant);
-						 								//throw new ApplicationException("Deliveries Can't be update"); 
-								temp.ShipmentDeliveries = DeliveryService27.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
+						DeliveryQueryService DeliveryService44 = new DeliveryQueryService(Tenant);
+						 								
+							temp.ShipmentDeliveries = DeliveryService44.DeliveryDataMappingAndValidatin(MyEntity.Deliveries,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 
@@ -975,8 +1161,8 @@ using Simplog.Data.ShipmentsModel;
 				}		
 			
 					
-                    							//throw new ApplicationException("ValueOfGoods Can't be update"); 
-							temp.ValueOfGoods = MyEntity.ValueOfGoods;
+                    							
+						temp.ValueOfGoods = MyEntity.ValueOfGoods;
 
 					 
 
@@ -989,7 +1175,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myValueOfGoodsCurrencyPM != null)
 						{ 
 
-						 								//throw new ApplicationException("ValueOfGoodsCurrency Can't be update"); 
+						 								
 								temp.ValueOfGoodsCurrencyId = myValueOfGoodsCurrencyPM.Id;
 						  
 
@@ -1002,11 +1188,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Receivables != null && MyEntity.Receivables.Count > 0)
 					{
-						ReceivableQueryService ReceivableService27 = new ReceivableQueryService(Tenant);
+						ReceivableQueryService ReceivableService44 = new ReceivableQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("Receivables Can't be update"); 
-								temp.ShipmentReceivables = ReceivableService27.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
+						{								
+							temp.ShipmentReceivables = ReceivableService44.ReceivableDataMappingAndValidatin(MyEntity.Receivables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1018,11 +1204,11 @@ using Simplog.Data.ShipmentsModel;
 
 					if(MyEntity.Payables != null && MyEntity.Payables.Count > 0)
 					{
-						PayableQueryService PayableService27 = new PayableQueryService(Tenant);
+						PayableQueryService PayableService44 = new PayableQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("Payables Can't be update"); 
-								temp.ShipmentPayables = PayableService27.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
+						{								
+							temp.ShipmentPayables = PayableService44.PayableDataMappingAndValidatin(MyEntity.Payables,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -1041,7 +1227,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("DimensionsUnit Can't be update"); 
+							{								
 								temp.DimensionsUnitCode = myDimensionsUnitPM.Code;
 						  
 							}  
@@ -1053,47 +1239,47 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && MyEntity.OrderNumberOfPackages != null)
-					{							//throw new ApplicationException("OrderNumberOfPackages Can't be update"); 
-							temp.BookingNumberOfPackages = MyEntity.OrderNumberOfPackages;
+					if(!IsUpdate)
+					{							
+						temp.BookingNumberOfPackages = MyEntity.OrderNumberOfPackages;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.OrderGrossWeight != null)
-					{							//throw new ApplicationException("OrderGrossWeight Can't be update"); 
-							temp.OrderGrossWeight = MyEntity.OrderGrossWeight;
+					if(!IsUpdate)
+					{							
+						temp.OrderGrossWeight = MyEntity.OrderGrossWeight;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.OrderVolume != null)
-					{							//throw new ApplicationException("OrderVolume Can't be update"); 
-							temp.BookingVolume = MyEntity.OrderVolume;
+					if(!IsUpdate)
+					{							
+						temp.BookingVolume = MyEntity.OrderVolume;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.OrderChargeableWeight != null)
-					{							//throw new ApplicationException("OrderChargeableWeight Can't be update"); 
-							temp.OrderChargeableWeight = MyEntity.OrderChargeableWeight;
+					if(!IsUpdate)
+					{							
+						temp.OrderChargeableWeight = MyEntity.OrderChargeableWeight;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && (MyEntity.OrderIsDangerouseGoods != temp.OrderIsDangerouseGoods))
-					{							//throw new ApplicationException("OrderIsDangerouseGoods Can't be update"); 
-							temp.OrderIsDangerouseGoods = MyEntity.OrderIsDangerouseGoods;
+					if(!IsUpdate)
+					{							
+						temp.OrderIsDangerouseGoods = MyEntity.OrderIsDangerouseGoods;
 
 										}  
 
 					
-                    							//throw new ApplicationException("MainHarmonize Can't be update"); 
-							temp.MainHarmonize = MyEntity.MainHarmonize;
+                    							
+						temp.MainHarmonize = MyEntity.MainHarmonize;
 
 					 
 
@@ -1106,7 +1292,7 @@ using Simplog.Data.ShipmentsModel;
 						if(mySalesmanPM != null)
 						{ 
 
-						 								//throw new ApplicationException("Salesman Can't be update"); 
+						 								
 								temp.SalesmanUserId = mySalesmanPM.Id;
 						  
 
@@ -1124,7 +1310,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myAccountManagerPM != null)
 						{ 
 
-						 								//throw new ApplicationException("AccountManager Can't be update"); 
+						 								
 								temp.AccountManagerUserId = myAccountManagerPM.Id;
 						  
 
@@ -1142,7 +1328,7 @@ using Simplog.Data.ShipmentsModel;
 						if(mySpecialServicesTypePM != null)
 						{ 
 
-						 								//throw new ApplicationException("SpecialServicesType Can't be update"); 
+						 								
 								temp.SpecialServicesTypeId = mySpecialServicesTypePM.Id;
 						  
 
@@ -1160,7 +1346,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myShipperNotExporterPM != null)
 						{ 
 
-						 								//throw new ApplicationException("ShipperNotExporter Can't be update"); 
+						 								
 								temp.ShipperNotExporterId = myShipperNotExporterPM.Id;
 						  
 
@@ -1178,7 +1364,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myAgentPM != null)
 						{ 
 
-						 								//throw new ApplicationException("Agent Can't be update"); 
+						 								
 								temp.AgentId = myAgentPM.Id;
 						  
 
@@ -1196,7 +1382,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myCustomAgentImportPM != null)
 						{ 
 
-						 								//throw new ApplicationException("CustomAgentImport Can't be update"); 
+						 								
 								temp.CustomAgentImportId = myCustomAgentImportPM.Id;
 						  
 
@@ -1214,7 +1400,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myReleasingAgentPM != null)
 						{ 
 
-						 								//throw new ApplicationException("ReleasingAgent Can't be update"); 
+						 								
 								temp.ReleasingAgentId = myReleasingAgentPM.Id;
 						  
 
@@ -1232,7 +1418,7 @@ using Simplog.Data.ShipmentsModel;
 						if(myFreightForwarderPM != null)
 						{ 
 
-						 								//throw new ApplicationException("FreightForwarder Can't be update"); 
+						 								
 								temp.FreightForwarderId = myFreightForwarderPM.Id;
 						  
 
@@ -1243,25 +1429,25 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && MyEntity.Ratio != null)
-					{							//throw new ApplicationException("Ratio Can't be update"); 
-							temp.Ratio = MyEntity.Ratio;
+					if(!IsUpdate)
+					{							
+						temp.Ratio = MyEntity.Ratio;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ConcurrencyGUID))
-					{							//throw new ApplicationException("ConcurrencyGUID Can't be update"); 
-							temp.ConcurrencyGUID = MyEntity.ConcurrencyGUID;
+					if(!IsUpdate)
+					{							
+						temp.ConcurrencyGUID = MyEntity.ConcurrencyGUID;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.CustomerReference1))
-					{							//throw new ApplicationException("CustomerReference1 Can't be update"); 
-							temp.CustomerReference1 = MyEntity.CustomerReference1;
+					if(!IsUpdate)
+					{							
+						temp.CustomerReference1 = MyEntity.CustomerReference1;
 
 										}  
 
@@ -1276,7 +1462,7 @@ using Simplog.Data.ShipmentsModel;
 
 						 
 							if(!IsUpdate)
-							{								//throw new ApplicationException("Status Can't be update"); 
+							{								
 								temp.StatusId = myStatusPM.Id;
 						  
 							}  
@@ -1288,34 +1474,544 @@ using Simplog.Data.ShipmentsModel;
 			
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.BookingConfirmationNumber))
-					{							//throw new ApplicationException("BookingConfirmationNumber Can't be update"); 
-							temp.BookingConfirmationNumber = MyEntity.BookingConfirmationNumber;
+					if(!IsUpdate)
+					{							
+						temp.BookingConfirmationNumber = MyEntity.BookingConfirmationNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.EstimatedFinalArrivalDate != null)
-					{							//throw new ApplicationException("EstimatedFinalArrivalDate Can't be update"); 
-							temp.EstimatedFinalArrivalDate = MyEntity.EstimatedFinalArrivalDate;
+					if(!IsUpdate)
+					{							
+						temp.EstimatedFinalArrivalDate = MyEntity.EstimatedFinalArrivalDate;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.ActualFinalArrivalDate != null)
-					{							//throw new ApplicationException("ActualFinalArrivalDate Can't be update"); 
-							temp.ActualFinalArrivalDate = MyEntity.ActualFinalArrivalDate;
+					if(!IsUpdate)
+					{							
+						temp.ActualFinalArrivalDate = MyEntity.ActualFinalArrivalDate;
 
 										}  
 
 					
-                    							//throw new ApplicationException("IsHTSMissing Can't be update"); 
-							temp.IsHTSMissing = MyEntity.IsHTSMissing;
+                    							
+						temp.IsHTSMissing = MyEntity.IsHTSMissing;
 
 					 
 
+					
+                    							
+						temp.PlannedCargoReadyDate = MyEntity.PlannedCargoReadyDate;
+
+					 
+
+					
+                    							
+						temp.ApprovedCargoReadyDate = MyEntity.ApprovedCargoReadyDate;
+
+					 
+
+					
+					UserQueryService HandlerUserUserService = new UserQueryService(Tenant);
+					if(MyEntity.HandlerUser != null)
+					{
+						var myHandlerUserPM = HandlerUserUserService.UserDataMappingAndValidatin(MyEntity.HandlerUser,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myHandlerUserPM != null)
+						{ 
+
+						 								
+								temp.HandlerUserId = myHandlerUserPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							
+						temp.Notify1Reference = MyEntity.Notify1Reference;
+
+					 
+
+					
+                    							
+						temp.Notify1Reference2 = MyEntity.Notify1Reference2;
+
+					 
+
+					
+                    							
+						temp.ShipperNotExporterReference1 = MyEntity.ShipperNotExporterReference1;
+
+					 
+
+					
+                    							
+						temp.ShipperNotExporterReference2 = MyEntity.ShipperNotExporterReference2;
+
+					 
+
+					
+                    							
+						temp.CustomsClearanceDate = MyEntity.CustomsClearanceDate;
+
+					 
+
+					
+					CardQueryService Notify1CardService = new CardQueryService(Tenant);
+					if(MyEntity.Notify1 != null)
+					{
+						var myNotify1PM = Notify1CardService.CardDataMappingAndValidatin(MyEntity.Notify1,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myNotify1PM != null)
+						{ 
+
+						 								
+								temp.Notify1Id = myNotify1PM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					 
+
+					if(MyEntity.EventList != null && MyEntity.EventList.Count > 0)
+					{
+						EventQueryService EventService44 = new EventQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								
+							temp.EventList = EventService44.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.EventList,Tenant,ComputingPartnerName,IsUpdate);
+
+					 
+						}  
+
+						
+					}
+
+								  
+
+					if(MyEntity.AddManualEvents != null && MyEntity.AddManualEvents.Count > 0)
+					{
+						EventQueryService EventService44 = new EventQueryService(Tenant);
+						  
+						if(!IsUpdate)
+						{								
+							temp.AddManualEvents = EventService44.EventCustomDataMappingAndValidatin(MyEntity,MyEntity.AddManualEvents,Tenant,ComputingPartnerName,IsUpdate);
+
+					 
+						}  
+
+						
+					}
+
+								 
+					AddressQueryService UnassignedShipperAddressAddressService = new AddressQueryService(Tenant);
+					if(MyEntity.UnassignedShipperAddress != null)
+					{
+						var myUnassignedShipperAddressPM = UnassignedShipperAddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.UnassignedShipperAddress,Tenant);
+						
+						if(myUnassignedShipperAddressPM != null)
+						{ 
+
+						 								
+								temp.UnassignedShipperAddressId = myUnassignedShipperAddressPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+					AddressQueryService UnassignedConsigneeAddressAddressService = new AddressQueryService(Tenant);
+					if(MyEntity.UnassignedConsigneeAddress != null)
+					{
+						var myUnassignedConsigneeAddressPM = UnassignedConsigneeAddressAddressService.AddressCustomDataMappingAndValidatin(MyEntity.UnassignedConsigneeAddress,Tenant);
+						
+						if(myUnassignedConsigneeAddressPM != null)
+						{ 
+
+						 								
+								temp.UnassignedConsigneeAddressId = myUnassignedConsigneeAddressPM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.LongMaster = MyEntity.FullMaster;
+
+										}  
+
+					
+					CardQueryService Notify2CardService = new CardQueryService(Tenant);
+					if(MyEntity.Notify2 != null)
+					{
+						var myNotify2PM = Notify2CardService.CardDataMappingAndValidatin(MyEntity.Notify2,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myNotify2PM != null)
+						{ 
+
+						 								
+								temp.Notify2Id = myNotify2PM.Id;
+						  
+
+							
+						} 
+
+					}
+			
+					
+                    							
+						temp.Notify2Reference = MyEntity.Notify2Reference;
+
+					 
+
+					
+					TransportModeQueryService PreForwardingTransportModeTransportModeService = new TransportModeQueryService(Tenant);
+					if(MyEntity.PreForwardingTransportMode != null)
+					{
+						var myPreForwardingTransportModePM = PreForwardingTransportModeTransportModeService.TransportModeDataMappingAndValidatin(MyEntity.PreForwardingTransportMode,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPreForwardingTransportModePM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.PreForwardingTransportModeId = myPreForwardingTransportModePM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					PortQueryService PreForwardingFromPortPortService = new PortQueryService(Tenant);
+					if(MyEntity.PreForwardingFromPort != null)
+					{
+						var myPreForwardingFromPortPM = PreForwardingFromPortPortService.PortDataMappingAndValidatin(MyEntity.PreForwardingFromPort,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPreForwardingFromPortPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.PreForwardingFromPortId = myPreForwardingFromPortPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					PortQueryService PreForwardingToPortPortService = new PortQueryService(Tenant);
+					if(MyEntity.PreForwardingToPort != null)
+					{
+						var myPreForwardingToPortPM = PreForwardingToPortPortService.PortDataMappingAndValidatin(MyEntity.PreForwardingToPort,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPreForwardingToPortPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.PreForwardingToPortId = myPreForwardingToPortPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.PreForwardingATD = MyEntity.PreForwardingATD;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.PreForwardingATA = MyEntity.PreForwardingATA;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.PreForwardingETD = MyEntity.PreForwardingETD;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.PreForwardingETA = MyEntity.PreForwardingETA;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.PreForwardingCarrierNumber = MyEntity.PreForwardingCarrierNumber;
+
+										}  
+
+					
+					CardQueryService PreForwardingCarrierCardService = new CardQueryService(Tenant);
+					if(MyEntity.PreForwardingCarrier != null)
+					{
+						var myPreForwardingCarrierPM = PreForwardingCarrierCardService.CardDataMappingAndValidatin(MyEntity.PreForwardingCarrier,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPreForwardingCarrierPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.PreForwardingCarrierId = myPreForwardingCarrierPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					VesselQueryService PreForwardingVesselVesselService = new VesselQueryService(Tenant);
+					if(MyEntity.PreForwardingVessel != null)
+					{
+						var myPreForwardingVesselPM = PreForwardingVesselVesselService.VesselDataMappingAndValidatin(MyEntity.PreForwardingVessel,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myPreForwardingVesselPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.PreForwardingVesselId = myPreForwardingVesselPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					TransportModeQueryService OnForwardingTransportModeTransportModeService = new TransportModeQueryService(Tenant);
+					if(MyEntity.OnForwardingTransportMode != null)
+					{
+						var myOnForwardingTransportModePM = OnForwardingTransportModeTransportModeService.TransportModeDataMappingAndValidatin(MyEntity.OnForwardingTransportMode,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myOnForwardingTransportModePM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.OnForwardingTransportModeId = myOnForwardingTransportModePM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					PortQueryService OnForwardingFromPortPortService = new PortQueryService(Tenant);
+					if(MyEntity.OnForwardingFromPort != null)
+					{
+						var myOnForwardingFromPortPM = OnForwardingFromPortPortService.PortDataMappingAndValidatin(MyEntity.OnForwardingFromPort,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myOnForwardingFromPortPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.OnForwardingFromPortId = myOnForwardingFromPortPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					PortQueryService OnForwardingToPortPortService = new PortQueryService(Tenant);
+					if(MyEntity.OnForwardingToPort != null)
+					{
+						var myOnForwardingToPortPM = OnForwardingToPortPortService.PortDataMappingAndValidatin(MyEntity.OnForwardingToPort,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myOnForwardingToPortPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.OnForwardingToPortId = myOnForwardingToPortPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.OnForwardingATD = MyEntity.OnForwardingATD;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.OnForwardingATA = MyEntity.OnForwardingATA;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.OnForwardingETD = MyEntity.OnForwardingETD;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.OnForwardingETA = MyEntity.OnForwardingETA;
+
+										}  
+
+					
+                    
+					if(!IsUpdate)
+					{							
+						temp.OnForwardingCarrierNumber = MyEntity.OnForwardingCarrierNumber;
+
+										}  
+
+					
+					CardQueryService OnForwardingCarrierCardService = new CardQueryService(Tenant);
+					if(MyEntity.OnForwardingCarrier != null)
+					{
+						var myOnForwardingCarrierPM = OnForwardingCarrierCardService.CardDataMappingAndValidatin(MyEntity.OnForwardingCarrier,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myOnForwardingCarrierPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.OnForwardingCarrierId = myOnForwardingCarrierPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					VesselQueryService OnForwardingVesselVesselService = new VesselQueryService(Tenant);
+					if(MyEntity.OnForwardingVessel != null)
+					{
+						var myOnForwardingVesselPM = OnForwardingVesselVesselService.VesselDataMappingAndValidatin(MyEntity.OnForwardingVessel,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myOnForwardingVesselPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.OnForwardingVesselId = myOnForwardingVesselPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					PrepaidCollectQueryService OtherPrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
+					if(MyEntity.OtherPrepaidCollect != null)
+					{
+						var myOtherPrepaidCollectPM = OtherPrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(MyEntity.OtherPrepaidCollect,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myOtherPrepaidCollectPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.OtherPrepaidCollectId = myOtherPrepaidCollectPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
+					
+					PrepaidCollectQueryService FreightPrepaidCollectPrepaidCollectService = new PrepaidCollectQueryService(Tenant);
+					if(MyEntity.FreightPrepaidCollect != null)
+					{
+						var myFreightPrepaidCollectPM = FreightPrepaidCollectPrepaidCollectService.PrepaidCollectDataMappingAndValidatin(MyEntity.FreightPrepaidCollect,Tenant,ComputingPartnerName,IsUpdate);
+						
+						if(myFreightPrepaidCollectPM != null)
+						{ 
+
+						 
+							if(!IsUpdate)
+							{								
+								temp.FreightPrepaidCollectId = myFreightPrepaidCollectPM.Id;
+						  
+							}  
+
+							
+						} 
+
+					}
+			
 										   
 					return temp;
 		    }
@@ -1325,6 +2021,8 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

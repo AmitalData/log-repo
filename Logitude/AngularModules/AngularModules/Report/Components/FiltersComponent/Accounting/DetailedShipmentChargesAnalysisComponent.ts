@@ -41,6 +41,7 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
         this.DateFilterList.push(new CodeNameClass("CRT", "Create Date"));
         this.DateFilterList.push(new CodeNameClass("REG", "Registry Date"));
         this.DateFilterList.push(new CodeNameClass("OPC", "Operational Close Date"));
+        this.DateFilterList.push(new CodeNameClass("ACD", "Accounting Close Date"));
 
         this.selectedDateFilter = this.DateFilterList.filter(d => d.Code == "OPE")[0];
     }
@@ -111,6 +112,14 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
         }
     }
 
+    private housesAndDirectOnly: boolean = false;
+    public get HousesAndDirectOnly() { return this.housesAndDirectOnly; }
+    public set HousesAndDirectOnly(value: boolean) {
+        if (this.housesAndDirectOnly != value) {
+            this.housesAndDirectOnly = value;
+        }
+    }
+
     RunButtonClicked() {
         this.SetUIProperties();
 
@@ -133,6 +142,7 @@ export class DetailedShipmentChargesAnalysisComponent extends BaseComponent impl
             myFilterItems.push(new QueryFilterItem("IncludeEstimations", this.IncludeEstimations));
             myFilterItems.push(new QueryFilterItem("SplitByCharges", this.SplitByCharges));
             myFilterItems.push(new QueryFilterItem("IncludeCancelledShipments", this.IncludeCancelledShipments));
+            myFilterItems.push(new QueryFilterItem("HousesAndDirectOnly", this.HousesAndDirectOnly));
 
             var myReportFliter: ReportFliter = new ReportFliter();
             myReportFliter.NumberOfPage = 1;

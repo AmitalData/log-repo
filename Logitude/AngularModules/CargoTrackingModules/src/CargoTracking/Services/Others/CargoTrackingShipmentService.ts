@@ -3,6 +3,7 @@ import { HttpClient, JsonpClientBackend} from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { ServiceHelper } from 'src/CargoTracking/Utilities/ServiceHelper';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { DeclarationApprovalArgs } from 'src/CargoTracking/DataContracts/DeclarationApprovalArgs';
 
 
 @Injectable()
@@ -72,5 +73,30 @@ export class CargoTrackingShipmentService {
             }),
             catchError(null));
     }
+
+
+
+
+
+    BuildURLParameters(object: any)
+    {
+        var urlparameters = '?';
+        var mykeys = Object.keys(object);
+
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = object[propName];
+
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
+
+            propValue = encodeURIComponent(propValue);
+            urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+        }
+        return urlparameters;
+    }
 }
+
+
 

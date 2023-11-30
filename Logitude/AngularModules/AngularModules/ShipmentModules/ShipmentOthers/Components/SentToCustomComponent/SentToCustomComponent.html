@@ -109,7 +109,7 @@
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsABMDisabled" (click)="SendButtonClicked('ABM')">Send</button>
+                                                            <button class="Button" [disabled]="IsABMDisabled" (click)="SendButtonClicked('ABM')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -183,7 +183,7 @@
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('ASV')">Send</button>
+                                                            <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('ASV')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -257,7 +257,7 @@
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('BOL')">Send</button>
+                                                            <button class="Button" [disabled]="IsATMSDisabled" (click)="SendButtonClicked('BOL')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -335,7 +335,7 @@
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button class="Button" [disabled]="IsAESDisabled" (click)="SendButtonClicked('CBP')">Send</button>
+                                                            <button class="Button" [disabled]="IsAESDisabled" (click)="SendButtonClicked('CBP')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -368,7 +368,7 @@
                                                                     <td>
                                                                         <table>
                                                                             <tr>
-                                                                                <td attr.data-cy="{{'CustomsTransmissionsStatusValue' | IdGeneratorPipe}}" style="width: 120px;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
+                                                                                <td attr.data-cy="{{'CustomsTransmissionsStatusValue' | IdGeneratorAsyncPipe | async}}" style="width: 120px;" [ngStyle]="{color: LocalCustomsTransmissionsStatusCode | StringToColorPipe:'CustomsTransmissionsStatus'}">
                                                                                     {{LocalCustomsTransmissionsStatusName}}
                                                                                 </td>
 
@@ -391,7 +391,7 @@
                                                                         <LogLabel [ObjectFieldName]="'LastSendDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td attr.data-cy="{{'CustomsTransmissionsStatusDate' | IdGeneratorPipe}}" style="text-align: left;">{{LocalCustomsTransmissionsStatusDate | DateTimePipe: 'SHWH'}}</td>
+                                                                    <td attr.data-cy="{{'CustomsTransmissionsStatusDate' | IdGeneratorAsyncPipe | async}}" style="text-align: left;">{{LocalCustomsTransmissionsStatusDate | DateTimePipe: 'SHWH'}}</td>
                                                                 </tr>
 
                                                                 <tr class="StatRow">
@@ -403,14 +403,14 @@
                                                                         <LogLabel [Text]="'By'" [DataContext]="DataContext"></LogLabel>
                                                                     </td>
 
-                                                                    <td attr.data-cy="{{'CustomsTransmissionsUserName' | IdGeneratorPipe}}" >{{LocalCustomsTransmissionsByUserName}}</td>
+                                                                    <td attr.data-cy="{{'CustomsTransmissionsUserName' | IdGeneratorAsyncPipe | async}}" >{{LocalCustomsTransmissionsByUserName}}</td>
                                                                 </tr>
                                                             </table>
                                                         </td>
 
                                                         <td style="width: 57px;">
-                                                            <button *ngIf="!IsRetransferAMANACVisible" class="Button" [disabled]="IsAMANACDisabled" (click)="SendButtonClicked('AMC')">Send</button>
-                                                            <button attr.data-cy="{{'CustomsTransmissionsRetransfer' | IdGeneratorPipe}}" *ngIf="IsRetransferAMANACVisible" class="Button" (click)="RetransferAMANACClicked()">Re-transfer</button>
+                                                            <button *ngIf="!IsRetransferAMANACVisible" class="Button" [disabled]="IsAMANACDisabled" (click)="SendButtonClicked('AMC')">{{'General.B.Send' | TextCodeTranslationPipe}}</button>
+                                                            <button attr.data-cy="{{'CustomsTransmissionsRetransfer' | IdGeneratorAsyncPipe | async}}" *ngIf="IsRetransferAMANACVisible" class="Button" (click)="RetransferAMANACClicked()">Re-transfer</button>
                                                         </td>
 
                                                         <td style="width: 30px;">
@@ -456,7 +456,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button attr.data-cy="{{'CloseCustomsTransmissions' | IdGeneratorPipe}}" class="Button" (click)="CloseButtonClicked()">Close</button>
+                        <button attr.data-cy="{{'CloseCustomsTransmissions' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

@@ -17,7 +17,12 @@ import {ObservableCollection} from '../../../../Infrastructure/Utilities/Observa
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 
+const CashbookTotalUpdateWindow = "Adjust Cashbook Total";
+const CashbookUpdateTotalWindowWidth = 400;
+const CashbookUpdateTotalWindowHeight = 180;
+const CashCashbookTypeCode = '1';
 @Component({
 
     templateUrl: './CashBookDetailsTabComponent.html',
@@ -52,6 +57,10 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
 
 
         this.SetUIProperties();
+    }
+
+    get ShowAdjustTotalButton(){
+        return SessionLocator?.LoggedUserPM?.IsCustomerCare;
     }
 
     ngOnInit() {
@@ -202,7 +211,7 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
         else if (this.FilterSelectedValue == 'postdated')
             filters.addAdditionalFilter("DueDate", today, null, null, "LargerThan", false, false, false, "DateTime");
 
-         filters.addAdditionalFilter("ARPChequeStatusCode", "1,2,3,4,7", null, null, "InListExact", false, false, false, "string");
+         filters.addAdditionalFilter("ARPChequeStatusCode", "1,4", null, null, "InListExact", false, false, false, "string");
         //  filters.addAdditionalFilter("ARPChequeStatusCode", "5", null, null, "NotEqual", false, false, false, "string");
          filters.addAdditionalFilter("IsDeposited", false, null, null, "Equals", false, false, false, "Boolean");
          filters.addAdditionalFilter("CashBookId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
@@ -260,6 +269,7 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
             this.UIProperties.SetEnabled("CashBookTypeCode", this.ObjectTableName, false);
         }
     }
+
 
 
 
@@ -434,6 +444,22 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
                 }
             });
 
+    }
+
+    RecalculateCashbookTotals(){
+        if(this.EntityPM.CashBookTypeCode == CashCashbookTypeCode)
+            this.ShowCashbookTotalUpdateWindow();
+    }
+
+    private ShowCashbookTotalUpdateWindow()
+    {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = CashbookUpdateTotalWindowWidth;
+        logitudeWindow.Height = CashbookUpdateTotalWindowHeight;
+        logitudeWindow.Title = CashbookTotalUpdateWindow;
+        logitudeWindow.WindowArgs = { CashbookPM: this.EntityPM };
+        logitudeWindow.Show('./Accounting/Components/EditTabs/CashBook/CashbookTotalAdjustWindow');
+        logitudeWindow.WindowClosed.subscribe(() => this.ReloadData() );
     }
 
 }

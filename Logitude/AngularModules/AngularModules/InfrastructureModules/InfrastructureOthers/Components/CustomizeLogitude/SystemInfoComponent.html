@@ -90,14 +90,14 @@
                     </tr>
 
 
-                    <tr  style="vertical-align:top;height:30px">
+                    <tr style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:210px;color:black"> <span>{{'TenantManagement.F.IsTrial' | TextCodeTranslationPipe}} :</span></td>
                         <td style="width:200px;color:black">{{IsTrial}}</td>
                         <td><div></div></td>
                     </tr>
 
-                    
+
                     <tr *ngIf="IsTrailVisibility" style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:210px;color:black"> <span>{{'TenantManagement.F.TrialStartDate' | TextCodeTranslationPipe}} :</span></td>
@@ -106,7 +106,7 @@
                     </tr>
 
                     <tr *ngIf="IsTrailVisibility" style="vertical-align:top;height:30px">
-                        
+
                         <td style="width:5px"><div></div></td>
                         <td style="width:210px;color:black"> <span>{{'TenantManagement.F.TrialEndDate' | TextCodeTranslationPipe}} :</span></td>
                         <td style="width:200px;color:black"> {{TrialEndDate}}</td>
@@ -129,10 +129,19 @@
                         <td><div></div></td>
                     </tr>
 
-                    <tr  style="vertical-align:top;height:30px">
+                    <tr style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:210px;color:black"> <span>{{'General.O.UsedSpace' | TextCodeTranslationPipe}} : </span></td>
                         <td style="width:200px;color:black">{{UsedSpace}}</td>
+                        <td><div></div></td>
+                    </tr>
+
+                    <tr *ngIf="IsCustomerCare" style="vertical-align:top;height:30px">
+                        <td style="width:5px"><div></div></td>
+                        <td style="width:210px;color:black"> <span>Tenant Local Time : </span></td>
+                        <td style="width:200px;color:black">
+                            <span class="Value">{{TenantLocalTime | DateTimeToTimePipe :'L12'}}</span>
+                        </td>
                         <td><div></div></td>
                     </tr>
 
@@ -143,9 +152,9 @@
                         <td><div></div></td>
                     </tr>
 
-                   <tr><td colspan="4"></td></tr>
+                    <tr><td colspan="4"></td></tr>
 
-                    </table>
+                </table>
 
                 </td>
 

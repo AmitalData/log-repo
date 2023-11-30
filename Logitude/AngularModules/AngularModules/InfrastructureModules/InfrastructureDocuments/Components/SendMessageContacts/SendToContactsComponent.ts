@@ -65,6 +65,7 @@ export class SendToContactsComponent implements OnInit {
     public ShowCC: boolean = true;
 
     public isRTL: boolean = false;
+    public ByCardCode: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _entityListService: EntityListService, public _documentOutPMService: DocumentOutPMService, private cd: ChangeDetectorRef) {
 
@@ -110,6 +111,7 @@ export class SendToContactsComponent implements OnInit {
         this.ToEmail = args.ToEmail;
         this.Cc = args.Cc;
         this.Bcc = args.Bcc;
+        this.ByCardCode = args.ByCardCode
 
         if (args.HideBCC) {
             this.ShowBCC = false;
@@ -120,6 +122,7 @@ export class SendToContactsComponent implements OnInit {
 
         if (this.PartnersObslist) {
 
+            
             if (!this.PartnersObslist.filter(d => d.PartnerType == "All")[0] && !this.IsSchedulerReport) {
                 this.PartnersObslist.push(new EntityPartner("All", "", false));
             }
@@ -149,6 +152,9 @@ export class SendToContactsComponent implements OnInit {
             }
         }
 
+        if (this.ByCardCode) {
+            this.SelectionChanged(this.SelectedPartnerItem, !args.ClearRecepients);
+        }
 
 
         ComponentArgs.AddComponent(new ParameterComponentArgs(this.CurrentSession.Sessionkey + "SendTo", this));
@@ -195,13 +201,15 @@ export class SendToContactsComponent implements OnInit {
 
     filterAgrs: ApiQueryFilters;
     SelectedPartnerItem: EntityPartner;
-    SelectionChanged(item: EntityPartner) {
+    SelectionChanged(item: EntityPartner, refresh: boolean = true) {
         this.SelectedPartnerItem = item;
         this.filterAgrs = new ApiQueryFilters();
         this.myPartnerId = this.SelectedPartnerItem.PartnerId;
+        this.myPartnerType = this.SelectedPartnerItem.PartnerType;
 
-
-        this.onQueryChangeEvent.emit({ QueryCode: "", Filters: this.filterAgrs });
+        if (refresh) {
+            this.onQueryChangeEvent.emit({ QueryCode: "", Filters: this.filterAgrs });
+        }
 
 
     }
@@ -307,7 +315,8 @@ export class SendToContactsComponent implements OnInit {
             return tempo;
         },
     };
-
+    
+    private myPartnerType: string;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         filters = new ApiQueryFilters();
         filters.GetCount = getCount;
@@ -317,14 +326,16 @@ export class SendToContactsComponent implements OnInit {
         filters.SortDirection = sortingDir;
         filters.Tenant = SessionLocator.Tenant;
         var rowsObjectTable = this.ObjectTableName;
+        this.myPartnerType = "";
 
 
         if (this.SelectedPartnerItem != null) {
-            if (this.SelectedPartnerItem.PartnerType.toUpperCase() != "ALL" && this.SelectedPartnerItem.PartnerTypeCode.toUpperCase() != "ALLUSERS") {
+
+            if (this.SelectedPartnerItem.PartnerType.toUpperCase() != "ALL"  && this.SelectedPartnerItem.PartnerTypeCode.toUpperCase() != "ALLUSERS") {
 
                 if (this.SelectedPartnerItem.PartnerId) {
                     if (!this.SelectedPartnerItem.IsUser) {
-                        this.myPartnerId = this.SelectedPartnerItem.PartnerId;
+                        this.SetMyPartnerDetails();
                     }
                 }
             }
@@ -335,8 +346,8 @@ export class SendToContactsComponent implements OnInit {
         if (!AppTool.IsNullOrEmpty(searchfields)) {
             filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, false, false, "string");
         }
-        
-        filters.addAdditionalFilter("CardId", this.myPartnerId, null, null, "InListExact", true, true, true, "string");
+
+        filters.addAdditionalFilter(this.ByCardCode ? "CardCode" : "CardId", this.myPartnerId, this.ByCardCode ? this.myPartnerType : null, null, "InListExact", true, true, true, "string");
         filters.addAdditionalFilter("HasEmail", "", null, null, "NotEqual", true, false, false, "String");
         filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
 
@@ -353,6 +364,11 @@ export class SendToContactsComponent implements OnInit {
 
     }
 
+
+    SetMyPartnerDetails() {
+        this.myPartnerId = this.SelectedPartnerItem.PartnerId;
+        this.myPartnerType = this.SelectedPartnerItem.PartnerType;
+    }
 
     RefreshEmailList(res: any) {
 

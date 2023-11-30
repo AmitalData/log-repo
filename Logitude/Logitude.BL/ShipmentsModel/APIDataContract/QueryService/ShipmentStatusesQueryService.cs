@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 using Logitude.BL.Security;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InfrastructureModel.EntityPMs;
+
 namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 {
     public class ShipmentStatusesQueryService
@@ -25,7 +28,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
 
             SecurityUtility.CheckSharedContactAuthentication(this.Tenant, shipment.CustomerId);
 
-            List<TraceEvent> shipmentEvents = GetShipmentStatusesEvents(shipment, latestStatusOnly);
+            List<TraceEventPM> shipmentEvents = GetShipmentStatusesEvents(shipment, latestStatusOnly);
             ShipmentStatuses shipmentStatuses = BuildShipmentStatues(shipment, shipmentEvents);
 
             return shipmentStatuses;
@@ -39,21 +42,22 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             var shipment = shipmentRepository.GetAllShipmentsByHouseNumber(houseNumber, this.Tenant).FirstOrDefault();
             return shipment;
         }
-        private List<TraceEvent> GetShipmentStatusesEvents(Shipment shipment, bool latestStatusOnly)
+        private List<TraceEventPM> GetShipmentStatusesEvents(Shipment shipment, bool latestStatusOnly)
         {
             var objectTabelRepository = new ObjectTableRepository(0);
             var shipmentObjectTable = objectTabelRepository.GetObjectTableByName("Shipment", 0, true);
             var traceEventRepository = new TraceEventRepository(this.Tenant);
+            var traceEventQuery = new TraceEventQuery(this.Tenant);
 
             if (latestStatusOnly)
             {
-                return new List<TraceEvent> { traceEventRepository.GetLatestEntityStatusTraceEvent(this.Tenant, shipment.Id, shipmentObjectTable.Id) };
+                return new List<TraceEventPM> { traceEventQuery.GetLatestEntityStatusTraceEvent(this.Tenant, shipment.Id, shipmentObjectTable.Id) };
             }
             else
-                return traceEventRepository.GetEntityStatusTraceEvents(this.Tenant, shipment.Id, shipmentObjectTable.Id).ToList();
+                return traceEventQuery.GetEntityStatusTraceEvents(this.Tenant, shipment.Id, shipmentObjectTable.Id).ToList();
 
         }
-        private ShipmentStatuses BuildShipmentStatues(Shipment shipment, List<TraceEvent> shipmentEvents)
+        private ShipmentStatuses BuildShipmentStatues(Shipment shipment, List<TraceEventPM> shipmentEvents)
         {
             var shipmentStatuses = new ShipmentStatuses();
             shipmentStatuses.HouseNumber = shipment.House;
@@ -61,13 +65,13 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             return shipmentStatuses;
         }
 
-        private List<StatusDetails> GetTraceEventStatuses(List<TraceEvent> shipmentEvents)
+        private List<StatusDetails> GetTraceEventStatuses(List<TraceEventPM> shipmentEvents)
         {
             return shipmentEvents.Select(eventItem =>
              new StatusDetails()
              {
-                 StatusCode = eventItem.EventType.EntityStatus.Code,
-                 StatusName = eventItem.EventType.EntityStatus.Name,
+                 StatusCode = eventItem.EntityStatusCode,
+                 StatusName = eventItem.EntityStatusName,
                  StatusDateTime = eventItem.EventDateTime,
                  StatusRemarks = eventItem.Notes
              }).ToList();

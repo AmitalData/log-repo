@@ -9,6 +9,7 @@ import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetai
 import * as BaseActions from "../../../../Base/cypress/actions/Actions"
 import * as GeneralActions from "../../actions/BaseActions";
 
+let searchFieldValue = null
 //#region import new air line
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
     cy.Login();
@@ -80,11 +81,12 @@ Then("the air line should create successfully", () => {
 
 //#region Search for the shipping line by code
 When("search the air line", () => {
-    AirLineActions.Search()
+    searchFieldValue = AirLineActions.getSearchFieldValue()
+    AirLineActions.Search(searchFieldValue)
 });
 
 Then("the air line should appear successfully", () => {
-    AirLineActions.AssertSearch()
+    AirLineActions.AssertSearch(searchFieldValue)
 });
 //#endregion
 
@@ -192,8 +194,8 @@ Then("the air line awb special handling code should create successfully", () => 
 });
 //#endregion
 
-//#region Inactivate shipping line
-Given("the user Inactivate air line", () => {
+//#region Inactivate Air Line and then reactivate it
+Given("the user change inactive checkBox value", () => {
     cy.Navigate(AirLineSelectors.GeneralTab);
     Actions.ChangeInactiveCheckBoxValue(AirLineSelectors.InactiveAirline)
 });

@@ -5,6 +5,7 @@
   DBType="CargoTracking"
   Module="CargoTracking">
   <Column
+    
     Name="Code"
     Type="varchar"
     Size="2">
@@ -38,5 +39,12 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="Weight"
+    OldNames="Weights"
+    Type="int">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Simplog.Data.Helpers;
+using Simplog.Server.Infrastructure.DataContracts;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
 
@@ -14,6 +16,7 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public string ObjectTableId { get; set; }
         public string FieldName { get; set; }
         public string DataTypeCode { get; set; }
+        public string DataTypeName { get; set; }
         public int MaxLength { get; set; }
         public bool IsRequiered { get; set; }
         public bool IsCustom { get; set; }
@@ -152,6 +155,20 @@ namespace Logitude.BL.InfrastructureModel.EntityPMs
         public bool DisplayInRequiredFields { get; set; }
 
 
+        public string LeftKey { get; set; }
+        public string RightKey { get; set; }
+        public bool IsForeignKey { get; set; }
+        public string ForeignEntity { get; set; }
+        public string NavigationPropertyName { get; set; }
+        public string DefaultAdditionalFilters { get; set; }
+        public QueryFilterItem DefaultAdditionalTreeFilters { get; set; }
 
+        public bool ForMetaDataOnly { get; set; }
+
+        public bool IsListFilter { get; set; }
+        public bool IndexOrder { get; set; }
+
+        public string RelatedEntities { get; set; }
+        public bool IsRelatedEntity { get; set; }
     }
 }

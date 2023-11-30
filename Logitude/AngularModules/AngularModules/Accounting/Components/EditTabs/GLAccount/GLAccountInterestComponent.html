@@ -65,7 +65,7 @@
             <td>
                 <table>
                     <tr>
-                        <td style="width: 700px;">
+                        <td style="width: 1000px;">
                             <table>
                                 <tr>
                                     <td>
@@ -235,26 +235,12 @@
                                                     <div></div>
                                                 </td>
                                             </tr>
-                                            <!--<tr style="height:5px;">
-                                                <td>
-                                                    <div></div>
-                                                </td>
-                                            </tr>-->
-                                            <!-- MinimumInterestInvoiceBilling -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 200px;">
                                                     <table>
                                                         <tr style="height:15px; ">
-                                                            <LogLabel [ObjectFieldName]="'MinimumInterestInvoiceBilling'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            <LogLabel [ObjectFieldName]="'InterestOpenBalance'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                         </tr>
-                                                        <!--<tr style="height:5px;">
-                                                            <td>
-                                                                <div></div>
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td><div></div></td>
-                                                        </tr>-->
                                                     </table>
                                                 </td>
                                                 <td>
@@ -262,8 +248,8 @@
                                                         <tr style="height:15px;">
                                                             <td>
 
-                                                                <LogTextBoxV2 [DigitsAfterPoint]="0" [FocusOnMe]="'true'" [ObjectFieldName]="'MinimumInterestInvoiceBilling'" [DataContext]="DataContext"
-                                                                              [Text]="MinimumInterestInvoiceBilling" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBoxV2>
+                                                                <LogTextBoxV2 [DigitsAfterPoint]="0" [FocusOnMe]="'true'" [ObjectFieldName]="'InterestOpenBalance'" [DataContext]="DataContext"
+                                                                              [Text]="InterestOpenBalance" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBoxV2>
                                                             </td>
                                                         </tr>
                                                         <tr>
@@ -314,6 +300,89 @@
                                             <tr><td></td></tr>
                                         </table>
                                     </td>
+                                    <td style="width:20px;">
+                                        <div></div>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr class="FormFieldRow"></tr>
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 200px;">
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <LogLabel [ObjectFieldName]="'PostponedChequesCommission'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <td>
+
+                                                                <LogTextBoxV2 InputType="unsDecimal" [DigitsAfterPoint]="2" [FocusOnMe]="'true'" [ObjectFieldName]="'PostponedChequesCommission'" [DataContext]="DataContext"
+                                                                              [Text]="PostponedChequesCommission" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBoxV2>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+
+
+
+
+                                            <tr class="FormFieldRow">
+                                                <td style="width: 200px;">
+                                                    <table>
+                                                        <tr style="height:15px; ">
+                                                            <LogLabel [ObjectFieldName]="'MinimumInterestInvoiceBilling'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                        </tr>
+                                                        <!--<tr style="height:5px;">
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>-->
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <table>
+                                                        <tr style="height:15px;">
+                                                            <td>
+
+                                                                <LogTextBoxV2 [DigitsAfterPoint]="0" [FocusOnMe]="'true'" [ObjectFieldName]="'MinimumInterestInvoiceBilling'" [DataContext]="DataContext"
+                                                                              [Text]="MinimumInterestInvoiceBilling" [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBoxV2>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><div></div></td>
+                                                        </tr>
+                                                    </table>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+
+
+
+                                            <tr><td></td></tr>
+                                        </table>
+                                    </td>
+                                    <td style="width:20px;">
+                                        <div></div>
+                                    </td>
+
+
                                     <td>
                                         <div></div>
                                     </td>

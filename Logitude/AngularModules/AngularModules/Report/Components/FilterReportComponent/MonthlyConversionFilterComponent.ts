@@ -30,6 +30,7 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
     public SelectedProdustsItem: any;   
     private reportDoaminService: ReportsDomainService;
     public ResellerId: string = null;
+    public IncludeCancelled: boolean = false;
     
     fillcombo(arr: any) {
         this.FilterdAdditionalService = [];
@@ -176,6 +177,13 @@ export class MonthlyConversionFilterComponent extends BaseComponent   {
             this.queryFilterItem.FieldValue = this.ToDate;
             this.queryFilterItem.FieldDataType = "Date";
             this.queryFilterItems.push(this.queryFilterItem);   
+
+            this.queryFilterItem = new QueryFilterItem();
+            this.queryFilterItem.DisplayInList = false;
+            this.queryFilterItem.FieldName = "IncludeCancelled";
+            this.queryFilterItem.FieldValue = this.IncludeCancelled;
+            this.queryFilterItem.Operator = "Equals";
+            this.queryFilterItems.push(this.queryFilterItem);
 
             if (this.IsCRMTenant) {
                 if (this.ResellerId) {

@@ -69,7 +69,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ReconciliationAmountWithSign, 
 	         IsAmountDebitNegative, 
 	         TransactionAmount, 
-	         ExcelTransactionAmount,
+	         ExcelTransactionAmount, 
+	         RefDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

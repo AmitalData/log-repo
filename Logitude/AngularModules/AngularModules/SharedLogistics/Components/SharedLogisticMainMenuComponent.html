@@ -1,17 +1,21 @@
-﻿
+
 <div style="position: absolute; top:10px; bottom:0px; left:15px; right:10px;margin:auto; background:white;">
     <table>
         <tr style="height:21px;">
             <td>
                 <ul class="PagesMenu">
-                    <li [class.SelectedPageMenu]="SelectedItem == 'SHLO'" (click)="SelectedItem = 'SHLO'">Shared Logistics and Mobile</li>
+                    <li *ngIf="SharedLogisticAndMobileVisibility" [class.SelectedPageMenu]="SelectedItem == 'SHLO'" (click)="SelectedItem = 'SHLO'">Shared Logistics and Mobile</li>
+
+                    <li *ngIf="IsDigitalPortalVisibile" [class.SelectedPageMenu]="SelectedItem == 'DIGP'" (click)="SelectedItem = 'DIGP'">Digital Portal</li>
 
                     <li *ngIf="CustomerTenantAccessVisibility" [class.SelectedPageMenu]="SelectedItem == 'LOBO'" (click)="SelectedItem = 'LOBO'">Access Management</li>
+
+                    <li *ngIf="CargoTrackingAccessVisibility" [class.SelectedPageMenu]="SelectedItem == 'CATR'" (click)="SelectedItem = 'CATR'">Cargo Tracking</li>
+
+                    <li *ngIf="CtoolAccessVisibility" [class.SelectedPageMenu]="SelectedItem == 'CTOOL'" (click)="SelectedItem = 'CTOOL'">CTool</li>
                 </ul>
             </td>
         </tr>
-
-
 
         <tr>
             <td class="CellStretch">
@@ -20,12 +24,25 @@
                     <div LocationDirective Code="SHLO"></div>
                 </div>
 
+                <!--Digital Portal-->
+                <div class="CellContent" [hidden]="SelectedItem != 'DIGP'">
+                    <div LocationDirective Code="DIGP"></div>
+                </div>
+
                 <!--LogBox-->
                 <div class="CellContent" [hidden]="SelectedItem != 'LOBO'">
                     <div LocationDirective Code="LOBO"></div>
                 </div>
 
+                <!--CargoTracking-->
+                <div class="CellContent" [hidden]="SelectedItem != 'CATR'">
+                    <div LocationDirective Code="CATR"></div>
+                </div>
 
+                <!--Ctool-->
+                <div class="CellContent" [hidden]="SelectedItem != 'CTOOL'">
+                    <div LocationDirective Code="CTOOL"></div>
+                </div>
             </td>
         </tr>
     </table>

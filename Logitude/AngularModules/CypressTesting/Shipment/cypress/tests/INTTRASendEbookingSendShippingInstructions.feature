@@ -1,7 +1,8 @@
-@release @stable @all
+@devrelease 
+#@stable @INTTRA
 Feature: INTTRA Sending E-Booking and Shipping Instructions
     The Customer Care user configures INTTRA for the tenant,
-    a second regular user creates an Ocean Export FCL shipment,
+    second regular user creates an Ocean Export FCL shipment,
     sends e-booking request,
     fixes the validations preventing the sending of e-booking,
     sends the e-booking again,
@@ -27,8 +28,8 @@ Feature: INTTRA Sending E-Booking and Shipping Instructions
             | Host     | ftp.cvt.inttra.com |
             | Folder   | outbound           |
         And fill the following branches settings
-            | BranchName  | INTTRAID | PartyAlias | Contact      |
-            | Main Office | 1234     | 5678       | SpecflowTest |
+            | BranchName  | INTTRAID | PartyAlias | Contact            |
+            | Main Office | 1234     | 5678       | devreleasetesting1 |
         And fill the following registration settings
             | BranchName  | RegistrationCode |
             | Main Office | YMLU             |

@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
+using Devart.Data.Linq;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 { 
@@ -30,19 +31,28 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                         Inactive = a.Inactive,
                                                         SearchFields = a.SearchFields,
                                                         CodeFilter = a.Code,
+                                                        Order = a.Order
                                                     });
             return query;
 		}
 
 		private IQueryable<ChartOfAccountsType> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<ChartOfAccountsType> iQueryable)
         {
+            if (queryOperations != null && queryOperations.QueryFilterItems.FirstOrDefault(item => item.FieldName == "isRevenueExpenseFilter") != null)
+            {
+                iQueryable = iQueryable.Where(d => d.Code == "1" || d.Code == "2");
+            }
             return iQueryable;
 		}
 
 		private IQueryable<ChartOfAccountsType> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<ChartOfAccountsType> iQueryable)
         {
 			return iQueryable;
-		}
+        }
+      
+
+
+
 	}
 
 

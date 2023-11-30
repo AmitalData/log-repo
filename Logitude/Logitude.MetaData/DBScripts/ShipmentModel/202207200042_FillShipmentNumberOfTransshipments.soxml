@@ -1,0 +1,46 @@
+﻿<Script DBType="Main" Module="Shipment" AOT="true" TargetTableName="ShipmentMasterDatas">
+	<Sql Version="1">
+		<![CDATA[
+    
+
+declare @Tenant as int
+declare @Id as varchar(15)
+declare @Via1_Id as varchar(15)
+declare @Via2_Id as varchar(15)
+declare @Via3_Id as varchar(15)
+declare @Count as int 
+
+BEGIN
+       DECLARE DataCursor CURSOR READ_ONLY
+       FOR
+       SELECT Id, Tenant, Transshipment1FromPortId, Transshipment2FromPortId, Transshipment3FromPortId
+       FROM ShipmentMasterDatas
+       where Transshipment1FromPortId is not null and $LastCounterWhere$ 
+       OPEN DataCursor FETCH NEXT FROM DataCursor INTO @Id, @Tenant, @Via1_Id, @Via2_Id, @Via3_Id
+       WHILE @@FETCH_STATUS = 0
+       BEGIN
+			  set @Count = 0
+
+              if(@Via3_Id is not null)
+                set @Count = 3
+
+              else if(@Via2_Id is not null)
+                set @Count = 2
+
+            else if(@Via1_Id is not null)
+                set @Count = 1
+
+            update ShipmentMasterDatas set NumberOfTransshipments = @Count where Id = @Id and Tenant = @Tenant
+                 			 
+       FETCH NEXT FROM DataCursor INTO @Id, @Tenant, @Via1_Id, @Via2_Id, @Via3_Id
+       END
+       CLOSE DataCursor
+       DEALLOCATE DataCursor
+END
+
+      
+        ]]>
+	</Sql>
+</Script>
+
+

@@ -1,9 +1,9 @@
 ﻿using Logitude.Server.Tools;
+using Marvin.JsonPatch.Exceptions;
+using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+
 namespace WebFreight.Web.Helpers
 {
     public class ApiExceptionBuilder
@@ -35,13 +35,13 @@ namespace WebFreight.Web.Helpers
                         }
                     }
                 }
-                apiException = new APIException()
-               {
-                   ErrorType = ex.GetType().Name,
-                   ErrorMessage = ErrorMessage,
-                   ShortErrorMessage = ShortErrorMessage,
-               };
 
+                apiException = new APIException()
+                {
+                    ErrorType = ex.GetType().Name,
+                    ErrorMessage = ErrorMessage ,
+                    ShortErrorMessage = ShortErrorMessage,
+                };
             }
             else
             {
@@ -52,17 +52,14 @@ namespace WebFreight.Web.Helpers
 
                     errorMessage = errorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
                     shortErrorMessage = shortErrorMessage + " (" + (ex.InnerException.InnerException != null ? ex.InnerException.InnerException.Message : ex.InnerException.Message) + ")" + Environment.NewLine;
-
                 }
 
-                //errorMessage = errorMessage + ex.StackTrace + Environment.NewLine;
                 apiException = new APIException()
                 {
                     ErrorType = ex.GetType().Name,
-                    ErrorMessage = errorMessage,
+                    ErrorMessage = errorMessage + " (" + ex.StackTrace + ")",
                     ShortErrorMessage = shortErrorMessage
                 };
-
             }
 
             return apiException;
@@ -92,9 +89,44 @@ namespace WebFreight.Web.Helpers
                 ShortErrorMessage = ShortErrorMessage,
             };
 
-
-
             return apiException;
+        }
+
+        public static object BuildJsonPatchException(JsonPatchException exception, string entityId, object jsonPatch)
+        {
+            string errorMessage = "Error Message: " + exception.Message + Environment.NewLine + 
+                                  "Entity Id: " + entityId + Environment.NewLine +
+                                  "Json Patch: " + JsonConvert.SerializeObject(jsonPatch);
+
+            string shortErrorMessage = GetShortErrorMessage(exception);
+
+            return new APIException()
+            {
+                ErrorType = exception.GetType().Name,
+                ErrorMessage = errorMessage,
+                ShortErrorMessage = shortErrorMessage
+            };
+        }
+
+        private static string GetShortErrorMessage(JsonPatchException exception)
+        {
+            if (Regex.IsMatch(exception.Message, @"The current value '.*' at path '.*' is not equal to the test value '.*'\."))
+            {
+                return "Some of the " + GetChildEntityName(exception) + " were deleted.";
+            }
+            else
+            {
+                return "Invalid update";
+            }
+        }
+
+        private static string GetChildEntityName(JsonPatchException exception)
+        {
+            var failedOperation = exception.FailedOperation;
+            string entityNameInCamelCase = failedOperation.path.Split('/')[1];
+
+            string returnedEntityName = Regex.Replace(entityNameInCamelCase, @"\p{Lu}", m => " " + m.Value.ToLowerInvariant());
+            return returnedEntityName;
         }
     }
 }

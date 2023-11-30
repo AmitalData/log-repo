@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WarehouseData.Service;
@@ -20,7 +21,8 @@ namespace WarehouseData.Helper
         FactWarehouseService factWarehouseService;
         WaterMarkDataWarehouseService waterMarkDataWarehouseService;
         DWDataWarehouseService dWDataWarehouseService;
-
+        public int RetryNumber = 0;
+        public int MaxRetriesNumber =10;
         public MainDataWarehouseService(string applicationName = "WarehouseData", string applicationMode = "Debug") :base(applicationName, applicationMode)
         {
 
@@ -29,7 +31,8 @@ namespace WarehouseData.Helper
 
         private void InitializeDataWarehouseServices()
         {
-            finalDataWarehouseService = new FinalDataWarehouseService();
+
+            finalDataWarehouseService = new FinalDataWarehouseService(ApplicationName, ApplicationMode);
             customFieldWarehouseService = new CustomFieldWarehouseService();
             dimensionWarehouseService = new DimensionWarehouseService(ApplicationName, ApplicationMode);
             factWarehouseService = new FactWarehouseService(ApplicationName, ApplicationMode);
@@ -128,16 +131,45 @@ namespace WarehouseData.Helper
 
         public void FinishBuildingDataWarehouse(string connectionString ,string destinationConnectionString, List<TableClass> tableLists)
         {
-        
+            try
+            {
+                TryFinishBuildingDataWarehouse(connectionString, destinationConnectionString, tableLists);
+            }
+            catch (Exception exception)
+            {
+                if(RetryNumber > MaxRetriesNumber) throw exception;
+
+                Thread.Sleep(new TimeSpan(0, 1, 0));
+                FinishBuildingDataWarehouse(connectionString, destinationConnectionString, tableLists);
+            }
+
+        }
+
+        private void TryFinishBuildingDataWarehouse(string connectionString, string destinationConnectionString, List<TableClass> tableLists)
+        {
+            RetryNumber += 1;
             finalDataWarehouseService.FinishBuildingDataWarehouse(connectionString, destinationConnectionString, tableLists);
+
+
+        }
+
+
+
+        public void FinishUpdatingDataWarehouse(string destinationConnectionString)
+        {
+
+            finalDataWarehouseService.FinishUpdatingDataWarehouse(destinationConnectionString);
         }
 
         public void RunAdditionalScripte(string connectionString, List<TableClass> tableLists, bool isIncrement = false)
         {
 
             customFieldWarehouseService.BuildCustomObjectFieldsTable(connectionString, tableLists);
-            RunSqlFunctions(connectionString);
-            if(!isIncrement)  ExecuteScript("Others", "AddAdditionalIndexesToDWTables", connectionString);
+            if (!isIncrement)
+            {
+                RunSqlFunctions(connectionString);
+                ExecuteScript("Others", "AddAdditionalIndexesToDWTables", connectionString);
+            }
         }
 
 
@@ -196,8 +228,7 @@ namespace WarehouseData.Helper
                 this.BuildFactTable(destinationConnectionString, table);
             });
 
-
-            FinishBuildingDataWarehouse(sourceConnectionString, destinationConnectionString, tableNameLists);
+          FinishBuildingDataWarehouse(sourceConnectionString, destinationConnectionString, tableNameLists);
         }
 
         public void UpdateDataWarehouse(string sourceConnectionString, string destinationConnectionString, int? privateTenant = null, string relatedTenants = null)
@@ -221,9 +252,22 @@ namespace WarehouseData.Helper
 
             #region Update Fact Table
 
-            Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) => {
-                this.UpdateFactTable(destinationConnectionString, table);
-            });
+            if (privateTenant != null)
+            {
+                foreach (TableClass table in tableNameLists.Where(d => d.HasFactTable).ToList())
+                {
+                    this.UpdateFactTable(destinationConnectionString, table);
+                }
+            }
+            else
+            {
+                Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) => {
+                    this.UpdateFactTable(destinationConnectionString, table);
+                });
+
+            }
+
+            FinishUpdatingDataWarehouse(destinationConnectionString);
 
             #endregion
 
@@ -254,8 +298,9 @@ namespace WarehouseData.Helper
                 }
                 FeatureDataWarehouseService featureDataWarehouseService = new FeatureDataWarehouseService(sourceConnectionString.Replace("Main" ,"Global"), sourceConnectionString);
 
-                Parallel.ForEach(dWHSettingsTable.Rows.Cast<DataRow>().ToList(), (row) =>
-                {
+                foreach(DataRow row in dWHSettingsTable.Rows.Cast<DataRow>().ToList())
+                { 
+
                     int tenant = Int32.Parse(row["Tenant"].ToString());
                     string catalog = row["Catalog"].ToString();
                     string userName = row["UserName"].ToString();
@@ -266,19 +311,20 @@ namespace WarehouseData.Helper
 
                     if (featureDataWarehouseService.CheckFeature("PrivateDB", tenant))
                     {
-                        string destinationConnectionString = BuildConnectionString(catalog, userName, password, server);
-                        List<int> relatedTenants = privateTenantDataWarehouse.GetPrivateRelatedTenants(sourceConnectionString, tenant);
+                        var privateMainDataWarehouseService = new MainDataWarehouseService(this.ApplicationName, this.ApplicationMode);
+                        string destinationConnectionString = privateMainDataWarehouseService.BuildConnectionString(catalog, userName, password, server);
+                        List<int> relatedTenants = privateMainDataWarehouseService.privateTenantDataWarehouse.GetPrivateRelatedTenants(sourceConnectionString, tenant);
                         if (!relatedTenants.Contains(tenant)) relatedTenants.Add(tenant);
-                        string tenants = privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
+                        string tenants = privateMainDataWarehouseService.privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
                         if (type == "Build")
                         {
-                            BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                            privateMainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
                             privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false, IsParentTenant = isParentTenant });
 
                         }
-                        else UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                        else privateMainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
                     }
-                });
+                }
             }
             else if (ApplicationName != "Service") MessageBox.Show("Connection Problem");
    

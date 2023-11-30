@@ -19,6 +19,8 @@ import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import {QuotePM} from '../../../Quote/EntityPMs/QuotePM';
 import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+import { QuoteTemplateSettingData, PricesFieldSettings } from '../../../Quote/DataContracts/QuoteTemplateSettingData';
+import { List } from '../../../Infrastructure/DataContracts/Dashboard/List';
 @Component({
     selector: 'QuoteTemplatePricingSettingComponent',
     
@@ -66,7 +68,8 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     ShowTotalPerContinerLink: boolean = false;
     ShowVATDetails :boolean = false;
     DisplayRegoinalTax: boolean = false;
-
+    CanSplitByQuoteCharge: boolean = false;
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         super();
         this.quoteTemplateSettingPMService = new QuoteTemplateSettingPMService();
@@ -80,6 +83,8 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         if (FeatureLocator.HasFeaturePermession("Quote", "TOTALPERCONTAINER")) this.ShowTotalPerContinerLink = true;
         if (SessionLocator.AccountingSettingPM.AllowRegionalTaxManagement) this.DisplayRegoinalTax = true;
 
+        this.CanSplitByQuoteCharge = FeatureLocator.HasFeaturePermession("QuoteTemplate", "SPLITCHARGEGROUP");
+
     }
 
     ngOnInit() {
@@ -90,6 +95,7 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
     SelectedTabCode: string;
     IsRoutingRates: boolean = false;
     SetWindowArgs(args: any) {
+        this.SetIsUsingVirtuallization();
         this.SelectedTabCode = "PRT";
         this.QuoteTemplatePM = args.QuoteTemplatePM;
         this.QuoteTemplateSectionTypeName = args.QuoteTemplateSectionTypeName;
@@ -97,10 +103,10 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         this.QuotePM = args.QuotePM;
 
         if (((this.QuotePM && this.QuotePM.IsChargesByVAT) || !this.QuotePM) && FeatureLocator.HasFeaturePermession("Quote", "VATDetAILSINQUOTATION")) {
-                this.ShowVATDetails = true;
-            }
-        
+            this.ShowVATDetails = true;
+        }
 
+        this.FillQuoteTemplateTableSettingsData();
 
         this.IsRoutingRates = this.QuoteTemplatePM != null ? this.QuoteTemplatePM.TemplateTypeCode == "P" ? true : false : false;
         this.Alignment.push("Left"); this.Alignment.push("Center"); this.Alignment.push("Right");
@@ -124,10 +130,189 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         this.LoadData();
     }
 
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
+    CountOfUsedQuoteTemplatePricesTableSettingsData: number = 0;
+    private FillQuoteTemplateTableSettingsData() {
+        if (!this.QuoteTemplateSettingPM) return;
+        if (!this.QuoteTemplateSettingPM.QuoteTemplateSettingData) return;
+        if (this.QuoteTemplateSectionTypeName == "Packages") this.FilllQuoteTemplatePricesPackagesTableSettingsData();
+        else this.FilllQuoteTemplatePricesContainersTableSettingsData();
+        this.CountOfUsedQuoteTemplatePricesTableSettingsData = this.QuoteTemplatePricesTableSettingsData.filter(q => q.Show).length;
+    }
+
+    private FilllQuoteTemplatePricesPackagesTableSettingsData() {
+        this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesPackagesTableSettings.forEach((item) => {
+            item.Key = Guid.newGuid();
+            item.Show = this.IsMustBeShown(item);
+            item.DisplayTextCode = this.GetItemSettingsDataDisplayTextCode(item);
+            this.ChangeTotalPerChargeGroupEnabled(item);
+        });
+        this.QuoteTemplatePricesTableSettingsData = this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesPackagesTableSettings;
+    }
+
+    private FilllQuoteTemplatePricesContainersTableSettingsData() {
+        this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesContainersTableSettings.forEach((item) => {
+            item.Key = Guid.newGuid();
+            item.Show = this.IsMustBeShown(item);
+            item.DisplayTextCode = this.GetItemSettingsDataDisplayTextCode(item);
+            this.ChangeTotalPerChargeGroupEnabled(item);
+        });
+        this.QuoteTemplatePricesTableSettingsData = this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesContainersTableSettings;
+    }
+
+    private IsMustBeShown(item) {
+        switch (item.Code) {
+            case "VATTYPEPACKAGES":
+            case "VATTYPECONTAINERS":
+                return this.ShowVATDetails;
+                break;
+            case "VATPERCENTAGEPACKAGES":
+            case "VATPERCENTAGECONTAINERS":
+                return this.ShowVATDetails;
+                break;
+            case "ISREGIONALTAXPACKAGES":
+            case "ISREGIONALTAXCONTAINERS":
+                return this.DisplayRegoinalTax;
+                break;
+            case "UNITSPACKAGES":
+            case "UNITSCONTAINERS":
+            case "FIXEDPRICECONTAINERS":
+                return (!this.IsRoutingRates && this.QuoteTemplateSectionTypeName == 'Packages') || this.QuoteTemplateSectionTypeName != 'Packages';
+                break;
+            default: return true;
+        }
+    }
+
+    private GetItemSettingsDataDisplayTextCode(item) {
+        switch (item.Code) {
+            case "HEADERPACKAGES":
+            case "HEADERCONTAINERS":
+                return "QuoteTemplate.S.ShowHeaderLabels";
+                break;
+            case "CHARGEPACKAGES":
+            case "CHARGECONTAINERS":
+                return "QuoteTemplate.S.ShowChargeName";
+                break;
+            case "CHARGECODEPACKAGES":
+            case "CHARGECODECONTAINERS":
+                return "QuoteTemplate.S.ShowChargeCode";
+                break;
+            case "MEASUREMENTPACKAGES":
+            case "MEASUREMENTCONTAINERS":
+                return "QuoteTemplate.S.ShowMeasurement";
+                break;
+            case "UNITSPACKAGES":
+            case "UNITSCONTAINERS":
+                return "QuoteTemplate.S.ShowUnits";
+                break;
+            case "FIXEDPRICECONTAINERS":
+                return "QuoteTemplate.S.ShowFixedPrice";
+                break;
+            case "UNITPRICEPACKAGES":
+            case "PRICEBYCONTAINERS":
+                return this.QuoteTemplateSectionTypeName == "Packages" ? "QuoteTemplate.S.ShowUnitPrice" : "QuoteTemplate.S.ShowPriceByContainer";
+                break;
+            case "TOTALPACKAGES":
+            case "TOTALCONTAINERS":
+                return "QuoteTemplate.S.ShowSaleCurrencyColumn";
+                break;
+            case "LOCALAMOUNTPACKAGES":
+            case "LOCALAMOUNTCONTAINERS":
+                return "QuoteTemplate.S.ShowLocalCurrencyColumn";
+                break;
+            case "CHARGEDESCRIPTIONPACKAGES":
+            case "CHARGEDESCRIPTIONCONTAINERS":
+                return "QuoteTemplate.S.ShowChargeDescription";
+                break;
+            case "CHARGENOTEPACKAGES":
+            case "CHARGENOTECONTAINERS":
+                return "QuoteTemplate.S.ShowChargeNote";
+                break;
+            case "SALEMINMAXPACKAGES":
+            case "SALEMINMAXCONTAINERS":
+                return "QuoteTemplate.S.ShowSaleMinMax";
+                break;
+            case "INCLUDEDCHARGESPACKAGES":
+            case "INCLUDEDCHARGESCONTAINERS":
+                return "QuoteTemplate.S.ShowIncludedCharges";
+                break;
+            case "ISREGIONALTAXPACKAGES":
+            case "ISREGIONALTAXCONTAINERS":
+                return "QuoteTemplate.S.ShowRegionalTax";
+                break;
+            case "VATTYPEPACKAGES":
+            case "VATTYPECONTAINERS":
+                return "QuoteTemplate.S.ShowVATType";
+                break;
+            case "VATPERCENTAGEPACKAGES":
+            case "VATPERCENTAGECONTAINERS":
+                return "QuoteTemplate.S.ShowVATPercentage";
+                break;
+            case "SALELOCALAMOUNTInCLUDINGVATPACKAGES":
+            case "SALELOCALAMOUNTInCLUDINGVATCONTAINERS":
+                return "QuoteTemplate.S.LocalSaleAmountIncludingVAT";
+                break;
+            case "SALEAMOUNTInCLUDINGVATPACKAGES":
+            case "SALEAMOUNTInCLUDINGVATCONTAINERS":
+                return "QuoteTemplate.S.SaleAmountIncludingVAT";
+                break;
+        }
+
+        if (item.Code == "ShowVATType") return this.ShowVATDetails;
+        if (item.Code == "ShowVATPercentage") return this.ShowVATDetails;
+        if (item.Code == "ShowRegionalTax") return this.DisplayRegoinalTax;
+        if (item.Code == "ShowPrice1Key") return (!this.IsRoutingRates && this.QuoteTemplateSectionTypeName == 'Packages') || this.QuoteTemplateSectionTypeName != 'Packages';
+        return true;
+    }
+
+    ArrowUpButtonClicked(currentItem: PricesFieldSettings) {
+        let currentIndex: number = this.QuoteTemplatePricesTableSettingsData.indexOf(currentItem);
+        var previousItem = this.QuoteTemplatePricesTableSettingsData[currentIndex - 1];
+        if (currentIndex <= 0) return;
+        this.QuoteTemplatePricesTableSettingsData = this.QuoteTemplatePricesTableSettingsData.filter(d => d.Code != previousItem.Code);
+        let tempOrder: number = currentItem.Index;
+        currentItem.Index = previousItem.Index;
+        previousItem.Index = tempOrder;
+
+        this.QuoteTemplatePricesTableSettingsData.splice(currentIndex, 0, previousItem);
+        if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesPackagesTableSettings = this.QuoteTemplatePricesTableSettingsData;
+        else this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesContainersTableSettings = this.QuoteTemplatePricesTableSettingsData;
+    }
+
+    ArrowDownButtonClicked(currentItem: PricesFieldSettings) {
+        let currentIndex: number = this.QuoteTemplatePricesTableSettingsData.indexOf(currentItem);
+        var nextItem = this.QuoteTemplatePricesTableSettingsData[currentIndex + 1];
+        if (currentIndex >= this.QuoteTemplatePricesTableSettingsData.length - 1) return;
+        this.QuoteTemplatePricesTableSettingsData = this.QuoteTemplatePricesTableSettingsData.filter(d => d.Code != nextItem.Code);
+        let tempOrder: number = currentItem.Index;
+        currentItem.Index = nextItem.Index;
+        nextItem.Index = tempOrder;
+
+        this.QuoteTemplatePricesTableSettingsData.splice(currentIndex, 0, nextItem);
+        if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesPackagesTableSettings = this.QuoteTemplatePricesTableSettingsData;
+        else this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricesContainersTableSettings = this.QuoteTemplatePricesTableSettingsData;
+    }
+
+    quoteTemplatePricesTableSettingsData: PricesFieldSettings[];
+    get QuoteTemplatePricesTableSettingsData() {
+        return this.quoteTemplatePricesTableSettingsData;
+    }
+    set QuoteTemplatePricesTableSettingsData(value: PricesFieldSettings[]) {
+        if (value != null) {
+            this.QuoteTemplateSettingPM.IsDirty = true;
+            this.quoteTemplatePricesTableSettingsData = value;
+        }
+    }
 
     BuildItemsSource() {
 
-
+        
         var itemsCollection: TextCodeData[] = [];
 
         this.QuoteTemplateTextCodePMList.forEach((item) => {
@@ -331,6 +516,33 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         }
     }
 
+    get PricingTableSplitChargeTypes() {
+        if(this.CanSplitByQuoteCharge) return ["Charge Group","Quote Charge Group"];       
+        return ["Charge Group"];
+    }
+    get PricingTableSplitChargeType() {
+        if (!this.QuoteTemplateSettingPM || !this.QuoteTemplateSettingPM.QuoteTemplateSettingData) return "Charge Group";
+        if(this.QuoteTemplateSectionTypeName == "Packages"){
+           return this.GetPricingPackagesSplitChargeType();
+        }
+        return this.GetPricingContinersSplitChargeType();
+    }
+
+    set PricingTableSplitChargeType(value: string) {
+        if (this.QuoteTemplateSettingPM == null) return;
+        if (this.QuoteTemplateSectionTypeName == "Packages") this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricingPackagesSplitChargeType = value;
+        else this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricingContinersSplitChargeType = value;
+    }
+
+    GetPricingPackagesSplitChargeType(): string {
+        if(AppTool.IsNullOrEmpty(this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricingPackagesSplitChargeType)) return "Charge Group";
+        return this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricingPackagesSplitChargeType;
+    }
+
+    GetPricingContinersSplitChargeType(): string {
+        if(AppTool.IsNullOrEmpty(this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricingContinersSplitChargeType)) return "Charge Group";
+        return this.QuoteTemplateSettingPM.QuoteTemplateSettingData.PricingContinersSplitChargeType;
+    }
 
     ShowChargeCodeKey: string = Guid.newGuid();
     get ShowChargeCode() {
@@ -463,24 +675,23 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
         }
     }
 
-    ShowSaleCurrencyColumnKey: string = Guid.newGuid();
-    get ShowSaleCurrencyColumn() {
-        var showSaleCurrencyColumn: boolean = false;
-        if (this.QuoteTemplateSettingPM) showSaleCurrencyColumn = this.QuoteTemplateSectionTypeName == "Packages" ? this.QuoteTemplateSettingPM.ShowSaleCurrencyColumnPackages : this.QuoteTemplateSettingPM.ShowSaleCurrencyColumnContainers;
-        return showSaleCurrencyColumn;
+
+    public InUseChange(checkedItem:any){
+        this.ChangeTotalPerChargeGroupEnabled(checkedItem,true);
     }
-    set ShowSaleCurrencyColumn(value: boolean) {
-        if (this.QuoteTemplateSettingPM != null) {
 
-
-            if (!value) this.ShowTotalPerChargeGroup = false;
-            
-            if (this.QuoteTemplateSectionTypeName == "Packages") {
-                this.QuoteTemplateSettingPM.ShowSaleCurrencyColumnPackages = value;
-            } else this.QuoteTemplateSettingPM.ShowSaleCurrencyColumnContainers = value;
+    public TotalPerChargeGroupEnabled: boolean;
+    ChangeTotalPerChargeGroupEnabled(checkedItem:any, isClicked:boolean = false) {
+        if(this.TotalPerChargeGroupEnabled && !isClicked ||(checkedItem.Name !="ShowTotalInSaleCurrencyContainers" && checkedItem.Name !="ShowSaleCurrencyColumnContainers" &&
+        checkedItem.Name !="ShowTotalInSaleCurrencyPackages" && checkedItem.Name !="ShowSaleCurrencyColumnPackages"))
+        return;
+        if(checkedItem.InUse) {
+            this.TotalPerChargeGroupEnabled = true;
+            return;
         }
+        this.TotalPerChargeGroupEnabled = false;
+        this.ShowTotalPerChargeGroup = false;
     }
-
 
     ShowLocalCurrencyColumnKey: string = Guid.newGuid();
     get ShowLocalCurrencyColumn() {
@@ -673,6 +884,8 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
             this.CurrentSession.CurrentWindow.StartBusyIndicator(TextCodeTranslator.Translate("QuoteTemplate.M.Saving"));
 
             if (this.QuoteTemplateSettingPM.IsDirty) {
+                this.MapIsUsedFieldToCurrentDBFields();
+                    
                 this.quoteTemplateSettingPMService.update(this.QuoteTemplateSettingPM).subscribe((res:any) => {
                     this.QuoteTemplateSettingPM.IsDirty = false;
                     this.SaveOthers(textDesignPmLists, textCodeDataLists);
@@ -705,6 +918,36 @@ export class QuoteTemplatePricingSettingComponent extends BaseComponent implemen
 
     }
 
+
+    private MapIsUsedFieldToCurrentDBFields() {
+        this.QuoteTemplatePricesTableSettingsData.forEach((item) => {
+            this.SetQuoteTemplateSetting(item);
+        });
+    }
+
+    WrongQuoteTemplatePricesPackagesTableSettingsData: string[] = ["ShowTotalInSaleCurrencyContainers", "ShowTotalInSaleCurrencyPackages", "ShowTotalInLocalCurrencyContainers", "ShowTotalInLocalCurrencyPackages"];
+    private SetQuoteTemplateSetting(pricesFieldSettings: PricesFieldSettings) {
+        var fieldName = pricesFieldSettings.Name;
+        if (this.HaveWrongFieldName(fieldName)) {
+            fieldName = this.GetCorrectQuoteTemplateFieldName(fieldName);
+        }
+        this.QuoteTemplateSettingPM[fieldName] = pricesFieldSettings.InUse;
+    }
+
+    GetCorrectQuoteTemplateFieldName(fieldName: string): string {
+        switch (fieldName) {
+            case "ShowTotalInSaleCurrencyContainers": return "ShowSaleCurrencyColumnContainers"
+            case "ShowTotalInSaleCurrencyPackages": return "ShowSaleCurrencyColumnPackages"
+            case "ShowTotalInLocalCurrencyContainers": return "ShowLocalCurrencyColumnContainers";
+            case "ShowTotalInLocalCurrencyPackages": return "ShowLocalCurrencyColumnPackages"
+            default: return ""
+        }
+    }
+
+
+    HaveWrongFieldName(item: string): boolean {
+        return this.WrongQuoteTemplatePricesPackagesTableSettingsData.some(x => x == item);
+    }
 
     SaveOthers(textDesignPmLists: any[], textCodeDataLists:any[]) {
 

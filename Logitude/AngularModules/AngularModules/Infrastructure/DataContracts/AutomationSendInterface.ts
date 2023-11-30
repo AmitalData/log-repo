@@ -2,6 +2,9 @@ export class AutomationSendInterface {
 
     constructor() {
         this.FTPDetails = new FTPAutomationDetails();
+        this.WebHookDetails = new WebHookAutomationDetails();
+        this.AdvancedAutomationSendInterfaceDetails = new AdvancedAutomationSendInterfaceDetails();
+        this.AdvancedAutomationSendInterfaceDetails.ARInvoiceDetails = new ARInvoiceDetails();
     }
 
 
@@ -11,6 +14,8 @@ export class AutomationSendInterface {
     public ComputingPartnerId: string;
     public FTBFolderId: string;
     public FTPDetails: FTPAutomationDetails;
+    public WebHookDetails: WebHookAutomationDetails;
+    public AdvancedAutomationSendInterfaceDetails: AdvancedAutomationSendInterfaceDetails;
     public IsChanged: boolean;
 
 }
@@ -24,4 +29,20 @@ export class FTPAutomationDetails {
     public Password: string;
 
 
+}
+
+export class WebHookAutomationDetails {
+    public URL: string;
+    public AuthenticationType: string;
+    public BasicAuthUserName: string;
+    public BasicAuthPassword: string;
+}
+
+export class AdvancedAutomationSendInterfaceDetails {
+    public IncludeEvents: boolean;
+    public ARInvoiceDetails: ARInvoiceDetails;
+}
+
+export class ARInvoiceDetails {
+    public IncludeShipmentDetails: boolean;
 }

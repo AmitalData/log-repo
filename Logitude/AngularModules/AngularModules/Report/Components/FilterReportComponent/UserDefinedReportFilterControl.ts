@@ -14,7 +14,7 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
-    
+
     selector: 'UserDefinedReportFilterControl',
     templateUrl: './UserDefinedReportFilterControl.html',
     inputs: ['ReportsPreview']
@@ -37,12 +37,13 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
     public FirstPeriodDateTo: Date;
     public UserDefinedReportId:string;
     public IncludeAnOpeningBalance:boolean =true;
+    public ExcludeZeroCloseBalance:boolean = true;
     public ExpandChartOfAccountToGLAccounts:boolean =false;
     public IsScreenLoaded: boolean = false;
     public UserDefinedReportFilterItems: ApiQueryFilters = new ApiQueryFilters();
     constructor() {
         super();
-      
+
          this._entityResourceService.getEntityResourceByTableName("UserDefinedReport", 0).subscribe((response: any) => { this.IsScreenLoaded=true; });
         this.ExcludeCancelledReports();
 
@@ -52,17 +53,17 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
 
     }
     ngOnInit(): void {
-        throw new Error('Method not implemented.');
+        // throw new Error('Method not implemented.');
     }
 
     InitializeComponent(myReportsPreview: ReportsPreviewComponent) {
         this.ReportsPreview = myReportsPreview;
     }
- 
-  
- 
-   
-    RunReport() {      
+
+
+
+
+    RunReport() {
         this.CheckIsReportFiltersValid();
         if (this.ValidationErrorsList.length == 0) {
            this.BuildReport();
@@ -80,7 +81,7 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
         this.ValidateToForSecoundPeriodsDate(FieldIsRequiredText);
         this.ValidateReportIsNotNull(FieldIsRequiredText);
         this.ValidateFirstPeriodDateFromLessorEqualDateTo();
-        this.ValidateSecounddPeriodDateFromLessorEqualDateTo();     
+        this.ValidateSecounddPeriodDateFromLessorEqualDateTo();
        }
 
    ValidateFromForFirstPeriodsDate(fieldIsRequiredText:string){
@@ -89,7 +90,7 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
                 fieldIsRequiredText.replace("%FieldName", TextCodeTranslator.Translate("Accounting.O.FromDate"));
                 this.ValidationErrorsList.push(FirstPeriodDateFromValidation);
             }
- 
+
     }
 
     ValidateFromForSecoundPeriodsDate(fieldIsRequiredText:string){
@@ -99,14 +100,14 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
                 this.ValidationErrorsList.push(SecoundPeriodDateFromValidation);
             }
     }
-    
+
     ValidateToForSecoundPeriodsDate(fieldIsRequiredText:string){
        if (!this.SecoundPeriodDateTo  && this.SecoundPeriodDateFrom) {
             var REFFromDateValidation: string = TextCodeTranslator.Translate("UserDefinedReport.O.Period2") +" "+
             fieldIsRequiredText.replace("%FieldName", TextCodeTranslator.Translate("Accounting.General.O.ToDate"));
             this.ValidationErrorsList.push(REFFromDateValidation);
         }
-            
+
     }
 
     ValidateToForFirstPeriodsDate(fieldIsRequiredText:string){
@@ -115,15 +116,15 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
              fieldIsRequiredText.replace("%FieldName", TextCodeTranslator.Translate("Accounting.General.O.ToDate"));
              this.ValidationErrorsList.push(FirstPeriodDateToValidation);
          }
-             
+
      }
      ValidatePeriodsDateIsNotNull(){
-        if ((!this.SecoundPeriodDateFrom && !this.SecoundPeriodDateTo) &&  
+        if ((!this.SecoundPeriodDateFrom && !this.SecoundPeriodDateTo) &&
              (!this.FirstPeriodDateTo  && !this.FirstPeriodDateFrom)) {
              var PeriodsDateValidation: string =  TextCodeTranslator.Translate("UserDefinedReport.O.AtLeastOnePeriodIsRequired");
              this.ValidationErrorsList.push(PeriodsDateValidation);
          }
-             
+
      }
 
     ValidateFirstPeriodDateFromLessorEqualDateTo(){
@@ -161,6 +162,7 @@ export class UserDefinedReportFilterControl extends BaseComponent implements OnI
         this.queryFilterItems.push(this.GetNewQueryFilterItem("FirstPeriodDateFrom",this.FirstPeriodDateFrom,"Date"));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("FirstPeriodDateTo",this.FirstPeriodDateTo,"Date"));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("IncludeAnOpeningBalance",this.IncludeAnOpeningBalance));
+        this.queryFilterItems.push(this.GetNewQueryFilterItem("ExcludeZeroCloseBalance",this.ExcludeZeroCloseBalance));
         this.queryFilterItems.push(this.GetNewQueryFilterItem("ExpandChartOfAccountToGLAccounts",this.ExpandChartOfAccountToGLAccounts));
     }
 

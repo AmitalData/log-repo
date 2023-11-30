@@ -40,6 +40,7 @@ namespace Simplog.Data.ShipmentsModel.Mapping
             this.Property(t => t.Width).HasColumnName("Width");
             this.Property(t => t.Length).HasColumnName("Length");
             this.Property(t => t.VolumetricWeight).HasColumnName("VolumetricWeight");
+            this.Property(t => t.ContainerNumber).HasColumnName("ContainerNumber");
 
             // Relationships
             this.HasOptional(t => t.PackageType)

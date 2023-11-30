@@ -35,6 +35,8 @@ export class NewGLAccountComponent extends BaseComponent {
     WindowArgsPassed: boolean = false;
 
     public AccountTypeCode = "1";
+    public OtherType = "3";
+    isEnableMultiCurrencyWithReconcileMethodCodeEqualOne=false;
 
 
     public isRTL: boolean = false;
@@ -54,6 +56,8 @@ export class NewGLAccountComponent extends BaseComponent {
 
         this.SetUIProperties();
         this.SelectDefaultValues();
+        this.isEnableMultiCurrencyWithReconcileMethodCodeEqualOne = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "MC1")[0] ? true : false;
+
     }
 
     BuildAPIFilters() {
@@ -76,7 +80,7 @@ export class NewGLAccountComponent extends BaseComponent {
             this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", excludedTypes, null, null, "Exclude", false, false, false, "string", false, true);
         }
         else if (!isCustomer && !isVendor) {
-            var excludedTypes = [ChartOfAccountTypes.Customer, ChartOfAccountTypes.Vendor].join(',');
+            var excludedTypes = [ChartOfAccountTypes.Customer, ChartOfAccountTypes.Vendor, ChartOfAccountTypes.Works].join(',');
             this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", excludedTypes, null, null, "Exclude", false, false, false, "string", false, true);
         }
     }
@@ -137,22 +141,23 @@ export class NewGLAccountComponent extends BaseComponent {
     set IsMultiCurrency(value: boolean) {
         if (value == true) {
             this.EntityPM.IsMultiCurrency = value;
-            this.ReconcileMethodCode = '0';
             this.CurrencyId = null;
-
             this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, false);
             this.UIProperties.SetValidity("CurrencyId", this.ObjectTableName, true, "");
             this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, false);
-            //this.UIProperties.SetEnabled("ReconcileMethodCode", this.ObjectTableName, false);
-
+            if(!this.isEnableMultiCurrencyWithReconcileMethodCodeEqualOne){
+                this.ReconcileMethodCode = '0';
+                //this.UIProperties.SetEnabled("ReconcileMethodCode", this.ObjectTableName, false);
+            }
             this.CD.detectChanges();
 
         } else if (value == false) {
             this.EntityPM.IsMultiCurrency = value;
             this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
             this.UIProperties.SetRequired("CurrencyId", this.ObjectTableName, true);
-            this.ReconcileMethodCode = null;
-
+            if(!this.isEnableMultiCurrencyWithReconcileMethodCodeEqualOne){
+                this.ReconcileMethodCode = null;
+            }
             this.CD.detectChanges();
         }
     }
@@ -239,6 +244,7 @@ export class NewGLAccountComponent extends BaseComponent {
                 this.IsMultiCurrencyCheckboxEnabled = true;
                 this.UIProperties.SetEnabled("CurrencyId", this.ObjectTableName, true);
                 this.UIProperties.SetEnabled("RevenueExpenseType", this.ObjectTableName, true);
+                this.RevenueExpenseType = this.OtherType;
             }
 
 
@@ -374,10 +380,12 @@ export class NewGLAccountComponent extends BaseComponent {
     OkButtonClicked() {
         var errors: string[] = [];
 
-        if (this.IsMultiCurrency) {
-            if (this.ReconcileMethodCode != '0') {
-                errors.push(TextCodeTranslator.Translate("GLAccounts.O.LocalCurrencyErr"));
-                //errors.push("The reconcile method for multi currency GLAaccount must be local currency"); // need a textcode to enable translations to hebrew
+        if(!this.isEnableMultiCurrencyWithReconcileMethodCodeEqualOne){
+            if (this.IsMultiCurrency) {
+                if (this.ReconcileMethodCode != '0') {
+                    errors.push(TextCodeTranslator.Translate("GLAccounts.O.LocalCurrencyErr"));
+                    //errors.push("The reconcile method for multi currency GLAaccount must be local currency"); // need a textcode to enable translations to hebrew
+                }
             }
         }
 

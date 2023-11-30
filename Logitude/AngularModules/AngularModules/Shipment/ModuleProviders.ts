@@ -34,14 +34,15 @@ import { AWBAdditionalHandlingInfoListService } from './Services/StandardLists/A
 import { ShipmentSubTypePMService } from './Services/StandardPMs/ShipmentSubTypePMService';
 import { ContainerListService } from './Services/StandardLists/ContainerListService';
 import { ContainerPMService } from './Services/StandardPMs/ContainerPMService';
-import { ShipmentSubTypeListService } from './services/standardlists/shipmentsubtypelistservice';
-
-//import { ShipmentTabsService } from './MetaDataServices/TabsServices/ShipmentTabsService';
-//import { ShipmentHeaderScreenService } from './MetaDataServices/HeaderScreenServices/ShipmentHeaderScreenService';
-//import { ShipmentMenuButtonService } from './MetaDataServices/MenuButtonServices/ShipmentMenuButtonService';
-
-
-
+ import { ShipmentSubTypeListService } from './services/standardlists/shipmentsubtypelistservice';
+ 
+import { ContainerMenuButtonsHandler } from './Components/MenuButtons/ContainerMenuButtonsHandler';
+import { ContainerTrackingProviderListService } from './Services/StandardLists/ContainerTrackingProvidersListService';
+import { ContainerTrackingProviderPMService } from './Services/StandardPMs/ContainerTrackingProvidersPMService';
+import { ContainerStatusSourceListService } from './Services/StandardLists/ContainerStatusSourceListService';
+import { ContainerTrackingProviderMenuButtonsHandler } from './Components/MenuButtons/ContainerTrackingProviderMenuButtonsHandler';
+import { AWBAdditionalHandlingInfoPMService } from './Services/StandardPMs/AWBAdditionalHandlingInfoPMService';
+ 
 export class ModuleProviders {
     public static GetInstance(name: string) {
 
@@ -76,6 +77,8 @@ export class ModuleProviders {
             case "CustomsTransferHeaderListService": { myResult = new CustomsTransferHeaderListService(); break; }
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }
             case "ShipmentSubTypeListService": { myResult = new ShipmentSubTypeListService(); break; }    
+            case "ContainerTrackingProviderListService": { myResult = new ContainerTrackingProviderListService(); break; }    
+            case "ContainerStatusSourceListService": { myResult = new ContainerStatusSourceListService(); break; }    
 
             // PM
             case "MessagingStockPMService": { myResult = new MessagingStockPMService(); break; }
@@ -86,15 +89,14 @@ export class ModuleProviders {
             case "ShipmentSubTypePMService": { myResult = new ShipmentSubTypePMService(); break; }
             case "ContainerListService": { myResult = new ContainerListService(); break; }
             case "ContainerPMService": { myResult = new ContainerPMService(); break; }
+            case "ContainerTrackingProviderPMService": { myResult = new ContainerTrackingProviderPMService(); break; }
+            case "AWBAdditionalHandlingInfoPMService": { myResult = new AWBAdditionalHandlingInfoPMService(); break; }
 
             // Handler
             case "MessagingStockMenuButtonsHandler": { myResult = new MessagingStockMenuButtonsHandler(); break; }
             case "ShipmentMenuButtonsHandler": { myResult = new ShipmentMenuButtonsHandler(); break; }
-            //case "ShipmentTabsService": { myResult = new ShipmentTabsService(); break; }
-            //case "ShipmentHeaderScreenService": { myResult = new ShipmentHeaderScreenService(); break; }
-            //case "ShipmentMenuButtonService": { myResult = new ShipmentMenuButtonService(); break; }
-
-                
+            case "ContainerMenuButtonsHandler": { myResult = new ContainerMenuButtonsHandler(); break; }
+            case "ContainerTrackingProviderMenuButtonsHandler": { myResult = new ContainerTrackingProviderMenuButtonsHandler(); break; }                
         }
 
         return myResult;

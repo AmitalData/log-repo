@@ -5,6 +5,7 @@ using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
+using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -75,11 +76,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                           IsMultiHarmonize = a.IsMultiHarmonize,
                                                           HorseName = a.Horse == null ? null : a.Horse.Name,
                                                           HorseId = a.HorseId,
-                                                      }).ToList();
+                                                      }).OrderBy(a => a.Id).ToList();
 
             foreach (InsideShipmentPackagePM package in myResult)
             {
                 package.InsidePackageHarmonizes = shipmentPackageHarmonizeQuery.GetInsideShipmentPackageHarmonizes(package.Id, package.Tenant);
+                package.VolumeInCBM = ShipmentMapping.GetVolumeInCBM("CBM", package.Volume);
+                package.GrossWeightInKG = ShipmentMapping.GetWeightInKG("KG", package.Weight);
+                package.VolumeInCBF = ShipmentMapping.GetVolumeInCBF(package.VolumeInCBM);
+                package.GrossWeightInLB = ShipmentMapping.GetWeightInLB(package.GrossWeightInKG);
             }
 
             return myResult;

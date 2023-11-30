@@ -153,6 +153,9 @@ namespace WebFreight.Web.DataProviders
         public double? FreightAccounted { get; set; }
         public double? OtherChargesAccounted { get; set; }
         public double? PayablesAccounted { get; set; }
+        public double? GrossweightinKG { get; set; }
+        public double? VolumeinCBM { get; set; }
+        public double? TotalAmountinLocalCurrency { get; set; }
 
 
 

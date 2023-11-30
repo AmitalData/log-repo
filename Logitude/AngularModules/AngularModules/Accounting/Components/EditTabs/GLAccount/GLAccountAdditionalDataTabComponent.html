@@ -28,7 +28,7 @@
                 </td>
                 <td><div></div></td>
                 <td style="text-align:center;width:50px">
-                    <span style="font-size:12px; padding-right:5px;padding-top:5px" id="{{'AddSplittedbyCurrency' | IdGeneratorPipe}}"    class="hyperlink" (click)="Add()">{{'GLAccounts.O.Add' | TextCodeTranslationPipe}}</span>
+                    <span style="font-size:12px; padding-right:5px;padding-top:5px" id="{{'AddSplittedbyCurrency' | IdGeneratorAsyncPipe | async}}"    class="hyperlink" (click)="Add()">{{'GLAccounts.O.Add' | TextCodeTranslationPipe}}</span>
 
                 </td>
 
@@ -79,7 +79,7 @@
                     <ng-template let-item>
                     <log-cell-template [IgnoreMods]="true"   #logcelltemplate>
                         <div *ngIf="!IsConnectedWithExistGLAccount(item.DisplayNumber)" style="width: 30px;   height:20px;padding-top:3px;align-self:center;padding-right:30px; padding-left:30px  ">
-                            <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="item.Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="item" (ValueChanged)="item.InactiveChecked($event)"></LogCheckBox>
+                            <LogCheckBox [ObjectFieldName]="'Inactive'" [Checked]="item.Inactive" [ObjectTableName]="ObjectTableName" [DataContext]="item" (ValueChanged)="item.InactiveChecked($event,item.BalanceInLocalCurrency)"></LogCheckBox>
                         </div>
 
 

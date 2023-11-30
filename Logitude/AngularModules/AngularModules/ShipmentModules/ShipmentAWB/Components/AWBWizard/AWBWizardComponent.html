@@ -209,75 +209,75 @@
                         <div class="TabControlHead">
                             <ul style="margin-left: 2px;">
 
-                                <li id="{{'OVE' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'OVE'" (click)="SelectedTabCode = 'OVE'" *ngIf="IsTabVisible_OVE">
+                                <li id="{{'OVE' | IdGeneratorAsyncPipe | async}}" [class.Selected]="SelectedTabCode == 'OVE'" (click)="SelectedTabCode = 'OVE'" *ngIf="IsTabVisible_OVE">
                                     <div class="InnerChild">
                                         {{'Shipment.TH.Overview' | TextCodeTranslationPipe}}
                                     </div>
                                 </li>
 
-                                <li id="{{'PAR' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'PAR'" (click)="SelectedTabCode = 'PAR'">
+                                <li id="{{'PAR' | IdGeneratorAsyncPipe | async}}" [class.Selected]="SelectedTabCode == 'PAR'" (click)="SelectedTabCode = 'PAR'">
                                     <div class="InnerChild">
                                         {{'Shipment.TH.Partners' | TextCodeTranslationPipe}}
                                         <div class="TabSquareIcon" [ngStyle]="{background: Fill_PAR}"></div>
                                     </div>
                                 </li>
 
-                                <li id="{{'ROU' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'ROU'" (click)="SelectedTabCode = 'ROU'">
+                                <li id="{{'ROU' | IdGeneratorAsyncPipe | async}}" [class.Selected]="SelectedTabCode == 'ROU'" (click)="SelectedTabCode = 'ROU'">
                                     <div class="InnerChild">
                                         {{'Shipment.TH.Routings' | TextCodeTranslationPipe}}
                                         <div class="TabSquareIcon" [ngStyle]="{background: Fill_ROU}"></div>
                                     </div>
                                 </li>
 
-                                <li id="{{'HAW' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'HAW'" (click)="SelectedTabCode = 'HAW'" *ngIf="IsTabVisible_HAW">
+                                <li id="{{'HAW' | IdGeneratorAsyncPipe | async}}" [class.Selected]="SelectedTabCode == 'HAW'" (click)="SelectedTabCode = 'HAW'" *ngIf="IsTabVisible_HAW">
                                     <div class="InnerChild">
                                         {{'Shipment.TH.HAWBs' | TextCodeTranslationPipe}}
                                     </div>
                                 </li>
 
-                                <li id="{{'PAC' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'PAC'" (click)="SelectedTabCode = 'PAC'">
+                                <li id="{{'PAC' | IdGeneratorAsyncPipe | async}}" [class.Selected]="SelectedTabCode == 'PAC'" (click)="SelectedTabCode = 'PAC'">
                                     <div class="InnerChild">
                                         {{'Shipment.TH.Packages' | TextCodeTranslationPipe}}
                                         <div class="TabSquareIcon" [ngStyle]="{background: Fill_PAC}"></div>
                                     </div>
                                 </li>
 
-                                <li id="{{'FRE' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'FRE'" (click)="SelectedTabCode = 'FRE'">
+                                <li id="{{'FRE' | IdGeneratorAsyncPipe | async}}" [class.Selected]="SelectedTabCode == 'FRE'" (click)="SelectedTabCode = 'FRE'">
                                     <div class="InnerChild">
                                         {{'Shipment.TH.FreightCharges' | TextCodeTranslationPipe}}
                                         <div class="TabSquareIcon" [ngStyle]="{background: Fill_FRE}"></div>
                                     </div>
                                 </li>
 
-                                <li id="{{'OTC' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'OTC'" (click)="SelectedTabCode = 'OTC'">
+                                <li id="{{'OTC' | IdGeneratorAsyncPipe | async}}" [class.Selected]="SelectedTabCode == 'OTC'" (click)="SelectedTabCode = 'OTC'">
                                     <div class="InnerChild">
                                         {{'Shipment.TH.OtherCharges' | TextCodeTranslationPipe}}
                                         <div class="TabSquareIcon" [ngStyle]="{background: Fill_OTC}"></div>
                                     </div>
                                 </li>
 
-                                <li id="{{'RAD' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'RAD'" (click)="SelectedTabCode = 'RAD'" *ngIf="IsTabVisible_RAD">
+                                <li id="{{'RAD' | IdGeneratorAsyncPipe | async}}" [class.Selected]="SelectedTabCode == 'RAD'" (click)="SelectedTabCode = 'RAD'" *ngIf="IsTabVisible_RAD">
                                     <div class="InnerChild">
                                         {{'Shipment.TH.RADetails' | TextCodeTranslationPipe}}
                                         <!--<div class="TabSquareIcon" [ngStyle]="{background: Fill_RAD}"></div>-->
                                     </div>
                                 </li>
 
-                                <li  id="{{'GEN' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'GEN'" (click)="SelectedTabCode = 'GEN'">
+                                <li  id="{{'GEN' | IdGeneratorAsyncPipe | async}}" [class.Selected]="SelectedTabCode == 'GEN'" (click)="SelectedTabCode = 'GEN'">
                                     <div class="InnerChild">
                                         {{'Shipment.TH.GeneralDetails' | TextCodeTranslationPipe}}
                                         <div class="TabSquareIcon" [ngStyle]="{background: Fill_GEN}"></div>
                                     </div>
                                 </li>
 
-                                <li id="{{'OCI' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'OCI'" (click)="SelectedTabCode = 'OCI'">
+                                <li id="{{'OCI' | IdGeneratorAsyncPipe | async}}" [class.Selected]="SelectedTabCode == 'OCI'" (click)="SelectedTabCode = 'OCI'">
                                     <div class="InnerChild">
                                         {{'Shipment.TH.OCI' | TextCodeTranslationPipe}}
                                         <div class="TabSquareIcon" [ngStyle]="{background: Fill_OCI}"></div>
                                     </div>
                                 </li>
 
-                                <li id="{{'OTP' | IdGeneratorPipe}}" [class.Selected]="SelectedTabCode == 'OTP'" (click)="SelectedTabCode = 'OTP'" *ngIf="IsTabVisible_OTP">
+                                <li id="{{'OTP' | IdGeneratorAsyncPipe | async}}" [class.Selected]="SelectedTabCode == 'OTP'" (click)="SelectedTabCode = 'OTP'" *ngIf="IsTabVisible_OTP">
                                     <div class="InnerChild">
                                         {{'Shipment.TH.OtherPartners' | TextCodeTranslationPipe}}
                                         <div class="TabSquareIcon" [ngStyle]="{background: Fill_OTP}"></div>
@@ -390,7 +390,7 @@
 
                     <!-- Preview -->
                     <td style="width: 1px;">
-                        <button id="{{'Preview' | IdGeneratorPipe}}" class="Button" (click)="PreviewAWBMethod()">Preview</button>
+                        <button id="{{'Preview' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="PreviewAWBMethod()">Preview</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -417,13 +417,13 @@
                         <div></div>
                     </td>
                     <td style="width: 1px;" *ngIf="IsSendVisible &&!IsImportWizard">
-                        <button id="{{'SendFWB' | IdGeneratorPipe}}" class="Button" (click)="SendClicked()">{{SendAWBLabel}}</button>
+                        <button id="{{'SendFWB' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="SendClicked()">{{SendAWBLabel}}</button>
                     </td>
                     <td style="width: 5px;" *ngIf="IsSendFHLsVisible &&!IsImportWizard">
                         <div></div>
                     </td>
                     <td style="width: 1px;" *ngIf="IsSendFHLsVisible &&!IsImportWizard">
-                        <button id="{{'SendFHL' | IdGeneratorPipe}}" class="Button" (click)="SendFHLsClicked()">Send FHL(s)</button>
+                        <button id="{{'SendFHL' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="SendFHLsClicked()">Send FHL(s)</button>
                     </td>
 
                     <!-- Cargonaut -->
@@ -494,7 +494,7 @@
 
                     <!-- Close -->
                     <td style="width: 57px;">
-                        <button id="{{'CloseWizard' | IdGeneratorPipe}}"  class="Button" (click)="CloseClicked()">Close</button>
+                        <button id="{{'CloseWizard' | IdGeneratorAsyncPipe | async}}"  class="Button" (click)="CloseClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -503,14 +503,14 @@
 
                     <!-- Save -->
                     <td style="width: 57px;">
-                        <button id="{{'SaveWizard' | IdGeneratorPipe}}"  *ngIf="!EntityPM.IsDirty" class="Button">
+                        <button id="{{'SaveWizard' | IdGeneratorAsyncPipe | async}}"  *ngIf="!EntityPM.IsDirty" class="Button">
                             <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
-                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                            <span style="line-height: 19px; margin-left: 17px;">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
                         </button>
 
-                        <button id="{{'SaveWizard' | IdGeneratorPipe}}"  *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveClicked()">
+                        <button id="{{'SaveWizard' | IdGeneratorAsyncPipe | async}}"  *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveClicked()">
                             <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
-                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                            <span style="line-height: 19px; margin-left: 17px;">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
                         </button>
                     </td>
                 </tr>

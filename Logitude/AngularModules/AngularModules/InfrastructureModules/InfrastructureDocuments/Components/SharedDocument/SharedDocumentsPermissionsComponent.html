@@ -1,4 +1,4 @@
-﻿<table>
+<table>
     <tr>
         <td>
             <div></div>
@@ -15,20 +15,25 @@
             <table>
 
 
-                <tr style="height:20px">
+                <tr *ngIf="FullComponentsVisibility" style="height:20px">
                     <td>
-          <table>
-              <tr>
+                        <table>
+                            <tr>
 
-                  <td><span style="color:gray;font-size:11px;vertical-align:top;width:300px">In this screen you choose which documents can be viewed by the agent.</span></td>
-                  <td><span><SearchTextBox style="float: right;margin-top:0px;margin-right:0px;width:200px" [ObjectTableName]="'Document'" [PlaceHolder]="'Search'" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox></span></td>
-              </tr>
-          </table>
+                                <td><span style="color:gray;font-size:11px;vertical-align:top;width:300px">In this
+                                        screen you choose which documents can be viewed by the agent.</span></td>
+                                <td><span>
+                                        <SearchTextBox style="float: right;margin-top:0px;margin-right:0px;width:200px"
+                                            [ObjectTableName]="'Document'" [PlaceHolder]="'Search'"
+                                            (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+                                    </span></td>
+                            </tr>
+                        </table>
 
                     </td>
                 </tr>
-            
-                <tr  style="height:15px">
+
+                <tr *ngIf="FullComponentsVisibility" style="height:15px">
                     <td></td>
                 </tr>
                 <!--GridView-->
@@ -38,10 +43,14 @@
                     <td>
                         <div style="border:1px solid lightGray;height:100%">
                             <table>
-                                <tr style="height:5px;"><td colspan="3"></td></tr>
+                                <tr style="height:5px;">
+                                    <td colspan="3"></td>
+                                </tr>
                                 <tr style="height:100%">
 
-                                    <td style="width:5px"><div style="width:5px"></div></td>
+                                    <td style="width:5px">
+                                        <div style="width:5px"></div>
+                                    </td>
                                     <td>
 
                                         <table>
@@ -49,19 +58,31 @@
                                                 <td style="width:5px;"></td>
 
                                                 <td>
-                                     
+
                                                     <div class="SimpleGridView">
                                                         <div class="SimpleGridViewHeader">
                                                             <table>
                                                                 <tr>
 
-                                                                    <td style="width: 300px; min-width: 300px">Document Name</td>
-                                                                    <td style="width: 200px; min-width: 200px">Document Type Copy</td>
-                                                                    <td style="width: 80px; min-width: 80px;text-align:center">Master</td>
-                                                                    <td style="width:80px; min-width:80px;text-align:center ">Direct</td>
-                                                                    <td style="width:80px; min-width:80px;text-align:center ">House</td>
-                                                                    <td><div style="width:100%;min-width:100%"></div></td>
-                                                      
+                                                                    <td style="width: 300px; min-width: 300px">Document
+                                                                        Name</td>
+                                                                    <td style="width: 200px; min-width: 200px">Document
+                                                                        Type Copy</td>
+                                                                    <td
+                                                                        style="width: 80px; min-width: 80px;text-align:center"
+                                                                        [ngStyle]="{'width': FromAgentView ? '125px' : '80px' }">
+                                                                        Master</td>
+                                                                    <td
+                                                                        style="width:80px; min-width:80px;text-align:center " *ngIf="!FromAgentView">
+                                                                        Direct</td>
+                                                                    <td
+                                                                        style="width:80px; min-width:80px;text-align:center "
+                                                                        [ngStyle]="{'width': FromAgentView ? '125px' : '80px' }">
+                                                                        House</td>
+                                                                    <td>
+                                                                        <div style="width:100%;min-width:100%"></div>
+                                                                    </td>
+
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -71,57 +92,98 @@
                                                                 <tr style="height: 1px;">
                                                                     <td>
                                                                         <table>
-                                                                            <tr class="SimpleGridViewRow RowHover" *ngFor="let item of DocumentPermissiosLists">
+                                                                            <tr class="SimpleGridViewRow RowHover"
+                                                                                *ngFor="let item of DocumentPermissiosLists">
                                                                                 <td>
                                                                                     <table>
-                                                                                        <tr style="height:25px;" (click)="DocumentPermissiosSelectedViewModel=item" [class.RowSelected]="item === DocumentPermissiosSelectedViewModel">
+                                                                                        <tr style="height:25px;"
+                                                                                            (click)="DocumentPermissiosSelectedViewModel=item"
+                                                                                            [class.RowSelected]="item === DocumentPermissiosSelectedViewModel">
 
-                                                                                            <td class="GridViewCell" style="width: 300px; min-width: 300px; max-width:300px; position: relative;">
+                                                                                            <td class="GridViewCell"
+                                                                                                style="width: 300px; min-width: 300px; max-width:300px; position: relative;">
 
 
                                                                                                 {{item.DocumentTypeName}}
                                                                                             </td>
 
-                                                                                            <td class="GridViewCell" style="width: 200px; min-width: 200px; max-width:200px; position: relative;">
+                                                                                            <td class="GridViewCell"
+                                                                                                style="width: 200px; min-width: 200px; max-width:200px; position: relative;">
 
-                                                                                                <ComboBox *ngIf="item.DocumentTypeCopyLists && item.DocumentTypeCopyLists.length>0" style="width:200px;" (SelectedItemChanged)="item.DocumentTypeCopyListValueChanged($event)" [ItemsSource]="item.DocumentTypeCopyLists" [SelectedItem]="item.SelectedDocumentTypeCopy" [Binding]="'Name'"> </ComboBox>
+                                                                                                <ComboBox
+                                                                                                    *ngIf="item.DocumentTypeCopyLists && item.DocumentTypeCopyLists.length>0"
+                                                                                                    style="width:200px;"
+                                                                                                    (SelectedItemChanged)="item.DocumentTypeCopyListValueChanged($event)"
+                                                                                                    [ItemsSource]="item.DocumentTypeCopyLists"
+                                                                                                    [SelectedItem]="item.SelectedDocumentTypeCopy"
+                                                                                                    [Binding]="'Name'">
+                                                                                                </ComboBox>
                                                                                             </td>
 
-                                                                                            <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                                            <td class="GridViewCell"
+                                                                                                style="width: 80px; min-width: 80px;"
+                                                                                                [ngStyle]="{'width': FromAgentView ? '125px' : '80px', 'min-width': FromAgentView ? '125px' : '80px'}">
                                                                                                 <div class="MediaFill">
-                                                                                                    <div class="MediaFillRelative">
-                                                                                                        <div class="CenterCenter" style="width: 16px;">
-                                                                                                            <CheckBox [IsChecked]="item.IsAgentSharedInMaster" (Checked)="item.IsAgentSharedInMaster = $event" [IsEnabled]="item.IsAgentSharedInMasterEnable"></CheckBox>
+                                                                                                    <div
+                                                                                                        class="MediaFillRelative">
+                                                                                                        <div class="CenterCenter"
+                                                                                                            style="width: 16px;">
+                                                                                                            <CheckBox [DataCy]="item.DocumentTypeName+'_Master'"
+                                                                                                                [IsChecked]="item.IsAgentSharedInMaster"
+                                                                                                                (Checked)="item.IsAgentSharedInMaster = $event"
+                                                                                                                [IsEnabled]="item.IsAgentSharedInMasterEnable">
+                                                                                                            </CheckBox>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </td>
 
-                                         
 
 
-                                                                                            <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+
+                                                                                            <td class="GridViewCell"
+                                                                                                style="width: 80px; min-width: 80px; max-width: 80px;"
+                                                                                                *ngIf="!FromAgentView">
                                                                                                 <div class="MediaFill">
-                                                                                                    <div class="MediaFillRelative">
-                                                                                                        <div class="CenterCenter" style="width: 16px;">
-                                                                                                            <CheckBox [IsChecked]="item.IsAgentSharedInDirect" (Checked)="item.IsAgentSharedInDirect = $event" [IsEnabled]="item.IsAgentSharedInDirectEnable"></CheckBox>
+                                                                                                    <div
+                                                                                                        class="MediaFillRelative">
+                                                                                                        <div class="CenterCenter"
+                                                                                                            style="width: 16px;">
+                                                                                                            <CheckBox [DataCy]="item.DocumentTypeName+'_Direct'"
+                                                                                                                [IsChecked]="item.IsAgentSharedInDirect"
+                                                                                                                (Checked)="item.IsAgentSharedInDirect = $event"
+                                                                                                                [IsEnabled]="item.IsAgentSharedInDirectEnable">
+                                                                                                            </CheckBox>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </td>
 
-                                                                                            <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px;">
+                                                                                            <td class="GridViewCell"
+                                                                                                style="width: 80px; min-width: 80px;"
+                                                                                                [ngStyle]="{'width': FromAgentView ? '125px' : '80px', 'min-width': FromAgentView ? '125px' : '80px'}">
                                                                                                 <div class="MediaFill">
-                                                                                                    <div class="MediaFillRelative">
-                                                                                                        <div class="CenterCenter" style="width: 16px;">
-                                                                                                            <CheckBox [IsChecked]="item.IsAgentSharedInHouse" (Checked)="item.IsAgentSharedInHouse = $event" [IsEnabled]="item.IsAgentSharedInHouseEnable"></CheckBox>
+                                                                                                    <div
+                                                                                                        class="MediaFillRelative">
+                                                                                                        <div class="CenterCenter"
+                                                                                                            style="width: 16px;">
+                                                                                                            <CheckBox [DataCy]="item.DocumentTypeName+'_House'"
+                                                                                                                [IsChecked]="item.IsAgentSharedInHouse"
+                                                                                                                (Checked)="item.IsAgentSharedInHouse = $event"
+                                                                                                                [IsEnabled]="item.IsAgentSharedInHouseEnable">
+                                                                                                            </CheckBox>
                                                                                                         </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </td>
-                                                                                            <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;"><div></div></td>
-</tr>
-                                                                                        <tr><td colspan="6"></td></tr>
+                                                                                            <td class="GridViewCell"
+                                                                                                style="width: 100%; min-width: 100%; max-width: 100%; position: relative;">
+                                                                                                <div></div>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                        <tr>
+                                                                                            <td colspan="6"></td>
+                                                                                        </tr>
                                                                                     </table>
 
 
@@ -145,10 +207,14 @@
                                         </table>
 
                                     </td>
-                                    <td style="width:5px"><div style="width:5px"></div></td>
+                                    <td style="width:5px">
+                                        <div style="width:5px"></div>
+                                    </td>
 
                                 </tr>
-                                <tr style="height:5px;"><td colspan="3"></td></tr>
+                                <tr style="height:5px;">
+                                    <td colspan="3"></td>
+                                </tr>
                             </table>
 
 
@@ -172,7 +238,7 @@
 
     </tr>
 
-    <tr  style="height: 32px;">
+    <tr style="height: 32px;" *ngIf="FullComponentsVisibility">
         <td style="vertical-align: bottom">
             <table style="height: 22px;">
                 <tr>

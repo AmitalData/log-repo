@@ -21,9 +21,14 @@ import { WebhookTesterComponent } from './Components/WebhookKeys/WebhookTesterCo
 import { CreateTenantComponent } from './Components/CreateTenant/CreateTenantComponent'; 
 import { PriceStepsGeneralTabComponent } from './Components/PriceSteps/PriceStepsGeneralTabComponent';
 import { CustomEventTypeComponent } from './Components/EventType/CustomEventTypeComponent';
+import { EventRemarksComponent } from './Components/EventType/EventRemarksComponent';
 import { FeatureToggleGeneralTabComponent } from './Components/FeatureToggle/FeatureToggleGeneralTabComponent';
 import { NewFeatureToggleComponent } from './Components/FeatureToggle/NewFeatureToggleComponent';
 import { OceanInsightsSettingsComponent } from './Components/OceanInsightsSetting/OceanInsightsSettingsComponent';
+import { NewImageLibraryComponent } from './Components/ImageLibrary/NewImageLibraryComponent';
+import { ImageLibraryGeneralTabComponent } from './Components/ImageLibrary/ImageLibraryGeneralTabComponent';
+import { VizionAutomaticRequestComponent } from './Components/Vizion/VizionAutomaticRequestComponent';
+import { TermsofUseComponent } from './Components/TermsOfUse/TermsofUseComponent';
 
 export const Components =
     [
@@ -50,9 +55,14 @@ export const Components =
         CreateTenantComponent,
         PriceStepsGeneralTabComponent,
         CustomEventTypeComponent,
+        EventRemarksComponent,
         FeatureToggleGeneralTabComponent,
         NewFeatureToggleComponent,
-        OceanInsightsSettingsComponent
+        OceanInsightsSettingsComponent,
+        NewImageLibraryComponent,
+        ImageLibraryGeneralTabComponent,
+        VizionAutomaticRequestComponent,
+        TermsofUseComponent
     ];
 
 export class ModuleDeclarations {
@@ -84,9 +94,14 @@ export class ModuleDeclarations {
             case "CreateTenantComponent": { myResult = CreateTenantComponent; break; }
             case "PriceStepsGeneralTabComponent": { myResult = PriceStepsGeneralTabComponent; break; }
             case "CustomEventTypeComponent": { myResult = CustomEventTypeComponent; break; }
+            case "EventRemarksComponent": { myResult = EventRemarksComponent; break; }
             case "FeatureToggleGeneralTabComponent": { myResult = FeatureToggleGeneralTabComponent; break; }
             case "NewFeatureToggleComponent": { myResult = NewFeatureToggleComponent; break; }
             case "OceanInsightsSettingsComponent": { myResult = OceanInsightsSettingsComponent; break; }
+            case "NewImageLibraryComponent": { myResult = NewImageLibraryComponent; break; }
+            case "ImageLibraryGeneralTabComponent": { myResult = ImageLibraryGeneralTabComponent; break; }
+            case "VizionAutomaticRequestComponent": { myResult = VizionAutomaticRequestComponent; break; }
+            case "TermsofUseComponent": { myResult = TermsofUseComponent; break; }
         }
 
         return myResult;

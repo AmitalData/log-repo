@@ -16,16 +16,17 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AccountManagerUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.SalesmanUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.RankId).HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Field1).HasMaxLength(250).IsUnicode(true);
-            this.Property(t => t.Field2).HasMaxLength(250).IsUnicode(true);
-            this.Property(t => t.Field3).HasMaxLength(250).IsUnicode(true);
-            this.Property(t => t.Field4).HasMaxLength(250).IsUnicode(true);
-            this.Property(t => t.Field5).HasMaxLength(250).IsUnicode(true);
-            this.Property(t => t.Field6).HasMaxLength(250).IsUnicode(true);
-            this.Property(t => t.Field7).HasMaxLength(250).IsUnicode(true);
-            this.Property(t => t.Field8).HasMaxLength(250).IsUnicode(true);
-            this.Property(t => t.Field9).HasMaxLength(250).IsUnicode(true);
-            this.Property(t => t.Field10).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.TeamId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Field1).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.Field2).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.Field3).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.Field4).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.Field5).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.Field6).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.Field7).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.Field8).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.Field9).HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.Field10).HasMaxLength(2000).IsUnicode(true);
             this.Property(t => t.IndustryId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LeadSourceId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LeadDescription).HasMaxLength(100).IsUnicode(false);
@@ -50,6 +51,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.ActivationRequestedByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LastOpportunitySubject).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.LastOpportunityStatus).HasMaxLength(60).IsUnicode(false);
+            this.Property(t => t.EmailForSendingSingArinvoice).HasMaxLength(40).IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("Customers");
@@ -58,6 +60,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.AccountManagerUserId).HasColumnName("AccountManagerUserId");
             this.Property(t => t.SalesmanUserId).HasColumnName("SalesmanUserId");
             this.Property(t => t.RankId).HasColumnName("RankId");
+            this.Property(t => t.TeamId).HasColumnName("TeamId");
             this.Property(t => t.StartWorkingDate).HasColumnName("StartWorkingDate");
             this.Property(t => t.StartWorkingManuallySet).HasColumnName("StartWorkingManuallySet");
             this.Property(t => t.LastShipmentDate).HasColumnName("LastShipmentDate");
@@ -112,19 +115,21 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.PrimaryContactName).HasColumnName("PrimaryContactName");
             this.Property(t => t.PrimaryContactEmail).HasColumnName("PrimaryContactEmail");
             this.Property(t => t.PrimaryContactPhone).HasColumnName("PrimaryContactPhone");
+            this.Property(t => t.EmailForSendingSingArinvoice).HasColumnName("EmailForSendingSingArinvoice");
             this.Property(t => t.ActivationDate).HasColumnName("ActivationDate");
             this.Property(t => t.InactiveDate).HasColumnName("InactiveDate");
             this.Property(t => t.ActivationRequestDate).HasColumnName("ActivationRequestDate");
             this.Property(t => t.ActivatedByUserId).HasColumnName("ActivatedByUserId");
             this.Property(t => t.SetAsInactiveByUserId).HasColumnName("SetAsInactiveByUserId");
             this.Property(t => t.ActivationRequestedByUserId).HasColumnName("ActivationRequestedByUserId");
-            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate"); 
+            this.Property(t => t.AutomaticLastUpdateDate).HasColumnName("AutomaticLastUpdateDate");
 
             // Relationships
             this.HasRequired(t => t.Card).WithOptional(t => t.Customer);
             this.HasOptional(t => t.AccountManagerUser).WithMany().HasForeignKey(d => d.AccountManagerUserId);
             this.HasOptional(t => t.SalesmanUser).WithMany().HasForeignKey(d => d.SalesmanUserId);
             this.HasOptional(t => t.Rank).WithMany().HasForeignKey(d => d.RankId);
+            this.HasOptional(t => t.CustomerTeam).WithMany().HasForeignKey(d => d.TeamId);
             this.HasOptional(t => t.LeadSource).WithMany().HasForeignKey(d => d.LeadSourceId);
             this.HasOptional(t => t.Industry).WithMany().HasForeignKey(d => d.IndustryId);
             this.HasOptional(t => t.CustomerStatus).WithMany().HasForeignKey(d => d.CustomerStatusCode);
@@ -138,7 +143,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.HasOptional(t => t.CustomerSize).WithMany().HasForeignKey(d => d.CustomerSizeId);
             this.HasOptional(t => t.ActivatedByUser).WithMany().HasForeignKey(d => d.ActivatedByUserId);
             this.HasOptional(t => t.SetAsInactiveByUser).WithMany().HasForeignKey(d => d.SetAsInactiveByUserId);
-            this.HasOptional(t => t.ActivationRequestedByUser).WithMany().HasForeignKey(d => d.ActivationRequestedByUserId);
+            this.HasOptional(t => t.ActivationRequestedByUser).WithMany().HasForeignKey(d => d.ActivationRequestedByUserId);           
+
         }
     }
 }

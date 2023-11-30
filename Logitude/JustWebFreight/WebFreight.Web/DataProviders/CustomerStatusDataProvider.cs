@@ -33,11 +33,14 @@ namespace WebFreight.Web.DataProviders
         public decimal TotalOpenCheques { get; set; }
         public decimal AccountingBalance { get; set; }
         public decimal CreditLimit { get; set; }
+        public decimal InsuredCreditLimit { get; set; }
+
         public string AccountSalesmanName { get; set; }
         public string AccountSalesmanLocalName { get; set; }
         public string AccountCollectorName { get; set; }
         public string AccountCollectorLocalName { get; set; }
-        public string ChartOfAccountLocalName { get; set; }
+		public string CustomerVatNumber { get; set; }
+		public string ChartOfAccountLocalName { get; set; }
         public string CurrencyCode { get; set; }
         public string Category1Name { get; set; }
         public string Category2Name { get; set; }
@@ -61,7 +64,9 @@ namespace WebFreight.Web.DataProviders
 
         public decimal TotalLocal { get; set; } = 0;
         public decimal TotalForeign { get; set; } = 0;
-        public int IsSplitAccount { get; set; }
+		public decimal SumTotalCredit { get; set; } = 0;
+
+		public int IsSplitAccount { get; set; }
         public List<StatusPeriod> Periods { get; set; } = new List<StatusPeriod>();
 
 

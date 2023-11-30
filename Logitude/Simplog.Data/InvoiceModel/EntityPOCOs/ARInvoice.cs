@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ServiceModel.DomainServices.Server;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.EntityPOCOs;
 
 namespace Simplog.Data.InvoiceModel.EntityPOCOs
 {    
@@ -42,6 +40,11 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string HouseNumber { get; set; }
         public string MasterNumber { get; set; }
         public bool IsClosed { get; set; }
+
+
+        
+       
+    
         public bool IsFromInterestBatchInvoice { get; set; }
 
         public double? AmountInProfitCurrency { get; set; }
@@ -57,6 +60,8 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public bool IsConstituentInvoice { get; set; }
         public bool IsConsolidationInvoice { get; set; }
         public string ConsolidationInvoiceId { get; set; }
+        public string DocumentTemplateId { get; set; }
+        public virtual DocumentTypeTemplate DocumentTemplate { get; set; }
         public string Field1 { get; set; }
         public string Field2 { get; set; }
         public string Field3 { get; set; }
@@ -84,21 +89,15 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string SATXML { get; set;}
         public string SATAdditionalFieldsXML { get; set; }
         public string RelatedInvoice { get; set; }
-
         public string SalesmanUserId { get; set; }
-
         public string ExternalAccountingEntityId { get; set; }
-
         public bool Intercompany { get; set; }
-
         public bool IsMultiCurrency { get; set; }
-
         public Decimal? TotalAmountForTaxReport { get; set; }
         public Decimal? TotaVatableAmountForTaxReport { get; set; }
+        public Decimal? TotalExamptFortaxReport { get; set; }
         public Decimal TotalVAT { get; set; }
-
         public DateTime? SATApprovalDate { get; set; }
-
         public bool IsFullAccounting { get; set; }
 
         [ForeignKey("SalesmanUserId")]
@@ -109,11 +108,15 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public string MetodoPagoCode { get; set; }
         [ForeignKey("MetodoPagoCode")]
         public virtual MetodoPago MetodoPago { get; set; }
-
         public string UsoCFDICode { get; set; }
 
         [ForeignKey("UsoCFDICode")]
         public virtual UsoCFDI UsoCFDI { get; set; }
+        public string PeriodCode { get; set; }
+        public string RegimenFiscalCode { get; set; }
+
+        [ForeignKey("RegimenFiscalCode")]
+        public virtual RegimenFiscal RegimenFiscal { get; set; }
 
         [ForeignKey("ProfitCurrencyId")]
         public virtual Currency ProfitCurrency { get; set; }
@@ -213,12 +216,28 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
 
         public double? RegionalTaxPercentage { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
-
+        public string PaidStatus { get; set; }
         public DateTime? PaidDate { get; set; }
         public string PartnerId { get; set; }
         [ForeignKey("PartnerId")]
         public virtual Card Partner { get; set; }
 
         public string ShipmentsNumbers { get; set; }
+
+        public string MasterNumbers { get; set; }
+        public string MasterShipmentNumbers { get; set; }
+        public string HouseNumbers { get; set; }
+        public string GlobalTaxCalculation { get; set; }
+
+        [ForeignKey("GlobalTaxCalculation")]
+        public virtual QBOGlobalTaxCalculation QBOGlobalTaxCalculation { get; set; }
+        public string PaymentReferences { get; set; }
+        public string SATCancelReasonCode { get; set; }
+        public string TotalEquation { get; set; }
+
+        [ForeignKey("IsSigned")]
+        public virtual ARInvoicesSignedStatus ARInvoicesSignedStatus { get; set; }
+        public string IsSigned { get; set; }
+        public string ConfirmationNumber { get; set; }
     }
 }

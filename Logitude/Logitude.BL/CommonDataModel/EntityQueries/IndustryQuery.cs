@@ -88,6 +88,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return null;
         }
 
+        public IndustryPM GetSinglePMByCode(string code, int tenant)
+        {
+            return (from a in repository.context.Industries
+                    where a.Tenant == tenant && a.Code == code
+                    select new IndustryPM()
+                    {
+                        Name = a.Name,
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        SearchFields = a.SearchFields,
+                        Code = a.Code,
+                        InActive = a.InActive,
+                    }).FirstOrDefault();
+        }
+
         public IQueryable<IndustryPM> GetIndustryPMsByTenant(int tenant)
         {
             IQueryable<IndustryPM> Industryes = from a in repository.context.Industries

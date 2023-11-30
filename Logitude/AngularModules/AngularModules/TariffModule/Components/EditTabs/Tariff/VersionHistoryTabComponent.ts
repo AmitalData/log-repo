@@ -49,8 +49,9 @@ export class VersionHistoryTabComponent implements OnDestroy {
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
     public darkerColler: string = "#f8ca12";
     public IsViaFieldVisible: boolean = true;
-
+    public IsUsingVirtuallization: boolean = false;
     constructor(public entityArgs: EntityArgs) {
+        this.SetIsUsingVirtuallization();
         this.EntityPM = entityArgs.EntityPM;
         this.VersionLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
@@ -62,8 +63,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
             this.GetAllPackageTypes();
         }
 
-        else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
-            this.IsDownloadExcelTemplateVisible = false;
+        else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS" ) {
             this.IsViaFieldVisible = false;
             this.GetAllChargesTypes();
         }
@@ -71,6 +71,14 @@ export class VersionHistoryTabComponent implements OnDestroy {
         this.LoadVersions();
         this.Listen();
     }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
     Intialize(args: any) {
         this.LineIdFromPriceCheck = args['LineIdFromPriceCheck'];
         this.chargeableWeightInKG = args['ChargeableWeightInKG'];
@@ -404,7 +412,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
             var newVersion: CodeNameClass = new CodeNameClass();
             newVersion.Code_Int = item.Version;
 
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "IFT" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS" ) {
                 newVersion.Name = "Version " + item.Version;
             }
 
@@ -583,6 +591,14 @@ export class VersionHistoryTabComponent implements OnDestroy {
             tariffLine.TransitTime = item.TransitTime;
             tariffLine.IsFromAllOtherPorts = item.IsFromAllOtherPorts;
             tariffLine.IsToAllOtherPorts = item.IsToAllOtherPorts;
+            tariffLine.IsFromAllOtherCountries = item.IsFromAllOtherCountries;
+            tariffLine.IsToAllOtherCountries = item.IsToAllOtherCountries;
+            tariffLine.FromCountryId = item.FromCountryId;
+            tariffLine.FromCountryCode = item.FromCountryCode;
+            tariffLine.FromCountryName = item.FromCountryName;
+            tariffLine.ToCountryId = item.ToCountryId;
+            tariffLine.ToCountryCode = item.ToCountryCode;
+            tariffLine.ToCountryName = item.ToCountryName;
 
             if (this.EntityPM.TypeCode == "AFC" || this.EntityPM.TypeCode == "OLC") {
                 tariffLine.MinPrice = item.MinPrice;
@@ -598,7 +614,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.ExpirationDate = this.VersionPM.ExpirationDate;
             }
 
-            else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC") {
+            else if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS" ) {
                 tariffLine.Surcharge1Price = item.Surcharge1Price;
                 tariffLine.Surcharge2Price = item.Surcharge2Price;
                 tariffLine.Surcharge3Price = item.Surcharge3Price;
@@ -645,7 +661,7 @@ export class VersionHistoryTabComponent implements OnDestroy {
                 tariffLine.Surcharge5Price = item.Surcharge5Price;
             }
 
-            else if (this.EntityPM.TypeCode == "OFS") {
+            else if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
                 tariffLine.StartDate = item.StartDate;
                 tariffLine.CurrencyId = item.CurrencyId;
                 tariffLine.CurrencyCode = item.CurrencyCode;
@@ -717,7 +733,9 @@ export class VersionHistoryTariffLine {
     public CurrencyCode: string;
     public StartDate: Date;
     public TransitTime: string;
-    public IsDifferentCurrenciesPerCharge: boolean;;
+    public IsDifferentCurrenciesPerCharge: boolean;
+    public FromCountryCode: string;
+    public ToCountryCode: string;
 
     //AFC || OLC
     public MinPrice: number;
@@ -777,11 +795,11 @@ export class VersionHistoryTariffLine {
             this.AssignData_FreightCost();
         }
 
-        else if (tariff.TypeCode == "OFC" || tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC") {
+        else if (tariff.TypeCode == "OFC" || tariff.TypeCode == "ASC" || tariff.TypeCode == "OSC" || tariff.TypeCode == "ICC" || tariff.TypeCode == "ECC" || tariff.TypeCode == "ICS" || tariff.TypeCode == "ECS" ) {
             this.AssignData_AIRLCLSurchargeCost();
         }
 
-        else if (tariff.TypeCode == "OFS") {
+        else if (tariff.TypeCode == "OFS" || tariff.TypeCode == "IFT") {
             this.AssignData_OceanFCLSurchargeCost();
         }
     }
@@ -810,6 +828,8 @@ export class VersionHistoryTariffLine {
         this.StartDate = this.myTariffLine.StartDate;
         this.TransitTime = this.myTariffLine.TransitTime;
         this.IsDifferentCurrenciesPerCharge = this.myTariffLine.IsDifferentCurrenciesPerCharge;
+        this.FromCountryCode = this.myTariffLine.FromCountryCode;
+        this.ToCountryCode = this.myTariffLine.ToCountryCode;
     }
 
     private AssignData_FreightCost() {

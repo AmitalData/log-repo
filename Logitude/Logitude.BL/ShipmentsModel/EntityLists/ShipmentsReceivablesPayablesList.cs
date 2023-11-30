@@ -45,5 +45,9 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string FinalDestinationPortCode { get; set; }
         public double? ValueOfGoods { get; set; }
         public string FlightNumber { get; set; }
+        public string ChargeGroupName { get; set; }
+        public string ChargeGroupCode { get; set; }
+        public double? ExchangeRate { get; set; }
+
     }
 }

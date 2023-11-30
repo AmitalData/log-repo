@@ -29,7 +29,9 @@ namespace Logitude.Infrastructure.BL.CloseTables
        public const string OceanInsightsV2 = "OI2";  
        public const string ShipmentWarningCheckbox = "SWC";  
        public const string AMSinExport = "AMS";  
-       public const string APIUpdate = "API";  
+       public const string APIUpdate = "API";
+       public const string UseSynchKafkaProducer = "SKP";
+
 
     }
 }

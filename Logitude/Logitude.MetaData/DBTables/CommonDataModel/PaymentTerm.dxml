@@ -91,7 +91,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CurrentMonth"
+    Name="EndOfMonth"
+    OldNames="CurrentMonth"
     Type="bit">
     <Constraints
       Nullable="false" />
@@ -115,6 +116,13 @@
     Type="datetime">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="NumberOfMonths"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="FromDateTypeCode"

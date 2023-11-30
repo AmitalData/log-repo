@@ -28,7 +28,7 @@
 
                     <td style="width: 390px;">
                         <!-- ObjectTableName = CardGLAccount to filter items by accountTypeCode in CommonDomainController.cs -->
-                        <SearchBox  [Watermark]="'Accounting.General.O.AccountNoName' | TextCodeTranslationPipe" [DropDownWidth]="390" [ObjectTableName]="'CardGLAccount'" [IsQuickSearch]="true" (ItemClicked)="EditGLAccount($event)"></SearchBox>
+                        <SearchBox  [Watermark]="'Accounting.General.O.AccountNoName' | TextCodeTranslationPipe" [DropDownWidth]="430" [ObjectTableName]="'CardGLAccount'" [IsQuickSearch]="true" (ItemClicked)="EditGLAccount($event)"></SearchBox>
                     </td>
 
                     <td>
@@ -71,7 +71,7 @@
                                             <div class="QueriesSection" style="color: #58B8FF;">
                                                 <div>{{'Accounting.General.O.GLAccount' | TextCodeTranslationPipe}}</div>
                                                 <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                                                    <button  id="{{'NewGLAccount' | IdGeneratorPipe}}" class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                                                    <button  id="{{'NewGLAccount' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
                                                 </div>
                                                 <div>
                                                     <table>
@@ -80,13 +80,11 @@
                                                                 <table>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <!-- ({{glAccountSummary.ActiveGLAccountCount}}) -->
                                                                             <p class="QueryLink" *ngIf="ActiveGLAccountsVisibility" (click)="ViewAccountingQuery('ActiveGLAccounts')"> {{'GLAccounts.Q.ActiveGLAccounts' | TextCodeTranslationPipe}}  </p>
                                                                         </td>
                                                                     </tr>
                                                                     <tr>
                                                                         <td style="width:190px;">
-                                                                            <!-- ({{glAccountSummary.InactiveGLAccountCount}})  -->
                                                                             <p class="QueryLink" *ngIf="InactiveGLAccountsVisibility" (click)="ViewAccountingQuery('InactiveGLAccounts')"> {{'GLAccounts.Q.InActiveGLAccounts' | TextCodeTranslationPipe}} </p>
                                                                         </td>
                                                                     </tr>
@@ -122,13 +120,11 @@
                                                                     <table>
                                                                         <tr>
                                                                             <td style="width:190px;">
-                                                                                <!-- ({{glAccountSummary.OpenFilesCount}}) -->
                                                                                 <p class="QueryLink" *ngIf="OpenFilesVisibility" (click)="ViewAccountingQuery('OpenFiles')"> {{'GLAccounts.Q.OpenFiles' | TextCodeTranslationPipe}} </p>
                                                                             </td>
                                                                         </tr>
                                                                         <tr>
                                                                             <td style="width:190px;">
-                                                                                <!-- ({{glAccountSummary.OpenMastersCount}}) -->
                                                                                 <p class="QueryLink" *ngIf="OpenFilesVisibility" (click)="ViewAccountingQuery('OpenMasters')"> {{'GLAccount.Q.OpenMasters' | TextCodeTranslationPipe}} </p>
                                                                             </td>
                                                                         </tr>

@@ -16,13 +16,13 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class JournalReconcilePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(this); 
-          this.IsDirty = false;
+	  		                        this.EntityParentPM = _entityParentPM;
+                this.UIProperties = new UIProperties(this);
+                this.IsDirty = false;
       }
 
 	 
@@ -60,6 +60,16 @@ export class JournalReconcilePM {
     private isPartial: boolean;
     public get IsPartial() { return this.isPartial; }
     public set IsPartial(newValue: boolean) { if (this.isPartial != newValue) { this.isPartial = newValue; this.MarkAsDirty("IsPartial"); } }
+       
+	 
+    private journalNumber: string;
+    public get JournalNumber() { return this.journalNumber; }
+    public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }
+       
+	 
+    private originalJournalId: string;
+    public get OriginalJournalId() { return this.originalJournalId; }
+    public set OriginalJournalId(newValue: string) { if (this.originalJournalId != newValue) { this.originalJournalId = newValue; this.MarkAsDirty("OriginalJournalId"); } }
        
 	 
 

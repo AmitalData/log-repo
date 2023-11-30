@@ -1,28 +1,32 @@
 
 declare var System: any;
 declare var window: any;
-import {ServiceResponse} from '../DataContracts/ServiceResponse';
-import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
-import {SessionLocator} from '../Utilities/SessionLocator';
-import {SessionInfo} from '../Utilities/SessionInfo';
-import {LogitudeWindow} from '../../Controls/Windows/LogitudeWindow';
+import { ServiceResponse } from '../DataContracts/ServiceResponse';
+import { ApiQueryFilters } from '../DataContracts/ApiQueryFilters';
+import { SessionLocator } from '../Utilities/SessionLocator';
+import { SessionInfo } from '../Utilities/SessionInfo';
+import { LogitudeWindow } from '../../Controls/Windows/LogitudeWindow';
 
-import {DocumentTypePM} from '../../Common/EntityPMs/DocumentTypePM';
-import {DocumentOutPM} from '../../Common/EntityPMs/DocumentOutPM';
-import {MessageWindow} from '../../Controls/Windows/MessageWindow';
-import {DocumentTypeListService} from '../../Common/Services/StandardLists/DocumentTypeListService';
-import {DocumentTypePMExtendedService} from '../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
+import { DocumentTypePM } from '../../Common/EntityPMs/DocumentTypePM';
+import { DocumentOutPM } from '../../Common/EntityPMs/DocumentOutPM';
+import { MessageWindow } from '../../Controls/Windows/MessageWindow';
+import { DocumentTypeListService } from '../../Common/Services/StandardLists/DocumentTypeListService';
+import { DocumentTypePMExtendedService } from '../../Common/Services/ExtendedPMs/DocumentTypePMExtendedService';
 
-import {DocumentTypeList} from '../../Common/EntityLists/DocumentTypeList';
-import {AppTool, DateTool} from '../../Infrastructure/Tools';
-import {DocumentOutPMService} from '../../Common/Services/ExtendedPMs/DocumentOutPMService';
-import {DocsOutDataViewModel} from '../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocsOutDataViewModel';
+import { DocumentTypeList } from '../../Common/EntityLists/DocumentTypeList';
+import { AppTool, DateTool } from '../../Infrastructure/Tools';
+import { DocumentOutPMService } from '../../Common/Services/ExtendedPMs/DocumentOutPMService';
+import { DocsOutDataViewModel } from '../../InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocsOut/ViewModel/DocsOutDataViewModel';
+import { ARInvoicePMService } from '../../Invoice/Services/StandardPMs/ARInvoicePMService';
+import { ARInvoicePM } from '../../Invoice/EntityPMs/ARInvoicePM';
+import { BuildDocumentHelper } from 'Accounting/Utilities/BuildDocumentHelper';
 
 
 export class GeneralPrintHelper {
     public ObjectTableName: string;
     public CurrentObjectTableId: string;
     ChildObjectTableId: string;
+    ChildObjectTableName: string;
 
     public DocumentTypeCode: string;
     public ChildEntityId: string;
@@ -34,10 +38,10 @@ export class GeneralPrintHelper {
     documentTypePM: DocumentTypePM;
     documentTypePMService: DocumentTypePMExtendedService;
     documentOutPMService: DocumentOutPMService;
-    public IsLoadPrintControl: boolean = false;
+    public IsLoadPrintControl: boolean = true;
     public IsStartPrint: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor(objecttablename: string, documentTypeCode: string, entityId: string, childEntityId: string, childReference:string ,childObjectTableId:string ) {
+    constructor(objecttablename: string, documentTypeCode: string, entityId: string, childEntityId: string, childReference: string, childObjectTableId: string) {
         this.ObjectTableName = objecttablename;
         if (!AppTool.IsNullOrEmpty(documentTypeCode)) {
             this.DocumentTypeCode = documentTypeCode.toUpperCase();
@@ -49,27 +53,42 @@ export class GeneralPrintHelper {
         this.ChildObjectTableId = childObjectTableId == "null" || !childObjectTableId ? "" : childObjectTableId;
         this.ChildReference = childReference == "null" || !childReference ? "" : childReference;
 
+        if (!AppTool.IsNullOrEmpty(this.ChildObjectTableId)) {
+            this.ChildObjectTableName = window.ObjectTables.filter(d => d.Id == this.ChildObjectTableId)[0].Name;
+        }
+
         this.documentTypePMService = new DocumentTypePMExtendedService();
         this.documentOutPMService = new DocumentOutPMService();
-        var documentTypeListService = new DocumentTypeListService();
 
 
-        var apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
+    }
+
+
+
+    IsHaveARInvoicePrintToogleFeature() {
+        return SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ARP")[0];
+    }
+
+    ShowPrintControl(documentTypeTemplate: string = null,StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true, showController: boolean = true) {
+
+        if (this.IsStartPrint) return;
+        let apiQueryFilters: ApiQueryFilters = new ApiQueryFilters();
         apiQueryFilters.GetAll = true;
         apiQueryFilters.Tenant = SessionInfo.LoggedUserTenant;
-
-        documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res:any) => {
+        let documentTypeListService = new DocumentTypeListService();
+        documentTypeListService.getAllFromCache(apiQueryFilters).subscribe((res: any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
-                  this.documentTypeList = myResult.filter(d => d.Code.toUpperCase() == this.DocumentTypeCode)[0];
+                this.documentTypeList = myResult.filter(d => d.Code.toUpperCase() == this.DocumentTypeCode)[0];
                 if (this.documentTypeList) {
                     if (this.documentTypeList.DocumentTypeDefaultReportTemplateId) {
-                        this.IsLoadPrintControl = true;
+
+                            this.GetDocumentOut(documentTypeTemplate,StatusCode,ApprovedDate,ShowPrintWindow, showController);
+
 
                     }
                     else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " has no default template");
-
                 }
 
                 else {
@@ -81,120 +100,188 @@ export class GeneralPrintHelper {
                     }
 
                     else this.ShowMessage("Document type of code " + this.DocumentTypeCode + " not exists");
-
                 }
-            
-
             }
         });
 
-
     }
 
 
-    ShowPrintControl() {
+    GetDocumentOut(documentTypeTemplate:string = null,StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true, showController: boolean = true) {
+        
+        var signHSM=!showController
 
-        if (this.IsLoadPrintControl && !this.IsStartPrint) {
-            this.IsStartPrint = true;
-            this.CurrentSession.StartBusyIndicatorLoading();
-            this.documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityId, SessionInfo.LoggedUserTenant, this.ChildEntityId, this.documentTypeList.Id).subscribe((res:any) => {
-                var pmResponse: ServiceResponse = res;
-                if (!pmResponse.HasError) {
-                    var myResult = pmResponse.Result;
+        if (this.IsStartPrint) return;
+        this.IsStartPrint = true;
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this.documentOutPMService.getDocumentOutByDocumentTypeEntityAndChild(this.EntityId, SessionInfo.LoggedUserTenant, this.ChildEntityId, this.documentTypeList.Id).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            
+            if (!pmResponse.HasError) {
+                var myResult = pmResponse.Result;
+                this.documentOutPM = myResult;
 
-                    this.documentOutPM = myResult;
+                if (!this.documentOutPM) {
+                    this.documentOutPMService.getCreateDocumentOut(this.documentTypeList.Id, this.EntityId, this.ChildEntityId, this.ChildReference, this.CurrentObjectTableId, SessionInfo.LoggedUserTenant, documentTypeTemplate,signHSM).subscribe((res: any) => {
+                        var pmResponse: ServiceResponse = res;
+                        if (!pmResponse.HasError) {
+                            var myResult = pmResponse.Result;
+                            if (myResult) {
+                                this.documentOutPM = myResult;
 
-                    if (!this.documentOutPM) {
-                        this.documentOutPMService.getCreateDocumentOut(this.documentTypeList.Id, this.EntityId, this.ChildEntityId, this.ChildReference, this.CurrentObjectTableId, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
-                            var pmResponse: ServiceResponse = res;
-                            if (!pmResponse.HasError) {
-                                var myResult = pmResponse.Result;
-                                if (myResult) {
-                                    this.documentOutPM = myResult;
-                                    this.LoadDocumentTypePm();
-                                }
+
+                                    this.LoadDocumentTypePm(StatusCode,ApprovedDate,ShowPrintWindow,showController);
 
                             }
-                            else {
-                                this.CurrentSession.StopBusyIndicator();
-                                this.IsStartPrint = false;
-                            }
+                        }
 
-                        });
-                    }
-                    else {
+                        else {
+                            this.CurrentSession.StopBusyIndicator();
+                            this.IsStartPrint = false;
+                        }
 
-
-                        this.LoadDocumentTypePm();
-                    }
-
+                    });
                 }
                 else {
-                    this.IsStartPrint = false;
-                    this.CurrentSession.StopBusyIndicator();
+
+                        this.LoadDocumentTypePm(StatusCode,ApprovedDate,ShowPrintWindow,showController);
+
                 }
+            }
 
-            });
-
-        }
+            else {
+                this.IsStartPrint = false;
+                this.CurrentSession.StopBusyIndicator();
+            }
+        });
 
     }
 
-    LoadDocumentTypePm() {
 
-
+    LoadDocumentTypePm(StatusCode:string = null,ApprovedDate:Date = null,ShowPrintWindow:Boolean = true, showController: boolean = true) {
         this.documentTypePMService.getSingleDocumentType(this.documentTypeList.Id, this.documentOutPM.Id, SessionInfo.LoggedUserTenant).subscribe((res:any) => {
-
 
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 if (myResult) {
                     this.documentTypePM = myResult;
-                    this.LoadPrintControl();
-                }
 
+
+                    if (showController)
+                        this.LoadPrintControl(StatusCode, ApprovedDate,ShowPrintWindow);
+                    else {
+                        
+                        this.IsStartPrint = false;
+                        this.CurrentSession.StopBusyIndicator();
+                    }
+                    
+                    
+                    
+                }
             }
+
             else {
                 this.CurrentSession.StopBusyIndicator();
                 this.IsStartPrint = false;
             }
-
-
         });
-                            
     }
+ 
+    LoadPrintControl(StatusCode: string = null, ApprovedDate: Date = null,ShowPrintWindow:Boolean = true) {
 
+        this.IsStartPrint = false;
+        this.CurrentSession.StopBusyIndicator();
+        var documentOutPmLists = new Array<DocumentOutPM>();
+        documentOutPmLists.push(this.documentOutPM);
+        var SelectedInternalDocument = new DocsOutDataViewModel(this.documentTypePM, this.EntityId, this.documentOutPM.ChildEntityId, this.CurrentObjectTableId, this.ChildObjectTableId, this.documentOutPM.ChildEntityReference,
+            documentOutPmLists, null, null, null);
 
-    LoadPrintControl() {
-        
-           this.IsStartPrint = false;
+        SelectedInternalDocument.IsNotFromDocsOutListOpenPrintControl = true;
+        SelectedInternalDocument.IsAWBWizard = false;
 
-            this.CurrentSession.StopBusyIndicator();
-           var documentOutPmLists = new Array<DocumentOutPM>();
-            //this.documentOutPM.NeedsRebuild = true;
-           documentOutPmLists.push(this.documentOutPM);
-           var SelectedInternalDocument = new DocsOutDataViewModel(this.documentTypePM, this.EntityId, this.documentOutPM.ChildEntityId, this.CurrentObjectTableId, this.ChildObjectTableId, this.documentOutPM.ChildEntityReference,
-               documentOutPmLists, null, null, null);
-
-           SelectedInternalDocument.IsNotFromDocsOutListOpenPrintControl = true;
-            SelectedInternalDocument.IsAWBWizard = false;
+        if(ShowPrintWindow){
             var logitudeWindow = new LogitudeWindow();
             logitudeWindow.Width = 760;
-
-            var heightwindwo: number = this.documentOutPM.IssuedDate ? 552 : 502; 
+            var heightwindwo: number = this.documentOutPM.IssuedDate ? 552 : 502;
             logitudeWindow.Height = heightwindwo;
             logitudeWindow.DataContext = SelectedInternalDocument;
             logitudeWindow.Title = "Print " + this.documentTypePM.Name;
+
+            logitudeWindow.WindowArgs = {"statusCode":StatusCode,"ApprovedDate":ApprovedDate};
+
             logitudeWindow.Show('./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/PrintDocumentComponent');
             logitudeWindow.WindowClosed.subscribe(($event: any) => {
                 if (this.CurrentSession.CurrentEditComponent) {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+    
+                    //if (this.ChildObjectTableName == "ARInvoice" || this.ObjectTableName == "ARInvoice") {
+                    //    this.UpdateInvoicePrintProperties();
+                    //}
+    
+                    //else {
+                    //    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    //}
                 }
             });
-       
+        } else{
+            if(this.IsHaveARInvoicePrintToogleFeature()) {
+                new BuildDocumentHelper(SelectedInternalDocument,StatusCode,ApprovedDate);
+            }
+            
+        }
+        
     }
+    
 
+
+
+    private UpdateInvoicePrintProperties() {
+        var invoiceId: string;
+        if (this.ChildObjectTableName == "ARInvoice") {
+            invoiceId = this.ChildEntityId;
+        }
+        else if (this.ObjectTableName == "ARInvoice") {
+            invoiceId = this.EntityId;
+        }
+
+        if (!AppTool.IsNullOrEmpty(invoiceId)) {
+            var service: ARInvoicePMService = new ARInvoicePMService();
+            service.get(invoiceId).subscribe((res: any) => {
+                var pmResponse: ServiceResponse = res;
+                if (!pmResponse.HasError) {
+                    var invoice: ARInvoicePM = pmResponse.Result;
+                    if (invoice) {
+                        invoice.PrintByUserId = invoice.IssuedByUserId;
+                        invoice.PrintDate = DateTool.GetCurrentDateAsUtc();
+
+                        switch (invoice.StatusCode) {
+                            case "AD":
+                            case "VD":
+                            case "PD":
+                            case "PP":
+                            case "AR":
+                            case "AC":
+                                {
+                                    if (invoice.IsFromInterestBatchInvoice == false) {
+                                        invoice.IsPrinted = true;
+                                    }
+
+                                    break;
+                                }
+                        }
+
+                        service.update(invoice).subscribe((res: any) => {
+                            var pmResponse: ServiceResponse = res;
+                            if (!pmResponse.HasError) {
+                                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            }
+                        });
+                    }
+                }
+            });
+        }
+    }
 
     public ShowMessage(message: string, title: string = "") {
 
@@ -205,11 +292,4 @@ export class GeneralPrintHelper {
             messageWindow.Title = title;
         }
     }
-
-
-
-
-
-
-
 }

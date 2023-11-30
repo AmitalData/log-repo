@@ -439,6 +439,80 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="VATAmountInLocalCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VATAmountInQuoteSaleCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VATAmountInLineSaleCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleTotalAmountLocalIncludingVAT"
+    OldNames="VatableSaleAmountLocal"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleAmountInSaleCurrencyIncludingVAT"
+    OldNames="VatableSaleAmountInSaleCurr"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleTotalAmountIncludingVAT"
+    OldNames="VatableSaleTotalAmount"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleTariffId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleTariffNumber"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SaleTariffVersion"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SaleTariffLineId"
+    Type="varchar"
+    Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MarkUpCurrencyId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="QuoteId"
     ReferencedTable="Quotes"
@@ -512,6 +586,11 @@
   <Relation
     ForeignKeyColumn="VatTypeId"
     ReferencedTable="VatTypes"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="MarkUpCurrencyId"
+    ReferencedTable="Currencies"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

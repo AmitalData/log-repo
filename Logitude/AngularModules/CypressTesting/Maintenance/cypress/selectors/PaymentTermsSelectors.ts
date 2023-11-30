@@ -1,6 +1,7 @@
 export class PaymentTermsSelectors {
 
     public static readonly MaintenanceItem = "#MaintenanceItemMTPT"
+    public static readonly NewPaymentTerm = "#NewButton_PaymentTerm"
     public static readonly SaveButton = "#PaymentTerm-Save"
     public static readonly SaveCloseButton = "#PaymentTerm-SaveClose"
     public static readonly Name = "#PaymentTerm_EnglishName"
@@ -11,7 +12,7 @@ export class PaymentTermsSelectors {
     public static readonly Description = "#PaymentTerm_Description"
     public static readonly LocalDescription = "#PaymentTerm_LocalDescription"
     public static readonly AccountingExternalID = "input[id^='PaymentTerm_ExternalId']"
-    public static readonly CurrentMonthCheckBox = "#PaymentTerm_CurrentMonth"
+    public static readonly CurrentMonthCheckBox = "#PaymentTerm_EndOfMonth"
     public static readonly InActiveCheckBox = "#PaymentTerm_InActive"
     public static readonly AccountingTab = "#PaymentTermTHAccounting"
     public static readonly EventsTab = "#PaymentTermTHEvents"

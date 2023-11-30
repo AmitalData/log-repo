@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
@@ -92,15 +93,9 @@ namespace Logitude.CRM.BL.Validators
                     }
 
                     string valueString = value != null ? value.ToString() : "";
-                    if (!string.IsNullOrEmpty(valueString))
+                    if (FieldValueValidator.IsNotValidMinMaxValue(field, valueString))
                     {
-                        if (!field.IsMaxLength)
-                        {
-                            if (valueString.Length > field.MaxLength || valueString.Length < field.MinLength)
-                            {
-                                valid = false;
-                            }
-                        }
+                        valid = false;
                     }
                 }
 
@@ -191,16 +186,9 @@ namespace Logitude.CRM.BL.Validators
                 }
 
                 string valueString = value != null ? value.ToString() : "";
-                if (!string.IsNullOrEmpty(valueString))
+                if (FieldValueValidator.IsNotValidMinMaxValue(field, valueString))
                 {
-                    if (!field.IsMaxLength)
-                    {
-                        if (valueString.Length > field.MaxLength || valueString.Length < field.MinLength)
-                        {
-                            error = CRMTranslateTextsClass.GetTranslation("General.M.MinMax", field.FullNameTextCode.Code, field.MinLength.ToString(), field.MaxLength.ToString(), field.Tenant);
-
-                        }
-                    }
+                    error = CRMTranslateTextsClass.GetTranslation("General.M.MinMax", field.FullNameTextCode.Code, field.MinLength.ToString(), field.MaxLength.ToString(), field.Tenant);
                 }
             }
 

@@ -1,5 +1,5 @@
-﻿using Logitude.Test.Base.Models.BillingsPreparation;
-using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Base.Models.Billings;
+using Logitude.Base.Models.UserTenant;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 

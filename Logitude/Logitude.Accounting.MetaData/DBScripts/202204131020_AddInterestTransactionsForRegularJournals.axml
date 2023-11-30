@@ -1,0 +1,45 @@
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="1">
+    <![CDATA[
+	
+insert into InterestTransactions (Id, Tenant, CreateDateTime, UpdateDateTime, GLAccountId, InterestEntityTypeCode, EntityId, OriginalEntityLineNumber, LocalAmount, ForeignAmount,CurrencyId, InterestValueDate, AccountingEntityCode)
+select CONCAT('6-', ROW_NUMBER() OVER(ORDER BY (SELECT 1))) as Id,Tenant, GETDATE() as CreateDateTime, GETDATE() as UpdateDateTime, GLAccountId,'3' as InterestEntityTypeCode, JournalId, Line, LocalAmount, ForeignAmount, CurrencyId, DueDate, '1'
+from (
+select 
+JournalLines.JournalId,
+JournalLines.Line, 
+JournalLines.LocalAmount * -1 as LocalAmount,
+JournalLines.ForeignAmount * -1 as ForeignAmount,
+JournalLines.CurrencyId,
+JournalLines.DueDate,
+JournalLines.Tenant, 
+CreditAccountId as GLAccountId
+from JournalLines 
+inner join Journals on Journals.Id = JournalLines.JournalId AND Journals.Tenant = JournalLines.Tenant
+inner join GLAccounts on GLAccounts.Id = JournalLines.CreditAccountId AND GLAccounts.Tenant = JournalLines.Tenant
+where (JournalLines.ActionCode = '1' OR JournalLines.ActionCode = '3')
+AND GLAccounts.ChartOfAccountsTypeCode NOT IN ('1', '2', '6') 
+AND Journals.AccountingEntityCode = '1' 
+AND NOT (Journals.ExternalSystem = 'AMITAL' AND Journals.ExternalNo is not null) 
+AND Journals.Id not in (select EntityId from InterestTransactions where InterestEntityTypeCode = 3)
+UNION
+select 
+JournalLines.JournalId,
+case when DebitAccountId = CreditAccountId AND ActionCode = '3' then JournalLines.Line + 10 else JournalLines.Line end, JournalLines.LocalAmount,
+JournalLines.ForeignAmount,
+JournalLines.CurrencyId,
+JournalLines.DueDate,
+JournalLines.Tenant, 
+DebitAccountId as GLAccountId
+from JournalLines 
+inner join Journals on Journals.Id = JournalLines.JournalId AND Journals.Tenant = JournalLines.Tenant
+inner join GLAccounts on GLAccounts.Id = JournalLines.DebitAccountId AND GLAccounts.Tenant = JournalLines.Tenant
+where (JournalLines.ActionCode = '2' OR JournalLines.ActionCode = '3') 
+AND GLAccounts.ChartOfAccountsTypeCode NOT IN ('1', '2', '6') 
+AND Journals.AccountingEntityCode = '1'
+AND NOT (Journals.ExternalSystem = 'AMITAL' AND Journals.ExternalNo is not null) 
+AND Journals.Id not in (select EntityId from InterestTransactions where InterestEntityTypeCode = 3)) as RegularJournalsInterestTransactions
+
+    ]]>       
+  </Sql>
+</Script>

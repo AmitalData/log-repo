@@ -1,0 +1,7 @@
+﻿<Script DBType="Main"  Module="Accounting" >
+  <Sql Version="1">
+	  <![CDATA[
+        INSERT INTO InterestEntityTypes (Code,EnglishName,SearchFields,LocalName) VALUES (N'5', N'Adjustments',N'5,Adjustments,התאמה,',N'התאמה')
+    ]]>
+  </Sql>
+</Script>

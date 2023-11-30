@@ -130,7 +130,9 @@
                                                             [QueryFilterItems]="GLAccountsFilterItems"
                                                             (SelectedItemChanged)="GLAccount = $event"
                                                             [ForceShowAddLink]="true"
-                                                            [HideColumns]="false">
+                                                            [HideColumns]="false"
+                                                            [StartSearchFromChar]="3"
+                                                            [StartSearchFromNumber]="6">
                                                     </LogLov>
                                                 </td>
                                                 <td><div></div></td>
@@ -151,7 +153,9 @@
                                                             [DependencyFilter2Value]="'1'"
                                                             [QueryFilterItems]="GLAccountsFilterItems"
                                                             (SelectedItemChanged)="DeferredGLAccount = $event"
-                                                            [HideColumns]="false">
+                                                            [HideColumns]="false"
+                                                            [StartSearchFromChar]="3"
+                                                            [StartSearchFromNumber]="6">
                                                     </LogLov>
                                                 </td>
                                                 <td><div></div></td>
@@ -172,7 +176,10 @@
                                                             [DependencyFilter2Value]="'1'"
                                                             [QueryFilterItems]="GLAccountsFilterItems"
                                                             (SelectedItemChanged)="DeferredGLAccount = $event"
-                                                            [HideColumns]="false">
+                                                            [HideColumns]="false"
+                                                            [StartSearchFromChar]="3"
+                                                            [StartSearchFromNumber]="6"
+                                                            >
                                                     </LogLov>
                                                 </td>
                                                 <td><div></div></td>

@@ -113,7 +113,7 @@ void SaveEntityServiceOutput(string outputFileName)
 	
 	         string[] namespacearr = pmnamespacestring.ToString().Split('.');
 		     string projectname = namespacearr[1].Replace("Lib","");
-        if (projectname != "Accounting" && projectname != "Booking"&& projectname != "Warehouse" && projectname != "TimeManagement" && projectname != "TariffModule"&& projectname != "CargoTracking")
+        if (projectname != "Accounting" && projectname != "Booking"&& projectname != "Warehouse" && projectname != "TimeManagement" && projectname != "TariffModule"&& projectname != "CargoTracking" && projectname != "ShipmentOrderModule" && projectname != "Workflow" && projectname != "DashboardModule")
         {
 		 iswrongname = true;
         }
@@ -147,11 +147,13 @@ void SaveEntityServiceOutput(string outputFileName)
 	{
 	   entityPMsPath="Logitude.CargoTracking.Def.EntityPMs;";
 	}
-	if(pocosspacestring.Contains("QuoteOPM"))
+ 
+	
+	if(pocosspacestring.Contains("ShipmentOrderModule"))
 	{
-	   entityPMsPath="Amital.QuoteOPM.Def.EntityPMs;";
+	   entityPMsPath="Logitude.ShipmentOrderModule.Def.EntityPMs;";
 	}
-
+ 
 	string pmsspacestring =   entityPMsPath;
 	string mappingspacestring =   servicenamespacestring.ToString().Substring(0,servicenamespacestring.ToString().LastIndexOf('.')) + ".EntityDataMappings;";
 	string repspacestring =   servicenamespacestring.ToString().Substring(0,servicenamespacestring.ToString().LastIndexOf('.')) + (iswrongname? ".Repsitories;" : ".Repositories;");
@@ -196,7 +198,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+<#+ 
+if(tableName != "Task" && tableName != "TaskStatus")
+{
+#>
 using System.Threading.Tasks;
+<#+
+}
+#>
 using System.ComponentModel.DataAnnotations;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools;

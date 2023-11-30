@@ -21,9 +21,12 @@ export class APInvoiceValidator {
     private Errors: string[] = [];
     private EntityPM: APInvoicePM;
     private message: string;
+    private accountingActivated: boolean= false;
     constructor() {
         this.Errors = [];
         this.message = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+        this.accountingActivated = SessionLocator.TenantPM.AccountingActivated;
+        
     }
 
     public Validate(entityPM: APInvoicePM) {
@@ -34,7 +37,7 @@ export class APInvoiceValidator {
 
         var allVatTypes: VatTypeList[] = VatTypesValidator.GetAllVatTypes();
 
-        if (DateTool.GetDateParts(this.EntityPM.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
+        if (DateTool.GetDateParts(this.EntityPM.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
             this.Errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
         }   
 
@@ -55,6 +58,11 @@ export class APInvoiceValidator {
 
             if (entityPM.InvoiceExpectedAmount == null) {
                 this.Errors.push(this.message.replace("%FieldName", "Invoice Amount"));
+            }
+
+            
+            if (this.accountingActivated && entityPM.AccountingDate == null) {
+                this.Errors.push(this.message.replace("%FieldName", "Accounting Date"));
             }
 
             else {

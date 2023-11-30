@@ -150,6 +150,8 @@ public void GeneratePM(string classFilePath,string xmlFilePath,string outputFile
 	string importString = BuildImportEntitesString(entity, elements);
 	string parentname = "";
 	bool hasParent = false;
+	 bool hasCompstionCustomField = false;
+
 	if(entity.ParentTableName.GetType() == typeof(string))
     {
 	   parentname = entity.ParentTableName.ToString().Trim('"') + "PM";
@@ -162,6 +164,15 @@ public void GeneratePM(string classFilePath,string xmlFilePath,string outputFile
 	   ApplyOnPropertyChangedCode = true;
 	   importString  += Environment.NewLine + "import {"+pmName+"CustomCode} from '../EntityPMCustomCode/" + pmName + "CustomCode';";
     }
+
+
+	if(entity.AllowCustomFields.GetType() == typeof(string)  && entity.AllowCustomFields == "true" && entity.IsComposition.GetType() == typeof(string)  && entity.IsComposition == "true")
+    {
+	   hasCompstionCustomField = true;
+    }
+
+	
+
 
 
 	 
@@ -207,9 +218,12 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+<#+ if(hasCompstionCustomField){#> import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';<#+}#>
+<#+ if(entity.ApplyGenericCustomFields.ToString() == "true") {#>import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
+<#+}#>
 
 
-export class <#=tableName #>PM {
+export class <#=tableName #>PM<#+ if(hasCompstionCustomField){#> extends ChildEntitiesCustomFieldPM<#+}#><#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#> extends ObjectCustomFieldPM<#+}#> {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -218,15 +232,35 @@ if(hasParent)
 {
 #>      <#+
 #>constructor(_entityParentPM: any) {
+	  <#+
+if(hasCompstionCustomField)
+{
+#>      <#+
+#>
+		  super("<#=tableName #>");
           this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
+<#+
+}
+else{
+#>
+		  <#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#>super("<#=tableName #>");
+<#+}#>
+          this.EntityParentPM = _entityParentPM;
+          this.UIProperties = new UIProperties(this); 
+          this.IsDirty = false;
+ <#+
+} 
+	   #>
       }
 
 <#+
 }
 else{
 #>constructor() {
+		  <#+ if(entity.ApplyGenericCustomFields.ToString() == "true"){#>super("<#=tableName #>");
+<#+}#>
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }

@@ -11,5 +11,7 @@
         public bool InActive { get; set; }
         public string SearchFields { get; set; }
         public string DisplayName { get; internal set; }
+        public string EntityStatusTypeCode { get; set; }
+
     }
 }

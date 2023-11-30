@@ -53,14 +53,14 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ContactPhone"
+    Name="ContactMobile"
     Type="varchar"
     Size="25">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
-    Name="ContactMobile"
+    Name="ContactPhone"
     Type="varchar"
     Size="25">
     <Constraints
@@ -71,12 +71,6 @@
     Type="datetime">
     <Constraints
       Nullable="false" />
-  </Column>
-  <Column
-    Name="LastShipmentDate"
-    Type="datetime">
-    <Constraints
-      Nullable="true" />
   </Column>
   <Column
     Name="Status"
@@ -106,10 +100,10 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsPrivateLabelCustomer"
-    Type="bit">
+    Name="LastShipmentDate"
+    Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="StockTypeCode"
@@ -117,6 +111,12 @@
     Size="15">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="IsPrivateLabelCustomer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="Status"

@@ -4,11 +4,14 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {SessionLocator} from '../../Infrastructure/Utilities/SessionLocator';
 import {ShipmentPickUpDeliveryPackagePM} from './ShipmentPickUpDeliveryPackagePM';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
+import { ChildEntitiesCustomFieldPM } from '../../Infrastructure/EntityPMs/ChildEntitiesCustomFieldPMExtended';
 
-export class ShipmentDeliveryPM {
+export class ShipmentDeliveryPM extends ChildEntitiesCustomFieldPM {
     public UIProperties: UIProperties;
     @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
     constructor(_entityParentPM: any) {
+        super("ShipmentDelivery");
+
         this.EntityParentPM = _entityParentPM;
         this.UIProperties = new UIProperties;
         this.IsDirty = false;
@@ -29,6 +32,14 @@ export class ShipmentDeliveryPM {
     private pickUpDeliveryNumber: string;
     public get PickUpDeliveryNumber() { return this.pickUpDeliveryNumber; }
     public set PickUpDeliveryNumber(newValue: string) { this.pickUpDeliveryNumber = newValue; this.MarkAsDirty(); }
+
+    private pickUpDeliveryIndex: number;
+    public get PickUpDeliveryIndex() { return this.pickUpDeliveryIndex; }
+    public set PickUpDeliveryIndex(newValue: number) { this.pickUpDeliveryIndex = newValue; this.MarkAsDirty(); }
+
+    private childIndex: number;
+    public get ChildIndex() { return this.childIndex; }
+    public set ChildIndex(newValue: number) { this.childIndex = newValue; this.MarkAsDirty(); }
 
     private pickUpDeliveryTypeCode: string;
     public get PickUpDeliveryTypeCode() { return this.pickUpDeliveryTypeCode; }

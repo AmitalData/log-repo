@@ -227,20 +227,40 @@ export class GLAccountPMService {
             }
 			   			   			   
             entityPM.OldEntityPM.GLAccountCurrencies = [];
-            for (var item in entityPM.GLAccountCurrencies) {
-            var myGLAccountCurrencyPM = entityPM.GLAccountCurrencies[item];
-            var newGLAccountCurrencyPM: GLAccountCurrencyPM = this.clone(myGLAccountCurrencyPM);
-						
-							 
-            entityPM.OldEntityPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
-            }
-			   			   			   
+            // for (var item in entityPM.GLAccountCurrencies) {
+            // var myGLAccountCurrencyPM = entityPM.GLAccountCurrencies[item];
+            // var newGLAccountCurrencyPM: GLAccountCurrencyPM = this.clone(myGLAccountCurrencyPM);
+
+
+            // entityPM.OldEntityPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
+            // }
+
             entityPM.OldEntityPM.GLAccountChildren = [];
             for (var item in entityPM.GLAccountChildren) {
             var myGLAccountPM = entityPM.GLAccountChildren[item];
             var newGLAccountPM: GLAccountPM = this.clone(myGLAccountPM);
 						
-                
+                // newGLAccountPM.GLAccountWithholdingTaxes = [];
+                // for (var k in myGLAccountPM.GLAccountWithholdingTaxes) {
+				//     var myGLAccountWithholdingTaxPM =myGLAccountPM.GLAccountWithholdingTaxes[k];
+				//     var newGLAccountWithholdingTaxPM=this.clone(myGLAccountPM.GLAccountWithholdingTaxes[k]);
+                //     newGLAccountPM.GLAccountWithholdingTaxes.push(newGLAccountWithholdingTaxPM);
+
+				// 	                 }
+                // newGLAccountPM.GLAccountInterestPeriods = [];
+                // for (var k in myGLAccountPM.GLAccountInterestPeriods) {
+				//     var myGLAccountInterestPeriodPM =myGLAccountPM.GLAccountInterestPeriods[k];
+				//     var newGLAccountInterestPeriodPM=this.clone(myGLAccountPM.GLAccountInterestPeriods[k]);
+                //     newGLAccountPM.GLAccountInterestPeriods.push(newGLAccountInterestPeriodPM);
+
+				// 	                 }
+                // newGLAccountPM.GLAccountCurrencies = [];
+                // for (var k in myGLAccountPM.GLAccountCurrencies) {
+				//     var myGLAccountCurrencyPM =myGLAccountPM.GLAccountCurrencies[k];
+				//     var newGLAccountCurrencyPM=this.clone(myGLAccountPM.GLAccountCurrencies[k]);
+                //     newGLAccountPM.GLAccountCurrencies.push(newGLAccountCurrencyPM);
+
+				// 	                 }
 							 
             entityPM.OldEntityPM.GLAccountChildren.push(newGLAccountPM);
             }
@@ -582,6 +602,17 @@ export class GLAccountPMService {
 			entityPM = new GLAccountPM();
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
+    }
+
+    UpdateFromCsv(fileUploadParamerter: any) {
+        return defer(() => {
+            return this._http.post(this._apiUrl + "/UpdateFromCsv", JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {                    
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
     }
 		 
 

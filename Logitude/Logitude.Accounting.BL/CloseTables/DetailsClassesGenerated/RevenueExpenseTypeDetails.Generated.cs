@@ -23,26 +23,26 @@ namespace Logitude.Accounting.BL
 		    var all = new List<RevenueExpenseTypeDetails>();  
             all.Add(new RevenueExpenseTypeDetails()
             {    
-                Code = "2", 
+                Code = "1", 
                 Inactive = false, 
-                LocalName = "הוצאות", 
+                LocalName = "הכנסות, מתאפס בהעברת שנה", 
+                EnglishName = "Revenue", 
+			});
+			 
+            all.Add(new RevenueExpenseTypeDetails()
+            {    
+                Code = "2", 
+                LocalName = "הוצאות, מתאפס בהעברת שנה", 
                 EnglishName = "Expense", 
+                Inactive = false, 
 			});
 			 
             all.Add(new RevenueExpenseTypeDetails()
             {    
                 Code = "3", 
-                Inactive = false, 
-                LocalName = "אחר", 
+                LocalName = "חו''ז , לא מתאפס. יתרה ממשיכה לשנה הבאה", 
                 EnglishName = "Other", 
-			});
-			 
-            all.Add(new RevenueExpenseTypeDetails()
-            {    
-                Code = "1", 
                 Inactive = false, 
-                LocalName = "הכנסות", 
-                EnglishName = "Revenue", 
 			});
 			
             return all;

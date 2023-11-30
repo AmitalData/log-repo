@@ -90,3 +90,106 @@ button {
     font-family: OpenSans-Regular;
     src: url(../Fonts/OpenSans-Regular.ttf);
 }
+
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 800;
+    src: url(../Fonts/Manrope-ExtraBold-800.ttf) format("truetype");
+}
+
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 700;
+    src: url(../Fonts/Manrope-Bold-700.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 600;
+    src: url(../Fonts/Manrope-SemiBold-600.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 500;
+    src: url(../Fonts/Manrope-Medium-500.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 400;
+    src: url(../Fonts/Manrope-Regular-400.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 300;
+    src: url(../Fonts/Manrope-Light-300.ttf) format("truetype");
+}
+
+
+@font-face {
+    font-family: Manrope;
+    font-weight: 200;
+    src: url(../Fonts/Manrope-ExtraLight-200.ttf) format("truetype");
+}
+
+
+
+
+
+
+
+
+
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 900;
+    src: url(../Fonts/Roboto-Black.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 800;
+    src: url(../Fonts/Roboto-Bold.ttf) format("truetype");
+}
+
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 700;
+    src: url(../Fonts/Roboto-Bold.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 600;
+    src: url(../Fonts/Roboto-Medium.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 500;
+    src: url(../Fonts/Roboto-Medium.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 400;
+    src: url(../Fonts/Roboto-Regular.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 300;
+    src: url(../Fonts/Roboto-Light.ttf) format("truetype");
+}
+
+@font-face {
+    font-family: Roboto;
+    font-weight: 100;
+    src: url(../Fonts/Roboto-Thin.ttf) format("truetype");
+}

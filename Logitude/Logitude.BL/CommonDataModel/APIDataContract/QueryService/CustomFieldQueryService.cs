@@ -37,7 +37,7 @@ namespace Logitude.BL.CommonDataModel.APIDataContract.ApiV1
         public List<CustomField> CustomFieldCustomDataMapping(object entityPM, int tenant)
         {
             List<CustomField> customFields = new List<CustomField>();
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
 
             foreach (ObjectField field in this.TableCustomFields)
             {

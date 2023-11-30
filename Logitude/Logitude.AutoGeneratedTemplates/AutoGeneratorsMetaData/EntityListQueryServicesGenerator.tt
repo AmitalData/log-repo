@@ -197,7 +197,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+<#+ 
+if(tableName != "Task" && tableName != "TaskStatus")
+{
+#>
 using System.Threading.Tasks;
+<#+
+}
+#>
 using System.Xml.Serialization;
 
 using <#= pocosspacestring #>
@@ -376,6 +383,11 @@ namespace <#= querylistservicenamespacestring #>
 			 tenantCondition = "&& a.Tenant == tenant";
 			 getalltenantCondition = "\n                   where a.Tenant == tenant";
 
+			 if(entity.TenantZeroData?.GetType() == typeof(string) && entity.TenantZeroData == "true")
+			 {
+				getalltenantCondition += " || a.Tenant == 0";
+			 }
+
 		     tenantKeyCondition = "&& a.Tenant == keys.Tenant";
 			 tenantParamValue=",tenant";
          }
@@ -406,7 +418,14 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+<#+ 
+if(tableName != "Task" && tableName != "TaskStatus")
+{
+#>
 using System.Threading.Tasks;
+<#+
+}
+#>
 using System.Xml.Serialization;
 
 using <#= pocosspacestring #>
@@ -423,7 +442,11 @@ namespace <#= querylistservicenamespacestring #>
             this.context = context;
         }
 
-        public List<<#= listName #>> GetList(QueryOperations queryOperations, int tenant)
+        public List<<#= listName #>> GetList(QueryOperations queryOperations, int tenant ){
+		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
+		 }
+
+        public List<<#= listName #>> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -441,9 +464,9 @@ namespace <#= querylistservicenamespacestring #>
 			iQueryable = ApplyCustomFilters(queryOperations, iQueryable<#=tenantParamValue#>);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
             iQueryable = filter.GetFilteredQuery<<#= tableName #>>(nonListQueryOperation, iQueryable);
 
@@ -452,6 +475,7 @@ namespace <#= querylistservicenamespacestring #>
             IQueryable<<#= listName #>> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<<#= listName #>>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -548,7 +572,14 @@ namespace <#= querylistservicenamespacestring #>
            
         }
 
-        public int GetListCount(QueryOperations queryOperations<#= tenantParam #>)
+
+		
+        public int GetListCount(QueryOperations queryOperations<#= tenantParam #> ){
+		 		  return GetListCount(queryOperations<#= tenantParamValue #>, new TreeFilterQueryArgs());
+
+		 }
+
+        public int GetListCount(QueryOperations queryOperations<#= tenantParam #>  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -566,20 +597,24 @@ namespace <#= querylistservicenamespacestring #>
 			iQueryable = ApplyCustomFilters(queryOperations, iQueryable<#=tenantParamValue#>);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
             
 			iQueryable = filter.GetFilteredQuery<<#= tableName #>>(nonListQueryOperation, iQueryable);
+
+
 
             IQueryable<<#= listName #>> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<<#= listName #>>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<<#= listName #>>(query2, treeFilterQueryArgs);
+
             int count = query2.Count();
             return count;
         }
 
-      
+
     }
 }
 	 <#+

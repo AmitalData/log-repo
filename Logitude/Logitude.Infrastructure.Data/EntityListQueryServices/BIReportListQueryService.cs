@@ -1,4 +1,4 @@
-	using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
@@ -14,6 +14,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Logitude.Infrastructure.Data.EntityLists;
 using Logitude.Infrastructure.Data.EntityMapping;
 using Logitude.Infrastructure.Data.Repsitories;
+using Logitude.Infrastructure.Data.ExtendedServices;
 
 namespace Logitude.Infrastructure.Data.EntityListQueryServices
 {
@@ -44,7 +45,22 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
                                                   LastRunByUserName = a.LastRunDetail == null ? null : (a.LastRunDetail.LastRunByUser == null ? null : (a.LastRunDetail.LastRunByUser.Contact == null ? null : a.LastRunDetail.LastRunByUser.Contact.EnglishName)),
                                                   FactTableName = a.FactTableName
                                               });
+
+            query = SetAvailableForSchedulingField(query);
+            
             return query;
+        }
+
+        private IQueryable<BIReportList> SetAvailableForSchedulingField(IQueryable<BIReportList> query)
+        {
+            AvailableForSchedulingBIReportService availableForSchedulingBIReportService = new AvailableForSchedulingBIReportService();
+            List<BIReportList> biReports = query.ToList();
+            foreach (BIReportList biReport in biReports)
+            {
+                biReport.AvailableForScheduling = availableForSchedulingBIReportService.IsAvailableForScheduling(biReport.FactTableName, biReport.Tenant);
+            }
+
+            return biReports.AsQueryable();
         }
 
         private IQueryable<BIReport> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<BIReport> iQueryable, int tenant)
@@ -188,4 +204,3 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
 
     }
 }
-	

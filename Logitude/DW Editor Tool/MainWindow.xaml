@@ -87,7 +87,9 @@
                                             <RowDefinition Height="28" />
                                             <RowDefinition Height="28" />
                                             <RowDefinition Height="28" />
-
+                                            <RowDefinition Height="28" />
+                                            <RowDefinition Height="72" />
+                                                
                                         </Grid.RowDefinitions>
                                         <TextBlock Grid.Row="0" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Code:" />
                                         <TextBox Grid.Row="0" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding Code, Mode=TwoWay}" />
@@ -143,8 +145,13 @@
 
                                         <TextBlock Grid.Row="16" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Max Number Of Custom Fields :" Visibility="{Binding IsFactTable}" />
                                         <TextBox Grid.Row="16" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding MaxNumberOfCustomFields  , Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
+                                       
+                                        <TextBlock Grid.Row="17" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Additional Conditions :" Visibility="{Binding IsFactTable}" />
+                                        <TextBox Grid.Row="17" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding AdditionalConditions  , Mode=TwoWay}" Visibility="{Binding IsFactTable}" />
 
-   
+                                        <TextBlock Grid.Row="18" Grid.Column="0" VerticalAlignment="Top" FontWeight="Bold" Text="Description :" Visibility="{Binding IsFactTable}" />
+                                        <TextBox Grid.Row="18" Grid.Column="1" Height="66" VerticalAlignment="Center" Text="{Binding Description  , Mode=TwoWay}" Visibility="{Binding IsFactTable}" AcceptsReturn="True" TextWrapping="Wrap" />
+
                                     </Grid>
 
 

@@ -230,7 +230,7 @@
   <Column
     Name="TruckerReference"
     Type="varchar"
-    Size="15">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -426,6 +426,13 @@
     Name="MasterShipmentNumber"
     Type="varchar"
     Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConnectedToReferenceNumber"
+    Type="nvarchar"
+    Size="200">
     <Constraints
       Nullable="true" />
   </Column>

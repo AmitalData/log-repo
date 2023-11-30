@@ -278,6 +278,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.Message)) //T4 find type == nText 
+            {
+                entityPM.Message = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Message));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 

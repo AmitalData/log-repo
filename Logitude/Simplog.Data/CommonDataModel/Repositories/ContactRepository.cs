@@ -366,6 +366,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public void Add(Contact entity)
         {
             SetComputedKeyValue(entity);
+            SetUpdateDate(entity);
             context.Contacts.Add(entity);
         }
 
@@ -382,6 +383,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public void Update(Contact entity)
         {
             SetComputedKeyValue(entity);
+            SetUpdateDate(entity);
             try
             {
                 context.Contacts.Attach(entity);
@@ -397,6 +399,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
             else
                 entity.ComputedKey = entity.Id;
 
+        }
+
+        private void SetUpdateDate(Contact entity)
+        {
+            if(entity.UpdateDate == null)
+            {
+                entity.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entity.Tenant);
+            }
         }
 
         public List<Contact> All()

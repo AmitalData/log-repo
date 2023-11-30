@@ -1,4 +1,5 @@
-﻿using Logitude.Test.Base.Models.UserTenantPreparation;
+﻿using Logitude.Base.Models.UserTenant;
+using Logitude.ShipmentTests.Models.PackageTypes;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 
@@ -42,6 +43,7 @@ namespace Logitude.ShipmentTests.Models.Builders
             return this;
         }
 
+
         public PackageBuilder Weight(double? weight)
         {
             _packagePM.Weight = weight;
@@ -59,7 +61,26 @@ namespace Logitude.ShipmentTests.Models.Builders
             _packagePM.Quantity = quantity;
             return this;
         }
-
+        public PackageBuilder ContainerNumber(string containerNumber)
+        {
+            _packagePM.ContainerNumber = containerNumber;
+            return this;
+        }
+        public PackageBuilder FlashPointTemperatureUnitCode(string flashPointTemperatureUnitCode)
+        {
+            _packagePM.FlashPointTemperatureUnitCode = flashPointTemperatureUnitCode;
+            return this;
+        }
+        public PackageBuilder TemperatureUnitCode(string TemperatureUnitCode)
+        {
+            _packagePM.TemperatureUnitCode = TemperatureUnitCode;
+            return this;
+        }
+        public PackageBuilder PackageTypeByCode(string code)
+        {
+            _packagePM.PackageTypeId = PackageTypeCodeMapping(code);
+            return this;
+        }
         public PackageBuilder ShipmentId(string shipmentId)
         {
             _packagePM.ShipmentId = shipmentId;
@@ -106,6 +127,22 @@ namespace Logitude.ShipmentTests.Models.Builders
         {
             _packagePM = dataTable.CreateInstance<PackagePM>();
             return this;
+        }
+        private string PackageTypeCodeMapping(string portCode)
+        {
+            switch (portCode)
+            {
+                case "PC2":
+                    return PackageTypesData.PackageTypeOceanPC2Id;
+                case "PC1":
+                    return PackageTypesData.PackageTypeOceanPC1Id;
+                case "PP1":
+                    return PackageTypesData.PackageTypeAirPP1Id;
+                case "PP2":
+                    return PackageTypesData.PackageTypeAirPP2Id;
+                default:
+                    return null;
+            }
         }
     }
 }

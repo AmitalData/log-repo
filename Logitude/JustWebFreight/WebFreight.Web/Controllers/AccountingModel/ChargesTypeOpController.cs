@@ -35,6 +35,9 @@ namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsCont
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(fileUploadParamerter.Tenant);
+
                 string documentId = "";
                 if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
                 {

@@ -364,6 +364,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="InvoiceNumbers"
+    Type="varchar"
+    Size="4000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="TransferError"
     Type="nvarchar"
     Size="-1">

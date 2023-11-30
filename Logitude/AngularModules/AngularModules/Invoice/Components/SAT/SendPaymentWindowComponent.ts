@@ -72,8 +72,6 @@ export class SendPaymentWindowComponent {
 
     }
 
-    
-
     public IsInvoicesValid: boolean = false;
     public IsInvoicesWarning: boolean = false;
     public IsInvoicesError: boolean = false;
@@ -145,14 +143,23 @@ export class SendPaymentWindowComponent {
                     this.CurrentSession.CurrentWindow.Close("");
                 }
                 else {
-                    var messageWindow = new MessageWindow();
-                    messageWindow.Show(response.ErrorsArray.toString());
+                    this.CurrentSession.CurrentWindow.StopBusyIndicator();
+                    //var messageWindow = new MessageWindow();
+                    //messageWindow.Show(response.ErrorsArray.toString());
+                    this.InvalidSendPayment(response.ErrorsArray.toString());
                 }
             }
 
         });
     }
 
+    private InvalidSendPayment(errorsArray: string) {
+        this.IsInvoicesStatusVisible = false;
+        this.IsPaymentValid = false;
+        this.IsPaymentError = true;
+        this.PaymentErrorText = "Invalid";
+        this.ValidationErrorsList.push(errorsArray);
+    }
 }
 
 

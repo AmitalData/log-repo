@@ -193,8 +193,9 @@ export class LicensesManagementComponent implements OnDestroy {
 
     private BuildAdditionalColumns() {
         if (SessionLocator.TenantManagementJS.MainAdditionalPackageApplied) {
+            var mainAdditionalPackageApplied = "true";
             this.Columns.push({
-                FieldName: SessionLocator.TenantManagementJS.PackageCode + ",0" ,
+                FieldName: SessionLocator.TenantManagementJS.PackageCode + ",0" + "," + SessionLocator.TenantManagementJS.PackageName + "," + mainAdditionalPackageApplied,
                 DataTypeCode: 'Boolean',
                 Display: SessionLocator.TenantManagementJS.PackageName,
                 IsCustomTemplate: true,
@@ -208,20 +209,20 @@ export class LicensesManagementComponent implements OnDestroy {
         var index: number = 0;
 
         var loop_licenses: TenantManagementLicensePM[] = SessionLocator.TenantManagementJS.TenantManagementLicenses.sort((a, b) => { return (a.PackageCode.toLowerCase() === b.PackageCode.toLowerCase()) ? 0 : (a.PackageCode.toLowerCase() < b.PackageCode.toLowerCase()) ? -1 : 1 });
+        
         loop_licenses.forEach(item => {
             index++;
-
             if (index <= 10) {
                 var myPackageName: string = "";
                 var myPackageCode: string = null;
+                var mainAdditionalPackageApplied = "false";
                 var list: PackageList = this.AllPackages.filter(d => d.Code == item.PackageCode)[0];
                 if (list != null) {
                     myPackageName = list.Name;
                     myPackageCode = list.Code;
                 }
-
                 this.Columns.push({
-                    FieldName: myPackageCode + "," + index,
+                    FieldName: myPackageCode + "," + index + "," + myPackageName + "," + mainAdditionalPackageApplied,
                     DataTypeCode: 'Boolean',
                     Display: myPackageName,
                     IsCustomTemplate: true,

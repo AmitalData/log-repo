@@ -19,11 +19,13 @@ namespace Logitude.Accounting.Data
    
        	 IDbSet<AccountingCompanyType> AccountingCompanyTypes { get; }
 		 IDbSet<AccountingEntity> AccountingEntities { get; }
+		 IDbSet<AccountingEntityJournal> AccountingEntitiesJournals { get; }
 		 IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks { get; }
 		 IDbSet<AccountingNote> AccountingNotes { get; }
 		 IDbSet<AccountingPeriod> AccountingPeriods { get; }
 		 IDbSet<ARPaymentCheque> ARPaymentCheques { get; }
 		 IDbSet<ARPaymentChequeStatus> ARPaymentChequeStatuses { get; }
+		 IDbSet<ARPaymentsJournal> ARPaymentsJournals { get; }
 		 IDbSet<AutomaticExternalRconcilMthod> AutomaticExternalRconcilMthods { get; }
 		 IDbSet<AutomaticReconcile> AutomaticReconciles { get; }
 		 IDbSet<AutomaticReconcileMethod> AutomaticReconcileMethods { get; }
@@ -45,6 +47,7 @@ namespace Logitude.Accounting.Data
 		 IDbSet<Category5> Category5 { get; }
 		 IDbSet<ChartOfAccount> ChartOfAccounts { get; }
 		 IDbSet<ChartOfAccountsType> ChartOfAccountsTypes { get; }
+		 IDbSet<CopyFromTenant0> CopyFromTenant0 { get; }
 		 IDbSet<ExternalPageAdditionalData> ExternalPageAdditionalDatas { get; }
 		 IDbSet<ExternalReconciliation> ExternalReconciliations { get; }
 		 IDbSet<ExternalReconciliationLine> ExternalReconciliationLines { get; }
@@ -107,6 +110,7 @@ namespace Logitude.Accounting.Data
 		 IDbSet<TaxReportLineType> TaxReportLineTypes { get; }
 		 IDbSet<TaxReportStatus> TaxReportStatuses { get; }
 		 IDbSet<TaxWithholdingAssessOffice> TaxWithholdingAssessOffices { get; }
+		 IDbSet<TenantIdleStatus> TenantIdleStatuses { get; }
 		 IDbSet<TestEntity> TestEntities { get; }
 		 IDbSet<UserDefinedReport> UserDefinedReports { get; }
 		 IDbSet<VatReportStatus> VatReportStatuses { get; }

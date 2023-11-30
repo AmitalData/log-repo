@@ -36,6 +36,7 @@ import {SafePipe} from './Pipes/SafePipe';
 import {LogBoxStatusDatePipe} from './Pipes/LogBoxStatusDatePipe';
 import {TimeToHoursMinutesPipe} from './Pipes/TimeToHoursMinutesPipe';
 import {CustomFieldResolverPipe} from './Pipes/CustomFieldResolverPipe';
+import {ContainerDateTimeToColorPipe} from './Pipes/ContainerDateTimeToColorPipe';
 
 // Controls Components
 import { GeneralSendComponent } from './Components/LogitudeComponents/GeneralSendComponent';
@@ -99,7 +100,8 @@ import {LoginComponent} from './Components/LoginComponent/LoginComponent';
 import {DSVLoginProcessComponent} from './Components/LoginComponent/PrivateLabelComponents/DSVLoginProcessComponent';
 import {DSVMobileLoginProcessComponent} from './Components/LoginComponent/PrivateLabelComponents/DSVMobileLoginProcessComponent';
 import {BlockScreenComponent} from './Components/LoginComponent/BlockScreenComponent';
-import {HomeComponent} from './Components/HomeComponent/HomeComponent';
+import { HomeComponent } from './Components/HomeComponent/HomeComponent';
+import { NewChargifyAWBStockComponent } from './Components/HomeComponent/NewChargifyAWBStockComponent';
 import {SessionComponent} from './Components/Session/SessionComponent';
 import {MainMenuComponent} from './Components/MainMenuComponent/MainMenuComponent';
 import {EditComponent} from './Components/EditComponent/EditComponent';
@@ -121,7 +123,9 @@ import {AddEditAutomationsComponent} from './Components/Maintenance/Automation/A
 import { ChooseSpecificUserComponent } from './Components/Maintenance/Automation/ChooseSpecificUserComponent';
 import {DelayAutomationconditionsComponent} from './Components/Maintenance/Automation/DelayAutomationconditionsComponent';
 import {ViewAutomationHistoryComponent} from './Components/Maintenance/Automation/ViewAutomationHistoryComponent';
-import {AuditAutomationTabComponent} from './Components/Maintenance/Automation/AuditAutomationTabComponent';
+import { AuditAutomationTabComponent } from './Components/Maintenance/Automation/AuditAutomationTabComponent';
+import { OnUpdateDocumentAutomationsSettingsComponent } from './Components/Maintenance/Automation/OnUpdateDocumentAutomationsSettingsComponent';
+import { DocumentAttachmentsComponent } from './Components/Maintenance/Automation/DocumentAttachmentsComponent';
 
 
 import {SelectDocumentTypesComponent} from './Components/Maintenance/Automation/SelectDocumentTypesComponent';
@@ -147,8 +151,11 @@ import {DWLogSearchWindowFieldsComponent} from './Components/QueryColumnsCompone
 import { ChooseUserComponent } from './Components/NewViewComponent/ChooseUserComponent';
 
 import {DWLogSearchAddFieldsComponent} from './Components/QueryColumnsComponents/DWLogSearchAddFieldsComponent';
-
-
+import { MultiUpdateComponent } from './Components/MultiUpdateComponent/MultiUpdateComponent';
+import { MultiEntityUpdateBaseComponent } from './Components/MultiUpdateComponent/MultiEntityUpdateBaseComponent';
+import { MultiEntityUpdateErrorHandlerComponent } from './Components/MultiUpdateComponent/MultiEntityUpdateErrorHandlerComponent';
+import { MultiUpdateCheckTemplate } from './Components/MultiUpdateComponent/MultiUpdateCheckTemplate';
+import { MultiUpdateCheckBoxComponent } from './Components/MultiUpdateComponent/MultiUpdateCheckBoxComponent';
 
 
 // Followups
@@ -185,16 +192,26 @@ import { SendInterfaceResultComponent } from './Components/Maintenance/Automatio
 import { FTPAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/FTPAutomationDetailsComponent';
 import { ToolTipFloatDirective } from './Utilities/RTLDirectives/ToolTipFloatDirective';
 import { SendDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/SendDocumentResultComponent';
+import { OnUpdateDocumentResultComponent } from './Components/Maintenance/Automation/AutomationResult/OnUpdateDocumentResultComponent';
+import { AdvancedAutomationSendInterfaceDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/AdvancedAutomationSendInterfaceDetailsComponent';
+import { WebHookAutomationDetailsComponent } from './Components/Maintenance/Automation/AutomationResult/WebHookAutomationDetailsComponent';
 
 import { PrivateLabelLoginProcessComponent } from './Components/LoginComponent/PrivateLabelComponents/PrivateLabelLoginProcessComponent';
 import { AutomationsConditionsViewDetailsComponent } from './Components/Maintenance/Automation/AutomationsConditionsViewDetailsComponent';
 import { AutomationConditionsDetailsComponent } from './Components/Maintenance/Automation/AutomationConditionsDetailsComponent';
 import { CreateTaskResultComponent } from './Components/Maintenance/Automation/AutomationResult/CreateTaskResultComponent';
- 
- 
+import { EventCreationResultComponent } from './Components/Maintenance/Automation/AutomationResult/EventCreationResultComponent';
 
-
-
+import { MultiPrintMainComponent } from './Components/MultiPrint/MultiPrintMainComponent';
+import { PrintComponent } from './Components/MultiPrint/PrintComponent';
+import { MultiPrintErrorHandlerComponent } from './Components/MultiPrint/MultiPrintErrorHandlerComponent';
+import { MultiPrintCheckBoxComponent } from './Components/MultiPrint/MultiPrintCheckBoxComponent';
+import { MultiPrintCheckTemplate } from './Components/MultiPrint/MultiPrintCheckTemplate';
+import { MonthpickerComponent } from './Components/LogitudeComponents/MonthPickerComponent';
+import { GridScreenSectionComponent } from './Components/LogitudeComponents/Customization/Screen/Section/GridScreenSectionComponent';
+import { AddEditChildEntityComponent } from './Components/LogitudeComponents/Customization/Screen/Section/AddEditChildEntityComponent';
+import { NewCustomObjectComponent } from './Components/NewEntity/NewCustomObjectComponent';
+import { DataProviderFieldsNestedList } from '../Report/Components/DataProviderFieldsNestedList';
 
 //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives =
@@ -235,6 +252,7 @@ export const Pipes =
         LogBoxStatusDatePipe,
         TimeToHoursMinutesPipe,
         CustomFieldResolverPipe,
+        ContainerDateTimeToColorPipe,
     ];
 export const ControlsComponents =
     [
@@ -314,6 +332,13 @@ export const ControlsComponents =
         AuditAutomationTabComponent,
         AutomationsConditionsViewDetailsComponent,
         CreateTaskResultComponent,
+        AdvancedAutomationSendInterfaceDetailsComponent,
+        WebHookAutomationDetailsComponent,
+        EventCreationResultComponent,
+        OnUpdateDocumentResultComponent,
+        MonthpickerComponent,
+        DataProviderFieldsNestedList,
+
     ];
 export const Components =
     [
@@ -324,6 +349,7 @@ export const Components =
         DSVMobileLoginProcessComponent,
         BlockScreenComponent,
         HomeComponent,
+        NewChargifyAWBStockComponent,
         SessionComponent,
         MainMenuComponent,
         EditComponent,
@@ -344,7 +370,8 @@ export const Components =
         ChooseSpecificUserComponent,
         DelayAutomationconditionsComponent,
         ViewAutomationHistoryComponent,
-
+        OnUpdateDocumentAutomationsSettingsComponent,
+        DocumentAttachmentsComponent,
 
         NewViewComponent,
         Export2ExcelControl,
@@ -393,9 +420,21 @@ export const Components =
         PrivateLabelLoginProcessComponent,
          
         AutomationConditionsDetailsComponent,
-        AutomationsConditionsViewDetailsComponent
+        AutomationsConditionsViewDetailsComponent,
 
-        
+        MultiUpdateComponent,
+        MultiEntityUpdateBaseComponent,
+        MultiEntityUpdateErrorHandlerComponent,
+        MultiUpdateCheckTemplate,
+        MultiUpdateCheckBoxComponent,
+        MultiPrintMainComponent,
+        PrintComponent,
+        MultiPrintErrorHandlerComponent,
+        MultiPrintCheckBoxComponent,
+        MultiPrintCheckTemplate,
+        GridScreenSectionComponent,
+        AddEditChildEntityComponent,
+        NewCustomObjectComponent
     ];
 
 export class ModuleDeclarations {
@@ -411,6 +450,7 @@ export class ModuleDeclarations {
             case 'DSVMobileLoginProcessComponent': { myResult = DSVMobileLoginProcessComponent; break; }
             case 'BlockScreenComponent': { myResult = BlockScreenComponent; break; }
             case 'HomeComponent': { myResult = HomeComponent; break; }
+            case "NewChargifyAWBStockComponent": { myResult = NewChargifyAWBStockComponent; break; }
             case 'SessionComponent': { myResult = SessionComponent; break; }
             case 'MainMenuComponent': { myResult = MainMenuComponent; break; }
             case 'EditComponent': { myResult = EditComponent; break; }
@@ -437,7 +477,8 @@ export class ModuleDeclarations {
             case 'DelayAutomationconditionsComponent': { myResult = DelayAutomationconditionsComponent; break; }
             case 'ViewAutomationHistoryComponent': { myResult = ViewAutomationHistoryComponent; break; }
             case 'AutomationConditionsDetailsComponent': { myResult = AutomationConditionsDetailsComponent; break; }
-                 
+            case 'OnUpdateDocumentAutomationsSettingsComponent': { myResult = OnUpdateDocumentAutomationsSettingsComponent; break; }
+            case 'DocumentAttachmentsComponent': { myResult = DocumentAttachmentsComponent; break; }
 
             case 'NewViewComponent': { myResult = NewViewComponent; break; }
             case 'Export2ExcelControl': { myResult = Export2ExcelControl; break; }
@@ -465,7 +506,7 @@ export class ModuleDeclarations {
             case 'AddFollowupComponent': { myResult = AddFollowupComponent; break; }
             case 'AddDocumentFollowupComponent': { myResult = AddDocumentFollowupComponent; break; }
             case 'DropBoxLogin': { myResult = DropBoxLogin; break; }
-              case 'StimulsoftDesigner': { myResult = StimulsoftDesigner; break; }
+            case 'StimulsoftDesigner': { myResult = StimulsoftDesigner; break; }
 
 
 
@@ -485,7 +526,7 @@ export class ModuleDeclarations {
             case 'StimulsoftDesignerComponent': { myResult = StimulsoftDesignerComponent; break; }
             case 'AutomationsConditionAreaComponent': { myResult = AutomationsConditionAreaComponent; break; }
             case 'AutomationsConditionAreaComponent': { myResult = AutomationsConditionsViewDetailsComponent; break; }
-                 
+
 
             case 'EraseTenantManagementDataComponent': { myResult = EraseTenantManagementDataComponent; break; }
 
@@ -501,13 +542,27 @@ export class ModuleDeclarations {
             case 'FTBSchedulerTemplateComponent': { myResult = FTBSchedulerTemplateComponent; break; }
             case 'SendInterfaceResultComponent': { myResult = SendInterfaceResultComponent; break; }
             case 'FTPAutomationDetailsComponent': { myResult = FTPAutomationDetailsComponent; break; }
-            case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; } 
-            case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; } 
+            case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; }
+            case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; }
             case 'CreateTaskResultComponent': { myResult = CreateTaskResultComponent; break; }
-                 
-                 
+            case 'AdvancedAutomationSendInterfaceDetailsComponent': { myResult = AdvancedAutomationSendInterfaceDetailsComponent; break; }
+            case 'WebHookAutomationDetailsComponent': { myResult = WebHookAutomationDetailsComponent; break; }
+            case 'EventCreationResultComponent': { myResult = EventCreationResultComponent; break; }
+            case 'OnUpdateDocumentResultComponent': { myResult = OnUpdateDocumentResultComponent; break; }
 
-                 
+            case 'MultiUpdateComponent': { myResult = MultiUpdateComponent; break; }
+            case 'MultiEntityUpdateBaseComponent': { myResult = MultiEntityUpdateBaseComponent; break; }
+            case 'MultiEntityUpdateErrorHandlerComponent': { myResult = MultiEntityUpdateErrorHandlerComponent; break; }
+            case 'MultiUpdateCheckTemplate': { myResult = MultiUpdateCheckTemplate; break; }
+            case 'MultiUpdateCheckBoxComponent': { myResult = MultiUpdateCheckBoxComponent; break; }
+            case 'MultiPrintMainComponent': { myResult = MultiPrintMainComponent; break; }
+            case 'PrintComponent': { myResult = PrintComponent; break; }
+            case 'MultiPrintErrorHandlerComponent': { myResult = MultiPrintErrorHandlerComponent; break; }
+            case 'MultiPrintCheckBoxComponent': { myResult = MultiPrintCheckBoxComponent; break; }
+            case 'MultiPrintCheckTemplate': { myResult = MultiPrintCheckTemplate; break; }
+            case 'GridScreenSectionComponent': { myResult = GridScreenSectionComponent; break; }
+            case 'AddEditChildEntityComponent': { myResult = AddEditChildEntityComponent; break; }
+            case "NewCustomObjectComponent": { myResult = NewCustomObjectComponent; break; }
         }
 
         return myResult;

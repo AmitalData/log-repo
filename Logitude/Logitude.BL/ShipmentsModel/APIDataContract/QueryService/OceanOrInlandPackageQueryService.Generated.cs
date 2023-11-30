@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -87,7 +89,8 @@ using Simplog.Data.ShipmentsModel;
 				}
 
 							 
-				   temp.ContainerNumber = item.ContainerNumber;					
+				   temp.ContainerNumber = item.ContainerNumber;
+				   temp.ChangeSetOp = item.ChangeSet;					
 					MyList.Add(temp);
 				}
 					
@@ -113,11 +116,13 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("ShipmentPackage with Id " + item.Id + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -143,12 +148,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myPackageTypePM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("PackageType Can't be update"); 
+						 								
 								temp.PackageTypeId = myPackageTypePM.Id;
 						  
-							}  
 
 							
 						} 
@@ -156,194 +158,172 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
+                    							
+						temp.Length = item.Length;
+
+					 
+
+					
+                    							
+						temp.Width = item.Width;
+
+					 
+
+					
+                    							
+						temp.Height = item.Height;
+
+					 
+
+					
+                    							
+						temp.Quantity = item.Pieces;
+
+					 
+
+					
+                    							
+						temp.Volume = item.Volume;
+
+					 
+
+					
+                    							
+						temp.Weight = item.GrossWeight;
+
+					 
+
+					
                     
-					if(!IsUpdate)// && item.Length != null)
-					{							//throw new ApplicationException("Length Can't be update"); 
-							temp.Length = item.Length;
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.ShipperSeal = item.Seal;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.Width != null)
-					{							//throw new ApplicationException("Width Can't be update"); 
-							temp.Width = item.Width;
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.CarrierSeal = item.Seal2;
+
+										}  
+
+					
+                    							
+						temp.Reference1 = item.Reference1;
+
+					 
+
+					
+                    							
+						temp.Reference2 = item.Reference2;
+
+					 
+
+					
+                    							
+						temp.Reference3 = item.Reference3;
+
+					 
+
+					
+                    
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.Harmonize = item.Harmonize;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.Height != null)
-					{							//throw new ApplicationException("Height Can't be update"); 
-							temp.Height = item.Height;
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.Temperature = item.Temperature;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.Pieces != null)
-					{							//throw new ApplicationException("Pieces Can't be update"); 
-							temp.Quantity = item.Pieces;
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.Ventilation = item.Ventilation;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.Volume != null)
-					{							//throw new ApplicationException("Volume Can't be update"); 
-							temp.Volume = item.Volume;
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.IsDangerous = item.IsDangerous;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && item.GrossWeight != null)
-					{							//throw new ApplicationException("GrossWeight Can't be update"); 
-							temp.Weight = item.GrossWeight;
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.ClassNumber = item.ClassNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Seal))
-					{							//throw new ApplicationException("Seal Can't be update"); 
-							temp.ShipperSeal = item.Seal;
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.UnNumber = item.UnNumber;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Seal2))
-					{							//throw new ApplicationException("Seal2 Can't be update"); 
-							temp.CarrierSeal = item.Seal2;
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.PackagingGroup = item.PackagingGroup;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Reference1))
-					{							//throw new ApplicationException("Reference1 Can't be update"); 
-							temp.Reference1 = item.Reference1;
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.IMDGCode = item.IMDGCode;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Reference2))
-					{							//throw new ApplicationException("Reference2 Can't be update"); 
-							temp.Reference2 = item.Reference2;
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.FlashPoint = item.FlashPoint;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Reference3))
-					{							//throw new ApplicationException("Reference3 Can't be update"); 
-							temp.Reference3 = item.Reference3;
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.MaterialDescription = item.MaterialDescription;
 
 										}  
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Harmonize))
-					{							//throw new ApplicationException("Harmonize Can't be update"); 
-							temp.Harmonize = item.Harmonize;
+                    							
+						temp.CommodityNumber = item.CommodityNumber;
 
-										}  
+					 
+
+					
+                    							
+						temp.Reference4 = item.Reference4;
+
+					 
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Temperature))
-					{							//throw new ApplicationException("Temperature Can't be update"); 
-							temp.Temperature = item.Temperature;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && item.Ventilation != null)
-					{							//throw new ApplicationException("Ventilation Can't be update"); 
-							temp.Ventilation = item.Ventilation;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && (item.IsDangerous != temp.IsDangerous))
-					{							//throw new ApplicationException("IsDangerous Can't be update"); 
-							temp.IsDangerous = item.IsDangerous;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.ClassNumber))
-					{							//throw new ApplicationException("ClassNumber Can't be update"); 
-							temp.ClassNumber = item.ClassNumber;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.UnNumber))
-					{							//throw new ApplicationException("UnNumber Can't be update"); 
-							temp.UnNumber = item.UnNumber;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.PackagingGroup))
-					{							//throw new ApplicationException("PackagingGroup Can't be update"); 
-							temp.PackagingGroup = item.PackagingGroup;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.IMDGCode))
-					{							//throw new ApplicationException("IMDGCode Can't be update"); 
-							temp.IMDGCode = item.IMDGCode;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.FlashPoint))
-					{							//throw new ApplicationException("FlashPoint Can't be update"); 
-							temp.FlashPoint = item.FlashPoint;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.MaterialDescription))
-					{							//throw new ApplicationException("MaterialDescription Can't be update"); 
-							temp.MaterialDescription = item.MaterialDescription;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.CommodityNumber))
-					{							//throw new ApplicationException("CommodityNumber Can't be update"); 
-							temp.CommodityNumber = item.CommodityNumber;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Reference4))
-					{							//throw new ApplicationException("Reference4 Can't be update"); 
-							temp.Reference4 = item.Reference4;
-
-										}  
-
-					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Notes))
-					{							//throw new ApplicationException("Notes Can't be update"); 
-							temp.Notes = item.Notes;
+					if(!IsUpdate|| string.IsNullOrEmpty(item.Id))
+					{							
+						temp.Notes = item.Notes;
 
 										}  
 
@@ -354,8 +334,8 @@ using Simplog.Data.ShipmentsModel;
 						InsidePackageQueryService InsidePackageService1 = new InsidePackageQueryService(Tenant);
 						  
 						if(!IsUpdate)
-						{								//throw new ApplicationException("InsidePackages Can't be update"); 
-								temp.InsideShipmentPackages = InsidePackageService1.InsidePackageDataMappingAndValidatin(item.InsidePackages,Tenant,ComputingPartnerName,IsUpdate);
+						{								
+							temp.InsideShipmentPackages = InsidePackageService1.InsidePackageDataMappingAndValidatin(item.InsidePackages,Tenant,ComputingPartnerName,IsUpdate);
 
 					 
 						}  
@@ -364,12 +344,16 @@ using Simplog.Data.ShipmentsModel;
 					}
 
 								 
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.ContainerNumber))
-					{							//throw new ApplicationException("ContainerNumber Can't be update"); 
-							temp.ContainerNumber = item.ContainerNumber;
+                    							
+						temp.ContainerNumber = item.ContainerNumber;
 
-										}  
+					 
+
+					
+                    							
+						temp.ChangeSet = item.ChangeSetOp;
+
+					 
 
 										   
 						MyList.Add(temp);
@@ -383,6 +367,8 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

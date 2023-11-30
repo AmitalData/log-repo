@@ -55,6 +55,26 @@ export class SATInterfaceSettingPM {
     public set MetodoPagoCode(newValue: string) { if (this.metodoPagoCode != newValue) { this.metodoPagoCode = newValue; this.MarkAsDirty("MetodoPagoCode"); } }
        
 	 
+    private isARInvoiceTransferEnabled: boolean;
+    public get IsARInvoiceTransferEnabled() { return this.isARInvoiceTransferEnabled; }
+    public set IsARInvoiceTransferEnabled(newValue: boolean) { if (this.isARInvoiceTransferEnabled != newValue) { this.isARInvoiceTransferEnabled = newValue; this.MarkAsDirty("IsARInvoiceTransferEnabled"); } }
+       
+	 
+    private isCartaPorteTransferEnabled: boolean;
+    public get IsCartaPorteTransferEnabled() { return this.isCartaPorteTransferEnabled; }
+    public set IsCartaPorteTransferEnabled(newValue: boolean) { if (this.isCartaPorteTransferEnabled != newValue) { this.isCartaPorteTransferEnabled = newValue; this.MarkAsDirty("IsCartaPorteTransferEnabled"); } }
+       
+	 
+    private sATCompanyName: string;
+    public get SATCompanyName() { return this.sATCompanyName; }
+    public set SATCompanyName(newValue: string) { if (this.sATCompanyName != newValue) { this.sATCompanyName = newValue; this.MarkAsDirty("SATCompanyName"); } }
+       
+	 
+    private transferExpenseCharges: boolean;
+    public get TransferExpenseCharges() { return this.transferExpenseCharges; }
+    public set TransferExpenseCharges(newValue: boolean) { if (this.transferExpenseCharges != newValue) { this.transferExpenseCharges = newValue; this.MarkAsDirty("TransferExpenseCharges"); } }
+       
+	 
 
     public OldEntityPM: SATInterfaceSettingPM;
 		

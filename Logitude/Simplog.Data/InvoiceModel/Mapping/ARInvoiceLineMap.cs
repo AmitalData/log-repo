@@ -20,7 +20,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.CreditAccount).HasMaxLength(40).IsUnicode(false);
             this.Property(t => t.Description).IsRequired().HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.LocalDescription).HasMaxLength(250).IsUnicode(true);
-            this.Property(t => t.Notes).HasMaxLength(500).IsUnicode(true);
+            this.Property(t => t.Notes).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.GLAccountId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LineActionCode).HasMaxLength(1).IsUnicode(false);
             this.Property(t => t.VatPercentage).IsOptional();

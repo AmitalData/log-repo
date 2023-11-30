@@ -26,9 +26,11 @@ import {ApiQueryFilters} from '../../Infrastructure/DataContracts/ApiQueryFilter
 import {APILogsListService} from '../../Infrastructure/Services/StandardLists/APILogsListService';
 import {UserListService} from '../../Common/Services/StandardLists/UserListService';
 import {UserList} from '../../Common/EntityLists/UserList';
+import { CustomerTenantAccessPMService } from '../../Common/Services/StandardPMs/CustomerTenantAccessPMService';
+import { TenantPMService } from '../../Common/Services/StandardPMs/TenantPMService';
 declare var window;
 @Component({
-    
+
     selector: 'RelatedCustomerComponent',
     templateUrl: './RelatedCustomerComponent.html',
 })
@@ -51,11 +53,54 @@ export class RelatedCustomerComponent extends BaseComponent{
     public QueriesList: Array<BatchQueriesData> = [];
     private selectedLogItem: BatchQueriesData;
     public IsShowTipIcon: boolean = false;
-    public get SelectedLogItem() { return this.selectedLogItem; }
+    public get SelectedLogItem() { return this.selectedLogItem; } 
+    public ValidationErrorsList: string[] = []; 
+     
+
+    public IsCustomsActivated: boolean = false;
+    public IsExportActivated: boolean = false;  
+
     public set SelectedLogItem(value: BatchQueriesData) {
         if (this.selectedLogItem != value)
             this.selectedLogItem = value;
     }
+
+    CheckIsExportActivated(item: CustomerTenantAccessCardPM) {
+        this.SetIsExportField(item);  
+        this.UpdateCustomerTenantAccess();
+    }
+ 
+    CheckIsImportActivated(item: CustomerTenantAccessCardPM) {   
+            this.SetIsImportField(item) 
+        this.UpdateCustomerTenantAccess(); 
+    }
+
+
+    private SetIsExportField(item: CustomerTenantAccessCardPM) {
+        item.IsExportActivated = !item.IsExportActivated;
+        this.EntityPM.CustomerTenantAccessCards.find(a => a.CustomerCode == this.SelectedCardPM.CustomerCode).IsExportActivated = item.IsExportActivated;
+    }
+
+    private SetIsImportField(item: CustomerTenantAccessCardPM) {
+        item.IsCustomsActivated = !item.IsCustomsActivated;
+        this.EntityPM.CustomerTenantAccessCards.find(a => a.CustomerCode == this.SelectedCardPM.CustomerCode).IsCustomsActivated = item.IsCustomsActivated;
+    }
+
+
+    private UpdateCustomerTenantAccess() {
+
+        this.ValidationErrorsList = [];
+
+        this.CurrentSession.StartBusyIndicator("Saving...");
+        let customerTenantAccessPMService: CustomerTenantAccessPMService = new CustomerTenantAccessPMService();
+        customerTenantAccessPMService.update(this.EntityPM).subscribe((serviceResponse: any) => {
+                    this.CurrentSession.StopBusyIndicator();
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");  
+                        if (serviceResponse.ErrorsArray?.length > 0) {
+                            this.ValidationErrorsList.push(serviceResponse.ErrorsArray[0]);
+                        } 
+                }); 
+    } 
 
     ViewLog(itemComponent) {
         if (itemComponent.Id != null) {
@@ -187,10 +232,7 @@ export class RelatedCustomerComponent extends BaseComponent{
                 this.RealCustomerTenantAccessPM = res.Result;
                 var customerTenantAccessCardPM: CustomerTenantAccessCardPM = new CustomerTenantAccessCardPM(this.EntityPM);
                
-                customerTenantAccessCardPM.CustomerTenantAccessId = this.RealCustomerTenantAccessPM.Id;
-                customerTenantAccessCardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
-                customerTenantAccessCardPM.UpdateDateTime = DateTool.GetCurrentDateTimeAsUtc();
-                customerTenantAccessCardPM.CreateByUserId = SessionLocator.LoggedUserPM.EnglishName;
+                this.InitializeCustomerTenantAccessCard(customerTenantAccessCardPM);
 
                 var viewModel: AddEditCustomerTenantAccessCardViewModel = new AddEditCustomerTenantAccessCardViewModel(this.RealCustomerTenantAccessPM, customerTenantAccessCardPM, true, this);
                 viewModel.DataLoaded.subscribe(output => {
@@ -232,10 +274,49 @@ export class RelatedCustomerComponent extends BaseComponent{
             this.BuildData();
             this.FillQueriesList();   
         });
-     
+
+
+        this.SetCustomerTenantAccessCardOptions();
+
     }
 
-    private isAddEnabled: boolean=true;
+    private isAddEnabled: boolean = true;
+
+    private SetCustomerTenantAccessCardOptions() {
+        let tenantPMService: TenantPMService = new TenantPMService();
+        tenantPMService.get(this.EntityPM.Tenant).subscribe((response: any) => {   
+            if (!response.HasError) {
+                var tenantPM = response.Result;
+
+                if (!tenantPM.CustomerTenantShareCustomsFile && !tenantPM.CustomerTenantShareExportFile) {
+                    this.SetDefaultOption(); 
+                } else {
+                    this.SetDirectionOptions(tenantPM); 
+                } 
+
+                 
+            }
+        });
+    }
+
+    private SetDirectionOptions(tenantPM: any) {
+        this.IsCustomsActivated = tenantPM.CustomerTenantShareCustomsFile;
+        this.IsExportActivated = tenantPM.CustomerTenantShareExportFile;
+    }
+
+    private SetDefaultOption() {
+        this.IsCustomsActivated = true;
+        this.IsExportActivated = false;
+    }
+
+    private InitializeCustomerTenantAccessCard(customerTenantAccessCardPM: CustomerTenantAccessCardPM) {
+        customerTenantAccessCardPM.CustomerTenantAccessId = this.RealCustomerTenantAccessPM.Id;
+        customerTenantAccessCardPM.CreateDate = DateTool.GetCurrentDateTimeAsUtc();
+        customerTenantAccessCardPM.UpdateDateTime = DateTool.GetCurrentDateTimeAsUtc();
+        customerTenantAccessCardPM.CreateByUserId = SessionLocator.LoggedUserPM.EnglishName;  
+    }
+
+     
     public get IsAddEnabled() { return this.isAddEnabled; }
     public set IsAddEnabled(value: boolean) { if (this.isAddEnabled != value) this.isAddEnabled = value; }
 
@@ -312,7 +393,8 @@ export class RelatedCustomerComponent extends BaseComponent{
         }       
     }
     getBatchData() {
-        this.BatchVisibility = true;
+        this.BatchVisibility = FeatureLocator.HasFeaturePermession("CustomerTenantAccessCardsBatch", "BATCHBUILDAREA");
+        if (!this.BatchVisibility) return;
         var service: CommonDomainService = new CommonDomainService();
         this.BatchObsList = [];
         service.GetCustomerTenantAccessCardsBatchPMsByCustomerIdCustomerTenantAccessId(this.SelectedItem.EntityPM.CustomerId, this.SelectedItem.EntityPM.CustomerTenantAccessId).subscribe((res:any) => {
@@ -378,6 +460,7 @@ export class AddEditCustomerTenantAccessCardViewModel   extends BaseComponent {
     public CardObsList: Array<CardListDataViewModel>=[];
     public isNew: boolean = false;
     public Parent: RelatedCustomerComponent;
+
     @Output() DataLoaded = new EventEmitter();
     public DataContext: AddEditCustomerTenantAccessCardViewModel = this;
     constructor(customertenantAccessPM: CustomerTenantAccessPM, entityPM: CustomerTenantAccessCardPM, isNew: boolean, Parent: RelatedCustomerComponent) {
@@ -387,9 +470,15 @@ export class AddEditCustomerTenantAccessCardViewModel   extends BaseComponent {
         this.isNew = isNew;
         this.Parent = Parent;
         this.setCreatedByName();
+        //this.CanSelect = Parent.CanSelect;
+        
         if (isNew) {
             this.LoadCardList();
         }
+ 
+
+
+
     }    
 
     public setCreatedByName() {
@@ -429,6 +518,13 @@ export class AddEditCustomerTenantAccessCardViewModel   extends BaseComponent {
     public set StatusType(value: string) { if (this.EntityPM.StatusType != value) this.EntityPM.StatusType = value; }
     public get StatusTypeCode() { return this.EntityPM.StatusTypeCode; }
     public set StatusTypeCode(value: string) { if (this.EntityPM.StatusTypeCode != value) this.EntityPM.StatusTypeCode = value; }
+
+    public get IsExportActivated() { return this.EntityPM.IsExportActivated; }
+    public set IsExportActivated(value: boolean) { if (value != this.EntityPM.IsExportActivated) this.EntityPM.IsExportActivated = value; }
+
+    public get IsCustomsActivated() { return this.EntityPM.IsCustomsActivated; }
+    public set IsCustomsActivated(value: boolean) { if (value != this.EntityPM.IsCustomsActivated) this.EntityPM.IsCustomsActivated = value; }
+
     private createByUserId: string;
     public get CreateByUserId() {
         return this.createByUserId;
@@ -524,8 +620,12 @@ export class CardListDataViewModel {
     public set VatNumber(value: string) { if (this.entityList.VatNumber != value) this.entityList.VatNumber = value; }
 
 
+
     public get Code() { return this.entityList.Code; }
     private isSelected: boolean = false;
+    private isImport: boolean = false;
+    private isExport: boolean = false;
+
     public get IsSelected() {
         if (this.AccessCardsPms != null || !this.IsCustomerCanChecked) {
             return true;
@@ -540,6 +640,18 @@ export class CardListDataViewModel {
         }
 
     }
+
+    public get IsCustomsActivated() { return this.isImport; }
+    public set IsCustomsActivated(value: boolean) {
+        this.isImport = value; 
+
+    }
+    public get IsExportActivated() { return this.isExport; }
+    public set IsExportActivated(value: boolean) {
+        this.isExport = value; 
+
+    }
+
 
     UnckechOthers() {
         this.Parent.CardObsList.forEach(item => {

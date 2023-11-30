@@ -23,5 +23,7 @@ namespace Logitude.BL.InfrastructureModel.EntityLists
         public string ComponentPath { get; set; }
 
         public string ObjectFieldCode { get; set; }
+        public int? SectionNumber { get; set; }
+
     }
 }

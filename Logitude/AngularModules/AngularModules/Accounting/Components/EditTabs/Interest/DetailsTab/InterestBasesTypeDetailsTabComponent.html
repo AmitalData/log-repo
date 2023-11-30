@@ -290,7 +290,7 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button id="{{'CREATEINTERESTBASES' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                            <button id="{{'CREATEINTERESTBASES' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>

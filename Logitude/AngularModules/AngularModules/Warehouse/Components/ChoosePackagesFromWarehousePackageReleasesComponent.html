@@ -76,6 +76,11 @@
                         </div>
 
                     </td>
+                    <td *ngIf="ShowNewWarehouseReleaseButton">
+                        <div style="padding-right:10px;">
+                            <button style="width:150px;float:right;margin-top: -5px" class="Button" (click)="NewWarehouseReleaseButtonClicked()">New Cross Dock Release</button>
+                        </div>
+                    </td>
                     <td></td>
                 </tr>
             </table>

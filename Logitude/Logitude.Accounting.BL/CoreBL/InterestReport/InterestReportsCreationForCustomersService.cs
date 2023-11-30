@@ -46,7 +46,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                     {
                         string LogMessage = "there is already a report with a calculation date less than or equal to the previously Invoiced/Closed report [Report "+ interestReportPM.ReportNumber + " on "+ interestReportPM.InterestCalculationDate.ToString("dd/MM/yyyy") + "].";
                         interestReportPM = null;
-                        throw new Exception(LogMessage);
+                        throw new ApplicationException(LogMessage);
                     }
                     interestReportPM = interestReportsCreationForCustomerDataPreparation.GetDraftInterestReportForCustomer(eligibleCustomers[i]);
                     if (interestReportPM != null && interestReportPM.InterestReportStatusCode == "1")

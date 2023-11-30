@@ -51,19 +51,24 @@ namespace WebFreight.Web.ReportsWebServices
     // [System.Web.Script.Services.ScriptService]
     public class PaymentWebService : System.Web.Services.WebService
     {
+        IShipmentsContext shipmentsContext;
+        ShipmentRepository shipmentRepository;
 
         [WebMethod]
         public byte[] GetPaymentData(string paymentId, int tenant, string documentTypeId)
         {
             PaymentDataProvider paymentDataProvider = GetPaymentDataProvider(paymentId, tenant, documentTypeId);
             XmlSerializer serializer = new XmlSerializer(typeof(PaymentDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, paymentDataProvider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, paymentDataProvider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
+            
         }
 
         public PaymentDataProvider GetPaymentDataForAPi(string paymentId, int tenant, string documentTypeId)
@@ -75,7 +80,7 @@ namespace WebFreight.Web.ReportsWebServices
 
         public PaymentDataProvider GetPaymentDataProvider(string paymentId, int tenant, string documentTypeId)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             PaymentDataProvider paymentDataProvider = new PaymentDataProvider();
             IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(tenant);
             ARPaymentRepository paymentRep = new ARPaymentRepository(invoiceCotnext);
@@ -84,10 +89,12 @@ namespace WebFreight.Web.ReportsWebServices
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
             IWebFreightContext webFreighContext = WebFreightContext.GetContext(tenant);
             AddressRepository addressRepository = new AddressRepository(tenant);
-            IShipmentsContext shipmentsContext = ShipmentsContext.GetContext(tenant);
-            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            shipmentsContext = ShipmentsContext.GetContext(tenant);
+            shipmentRepository = new ShipmentRepository(shipmentsContext);
+			GLAccountCurrencyQueryService accountcurrencyQueryService = new GLAccountCurrencyQueryService(tenant);
+			GLAccountRepository GLAccountRepository = new GLAccountRepository(tenant);
 
-            ARPayment currentPayment = (from a in invoiceCotnext.ARPayments.Include("PaymentCurrency").Include("BankAccountLite").Include("CreditCardType")
+			ARPayment currentPayment = (from a in invoiceCotnext.ARPayments.Include("PaymentCurrency").Include("BankAccountLite").Include("CreditCardType")
                                         where a.Id == paymentId
                                         select a).FirstOrDefault();
 
@@ -192,8 +199,25 @@ namespace WebFreight.Web.ReportsWebServices
                         paymentDataProvider.BillToVatNo = billToCard.VatNumber != null ? billToCard.VatNumber : "";
                         paymentDataProvider.IRSPlace = billToCard.IRSPlace;
                         paymentDataProvider.IRSNumber = billToCard.IRSNumber;
+                        paymentDataProvider.BillToWebsite = billToCard.Website != null ? billToCard.Website  : "";
+                        paymentDataProvider.BillToBankAccountNumber = billToCard.AccountNumber != null ? billToCard.AccountNumber : "";
+                        paymentDataProvider.BillToBankName = billToCard.BankName != null ? billToCard.BankName : "";
+						if (!string.IsNullOrEmpty(billToCard.GLAccountId))
+						{
 
-                        Address address = addressRepository.GetSingleAddress(currentPayment.BillToAddressId, tenant);
+							var CurrentGLAccount = billToCard.GLAccountId;
+							GLAccountCurrencyPM gLAccountCurrencyPM = accountcurrencyQueryService.GetEntityByCurrencyAndGLAccountId(billToCard.GLAccountId, currentPayment.PaymentCurrencyId, tenant);
+							if (gLAccountCurrencyPM != null)
+							{
+								CurrentGLAccount = gLAccountCurrencyPM.GLAccountId.ToString();
+
+							}
+							var GLAccount = GLAccountRepository.GetSingle(CurrentGLAccount, tenant);
+
+							paymentDataProvider.GLAccountDisplayNumber = GLAccount.DisplayNumber;
+						}
+						
+						Address address = addressRepository.GetSingleAddress(currentPayment.BillToAddressId, tenant);
 
                         if (address != null)
                         {
@@ -204,6 +228,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 if (!string.IsNullOrEmpty(billToCard.LocalName))
                                 {
                                     paymentDataProvider.BillToName = billToCard.LocalName != null ? billToCard.LocalName + Environment.NewLine : "";
+                                    paymentDataProvider.BillToWebsite = billToCard.Website != null ? billToCard.Website : "";
                                 }
                             }
 
@@ -283,12 +308,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (documentTypePM != null)
                     {
-                        List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id).ToList();
+                        List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id && fc.EntityId == currentPayment.Id && fc.Tenant == tenant).ToList();
 
-                        List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id).ToList();
+                        List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id && fc.Tenant == tenant).ToList();
 
                         FormCustomField paidByCustomField = (from a in customfieldsList
-                                                             where a.FieldCode == "PaidBy" && a.EntityId == currentPayment.Id
+                                                             where a.FieldCode == "PaidBy"
                                                              select a).FirstOrDefault();
 
                         DocumentTypeCustomField paidByDocumentCustom = (from a in documentCustomfieldsList
@@ -406,6 +431,7 @@ namespace WebFreight.Web.ReportsWebServices
                                         a.ARInvoiceId,
                                         a.ARInvoice.InvoiceNumber,
                                         a.ARInvoice.MainEntityReference,
+                                        a.ARInvoice.MainEntityId,
                                         a.PaymentAmount,
                                         a.ARInvoice.AmountDue,
                                         a.ARInvoice.AmountInInvoiceCurrency,
@@ -417,12 +443,14 @@ namespace WebFreight.Web.ReportsWebServices
                                         ARInvoiceId = gr.Key.ARInvoiceId,
                                         InvoiceNumber = gr.Key.InvoiceNumber,
                                         Reference = gr.Key.MainEntityReference,
+                                        ReferenceId = gr.Key.MainEntityId,
                                         AmountPaid = gr.Key.PaymentAmount,
                                         AmountDue = gr.Key.AmountDue,
                                         OriginalAmount = gr.Key.AmountInInvoiceCurrency,
                                         HouseNumber = gr.Key.ARInvoice.HouseNumber,
                                         InvoiceCurrencyId = gr.Key.ARInvoice.InvoiceCurrencyId,
                                         ExchangeRate = gr.Key.ARInvoice.InvoiceCurrencyExchangeRate,
+                                        CustomerRef = gr.Key.ARInvoice.CustomerRef,
                                     }).ToList();
 
                     foreach (var item in payments)
@@ -438,7 +466,8 @@ namespace WebFreight.Web.ReportsWebServices
                         reportPayments.Vat = ARInvoiceTotalVATs.Sum(s => (s.InvoiceCurrencyVatableAmount * s.VatPercent) / 100);
                         reportPayments.OriginalAmount = item.OriginalAmount;
                         reportPayments.InvoicePaymentExchangeRate = item.ExchangeRate;
-
+                        reportPayments.CustomerRef = item.CustomerRef;
+                        reportPayments.ProjectNumber = this.GetProjectNumber(item.ReferenceId, tenant);
                         Currency myCurrency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant, true);
                         if (myCurrency != null)
                         {
@@ -470,9 +499,15 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 }
 
-                if (satSetting != null && (satSetting.SATInterfaceCode == "PROF" || satSetting.SATInterfaceCode == "PROF33") && tenantSettings != null)
+                int currentDocumentSATVersion = GetcurrentDocumentSATVersion(currentPayment.SATXML);
+
+                if (satSetting != null && currentDocumentSATVersion == 3 && tenantSettings != null)
                 {
                     this.MapPaymentProfact33Fields(currentPayment, paymentDataProvider, tenantSettings, invoiceCotnext, billToCard);
+                }
+                else if (satSetting != null && currentDocumentSATVersion == 4 && tenantSettings != null)
+                {
+                    SATPaymentProfact40DataProviderMappingFields.MapProfact40Fields(currentPayment, paymentDataProvider, invoiceCotnext, billToCard);
                 }
 
                 paymentDataProvider.AmountInLocalCurrency = currentPayment.AmountInLocalCurrency;
@@ -486,6 +521,31 @@ namespace WebFreight.Web.ReportsWebServices
             customFieldResolver.SetDataProviderCustomFieldsValues("ARPayment", tenant, currentPayment, paymentDataProvider);
 
             return paymentDataProvider;
+        }
+
+        private int GetcurrentDocumentSATVersion(string sATXML)
+        {
+            int currentDocumentSATVersion = 4;
+            try
+            {
+                LogitudeXmlSerializer.DeserializeObject<Profact.TimbraCFDI40.Comprobante>(sATXML);
+                return currentDocumentSATVersion;
+            }
+            catch (Exception ex)
+            {
+                currentDocumentSATVersion = 3;
+                return currentDocumentSATVersion;
+            }
+        }
+
+        private string GetProjectNumber(string referenceId, int tenant)
+        {
+            if(referenceId == null)
+            {
+                return "";
+            }
+            var projectNumber = shipmentRepository.GetShipmentProjectNumber(referenceId, tenant);
+            return projectNumber;
         }
 
         private void SetFullAccountingBankName(ARPayment payment, PaymentDataProvider paymentDataProvider)
@@ -551,7 +611,8 @@ namespace WebFreight.Web.ReportsWebServices
         private void PrintTotalAmountInEnglishAndSpanish(PaymentDataProvider paymentDataProvider, string paymentCurrencyLocalName)
         {
             NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
-            var resultOfTotalAmount = decimal.Parse(paymentDataProvider.TotalAmount + "") - Math.Truncate(decimal.Parse(paymentDataProvider.TotalAmount + ""));
+            var resultOfTotalAmount = decimal.Parse((paymentDataProvider.TotalAmount == null ? 0 : paymentDataProvider.TotalAmount) + "")
+                - Math.Truncate(decimal.Parse((paymentDataProvider.TotalAmount == null ? 0 : paymentDataProvider.TotalAmount) + ""));
             var resulyFirstdigits = (int)(Math.Round(resultOfTotalAmount, 2) * 100);
             string resultstr = "";
             if (resulyFirstdigits < 10 && resulyFirstdigits > 0)
@@ -563,8 +624,8 @@ namespace WebFreight.Web.ReportsWebServices
             {
                 resultstr = "";
             }
-            paymentDataProvider.TotalAmountInWordsSpanish = numbersConverterToWords.NumbersToSpanish((int)paymentDataProvider.TotalAmount) + " " + paymentCurrencyLocalName + " " + resultstr;
-            paymentDataProvider.TotalAmountInWordsEnglish = numbersConverterToWords.NumbersToEnglish((int)paymentDataProvider.TotalAmount) + " " + paymentCurrencyLocalName + " " + resultstr;
+            paymentDataProvider.TotalAmountInWordsSpanish = numbersConverterToWords.NumbersToSpanish((int)(paymentDataProvider.TotalAmount == null ? 0 : paymentDataProvider.TotalAmount)) + " " + paymentCurrencyLocalName + " " + resultstr;
+            paymentDataProvider.TotalAmountInWordsEnglish = numbersConverterToWords.NumbersToEnglish((int)(paymentDataProvider.TotalAmount == null ? 0 : paymentDataProvider.TotalAmount)) + " " + paymentCurrencyLocalName + " " + resultstr;
         }
 
         private string GetPaymentMethodLocalName(string code)
@@ -681,7 +742,10 @@ namespace WebFreight.Web.ReportsWebServices
                             paymentDataProvider.SAT.CadenaOriginal = additionalFields.CadenaOriginal;
                             if (!string.IsNullOrEmpty(additionalFields.QRImage))
                             {
-                                paymentDataProvider.SAT.QRImage = Image.FromStream(new MemoryStream(Convert.FromBase64String(additionalFields.QRImage)));
+                                using (MemoryStream memstream = new MemoryStream(Convert.FromBase64String(additionalFields.QRImage)))
+                                {
+                                    paymentDataProvider.SAT.QRImage = Image.FromStream(memstream);
+                                }
                             }
                         }
 
@@ -714,22 +778,7 @@ namespace WebFreight.Web.ReportsWebServices
                                 {
 
                                     PaymentDataProvider.InvoicePayments invoicePayment = null;
-                                    string invoicenumber = doctoItem.Folio;
-                                    if (!string.IsNullOrEmpty(doctoItem.Serie) && doctoItem.Serie != "A")
-                                    {
-                                        invoicenumber = doctoItem.Serie + doctoItem.Folio;
-                                        invoicePayment = paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
-                                    }
-                                    else
-                                    {
-                                        invoicePayment = paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
-                                        if(invoicePayment == null)
-                                        {
-                                            invoicenumber = doctoItem.Serie + doctoItem.Folio;
-                                            invoicePayment = paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
-                                        }
-
-                                    }
+                                    invoicePayment = GetInvoicePayment(paymentDataProvider, doctoItem);
                                     if (invoicePayment != null)
                                     {
                                         invoicePayment.UUID = doctoItem.IdDocumento;
@@ -763,9 +812,21 @@ namespace WebFreight.Web.ReportsWebServices
             }
         }
 
+        private static PaymentDataProvider.InvoicePayments GetInvoicePayment(PaymentDataProvider paymentDataProvider, Profact.TimbraCFDI33.Complementos.Pagos10.PagosPagoDoctoRelacionado doctoItem)
+        {
+            string invoicenumber = doctoItem.Folio;
+
+            PaymentDataProvider.InvoicePayments invoicePayment = paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
+            if (invoicePayment != null) return invoicePayment;
+
+            invoicenumber = doctoItem.Serie + doctoItem.Folio;
+            invoicePayment = paymentDataProvider.PaidInvoicesList.FirstOrDefault(i => i.InvoiceNumber == invoicenumber);
+            return invoicePayment;
+        }
+
         //private void MapPaymentInvoiceProfact33Fields(ARPayment currentPayment, ARInvoice currentInvoice, PaymentDataProvider.InvoicePayments invoicePaymentDataProvider, Tenant tenantSettings)
         //{
-           
+
 
         //    UsoCFDIRepository usoCFDIRepository = new UsoCFDIRepository(currentInvoice.Tenant);
         //    List<UsoCFDI> allUsoCFDIs = usoCFDIRepository.GetUsoCFDIs().ToList();
@@ -832,7 +893,7 @@ namespace WebFreight.Web.ReportsWebServices
             cheque.Bank = chequePM.BankId;
             cheque.Branch = chequePM.BankBranch;
             cheque.Account = chequePM.BankAccount;
-            cheque.ValueDate = chequePM.ValueDate.ToShortDateString();
+            cheque.ValueDate = chequePM.ValueDate.ToString("dd/MM/yyyy");
             cheque.CurrencyCode = chequePM.CurrencyCode;
             cheque.LocalAmount = chequePM.LocalAmount;
             cheque.ForeignAmount = chequePM.ForeignAmount;

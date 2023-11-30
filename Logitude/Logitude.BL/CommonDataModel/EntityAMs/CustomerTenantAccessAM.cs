@@ -17,6 +17,7 @@ namespace Logitude.BL.CommonDataModel.EntityAMs
         public string ContactMobile { get; set; }
         public string ContactPhone { get; set; }
         public bool IsPrivateLabelCustomer { get; set; }
-        public string StockTypeCode { get; set; } 
+        public string StockTypeCode { get; set; }
+        public string PrivateLabelName { get; set; }
     }
 }

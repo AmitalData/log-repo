@@ -1,0 +1,19 @@
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="1">
+    <![CDATA[
+     update LedgerTransactions set OppositeAccountId = JournlaLinesGlAccountCurrencies.BillToGLAccountId from LedgerTransactions
+    inner join(
+	Select journallines.DebitAccountId, BillToGLAccountId ,Journals.Id as JournalId, journallines.Line,Journals.JournalNumber
+    , journallines.CurrencyId, journallines.ActionCode, journallines.Tenant
+    from Journals
+    inner join journallines on journallines.JournalId = Journals.Id AND journallines.Tenant = Journals.Tenant 
+    inner join ARInvoices on ARInvoices.Id = Journals.AccountingEntityId AND ARInvoices.Tenant = Journals.Tenant
+    inner join GLAccounts as GLA on ARInvoices.BillToGLAccountId = GLA.Id AND ARInvoices.Tenant = GLA.Tenant 
+    where  AccountingEntityCode = 2 AND ActionCode = '1' AND journallines.DebitAccountId != ARInvoices.BillToGLAccountId AND GLA.ChartOfAccountsTypeCode = '6'
+	
+	) as JournlaLinesGlAccountCurrencies
+    on JournlaLinesGlAccountCurrencies.JournalId = LedgerTransactions.JournalId AND JournlaLinesGlAccountCurrencies.Line = LedgerTransactions.JournalLineNumber
+    AND JournlaLinesGlAccountCurrencies.Tenant = LedgerTransactions.Tenant
+     ]]>
+ </Sql>
+</Script>

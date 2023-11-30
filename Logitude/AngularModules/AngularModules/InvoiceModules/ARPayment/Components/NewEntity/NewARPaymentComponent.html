@@ -74,7 +74,9 @@
                                                 [DependencyFilter1Value]="filterByPartnerTypeCode"
                                                 [DisplayFieldsFromList]="DisplayFieldsFromList"
                                                 [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                                [CustomizedWidth]="BillToLovSizeForFullAccounting">
+                                                [CustomizedWidth]="BillToLovSizeForFullAccounting"
+                                                [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                                         </LogLov>
 
                                         <LogLov *ngIf="!isPartnerTypesFilterEnabled"
@@ -87,7 +89,9 @@
                                                 [DependencyFilter1IsList]="true"
                                                 [DisplayFieldsFromList]="DisplayFieldsFromList"
                                                 [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                                [CustomizedWidth]="BillToLovSizeForFullAccounting">
+                                                [CustomizedWidth]="BillToLovSizeForFullAccounting"
+                                                [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                                         </LogLov>
                                     </td>
 
@@ -110,7 +114,9 @@
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [SelectedValue]="BillToId"
-                                                [LookUpTableName]="'Card'">
+                                                [LookUpTableName]="'Card'"
+                                                [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                                         </LogLov>
                                     </td>
 
@@ -223,7 +229,8 @@
                                                 [SelectedValue]="AccountingPaymentMethodId"
                                                 [DataContext]="DataContext"
                                                 [DependencyFilter1Value]="'true'"
-                                                [LookUpTableName]="'AccountingPaymentMethod'">
+                                                [LookUpTableName]="'AccountingPaymentMethod'"
+                                                >
                                         </LogLov>
                                     </td>
 
@@ -239,7 +246,8 @@
                                     </td>
 
                                     <td>
-                                        <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                        <LogTextBox [ObjectFieldName]="'AmountInPaymentCurrency'" [InputType]="IsNegativeAmountEnabled ? 'sigdouble':'double'"
+                                                    [Text]="AmountInPaymentCurrency" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
                                     </td>
 
                                     <td>
@@ -522,7 +530,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'cance-AddARPayment' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'cance-AddARPayment' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -530,7 +538,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'ok-AddARPayment' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'ok-AddARPayment' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

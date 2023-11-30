@@ -136,6 +136,48 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+     Name="DocumentInspection"
+     Type="datetime">
+  	<Constraints
+  	  Nullable="true" />
+  </Column>
+  <Column
+     Name="GatepassDocumentsReady"
+     Type="datetime">
+  	<Constraints
+  	  Nullable="true" />
+  </Column>
+  <Column
+	Name="GoodsClassification"
+	Type="datetime">
+   <Constraints
+     Nullable="true" />
+  </Column>
+	<Column
+  Name="PaymentRequestDateTime"
+  Type="datetime">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+<Column
+    Name="DenyDate"
+    Type="datetime">
+	<Constraints
+		Nullable="true" />
+</Column>
+	<Column
+  Name="InvoiceIssuedDate"
+  Type="datetime">
+		<Constraints
+		  Nullable="true" />
+	</Column>
+  <Column
+  Name="UserAcceptSaveID"
+  Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Shipments"

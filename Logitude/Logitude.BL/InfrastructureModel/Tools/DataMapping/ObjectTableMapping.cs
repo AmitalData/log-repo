@@ -63,7 +63,15 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             objectTable.DescriptionTextCodeCode = objectTablePM.DescriptionTextCodeCode;
             objectTable.NewButtonTextCodeCode = objectTablePM.NewButtonTextCodeCode;
             objectTable.HeaderScreenCode = objectTablePM.HeaderScreenCode;
-
+            objectTable.ParentObjectTableName = objectTablePM.ParentObjectTableName;
+            objectTable.AvailableInCustomization = objectTablePM.AvailableInCustomization;
+            objectTable.ParentObjectTableId = objectTablePM.ParentObjectTableId;
+            objectTable.IsCustom = objectTablePM.IsCustom;
+            objectTable.SupportSubEntity = objectTablePM.SupportSubEntity;
+            objectTable.ApplyGenericCustomFields = objectTablePM.ApplyGenericCustomFields;
+            objectTable.FullNameTextCodeId = objectTablePM.FullNameTextCodeId;
+            objectTable.FullNameTextCodeCode = objectTablePM.FullNameTextCodeCode;
+            objectTable.AvailableInDocumentTypes = objectTablePM.AvailableInDocumentTypes;
         }
     }
 }

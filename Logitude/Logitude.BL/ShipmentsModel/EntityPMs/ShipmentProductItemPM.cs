@@ -26,6 +26,12 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string OriginCountryId { get; set; }
         public string OriginCountryName { get; set; }
         public bool IsEmptyLine { get; set; }
+        public double? VATPercentage { get; set; }
+        public double? DutiesPercentage { get; set; }
+        public string OtherDuties { get; set; }
+        public string Remarks { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
+        public string ShipperId { get; set; }
+        public string ShipperName { get; set; }
     }
 }

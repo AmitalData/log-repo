@@ -115,3 +115,16 @@ Then("the auto credit invoice should have negative amount of the AR invoice", ()
     let expectedAutoCreditInvoiceAmount = (Number(invoiceAmount) / -1);
     AccountingActions.AssertARInvoiceAmount(expectedAutoCreditInvoiceAmount);
 });
+
+Then("the status value should be {string}", (statusValue) => {
+    BaseAssertion.AssertElementContain(ShipmentSelectors.ARInvoiceStatus, statusValue)
+  });
+
+Then("the details screen fields should be disabled",()=>{
+    AccountingActions.AssertARInvoiceDetailsFieldsDisabled()
+
+})  
+Then("the details screen fields shouldn't be dim",()=>{
+    AccountingActions.AssertARInvoiceDetailsFieldsNotBeDisabled()
+
+})  

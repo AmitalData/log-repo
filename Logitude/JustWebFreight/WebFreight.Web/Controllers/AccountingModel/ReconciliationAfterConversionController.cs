@@ -10,6 +10,11 @@ using WebFreight.Web.Helpers;
 using System.Text.RegularExpressions;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.CoreBL.Batch;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
+using WebFreight.Web.Security;
+using Simplog.Server.Infrastructure.Helpers;
+using Stimulsoft.Report;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -23,27 +28,46 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         public HttpResponseMessage GetReconciliationAfterConversion(int tenant)
         {
+            bool retry = true;
+            int timeoutinmin = 10;
             string fromExtNum = "000000000000001";
             string toExtNum = "999999999999999";
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
 
                 ReconciliationAfterConversionBatch reconciliationAfterConversionBatch = new ReconciliationAfterConversionBatch();
-                ReconciliationAfterConversionArg reconciliationAfterConversionArg = new ReconciliationAfterConversionArg()
+                retry = true;
+                while (retry)
                 {
-                    Tenant = tenant,
-                    FromExtNum = fromExtNum,
-                    ToExtNum = toExtNum,
-                };
-                reconciliationAfterConversionBatch.RunReconciliationAfterConversion(reconciliationAfterConversionArg);
+                    retry = false;
+                    using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
+                    {
+
+                        try
+                        {
+                            ReconciliationAfterConversionArg reconciliationAfterConversionArg = new ReconciliationAfterConversionArg()
+                            {
+                                Tenant = tenant,
+                                FromExtNum = fromExtNum,
+                                ToExtNum = toExtNum,
+                            };
+                            reconciliationAfterConversionBatch.RunReconciliationAfterConversion(reconciliationAfterConversionArg, timeoutinmin - 1, ref retry);
+                            scope.Complete();
+                        }
+                        catch (Exception e)
+                        {
+                            throw;
+                        }
+                    }
+                }
                 string responseText = reconciliationAfterConversionBatch.ResponseText();
                 HttpStatusCode StatusCode = reconciliationAfterConversionBatch.StatusCode();
                 var res1 = new { Success = true, Message = responseText };
-
                 return Request.CreateResponse(StatusCode, res1);
 
             }
@@ -56,23 +80,44 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         public HttpResponseMessage GetReconciliationAfterConversion(int tenant, int NoBatch)
         {
+            bool retry = true;
+            int timeoutinmin = 10;
             string fromExtNum = "000000000000001";
             string toExtNum = "999999999999999";
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
 
                 ReconciliationAfterConversionBatch reconciliationAfterConversionBatch = new ReconciliationAfterConversionBatch();
-                ReconciliationAfterConversionArg reconciliationAfterConversionArg = new ReconciliationAfterConversionArg()
+                retry = true;
+                while (retry)
                 {
-                    Tenant = tenant,
-                    FromExtNum = fromExtNum,
-                    ToExtNum = toExtNum,
-                };
-                reconciliationAfterConversionBatch.RunReconciliationAfterConversion(reconciliationAfterConversionArg);
+                    retry = false;
+                    using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
+                    {
+
+                        try
+                        {
+                            ReconciliationAfterConversionArg reconciliationAfterConversionArg = new ReconciliationAfterConversionArg()
+                            {
+                                Tenant = tenant,
+                                FromExtNum = fromExtNum,
+                                ToExtNum = toExtNum,
+                            };
+                            reconciliationAfterConversionBatch.RunReconciliationAfterConversion(reconciliationAfterConversionArg, timeoutinmin - 1, ref retry);
+                            scope.Complete();
+                        }
+                        catch (Exception e)
+                        {
+                            throw;
+                        }
+                    }
+                }
+
                 string responseText = reconciliationAfterConversionBatch.ResponseText();
                 HttpStatusCode StatusCode = reconciliationAfterConversionBatch.StatusCode();
                 var res1 = new { Success = true, Message = responseText };
@@ -92,7 +137,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
-
+                bool retry = true;
+                int timeoutinmin = 10;
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
 
                 string _myfromExtNum = "";
                 if (String.IsNullOrWhiteSpace(fromExtNum) || fromExtNum == "undefined")
@@ -116,10 +167,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     _mytoExtNum = Regex.Replace(toExtNum, @"\d+", n => n.Value.PadLeft(15, '0'));
                 }
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
+                
                 bool batchIt = true;
                 if (batchIt)
                 {
@@ -203,13 +251,31 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 else
                 {
                     ReconciliationAfterConversionBatch reconciliationAfterConversionBatch = new ReconciliationAfterConversionBatch();
-                    ReconciliationAfterConversionArg reconciliationAfterConversionArg = new ReconciliationAfterConversionArg()
+                    retry = true;
+                    while (retry)
                     {
-                        Tenant = tenant,
-                        FromExtNum = _myfromExtNum,
-                        ToExtNum = _mytoExtNum,
-                    };
-                    reconciliationAfterConversionBatch.RunReconciliationAfterConversion(reconciliationAfterConversionArg);
+                        retry = false;
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
+                        {
+
+                            try
+                            {
+                                ReconciliationAfterConversionArg reconciliationAfterConversionArg = new ReconciliationAfterConversionArg()
+                                {
+                                    Tenant = tenant,
+                                    FromExtNum = _myfromExtNum,
+                                    ToExtNum = _mytoExtNum,
+                                };
+                                reconciliationAfterConversionBatch.RunReconciliationAfterConversion(reconciliationAfterConversionArg, timeoutinmin - 1, ref retry);
+                                scope.Complete();
+                            }
+                            catch (Exception e)
+                            {
+                                throw;
+                            }
+                        }
+                    }
+
                     string responseText = reconciliationAfterConversionBatch.ResponseText();
                     HttpStatusCode StatusCode = reconciliationAfterConversionBatch.StatusCode();
                     var res1 = new { Success = true, Message = responseText };
@@ -235,6 +301,14 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
+                bool retry = true;
+                int timeoutinmin = 10; 
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
+
                 string _myfromExtNum = "";
                 if (String.IsNullOrWhiteSpace(fromExtNum) || fromExtNum == "undefined")
                 {
@@ -255,10 +329,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                     _mytoExtNum = Regex.Replace(toExtNum, @"\d+", n => n.Value.PadLeft(15, '0'));
                 }
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                //SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                //SecurityUtility.CheckContactFeature("TaxDeductionReport", "NEW", authToken.Tenant);
+
                 bool batchIt = true;
                 if (noBatch == 1) batchIt = false;
                 if (batchIt)
@@ -349,13 +420,31 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 else
                 {
                     ReconciliationAfterConversionBatch reconciliationAfterConversionBatch = new ReconciliationAfterConversionBatch();
-                    ReconciliationAfterConversionArg reconciliationAfterConversionArg = new ReconciliationAfterConversionArg()
+                    retry = true;
+                    while (retry)
                     {
-                        Tenant = tenant,
-                        FromExtNum = _myfromExtNum,
-                        ToExtNum = _mytoExtNum,
-                    };
-                    reconciliationAfterConversionBatch.RunReconciliationAfterConversion(reconciliationAfterConversionArg);
+                        retry = false;
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
+                        {
+
+                            try
+                            {
+                                ReconciliationAfterConversionArg reconciliationAfterConversionArg = new ReconciliationAfterConversionArg()
+                                {
+                                    Tenant = tenant,
+                                    FromExtNum = _myfromExtNum,
+                                    ToExtNum = _mytoExtNum,
+                                };
+                                reconciliationAfterConversionBatch.RunReconciliationAfterConversion(reconciliationAfterConversionArg, timeoutinmin - 1, ref retry);
+                                scope.Complete();
+                            }
+                            catch (Exception e)
+                            {
+                                throw;
+                            }
+                        }
+                    }
+
                     string responseText = reconciliationAfterConversionBatch.ResponseText();
                     HttpStatusCode StatusCode = reconciliationAfterConversionBatch.StatusCode();
                     var res1 = new { Success = true, Message = responseText };

@@ -155,6 +155,33 @@ namespace WebFreight.Web.Controllers.AccountingModel
         }
 
 
+        public HttpResponseMessage PostRecalculateCashbookTotal(string cashbookId)
+        {
+
+            try
+            {
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+
+                    AuthenticationToken authToken = AuthinticateTenant();
+                    int tenant = authToken.Tenant;
+
+                    CashbookService cashbookService = new CashbookService();
+                    cashbookService.RecalculateCashbookTotal(cashbookId,tenant);
+
+                    scope.Complete();
+
+                    return Request.CreateResponse(HttpStatusCode.OK);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
         // --------------------------- PRIVATE MEMBERS 
 
         private CashbookChequesCounter GetChequesCounterForCashbook(string id, int tenant)

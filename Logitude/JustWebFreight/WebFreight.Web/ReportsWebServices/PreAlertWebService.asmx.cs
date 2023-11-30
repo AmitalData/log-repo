@@ -52,10 +52,13 @@ namespace WebFreight.Web.ReportsWebServices
         AddressRepository addressRepository;
         PortRepository portRepository;
         CardQuery cardQuery;
-
+        public ShipmentPM shipmentpm;
+        private ShipmentRepository shipmentRepository;
+        private WebServiceHelper servicHelper;
         [WebMethod]
         public byte[] GetPreAlertData(string shipmentid, int tenant, string documentTypeId)
         {
+            servicHelper = new WebServiceHelper(tenant);
             PreAlertDataProvider prealertDataProvider = GetPreAlertDataProvider(shipmentid, tenant, documentTypeId);
 
             #region Serialize and remove null region
@@ -82,14 +85,17 @@ namespace WebFreight.Web.ReportsWebServices
             catch { }
 
             XmlSerializer serializer = new XmlSerializer(typeof(PreAlertDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, prealertDataProvider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, prealertDataProvider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
 
-            return bytearray;
+                return bytearray;
+            }
+            
 
             #endregion
         }
@@ -103,9 +109,9 @@ namespace WebFreight.Web.ReportsWebServices
             commonContext = CommonDataContext.GetContext(tenant);
             countryRepository = new CountryRepository(commonContext);
             cardQuery = new CardQuery(tenant);
-            ShipmentRepository shipmentRepository = new ShipmentRepository(shipmentsContext);
+            shipmentRepository = new ShipmentRepository(shipmentsContext);
             ShipmentQuery shipmentQuery = new ShipmentQuery(shipmentRepository);
-            ShipmentPM shipmentpm = shipmentQuery.GetSinglePM(shipmentid, tenant);
+            shipmentpm = shipmentQuery.GetSinglePM(shipmentid, tenant);
 
             TenantQuery tenantQuery = new TenantQuery(tenant);
             tenantpm = tenantQuery.GetSinglePM(tenant);
@@ -115,6 +121,9 @@ namespace WebFreight.Web.ReportsWebServices
 
             if (shipmentpm != null)
             {
+                prealertDataProvider.ShipmentNumberLink = DataProviders.General.BuildShipmentNumberLink(shipmentpm.Id, shipmentpm.ShipmentLevelCode, shipmentpm.SecurityKey, tenant);
+                this.MapMasterShipmentNumber();
+
                 ContactRepository contactRepository = new ContactRepository(tenant);
                 addressRepository = new AddressRepository(tenant);
                 portRepository = new PortRepository(tenant);
@@ -222,6 +231,7 @@ namespace WebFreight.Web.ReportsWebServices
                         prealertDataProvider.CustomerAddress = prealertDataProvider.CustomerAddress + Environment.NewLine + (customerAddress.PhoneNumber != null ? "Tel: " + customerAddress.PhoneNumber + " " : "") + (customerAddress.FaxNumber != null ? "Fax: " + customerAddress.FaxNumber + " " : "");
                     }
                 }
+
                 prealertDataProvider.ChargeableWeightUnitCode = shipmentpm.ChargeableWeightUnitCode != null ? shipmentpm.ChargeableWeightUnitCode : "";
                 prealertDataProvider.ChargeableWeight = shipmentpm.ChargeableWeight != null ? shipmentpm.ChargeableWeight != 0 ? (String.Format("{0:#,0.00}", shipmentpm.ChargeableWeight)) : "" : "";
                 prealertDataProvider.MainIncoterm = shipmentpm.IncotermName;
@@ -237,6 +247,37 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.BookingConfirmationNumber = shipmentpm.BookingConfirmationNumber;
                 prealertDataProvider.IncotermCode = shipmentpm.IncotermCode;
                 prealertDataProvider.ShipmentSubTypeName = shipmentpm.ShipmentSubTypeName;
+                prealertDataProvider.TrailerNumber = shipmentpm.TrailerNumber;
+                prealertDataProvider.Transshipment1TrailerNumber = shipmentpm.Transshipment1TrailerNumber;
+                prealertDataProvider.Transshipment2TrailerNumber = shipmentpm.Transshipment2TrailerNumber;
+                prealertDataProvider.Transshipment3TrailerNumber = shipmentpm.Transshipment3TrailerNumber;
+                prealertDataProvider.ValueOfGoods = shipmentpm.ValueOfGoods;
+                prealertDataProvider.AMSBL = shipmentpm.AMSBL;
+                prealertDataProvider.HousesNumber = shipmentpm.NumberOfHouses;
+
+                prealertDataProvider.LastLegATA =
+                    shipmentpm.Transshipment3FromPortId != null ? shipmentpm.Transshipment3ATA :
+                    (shipmentpm.Transshipment2FromPortId != null ? shipmentpm.Transshipment2ATA :
+                    (shipmentpm.Transshipment1FromPortId != null ? shipmentpm.Transshipment1ATA : 
+                    shipmentpm.MainCarriageATA));
+
+                prealertDataProvider.LastLegVessel =
+                   shipmentpm.Transshipment3FromPortId != null ? shipmentpm.Transshipment3VesselName :
+                    (shipmentpm.Transshipment2FromPortId != null ? shipmentpm.Transshipment2VesselName :
+                    (shipmentpm.Transshipment1FromPortId != null ? shipmentpm.Transshipment1VesselName :
+                    shipmentpm.MainCarriageVesselName));
+
+                prealertDataProvider.LastLegVoyageNumber =
+                   shipmentpm.Transshipment3FromPortId != null ? shipmentpm.Transshipment3CarrierNumber :
+                    (shipmentpm.Transshipment2FromPortId != null ? shipmentpm.Transshipment2CarrierNumber :
+                    (shipmentpm.Transshipment1FromPortId != null ? shipmentpm.Transshipment1CarrierNumber :
+                    shipmentpm.MainCarriageCarrierNumber));
+
+                if (!string.IsNullOrEmpty(shipmentpm.ValueOfGoodsCurrencyId))
+                {
+                    Currency currency = commonContext.Currencies.Where(d => d.Id == shipmentpm.ValueOfGoodsCurrencyId).FirstOrDefault();
+                    prealertDataProvider.ValueOfGoodsCurrecny = currency?.Code;
+                }
 
                 if (shipmentpm.DocumentsClosingDate != null)
                 {
@@ -256,6 +297,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region Tenant Details
                 string tenantAgent = null;
+                string tenantAgentTel = null;
 
                 if (tenantpm != null)
                 {
@@ -265,6 +307,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (tenantAddress != null)
                     {
+                        tenantAgentTel = tenantAddress.PhoneNumber;
+
                         if (!string.IsNullOrEmpty(tenantAddress.City))
                         {
                             tenantAgent = tenantAgent + Environment.NewLine + tenantAddress.City;
@@ -288,6 +332,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region Agent
                 string shipmentAgent = null;
+                string shipmentAgentTel = null;
                 if (!string.IsNullOrEmpty(shipmentpm.AgentId))
                 {
                     CardPM agent = cardQuery.GetSinglePM(shipmentpm.AgentId, tenant);
@@ -299,6 +344,8 @@ namespace WebFreight.Web.ReportsWebServices
 
                         if (agentAddress != null)
                         {
+                            shipmentAgentTel = agentAddress.PhoneNumber;
+
                             if (agentAddress.IsLocalLanguage && !string.IsNullOrEmpty(agent.LocalName))
                             {
                                 shipmentAgent = agent.LocalName;
@@ -313,13 +360,17 @@ namespace WebFreight.Web.ReportsWebServices
                 if (shipmentpm.DirectionId == "E")
                 {
                     prealertDataProvider.OriginAgent = tenantAgent;
+                    prealertDataProvider.OriginAgentTel = tenantAgentTel;
                     prealertDataProvider.DestinationAgent = shipmentAgent;
+                    prealertDataProvider.DestinationAgentTel = shipmentAgentTel;
                 }
 
                 else if (shipmentpm.DirectionId == "I")
                 {
                     prealertDataProvider.OriginAgent = shipmentAgent;
+                    prealertDataProvider.OriginAgentTel = shipmentAgentTel;
                     prealertDataProvider.DestinationAgent = tenantAgent;
+                    prealertDataProvider.DestinationAgentTel = tenantAgentTel;
                 }
 
                 #region CustomAgent
@@ -540,25 +591,26 @@ namespace WebFreight.Web.ReportsWebServices
                         prealertDataProvider.FromPort = mainCarriageFromPort.EnglishName;
                     }
                 }
-                VesselQuery vesselQuery = new VesselQuery(tenant);
 
                 // Inland + Domestic
                 if (shipmentpm.DirectionId == "D" && shipmentpm.TransportModeId == "I")
                 {
-                    Address fromAddress = addressRepository.GetSingleAddress(shipmentpm.MainCarriageFromAddressId, tenant);
-                    Address toAddress = addressRepository.GetSingleAddress(shipmentpm.MainCarriageToAddressId, tenant);
-
-
-                    if (fromAddress != null)
+                    InlandDomesticArgs args = new InlandDomesticArgs()
                     {
-                        prealertDataProvider.FromLocation = fromAddress.City + " " + (fromAddress.Country != null ? fromAddress.Country.Code : "");
-                    }
-
-                    if (toAddress != null)
-                    {
-                        prealertDataProvider.ToLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-                        prealertDataProvider.FinalLocation = toAddress.City + " " + (toAddress.Country != null ? toAddress.Country.Code : "");
-                    }
+                        InlandDomesticFromTypeCode = shipmentpm.InlandDomesticFromTypeCode,
+                        MainCarriageFromAddressId = shipmentpm.MainCarriageFromAddressId,
+                        MainCarriageFromPortId = shipmentpm.MainCarriageFromPortId,
+                        InlandDomesticFromCity = shipmentpm.InlandDomesticFromCity,
+                        InlandDomesticFromCountryId = shipmentpm.InlandDomesticFromCountryId,
+                        InlandDomesticToTypeCode = shipmentpm.InlandDomesticToTypeCode,
+                        MainCarriageToAddressId = shipmentpm.MainCarriageToAddressId,
+                        InlandDomesticToCity = shipmentpm.InlandDomesticToCity,
+                        InlandDomesticToCountryId = shipmentpm.InlandDomesticToCountryId,
+                        MainCarriageToPortId = shipmentpm.MainCarriageToPortId,
+                    };
+                    prealertDataProvider.FromLocation = servicHelper.GetInlandDomesticFromLocation(args);
+                    prealertDataProvider.ToLocation = servicHelper.GetInlandDomesticToLocation(args);
+                    prealertDataProvider.FinalLocation = prealertDataProvider.ToLocation;
                 }
                 else
                 {
@@ -578,12 +630,11 @@ namespace WebFreight.Web.ReportsWebServices
                 //Transshipment1
                 prealertDataProvider.Transshipment1CarrierNumber = shipmentpm.Transshipment1CarrierNumber != null ? shipmentpm.Transshipment1CarrierNumber : "";
                 prealertDataProvider.Transshipment1CarrierName = shipmentpm.Transshipment1CarrierName != null ? shipmentpm.Transshipment1CarrierName : "";
+                prealertDataProvider.Transshipment1Vessel = shipmentpm.Transshipment1VesselName;
 
-                VesselPM trans1Vesselpm = vesselQuery.GetSinglePM(shipmentpm.Transshipment1VesselId, tenant);
-                if (trans1Vesselpm != null)
-                {
-                    prealertDataProvider.Transshipment1Vessel = trans1Vesselpm.EnglishName != null ? trans1Vesselpm.EnglishName : "";
-                    prealertDataProvider.Transshipment1CarrierNumber = shipmentpm.Transshipment1CarrierNumber != null ? (trans1Vesselpm.EnglishName + " / " + shipmentpm.Transshipment1CarrierNumber) : "";
+                if (!string.IsNullOrEmpty(shipmentpm.Transshipment1VesselName))
+                {                    
+                    prealertDataProvider.Transshipment1CarrierNumber = shipmentpm.Transshipment1CarrierNumber != null ? (shipmentpm.Transshipment1VesselName + " / " + shipmentpm.Transshipment1CarrierNumber) : "";
                 }
 
                 prealertDataProvider.Transshipment1ETA = shipmentpm.Transshipment1ETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment1ETA) : "";
@@ -595,12 +646,11 @@ namespace WebFreight.Web.ReportsWebServices
 
                 //Transshipment2
                 prealertDataProvider.Transshipment2CarrierNumber = shipmentpm.Transshipment2CarrierNumber != null ? shipmentpm.Transshipment2CarrierNumber : "";
+                prealertDataProvider.Transshipment2Vessel = shipmentpm.Transshipment2VesselName;
 
-                VesselPM trans2Vesselpm = vesselQuery.GetSinglePM(shipmentpm.Transshipment2VesselId, tenant);
-                if (trans2Vesselpm != null)
+                if (!string.IsNullOrEmpty(shipmentpm.Transshipment2VesselName))
                 {
-                    prealertDataProvider.Transshipment2Vessel = trans2Vesselpm.EnglishName != null ? trans2Vesselpm.EnglishName : "";
-                    prealertDataProvider.Transshipment2CarrierNumber = shipmentpm.Transshipment2CarrierNumber != null ? (trans2Vesselpm.EnglishName + " / " + shipmentpm.Transshipment2CarrierNumber) : "";
+                    prealertDataProvider.Transshipment2CarrierNumber = shipmentpm.Transshipment2CarrierNumber != null ? (shipmentpm.Transshipment2VesselName + " / " + shipmentpm.Transshipment2CarrierNumber) : "";
                 }
 
                 prealertDataProvider.Transshipment2ETA = shipmentpm.Transshipment2ETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment2ETA) : "";
@@ -612,12 +662,11 @@ namespace WebFreight.Web.ReportsWebServices
 
                 //Transshipment3
                 prealertDataProvider.Transshipment3CarrierNumber = shipmentpm.Transshipment3CarrierNumber != null ? shipmentpm.Transshipment3CarrierNumber : "";
+                prealertDataProvider.Transshipment3Vessel = shipmentpm.Transshipment3VesselName;
 
-                VesselPM trans3Vesselpm = vesselQuery.GetSinglePM(shipmentpm.Transshipment3VesselId, tenant);
-                if (trans3Vesselpm != null)
-                {
-                    prealertDataProvider.Transshipment3Vessel = trans3Vesselpm.EnglishName != null ? trans3Vesselpm.EnglishName : "";
-                    prealertDataProvider.Transshipment3CarrierNumber = shipmentpm.Transshipment3CarrierNumber != null ? (trans3Vesselpm.EnglishName + " / " + shipmentpm.Transshipment3CarrierNumber) : "";
+                if (!string.IsNullOrEmpty(shipmentpm.Transshipment3VesselName))
+                {                    
+                    prealertDataProvider.Transshipment3CarrierNumber = shipmentpm.Transshipment3CarrierNumber != null ? (shipmentpm.Transshipment3VesselName + " / " + shipmentpm.Transshipment3CarrierNumber) : "";
                 }
 
                 prealertDataProvider.Transshipment3ETA = shipmentpm.Transshipment3ETA != null ? String.Format("{0:dd MMM yyyy}", shipmentpm.Transshipment3ETA) : "";
@@ -663,13 +712,10 @@ namespace WebFreight.Web.ReportsWebServices
                     prealertDataProvider.MainCarriageCarrierNumber_Label = "Vessel & Voyage";
                     prealertDataProvider.ShippingDetails_FlightDetails = "Shipping Details";
 
-                    if (shipmentpm.MainCarriageVesselId != null)
+                    if (shipmentpm.MainCarriageVesselName != null)
                     {
-                        VesselPM vesselpm = vesselQuery.GetSinglePM(shipmentpm.MainCarriageVesselId, tenant);
-                        if (vesselpm != null)
-                        {
-                            prealertDataProvider.MainCarriageCarrierNumber = vesselpm.EnglishName + " / " + prealertDataProvider.MainCarriageCarrierNumber;
-                        }
+                        prealertDataProvider.MainCarriageCarrierNumber = shipmentpm.MainCarriageVesselName + " / " + prealertDataProvider.MainCarriageCarrierNumber;
+
                     }
                 }
 
@@ -739,6 +785,8 @@ namespace WebFreight.Web.ReportsWebServices
                     masterpackage.DescriptionOfGoods = package.Description;
                     masterpackage.NumberOfInsidePackages = package.NumberOfInsidePackages;
                     masterpackage.ContainerNumber = package.ContainerNumber;
+                    masterpackage.Seal1 = package.ShipperSeal;
+                    masterpackage.Seal2 = package.CarrierSeal;                    
 
                     if (package.IsDangerous)
                     {
@@ -783,6 +831,9 @@ namespace WebFreight.Web.ReportsWebServices
                             string itemText = package.Quantity.ToString() + " x " + num + "'" + alpha;
                             myTotalContainers = string.IsNullOrEmpty(myTotalContainers) ? itemText : myTotalContainers + ", " + itemText;
                         }
+
+                        masterpackage.PackageTypeCode = myPackageType.Code;
+                        masterpackage.PackagesTypesAndNumbers = package.Quantity + " " + myPackageType.EnglishName;
                     }
 
                     masterpackage.InsidePackagesLines = new List<InsidePackageLine>();
@@ -1410,13 +1461,22 @@ namespace WebFreight.Web.ReportsWebServices
 
                 prealertDataProvider.PreCarriageETD = shipmentpm.PreCarriageETD;
                 prealertDataProvider.PreCarriageATD = shipmentpm.PreCarriageATD;
+                prealertDataProvider.PreCarriageETA = shipmentpm.PreCarriageETA;
+                prealertDataProvider.PreCarriageATA = shipmentpm.PreCarriageATA;
                 prealertDataProvider.PreCarriageCarrierCode = shipmentpm.PreCarriageCarrierCode;
                 prealertDataProvider.PreCarriageCarrierNumber = shipmentpm.PreCarriageCarrierNumber;
+                prealertDataProvider.PreCarriageFrom = shipmentpm.PreCarriageFromPortName;
+                prealertDataProvider.PreCarriageTo = shipmentpm.PreCarriageToPortName;
                 prealertDataProvider.PreForwardingETD = shipmentpm.PreForwardingETD;
                 prealertDataProvider.PreForwardingATD = shipmentpm.PreForwardingATD;
+                prealertDataProvider.PreForwardingETA = shipmentpm.PreForwardingETA;
+                prealertDataProvider.PreForwardingATA = shipmentpm.PreForwardingATA;
                 prealertDataProvider.PreForwardingCarrierCode = shipmentpm.PreForwardingCarrierCode;
                 prealertDataProvider.PreForwardingCarrierNumber = shipmentpm.PreForwardingCarrierNumber;
+                prealertDataProvider.PreForwardingFrom = shipmentpm.PreForwardingFromPortName;
+                prealertDataProvider.PreForwardingTo = shipmentpm.PreForwardingToPortName;
                 prealertDataProvider.MainCarriageATD = shipmentpm.MainCarriageATD;
+                prealertDataProvider.MainCarriageATA = shipmentpm.MainCarriageATA;
                 prealertDataProvider.Transhipment1ATD = shipmentpm.Transshipment1ATD;
                 prealertDataProvider.Transshipment1CarrierCode = shipmentpm.Transshipment1CarrierCode;
                 prealertDataProvider.Transshipment1CarrierNumber_New = shipmentpm.Transshipment1CarrierNumber;
@@ -1431,8 +1491,23 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.ShipmentNotes = shipmentpm.Notes;
                 prealertDataProvider.TotalQuantity = shipmentpm.NumberOfPackages;
                 prealertDataProvider.Salesman = shipmentpm.SalesmanUserName;
-
                 prealertDataProvider.FullRoutings = this.GetFullRouting(shipmentpm, shipmentPickUpQuery, shipmentDeliveryQuery);
+                prealertDataProvider.OnForwardingFrom = shipmentpm.OnForwardingFromPortName;
+                prealertDataProvider.OnForwardingTo = shipmentpm.OnForwardingToPortName;
+                prealertDataProvider.OnForwardingETD = shipmentpm.OnForwardingETD;
+                prealertDataProvider.OnForwardingETA = shipmentpm.OnForwardingETA;
+                prealertDataProvider.OnForwardingATD = shipmentpm.OnForwardingATD;
+                prealertDataProvider.OnForwardingATA = shipmentpm.OnForwardingATA;
+                prealertDataProvider.OnForwardingCarrierCode = shipmentpm.OnForwardingCarrierCode;
+                prealertDataProvider.OnForwardingCarrierNumber = shipmentpm.OnForwardingCarrierNumber;
+                prealertDataProvider.OnCarriageFrom = shipmentpm.OnCarriageFromPortName;
+                prealertDataProvider.OnCarriageTo = shipmentpm.OnCarriageToPortName;
+                prealertDataProvider.OnCarriageETD = shipmentpm.OnCarriageETD;
+                prealertDataProvider.OnCarriageETA = shipmentpm.OnCarriageETA;
+                prealertDataProvider.OnCarriageATD = shipmentpm.OnCarriageATD;
+                prealertDataProvider.OnCarriageATA = shipmentpm.OnCarriageATA;
+                prealertDataProvider.OnCarriageCarrierCode = shipmentpm.OnCarriageCarrierCode;
+                prealertDataProvider.OnCarriageCarrierNumber = shipmentpm.OnCarriageCarrierNumber;
 
                 ARInvoiceRepository invoiceRep = new ARInvoiceRepository(tenant);
                 List<ARInvoice> invoices = invoiceRep.GetInvoicesByMainEntityId(shipmentpm.Id, tenant);
@@ -1441,19 +1516,20 @@ namespace WebFreight.Web.ReportsWebServices
                     string str = "";
                     foreach (ARInvoice item in invoices)
                     {
+                        string printedNumber = item.StatusCode == "DR" ? item.DraftNumber : item.InvoiceNumber;
+
                         if (string.IsNullOrEmpty(str))
                         {
-                            str = item.InvoiceNumber;
+                            str = printedNumber;
                         }
                         else
                         {
-                            str = str + ", " + item.InvoiceNumber;
+                            str = str + ", " + printedNumber;
                         }
                     }
 
                     prealertDataProvider.InvoicesNumbers = str;
                 }
-
 
                 ShipmentPickUpDelivery myFirstPickup =
                     (from d in shipmentsContext.ShipmentPickUpDeliveries
@@ -1521,15 +1597,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
 
                 prealertDataProvider.VoyageNumber = shipmentpm.MainCarriageCarrierNumber;
-
-                if (!string.IsNullOrEmpty(shipmentpm.MainCarriageVesselId))
-                {
-                    VesselPM myVessel = vesselQuery.GetSinglePM(shipmentpm.MainCarriageVesselId, tenant);
-                    if (myVessel != null)
-                    {
-                        prealertDataProvider.Vessel = myVessel.EnglishName;
-                    }
-                }
+                prealertDataProvider.Vessel = shipmentpm.MainCarriageVesselName;
 
                 if (!string.IsNullOrEmpty(shipmentpm.MoveTypeId))
                 {
@@ -1576,7 +1644,7 @@ namespace WebFreight.Web.ReportsWebServices
                 prealertDataProvider.WarehouseLegTerminalCode = shipmentpm.WarehouseLegTerminalCode;
                 #endregion
 
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                 customFieldResolver.SetDataProviderCustomFieldsValues("Shipment", tenant, shipmentpm, prealertDataProvider);
             }
 
@@ -2074,6 +2142,26 @@ namespace WebFreight.Web.ReportsWebServices
 
             totalPrepaidString = totalPrepaid;
             totalCollectString = totalCollect;
+        }
+        private void MapMasterShipmentNumber()
+        {
+            if (shipmentpm.ShipmentLevelCode == "C")
+            {
+                prealertDataProvider.MasterShipmentNumber = shipmentpm.ShipmentNumber;
+            }
+
+            else if (shipmentpm.ShipmentLevelCode == "H" && !string.IsNullOrEmpty(shipmentpm.MasterShipmentDataId))
+            {
+                SetMasterShipmentNumberForConnectedHouse();
+            }
+        }
+        private void SetMasterShipmentNumberForConnectedHouse()
+        {
+            Shipment masterData = shipmentRepository.GetSingleShipment(shipmentpm.MasterShipmentDataId, tenant);
+            if (masterData != null)
+            {
+                prealertDataProvider.MasterShipmentNumber = masterData.ShipmentNumber;
+            }
         }
     }
 }

@@ -18,7 +18,7 @@
                                     </td>
 
                                     <td style="width: 1px;">
-                                        <button id="{{ 'Orders-AddPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackage()">{{AddButtonLabel}}</button>
+                                        <button id="{{ 'Orders-AddPackage' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackage()">{{AddButtonLabel}}</button>
                                     </td>
 
                                     <td style="width: 3px;">
@@ -340,7 +340,23 @@
                                                                         [ObjectTableName]="ObjectTableName"
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'Carrier'"
-                                                                        [DependencyFilter1Value]="CarrierDependencyFilter1Value">
+                                                                        [DependencyFilter1Value]="CarrierDependencyFilter1Value"
+                                                                        [ShowInActive]="CarrierDependencyFilter1Value=='SL'" [ShowInActivePopUpWindow]="'true'">
+                                                                </LogLov>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr class="FormFieldRow" *ngIf="IsCarrierServiceLineVisible">
+                                                            <td>
+                                                                <LogLabel [ObjectFieldName]="'CarrierServiceLineId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+                                                            <td>
+                                                                <LogLov [ObjectFieldName]="'CarrierServiceLineId'"
+                                                                        [SelectedValue]="CarrierServiceLineId"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'CarrierServiceLine'"
+                                                                        [DependencyFilter1Value]="MainCarriageCarrierId">
                                                                 </LogLov>
                                                             </td>
                                                         </tr>
@@ -432,6 +448,10 @@
                                                                         <td>
                                                                             <LogDatePicker [ObjectFieldName]="'WarehouseLegCutOffDate'" [SelectedDateValue]="WarehouseLegCutOffDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                                         </td>
+
+                                                                        <td style="width:18px; ">
+                                                                            <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'WarehouseLegCutOffDate'"></FollowupButton>
+                                                                        </td>
                                                                     </tr>
 
                                                                     <tr class="FormFieldRow" *ngIf="IsFCLEntity">
@@ -441,6 +461,10 @@
 
                                                                         <td>
                                                                             <LogDatePicker [ObjectFieldName]="'WarehouseLegVGMCutOffDate'" [SelectedDateValue]="WarehouseLegVGMCutOffDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+
+                                                                        <td style="width:18px;">
+                                                                            <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'WarehouseLegVGMCutOffDate'"></FollowupButton>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -476,12 +500,22 @@
 
                                                         <!-- AMS Closing Date -->
                                                         <tr class="FormFieldRow" *ngIf="IsAMSClosingDateVisible">
-                                                            <td>
-                                                                <LogLabel [ObjectFieldName]="'AMSClosingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                                            </td>
+                                                            <td colspan="2">
+                                                                <table>
+                                                                    <tr class="FormFieldRow">
+                                                                        <td>
+                                                                            <LogLabel [ObjectFieldName]="'AMSClosingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                        </td>
 
-                                                            <td>
-                                                                <LogDatePicker [ObjectFieldName]="'AMSClosingDate'" [SelectedDateValue]="AMSClosingDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        <td>
+                                                                            <LogDatePicker [ObjectFieldName]="'AMSClosingDate'" [SelectedDateValue]="AMSClosingDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
+                                                                        </td>
+
+                                                                        <td style="width:18px; ">
+                                                                            <FollowupButton [IsEnabled]="IsEditingEnabled" [ShipmentPM]="EntityPM" [LegType]="'AMSClosingDate'"></FollowupButton>
+                                                                        </td>
+                                                                    </tr>
+                                                                </table>
                                                             </td>
                                                         </tr>
 
@@ -523,7 +557,7 @@
                                                             </td>
                                                         </tr>
 
-                                                          <!-- INTTRA Harmonize -->
+                                                        <!-- INTTRA Harmonize -->
                                                         <tr class="FormFieldRow">
                                                             <td>
                                                                 <table>

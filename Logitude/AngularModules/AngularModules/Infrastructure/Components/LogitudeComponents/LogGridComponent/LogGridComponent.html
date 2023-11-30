@@ -157,7 +157,7 @@
         pointer-events: none;
     }
 </style>
-<div id="{{'ListDataLoaded' | IdGeneratorPipe}}" *ngIf="IsDataLoaded" ></div>
+<div id="{{'ListDataLoaded' | IdGeneratorAsyncPipe | async}}" *ngIf="IsDataLoaded" ></div>
 <div class="outer-container">
     <div [id]="LogGridId" [style.direction]="RTL == true ? 'rtl' : 'ltr'" class="GeneratedGrid  inner-container" (mousemove)="OnMyMouseMove($event)">
         <!--(mouseup)="OnMyMouseUp($event)"-->

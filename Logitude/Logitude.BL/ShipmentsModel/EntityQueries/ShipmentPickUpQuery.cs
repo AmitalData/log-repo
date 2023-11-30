@@ -10,6 +10,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
@@ -97,7 +98,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
                 #region From PART
                 if (entityPOCO.PickUpDeliveryFromTypeCode == "PART")
-                {                   
+                {
                     if (!string.IsNullOrEmpty(entityPOCO.FromPartnerCardId))
                     {
                         Card card = cardRepository.GetSingleCard(entityPOCO.FromPartnerCardId, tenant);
@@ -284,20 +285,32 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     entityPM.ToAddressCity_Dummy = entityPOCO.ToAddressCity;
                 }
                 #endregion
+
+
+                new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+                {
+                    Tenant = tenant,
+                    EntityId = entityPM.ShipmentId,
+                    ObjectTableName = "Shipment",
+                    ChildObjectTableName = "ShipmentPickUpDelivery",
+                    ChildEntityId = entityPM?.Id,
+                    ChildEntities = new List<object>() { entityPM }.ToList(),
+                });
+
             }
 
             return entityPM;
         }    
-        public List<ShipmentPickUpPM> GetShipmentPickUpPMsByTenantAndShipment(string shipmentId, int tenant)
+        public List<ShipmentPickUpPM> GetShipmentPickUpPMsByTenantAndShipment(string shipmentId, int tenant,bool byLocalName = false)
         {
-            List<ShipmentPickUpPM> dataList = (from entityPOCO in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard").Include("TransportMode")
+            List<ShipmentPickUpPM> dataList = (from entityPOCO in repository.context.ShipmentPickUpDeliveries.Include("FromPort").Include("ToPort").Include("CarrierCard.PartnerType").Include("TransportMode")
                                                where entityPOCO.ShipmentId == shipmentId && entityPOCO.Tenant == tenant && entityPOCO.PickUpDeliveryTypeCode == "PICK"
                                                select new ShipmentPickUpPM()
                                                {
                                                    Id = entityPOCO.Id,
                                                    Tenant = entityPOCO.Tenant,
                                                    ShipmentId = entityPOCO.ShipmentId,
-                                                   PickUpDeliveryNumber = entityPOCO.PickUpDeliveryNumber,
+                                                   PickUpDeliveryNumber = entityPOCO.PickUpDeliveryNumber,                                                  
                                                    ATA = entityPOCO.ATA,
                                                    ATD = entityPOCO.ATD,
                                                    ETA = entityPOCO.ETA,
@@ -309,7 +322,9 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    CarrierId = entityPOCO.CarrierId,
                                                    CarrierCode = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.Code,
                                                    CarrierName = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.EnglishName,
+                                                   CarrierLocalName = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.LocalName != null ? entityPOCO.CarrierCard.LocalName : entityPOCO.CarrierCard.EnglishName,
                                                    CarrierWebSite = entityPOCO.CarrierCard == null ? null : entityPOCO.CarrierCard.Website,
+                                                   CarrierTypeName = entityPOCO.CarrierCard == null || entityPOCO.CarrierCard.PartnerType == null ? null : entityPOCO.CarrierCard.PartnerType.Name,
                                                    CarrierNumber = entityPOCO.CarrierNumber,
                                                    PickUpDeliveryTypeCode = entityPOCO.PickUpDeliveryTypeCode,
                                                    FullResponsibility = entityPOCO.FullResponsibility,
@@ -347,7 +362,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                    ChildPickUpIndex = entityPOCO.ChildPickUpIndex,
                                                    StandaloneShipmentId = entityPOCO.StandaloneShipmentId,
                                                    StandaloneShipmentNumber = entityPOCO.StandaloneShipmentNumber,
-                                               }).ToList();
+                                               }).OrderBy(a => a.Id).ToList();
 
             if (dataList.Count > 0)
             {
@@ -358,9 +373,11 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 CountryRepository countryRepository = new CountryRepository(tenant);
                 CardRepository cardRepository = new CardRepository(tenant);
 
+                string shipmentNumber = repository.context.Shipments.Where(d => d.Id == shipmentId && d.Tenant == tenant).FirstOrDefault()?.ShipmentNumber;
                 foreach (ShipmentPickUpPM item in dataList)
                 {
                     item.ShipmentPickUpDeliveryPackages = packagesQuery.GetShipmentPickUpDeliveryPackages(item.Id, tenant);
+                    //this.GetPickUpDeliveryIndexes(item, shipmentNumber);                    
 
                     #region From PART
                     if (item.PickUpDeliveryFromTypeCode == "PART")
@@ -385,7 +402,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 string location = "";
 
-                                if (address.IsLocalLanguage && !string.IsNullOrEmpty(card.LocalName))
+                                if ((address.IsLocalLanguage || byLocalName) && !string.IsNullOrEmpty(card.LocalName))
                                 {
                                     location = card.LocalName + Environment.NewLine;
                                 }
@@ -480,7 +497,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                             {
                                 string location = "";
 
-                                if (address.IsLocalLanguage && !string.IsNullOrEmpty(card.LocalName))
+                                if ((address.IsLocalLanguage || byLocalName) && !string.IsNullOrEmpty(card.LocalName))
                                 {
                                     location = card.LocalName + Environment.NewLine;
                                 }
@@ -554,7 +571,18 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                 }
             }
 
+
+            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+            {
+                Tenant = tenant,
+                EntityId = shipmentId,
+                ObjectTableName = "Shipment",
+                ChildObjectTableName = "ShipmentPickUpDelivery",
+                ChildEntities = dataList.Cast<object>().ToList()
+            });
+
             return dataList;
+
         }
 
         public ShipmentPickUpPM GetFistShipmentPickUpPMByTenantAndShipmentId(string shipmentId, string shipmentNumber, int tenant)

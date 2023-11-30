@@ -122,7 +122,7 @@ export class ReportSchedulerDateListTemplate {
     SetTaskDefaultDate(fieldName) {
         var pmDate = new Date(this.rowData[fieldName]);
         if (pmDate.getFullYear() > 1970) {
-            this.dateValue = pmDate;
+            this.dateValue = this.rowData[fieldName];
         }
     }
 }

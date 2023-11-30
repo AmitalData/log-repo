@@ -19,6 +19,33 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="MeasurementId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TEU"
+    Type="float">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Volume"
+    Type="decimal"
+    Precision="18"
+    Scale="2">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ContainerSize"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Code"
     Type="varchar"
     Size="4">
@@ -64,6 +91,12 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="IsContainer"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="Notes"
     Type="nvarchar"
     Size="250">
@@ -71,28 +104,9 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="IsContainer"
-    Type="bit">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="TEU"
-    Type="float">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="ContainerSize"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
-    Name="Volume"
-    Type="decimal"
-    Precision="18"
-    Scale="2">
+    Name="PrintAs"
+    Type="varchar"
+    Size="20">
     <Constraints
       Nullable="false" />
   </Column>
@@ -103,25 +117,11 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="MeasurementId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="SearchFields"
     Type="nvarchar"
     Size="1000">
     <Constraints
       Nullable="true" />
-  </Column>
-  <Column
-    Name="PrintAs"
-    Type="varchar"
-    Size="20">
-    <Constraints
-      Nullable="false" />
   </Column>
   <Column
     Name="IsRefrigerated"
@@ -134,6 +134,12 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="MeasurementId"

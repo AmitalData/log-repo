@@ -20,6 +20,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.SearchFields = entityPM.Order + "," + entityPM.Name;
             poco.OrderNumber = entityPM.Order;
             poco.InActive = entityPM.InActive;
+            poco.Code = entityPM.Code;
         }
     }
 }

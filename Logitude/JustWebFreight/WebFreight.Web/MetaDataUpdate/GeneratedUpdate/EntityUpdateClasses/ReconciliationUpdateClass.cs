@@ -74,12 +74,18 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconciliationUpdateClass
    {  		
-		public const string HashString = "da2d0c1f353918a04ad558ae5ec1583f";
+		public const string HashString = "150316c7d5a5d74b22bd6052b00ef474";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -93,6 +99,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTablePlural =  "Reconciliations",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
+			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -122,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "Reconciliation",
-			      				    Code =  "ded7",
+			      				    Code =  "c403",
 			      				    Name =  "Reconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -160,6 +170,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -188,7 +199,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IdListLable",
 					  						ListLableDefaultText =  "Id",
 					  						ListLocalDefaultText =  "מזהה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -221,6 +234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -249,7 +263,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "TenantListLable",
 					  						ListLableDefaultText =  "Tenant",
 					  						ListLocalDefaultText =  "tenant",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -282,6 +298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -311,7 +328,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AccountIdListLable",
 					  						ListLableDefaultText =  "Account",
 					  						ListLocalDefaultText =  "חשבון",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "GLAccount",
+					  						NavigationPropertyName =  "Account",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -344,6 +365,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -373,7 +395,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "NumberListLable",
 					  						ListLableDefaultText =  "Reconciliation No.",
 					  						ListLocalDefaultText =  "מספר התאמה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -406,6 +430,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -435,7 +460,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
 					  						ListLocalDefaultText =  "תאריך פתיחה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -469,6 +496,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -498,7 +526,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CreatedByUserIdListLable",
 					  						ListLableDefaultText =  "Created by User",
 					  						ListLocalDefaultText =  "נוצר על ידי משתמש",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "User",
+					  						NavigationPropertyName =  "CreatedByUser",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -531,6 +563,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  4000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -557,7 +590,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Reconciliation No.",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Reconciliation No.",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  true,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -590,6 +625,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -616,7 +652,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Reconciliation Lines",
 					  						ListFieldLable =  "ReconciliationLinesListLable",
 					  						ListLableDefaultText =  "Reconciliation Lines",
+					  						IsForeignKey =  false,
+					  						ThisKey =  "Id",
+					  						OtherKey =  "ReconciliationId",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -649,6 +689,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -678,7 +719,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CreatedByUserNameListLable",
 					  						ListLableDefaultText =  "Created by",
 					  						ListLocalDefaultText =  "נוצר על ידי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -711,6 +754,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -740,7 +784,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AccountNumberListLable",
 					  						ListLableDefaultText =  "Account Number",
 					  						ListLocalDefaultText =  "מספר חשבון",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -773,6 +819,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -802,7 +849,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AccountNameListLable",
 					  						ListLableDefaultText =  "Account",
 					  						ListLocalDefaultText =  "חשבון",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -835,6 +884,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  true,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -864,7 +914,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IsCancelledListLable",
 					  						ListLableDefaultText =  "Is Cancelled",
 					  						ListLocalDefaultText =  "מבוטלת",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -897,6 +949,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -920,7 +973,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencyCode",
 					  						DefaultText =  "Currency",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -953,6 +1008,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -976,7 +1032,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountReconcileMethodCode",
 					  						DefaultText =  "AccountReconcileMethodCode",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1009,6 +1067,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1032,7 +1091,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountCurrencyId",
 					  						DefaultText =  "AccountCurrencyId",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1234,6 +1295,24 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ReconciliationTextCode_ReconciliationOCantReconcileMutipleAPPayment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.CantReconcileMutipleAPPayment", DefaultText = "Can’t include more than one AP payment in the same reconciliation",LocalDefaultText = @"לא ניתן לכלול יותר מתשלום אחד באותה התאמה", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ReconciliationTextCode_ReconciliationOAdditionalReconciliationsHasBeenCreated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.AdditionalReconciliationsHasBeenCreated", DefaultText = "Reconcile has been created, additional Reconciliations of the Transfer will be created in the background and can be found on the in the Reconcile Management screen at the end of the process",LocalDefaultText = @" התאמות נוצרו, התאמות נוספות לתנועות מחשבון הדחויים יווצרו ברקע וניתן יהיה לראותם במסך ניהול ההתאמות בסיום התהליך ", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationODifferentAccounts = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.DifferentAccounts", DefaultText = "The reconciliation lines are from different accounts",LocalDefaultText = @"השורות בהתאמה מחשבונות שונים", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationOOpenTransactions = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.OpenTransactions", DefaultText = "Open Transactions",LocalDefaultText = @"תנועות פתוחות", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationONoLinesSelected = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.NoLinesSelected", DefaultText = "No lines was marked",LocalDefaultText = @"יש לסמן את השורות שברצונך להוריד", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationOMultiCurrencyGlaccountReconciliation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.MultiCurrencyGlaccountReconciliation", DefaultText = "A currency GLAccount is attached to the MULTI GLAccount - disconnection must be performed before performing a adjust journal",LocalDefaultText = @"לכרטיס המולטי חובר כרטיס מטבעי - יש לבצע ניתוק בטרם ביצוע פעולת מיון", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationBAdjustInOneJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.B.AdjustInOneJournal", DefaultText = "Adjust in one journal",LocalDefaultText = @"פקודת יומן בשורה אחת", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationBAdjustInSplitJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.B.AdjustInSplitJournal", DefaultText = "Adjust in split journal",LocalDefaultText = @"פקודת יומן מפוצלת כמספר השורות המסומנות", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationMLedgerTransactionAlreadyReconciled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.M.LedgerTransactionAlreadyReconciled", DefaultText = " ledgerTransaction already Reconciled  ?? ? TransactionId=",LocalDefaultText = @" התנועות שהינך מנסה להתאים כבר מסומנות בבסיס הנתונים כתנועות מותאמות, מזהה תנועה=", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationsOErrorsInMultiWithRecOne = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ErrorsInMultiWithRecOne", DefaultText = "With a multi-currency card that the adjustments are managed by MTZ, it is not possible to make an adjustment with the difference",LocalDefaultText = "בכרטיס רב מטבעי שההתאמות מנוהלות במט''ז לא ניתן לבצע התאמה עם הפרש", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationOWarningMultiRecoOne = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.WarningMultiRecoOne", DefaultText = "The adjustment method for this card is adjustment in MTZ, you must first select the type of currency you want to adjust",LocalDefaultText = "שיטת ההתאמה עבור כרטיס זה היא התאמה במט''ז יש לבחור תחילה את סוג המטבע שברצונך להתאים", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -1,0 +1,240 @@
+<style type="text/css">
+    .LinkBtn {
+        text-decoration: underline;
+        float: left;
+        color: blue;
+        font-size: 11px;
+        text-indent: 3px;
+    }
+
+    .LinkBtn:hover {
+        text-decoration: underline;
+        float: left;
+        color: lightskyblue;
+        font-size: 11px;
+        cursor: pointer;
+    }
+
+    .GroupItem {
+        min-width: 70px;
+        min-height: 65px;
+        display: inline-block;
+        width:620px;
+    }
+
+    .Operator {
+        min-width: 45px;
+        min-height: 20px;
+        display: inline-block;
+        margin-top: 3px;
+        margin-right: 5px;
+    }
+
+    .Filters {
+        display: table-cell;
+        border-left: 1px solid gray;
+    }
+
+    .FilterItem {
+        min-width: 55px;
+        min-height: 20px;
+        margin: 5px;
+    }
+
+    .ImgHolder {
+        display: flex;
+        align-items: center;
+        margin-right: 5px;
+    }
+</style>
+<table>
+    <tr>
+        <td style="width:6px;">
+            <div></div>
+        </td>
+        <td>
+            <table>
+                <tr>
+                    <td *ngIf="IsRoot && (!FilterItems || FilterItems.length == 0)" style="height: 0;">
+                        <span class="LinkBtn" (click)="AddEmptyFilter()"> Filters</span>
+                    </td>
+
+                    <td *ngIf="FilterItems && FilterItems.length > 0" style="vertical-align: top;">
+                        <div style="display: flex; width: 0px;" *ngFor="let item of FilterItems; let i=index;">
+                            <div *ngIf="IsRoot || FilterItems.length != 1" class="ImgHolder">
+                                <IconButton [Left]="3" [Name]="'Minus'" [IsSmall]="true" (click)="onDeleteFilterClick(item)"></IconButton>
+                            </div>
+                            <div *ngIf="!item.IsGroup" style="width:650px;">
+                                <div>
+                                    <table style="height:30px;">
+                                        <tr style="height:30px;" class="MyFilterItem">
+                                            <td style="width:150px;max-width:150px;min-width:150px;">
+                                                <LogLov [SelectedValue]="item.FieldId"
+                                                        [ObjectTableName]="'Widget'"
+                                                        [DataContext]="item"
+                                                        [LookUpTableName]="'AnalyticsFactsFieldsMetaData'"
+                                                        [DependencyFilter3Value]="EntityId"
+                                                        [HideColumns]="true"
+                                                        [DisplayMemberPath]="'DisplayName'"
+                                                        (SelectedItemChanged)="item.FieldChanged($event)"
+                                                        [NoValidation]="true"
+                                                        [IsFreeText]="true"
+                                                        [PlaceHolder]="'Field'"
+                                                        [ObjectFieldName]="'FieldCode'">
+                                                </LogLov>
+                                            </td>
+                                            <td style="width:7px;">
+                                                <div style="width:7px;"></div>
+                                            </td>
+                                            <td style="width:150px;max-width:150px;min-width:150px;">
+                                                <ComboBox 
+                                                        style="width:100px;" 
+                                                        [ItemsSource]="item.Operators"
+                                                        [SelectedItem]="item.SelectedOperator"
+                                                        [Binding]="'Name'"
+                                                        [WaterMark]="'Operator'" 
+                                                        [IsDisabled]="!item.FieldName"
+                                                        (SelectedItemChanged)="item.OperationValueChanged($event)">
+                                                </ComboBox>
+                                            </td>
+
+                                            <td style="width:7px;">
+                                                <div style="width:7px;"></div>
+                                            </td>
+
+                                            <td style="width:150px;max-width:150px;min-width:150px;"
+                                                *ngIf="item.ShowTextBox(item)">
+                                                <div>
+                                                    <LogTextBox 
+                                                        [NoValidation]="true" 
+                                                        [HideLastColumn]="true"
+                                                        [Text]="item.TextFieldValue" 
+                                                        [IsFreeText]="true"
+                                                        (ValueChanged)="item.TextBoxValueChange($event)"
+                                                        style="height:22px" 
+                                                        [DataContext]="item"
+                                                        HideLastColumn="true"
+                                                        HideColumns="true"
+                                                        DontAllowAutoSelect="true"
+                                                        [InputType]="item.GetTextInputType(item)"></LogTextBox>
+                                                </div>
+                                            </td>
+
+
+                                           <td style="width:150px;max-width:150px;min-width:150px;"
+                                                *ngIf="item.Operator && item.FieldDataType == 'Boolean' && item.Operator == 'Equal'">
+                                                <ComboBox 
+                                                    style="width:107px;"
+                                                    (SelectedItemChanged)="item.BooleanListValueChanged($event)"
+                                                    [ItemsSource]="item.BooleanList" 
+                                                    [SelectedItem]="item.IsChecked"
+                                                    [WaterMark]="'Value'"></ComboBox>
+                                            </td>
+
+
+                                            <td style="width:150px;max-width:150px;min-width:150px;"
+                                                 *ngIf="item.IsNotEmptyNotEmtyOperator(item) && item.FieldDataType == 'LookUp' && item.SelectedField">
+                                                <LogLov (SelectedItemChanged)="item.LogLovCondationValueChange($event)"
+                                                        [ObjectFieldName]="'FieldValue'"
+                                                        [ObjectTableName]="item.SelectedField.JoinedTableName" 
+                                                        [DataContext]="item"
+                                                        [IsFreeText]="true" 
+                                                        [NoValidation]="true" 
+                                                        [SelectedValue]="item.FieldValue"
+                                                        [LookUpTableName]="item.SelectedField.JoinedTableName"
+                                                        [PlaceHolder]="'Value'" 
+                                                        [SelectedItemObject]="item.FieldValue">
+                                                </LogLov>
+                                            </td>
+
+
+                                            <td style="width:150px;max-width:150px;min-width:150px;"
+                                                *ngIf="item.ShowFirstDatePicker(item)">
+                                                <LogDatePicker 
+                                                    [InputType]="'date'" 
+                                                    [HideColumns]="true"
+                                                    [IsFreeValue]="true" 
+                                                    [NoValidation]="true"
+                                                    [SelectedDateValue]="item.FieldValue"
+                                                    (ValueChanged)="item.DatePickerCondationValueChange($event)"
+                                                    [DataContext]="item">
+                                                </LogDatePicker>
+                                            </td>
+
+                                            <td *ngIf="item.ShowSecondDatePicker(item)" style="width:7px;">
+                                                <div style="width:7px;"></div>
+                                            </td>
+
+                                            <td style="width:150px;max-width:150px;min-width:150px;"
+                                                *ngIf="item.ShowSecondDatePicker(item)">
+                                                <LogDatePicker 
+                                                    [InputType]="'date'" 
+                                                    [HideColumns]="true"
+                                                    [IsFreeValue]="true" 
+                                                    [NoValidation]="true"
+                                                    [SelectedDateValue]="item.FieldValue2"
+                                                    (ValueChanged)="item.SecondDatePickerCondationValueChange($event)"
+                                                    [DataContext]="item">
+                                                </LogDatePicker>
+                                            </td>
+
+                                            <td *ngIf="item.ShowDateGroups(item) && item.Operator != 'Current'" style="width:7px;">
+                                                <div style="width:7px;"></div>
+                                            </td>
+
+                                            <td *ngIf="item.ShowDateGroups(item)" style="width:150px;max-width:150px;min-width:150px;">
+                                                <ComboBox  (SelectedItemChanged)="item.DateGroupCodeChange($event)"
+                                                           [ItemsSource]="DateGroupCodes" 
+                                                           [SelectedItem]="item.DateGroupCode"
+                                                           style="width: 70px;">
+                                                </ComboBox>
+                                            </td>
+                                                  
+                                            <td colspan="5">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <WidgetFilter [DataSource]="item" [EntityId]="EntityId">
+                                    </WidgetFilter>
+                                </div>
+                            </div>
+                            <div class="GroupItem" *ngIf="item.IsGroup == true" style="width:620px;">
+                                <div style="display: table-cell;vertical-align: middle;">
+                                    <div class="Operator">
+                                        <ComboBox *ngIf="item" (SelectedItemChanged)="item.AndOrOpsChanged($event)"
+                                            [ItemsSource]="item.AndOrOps" [SelectedItem]="item.AndOr"></ComboBox>
+                                    </div>
+                                </div>
+                                <div class="Filters">
+                                    <div class="FilterItem">
+                                        <WidgetFilter [DataSource]="item" [EntityId]="EntityId" [DashboardId] = "DashboardId">
+                                        </WidgetFilter>
+                                        <div *ngIf="FilterItems.length > 0 && item.IsGroup == true"
+                                            style="margin-top: 10px;margin-left: 6px;">
+                                            <table>
+                                                <tr>
+                                                    <td style="width:1%;"></td>
+                                                    <td style="width:1%;"><span class="LinkBtn"
+                                                            (click)="AddFilterToGroup(item)">Add Filter</span></td>
+                                                    <td style="width:1%;"></td>
+                                                    <td style="width:10%;"><span class="LinkBtn"
+                                                            (click)="AddGroup(item)">Add Group</span></td>
+                                                    <td style="width:4%;"></td>
+                                                    <td style="width:30%;"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="4"></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

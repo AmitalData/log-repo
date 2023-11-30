@@ -13,6 +13,7 @@ import {FeatureLocator} from '../../../../../Infrastructure/Utilities/FeatureLoc
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import {GroupByPipe} from '../../../../../Infrastructure/Pipes/GroupByPipe';
 import {DocumentTypeTemplatePM} from '../../../../../Common/EntityPMs/DocumentTypeTemplatePM';
+import { AppTool } from 'Infrastructure/Tools';
 
 @Component({
     
@@ -97,7 +98,8 @@ export class AddDocumentTypeFromLibraryComponent implements OnInit {
     Load() {
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
         //var isfilter = FeatureLocator.HasFeaturePermession("DocumentType", "DOCUMENTTYPE") ?true:false;
-        this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibrary(this.ObjectTableId, SessionInfo.LoggedUserTenant, true, this.TransportModeId, this.ShipmentlevelCode).subscribe((res:any) => {
+        var objectTableId = AppTool.IsNullOrEmpty(this.ChildObjectTableId) ? this.ObjectTableId : this.ChildObjectTableId;
+        this._documentTypeTemplateListExtendedService.GetDocumentTypeTemplatesFromLibrary(objectTableId, SessionInfo.LoggedUserTenant, true, this.TransportModeId, this.ShipmentlevelCode).subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;

@@ -20,7 +20,7 @@ export class EntityStatusPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -78,6 +78,26 @@ export class EntityStatusPM {
     private displayName: string;
     public get DisplayName() { return this.displayName; }
     public set DisplayName(newValue: string) { if (this.displayName != newValue) { this.displayName = newValue; this.MarkAsDirty("DisplayName"); } }
+       
+	 
+    private statusLocalWeight: number;
+    public get StatusLocalWeight() { return this.statusLocalWeight; }
+    public set StatusLocalWeight(newValue: number) { if (this.statusLocalWeight != newValue) { this.statusLocalWeight = newValue; this.MarkAsDirty("StatusLocalWeight"); } }
+       
+	 
+    private entityStatusTypeCode: string;
+    public get EntityStatusTypeCode() { return this.entityStatusTypeCode; }
+    public set EntityStatusTypeCode(newValue: string) { if (this.entityStatusTypeCode != newValue) { this.entityStatusTypeCode = newValue; this.MarkAsDirty("EntityStatusTypeCode"); } }
+       
+	 
+    private allowPartial: boolean;
+    public get AllowPartial() { return this.allowPartial; }
+    public set AllowPartial(newValue: boolean) { if (this.allowPartial != newValue) { this.allowPartial = newValue; this.MarkAsDirty("AllowPartial"); } }
+       
+	 
+    private isDigitalPortal: boolean;
+    public get IsDigitalPortal() { return this.isDigitalPortal; }
+    public set IsDigitalPortal(newValue: boolean) { if (this.isDigitalPortal != newValue) { this.isDigitalPortal = newValue; this.MarkAsDirty("IsDigitalPortal"); } }
        
 	 
 

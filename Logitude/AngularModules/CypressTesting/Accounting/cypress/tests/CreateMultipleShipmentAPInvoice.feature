@@ -1,4 +1,4 @@
-@smoke @release @stable @all
+@smoke @smoke1 @all
 Feature: Create multiple shipment AP Invoice
   After the user logging in the system and navigate to customers workspace
   will create a customer as shipper in the new shipments
@@ -91,9 +91,9 @@ Feature: Create multiple shipment AP Invoice
       | InvoiceAmount       | 50          |
       | InvoiceCurrency     | EUR         |
       | InvoiceExchangeRate | 4           |
-      | InvoiceDate         | Today       |
+      | InvoiceDate         | 27/9/2021   |
       | PaymentTerms        | Cash        |
-      | DueDate             | Today       |
+      | DueDate             | 27/9/2021   |
       | VatNo               | 5           |
       | VATType             | Zero        |
       | Branch              | Main Office |

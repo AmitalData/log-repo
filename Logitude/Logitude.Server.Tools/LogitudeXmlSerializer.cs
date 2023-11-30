@@ -16,34 +16,38 @@ namespace Logitude.Server.Tools
 
         public static byte[] SerializeObject<T>(T myObject)
         {
-            
-            MemoryStream memstream = new MemoryStream();
-            XmlSerializer serilaizer = new XmlSerializer(typeof(T));
-            serilaizer.Serialize(memstream, myObject);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
+
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                XmlSerializer serilaizer = new XmlSerializer(typeof(T));
+                serilaizer.Serialize(memstream, myObject);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
 
 
-            return bytearray;
+                return bytearray;
+            }
         }
 
 
         public static string SerializeObjectToXmlElementString<T>(T myObject)
         {
 
-            MemoryStream memstream = new MemoryStream();
-            XmlSerializer serilaizer = new XmlSerializer(typeof(T));
-            serilaizer.Serialize(memstream, myObject);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            memstream.Seek(0, SeekOrigin.Begin);
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                XmlSerializer serilaizer = new XmlSerializer(typeof(T));
+                serilaizer.Serialize(memstream, myObject);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                memstream.Seek(0, SeekOrigin.Begin);
 
-            XElement element = XElement.Load(memstream);
+                XElement element = XElement.Load(memstream);
 
-            return element.ToString();
+                return element.ToString();
+            }
 
         }
 
@@ -51,69 +55,93 @@ namespace Logitude.Server.Tools
         public static string SerializeObjectToElementString<T>(T myObject, Type[] knowntypes = null)
         {
 
-            MemoryStream memoryStream = new MemoryStream();
-
-            var serializer = new DataContractSerializer(typeof(T));
-            if (knowntypes != null)
+            using (MemoryStream memoryStream = new MemoryStream())
             {
-                serializer = new DataContractSerializer(typeof(T), knowntypes);
 
+                var serializer = new DataContractSerializer(typeof(T));
+                if (knowntypes != null)
+                {
+                    serializer = new DataContractSerializer(typeof(T), knowntypes);
+
+                }
+                serializer.WriteObject(memoryStream, myObject);
+
+                memoryStream.Seek(0, SeekOrigin.Begin);
+
+                var reader = new StreamReader(memoryStream, Encoding.UTF8);
+                string content = reader.ReadToEnd();
+                content = content.Replace(" />", "/>");
+
+                return content;
             }
-            serializer.WriteObject(memoryStream, myObject);
-
-            memoryStream.Seek(0, SeekOrigin.Begin);
-
-            var reader = new StreamReader(memoryStream, Encoding.UTF8);
-            string content = reader.ReadToEnd();
-            content = content.Replace(" />", "/>");
-
-            return content;
 
 
         }
 
+        public static string SerializeObjectToXmlElementStringWithoutIndentation<T>(T objectToBeSerialized)
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            XmlSerializerNamespaces namespaces = new XmlSerializerNamespaces();
+            namespaces.Add("", ""); // Add an empty namespace to remove any namespace declarations
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                OmitXmlDeclaration = true, // Remove the XML declaration
+                Indent = false // Disable indentation and new lines
+            };
+            using (var stringWriter = new StringWriter())
+            {
+                using (var xmlWriter = XmlWriter.Create(stringWriter, settings))
+                {
+                    serializer.Serialize(xmlWriter, objectToBeSerialized, namespaces);
+                }
+                return stringWriter.ToString();
+            }
+        }
 
-        
         public static string SerializeObjectToXmlString<T>(T myObject , bool useObjectGetType = false)
         {
-            MemoryStream memstream = new MemoryStream();
-            XmlSerializer serilaizer = new XmlSerializer(useObjectGetType ? myObject.GetType() : typeof(T));
-            serilaizer.Serialize(memstream, myObject);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            memstream.Seek(0, SeekOrigin.Begin);
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                XmlSerializer serilaizer = new XmlSerializer(useObjectGetType ? myObject.GetType() : typeof(T));
+                serilaizer.Serialize(memstream, myObject);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                memstream.Seek(0, SeekOrigin.Begin);
 
-            XmlDocument doc = new XmlDocument();
-            doc.Load(memstream);
+                XmlDocument doc = new XmlDocument();
+                doc.Load(memstream);
 
-            return doc.InnerXml;
+                return doc.InnerXml;
+            }
         }
 
-        public static string SerializeObjectToUTF8XmlString<T>(T myObject)
+        public static string SerializeObjectToUTF8XmlString<T>(T myObject, bool useObjectGetType = false)
         {
 
-            MemoryStream memstream = new MemoryStream();
-            XmlSerializer serilaizer = new XmlSerializer(typeof(T));
-            var streamWriter = new StreamWriter(memstream, System.Text.Encoding.UTF8);
-            serilaizer.Serialize(streamWriter, myObject);
-            byte[] utf8EncodedXml = memstream.ToArray();
-            string xml = Encoding.UTF8.GetString(utf8EncodedXml);
-            string _byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
-            if (xml.StartsWith(_byteOrderMarkUtf8))
+            using (MemoryStream memstream = new MemoryStream())
             {
-                xml = xml.Remove(0, _byteOrderMarkUtf8.Length);
+                XmlSerializer serilaizer = new XmlSerializer(useObjectGetType ? myObject.GetType() : typeof(T));
+                var streamWriter = new StreamWriter(memstream, System.Text.Encoding.UTF8);
+                serilaizer.Serialize(streamWriter, myObject);
+                byte[] utf8EncodedXml = memstream.ToArray();
+                string xml = Encoding.UTF8.GetString(utf8EncodedXml);
+                string _byteOrderMarkUtf8 = Encoding.UTF8.GetString(Encoding.UTF8.GetPreamble());
+                if (xml.StartsWith(_byteOrderMarkUtf8))
+                {
+                    xml = xml.Remove(0, _byteOrderMarkUtf8.Length);
+                }
+                // doc.LoadXml(xml);
+                //memstream.Seek(0, SeekOrigin.Begin);
+                //var reader = new StreamReader(memstream, Encoding.UTF8);
+                //string content = reader.ReadToEnd();
+                //memstream.Seek(0, SeekOrigin.Begin);
+
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(xml);
+
+                return doc.InnerXml;
             }
-            // doc.LoadXml(xml);
-            //memstream.Seek(0, SeekOrigin.Begin);
-            //var reader = new StreamReader(memstream, Encoding.UTF8);
-            //string content = reader.ReadToEnd();
-            //memstream.Seek(0, SeekOrigin.Begin);
-
-            XmlDocument doc = new XmlDocument();
-            doc.LoadXml(xml);
-
-            return doc.InnerXml;
         }
 
         public static string SerializeObjectToJosnString<T>(T myObject)
@@ -177,13 +205,25 @@ namespace Logitude.Server.Tools
         public static T DeserializeObject<T>(byte[] byteData)
         {
 
-            MemoryStream memstream = new MemoryStream(byteData);
-            XmlSerializer serilaizer = new XmlSerializer(typeof(T));
-     
-            return (T)serilaizer.Deserialize(memstream);
+            using (MemoryStream memstream = new MemoryStream(byteData))
+            {
+                XmlSerializer serilaizer = new XmlSerializer(typeof(T));
+
+                return (T)serilaizer.Deserialize(memstream);
+            }
              
 
         }
-  
+
+        public static object DeserializeObject(byte[] byteData, Type type)
+        {
+            using (MemoryStream memstream = new MemoryStream(byteData))
+            {
+                XmlSerializer serilaizer = new XmlSerializer(type);
+
+                return serilaizer.Deserialize(memstream);
+            }
+        }
+
     }
 }

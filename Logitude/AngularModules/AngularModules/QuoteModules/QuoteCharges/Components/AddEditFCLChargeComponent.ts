@@ -39,12 +39,22 @@ export class AddEditFCLChargeComponent implements OnDestroy {
     private IsHyprid: boolean;
     private ChargesTypeCode: string;
     private PropertyChangedEvent: any = null;
-
+    private QuoteValidator;
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
+        this.QuoteValidator = new QuoteValidator();
         this.ItemsSource = new ObservableCollection([]);
         this.HideFCLAllIn = SessionLocator.TenantPM.HideFCLAllIn;
         this.IsHyprid = SessionLocator.TenantPM.IsHybrid;
     }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
     private propertiesChanges = [];
     private ListenPropertyChanged() {
 
@@ -64,6 +74,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
     }
 
     SetDataContext(dataContext: FCLQuoteChargeItem) {
+        this.SetIsUsingVirtuallization();
         this.QuotePM = dataContext.QuotePM;
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;
@@ -86,7 +97,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
     }
     BuildQueryFilters() {
         this.MeasurementsQueryFilters = new ApiQueryFilters();
-        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+        this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "Exclude", false, false, false, "string", false, true, true);
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
@@ -139,13 +150,15 @@ export class AddEditFCLChargeComponent implements OnDestroy {
         this.CheckChargeTypeDuplication();
 
         if (this.IsHyprid && this.CheckChargeTypeDuplicationFlag) {
-            var quoteValidator: QuoteValidator = new QuoteValidator();
-            quoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, this.errors);
+          
+            this.QuoteValidator.CheckDuplicateInCharges(this.QuotePM, this.EntityPM, this.errors);
         }
 
         if (this.EntityPM.ChargesGroupCode == "FRT") {
-            if (this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT" && d != this.EntityPM).length > 0) {
-                this.errors.push("Freight Charge already added");
+
+            var freightError = this.QuoteValidator.ValidateFreightQuoteCharges(this.QuotePM, this.EntityPM);
+            if (freightError) {
+                this.errors.push(freightError);
             }
         }
 
@@ -214,7 +227,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
             }
 
             this.DataContext.fatherComponent.OnPercentForeignAmountChanged();
-
+            this.Father.IsAllowingMultipleFreightChargesMethod();
             if (!AppTool.IsNullOrEmpty(this.DataContext.TariffId) && this.EntityPM.IsDirty && !this.DataContext.IsNew) {
                 var property = this.propertiesChanges.filter(a => a == "CostUnitPrice" || a == "CostTotalAmount" || a == "CostCurrencyId"
                     || a == "CostContainerType1UnitPrice" || a == "CostContainerType2UnitPrice" || a == "CostContainerType3UnitPrice"
@@ -293,6 +306,7 @@ export class AddEditFCLChargeComponent implements OnDestroy {
         this.myCloner.AddField('SaleCurrencyId');
         this.myCloner.AddField('SaleExchangeRate');
         this.myCloner.AddField('SaleIsFixedRate');
+        this.myCloner.AddField('MarkUpCurrencyId');
         this.myCloner.AddEntity(this.EntityPM);
         this.myCloner.AddEntity(this.DataContext.QuotePM);
     }

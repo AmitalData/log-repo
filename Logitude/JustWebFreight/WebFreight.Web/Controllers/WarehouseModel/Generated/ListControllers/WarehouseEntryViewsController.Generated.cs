@@ -38,6 +38,7 @@ using Logitude.WarehouseLib.Data.EntityPOCOs;
 using Logitude.WarehouseLib.BL.EntityPMs;
 using Logitude.WarehouseLib.Data;
 using Logitude.WarehouseLib.BL;
+using Logitude.BL.Helpers;
 using Logitude.WarehouseLib.Data.EntityLists;
 using Logitude.WarehouseLib.BL.EntityUpdateServices;
 using Logitude.WarehouseLib.Data.EntityListQueryServices;
@@ -63,6 +64,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
                 WarehouseEntryListQueryService warehouseEntryQuery = new WarehouseEntryListQueryService(MyContext);
                 WarehouseEntryList warehouseEntryList = warehouseEntryQuery.GetSingle(id);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("WarehouseEntry",  authToken.Tenant, new List<WarehouseEntryList> { warehouseEntryList }.Cast<object>().ToList());
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  warehouseEntryList);
@@ -86,6 +89,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
                 WarehouseEntryListQueryService warehouseEntryQuery = new WarehouseEntryListQueryService(MyContext);
                 List<WarehouseEntryList> result = warehouseEntryQuery.GetList(authToken.Tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("WarehouseEntry",  authToken.Tenant, result.Cast<object>().ToList());
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -154,7 +159,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
 
                         }
                         else
@@ -184,7 +189,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
 
                         }
                         else
@@ -197,16 +202,29 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IWarehouseContext MyContext = WarehouseContext.GetContext(tenant);
 				WarehouseEntryListQueryService warehouseEntryQuery = new WarehouseEntryListQueryService(MyContext);
 
-                List<WarehouseEntryList> entityLists = warehouseEntryQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "WarehouseEntry",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<WarehouseEntryList> entityLists = warehouseEntryQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = warehouseEntryQuery.GetListCount(queryOperations, tenant);
+                    int count = warehouseEntryQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
                     response.Count = count;
                 }
 
                 response.Result = entityLists;
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("WarehouseEntry",  authToken.Tenant, entityLists.Cast<object>().ToList());
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

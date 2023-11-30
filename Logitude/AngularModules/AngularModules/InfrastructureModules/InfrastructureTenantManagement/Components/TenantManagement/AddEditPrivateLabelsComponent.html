@@ -148,9 +148,9 @@
 
     .SmallLogo {
         position: relative;
-        right: 70px;
         bottom: 60px;
         font-size: 11px;
+        left: 10px;
     }
 </style>
 
@@ -222,7 +222,7 @@
                                                         <LogLabel [Text]="'Name'" [ObjectFieldName]="'PrivateLabelName'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
+                                                    <td style="width:380px;">
                                                         <LogTextBox [ObjectFieldName]="'PrivateLabelName'" [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
@@ -233,11 +233,11 @@
                                                 <!-- Short Name -->
                                                 <tr class="FormFieldRow">
 
-                                                    <td>
+                                                    <td style="width:130px">
                                                         <LogLabel [Text]="'Short Name'" [ObjectFieldName]="'PrivateLabelShortName'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
+                                                    <td style="width:380px;">
                                                         <LogTextBox [ObjectFieldName]="'PrivateLabelShortName'" [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
@@ -249,11 +249,11 @@
                                                 <!-- URL -->
                                                 <tr class="FormFieldRow">
 
-                                                    <td>
+                                                    <td style="width:130px">
                                                         <LogLabel [Text]="'URL'" [ObjectFieldName]="'PrivateLabelUrl'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
+                                                    <td style="width:380px;">
                                                         <LogTextBox [ObjectFieldName]="'PrivateLabelUrl'" [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
@@ -265,12 +265,28 @@
                                                 <!-- Domain -->
                                                 <tr class="FormFieldRow">
 
-                                                    <td>
+                                                    <td style="width:130px">
                                                         <LogLabel [Text]="'Domain'" [ObjectFieldName]="'PrivateLabelDomain'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
+                                                    <td style="width:380px;">
                                                         <LogTextBox [ObjectFieldName]="'PrivateLabelDomain'" [ObjectTableName]="ObjectTableName"
+                                                                    [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
+                                                    </td>
+
+                                                    <td></td>
+
+                                                </tr>
+
+                                                <!-- Filing Inbox Domain -->
+                                                <tr class="FormFieldRow">
+
+                                                    <td style="width:130px">
+                                                        <LogLabel [Text]="'Filing Inbox Domain'" [ObjectFieldName]="'FilingInboxDomain'" [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+                                                    <td style="width:380px;">
+                                                        <LogTextBox [ObjectFieldName]="'FilingInboxDomain'" [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext" [HideLastColumn]="true"></LogTextBox>
                                                     </td>
 
@@ -281,11 +297,11 @@
                                                 <!-- Contact Us Email -->
                                                 <tr class="FormFieldRow">
 
-                                                    <td>
+                                                    <td style="width:130px">
                                                         <LogLabel [Text]="'Contact Us Email'" [ObjectFieldName]="'ContactUsEmail'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
+                                                    <td style="width:380px;">
                                                         <LogTextBox [ObjectFieldName]="'ContactUsEmail'" [ObjectTableName]="ObjectTableName"
                                                                     [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                     </td>
@@ -297,16 +313,17 @@
                                                 <!-- Hybrid Partner -->
                                                 <tr class="FormFieldRow">
 
-                                                    <td>
+                                                    <td style="width:130px">
                                                         <LogLabel [Text]="'Hybrid Partner'" [ObjectFieldName]="'HybridPartnerId'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
+                                                    <td style="width:380px;">
                                                         <LogLov [ObjectFieldName]="'HybridPartnerId'"
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [SelectedValue]="HybridPartnerId"
                                                                 [DataContext]="DataContext"
                                                                 [DisplayMemberPath]="'Name'"
+                                                                [RunToggleMode]="true"
                                                                 [LookUpTableName]="'HybridPartner'"
                                                                 [HideColumns]="true">
                                                         </LogLov>
@@ -316,50 +333,139 @@
 
                                                 </tr>
 
+                                                <!-- Distributor -->
                                                 <tr class="FormFieldRow">
 
-                                                    <!-- Receive All Statuses -->
-                                                    <td>
-                                                        <LogLabel [Text]="'Receive All Statuses'" [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName"
+                                                    <td style="width:130px">
+                                                        <LogLabel [Text]="'Distributor'" [ObjectFieldName]="'DistributorCode'" [ObjectTableName]="ObjectTableName"
                                                                   [DataContext]="DataContext"></LogLabel>
                                                     </td>
-                                                    <td>
-                                                        <LogCheckBox [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                    <td style="width:380px;">
+                                                        <LogLov [ObjectFieldName]="'DistributorCode'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [SelectedValue]="DistributorCode"
+                                                                [DataContext]="DataContext"
+                                                                [DisplayMemberPath]="'EnglishName'"
+                                                                [LookUpTableName]="'Distributor'"
+                                                                [HideColumns]="true">
+                                                        </LogLov>
                                                     </td>
 
                                                     <td></td>
 
                                                 </tr>
 
+                                                <!-- Receive All Statuses -->
                                                 <tr class="FormFieldRow">
-
-                                                    <!-- Inactive -->
                                                     <td>
-                                                        <LogLabel [Text]="'In Active'" [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
-                                                                  [DataContext]="DataContext"></LogLabel>
-                                                    </td>
-                                                    <td>
-                                                        <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
-                                                    </td>
+                                                        <div style="display:inline-flex;width:310px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [Text]="'Receive All Statuses'" [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'ReceiveAllStatuses'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
 
-                                                    <td></td>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Inactive -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <div style="display:inline-flex;width:310px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [Text]="'In Active'" [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
+
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            </div>
+                                                        </div>
+                                                    </td>
 
                                                 </tr>
 
-
+                                                <!-- HasLogboxAccess -->
                                                 <tr class="FormFieldRow">
-
-                                                    <!-- HasLogboxAccess -->
                                                     <td>
-                                                        <LogLabel [Text]="'Has Logbox Access'" [ObjectFieldName]="'HasLogboxAccess'" [ObjectTableName]="ObjectTableName"
-                                                                  [DataContext]="DataContext"></LogLabel>
+                                                        <div style="display:inline-flex;width:310px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [Text]="'Has Logbox Access'" [ObjectFieldName]="'HasLogboxAccess'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
+
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'HasLogboxAccess'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            </div>
+                                                        </div>
                                                     </td>
+                                                </tr>
+
+                                                <!-- IsCustomsActivated -->
+                                                <tr class="FormFieldRow">
                                                     <td>
-                                                        <LogCheckBox [ObjectFieldName]="'HasLogboxAccess'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                        <div style="display:inline-flex;width:310px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [Text]="'Is Customs Activated'" [ObjectFieldName]="'IsCustomsActivated'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
+
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'IsCustomsActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            </div>
+                                                        </div>
                                                     </td>
+                                                </tr>
 
-                                                    <td></td>
+                                                <!-- IsExportActivated -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <div style="display:inline-flex;width:310px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [Text]="'Is Export Activated'" [ObjectFieldName]="'IsExportActivated'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
 
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'IsExportActivated'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- CreateShipmentsWithoutDocs -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <div style="display:inline-flex;width:310px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [ObjectFieldName]="'CreateShipmentsWithoutDocs'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'CreateShipmentsWithoutDocs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- CreateOcceanShipmentsWithoutDocs -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <div style="display:inline-flex;width:310px">
+                                                            <div style="display:inline;width:auto">
+                                                                <LogLabel [ObjectFieldName]="'CreateOShipmentsWithoutDocs'" [ObjectTableName]="ObjectTableName"
+                                                                          [DataContext]="DataContext"></LogLabel>
+                                                            </div>
+                                                            <div style="display:inline;width:auto;margin-left:5px">
+                                                                <LogCheckBox [ObjectFieldName]="'CreateOShipmentsWithoutDocs'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                 </tr>
 
                                                 <tr class="FormFieldRow">
@@ -377,16 +483,19 @@
                                                     </td>
 
                                                     <td>
-                                                        <table style="position: relative; right: 80px;">
+                                                        <table style="position: relative; ">
                                                             <tr>
 
-                                                                <td style="width:80px">
+                                                                <td style="width:75px">
+                                                                </td>
+
+                                                                <td style="width:165px">
                                                                     <LogLabel [Text]="'Small Logo'" [ObjectFieldName]="'SmallLogo'" [ObjectTableName]="ObjectTableName"
                                                                               [DataContext]="DataContext"></LogLabel>
                                                                 </td>
 
                                                                 <td>
-                                                                    <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px; left: 55px;" class="Button" (click)="OpenUpLoadSmallLogo()">Upload</button>
+                                                                    <button [class.HyperlinkDisabled]="DemoMessageVisibility" style="margin-left: -25px; margin-right: -20px;width: 57px;" class="Button" (click)="OpenUpLoadSmallLogo()">Upload</button>
                                                                     <input [attr.id]="LogoSmallFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG,.PNG" type="file" (change)="UploadogoFileSmall($event)" style="display:none" class="upload" />
 
                                                                 </td>
@@ -434,18 +543,20 @@
                                                     <td style="vertical-align:top">
                                                         <table>
                                                             <tr>
+                                                                <td style="width:80px">
+
                                                                 <td>
                                                                     <span class="SmallLogo"> Size: (239X85 pixels)  </span>
                                                                 </td>
                                                                 <td style="vertical-align:top">
-                                                                    <div style="width:150px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px;position: relative; right: 110px;">
+                                                                    <div style="width:150px;vertical-align:top; border-right:2px solid #E4E3E1;border-left:2px solid #E4E3E1;border-bottom:2px solid #E4E3E1;border-radius:5px;position: relative;">
                                                                         <table style="height:100%;width:100%; ">
 
                                                                             <tr>
 
                                                                                 <td>
                                                                                     <div style="background-color:#EDEDED;height:25px;color:black;border-top:2px solid #E4E3E1;border-bottom:0px solid gray;border-radius:0px">
-                                                                                        <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central">Small Logo</p>
+                                                                                        <p style="font-size:12px;margin-left:5px;margin-top:0px;color:#1B90CB;text-align:left;vertical-align:central;margin-right: 20px;">Small Logo</p>
                                                                                     </div>
                                                                                 </td>
                                                                             </tr>
@@ -669,6 +780,109 @@
                                         </td>
                                     </tr>
 
+                                    <!-- QueryFiltersHighlightColor -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width:200px;">
+                                            <LogLabel [Text]="'Query Filters High light Color'" [ObjectFieldName]="'QueryFiltersHighlightColor'" [ObjectTableName]="'ObjectTableName'"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td colspan="3">
+                                            <div style="width:70px; direction: ltr;" float-start>
+                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'QueryFiltersHighlightColorCode'"
+                                                            [ObjectTableName]="'ObjectTableName'" [Text]="QueryFiltersHighlightColorCode" [DataContext]="DataContext">
+                                                </LogTextBox>
+                                            </div>
+                                            <div float-start style="width: 5px;height: 10px;"></div>
+                                            <div class="color-picker-wrapper" float-start>
+                                                <input type="color" [(ngModel)]="QueryFiltersHighlightColorCode" class="colorPicker" id="color" [style.opacity]="QueryFiltersHighlightColorOpacity/100"
+                                                       value="">
+                                            </div>
+                                            <div float-start style="width: 20px;height: 10px;"></div>
+                                            <div float-start style="color: #757575;padding: 5px 5px 0 5px">
+                                                Opacity:
+                                            </div>
+                                            <div float-start class="range">
+                                                <input [(ngModel)]="QueryFiltersHighlightColorOpacity" class="slider"
+                                                       id="slider0" min="25" max="100" step="25" type="range" />
+                                                <span style="position: absolute;top: 7px; padding: 0 7px;">{{QueryFiltersHighlightColorOpacity}}%</span>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <!-- Main Tab Highlight Color -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width:200px;">
+                                            <LogLabel [Text]="'Main Tab Highlight Color'" [ObjectFieldName]="'MainTabHighlightColor'" [ObjectTableName]="'ObjectTableName'"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td colspan="3">
+                                            <div style="width:70px; direction: ltr;" float-start>
+                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'MainTabHighlightColorCode'"
+                                                            [ObjectTableName]="'ObjectTableName'" [Text]="MainTabHighlightColorCode" [DataContext]="DataContext">
+                                                </LogTextBox>
+                                            </div>
+                                            <div float-start style="width: 5px;height: 10px;"></div>
+                                            <div class="color-picker-wrapper" float-start>
+                                                <input type="color" [(ngModel)]="MainTabHighlightColorCode" class="colorPicker" id="color" [style.opacity]="MainTabHighlightColorOpacity/100"
+                                                       value="">
+                                            </div>
+                                            <div float-start style="width: 20px;height: 10px;"></div>
+                                            <div float-start style="color: #757575;padding: 5px 5px 0 5px">
+                                                Opacity:
+                                            </div>
+                                            <div float-start class="range">
+                                                <input [(ngModel)]="MainTabHighlightColorOpacity" class="slider"
+                                                       id="slider0" min="25" max="100" step="25" type="range" />
+                                                <span style="position: absolute;top: 7px; padding: 0 7px;">{{MainTabHighlightColorOpacity}}%</span>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+
+                                    <!-- Document Type Highlight Color -->
+                                    <tr class="FormFieldRow">
+                                        <td style="width:200px;">
+                                            <LogLabel [Text]="'Document Type Highlight Color'" [ObjectFieldName]="'DocumentTypeHighlightColor'" [ObjectTableName]="'ObjectTableName'"
+                                                      [DataContext]="DataContext"></LogLabel>
+                                        </td>
+
+                                        <td colspan="3">
+                                            <div style="width:70px; direction: ltr;" float-start>
+                                                <LogTextBox [HideColumns]="true" [ObjectFieldName]="'DocumentTypeHighlightColorCode'"
+                                                            [ObjectTableName]="'ObjectTableName'" [Text]="DocumentTypeHighlightColorCode" [DataContext]="DataContext">
+                                                </LogTextBox>
+                                            </div>
+                                            <div float-start style="width: 5px;height: 10px;"></div>
+                                            <div class="color-picker-wrapper" float-start>
+                                                <input type="color" [(ngModel)]="DocumentTypeHighlightColorCode" class="colorPicker" id="color" [style.opacity]="DocumentTypeHighlightColorOpacity/100"
+                                                       value="">
+                                            </div>
+                                            <div float-start style="width: 20px;height: 10px;"></div>
+                                            <div float-start style="color: #757575;padding: 5px 5px 0 5px">
+                                                Opacity:
+                                            </div>
+                                            <div float-start class="range">
+                                                <input [(ngModel)]="DocumentTypeHighlightColorOpacity" class="slider"
+                                                       id="slider0" min="25" max="100" step="25" type="range" />
+                                                <span style="position: absolute;top: 7px; padding: 0 7px;">{{DocumentTypeHighlightColorOpacity}}%</span>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
                                 </table>
 
 
@@ -679,8 +893,8 @@
                         <!--   Tab 3 Label-->
                         <div class="MediaFillRelative" [hidden]="SelectedTabCode != 'TOU'">
                             <div style="margin:10px" class="TabBody MediaFillAbsolute">
-                                <h3 style="color: #1B90CB;position: relative;margin: 8px;">Terms Of Use</h3> 
-                                <button  style="width:55px;position: relative; bottom: 30px; left: 180px;" class="Button" (click)="OpenUpLoadTemplateFile()">Upload</button>
+                                <h3 style="color: #1B90CB;position: relative;margin: 8px;margin-right: 100px;">Terms Of Use</h3> 
+                                <button  style="width:55px; bottom: 30px; margin-left: 180px;" class="Button" (click)="OpenUpLoadTemplateFile()">Upload</button>
                                 <!--accept=".xml,.XML"-->
                                 <input [attr.accept]="'.PDF'" [attr.id]="VersionDocumentId" type="file" (change)="UpLoadTemplateFileMethod($event)" style="display:none" class="upload" />
 

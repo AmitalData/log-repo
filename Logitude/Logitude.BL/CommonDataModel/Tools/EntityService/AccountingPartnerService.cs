@@ -24,6 +24,7 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.Helpers;
 using Logitude.BL.DataContracts;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -43,6 +44,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private ICommonDataContext objectContext;
         private CardExternalCodeByCurrencyRepository cardExternalCodeByCurrencyRepository;
         private ContactService contactService;
+       private  CardService cardService;
 
         public AccountingPartnerService(ICommonDataContext objectContext, int tenant)
         {
@@ -55,6 +57,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.cardContactRepository = new CardContactRepository(objectContext);
             this.cardExternalCodeByCurrencyRepository = new CardExternalCodeByCurrencyRepository(objectContext);
             this.GetLoggedContact();
+            cardService = new CardService(objectContext, tenant);
         }
 
         public AccountingPartnerService(ICommonDataContext objectContext, AccountingPartnerPM entityPM, string loggedContactId)
@@ -152,6 +155,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             }
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "AccountingPartner", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<AccountingPartnerPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "AccountingPartner");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
@@ -227,7 +231,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Update(entityCard);
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
-
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "AccountingPartner", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<AccountingPartnerPM> { entityPM }.Cast<object>().ToList() }).Update();
+            
+            cardService.HandleGLAccountCardData(entityCard.Id, entityCard.GLAccountId, entityPM.Tenant);
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "AccountingPartner");
             TableLastUpdateClass.UpdateTableHistory(entityPM.Tenant, "Card");
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
@@ -522,6 +528,16 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     #endregion
 
                     #endregion
+                }
+
+                if (isNewEntity)
+                {
+                    if (itemContactPM.SetAsPrimaryForCard)
+                    {
+                        entityPM.PrimaryContactId = itemContactPM.Id;
+                        entityPM.PrimaryContactPhone = itemContactPM.BusinessPhone;
+                        entityPM.PrimaryContactName = itemContactPM.EnglishName;
+                    }
                 }
 
                 CardContact newCardContact = new CardContact()

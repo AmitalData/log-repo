@@ -27,6 +27,9 @@ namespace Logitude.Accounting.BL.Validators
     }
     public interface IExternalReconcileDataProvider 
     {
+
+        BankAccountPM GetBankAccountByGLAccountId(string dAccountId, int tenant);
+
         BankAccountPM GetBankAccountFromTransferAccount(string myLedgerTransactionTransferInCreditAccountId, int tenant);//DO NOT USE OBJECT FROM DIFF TENANT
         BankAccountPM GetBankAccountFromReconcileExternalPageLineId(string reconcileExternalPageLineId, int tenant);
 

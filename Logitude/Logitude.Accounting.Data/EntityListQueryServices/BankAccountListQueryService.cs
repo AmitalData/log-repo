@@ -27,7 +27,14 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             IQueryable<BankAccountList> query = (from a in iQueryable.Include("GLAccount").Include("DeferredGLAccount").Include("TransferGLAcccount")
                                                  .Include("BankCode")
                                                  .Include("Currency")
-                                                 //.DefaultIfEmpty()
+                                                 join qBTotalOpenTransInBankViews in context.TotalOpenTransInBankViews
+                                                 on
+                                                 new { BankID = a.Id, Tenant = a.Tenant } equals
+                                                 new { BankID = qBTotalOpenTransInBankViews.Id, Tenant = qBTotalOpenTransInBankViews.Tenant }
+                                               //  a.Id equals qBTotalOpenTransInBankViews.Id
+                                                  into qBTotalOpenTransInBankViewsJoin
+                                                 from MyJoinpenTransInBankViews in qBTotalOpenTransInBankViewsJoin.DefaultIfEmpty()
+                                                     //.DefaultIfEmpty()
                                                  select new BankAccountList()
                                                  {
 
@@ -84,6 +91,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                      CurrencyCode = a.Currency == null ? null : a.Currency.Code,
                                                      CurrencySign = a.Currency == null ? null : a.Currency.Sign,
                                                      CurrencyId = a.CurrencyId,
+                                                     TotalOpenExternalTransactions= MyJoinpenTransInBankViews.TotalLedgerTransactionsCount.ToString(),
+                                                     TotalOpenPagesLines= MyJoinpenTransInBankViews.TotalReconcileExternalPageLinesCount.ToString(),
 
                                                  });
             return query;
@@ -99,14 +108,15 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 		}
 
 
-        public BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, int tenant)
+        public BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, string currencyId, int tenant)
         {
             IQueryable<BankAccount> accountQuery = (from a in context.BankAccounts
                                                     where a.Tenant == tenant 
                                                     && a.AccountNumber == accountNumber 
                                                     && a.BranchNumber == branchNumber
                                                     && a.BankId == bankId
-                                                  select a);
+                                                    && a.CurrencyId == currencyId
+                                                    select a);
 
             IQueryable<BankAccountList> accountListQuery = this.GetIqueryableList(accountQuery);
             List<BankAccountList> accountList = accountListQuery.ToList();

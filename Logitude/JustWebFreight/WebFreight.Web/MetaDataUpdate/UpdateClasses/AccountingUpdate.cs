@@ -646,15 +646,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 
         public void LoadOtherFields(IWebFreightContext context)
         {
+           
             //  ________________________________________________
             // |                                                |
             // |           MUST BE ADDED To LXML Files          |
             // |________________________________________________|
-            return; //
+          
             objectContext = context;
             textCodeRepository = new TextCodeRepository(objectContext);
 
             Dictionary<string, TextCode> textcodes = textCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a);
+            LoadTextCodes_ConsolidatedTaxReport(textcodes);
+            return;
             LoadTextCodes_General(textcodes);
             LoadTextCodes_JournalActionType(textcodes);
             LoadTextCodes_ChartOfAccounts(textcodes);
@@ -1572,6 +1575,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.F.Year", DefaultText = "Year", LocalDefaultText = "שנה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.F.YearLabel", DefaultText = "Year: ", LocalDefaultText = "שנה: ", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.RevenueExpenseType", DefaultText = "A year transfer account is undefined or is not configured correctly.", LocalDefaultText = "חשבון להעברת שנה אינו מוגדר או אינו מוגדר תקין.", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.TwoOrFourDigits", DefaultText = "Enter year in either two or four digits only", LocalDefaultText = "יש להזין שנה בשתי ספרות או בארבע ספרות בלבד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.PastYear", DefaultText = "Enter past years only", LocalDefaultText = "יש להזין שנים קודמות בלבד", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
         }
         #endregion
 
@@ -1610,6 +1615,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.EndDate", DefaultText = "End Date", LocalDefaultText = "תאריך סיום", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FailedWhilePerforming", DefaultText = "failed while performing", LocalDefaultText = "תקלה בביצוע", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NoVendors", DefaultText = "No Vendors found with Vat Number and Deduction File Number", LocalDefaultText = "לא אותרו ספקים עם תיק ניכויים ועם מספר עוסק מורשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FoundVatNumber", DefaultText = "Found Vat Number", LocalDefaultText = "אותר מספר עוסק מורשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
         }
         #endregion
 
@@ -1688,6 +1694,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccountsCSV.O.ReferenceDate", DefaultText = "Reference Date", LocalDefaultText = "תאריך אסמכתא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccountsCSV.O.Reference", DefaultText = "Reference #", LocalDefaultText = "מספר אסמכתא", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccountsCSV.O.ChartCode", DefaultText = "Chart of Accounts Code", LocalDefaultText = "קוד קבוצת מאזן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
+            AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccountsCSV.O.ControlAccount", DefaultText = "Control Account", LocalDefaultText = "חשבון מרכז", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccountsCSV.O.ChartType", DefaultText = "Chart of Accounts Type", LocalDefaultText = "סוג קבוצת מאזן", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccountsCSV.O.CurrencyCode", DefaultText = "Currency Code", LocalDefaultText = "קוד מטבע", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccountsCSV.O.ReconciliationMethod", DefaultText = "Reconciliation Method", LocalDefaultText = "שיטת התאמה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", }, textCodeRepository, textcodes);
@@ -1876,11 +1883,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
             AddTextCodes.AddTextCode(new TextCodeDetails()
             {
                 Code = "Journal.M.AllDateMustInit",
-                DefaultText = "All dates variable must initialize",
+                DefaultText = "All the dates must have a value",
                 ObjectTableId = objectTable.Id,
                 Tenant = 0,
                 TextCodeTypeCode = "M",
-                LocalDefaultText = "כל התאריכים חייבים אתחול"
+                LocalDefaultText = "חייבים להזין את כל שדות התאריכים"
             }, textCodeRepository, textcodes);
 
             AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Journal.M.YouShouldSelectTwoTransactions", DefaultText = "You should select at lease two transactions in order to create new reconcile", LocalDefaultText= "יש לבחור לפחות שתי תנועות על מנת ליצור התאמה חדשה", ObjectTableId = objectTable.Id, Tenant = 0, TextCodeTypeCode = "O", }, textCodeRepository, textcodes);

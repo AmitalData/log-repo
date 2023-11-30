@@ -15,4 +15,5 @@ export class QuoteEventNotesArgs {
     public NotesHeader: string = "Notes";
     public ShowClosingReason: boolean = false;
     public IsConvertQuoteType: boolean = false;
+    public ShowClosingReasonNotes: boolean = false;
 }

@@ -5,6 +5,7 @@ import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQuery
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import {ServiceHelper} from '../../../../Infrastructure/Utilities/ServiceHelper';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
     
@@ -57,6 +58,7 @@ export class DownloadAllFilesComponent {
     }
 
     SaveBtnCLicked() {
+        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Download all shipment docs" });
         this.SaveExcelFile(this.tenant, this.FileName);
     }
     RetryBtnClicked() {

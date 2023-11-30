@@ -98,13 +98,13 @@
 
                     <td style="width: 57px;">
                         <div>
-                            <button *ngIf="IsCancelVisibile" class="RedButton" (click)="CancelButtonClicked()">Cancel</button>
+                            <button *ngIf="IsCancelVisibile" class="RedButton" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                         </div>
                     </td>
 
 
                     <td *ngIf="IsCloseButtonVisibile" style="width: 57px;">
-                        <button class="RedButton" (click)="CloseButtonClicked()">Close</button>
+                        <button class="RedButton" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

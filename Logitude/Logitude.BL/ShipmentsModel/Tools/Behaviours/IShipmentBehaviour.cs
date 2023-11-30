@@ -1,9 +1,6 @@
 ﻿using Logitude.BL.ShipmentsModel.Tools.TraceEvents;
-using System;
+using Logitude.Infrastructure.Data.Models.AuditLog;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
 {
@@ -11,7 +8,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
     {
         bool ReceivablePricingUpdated { get; set; }
         bool DatesFromCrossDocsUpdated { get; set; }
-        void Handle();
+        void Handle(List<FieldChange> fieldChanges = null);
 
         void Save();
         void Trace(ShipmentTracing shipmentTracing);

@@ -24,6 +24,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.UpdatedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.MainEntityReference).HasMaxLength(20).IsUnicode(false);
             this.Property(t => t.MainEntityId).HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConfirmationNumber).HasMaxLength(30).IsUnicode(false);
+
             string dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
             {
@@ -58,6 +60,13 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Field9).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.Field10).HasMaxLength(250).IsUnicode(true);
             this.Property(t => t.ShipmentsNumbers).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.MasterNumbers).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.MasterShipmentNumbers).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.HouseNumbers).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.GlobalTaxCalculation).HasMaxLength(3).IsUnicode(false);
+            this.Property(t => t.ConcurrencyGUID).HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.ConnectedPaymentsNumbers).HasMaxLength(1000).IsUnicode(false);
+            this.Property(t => t.TotalEquation).IsMaxLength().IsUnicode(false);
 
             // Table & Column Mappings
             this.ToTable("APInvoices");
@@ -130,6 +139,16 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.TotalVATOnly).HasColumnName("TotalVATOnly");
             this.Property(t => t.PaidDate).HasColumnName("PaidDate");
             this.Property(t => t.ShipmentsNumbers).HasColumnName("ShipmentsNumbers");
+            this.Property(t => t.MasterNumbers).HasColumnName("MasterNumbers");
+            this.Property(t => t.MasterShipmentNumbers).HasColumnName("MasterShipmentNumbers");
+            this.Property(t => t.HouseNumbers).HasColumnName("HouseNumbers");
+            this.Property(t => t.GlobalTaxCalculation).HasColumnName("GlobalTaxCalculation");
+            this.Property(t => t.ConcurrencyGUID).HasColumnName("ConcurrencyGUID");
+            this.Property(t => t.IsEquipment).HasColumnName("IsEquipment");
+            this.Property(t => t.ConnectedPaymentsNumbers).HasColumnName("ConnectedPaymentsNumbers");
+            this.Property(t => t.TotalEquation).HasColumnName("TotalEquation");
+            this.Property(t => t.ConfirmationNumber).HasColumnName("ConfirmationNumber");
+
 
             // Relationships
             this.HasRequired(t => t.Status).WithMany().HasForeignKey(d => d.StatusCode);
@@ -143,6 +162,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasRequired(t => t.VendorCard).WithMany().HasForeignKey(d => d.VendorId);
             this.HasRequired(t => t.TransferStatus).WithMany().HasForeignKey(d => d.TransferStatusCode);
             this.HasOptional(t => t.ApprovedByUser).WithMany().HasForeignKey(d => d.ApprovedByUserId);
+            this.HasOptional(t => t.QBOGlobalTaxCalculation).WithMany().HasForeignKey(d => d.GlobalTaxCalculation);
         }
     }
 }

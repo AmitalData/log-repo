@@ -112,7 +112,30 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private string accountingEntityCode ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AccountingEntityCode  
+	   {
+	    
+	     get
+		{
+		   return accountingEntityCode;
+		 }
+		 set
+		 {
+		   if(accountingEntityCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AccountingEntityCode",OldValue=accountingEntityCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   accountingEntityCode=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

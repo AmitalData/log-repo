@@ -23,6 +23,9 @@ import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator'
 import { QuoteChargesBehaviours } from '../Behaviours/QuoteChargesBehaviours';
 import { QuoteTariffsBehaviours } from '../Behaviours/QuoteTariffsBehaviours';
 import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { TariffDomainService, SalesLocalCharges } from '../../../TariffModule/Services/TariffDomainService';
+import { MarkupCurrency } from '../../../Quote/Components/Shared/MarkupCurrency';
 
 @Component({
     selector: 'LCLChargesComponent',    
@@ -42,8 +45,13 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     public IsEditExchangeRateVisible: boolean = false;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsPriceCheckVisible: boolean = false;
+    public IsSalePriceCheckVisible: boolean = false;
     private entityResourceService: EntityResourceService = new EntityResourceService();
     public ComponentRef: any;
+    public IsAllowingMultipleFreightCharges: boolean = false;
+    private TariffList_Quote: QuoteChargePM[];
+    public IsMarkUpCurrencyHasFeatureToggle: boolean = false;
+    public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -51,8 +59,9 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.IsAdhoc = this.EntityPM.QuoteTypeCode == "A" ? true : false;
         this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+        this.SetIsUsingVirtuallization();
         this.ItemsSource = new ObservableCollection([]);
-
+        this.TariffList_Quote = [];
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
@@ -62,7 +71,10 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         }
 
         this.IsPriceCheckVisible = QuoteUtilities.IsPriceCheckVisible(this.EntityPM);
-        
+        if (FeatureLocator.HasFeaturePermession("Tariff", "SaleTariff")) {
+            this.IsSalePriceCheckVisible = true;
+        }
+        this.IsAllowingMultipleFreightChargesMethod();
         this.InitBehaviours();
 
         this.SetLabels();
@@ -71,7 +83,27 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         this.CheckUpdateQuantities();
         this.BuildItemsSource();
         this.InitializeProfit();
+        this.CheckMarkUpCurrencyFeatureToggle();
         this.Listen();
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
+    private CheckMarkUpCurrencyFeatureToggle() {
+        this.IsMarkUpCurrencyHasFeatureToggle = false;
+        var featureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QMU")[0];
+        if (featureToggle) {
+            this.IsMarkUpCurrencyHasFeatureToggle = true;
+        }
+    }
+
+    private IsAllowingMultipleFreightChargesMethod() {
+        this.IsAllowingMultipleFreightCharges = QuoteUtilities.IsAllowingMultipleFreightCharges(this.EntityPM);
     }
 
     public Behaviours: QuoteChargesBehaviours;
@@ -89,12 +121,19 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
     SetFeaturesAndFlags() {
         this.IsRegionalTaxVisible = this.Behaviours.IsRegionalTaxVisible();
     }
-
+    private SessionEvent: any = null;
     private TabSelectedEvent: any = null;
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null; 
     Listen() {
         if (this.entityArgs.EditComponent) {
+
+            this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+                if (s == "UpdateTariffSaleCharges") {
+                    this.CheckUpdateSalesCharges();
+                }
+
+            });
 
             this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                 if (isSaveSuccess) {
@@ -105,6 +144,15 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                     this.SetUIProperties();
                     this.BuildItemsSource();
                     this.BuildProfitData();
+                    if (this.IsGenerateSalesLocalCharges) {
+                        this.IsGenerateSalesLocalCharges = false;
+                        this.GenerateSalesLocalCharges();
+                    }
+                    if (this.IsUpdatingSalesCharges) {
+                        this.IsUpdatingSalesCharges = false;
+                        this.UpdateTariffSalesChargesLines();
+                    }
+
                 }
             });
 
@@ -136,6 +184,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         }
     }
     ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SessionEvent);
         AppTool.KillEventEmitter(this.TabSelectedEvent);
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
@@ -269,6 +318,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             this.OnPercentForeignAmountChanged();
             this.BuildItemsSource();
             this.ComputeTotals();
+            this.IsAllowingMultipleFreightChargesMethod();
         });
 
         this.Behaviours.DeleteCharge(itemComponent.EntityPM);
@@ -294,17 +344,21 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
         logWindow.Show('./QuoteModules/QuoteTabs/Components/Tariffs/TariffsComponent');
        
     }
+
     PriceCheck() {
         this.entityResourceService.getEntityResourceByTableName("TariffLine").subscribe((res1: any) => {
             ServiceLocator.SendTotangoUserActivity("Tariff", "Generate from Quote");
 
             var betweenDate: Date = DateTool.GetCurrentDateAsUtc();
+            var betweenDateHelpIconMassage: string = "Today's Date";
 
             if (this.EntityPM.DirectionId == "I") {
                 betweenDate = this.EntityPM.ETA;
+                betweenDateHelpIconMassage = this.EntityPM.ETA != null ? "ETA Date" : betweenDateHelpIconMassage;
             }
             else  {
                 betweenDate = this.EntityPM.ETD;
+                betweenDateHelpIconMassage = this.EntityPM.ETD != null ? "ETD Date" : betweenDateHelpIconMassage;
             }
 
             var tariffType = "";
@@ -319,6 +373,7 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             var WindowArgs: any =
             {
                 BetweenDate: betweenDate,
+                BetweenDateHelpIconMassage : betweenDateHelpIconMassage,
                 FromPort: this.EntityPM.FromPortId,
                 ToPort: this.EntityPM.ToPortId,
                 GrossWeight: this.EntityPM.GrossWeight,
@@ -346,6 +401,177 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             logWindow.Show("./TariffModule/Components/Workspaces/TariffSearchAirFreightPricesComponent");
         });
     }
+
+    private IsGenerateSalesLocalCharges = false;
+    GenerateSalesLocalChargesClicked() {
+        this.IsGenerateSalesLocalCharges = true;
+        this.entityArgs.EditComponent.SaveChanges();
+    }
+
+    GenerateSalesLocalCharges() {
+        var args = this.TariffBehaviours.GenerateSalesLocalCharges();
+        var tariffService: TariffDomainService = new TariffDomainService();
+        tariffService.GetAvailableSalesLocalChargesTariffs(args).subscribe((res: ServiceResponse) => {
+            if (!res.HasError && res.Result) {
+                var error = res.Result.Error;
+                if (error != null) {
+                    var msg = new MessageWindow();
+                    msg.Show(error);
+                }
+                else {
+                    var saleLocalCharges = res.Result.SalesLocalCharges;
+                    this.CreateQuoteSalesLocalCharges(saleLocalCharges);
+                }
+            }
+            else {
+                this.CurrentSession.CurrentEditComponent.ValidationErrorsList = res.ErrorsArray;
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    CreateQuoteSalesLocalCharges(tariffCharges) {
+        this.TariffList_Quote = [];
+        if (tariffCharges != null) {
+            tariffCharges.forEach((localCharge: SalesLocalCharges) => {
+                this.GenerateNewTariffQuoteCharge(localCharge);
+            });
+
+            this.TariffList_Quote.forEach((localCharge: QuoteChargePM) => {
+                this.AddTariffChargesToQuote_LCL(localCharge);
+            });
+        }
+    }
+
+    GenerateNewTariffQuoteCharge(item: any) {
+        var quoteCharge: QuoteChargePM = this.EntityPM.QuoteCharges.filter(d => d.ChargesTypeId == item.ChargeTypeId && d.SaleCurrencyId == item.CurrencyId && d.SaleMeasurementId == item.UnitOfMesurmentId && (d.SaleTariffId == item.TariffId || d.SaleTariffId == null))[0];
+        if (!quoteCharge) {
+            this.CreateNewTariffQuoteCharge(item);
+        }
+        else {
+            this.UpdateNewTariffQuoteCharge(item, quoteCharge);
+        }
+    }
+
+    CreateNewTariffQuoteCharge(item: any) {
+        this.Behaviours.ChargesTypeListService.getSingleFromCache(item.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var chargesType: ChargesTypeList = myResponse.Result;
+                var chargePM = new QuoteChargePM(this.EntityPM);
+                chargePM.ChargesTypeId = item.ChargeTypeId;
+                chargePM.ChargesTypeCode = chargesType.Code;
+                chargePM.ChargesTypeName = chargesType.EnglishName;
+                chargePM.ChargesTypeLocalName = chargesType.LocalName;
+                chargePM.SaleTariffId = item.TariffId;
+                chargePM.SaleTariffNumber = item.TariffNumber;
+                chargePM.SaleTariffLineId = item.TariffLineId;
+                chargePM.SaleTariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
+                chargePM.Tenant = this.EntityPM.Tenant;
+                chargePM.QuoteId = this.EntityPM.Id;
+                chargePM.UpdatedByUserId = SessionLocator.LoggedUserId;
+                chargePM.MarkUpTypeCode = "F";
+                chargePM.MarkUpValue = 0;
+                chargePM.QuoteTypeCode = this.EntityPM.QuoteTypeCode;
+                chargePM.CostCurrencyId = item.CurrencyId;
+                chargePM.CostCurrencyCode = this.Behaviours.GetCurrencyCode(item.CurrencyId);
+                chargePM.CostExchangeRate = this.Behaviours.GetCurrencyRate(item.CurrencyId);
+                chargePM.SaleCurrencyId = item.CurrencyId;
+                chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
+                chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
+                chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
+                chargePM.MarkUpCurrencyId = item.CurrencyId;
+
+                var measurementCode = item.UnitOfMesurmentCode;
+                var measurementId = item.UnitOfMesurmentId;
+                chargePM.SaleMinAmount = AppTool.Round(item.IsDifferentCurrency ? item.ActualMinPrice : item.MinPrice, 3);
+                var saleAmount = AppTool.Round(item.SaleTotalAmount, 2);
+                chargePM.SaleTotalAmount = saleAmount;
+                chargePM.SaleMeasurementCode = measurementCode;
+                chargePM.SaleMeasurementId = measurementId;
+                chargePM.CostMeasurementCode = measurementCode;
+                chargePM.CostMeasurementId = measurementId;
+                this.TariffList_Quote.push(chargePM);
+            }
+        });
+    }
+    UpdateNewTariffQuoteCharge(item: any, quoteCharge: QuoteChargePM) {
+        this.Behaviours.ChargesTypeListService.getSingleFromCache(item.ChargeTypeId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var chargesType: ChargesTypeList = myResponse.Result;
+                var chargePM: QuoteChargeItem = new QuoteChargeItem(quoteCharge, this, false);
+                chargePM.SaleTariffId = item.TariffId;
+                chargePM.SaleTariffNumber = item.TariffNumber;
+                chargePM.SaleTariffLineId = item.TariffLineId;
+                chargePM.SaleTariffVersion = item.VersionId != null ? item.VersionId.toString() : item.VersionId;
+                chargePM.MarkUpTypeCode = "F";
+                chargePM.MarkUpValue = 0;
+                chargePM.CostCurrencyId = item.CurrencyId;
+                chargePM.CostCurrencyCode = this.Behaviours.GetCurrencyCode(item.CurrencyId);
+                chargePM.CostExchangeRate = this.Behaviours.GetCurrencyRate(item.CurrencyId);
+                chargePM.SaleCurrencyId = item.CurrencyId;
+                chargePM.SaleCurrencyCode = this.Behaviours.GetCurrencyCode(chargePM.SaleCurrencyId);
+                chargePM.SaleExchangeRate = this.Behaviours.GetCurrencyRate(chargePM.SaleCurrencyId);
+                chargePM.ChargesGroupCode = chargesType.ChargesGroupCode;
+
+                var measurementCode = item.UnitOfMesurmentCode;
+                var measurementId = item.UnitOfMesurmentId;
+                chargePM.SaleMeasurementCode = measurementCode;
+                chargePM.SaleMeasurementId = measurementId;
+                chargePM.CostMeasurementCode = measurementCode;
+                chargePM.CostMeasurementId = measurementId;
+                chargePM.SaleMinAmount = AppTool.Round(item.IsDifferentCurrency ? item.ActualMinPrice : item.MinPrice, 3);
+                var saleAmount = AppTool.Round(item.SaleTotalAmount, 2);
+                chargePM.SaleTotalAmount = saleAmount;
+                chargePM.SetSaleQuantity();
+                var saleQuantity: number = chargePM.SaleQuantity;
+                if (saleQuantity != null && saleQuantity != 0) {
+                    if (chargePM.SaleMeasurementCode == "PRVL" || chargePM.SaleMeasurementCode == "PRFR") {
+                        chargePM.SaleUnitPrice = (saleAmount / saleQuantity) * 100;
+                    }
+                    else {
+                        chargePM.SaleUnitPrice = (saleAmount / saleQuantity);
+
+                    }
+                    chargePM.SaleUnitPrice = chargePM.SaleUnitPrice;
+                }
+                chargePM.ComputeSaleAmounts();
+            }
+        });
+    }
+    AddTariffChargesToQuote_LCL(localCharge) {
+        this.EntityPM.AddQuoteChargePM(localCharge);
+        var chargeItem: QuoteChargeItem = new QuoteChargeItem(localCharge, this, false);
+        chargeItem.ChargesTypeId = localCharge.ChargesTypeId;
+        chargeItem.SaleMeasurementId = localCharge.SaleMeasurementId;
+        chargeItem.SaleCurrencyId = localCharge.SaleCurrencyId;
+        chargeItem.SaleExchangeRate = localCharge.SaleExchangeRate;
+        chargeItem.ChargesGroupCode = localCharge.ChargesGroupCode;
+        chargeItem.IsAllIN = false;
+        chargeItem.CostMeasurementId = localCharge.CostMeasurementId;
+        chargeItem.CostCurrencyId = localCharge.CostCurrencyId;
+        chargeItem.CostExchangeRate = localCharge.CostExchangeRate;
+        var saleAmount: number = localCharge.SaleTotalAmount;
+        chargeItem.SetSaleQuantity(); 
+        var saleQuantity: number = chargeItem.SaleQuantity;
+
+        if (saleQuantity != null && saleQuantity != 0) {
+            if (chargeItem.SaleMeasurementCode == "PRVL" || chargeItem.SaleMeasurementCode == "PRFR") {
+                chargeItem.SaleUnitPrice = (saleAmount / saleQuantity) * 100;
+            }
+            else {
+                chargeItem.SaleUnitPrice = (saleAmount / saleQuantity);
+
+            }
+            chargeItem.SaleUnitPrice = chargeItem.SaleUnitPrice;
+            //chargeItem.CostUnitPrice = chargeItem.SaleUnitPrice;
+        }
+
+        //ComputeCostInSalePrice();
+        chargeItem.ComputeSaleAmounts();
+        chargeItem.SetUIProperties_AllIn();
+        this.ItemsSource.Insert(chargeItem);
+    }
+
     EditTariffClicked(item: QuoteChargeItem) {
         if (item != null) {
             var editWindow = new LogitudeWindow();
@@ -358,6 +584,53 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             editWindow.ShowEditComponent(item.TariffId, "Tariff");
         }
     }
+    EditSaleTariffClicked(item: QuoteChargeItem) {
+        if (item != null) {
+            var editWindow = new LogitudeWindow();
+            editWindow.ShowHeaderButtons = true;
+            editWindow.Title = "Price Check";
+            editWindow.Height = 770;
+            editWindow.Width = 1500;
+            var code = item.SaleTariffVersion.toString();
+            if (!AppTool.IsNullOrEmpty(item.SaleTariffLineId)) {
+                code = code + "," + item.SaleTariffLineId;
+            }
+
+            var argumentsPriceCheck = { VersionId: item.SaleTariffVersion.toString(), LineId: item.SaleTariffLineId, ChargeableWeightInKG: this.EntityPM.ChargeableWeightInKG };
+            editWindow.EditComponentArguments = argumentsPriceCheck;
+            editWindow.ShowEditComponent(item.SaleTariffId, "Tariff", code);
+        }
+    }
+
+    public UpdateSalesChargesMessage: string;
+    public UpdateSalesChargesMessageWidth: number = 0;
+    public IsUpdateSalesChargesVisible: boolean = false;
+    public IsUpdatingSalesCharges: boolean = false;   
+    CheckUpdateSalesCharges() {
+        var updateMessage: string = null;
+        updateMessage = "Customer has been changed, update the generated sales tariff amounts?";
+        this.UpdateSalesChargesMessage = updateMessage;
+        this.UpdateSalesChargesMessageWidth = AppTool.GetTextWidth(updateMessage, 11);
+        this.IsUpdateSalesChargesVisible = AppTool.IsNullOrEmpty(updateMessage) ? false : true;
+    }
+
+    UpdateSalesChargesClicked() {
+        this.IsUpdatingSalesCharges = true;
+        this.entityArgs.EditComponent.SaveChanges();
+    }
+
+    UpdateTariffSalesChargesLines() {
+        this.UpdateSalesChargesMessage = null;
+        this.UpdateSalesChargesMessageWidth = 0;
+        this.IsUpdateSalesChargesVisible = false;
+        this.EntityPM.QuoteCharges.forEach(item => {
+            item.SaleTariffId = null;
+            item.SaleTariffNumber = null;
+            item.SaleTariffLineId = null;
+        });
+        this.GenerateSalesLocalCharges();
+    }
+
     DeleteTariff(item: QuoteChargeItem) {
         if (item != null) {
             item.TariffId = null;
@@ -365,7 +638,14 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
             item.SetUIProperties();
         }
     }
-
+    DeleteSaleTariff(item: QuoteChargeItem) {
+        if (item != null) {
+            item.SaleTariffId = null;
+            item.SaleTariffNumber = null;
+            item.SaleTariffLineId = null;
+            item.SetUIProperties();
+        }
+    }
     // Profit
     InitializeProfit() {
         this.SelectedCurrencyCode = this.SaleCurrencyCode;
@@ -732,10 +1012,10 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
 
                 //"PRVL"
                 entityQuantity = this.EntityPM.ValueOfGoods;
-                if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRVL" && f.CostQuantity != entityQuantity).length > 0) {
+                if (this.EntityPM.QuoteCharges.filter(f => f.CostQuantity == null && f.CostMeasurementCode == "PRVL" && f.CostQuantity == null  && f.CostQuantity != entityQuantity).length > 0) {
                     isDifferentPRVL = true;
                 }
-                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRVL" && f.SaleQuantity != entityQuantity).length > 0) {
+                else if (this.EntityPM.QuoteCharges.filter(f => f.SaleQuantity == null && f.SaleMeasurementCode == "PRVL" && f.SaleQuantity == null && f.SaleQuantity != entityQuantity).length > 0) {
                     isDifferentPRVL = true;
                 }
                 
@@ -743,8 +1023,10 @@ export class LCLChargesComponent extends BaseComponent implements OnDestroy {
                 if (this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT").length > 0) {
                     if (this.EntityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRFR" || f.SaleMeasurementCode == "PRFR").length > 0) {
 
-                        var FRT_CostQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].CostTotalAmount;
-                        var FRT_SaleQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].SaleTotalAmount;
+                        var FRT_CostQuantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"),2);
+                        var FRT_SaleQuantity = AppTool.Round(ArrayTool.Sum(this.EntityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"),2);
+                        //var FRT_CostQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].CostTotalAmount;
+                        //var FRT_SaleQuantity = this.EntityPM.QuoteCharges.filter(f => f.ChargesGroupCode == "FRT")[0].SaleTotalAmount;
 
                         if (AppTool.IsNullOrZero(FRT_CostQuantity)) {
                             FRT_CostQuantity = 0;
@@ -978,6 +1260,7 @@ export class QuoteChargeItem extends BaseComponent {
         this.ComputeMarkUpString();
         this.SetUIProperties_CellsColors();
         this.BuildPriceBreaksTooltips();
+        this.FillMarkupCurrencyList();
     }
 
     public HasCostPriceBreaks: boolean = false;
@@ -1128,16 +1411,12 @@ export class QuoteChargeItem extends BaseComponent {
                 else if (!this.IsAllIN) {
                     isEnabled_Id = true;
                 }
+            }
 
-                if (isEnabled_Id) {
-                    if (this.SaleCurrencyId) {
-                        if (this.SaleCurrencyId != SessionLocator.LocalCurrencyId) {
-                            if (this.SaleCurrencyId != this.fatherComponent.SaleCurrencyId) {
-                                if (this.SaleCurrencyId != this.CostCurrencyId) {
-                                    isEnabled_Rate = true;
-                                }
-                            }
-                        }
+            if (this.SaleCurrencyId) {
+                if (this.SaleCurrencyId != SessionLocator.LocalCurrencyId) {
+                    if (this.QuotePM.IsSaleCurrencySameAsCost || this.QuotePM.IsMultiCurrency) {
+                        isEnabled_Rate = true;
                     }
                 }
             }
@@ -1174,10 +1453,8 @@ export class QuoteChargeItem extends BaseComponent {
                 case "BTEU":
                 case "FIXD":
                 case "BCNT":
-                case "PRVL":
                 case "PRFR":
                 case "GWTN":
-                case "QTY":
                 case "PDCW":
                 case "PFCL":
                     {
@@ -1256,12 +1533,14 @@ export class QuoteChargeItem extends BaseComponent {
     public IsEnabled_SaleMinAmount: boolean = false;
     public IsEnabled_SaleTotalAmount: boolean = false;
     public IsEnabled_SaleTotalAmountLocal: boolean = false;
+    public IsMarkupCurrencyValid: boolean = false;
     SetUIProperties_SaleFields() {
         var isEnabled_SaleQuantity = false;
         var isEnabled_SaleUnitPrice = false;
         var isEnabled_SaleMinAmount = false;
         var isEnabled_SaleTotalAmount = false;
         var isEnabled_SaleTotalAmountLocal = false;
+        var isMarkupCurrencyValid = false;
         var isEnabled_SaleMeasurement = false;
 
         if (this.IsEditingEnabled) {
@@ -1281,10 +1560,8 @@ export class QuoteChargeItem extends BaseComponent {
                 case "BTEU":
                 case "FIXD":
                 case "BCNT":
-                case "PRVL":
                 case "PRFR":
                 case "GWTN":
-                case "QTY":
                 case "PDCW":
                 case "PFCL":
                     {
@@ -1311,6 +1588,8 @@ export class QuoteChargeItem extends BaseComponent {
                 isEnabled_SaleMinAmount = false;
                 //isEnabled_SaleMeasurement = false;
             }
+
+            isMarkupCurrencyValid = (!this.QuotePM.IsSaleCurrencySameAsCost) && (this.SaleCurrencyId != this.CostCurrencyId);
         }
 
         this.IsEnabled_SaleQuantity = isEnabled_SaleQuantity;
@@ -1321,6 +1600,7 @@ export class QuoteChargeItem extends BaseComponent {
         this.UIProperties.SetEnabled("SaleMeasurementId", this.ObjectTableName, isEnabled_SaleMeasurement);
         this.UIProperties.SetEnabled("SaleMinAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
         this.UIProperties.SetEnabled("SaleMaxAmount", this.ObjectTableName, isEnabled_SaleMinAmount);
+        this.IsMarkupCurrencyValid = isMarkupCurrencyValid; 
     }
 
     public CostMinMaxIconTitle: string = "";
@@ -1960,6 +2240,33 @@ export class QuoteChargeItem extends BaseComponent {
         }
     }
 
+    get SaleTariffNumber() { return this.EntityPM.SaleTariffNumber; }
+    set  SaleTariffNumber(value: string) {
+        if (value != this.EntityPM.SaleTariffNumber) {
+            this.EntityPM.SaleTariffNumber = value;
+        }
+    }
+    get SaleTariffId() {
+        return this.EntityPM.SaleTariffId;
+    }
+    set SaleTariffId(value: string) {
+        if (value != this.EntityPM.SaleTariffId) {
+            this.EntityPM.SaleTariffId = value;
+        }
+    }
+    get SaleTariffVersion() { return this.EntityPM.SaleTariffVersion; }
+    set SaleTariffVersion(value: number) {
+        if (value != this.EntityPM.SaleTariffVersion) {
+            this.EntityPM.SaleTariffVersion = value;
+        }
+    }
+    get SaleTariffLineId() { return this.EntityPM.SaleTariffLineId; }
+    set SaleTariffLineId(value: string) {
+        if (value != this.EntityPM.SaleTariffLineId) {
+            this.EntityPM.SaleTariffLineId = value;
+        }
+    }
+
     public RelativeRateDate: string;
     UpdateCurrencyRateClicked() {
         var logWindow = new LogitudeWindow();
@@ -1990,7 +2297,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "VOLU": { myResult = this.QuotePM.Volume; break; }
                 case "BTEU": { myResult = this.QuotePM.TEU; break; }
                 case "FIXD": { myResult = 1; break; }
-                case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
+                case "PRVL": { myResult = AppTool.IsNullOrZero(this.CostQuantity) ? this.QuotePM.ValueOfGoods : this.CostQuantity; break; }
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == ChargesGroupCode), "CostTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
@@ -2003,7 +2310,7 @@ export class QuoteChargeItem extends BaseComponent {
             }
         }
 
-        this.CostQuantity = myResult;
+        this.CostQuantity = AppTool.Round(myResult,3);
     }
     ComputeCostAmounts() {
         var iAmount: number = null;
@@ -2298,6 +2605,51 @@ export class QuoteChargeItem extends BaseComponent {
         }
     }
 
+    get MarkUpCurrencyId() { return this.EntityPM.MarkUpCurrencyId; }
+    set MarkUpCurrencyId(newValue: string) {
+        if (this.EntityPM.MarkUpCurrencyId != newValue) {
+            this.EntityPM.MarkUpCurrencyId = newValue;
+        }
+    }
+
+    private markUpCurrencySelectedItem: MarkupCurrency;
+    get MarkUpCurrencySelectedItem() { return this.markUpCurrencySelectedItem; }
+    set MarkUpCurrencySelectedItem(value: MarkupCurrency) {
+        if (this.markUpCurrencySelectedItem != value) {
+            this.markUpCurrencySelectedItem = value;
+            this.MarkUpCurrencyId = this.markUpCurrencySelectedItem.CurrencyId;
+            this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+        }
+    }
+
+    public MarkupCurrencyList: MarkupCurrency[];
+    public MarkUpCurrencyCode: string = null;
+    private FillMarkupCurrencyList() {
+        this.MarkupCurrencyList = [];
+        var costCurrency = new MarkupCurrency();
+        costCurrency.CurrencyCode = this.CostCurrencyCode;
+        costCurrency.CurrencyId = this.CostCurrencyId;
+        costCurrency.Type = "Cost";
+
+        var saleCurrency = new MarkupCurrency();
+        saleCurrency.CurrencyId = this.SaleCurrencyId;
+        saleCurrency.CurrencyCode = this.SaleCurrencyCode;
+        saleCurrency.Type = "Sale";
+
+        this.MarkupCurrencyList.push(costCurrency);
+        this.MarkupCurrencyList.push(saleCurrency);
+
+        if (!this.IsNew) {
+            this.markUpCurrencySelectedItem = this.MarkupCurrencyList.filter(a => a.CurrencyId == this.MarkUpCurrencyId)[0];
+            if (!this.markUpCurrencySelectedItem) {
+                this.MarkUpCurrencyCode = this.MarkupCurrencyList[0].CurrencyCode;
+            }
+            else {
+                this.MarkUpCurrencyCode = this.markUpCurrencySelectedItem.CurrencyCode;
+            }
+        }
+    }
+
     SetSaleQuantity(ChargesGroupCode: string = "FRT") {
         var myResult = null;
 
@@ -2308,7 +2660,7 @@ export class QuoteChargeItem extends BaseComponent {
                 case "VOLU": { myResult = this.QuotePM.Volume; break; }
                 case "BTEU": { myResult = this.QuotePM.TEU; break; }
                 case "FIXD": { myResult = 1; break; }
-                case "PRVL": { myResult = this.QuotePM.ValueOfGoods; break; }
+                case "PRVL": { myResult = AppTool.IsNullOrZero(this.SaleQuantity) ? this.QuotePM.ValueOfGoods : this.SaleQuantity; break; }
                 case "PRFR": { myResult = ArrayTool.Sum(this.QuotePM.QuoteCharges.filter(d => d.ChargesGroupCode == ChargesGroupCode), "SaleTotalAmount"); break; }
                 case "GWTN": { myResult = this.QuotePM.GrossWeightPerTon; break; }
                 case "QTY": { myResult = this.QuotePM.NumberOfPackages; break; }
@@ -2321,7 +2673,7 @@ export class QuoteChargeItem extends BaseComponent {
             }
         }
 
-        this.SaleQuantity = myResult;
+        this.SaleQuantity = AppTool.Round(myResult,3);
     }
 
     ComputeSaleAmounts() {
@@ -2386,7 +2738,7 @@ export class QuoteChargeItem extends BaseComponent {
             }
 
             else {
-                output = AppTool.Round((saleUnitPrice * this.EntityPM.SaleExchangeRate / this.QuotePM.ExchangeRate), 2);
+                output = AppTool.Round((saleUnitPrice * this.EntityPM.SaleExchangeRate / this.QuotePM.ExchangeRate), 3);
             }
         }
 
@@ -2400,8 +2752,7 @@ export class QuoteChargeItem extends BaseComponent {
 
         else {
             var myResult = this.SaleUnitPrice;
-            var markup = this.MarkUpValue == null ? 0 : this.MarkUpValue;
-
+            var markup = this.GetMarkUpValueByCurrency(this.MarkUpValue); 
             if (this.MarkUpTypeCode == "P") {
                 myResult = this.CostUnitPriceInSaleCurrency + (this.CostUnitPriceInSaleCurrency * (markup / 100));
             }
@@ -2415,6 +2766,23 @@ export class QuoteChargeItem extends BaseComponent {
             }
 
             this.SaleUnitPrice = myResult;
+        }
+    }
+
+    GetMarkUpValueByCurrency(value) {
+        if (!this.fatherComponent.IsMarkUpCurrencyHasFeatureToggle) {
+            return value;
+        }
+        else {
+            var markUpValue = (value == null ? 0 : value);
+            if (this.SaleCurrencyId == this.MarkUpCurrencyId) {
+                return markUpValue;
+            }
+
+            var markUpLocalValue = markUpValue * this.CostExchangeRate;
+            markUpValue = markUpLocalValue / this.SaleExchangeRate;
+
+            return markUpValue;
         }
     }
 
@@ -2448,6 +2816,8 @@ export class QuoteChargeItem extends BaseComponent {
                         else {
                             myMarkUpValue = +myMarkUpValueInput;
                         }
+
+                        myMarkUpValue = this.GetMarkUpValueByCurrency(myMarkUpValue);
 
                         if (value.indexOf("%") > -1) {
                             myMarkUpCode = "P";
@@ -2609,14 +2979,16 @@ export class QuoteChargeItem extends BaseComponent {
 
 
                     var freightTotalAmountLocal = AppTool.IsNullOrEmpty(freightModel.SaleTotalAmountLocal) ? 0 : freightModel.SaleTotalAmountLocal;
-
+                    var newSaleTotalAmountLocal = null;
                     if (this.IsAllIN) {
-                        freightModel.SaleTotalAmountLocal = freightTotalAmountLocal + this.EntityPM.SaleTotalAmountLocal;
+                        newSaleTotalAmountLocal = freightTotalAmountLocal + this.EntityPM.SaleTotalAmountLocal;
                     }
 
                     else {
-                        freightModel.SaleTotalAmountLocal = freightTotalAmountLocal - this.EntityPM.SaleTotalAmountLocal;
+                        newSaleTotalAmountLocal = freightTotalAmountLocal - this.EntityPM.SaleTotalAmountLocal;
                     }
+
+                    freightModel.SaleTotalAmountLocal = newSaleTotalAmountLocal;
                 }
             }
         }
@@ -2668,6 +3040,8 @@ export class QuoteChargeItem extends BaseComponent {
             this.SalePriceHeader = TextCodeTranslator.Translate("Quote.O.Charges.SalePrice", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
             this.SaleAmountHeader = TextCodeTranslator.Translate("Quote.O.Charges.SaleAmount", false).replace("%SaleCurrencyCode", myCurrencyCode).split('%n');
         }
+
+        this.FillMarkupCurrencyList();
     }
 
     OnMeasurementsCodeChanged() {
@@ -2756,6 +3130,7 @@ export class QuoteChargeItem extends BaseComponent {
         }
 
         this.OnChargeCurrencyChanged();
+        this.FillMarkupCurrencyList();
     }
     OnQuoteSaleCurrencyDataChanged() {
 

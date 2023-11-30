@@ -100,6 +100,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public bool IsMobileActivated { get; set; }
         public bool SharedLogisticsMessageLink { get; set; }
+        public bool ShowMultiUnitsOfMeasurements { get; set; }
         public bool IsCustomerTelRequired { get; set; }
         public bool IsCustomerFaxRequired { get; set; }
         public bool IsPickDelAdrsRequired { get; set; }
@@ -130,7 +131,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool RegulatedAgentRegimeActivated { get; set; }
         public string CustomerId { get; set; }
         public virtual Card CustomerCard { get; set; }
-        public bool IsCustomerTenantShare { get; set; }
+        public bool CustomerTenantShareCustomsFile { get; set; }
         public bool CustomerTenantShareExportFile { get; set; }
 
 
@@ -196,5 +197,15 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public double? FCLRatio { get; set; }
         public double? LTLRatio { get; set; }
         public double? FTLRatio { get; set; }
+        public bool IsCargoTrackWebAccessActivated { get; set; }        
+        public bool EnableDeliveryOptions { get; set; }
+        public int? EmptyReturnClosingDays { get; set; }
+        public int? ShipmentATAClosingDays { get; set; }
+        public bool IsDigitalPortalAccessActivated { get; set; }
+        public bool UseNewTermsOfUse { get; set; }
+        public string ShipmentATADateIndicator { get; set; }
+        public bool ApproveUploadedDocuments { get; set; }
+        public bool JouranlApprovalIsIdle { get; set; }
+        
     }
 }

@@ -50,6 +50,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     ApprovedByCustomer = entityPoco.ApprovedByCustomer,
                     InActive = entityPoco.InActive,
                     LineNumber = entityPoco.LineNumber,
+                    VATPercentage = entityPoco.VATPercentage,
+                    DutiesPercentage = entityPoco.DutiesPercentage,
+                    OtherDuties = entityPoco.OtherDuties,
+                    Remarks = entityPoco.Remarks,
                 };
             }
 
@@ -69,6 +73,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                  ApprovedByCustomer = entity.ApprovedByCustomer,
                                                  InActive = entity.InActive,
                                                  LineNumber = entity.LineNumber,
+                                                 VATPercentage = entity.VATPercentage,
+                                                 DutiesPercentage = entity.DutiesPercentage,
+                                                 OtherDuties = entity.OtherDuties,
+                                                 Remarks = entity.Remarks,
                                              };
             return result;
         }
@@ -88,6 +96,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             ApprovedByCustomer = entity.ApprovedByCustomer,
                                             InActive = entity.InActive,
                                             LineNumber = entity.LineNumber,
+                                            VATPercentage = entity.VATPercentage,
+                                            DutiesPercentage = entity.DutiesPercentage,
+                                            OtherDuties = entity.OtherDuties,
+                                            Remarks = entity.Remarks,
                                         }).ToList();
 
             return hTSCodes;
@@ -108,7 +120,40 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                         ApprovedByCustomer = a.ApprovedByCustomer,
                         InActive = a.InActive,
                         LineNumber = a.LineNumber,
+                        VATPercentage = a.VATPercentage,
+                        DutiesPercentage = a.DutiesPercentage,
+                        OtherDuties = a.OtherDuties,
+                        Remarks = a.Remarks,
                     }).FirstOrDefault();
+        }
+
+        public List<HTSCodePM> GetHTSCodeByProductItemIdsAndCountry(string itemsIds, string countryId, int tenant)
+        {
+            List<HTSCodePM> hTSCodes = new List<HTSCodePM>();
+            List<string> itemsIdsList = itemsIds.Split(',').Select(p => p.Trim()).ToList().Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+            if (itemsIdsList.Count() > 0)
+            {
+                hTSCodes = (from a in repository.context.HTSCodes.Include("Country")
+                            where itemsIdsList.Contains(a.ItemId) && a.DestinationCountryId == countryId && a.Tenant == tenant && !a.InActive
+                            select new HTSCodePM()
+                            {
+                                Id = a.Id,
+                                Tenant = a.Tenant,
+                                Code = a.Code,
+                                ItemId = a.ItemId,
+                                DestinationCountryId = a.DestinationCountryId,
+                                CountryEnglishName = a.Country == null ? null : a.Country.EnglishName,
+                                ApprovedByCustomer = a.ApprovedByCustomer,
+                                InActive = a.InActive,
+                                LineNumber = a.LineNumber,
+                                VATPercentage = a.VATPercentage,
+                                DutiesPercentage = a.DutiesPercentage,
+                                OtherDuties = a.OtherDuties,
+                                Remarks = a.Remarks,
+                            }).ToList();
+            }
+
+            return hTSCodes;
         }
     }
 }

@@ -1,0 +1,112 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .name-container {
+        height: 30px;
+        width: 320px;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+
+    .table-row-cell-label {
+        padding-bottom: 6px;
+    }
+
+    .help-text-container {
+        padding-top: 20px;
+    }
+
+    .help-text-label {
+        padding-left: 4px;
+    }
+</style>
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'" [DataContext]="DataContext">
+                </LogLabel>
+            </div>
+            <div class="table-row-cell-block name-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                    (ValueChanged)="updateName($event)" [DataCy]="'delete-item-name'">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell-label">
+            <div class="table-row-cell-block">
+                <div class="label">Select Record to Delete</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Record'" [ObjectFieldName]="'Record'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block">
+                <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'300px'" [Value]="Record"
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateRecord($event)">
+                </TreeSelect>
+            </div>
+            <div class="table-row-cell-block help-text-container">
+                <img src="./Images/Help.png" />
+                <span class="help-text-label">Make sure that each record has an ID. Otherwise the flow cannot find the record to delete, and it will fail.</span>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+</table>

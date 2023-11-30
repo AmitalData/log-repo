@@ -1,0 +1,152 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .name-container {
+        height: 30px;
+        width: 320px;
+    }
+
+    .table-container {
+        overflow: auto;
+        height: 515px;
+        pointer-events: auto !important;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+
+    .table-row-cell-label {
+        padding-bottom: 6px;
+    }
+    .filter-collection-label{
+        font-weight: bold;
+    }
+    .break-space{
+        white-space: break-spaces;
+    }
+</style>
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'" [DataContext]="DataContext">
+                </LogLabel>
+            </div>
+            <div class="table-row-cell-block name-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                    (ValueChanged)="updateName($event)" [DataCy]="'collection-filter-name'">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="filter-collection-label">Filter Items in This Collection</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <p class="Label break-space">Select a source collection. This element returns a target collection that contains only the source items that meet the condition.</p>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Collection'" [ObjectFieldName]="'Collection'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block">
+                <TreeSelect [Items]="CollectionItems" [Width]="'300px'" [Value]="Collection"
+                    (ValueChanged)="updateCollection($event)" [IsReturnedTreeSelectItem]="true">
+                </TreeSelect>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="Collection" class="table-row">
+        <td class="table-row-cell-label">
+            <div class="table-row-cell-block">
+                <div class="label">Collection Filters</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="Collection" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block table-container">
+
+                <Conditions *ngIf="CollectionFilters && CollectionFilters.length > 0" [EntityId]="EntityId"
+                    [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
+                    (IsValidConditionsChange)="setIsValidConditions($event)"
+                    [(ConditionsOperation)]="CollectionFiltersOperation" [(Conditions)]="CollectionFilters"
+                    [FlowObject]="FlowObject" [CurrentNodeId]="CurrentNodeId" [IsEntityField]="true"
+                    [IsOneLevelConditions]="true" [IsDummyField]="IsPrimitiveType"
+                    [GetFieldFromFirstCondition]="IsPrimitiveType">
+                </Conditions>
+
+            </div>
+
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+</table>

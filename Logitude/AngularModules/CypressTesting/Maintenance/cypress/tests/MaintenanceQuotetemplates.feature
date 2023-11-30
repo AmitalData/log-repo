@@ -1,4 +1,4 @@
-@release @all @dev
+@release @all @stable
 Feature: Create, Search, Open and Edit a Quote Template from Maintenance
     The user creates, searches for, opens and edits a quote template from Maintenance Module.
 
@@ -45,17 +45,17 @@ Feature: Create, Search, Open and Edit a Quote Template from Maintenance
     Scenario: Edit the quote template's Pricing Packages
         Given the user reopen the quote template
         And add the following columns fields in "Pricing Packages" settings
-            | Column             |
-            | Charge Code        |
-            | Charge Description |
+            | Column            |
+            | ChargeCode        |
+            | ChargeDescription |
         When save quote pricing template
         Then the quote template should update successfully
 
     Scenario: Edit the quote template's Pricing Containers
         Given add the following columns fields in "Pricing Containers" settings
-            | Column             |
-            | Charge Code        |
-            | Charge Description |
+            | Column            |
+            | ChargeCode        |
+            | ChargeDescription |
         When save quote pricing template
         Then the quote template should update successfully
 

@@ -8,14 +8,15 @@ import {ObjectsLocator} from '../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
     selector: 'SearchTextBox',
-    template: `<input type="text" [disabled]="IsDisabled" [id]="SearchFieldsId" placeholder="{{PlaceHolder}}" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [ngStyle]="textValueStyle" [(ngModel)]="SearchText" style="background: url(Images/Search.png) no-repeat scroll;background-color: white;background-position: right center;font-style: italic;" [ngStyle]="LayoutDirection == 'rtl' ? {'padding-left': '30px'} : {'padding-right': '30px'}" />
+    template: `<input [attr.data-cy]="DataCy" type="text" [disabled]="IsDisabled" [id]="SearchFieldsId" placeholder="{{PlaceHolder}}" (focus)="ClearPlaceHolder();" (blur)="FillPlaceHolder();" [ngStyle]="textValueStyle" [(ngModel)]="SearchText" style="background: url(Images/Search.png) no-repeat scroll;background-color: white;background-position: right center;font-style: italic;" [ngStyle]="LayoutDirection == 'rtl' ? {'padding-left': '30px'} : {'padding-right': '30px'}" />
                <img *ngIf="SearchText" [className]="LayoutDirection == 'rtl' ? 'DeleteButton LeftCenter' : 'DeleteButton RightCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'left': '15px'} : {'right': '15px'}" src="Images/RedX.png" (click)="OnDeleteValue()" />
               `,
-    inputs: ['ObjectTableName', 'PlaceHolder', 'SearchText', 'IsDisabled'],
+    inputs: ['ObjectTableName', 'PlaceHolder', 'SearchText', 'IsDisabled', 'DataCy'],
 })
 
 export class SearchTextBox implements OnInit {
     //SearchFields//HelpTextDefaultText
+    DataCy: string;
     SearchFieldsId: string;
     PlaceHolder: string;
     ObjectTableName: string;
@@ -79,7 +80,7 @@ export class SearchTextBox implements OnInit {
             
             else {
                 var ObjectTable = this.GetObjectTableName(this.ObjectTableName);
-                var textCode = ObjectTable + ".F.SearchFields";
+                var textCode = (ObjectTable =="DocumentTypeTemplate" ? "DocumentType" : ObjectTable) + ".F.SearchFields";
                 var waterMark = TextCodeTranslator.Translate(textCode);
                 if (!AppTool.IsNullOrEmpty(waterMark)) {
                     this.PlaceHolder = waterMark;
@@ -159,6 +160,10 @@ export class SearchTextBox implements OnInit {
     }
 
     GetObjectTableName(theObjectTableName: string) {
+        let objectTable = window.ObjectTables.filter(obejctTable => obejctTable.Name == theObjectTableName)[0];
+        if (objectTable && objectTable.IsCustom && AppTool.IsNullOrEmpty(objectTable.ParentObjectTableId)){
+            return this.GetCustomObjectRelatedTableName(objectTable);
+        }
         var cardTables = ["customer", "agent", "shippingagent", "customagent", "vendor", "airline", "trucker", "shippingline", "warehouse"];
 
         if (cardTables.indexOf(theObjectTableName.toLowerCase()) > -1) {
@@ -167,6 +172,10 @@ export class SearchTextBox implements OnInit {
         else {
             return theObjectTableName;
         }
+    }
+    GetCustomObjectRelatedTableName(objectTable: any) {
+        if (objectTable.ObjectTableTypeCode == "MD") return "ReferenceCustomObject";
+        return "DataCustomObject";
     }
 
     textValueStyle: any;

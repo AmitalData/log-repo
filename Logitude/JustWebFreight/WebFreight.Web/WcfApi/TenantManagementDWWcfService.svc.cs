@@ -10,6 +10,7 @@ using System.ServiceModel;
 using System.ServiceModel.Activation;
 using System.Text;
 using System.Xml.Serialization;
+using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 
 namespace WebFreight.Web.WcfApi
@@ -28,10 +29,12 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return new List<TenantManagementDW>();
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("TenantManagement", "READ", tenant);
                 TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
-                List<TenantManagementDW> result = tenantManagementQuery.GetTenantManagementDWs(tenant,skip, take);
+                List<TenantManagementDW> result = tenantManagementQuery.GetTenantManagementDWs(tenant, skip, take);
                 return result;
             }
 

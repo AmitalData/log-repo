@@ -379,16 +379,19 @@ namespace Logitude.Accounting.BL.CoreBL
                          where (!a.CalcDueInLocal.Equals(a.DBDueInLocal) || !a.CalcDueInForeign.Equals(a.DBDueInForeign) ||  !a.CalcNextDueDate.Equals(a.DBNextDueDate))
 
                          select a);
-                    var myDiffList = qDiff.ToList();
+                    var myDiffList = qDiff.Take(30).ToList();
                     myDiffList = myDiffList.Where(a => !a.CalcDueInLocal.Equals(a.DBDueInLocal) || !a.CalcDueInForeign.Equals(a.DBDueInForeign) || !a.CalcNextDueDate.Date.Equals(a.DBNextDueDate.Date)).ToList();
+
+                    Convert2DisplayNumber(myDiffList, tenant);
+
                     return myDiffList;
 
 
                 }
             }
-            catch (Exception e)
+            catch //(Exception e)
             {
-                LogMessagingUtil.Instance.AppendLine("DueLocalBalanceService Exception e=" + e.ToString());
+              //  LogMessagingUtil.Instance.AppendLine("DueLocalBalanceService Exception e=" + e.ToString());
                 throw;
             }
             finally
@@ -396,7 +399,33 @@ namespace Logitude.Accounting.BL.CoreBL
                 LogMessagingUtil.Instance.AppendLine("DueLocalBalanceService tenant= " + tenant + " took:" + sw.Elapsed.ToString());
             }
         }
+        private void Convert2DisplayNumber(List<DueLocalBalanceDiffM> rows, int tenant)
+        {
+            if (rows == null)
+            {
+                return;
+            }
+            try
+            {
+                var AccountIdList = rows.Where(r => !string.IsNullOrWhiteSpace(r.AccountId)).Select(x => x.AccountId).Distinct().ToList();
+                var repo = new GLAccountRepository(tenant);
+                var res = repo.GetDisplayNumberList(AccountIdList.ToHashSet(), tenant);
+                foreach (var item in rows)
+                {
+                    var display = res.FirstOrDefault(r => r.Key == item.AccountId);
+                    if (string.IsNullOrEmpty(display.Value))
+                    {
+                        continue;
+                    }
+                    item.AccountDisplayNumber= display.Value;
+                }
+            }
+            catch (Exception)
+            {
 
+
+            }
+        }
         private void InitDueLocalBalanceListToUpdate(IAccountingContext accountingContext, int tenant, string AccountId, bool filterByNextDueDate, bool onlyWithActivity)
         {
             //using (var scope = TransactionFactory.GetTransaction())
@@ -563,6 +592,13 @@ namespace Logitude.Accounting.BL.CoreBL
     public class DueLocalBalanceDiffM
     {
         public string AccountId { get; set; }
+
+        public string DisplayNumber { get; set; }
+        public string LocalName { get; set; }
+
+
+        public string AccountDisplayNumber { get; set; }
+
 
         public decimal CalcDueInLocal { get; set; }
         public decimal CalcDueInForeign { get; set; }

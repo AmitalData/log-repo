@@ -28,6 +28,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { ARInvoiceStockLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
+import { AccountingSettingListService } from '../../../../Common/Services/StandardLists/AccountingSettingListService';
 
 @Component({
     
@@ -60,7 +61,6 @@ export class ARInvoiceDetailsTabConsolidation extends BaseComponent implements O
         this.Listen()
 
         this.BuildEntityWarnings();
-
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
@@ -1335,6 +1335,7 @@ export class SubInvoiceLine {
                 var itemPM: ConstituentPM = new ConstituentPM(null);
                 itemPM.Id = this.entityList.Id;
                 itemPM.Tenant = this.entityList.Tenant;
+                itemPM.ConcurrencyGUID = this.entityList.ConcurrencyGUID;
                 itemPM.ConsolidationInvoiceId = this.fatherComponent.EntityPM.Id;
                 this.fatherComponent.EntityPM.AddConstituentPM(itemPM);
             }
@@ -1342,6 +1343,7 @@ export class SubInvoiceLine {
             else {
                 var itemPM: ConstituentPM = this.fatherComponent.EntityPM.ConstituentInvoices.filter(f => f.ConsolidationInvoiceId == this.fatherComponent.EntityPM.Id && f.Id == this.Id)[0];
                 if (itemPM) {
+                    itemPM.ConcurrencyGUID = this.entityList.ConcurrencyGUID;
                     this.fatherComponent.EntityPM.RemoveConstituentPM(itemPM);
                 }
             }

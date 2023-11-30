@@ -12,6 +12,7 @@ namespace WebFreight.Web.DataContracts
         public string MainColor { get; set; }
         public string SecondaryColor { get; set; }
         public string BackgroundId { get; set; }
+        public string MobileBackgroundId { get; set; }
         public string BackgroundImg { get; set; }
         public string BackgroundURL { get; set; }
         public string ComapnylogoId { get; set; }
@@ -32,8 +33,11 @@ namespace WebFreight.Web.DataContracts
         public byte[] ComapnylogoBytes { get; set; }
         public byte[] InvertedLogoBytes { get; set; }
         public byte[] BackgroundBytes { get; set; }
+        public byte[] MobileBackgroundBytes { get; set; }
         public byte[] ShipmentHeaderBytes { get; set; }
-
-        
+        public bool ForceHttps { get; set; }
+        public bool ActivatePrivateSite { get; set; }
+        public bool EnableExportToExcel { get; set; }
+        public string ContactEmail { get; set; }
     }
 }

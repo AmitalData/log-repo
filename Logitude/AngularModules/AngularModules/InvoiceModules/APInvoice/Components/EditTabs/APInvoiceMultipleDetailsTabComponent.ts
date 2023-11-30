@@ -371,6 +371,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
     ComputeTotals() {
         this.BuildTotalsCollection(true);
     }
+
     BuildTotalsCollection(isComputingTotals: boolean = false) {
         var totalsList: InvoiceTotalsClass[] = [];
         var myDataList = this.EntityPM.InvoiceMultipleShipments;
@@ -532,6 +533,7 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
 
         return myResult;
     }
+
 
     get SubTotalInLocalCurrency() { return this.EntityPM.SubTotalInLocalCurrency; }
     set SubTotalInLocalCurrency(value: number) {
@@ -876,6 +878,11 @@ export class APInvoiceMultipleDetailsTabComponent extends BaseComponent implemen
                     if (this.invoiceLinesAdded) {
                         this.invoiceLinesAdded = false;
                         this.SaveAPInvoiceMultipleShortEntity();
+                    }
+
+                    else if (this.missingVATPayables.length > 0) {
+                        var window: MessageWindow = new MessageWindow();
+                        window.Show("Some of the payables in this shipment don't have a VAT type and will not be added.");
                     }
                 });
             });

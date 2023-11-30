@@ -2,7 +2,7 @@
     <tr>
         <td style="width:265px;min-width:265px;">
             <table>
-                <tr style="height:240px;">
+                <tr [style.height.px]="QueriesAreaHeight">
                     <td>
                         <div class="MediaFill">
                             <SectionBox [Scrolling]="true">
@@ -11,7 +11,7 @@
                                     <div class="QueriesSection">
                                         <div>Freight</div>
                                         <div style="height:22px; width: 45px; position: absolute; top:4px; right:0px;">
-                                            <div id="{{'NEWTARIFF' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                            <div id="{{'NEWTARIFF' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
                                                 <label>New</label>
                                                 <img src="./Images/ToggleIcon.png" />
                                                 <div class="ToggleButtonMenu" style="width: 50px;">
@@ -37,7 +37,7 @@
                                     <div class="QueriesSection">
                                         <div>Surcharge</div>
                                         <div style="height:22px; width: 45px; position: absolute; top:4px; right:0px;">
-                                            <div id="{{'NEWTARIFF' | IdGeneratorPipe}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                            <div id="{{'NEWTARIFF' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
                                                 <label>New</label>
                                                 <img src="./Images/ToggleIcon.png" />
                                                 <div class="ToggleButtonMenu" style="width: 80px;">
@@ -49,21 +49,63 @@
                                         </div>
                                         <div>
                                             <div *ngIf="AirSurchargesCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('AS')" attr.data-cy="{{'Surcharge_Air' | IdGeneratorPipe}}">Air ({{AirSurchargeCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('AS')" attr.data-cy="{{'Surcharge_Air' | IdGeneratorAsyncPipe | async}}">Air ({{AirSurchargeCount}})</HyperlinkQuery>
                                             </div>
                                             <div *ngIf="OceanLCLSurchargesCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('OSC')" attr.data-cy="{{'Surcharge_OceanLCL' | IdGeneratorPipe}}">Ocean LCL ({{OceanSurchargeCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('OSC')" attr.data-cy="{{'Surcharge_OceanLCL' | IdGeneratorAsyncPipe | async}}">Ocean LCL ({{OceanSurchargeCount}})</HyperlinkQuery>
                                             </div>
                                             <div *ngIf="OceanFCLSurchargesCostVisibility">
-                                                <HyperlinkQuery (click)="ViewTariffs('OFS')" attr.data-cy="{{'Surcharge_OceanFCL' | IdGeneratorPipe}}">Ocean FCL ({{OceanFCLSurchargesCount}})</HyperlinkQuery>
+                                                <HyperlinkQuery (click)="ViewTariffs('OFS')" attr.data-cy="{{'Surcharge_OceanFCL' | IdGeneratorAsyncPipe | async}}">Ocean FCL ({{OceanFCLSurchargesCount}})</HyperlinkQuery>
                                             </div>
                                         </div>
                                     </div>
+
+                                    <div class="QueriesSection" *ngIf="IsCustomsChargesVisible">
+                                        <div>Customs Charges</div>
+                                        <div style="height:22px; width: 45px; position: absolute; top:4px; right:0px;">
+                                            <div id="{{'NEWTARIFF' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                                <label>New</label>
+                                                <img src="./Images/ToggleIcon.png" />
+                                                <div class="ToggleButtonMenu" style="width: 80px;">
+                                                    <button *ngIf="ImportCustomsCostVisibility" (click)="NewTariff('ICC')">Import</button>
+                                                    <button *ngIf="ExportCustomsCostVisibility" (click)="NewTariff('ECC')">Export</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div *ngIf="ImportCustomsCostVisibility">
+                                                <HyperlinkQuery (click)="ViewTariffs('ICC')" attr.data-cy="{{'CustomCharges_Import' | IdGeneratorAsyncPipe | async}}">Import ({{ImportCustomsChargesCount}})</HyperlinkQuery>
+                                            </div>
+                                            <div *ngIf="ExportCustomsCostVisibility">
+                                                <HyperlinkQuery (click)="ViewTariffs('ECC')" attr.data-cy="{{'CustomCharges_Export' | IdGeneratorAsyncPipe | async}}">Export ({{ExportCustomsChargesCount}})</HyperlinkQuery>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="QueriesSection" *ngIf="IsInlandTariffsVisible">
+                                        <div>Inland Tariffs</div>
+                                        <div style="height:22px; width: 45px; position: absolute; top:4px; right:0px;">
+                                            <div id="{{'NEWTARIFF' | IdGeneratorAsyncPipe | async}}" tabindex="0" class="ToggleButton" style="margin: auto; width: 100% !important; height: 100% !important">
+                                                <label>New</label>
+                                                <img src="./Images/ToggleIcon.png" />
+                                                <div class="ToggleButtonMenu" style="width: 80px;">
+                                                    <button (click)="NewTariff('IFT')">Inland FTL</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div>
+                                                <HyperlinkQuery (click)="ViewTariffs('IFT')" attr.data-cy="{{'InlandFTL' | IdGeneratorAsyncPipe | async}}">Inland FTL ({{InlandFTLTariffsCount}})</HyperlinkQuery>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </SectionBody>
                             </SectionBox>
                         </div>
                     </td>
                 </tr>
+
                 <tr style="height:240px;">
                     <td>
                         <div class="MediaFill">
@@ -88,6 +130,7 @@
                         </div>
                     </td>
                 </tr>
+
                 <tr>
                     <td>
                         <div></div>
@@ -146,14 +189,21 @@
                                                                 {{item.SellerName}}
                                                             </td>
 
+
                                                             <td style="width:7px; height: 100%;" rowspan="2">
                                                                 <div style="width:1px; height: calc(100% - 5px); background: #DADADA; margin:auto;"></div>
                                                             </td>
 
                                                             <!-- Transport -->
-                                                            <td style="width:30px; height: 100%;" rowspan="2">
+                                                            <td *ngIf="item.TypeCode != 'ICC' && item.TypeCode != 'ECC'" style="width:30px; height: 100%;" rowspan="2">
                                                                 <div title="{{item.TransportModeName}}" style="width: 100%; height: 100%; position:relative;">
                                                                     <img class="CenterCenter" style="height:auto;width:20px;" [attr.src]="'./Images/Icons/' + item.TransportModeCode + '.png'" />
+                                                                </div>
+                                                            </td>
+
+                                                            <td *ngIf="item.TypeCode == 'ICC' || item.TypeCode == 'ECC'" style="width:30px; height: 100%;" rowspan="2">
+                                                                <div title="{{item.DirectionName}}" style="width: 100%; height: 100%; position:relative;">
+                                                                    <img class="CenterCenter" style="height:auto;width:20px;" [attr.src]="'./Images/Directions/' + item.DirectionCode + '.png'" />
                                                                 </div>
                                                             </td>
                                                             <td>

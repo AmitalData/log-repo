@@ -24,8 +24,10 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
         "IsSmallLabel",
         "Replace",
             "ReplaceWith",
-        "LayoutDirection"
-    ],
+         "LayoutDirection"
+         "ShowTitle",
+        "Title",
+     ],
 
     template:
     `
@@ -39,11 +41,11 @@ import { EntityResourceService } from '../../Services/EntityResourceService';
                 </div>
             </td>
 
-            <td class="TextTrimming" style="vertical-align:middle;"  [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!IsSmallLabel">
+            <td class="TextTrimming" style="vertical-align:middle;"  [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="!IsSmallLabel" title="{{ ShowTitle ? (Title ? Title : LabelText) : '' }}">
                 <label class="Label" [ngStyle]="{color: LabelColor}">{{LabelText}}</label>
             </td>
 
-            <td class="TextTrimming" style="vertical-align:middle;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="IsSmallLabel">
+            <td class="TextTrimming" style="vertical-align:middle;" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'" *ngIf="IsSmallLabel" title="{{ ShowTitle ? (Title ? Title : LabelText) : '' }}">
                 <label class="SmallLabel" [ngStyle]="{color: LabelColor}">{{LabelText}}</label>
             </td>
         </tr>
@@ -73,6 +75,8 @@ export class LogLabelComponent implements OnInit {
     public LabelOpacity: number = 1;
     public ShowWarning: boolean = false;
     public NoValidation: boolean = false;
+    public ShowTitle: boolean = false;
+    public Title: string;
     objectfield: any;
     uiProperty: UIProperty;   
     @Input() NoObjectField: boolean = false; 
@@ -283,7 +287,7 @@ export class LogLabelComponent implements OnInit {
                                             fieldValueLength = this.DataContext[this.ObjectFieldName].length;
                                         }
 
-                                        if (fieldValueLength > this.objectfield.MaxLength) {
+                                        if (this.objectfield.MaxLength != 0 && fieldValueLength > this.objectfield.MaxLength) {
                                             isValid = false;
                                         }
 

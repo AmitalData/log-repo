@@ -4,11 +4,15 @@
   ObjectTableName="&quot;GLAccountType&quot;"
   IsNew="false"
   DBTableName="&quot;GLAccountTypes&quot;"
-  OldDBTableName="&quot;GLAccountTypes&quot;"
+  DBTableOldNames="GLAccountTypes"
   ObjectTableSingular="&quot;GLAccountType&quot;"
   ObjectTablePlural="&quot;GLAccountTypes&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -16,7 +20,7 @@
   IsEditable="false"
   IsNewWizard="false"
   LookUp1="&quot;Code&quot;"
-  LookUp2="&quot;EnglishName&quot;"
+  LookUp2="&quot;LocalName&quot;"
   KeyPropertyPath="&quot;Code&quot;"
   AutoCompleteSearchWindow="false"
   IsClosed="true"
@@ -39,33 +43,37 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוג כרטיס&quot;"
   DefaultText="&quot;Account Types&quot;"
-  Code="&quot;836f&quot;"
+  Code="&quot;40c4&quot;"
   Name="&quot;GLAccountType Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
-  CloseTableName="&quot;EnglishName&quot;"
+  CloseTableName="&quot;LocalName&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
-  NoViewController="false"
+  NoViewController="true"
   NoPMController="false"
   NoTS="false"
+  NoDefaultFeatures="false"
   HasCompactSearch="false"
   ApplyDefaultValues="false"
   HasMenuButtons="false"
   ApplyOnPropertyChangedCode="false"
   HasApiHelper="false"
   AllowedForComputingPartners="false"
+  IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;22d5&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
+  IsTabsHidden="false"
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="dbo">
   <field
     Id="&quot;8b56941d-ac08-4342-b9dc-cbeb710d64bb&quot;"
     FieldName="&quot;Code&quot;"
-    OldFieldName="&quot;Code&quot;"
+    OldNames="Code"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -74,7 +82,9 @@
     MinLength="1"
     MaxLength="1"
     IsRequired="true"
+    CopyToDW="false"
     DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -82,6 +92,7 @@
     SystemMaxLength="1"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -113,6 +124,7 @@
     ListLocalDefaultText="&quot;קוד&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="true"
     HasDataBaseField="true"
     HasPMField="true"
@@ -126,16 +138,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;a5ce79dc-0b68-4b45-a012-6ada8b052f79&quot;"
     FieldName="&quot;LocalName&quot;"
-    OldFieldName="&quot;LocalName&quot;"
+    OldNames="LocalName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -144,7 +158,9 @@
     MinLength="0"
     MaxLength="30"
     IsRequired="false"
-    DisplayOnLookUp="false"
+    CopyToDW="false"
+    DisplayOnLookUp="true"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -152,10 +168,11 @@
     SystemMaxLength="30"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="true"
+    DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;LocalName&quot;"
     ListPropertyPath="&quot;LocalName&quot;"
     DisplayInLookUpIndex="1"
@@ -183,6 +200,7 @@
     ListLocalDefaultText="&quot;שם מקומי&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -196,16 +214,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;dde8e059-d737-47ee-a106-0ac3c32bc894&quot;"
     FieldName="&quot;EnglishName&quot;"
-    OldFieldName="&quot;EnglishName&quot;"
+    OldNames="EnglishName"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -214,7 +234,9 @@
     MinLength="0"
     MaxLength="60"
     IsRequired="true"
-    DisplayOnLookUp="true"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
@@ -222,10 +244,11 @@
     SystemMaxLength="60"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
-    DisplayInSearchWindowList="true"
+    DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EnglishName&quot;"
     ListPropertyPath="&quot;EnglishName&quot;"
     DisplayInLookUpIndex="1"
@@ -253,6 +276,7 @@
     ListLocalDefaultText="&quot;שם אנגלית&quot;"
     IsNullable="true"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -266,16 +290,18 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
   <field
     Id="&quot;3730b949-070d-40b4-9d21-7646f1cbc8cb&quot;"
     FieldName="&quot;Inactive&quot;"
-    OldFieldName="&quot;Inactive&quot;"
+    OldNames="Inactive"
     IsNew="false"
     IsChecked="false"
     IsDeleted="false"
@@ -284,7 +310,9 @@
     MinLength="0"
     MaxLength="0"
     IsRequired="false"
+    CopyToDW="false"
     DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
     CanFilter="false"
     DisplayOnly="false"
     SystemRequired="false"
@@ -292,6 +320,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -322,6 +351,7 @@
     ListLocalDefaultText="&quot;חסום&quot;"
     IsNullable="false"
     IsForeignKey="false"
+    DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -335,12 +365,23 @@
     AllowedinAutomationConditions="false"
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
     IsSpellCheckedShortLocalDefaultText="false"
-    IsSpellCheckedListLocalDefaultText="false" />
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;GLAccountTypeHeaderScreen&quot;"
+    ObjectTableName="&quot;GLAccountType&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -401,7 +442,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;GLAccountType&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Code&quot;"
         FieldName="&quot;Code&quot;"
@@ -414,7 +456,9 @@
         IsCustomType="false"
         IsAttribute="true"
         IgnoreCustomTypeCheck="false"
-        IsCloseField="false" />
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;LocalName&quot;"
         FieldName="&quot;LocalName&quot;"
@@ -427,7 +471,9 @@
         IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
-        IsCloseField="false" />
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;EnglishName&quot;"
         FieldName="&quot;EnglishName&quot;"
@@ -440,7 +486,9 @@
         IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
-        IsCloseField="false" />
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
       <DCField
         DCFieldName="&quot;Inactive&quot;"
         FieldName="&quot;Inactive&quot;"
@@ -453,9 +501,11 @@
         IsCustomType="false"
         IsAttribute="false"
         IgnoreCustomTypeCheck="false"
-        IsCloseField="false" />
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
-  <AdditionalFeatures />
   <AdditionalTextCodes />
+  <AdditionalFeatures />
 </entity>

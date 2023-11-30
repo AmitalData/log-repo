@@ -100,6 +100,18 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             set;
         }
 
+        public IDbSet<RegimenFiscal> RegimenFiscals
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<PostalCode> PostalCodes
+        {
+            get;
+            set;
+        }
+
         public IDbSet<DocumentStatus> DocumentStatuses
         {
             get;
@@ -964,6 +976,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<CheckDigitControlAlgorithm> CheckDigitControlAlgorithms { get; set; }
         public IDbSet<UserLastSettings> UserLastSettings { get; set; }
         public IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
+        public IDbSet<Mention> Mentions { get; set; }
 
 
         #endregion
@@ -1351,7 +1364,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         }
 
 
-        public IDbSet<ImageLibrary> ImageLibrarys
+        public IDbSet<ImageLibrary> ImageLibraries
         {
             get;
             set;
@@ -1511,6 +1524,13 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             get;
             set;
         }
+
+        public IDbSet<ShipmentAnalytic> ShipmentAnalytics
+        {
+            get;
+            set;
+        }
+
         public IDbSet<ShipmentAdditionalCloudData> ShipmentAdditionalCloudDatas
         {
             get;
@@ -1905,6 +1925,7 @@ namespace Logitude.DatabaseMigration.LogitudeModel
         public IDbSet<ARInvoiceStock> ARInvoiceStocks { get; set; }
         public IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; set; }
         #endregion
+        public IDbSet<ARInvoicesSignedStatus> ARInvoicesSignedStatuses { get; set; }
 
         #region Quotes Context
         public IDbSet<QuoteClosingReason> QuoteClosingReasons { get; set; }
@@ -5243,6 +5264,8 @@ namespace Logitude.DatabaseMigration.LogitudeModel
             modelBuilder.Configurations.Add(new DocumentStatusMap());
             
             modelBuilder.Configurations.Add(new CourierCustomStatusMap());
+            modelBuilder.Configurations.Add(new MentionMap());
+            modelBuilder.Configurations.Add(new ShipmentAnalyticMap());
             #endregion
 
             #region Missing Map Files For Customs Pocos

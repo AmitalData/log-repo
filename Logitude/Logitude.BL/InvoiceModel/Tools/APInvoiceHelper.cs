@@ -1,10 +1,14 @@
 ﻿using Intuit.Ipp.Data;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.DataMapping;
+using Logitude.BL.Resolvers;
 using Logitude.BL.Security;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
@@ -29,6 +33,7 @@ using System.Transactions;
 using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
+using User = Simplog.Data.CommonDataModel.EntityPOCOs.User;
 
 namespace Logitude.BL.InvoiceModel.Tools
 {
@@ -89,7 +94,7 @@ namespace Logitude.BL.InvoiceModel.Tools
             {
                 return;
             }
-
+            
             if (IsSetApproved)
             {
                 commonContext = CommonContext;
@@ -102,6 +107,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                 if (loggedTenant.AccountingSetting != null)
                     if (IsQuickBooksAccoutingSystemTransfer(entityPM))
                     {
+                        if(entityPM.TotalVATOnly)
+                        {
+                            var showLocals = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                            throw new ApplicationException(TranslateTextsClass.Translate("Apinvoice.O.TotalVATwithQBO", entityPM.Tenant, showLocals));
+                        }
                         APInvoice = entityPM;
                         APInvoiceId = entityPM.Id;
                         documentRepository = new DocumentRepository(commonContext);
@@ -312,6 +322,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                     QBOBill.DocNumber = invoice.InvoiceNumber;
                     QBOBill.Id = invoice.Id;
                     QBOBill.domain = invoice.ExternalAccountingEntityId;
+                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
+                    {
+                        QBOBill.GlobalTaxCalculationSpecified = true;
+                        QBOBill.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
+                    }
                     string notes = "";
                     if (!String.IsNullOrEmpty(invoice.MainEntityReference))
                     {
@@ -332,32 +347,8 @@ namespace Logitude.BL.InvoiceModel.Tools
                             line.Amount = Decimal.Parse(lines[i].InvoiceCurrencyAmount + "");
                             line.AmountSpecified = true;
                             line.DetailType = LineDetailTypeEnum.AccountBasedExpenseLineDetail;
-                            line.DetailTypeSpecified = true;
-                            if (lines[i].VatPercentage != 0)
-                            {
-                                line.AnyIntuitObject = new AccountBasedExpenseLineDetail
-                                {
-                                    AccountRef = new ReferenceType
-                                    {
-                                        Value = PayablesExternalChargesTypesCode[i]
-                                    },
-                                    TaxCodeRef = new ReferenceType
-                                    {
-                                        Value = ExternalVatTypesCode[i]
-                                    },
-                                };
-                            }
-                            else
-                            {
-                                line.AnyIntuitObject = new AccountBasedExpenseLineDetail
-                                {
-                                    AccountRef = new ReferenceType
-                                    {
-                                        Value = PayablesExternalChargesTypesCode[i]
-                                    },
-
-                                };
-                            }
+                            line.DetailTypeSpecified = true;                    
+                            line.AnyIntuitObject = this.GetAccountBasedExpenseLineDetail(i);
 
                         }
                         else if (AccountingSystemCode == "QBO")
@@ -366,13 +357,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             line.AmountSpecified = true;
                             line.DetailType = LineDetailTypeEnum.AccountBasedExpenseLineDetail;
                             line.DetailTypeSpecified = true;
-                            line.AnyIntuitObject = new AccountBasedExpenseLineDetail
-                            {
-                                AccountRef = new ReferenceType
-                                {
-                                    Value = PayablesExternalChargesTypesCode[i]
-                                },
-                            };
+                            line.AnyIntuitObject = this.GetAccountBasedExpenseLineDetail(i);
                         }
                         lineList.Add(line);
                     }
@@ -406,6 +391,11 @@ namespace Logitude.BL.InvoiceModel.Tools
                     lines = invoice.InvoiceLines.Where(d => d.ChangeSetOp != ChangeSetOperation.Delete).ToList();
                     QBOBill.Id = invoice.Id;
                     QBOBill.domain = invoice.ExternalAccountingEntityId;
+                    if (!string.IsNullOrEmpty(invoice.GlobalTaxCalculation))
+                    {
+                        QBOBill.GlobalTaxCalculationSpecified = true;
+                        QBOBill.GlobalTaxCalculation = GetGlobalTaxCalculation(invoice.GlobalTaxCalculation);
+                    }
                     for (int i = 0; i < lines.Count; i++)
                     {
                         Line line = new Line();
@@ -418,31 +408,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             line.AmountSpecified = true;
                             line.DetailType = LineDetailTypeEnum.AccountBasedExpenseLineDetail;
                             line.DetailTypeSpecified = true;
-                            if (lines[i].VatPercentage != 0)
-                            {
-                                line.AnyIntuitObject = new AccountBasedExpenseLineDetail
-                                {
-                                    AccountRef = new ReferenceType
-                                    {
-                                        Value = PayablesExternalChargesTypesCode[i]
-                                    },
-                                    TaxCodeRef = new ReferenceType
-                                    {
-                                        Value = ExternalVatTypesCode[i]
-                                    },
-                                };
-                            }
-                            else
-                            {
-                                line.AnyIntuitObject = new AccountBasedExpenseLineDetail
-                                {
-                                    AccountRef = new ReferenceType
-                                    {
-                                        Value = PayablesExternalChargesTypesCode[i]
-                                    },
-
-                                };
-                            }
+                            line.AnyIntuitObject = this.GetAccountBasedExpenseLineDetail(i);
 
                         }
                         else if (AccountingSystemCode == "QBO")
@@ -452,13 +418,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                             line.AmountSpecified = true;
                             line.DetailType = LineDetailTypeEnum.AccountBasedExpenseLineDetail;
                             line.DetailTypeSpecified = true;
-                            line.AnyIntuitObject = new AccountBasedExpenseLineDetail
-                            {
-                                AccountRef = new ReferenceType
-                                {
-                                    Value = PayablesExternalChargesTypesCode[i]
-                                },
-                            };
+                            line.AnyIntuitObject = this.GetAccountBasedExpenseLineDetail(i);
                         }
                         lineList.Add(line);
                     }
@@ -603,7 +563,7 @@ namespace Logitude.BL.InvoiceModel.Tools
                 queueservice.Complete();
                 APInvoiceRepository repository = new APInvoiceRepository(tenant);
                 APInvoice invoice = repository.GetSingleAPInvoice(APInvoice.Id, tenant);
-                APInvoiceMapping.MapEntity(APInvoice, invoice, IsNewEntity);
+                APInvoiceMapping.MapEntity(APInvoice, invoice == null ? new APInvoice() : invoice, IsNewEntity);
                 repository.Update(invoice);
             }
 
@@ -680,9 +640,171 @@ namespace Logitude.BL.InvoiceModel.Tools
             communicationLogRepository.SubmitChanges();
         }
 
+        private GlobalTaxCalculationEnum GetGlobalTaxCalculation(string globalTaxCalculation)
+        {
+            if (globalTaxCalculation == "TE")
+            {
+                return GlobalTaxCalculationEnum.TaxExcluded;
+            }
+            else if (globalTaxCalculation == "TI")
+            {
+                return GlobalTaxCalculationEnum.TaxInclusive;
+            }
+            else
+            {
+                return GlobalTaxCalculationEnum.NotApplicable;
+            }
+        }
+
+        private AccountBasedExpenseLineDetail GetAccountBasedExpenseLineDetail(int index)
+        {
+            AccountBasedExpenseLineDetail anyIntuitObject = new AccountBasedExpenseLineDetail
+            {
+                AccountRef = new ReferenceType
+                {
+                    Value = PayablesExternalChargesTypesCode[index]
+                },
+                TaxCodeRef = new ReferenceType
+                {
+                    Value = ExternalVatTypesCode[index]
+                },
+            };
+
+            return anyIntuitObject;
+        }
 
 
+        public static void AddCommunicationLog<T, T2>(string communicationStatusTypeCode, T body, T2 response, string tableName, string entityId, string subject, int? tenantnumber = null)
+        {
+            try
+            {
+                int tenant = 0;
+                if (tenantnumber == null && HttpContext.Current != null && HttpContext.Current.Request != null && HttpContext.Current.Request.Headers != null)
+                {
+                    string token = HttpContext.Current.Request.Headers["Token"];
+                    if (!string.IsNullOrEmpty(token))
+                    {
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        if (authToken != null)
+                        {
+                            tenant = authToken.Tenant;
+                        }
+                    }
+                }
+                else tenant = (int)tenantnumber;
+
+                ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
+                CommunicationLogRepository communicationLogRepository = new CommunicationLogRepository(commonContext);
+                DocumentRepository documentRepository = new DocumentRepository(commonContext);
+                UserRepository userRepository = new UserRepository(commonContext);
+                CommunicationLogService communicationLogService = new CommunicationLogService(commonContext, tenant);
+                ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+
+                string objectTableId = null;
+                if (!string.IsNullOrEmpty(tableName))
+                {
+                    ObjectTable table = objectTableRepository.GetObjectTableByName(tableName, tenant, false);
+                    if (table != null)
+                        objectTableId = table.Id;
+
+                }
+
+                string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+                User loggedUser = userRepository.GetSingleUserByEmail(loggedUserEmail, tenant, true);
+
+                #region Body Message Document
+                byte[] bytearray = body != null ? LogitudeXmlSerializer.SerializeObject<T>(body) : new byte[0];
+                Document bodyDocument = new Document()
+                {
+                    CreateDate = DateTime.Now,
+                    Extension = "xml",
+                    FileSize = bytearray.Length,
+                    Tenant = Convert.ToInt32(tenant),
+                    Id = IdCounter.GetNumber("Document", tenant),
+                    HasFile = true,
+                    Folder = "api",
+                };
+
+                documentRepository.Add(bodyDocument);
+                #endregion
+
+                #region Response Body Document
+                Document responseDocument = null;
+                byte[] responseByteArray = null;
+                if (response != null)
+                {
+                    responseByteArray = LogitudeXmlSerializer.SerializeObject<T2>(response);
+
+                    responseDocument = new Document()
+                    {
+                        CreateDate = DateTime.Now,
+                        Extension = "xml",
+                        FileSize = responseByteArray.Length,
+                        Tenant = Convert.ToInt32(tenant),
+                        Id = IdCounter.GetNumber("Document", tenant),
+                        HasFile = true,
+                        Folder = "api",
+                    };
+
+                    documentRepository.Add(responseDocument);
+
+                }
+                #endregion
+
+                documentRepository.SubmitChanges();
+
+                CommunicationLogPM commLog = new CommunicationLogPM()
+                {
+                    Id = IdCounter.GetNumber("CommunicationLog", tenant),
+                    LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    LastStatusDateUTC = DateTime.UtcNow,
+                    InOut = "I",
+                    Subject = subject,
+                    Tenant = tenant,
+                    CommunicationLogTypeCode = "A",
+                    CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
+                    CommunicationStatusTypeCode = communicationStatusTypeCode,
+                    DocumentId = bodyDocument.Id,
+                    CreateDateUTC = DateTime.UtcNow,
+                    CreatedByUserId = loggedUser.Id,
+                    ObjectTableId = objectTableId,
+                    EntityId = entityId,
+                    ResponseDocumentId = responseDocument != null ? responseDocument.Id : null,
+
+                };
+
+                communicationLogService.Create(commLog);
 
 
+                #region Write Document On Storage
+                Logitude.Server.Tools.BlobFileInfo fileInfo = new BlobFileInfo()
+                {
+                    FileName = bodyDocument.Id,
+                    FolderName = bodyDocument.Folder,
+                    Extension = bodyDocument.Extension,
+                    Tenant = tenant,
+                    FileSize = bytearray.Length,
+                };
+
+                Logitude.Server.Tools.StorageService.IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                storageservice.Write(bytearray.ToArray(), fileInfo);
+
+                if (responseByteArray != null && responseDocument != null)
+                {
+                    fileInfo.FileName = responseDocument.Id;
+                    fileInfo.FolderName = responseDocument.Folder;
+                    fileInfo.Extension = responseDocument.Extension;
+                    fileInfo.Tenant = tenant;
+                    fileInfo.FileSize = responseByteArray.Length;
+                    storageservice.Write(responseByteArray.ToArray(), fileInfo);
+                }
+                #endregion
+
+            }
+            catch (Exception ex)
+            {
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "API", null, null);
+            }
+        }
     }
 }

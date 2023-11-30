@@ -9,6 +9,8 @@ using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.Server.Tools.CustomFields;
+using Logitude.BL.InfrastructureModel.EntityQueries;
 
 namespace Logitude.BL.CommonDataModel.EntityQueries
 {
@@ -51,6 +53,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           AWBPrintDescription = a.AWBPrintDescription,
                           ChargesGroupCode = a.ChargesGroupCode,
                           ChargesGroupId = a.ChargesGroupId,
+                          QuoteChargesGroupCode = a.QuoteChargesGroupCode,
+                          QuoteChargesGroupId = a.QuoteChargesGroupId,
                           IATACodeId = a.IATACodeId,
                           Description = a.Description,
                           IsAir = a.IsAir,
@@ -76,6 +80,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           PayablesChargesTypeExternalCode = a.PayablesChargesTypeExternalCode,
                           PayableDebitGLAcountId = a.PayableDebitGLAcountId,
                           ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
+                          RecCreditGLAcountLocalName = a.RecCreditGLAcountLocalName,
+                          PayDebitGLAcountLocalName = a.PayDebitGLAcountLocalName,
                           IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
                           IsCustoms = a.IsCustoms,
                           IsBackToBack = a.IsBackToBack,
@@ -100,6 +106,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
             entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
 
             ChargesTypePM securedPm = new ChargesTypePM();
             SecuredMapping.GetMappedPM(entity, securedPm, "ChargesType", tenant);
@@ -127,6 +134,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         AWBPrintDescription = a.AWBPrintDescription,
                                         ChargesGroupCode = a.ChargesGroupCode,
                                         ChargesGroupId = a.ChargesGroupId,
+                                        QuoteChargesGroupCode = a.QuoteChargesGroupCode,
+                                        QuoteChargesGroupId = a.QuoteChargesGroupId,
                                         IATACodeId = a.IATACodeId,
                                         Description = a.Description,
                                         IsAir = a.IsAir,
@@ -152,6 +161,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         PayablesChargesTypeExternalCode = a.PayablesChargesTypeExternalCode,
                                         PayableDebitGLAcountId = a.PayableDebitGLAcountId,
                                         ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
+                                        RecCreditGLAcountLocalName = a.RecCreditGLAcountLocalName,
+                                        PayDebitGLAcountLocalName = a.PayDebitGLAcountLocalName,
                                         IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
                                         IsCustoms = a.IsCustoms,
                                         IsBackToBack = a.IsBackToBack,
@@ -176,6 +187,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
             entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
 
             ChargesTypePM securedPm = new ChargesTypePM();
             SecuredMapping.GetMappedPM(entity, securedPm, "ChargesType", tenant);
@@ -235,6 +247,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   PayablesChargesTypeExternalCode = a.PayablesChargesTypeExternalCode,
                                   PayableDebitGLAcountId = a.PayableDebitGLAcountId,
                                   ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
+                                  RecCreditGLAcountLocalName = a.RecCreditGLAcountLocalName,
+                                  PayDebitGLAcountLocalName = a.PayDebitGLAcountLocalName,
                                   IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
                                   IsCustoms = a.IsCustoms,
                                   IsBackToBack = a.IsBackToBack,
@@ -260,6 +274,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     if (entity != null)
                     {
                         entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
+                        new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
 
                         string cname = "ChargesTypePM" + entity.Id + entity.Tenant;
 
@@ -300,6 +315,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               AWBPrintDescription = a.AWBPrintDescription,
                               ChargesGroupCode = a.ChargesGroupCode,
                               ChargesGroupId = a.ChargesGroupId,
+                              QuoteChargesGroupCode = a.QuoteChargesGroupCode,
+                              QuoteChargesGroupId = a.QuoteChargesGroupId,
                               IATACodeId = a.IATACodeId,
                               Description = a.Description,
                               IsAir = a.IsAir,
@@ -325,6 +342,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               PayablesChargesTypeExternalCode = a.PayablesChargesTypeExternalCode,
                               PayableDebitGLAcountId = a.PayableDebitGLAcountId,
                               ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
+                              RecCreditGLAcountLocalName = a.RecCreditGLAcountLocalName,
+                              PayDebitGLAcountLocalName = a.PayDebitGLAcountLocalName,
                               IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
                               IsCustoms = a.IsCustoms,
                               IsBackToBack = a.IsBackToBack,
@@ -349,6 +368,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                 ChargeTypeAccountingQuery chargeTypeAccountingQuery = new ChargeTypeAccountingQuery(tenant);
                 entity.ChargeTypeAccountings = chargeTypeAccountingQuery.GetChargeTypeAccountingsForChargeType(entity.Id, tenant).ToList();
+                new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "PM", Entities = new List<ChargesTypePM> { entity }.Cast<object>().ToList() }).Set();
+
             }
 
             ChargesTypePM securedPm = new ChargesTypePM();
@@ -377,6 +398,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                               }).ToList();
 
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "PM", Entities = Entities.Cast<object>().ToList() }).Set();
+
             return Entities;
 
 
@@ -402,6 +425,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     AWBPrintDescription = a.AWBPrintDescription,
                                                     ChargesGroupCode = a.ChargesGroupCode,
                                                     ChargesGroupId = a.ChargesGroupId,
+                                                    QuoteChargesGroupCode = a.QuoteChargesGroupCode,
+                                                    QuoteChargesGroupId = a.QuoteChargesGroupId,
                                                     IATACodeId = a.IATACodeId,
                                                     Description = a.Description,
                                                     IsAir = a.IsAir,
@@ -427,6 +452,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                     PayablesChargesTypeExternalCode=a.PayablesChargesTypeExternalCode,
                                                     PayableDebitGLAcountId = a.PayableDebitGLAcountId,
                                                     ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
+                                                    RecCreditGLAcountLocalName = a.RecCreditGLAcountLocalName,
+                                                    PayDebitGLAcountLocalName = a.PayDebitGLAcountLocalName,
                                                     IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
                                                     IsCustoms = a.IsCustoms,
                                                     IsBackToBack = a.IsBackToBack,
@@ -475,6 +502,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              AWBPrintDescription = a.AWBPrintDescription,
                              ChargesGroupCode = a.ChargesGroupCode,
                              ChargesGroupId = a.ChargesGroupId,
+                             QuoteChargesGroupCode = a.QuoteChargesGroupCode,
+                             QuoteChargesGroupId = a.QuoteChargesGroupId,
                              IATACodeId = a.IATACodeId,
                              Description = a.Description,
                              IsAir = a.IsAir,
@@ -500,6 +529,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              PayablesChargesTypeExternalCode=a.PayablesChargesTypeExternalCode,
                              PayableDebitGLAcountId = a.PayableDebitGLAcountId,
                              ReceivableCreditGLAccountId = a.ReceivableCreditGLAccountId,
+                             RecCreditGLAcountLocalName = a.RecCreditGLAcountLocalName,
+                             PayDebitGLAcountLocalName = a.PayDebitGLAcountLocalName,
                              IsAutoDisplayInCustoms = a.IsAutoDisplayInCustoms,
                              IsCustoms = a.IsCustoms,
                              IsBackToBack = a.IsBackToBack,
@@ -549,9 +580,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 return query;
         }
 
+
+
         public IQueryable<ChargesTypeList> GetIQueryableEntityList(IQueryable<ChargesType> iQueryable)
         {
-            IQueryable<ChargesTypeList> result = from f in iQueryable.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup")
+            string objcetTableId = new ObjectTableQuery(0).GetObjectTableIdByName("ChargesType");
+            IQueryable<ChargesTypeList> result = from f in iQueryable.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup").Include("QuoteChargesGroup")
+                                                 join customFieldsMainObject in repository.context.CustomFieldsMainObjects.Where(d => d.ObjectTableId == objcetTableId) on f.Id equals customFieldsMainObject.EntityId into customFieldsMainObjectJoin
+                                                 from customFieldsMainObject in customFieldsMainObjectJoin.DefaultIfEmpty()
                                                  select new ChargesTypeList()
                                                  {
                                                      AddedManually = f.AddedManually,
@@ -567,6 +603,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      AWBPrintDescription = f.AWBPrintDescription,
                                                      ChargesGroupCode = f.ChargesGroupCode,
                                                      ChargesGroupId = f.ChargesGroupId,
+                                                     QuoteChargesGroupCode = f.QuoteChargesGroupCode,
+                                                     QuoteChargesGroupId = f.QuoteChargesGroupId,
                                                      IATACodeId = f.IATACodeId,
                                                      Description = f.Description,
                                                      IsAir = f.IsAir,
@@ -578,7 +616,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      IsReceivable = f.IsReceivable,
                                                      VatTypeId = f.VatTypeId,
                                                      VatTypeName = f.VatType == null ? "" : f.VatType.EnglishName,
-                                                     VatIsMultiPercentage= f.VatType == null ? false : f.VatType.IsMultiPercentage,
+                                                     VatIsMultiPercentage = f.VatType == null ? false : f.VatType.IsMultiPercentage,
                                                      DueTypeCode = f.DueTypeCode,
                                                      DueTypeName = f.DueType != null ? f.DueType.Name : null,
                                                      IsAutoDisplayInQuote = f.IsAutoDisplayInQuote,
@@ -586,16 +624,19 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      ContainerMeasurementCode = f.ContainerMeasurement != null ? f.ContainerMeasurement.Code : null,
                                                      ViewOrder = f.ViewOrder,
                                                      ChargesGroupName = f.ChargesGroup == null ? null : f.ChargesGroup.Name,
+                                                     QuoteChargesGroupName = f.QuoteChargesGroup == null ? null : f.QuoteChargesGroup.Name,
                                                      SearchFields = f.SearchFields,
                                                      AccountingVATSplit = f.AccountingVATSplit,
                                                      ReceivableCreditAccount = f.ReceivableCreditAccount,
                                                      PayableDebitAccount = f.PayableDebitAccount,
                                                      ReceivablesChargesTypeExternalCode = f.ReceivablesChargesTypeExternalCode,
-                                                     PayablesChargesTypeExternalCode=f.PayablesChargesTypeExternalCode,
+                                                     PayablesChargesTypeExternalCode = f.PayablesChargesTypeExternalCode,
                                                      PayableAccountId = f.PayableAccountId,
                                                      ReceivableAccountId = f.ReceivableAccountId,
                                                      PayableDebitGLAcountId = f.PayableDebitGLAcountId,
                                                      ReceivableCreditGLAccountId = f.ReceivableCreditGLAccountId,
+                                                     RecCreditGLAcountLocalName = f.RecCreditGLAcountLocalName,
+                                                     PayDebitGLAcountLocalName = f.PayDebitGLAcountLocalName,
                                                      IsBackToBack = f.IsBackToBack,
                                                      IsAutoDisplayInCustoms = f.IsAutoDisplayInCustoms,
                                                      IsCustoms = f.IsCustoms,
@@ -615,13 +656,65 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                      IsActiveInImport = f.IsActiveInImport,
                                                      IsActiveInDrop = f.IsActiveInDrop,
                                                      IsActiveInDomestic = f.IsActiveInDomestic,
+                                                     Field1 = customFieldsMainObject != null ? customFieldsMainObject.Field1 : null,
+                                                     Field2 = customFieldsMainObject != null ? customFieldsMainObject.Field2 : null,
+                                                     Field3 = customFieldsMainObject != null ? customFieldsMainObject.Field3 : null,
+                                                     Field4 = customFieldsMainObject != null ? customFieldsMainObject.Field4 : null,
+                                                     Field5 = customFieldsMainObject != null ? customFieldsMainObject.Field5 : null,
+                                                     Field6 = customFieldsMainObject != null ? customFieldsMainObject.Field6 : null,
+                                                     Field7 = customFieldsMainObject != null ? customFieldsMainObject.Field7 : null,
+                                                     Field8 = customFieldsMainObject != null ? customFieldsMainObject.Field8 : null,
+                                                     Field9 = customFieldsMainObject != null ? customFieldsMainObject.Field9 : null,
+                                                     Field10 = customFieldsMainObject != null ? customFieldsMainObject.Field10 : null,
+                                                     Field11 = customFieldsMainObject != null ? customFieldsMainObject.Field11 : null,
+                                                     Field12 = customFieldsMainObject != null ? customFieldsMainObject.Field12 : null,
+                                                     Field13 = customFieldsMainObject != null ? customFieldsMainObject.Field13 : null,
+                                                     Field14 = customFieldsMainObject != null ? customFieldsMainObject.Field14 : null,
+                                                     Field15 = customFieldsMainObject != null ? customFieldsMainObject.Field15 : null,
+                                                     Field16 = customFieldsMainObject != null ? customFieldsMainObject.Field16 : null,
+                                                     Field17 = customFieldsMainObject != null ? customFieldsMainObject.Field17 : null,
+                                                     Field18= customFieldsMainObject != null ? customFieldsMainObject.Field18 : null,
+                                                     Field19= customFieldsMainObject != null ? customFieldsMainObject.Field19 : null,
+                                                     Field20 = customFieldsMainObject != null ? customFieldsMainObject.Field20 : null,
+                                                     Field21 = customFieldsMainObject != null ? customFieldsMainObject.Field21 : null,
+                                                     Field22 = customFieldsMainObject != null ? customFieldsMainObject.Field22 : null,
+                                                     Field23 = customFieldsMainObject != null ? customFieldsMainObject.Field23 : null,
+                                                     Field24 = customFieldsMainObject != null ? customFieldsMainObject.Field24 : null,
+                                                     Field25 = customFieldsMainObject != null ? customFieldsMainObject.Field25 : null,
+                                                     Field26 = customFieldsMainObject != null ? customFieldsMainObject.Field26 : null,
+                                                     Field27 = customFieldsMainObject != null ? customFieldsMainObject.Field27 : null,
+                                                     Field28 = customFieldsMainObject != null ? customFieldsMainObject.Field28 : null,
+                                                     Field29 = customFieldsMainObject != null ? customFieldsMainObject.Field29 : null,
+                                                     Field30 = customFieldsMainObject != null ? customFieldsMainObject.Field30 : null,
+                                                     Field31 = customFieldsMainObject != null ? customFieldsMainObject.Field31 : null,
+                                                     Field32 = customFieldsMainObject != null ? customFieldsMainObject.Field32 : null,
+                                                     Field33 = customFieldsMainObject != null ? customFieldsMainObject.Field33 : null,
+                                                     Field34 = customFieldsMainObject != null ? customFieldsMainObject.Field34 : null,
+                                                     Field35 = customFieldsMainObject != null ? customFieldsMainObject.Field35 : null,
+                                                     Field36 = customFieldsMainObject != null ? customFieldsMainObject.Field36 : null,
+                                                     Field37 = customFieldsMainObject != null ? customFieldsMainObject.Field37 : null,
+                                                     Field38 = customFieldsMainObject != null ? customFieldsMainObject.Field38 : null,
+                                                     Field39 = customFieldsMainObject != null ? customFieldsMainObject.Field39 : null,
+                                                     Field40 = customFieldsMainObject != null ? customFieldsMainObject.Field40 : null,
+                                                     Field41 = customFieldsMainObject != null ? customFieldsMainObject.Field41 : null,
+                                                     Field42 = customFieldsMainObject != null ? customFieldsMainObject.Field42 : null,
+                                                     Field43 = customFieldsMainObject != null ? customFieldsMainObject.Field43 : null,
+                                                     Field44 = customFieldsMainObject != null ? customFieldsMainObject.Field44 : null,
+                                                     Field45 = customFieldsMainObject != null ? customFieldsMainObject.Field45 : null,
+                                                     Field46 = customFieldsMainObject != null ? customFieldsMainObject.Field46 : null,
+                                                     Field47 = customFieldsMainObject != null ? customFieldsMainObject.Field47 : null,
+                                                     Field48 = customFieldsMainObject != null ? customFieldsMainObject.Field48 : null,
+                                                     Field49 = customFieldsMainObject != null ? customFieldsMainObject.Field49 : null,
+                                                     Field50 = customFieldsMainObject != null ? customFieldsMainObject.Field50 : null,
                                                  };
             return result;
         }
 
+
+
         public ChargesTypeList GetSingleChargesType(string id, int tenant)
         {
-            ChargesTypeList chargesTypeList = (from f in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup")
+            ChargesTypeList chargesTypeList = (from f in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup").Include("QuoteChargesGroup")
                                                where f.Tenant == tenant && f.Id == id
                                                select new ChargesTypeList()
                                                {
@@ -638,6 +731,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    AWBPrintDescription = f.AWBPrintDescription,
                                                    ChargesGroupCode = f.ChargesGroupCode,
                                                    ChargesGroupId = f.ChargesGroupId,
+                                                   QuoteChargesGroupCode = f.QuoteChargesGroupCode,
+                                                   QuoteChargesGroupId = f.QuoteChargesGroupId,
                                                    IATACodeId = f.IATACodeId,
                                                    Description = f.Description,
                                                    IsAir = f.IsAir,
@@ -657,6 +752,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    ContainerMeasurementCode = f.ContainerMeasurement != null ? f.ContainerMeasurement.Code : null,
                                                    ViewOrder = f.ViewOrder,
                                                    ChargesGroupName = f.ChargesGroup == null ? null : f.ChargesGroup.Name,
+                                                   QuoteChargesGroupName = f.QuoteChargesGroup == null ? null : f.QuoteChargesGroup.Name,
                                                    SearchFields = f.SearchFields,
                                                    AccountingVATSplit = f.AccountingVATSplit,
                                                    ReceivableCreditAccount = f.ReceivableCreditAccount,
@@ -665,6 +761,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    PayablesChargesTypeExternalCode=f.PayablesChargesTypeExternalCode,
                                                    PayableDebitGLAcountId = f.PayableDebitGLAcountId,
                                                    ReceivableCreditGLAccountId = f.ReceivableCreditGLAccountId,
+                                                   RecCreditGLAcountLocalName = f.RecCreditGLAcountLocalName,
+                                                   PayDebitGLAcountLocalName = f.PayDebitGLAcountLocalName,
                                                    IsBackToBack = f.IsBackToBack,
                                                    IsAutoDisplayInCustoms = f.IsAutoDisplayInCustoms,
                                                    IsCustoms = f.IsCustoms,
@@ -686,13 +784,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    IsActiveInDomestic = f.IsActiveInDomestic,
 
                                                }).FirstOrDefault();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "List", Entities = new List<ChargesTypeList> { chargesTypeList }.Cast<object>().ToList() }).Set();
 
             return chargesTypeList;
         }
 
         public IQueryable<ChargesTypeList> GetChargesTypeLists(int tenant, int skip, int take)
         {
-            IQueryable<ChargesTypeList> query = (from f in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup")
+            IQueryable<ChargesTypeList> query = (from f in repository.context.ChargesTypes.Include("Measurement").Include("ContainerMeasurement").Include("VatType").Include("ChargesGroup").Include("QuoteChargesGroup")
                                                  where f.Tenant == tenant
                          select new ChargesTypeList()
                          {
@@ -709,6 +808,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              AWBPrintDescription = f.AWBPrintDescription,
                              ChargesGroupCode = f.ChargesGroupCode,
                              ChargesGroupId = f.ChargesGroupId,
+                             QuoteChargesGroupCode = f.QuoteChargesGroupCode,
+                             QuoteChargesGroupId = f.QuoteChargesGroupId,
                              IATACodeId = f.IATACodeId,
                              Description = f.Description,
                              IsAir = f.IsAir,
@@ -728,6 +829,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ContainerMeasurementCode = f.ContainerMeasurement != null ? f.ContainerMeasurement.Code : null,
                              ViewOrder = f.ViewOrder,
                              ChargesGroupName = f.ChargesGroup == null ? null : f.ChargesGroup.Name,
+                             QuoteChargesGroupName = f.QuoteChargesGroup == null ? null : f.QuoteChargesGroup.Name,
                              SearchFields = f.SearchFields,
                              AccountingVATSplit = f.AccountingVATSplit,
                              ReceivableCreditAccount = f.ReceivableCreditAccount,
@@ -738,6 +840,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              ReceivableAccountId = f.ReceivableAccountId,
                              PayableDebitGLAcountId = f.PayableDebitGLAcountId,
                              ReceivableCreditGLAccountId = f.ReceivableCreditGLAccountId,
+                             RecCreditGLAcountLocalName = f.RecCreditGLAcountLocalName,
+                             PayDebitGLAcountLocalName = f.PayDebitGLAcountLocalName,
                              IsBackToBack = f.IsBackToBack,
                              IsAutoDisplayInCustoms = f.IsAutoDisplayInCustoms,
                              IsCustoms = f.IsCustoms,
@@ -774,13 +878,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   Code = a.Code,
                                                   ViewOrder = a.ViewOrder, 
                                                   ChargesGroupId = a.ChargesGroupId,
+                                                  QuoteChargesGroupId = a.QuoteChargesGroupId,
                                                 };
             return charges;
         }
 
         public ChargesTypeList GetSingleChargesTypeListByCode(string code, int tenant)
         {
-            ChargesTypeList chargesTypeList = (from f in repository.context.ChargesTypes.Include("Measurement").Include("VatType").Include("ChargesGroup")
+            ChargesTypeList chargesTypeList = (from f in repository.context.ChargesTypes.Include("Measurement").Include("VatType").Include("ChargesGroup").Include("QuoteChargesGroup")
                                                where f.Tenant == tenant && f.Code == code
                                                select new ChargesTypeList()
                                                {
@@ -797,6 +902,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    AWBPrintDescription = f.AWBPrintDescription,
                                                    ChargesGroupCode = f.ChargesGroupCode,
                                                    ChargesGroupId = f.ChargesGroupId,
+                                                   QuoteChargesGroupCode = f.QuoteChargesGroupCode,
+                                                   QuoteChargesGroupId = f.QuoteChargesGroupId,
                                                    IATACodeId = f.IATACodeId,
                                                    Description = f.Description,
                                                    IsAir = f.IsAir,
@@ -815,6 +922,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    ContainerMeasurementId = f.ContainerMeasurementId,
                                                    ViewOrder = f.ViewOrder,
                                                    ChargesGroupName = f.ChargesGroup == null ? null : f.ChargesGroup.Name,
+                                                   QuoteChargesGroupName = f.QuoteChargesGroup == null ? null : f.QuoteChargesGroup.Name,
                                                    SearchFields = f.SearchFields,
                                                    AccountingVATSplit = f.AccountingVATSplit,
                                                    ReceivableCreditAccount = f.ReceivableCreditAccount,
@@ -823,6 +931,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    PayablesChargesTypeExternalCode = f.PayablesChargesTypeExternalCode,
                                                    PayableDebitGLAcountId = f.PayableDebitGLAcountId,
                                                    ReceivableCreditGLAccountId = f.ReceivableCreditGLAccountId,
+                                                   RecCreditGLAcountLocalName = f.RecCreditGLAcountLocalName,
+                                                   PayDebitGLAcountLocalName = f.PayDebitGLAcountLocalName,
                                                    IsBackToBack = f.IsBackToBack,
                                                    IsAutoDisplayInCustoms = f.IsAutoDisplayInCustoms,
                                                    IsCustoms = f.IsCustoms,
@@ -844,8 +954,18 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                    IsActiveInDomestic = f.IsActiveInDomestic,
 
                                                }).FirstOrDefault();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "ChargesType", Tenant = tenant, Type = "List", Entities = new List<ChargesTypeList> { chargesTypeList }.Cast<object>().ToList() }).Set();
 
             return chargesTypeList;
+        }
+
+        public List<string> GetChargesTypesIdsByChargeGroupCodeAndTenant(string chargeGroupCode, int tenant)
+        {
+            List<string> chargesTypesIds = (from a in repository.context.ChargesTypes
+                                            where a.ChargesGroupCode == chargeGroupCode && a.Tenant == tenant
+                                            select a.Id).ToList();
+
+            return chargesTypesIds;
         }
     }
 }

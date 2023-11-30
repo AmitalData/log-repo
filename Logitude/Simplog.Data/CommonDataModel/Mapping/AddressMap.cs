@@ -18,7 +18,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsUnicode(true);
 
             this.Property(t => t.City)
-                .HasMaxLength(25)
+                .HasMaxLength(40)
                 .IsUnicode(true);
 
             this.Property(t => t.ZipCode)

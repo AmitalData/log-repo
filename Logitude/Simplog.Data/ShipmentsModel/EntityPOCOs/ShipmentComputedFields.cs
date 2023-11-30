@@ -36,7 +36,6 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? FinalDeliveryETA { get; set; }
         public DateTime? FinalDeliveryATD { get; set; }
         public DateTime? FinalDeliveryATA { get; set; }
-
         public string OperationallyClosedByUserId { get; set; }
         public int? NumberOfDeliveries { get; set; }
         public DateTime? LastPickupETA { get; set; }
@@ -50,13 +49,11 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string PickupTo { get; set; }
         public string OperationallyClosedByUserName { get; set; }
         public bool CreatedFromDigital { get; set; }
-
         public string DeliveryTruckerId { get; set; }
         public string DeliveryTruckerNumber { get; set; }
         public string DeliveryDriver { get; set; }
         public string DeliveryTrailerNumber { get; set; }
         public string DeliveryNotes { get; set; }
-
         public string PickupTruckerId { get; set; }
         public string PickupTruckerNumber { get; set; }
         public string PickupDriver { get; set; }
@@ -65,32 +62,29 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public DateTime? DeliveryDate { get; set; }
         public DateTime? OnHandDate { get; set; }
         public DateTime? PODDate { get; set; }
-
-
-
         public DateTime? BookingConfirmationSent { get; set; }
         public DateTime? PreAlertSent { get; set; }
         public DateTime? DeliveryNoticeSent { get; set; }
         public DateTime? ExpectedArrivalNoticeSent { get; set; }
         public DateTime? ArrivalNoticeSent { get; set; }
         public DateTime? T1Received  { get; set; }
-
-
-
-
-
-
-
-
+        public string AccountingClosedByUserId { get; set; }
         public virtual User OperationallyClosedByUser { get; set; }
         public virtual Port DeliveryToPort { get; set; }
 
         [ForeignKey("DeliveryTruckerId")]
         public Card DeliveryTrucker { get; set; }
 
-
         [ForeignKey("PickupTruckerId")]
         public Card PickupTrucker { get; set; }
+        public virtual User AccountingClosedByUserUser { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
+        public string PackagesQuantityAndType { get; set; }
+        public string Transshipments { get; set; }
+        public bool IsDocumentsNeedApprove { get; set; }
 
     }
 }

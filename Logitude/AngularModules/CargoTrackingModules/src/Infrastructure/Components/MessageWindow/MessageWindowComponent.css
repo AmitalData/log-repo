@@ -1,0 +1,38 @@
+.toolbar{
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+.toolbar > button{
+    padding: 8px 22px;
+    border: none;
+    font-weight: 600;
+    background: #ebebeb;
+    border-radius: 3px;
+    color: var(--MainColor);
+    cursor: pointer;
+    user-select: none;
+    margin: 0 5px;
+}
+.input-text{
+    padding: 10px 10px;
+    background: #ebebeb;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+    color: black;
+    margin-top: 12px;
+    border: none;
+    border-bottom: 1px solid #c3c3c3;
+    width: 300px;
+}
+.spinner{
+    margin: 18px auto;
+}
+.input-text.error {
+    border-bottom: 2px solid #df5050;
+}
+.error-text{
+    color: #df5050;
+    font-size: 12px;
+    padding-top: 5px;
+}

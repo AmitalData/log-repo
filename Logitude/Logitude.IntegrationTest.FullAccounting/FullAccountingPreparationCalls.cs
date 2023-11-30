@@ -341,7 +341,8 @@ namespace Logitude.IntegrationTest.FullAccounting
             paymentTermPM.Days = 0;
             paymentTermPM.FromDateTypeCode = "INV";
             paymentTermPM.InActive = false;
-            paymentTermPM.CurrentMonth = false;
+            paymentTermPM.EndOfMonth = false;
+            paymentTermPM.NumberOfMonths = 0;
             paymentTermPM.IsManuallySet = false;
             paymentTermPM.DisplayInLOV = true;
             return paymentTermPM;

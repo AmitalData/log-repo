@@ -31,6 +31,7 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() ObjectTableName: string;
     @Input() DataContext: any;
     @Input() HideColumns: boolean;
+    @Input() FocusOnMe: boolean;
     @Input() HideLastColumn: boolean;
     @Input() NoValidation: boolean;    
     @Input() PlaceHolder: string;
@@ -39,6 +40,8 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
     @Input() FromNewView: boolean = false;
     @Input() IsFreeText: boolean = false;
     @Input() IgnoreCustomFieldCheck: boolean = false;
+    @Input() DataCy: string;
+    @Input() ForceDisabled: boolean = false;
     //-------------------------------------------------------
 
     @Output() OnBlurEvent: EventEmitter<any> = new EventEmitter();
@@ -104,7 +107,6 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
     IsDropDownVisible: boolean;
     public IsOpen: boolean;
     searchTextChanged: boolean = false;
-    FocusOnMe: boolean = false;
     private timerToken: any;
     showPopup: boolean = false;
     deleteSearchText: boolean;
@@ -196,7 +198,7 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.IgnoreCustomFieldCheck == true) {
             this.DataContext[this.ObjectFieldName] = this.DataContext["TextValue"];
         }
-        this.IsDisabled = !this.uiProperty.IsEnabled;
+        this.IsDisabled = !this.uiProperty.IsEnabled || this.ForceDisabled;
         this._entityResourceService.getEntityResourceByTableName('CustomPickList', 0).subscribe((res: any) => {
 
             var objectFieldAvailable: boolean = true;
@@ -293,7 +295,7 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
                         if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
                             if (uiPropertyArgs.property == "IsEnabled") {
                                 var isEnabled = uiPropertyArgs.newValue;
-                                this.IsDisabled = !isEnabled;
+                                this.IsDisabled = !isEnabled  || this.ForceDisabled;
                                 this.uiProperty.IsEnabled = isEnabled;
                             }
                             else if (uiPropertyArgs.property == "IsRequired") {
@@ -492,6 +494,9 @@ export class PickListComponent implements OnInit, AfterViewInit, OnDestroy {
         if (this.DataContext[this.ObjectFieldName] || this.IsFreeText) {
 
             var value = this.IsFreeText ? this.selectedValue : this.DataContext[this.ObjectFieldName];
+            if (value && value instanceof CustomFieldClass) {
+                value = value.Value;
+            }
             if (this.ObjectField) {
                 if (this.ObjectField.IsCustom && this.IgnoreCustomFieldCheck == false) {
                     var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];

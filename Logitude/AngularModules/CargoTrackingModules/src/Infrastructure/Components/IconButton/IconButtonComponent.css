@@ -1,0 +1,8 @@
+.icon-button {
+    width: 21px;
+    height: 21px;
+    padding: 6px;
+}
+.icon-button svg{
+    fill: #4e4e4e;
+}

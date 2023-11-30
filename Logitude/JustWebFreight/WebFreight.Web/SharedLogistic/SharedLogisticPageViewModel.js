@@ -10,7 +10,7 @@
     jQuery.IsAgentShared = false;
     jQuery.IsShipperShared = false;
     jQuery.IsConsigneeShared = false;
-    jQuery.LoadingCount = 1001;
+    jQuery.LoadingCount = 100;
 
     jQuery.SearchText_SHI = null;
     jQuery.SearchText_INV = null;
@@ -194,12 +194,14 @@
 
             success: function (result) {
                 $.SendContactActivity($.CurrentEmail, "Invoice", "Invoices List", $.CurrentTenant, $.CurrentCardId);
-
+                $("#InvoicesQueryLimitMessage").html("");
 
                 if (result.length >= $.LoadingCount) {
                     $("#InvoicesQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
-                }
+                    $("#InvoicesQueryLimitMessage").html($.GetQueryLimitMessage(filters.PageSize));
 
+                }
+                 
                 else {
                     $("#InvoicesQueryCount").html("(" + result.length + ")");
                 }
@@ -223,7 +225,7 @@
 
     });
 
-    jQuery.LoadShipments = (function () {
+    jQuery.LoadShipments = (function (pageSize) {
 
         $("#ShipmentsBusyIndicator").show();
 
@@ -264,11 +266,13 @@
             },
 
             success: function (result) {                
-
+                $("#ShipmentsQueryLimitMessage").html("");
                 $.SendContactActivity($.CurrentEmail, "Shipment", "Shipments List", $.CurrentTenant, $.CurrentCardId);
 
                 if (result.length >= $.LoadingCount) {
                     $("#ShipmentsQueryCount").html("(" + ($.LoadingCount - 1) + "+)");
+                    $("#ShipmentsQueryLimitMessage").html($.GetQueryLimitMessage(filters.PageSize));
+
                 }
 
                 else {
@@ -293,6 +297,9 @@
         });
     });
 
+    jQuery.GetQueryLimitMessage = (function (pageSize) {
+        return ("Showing the first " + pageSize + " rows, use the search field to find more results.");
+    });
 
     jQuery.SetQuotesRequestQueryCount = (function (result) {
         let quotesRequestQueryCount = (result.length >= $.LoadingCount) ? "(" + ($.LoadingCount - 1) + "+)" : "(" + result.length + ")";

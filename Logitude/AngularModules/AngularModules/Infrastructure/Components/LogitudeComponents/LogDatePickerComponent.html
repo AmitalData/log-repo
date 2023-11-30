@@ -95,6 +95,11 @@
         pointer-events: none;
     }
 
+    .DatePickerInputDivDisabledWithColor {
+        pointer-events: none;
+    }
+
+
       .ErrorPopUp {
         background-image: url('Images/ValidationTooltip.png');
         background-repeat: no-repeat;
@@ -165,7 +170,7 @@
 
                     <!-- Input -->
                     <div style="height: 100%;width: calc(100% - 24px);"  float-start >
-                        <input [id]="DatePickerInputId"
+                        <input [attr.data-cy]="DataCy" [id]="DatePickerInputId"
                             style="background: transparent;padding-top: 2px;box-shadow:none;border:1px solid transparent; border-radius:3px; text-indent:5px;height:18px;min-height:18px;max-height:20px;opacity:1 !important;line-height: 1.0;display: block;"
                             [disabled]="IsDisabled"
                             [(ngModel)]="InputValue"
@@ -179,7 +184,7 @@
 
                     <!-- Toggle Button -->
                     <div style="height: 100%;width: 20px;" [style.float]="isRTL ? 'left' : 'right'">
-                        <button [id]="CalendarButtonId" tabindex="-1"
+                        <button [attr.data-cy]="DataCy" [id]="CalendarButtonId" tabindex="-1"
                             class="Button CalendarButton RightCenter CustomButton"
                             (click)="ToggleCalendar()"
                             (focus)="OnBtnFocus()"

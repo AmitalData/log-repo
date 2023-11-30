@@ -781,6 +781,14 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 throw new NotImplementedException();
             }
         }
+
+        public IDbSet<ARInvoicesSignedStatus> ARInvoicesSignedStatuses
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
         public IDbSet<ARPaymentChequeReplica> ARPaymentChequeReplicas
         {
             get
@@ -789,6 +797,40 @@ namespace Simplog.Data.InvoiceModel.Mocks
             }
         }
         public IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public IDbSet<ARPaymentBankTranfer> ARPaymentBankTranfers
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public IDbSet<ARInvoiceChargesConstraint> ARInvoiceChargesConstraints => throw new NotImplementedException();
+
+        public IDbSet<QBOGlobalTaxCalculation> QBOGlobalTaxCalculations {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public IDbSet<ARInvoiceAnalytic> ARInvoiceAnalytics => throw new NotImplementedException();
+
+        public IDbSet<APInvoiceAnalytic> APInvoiceAnalytics => throw new NotImplementedException();
+
+        public IDbSet<DigitalInvoicesCounterDataView> DigitalInvoicesCounterDataView
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
+        public IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView
         {
             get
             {

@@ -9,6 +9,10 @@
   ObjectTablePlural="&quot;CargoTrackingMilestones&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -37,7 +41,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;CargoTrackingMilestones&quot;"
-  Code="&quot;0256&quot;"
+  Code="&quot;1f23&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;EnglishName&quot;"
@@ -54,6 +58,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;8703&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -85,6 +90,7 @@
     SystemMaxLength="2"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -157,6 +163,7 @@
     SystemMaxLength="30"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -229,6 +236,7 @@
     SystemMaxLength="100"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -301,6 +309,7 @@
     SystemMaxLength="30"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -370,6 +379,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -394,6 +404,76 @@
     FullFieldLable="&quot;Inactive&quot;"
     DefaultText="&quot;Inactive&quot;"
     IsNullable="false"
+    IsForeignKey="false"
+    DontBuildRelationOnDB="false"
+    IsPrimaryKey="false"
+    HasDataBaseField="true"
+    HasPMField="true"
+    IsComposition="false"
+    IsMaxLength="false"
+    NoMetaDataField="false"
+    GenerateInList="true"
+    IsFixedLength="false"
+    EnableAutoFill="false"
+    IncludeInSearchField="false"
+    AllowedinAutomationConditions="false"
+    AutomationEmailRecipient="false"
+    CanAutomateSetValue="false"
+    DisplayInAutomationAsEnitity="false"
+    HasTemplate="false"
+    IsCustom="false"
+    IsSpellCheckedFullFieldLable="false"
+    IsSpellCheckedHelpLocalDefaultText="false"
+    IsSpellCheckedShortLocalDefaultText="false"
+    IsSpellCheckedListLocalDefaultText="false"
+    EnableFullscreenTextBox="false" />
+  <field
+    Id="&quot;cad649cf-6c9e-4643-9721-13c2d68275c4&quot;"
+    FieldName="&quot;Weight&quot;"
+    OldNames="Weights,Weight"
+    IsNew="true"
+    IsChecked="true"
+    IsDeleted="false"
+    ObjectTableName="&quot;CargoTrackingMilestone&quot;"
+    FieldsDataType="&quot;Integer&quot;"
+    MinLength="0"
+    MaxLength="0"
+    IsRequired="false"
+    CopyToDW="false"
+    DisplayOnLookUp="false"
+    DisplayOnLookUpLocal="false"
+    CanFilter="false"
+    DisplayOnly="false"
+    SystemRequired="false"
+    ObjectFieldNotRequired="false"
+    SystemMaxLength="0"
+    DisplayInList="false"
+    IsCustomFilter="false"
+    IsListFilter="false"
+    MultiLine="false"
+    IsTimeFrameFilter="false"
+    DisplayInSearchWindowList="false"
+    PMPropertyPath="&quot;Weight&quot;"
+    ListPropertyPath="&quot;Weight&quot;"
+    DisplayInLookUpIndex="0"
+    AutomaticField="false"
+    UniqueField="false"
+    DisplayInSearchWindowListIndex="0"
+    IsMulti="false"
+    DependencyFilter1IsList="false"
+    DependencyFilter2IsList="false"
+    DependencyFilter3IsList="false"
+    IsRestrictable="false"
+    DisplayInEntityVariables="false"
+    AllowedInCustomerFieldsSettings="false"
+    DisplayInSearchWindowFilters="false"
+    DisplayInSearchWindowFiltersIndex="0"
+    DisplayInDocumentReferences="false"
+    InActive="false"
+    DisplayLongName="false"
+    FullFieldLable="&quot;Weight&quot;"
+    DefaultText="&quot;0&quot;"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
@@ -457,74 +537,136 @@
   <Records>
     <Record
       Code="&quot;1&quot;"
-      EnglishName="&quot;Booking&quot;"
-      SearchFields="&quot;1,Booking&quot;"
-      LocalName="&quot;Booking&quot;" />
+      EnglishName="&quot;Created&quot;"
+      SearchFields="&quot;1,Created,משלוח נוצר&quot;"
+      LocalName="&quot;משלוח נוצר&quot;"
+      Inactive="false"
+      Weight="10" />
     <Record
       Code="&quot;2&quot;"
-      EnglishName="&quot;Pickup&quot;"
-      SearchFields="&quot;2,Pickup&quot;"
-      LocalName="&quot;Pickup&quot;" />
+      EnglishName="&quot;Booking&quot;"
+      SearchFields="&quot;2,Booking,בוצעה הזמנה&quot;"
+      LocalName="&quot;בוצעה הזמנה&quot;"
+      Weight="20" />
     <Record
       Code="&quot;3&quot;"
-      EnglishName="&quot;From Warehouse&quot;"
-      SearchFields="&quot;3,From Warehouse&quot;"
-      LocalName="&quot;From Warehouse&quot;" />
+      EnglishName="&quot;Pickup&quot;"
+      SearchFields="&quot;3,Pickup,נאסף מהספק&quot;"
+      LocalName="&quot;נאסף מהספק&quot;"
+      Weight="30" />
     <Record
       Code="&quot;4&quot;"
-      EnglishName="&quot;Departure&quot;"
-      SearchFields="&quot;4,Departure&quot;"
-      LocalName="&quot;Departure&quot;" />
+      EnglishName="&quot;Origin Warehouse&quot;"
+      SearchFields="&quot;4,Origin Warehouse, אחסנה בנמל מוצא&quot;"
+      LocalName="&quot; אחסנה בנמל מוצא&quot;"
+      Inactive="false"
+      Weight="40" />
     <Record
       Code="&quot;5&quot;"
-      EnglishName="&quot;Arrival&quot;"
-      SearchFields="&quot;5,Arrival&quot;"
-      LocalName="&quot;Arrival&quot;" />
+      EnglishName="&quot;Departure&quot;"
+      SearchFields="&quot;5,Departure,המראה&quot;"
+      LocalName="&quot;המראה&quot;"
+      Weight="50" />
     <Record
       Code="&quot;6&quot;"
-      EnglishName="&quot;To Warehouse&quot;"
-      SearchFields="&quot;6,To Warehouse&quot;"
-      LocalName="&quot;To Warehouse&quot;" />
+      EnglishName="&quot;Arrival&quot;"
+      SearchFields="&quot;6,Arrival,הגעה&quot;"
+      LocalName="&quot;הגעה&quot;"
+      Weight="60" />
     <Record
       Code="&quot;7&quot;"
-      EnglishName="&quot;Assigned To Customs Agent&quot;"
-      SearchFields="&quot;7,Assigned To Customs Agent&quot;"
-      LocalName="&quot;Assigned To Customs Agent&quot;" />
+      EnglishName="&quot;Destination Warehouse&quot;"
+      SearchFields="&quot;7,Destination Warehouse,אחסנה בנמל יעד&quot;"
+      LocalName="&quot;אחסנה בנמל יעד&quot;"
+      Weight="70" />
     <Record
       Code="&quot;8&quot;"
-      EnglishName="&quot;Customs Process&quot;"
-      SearchFields="&quot;8,Customs Process&quot;"
-      LocalName="&quot;Customs Process&quot;" />
+      EnglishName="&quot;Assigned To Customs Broker&quot;"
+      SearchFields="&quot;8,Assigned To Customs Broker,הועבר לסוכן מכס&quot;"
+      LocalName="&quot;הועבר לסוכן מכס&quot;"
+      Inactive="false"
+      Weight="80" />
     <Record
       Code="&quot;9&quot;"
-      EnglishName="&quot;Customs Payment&quot;"
-      SearchFields="&quot;9,Customs Payment&quot;"
-      LocalName="&quot;Customs Payment&quot;" />
+      EnglishName="&quot;Customs Process&quot;"
+      SearchFields="&quot;9,Customs Process,בתהליך מכס&quot;"
+      LocalName="&quot;בתהליך מכס&quot;"
+      Weight="90" />
     <Record
       Code="&quot;10&quot;"
-      EnglishName="&quot;Clearance&quot;"
-      SearchFields="&quot;10,Clearance&quot;"
-      LocalName="&quot;Clearance&quot;" />
+      EnglishName="&quot;Goods Classification&quot;"
+      SearchFields="&quot;10,Goods Classification,סיווג&quot;"
+      LocalName="&quot;סיווג&quot;"
+      Weight="100" />
     <Record
       Code="&quot;11&quot;"
-      EnglishName="&quot;Assigned to Trucker&quot;"
-      SearchFields="&quot;11,Assigned to Trucker&quot;"
-      LocalName="&quot;Assigned to Trucker&quot;" />
+      EnglishName="&quot;Document Inspection&quot;"
+      SearchFields="&quot;11,Document Inspection,ביקורת מסמכים&quot;"
+      LocalName="&quot;ביקורת מסמכים&quot;"
+      Weight="110" />
     <Record
       Code="&quot;12&quot;"
-      EnglishName="&quot;Delivery Out&quot;"
-      SearchFields="&quot;12,Delivery Out&quot;"
-      LocalName="&quot;Delivery Out&quot;" />
+      EnglishName="&quot;Payment Requested&quot;"
+      SearchFields="&quot;12,Payment Requested,נשלחה בקשת תשלום&quot;"
+      LocalName="&quot;נשלחה בקשת תשלום&quot;"
+      Inactive="false"
+      Weight="120" />
     <Record
       Code="&quot;13&quot;"
-      EnglishName="&quot;Delivered&quot;"
-      SearchFields="&quot;13,Delivered&quot;"
-      LocalName="&quot;Delivered&quot;" />
+      EnglishName="&quot;Payment Received&quot;"
+      SearchFields="&quot;13,Payment Received,התקבל תשלום&quot;"
+      LocalName="&quot;התקבל תשלום&quot;"
+      Inactive="false"
+      Weight="130" />
     <Record
       Code="&quot;14&quot;"
-      EnglishName="&quot;Invoiced&quot;"
-      SearchFields="&quot;14,Invoiced&quot;"
-      LocalName="&quot;Invoiced&quot;" />
+      EnglishName="&quot;Customs Payment&quot;"
+      SearchFields="&quot;14,Customs Payment,שולם למכס&quot;"
+      LocalName="&quot;שולם למכס&quot;"
+      Inactive="false"
+      Weight="140" />
+    <Record
+      Code="&quot;15&quot;"
+      EnglishName="&quot;Clearance&quot;"
+      SearchFields="&quot;15,Clearance,התרת מכס&quot;"
+      LocalName="&quot;התרת מכס&quot;"
+      Inactive="false"
+      Weight="150" />
+    <Record
+      Code="&quot;16&quot;"
+      EnglishName="&quot;Gatepass Arrived&quot;"
+      SearchFields="&quot;16,Gatepass Arrived,גייטפס מוכן&quot;"
+      LocalName="&quot;גייטפס מוכן&quot;"
+      Inactive="false"
+      Weight="160" />
+    <Record
+      Code="&quot;17&quot;"
+      EnglishName="&quot;Assigned to Trucker&quot;"
+      SearchFields="&quot;17,Assigned to Trucker,נמסר למוביל&quot;"
+      LocalName="&quot;נמסר למוביל&quot;"
+      Inactive="false"
+      Weight="170" />
+    <Record
+      Code="&quot;18&quot;"
+      EnglishName="&quot;Delivery on the way&quot;"
+      SearchFields="&quot;18,Delivery on the way,יצא להפצה&quot;"
+      LocalName="&quot;יצא להפצה&quot;"
+      Inactive="false"
+      Weight="180" />
+    <Record
+      Code="&quot;19&quot;"
+      EnglishName="&quot;Delivered&quot;"
+      SearchFields="&quot;19,Delivered,נמסר ללקוח&quot;"
+      LocalName="&quot;נמסר ללקוח&quot;"
+      Inactive="false"
+      Weight="190" />
+    <Record
+      Code="&quot;20&quot;"
+      EnglishName="&quot;Invoice Issued&quot;"
+      SearchFields="&quot;20,Invoice Issued,הופקה חשבונית&quot;"
+      LocalName="&quot;הופקה חשבונית&quot;"
+      Inactive="false"
+      Weight="200" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

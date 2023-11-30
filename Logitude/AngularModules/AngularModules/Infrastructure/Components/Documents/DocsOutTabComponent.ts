@@ -34,6 +34,7 @@ import {Guid} from '../../../Infrastructure/Utilities/Guid';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import { CardPMService } from '"../../../Common/Services/StandardPMs/CardPMService';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { ARInvoicePM } from '../../../Invoice/EntityPMs/ARInvoicePM';
 
 @Component({
     
@@ -1106,6 +1107,12 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
     PrintButtonClick(item: DocsOutDataViewModel) {
         this.SelectedInternalDocument = item;
 
+        let validationErrors = this.ValidateEntityPM();
+        if (validationErrors.length > 0) {
+            this.ShowMessageWindow(validationErrors.toString());
+            return;
+        }
+
         if (this.EntityPM && this.EntityPM.IsDirty) {
             this.isPrintRequested = true;
             this.CurrentSession.CurrentEditComponent.SaveChanges();
@@ -1117,6 +1124,29 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
 
 
     };
+
+    private ValidateEntityPM() {
+        let errors = [];
+        this.ValidateARInvoicePM(errors);
+
+        return errors;
+    }
+
+    private ValidateARInvoicePM(errors) {
+        if (!SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "INU")[0]) return;
+        if (!this.EntityPM) return;
+        if (!(this.EntityPM instanceof ARInvoicePM)) return;
+        let sATTransferingStatusCode = "TG";
+        if (this.EntityPM.SATTransferStatusCode != sATTransferingStatusCode) return;
+
+        errors.push("You are not allowed to build the document while invoice status is Transferring to SAT");
+    }
+
+    public ShowMessageWindow(message: string) {
+        let messageWindow: MessageWindow = new MessageWindow();
+        messageWindow.Show(message ? message : "Error");
+    }
+
     InitializePrinting() {
 
     
@@ -1160,7 +1190,7 @@ export class DocsOutTabComponent implements OnInit, OnDestroy {
     }
     ShowPrintControl() {
 
-
+     
         var logWindow = new LogitudeWindow();
         logWindow.Width = 760;
         logWindow.Height = 552;

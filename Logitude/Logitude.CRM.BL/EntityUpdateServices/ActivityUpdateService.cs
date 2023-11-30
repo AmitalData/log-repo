@@ -50,10 +50,10 @@ namespace Logitude.CRM.BL.EntityUpdateServices
                 {
                     entityPM.CompleteDate = myDate;
                     entityPM.IsOpen = false;
-                    entityPM.ActivityStatusCode = "C";
-
-                    this.SetTheLastActivityFields(entityPM);
+                    entityPM.ActivityStatusCode = "C";            
                 }
+
+                if(entityPM.ActivityStatusCode == "C") this.SetTheLastActivityFields(entityPM);
 
                 this.InitializeData(entityPM);
                 this.SetCustomerDateFields(entityPM, null);

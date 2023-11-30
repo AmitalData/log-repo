@@ -90,5 +90,10 @@ namespace WebFreight.Web.MetaDataUpdate.DetailClasses
         public bool PrimaryKeyIsTenant { get; internal set; }
         public bool NoDefaultFeatures { get; internal set; }
         public string HashString { get; set; }
+        public string ParentObjectTableName { get; set; }
+        public bool AvailableInCustomization { get; set; }
+        public bool SupportSubEntity { get; set; }
+        public bool ApplyGenericCustomFields { get; set; }
+        public bool AvailableInDocumentTypes { get; set; }
     }
 }

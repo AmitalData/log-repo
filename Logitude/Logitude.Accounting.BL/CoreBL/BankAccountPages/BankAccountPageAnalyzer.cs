@@ -886,9 +886,11 @@ s             b                   a
             rec.Bankdetails = rawLine.Substring(62 - 1, 25).Trim() ?? "";
             rec.BankdetailsReverse = Reverse(rec.Bankdetails);//FROM PAGE BANK "DOS-862" TO WN1255 + Reverse
 
-            string txtDateTime = rawLine.Substring(87 - 1, 8);
+        //  string txtDateTime = rawLine.Substring(87 - 1, 8);
+            string txtDateTime = rawLine.Substring(95 - 1, 8);
             string fieldname = "ReferenceDate";
-            string pos = "87 - 1, 8";
+        //  string pos = "87 - 1, 8";
+            string pos = "95 - 1, 8";
             DateTime date = BankAccountPageAnalyzer.TryGetDateTime(rawLine, txtDateTime, fieldname, pos, format: "yyyyMMdd");
             rec.ReferenceDate = date; ;
 

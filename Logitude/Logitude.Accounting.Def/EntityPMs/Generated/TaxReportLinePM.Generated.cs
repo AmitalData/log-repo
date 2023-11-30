@@ -689,7 +689,99 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private decimal? vatAmountRound ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? VatAmountRound  
+	   {
+	    
+	     get
+		{
+		   return vatAmountRound;
+		 }
+		 set
+		 {
+		   if(vatAmountRound != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VatAmountRound",OldValue=vatAmountRound,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   vatAmountRound=value;
+		   }
+			
+		 }
+	   }
+	  private string ledgerTransactionId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LedgerTransactionId  
+	   {
+	    
+	     get
+		{
+		   return ledgerTransactionId;
+		 }
+		 set
+		 {
+		   if(ledgerTransactionId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LedgerTransactionId",OldValue=ledgerTransactionId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   ledgerTransactionId=value;
+		   }
+			
+		 }
+	   }
+	  private double? subTotalInLocalCurrency ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public double? SubTotalInLocalCurrency  
+	   {
+	    
+	     get
+		{
+		   return subTotalInLocalCurrency;
+		 }
+		 set
+		 {
+		   if(subTotalInLocalCurrency != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SubTotalInLocalCurrency",OldValue=subTotalInLocalCurrency,NewValue=value,PropertyType="double?"};
+		    NotifyPropertyChanged(values);
+		   subTotalInLocalCurrency=value;
+		   }
+			
+		 }
+	   }
+	  private string confirmationNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ConfirmationNumber  
+	   {
+	    
+	     get
+		{
+		   return confirmationNumber;
+		 }
+		 set
+		 {
+		   if(confirmationNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ConfirmationNumber",OldValue=confirmationNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   confirmationNumber=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

@@ -24,10 +24,16 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public DateTime? AutomaticLastUpdateDate { get; set; }
         [ForeignKey("ObjectTableId")]
         public virtual ObjectTable ObjectTable { get; set; }
-     //   public List<EventType> EventTypes { get; set; }
-       // public List<Shipment> Shipments { get; set; }
-       // public List<Quote> Quotes { get; set; }
-       // public List<ShipmentMasterData> ShipmentMasterDatas { get; set; }
+        public int? StatusLocalWeight { get; set; }
+        public string EntityStatusTypeCode { get; set; }
 
+        [ForeignKey("EntityStatusTypeCode")]
+        public virtual EntityStatusType EntityStatusType { get; set; }
+        //   public List<EventType> EventTypes { get; set; }
+        // public List<Shipment> Shipments { get; set; }
+        // public List<Quote> Quotes { get; set; }
+        // public List<ShipmentMasterData> ShipmentMasterDatas { get; set; }
+        public bool AllowPartial { get; set; }
+        public bool IsDigitalPortal { get; set; }
     }
 }

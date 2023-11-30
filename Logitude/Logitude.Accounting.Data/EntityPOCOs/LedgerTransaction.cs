@@ -100,6 +100,12 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string ReconcileRemarks { get; set; }
         [Column("InProgressExternalReconcile")]
 	    public bool InProgressExternalReconcile { get; set; }
+        [Column("UpdateDateTime")]
+	    public DateTime? UpdateDateTime { get; set; }
+        [Column("UpdatedByUserName")]
+	    public string UpdatedByUserName { get; set; }
+        [Column("InternalNote")]
+	    public string InternalNote { get; set; }
     }
 }
 	 

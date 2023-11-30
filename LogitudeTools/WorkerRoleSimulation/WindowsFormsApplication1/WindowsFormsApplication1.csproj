@@ -108,12 +108,15 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\..\LogitudeWorld\main\JustWebFreight\WebFreight.Web\bin\Microsoft.WindowsAzure.StorageClient.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.6.0.0\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -183,6 +186,10 @@
     <ProjectReference Include="..\..\..\Logitude\CommunicationWorkerRole\CommunicationWorkerRole.csproj">
       <Project>{ba2a42b8-a348-4d44-984c-1d718cb20b6f}</Project>
       <Name>CommunicationWorkerRole</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Logitude\Logitude.CargoTracking.BL\Logitude.CargoTracking.BL.csproj">
+      <Project>{6b7fb227-28d2-45b8-b079-2e2f4251510d}</Project>
+      <Name>Logitude.CargoTracking.BL</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

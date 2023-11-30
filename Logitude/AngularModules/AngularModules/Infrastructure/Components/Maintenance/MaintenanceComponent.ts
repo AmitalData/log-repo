@@ -16,7 +16,10 @@ import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/
 import { DeclarationRemarks } from '../../../Customs/EntityPMs/Extended/DeclarationRemarks';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
+import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
+import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
+import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 
 @Component({
 
@@ -29,11 +32,31 @@ export class MaintenanceComponent {
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+    private textCodeTranslationPipe: TextCodeTranslationPipe;
+
+    public EntityStatusToggle: boolean = false;
     constructor() {
+        this.SetEntityStatusToggle();
         this.ItemsSource = [];
         this.BuildPagesMenu();
         this.BuildMaintenanceMenu();
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
+        this.textCodeTranslationPipe = new TextCodeTranslationPipe();
+    }
+
+
+    private SetEntityStatusToggle() {
+        let entityStatusFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EST")[0];
+        if (entityStatusFeatureToggle) {
+            this.EntityStatusToggle = true;
+
+        }
+    }
+    private CustomObjectTables: ObjectTablePM[] = window.ObjectTables.filter(obj => (obj.ParentObjectTableId == null) && (obj.IsCustom == true));
+    private IsCustomObjectsAdded(): boolean {
+        if (this.CustomObjectTables.length > 0)
+            return true;
+        return false;
     }
 
     // Pages Menu
@@ -83,6 +106,10 @@ export class MaintenanceComponent {
             this.PagesMenu.push(new Menu("ACC", TextCodeTranslator.Translate("General.MC.Accounting.Accounting")));
         }
 
+        if (FeatureLocator.HasFeaturePermession("General", "QUOTES")) {
+            this.PagesMenu.push(new Menu("QUO", "Quotation"));
+        }
+
         this.isTransmissionsPageVisible = false;
         if (SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "General.Features.InttraSettings")) {
             this.isTransmissionsPageVisible = true;
@@ -94,16 +121,30 @@ export class MaintenanceComponent {
             }
         }
 
-        if (this.isTransmissionsPageVisible) {
+       if (this.isTransmissionsPageVisible) {
             this.PagesMenu.push(new Menu("TRANS", "Transmissions"));
         }
+  
 
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessQueue") || FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessTeam") ||
             FeatureLocator.HasFeaturePermession("General", "General.Features.BusinessProcessBusinessRole")) {
             this.PagesMenu.push(new Menu("BUP", TextCodeTranslator.Translate("General.MC.BusinessProcess")));
         }
-    }
 
+        //check if want to connect to feature
+        this.PagesMenu.push(new Menu("CUS", TextCodeTranslator.Translate("General.MC.Customization.Customization")));
+
+        if (this.IsCustomObjectsAdded()) {
+            this.PagesMenu.push(new Menu("CSO", TextCodeTranslator.Translate("General.MC.CustomObjects.CustomObjects")));
+        }
+
+        if (FeatureLocator.HasFeaturePermession("General", "TASKTYPES") ||
+            FeatureLocator.HasFeaturePermession("General", "TASKPRIORITIES") ||
+            FeatureLocator.HasFeaturePermession("General", "TASKSTATUSES")) {
+            this.PagesMenu.push(new Menu("TSK", TextCodeTranslator.Translate("General.MC.Tasks.Tasks")));
+        }
+    }
+    
     // Maintenance Menu
     private AllMaintenanceMenu: MaintenanceMenuItem[];
     private BuildMaintenanceMenu() {
@@ -111,7 +152,7 @@ export class MaintenanceComponent {
         var allMenusTables: MenusTablePM[] = window.MenusTables.filter(x => x.MenuTypeCode === "MTC").sort((a, b) => { return a.IndexOfOrder - b.IndexOfOrder });
 
         allMenusTables.forEach(item => {
-
+ 
             if (FeatureLocator.IsFeatureGrantedByUniqeCode(item.FeatureUniqeCode)) {
 
                 if (item.Code == "MTCB") {
@@ -136,18 +177,26 @@ export class MaintenanceComponent {
                         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                     }
                 }
+                 
+                else if (item.Code == "MTCO") {
+                    this.PushEntityStatusMenu(item);
+                }
 
                 else {
-                    if (item.Code != "MTHT") {
+                    if (item.Code != "MTHT" && item.Code != "POGP") {
                         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                     }
                 }
             }
 
-            if (item.Code == "MTHT") {
+            if (item.Code == "MTHT" || item.Code == "POGP") {
                 if (SessionLocator.Tenant == 0) {
                     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
                 }
+            }
+
+            else if (item.Code == "DEPA" && this.CheckDeploymentPackageFeatures()) {
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
         });
 
@@ -157,8 +206,21 @@ export class MaintenanceComponent {
         this.BuildAccountingMenus();
         this.BuildOtherMenus();
         this.BuildTransmissionsMenus();
+        this.BuildCustomizationMenus();
+        this.BuildCustomObjectsMenus();
         this.PageChanged(this.PagesMenu[0]);
     }
+    CheckDeploymentPackageFeatures() {
+        if (FeatureLocator.IsFeatureGrantedByUniqeCode("General.Customization.DeploymentPackage"))
+            return false;
+        return CustomizationPermissionService.HasFeaturePermession("General", "Customization.DeploymentPackage");
+    }
+    private PushEntityStatusMenu(item: MenusTablePM) {
+        if (SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor || this.EntityStatusToggle) {
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
+    }
+
     private BuildSystemSettings() {
 
         if (FeatureLocator.HasFeaturePermession("General", "TERMOFUSERFEATUE")) {
@@ -166,9 +228,10 @@ export class MaintenanceComponent {
             item2.CategoryTypeCode = "CMS";
             item2.Icon = "Settings"
             item2.Code = "TOUS";
-            item2.ObjectTableName = "Terms of Use";
+            item2.ObjectTableName = "Terms of Use Signature";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item2));
         }
+        this.AddTermsOfUseMenuItem();
 
         if (FeatureLocator.HasFeaturePermession("General", "SYSTEMSETTINGS")) {
 
@@ -303,7 +366,15 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Ocean Insights Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
-
+            if (FeatureLocator.HasFeaturePermession("General", "CONTAINERTRACKINGSETTINGS") && SessionLocator.Tenant == 0) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "CTPS";
+                item.ObjectTableName = "ContainerTrackingProvider";
+                item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "ContainerTrackingProvider")[0].Id
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemUserPassword")) {
                 var item = new MenusTablePM();
                 item.CategoryTypeCode = "CMS";
@@ -392,13 +463,22 @@ export class MaintenanceComponent {
             }
             if (FeatureLocator.HasFeaturePermession("General", "General.Features.QuoteSettings")) {
                 var item = new MenusTablePM();
-                item.CategoryTypeCode = "CMS";
+                item.CategoryTypeCode = "QUO";
                 item.Icon = "Settings"
                 item.Code = "QuoteSettings";
                 item.ObjectTableName = "Quote Settings";
+                item.IndexOfOrder = 5;
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
-
+            if (FeatureLocator.HasFeaturePermession("General", "General.Features.ContainerSettings")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "ContainerSettings";
+                item.ObjectTableName = "Container Settings";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
+ 
             var item1 = new MenusTablePM();
             item1.CategoryTypeCode = "CMS";
             item1.Icon = "Settings"
@@ -458,8 +538,28 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Support Mail Boxes";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
+
+            if (SessionInfo.LoggedUserPM.IsCustomerCare && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "VIP")[0] != null) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "VIZN";
+                item.ObjectTableName = "Container Tracking - Pilot Customer";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
         }
     }
+    private AddTermsOfUseMenuItem() {
+        if (SessionLocator.Tenant != 0 || !SessionLocator.LoggedUserPM.IsCustomerCare) return;
+        let menusTablePM = new MenusTablePM();
+        menusTablePM.CategoryTypeCode = "CMS";
+        menusTablePM.Icon = "Settings";
+        menusTablePM.Code = "TOU";
+        menusTablePM.ObjectTableName = "Terms of Use";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(menusTablePM));
+    }
+
+   
     private BuildPersonalSettings() {
         if (FeatureLocator.HasFeaturePermession("General", "PERSONALSETTINGS")) {
 
@@ -516,7 +616,7 @@ export class MaintenanceComponent {
                 item.CategoryTypeCode = "CSM";
                 item.Icon = "Table"
                 item.Code = "DOCR";
-                item.TranslatedName = "ברירות מחדל OCR - יצוא"
+                item.TranslatedName = "ברירות מחדל OCR - יצום"
                 item.ObjectTableName = "Customs.Client";
                 item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.Client")[0].Id
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
@@ -591,6 +691,15 @@ export class MaintenanceComponent {
                 item.Icon = "Settings"
                 item.Code = "FACS";
                 item.ObjectTableName = "Full Accounting Setting";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
+
+            if (FeatureLocator.HasFeaturePermession("General", "General.Features.ChartOfAccountsTypesOrder")) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "ACC";
+                item.Icon = "Settings"
+                item.Code = "COATO";
+                item.ObjectTableName = "Chart Of Accounts Types Order";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
             //if (FeatureLocator.HasFeaturePermession("General", "General.Features.YearTransfer")) {
@@ -770,6 +879,85 @@ export class MaintenanceComponent {
         }
     }
 
+
+    IsCustomizationMaintenanceMenuVisible(): boolean {
+
+        if (SessionLocator.Tenant == 261) {
+            return true;
+        }
+        if (CustomizationPermissionService.HasFeaturePermession("General", "General.Features.CustomizationSettings") && CustomizationPermissionService.HasToggleFeaturePermession("CUS")) {
+            return true;
+        }
+        return false;
+    }
+
+    IsTranslationMaintenanceMenusVisible(): boolean {
+        if (SessionLocator.Tenant == 261) {
+            return true;
+        }
+
+        else if (CustomizationPermissionService.HasFeaturePermession("General", "General.Features.Customization")) {
+            return true;
+        }
+        return false;
+    }
+    private BuildCustomizationMenus() {
+        if (this.IsCustomizationMaintenanceMenuVisible()) {
+            this.AddCustomizationMenu();
+        }
+        if (this.IsTranslationMaintenanceMenusVisible()) {
+            this.AddTranslateLabelMenu();
+            this.AddTranslationMenu();
+        }
+        this.AddCustomFieldsMenu();  
+    }
+    private AddCustomFieldsMenu() {
+        let item = new MenusTablePM();
+        item.CategoryTypeCode = "CUS";
+        item.Icon = "Settings";
+        item.Code = "CFMM";
+        item.ObjectTableName = "Custom Fields";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+    }
+    private AddCustomizationMenu() {
+        let item = new MenusTablePM();
+        item.CategoryTypeCode = "CUS";
+        item.Icon = "list";
+        item.Code = "CUMM";
+        item.ObjectTableName = "Customization";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+    }
+    private AddTranslationMenu() {
+        let item = new MenusTablePM();
+        item.CategoryTypeCode = "CUS";
+        item.Icon = "list";
+        item.Code = "TRMM";
+        item.ObjectTableName = "Translation";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+    }
+    private AddTranslateLabelMenu() {
+        let item = new MenusTablePM();
+        item.CategoryTypeCode = "CUS";
+        item.Icon = "list";
+        item.Code = "TLMM";
+        item.ObjectTableName = "Translate Label";
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+    }
+    private BuildCustomObjectsMenus() {
+        this.CustomObjectTables.forEach(objectTable =>
+            this.BuildSingleCustomObjectMenu(objectTable));
+    }
+    private BuildSingleCustomObjectMenu(objectTable: ObjectTablePM) {
+        let item = new MenusTablePM();
+        item.CategoryTypeCode = "CSO";
+        item.Icon = "list";
+        item.ObjectTableId = objectTable.Id;
+        item.ObjectTableName = objectTable.Name;
+        item.Code = "CustomObject"
+        var maintenanceMenuItem = new MaintenanceMenuItem(item);
+        maintenanceMenuItem.DescriptionText = objectTable.Description != null ? objectTable.Description : TextCodeTranslator.Translate(objectTable.DescriptionTextCodeCode);
+        this.AllMaintenanceMenu.push(maintenanceMenuItem);
+    }
     // Commands
     PageChanged(item: Menu) {
         this.SelectedMenu = item;
@@ -988,10 +1176,18 @@ export class MaintenanceComponent {
                     logitudeWindow.Width = 950;
                     logitudeWindow.Height = 640;
                     logitudeWindow.DataContext = this;
+                    logitudeWindow.DataContext.IsMainteneceView = true;
                     logitudeWindow.Title = "Automations";
                     logitudeWindow.Show('./Infrastructure/Components/Maintenance/Automation/MainMenuAutomationComponent');
                     break;
                 }
+
+                case "CFMM": { 
+                    var { logWindow, windowArgs }: { logWindow: LogitudeWindow; windowArgs: any; } = this.ShowCustomizationCustomFieldsWindow(logWindow, windowArgs);
+                    break;
+                }
+                     
+
                 case "SYIN": {
                     this._entityResourceService.getEntityResourceByTableName("TenantManagement", 0).subscribe((response: any) => {
                         this._entityResourceService.getEntityResourceByTableName("Tenant", 0).subscribe(tenantResp => {
@@ -1059,6 +1255,16 @@ export class MaintenanceComponent {
                         logitudeWindow.Height = 550;
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.O.FullAccountingSettings"); // "Full Accounting Settings";
                         logitudeWindow.Show('./Accounting/Components/Maintenance/FullAccountingSettingsComponent');
+                    });
+                    break;
+                }
+                case "COATO": {
+                    this._entityResourceService.getEntityResourceByTableName("ChartOfAccountsType", 0).subscribe((response:any) => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.Width = 500;
+                        logitudeWindow.Height = 400;
+                        logitudeWindow.Title = 'Chart Of Accounts Types Order';//TextCodeTranslator.Translate("Accounting.General.O.ChartOfAccountsTypesOrder");
+                        logitudeWindow.Show('./Accounting/Components/Maintenance/ChartOfAccountsTypesOrderComponent');
                     });
                     break;
                 }
@@ -1335,8 +1541,8 @@ export class MaintenanceComponent {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Title = "Ocean Insights Settings";
                     logitudeWindow.ShowCloseButton = true;
-                    logitudeWindow.Height = 400;
-                    logitudeWindow.Width = 500;
+                    logitudeWindow.Width = 1400;
+                    logitudeWindow.Height = 800;
                     logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/OceanInsightsSetting/OceanInsightsSettingsComponent');
                     break;
                 }
@@ -1409,7 +1615,7 @@ export class MaintenanceComponent {
                 }
                 case "MRCF": {
                     var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.Title = "קליטת קובץ אישורים מאיקאה להצהרה";
+                    logitudeWindow.Title = "קליטת קובץ םישורים מםיקםה להצהרה";
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 600;
                     logitudeWindow.Width = 700;
@@ -1464,7 +1670,7 @@ export class MaintenanceComponent {
                         confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                         confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
                         confirmWindow.ShowNoButton
-                        confirmWindow.Show("לעדכן נתוני יבואנים/יצואנים במערכת?");
+                        confirmWindow.Show("לעדכן נתוני יבוםנים/יצוםנים במערכת?");
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
 
@@ -1493,6 +1699,19 @@ export class MaintenanceComponent {
                     logitudeWindow.Show('./QuoteModules/QuoteOthers/Components/Maintenance/QuoteSettingsComponent');
                     break;
                 }
+
+                case "ContainerSettings": {
+                    this._entityResourceService.getEntityResourceByTableName("ContainerSetting").subscribe(() => {
+                        var logitudeWindow = new LogitudeWindow();
+                        logitudeWindow.ShowCloseButton = true;
+                        logitudeWindow.Width = 1200;
+                        logitudeWindow.Height = 600;
+                        logitudeWindow.Title = "Container Settings";
+                        logitudeWindow.Show('./ShipmentModules/ShipmentOthers/Components/ContainerSetting/ContainerSettingsComponent');
+                    });
+                    break;
+                }
+
                 case "INTTRA_S": {
                     var logitudeWindow = new LogitudeWindow();
                     logitudeWindow.Width = 960;
@@ -1584,7 +1803,7 @@ export class MaintenanceComponent {
                             messageWindow.Show("Logged User Is not Customer Care ");
                             return;
                         }
-                        let msg = "האם לבצע שליפה של כל הלקוחות במערכת?"
+                        let msg = "הםם לבצע שליפה של כל הלקוחות במערכת?"
                         let confirmWindow = new ConfirmWindow();
                         confirmWindow.Title = "שליפת לקוח ברצף";
                         confirmWindow.Width = 350;
@@ -1607,8 +1826,44 @@ export class MaintenanceComponent {
                         break;
                     }
 
+                case "VIZN": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Title = "Container Tracking - Pilot Customers";
+                    logitudeWindow.Width = 1000;
+                    logitudeWindow.Height = 600;
+                    logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/Vizion/VizionAutomaticRequestComponent');
+                    break;
+                }
 
-                case "DOCR":
+                case "TOU": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.Width = 800;
+                    logitudeWindow.Height = 500;
+                    logitudeWindow.IsShowCloseButton = true;
+                    logitudeWindow.Title = "Terms of Use";
+                    logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/TermsOfUse/TermsofUseComponent');
+                    break;
+                }
+
+                case "CUMM": {
+                    this.ShowCustomizationWindow();
+                    break;
+                }
+
+ 
+                 case "TRMM": {
+                    this.ShowTranslationWindow();
+                    break;
+                }
+
+                case "TLMM": {
+                    this.ShowTranslateLabelsWindow();
+                    break;
+                }
+                case "CustomObject":
+                    this.ShowCustomObject(item);
+                    break;
+                 case "DOCR":
                     {
                         this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceExportDefault", 0).subscribe((response: any) => {
                             var windowTitle = TextCodeTranslator.Translate("Customs.SupplierInvioceExportDefault.O.OCRDefaults");
@@ -1622,6 +1877,7 @@ export class MaintenanceComponent {
                         break;
                     }
                 default: {
+                    
                     if (item.ObjectTableId) {
                         var allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === item.ObjectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
                         if (allQueries.length == 0) {
@@ -1697,6 +1953,67 @@ export class MaintenanceComponent {
         }
     }
 
+    private ShowCustomObject(item: any) {
+        let objectTable = window.ObjectTables.filter(d => d.Id == item.ObjectTableId)[0];
+        let listArgs = new ListComponentArgs();
+        listArgs.ObjectTableName = objectTable.Name;
+        listArgs.BackButtonTitle = "Maintenance";
+        listArgs.ShowViews = true;
+        listArgs.DisplayTitle = this.textCodeTranslationPipe.transform(objectTable.Name);
+        listArgs.QueryCode = this.GetQueryCode(item);
+        listArgs.DontCheckQueryFeature = true;
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.IsCustomEntity = true;
+                cmpRef.instance.Run(listArgs);
+            });
+    }
+
+    private GetQueryCode(item: any) {
+        let allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === item.ObjectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder; });
+        let SelectedQuery = allQueries.filter(query => query.IsDefault)[0];
+        if (allQueries.length > 0 && !SelectedQuery) {
+            SelectedQuery = allQueries[0];
+        }
+        return SelectedQuery?.Code;
+    }
+
+    private ShowCustomizationCustomFieldsWindow(logWindow: LogitudeWindow, windowArgs: any) {
+        var logWindow = new LogitudeWindow();
+        var windowArgs: any = {};
+        windowArgs.IsCustomFieldsMenue = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = "";
+        logWindow.Width = 900;
+        logWindow.Height = 550;
+        logWindow.IsShowCloseButton = false;
+        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationMainComponent');
+        return { logWindow, windowArgs };
+    }
+    private ShowCustomizationWindow() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "";
+        logWindow.Width = 900;
+        logWindow.Height = 550;
+        logWindow.IsShowCloseButton = false;
+        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/CustomizationMainComponent');
+    }
+    private ShowTranslateLabelsWindow() {
+        var windowTitle = "Select Translation Language";
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 350;
+        logWindow.Height = 200;
+        logWindow.Title = windowTitle;
+        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/TranslationLabels/SelectLanguagesComponent');
+    }
+    private ShowTranslationWindow() {
+        var logWindow = new LogitudeWindow();
+        logWindow.IsFillScreen_90 = true;
+        logWindow.Title = "Translation";
+        logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Translations/TranslationComponent');
+    }
+ 
     DoJoker(text: string) {
         switch (text) {
             //case "jokerng0": {
@@ -1764,7 +2081,7 @@ export class MaintenanceComponent {
                     //LogitudeViewModel = UnifreightMassageHandler·;
                     //LogitudeCommandId = CreateInvoiceCommand·;
                     //formtitle = הצהרת יבום"
-                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
+                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבום"}';
 
                     var objParams = JSON.parse(json);
                     objParams.Requset = new Array();
@@ -1997,10 +2314,15 @@ class MaintenanceMenuItem {
     private SetDescriptionText() {
         var myResult = "";
 
+        if (this.Code == "CFMM" || this.Code == "CUMM") {
+            switch (this.Code) {
+                case "CUMM": { myResult = "Managing standard and Custom objects such ad Custom Fields, Screen Layout, Tabs, Rules .."; break; }
+                case "CFMM": { myResult = "Managing Custom fields with Pick-list type, defining new Pick-list and adjusting the existing ones"; break; }
+            }
+        }
 
 
-
-        if (this.CategoryTypeCode == "PRS" || this.CategoryTypeCode == "CMS" || this.CategoryTypeCode == "MNG" || this.Code == "FACS" || this.Code == "ACYT") {
+        if (this.CategoryTypeCode == "PRS" || this.CategoryTypeCode == "CMS" || this.CategoryTypeCode == "MNG" || this.Code == "FACS" || this.Code == "COATO" || this.Code == "ACYT") {
             switch (this.Code) {
                 case "SIGN": { myResult = "Set Signature Settings"; break; }
                 case "CHPA": { myResult = "Change Password"; break; }
@@ -2016,9 +2338,11 @@ class MaintenanceMenuItem {
                 case "USPC": { myResult = "User Packages"; break; }
                 case "TENT": { myResult = "List of Tenants"; break; }
                 case "LOGS": { myResult = "Communication Logs"; break; }
+                case "CTPS": { myResult = "Container Tracking Settings"; break; }
                 case "MNGT": { myResult = "Error Logs"; break; }
                 case "APLG": { myResult = "API Logs"; break; }
                 case "FACS": { myResult = "Define your accounting settings"; break; }
+                case "COATO": { myResult = "Define your Chart Of Accounts Types Order"; break; }
                 //case "ACPD": { myResult = "Define your accounting periods"; break; }
                 case "ACYT": { myResult = "Year Transfer"; break; }
 

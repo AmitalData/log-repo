@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 
-namespace Logitude.Test.Base.Extensions
+namespace Logitude.Base.Extensions
 {
     [Binding]
     public class Transforms
@@ -42,7 +42,13 @@ namespace Logitude.Test.Base.Extensions
             {"Busy","BS" },
             {"Free","FR" },
             {"Out Of Office" ,"OF" },
-            {"Tentative" ,"TN" }
+            {"Tentative" ,"TN" },
+        #endregion
+        #region ActivityTimeTypes
+            {"Cold","C" },
+            {"Hot","H" },
+            {"Neutral" ,"N" },
+            {"Warm" ,"W" }
         #endregion
         };
 

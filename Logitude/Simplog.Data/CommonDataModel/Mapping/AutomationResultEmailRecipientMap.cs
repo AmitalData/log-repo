@@ -30,7 +30,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .IsUnicode(false);
           
            this.Property(t => t.RecipientType)
-               .HasMaxLength(8)
+               .HasMaxLength(20)
                .IsUnicode(false);
 
 

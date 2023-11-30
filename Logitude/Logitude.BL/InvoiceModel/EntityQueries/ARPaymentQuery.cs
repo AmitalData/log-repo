@@ -122,6 +122,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BillToName = a.BillToCard == null ? "" : a.BillToCard.EnglishName,
                                        BillToLocalName = a.BillToCard == null ? "" : a.BillToCard.LocalName,
                                        BillToPartnerTypeId = a.BillToCard == null ? "" : a.BillToCard.PartnerTypeId,
+                                       BillToCode = a.BillToCard == null ? "" : a.BillToCard.Code,
                                        LocalCurrencyCode = a.LocalCurrency != null ? a.LocalCurrency.Code : null,
                                        PaymentCurrencyCode = a.PaymentCurrency == null ? null : a.PaymentCurrency.Code,
                                        SATXML = a.SATXML,
@@ -145,23 +146,27 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                        BranchName = a.Branch == null ? null : a.Branch.EnglishName,
                                        CreatedByPartner = a.CreatedByPartner,
                                        IsPaymentNumberManuallySet = a.IsPaymentNumberManuallySet,
-
                                        AccountingCancelationDate = a.AccountingCancelationDate,
                                        CancelationNotes = a.CancelationNotes,
-
                                        PaymentCurrencySign= a.PaymentCurrency.Sign,
                                        PartnerId = a.PartnerId,
-
+                                       InvoiceNumbers = a.InvoiceNumbers,
+                                       TransferStatusCode_Original = a.TransferStatusCode,
+                                       IsTransferStarted_Original = a.IsTransferStarted,
+                                       TransferError_Original = a.TransferError,
+                                       SATAdditionalFieldsXML = a.SATAdditionalFieldsXML
                                    }).FirstOrDefault();
 
 
-            BuildAllInvoicesNumbersField(payment);
+            //BuildAllInvoicesNumbersField(payment);
 
             ARInvoicePaymentRepository entityRepository = new ARInvoicePaymentRepository(repository.context);
             ARInvoicePaymentQuery entityQuery = new ARInvoicePaymentQuery(entityRepository);
             payment.PaymentInvoices = entityQuery.GetARPaymentInvoicePMsForPayment(payment.Id, tenant);
 
             payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
+            payment.ARPaymentBankTranfers = GetARPaymentBankTranfersByPaymentId(payment.Id, tenant);
+            
             SetGLAccountFields(payment);
             payment =  SetJournalFields(payment);
 
@@ -216,6 +221,39 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             ARPaymentChequeReplicaQuery aRPaymentChequeReplicaQuery = new ARPaymentChequeReplicaQuery(tenant);
             return aRPaymentChequeReplicaQuery.GetARPaymentChequeReplicaPMsByPaymentId(paymentid, tenant);
+        }
+
+        private List<ARPaymentBankTranferPM> GetARPaymentBankTranfersByPaymentId(string paymentid, int tenant)
+        {
+            IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
+            
+            ARPaymentBankTranferRepository aRPaymentBankTranferRepository = new ARPaymentBankTranferRepository(tenant);
+            List<ARPaymentBankTranfer> arPaymentBankTranfers = aRPaymentBankTranferRepository.GetARPaymentBankTranfers(paymentid, tenant).ToList();
+            var list = (from a in arPaymentBankTranfers
+                        select new ARPaymentBankTranferPM()
+                        {
+                            Id = a.Id,
+                            Tenant = a.Tenant,
+                            PaymentId = a.PaymentId,
+                            PaymentRef = a.PaymentRef,
+                            ValueDate = a.ValueDate,
+                            BankAccountId = a.BankAccountId,
+                            CurrencyId = a.CurrencyId,
+                            LineNumber = a.LineNumber,
+                            LocalAmount = a.LocalAmount,
+                            ForeignAmount = a.ForeignAmount,
+                            ExchageRate = a.ExchageRate,
+                        }).OrderBy(d => d.LineNumber).ToList();
+
+                        list.ForEach(item => {
+                            BankAccountPM bankAccount = bankAccountQuery.GetByFirstOrDefault(item.BankAccountId, tenant);
+                            if (bankAccount != null)
+                            {
+                                item.BankAccount = new BankAccountLightPM { Id = bankAccount.Id, LocalName = bankAccount.LocalName, EnglishName = bankAccount.EnglishName, BankAccountNumber = bankAccount.AccountNumber };
+                            }
+                            item.BankAccountNumber = item.BankAccount!= null ? item.BankAccount.BankAccountNumber : null;
+                        });
+            return list;
         }
 
         void SetGLAccountFields(ARPaymentPM paymentPM)
@@ -453,12 +491,15 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
                 Card billto = CardRepository.GetSingleCard(payment.BillToId, payment.Tenant, true);
                 payment.BillToName = billto != null ? billto.EnglishName : null;
+                payment.BillToCode = billto != null ? billto.Code : null;
                 payment.BillToLocalName = billto != null ? billto.LocalName : null;
 
                 AccountingPaymentMethod method = paymentMethodRep.GetSingleAccountingPaymentMethod(payment.AccountingPaymentMethodId, tenant);
                 payment.AccountingPaymentMethodName = method != null ? method.Name : null;
                 payment.AccountingPaymentMethodCode = method != null ? method.Code : null;
                 payment.ARPaymentChequeReplicas = GetARPaymentChequeReplicasByPaymentId(payment.Id, tenant);
+                payment.ARPaymentBankTranfers = GetARPaymentBankTranfersByPaymentId(payment.Id, tenant);
+
                 if (payment.BankAccountId != null)
                 {
                     payment.BankAccountNumber = GetBankAccountNumberById(payment.BankAccountId, payment.Tenant);
@@ -471,6 +512,45 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
 
             return BranchPermitionsFilter.AddUserBranchRestrictionFilters(new QueryOperations(), payment, tenant); ;
         }
+
+
+
+        public string GetSinglePaymentIdByPaymentNumber(string paymentNo, int tenant)
+        {
+            ARPayment entityPOCO =
+                (from a in repository.context.ARPayments
+                 where a.PaymentNo == paymentNo && a.Tenant == tenant
+                 select a).FirstOrDefault();
+            if (entityPOCO == null)
+            {
+                return null;
+            }
+            else
+            {
+                return entityPOCO.Id;
+            }
+        }
+
+
+
+        public string GetCheckPaymentId(string paymentId, int tenant)
+        {
+            ARPayment entityPOCO =
+                (from a in repository.context.ARPayments
+                 where a.Id == paymentId && a.Tenant == tenant
+                 select a).FirstOrDefault();
+            if (entityPOCO == null)
+            {
+                return null;
+            }
+            else
+            {
+                return entityPOCO.Id;
+            }
+        }
+
+
+
         private string GetBankAccountNumberById(string id, int tenant)
         {
             IBankAccountQueryServiceExt bankAccountQuery = ContainerAccessor.Container.Resolve(typeof(IBankAccountQueryServiceExt), "BankAccountQueryServiceExt", new ParameterOverride("", 1)) as IBankAccountQueryServiceExt;
@@ -501,6 +581,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    BillToId = entity.BillToId,
                                                    BillToName = entity.BillToCard == null ? null : entity.BillToCard.EnglishName,
                                                    BillToLocalName = entity.BillToCard == null ? null : entity.BillToCard.LocalName,
+                                                   BillToCode = entity.BillToCard == null ?null : entity.BillToCard.Code,
                                                    BranchId = entity.BranchId,
                                                    BranchName = entity.Branch == null ? null : entity.Branch.EnglishName,
                                                    CreateByUserId = entity.CreatedByUserId,
@@ -556,7 +637,6 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    SATTransferStatusCode = entity.SATTransferStatusCode,
                                                    SATTransferStatusName = entity.SATTransferStatus != null ? entity.SATTransferStatus.Name : null,
                                                    TransmissionError = entity.TransmissionError,
-
                                                    MetodoPagoCode = entity.MetodoPagoCode,
                                                    TipoCadenaPago = entity.TipoCadenaPago,
                                                    CadPago = entity.CadPago,
@@ -583,6 +663,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                    AccountingCancelationDate = entity.AccountingCancelationDate,
                                                    CancelationNotes = entity.CancelationNotes,
                                                    PartnerId = entity.PartnerId,
+                                                   InvoiceNumbers = entity.InvoiceNumbers,
                                                };
             return query2;
         }
@@ -602,6 +683,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             BillToId = entity.BillToId,
                             BillToName = entity.BillToCard == null ? null : entity.BillToCard.EnglishName,
                             BillToLocalName = entity.BillToCard == null ? null : entity.BillToCard.LocalName,
+                            BillToCode = entity.BillToCard == null ? null : entity.BillToCard.Code,
                             BranchId = entity.BranchId,
                             CreateByUserId = entity.CreatedByUserId,
                             CreatedByUserName = entity.CreatedByUser == null ? null : (entity.CreatedByUser.Contact == null ? null : entity.CreatedByUser.Contact.EnglishName),
@@ -702,6 +784,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                             BillToId = entity.BillToId,
                             BillToName = entity.BillToCard == null ? null : entity.BillToCard.EnglishName,
                             BillToLocalName = entity.BillToCard == null ? null : entity.BillToCard.LocalName,
+                            BillToCode = entity.BillToCard == null ? null : entity.BillToCard.Code,
                             BranchId = entity.BranchId,
                             CreateByUserId = entity.CreatedByUserId,
                             CreatedByUserName = entity.CreatedByUser == null ? null : (entity.CreatedByUser.Contact == null ? null : entity.CreatedByUser.Contact.EnglishName),

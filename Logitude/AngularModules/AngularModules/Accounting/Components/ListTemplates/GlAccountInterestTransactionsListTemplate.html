@@ -1,0 +1,89 @@
+<style>
+    .red {
+        color: red !important;
+    }
+    
+    a {
+        cursor: pointer;
+    }
+    
+    .aboodV {
+        margin: 0 auto;
+        position: absolute;
+        left: 15px;
+        top: 4px;
+        right: 15px;
+        width: 15px;
+    }
+    
+    .aboodV:after {
+        content: "";
+        display: block;
+        width: 4px;
+        height: 10px;
+        border: solid #090;
+        border-width: 0 3px 3px 0;
+        transform: rotate(45deg);
+    }
+</style>
+
+<div>
+    <!-- Dates -->
+    <div text-start class="TextTrimming" *ngIf="fieldName == 'CreateDateTime'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+    <div text-start class="TextTrimming" *ngIf="fieldName == 'InterestValueDate'">{{ rowData[fieldName] | DateTimePipe:'SD' }}</div>
+
+    <!-- JournalNumber -->
+    <div text-start class="TextTrimming" *ngIf="fieldName == 'JournalNumber'">
+        <a href="javascript:;" (click)="OpenJournal(rowData['JournalId'])">
+            {{ rowData['JournalNumber'] }}
+        </a>
+    </div>
+
+    <!-- InterestReportNumber -->
+    <div text-start class="TextTrimming" *ngIf="fieldName == 'InterestReportNumber'">
+        <a (click)="OpenInterestReport(rowData['InterestReportId'])">
+            {{ rowData['InterestReportNumber'] }}
+        </a>
+    </div>
+
+    <!-- CurrencyCode -->
+    <div text-start class="TextTrimming" style="text-align: center;" *ngIf="fieldName == 'CurrencyCode'">
+        {{ rowData['CurrencyCode'] }}
+    </div>
+
+    <!-- SourceType -->
+    <div style="padding: 0px 7px;text-align: left;" class="TextTrimming" *ngIf="fieldName == 'Source'">
+
+        <span [title]="rowData['SourceType']" *ngIf="IconCode" [class]="'SourceTypeIcon color-' + rowData['SourceTypeCode']" (click)="OpenSource(rowData['SourceId'])">{{IconCode}}</span>
+
+        <a (click)="OpenSource(rowData['SourceId'])">
+            {{rowData['Source']}}
+        </a>
+    </div>
+
+    <!-- LocalAmount -->
+    <div class="TextTrimming" *ngIf="fieldName == 'LocalAmount'" style="text-align: right; padding: 0px 2px;direction: ltr;">
+        {{ rowData["LocalAmount"] | NumbersPipe:'N2' }}
+    </div>
+
+    <!-- ForeignAmount -->
+    <div class="TextTrimming" *ngIf="fieldName == 'ForeignAmount'" style="text-align: right; padding: 0px 2px;direction: ltr;">
+        {{ rowData["ForeignAmount"] | NumbersPipe:'N2' }}
+    </div>
+
+
+    <!-- IsClosed -->
+    <div *ngIf="fieldName == 'IsClosed'" style="width: 90px; min-width: 90px; max-width: 90px;text-align:center;">
+        <div *ngIf="rowData['IsClosed']" class="TextTrimming" style="text-align: center;">
+            <div class="aboodV" [style.right.px]="isRTL ? '30' : '15'"></div>
+        </div>
+    </div>
+
+    <!-- IsCancelled -->
+    <div *ngIf="fieldName == 'IsCancelled'" style="width: 90px; min-width: 90px; max-width: 90px;text-align:center;">
+        <div *ngIf="rowData['IsCancelled']" class="TextTrimming" style="text-align: center;">
+            <div class="aboodV" [style.right.px]="isRTL ? '30' : '15'"></div>
+        </div>
+    </div>
+
+</div>

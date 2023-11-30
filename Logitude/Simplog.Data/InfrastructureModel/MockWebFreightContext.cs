@@ -98,7 +98,10 @@ namespace Simplog.Data.InfrastructureModel
 
         #endregion
 
-
+        public DbContextTransaction GetSnapshotTransaction()
+        {
+            throw new NotImplementedException();
+        }
         public IDbSet<User> Users
         {
             get
@@ -370,7 +373,10 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
-
+        public IDbSet<EntityStatusType> EntityStatusTypes
+        {
+            get { throw new NotImplementedException(); }
+        }
 
         public IDbSet<SpecialService> SpecialServices
         {
@@ -1472,6 +1478,21 @@ namespace Simplog.Data.InfrastructureModel
             }
         }
 
+        private MockObjectSet<QuoteChargesGroup> quoteChargesGroupList;
+        public IDbSet<QuoteChargesGroup> QuoteChargesGroups
+        {
+            get
+            {
+                quoteChargesGroupList = new MockObjectSet<QuoteChargesGroup>();
+                QuoteChargesGroup chargesGroup1 = new QuoteChargesGroup() { Code = "CG" };
+
+
+                quoteChargesGroupList.AddObject(chargesGroup1);
+
+                return quoteChargesGroupList;
+            }
+        }
+
         private MockObjectSet<VolumeUnit> volumeUnitList;
         public IDbSet<VolumeUnit> VolumeUnits
         {
@@ -1775,7 +1796,7 @@ namespace Simplog.Data.InfrastructureModel
             get { throw new NotImplementedException(); }
         }
 
-        public IDbSet<ImageLibrary> ImageLibrarys
+        public IDbSet<ImageLibrary> ImageLibraries
         {
             get { throw new NotImplementedException(); }
         }
@@ -1906,7 +1927,6 @@ namespace Simplog.Data.InfrastructureModel
         {
             throw new NotImplementedException();
         }
-
 
         public IDbSet<ObjectTableLastUpdate> ObjectTableLastUpdates
         {
@@ -2070,12 +2090,35 @@ namespace Simplog.Data.InfrastructureModel
 
         public IDbSet<RuleUpdateHistory> RuleUpdateHistories => throw new NotImplementedException();
 
-        DbSet<ObjectField> IWebFreightContext.ObjectFields => throw new NotImplementedException();
+        IQueryable<ObjectField> IWebFreightContext.ObjectFields => throw new NotImplementedException();
 
         DbSet<TextCode> IWebFreightContext.TextCodes => throw new NotImplementedException();
 
         public IDbSet<WorkerRoleName> WorkerRoleNames => throw new NotImplementedException();
 
         public IDbSet<QueryExportExecutionLog> QueryExportExecutionLogs => throw new NotImplementedException();
+
+        public IDbSet<MultiEntityUpdateLog> MultiEntityUpdateLogs => throw new NotImplementedException();
+
+        public IDbSet<ChildEntitiesCustomField> ChildEntitiesCustomFields => throw new NotImplementedException();
+
+        public IDbSet<ScreenSection> ScreenSections => throw new NotImplementedException();
+
+        public IDbSet<TabModification> TabsModifications
+        {
+            get;
+            set;
+        }
+
+        public DbSet<ObjectField> ObjectFieldsDbSet => throw new NotImplementedException();
+        public IDbSet<CustomChildObject> CustomChildObjects => throw new NotImplementedException();
+        public IDbSet<DataCustomObject> DataCustomObjects => throw new NotImplementedException();
+        public IDbSet<ReferenceCustomObject> ReferenceCustomObjects => throw new NotImplementedException();
+        public IDbSet<DeploymentPackage> DeploymentPackages => throw new NotImplementedException();
+        public IDbSet<DeploymentPackagesVersion> DeploymentPackagesVersions => throw new NotImplementedException();
+        public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects => throw new NotImplementedException();
+        public IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs => throw new NotImplementedException();
+
+        public IDbSet<EventRemark> EventRemarks => throw new NotImplementedException();
     }
 }

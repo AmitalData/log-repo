@@ -13,6 +13,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string Id { get; set; }      
         public int Tenant { get; set; }
         public string RankId { get; set; }
+        public string TeamId { get; set; }
         public string AccountManagerUserId { get; set; }
         public string SalesmanUserId { get; set; }
         public bool StartWorkingManuallySet { get; set; }
@@ -30,7 +31,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string CollectorId { get; set; } 
         public string CustomerSizeId { get; set; }
         public DateTime? AutomaticLastUpdateDate { get; set; }
-        public string EORInumber { get; set; }
         public virtual Card Card { get; set; }
 
         [ForeignKey("SalesmanUserId")]
@@ -46,7 +46,10 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
               
         [ForeignKey("RankId")]
         public virtual Rank Rank { get; set; }
-               
+
+        [ForeignKey("TeamId")]
+        public virtual CustomerTeam CustomerTeam { get; set; }
+
         public string IndustryId { get; set; }       
         public virtual Industry Industry { get; set; }        
 
@@ -126,6 +129,14 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string PrimaryContactName { get; set; }
         public string PrimaryContactEmail { get; set; }
         public string PrimaryContactPhone { get; set; }
+        public string EmailForSendingSingArinvoice { get; set; }
+        public string ImportLocalCustomerGroupId { get; set; }
+        public string ExportLocalCustomerGroupId { get; set; }
+        public string EORInumber { get; set; }
 
+        //[ForeignKey("ImportLocalCustomerGroupId")]
+        //public virtual CustomerGroup ImportLocalCustomerGroup { get; set; }
+        //[ForeignKey("ExportLocalCustomerGroupId")]
+        //public virtual CustomerGroup ExportLocalCustomerGroup { get; set; }
     }
 }

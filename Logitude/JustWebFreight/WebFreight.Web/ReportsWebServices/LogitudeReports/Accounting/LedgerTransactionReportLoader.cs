@@ -20,6 +20,7 @@ using WebFreight.Web.DataProviders;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using WebFreight.Web.Security;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.Data.Repositories;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -119,7 +120,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         }
 
         private void FillGLAccountBalance(List<LedgerTransactionBalanceResponse> cardIndexs)
-        {
+        {           
             LedgerTransactionBalanceFilterCallBack LTBFilterCallBack = BuildLTBFilterCallback(cardIndexs);
 
             //GLAccountPM glaccountPM = GetGLAccountById(GetFilterValue<string>("GLAccountId"));
@@ -155,7 +156,11 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     BalanceLocal = 0,
                     CurrencyId = "",
                     LocalCurrencySign = "",
-                    ForeignCurrencySign = ""
+                    ForeignCurrencySign = "",
+                    LocalBalanceInDue = 0,
+                    BalanceInForeignCurrency=0,
+                    ForeignBalanceInDue = 0
+
                 });
             }
 
@@ -165,13 +170,22 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CurrencyRepository currencyRepo = new CurrencyRepository(tenant);
                 Currency currency = currencyRepo.GetSingleCurrency(item.CurrencyId, tenant);
 
+                GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
+                var gLAccountMoreData = gLAccountMoreDataRepository.GetSingle(LTBFilterCallBack.GLAccountId, tenant);
+
                 transactionsDataProvider.LocalClosedBalanceList.Add(new GLAccountBalanceList()
                 {
                     BalanceForeign = item.BalanceForeign,
                     BalanceLocal = item.BalanceLocal,
                     CurrencyId = item.CurrencyId,
                     LocalCurrencySign = GetTenantPM().CurrencySign,
-                    ForeignCurrencySign = currency.Sign
+                    ForeignCurrencySign = currency.Sign,
+                    LocalBalanceInDue = gLAccountMoreData.LocalBalanceInDue,
+                    BalanceInForeignCurrency = gLAccountMoreData.BalanceInForeignCurrency,
+                    ForeignBalanceInDue = gLAccountMoreData.ForeignBalanceInDue
+
+
+
                 });
             }
 
@@ -242,21 +256,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             {
                 ReportLedgerTransaction reportTransaction = GetReportNewLedgerTransaction(transaction);
                 FillReportTransactionGLAccountFields(transactionsAccounts, reportTransaction);
-
                 transactionsDataProvider.Transactions.Add(reportTransaction);
             }
 
-            transactionsDataProvider.LastCumulativeOpenAmount = transactions.Count > 1 ? transactions[transactions.Count - 1].CumulativeOpenAmount : 0;
+            transactionsDataProvider.LastCumulativeOpenAmount = transactions.Count >= 1 ? transactions[transactions.Count - 1].CumulativeOpenAmount : 0;
         }
-
+     
         private List<GLAccountList> GetGLAccountsInsideTransactions(List<LedgerTransactionList> transactions)
         {
             List<string> accountsIds = transactions.GroupBy(d => d.AccountId).Select(d => d.Key).ToList();
-            GLAccountListQueryService gLAccountListQueryService = new GLAccountListQueryService(accountingContext);
-            var glaccounts = gLAccountListQueryService.GetByIds(accountsIds, tenant,false).ToList();
+            GLAccountListQueryService gLAccountListQueryService = new GLAccountListQueryService(accountingContext);        
+              var   glaccounts = gLAccountListQueryService.GetByIds(accountsIds, tenant, false).ToList();
             return glaccounts;
         }
-
+      
         private void FillReportTransactionGLAccountFields(List<GLAccountList> accounts, ReportLedgerTransaction reportTransaction)
         {
                 GLAccountList account = accounts.FirstOrDefault(d => d.Id == reportTransaction.AccountId);
@@ -277,9 +290,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 CreateDate = transaction.CreateDate,
                 ControlAccountId = transaction.ControlAccountId,
                 AccountId = transaction.AccountId,
-                AccountingDate = transaction.AccountingDate,
-                DocumentDate = transaction.DocumentDate,
-                DueDate = transaction.DueDate,
+                AccountingDate = transaction.AccountingDate.ToString("dd/MM/yyyy"),
+                DocumentDate = transaction.DocumentDate.ToString("dd/MM/yyyy"),
+                DueDate = transaction.DueDate.ToString("dd/MM/yyyy"),
                 LocalAmountDebit = transaction.LocalAmountDebit,
                 LocalAmountCredit = transaction.LocalAmountCredit,
                 CurrencyId = transaction.CurrencyId,
@@ -307,6 +320,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 Source = transaction.Source,
                 JournalNumber = transaction.JournalNumber,
+                JournalCreatedByUser = transaction.JournalCreatedByUser,
                 TenantCurrencySign = GetTenantPM().CurrencySign,
 
                 OppositeAccountDisplayNumber = transaction.OppositeAccountDisplayNumber,
@@ -324,15 +338,40 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
         private void FillPrintingInformation()
         {
-            transactionsDataProvider.PrintedByUser = GetLoggedContactName();
+            string loggedContactName = GetLoggedContactName();           
+            transactionsDataProvider.PrintedByUser = loggedContactName;
             transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
         }
 
+        private string GetContactName(ContactPM loggedContact)
+        {
+            return loggedContact.DontShowLocal ? loggedContact.EnglishName : loggedContact.LocalName;
+        }
+
+        private ContactPM  GetLoggedContact()
+        {
+            return LoggedContactResolver.GetLoggedContact(tenant);
+           
+        }
         private string GetLoggedContactName()
         {
-            ContactPM loggedContact = LoggedContactResolver.GetLoggedContact(tenant);
-            var x = showLocals ? loggedContact.LocalName : loggedContact.EnglishName;
-            return x;
+            ContactPM loggedContact;
+            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            {
+                loggedContact = GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail);
+                return GetContactName(loggedContact);
+            }
+            else
+            {
+
+                loggedContact = GetLoggedContact();
+               return GetContactName(loggedContact);
+            }
+        }
+        private ContactPM GetContactByEmail(string email)
+        {
+            ContactQuery contactQuery = new ContactQuery(tenant);
+            return contactQuery.GetContactByEmailOnly(email, tenant);
         }
 
         private void FillTenantFields()
@@ -401,9 +440,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 StartBalanceLocal = cardIndexs.First().StartBalanceLocal,
                 TotalRowCount = cardIndexs.First().TotalRowCount,
                 YearTransferLedgerTransactionIds = cardIndexs.First().YearTransferLedgerTransactionIds,
-                SuppressCumulativeDueMultiCurrencyInPeriod = cardIndexs.First().SuppressCumulativeDueMultiCurrencyInPeriod
-
-            };
+                SuppressCumulativeDueMultiCurrencyInPeriod = cardIndexs.First().SuppressCumulativeDueMultiCurrencyInPeriod,
+                GLAccountId = cardIndexs.First().GLAccountId
+        };
             return LTBFilterCallBack;
         }
 
@@ -434,7 +473,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 IsReconciled = GetFilterValue<bool?>("IsReconciled"),
                 IncludeChildAccounts = GetFilterValue<bool>("IncludeChildAccounts"),
                 IncludeRelatedCurrenciesAccount = GetFilterValue<bool>("IncludeRelatedCurrenciesAccount"),
-
+                UseSecurityLevel = GetFilterValue<bool>("UseSecurityLevel"),
             };
             SetReportCategoryParameters(cardIndexParameters);
 

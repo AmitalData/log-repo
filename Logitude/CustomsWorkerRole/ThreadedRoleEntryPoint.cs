@@ -21,7 +21,7 @@ namespace CustomsWorkerRole
         List<WorkerEntryPoint> workers;
         protected EventWaitHandle EventWaitHandle = new EventWaitHandle(false, EventResetMode.ManualReset);
         //public static string DeploymentStage = "Dev";//Dev//Test1//Simplog
-
+        
         public override void Run()
         {
             foreach (WorkerEntryPoint worker in workers)
@@ -237,11 +237,7 @@ namespace CustomsWorkerRole
                 he.DateTimeFormat.ShortDatePattern = "dd-MM-yy";// ' "yyyy/MM/dd" '  ' "DD/MM/YYYY"
                 System.Threading.Thread.CurrentThread.CurrentCulture = he;
                 
-                LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
-                {
-                    if (DateTime.Now > stopLogAt) return;
-                    Logger.LogMe(mess, err, suffix);
-                });
+
 
                 LogitudeSettings.RunWorkerRoleAutomaticBreakPoint = false;
 
@@ -251,6 +247,14 @@ namespace CustomsWorkerRole
             //string queueServiceMode = System.Configuration.ConfigurationManager.AppSettings.Get("QueueServiceMode");
             ContainerAccessor.InitContainer();
            
+            // logging
+
+            // logging
+            LogitudeSettings.HandleLogMe = new Action<string, bool, string, DateTime>((mess, err, suffix, stopLogAt) =>
+            {
+                if (DateTime.Now > stopLogAt) return;
+                Logger.LogMe(mess, err, suffix);
+            });
 
 
         }

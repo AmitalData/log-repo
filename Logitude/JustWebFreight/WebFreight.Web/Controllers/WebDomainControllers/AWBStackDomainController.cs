@@ -37,7 +37,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 SecurityUtility.CheckContactFeature("Airline", "READ", tenant);
 
                 MAWBStackQuery entityQuery = new MAWBStackQuery(tenant);
-                IQueryable<MAWBStackPM> myResult = entityQuery.GetMAWBStackPMsByAirlineId(myCardId, tenant).AsQueryable().OrderBy(a => a.InsertionDate);
+                IQueryable<MAWBStackPM> myResult = entityQuery.GetMAWBStackPMsByAirlineId(myCardId, tenant).OrderBy(a => a.InsertionDate);
 
                 return Request.CreateResponse(HttpStatusCode.OK, myResult);
             }

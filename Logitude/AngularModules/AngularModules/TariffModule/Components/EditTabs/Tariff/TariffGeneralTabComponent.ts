@@ -10,9 +10,10 @@ import { TariffDomainService } from '../../../../TariffModule/Services/TariffDom
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
 import { TariffVersionPM } from '../../../EntityPMs/TariffVersionPM';
+import { CardList } from '../../../../Common/EntityLists/CardList';
+import { TariffTool } from '../../../Tools';
 
-@Component({
-    
+@Component({    
     templateUrl: './TariffGeneralTabComponent.html',
 })
 
@@ -31,36 +32,60 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     public SellerDependancy: string = "AL";
     public TariffCurrencyTextCode: string = "Tariff.F.CurrencyId";
     public IsContainersAreaVisible: boolean = false;
+    public IsUnitOfMeasurementFieldVisible: boolean = false;
     private draftVersion: TariffVersionPM;
+    public IsSellerVisible: boolean = false;    
+    public IsCustomerGroupVisible: boolean = false;
+    public IsSurchargeTariff: boolean = false;
+    public IsCustomsTariff: boolean = false;
+    public IsInlandFTLTariff: boolean = false;
+    public IsTariffHasContainers: boolean = false;
+    public IsLocalCustomsTariff: boolean = false;
+    public SellerToolTip: string;
+    public ContainerTypeDependencyFilter: string;
+    private commonDomainService: CommonDomainService;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
         this.chargesTypePMService = new ChargesTypeListService();
         this.draftVersion = this.EntityPM.TariffVersions.filter(d => d.IsDraft)[0];
 
+        this.IsSurchargeTariff = TariffTool.IsSurchargeTariff(this.EntityPM);
+        this.IsCustomsTariff = TariffTool.IsCustomsTariff(this.EntityPM);
+        this.IsLocalCustomsTariff = TariffTool.IsLocalCustomsTariff(this.EntityPM);
+        this.IsInlandFTLTariff = TariffTool.IsInlandFTLTariff(this.EntityPM);
+        this.IsTariffHasContainers = TariffTool.IsTariffHasContainers(this.EntityPM);
+        this.commonDomainService = new CommonDomainService();
+
         this.BuildQueryFilters();
 
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+        if (this.IsSurchargeTariff || this.IsCustomsTariff || this.IsInlandFTLTariff || this.IsLocalCustomsTariff) {
             this.FillChargesIDsAndUOMS();
             this.VisibileSurchargesArea = true;
             this.TariffCurrencyTextCode = "Tariff.O.DefaultCurrency";
         }
 
-        if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
+        if (this.IsTariffHasContainers) {
             this.FillContainersIDs();
             this.IsContainersAreaVisible = true;
+            this.ContainerTypeDependencyFilter = this.EntityPM.TypeCode == "IFT" ? null : "O";
+        }
+
+        if (this.EntityPM.TypeCode == "ICC" || this.EntityPM.TypeCode == "ECC") {
+            this.SellerToolTip = "Customs Broker";
         }
 
         this.Listen();
-        this.CheckCurrancyEnabledProperty();
+        this.SetUIProperties();
         this.GetBCNTMeasurementId();
+        this.SetUnitOfMeasurementFieldVisiblity();
     }
 
     private BCNTmeasurementId: string;
     private GetBCNTMeasurementId() {
-        if (this.EntityPM.TypeCode == "OFS") {
-            var commonDomainService: CommonDomainService = new CommonDomainService();
-            commonDomainService.GetMeasurementIdByCode("BCNT").subscribe((res:any) => {
+        if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
+            this.commonDomainService.GetMeasurementIdByCode("BCNT").subscribe((res:any) => {
                 if (!res.HasError) {
                     if (res.Result) {
                         this.BCNTmeasurementId = res.Result;
@@ -71,7 +96,48 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
     SetUIProperties() {
+        this.SetUIProperties_Seller();
         this.CheckCurrancyEnabledProperty();
+        this.SetUIProperties_CustomerGroup();
+    }
+    private SetUIProperties_Seller() {
+        var isSellerVisible: boolean = true;
+        var isSellerRequired: boolean = false;
+
+        if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+            isSellerVisible = false;
+        }
+
+        if (isSellerVisible) {
+            isSellerRequired = AppTool.IsNullOrEmpty(this.SellerId);
+        }
+
+        this.IsSellerVisible = isSellerVisible;
+        this.UIProperties.SetVisibility("SellerId", this.ObjectTableName, isSellerVisible);
+        this.UIProperties.SetRequired("SellerId", this.ObjectTableName, isSellerRequired)
+    }
+    
+    private SetUIProperties_CustomerGroup() {
+        var isCustomerGroupVisible: boolean = false;
+        var isisCustomerGroupRequired: boolean = false;
+
+        if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+            isCustomerGroupVisible = true;
+        }
+
+        if (isCustomerGroupVisible) {
+            isisCustomerGroupRequired = AppTool.IsNullOrEmpty(this.CustomerGroupId);
+        }
+
+        this.IsCustomerGroupVisible = isCustomerGroupVisible;
+        this.UIProperties.SetVisibility("CustomerGroupId", this.ObjectTableName, isCustomerGroupVisible);
+        this.UIProperties.SetRequired("CustomerGroupId", this.ObjectTableName, isisCustomerGroupRequired);
+    }
+    SetUnitOfMeasurementFieldVisiblity() {
+        this.UIProperties.SetEnabled("UnitOfMeasurementCode", this.ObjectTableName, false);
+        if (this.EntityPM.TypeCode == "OLC" || this.EntityPM.TypeCode == "AFC") {
+            this.IsUnitOfMeasurementFieldVisible = true;
+        }
     }
 
     CheckCurrancyEnabledProperty() {
@@ -112,28 +178,49 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
     BuildQueryFilters() {
-        var EntityType: string = "IsAir";
+        var entityType: string = "IsAir";
         if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
-            EntityType = "IsOcean";
+            entityType = "IsOcean";
             this.SellerDependancy = "SL";
-        }else if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
-            EntityType = "IsOcean";
+        }
+
+        else if (this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OLC") {
+            entityType = "IsOcean";
             this.SellerDependancy = "SL,AG,SG";
         }
-        this.MeasurementsQueryFilters = new ApiQueryFilters();
 
-        if (this.EntityPM.TypeCode == "OFS") {
+        else if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+            entityType = this.EntityPM.TypeCode == "ECS" ? "IsExport" : "IsImport";
+        }
+
+        else if (this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICC") {
+            entityType = this.EntityPM.TypeCode == "ECC" ? "IsExport" : "IsImport";
+            this.SellerDependancy = "AG,CG";
+        }
+
+        else if (this.EntityPM.TypeCode == "IFT") {
+            entityType = "IsInland";
+            this.SellerDependancy = "TR";
+        }
+
+        this.MeasurementsQueryFilters = new ApiQueryFilters();
+        if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
             this.MeasurementsQueryFilters.addAdditionalFilter("Code", "BCNT,BTEU,FIXD", null, null, "InList", false, true, false, "string", false, true, true);
         }
+        else if (this.EntityPM.TypeCode == "ECS" || this.EntityPM.TypeCode == "ICS"){
+            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "FIXD", null, null, "Equals", false, false, false, "string", false, true, true);
+        }
         else {
-            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "NotContains", false, false, false, "string", false, true, true);
+            this.MeasurementsQueryFilters.addAdditionalFilter("Code", "STFE", null, null, "Exclude", false, false, false, "string", false, true, true);
         }
 
         this.ChargeTypesQueryFilters = new ApiQueryFilters();
         this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter(EntityType, true, null, null, "Equals", false, false, false, "Boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
-        
+        this.ChargeTypesQueryFilters.addAdditionalFilter(entityType, true, null, null, "Equals", false, false, false, "Boolean");
+
+        if (this.EntityPM.TypeCode != "IFT") {
+            this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
+        }
     }
 
     FillChargesIDsAndUOMS() {
@@ -149,25 +236,36 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
     SetDefaultUOM(index: number) {
-            this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res: any) => {
-                if (!res.HasError) {
-                    if (res.Result) {
-                        var ChargesType: ChargesTypeList = res.Result;
-                        if (this.EntityPM.TypeCode == "OFS") {
-                            if (!AppTool.IsNullOrEmpty(ChargesType.ContainerMeasurementId)) {
-                                this[this.UOMProps[index]] = ChargesType.ContainerMeasurementId;
-                            }
-                            else {
-                                this[this.UOMProps[index]] = this.BCNTmeasurementId;
-                            }
+        if (this.EntityPM.TypeCode == "ECS" || this.EntityPM.TypeCode == "ICS") {
+            this.SetFixedUOM(index);
+            return;
+        }
+        this.chargesTypePMService.getSingleFromCache(this[this.IdProps[index]]).subscribe((res: any) => {
+            if (!res.HasError) {
+                if (res.Result) {
+                    var ChargesType: ChargesTypeList = res.Result;
+                    if (this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
+                        if (!AppTool.IsNullOrEmpty(ChargesType.ContainerMeasurementId)) {
+                            this[this.UOMProps[index]] = ChargesType.ContainerMeasurementId;
                         }
                         else {
-                            this[this.UOMProps[index]] = ChargesType.MeasurementId;
+                            this[this.UOMProps[index]] = this.BCNTmeasurementId;
                         }
                     }
+                    else {
+                        this[this.UOMProps[index]] = ChargesType.MeasurementId;
+                    }
                 }
-            });
-        }
+            }
+        });
+    }
+
+    private SetFixedUOM(index: number) {
+        this.commonDomainService.GetMeasurementIdByCode("FIXD").subscribe((res: any) => {
+            if (!res.HasError && res.Result)
+                this[this.UOMProps[index]] = res.Result;
+        });
+    }
 
     private SetDefaultCurrency(index: number) {        
         if (this.draftVersion != null) {
@@ -185,17 +283,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
         }
     }
 
-    private isSurcharges1Added: boolean = false;
-    private isSurcharges2Added: boolean = false;
-    private isSurcharges3Added: boolean = false;
-    private isSurcharges4Added: boolean = false;
-    private isSurcharges5Added: boolean = false;
-    private isSurcharges6Added: boolean = false;
-    private isSurcharges7Added: boolean = false;
-    private isSurcharges8Added: boolean = false;
-    private isSurcharges9Added: boolean = false;
-    private isSurcharges10Added: boolean = false;
-
     get Surcharge1Id() {
         return this.EntityPM.Surcharge1Id;
     }
@@ -205,7 +292,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(0);
-                this.isSurcharges1Added = true;
             }
 
             this.SetDefaultCurrency(1);
@@ -221,7 +307,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(1);
-                this.isSurcharges2Added = true;
             }
 
             this.SetDefaultCurrency(2);
@@ -237,7 +322,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(2);
-                this.isSurcharges3Added = true;
             }
 
             this.SetDefaultCurrency(3);
@@ -253,7 +337,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(3);
-                this.isSurcharges4Added = true;
             }
 
             this.SetDefaultCurrency(4);
@@ -269,7 +352,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(4);
-                this.isSurcharges5Added = true;
             }
 
             this.SetDefaultCurrency(5);
@@ -285,7 +367,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(5);
-                this.isSurcharges6Added = true;
             }
 
             this.SetDefaultCurrency(6);
@@ -301,7 +382,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(6);
-                this.isSurcharges7Added = true;
             }
 
             this.SetDefaultCurrency(7);
@@ -317,7 +397,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(7);
-                this.isSurcharges8Added = true;
             }
 
             this.SetDefaultCurrency(8);
@@ -333,7 +412,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(8);
-                this.isSurcharges9Added = true;
             }
 
             this.SetDefaultCurrency(9);
@@ -349,7 +427,6 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
             this.Validate();
             if (value != null) {
                 this.SetDefaultUOM(9);
-                this.isSurcharges10Added = true;
             }
 
             this.SetDefaultCurrency(10);
@@ -602,10 +679,11 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     }
 
     ngAfterViewInit() {
-        if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+        if (this.IsSurchargeTariff || this.IsCustomsTariff || this.IsInlandFTLTariff || this.IsLocalCustomsTariff) {
             this.Validate(true);
         }
-        if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
+
+        if (this.IsTariffHasContainers) {
             this.ValidateContainers(true);
         }        
     }
@@ -655,7 +733,9 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                     }
 
                     else {
-                        this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, true);
+                        if(this.EntityPM.TypeCode != "ECS" && this.EntityPM.TypeCode != "ICS") 
+                           this.UIProperties.SetEnabled(this.UOMProps[index - 1], this.ObjectTableName, true);
+                           
                         if (index == 1) {
                             this.UIProperties.SetRequired(this.IdProps[index - 1], this.ObjectTableName, false);
                             if (AppTool.IsNullOrEmpty(this[this.UOMProps[index - 1]])) {
@@ -726,10 +806,11 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
                         this["isSurcharges" + i + "Added"] = false;
                     }
 
-                    if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+                    if (this.IsSurchargeTariff || this.IsCustomsTariff || this.IsInlandFTLTariff || this.IsLocalCustomsTariff) {
                         this.Validate(true);
                     }
-                    if (this.EntityPM.TypeCode == "OFC" || this.EntityPM.TypeCode == "OFS") {
+
+                    if (this.IsTariffHasContainers) {
                         this.ValidateContainers(true);
                     }
                     
@@ -770,6 +851,51 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     set SellerId(value: string) {
         if (this.EntityPM.SellerId != value) {
             this.EntityPM.SellerId = value;
+
+            this.SetUIProperties_Seller();
+        }
+    }
+
+    private seller: CardList;
+    get Seller() { return this.seller; }
+    set Seller(value: CardList) {
+        if (this.seller != value) {
+            this.seller = value;
+
+            if (value) {
+                this.EntityPM.SellerName = value.EnglishName;
+            }
+
+            else {
+                this.EntityPM.SellerName = null;
+            }
+        }
+    }
+
+    get CustomerGroupId() {
+        return this.EntityPM.CustomerGroupId;
+    }
+    set CustomerGroupId(value: string) {
+        if (this.EntityPM.CustomerGroupId != value) {
+            this.EntityPM.CustomerGroupId = value;
+
+            this.SetUIProperties_CustomerGroup();
+        }
+    }
+
+    private customsBroker: CardList;
+    get CustomsBroker() { return this.customsBroker; }
+    set CustomsBroker(value: CardList) {
+        if (this.customsBroker != value) {
+            this.customsBroker = value;
+
+            if (value) {
+                this.EntityPM.CustomsBrokerName = value.EnglishName;
+            }
+
+            else {
+                this.EntityPM.CustomsBrokerName = null;
+            }
         }
     }
 
@@ -777,6 +903,13 @@ export class TariffGeneralTabComponent extends BaseComponent implements OnDestro
     set ContractNumber(value: string) {
         if (this.EntityPM.ContractNumber != value) {
             this.EntityPM.ContractNumber = value;
+        }
+    }
+
+    get UnitOfMeasurementCode() { return this.EntityPM.UnitOfMeasurementCode; }
+    set UnitOfMeasurementCode(value: string) {
+        if (this.EntityPM.UnitOfMeasurementCode != value) {
+            this.EntityPM.UnitOfMeasurementCode = value;
         }
     }
 

@@ -32,8 +32,15 @@ export class ReportSchedulerDetails {
     public CreatedByUserId: string;
     public Recepients: ReportSchedulerRecepients;
     public ReportTemplateId: string;
+    public BIReportEntityId: string;
+    public DWQueryId: string;
+    public ReportTemplateType: string;
     public ReportFilterItems: Array<QueryFilterItem>;
     public MainCustomerFieldName: string;
+    public DWQueryFilterData: any;
+    public DocumentTypeTemplateId: string;
+    public DocumentTypeTemplateIds: Array<string> = [];
+    public MessageTemplateId: string;
 }
 
 export class ReportSchedulerRecepients {
@@ -41,4 +48,3 @@ export class ReportSchedulerRecepients {
     public Cc: string;
     public Bcc: string;
 }
-

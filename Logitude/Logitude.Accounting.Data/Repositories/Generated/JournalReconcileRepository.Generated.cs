@@ -49,7 +49,7 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.JournalId == keys.JournalId && a.LedgerTransactionId == keys.LedgerTransactionId
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(JournalReconcile entity)
         {

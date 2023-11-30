@@ -1,7 +1,9 @@
-﻿using Simplog.Data.CommonDataModel.Repositories;
+﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,19 +22,19 @@ namespace Logitude.Server.Tools.EntityChanges
 
         }
 
-        public string GetLoggedContactId(int tenant)
+        public string GetLoggedContactId(int tenant, string loggedUserEmail)
         {
-            string loggedContactId = string.Empty;
-            string email = ("system@tenant" + tenant.ToString() + ".com");
-            ContactRepository contactRepository = new ContactRepository(tenant);
+            string email = !string.IsNullOrEmpty(loggedUserEmail) ? loggedUserEmail : ("system@tenant" + tenant.ToString() + ".com");
             if (HttpContext.Current != null && HttpContext.Current.User != null && HttpContext.Current.User.Identity != null && !string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))
             {
                 email = HttpContext.Current.User.Identity.Name;
             }
-            var contact = contactRepository.GetSingleContactByEmail(email, tenant, true);
-            if (contact != null) loggedContactId = contact.Id;
 
-            return loggedContactId;
+            UserRepository userRepository = new UserRepository(tenant);
+            User user = userRepository.GetSingleUserByEmail(email, tenant, true);
+            if(user == null) user = userRepository.GetSingleUserByEmail(("system@tenant" + tenant.ToString() + ".com"), tenant, true);
+
+            return user?.Id;
         }
 
         public DateTime? GetAutomationLastUpdateDate(string automationObjectTableId , int tenant)
@@ -108,5 +110,43 @@ namespace Logitude.Server.Tools.EntityChanges
             }
             return result;
         }
+
+        public EntityDetails GetEntityDetails(string entityId, string objectTableName, int tenant)
+        {
+            object entityPM = GetEntityPMByIdAndObjectTableName(entityId, objectTableName, tenant);
+            if (objectTableName != "Shipment") return new EntityDetails { EntityPM = entityPM, ObjectTableName = objectTableName, CombinedObjectTableName = objectTableName };
+
+            string shipmentTableName = GetShipmentTableName(entityPM);
+            if (shipmentTableName != "MasterAndHouse") return new EntityDetails { EntityPM = entityPM, ObjectTableName = shipmentTableName, CombinedObjectTableName = objectTableName };
+
+            return new EntityDetails { EntityPM = entityPM, ObjectTableName = "Master", OtherObjectTableName = "Shipment", CombinedObjectTableName = shipmentTableName };
+        }
+
+        private string GetShipmentTableName(object entityPM)
+        {
+            string shipmentLevelCode = entityPM?.GetType()?.GetProperty("ShipmentLevelCode")?.GetValue(entityPM)?.ToString();
+            string shipmentTableName = shipmentLevelCode == "C" ? "Master" : shipmentLevelCode == "H" ? "Shipment" : "MasterAndHouse";
+            return shipmentTableName;
+        }
+
+        private object GetEntityPMByIdAndObjectTableName(string entityId, string objectTableName, int tenant)
+        {
+            object entityPM = null;
+
+            if (!string.IsNullOrEmpty(entityId))
+            {
+                entityPM = InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(objectTableName, entityId, tenant);
+            }
+
+            return entityPM;
+        }
+    }
+
+    public class EntityDetails
+    {
+        public object EntityPM { get; set; }
+        public string ObjectTableName { get; set; }
+        public string OtherObjectTableName { get; set; }
+        public string CombinedObjectTableName { get; set; }
     }
 }

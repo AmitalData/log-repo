@@ -33,6 +33,8 @@ using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.QuoteModel.EntityPOCOs;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Simplog.Data.QuoteModel;
@@ -175,7 +177,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -204,7 +206,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                         {
@@ -216,6 +218,16 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "QuoteTemplate",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IQuotesContext MyContext = QuotesContext.GetContext(tenant);
@@ -225,9 +237,9 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                 QuoteTemplateQuery quoteTemplateQuery = new QuoteTemplateQuery(quoteTemplateRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				                
 				QuoteTemplateCustomFilter customfilters = new QuoteTemplateCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
@@ -237,6 +249,7 @@ namespace WebFreight.Web.Controllers.QuoteModel.Generated.ListControllers
                 IQueryable<QuoteTemplateList> entityLists = quoteTemplateQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<QuoteTemplateList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<QuoteTemplateList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

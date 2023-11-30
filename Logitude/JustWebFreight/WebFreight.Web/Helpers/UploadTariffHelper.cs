@@ -21,6 +21,7 @@ using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools;
 using System.IO;
+using Logitude.BL.DataContracts;
 
 namespace WebFreight.Web.Helpers
 {
@@ -1765,10 +1766,12 @@ namespace WebFreight.Web.Helpers
                 Longtitude = ZeroPort.Longtitude,
                 SearchFields = ZeroPort.SearchFields,
                 Notes = ZeroPort.Notes,
+                PortTimeZoneCode = ZeroPort.PortTimeZoneCode,
             };
 
             portRepository.Add(newPort);
             portRepository.SubmitChanges();
+            RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
 
             TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
 

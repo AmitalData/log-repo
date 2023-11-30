@@ -18,6 +18,7 @@ export class CommonSelectors {
     public static readonly CustomerBillingTab = '#CustomerTHBilling';
     public static readonly EnableConsolidationInvoices = '[for="Customer_EnableConsolidationInvoices"]';
     public static readonly CustomerSave = '#Customer-Save';
+    public static readonly CustomerVatNumber = '#Address_VatNumber';
     //#endregion
     //#region Login 
     public static readonly Email="#Email"

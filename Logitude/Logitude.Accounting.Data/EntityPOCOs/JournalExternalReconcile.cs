@@ -39,6 +39,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string ReconcileExternalPageLineId { get; set; }
 	      
         public virtual ReconcileExternalPageLine ReconcileExternalPageLine { get; set; }
+        [Column("SkipAccountsValidation")]
+	    public bool SkipAccountsValidation { get; set; }
     }
 }
 	 

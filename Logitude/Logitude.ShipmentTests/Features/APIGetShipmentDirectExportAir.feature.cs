@@ -83,12 +83,16 @@ namespace Logitude.ShipmentTests.Features
         [Xunit.SkippableFactAttribute(DisplayName="GET Shipment Direct Export Air")]
         [Xunit.TraitAttribute("FeatureTitle", "GET Shipment Direct Export Air")]
         [Xunit.TraitAttribute("Description", "GET Shipment Direct Export Air")]
+        [Xunit.TraitAttribute("Category", "Smoke")]
+        [Xunit.TraitAttribute("Category", "Release")]
         public virtual void GETShipmentDirectExportAir()
         {
-            string[] tagsOfScenario = ((string[])(null));
+            string[] tagsOfScenario = new string[] {
+                    "Smoke",
+                    "Release"};
             System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new System.Collections.Specialized.OrderedDictionary();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("GET Shipment Direct Export Air", null, tagsOfScenario, argumentsOfScenario);
-#line 4
+#line 5
 this.ScenarioInitialize(scenarioInfo);
 #line hidden
             bool isScenarioIgnored = default(bool);
@@ -108,10 +112,10 @@ this.ScenarioInitialize(scenarioInfo);
             else
             {
                 this.ScenarioStart();
-#line 5
+#line 6
  testRunner.When("get shipment with shipmentnumber", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 6
+#line 7
  testRunner.Then("shipment should be avaliable", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             }

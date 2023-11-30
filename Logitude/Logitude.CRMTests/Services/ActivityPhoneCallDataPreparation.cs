@@ -1,9 +1,9 @@
 ﻿using Logitude.CRMTests.Models;
 using Logitude.CRMTests.Models.Builders;
-using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.Shared;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Services;
+using Logitude.Base.Models.Api;
+using Logitude.Base.Models.Shared;
+using Logitude.Base.Models.UserTenant;
+using Logitude.Base.Services;
 using System;
 
 namespace Logitude.CRMTests.Services
@@ -34,7 +34,7 @@ namespace Logitude.CRMTests.Services
                 .PriorityCode("Normal")
                 .ActivityStatusCode("N")
                 .ActivityTypeCode("CL")
-                .CallWithId(new ActivityPhoneCallServices().GetDefaultContact())
+                .CallWithId(UserTenant.UserId)
                 .Build();
         }
 

@@ -1,4 +1,4 @@
-@release @stable  @all
+@release @stable
 Feature: Create City, Inactivate and activate it from Maintenance
     The user creates a City, selects it to edit,
     selects it to edit again and Inactivates it from the Maintenance module.
@@ -6,7 +6,7 @@ Feature: Create City, Inactivate and activate it from Maintenance
     Scenario: Add CityCode with lenght more than 15
         Given the user logged in and navigate to "Cities" in maintenance menu
         When add "CityCode12345678" as city code
-        Then a validation message with "Code Field must be less than 15" error should appear
+        Then a validation message with "Code Field length must be less than 15" error should appear
 
     Scenario: Add City
         Given a city with the following details

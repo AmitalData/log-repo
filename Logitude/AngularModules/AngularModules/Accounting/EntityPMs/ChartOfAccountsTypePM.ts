@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class ChartOfAccountsTypePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -47,6 +47,11 @@ export class ChartOfAccountsTypePM {
     private inactive: boolean;
     public get Inactive() { return this.inactive; }
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
+       
+	 
+    private order: number;
+    public get Order() { return this.order; }
+    public set Order(newValue: number) { if (this.order != newValue) { this.order = newValue; this.MarkAsDirty("Order"); } }
        
 	 
 

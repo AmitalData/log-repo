@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class TaxReportLinePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -167,6 +167,26 @@ export class TaxReportLinePM {
     private previousReference: string;
     public get PreviousReference() { return this.previousReference; }
     public set PreviousReference(newValue: string) { if (this.previousReference != newValue) { this.previousReference = newValue; this.MarkAsDirty("PreviousReference"); } }
+       
+	 
+    private vatAmountRound: number;
+    public get VatAmountRound() { return this.vatAmountRound; }
+    public set VatAmountRound(newValue: number) { if (this.vatAmountRound != newValue) { this.vatAmountRound = newValue; this.MarkAsDirty("VatAmountRound"); } }
+       
+	 
+    private ledgerTransactionId: string;
+    public get LedgerTransactionId() { return this.ledgerTransactionId; }
+    public set LedgerTransactionId(newValue: string) { if (this.ledgerTransactionId != newValue) { this.ledgerTransactionId = newValue; this.MarkAsDirty("LedgerTransactionId"); } }
+       
+	 
+    private subTotalInLocalCurrency: number;
+    public get SubTotalInLocalCurrency() { return this.subTotalInLocalCurrency; }
+    public set SubTotalInLocalCurrency(newValue: number) { if (this.subTotalInLocalCurrency != newValue) { this.subTotalInLocalCurrency = newValue; this.MarkAsDirty("SubTotalInLocalCurrency"); } }
+       
+	 
+    private confirmationNumber: string;
+    public get ConfirmationNumber() { return this.confirmationNumber; }
+    public set ConfirmationNumber(newValue: string) { if (this.confirmationNumber != newValue) { this.confirmationNumber = newValue; this.MarkAsDirty("ConfirmationNumber"); } }
        
 	 
 

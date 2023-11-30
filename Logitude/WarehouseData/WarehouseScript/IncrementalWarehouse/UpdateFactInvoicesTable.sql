@@ -53,6 +53,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 	declare @DraftNumber as varchar(20) 
     declare @Vendor as int
     declare @BillTo as int
+    declare @PaidDate as datetime
 
 	DECLARE InvoicesCursor CURSOR READ_ONLY
 	FOR
@@ -63,7 +64,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 			null, DIM_Branches.Id_Number, DIM_PaymentTerms.Id_Number, LocalCurrency.Id_Number, InvoiceCurrency.Id_Number,
 			SalesmanUser.Id_Number, ApprovedByUser.Id_Number, CreatedByUser.Id_Number, PrintedByUser.Id_Number, dw_ARInvoiceStatus.Name, 'AR Invoice',
 			dw_ARInvoiceTypes.Name, ARPartner.Id_Number, dw_ARInvoices.AccountingExternalCode, dw_ARInvoices.MainEntityId, dw_ARInvoices.StatusCode, dw_ARInvoices.DraftNumber,
-			1, BillTo.Id_Number
+			1, BillTo.Id_Number, dw_ARInvoices.PaidDate
 		--, @dw_ARInvoices.CustomFieldsVariable
 
     From dw_ARInvoices
@@ -95,7 +96,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 
 	--inner JOIN dw_CustomObjectFields  ON dw_ARInvoices.Tenant = dw_CustomObjectFields.Tenant and dw_CustomObjectFields.ObjectTableName = 'ARInvoice'
 
-	where dw_ARInvoices.AutomaticLastUpdateDate > @ARInvoicesLastUpdateDate and dw_ARInvoices.StatusCode <> 'VD' and dw_ARInvoices.StatusCode <> 'LL'
+	where dw_ARInvoices.AutomaticLastUpdateDate > @ARInvoicesLastUpdateDate and dw_ARInvoices.StatusCode <> 'VD' and dw_ARInvoices.StatusCode <> 'LL' and dw_ARInvoices.Id != '-1'
 
 	UNION ALL
 
@@ -105,7 +106,8 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 			null, dw_APInvoices.InvoiceDate, dw_APInvoices.CreateDate, dw_APInvoices.ApprovedDate, dw_APInvoices.DueDate, null,
 			dw_APInvoices.FirstApproveDate, DIM_Branches.Id_Number, DIM_PaymentTerms.Id_Number, LocalCurrency.Id_Number, InvoiceCurrency.Id_Number,
 			1, ApprovedByUser.Id_Number, CreatedByUser.Id_Number, 1, dw_APInvoiceStatus.Name, 'AP Invoice',
-			'Invoice', 1, dw_APInvoices.AccountingExternalCode, dw_APInvoices.MainEntityId, dw_APInvoices.StatusCode, null, Vendor.Id_Number, 1
+			'Invoice', 1, dw_APInvoices.AccountingExternalCode, dw_APInvoices.MainEntityId, dw_APInvoices.StatusCode, null, Vendor.Id_Number, 1,
+			dw_APInvoices.PaidDate
 			--, @dw_ARInvoices.CustomFieldsVariable
 
     From dw_APInvoices
@@ -139,7 +141,7 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 		@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @PrintNotes, @InvoiceDate, @CreateDate,
 		@ApprovedDate, @DueDate, @PrintDate, @FirstApproveDate, @Branch, @PaymentTerm, @LocalCurrency, @InvoiceCurrency,
 		@Salesman, @ApprovedBy, @CreatedBy, @PrintedBy, @Status, @AR_APInvoice,
-		@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @StatusCode, @DraftNumber, @Vendor, @BillTo
+		@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @StatusCode, @DraftNumber, @Vendor, @BillTo, @PaidDate
 
 
 	WHILE @@FETCH_STATUS = 0
@@ -162,19 +164,19 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 			END
 		----------------------------------------------
 		BEGIN TRY
-		insert into Fact_Invoices 
+		insert into #Fact_InvoicesTemp 
 			([Id], [Source Tenant], [Parent Tenant], [Invoice Number], [VAT Number], [Shipment Number], [Subtotal (Local)], [Subtotal (Profit)],
 			[Invoice Amount (Local)], [Invoice Amount (Profit)], [Amount Due (Local)], [Amount Due (Profit)], [Print Note], [Invoice Date], [Create Date],
 			[Approved Date], [Due Date], [Print Date], [First Approve Date], [Branch], [Payment Term], [Invoice Local Currency], [Invoice Currency],
 			[Invoice Salesman], [Approved By], [Created By], [Printed By], [Invoice Status], [AR_AP Invoice],
-			[Invoice Type], [Partner], [Partner External ID], [Main Entity Id], [Vendor], [Bill To])
+			[Invoice Type], [Partner], [Partner External ID], [Main Entity Id], [Vendor], [Bill To], [Paid Date])
 	   
 		values (
 			@Id, @SourceTenant, @ParentTenant, @InvoiceNumber, @VATNumber, @ShipmentsNumbers, @SubTotalInLocalCurrency, @SubTotalInInvoiceCurrency,
 			@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @PrintNotes, dbo.GetDateFormateAsNumber(@InvoiceDate), dbo.GetDateFormateAsNumber(@CreateDate),
 			dbo.GetDateFormateAsNumber(@ApprovedDate), dbo.GetDateFormateAsNumber(@DueDate), dbo.GetDateFormateAsNumber(@PrintDate), dbo.GetDateFormateAsNumber(@FirstApproveDate), @Branch, @PaymentTerm, @LocalCurrency, @InvoiceCurrency,
 			@Salesman, @ApprovedBy, @CreatedBy, @PrintedBy, @Status, @AR_APInvoice,
-			@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @Vendor, @BillTo
+			@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @Vendor, @BillTo, dbo.GetDateFormateAsNumber(@PaidDate)
 			)
 
 		END TRY 
@@ -192,14 +194,14 @@ set @APInvoicesAutomaticLastUpdateDate = (select MAX(AutomaticLastUpdateDate) Au
 			@AmountInLocalCurrency, @AmountInProfitCurrency, @AmountDueInLocalCurrency, @AmountDueInProfitCurrency, @PrintNotes, @InvoiceDate, @CreateDate,
 			@ApprovedDate, @DueDate, @PrintDate, @FirstApproveDate, @Branch, @PaymentTerm, @LocalCurrency, @InvoiceCurrency,
 			@Salesman, @ApprovedBy, @CreatedBy, @PrintedBy, @Status, @AR_APInvoice,
-			@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @StatusCode, @DraftNumber, @Vendor, @BillTo
+			@InvoiceType, @Partner, @PartnerExternalID, @MainEntityId, @StatusCode, @DraftNumber, @Vendor, @BillTo, @PaidDate
 
 	END
 	CLOSE InvoicesCursor
 	DEALLOCATE InvoicesCursor
 
+			insert into Fact_Invoices select * from #Fact_InvoicesTemp
 
-	update dw_WaterMarks set LastUpdateDate = @ARInvoicesAutomaticLastUpdateDate where TableName = 'ARInvoice'
 	update dw_WaterMarks set LastUpdateDate = @APInvoicesAutomaticLastUpdateDate where TableName = 'APInvoice'
 
 End

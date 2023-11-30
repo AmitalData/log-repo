@@ -32,7 +32,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         Description = a.Description,
                         Quantity = a.Quantity,
                         GoodsValue = a.GoodsValue,
-                    }).ToList();
+                    }).OrderBy(a => a.LineNumber).ToList();
         }
     }
 }

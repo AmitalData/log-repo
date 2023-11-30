@@ -33,15 +33,20 @@ using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
+using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.CustomFilters;
+		  
+using WebFreight.Web.Controllers.CommonDataModel.ApiHelpers;
 		  
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
@@ -63,20 +68,17 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				CustomAgentRepository  customAgentRepository = new CustomAgentRepository(MyContext);
-				CustomAgentList entityList = null;
-				CustomAgent entityPoco = customAgentRepository.GetSingleCustomAgent(id , authToken.Tenant);
-
-				if (entityPoco != null)
+				
+				CustomAgentQuery  customAgentQuery = new CustomAgentQuery(customAgentRepository);
+				IQueryable<CustomAgent> customAgents = customAgentRepository.GetCustomAgents(authToken.Tenant).Where(a=>a.Id == id);
+				CustomAgentList entityList = customAgentQuery.GetIQueryableEntityList(customAgents).FirstOrDefault();
+				if (entityList != null)
 				{
-									List<CustomAgent> singleEntityList = new List<CustomAgent>();
-					singleEntityList.Add(entityPoco);
-
-					CustomAgentQuery customAgentQuery = new CustomAgentQuery(customAgentRepository);
-					IQueryable<CustomAgent> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<CustomAgentList> iQueryableEntityList = customAgentQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                	customFieldResolver.SetCustomFieldsValues("CustomAgent",  authToken.Tenant, new List<CustomAgentList> { entityList }.Cast<object>().ToList());
+ 	
+					entityList = CustomAgentAPiHelper.ApplyFilters(entityList, authToken.Tenant);
+				}
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
@@ -109,6 +111,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.Id);
 				List<CustomAgentList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("CustomAgent", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -175,7 +179,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -204,7 +208,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                         {
@@ -214,8 +218,19 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 }
 
 
+                CustomAgentAPiHelper.AddFilters(queryOperations, tenant);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "CustomAgent",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
@@ -225,18 +240,20 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 CustomAgentQuery customAgentQuery = new CustomAgentQuery(customAgentRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				                
 				CustomAgentCustomFilter customfilters = new CustomAgentCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-	
+	            entityPocos = CustomAgentAPiHelper.ApplyFilters(entityPocos, tenant);
+
                 entityPocos = genericFilter.GetFilteredQuery<CustomAgent>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<CustomAgentList> entityLists = customAgentQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<CustomAgentList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<CustomAgentList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								
@@ -323,6 +340,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				}
 			   List<CustomAgentList> listResult = entityLists.ToList();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+               customFieldResolver.SetCustomFieldsValues("CustomAgent", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

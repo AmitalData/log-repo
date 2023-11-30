@@ -13,9 +13,15 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ARPaymentChequeOperationsService } from 'Accounting/Services/Others/ARPaymentChequeOpService';
+import { ARPaymentPMService } from 'Invoice/Services/StandardPMs/ARPaymentPMService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { JournalValidator } from 'Accounting/Validators/JournalValidator';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 declare var window: any;
 
+const ReturnChequeWindowWidth = 400;
 @Component({
 
     templateUrl: './ARPaymentMultiChequesComponent.html',
@@ -37,6 +43,11 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
     public ChequesCounter: number;
     public TotalAmount: number;
     public isLTR: boolean;
+    arPaymentChequeOperationsService:ARPaymentChequeOperationsService = new ARPaymentChequeOperationsService();
+    arPaymentPMService:ARPaymentPMService = new ARPaymentPMService();
+    inCashbookChequeStatus = '1';
+    returnedFromBankChequeStatus = "4";
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -44,20 +55,34 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         this.isLTR = (ObjectsLocator.GlobalSetting.LayoutDirection == "ltr");
         this.CalculateTotal();
     }
-   
+
     SetWindowArgs(args: any) {
-    
+
         if (!AppTool.IsNullOrEmpty(args)) {
+            this.SetIsUsingVirtuallization();
             this.paymentPM = args.EntityPM;
             this.OriginalItemPM = args.EntityPM;
             this.ClonedItemPM = this.CloneEntity(args.EntityPM);
-            this.FillItemSource();
-            this.AddFirstChequeRecord();
-            this.CalculateTotal();
-            this.UpdateChequeCounter();
+            this.LoadScreen();
             this.IsDisplayOnly = this.paymentPM.StatusCode == "AD" || this.paymentPM.StatusCode == "VD"  ? true : false;
         }
     }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
+    private LoadScreen()
+    {
+        this.FillItemSource();
+        this.AddFirstChequeRecord();
+        this.CalculateTotal();
+        this.UpdateChequeCounter();
+    }
+
     UpdateChequeCounter() {
         this.ChequesCounter = this.paymentPM.ARPaymentChequeReplicas.length;
     }
@@ -66,7 +91,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         for (let item of this.paymentPM.ARPaymentChequeReplicas) {
             this.ItemsSource.Insert(new PaymentChequeLine(item, this));
         }
-      
+
 
     }
     AddFirstChequeRecord() {
@@ -84,7 +109,7 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             this.UpdatePaymentChequeList(cheque);
         }
     }
-  
+
     UpdatePaymentChequeList(cheque: ARPaymentChequeReplicaPM) {
         if (!this.paymentPM.ARPaymentChequeReplicas.includes(cheque)) {
             this.paymentPM.AddARPaymentChequeReplicaPM(cheque);
@@ -127,12 +152,16 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
             if (!AppTool.IsNullOrEmpty(cheque.ForeignAmount))
             this.TotalAmount += cheque.ForeignAmount;
         }
-         
+
     }
 
     CancelButtonClicked() {
         this.RejectChanges();
-        this.CurrentSession.CloseCurrentWindow();
+        if(this.paymentPM.StatusCode == "AD" || this.paymentPM.StatusCode == "VD") {
+            this.CurrentSession.CloseCurrentWindowData({chequesReplicas: this.paymentPM.ARPaymentChequeReplicas});
+        } else {
+            this.CurrentSession.CloseCurrentWindow();
+        }
     }
 
     CloneEntity(entityToClone: ARPaymentPM) {
@@ -166,13 +195,13 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         }
         if (this.ValidationErrorsList.length == 0) {
             return true;
-        } 
-        
+        }
+
     }
-    OkButtonClicked() {       
-        if (this.CheckRequiredFileds()) {      
+    OkButtonClicked() {
+        if (this.CheckRequiredFileds()) {
             this.CurrentSession.CloseCurrentWindowEmit('ok');
-        } 
+        }
     }
     private ValidateChequeFields(cheque: ARPaymentChequeReplicaPM) {
         if (AppTool.IsNullOrEmpty(cheque.ChequeNumber)) {
@@ -223,8 +252,113 @@ export class ARPaymentMultiChequesComponent extends BaseComponent {
         }
     }
 
-  
+    ReturnChequeButtonClicked(cheque){
+        const confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = ReturnChequeWindowWidth;
+        var message = TextCodeTranslator.Translate('ARPayment.O.ReturnChequeConfirmMessage');
+        confirmWindow.Show(message);
+        
 
+        
+        confirmWindow.WindowClosed.subscribe((event) => {
+            
+            if (confirmWindow.Yes) {
+               
+                const dateObject = this.GetTodayDate();
+                
+                const isOpenMonth = this.ValidateDates(dateObject, "AccountingDate");
+                if(isOpenMonth) {
+                    this.ReturnChequeToCustomer(cheque);
+                }
+                else {
+                    let messWindow = new MessageWindow();
+                    messWindow.Show("חודש סגור");
+                    messWindow.WindowClosed.subscribe(() => {
+                        SessionLocator.SelectedSession.CloseCurrentWindow();
+                    });
+                }
+            }
+        });
+    }
+    
+    private GetTodayDate(): Date {
+        const AccountingDate = new Date();
+        const year = AccountingDate.getFullYear(); // Get the year (e.g., 2023)
+        const month = AccountingDate.getMonth() + 1; // Get the month (0-indexed, so add 1)
+        const day = AccountingDate.getDate(); // Get the day of the month
+        const todayDate = `${year}-${month < 10 ? '0' : ''}${month}-${day < 10 ? '0' : ''}${day}`;
+        const dateObject = new Date(todayDate);
+        return dateObject;
+    }
+    AccountingPeriods: AccountingPeriodList[] = [];
+
+    private async ValidateDates(value:Date, fieldName:string) {
+        this.AccountingPeriods=null;
+        await this.GetAccountingPeriods();
+        var accountingPeriod = this.AccountingPeriods.find(d => d.Year == value.getFullYear());
+        if (accountingPeriod) {
+
+            var month = value.getMonth() + 1;
+
+            // Valid Month => (ClosedMonth < month <= OpenMonth)
+            if (month > accountingPeriod.ClosedMonth && month <= accountingPeriod.OpenMonth) { // valid (open month)
+                return true;
+            } else { // invalid (closed month)
+                return false;
+            }
+        }
+        return false;
+    }
+    
+    _AccountingPeriodListService: AccountingPeriodListService = new AccountingPeriodListService();
+
+    async GetAccountingPeriods() {
+          
+            var filters = new ApiQueryFilters(true);
+            filters.addAdditionalFilter("PeriodTypeCode", "1", null, null, "Equals", false, false, false, "string"); // 1-Regular   
+            
+        const res = await new Promise<boolean>((resolve, reject) => {   
+            
+            this._AccountingPeriodListService.getByFilters(filters).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse != null) {
+                    if (!myResponse.HasError) {
+                        this.AccountingPeriods = myResponse.Result;
+                        console.log(">>Accounting Periods: ", myResponse.Result);
+                        resolve(true);
+                    }
+                }
+            });
+        })
+    return res;
+
+    }
+
+    GetPayment(){
+        this.CurrentSession.StartBusyIndicatorSaving()
+        this.arPaymentPMService
+        .get(this.paymentPM.Id)
+            .subscribe((response:ServiceResponse) => {
+                this.CurrentSession.StopBusyIndicator();
+                this.paymentPM = response.Result;
+                this.LoadScreen();
+            });
+    }
+
+    ReturnChequeToCustomer(cheque)
+    {
+        this.CurrentSession.StartBusyIndicatorSaving()
+        this.arPaymentChequeOperationsService
+        .ReturnChequeToCustomer(this.paymentPM.Tenant,cheque.entityPM.Id,this.paymentPM.Id)
+            .subscribe((response:ServiceResponse) => {
+                this.CurrentSession.StopBusyIndicator();
+                if(response.HasError) {
+                    this.ValidationErrorsList.push(response.ErrorsArray[0]);
+                } else {
+                    this.GetPayment();
+                }
+            });
+
+    }
 }
 
 export class PaymentChequeLine extends BaseComponent {
@@ -239,7 +373,7 @@ export class PaymentChequeLine extends BaseComponent {
 
     }
 
-  
+
     get LineNumber() { return this.entityPM.LineNumber; }
     set LineNumber(value: number) {
         if (this.entityPM.LineNumber != value) {
@@ -314,12 +448,12 @@ export class PaymentChequeLine extends BaseComponent {
     }
 
     DeleteButtonClicked() {
-    
+
         this.parent.ItemsSource.Remove(this);
         if (this.parent.paymentPM.ARPaymentChequeReplicas.includes(this.entityPM)) {
             this.parent.paymentPM.RemoveARPaymentChequeReplicaPM(this.entityPM);
         }
-        this.ResetLineNumber();     
+        this.ResetLineNumber();
         this.parent.CalculateTotal();
         --this.parent.ChequesCounter;
     }

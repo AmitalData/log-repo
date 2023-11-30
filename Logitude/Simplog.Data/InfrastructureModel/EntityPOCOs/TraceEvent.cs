@@ -25,8 +25,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public bool IsAddedManually { get; set; }
         public string Location { get; set; }
         public string PartnerName { get; set; }
-        
-
+        public string ChildEntityId { get; set; }
+        public string ChildObjectTableId { get; set; }
 
         [ForeignKey("ObjectTableId")]
         public virtual ObjectTable ObjectTable { get; set; }
@@ -35,6 +35,8 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public virtual EventType EventType { get; set; }
 
         [ForeignKey("UserId")]
-        public virtual User User { get; set; }        
+        public virtual User User { get; set; }
+        [ForeignKey("ChildObjectTableId")]
+        public virtual ObjectTable ChildObjectTable { get; set; }
     }
 }

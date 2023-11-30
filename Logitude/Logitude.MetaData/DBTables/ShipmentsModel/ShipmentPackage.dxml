@@ -625,6 +625,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AutomaticLastUpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ContainerStrippedDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"
     ReferencedTable="Shipments"
@@ -692,4 +704,8 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,CommodityId" />
+  <Index
+    Columns="AutomaticLastUpdateDate" />
+  <Index
+    Columns="ContainerEntityId" />
 </Table>

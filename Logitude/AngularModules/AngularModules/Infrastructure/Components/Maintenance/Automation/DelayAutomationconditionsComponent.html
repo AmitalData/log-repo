@@ -1,4 +1,4 @@
-﻿
+
 
 
 <style>
@@ -24,7 +24,7 @@
 
                     <td>
 
-                        <AutomationsConditionAreaComponent [AutomationCondationLists]="AutomationCondationAndList" [Title]="'Conditions (meet ALL Conditions in this area)'" [TiggerComponent]="DataContext" [CondationListType]="'And'"></AutomationsConditionAreaComponent>
+                        <AutomationsConditionAreaComponent [IsDelay]="true" [AutomationCondationLists]="AutomationCondationAndList" [Title]="'Conditions (meet ALL Conditions in this area)'" [TiggerComponent]="DataContext" [CondationListType]="'And'"></AutomationsConditionAreaComponent>
 
 
                       
@@ -38,7 +38,7 @@
                 <tr style="height:150px">
 
                     <td>
-                        <AutomationsConditionAreaComponent [AutomationCondationLists]="AutomationCondationOrList" [Title]="'Conditions (meet ANY Conditions in this area)'" [TiggerComponent]="DataContext" [CondationListType]="'Or'"></AutomationsConditionAreaComponent>
+                        <AutomationsConditionAreaComponent [IsDelay]="true"  [AutomationCondationLists]="AutomationCondationOrList" [Title]="'Conditions (meet ANY Conditions in this area)'" [TiggerComponent]="DataContext" [CondationListType]="'Or'"></AutomationsConditionAreaComponent>
                     </td>
 
 

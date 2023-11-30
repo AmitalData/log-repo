@@ -95,13 +95,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
+                                  SecurityLevel = a.SecurityLevel,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,                            
                                   LayoutDirection = a.LayoutDirection,
-                                  SignatureImageId = a.SignatureImageId
-                              }).FirstOrDefault();
+                                  SignatureImageId = a.SignatureImageId,
+                             }).FirstOrDefault();
 
                     if (entity != null)
                     {
+                        entity.IsHRUser = this.CheckIfIsHRUser(entity);
                         entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
 
                         UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -183,13 +185,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
+                              SecurityLevel = a.SecurityLevel,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                               LayoutDirection= a.LayoutDirection,
-                              SignatureImageId = a.SignatureImageId
+                              SignatureImageId = a.SignatureImageId,
                           }).FirstOrDefault();
 
                 if (entity != null)
                 {
+                    entity.IsHRUser = this.CheckIfIsHRUser(entity);
                     entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
 
                     UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -273,13 +277,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
+                                      SecurityLevel = a.SecurityLevel,
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                       LayoutDirection = a.LayoutDirection,
-                                      SignatureImageId = a.SignatureImageId
+                                      SignatureImageId = a.SignatureImageId,
                                   }).FirstOrDefault();
 
                         if (entity != null)
                         {
+                            entity.IsHRUser = this.CheckIfIsHRUser(entity);
                             entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
 
                             UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -360,13 +366,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
+                                  SecurityLevel = a.SecurityLevel,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                   LayoutDirection = a.LayoutDirection,
-                                  SignatureImageId = a.SignatureImageId
+                                  SignatureImageId = a.SignatureImageId,
                               }).FirstOrDefault();
 
                     if (entity != null)
                     {
+                        entity.IsHRUser = this.CheckIfIsHRUser(entity);
                         entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
 
                         UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -435,13 +443,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
+                              SecurityLevel = a.SecurityLevel,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                               LayoutDirection = a.LayoutDirection,
-                              SignatureImageId = a.SignatureImageId
+                              SignatureImageId = a.SignatureImageId,
                           }).FirstOrDefault();
 
                 if (entity != null)
                 {
+                    entity.IsHRUser = this.CheckIfIsHRUser(entity);
                     entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
 
                     UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -525,9 +535,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
+                                      SecurityLevel = a.SecurityLevel,
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                       LayoutDirection = a.LayoutDirection,
-                                      SignatureImageId = a.SignatureImageId
+                                      SignatureImageId = a.SignatureImageId,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -613,9 +624,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
+                                  SecurityLevel = a.SecurityLevel,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                   LayoutDirection = a.LayoutDirection,
-                                  SignatureImageId = a.SignatureImageId
+                                  SignatureImageId = a.SignatureImageId,
                               }).FirstOrDefault();
 
                     if (entity != null)
@@ -689,9 +701,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
+                              SecurityLevel = a.SecurityLevel,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                               LayoutDirection = a.LayoutDirection,
-                              SignatureImageId = a.SignatureImageId
+                              SignatureImageId = a.SignatureImageId,
                           }).FirstOrDefault();
 
                 if (entity != null)
@@ -778,9 +791,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                       UserRoles = a.UserRoles,
+                                      SecurityLevel = a.SecurityLevel,
                                       AdditionalPackagesOnly = a.AdditionalPackagesOnly,
                                       LayoutDirection = a.LayoutDirection,
-                                      SignatureImageId = a.SignatureImageId
+                                      SignatureImageId = a.SignatureImageId,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -788,6 +802,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
                             UserLastLoginQuery query = new UserLastLoginQuery(rep);
                             entity.UserLastLogin = query.GetSinglePM(entity.Id, tenant);
+                            entity.IsHRUser = this.CheckIfIsHRUser(entity);
                             entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
                             UserPermittedBranchRepository userPermRep = new UserPermittedBranchRepository(this.repository.context);
                             UserPermittedBranchQuery userPermittedBranchQuery = new UserPermittedBranchQuery(userPermRep);
@@ -864,15 +879,16 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   ShowInboxToolTip = a.ShowInboxToolTip,
                                   ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                   UserRoles = a.UserRoles,
+                                  SecurityLevel = a.SecurityLevel,
                                   AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-
                                   LayoutDirection = a.LayoutDirection,
-                                  SignatureImageId = a.SignatureImageId
+                                  SignatureImageId = a.SignatureImageId,
 
                               }).FirstOrDefault();
 
                     if (entity != null)
                     {
+                        entity.IsHRUser = this.CheckIfIsHRUser(entity);
                         entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
                         UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
                         UserLastLoginQuery query = new UserLastLoginQuery(rep);
@@ -941,15 +957,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                               ShowInboxToolTip = a.ShowInboxToolTip,
                               ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                               UserRoles = a.UserRoles,
+                              SecurityLevel = a.SecurityLevel,
                               AdditionalPackagesOnly = a.AdditionalPackagesOnly,
 
                               LayoutDirection = a.LayoutDirection,
-                              SignatureImageId = a.SignatureImageId
+                              SignatureImageId = a.SignatureImageId,
 
                           }).FirstOrDefault();
 
                 if (entity != null)
                 {
+                    entity.IsHRUser = this.CheckIfIsHRUser(entity);
                     entity.ExpirationDaysLeft = ComputeDaysLeft(entity.ExpirationDate);
 
                     UserLastLoginRepository rep = new UserLastLoginRepository(this.repository.context);
@@ -1024,11 +1042,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            ShowInboxToolTip = a.ShowInboxToolTip,
                                            ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                            UserRoles = a.UserRoles,
+                                           SecurityLevel = a.SecurityLevel,
                                            AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-
                                            LayoutDirection = a.LayoutDirection,
-                                           SignatureImageId = a.SignatureImageId
-
+                                           SignatureImageId = a.SignatureImageId,
                                        };
             return users;
         }
@@ -1093,11 +1110,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                             ShowInboxToolTip = a.ShowInboxToolTip,
                             ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                             UserRoles = a.UserRoles,
+                            SecurityLevel = a.SecurityLevel,
                             AdditionalPackagesOnly = a.AdditionalPackagesOnly,
-
                             LayoutDirection = a.LayoutDirection,
-                            SignatureImageId = a.SignatureImageId
-
+                            SignatureImageId = a.SignatureImageId,
                         };
 
             IQueryable<UserPM> query2 = null;
@@ -1168,9 +1184,10 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               DocumentFilingInbox = user.DocumentFilingInbox,
                                               ShowLocalNameInLOV = user.ShowLocalNameInLOV,
                                               UserRoles = user.UserRoles,
+                                              SecurityLevel = user.SecurityLevel,
                                               AdditionalPackagesOnly = user.AdditionalPackagesOnly,
-                                              SignatureImageId = user.SignatureImageId
-
+                                              SignatureImageId = user.SignatureImageId,
+                                              Mobile = user.Contact.Mobile ?? "",
                                           };
 
             //int tenant = 0;
@@ -1391,10 +1408,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                  ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                  ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                  UserRoles = a.UserRoles,
-
+                                 SecurityLevel = a.SecurityLevel,
                                  LayoutDirection = a.LayoutDirection,
-                                 SignatureImageId = a.SignatureImageId
-
+                                 SignatureImageId = a.SignatureImageId,
                              }).FirstOrDefault();
 
             if (entity != null)
@@ -1458,7 +1474,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         DocumentFilingInbox = a.DocumentFilingInbox,
                                         ShowLocalNameInLOV = a.ShowLocalNameInLOV,
                                         SignatureImageId = a.SignatureImageId,
-
                                     }).ToList();
             return users;
         }
@@ -1506,10 +1521,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                                       ShowInboxToolTip = a.ShowInboxToolTip,
                                       ShowLocalNameInLOV = a.ShowLocalNameInLOV,
-
                                       LayoutDirection = a.LayoutDirection,
-                                      SignatureImageId = a.SignatureImageId
-
+                                      SignatureImageId = a.SignatureImageId,
                                   }).ToList();
             return users;
         }
@@ -1638,10 +1651,9 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                           ShowLogBoxToolTip = a.ShowLogBoxToolTip,
                           ShowInboxToolTip = a.ShowInboxToolTip,
                           ShowLocalNameInLOV = a.ShowLocalNameInLOV,
-
+                          SecurityLevel= a.SecurityLevel,
                           LayoutDirection = a.LayoutDirection,
-                          SignatureImageId = a.SignatureImageId
-
+                          SignatureImageId = a.SignatureImageId,
                       }).FirstOrDefault();
 
             if (entity != null)
@@ -1771,6 +1783,75 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
             return "";
         }
+
+        private bool CheckIfIsHRUser(UserPM entity)
+        {
+            bool isHR = false;
+            RoleRepository roleRepository = new RoleRepository(entity.Tenant);
+            ContactTenantRepository contactTenantRepository = new ContactTenantRepository(entity.Tenant);
+
+            Role role = roleRepository.GetSingleByCode("HRAD", 0);
+            ContactTenant contactTenant = contactTenantRepository.GetContactTenantForContactId(entity.Id, entity.Tenant);
+            if (role != null && contactTenant != null)
+            {
+                ContactTenantRoleRepository contactTenantRoleRepository = new ContactTenantRoleRepository(entity.Tenant);
+                ContactTenantRole contactTenantRole = contactTenantRoleRepository.GetContactTenantRoleByRoleIdAndContactTenant(role.Id, contactTenant.Id, entity.Tenant);
+                isHR = contactTenantRole == null ? false : true;
+            }
+
+            return isHR;
+        }
+
+
+
+        public UserPM UserCustomDataMappingAndValidatin(Logitude.BL.CommonDataModel.APIDataContract.ApiV1.User MyEntity, int Tenant, string ComputingPartnerName = "")
+        {
+
+            try
+            {
+                var temp = new UserPM();
+                if (!string.IsNullOrEmpty(MyEntity.Id))
+                {
+                    temp = this.GetSinglePM(MyEntity.Id, Tenant);
+                }
+
+                else
+                {
+                    temp = this.GetSingleUserPMByCode(MyEntity.ExternalCode, Tenant, false);
+                }
+
+
+                if (temp != null)
+                {
+
+
+                    if (string.IsNullOrEmpty(temp.Id))
+                    {
+                        temp.Id = MyEntity.Id;
+                    }
+                    if (string.IsNullOrEmpty(temp.Code))
+                    {
+                        temp.Code = MyEntity.ExternalCode;
+                    }
+                    if (string.IsNullOrEmpty(temp.EnglishName))
+                    {
+                        temp.EnglishName = MyEntity.EnglishName;
+                    }
+                    if (string.IsNullOrEmpty(temp.LocalName))
+                    {
+                        temp.LocalName = MyEntity.LocalName;
+                    }
+                }
+                return temp;
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+
 
     }
 }

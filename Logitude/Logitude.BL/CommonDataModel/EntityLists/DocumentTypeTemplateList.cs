@@ -56,7 +56,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string To { get; set; }
         public string AutomationId { get; set; }
         public string AttachedExternalDocumentsIds { get; set; }
-
+        public bool IsSystem { get; set; }
+        public string EntityId { get; set; }
 
     }
 }

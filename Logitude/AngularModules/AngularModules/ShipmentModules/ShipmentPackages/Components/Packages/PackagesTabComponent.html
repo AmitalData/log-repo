@@ -63,7 +63,7 @@
                                     </td>
 
                                     <td style="width: 90px">
-                                        <button id="{{ 'AddPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackageClicked()">{{AddButtonLabel}}</button>
+                                        <button id="{{ 'AddPackage' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddPackageClicked()">{{AddButtonLabel}}</button>
                                     </td>
 
                                     <td style="width:5px;" *ngIf="IsFCLEntity">
@@ -71,7 +71,7 @@
                                     </td>
 
                                     <td style="width: 120px" *ngIf="IsInsideButtonVisible">
-                                        <button id="{{ 'AddInsidePackage' | IdGeneratorPipe}}" [disabled]="!IsAddInsideButtonEnabled" class="Button" (click)="AddInsideButtonClicked()">{{'Shipment.B.Packages.AddInsidePackage' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'AddInsidePackage' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsAddInsideButtonEnabled" class="Button" (click)="AddInsideButtonClicked()">{{'Shipment.B.Packages.AddInsidePackage' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width:5px;">
@@ -79,7 +79,7 @@
                                     </td>
 
                                     <td style="width: 1px">
-                                        <IconButton id="{{ 'PackageSettings' | IdGeneratorPipe}}" [Name]="'Settings'" title="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
+                                        <IconButton id="{{ 'PackageSettings' | IdGeneratorAsyncPipe | async}}" [Name]="'Settings'" title="MeasurmentsButtonToolTip" (click)="MeasurmentsSettingsClicked()"></IconButton>
                                     </td>
 
                                     <td style="width:5px;" *ngIf="IsRebuildButtonVisible">
@@ -87,7 +87,7 @@
                                     </td>
 
                                     <td style="width: 1px" *ngIf="IsRebuildButtonVisible">
-                                        <button id="{{ 'ReBuildPackage' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="RebuildButtonClicked()">{{'Shipment.B.Packages.Rebuild' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'ReBuildPackage' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" class="Button" (click)="RebuildButtonClicked()">{{'Shipment.B.Packages.Rebuild' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width:5px;" *ngIf="IsDeletePackagesButtonVisible">
@@ -95,7 +95,7 @@
                                     </td>
 
                                     <td style="width: 1px" *ngIf="IsDeletePackagesButtonVisible">
-                                        <button id="{{ 'DeletePackages' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="DeletePackagesButtonClicked()">{{'Shipment.B.Packages.DeletePackages' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{ 'DeletePackages' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" class="Button" (click)="DeletePackagesButtonClicked()">{{'Shipment.B.Packages.DeletePackages' | TextCodeTranslationPipe}}</button>
                                     </td>
 
 
@@ -207,7 +207,8 @@
                             <div class="MediaFill">
 
                                 <!-- Airline -->
-                                <logitude-edit-grid *ngIf="TransportModeId == 'A'" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                <logitude-edit-grid *ngIf="TransportModeId == 'A'" GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow"
+                                                    [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <!-- Icon -->
                                     <log-column [width]="'25'">
@@ -302,7 +303,7 @@
                                     </log-column>
 
                                     <!-- Horse Name-->
-                                    <log-column [width]="'150'" [header]="'Horse'" *ngIf="HorseFieldIsVisible">
+                                    <log-column [width]="'150'" [header]="'ShipmentPackage.F.HorseId' | TextCodeTranslationPipe" *ngIf="HorseFieldIsVisible">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 {{item.HorseName}}
@@ -383,7 +384,7 @@
                                                     [SelectedRow]="SelectedRow"
                                                     (MouseOverChanged)="SetMouseHoverRow($event, true)"
                                                     (MouseleaveChanged)="SetMouseHoverRow($event, false)"
-                                                    [EnableExpandCollapseAll]="IsFCLEntity">
+                                                    [EnableExpandCollapseAll]="IsFCLEntity" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <log-row-details>
                                         <row-template>
@@ -507,6 +508,15 @@
                                         </ng-template>
                                     </log-column>
 
+                                    <!-- Dimensions -->
+                                    <log-column [width]="'230'" [header]="DimensionsColumnHeader" *ngIf="IsLCLEntity">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="false" [Alignment]="'right'">
+                                                {{item.Dimensions}}
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
                                     <!-- Container# -->
                                     <log-column [width]="'100'" [header]="'ShipmentPackage.F.ContainerNumber.Short' | TextCodeTranslationPipe">
                                         <ng-template let-item>
@@ -602,7 +612,7 @@
                                     </log-column>
 
                                     <!-- Horse Name-->
-                                    <log-column [width]="'150'" [header]="'Horse'" *ngIf="(HorseFieldIsVisible && !IsFCLEntity) || (HorseFieldIsVisible && TransportModeId == 'I' && IsFCLEntity)">
+                                    <log-column [width]="'150'" [header]="'ShipmentPackage.F.HorseId' | TextCodeTranslationPipe" *ngIf="(HorseFieldIsVisible && !IsFCLEntity)">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IsEnabled]="false">
                                                 {{item.HorseName}}
@@ -619,18 +629,19 @@
                                     </log-column>
 
                                     <!-- Last Status -->
-                                    <log-column [width]="'150'" [header]="'ShipmentPackage.F.LastStatusCode' | TextCodeTranslationPipe" *ngIf="IsShippingInstructionsVisible">
+                                    <log-column [width]="'150'" [header]="'ShipmentPackage.F.LastStatusCode' | TextCodeTranslationPipe" *ngIf="IsLastStatusVisible">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div style="height: 100%; width: 100%;">
-                                                    <Hyperlink *ngIf="item.LastStatusName" (click)="ViewStatusesClicked(item)">{{item.LastStatusName}}</Hyperlink>
+                                                    <Hyperlink *ngIf="item.ContainerStatusName" (click)="ViewContainerEntity(item)">{{item.ContainerStatusName}}</Hyperlink>
+                                                    <Hyperlink *ngIf="item.LastStatusName && item.ContainerStatusSourceCode == 'INT'" (click)="ViewStatusesClicked(item)">{{item.LastStatusName}}</Hyperlink>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
 
                                     <!-- Icon:HasContainerException -->
-                                    <log-column [width]="'25'" *ngIf="IsShippingInstructionsVisible">
+                                    <log-column [width]="'25'" *ngIf="IsLastStatusVisible">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <img *ngIf="item.HasContainerException" src="./Images/WarningIcon.png" class="CenterCenter" title="In a different voyage than the other containers" />
@@ -688,13 +699,13 @@
                                                 <div class="MediaFillRelative">
 
                                                     <div class="MediaFillRelative" *ngIf="!item.DeliveryId && !item.IsDeliveryFU && IsEditingEnabled" (mousedown)="item.DeliveryIconClicked()" style="cursor: pointer;">
-                                                        <div attr.data-cy="{{'AddContainerDelivery_' + item.ContainerNumber | IdGeneratorPipe}}" class="CenterCenter" style="width: 12px; height: 12px;">
+                                                        <div attr.data-cy="{{'AddContainerDelivery_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" class="CenterCenter" style="width: 12px; height: 12px;">
                                                             <div *ngIf="item.IsRowHover" class="GreenAddButton"></div>
                                                         </div>
                                                     </div>
 
-                                                    <img attr.data-cy="{{'EditContainerDelivery_' + item.ContainerNumber | IdGeneratorPipe}}" *ngIf="!item.DeliveryId && item.IsDeliveryFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.DeliveryIconClicked()" />
-                                                    <img attr.data-cy="{{'EditContainerDelivery_' + item.ContainerNumber | IdGeneratorPipe}}" *ngIf="item.DeliveryId" src="./Images/CellIcons/Trucker.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.DeliveryIconClicked()" />
+                                                    <img attr.data-cy="{{'EditContainerDelivery_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" *ngIf="!item.DeliveryId && item.IsDeliveryFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.DeliveryIconClicked()" />
+                                                    <img attr.data-cy="{{'EditContainerDelivery_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" *ngIf="item.DeliveryId" src="./Images/CellIcons/Trucker.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.DeliveryIconClicked()" />
 
                                                 </div>
                                             </log-cell-template>
@@ -715,13 +726,13 @@
                                             <log-cell-template #logcelltemplate [TabIndex]="-1">
                                                 <div class="MediaFillRelative">
                                                     <div class="MediaFillRelative" *ngIf="!item.EmptyContainerReturnId && !item.IsEmptyContainerReturnFU && IsEditingEnabled" (mousedown)="item.EmptyContainerIconClicked()" style="cursor: pointer;">
-                                                        <div attr.data-cy="{{'AddContainerReturn_' + item.ContainerNumber | IdGeneratorPipe}}" class="CenterCenter" style="width: 12px; height: 12px;">
+                                                        <div attr.data-cy="{{'AddContainerReturn_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" class="CenterCenter" style="width: 12px; height: 12px;">
                                                             <div *ngIf="item.IsRowHover" class="GreenAddButton"></div>
                                                         </div>
                                                     </div>
 
-                                                    <img attr.data-cy="{{'EditContainerReturn_' + item.ContainerNumber | IdGeneratorPipe}}" *ngIf="!item.EmptyContainerReturnId && item.IsEmptyContainerReturnFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.EmptyContainerIconClicked()" />
-                                                    <img attr.data-cy="{{'EditContainerReturn_' + item.ContainerNumber | IdGeneratorPipe}}" *ngIf="item.EmptyContainerReturnId" src="./Images/CellIcons/Container.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.EmptyContainerIconClicked()" />
+                                                    <img attr.data-cy="{{'EditContainerReturn_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" *ngIf="!item.EmptyContainerReturnId && item.IsEmptyContainerReturnFU" src="./Images/CellIcons/ContainerFollowup.png" class="CenterCenter" style="cursor: pointer; width: 24px; height: 24px;" (mousedown)="item.EmptyContainerIconClicked()" />
+                                                    <img attr.data-cy="{{'EditContainerReturn_' + item.ContainerNumber | IdGeneratorAsyncPipe | async}}" *ngIf="item.EmptyContainerReturnId" src="./Images/CellIcons/Container.png" class="CenterCenter" style="cursor: pointer;" (mousedown)="item.EmptyContainerIconClicked()" />
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
@@ -785,15 +796,15 @@
 
                                 <div class="GenerateArea" *ngIf="IsGenerateControlVisible">
                                     <div class="GenerateLinks">
-                                        <Hyperlink id="{{ 'GenerateBTN' | IdGeneratorPipe}}" [IsEnabled]="IsGenerateButtonEnabled" *ngIf="IsGenerateButtonVisible" (click)="GenerateButtonClicked()">{{GenerateButtonLabel}}</Hyperlink>
+                                        <Hyperlink id="{{ 'GenerateBTN' | IdGeneratorAsyncPipe | async}}" [IsEnabled]="IsGenerateButtonEnabled" *ngIf="IsGenerateButtonVisible" (click)="GenerateButtonClicked()">{{GenerateButtonLabel}}</Hyperlink>
 
                                         <div *ngIf="IsBuildButtonVisible ">
-                                            <Hyperlink id="{{ 'ShipmentPackage.M.ContainNoPackages' | IdGeneratorPipe}}" [IsEnabled]="IsBuildButtonEnabled" (click)="BuildButtonClicked()">{{BuildButtonLabel}}</Hyperlink>
+                                            <Hyperlink id="{{ 'ShipmentPackage.M.ContainNoPackages' | IdGeneratorAsyncPipe | async}}" [IsEnabled]="IsBuildButtonEnabled" (click)="BuildButtonClicked()">{{BuildButtonLabel}}</Hyperlink>
                                             <span style="font-style:italic; color: gray; margin-left: 5px;" *ngIf="IsNoPackagesLoadedTextVisible">{{'ShipmentPackage.M.ContainNoPackages' | TextCodeTranslationPipe}}</span>
                                         </div>
 
                                         <div *ngIf="IsGeneratePackagesfromCrossDockReleasesButtonVisible">
-                                            <Hyperlink id="{{ 'GenerateCrossDockReleases' | IdGeneratorPipe}}" (click)="GeneratePackagesfromCrossDockReleasesButtonClicked()">{{GenerateCrossDockReleasesButtonLabel}}</Hyperlink>
+                                            <Hyperlink id="{{ 'GenerateCrossDockReleases' | IdGeneratorAsyncPipe | async}}" (click)="GeneratePackagesfromCrossDockReleasesButtonClicked()">{{GenerateCrossDockReleasesButtonLabel}}</Hyperlink>
                                         </div>
                                     </div>
                                 </div>

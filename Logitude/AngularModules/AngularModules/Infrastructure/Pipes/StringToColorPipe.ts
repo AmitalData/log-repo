@@ -84,6 +84,7 @@ export class StringToColorPipe {
             case "Transferred":
             case "In Progress":
             case "Arrival_referant":
+            case "Unpaid":
 
                 {
                     color = "#27AAE1";
@@ -97,23 +98,25 @@ export class StringToColorPipe {
                 }
             case "Printed":
             case "Pick Up":
+            case "Partially Pick Up":
             case "On Hand":
                 {
                     color = "#F37021";
                     break;
                 }
-
-            case "Paid":
+                
             case "Cleared":
             case "Delivery":
             case "Delivered":
+            case "Partially Delivered":
+            case "Out for Delivery":
                 {
                     color = "#2BB673";
                     break;
                 }
 
             case "Approved":
-            case "Unpaid":
+            case "Paid":
             case "Approved By Customer":
                 {
                     color = "#8DC63F";

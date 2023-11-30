@@ -500,7 +500,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'CancelButton' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{'CancelButton' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -508,7 +508,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'OkButton' | IdGeneratorPipe}}" class="RedButton"(click)="OkButtonClicked()">Ok</button>
+                        <button id="{{'OkButton' | IdGeneratorAsyncPipe | async}}" class="RedButton"(click)="OkButtonClicked()">Ok</button>
                     </td>
                 </tr>
             </table>

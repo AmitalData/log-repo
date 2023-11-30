@@ -1,0 +1,21 @@
+﻿<Script DBType="Main" Module="Dashboard" Env="Logitude,local,test">
+  <Sql Version="1">
+    <![CDATA[
+      BEGIN
+          IF EXISTS (SELECT *  FROM sys.indexes  WHERE NAME='IX_OpportunityAnalytics_ColumnStore' AND object_id = OBJECT_ID('[OpportunityAnalytics]'))
+          BEGIN
+				DROP INDEX IX_OpportunityAnalytics_ColumnStore ON OpportunityAnalytics;
+          END
+		  CREATE COLUMNSTORE INDEX IX_OpportunityAnalytics_ColumnStore ON OpportunityAnalytics (
+                OwnerId,Subject,CustomerId,LeadSourceId,ContactId,EstimatedClosingDate,StageId,Probability,
+				CreateDate,CreatedByUserId,UpdateDate,UpdatedByUserId,RatingCode,IsClosed,ActualClosingDate,
+				ClosingDescription,NumberOfShipments,ValueField,LastStageDate,LastStageIdBeforeClosure,LastCompletedActivityDate,
+				LeadDescription,LastCompletedActivityTypeCode,LastActivitySubject,NextActivityDate,NextActivityTypeCode,NextActivitySubject,
+				StageDueDate,BusinessUnitId,LeadUserId,LeadPartnerId,AgentId,ForeignClientId,ClosingReasonId,IsCancelled,OpportunityTypeId,
+				NumberOfConnectedQuotes
+          );
+      END
+
+    ]]>       
+  </Sql>
+</Script>

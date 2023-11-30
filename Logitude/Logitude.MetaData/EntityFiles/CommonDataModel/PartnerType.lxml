@@ -459,6 +459,10 @@
       Id="&quot;AC&quot;"
       Name="&quot;Accounting Partner&quot;"
       SearchFields="&quot;AC,Accounting Partner&quot;" />
+    <Record
+      Id="&quot;SC&quot;"
+      Name="&quot;Shipper-Consignee&quot;"
+      SearchFields="&quot;SC,Shipper-Consignee&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

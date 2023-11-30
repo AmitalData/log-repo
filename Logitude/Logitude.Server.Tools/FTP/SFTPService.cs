@@ -327,12 +327,38 @@ namespace Logitude.Server.Tools.FTP
             }
         }
 
+
+        private void CreateFoldersIfNotExist(nsoftware.IPWorksSSH.Sftp sftp)
+        {
+            if (string.IsNullOrEmpty(sftp.RemotePath)) return;
+            var folders = sftp.RemotePath.Split('/');
+            string folderPath = string.Empty;
+            int folderscount = 0;
+            while (folderscount < folders.Length)
+            {
+                folderPath = CreateFolderIfNotExist(folders[folderscount], folderPath, sftp);
+                folderscount += 1;
+            }
+        }
+
+        private string CreateFolderIfNotExist(string folderName, string folderPath, nsoftware.IPWorksSSH.Sftp sftp)
+        {
+            if (string.IsNullOrEmpty(folderName)) return folderPath;
+
+            try
+            {
+                sftp.MakeDirectory((folderPath + "/" + folderName));
+            }
+            catch (Exception exception) { }
+
+            return (folderPath + "/" + folderName);
+        }
+
         public void Upload(string p_filename, byte[] filedata, bool deleteIfExist, bool uploadAsTemp, out string p_status, out string p_message)
         {
             MyStart();
             p_status = "";
             p_message = "";
-
             //if (!string.IsNullOrEmpty(p_folderName) && sftp.RemotePath == @"/")
             //    sftp.RemotePath = p_folderName;
             string v_filename = Path.GetFileName(p_filename);
@@ -353,6 +379,9 @@ namespace Logitude.Server.Tools.FTP
                     p_status = "-1";
                     return;
                 }
+
+                CreateFoldersIfNotExist(sftp);
+
 
                 if (deleteIfExist)
                     sftp.Overwrite = true;

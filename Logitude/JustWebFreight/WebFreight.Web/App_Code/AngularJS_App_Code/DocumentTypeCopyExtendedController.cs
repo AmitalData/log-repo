@@ -43,6 +43,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeCopyQuery documentTypeCopyQuery = new DocumentTypeCopyQuery(tenant);
                 List<DocumentTypeCopyPM> documentTypeCopies = documentTypeCopyQuery.GetDocumentTypeCopiesWithoutLimitedOneForAutomations(documentTypeId, limitedPrintCopyId, tenant);
 

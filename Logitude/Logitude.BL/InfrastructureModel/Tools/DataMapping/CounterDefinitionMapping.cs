@@ -16,6 +16,10 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             counterDefinition.StartNumber = counterDefinitionPM.StartNumber;
 			counterDefinition.CounterSize = counterDefinitionPM.CounterSize;
 			counterDefinition.Suffix = counterDefinitionPM.Suffix;
-		}
+            counterDefinition.InActive = counterDefinitionPM.InActive;
+            counterDefinition.UsePerBranch = counterDefinitionPM.UsePerBranch;
+            counterDefinition.IsCustomized = counterDefinitionPM.IsCustomized;
+
+        }
     }
 }

@@ -26,6 +26,7 @@ import {DownloadManager} from '../../../Infrastructure/Utilities/DownloadManager
 import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHelper';
 import {JournalExtendedPMService} from '../../Services/ExtendedPMs/JournalExtendedPMService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
 
 export class JournalMenuButtonsHandler {
     public EntityPM: JournalPM;
@@ -37,6 +38,7 @@ export class JournalMenuButtonsHandler {
     private _documentTypePMService: DocumentTypePMExtendedService = new DocumentTypePMExtendedService();
     private _exportDocumentService: ExportDocumentService = new ExportDocumentService();
     private CurrentSession = SessionLocator.SelectedSession;
+    private CancelledStatusCode: string = "5";
 
     public SetEntityPM(entityArgs: EntityArgs) {
         this.TenantPM = SessionLocator.TenantPM;
@@ -69,7 +71,7 @@ export class JournalMenuButtonsHandler {
 
                         case "JournalSave": // save and close
                             {
-                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3") {
+                                if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode ) {
                                     button.IsDisabled = true;
                                 }
 
@@ -80,7 +82,7 @@ export class JournalMenuButtonsHandler {
                             }
                         case "JournalApprove":
                             {
-                                if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == "2" ) {
+                                if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == this.CancelledStatusCode  ) {
                                     button.IsDisabled = true;
                                 }
 
@@ -95,7 +97,7 @@ export class JournalMenuButtonsHandler {
                                     button.IsHidden = true;
                                 }
 
-                               else if (this.EntityPM.StatusCode == "3") {
+                               else if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode ) {
                                     button.IsDisabled = true;
                                 }
 
@@ -128,6 +130,9 @@ export class JournalMenuButtonsHandler {
                         case "JournalPrint":
                             {
                                 button.IsDisabled = false;
+
+                                if (!AppTool.IsNullOrEmpty(SessionLocator.LoggedUserPM.SecurityLevel) && SessionLocator.LoggedUserPM.SecurityLevel <= this.EntityPM.SecurityLevel)
+                                    button.IsDisabled = true;
                                 //    if (this.EntityPM.StatusCode == "2" && this.EntityPM.OriginalJournalId == null) {
                                 //    button.IsDisabled = false;
                                 //}
@@ -145,6 +150,9 @@ export class JournalMenuButtonsHandler {
                                 else {
                                     button.IsDisabled = true;
                                 }
+
+                                if (!AppTool.IsNullOrEmpty(SessionLocator.LoggedUserPM.SecurityLevel) &&  SessionLocator.LoggedUserPM.SecurityLevel <= this.EntityPM.SecurityLevel)
+                                    button.IsDisabled = true;
                                 break;
                             }
                     }
@@ -159,9 +167,12 @@ export class JournalMenuButtonsHandler {
         const JournalAccountingEntity = "1";
         const RevaluationAccountingEntity = "8";
         const AdjustmentAccountingEntity = "10";
-        const ApprovedStatusCode = "2";
+        const ApprovedStatusCode = "6";
+        const VoidedStatusCode = "3";
+
 
         let IsVoidButtonEnabled: Boolean = this.EntityPM.AccountingEntityCode == JournalAccountingEntity ||
+            this.EntityPM.AccountingEntityCode == "12" ||
             this.EntityPM.AccountingEntityCode == RevaluationAccountingEntity ||
             this.EntityPM.AccountingEntityCode == AdjustmentAccountingEntity;
 
@@ -179,6 +190,17 @@ export class JournalMenuButtonsHandler {
 
         if (this.EntityPM.ExternalSystem)
             button.IsDisabled = true;
+
+        if (this.EntityPM.StatusCode == VoidedStatusCode)
+            button.IsDisabled = true;
+
+        if (this.EntityPM.StatusCode == this.CancelledStatusCode)
+            button.IsDisabled = true;
+
+        if (!AppTool.IsNullOrEmpty(SessionLocator.LoggedUserPM.SecurityLevel) && SessionLocator.LoggedUserPM.SecurityLevel <= this.EntityPM.SecurityLevel)
+            button.IsDisabled = true;
+
+
     }
 
     public MenuButtonClick(menuButton: MenuButtonPM) {
@@ -196,39 +218,44 @@ export class JournalMenuButtonsHandler {
             case "JournalApprove":
                 {
                     this.EntityPM.StatusCode = "2"; // Approved
+                    this.EntityPM.JournalLines?.forEach(x => {
+                        if (x.AccountingDate instanceof Date) {
+                          x.AccountingDate = new Date(x.AccountingDate.getTime() - (x.AccountingDate.getTimezoneOffset() * 60000));
+                        }
+                      });
+                    
+                    this.SaveChenges();    
 
-                    this.EntityPM.UIProperties.SetEnabled("AccountingDate", "Journal", false);
-                    this.EntityPM.UIProperties.SetEnabled("Reference1", "Journal", false);
-                    this.EntityPM.UIProperties.SetEnabled("Reference2", "Journal", false);
-                    this.EntityPM.UIProperties.SetEnabled("Reference3", "Journal", false);
-                    this.EntityPM.UIProperties.SetEnabled("Notes", "Journal", false);
-
-                    this.SaveChenges();
+                    this.entityArgs.EditComponent.SaveCompleted.subscribe(($event) => {
+                        if ($event == true) {                           
+                             this.EntityPM.UIProperties.SetEnabled("AccountingDate", "Journal", false);
+                             this.EntityPM.UIProperties.SetEnabled("Reference1", "Journal", false);
+                             this.EntityPM.UIProperties.SetEnabled("Reference2", "Journal", false);
+                             this.EntityPM.UIProperties.SetEnabled("Reference3", "Journal", false);
+                             this.EntityPM.UIProperties.SetEnabled("Notes", "Journal", false);
+            
+                        }
+                    });
+                     
+                     
+                   
                     break;
                 }
             case "JournalSaveAsDraft":
                 {
                     this.EntityPM.StatusCode = "0"; // Draft
                     this.EntityPM.IsDirty = true;
+                    this.EntityPM.JournalLines?.forEach(x => {
+                        if (x.AccountingDate instanceof Date) {
+                            x.AccountingDate = new Date(x.AccountingDate.getTime() - (x.AccountingDate.getTimezoneOffset() * 60000));
+                        }
+                    });
                     this.SaveChenges();
                     break;
                 }
             case "JournalVoid":
                 {
-                    this.entityArgs.EditComponent.StartBusyIndicatorSaving();
-                    let myJournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
-                    myJournalExtendedPMService
-                        .VoidJournal(this.EntityPM.Tenant, this.EntityPM.Id, "", "", "")
-                        .subscribe((res: ServiceResponse) => {
-                            this.entityArgs.EditComponent.StopBusyIndicator();
-                            if (res.HasError) {
-                                this.entityArgs.EditComponent.ValidationErrorsList= res.ErrorsArray;
-                            } else {
-                                this.entityArgs.EditComponent.ReloadEntityPM();
-                            }
-                        });
-                    //this.EntityPM.StatusCode = "3"; // Voided
-                    //this.SaveChenges();
+                    this.ShowConfirmMessageAndVoidJournal();
                     break;
                 }
             case "JournalPrint":
@@ -257,6 +284,44 @@ export class JournalMenuButtonsHandler {
         }
 
 
+    }
+
+    private ShowConfirmMessageAndVoidJournal() {
+        var msg = TextCodeTranslator.Translate("Journal.O.ConfirmVoidJournal");
+        var confirmWindow = new ConfirmWindow();
+        const widthOfWindow = 300;
+        const heightOfWindow = 150;
+
+        confirmWindow.Width = widthOfWindow;
+        confirmWindow.Height = heightOfWindow;
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Accounting.General.B.OK");
+        confirmWindow.NoButtonText = TextCodeTranslator.Translate("Accounting.General.B.Cancel");
+        confirmWindow.Show(msg);
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+
+            if (confirmWindow.Yes) {
+                this.entityArgs.EditComponent.StartBusyIndicatorSaving();
+                this.VoidJournal();
+            }
+            else {
+                confirmWindow.Close();
+            }
+        });
+    }
+
+    private VoidJournal() {
+        let myJournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
+        myJournalExtendedPMService
+            .VoidJournal(this.EntityPM.Tenant, this.EntityPM.Id, "", "", "")
+            .subscribe((res: ServiceResponse) => {
+                this.entityArgs.EditComponent.StopBusyIndicator();
+                if (res.HasError) {
+                    this.entityArgs.EditComponent.ValidationErrorsList = res.ErrorsArray;
+                } else {
+                    this.entityArgs.EditComponent.ReloadEntityPM();
+                }
+            });
     }
 
     SaveChenges() {

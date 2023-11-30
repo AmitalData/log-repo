@@ -53,6 +53,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.CheckContactFeature("LastRunDetail", "READ", authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("LastRunDetail", entityPM.Tenant, authToken.Tenant);
 
                 IInfrastructureContext infrastructureContext = InfrastructureContext.GetContext(entityPM.Tenant);
                 ICommonDataContext commonContext = CommonDataContext.GetContext(authToken.Tenant);

@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class PriceStepPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -82,6 +82,11 @@ export class PriceStepPM {
     private updatedByUserName: string;
     public get UpdatedByUserName() { return this.updatedByUserName; }
     public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
+    private unitOfMeasurementCode: string;
+    public get UnitOfMeasurementCode() { return this.unitOfMeasurementCode; }
+    public set UnitOfMeasurementCode(newValue: string) { if (this.unitOfMeasurementCode != newValue) { this.unitOfMeasurementCode = newValue; this.MarkAsDirty("UnitOfMeasurementCode"); } }
        
 	 
 

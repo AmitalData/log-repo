@@ -104,12 +104,11 @@ Given("the user add payable with the following details", (dataTable) => {
 });
 
 When("update shipment", () => {
-  ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveButton);
+  ShipmentActions.UpdateShipment(ShipmentSelectors.ShipmentSaveCloseButton);
 });
 
 Then("the direct should update successfully", () => {
   BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
-  cy.Click(BaseSelectors.Backbutton, null, false);
 });
 //#endregion
 

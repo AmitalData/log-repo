@@ -52,6 +52,8 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
     IsSaveQuoteTemplateTableDesignRuning: boolean = false;
     IsSaveQuoteTemplateTextCodeRuning: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsUsingVirtuallization: boolean = false;
+
     constructor() {
         super();
         this.ItemsSource = new ObservableCollection([]);
@@ -68,7 +70,7 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
     }
 
     SetWindowArgs(args: any) {
-
+        this.SetIsUsingVirtuallization();
         if (args) {
             this.QuoteTemplateSettingPM = args.QuoteTemplateSettingPM;
 
@@ -87,6 +89,12 @@ export class QuoteTemplateTotalPerContainerSetting extends BaseComponent impleme
 
     }
 
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
 
     //ShowTotalSplitToMultipleCurrencies
     get TotalPerContainersCurrencyType() {

@@ -26,5 +26,14 @@ export class TenantManagmentPrivateLabelsList {
 		ForgetPasswordImageId: string;
 		SecondaryColor: string;
 		HasLogboxAccess: boolean;
+		MainTabHighlightColor: string;
+		DocumentTypeHighlightColor: string;
+		IsCustomsActivated: boolean;
+		IsExportActivated: boolean;
+		QueryFiltersHighlightColor: string;
+		CreateShipmentsWithoutDocs: boolean;
+		CreateOShipmentsWithoutDocs: boolean;
+		FilingInboxDomain: string;
+		DistributorCode: string;
 	
 }

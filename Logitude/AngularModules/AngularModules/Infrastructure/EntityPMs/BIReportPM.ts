@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class BIReportPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -122,6 +122,11 @@ export class BIReportPM {
     private lastRunId: string;
     public get LastRunId() { return this.lastRunId; }
     public set LastRunId(newValue: string) { if (this.lastRunId != newValue) { this.lastRunId = newValue; this.MarkAsDirty("LastRunId"); } }
+       
+	 
+    private availableForScheduling: boolean;
+    public get AvailableForScheduling() { return this.availableForScheduling; }
+    public set AvailableForScheduling(newValue: boolean) { if (this.availableForScheduling != newValue) { this.availableForScheduling = newValue; this.MarkAsDirty("AvailableForScheduling"); } }
        
 	 
 

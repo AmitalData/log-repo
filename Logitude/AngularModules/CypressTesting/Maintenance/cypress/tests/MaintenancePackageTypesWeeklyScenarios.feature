@@ -1,15 +1,15 @@
-@dev @weekly
+@release @stable @weekly
 Feature: Package Type Create, Search and Edit from Maintenance
     The user creates a Package Type, searches for and edits it from the Maintenance Module.
 
     Scenario: Add Package Type Code with lenght more than 4
         Given the user logged in and open "Package Types" in maintenance menu
         When add "12345" as package type code
-        Then a validation message with "Code Field must be less than 4" error should appear
+        Then a validation message with "Code Field length must be less than 4" error should appear
 
     Scenario: Add Package Type PrintAs with lenght more than 20
         When add "123456789012345678901" as package type PrintAs
-        Then a validation message with "Print As Field must be less than 20" error should appear
+        Then a validation message with "Print As Field length must be less than 20" error should appear
 
     Scenario: Create new package type with code already exists
         Given a package type with the following required details

@@ -125,7 +125,7 @@
   <Column
     Name="Notes"
     Type="nvarchar"
-    Size="500">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -262,4 +262,6 @@
     ReferencedTableSchema="dbo" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+  <Index
+    Columns="Tenant" />
 </Table>

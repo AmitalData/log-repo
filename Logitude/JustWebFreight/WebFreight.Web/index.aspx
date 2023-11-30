@@ -1,0 +1,17 @@
+﻿<html dir="rtl">
+  <head>
+   <meta http-equiv="refresh" content="20;url=https://customs.amital.co.il/accounting/" />
+  </head>
+  <body style="font-size:32px;"">
+    <p>לקוח נכבד,</p>
+      <p>
+        בעוד מספר שניות תועבר לכתובת החדשה <a href="https://customs.amital.co.il/accounting/">https://customs.amital.co.il/accounting/</a> .
+          </p>
+      <p>
+הסיבה : הגברת אבטחת מידע.
+          </p>
+      <p style="font-weight:bold">
+שימו לב : ניתן לעבוד רק דרך משרדכם. לא ניתן לעבוד מכתובות מחוץ למשרד.
+</p>
+  </body>
+</html>

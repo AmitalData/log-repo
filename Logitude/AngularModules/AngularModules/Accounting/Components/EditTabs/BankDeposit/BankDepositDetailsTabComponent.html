@@ -535,6 +535,9 @@
                                 <div style="padding: 4px; width: 250px;" [style.float]="isRTL ? 'left' : 'right'">
                                     <SearchTextBox [ObjectTableName]="ObjectTableName" [PlaceHolder]="'Accounting.General.O.ChequeNoBankAccount' | TextCodeTranslationPipe" (SearchTextChangeEvent)="TextChanged($event)"></SearchTextBox>
                                 </div>
+                                <div  *ngIf="EnableExportChequeDepositsToExcell" style="width: 30px;margin-top: 4px;margin-right: 10px;" [style.float]="isRTL ? 'left' : 'right'">
+                                    <button class="Button" style="height:22px;width:22px;" (click)="ExportToExcel()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                                  </div>
                             </div>
                         </td>
                     </tr>
@@ -544,7 +547,7 @@
                         <td [attr.colspan]="IsLinesSelection?3:1" style="height: 100%; padding-bottom: 75px;">
 
                             <div class="GeneratedGridContainer">
-                                <div *ngIf="IsLinesSelection && CashbookLines?.Length == 0" id="{{'ARPaymentSpinner' | IdGeneratorPipe}}" class="NoDataText">
+                                <div *ngIf="IsLinesSelection && CashbookLines?.Length == 0" id="{{'ARPaymentSpinner' | IdGeneratorAsyncPipe | async}}" class="NoDataText">
                                     {{'CashbookLine.O.NoDataFound' | TextCodeTranslationPipe}}
                                 </div>
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%"
@@ -671,11 +674,11 @@
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'"
                                                 [header]="'ARPaymentCheque.F.StatusCode' | TextCodeTranslationPipe" [width]="'100'"
-                                                [binding]="'StatusCode'" [SortFieldName]="IsLinesSelection? (showLocal? 'ARPChequeStatusName' :'ARPChequeStatusLocalName' ) : (showLocal? 'ChequeStatusName' : 'ChequeStatusLocalName')">
+                                                [binding]="'StatusCode'" [SortFieldName]="IsLinesSelection? (showLocals? 'ARPChequeStatusName' :'ARPChequeStatusLocalName' ) : (showLocals? 'ChequeStatusName' : 'ChequeStatusLocalName')">
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                                 <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                    {{  IsLinesSelection ? (showLocal?item.ARPChequeStatusName : item.ARPChequeStatusLocalName ) : (showLocal?item.ChequeStatusName : item.ChequeStatusLocalName )  }}
+                                                    {{  IsLinesSelection ? (showLocals?item.ARPChequeStatusLocalName : item.ARPChequeStatusName ) : (showLocals?item.ChequeStatusLocalName : item.ChequeStatusName )  }}
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
@@ -686,7 +689,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [IgnoreMods]="true">
                                                 <div class="CellStretched" style="width: 50px; max-width: 50px; padding-top: 2px;" title="Return Cheque">
-                                                    <IconButton [style.text-align]="isRTL ? 'right' : 'left'" [IsEnabled]="!item.IsOutOfDeposit"
+                                                    <IconButton [style.text-align]="isRTL ? 'right' : 'left'" [IsEnabled]="!item.IsOutOfDeposit &&  !EntityPM.IsCanceled"
                                                                 [Name]="'return'" [IsSmall]="true" (click)="ReturnChequeButtonClicked(item)"></IconButton>
                                                 </div>
                                             </log-cell-template>

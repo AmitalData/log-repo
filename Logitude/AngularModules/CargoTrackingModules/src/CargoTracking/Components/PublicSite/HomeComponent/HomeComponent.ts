@@ -24,6 +24,7 @@ export class HomeComponent
     companyLabel: string = "DSV";
     companyName: string = "Unifreight Cloud Services";
     Domain:string;
+    brandingData: any;
     public baseUrl:string;
 
 
@@ -38,20 +39,31 @@ export class HomeComponent
 
     private getcargoTrackingData()
     {
-        this.cargoTrackingDataExtendedService.get(ServiceHelper.GetcargoTrackingDataRequest(this.baseUrl)).subscribe((response: ServiceResponse) =>
-        { if(response.Result){
+        this.cargoTrackingDataExtendedService.get(ServiceHelper.GetcargoTrackingDataRequest(this.baseUrl)).subscribe((response: any) =>
+        {
+            if (response.Result) {
+                this.brandingData = response.Result;
+                if (response?.Result?.ForceHttps)
+                     this.RedirectAppToHttps();
 
-            ServiceHelper.SetCargoTrackingDate(response.Result,this.baseUrl);
-            this.IsBrandingDataLoaded = true;
-            this.listenToRouterEvents();
-        }
-        else{
-            this.GoToError401();
-        }
+                ServiceHelper.SetCargoTrackingDate(response.Result, this.baseUrl);
+                this.IsBrandingDataLoaded = true;
+                this.listenToRouterEvents();
+            }
+            else {
+                this.GoToError401();
+            }
 
         });
     }
 
+    RedirectAppToHttps(){
+        const isLocally = window.location.origin.indexOf('localhost') > -1;
+
+        if (!isLocally && location.protocol === 'http:') {
+            window.location.href = location.href.replace('http', 'https');
+        }
+    }
 
 
     get ComapnyLogo(){

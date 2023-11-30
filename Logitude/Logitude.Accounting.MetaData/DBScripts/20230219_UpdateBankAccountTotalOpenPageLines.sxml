@@ -1,0 +1,19 @@
+﻿<Script DBType="Main" Module="Accounting" AOT="false" TargetTableName="BankAccounts" Env="local,test,cloud">
+	<Sql Version="3">
+		<![CDATA[
+
+;with q AS (
+select bd.GLAccountId,bd.Tenant,count(*) as count
+from BankAccounts as  bd
+join dbo.ReconcileExternalPages as ext on bd.GLAccountId = ext.GLAccountId and bd.Tenant = ext.Tenant
+join dbo.ReconcileExternalPageLines as extLine on ext.Id = extLine.ReconcileExternalPageId 
+where extLine.InReconcileProgress=0
+group by bd.GLAccountId,bd.Tenant)
+update BankAccounts
+set TotalOpenPagesLines = (select CAST(q.count as varchar) from q where q.GLAccountId = BankAccounts.GLAccountId and q.Tenant = BankAccounts.Tenant)
+from q 
+where q.GLAccountId =  BankAccounts.GLAccountId and q.Tenant = BankAccounts.Tenant
+
+    ]]>       
+  </Sql>
+</Script>

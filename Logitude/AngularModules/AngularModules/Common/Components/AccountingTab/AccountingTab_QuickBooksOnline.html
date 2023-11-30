@@ -1,308 +1,340 @@
+
 <table>
-    <tr>
+    <!-- BillToId -->
+    <tr class="FormFieldRow" *ngIf="IsPartnerEntity">
+        <td>
+            <table>
+                <tr>
+                    <td style="width: 70px;">
+                        <LogLabel [ObjectFieldName]="'BillToId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                    </td>
 
-        <!-- Card Receivable Only Or Card Payable Only  -->
-        <td *ngIf="RecievableCardOnly || PayableCardOnly">
-            <div class="MediaFill">
-                <div class="SimpleGridView">
-                    <div class="SimpleGridViewHeader">
-                        <table>
-                            <tr>
-                                <td style="width: 150px; min-width: 150px;max-width:150px">Currency</td>
-                                <td style="width: 200px; min-width: 200px;max-width:200px">{{ExternalIDPayableOrReceivable}}</td>
-                                <td class="LastChild"></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="SimpleGridViewBody">
-                        <table>
+                    <td style="width: 200px;">
+                        <LogLov [ObjectFieldName]="'BillToId'"
+                                [SelectedValue]="BillToId"
+                                [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Card'">
+                        </LogLov>
+                    </td>
 
-                            <tr *ngIf="RecievableCardOnly">
-                                <td>
-                                    <table>
-                                        <tr class="SimpleGridViewRow" *ngFor="let currency of CurrenciesListFilterd;let i = index">
-
-                                            <td class="GridViewCell" style="width:150px; min-width:150px;max-width:150px">
-                                                <div>{{currency.CurrencyCode}}</div>
-                                            </td>
-
-                                            <td class="GridViewCell" style="width:200px; min-width:200px;max-width:200px">
-                                                <table>
-                                                    <tr>
-                                                        <td>
-                                                            <span class="Value">{{currency.RecievableCustomerExternalName}}</span>
-
-                                                        </td>
-                                                        <td>
-                                                            <div *ngIf="imgVisibile(i,'R')">
-                                                                <div *ngIf="!FailedLoading(i,'R')">
-                                                                    Loading ..
-                                                                    <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoading(i,'R')" />
-                                                                </div>
-                                                                <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="FailedLoading(i,'R')" (click)="RefreshLoadingDataCustomer(currency,i,'R')" />
-
-                                                            </div>
-
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-
-                                            <td class="GridViewCell">
-                                                <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenQuickBooks(currency,'R')" /></span>
-                                            </td>
-                                        </tr>
-
-                                    </table>
-                                </td>
-                            </tr>
-
-                            <tr  *ngIf="PayableCardOnly">
-                                    <td>
-                                        <table>
-                                            <tr class="SimpleGridViewRow" *ngFor="let currency of CurrenciesListFilterd;let i = index">
-
-                                                <td class="GridViewCell" style="width:150px; min-width:150px;max-width:150px">
-                                                    <div>{{currency.CurrencyCode}}</div>
-                                                </td>
-
-                                                <td class="GridViewCell" style="width:200px; min-width:200px;max-width:200px">
-                                                    <table>
-                                                        <tr>
-                                                            <td>
-                                                                <span class="Value">{{currency.PayableCustomerExternalName}}</span>
-
-                                                            </td>
-                                                            <td>
-                                                                <div *ngIf="imgVisibile(i,'P')">
-                                                                    <div *ngIf="!FailedLoading(i,'P')">
-                                                                        Loading ..
-                                                                        <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoading(i,'P')" />
-                                                                    </div>
-                                                                    <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="FailedLoading(i,'P')" (click)="RefreshLoadingDataCustomer(currency,i,'P')" />
-
-                                                                </div>
-
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td>
-
-                                                <td class="GridViewCell">
-                                                    <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenQuickBooks(currency,'P')" /></span>
-                                                </td>
-                                            </tr>
-
-                                        </table>
-                                    </td>
-                            </tr>
-
-                            <tr>
-                                <td>
-                                    <div></div>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
+                    <td>
+                        <div></div>
+                    </td>
+                </tr>
+            </table>
         </td>
-        <!-- Both Cards  -->
-        <td *ngIf="PayableAndRecievableCard">
-            <div class="MediaFill">
-                <div class="SimpleGridView">
-                    <div class="SimpleGridViewHeader">
-                        <table>
-                            <tr>
-                                <td style="width: 150px; min-width: 150px;max-width:150px">Currency</td>
-                                <td style="width: 230px; min-width: 230px;max-width:230px">Account Receivables External Id</td>
-                                <td style="width: 230px; min-width: 230px;max-width:230px">Account Payables External Id</td>
-                                <td class="LastChild"></td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="SimpleGridViewBody">
-                        <table>
+    </tr>
 
-                            <tr >
-                                <td>
+    <tr style="height:5px;">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <table>
+                <tr>
+                    <!-- Card Receivable Only Or Card Payable Only  -->
+                    <td *ngIf="RecievableCardOnly || PayableCardOnly">
+                        <div class="MediaFill">
+                            <div class="SimpleGridView">
+                                <div class="SimpleGridViewHeader">
                                     <table>
-                                        <tr class="SimpleGridViewRow" *ngFor="let currency of CurrenciesListFilterd;let i = index">
+                                        <tr>
+                                            <td style="width: 150px; min-width: 150px;max-width:150px">Currency</td>
+                                            <td style="width: 200px; min-width: 200px;max-width:200px">{{ExternalIDPayableOrReceivable}}</td>
+                                            <td class="LastChild"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="SimpleGridViewBody">
+                                    <table>
 
-                                            <td class="GridViewCell" style="width:150px; min-width:150px;max-width:150px">
-                                                <div>{{currency.CurrencyCode}}</div>
-                                            </td>
-
-                                            <td class="GridViewCell" style="width:230px; min-width:230px;max-width:230px">
+                                        <tr *ngIf="RecievableCardOnly">
+                                            <td>
                                                 <table>
-                                                    <tr>
-                                                        <td style="width:200px;max-width:200px;overflow-x:hidden" title="{{currency.RecievableCustomerExternalName}}">
-                                                            <span class="Value">{{currency.RecievableCustomerExternalName}}</span>
+                                                    <tr class="SimpleGridViewRow" *ngFor="let currency of CurrenciesListFilterd;let i = index">
 
-                                                        </td>
-                                                        <td>
-                                                            <div *ngIf="imgVisibile(i,'R')">
-                                                                <div *ngIf="!FailedLoading(i,'R')">
-                                                                    Loading ..
-                                                                    <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoading(i,'R')" />
-                                                                </div>
-                                                                <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="FailedLoading(i,'R')" (click)="RefreshLoadingDataCustomer(currency,i,'R')" />
-
-                                                            </div>
-
+                                                        <td class="GridViewCell" style="width:150px; min-width:150px;max-width:150px">
+                                                            <div>{{currency.CurrencyCode}}</div>
                                                         </td>
 
-                                                        <td class="GridViewCell" style="width:15px">
+                                                        <td class="GridViewCell" style="width:200px; min-width:200px;max-width:200px">
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <span class="Value">{{currency.RecievableCustomerExternalName}}</span>
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <div *ngIf="imgVisibile(i,'R')">
+                                                                            <div *ngIf="!FailedLoading(i,'R')">
+                                                                                Loading ..
+                                                                                <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoading(i,'R')" />
+                                                                            </div>
+                                                                            <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="FailedLoading(i,'R')" (click)="RefreshLoadingDataCustomer(currency,i,'R')" />
+
+                                                                        </div>
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td class="GridViewCell">
                                                             <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenQuickBooks(currency,'R')" /></span>
                                                         </td>
                                                     </tr>
+
                                                 </table>
-                                            </td>
-
-                                            <td class="GridViewCell" style="width:230px; min-width:230px;max-width:230px">
-                                                <table>
-                                                    <tr>
-                                                        <td style="width:200px;max-width:200px;overflow-x:hidden" title="{{currency.PayableCustomerExternalName}}">
-                                                            <span class="Value">{{currency.PayableCustomerExternalName}}</span>
-
-                                                        </td>
-                                                        <td>
-                                                            <div *ngIf="imgVisibile(i,'P')">
-                                                                <div *ngIf="!FailedLoading(i,'P')">
-                                                                    Loading ..
-                                                                    <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoading(i,'P')" />
-                                                                </div>
-                                                                <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="FailedLoading(i,'P')" (click)="RefreshLoadingDataCustomer(currency,i,'P')" />
-
-                                                            </div>
-
-                                                        </td>
-
-                                                        <td class="GridViewCell" style="width:15px">
-                                                            <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenQuickBooks(currency,'P')" /></span>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-
-
-                                            <td class="GridViewCell">
                                             </td>
                                         </tr>
 
+                                        <tr *ngIf="PayableCardOnly">
+                                            <td>
+                                                <table>
+                                                    <tr class="SimpleGridViewRow" *ngFor="let currency of CurrenciesListFilterd;let i = index">
+
+                                                        <td class="GridViewCell" style="width:150px; min-width:150px;max-width:150px">
+                                                            <div>{{currency.CurrencyCode}}</div>
+                                                        </td>
+
+                                                        <td class="GridViewCell" style="width:200px; min-width:200px;max-width:200px">
+                                                            <table>
+                                                                <tr>
+                                                                    <td>
+                                                                        <span class="Value">{{currency.PayableCustomerExternalName}}</span>
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <div *ngIf="imgVisibile(i,'P')">
+                                                                            <div *ngIf="!FailedLoading(i,'P')">
+                                                                                Loading ..
+                                                                                <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoading(i,'P')" />
+                                                                            </div>
+                                                                            <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="FailedLoading(i,'P')" (click)="RefreshLoadingDataCustomer(currency,i,'P')" />
+
+                                                                        </div>
+
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td class="GridViewCell">
+                                                            <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenQuickBooks(currency,'P')" /></span>
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                        </tr>
+
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
                                     </table>
-                                </td>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <!-- Both Cards  -->
+                    <td *ngIf="PayableAndRecievableCard">
+                        <div class="MediaFill">
+                            <div class="SimpleGridView">
+                                <div class="SimpleGridViewHeader">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 150px; min-width: 150px;max-width:150px">Currency</td>
+                                            <td style="width: 230px; min-width: 230px;max-width:230px">Account Receivables External Id</td>
+                                            <td style="width: 230px; min-width: 230px;max-width:230px">Account Payables External Id</td>
+                                            <td class="LastChild"></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="SimpleGridViewBody">
+                                    <table>
+
+                                        <tr>
+                                            <td>
+                                                <table>
+                                                    <tr class="SimpleGridViewRow" *ngFor="let currency of CurrenciesListFilterd;let i = index">
+
+                                                        <td class="GridViewCell" style="width:150px; min-width:150px;max-width:150px">
+                                                            <div>{{currency.CurrencyCode}}</div>
+                                                        </td>
+
+                                                        <td class="GridViewCell" style="width:230px; min-width:230px;max-width:230px">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:200px;max-width:200px;overflow-x:hidden" title="{{currency.RecievableCustomerExternalName}}">
+                                                                        <span class="Value">{{currency.RecievableCustomerExternalName}}</span>
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <div *ngIf="imgVisibile(i,'R')">
+                                                                            <div *ngIf="!FailedLoading(i,'R')">
+                                                                                Loading ..
+                                                                                <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoading(i,'R')" />
+                                                                            </div>
+                                                                            <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="FailedLoading(i,'R')" (click)="RefreshLoadingDataCustomer(currency,i,'R')" />
+
+                                                                        </div>
+
+                                                                    </td>
+
+                                                                    <td class="GridViewCell" style="width:15px">
+                                                                        <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenQuickBooks(currency,'R')" /></span>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+                                                        <td class="GridViewCell" style="width:230px; min-width:230px;max-width:230px">
+                                                            <table>
+                                                                <tr>
+                                                                    <td style="width:200px;max-width:200px;overflow-x:hidden" title="{{currency.PayableCustomerExternalName}}">
+                                                                        <span class="Value">{{currency.PayableCustomerExternalName}}</span>
+
+                                                                    </td>
+                                                                    <td>
+                                                                        <div *ngIf="imgVisibile(i,'P')">
+                                                                            <div *ngIf="!FailedLoading(i,'P')">
+                                                                                Loading ..
+                                                                                <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoading(i,'P')" />
+                                                                            </div>
+                                                                            <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="FailedLoading(i,'P')" (click)="RefreshLoadingDataCustomer(currency,i,'P')" />
+
+                                                                        </div>
+
+                                                                    </td>
+
+                                                                    <td class="GridViewCell" style="width:15px">
+                                                                        <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenQuickBooks(currency,'P')" /></span>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </td>
+
+
+                                                        <td class="GridViewCell">
+                                                        </td>
+                                                    </tr>
+
+                                                </table>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+
+                    <!-- Others Entities -->
+                    <td *ngIf="OtherEntities" style="vertical-align:top">
+                        <table>
+                            <tr style="height:5px">
+                                <td colspan="4"></td>
                             </tr>
-                            <tr>
-                                <td>
+                            <tr style="height:32px" *ngIf="ObjectTableName != 'AccountingPaymentMethod'">
+                                <td style="width:100px;vertical-align:top" *ngIf="ObjectTableName == 'ChargesType' ">Receivables :</td>
+                                <td style="width:265px;vertical-align:top">
+                                    <input type="text" [disabled]="'true'" style="width:265px" [ngModel]="TextBoxText" />
+                                    <div *ngIf="imgVisibileOthers()" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 0px;height:10px;width:10px">
+                                        <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoading() && !ReceivablesFailed" />
+                                        <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="!FailedLoading() && ReceivablesFailed" (click)="RefreshLoadingData()" />
+
+                                    </div>
+
+                                </td>
+
+                                <td style="width:10px">
                                     <div></div>
                                 </td>
+                                <td style="vertical-align:top">
+                                    <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenQuickBooks()" /></span>
+                                </td>
+
+
+                            </tr>
+
+                            <tr style="height:32px" *ngIf="ObjectTableName == 'ChargesType'">
+                                <td style="width:100px;vertical-align:top">Payables :</td>
+                                <td style="width:265px;vertical-align:top">
+                                    <input type="text" [disabled]="'true'" style="width:265px" [ngModel]="ChargeTypeTextBoxText" />
+                                    <div *ngIf="imgVisibilePayables()" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 0px;height:10px;width:10px">
+                                        <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoadingSecond() && !PayablesFailed" />
+                                        <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="!FailedLoadingSecond() && PayablesFailed" (click)="RefreshLoadingDataSecond()" />
+
+                                    </div>
+                                </td>
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
+                                <td style="vertical-align:top">
+                                    <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenChargesTypesPayables()" /></span>
+                                </td>
+
+
+                            </tr>
+
+                            <tr style="height:32px" *ngIf="ObjectTableName == 'AccountingPaymentMethod' ">
+                                <td style="width:100px;vertical-align:top">AR Payment Method :</td>
+                                <td style="width:265px;vertical-align:top">
+                                    <input type="text" [disabled]="'true'" style="width:265px" [ngModel]="TextBoxText" />
+                                    <div *ngIf="imgVisibileOthers()" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 0px;height:10px;width:10px">
+                                        <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoading() && !ReceivablesFailed" />
+                                        <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="!FailedLoading() && ReceivablesFailed" (click)="RefreshLoadingData()" />
+
+                                    </div>
+
+                                </td>
+
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
+                                <td style="vertical-align:top">
+                                    <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenARPaymentMethods()" /></span>
+                                </td>
+                            </tr>
+
+                            <tr style="height:32px" *ngIf="ObjectTableName == 'AccountingPaymentMethod'">
+                                <td style="width:100px;vertical-align:top">AP Payment Method :</td>
+                                <td style="width:265px;vertical-align:top">
+                                    <input type="text" [disabled]="'true'" style="width:265px" [ngModel]="ChargeTypeTextBoxText" />
+                                    <div *ngIf="imgVisibilePayables()" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 0px;height:10px;width:10px">
+                                        <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoadingSecond() && !PayablesFailed" />
+                                        <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="!FailedLoadingSecond() && PayablesFailed" (click)="RefreshLoadingDataSecond()" />
+
+                                    </div>
+                                </td>
+                                <td style="width:10px">
+                                    <div></div>
+                                </td>
+                                <td style="vertical-align:top">
+                                    <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenAPPaymentMethods()" /></span>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td *ngIf="ObjectTableName=='ChargesType' || ObjectTableName=='AccountingPaymentMethod'"></td>
+                                <td colspan="4"></td>
                             </tr>
                         </table>
-                    </div>
-                </div>
-            </div>
-        </td>
-
-
-        <!-- Others Entities -->
-        <td *ngIf="OtherEntities" style="vertical-align:top">
-            <table>
-                <tr style="height:5px">
-                    <td colspan="4"></td>
-                </tr>
-                <tr style="height:32px" *ngIf="ObjectTableName != 'AccountingPaymentMethod'" >
-                    <td style="width:100px;vertical-align:top" *ngIf="ObjectTableName == 'ChargesType' ">Receivables :</td>
-                    <td style="width:265px;vertical-align:top">
-                        <input type="text" [disabled]="'true'" style="width:265px" [ngModel]="TextBoxText" />
-                        <div *ngIf="imgVisibileOthers()" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 0px;height:10px;width:10px">
-                            <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoading() && !ReceivablesFailed" />
-                            <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="!FailedLoading() && ReceivablesFailed" (click)="RefreshLoadingData()" />
-
-                        </div>
 
                     </td>
-
-                    <td style="width:10px">
-                        <div></div>
-                    </td>
-                    <td style="vertical-align:top">
-                        <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenQuickBooks()" /></span>
-                    </td>
-
-
-                </tr>
-
-                <tr style="height:32px" *ngIf="ObjectTableName == 'ChargesType'" >
-                    <td style="width:100px;vertical-align:top">Payables :</td>
-                    <td style="width:265px;vertical-align:top">
-                        <input type="text" [disabled]="'true'" style="width:265px" [ngModel]="ChargeTypeTextBoxText" />  
-                        <div *ngIf="imgVisibilePayables()" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 0px;height:10px;width:10px">
-                            <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoadingSecond() && !PayablesFailed" />
-                            <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="!FailedLoadingSecond() && PayablesFailed" (click)="RefreshLoadingDataSecond()" />
-
-                        </div>              
-                    </td>
-                    <td style="width:10px">
-                        <div></div>
-                    </td>
-                    <td style="vertical-align:top">
-                        <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenChargesTypesPayables()" /></span>
-                    </td>
-
-
-</tr>
-
-                <tr style="height:32px" *ngIf="ObjectTableName == 'AccountingPaymentMethod' ">
-                    <td style="width:100px;vertical-align:top" >AR Payment Method :</td>
-                    <td style="width:265px;vertical-align:top">
-                        <input type="text" [disabled]="'true'" style="width:265px" [ngModel]="TextBoxText" />
-                        <div *ngIf="imgVisibileOthers()" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 0px;height:10px;width:10px">
-                            <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoading() && !ReceivablesFailed" />
-                            <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="!FailedLoading() && ReceivablesFailed" (click)="RefreshLoadingData()" />
-
-                        </div>
-
-                    </td>
-
-                    <td style="width:10px">
-                        <div></div>
-                    </td>
-                    <td style="vertical-align:top">
-                        <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenARPaymentMethods()" /></span>
-                    </td>
-
-
-                </tr>
-
-                <tr style="height:32px" *ngIf="ObjectTableName == 'AccountingPaymentMethod'">
-                    <td style="width:100px;vertical-align:top">AP Payment Method :</td>
-                    <td style="width:265px;vertical-align:top">
-                        <input type="text" [disabled]="'true'" style="width:265px" [ngModel]="ChargeTypeTextBoxText" />
-                        <div *ngIf="imgVisibilePayables()" class="DeleteButton RightCenter" style="right:4px;position: relative;display:inline-block;margin-left: -25px;top: 0px;height:10px;width:10px">
-                            <img src="./Images/BusyIndicator.gif" style="height:10px;width:10px" *ngIf="!FailedLoadingSecond() && !PayablesFailed" />
-                            <img src="./Images/Buttons/Refresh.png" style="cursor:pointer" *ngIf="!FailedLoadingSecond() && PayablesFailed" (click)="RefreshLoadingDataSecond()" />
-
-                        </div>
-                    </td>
-                    <td style="width:10px">
-                        <div></div>
-                    </td>
-                    <td style="vertical-align:top">
-                        <span class="Value"><img class="SearchIcon" src="./Images/Search.png" style="display: block; float: left; cursor: pointer;" (click)="OpenAPPaymentMethods()" /></span>
-                    </td>
-
-
-                </tr>
-
-
-
-                <tr>
-                    <td *ngIf="ObjectTableName=='ChargesType' || ObjectTableName=='AccountingPaymentMethod'"></td>
-                    <td colspan="4"></td>
                 </tr>
             </table>
-
         </td>
     </tr>
 </table>

@@ -17,5 +17,9 @@ export class EntityStatusList {
 		Code: string;
 		SearchFields: string;
 		DisplayName: string;
+		StatusLocalWeight: number;
+		EntityStatusTypeCode: string;
+		AllowPartial: boolean;
+		IsDigitalPortal: boolean;
 	
 }

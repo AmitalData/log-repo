@@ -1,0 +1,96 @@
+﻿<Script DBType="Main" Module="Infrastructure" AOT="false" >
+  <Sql Version="55">
+    <![CDATA[
+
+declare @NewId  as varchar(15);
+declare @Tenant as varchar(15)
+declare @SearchFields as nvarchar(MAX)
+declare @GLAccountId	as varchar(15)
+declare @EntityId as varchar(15)
+declare @OriginalEntityLineNumber as int
+declare @LocalAmount as decimal(16, 2)
+declare @ForeignAmount as decimal(16, 2)
+declare @CurrencyId as varchar(15)
+declare @InterestValueDate as datetime
+
+ 
+
+
+ DECLARE VatsCursor CURSOR READ_ONLY
+FOR
+select 
+	j.Tenant as  [Tenant] 
+    ,(case when l.ActionCode = '1' then l.CreditAccountId else l.DebitAccountId end ) [GLAccountId]
+    ,j.id [EntityId]
+    ,l.Line [OriginalEntityLineNumber]
+    ,l.LocalAmount [LocalAmount]
+    ,l.ForeignAmount [ForeignAmount]
+    ,l.CurrencyId [CurrencyId]
+    ,l.AccountingDate [InterestValueDate]
+from Journals j left join JournalLines l on j.Id = l.JournalId where AccountingEntityCode = '8' 
+
+OPEN VatsCursor FETCH NEXT FROM VatsCursor INTO @Tenant, @GLAccountId,@EntityId,@OriginalEntityLineNumber,@LocalAmount,@ForeignAmount,@CurrencyId,@InterestValueDate
+
+WHILE @@FETCH_STATUS = 0
+
+BEGIN
+
+	EXECUTE usp_GetNextTableIdValue @NewId OUTPUT,'InterestTransaction'
+	IF NOT EXISTS (	select * from interesttransactions where EntityId = @EntityId and GLAccountId =@GLAccountId and InterestEntityTypeCode='3' and OriginalEntityLineNumber=@OriginalEntityLineNumber and Tenant = @Tenant) 
+BEGIN
+insert into InterestTransactions
+	(
+		Id
+		,[Tenant]
+		,[CreateDateTime]
+		,[UpdateDateTime]
+		,[SearchFields]
+		,[GLAccountId]
+		,[InterestEntityTypeCode]
+		,[EntityId]
+		,[OriginalEntityLineNumber]
+		,[LocalAmount]
+		,[ForeignAmount]
+		,[CurrencyId]
+		,[InterestValueDate]
+		,[InterestReportId]
+		,[IsClosed]
+		,[IsCancelled]
+	)
+	values
+	(
+		@NewId,
+		@Tenant,
+		GETDATE(),
+		GETDATE(),
+		null,
+		@GLAccountId,
+		'3',
+		@EntityId,
+		@OriginalEntityLineNumber,
+		@LocalAmount,
+		@ForeignAmount,
+		@CurrencyId,
+		@InterestValueDate,
+		null,
+		0,
+		0
+	)
+END
+	
+
+	FETCH NEXT FROM VatsCursor INTO @Tenant, @GLAccountId,@EntityId,@OriginalEntityLineNumber,@LocalAmount,@ForeignAmount,@CurrencyId,@InterestValueDate
+
+END
+
+CLOSE VatsCursor
+DEALLOCATE VatsCursor	
+
+
+				
+
+    
+   
+    ]]>       
+  </Sql>
+</Script>

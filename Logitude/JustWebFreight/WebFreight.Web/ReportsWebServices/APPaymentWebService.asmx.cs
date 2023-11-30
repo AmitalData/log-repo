@@ -22,6 +22,8 @@ using System.Web;
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Accounting.BL.EntityQueryServices;
+using Logitude.Accounting.Def.EntityPMs;
 
 namespace WebFreight.Web.ReportsWebServices
 { 
@@ -40,18 +42,20 @@ namespace WebFreight.Web.ReportsWebServices
         {
             APPaymentDataProvider apPaymentDataProvider = GetAPPaymentDataProvider(paymentId, tenant, documentTypeId);
             XmlSerializer serializer = new XmlSerializer(typeof(APPaymentDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, apPaymentDataProvider);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
-            return bytearray;
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, apPaymentDataProvider);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+                return bytearray;
+            }
         }
 
         public APPaymentDataProvider GetAPPaymentDataProvider(string paymentId, int tenant, string documentTypeId)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             APPaymentDataProvider apPaymentDataProvider = new APPaymentDataProvider();
             IInvoiceContext invoiceCotnext = InvoiceContext.GetContext(tenant);
             APPaymentRepository paymentRep = new APPaymentRepository(invoiceCotnext);
@@ -60,7 +64,10 @@ namespace WebFreight.Web.ReportsWebServices
             IWebFreightContext webFreighContext = WebFreightContext.GetContext(tenant);
             APPayment currentPayment = paymentRep.GetSingleAPPayment(paymentId, tenant);
             AddressRepository addressRepository = new AddressRepository(tenant);
-            Contact loggedContact = GetLoggedContact(tenant);
+			GLAccountCurrencyQueryService accountcurrencyQueryService = new GLAccountCurrencyQueryService(tenant);
+			GLAccountRepository GLAccountRepository = new GLAccountRepository(tenant);
+
+			Contact loggedContact = GetLoggedContact(tenant);
             BankAccount bankAccount = GetBankAccountById(currentPayment.BankAccountId, currentPayment.Tenant);
             if (currentPayment != null)
             {
@@ -77,8 +84,8 @@ namespace WebFreight.Web.ReportsWebServices
                 apPaymentDataProvider.VendorSwift = currentPayment.VendorSwift;
                 apPaymentDataProvider.VendorBankAccountNumber = currentPayment.VendorBankAccountNumber;
                 apPaymentDataProvider.VendorIBANNo = currentPayment.VendorIBANNumber;
-               
- 
+                
+
                 if (bankAccount != null)
                 {
                     apPaymentDataProvider.BankAccountEnglishName = bankAccount.EnglishName;
@@ -160,8 +167,24 @@ namespace WebFreight.Web.ReportsWebServices
                         apPaymentDataProvider.Swift = paidToCard.Swift;
                         apPaymentDataProvider.AccountNumber = GetPartnerAccountNumber(paidToCard);
                         apPaymentDataProvider.PaidToCode = paidToCard.Code;
+                        apPaymentDataProvider.VendorWebsite = paidToCard.Website;
 
-                        Address address = addressRepository.GetSingleAddress(currentPayment.VendorAddressId, tenant);
+
+                        if (!string.IsNullOrEmpty(paidToCard.GLAccountId)) 
+                        {
+
+                            var CurrentGLAccount = paidToCard.GLAccountId;
+							GLAccountCurrencyPM gLAccountCurrencyPM = accountcurrencyQueryService.GetEntityByCurrencyAndGLAccountId(paidToCard.GLAccountId, currentPayment.PaymentCurrencyId, tenant);
+                            if (gLAccountCurrencyPM != null)
+                            {
+								CurrentGLAccount = gLAccountCurrencyPM.GLAccountId.ToString();
+
+							}
+                          var GLAccount = GLAccountRepository.GetSingle(CurrentGLAccount, tenant);
+
+							apPaymentDataProvider.GLAccountDisplayNumber = GLAccount.DisplayNumber;
+						}
+						Address address = addressRepository.GetSingleAddress(currentPayment.VendorAddressId, tenant);
                         if (address != null)
                         {
                             apPaymentDataProvider.PaidToAddress = DataProviders.General.GetAddress(address);
@@ -228,12 +251,12 @@ namespace WebFreight.Web.ReportsWebServices
 
                     if (documentTypePM != null)
                     {
-                        List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id).ToList();
+                        List<FormCustomField> customfieldsList = commonContext.FormCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id && fc.EntityId == currentPayment.Id && fc.Tenant == tenant).ToList();
 
-                        List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id).ToList();
+                        List<DocumentTypeCustomField> documentCustomfieldsList = commonContext.DocumentTypeCustomFields.Where(fc => fc.DocumentTypeId == documentTypePM.Id && fc.Tenant == tenant).ToList();
 
                         FormCustomField paidByCustomField = (from a in customfieldsList
-                                                             where a.FieldCode == "PaidBy" && a.EntityId == currentPayment.Id
+                                                             where a.FieldCode == "PaidBy"
                                                              select a).FirstOrDefault();
 
                         DocumentTypeCustomField paidByDocumentCustom = (from a in documentCustomfieldsList
@@ -399,7 +422,7 @@ namespace WebFreight.Web.ReportsWebServices
                 }
             }
 
-            customFieldResolver = new CustomFieldResolver();
+            customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetDataProviderCustomFieldsValues("APPayment", tenant, currentPayment, apPaymentDataProvider);
 
             return apPaymentDataProvider;

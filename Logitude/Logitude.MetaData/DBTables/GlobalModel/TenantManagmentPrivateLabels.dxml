@@ -20,7 +20,7 @@
   </Column>
   <Column
     Name="HybridPartnerId"
-    Type="nvarchar"
+    Type="varchar"
     Size="15">
     <Constraints
       Nullable="false" />
@@ -147,5 +147,67 @@
     Type="bit">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="MainTabHighlightColor"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DocumentTypeHighlightColor"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCustomsActivated"
+    OldNames="IsImportActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsExportActivated"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QueryFiltersHighlightColor"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CreateShipmentsWithoutDocs"
+    OldNames="CreateWithoutDocument"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateOShipmentsWithoutDocs"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FilingInboxDomain"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DistributorCode"
+    OldNames="Distributor"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
 </Table>

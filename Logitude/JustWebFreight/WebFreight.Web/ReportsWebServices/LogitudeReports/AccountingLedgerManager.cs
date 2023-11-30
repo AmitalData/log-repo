@@ -18,6 +18,7 @@ using System.Linq;
 using System.Web;
 using System.Xml.Serialization;
 using WebFreight.Web.DataProviders;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 {
@@ -98,17 +99,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
         public byte[] GetData()
         {
             AccountingLedgerDataProvider myDataProvider = new AccountingLedgerDataProvider();
-
             myDataProvider = this.LoadDataProvider();
-
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(AccountingLedgerDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, myDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            StreamReader streamReader = new StreamReader(memoryStream);
-            string content = streamReader.ReadToEnd();
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(myDataProvider, typeof(AccountingLedgerDataProvider), tenant);
         }
 
         private AccountingLedgerDataProvider LoadDataProvider()
@@ -303,6 +295,17 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
             #region AR/ Invoice
             foreach (ARInvoice openARinvoice in iQueryable_ARInvoice_Open)
             {
+                string creditedByARInvoiceTypeCode = null;
+
+                if (!string.IsNullOrEmpty(openARinvoice.CreditedByARInvoiceId))
+                {
+                    ARInvoice creditedByInvoice = iQueryable_ARInvoice_All.Where(d => d.Id == openARinvoice.CreditedByARInvoiceId).FirstOrDefault();
+                    if (creditedByInvoice != null)
+                    {
+                        creditedByARInvoiceTypeCode = creditedByInvoice.ARInvoiceTypeCode;
+                    }
+                }
+
                 AccountingLedger accountingLedgerRecord = new AccountingLedger();
                 accountingLedgerRecord.Currency = systemCurrencies.Where(d => d.Id == openARinvoice.InvoiceCurrencyId).FirstOrDefault().Code;
                 accountingLedgerRecord.Notes = openARinvoice.InternalNotes;
@@ -321,30 +324,23 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (openARinvoice.ARInvoiceTypeCode == "CD")
-                {
-                    accountingLedgerRecord.ReferenceType = "Credit Note";
-                }
+                if (openARinvoice.ARInvoiceTypeCode == "CD")                
+                    accountingLedgerRecord.ReferenceType = "Credit Note";                
 
-                else if (openARinvoice.ARInvoiceTypeCode == "CC")
-                {
-                    accountingLedgerRecord.ReferenceType = "Customs Credit";
-                }
+                else if (openARinvoice.ARInvoiceTypeCode == "CC")                
+                    accountingLedgerRecord.ReferenceType = "Customs Credit";                
 
-                else if (openARinvoice.ARInvoiceTypeCode == "CI")
-                {
-                    accountingLedgerRecord.ReferenceType = "Customs Invoice";
-                }
+                else if (openARinvoice.ARInvoiceTypeCode == "CI")                
+                    accountingLedgerRecord.ReferenceType = "Customs Invoice";                
 
-                else
-                {
-                    accountingLedgerRecord.ReferenceType = "A\\R Invoice";
-                }
+                else                
+                    accountingLedgerRecord.ReferenceType = "A\\R Invoice";                
 
                 if (openARinvoice.ARInvoiceTypeCode == "IN" || openARinvoice.ARInvoiceTypeCode == "MN" || openARinvoice.ARInvoiceTypeCode == "CI")
                 {
                     if (openARinvoice.StatusCode == "AC")
                     {
+                        accountingLedgerRecord.IsAutoCredit = true;
                         accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARinvoice.AmountInInvoiceCurrency);
                         accountingLedgerRecord.CreditInLocalCurrency = (double)Math.Abs((decimal)openARinvoice.AmountInLocalCurrency);
                     }
@@ -357,8 +353,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 }
                 else
                 {
-                    accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARinvoice.AmountInInvoiceCurrency);
-                    accountingLedgerRecord.CreditInLocalCurrency = (double)Math.Abs((decimal)openARinvoice.AmountInLocalCurrency);
+                    if (openARinvoice.StatusCode == "AC" && (creditedByARInvoiceTypeCode == "CD" || creditedByARInvoiceTypeCode == "CC"))
+                    {
+                        accountingLedgerRecord.IsAutoCredit = true;
+                        accountingLedgerRecord.Debit = openARinvoice.AmountInInvoiceCurrency;
+                        accountingLedgerRecord.DebitInLocalCurrency = openARinvoice.AmountInLocalCurrency;
+                    }
+
+                    else
+                    {
+                        accountingLedgerRecord.Credits = (double)Math.Abs((decimal)openARinvoice.AmountInInvoiceCurrency);
+                        accountingLedgerRecord.CreditInLocalCurrency = (double)Math.Abs((decimal)openARinvoice.AmountInLocalCurrency);
+                    }
                 }
 
                 OpeningAccounts.Add(accountingLedgerRecord);
@@ -422,7 +428,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (ARPaymentMethods.Where(d => d.Id == openARpayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
+                AccountingPaymentMethod paymentMethod = ARPaymentMethods.Where(d => d.Id == openARpayment.AccountingPaymentMethodId).FirstOrDefault();
+                if (paymentMethod != null && paymentMethod.Code == "FS")
                 {
                     if (openARpayment.AmountInPaymentCurrency < 0)
                     {
@@ -467,7 +474,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (APPaymentMethods.Where(d => d.Id == openAPpayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
+                AccountingPaymentMethod paymentMethod = APPaymentMethods.Where(d => d.Id == openAPpayment.AccountingPaymentMethodId).FirstOrDefault();
+                if (paymentMethod != null && paymentMethod.Code == "FS")
                 {
                     if (openAPpayment.AmountInPaymentCurrency < 0)
                     {
@@ -541,9 +549,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     {
                         switch (ledger.ReferenceType)
                         {
-                            case "A\\P Payment":
-                            case "A\\R Invoice":
-                            case "A\\P Credit Note":
+                            case "A\\P Payment":                            
+                            case "A\\P Credit Note":                            
                                 {
                                     Openbalance = Openbalance + ledger.Debit;
                                     Openbalance_local = Openbalance_local + ledger.DebitInLocalCurrency;
@@ -554,7 +561,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
 
 
                             case "A\\R Payment":
-                            case "Credit Note":
                             case "A\\P Invoice":
                             case "External Payment":
                                 {
@@ -562,6 +568,49 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                     Openbalance_local = Openbalance_local - ledger.CreditInLocalCurrency;
                                     ledger.AccountBanalnce = Openbalance;
                                     ledger.AccountBalanceInLocalCurrency = Openbalance_local;
+                                    break;
+                                }
+
+                            case "A\\R Invoice":
+                            case "Customs Invoice":
+                                {
+                                    if (ledger.IsAutoCredit)
+                                    {
+                                        Openbalance = Openbalance - ledger.Credits;
+                                        Openbalance_local = Openbalance_local - ledger.CreditInLocalCurrency;
+                                        ledger.AccountBanalnce = Openbalance;
+                                        ledger.AccountBalanceInLocalCurrency = Openbalance_local;
+                                    }
+
+                                    else
+                                    {
+                                        Openbalance = Openbalance + ledger.Debit;
+                                        Openbalance_local = Openbalance_local + ledger.DebitInLocalCurrency;
+                                        ledger.AccountBanalnce = Openbalance;
+                                        ledger.AccountBalanceInLocalCurrency = Openbalance_local;
+                                    }
+
+                                    break;
+                                }
+
+                            case "Credit Note":
+                            case "Customs Credit":
+                                {
+                                    if (ledger.IsAutoCredit)
+                                    {
+                                        Openbalance = Openbalance + ledger.Debit;
+                                        Openbalance_local = Openbalance_local + ledger.DebitInLocalCurrency;
+                                        ledger.AccountBanalnce = Openbalance;
+                                        ledger.AccountBalanceInLocalCurrency = Openbalance_local;
+                                    }
+
+                                    else
+                                    {
+                                        Openbalance = Openbalance - ledger.Credits;
+                                        Openbalance_local = Openbalance_local - ledger.CreditInLocalCurrency;
+                                        ledger.AccountBanalnce = Openbalance;
+                                        ledger.AccountBalanceInLocalCurrency = Openbalance_local;
+                                    }
                                     break;
                                 }
                         }
@@ -640,6 +689,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         accountingLedgerRecord.ShipperReference1 = shipment.ShipperReference1;
                         accountingLedgerRecord.ShipperReference2 = shipment.ShipperReference2;
                         accountingLedgerRecord.ShipmentNumber = shipment.ShipmentNumber;
+                        accountingLedgerRecord.ProjectNumber = shipment.ProjectNumber;
+                        accountingLedgerRecord.CustomerReference1 = shipment.CustomerReference1;
+                        accountingLedgerRecord.CustomerReference2 = shipment.CustomerReference2;
                     }
                 }
 
@@ -746,6 +798,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         accountingLedgerRecord.ShipperReference1 = shipment.ShipperReference1;
                         accountingLedgerRecord.ShipperReference2 = shipment.ShipperReference2;
                         accountingLedgerRecord.ShipmentNumber = shipment.ShipmentNumber;
+                        accountingLedgerRecord.ProjectNumber = shipment.ProjectNumber;
+                        accountingLedgerRecord.CustomerReference1 = shipment.CustomerReference1;
+                        accountingLedgerRecord.CustomerReference2 = shipment.CustomerReference2;
                     }
                 }
 
@@ -794,6 +849,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.ReferenceType = "A\\R Payment";
                 accountingLedgerRecord.CustomerId = arPayment.BillToId;
                 accountingLedgerRecord.PartnerId = arPayment.PartnerId;
+                
 
                 if (arPayment.BranchId != null)
                 {
@@ -815,7 +871,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (ARPaymentMethods.Where(d => d.Id == arPayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
+                AccountingPaymentMethod paymentMethod = ARPaymentMethods.Where(d => d.Id == arPayment.AccountingPaymentMethodId).FirstOrDefault();
+                if (paymentMethod != null && paymentMethod.Code == "FS")
                 {
                     if (arPayment.AmountInPaymentCurrency < 0)
                     {
@@ -840,7 +897,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = arPayment.InternalNotes;
                 accountingLedgerRecord.RegisterDate = arPayment.RegisterDate;
                 accountingLedgerRecord.ValueDate = arPayment.ValueDate;
-                accountingLedgerRecord.PaymentMethod = ARPaymentMethods.Where(d => d.Id == arPayment.AccountingPaymentMethodId).FirstOrDefault().Name;
+                accountingLedgerRecord.PaymentMethod = paymentMethod == null ? null : paymentMethod.Name;
 
                 tempList.Add(accountingLedgerRecord);
             }
@@ -885,7 +942,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                     }
                 }
 
-                if (APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Code == "FS")
+                AccountingPaymentMethod paymentMethod = APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault();
+                if (paymentMethod != null && paymentMethod.Code == "FS")
                 {
                     if (apPayment.AmountInPaymentCurrency < 0)
                     {
@@ -910,7 +968,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                 accountingLedgerRecord.Notes = apPayment.InternalNotes;
                 accountingLedgerRecord.RegisterDate = apPayment.RegisterDate;
                 accountingLedgerRecord.ValueDate = apPayment.ValueDate;
-                accountingLedgerRecord.PaymentMethod = APPaymentMethods.Where(d => d.Id == apPayment.AccountingPaymentMethodId).FirstOrDefault().Name;
+                accountingLedgerRecord.PaymentMethod = paymentMethod == null ? null : paymentMethod.Name;
 
                 tempList.Add(accountingLedgerRecord);
             }
@@ -1071,6 +1129,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                                 }
                         }
 
+                        if (ledger.AccountBanalnce == null)
+                            ledger.AccountBanalnce = 0;
+
+                        if (ledger.AccountBalanceInLocalCurrency == null)
+                            ledger.AccountBalanceInLocalCurrency = 0;
+
                         AccountingLedger currencyRecord = new AccountingLedger();
                         currencyRecord.Currency = ledger.Currency;
                         currencyRecord.CreateDate = ledger.CreateDate;
@@ -1093,7 +1157,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports
                         currencyRecord.MasterNumber = ledger.MasterNumber;
                         currencyRecord.HouseNumber = ledger.HouseNumber;
                         currencyRecord.Description = ledger.Description;
-
+                        currencyRecord.ProjectNumber = ledger.ProjectNumber;
+                        currencyRecord.CustomerReference1 = ledger.CustomerReference1;
+                        currencyRecord.CustomerReference2 = ledger.CustomerReference2;
                         customerRecord.AccountingLedgerList.Add(currencyRecord);
                     }
                 }

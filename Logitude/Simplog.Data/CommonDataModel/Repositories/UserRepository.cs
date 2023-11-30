@@ -46,6 +46,10 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return (from record in context.Users where record.Tenant == tenant && record.IsTwoFactorAuthenticationEnabled select record).Any();
         }
 
+        public User GetSingleUserById(string id)
+        {
+            return context.Users.FirstOrDefault(x => x.Id == id);
+        }
 
         public User GetSingleUser(string id, int tenant)
         {

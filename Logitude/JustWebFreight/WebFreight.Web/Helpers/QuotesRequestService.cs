@@ -4,6 +4,8 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.QuoteModel.EntityPMs;
+using Logitude.BL.QuoteModel.EntityQueries;
 using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.BL.EntityQueryServices;
 using Logitude.CRM.BL.EntityUpdateServices;
@@ -28,6 +30,7 @@ namespace WebFreight.Web.Helpers
     {
         private QuotesRequestFilters quotesRequestFilters = null;
         private List<TicketList> tickets = null;
+        private List<QuoteDocumentVersionPM> quoteDocumentsVersionPMs = null;
         private List<DocumentsFilingList> documentsFilings = null;
         private int tenant;
         private ICRMContext iCRMContext;
@@ -89,7 +92,7 @@ namespace WebFreight.Web.Helpers
 
         private void MapTicketCustomField(TicketPM ticketPM, string fieldCode, string fieldValue)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             CustomFieldResolverArgs customFieldResolverArgs = new CustomFieldResolverArgs
             {
                 ObjectTableName = "Ticket",
@@ -162,6 +165,7 @@ namespace WebFreight.Web.Helpers
         {
             QueryOperations queryOperations = BuildQueryOperations();
             tickets = GetTickets(queryOperations);
+            quoteDocumentsVersionPMs = GetQuoteDocumentsVersionPMs();
             documentsFilings = GetTicketsDocumentsFilings();
             List<QuotesRequest> quotesRequests = BuildQuotesRequests();
             return quotesRequests;
@@ -177,6 +181,7 @@ namespace WebFreight.Web.Helpers
             queryOperations.SetFilter("EntityType", quoteObjectTableId, false, "Equals", null, false);
             queryOperations.SetFilter("CompanyId", quotesRequestFilters.PartnerId, false, "Equals", null, false);
             queryOperations.SetFilter("SearchFields", quotesRequestFilters.SearchField, false, "Contains", null, false);
+            queryOperations.SetFilter("IsCancelled", false, false, "Equals", null, false);
             MapRequestedByFilterToQueryOperations(queryOperations);
             MapOpenedByFilterToQueryOperations(queryOperations);
             MapCreateDateFilterToQueryOperations(queryOperations);
@@ -210,6 +215,8 @@ namespace WebFreight.Web.Helpers
 
         private void MapCustomerStatusCustomFieldFilterToQueryOperations(QueryOperations queryOperations)
         {
+            if (quotesRequestFilters.CustomerStatus == "All")
+                return;
             List<ObjectField> ticketCustomFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Ticket", tenant);
             ObjectField objectCustomField = ticketCustomFields.Where(f => f.Code.Replace(" ","") == "CustomerStatus").FirstOrDefault();
             if (objectCustomField == null)
@@ -239,6 +246,19 @@ namespace WebFreight.Web.Helpers
             return documentsFilings;
         }
 
+        private List<QuoteDocumentVersionPM> GetQuoteDocumentsVersionPMs()
+        {
+            if (tickets.Count == 0)
+            {
+                return new List<QuoteDocumentVersionPM>();
+            }
+            List<string> QuoteIds = tickets.Select(d => d.QuoteId).ToList();
+            QuoteDocumentVersionQuery quoteDocumentVersionQuery = new QuoteDocumentVersionQuery(tenant);
+            List<QuoteDocumentVersionPM> quoteDocumentVersionPMs = quoteDocumentVersionQuery.GetQuoteDocumentVersionsPMByQuotesIds(QuoteIds, tenant);
+            return quoteDocumentVersionPMs;
+        }
+
+
         private List<QuotesRequest> BuildQuotesRequests()
         {
             List<QuotesRequest> quotesRequests = new List<QuotesRequest>();
@@ -253,7 +273,7 @@ namespace WebFreight.Web.Helpers
         private QuotesRequest GetNewInStanceFromQuotesRequest(TicketList ticketList)
         {
             List<ObjectField> ticketCustomFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Ticket", this.tenant);
-            
+
             QuotesRequest quotesRequest = new QuotesRequest()
             {
                 Id = ticketList.Id,
@@ -269,12 +289,25 @@ namespace WebFreight.Web.Helpers
                 PONumber = GetCustomFieldValueByEntityAndCode(ticketList, ticketCustomFields, "PO"),
                 Brand = GetCustomFieldValueByEntityAndCode(ticketList, ticketCustomFields, "Brand"),
             };
-            if (documentsFilings.Where(d => d.EntityId == ticketList.Id).Any())
+            FillQuotationDocumentFiling(ticketList, quotesRequest);
+            return quotesRequest;
+
+        }
+
+        private void FillQuotationDocumentFiling(TicketList ticketList, QuotesRequest quotesRequest)
+        {
+            QuoteDocumentVersionPM quoteDocumentVersionPM = quoteDocumentsVersionPMs.Where(quoteDocumentsVersion => quoteDocumentsVersion.QuoteId == ticketList.QuoteId).FirstOrDefault();
+            if (quoteDocumentVersionPM != null)
+            {
+                quotesRequest.QuotationDocumentFiling = new DocumentsFilingList() {
+                    DocumentId = quoteDocumentVersionPM.DocumentId,
+                    CreateDate = quoteDocumentVersionPM.CreateDate,
+                };
+            }
+            else if (documentsFilings.Where(d => d.EntityId == ticketList.Id).Any())
             {
                 quotesRequest.QuotationDocumentFiling = GetLatestCreatedDocumentsFilingByEntityId(ticketList.Id);
             }
-            return quotesRequest;
-
         }
 
         private string GetCustomFieldValueByEntityAndCode(object entity, List<ObjectField> entityCustomFields, string customFieldCode)
@@ -288,7 +321,7 @@ namespace WebFreight.Web.Helpers
 
         private string GetCustomFieldValue(ObjectField objectField, object entity, int tenant)
         {
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             object customFieldValue = customFieldResolver.GetFieldValue(entity, objectField, tenant);
             if (customFieldValue != null)
                 return customFieldValue.ToString();

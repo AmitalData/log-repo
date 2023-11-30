@@ -9,6 +9,7 @@
   ObjectTablePlural="&quot;SchedulerProcedures&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -37,7 +38,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Scheduler Procedure&quot;"
-  Code="&quot;ec52&quot;"
+  Code="&quot;b38a&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -54,6 +55,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;c1dc&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -85,6 +87,7 @@
     SystemMaxLength="100"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -157,6 +160,7 @@
     SystemMaxLength="100"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -229,6 +233,7 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -301,6 +306,7 @@
     SystemMaxLength="1000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="true"
@@ -373,6 +379,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -550,6 +557,71 @@
       Name="&quot;ExchangeRateUpdateTask&quot;"
       SearchFields="&quot;ExchangeRateUpdateTask&quot;"
       Description="&quot;ExchangeRateUpdateTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;ContainerAutomaticallyClosingTask&quot;"
+      Name="&quot;ContainerAutomaticallyClosingTask&quot;"
+      SearchFields="&quot;ContainerAutomaticallyClosingTask&quot;"
+      Description="&quot;ContainerAutomaticallyClosingTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;RecalculateCashbooksTotalsTask&quot;"
+      Name="&quot;RecalculateCashbooksTotalsTask&quot;"
+      SearchFields="&quot;RecalculateCashbooksTotalsTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;ResetFullTextSearchIndexChangeTrackingTask&quot;"
+      Name="&quot;ResetFullTextSearchIndexChangeTrackingTask&quot;"
+      SearchFields="&quot;ResetFullTextSearchIndexChangeTrackingTask&quot;"
+      Description="&quot;ResetFullTextSearchIndexChangeTrackingTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;UpdateCanceledSATEntitiesStatusesTask&quot;"
+      Name="&quot;UpdateCanceledSATEntitiesStatusesTask&quot;"
+      SearchFields="&quot;UpdateCanceledSATEntitiesStatusesTask&quot;"
+      IsInternallyDefined="false"
+      Description="&quot;UpdateCanceledSATEntitiesStatusesTask&quot;" />
+    <Record
+      Code="&quot;DeleteOldContactActivityLogsTask&quot;"
+      Name="&quot;DeleteOldContactActivityLogsTask&quot;"
+      SearchFields="&quot;DeleteOldContactActivityLogsTask&quot;"
+      Description="&quot;DeleteOldContactActivityLogsTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;DeleteOldAnalyzeQueuesTask&quot;"
+      Name="&quot;DeleteOldAnalyzeQueuesTask&quot;"
+      SearchFields="&quot;DeleteOldAnalyzeQueuesTask&quot;"
+      Description="&quot;DeleteOldAnalyzeQueuesTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;DeleteOldMobileNotificationLogsTask&quot;"
+      Name="&quot;DeleteOldMobileNotificationLogsTask&quot;"
+      SearchFields="&quot;DeleteOldMobileNotificationLogsTask&quot;"
+      Description="&quot;DeleteOldMobileNotificationLogsTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;DeleteOldPerformanceLogsTask&quot;"
+      Name="&quot;DeleteOldPerformanceLogsTask&quot;"
+      SearchFields="&quot;DeleteOldPerformanceLogsTask&quot;"
+      Description="&quot;DeleteOldPerformanceLogsTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;DeleteOldBIReportsExecutionLogsTask&quot;"
+      Name="&quot;DeleteOldBIReportsExecutionLogsTask&quot;"
+      SearchFields="&quot;DeleteOldBIReportsExecutionLogsTask&quot;"
+      Description="&quot;DeleteOldBIReportsExecutionLogsTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;DeleteOldReportExecutionLogsTask&quot;"
+      Name="&quot;DeleteOldReportExecutionLogsTask&quot;"
+      SearchFields="&quot;DeleteOldReportExecutionLogsTask&quot;"
+      Description="&quot;DeleteOldReportExecutionLogsTask&quot;"
+      IsInternallyDefined="false" />
+    <Record
+      Code="&quot;DeleteOldDocumentsExecutionLogsTask&quot;"
+      Name="&quot;DeleteOldDocumentsExecutionLogsTask&quot;"
+      SearchFields="&quot;DeleteOldDocumentsExecutionLogsTask&quot;"
+      Description="&quot;DeleteOldDocumentsExecutionLogsTask&quot;"
       IsInternallyDefined="false" />
   </Records>
   <DataContracts />

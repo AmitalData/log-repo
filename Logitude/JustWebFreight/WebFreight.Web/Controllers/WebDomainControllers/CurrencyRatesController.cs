@@ -98,7 +98,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        public HttpResponseMessage GetCurrenciesExchangeRateByValueDate(string currencyId, string dateString)
+        public HttpResponseMessage GetCurrenciesExchangeRateByValueDate(string currencyId, string dateString,bool calculateRateAccordingNumberUnit)
         {
             try
             {
@@ -114,7 +114,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
 
                 WebFreightDomainService domain = new WebFreightDomainService();
-                results = domain.GetCurrenciesExchangeRateByValueDate(authToken.Tenant, currencyId, loadingDate);
+                results = domain.GetCurrenciesExchangeRateByValueDate(authToken.Tenant, currencyId, loadingDate, calculateRateAccordingNumberUnit);
                 return Request.CreateResponse(HttpStatusCode.OK, results);
 
             }
@@ -162,6 +162,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                     if (args.TenantPM != null)
                     {
+                        SecurityUtility.AuthenticationOnTenant(args.TenantPM.Id);
+                        SecurityUtility.AuthenticationOnEntityTenant("RatesTable", args.TenantPM.Id, authToken.Tenant);
                         WebFreightDomainService webFreightDomain = new WebFreightDomainService();
                         CommonDataDomainService commonDataDomain = new CommonDataDomainService();
 
@@ -231,6 +233,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(args.Tenant);
 
                 args.Tenant = authToken.Tenant;
                 SystemCurrencyChanger changeCurrencyManager = new SystemCurrencyChanger(args);

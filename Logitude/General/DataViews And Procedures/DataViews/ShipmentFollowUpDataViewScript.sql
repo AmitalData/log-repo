@@ -85,6 +85,12 @@ SELECT         dbo.Shipments.Id, dbo.Shipments.Tenant, dbo.Shipments.ShipmentNum
 						 dbo.Shipments.Field26, dbo.Shipments.Field27, dbo.Shipments.Field28, dbo.Shipments.Field29, dbo.Shipments.Field30,
 						 dbo.Shipments.Field31, dbo.Shipments.Field32, dbo.Shipments.Field33, dbo.Shipments.Field34, dbo.Shipments.Field35,
 						 dbo.Shipments.Field36, dbo.Shipments.Field37, dbo.Shipments.Field38, dbo.Shipments.Field39, dbo.Shipments.Field40,
+                         dbo.Shipments.Field41, dbo.Shipments.Field42, dbo.Shipments.Field43, dbo.Shipments.Field44, dbo.Shipments.Field45,
+                         dbo.Shipments.Field46, dbo.Shipments.Field47, dbo.Shipments.Field48, dbo.Shipments.Field49, dbo.Shipments.Field50,
+                         dbo.Shipments.Field51, dbo.Shipments.Field52, dbo.Shipments.Field53, dbo.Shipments.Field54, dbo.Shipments.Field55,
+                         dbo.Shipments.Field56, dbo.Shipments.Field57, dbo.Shipments.Field58, dbo.Shipments.Field59, dbo.Shipments.Field60,
+                         dbo.Shipments.Field61, dbo.Shipments.Field62, dbo.Shipments.Field63, dbo.Shipments.Field64, dbo.Shipments.Field65, 
+                         dbo.Shipments.Field66, dbo.Shipments.Field67, dbo.Shipments.Field68, dbo.Shipments.Field69, dbo.Shipments.Field70,
 
                          dbo.Shipments.AgentContactId, dbo.Shipments.AgentAddressId, dbo.Shipments.CustomAgentImportAddressId, dbo.Shipments.CustomAgentImportContactId, 
                          dbo.Shipments.ShipperContactId, dbo.Shipments.Notify2ContactId, dbo.Shipments.Notify1ContactId, dbo.Shipments.Notify2AddressId, 

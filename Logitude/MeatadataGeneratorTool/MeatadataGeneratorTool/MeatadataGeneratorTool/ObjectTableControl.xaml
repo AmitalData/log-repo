@@ -153,7 +153,7 @@
                                             <TextBlock Grid.Row="29" Grid.Column="0" VerticalAlignment="Center" Text="Has Filters Menu:" />
                                             <TextBlock Grid.Row="30" Grid.Column="0" VerticalAlignment="Center" Text="Lov Display Member Path:" />
                                             <TextBlock Grid.Row="31" Grid.Column="0" VerticalAlignment="Center" Text="Lov Display Member Path Local:" />
-                                            
+
 
 
                                             <TextBox Grid.Row="0" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding ObjectTableName, Mode=TwoWay}" />
@@ -192,7 +192,7 @@
                                             <CheckBox Grid.Row="29" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasFiltersMenu, Mode=TwoWay}" />
                                             <ComboBox x:Name="cmbDisplay" Grid.Row="30" Grid.Column="1" Height="22" VerticalAlignment="Center" DisplayMemberPath="FieldName" ItemsSource="{Binding ObsList}" SelectedValue="{Binding LovDisplayMemberPath, Mode=TwoWay}" SelectedValuePath="FieldName" />
                                             <ComboBox x:Name="cmbDisplayLocal" Grid.Row="31" Grid.Column="1" Height="22" VerticalAlignment="Center" DisplayMemberPath="FieldName" ItemsSource="{Binding ObsList}" SelectedValue="{Binding LovDisplayMemberPathLocal, Mode=TwoWay}" SelectedValuePath="FieldName" />
-                                            
+
                                         </Grid>
 
                                         <Grid Grid.Column="2">
@@ -262,6 +262,7 @@
                                             <TextBlock Grid.Row="25" Grid.Column="0" VerticalAlignment="Center" Text="Has Custom Validator:" />
                                             <TextBlock Grid.Row="26" Grid.Column="0" VerticalAlignment="Center" Text="Has Menu Buttons:" />
                                             <TextBlock Grid.Row="27" Grid.Column="0" VerticalAlignment="Center" Text="Apply OnProperty Changed Code:" />
+                                            <TextBlock Grid.Row="28" Grid.Column="0" VerticalAlignment="Center" Text="Tenant Zero Data:" />
 
                                             <CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IsNewWizard, Mode=TwoWay}" />
                                             <TextBox Grid.Row="1" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding NewWizardControlName, Mode=TwoWay}" />
@@ -291,6 +292,7 @@
                                             <CheckBox Grid.Row="25" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasCustomValidator, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="26" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasMenuButtons, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="27" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ApplyOnPropertyChangedCode, Mode=TwoWay}" />
+                                            <CheckBox Grid.Row="28" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding TenantZeroData, Mode=TwoWay}" />
                                         </Grid>
 
                                         <Grid Grid.Column="4">
@@ -300,6 +302,10 @@
                                                 <ColumnDefinition />
                                             </Grid.ColumnDefinitions>
                                             <Grid.RowDefinitions>
+                                                <RowDefinition Height="28" />
+                                                <RowDefinition Height="28" />
+                                                <RowDefinition Height="28" />
+                                                <RowDefinition Height="28" />
                                                 <RowDefinition Height="28" />
                                                 <RowDefinition Height="28" />
                                                 <RowDefinition Height="28" />
@@ -330,6 +336,11 @@
                                             <TextBlock Grid.Row="10" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Database Type:" />
                                             <TextBlock Grid.Row="11" Grid.Column="0" VerticalAlignment="Center" FontWeight="Bold" Text="Database Schema:" />
                                             <TextBlock Grid.Row="12" Grid.Column="0" VerticalAlignment="Center" Text="Is Business Unit Enabled :" />
+                                            <TextBlock Grid.Row="13" Grid.Column="0" VerticalAlignment="Center" Text="Parent Object Table Name:" />
+                                            <TextBlock Grid.Row="14" Grid.Column="0" VerticalAlignment="Center" Text="Available In Customization:" />
+                                            <TextBlock Grid.Row="15" Grid.Column="0" VerticalAlignment="Center" Text="Support Sub Entity:" />
+                                            <TextBlock Grid.Row="16" Grid.Column="0" VerticalAlignment="Center" Text="Apply Generic Custom Fields:" />
+                                            <TextBlock Grid.Row="17" Grid.Column="0" VerticalAlignment="Center" Text="Available In Document Types:" />
 
                                             <CheckBox Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasApiHelper, Mode=TwoWay}" />
                                             <CheckBox Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding HasCustomFields, Mode=TwoWay}" />
@@ -343,7 +354,12 @@
                                             <TextBox Grid.Row="9" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding DBTableShortName, Mode=TwoWay}" />
                                             <ComboBox Grid.Row="10" Grid.Column="1" Height="22" VerticalAlignment="Center" DisplayMemberPath="Name" ItemsSource="{Binding DxmlDatabaseTypes}" SelectedValue="{Binding DxmlDatabaseTypeCode, Mode=TwoWay}" SelectedValuePath="Code" />
                                             <ComboBox Grid.Row="11" Grid.Column="1" Height="22" VerticalAlignment="Center" DisplayMemberPath="Name" ItemsSource="{Binding DxmlDatabaseSchemas}" SelectedValue="{Binding DxmlDatabaseSchemaCode, Mode=TwoWay}" SelectedValuePath="Code" />
-                                            <CheckBox Grid.Row="12" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IsBusinessUnitEnabled , Mode=TwoWay}" />
+                                            <CheckBox Grid.Row="12" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding IsBusinessUnitEnabled , Mode=TwoWay}" HorizontalAlignment="Right" Margin="0,7" Width="220" />
+                                            <TextBox Grid.Row="13" Grid.Column="1" Height="22" VerticalAlignment="Center" Text="{Binding ParentObjectTableName, Mode=TwoWay}" TextChanged="TextBox_TextChanged" />
+                                            <CheckBox Grid.Row="14" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding AvailableInCustomization , Mode=TwoWay}" />
+                                            <CheckBox Grid.Row="15" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding SupportSubEntity , Mode=TwoWay}" />
+                                            <CheckBox Grid.Row="16" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding ApplyGenericCustomFields , Mode=TwoWay}" />
+                                            <CheckBox Grid.Row="17" Grid.Column="1" VerticalAlignment="Center" IsChecked="{Binding AvailableInDocumentTypes , Mode=TwoWay}" />
 
                                         </Grid>
 
@@ -2663,9 +2679,9 @@
                                             <RowDefinition Height="*" />
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="300" />
                                             <ColumnDefinition Width="auto" />
-                                            <ColumnDefinition Width="200" />
+                                            <ColumnDefinition Width="300" />
                                             <ColumnDefinition Width="*" />
                                         </Grid.ColumnDefinitions>
                                         <StackPanel Grid.Row="0"

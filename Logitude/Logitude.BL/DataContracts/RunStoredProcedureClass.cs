@@ -1,16 +1,19 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -135,45 +138,26 @@ namespace Logitude.BL.DataContracts
             }
         }
 
-        private static bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
-        {
-            if (loggedTenant.CustomerTenantShareExportFile == true) //&& FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id)
-            {
-                return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
-            }
-            else
-            {
-                return false;
-            }
-        }
-        private static bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM)
-        {
-            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
         public static void CreateShipmentQueue(string shipmentId, int tenant)
         {
             try
             {
 
                 var tenantQuery = new TenantQuery(tenant);
-                var tenantPM = tenantQuery.GetSinglePM(tenant);
+                var tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
                 var ShipmentQuery = new ShipmentQuery(tenant);
                 var entityPM = ShipmentQuery.GetSinglePMWithoutComposition(shipmentId, tenant);
                 if (entityPM != null && tenantPM != null)
                 {
-                    if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && tenantPM.IsCustomerTenantShare && (entityPM.DirectionId.ToUpper() == "C" || IsExportShipmentsAllowedForLogBox(tenantPM, entityPM) || IsImportShipmentsAllowedForLogBox(tenantPM, entityPM)))
+                    //Duplicated Logic Should Be Replaced --
+                    if (!tenantPM.IsDocumentsArchive && !entityPM.IsCancelled && IsImportShipmentsAllowedForLogBox(tenantPM, entityPM) && IsLogBoxQueueEnabled(entityPM, tenantPM.Id))
                     {
                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, entityPM.CustomerId);
 
-                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && IsImporterTenantHasExportFeatureForExportShipments(customerTenantAccessInfo.CustomerTenant, entityPM))
+                        PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, entityPM, customerTenantAccessInfo);
+
+                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && customerTenantAccessInfo.CustomerTenant != 0 && privateLabelShipmentService.IsShipmentsAllowedForLogBox())
                         {
                             var ImporterTenant = customerTenantAccessInfo.CustomerTenant;
                             IQueueService queueservice = new DbQueueService();
@@ -200,7 +184,18 @@ namespace Logitude.BL.DataContracts
             }
         }
 
-      
+        //Duplicated Logic Should Be Replaced --
+        private static bool IsLogBoxQueueEnabled(ShipmentPM entityPM, int tenant)
+        {
+            if (string.IsNullOrEmpty(entityPM.CustomerShipmentNumber) && entityPM.CustomerTenantNumber != null) return true;
+
+            CustomerRepository customerRepository = new CustomerRepository(tenant);
+            Customer customer = customerRepository.GetSingleCustomer(entityPM.CustomerId, tenant, true);
+            if (customer != null && (customer.LogBoxActivated || customer.IsPrivateLabelCustomer)) return true;
+
+            return false;
+        }
+
         public static void UpdateCustomConnectToShipment(string shipmentId, int tenant)
         {
             string strConnString = GetConnection(tenant);
@@ -400,7 +395,7 @@ namespace Logitude.BL.DataContracts
 
         public static void RunEreaseTenantData(int tenant, string procedureName)
         {
-            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
             {
                 string strConnString = GetConnection(tenant);
                 using (SqlConnection cn = new SqlConnection(strConnString))
@@ -453,5 +448,27 @@ namespace Logitude.BL.DataContracts
                 scope.Complete();
             }
         }
+
+
+
+        public static void UpdatePortSearcsFields(string portId, int tenant)
+        {
+            string strConnString = GetConnection(tenant);
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+                SqlCommand cmd = new SqlCommand("usp_UpdatePortSearchFieldsFunction", cn);
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                SqlParameter param1 = new SqlParameter("@PortId", SqlDbType.VarChar);
+                param1.Direction = ParameterDirection.Input;
+                param1.Value = portId;
+                cmd.Parameters.Add(param1);
+
+                cn.Open();
+                cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+        }
+
     }
 }

@@ -2,6 +2,7 @@
 using Logitude.Accounting.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -30,10 +31,52 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                         LocalAmount = a.LocalAmount ,
                         ValueDate = a.ValueDate,
                         ChequeNumber = a.ChequeNumber,
-                        PaymentId = a.PaymentId
+                        PaymentId = a.PaymentId,
+                        CurrencyId = a.CurrencyId,
+
                     }).ToList();
 
 
+        }
+
+
+        public List<ARPaymentChequePM> GetARPaymentChequesBySinglePaymentId(string paymentId, int tenant)
+        {
+
+
+
+            List<ARPaymentCheque> paymentCheques = (from a in context.ARPaymentCheques
+                                                    where paymentId == a.PaymentId && a.Tenant == tenant
+                                                    select a).ToList();
+
+            return (from a in paymentCheques
+                    select new ARPaymentChequePM()
+                    {
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        StatusCode = a.StatusCode,
+                        LocalAmount = a.LocalAmount,
+                        ValueDate = a.ValueDate,
+                        ChequeNumber = a.ChequeNumber,
+                        PaymentId = a.PaymentId,
+                        BankAccount = a.BankAccount,
+                        BankBranch = a.BankBranch 
+                    }).ToList();
+
+
+        }
+
+
+
+        public int GetARPaymentChequesCountWithValueDateGreaterThanARPaymentRegisterDate(List<string> paymentIds, int tenant)
+        {
+            List<ARPaymentCheque> paymentCheques = (from a in context.ARPaymentCheques.Include("Payment")
+                                                    where paymentIds.Contains(a.PaymentId) 
+                                                    && a.ValueDate > a.Payment.RegisterDate
+                                                    && a.Tenant == tenant 
+                                                    && a.StatusCode != PaymentChequeStatuses.Redeemed.ToString() && a.StatusCode != PaymentChequeStatuses.ReturnedToCustomer.ToString()
+                                                    select a).ToList();
+            return paymentCheques.Count();
         }
 
 
@@ -150,7 +193,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public List<ARPaymentChequePM> GetOpenARPaymentCheques( int tenant)
         {
             List<ARPaymentCheque> pocos = (from a in context.ARPaymentCheques
-                                    where  a.Tenant == tenant && a.StatusCode != "5" && a.StatusCode != "6"
+                                    where  a.Tenant == tenant
                                     
                                     select a).ToList();
 
@@ -164,6 +207,11 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                     select a).ToList();
 
             return cheques.Select(rec => GetEntityPM(rec)).ToList();
+        }
+
+        public string GetAccountIdForCheque(int tenant, string paymentId, int lineNumber)
+        {
+            return repository.GetAccountIdForCheque(tenant, paymentId, lineNumber);
         }
     }
 }

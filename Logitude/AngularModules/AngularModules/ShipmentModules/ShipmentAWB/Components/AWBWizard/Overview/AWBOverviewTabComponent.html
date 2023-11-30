@@ -320,7 +320,7 @@
                                                                     </td>
 
                                                                     <td style="width: 110px;" *ngIf="IsFSRButtonVisible">
-                                                                        <button  id="{{'FSRRequestBtn' | IdGeneratorPipe}}" class="Button" [disabled]="!IsFSRButtonEnabled" (click)="SendFSRClicked()">FSR Status Request</button>
+                                                                        <button  id="{{'FSRRequestBtn' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="!IsFSRButtonEnabled" (click)="SendFSRClicked()">FSR Status Request</button>
                                                                     </td>
 
                                                                     <td style="width: 5px;">

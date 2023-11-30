@@ -53,10 +53,16 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             IQueryable<TextCode> textcodes = from a in context.TextCodes.Include("ObjectTable").Include("SpellCheckedByUser")
                                              where (a.Tenant == tenant || a.Tenant == 0)
                                              select a;
-
             return textcodes;
         }
 
+        public IQueryable<TextCode> GetTextCodesByTenantForCustomization(int tenant)
+        {
+            IQueryable<TextCode> textcodes = from a in context.TextCodes
+                                             where (a.Tenant == tenant || a.Tenant == 0)
+                                             select a;
+            return textcodes;
+        }
 
         public List<TextCode> GetTextCodesByTenantAndObjectTable(int tenant, string objectTableName)
         {
@@ -66,6 +72,22 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                                         where (a.Tenant == tenant || a.Tenant == 0) && a.ObjectTableId == table.Id && a.InActive == false
                                              select a).ToList();
 
+            return textcodes;
+        }
+
+        public List<TextCode> GetDigitalTextCodesByTenantAndObjectTable(int tenant, string objectTableName)
+        {
+            var allowedTextCodesTypes = new List<string> { "F", "QC", "CH", "TH", "G" , "O"};
+
+            List<TextCode> textcodes = context.TextCodes
+                                              .Where(a => (a.Tenant == tenant || a.Tenant == 0) 
+                                                           && (a.ObjectTable.Name.Equals(objectTableName) 
+                                                                || (a.ObjectTable
+                                                                    .Name
+                                                                    .Equals("general", StringComparison.InvariantCultureIgnoreCase)
+                                                                    && a.Code.StartsWith(objectTableName))) 
+                                                           && allowedTextCodesTypes.Contains(a.TextCodeTypeCode))
+                                              .ToList();
             return textcodes;
         }
 
@@ -295,5 +317,6 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
             return textcodes;
         }
+
     }
 }

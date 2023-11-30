@@ -5,34 +5,39 @@ using Simplog.Server.Infrastructure.Helpers;
 
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
+using System.Transactions;
 
 namespace Simplog.Data.InfrastructureModel.Repositories
 {
-    public class EntityLastActivityRepository:IRepository<EntityLastActivity>
+    public class EntityLastActivityRepository : IRepository<EntityLastActivity>
     {
 
         IWebFreightContext webFreightContext;
+        IWebFreightContext webFreightSecondContext;
         public EntityLastActivityRepository()
         {
             webFreightContext = new WebFreightContext();
 
+            webFreightSecondContext = new WebFreightContext();
         }
 
         public EntityLastActivityRepository(IWebFreightContext context)
         {
             webFreightContext = context;
+            webFreightSecondContext = context;
         }
         public EntityLastActivityRepository(int tenant)
         {
             webFreightContext = WebFreightContext.GetContext(tenant);
+            webFreightSecondContext = WebFreightContext.GetSecondaryContext(tenant);
         }
 
         public IQueryable<EntityLastActivity> GetEntityLastActivitiesForUser(string userId, int tenant)
         {
             DateTime present = DateTime.Now.Date;
             IQueryable<EntityLastActivity> entityLastAccesses = from a in context.EntityLastActivities
-                                                              where a.UserId == userId && a.Tenant == tenant && a.ActivityDate < present
-                                                              select a;
+                                                                where a.UserId == userId && a.Tenant == tenant && a.ActivityDate < present
+                                                                select a;
             return entityLastAccesses;
         }
 
@@ -52,57 +57,61 @@ namespace Simplog.Data.InfrastructureModel.Repositories
 
         public List<EntityLastActivity> GetTopEntityLastActivities(int tenant, string userId, string objectTableId)
         {
-            IQueryable<EntityLastActivity> lastActivitiesQuery = null;
-            if (tenant != 65)
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromSeconds(10)))
             {
-                lastActivitiesQuery = (from a in context.EntityLastActivities.Include("ActivityType").Include("User.Contact")
-                                       where a.Tenant == tenant && a.UserId == userId && a.ObjectTableId == objectTableId
-                                       select a).OrderByDescending(d => d.ActivityDate);
-            }
-            else
-            {
-                lastActivitiesQuery = (from a in context.EntityLastActivities.Include("ActivityType").Include("User.Contact")
-                                       where a.Tenant == tenant && a.ObjectTableId == objectTableId
-                                       select a).OrderByDescending(d => d.ActivityDate);
-            }
-            var lastActivitiesGroup = (from a in lastActivitiesQuery
-                                       group a by new { EntityId = a.EntityId, ObjectTableId = a.ObjectTableId, UserId = a.UserId, Tenant = a.Tenant } into g
-                                       select new { EntityId = g.Key.EntityId, ObjectTableId = g.Key.ObjectTableId, UserId = g.Key.UserId, Tenant = g.Key.Tenant, ActivityDate = g.Max(d => d.ActivityDate) }).OrderByDescending(d => d.ActivityDate).Take(10);
-            List<EntityLastActivity> lastActivities = new List<EntityLastActivity>();
-            foreach (var activityGroup in lastActivitiesGroup)
-            {
-
-                //EntityLastActivity activity = lastActivitiesQuery.Where(d => d.ActivityDate == activityGroup.ActivityDate && d.EntityId == activityGroup.EntityId && d.ObjectTableId == activityGroup.ObjectTableId && d.UserId == activityGroup.UserId).FirstOrDefault();
-
-                EntityLastActivity activity = lastActivitiesQuery.Where(d =>
-                    d.ActivityDate.Year == activityGroup.ActivityDate.Year
-                    && d.ActivityDate.Month == activityGroup.ActivityDate.Month
-                    && d.ActivityDate.Day == activityGroup.ActivityDate.Day
-                    && d.ActivityDate.Hour == activityGroup.ActivityDate.Hour
-                    && d.ActivityDate.Minute == activityGroup.ActivityDate.Minute
-                    && d.ActivityDate.Second == activityGroup.ActivityDate.Second
-                    && d.EntityId == activityGroup.EntityId
-                    && d.ObjectTableId == activityGroup.ObjectTableId
-                    && d.UserId == activityGroup.UserId)
-                        .FirstOrDefault();
-
-                EntityLastActivity existedActivity = (from a in lastActivities
-                                                      where a.EntityId == activity.EntityId && a.ObjectTableId == activity.ObjectTableId
-                                                      select a).FirstOrDefault();
-                if (existedActivity != null)
+                IQueryable<EntityLastActivity> lastActivitiesQuery = null;
+                if (tenant != 65)
                 {
-                    if (activity.ActivityDate > existedActivity.ActivityDate)
-                    {
-                        existedActivity.ActivityDate = activity.ActivityDate;
-                    }
+                    lastActivitiesQuery = (from a in context.EntityLastActivities.Include("ActivityType").Include("User.Contact")
+                                           where a.Tenant == tenant && a.UserId == userId && a.ObjectTableId == objectTableId
+                                           select a).OrderByDescending(d => d.ActivityDate);
                 }
                 else
                 {
-                    lastActivities.Add(activity);
+                    lastActivitiesQuery = (from a in context.EntityLastActivities.Include("ActivityType").Include("User.Contact")
+                                           where a.Tenant == tenant && a.ObjectTableId == objectTableId
+                                           select a).OrderByDescending(d => d.ActivityDate);
                 }
+                var lastActivitiesGroup = (from a in lastActivitiesQuery
+                                           group a by new { EntityId = a.EntityId, ObjectTableId = a.ObjectTableId, UserId = a.UserId, Tenant = a.Tenant } into g
+                                           select new { EntityId = g.Key.EntityId, ObjectTableId = g.Key.ObjectTableId, UserId = g.Key.UserId, Tenant = g.Key.Tenant, ActivityDate = g.Max(d => d.ActivityDate) }).OrderByDescending(d => d.ActivityDate).Take(10);
+                List<EntityLastActivity> lastActivities = new List<EntityLastActivity>();
+                foreach (var activityGroup in lastActivitiesGroup)
+                {
 
+                    //EntityLastActivity activity = lastActivitiesQuery.Where(d => d.ActivityDate == activityGroup.ActivityDate && d.EntityId == activityGroup.EntityId && d.ObjectTableId == activityGroup.ObjectTableId && d.UserId == activityGroup.UserId).FirstOrDefault();
+
+                    EntityLastActivity activity = lastActivitiesQuery.Where(d =>
+                        d.ActivityDate.Year == activityGroup.ActivityDate.Year
+                        && d.ActivityDate.Month == activityGroup.ActivityDate.Month
+                        && d.ActivityDate.Day == activityGroup.ActivityDate.Day
+                        && d.ActivityDate.Hour == activityGroup.ActivityDate.Hour
+                        && d.ActivityDate.Minute == activityGroup.ActivityDate.Minute
+                        && d.ActivityDate.Second == activityGroup.ActivityDate.Second
+                        && d.EntityId == activityGroup.EntityId
+                        && d.ObjectTableId == activityGroup.ObjectTableId
+                        && d.UserId == activityGroup.UserId)
+                            .FirstOrDefault();
+
+                    EntityLastActivity existedActivity = (from a in lastActivities
+                                                          where a.EntityId == activity.EntityId && a.ObjectTableId == activity.ObjectTableId
+                                                          select a).FirstOrDefault();
+                    if (existedActivity != null)
+                    {
+                        if (activity.ActivityDate > existedActivity.ActivityDate)
+                        {
+                            existedActivity.ActivityDate = activity.ActivityDate;
+                        }
+                    }
+                    else
+                    {
+                        lastActivities.Add(activity);
+                    }
+
+                }
+                scope.Complete();   
+                return lastActivities;
             }
-            return lastActivities;
         }
 
         public void Add(EntityLastActivity entity)
@@ -130,6 +139,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         public IWebFreightContext context
         {
             get { return webFreightContext; }
+        }
+        public IWebFreightContext secondContext
+        {
+            get { return webFreightSecondContext; }
         }
 
         public void SubmitChanges()

@@ -1,7 +1,11 @@
-﻿using Simplog.Server.Infrastructure.DataContracts;
+﻿using Logitude.Accounting.Def.Validators;
+using Logitude.BL.Validators;
+using Logitude.Server.Tools;
+using Simplog.Server.Infrastructure.DataContracts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 using System.ServiceModel.DomainServices.Server;
 
 namespace Logitude.BL.InvoiceModel.EntityPMs
@@ -93,9 +97,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string BranchId { get; set; }
         public string BranchName { get; set; }
-
         public string HouseNumber {get; set;}
         public string MasterNumber {get; set;}
+        public string MainEntityMasterShipmentNumbers { get; set; }
         public string Description {get; set;}
         public string VendorPartnerTypeId { get; set; }
         public string CreditAccount { get; set; }
@@ -170,6 +174,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public CustomFieldClass Field10 { get; set; }
 
         public string ShipmentsNumbers { get; set; }
+        public string MasterNumbers { get; set; }
+        public string MasterShipmentNumbers { get; set; }
+        public string HouseNumbers { get; set; }
 
         private List<APInvoiceLinePM> invoiceLines;
         [Include]
@@ -339,5 +346,18 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string VendorVatNumber { get; set; }
 
         public DateTime? PaidDate { get; set; }
+        public Boolean IsNew { get; set; }
+        public Boolean IsCopied { get; set; }
+        public string CopiedFrom { get; set; }
+        public string GlobalTaxCalculation { get; set; }
+        public bool IsUpdateFromPaymentService { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string ConcurrencyGUID { get; set; }
+        public string NewConcurrencyGUID { get; set; }
+        public bool IsEquipment { get; set; }
+        public string ConnectedPaymentsNumbers { get; set; }
+        public string TotalEquation { get; set; }
+        public string ConfirmationNumber { get; set; }
     }
 }

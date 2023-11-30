@@ -55,6 +55,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                              Logs = a.Logs,
                                                              RequestXML = a.RequestXML,
                                                              RetryNumber = a.RetryNumber,
+                                                             ExecutedByServerName = a.ExecutedByServerName,
 
                                                          };
 
@@ -84,6 +85,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 Logs = a.Logs,
                                                 RequestXML = a.RequestXML,
                                                 RetryNumber = a.RetryNumber,
+                                                ExecutedByServerName = a.ExecutedByServerName,
+
                                             }).FirstOrDefault();
             return entity;
         }
@@ -108,6 +111,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                            Logs = a.Logs,
                                                                            RequestXML = a.RequestXML,
                                                                            RetryNumber = a.RetryNumber,
+                                                                           ExecutedByServerName = a.ExecutedByServerName,
+
                                                                        };
             return DocumentsExecutionLogPMs;
         }
@@ -132,6 +137,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                                                Logs = a.Logs,
                                                                                RequestXML = a.RequestXML,
                                                                                RetryNumber = a.RetryNumber,
+                                                                               ExecutedByServerName = a.ExecutedByServerName,
+
 
                                                                            };
             return DocumentsExecutionLogLists;
@@ -150,6 +157,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   StatusCode = a.StatusCode,
                                                   ExceptionMessage = a.ExceptionMessage,
                                                   CreateDate = a.CreateDate,
+                                                  ExecutedByServerName = a.ExecutedByServerName,
+
                                               }).FirstOrDefault();
 
             if (documentsExecutionLogList != null) documentsExecutionLogList.ExceptionMessage = GetUnderStandableMessageFromMessageException(documentsExecutionLogList.ExceptionMessage);

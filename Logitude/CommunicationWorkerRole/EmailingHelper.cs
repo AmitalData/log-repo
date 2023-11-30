@@ -16,6 +16,8 @@ using Microsoft.Practices.Unity;
 using System.Collections.Specialized;
 using SendGrid.SmtpApi;
 using System.Diagnostics;
+using CommunicationWorkerRole.Services;
+using Logitude.Server.Tools;
 
 namespace CommunicationWorkerRole
 {
@@ -27,9 +29,9 @@ namespace CommunicationWorkerRole
 
             //   if (provider != null)
             //  {
-            string strRegex = @"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
+            string strRegex = @"^([a-zA-Z0-9_\'\-\.]+)@((\[[0-9]{1,3}" +
 @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
-@".)+))([a-zA-Z]{2,6}|[0-9]{1,3})(\]?)$";
+@".)+))([a-zA-Z]{2,}|[0-9]{1,3})(\]?)$";
 
             SmtpClient myClient;
             MailMessage myMessage;
@@ -47,7 +49,7 @@ namespace CommunicationWorkerRole
             if (provider != null && provider.SupportsEmailDelivery)
             {
                 myMessage.DeliveryNotificationOptions = DeliveryNotificationOptions.OnFailure;
-                string createDate = parameters.CommunicationLogCreateDate != null ? parameters.CommunicationLogCreateDate.Value.ToString("yyyy-MM-dd HH:mm:ss.fff"): "";
+                string createDate = parameters.CommunicationLogCreateDate != null ? parameters.CommunicationLogCreateDate.Value.ToString("yyyy-MM-dd HH:mm:ss.fff") : "";
                 var header = new Header();
                 var uniqueArgs = new Dictionary<string, string> {
                   {"CommunicationLogId", parameters.CommunicationLogId},
@@ -69,12 +71,11 @@ namespace CommunicationWorkerRole
             myMessage.Subject = subject;
             myMessage.BodyEncoding = System.Text.Encoding.UTF8;
 
-            if (!string.IsNullOrWhiteSpace(provider.UserName) && parameters.SwitchFromWithUserNameIfValid && Regex.IsMatch(provider.UserName, strRegex))
+            if (!string.IsNullOrEmpty(provider.UserName) && !string.IsNullOrWhiteSpace(provider.UserName) && parameters.SwitchFromWithUserNameIfValid && Regex.IsMatch(provider.UserName, strRegex))
             {
                 myMessage.From = new MailAddress(provider.UserName);
             }
-            else
-            if (string.IsNullOrEmpty(parameters.SentByUser))
+            else if (string.IsNullOrEmpty(parameters.SentByUser) || string.IsNullOrWhiteSpace(parameters.SentByUser))
             {
                 if (parameters.From == "no-reply@")
                 {
@@ -97,14 +98,14 @@ namespace CommunicationWorkerRole
             //myMessage.
             string[] emailList = new string[] { };
 
-            if (parameters.To != null)
+            if (!string.IsNullOrEmpty(parameters.To) && !string.IsNullOrWhiteSpace(parameters.To))
             {
                 emailList = parameters.To.Split(';');
             }
 
             for (int i = 0; i < emailList.Length; i++)
             {
-                if (!string.IsNullOrEmpty(emailList[i]))
+                if (!string.IsNullOrEmpty(emailList[i]) && !string.IsNullOrWhiteSpace(emailList[i]))
                 {
                     emailList[i] = emailList[i].Trim();
                     Regex re = new Regex(strRegex);
@@ -116,12 +117,12 @@ namespace CommunicationWorkerRole
                 }
             }
 
-            if (!string.IsNullOrEmpty(parameters.Cc))
+            if (!string.IsNullOrEmpty(parameters.Cc) && !string.IsNullOrWhiteSpace(parameters.Cc))
             {
                 string[] ccList = parameters.Cc.Split(';');
                 for (int i = 0; i < ccList.Length; i++)
                 {
-                    if (!string.IsNullOrEmpty(ccList[i]))
+                    if (!string.IsNullOrEmpty(ccList[i]) && !string.IsNullOrWhiteSpace(ccList[i]))
                     {
                         Regex re = new Regex(strRegex);
                         if (re.IsMatch(ccList[i]))
@@ -129,19 +130,17 @@ namespace CommunicationWorkerRole
                             MailAddress mailaddress = new MailAddress(ccList[i]);
                             myMessage.CC.Add(mailaddress);
                         }
-
                     }
                 }
-
             }
 
             //Bcc
-            if (!string.IsNullOrEmpty(parameters.Bcc))
+            if (!string.IsNullOrEmpty(parameters.Bcc) && !string.IsNullOrWhiteSpace(parameters.Bcc))
             {
                 string[] bccList = parameters.Bcc.Split(';');//to be fixed to Bcc when field is ready!
                 for (int i = 0; i < bccList.Length; i++)
                 {
-                    if (!string.IsNullOrEmpty(bccList[i]))
+                    if (!string.IsNullOrEmpty(bccList[i]) && !string.IsNullOrWhiteSpace(bccList[i]))
                     {
                         Regex re = new Regex(strRegex);
                         if (re.IsMatch(bccList[i]))
@@ -150,12 +149,9 @@ namespace CommunicationWorkerRole
                             myMessage.Bcc.Add(mailaddress);
 
                         }
-
                     }
                 }
-
             }
-
 
 
             //=======================================================================================================================
@@ -165,98 +161,101 @@ namespace CommunicationWorkerRole
                 //myMessage.AlternateViews.Add(alternateview);
                 if (parameters.IsBodyHtml)
                 {
-                    List<LinkedResource> resourceList = new List<LinkedResource>();
+                    FroalaEditorImageLibraryService froalaEditorImageLibraryService = new FroalaEditorImageLibraryService(parameters);
+                    parameters.Body = froalaEditorImageLibraryService.BuildMailBody();
+                    List<LinkedResource> resourceList = froalaEditorImageLibraryService.GetLinkedResources();
 
                     string[] htmlStringArray = parameters.Body.Split('<');
 
-                    List<string> imagesList = htmlStringArray.Where(s => s.StartsWith("img")).ToList();
+                    List<string> imagesList = htmlStringArray.Where(s => s.StartsWith("img") && s.IndexOf("cid:") != -1).ToList();
 
                     foreach (string imageString in imagesList)
                     {
-                        if (imageString.IndexOf("cid:") != -1)
+                        //int startIndex = imageString.IndexOf("cid:") + 4;
+                        //int endIndex = imageString.IndexOf("/>") - startIndex;
+                        //string imageName = imageString.Substring(startIndex, endIndex).Trim();
+                        //if (imageName.Contains("'"))
+                        //{
+                        //    imageName = imageName.Replace("'", "");
+                        //}
+
+
+                        string imageName = getBetween(imageString, "cid:", "'");
+                        string fileName = !string.IsNullOrEmpty(imageName) ? imageName.ToLower() : "";
+
+
+                        // Download file from Azure Storage
+
+
+                        int tenant = (fileName == "logo0" || fileName == "smalllogo0" || fileName == "sharedlogtsitcslogo0" || fileName == "appmobilelogo" || fileName == "applestore" || fileName == "googleplay") ? 0 : parameters.Tenant;
+
+                        if ((fileName == "logo0" || fileName == "smalllogo0" || fileName == "sharedlogtsitcslogo0"))
                         {
-                            //int startIndex = imageString.IndexOf("cid:") + 4;
-                            //int endIndex = imageString.IndexOf("/>") - startIndex;
-                            //string imageName = imageString.Substring(startIndex, endIndex).Trim();
-                            //if (imageName.Contains("'"))
-                            //{
-                            //    imageName = imageName.Replace("'", "");
-                            //}
-
-
-                            string imageName = getBetween(imageString, "cid:", "'");
-                            string fileName = !string.IsNullOrEmpty(imageName) ? imageName.ToLower() : "";
-
-                    
-                            // Download file from Azure Storage
-                        
-                       
-                            int tenant = (fileName == "logo0" || fileName == "smalllogo0" || fileName == "sharedlogtsitcslogo0" || fileName == "appmobilelogo" || fileName == "applestore" || fileName == "googleplay") ? 0 : parameters.Tenant;
-
-                            if ((fileName == "logo0" || fileName == "smalllogo0" || fileName == "sharedlogtsitcslogo0"))
-                            {
-                                string newImageName = SystemLogoHelper.GetEnvironmentLogoName(imageName.Contains("small"));
-                                parameters.Body = parameters.Body.Replace(imageName, newImageName);
-                                imageName = newImageName;
-                            }
-
-
-                            #region Download Image
-                            string extension = (!string.IsNullOrEmpty(imageName) && imageName.Split('.').Length > 1) ? imageName.Split('.')[1] : "jpg";
-                            string originalImageName = !string.IsNullOrEmpty(imageName) ? imageName.Split('.')[0] : "";
-
-                            if (!string.IsNullOrEmpty(fileName) && fileName.Contains("sharedlogtsitcslogo"))
-                            {
-                                extension = "png";
-                                originalImageName = "sharedLogtsitcslogo" + tenant;
-                            }
-
-
-                            string image = originalImageName + "." + extension;
-
-                            Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
-                            {
-                                FileName = originalImageName,
-                                FolderName = GetFolderName(originalImageName.ToLower()),
-                                Extension = extension,
-                                Tenant = tenant,
-
-                            };
-                            Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
-                            byte[] datainByte = storageservice.Read(fileInfo);
-
-
-                            #endregion
-
-
-                            //CloudBlobContainer blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
-                            //var blobfile = blobContainer.GetBlockBlobReference(StorageAcountDetails.GetBlobNameByLocation(image, "logos"));
-
-                            //if (blobfile.Exists())
-                            //{
-                            //    MemoryStream memstream = new MemoryStream();
-
-                            //    if (blobfile != null)
-                            //    {
-                            //blobfile.DownloadToStream(memstream);
-                            if (datainByte != null)
-                            {
-                                MemoryStream memstream = new MemoryStream(datainByte);
-                                memstream.Seek(0, SeekOrigin.Begin);
-
-                                LinkedResource logo = new LinkedResource(memstream, "image/" + extension);
-                                logo.ContentId = imageName;
-                                logo.ContentType.Name = image;
-
-                                resourceList.Add(logo);
-                            }
-                            //    }
-                            //}
+                            string newImageName = SystemLogoHelper.GetEnvironmentLogoName(imageName.Contains("small"));
+                            parameters.Body = parameters.Body.Replace(imageName, newImageName);
+                            imageName = newImageName;
                         }
 
 
-                    }
+                        #region Download Image
+                        string extension = (!string.IsNullOrEmpty(imageName) && imageName.Split('.').Length > 1) ? imageName.Split('.')[1] : "jpg";
+                        string originalImageName = !string.IsNullOrEmpty(imageName) ? imageName.Split('.')[0] : "";
 
+                        if (!string.IsNullOrEmpty(fileName) && fileName.Contains("sharedlogtsitcslogo"))
+                        {
+                            extension = "png";
+                            originalImageName = "sharedLogtsitcslogo" + tenant;
+                        }
+
+
+                        string image = originalImageName + "." + extension;
+
+                        Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
+                        {
+                            FileName = originalImageName,
+                            FolderName = GetFolderName(originalImageName.ToLower()),
+                            Extension = extension,
+                            Tenant = tenant,
+
+                        };
+                        Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
+                        byte[] datainByte = storageservice.Read(fileInfo);
+                        // todo: added to fix a digital portal issue on pilote, need to be changed
+                        if (datainByte == null)
+                        {
+                            fileInfo.Tenant = 0;
+                            fileInfo.Extension = "png";
+                            datainByte = storageservice.Read(fileInfo);
+                        }
+
+                        #endregion
+
+
+                        //CloudBlobContainer blobContainer = StorageAcountDetails.GetCurrentContainer(tenant);
+                        //var blobfile = blobContainer.GetBlockBlobReference(StorageAcountDetails.GetBlobNameByLocation(image, "logos"));
+
+                        //if (blobfile.Exists())
+                        //{
+                        //    MemoryStream memstream = new MemoryStream();
+
+                        //    if (blobfile != null)
+                        //    {
+                        //blobfile.DownloadToStream(memstream);
+                        if (datainByte != null)
+                        {
+                            MemoryStream memstream = new MemoryStream(datainByte);
+                            memstream.Seek(0, SeekOrigin.Begin);
+
+                            LinkedResource logo = new LinkedResource(memstream, "image/" + extension);
+                            logo.ContentId = imageName;
+                            logo.ContentType.Name = image;
+
+                            resourceList.Add(logo);
+                        }
+                        //    }
+                        //}                       
+
+                    }
                     AlternateView alternateview = AlternateView.CreateAlternateViewFromString(parameters.Body, null, parameters.EmailView);
                     myMessage.AlternateViews.Add(alternateview);
 
@@ -293,11 +292,11 @@ namespace CommunicationWorkerRole
                     Debug.WriteLine("Exception!!!!!!myClient.Send(myMessage):" + ee.ToString());
                     throw;
                 }
-                
+
             }
 
 
-           // }
+            // }
         }
 
 
@@ -420,7 +419,7 @@ namespace CommunicationWorkerRole
             {
                 replyToList = value;
             }
-             
+
         }
 
         public string CommunicationLogId { get; set; }

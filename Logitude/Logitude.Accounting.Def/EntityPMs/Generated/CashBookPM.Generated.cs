@@ -607,7 +607,76 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private bool inDepositingProgress ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool InDepositingProgress  
+	   {
+	    
+	     get
+		{
+		   return inDepositingProgress;
+		 }
+		 set
+		 {
+		   if(inDepositingProgress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="InDepositingProgress",OldValue=inDepositingProgress,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   inDepositingProgress=value;
+		   }
+			
+		 }
+	   }
+	  private bool isTotalUpdatedByCC ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsTotalUpdatedByCC  
+	   {
+	    
+	     get
+		{
+		   return isTotalUpdatedByCC;
+		 }
+		 set
+		 {
+		   if(isTotalUpdatedByCC != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsTotalUpdatedByCC",OldValue=isTotalUpdatedByCC,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isTotalUpdatedByCC=value;
+		   }
+			
+		 }
+	   }
+	  private decimal? balanceInForeignCurrency ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public decimal? BalanceInForeignCurrency  
+	   {
+	    
+	     get
+		{
+		   return balanceInForeignCurrency;
+		 }
+		 set
+		 {
+		   if(balanceInForeignCurrency != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BalanceInForeignCurrency",OldValue=balanceInForeignCurrency,NewValue=value,PropertyType="decimal?"};
+		    NotifyPropertyChanged(values);
+		   balanceInForeignCurrency=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

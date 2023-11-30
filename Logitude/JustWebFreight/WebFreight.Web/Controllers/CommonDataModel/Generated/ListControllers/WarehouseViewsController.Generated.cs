@@ -33,15 +33,20 @@ using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Logitude.BL.CommonDataModel;
+using Logitude.BL.Helpers;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Simplog.Data.CommonDataModel.Repositories;
 using Logitude.BL.CommonDataModel.CustomFilters;
+		  
+using WebFreight.Web.Controllers.CommonDataModel.ApiHelpers;
 		  
 namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 { 
@@ -63,20 +68,17 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				
 		    	ICommonDataContext MyContext = CommonDataContext.GetContext(authToken.Tenant);
 				WarehouseRepository  warehouseRepository = new WarehouseRepository(MyContext);
-				WarehouseList entityList = null;
-				Warehouse entityPoco = warehouseRepository.GetSingleWarehouse(id , authToken.Tenant);
-
-				if (entityPoco != null)
+				
+				WarehouseQuery  warehouseQuery = new WarehouseQuery(warehouseRepository);
+				IQueryable<Warehouse> warehouses = warehouseRepository.GetWarehouses(authToken.Tenant).Where(a=>a.Id == id);
+				WarehouseList entityList = warehouseQuery.GetIQueryableEntityList(warehouses).FirstOrDefault();
+				if (entityList != null)
 				{
-									List<Warehouse> singleEntityList = new List<Warehouse>();
-					singleEntityList.Add(entityPoco);
-
-					WarehouseQuery warehouseQuery = new WarehouseQuery(warehouseRepository);
-					IQueryable<Warehouse> iQueryable = singleEntityList.AsQueryable();
-					IQueryable<WarehouseList> iQueryableEntityList = warehouseQuery.GetIQueryableEntityList(iQueryable);
-				    entityList = iQueryableEntityList.FirstOrDefault();
-
-			    }
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                	customFieldResolver.SetCustomFieldsValues("Warehouse",  authToken.Tenant, new List<WarehouseList> { entityList }.Cast<object>().ToList());
+ 	
+					entityList = WarehouseAPiHelper.ApplyFilters(entityList, authToken.Tenant);
+				}
 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
 				               
@@ -109,6 +111,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 				entityLists = entityLists.OrderBy(d => d.Code);
 				List<WarehouseList> listResult = entityLists.ToList();
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);  
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("Warehouse", authToken.Tenant, listResult.Cast<object>().ToList());
 										
 				return Request.CreateResponse(HttpStatusCode.OK, listResult);
             }
@@ -175,7 +179,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -204,7 +208,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                         {
@@ -214,8 +218,19 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 }
 
 
+                WarehouseAPiHelper.AddFilters(queryOperations, tenant);
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "Warehouse",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 ICommonDataContext MyContext = CommonDataContext.GetContext(tenant);
@@ -225,18 +240,20 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
                 WarehouseQuery warehouseQuery = new WarehouseQuery(warehouseRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				                
 				WarehouseCustomFilter customfilters = new WarehouseCustomFilter(tenant);
                 entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
-	
+	            entityPocos = WarehouseAPiHelper.ApplyFilters(entityPocos, tenant);
+
                 entityPocos = genericFilter.GetFilteredQuery<Warehouse>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<WarehouseList> entityLists = warehouseQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<WarehouseList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<WarehouseList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								
@@ -323,6 +340,8 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.ListControllers
 
 				}
 			   List<WarehouseList> listResult = entityLists.ToList();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+               customFieldResolver.SetCustomFieldsValues("Warehouse", authToken.Tenant, listResult.Cast<object>().ToList());
 
                response.Result = listResult;
 			   HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);

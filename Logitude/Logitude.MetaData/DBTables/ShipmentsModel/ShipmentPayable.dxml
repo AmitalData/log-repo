@@ -265,7 +265,7 @@
   <Column
     Name="Notes"
     Type="nvarchar"
-    Size="250">
+    Size="1000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -360,6 +360,24 @@
     Type="float">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="ProratedAmountInLocalCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ProratedAmountInProfitCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCustomsChargesTariff"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="ShipmentId"

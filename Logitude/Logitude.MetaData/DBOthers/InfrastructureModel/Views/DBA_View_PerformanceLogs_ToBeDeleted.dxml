@@ -1,0 +1,13 @@
+<View DBType="Global" Name="DBA_View_PerformanceLogs_ToBeDeleted" Schema="dbo" Module="Infrastructure">
+  <SqlScript>
+    <![CDATA[
+    create VIEW [dbo].[DBA_View_PerformanceLogs_ToBeDeleted] AS
+    SELECT TOP 1000 *
+    FROM [dbo].[PerformanceLogs]
+    where LogDateTimeLocal < DATEADD(Month, -6, GETDATE())
+    ORDER BY LogDateTimeLocal;
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

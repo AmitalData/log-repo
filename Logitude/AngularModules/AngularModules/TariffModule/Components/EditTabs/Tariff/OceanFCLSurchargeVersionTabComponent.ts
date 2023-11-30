@@ -25,13 +25,13 @@ import { TariffVersionExtendedPMService } from '../../../Services/ExtendedPMs/Ta
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { UpdateTariffArgs } from '../../../Args';
 import { PortList } from '../../../../Common/EntityLists/PortList';
+import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
 import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
 import { TariffLinesContainersPricePM } from '../../../EntityPMs/TariffLinesContainersPricePM';
 import { PackageTypeList } from '../../../../Common/EntityLists/PackageTypeList';
 import { PackageTypeListService } from '../../../../Common/Services/StandardLists/PackageTypeListService';
 
-@Component({
-    
+@Component({    
     templateUrl: './OceanFCLSurchargeVersionTabComponent.html',
 })
 
@@ -52,7 +52,8 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     private deletedLinesExpirationDates: TariffLineExpirationDatePM[];
     public selectedRow: any;
     public changeScrollPosition: EventEmitter<any> = new EventEmitter();
-  @Output() ReloadDetails = new EventEmitter();
+    @Output() ReloadDetails = new EventEmitter();
+    public IsUsingVirtuallization: boolean = false;
   public LinesCount: number;
 
     constructor(public entityArgs: EntityArgs) {
@@ -64,8 +65,11 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     public AllChargesTypes: ChargesTypeList[];
     public AllMeasurements: MeasurementList[];
     public AllPackageTypes: PackageTypeList[];
+    public AllCurrencies: CurrencyList[];
+
     public LineIdFromPriceCheck: string;
     Intialize(args: any) {
+        this.SetIsUsingVirtuallization();
         this.TariffsLinesSource = new ObservableCollection([]);
         this.TariffDomainService = new TariffDomainService();
         this.deletedLinesExpirationDates = [];
@@ -82,7 +86,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         var iChargesTypeListService = new ChargesTypeListService();
         var iMeasurementListService = new MeasurementListService();
         var iPackageTypeListService = new PackageTypeListService();
-
+        var currencyListService = new CurrencyListService();
         iChargesTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.AllChargesTypes = myResponse.Result;
@@ -90,11 +94,13 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 iMeasurementListService.getAllFromCache().subscribe((myResponse2: ServiceResponse) => {
                     if (!myResponse2.HasError) {
                         this.AllMeasurements = myResponse2.Result;
-
-                        this.SetSurchargesIds();
-                        this.LoadCompareToVersions();
-                        this.SetUIProperties();
-                        this.SetSurchargesLabelsAndVisibility();
+                        currencyListService.getAllFromCache().subscribe((myResponse3: ServiceResponse) => {
+                            this.AllCurrencies = myResponse3.Result;
+                            this.SetSurchargesIds();
+                            this.LoadCompareToVersions();
+                            this.SetUIProperties();
+                            this.SetSurchargesLabelsAndVisibility();
+                        });
                     }
                 });
             }
@@ -109,6 +115,13 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
 
         if (this.IsDraftVersion) {
             this.IsComparToChecked = true;
+        }
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
         }
     }
 
@@ -246,7 +259,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
                 isApproveVersionButtonVisible = true;
             }
 
-            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "UPDATESURCHARGES")) {
+            if (FeatureLocator.HasFeaturePermession(this.ObjectTableName, "UPDATESURCHARGES") && this.EntityPM.TypeCode == "OFS") {
                 isUpdateSurchargesButtonVisible = true;
             }
         }
@@ -520,19 +533,8 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
             newVersion.Version = item.Version;
             newVersion.ParentVersionNumber = item.ParentVersionNumber;
             newVersion.Id = item.TariffId;
-
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
-                newVersion.Name = "Version " + item.Version;
-            }
-
-            else {
-                var from: string = datePipe.transform(item.StartDate, 'dd/MM/yyyy');
-                var to: string = datePipe.transform(item.ExpirationDate, 'dd/MM/yyyy');
-                newVersion.Name = "Version " + item.Version + " (" + from + " - " + to + ")";
-            }
-
+            newVersion.Name = "Version " + item.Version;
             this.VersionsList.push(newVersion);
-
         });
 
         this.SelectedVersion = this.VersionsList.filter(a => a.Version == this.CurrentVersion.ParentVersionNumber)[0];
@@ -545,21 +547,19 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
     }
 
     ComparingCalculations(load: boolean) {
-        //if (this.IsComparToChecked && this.SelectedVersion != null) {
-            if (load) {
-                this.LoadTariffLines("compareVersion");
+        if (load) {
+            this.LoadTariffLines("compareVersion");
+        }
+
+        else {
+            if (this.CurrentVersion != null && this.CurrentVersion.IsDraft) {
+                this.FillTariffLines(this.CurrentVersion.TariffLines);
             }
 
             else {
-                if (this.CurrentVersion != null && this.CurrentVersion.IsDraft) {
-                    this.FillTariffLines(this.CurrentVersion.TariffLines);
-                }
-
-                else {
-                    this.FillTariffLines(this.loadedTariffLines);
-                }
+                this.FillTariffLines(this.loadedTariffLines);
             }
-        //}
+        }
     }
 
     AddTariffLine() {
@@ -585,6 +585,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         var itemComponent = new OceanFCLSurchargeTariffLineData(false, itemPM, this, true);
         logWindow.WindowArgs = { DataContext: itemComponent, EntityPM: itemPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "New Tariff Line";
+        logWindow.Width = 800;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
@@ -595,6 +596,7 @@ export class OceanFCLSurchargeVersionTabComponent extends BaseComponent implemen
         var logWindow = new LogitudeWindow();
         logWindow.WindowArgs = { DataContext: item, EntityPM: item.EntityPM, TariffType: this.EntityPM.TypeCode };
         logWindow.Title = "Edit Tariff Line";
+        logWindow.Width = 800;
         logWindow.Show("./TariffModule/Components/EditTabs/Tariff/AddEditTariffLineComponent");
     }
 
@@ -863,13 +865,16 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
     public ContainerPricesItemsSource: ContainerPricesItem[] = [];
     public ContainersItemsSourceView: ContainerPricesItem[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    private lineCurrencyId: string;
     constructor(isDeleted: boolean, entity: TariffLinePM, public FatherComponent: OceanFCLSurchargeVersionTabComponent, isNew: boolean = false) {
         super();
+        this.ContainerPricesItemsSource = [];
         this.EntityPM = entity;
         this.TariffPM = FatherComponent.EntityPM;
         this.IsNewEntity = isNew;
         this.initialIndex = entity.Index;
         this.IsEditEnabled = FatherComponent.IsDraftVersion;
+        this.lineCurrencyId = this.EntityPM.CurrencyId;
 
         this.SetUIProperties();
         this.SetCellColorsForPriceCheck();
@@ -1359,6 +1364,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
         if (this.EntityPM.CurrencyId != value) {
             this.EntityPM.CurrencyId = value;
             this.EntityPM.LineEdited = true;
+            this.lineCurrencyId = this.EntityPM.CurrencyId;
 
             this.SetUIProperties_Currency();
         }
@@ -1613,6 +1619,7 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
             this.ContainerPricesItemsSource.push(new ContainerPricesItem(item, this, isNew));
         });
 
+
         this.EntityPM.ContainersPrices.forEach(item => {
             this.ContainersItemsSourceView.push(new ContainerPricesItem(item, this, false));
         });
@@ -1642,10 +1649,11 @@ export class OceanFCLSurchargeTariffLineData extends BaseComponent {
             this.SurchargesCurrencies(this.CurrencyId);
 
             if (value) {
-                this.CurrencyId = null;
+                this.EntityPM.CurrencyId = null;
             }
 
             else {
+                this.CurrencyId = this.lineCurrencyId;
                 this.ContainerPricesItemsSource.forEach(item => {
                     item.CurrencyId = null;
                 });
@@ -1667,6 +1675,7 @@ export class ContainerPricesItem extends BaseComponent {
     public IsNewEntity: boolean = false;
     private DefaultColor = "blue";
     public ComparedEntity: TariffLinesContainersPricePM;
+
     constructor(entity: TariffLinesContainersPricePM, public FatherComponent: OceanFCLSurchargeTariffLineData, isNew: boolean = false) {
         super();
         this.EntityPM = entity;
@@ -1675,9 +1684,11 @@ export class ContainerPricesItem extends BaseComponent {
         
         this.SetUIProperties();
         this.FillChargeLabels();
+        this.FillCurrencyMeasurementLabel();
     }
 
     public ChargeLabel: string;
+  
     private FillChargeLabels() {
         var index: number = 0;
         if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge1Id) {
@@ -1720,7 +1731,6 @@ export class ContainerPricesItem extends BaseComponent {
             index = 10;
         }
 
-        this.ChargeLabel = this.FatherComponent.DataContext.FatherComponent['Surcharge' + index + 'PriceLabel'];
         var iMeasurement = this.FatherComponent.DataContext.FatherComponent.AllMeasurements.filter(f => f.Id == this.FatherComponent.DataContext.FatherComponent.EntityPM['Surcharge' + index + 'UOM'])[0];
         if (iMeasurement) {
             if (iMeasurement.Code == "FIXD" || iMeasurement.Code == "BTEU") {
@@ -1733,7 +1743,81 @@ export class ContainerPricesItem extends BaseComponent {
             }
         }
 
+        //this.ChargeLabel = this.FatherComponent.DataContext.FatherComponent['Surcharge' + index + 'PriceLabel'];
+        var iChargeType = this.FatherComponent.DataContext.FatherComponent.AllChargesTypes.filter(a => a.Id == this.FatherComponent.DataContext.FatherComponent.EntityPM['Surcharge' + index + 'Id'])[0];
+        if (iChargeType) {
+            this.ChargeLabel = iChargeType.EnglishName;
+        } 
+
         //this.SetUIProperties();
+    }
+
+    public CurrencyMeasurementLabel: string;
+    private FillCurrencyMeasurementLabel() {
+        var currencyMeasurementLabel = "";
+        var index = this.GetSurchargeIndex();
+        if (this.FatherComponent.DataContext.FatherComponent.AllMeasurements) {
+            var iMeasurement = this.FatherComponent.DataContext.FatherComponent.AllMeasurements.filter(f => f.Id == this.FatherComponent.DataContext.FatherComponent.EntityPM['Surcharge' + index + 'UOM'])[0];
+            var currencyCode = this.CurrencyCode;
+            if (iMeasurement) {
+                if (iMeasurement.Code == "FIXD") {
+                    currencyMeasurementLabel = currencyCode;
+                }
+                else if (iMeasurement.Code == "PRFR" || iMeasurement.Code == "PRVL" || iMeasurement.Code == "PFCL") {
+
+                    currencyMeasurementLabel = "% " + iMeasurement.Code;
+                }
+                else {
+                    currencyMeasurementLabel = !AppTool.IsNullOrEmpty(currencyCode) ? currencyCode + "/" + iMeasurement.Code : iMeasurement.Code;
+                }
+
+                this.CurrencyMeasurementLabel = currencyMeasurementLabel;
+            }
+        }
+    }
+  
+    private GetSurchargeIndex(): number {
+        var index: number = 0;
+        if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge1Id) {
+            index = 1;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge2Id) {
+            index = 2;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge3Id) {
+            index = 3;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge4Id) {
+            index = 4;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge5Id) {
+            index = 5;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge6Id) {
+            index = 6;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge7Id) {
+            index = 7;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge8Id) {
+            index = 8;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge9Id) {
+            index = 9;
+        }
+
+        else if (this.SurchargeId == this.FatherComponent.FatherComponent.Surcharge10Id) {
+            index = 10;
+        }
+        return index;
     }
 
     public IsEditingEnabled: boolean = false;
@@ -1858,6 +1942,10 @@ export class ContainerPricesItem extends BaseComponent {
         if (this.EntityPM.CurrencyCode != value) {
             this.EntityPM.CurrencyCode = value;
         }
+    }
+
+    get CurrencyName() {
+        return this.Currency?.EnglishName;
     }
 
     currency: CurrencyList;

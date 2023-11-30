@@ -63,11 +63,26 @@
                                         </div>
                                     </td>
 
+                                    <td style="width:5px;" *ngIf="IsUpdateCustomsChargesVisible">
+                                        <div></div>
+                                    </td>
+
+                                    <td [style.width.px]="UpdateCustomsChargesMessageWidth + 70" *ngIf="IsUpdateCustomsChargesVisible">
+                                        <div class="MediaFill">
+                                            <div class="MediaFillAbsolute OrangeInfo" style="top: 2px; bottom: 2px; padding: 0px;">
+                                                <div style="line-height: 25px; margin-left: 5px; float: left; color:black; font-size:11px;">{{UpdateCustomsChargesMessage}}</div>
+                                                <div style="line-height: 25px; margin-left: 10px; float: left; width: 50px;">
+                                                    <button class="Button" style="margin-top: 1px;" [disabled]="!IsEditingEnabled" (click)="UpdateCustomsChargesClicked()">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+
                                     <td>
                                         <div></div>
                                     </td>
 
-                                    <td id="{{'AddPayable'| IdGeneratorPipe}}" style="width: 21px">
+                                    <td id="{{'AddPayable'| IdGeneratorAsyncPipe | async}}" style="width: 21px">
                                         <IconButton [Name]="'Add'" [IsEnabled]="IsEditingEnabled" (click)="AddPayable()"></IconButton>
                                     </td>
 
@@ -76,22 +91,19 @@
                                     </td>
 
                                     <td style="width: 1px;">
-                                        <button id="{{'ReceiveInvoice' | IdGeneratorPipe}}" class="Button" [disabled]="!IsEditingEnabled" (click)="ReceiveInvoiceClicked()">{{'Shipment.B.Payables.ReceiveInvoice' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{'ReceiveInvoice' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="!IsEditingEnabled" (click)="ReceiveInvoiceClicked()">{{'Shipment.B.Payables.ReceiveInvoice' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width: 1px; padding-left: 5px;" *ngIf="IsDeleteAllPayablesVisible">
-                                        <button id="{{'DeleteAll' | IdGeneratorPipe}}" class="Button" [disabled]="IsEditingEnabled == false || ItemsSource.Length == 0" (click)="DeleteAllClicked()">Delete All</button>
+                                        <button id="{{'DeleteAll' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="IsEditingEnabled == false || ItemsSource.Length == 0" (click)="DeleteAllClicked()">Delete All</button>
                                     </td>
 
                                     <td style="width: 1px; padding-left: 5px;" *ngIf="IsPriceCheckVisible">
-                                        <button id="{{'PriceCheck' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" class="Button" (click)="PriceCheck()">{{'Shipment.Features.ShipmentPriceCheck' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{'PriceCheck' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" class="Button" (click)="PriceCheck()">{{'Shipment.Features.ShipmentPriceCheck' | TextCodeTranslationPipe}}</button>
                                     </td>
 
-                                    <td style="width: 1px; padding-left: 5px;" *ngIf="EntityPM.ShipmentLevelCode != 'H' && EntityPM.TransportModeId == 'A'">
-                                        <button class="Button" [disabled]="!IsEditingEnabled" (click)="TariffsButtonClicked()">
-                                            <img class="LeftCenter" style="margin-left: 2px; width: 16px; height: 16px;" src="./Images/Icons/Window.png" />
-                                            <span style="line-height: 19px; margin-left: 15px;">{{'Shipment.B.Payables.Tariffs' | TextCodeTranslationPipe}}</span>
-                                        </button>
+                                    <td style="width: 1px; padding-left: 5px;" *ngIf="IsCustomsChargesVisible">
+                                        <button id="{{'CustomsCharges' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" class="Button" (click)="AddCustomsChargesClicked(true)">Add Customs Charges</button>
                                     </td>
 
                                     <td style="width:15px;" *ngIf="EntityPM.QuoteId">
@@ -114,7 +126,7 @@
                                                     [ItemSource]="ItemsSource"
                                                     [SelectedRow]="SelectedRow"
                                                     (RowDataLoaded)="OnRowLoaded($event)"
-                                                    (SelectedItemChanged)="OnRowSelected($event)">
+                                                    (SelectedItemChanged)="OnRowSelected($event)" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <log-row-details>
                                         <row-template>
@@ -191,8 +203,8 @@
                                                                         </td>
 
                                                                         <td class="GridViewCell" style="width: 110px; min-width: 110px; max-width: 110px; text-align: right;">
-                                                                            <span>{{insideItem.ExpectedAmount | NumbersPipe:'N2'}}</span>
-                                                                            <span style="margin-left: 2px;" *ngIf="insideItem.ExpectedAmount">{{insideItem.CurrencyCode}}</span>
+                                                                            <span [attr.data-cy]="'HouseExpectedAmount'" >{{insideItem.ExpectedAmount | NumbersPipe:'N2'}}</span>
+                                                                            <span [attr.data-cy]="'HouseCurrencyCode'" style="margin-left: 2px;" *ngIf="insideItem.ExpectedAmount">{{insideItem.CurrencyCode}}</span>
                                                                         </td>
 
                                                                         <td class="GridViewCell" style="width: 150px; min-width: 150px; max-width: 150px; text-align: right;">
@@ -234,7 +246,7 @@
                                                                         </td>
 
                                                                         <td style="width: 110px; min-width: 110px; max-width: 110px; text-align: right;">
-                                                                            <span>{{item.SumOfAmount | NumbersPipe:'N2'}}</span>
+                                                                            <span [attr.data-cy]="'SumOfAmount'">{{item.SumOfAmount | NumbersPipe:'N2'}}</span>
                                                                             <span style="margin-left: 2px;" *ngIf="item.SumOfAmount">{{item.CurrencyCode}}</span>
                                                                         </td>
 
@@ -410,8 +422,8 @@
                                                             </td>
 
                                                             <td style="text-align: right;">
-                                                                <span [ngStyle]="{color: item.ExpectedAmountColor}">{{item.ExpectedAmount | NumbersPipe:'N2'}}</span>
-                                                                <span [ngStyle]="{color: item.ExpectedAmountColor}" style="margin-left: 2px;" *ngIf="item.ExpectedAmount != null">{{item.CurrencyCode}}</span>
+                                                                <span [attr.data-cy]="'MasterExpectedAmount'" [ngStyle]="{color: item.ExpectedAmountColor}">{{item.ExpectedAmount | NumbersPipe:'N2'}}</span>
+                                                                <span [attr.data-cy]="'MasterCurrencyCode'" [ngStyle]="{color: item.ExpectedAmountColor}" style="margin-left: 2px;" *ngIf="item.ExpectedAmount != null">{{item.CurrencyCode}}</span>
                                                             </td>
                                                         </tr>
                                                     </table>
@@ -670,15 +682,15 @@
                                     <div class="GenerateLinks">
 
                                         <div *ngIf="EntityPM.OriginShipmentId">
-                                            <Hyperlink id="{{'ORGNPayable-payable' | IdGeneratorPipe}}" [FontSize]="14" [IsEnabled]="IsEditingEnabled" (click)="GenerateClicked('ORGN')">Generate from Original Shipment</Hyperlink>
+                                            <Hyperlink id="{{'ORGNPayable-payable' | IdGeneratorAsyncPipe | async}}" [FontSize]="14" [IsEnabled]="IsEditingEnabled" (click)="GenerateClicked('ORGN')">Generate from Original Shipment</Hyperlink>
                                         </div>
 
                                         <div>
-                                            <Hyperlink id="{{'ATDSPayable-payable' | IdGeneratorPipe}}" [FontSize]="14" [IsEnabled]="IsEditingEnabled" (click)="GenerateClicked('ATDS')">{{'Shipment.B.Payables.GenerateAutoDisplay' | TextCodeTranslationPipe}}</Hyperlink>
+                                            <Hyperlink id="{{'ATDSPayable-payable' | IdGeneratorAsyncPipe | async}}" [FontSize]="14" [IsEnabled]="IsEditingEnabled" (click)="GenerateClicked('ATDS')">{{'Shipment.B.Payables.GenerateAutoDisplay' | TextCodeTranslationPipe}}</Hyperlink>
                                         </div>
 
                                         <div *ngIf="EntityPM.QuoteId">
-                                            <Hyperlink id="{{'QTPYPayable-payable' | IdGeneratorPipe}}" [FontSize]="14" [IsEnabled]="IsGenerateFromQuoteChargesEnabled" (click)="GenerateClicked('QTPY')">{{'Shipment.B.Payables.GenerateFromQuote' | TextCodeTranslationPipe}}</Hyperlink>
+                                            <Hyperlink id="{{'QTPYPayable-payable' | IdGeneratorAsyncPipe | async}}" [FontSize]="14" [IsEnabled]="IsGenerateFromQuoteChargesEnabled" (click)="GenerateClicked('QTPY')">{{'Shipment.B.Payables.GenerateFromQuote' | TextCodeTranslationPipe}}</Hyperlink>
                                             <span *ngIf="IsNoChargesTextVisibil" style="margin-left: 5px; color: gray; font-family: Arial; font-size: 10px; font-style: italic;">{{'Shipment.S.Payables.NoCharges' | TextCodeTranslationPipe}}</span>
                                         </div>
                                     </div>
@@ -893,7 +905,7 @@
                                             <tr>
                                                 <td style="width: 80px;" class="Label">{{'Shipment.S.Payables.Receivables' | TextCodeTranslationPipe}}:</td>
                                                 <td style="width: 200px; text-align: right;">
-                                                    <span id="{{'ReceivableAmount' | IdGeneratorPipe}}" class="Value" style="font-size: 14px;">{{ReceivablesInSelectedCurrencyText}}</span>
+                                                    <span id="{{'ReceivableAmount' | IdGeneratorAsyncPipe | async}}" class="Value" style="font-size: 14px;">{{ReceivablesInSelectedCurrencyText}}</span>
                                                     <span class="Label" style="font-size: 11px;">({{SelectedCurrencyCode}})</span>
                                                 </td>
                                                 <td>
@@ -904,7 +916,7 @@
                                             <tr>
                                                 <td style="width: 80px;" class="Label">{{'Shipment.S.Payables.Payables' | TextCodeTranslationPipe}}:</td>
                                                 <td style="width: 200px; text-align: right;">
-                                                    <span id="{{'PayableAmount' | IdGeneratorPipe}}" class="Value" style="font-size: 14px;">{{PayablesInSelectedCurrencyText}}</span>
+                                                    <span id="{{'PayableAmount' | IdGeneratorAsyncPipe | async}}" class="Value" style="font-size: 14px;">{{PayablesInSelectedCurrencyText}}</span>
                                                     <span class="Label" style="font-size: 11px;">({{SelectedCurrencyCode}})</span>
                                                 </td>
                                                 <td>
@@ -925,7 +937,7 @@
                                             <tr>
                                                 <td style="width: 80px;" class="Label">{{'Shipment.S.Payables.Profit' | TextCodeTranslationPipe}}:</td>
                                                 <td style="width: 200px; text-align: right;">
-                                                    <span id="{{'ProfitAmount' | IdGeneratorPipe}}" class="ProfitLink" style="font-size: 14px;" [ngStyle]="{color: ProfitInSelectedCurrencyText | StringToColorPipe:'number'}" (mousedown)="ShowProfitClicked()">{{ProfitInSelectedCurrencyText}}</span>
+                                                    <span id="{{'ProfitAmount' | IdGeneratorAsyncPipe | async}}" class="ProfitLink" style="font-size: 14px;" [ngStyle]="{color: ProfitInSelectedCurrencyText | StringToColorPipe:'number'}" (mousedown)="ShowProfitClicked()">{{ProfitInSelectedCurrencyText}}</span>
                                                     <span class="Label" style="font-size: 11px;">({{SelectedCurrencyCode}})</span>
                                                 </td>
                                                 <td>

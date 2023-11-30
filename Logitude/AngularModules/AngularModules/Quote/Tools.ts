@@ -104,7 +104,7 @@ export class QuoteTool {
                                 case "BTEU": { myCostQuantity = entityPM.TEU; break; }
                                 case "FIXD": { myCostQuantity = 1; break; }
                                 case "GWTN": { myCostQuantity = entityPM.GrossWeightPerTon; break; }
-                                case "PRVL": { myCostQuantity = entityPM.ValueOfGoods; break; }
+                                case "PRVL": { myCostQuantity = AppTool.IsNullOrZero(item.CostQuantity) ? entityPM.ValueOfGoods : item.CostQuantity; break; }
                                 case "PRFR": { myCostQuantity = ArrayTool.Sum(entityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "CostTotalAmount"); break; }
                                 case "QTY": { myCostQuantity = entityPM.NumberOfPackages; break; }
                                 case "CWKG": { myCostQuantity = entityPM.ChargeableWeightInKG; break; }
@@ -123,7 +123,7 @@ export class QuoteTool {
                                 case "BTEU": { mySaleQuantity = entityPM.TEU; break; }
                                 case "FIXD": { mySaleQuantity = 1; break; }
                                 case "GWTN": { mySaleQuantity = entityPM.GrossWeightPerTon; break; }
-                                case "PRVL": { mySaleQuantity = entityPM.ValueOfGoods; break; }
+                                case "PRVL": { mySaleQuantity = AppTool.IsNullOrZero(item.SaleQuantity) ? entityPM.ValueOfGoods : item.SaleQuantity; break; }
                                 case "PRFR": { mySaleQuantity = ArrayTool.Sum(entityPM.QuoteCharges.filter(d => d.ChargesGroupCode == "FRT"), "SaleTotalAmount"); break; }
                                 case "QTY": { mySaleQuantity = entityPM.NumberOfPackages; break; }
                                 case "CWKG": { mySaleQuantity = entityPM.ChargeableWeightInKG; break; }
@@ -301,10 +301,10 @@ export class QuoteTool {
 
                 //"PRVL"
                 entityQuantity = entityPM.ValueOfGoods;
-                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRVL" && f.CostQuantity != entityQuantity).length > 0) {
+                if (entityPM.QuoteCharges.filter(f => f.CostMeasurementCode == "PRVL" && f.CostQuantity  == null && f.CostQuantity != entityQuantity).length > 0) {
                     myResult = true;
                 }
-                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRVL" && f.SaleQuantity != entityQuantity).length > 0) {
+                else if (entityPM.QuoteCharges.filter(f => f.SaleMeasurementCode == "PRVL" && f.SaleQuantity == null&& f.SaleQuantity != entityQuantity).length > 0) {
                     myResult = true;
                 }
 
@@ -381,15 +381,15 @@ export class QuoteTool {
                 myResult = true;
             }
 
-            if (entityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
-                if (entityPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PRVL" && d.CostQuantity != entityPM.ValueOfGoods) || (d.CostMeasurementCode == "PRVL" && d.CostQuantity != entityPM.ValueOfGoods)).length > 0) {
-                    myResult = true;
-                }
+            //if (entityPM.QuoteCharges.filter(d => d.SaleUnitPrice != null || d.CostUnitPrice != null).length > 0) {
+            //    if (entityPM.QuoteCharges.filter(d => (d.CostMeasurementCode == "PRVL" && d.CostQuantity != entityPM.ValueOfGoods) || (d.CostMeasurementCode == "PRVL" && d.CostQuantity != entityPM.ValueOfGoods)).length > 0) {
+            //        myResult = true;
+            //    }
 
-                else if (entityPM.QuoteCharges.filter(d => d.SaleMeasurementCode == "PRVL" && d.SaleQuantity != entityPM.ValueOfGoods).length > 0) {
-                    myResult = true;
-                }
-            }
+            //    else if (entityPM.QuoteCharges.filter(d => d.SaleMeasurementCode == "PRVL" && d.SaleQuantity != entityPM.ValueOfGoods).length > 0) {
+            //        myResult = true;
+            //    }
+            //}
         }
 
         return myResult;

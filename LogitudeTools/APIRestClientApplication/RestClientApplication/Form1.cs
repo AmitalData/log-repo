@@ -1,5 +1,4 @@
 ﻿
-using Json2KeyValue;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -7,12 +6,15 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
+using Newtonsoft.Json;
 
 namespace RestClientApplication
 {
@@ -30,6 +32,8 @@ namespace RestClientApplication
             this.actionCombo.Items.Add("Decline");
             this.actionCombo.Items.Add("Cancel");
 
+            Includelabel.Visible = false;
+            IncludeEventsCheckBox.Visible = false;
         }
 
         private void BuildOperationComboBox()
@@ -42,6 +46,32 @@ namespace RestClientApplication
                     this.operationCombo.Items.Clear();
                     this.operationCombo.Items.Add("Create (POST)");
                 }
+
+                else if(apiCombo.SelectedItem.Equals("Direct"))
+                {
+                    this.operationCombo.SelectedItem = null;
+                    this.operationCombo.Items.Clear();
+                    AddGeneralOperationsToComboBox();
+                    this.operationCombo.Items.Add("Update (Patch)");
+                }
+
+                else if (apiCombo.SelectedItem.Equals("Container"))
+                {
+                    this.operationCombo.SelectedItem = null;
+                    this.operationCombo.Items.Clear();
+                    this.operationCombo.Items.Add("Update (PUT)");
+                    this.operationCombo.Items.Add("Get");
+                }
+
+                if (apiCombo.SelectedItem.Equals("Get Shipments by References"))
+                {
+                    this.operationCombo.SelectedItem = null;
+                    this.operationCombo.Items.Clear();
+                    this.operationCombo.Items.Add("Get Direct Shipments");
+                    this.operationCombo.Items.Add("Get House Shipments");
+                    this.operationCombo.Items.Add("Get Master Shipments");
+                }
+
                 else
                 {
                     AddGeneralOperationsToComboBox();
@@ -202,23 +232,21 @@ namespace RestClientApplication
         {
             actionCombo.Visible = false;
             ActionLabel.Visible = false;
-            string requestText = "";
             txtParameter.Visible = false;
             lblParameter.Visible = false;
-
             txtParameter2.Visible = false;
             lblParameter2.Visible = false;
-            textBox1.Visible = false;
-            label10.Visible = false;
-            label11.Visible = false;
-            textBox2.Visible = false;
-            label12.Visible = false;
-            textBox3.Visible = false;
-            textBox7.Visible = false;
-            textBox4.Visible = false;
-            label16.Visible = false;
+            txtParameter3.Visible = false;
+            lblParameter3.Visible = false;
+            txtParameter4.Visible = false;
+            lblParameter4.Visible = false;
+            rdbXml.Visible = true;
+            rdbJson.Checked = false;
+            Includelabel.Visible = false;
+            IncludeEventsCheckBox.Visible = false;
 
-            panel1.Visible = false;
+            string requestText = "";
+
             switch (apiCombo.SelectedItem)
             {
                 #region House
@@ -249,6 +277,9 @@ namespace RestClientApplication
 
                                 txtParameter2.Visible = true;
                                 lblParameter2.Visible = true;
+
+                                Includelabel.Visible = true;
+                                IncludeEventsCheckBox.Visible = true;
                                 break;
                         }
                         break;
@@ -258,7 +289,6 @@ namespace RestClientApplication
                 #region Direct
                 case "Direct":
                     {
-
                         if (operationCombo.SelectedIndex == 2)
                         {
                             lblParameter.Text = "Number";
@@ -269,11 +299,28 @@ namespace RestClientApplication
 
                             txtParameter2.Visible = true;
                             lblParameter2.Visible = true;
+
+                            Includelabel.Visible = true;
+                            IncludeEventsCheckBox.Visible = true;
+                        }
+
+                        else if (operationCombo.SelectedItem != null && operationCombo.SelectedItem.Equals("Update (Patch)"))
+                        {
+                            lblParameter2.Text = "Id";
+                            txtParameter2.Visible = true;
+                            lblParameter2.Visible = true;
+                            txtRequestContentType.Text = "application/json";
+                            rdbJson.Checked = true;
+                            rdbXml.Visible = false;
+                            requestText = responseParameters.XMLRequestText["PatchDirect"];
+                        }
+
+                        else
+                        {
+                            requestText = responseParameters.XMLRequestText["PostDirect"];
                         }
 
                         apiName = "direct";
-
-                        requestText = responseParameters.XMLRequestText["PostDirect"];
                         break;
                     }
                 #endregion
@@ -343,7 +390,7 @@ namespace RestClientApplication
                 #region ARInvoice
                 case "ARInvoice":
                     {
-                        textBox4.Visible = true;
+                        txtParameter.Visible = true;
                         lblParameter.Visible = true;
                         lblParameter.Text = "Id:";
 
@@ -356,16 +403,40 @@ namespace RestClientApplication
                     }
                 #endregion
 
+                #region ClosedMonthCheck
+                case "ClosedMonthCheck":
+                    {
+                        txtParameter.Visible = true;
+                        lblParameter.Visible = true;
+                        lblParameter.Text = "Year:";
 
+                        txtParameter2.Visible = true;
+                        lblParameter2.Visible = true;
+                        lblParameter2.Text = "Month:";
 
+                        txtParameter3.Visible = true;
+                        lblParameter3.Visible = true;
+                        lblParameter3.Text = "Period type:";
+                        apiName = "ClosedMonthCheck";
+                        break;
+                    }
+                #endregion
+
+                #region GLAccount
                 case "GLAccount":
                     {
-                        textBox1.Visible = true;
-                        label10.Visible = true;
-                        label11.Visible = true;
-                        textBox2.Visible = true;
-                        label12.Visible = true;
-                        textBox3.Visible = true;
+                        lblParameter.Text = "Id";
+                        lblParameter.Visible = true;
+                        txtParameter.Visible = true;
+
+                        lblParameter2.Text = "Internal Number";
+                        lblParameter2.Visible = true;
+                        txtParameter2.Visible = true;
+
+                        lblParameter3.Text = "Display Number";
+                        lblParameter3.Visible = true;
+                        txtParameter3.Visible = true;
+
                         apiName = "GLAccount";
                         XmlDocument xmldoc = new XmlDocument();
 
@@ -376,29 +447,51 @@ namespace RestClientApplication
 
                         break;
                     }
+                #endregion
 
+                #region Journal
                 case "Journal":
                     {
-                        textBox4.Visible = true;
+                        txtParameter.Visible = true;
                         lblParameter.Visible = true;
                         lblParameter.Text = "Id:";
 
                         txtParameter2.Visible = true;
                         lblParameter2.Visible = true;
                         lblParameter2.Text = "Number:";
-                        panel1.Visible = true;
-                        //txtParameter2.Visible = true;
-                        //lblParameter2.Visible = true;
+
+                        txtParameter3.Visible = true;
+                        lblParameter3.Visible = true;
+                        lblParameter3.Text = "External No:";
+
+                        txtParameter4.Visible = true;
+                        lblParameter4.Visible = true;
+                        lblParameter4.Text = "External System:";
+
                         apiName = "Journal";
 
                         break;
                     }
-
-
+                #endregion
 
                 #region Master
                 case "Master":
                     {
+                        if (operationCombo.SelectedIndex == 2)
+                        {
+                            lblParameter.Text = "Number";
+                            lblParameter2.Text = "Id";
+
+                            txtParameter.Visible = true;
+                            lblParameter.Visible = true;
+
+                            txtParameter2.Visible = true;
+                            lblParameter2.Visible = true;
+
+                            Includelabel.Visible = true;
+                            IncludeEventsCheckBox.Visible = true;
+                        }
+
                         apiName = "master";
                         requestText = responseParameters.XMLRequestText["PostMaster"];
                         break;
@@ -409,7 +502,41 @@ namespace RestClientApplication
                 case "Customer":
                     {
                         apiName = "customer";
-                        requestText = responseParameters.XMLRequestText["Customer"];
+                        //requestText = responseParameters.XMLRequestText["Customer"];
+
+                        switch (operationCombo.SelectedIndex)
+                        {
+                            case 0:
+                                {
+                                    requestText = responseParameters.XMLRequestText["Customer"];
+                                    break;
+                                }
+
+                            case 1:
+                                {
+                                    //requestText = responseParameters.XMLRequestText[""];
+                                    break;
+                                }
+
+                            case 2:
+                                lblParameter.Text = "Code";
+                                lblParameter.Visible = true;
+                                txtParameter.Visible = true;
+
+                                lblParameter2.Text = "VAT #";
+                                lblParameter2.Visible = true;
+                                txtParameter2.Visible = true;
+
+                                lblParameter3.Text = "External Id";
+                                lblParameter3.Visible = true;
+                                txtParameter3.Visible = true;
+
+                                lblParameter4.Text = "Name";
+                                lblParameter4.Visible = true;
+                                txtParameter4.Visible = true;
+
+                                break;
+                        }
                         break;
                     }
                 #endregion
@@ -419,7 +546,7 @@ namespace RestClientApplication
                     {
                         txtParameter2.Visible = true;
                         apiName = "vendorpartner";
-                        requestText = responseParameters.XMLRequestText["Vendor"];
+                        //  requestText = responseParameters.XMLRequestText["Vendor"];
                         break;
                     }
                 #endregion
@@ -427,7 +554,7 @@ namespace RestClientApplication
                 #region ARPayment
                 case "ARPayment":
                     {
-                        textBox4.Visible = true;
+                        txtParameter.Visible = true;
                         lblParameter.Visible = true;
                         lblParameter.Text = "Id:";
 
@@ -453,22 +580,23 @@ namespace RestClientApplication
                 #region APInvoice
                 case "APInvoice":
                     {
-                        textBox4.Visible = true;
+                        txtParameter.Visible = true;
                         lblParameter.Visible = true;
                         lblParameter.Text = "Id:";
 
                         txtParameter2.Visible = true;
                         lblParameter2.Visible = true;
                         lblParameter2.Text = "Number:";
-                        label16.Visible = true;
-                        label16.Text = "External ID:";
-                        textBox7.Visible = true;
+
+                        lblParameter3.Visible = true;
+                        lblParameter3.Text = "External ID:";
+                        txtParameter3.Visible = true;
+
                         apiName = "APInvoice";
 
                         break;
                     }
                 #endregion
-
 
                 #region ARInvoiceAdditionalData
                 case "ARInvoice Additional Data":
@@ -477,7 +605,6 @@ namespace RestClientApplication
                         break;
                     }
                 #endregion
-
 
                 #region CustomerOpenFilesAmount
                 case "Customer Open Files Amount":
@@ -495,7 +622,7 @@ namespace RestClientApplication
 
                         lblParameter.Text = "External ID:";
                         lblParameter.Visible = true;
-                        textBox4.Visible = true;
+                        txtParameter.Visible = true;
                         apiName = "APInvoiceCancellation";
                         break;
                     }
@@ -536,8 +663,47 @@ namespace RestClientApplication
                         apiName = "CargoTrackingShipmentDetails";
                         break;
                     }
-                    #endregion
+                #endregion
 
+                #region Container
+                case "Container":
+                    {
+                        apiName = "container";
+
+                        if (operationCombo.SelectedItem != null)
+                        {
+                            if (operationCombo.SelectedItem.Equals("Update (PUT)"))
+                            {
+                                //requestText = responseParameters.XMLRequestText["PutContainer"];
+                            }
+
+                            else if (operationCombo.SelectedItem.Equals("Get"))
+                            {
+                                lblParameter.Text = "Container No";
+                                lblParameter2.Text = "Shipment No";
+
+                                txtParameter.Visible = true;
+                                lblParameter.Visible = true;
+
+                                txtParameter2.Visible = true;
+                                lblParameter2.Visible = true;
+                            }
+                        }
+
+                        break;
+                    }
+                #endregion
+
+                #region Get Shipments by References
+                case "Get Shipments by References":
+                    {
+                        lblParameter.Visible = false;
+                        txtParameter.Visible = false;
+                        requestText = responseParameters.XMLRequestText["GetShipmentsByReferences"];
+                        apiName = "GetShipmentsByReferences";
+                        break;
+                    }
+                    #endregion
             }
 
             txtRequestBody.Text = requestText;
@@ -563,56 +729,93 @@ namespace RestClientApplication
 
             if (!string.IsNullOrEmpty(this.Token))
             {
-                using (var client = new HttpClient())
+                using (HttpClient client = new HttpClient())
                 {
                     client.Timeout = new TimeSpan(0, 10, 0); // 10 minutes
-
                     client.DefaultRequestHeaders.Add("Token", Token);
+
                     var content = new StringContent(txtRequestBody.Text, Encoding.UTF8, txtRequestContentType.Text);
                     HttpResponseMessage response = new HttpResponseMessage();
 
-                    if (operationCombo.SelectedIndex == 0)
+                    if (operationCombo.SelectedItem.Equals("Create (POST)"))
                     {
                         response = await client.PostAsync(txtServerUrl.Text + "/" + api, content);
                     }
-                    else if (operationCombo.SelectedIndex == 1)
+                    else if (operationCombo.SelectedItem.Equals("Update (PUT)"))
                     {
                         response = await client.PutAsync(txtServerUrl.Text + "/" + api, content);
                     }
-                    else if (operationCombo.SelectedIndex == 2)
+
+                    else if (operationCombo.SelectedItem.Equals("Get"))
                     {
                         client.DefaultRequestHeaders.Add("Accept", "application/xml");
 
-                        if (!string.IsNullOrEmpty(txtParameter.Text))
+                        if (apiName == "direct" || apiName == "house" || apiName == "master")
                         {
-                            response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?number=" + txtParameter.Text);
+                            string url = "";
+                            if (!string.IsNullOrEmpty(txtParameter.Text))
+                            {
+                                url = txtServerUrl.Text + "/" + api + "?number=" + txtParameter.Text + "&include=";
+                            }
+
+                            else
+                            {
+                                url = txtServerUrl.Text + "/" + api + "?id=" + txtParameter2.Text + "&include=";
+                            }
+
+                            if (IncludeEventsCheckBox.Checked)
+                            {
+                                url += "eventlist";
+                            }
+
+                            response = await client.GetAsync(url);
                         }
+
+                        else if (apiName == "container")
+                        {
+                            response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?containerNumber=" + txtParameter.Text + "&shipmentNumber=" + txtParameter2.Text);
+                        }
+
+                        else if (apiName == "customer")
+                        {
+                            string url = GetCustomerURL();
+                            response = await client.GetAsync(url);
+                        }
+
                         else
                         {
-
-                            if (apiName == "GLAccount")
+                            if (apiName == "ClosedMonthCheck")
                             {
-                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox1.Text + "&DisplayNumber=" + textBox2.Text + "&InternalNumber=" + textBox3.Text);
+                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?year=" + txtParameter.Text + "&month=" + txtParameter2.Text + "&periodTypeCode=" + txtParameter3.Text);
                             }
-                            else if (apiName == "ARInvoice" || apiName == "ARPayment")
+                            else if (!string.IsNullOrEmpty(txtParameter.Text))
                             {
-                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text);
-                            }
-                            else if (apiName == "APInvoice")
-                            {
-
-                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text + "&externalId=" + textBox7.Text + "&internalNumber=" + null);
-                            }
-                            else if (apiName == "Journal")
-                            {
-                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + textBox4.Text + "&number=" + txtParameter2.Text + "&externalNo=" + textBox6.Text + "&externalSystem=" + textBox5.Text);
+                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?number=" + txtParameter.Text);
                             }
                             else
-                                response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + txtParameter2.Text);
-
+                            {
+                                if (apiName == "GLAccount")
+                                {
+                                    response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + txtParameter.Text + "&DisplayNumber=" + txtParameter3.Text + "&InternalNumber=" + txtParameter2.Text);
+                                }
+                                else if (apiName == "ARInvoice" || apiName == "ARPayment")
+                                {
+                                    response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + txtParameter.Text + "&number=" + txtParameter2.Text);
+                                }
+                                else if (apiName == "APInvoice")
+                                {
+                                    response = await client.GetAsync(EncodeUrl(txtServerUrl.Text + "/" + api + "?id=" + txtParameter.Text + "&number=" + txtParameter2.Text + "&externalId=" + txtParameter3.Text + "&internalNumber=" + null));
+                                }
+                                else if (apiName == "Journal")
+                                {
+                                    response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + txtParameter.Text + "&number=" + txtParameter2.Text + "&externalNo=" + txtParameter3.Text + "&externalSystem=" + txtParameter4.Text);
+                                }
+                                else
+                                {
+                                    response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?id=" + txtParameter2.Text);
+                                }
+                            }
                         }
-
-
                     }
 
                     else if (operationCombo.SelectedIndex == 3)
@@ -620,7 +823,7 @@ namespace RestClientApplication
                         if (apiName == "APInvoiceCancellation")
                         {
                             client.DefaultRequestHeaders.Add("Accept", "application/xml");
-                            response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?externalId=" + textBox4.Text);
+                            response = await client.GetAsync(txtServerUrl.Text + "/" + api + "?externalId=" + txtParameter.Text);
 
                         }
                         else
@@ -629,24 +832,43 @@ namespace RestClientApplication
                         }
                     }
 
+                    else if (operationCombo.SelectedItem.Equals("Update (Patch)") && apiName == "direct")
+                    {
+                        var url = txtServerUrl.Text + "/" + api + "?id=" + txtParameter2.Text;
+                        var request = new HttpRequestMessage(new HttpMethod("PATCH"), url);
+                        request.Content = content;
+                        response = await client.SendAsync(request);
+                    }
+
+                    else if (operationCombo.SelectedItem.Equals("Get Direct Shipments"))
+                    {
+                        response = await client.PostAsync(txtServerUrl.Text + "/" + api + "/PostGetDirectShipments", content);                      
+                    }
+
+                    else if (operationCombo.SelectedItem.Equals("Get House Shipments"))
+                    {
+                        response = await client.PostAsync(txtServerUrl.Text + "/" + api + "/PostGetHouseShipments", content);
+                    }
+
+                    else if (operationCombo.SelectedItem.Equals("Get Master Shipments"))
+                    {
+                        response = await client.PostAsync(txtServerUrl.Text + "/" + api + "/PostGetMasterShipments", content);
+                    }
+
                     txtReponseCode.Text = ((int)response.StatusCode).ToString();
 
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         var resultData = response.Content.ReadAsStringAsync().Result;
-                        this.SetXmlBrouserXml(resultData);
+                        this.SetXmlBrouserXml(resultData, api);
                     }
 
                     else
                     {
                         var resultData2 = response.Content.ReadAsStringAsync().Result;
-                        this.SetXmlBrouserXml(resultData2);
+                        this.SetXmlBrouserXml(resultData2, api);
                     }
-
-                    //isSendButtonEnabled = true;
                 }
-
-                //this.ChangeFormState();
             }
 
             else
@@ -656,6 +878,29 @@ namespace RestClientApplication
             }
 
             this.Cursor = Cursors.Default;
+        }
+
+        private string GetCustomerURL()
+        {
+            if (!string.IsNullOrEmpty(txtParameter.Text))
+                return txtServerUrl.Text + "/" + apiName + "?code=" + txtParameter.Text;            
+
+            else if (!string.IsNullOrEmpty(txtParameter2.Text))
+                return txtServerUrl.Text + "/" + apiName + "?vatNumber=" + txtParameter2.Text;
+
+            else if(!string.IsNullOrEmpty(txtParameter3.Text))
+                return txtServerUrl.Text + "/" + apiName + "?externalId=" + txtParameter3.Text;
+
+            else if(!string.IsNullOrEmpty(txtParameter4.Text))
+                return txtServerUrl.Text + "/" + apiName + "?name=" + txtParameter4.Text;            
+
+            return "";
+        }
+
+        private string EncodeUrl(string url)
+        {
+            string encodedUrl = url.Replace("+", "%2b");
+            return encodedUrl;
         }
 
         private void rdbJson_CheckedChanged(object sender, EventArgs e)
@@ -688,18 +933,51 @@ namespace RestClientApplication
             Clipboard.SetText(xmlBrowser1.XmlText);
         }
 
-        private void SetXmlBrouserXml(string xmlString)
+        private void SetXmlBrouserXml(string xmlString , string apiName)
         {
-            System.Xml.Xsl.XslCompiledTransform xTrans = new System.Xml.Xsl.XslCompiledTransform();
+            try
+            {
+                xmlString = this.DeleteAllowUnassignedEntryFromXML(xmlString);
+                System.Xml.Xsl.XslCompiledTransform xTrans = new System.Xml.Xsl.XslCompiledTransform();
+                StringReader sr = new StringReader(xmlString);
+                XmlReader xReader = XmlReader.Create(sr);
 
-            StringReader sr = new StringReader(xmlString);
-            XmlReader xReader = XmlReader.Create(sr);
+                xmlBrowser1.XmlDocumentTransformType = XmlRender.XmlBrowser.XslTransformType.XSL;
+                XmlDocument _xd = new XmlDocument();
+                if (IsResponseFromPatchAPI(apiName) || txtRequestContentType.Text == "application/json")
+                {
+                    _xd = JsonConvert.DeserializeXmlNode(xmlString, "Direct");
+                }
+                else
+                {
+                    _xd.Load(xReader);
+                }
+                xmlBrowser1.XmlDocument = _xd;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
 
-            xmlBrowser1.XmlDocumentTransformType = XmlRender.XmlBrowser.XslTransformType.XSL;
+        private string DeleteAllowUnassignedEntryFromXML(string xmlString)
+        {
+            string newXmlString = "";
+            newXmlString = xmlString.Replace("AllowUnassignedEntry=\"true\"", "");
+            newXmlString = newXmlString.Replace("AllowUnassignedEntry=\"false\"", "");
 
-            XmlDocument _xd = new XmlDocument();
-            _xd.Load(xReader);
-            xmlBrowser1.XmlDocument = _xd;
+            return newXmlString;
+        }
+
+        private bool IsResponseFromPatchAPI(string apiName)
+        {
+            if (!(apiName == "direct"))
+                return false;
+
+            if (!operationCombo.SelectedItem.Equals("Update (Patch)"))
+                return false;
+
+            return true;
         }
 
         private void txtCredentialsPrimary_TextChanged(object sender, EventArgs e)
@@ -882,22 +1160,11 @@ namespace RestClientApplication
         private void button3_Click(object sender, EventArgs e)
         {
             txtRequestBody.Text = Clipboard.GetText();
-
         }
 
         private void btnConnect_Click(object sender, EventArgs e)
         {
-
             this.LoginWithCredentials();
-        }
-        private void groupBox2_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
         }
     }
 }

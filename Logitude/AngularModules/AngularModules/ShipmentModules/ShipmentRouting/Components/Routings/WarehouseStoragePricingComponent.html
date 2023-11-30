@@ -124,7 +124,7 @@
                     <tr>
                         <td colspan="3">
                             <div class="MediaFill" style="overflow-x: hidden;">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="PricingItemsList" (RowEnded)="OnRowEnded($event)">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="PricingItemsList" (RowEnded)="OnRowEnded($event)" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <log-column [header]="'Step From'" [width]="'100'" [Alignment]="'left'">
                                         <ng-template let-item>
@@ -270,7 +270,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -278,7 +278,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

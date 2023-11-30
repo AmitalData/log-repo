@@ -10,12 +10,10 @@ using System.Xml;
 using System.Xml.Serialization;
 using Logitude.Server.Tools;
 using System.Collections.Generic;
-using System.Net;
 using Simplog.Data.ShipmentsModel.Repositories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Logitude.BL.Security;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
@@ -24,11 +22,12 @@ using Simplog.Data.ShipmentsModel;
 using Logitude.Server.Tools.Counters;
 using System.Security.Cryptography;
 using System.Reflection;
-using System.Globalization;
 using Logitude.Server.Tools.Helpers;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
+using Logitude.BL.Helpers;
+using Logitude.BL.CommonDataModel.EntityQueries;
 
 namespace WebFreight.Web.Helpers.Analyzers
 {
@@ -37,8 +36,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         private AnalyzeQueue analyzeQueue;
         private AnalyzeQueueRepository analyzeQueueRepository;
         private CommunicationLogRepository communicationLogRepository;
-        private int tenant;
-        private ArrayOfQueueTask externalTasksQueues;        
+        private int tenant_Zero;
+        private ArrayOfQueueTask externalTasksQueues;
         private LogitudeOceanInsightsRequestRepository logitudeOceanInsightsRequestRepository;
         private int? logitudeTenant = null;
         private ICommonDataContext commonContext;
@@ -46,7 +45,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         private ContainerPM container;
         private string communicationLogTo = "OceanInsightStatusRequest";
         private string communicationLogSubject = "Shipment Containers Statuses";
-        private string containerObjectTableId;
+        private string objectTableId;
         private string loggedContactId;
         private string containerId;
         private string oceanInsightsEnvelopeParameters;
@@ -57,9 +56,16 @@ namespace WebFreight.Web.Helpers.Analyzers
         private ContainerStatusRepository containerStatusRepository;
         private ShipmentRepository shipmentRepository;
         private ShipmentQuery shipmentQuery;
-
+        private string objectTableName = "Container";
+        private ShipmentPM shipmentPM;
+        private PortRepository portRepository;
+        private VesselRepository vesselRepository;
+        private PortTimeZoneRepository portTimeZoneRepository;
+        private ComputingPartnerTranslationHelper computingPartnerTranslator;
         private string oceanInsightsId;
         private string container_number;
+        private string shipmentPackagesId;
+        private string container_number_FromXML;
         private string carrier_scac;
         private string container_status;
         private string details;
@@ -79,20 +85,150 @@ namespace WebFreight.Web.Helpers.Analyzers
         private string emptyPickup_initial;
         private string emptyPickup_actual;
         private string emptyPickupLocation;
+        private string emptyPickupTimeZone;
         private string gateInDate_last;
         private string gateInDate_initial;
         private string gateInDate_actual;
         private string departureLocation;
         private string destinationLocation;
-
+        private string origin_loc_locode;
+        private string origin_loc_timezone;
+        private string origin_pickup_planned_initial = null;
+        private string origin_pickup_planned_last = null;
+        private string origin_pickup_actual = null;
+        private string pol_loc_locode = null;
+        private string pol_loc_timezone = null;
+        private string pol_loaded_planned_initial = null;
+        private string pol_loaded_planned_last = null;
+        private string pol_loaded_actual = null;
+        private string ts_count = null;
+        private string tsp1_loc_locode = null;
+        private string tsp1_loc_timezone = null;
+        private string tsp1_vslarrival_planned_initial = null;
+        string tsp1_vslarrival_planned_last = null;
+        string tsp1_vslarrival_actual = null;
+        string tsp1_vslarrival_detected = null;
+        string tsp1_discharge_planned_last = null;
+        string tsp1_discharge_actual = null;
+        string tsp1_loaded_planned_initial = null;
+        string tsp1_loaded_planned_last = null;
+        string tsp1_loaded_actual = null;
+        string tsp1_vsldeparture_planned_initial = null;
+        string tsp1_vsldeparture_planned_last = null;
+        string tsp1_vsldeparture_actual = null;
+        string tsp1_vsldeparture_detected = null ; 
+        string tsp1_discharge_planned_initial = null;
+        string tsp2_loc_locode = null;
+        string tsp2_loc_timezone = null;
+        string tsp2_vslarrival_planned_initial = null;
+        string tsp2_vslarrival_planned_last = null;
+        string tsp2_vslarrival_actual = null;
+        string tsp2_vslarrival_detected = null;
+        string tsp2_discharge_planned_initial = null;
+        string tsp2_discharge_planned_last = null;
+        string tsp2_discharge_actual = null;
+        string tsp2_loaded_planned_initial = null;
+        string tsp2_loaded_planned_last = null;
+        string tsp2_loaded_actual = null;
+        string tsp2_vsldeparture_planned_initial = null;
+        string tsp2_vsldeparture_planned_last = null;
+        string tsp2_vsldeparture_actual = null;
+        string tsp2_vsldeparture_detected = null;
+        string tsp3_loc_locode = null;
+        string tsp3_loc_timezone = null;
+        string tsp3_vslarrival_planned_initial = null;
+        string tsp3_vslarrival_planned_last = null;
+        string tsp3_vslarrival_actual = null;
+        string tsp3_vslarrival_detected = null;
+        string tsp3_discharge_planned_initial = null;
+        string tsp3_discharge_planned_last = null;
+        string tsp3_discharge_actual = null;
+        string tsp3_loaded_planned_initial = null;
+        string tsp3_loaded_planned_last = null;
+        string tsp3_loaded_actual = null;
+        string tsp3_vsldeparture_planned_initial = null;
+        string tsp3_vsldeparture_planned_last = null;
+        string tsp3_vsldeparture_actual = null;
+        string tsp3_vsldeparture_detected = null;
+        string tsp4_loc_locode = null;
+        string tsp4_loc_timezone = null;
+        string tsp4_vslarrival_planned_initial = null;
+        string tsp4_vslarrival_planned_last = null;
+        string tsp4_vslarrival_actual = null;
+        string tsp4_vslarrival_detected = null;
+        string tsp4_discharge_planned_initial = null;
+        string tsp4_discharge_planned_last = null;
+        string tsp4_discharge_actual = null;
+        string tsp4_loaded_planned_initial = null;
+        string tsp4_loaded_planned_last = null;
+        string tsp4_loaded_actual = null;
+        string tsp4_vsldeparture_planned_initial = null;
+        string tsp4_vsldeparture_planned_last = null;
+        string tsp4_vsldeparture_actual = null;
+        string tsp4_vsldeparture_detected = null;
+        string leg1_vessel_name = null;
+        string leg1_voyage = null;
+        string leg2_vessel_name = null;
+        string leg2_voyage = null;
+        string leg3_vessel_name = null;
+        string leg3_voyage = null;
+        string leg4_vessel_name = null;
+        string leg4_voyage = null;
+        string leg5_vessel_name = null;
+        string leg5_voyage = null;
+        string pod_loc_locode = null;
+        string pod_loc_timezone = null;
+        string pod_discharge_planned_initial = null;
+        string pod_discharge_planned_last = null;
+        string pod_discharge_actual = null;
+        string pod_departure_planned_initial = null;
+        string pod_departure_planned_last = null;
+        string pod_departure_actual = null;
+        string dlv_loc_locode = null;
+        string dlv_loc_timezone = null;
+        string dlv_delivery_planned_initial = null;
+        string dlv_delivery_planned_last = null;
+        string dlv_delivery_actual = null;
+        string lif_loc_locode = null;
+        string lif_loc_timezone = null;
+        string lif_arrival_planned_initial = null;
+        string lif_arrival_planned_last = null;
+        string lif_arrival_actual = null;
+        string lif_departure_planned_initial = null;
+        string lif_departure_planned_last = null;
+        string lif_departure_actual = null;
+        string empty_return_loc_locode = null;
+        string empty_return_loc_timezone = null;
+        string empty_return_planned_initial = null;
+        string empty_return_planned_last = null;
+        string empty_return_actual = null;
+        string customs_release_date = null;
+        string carrier_release_date = null;
+        string customs_release_state = null;
+        string carrier_release_state = null;
+        string availability_date = null;
+        string availability_locode =  null;
+        string availability_timezone = null;
+        string POLShipmentUpdateIndicator = null;
+        string PODShipmentUpdateIndicator = null;
+        string computingPartnerCode;
+        string xmlId = null;
+        private bool IsUpdatingPackages = false;
+        private ContainersExternalData containersExternalData_DB;
+        private ContainersExternalData containersExternalData_New;
+        private ContainersExternalDataRepository containersExternalDataRepository;
+        private ContainersExternal containersExternal;
+        private bool IsUpdatingShipmentDateFields  = false;
+        private bool IsUpdatingEmptyLeg = false;
         public ContainerStatusesConnecterAnalyzer(AnalyzeQueue analyzeQueue, AnalyzeQueueRepository analyzeQueueRepository)
         {
             if (analyzeQueue != null)
             {
-                this.tenant = analyzeQueue.Tenant;
+                this.tenant_Zero = analyzeQueue.Tenant;
                 this.analyzeQueue = analyzeQueue;
                 this.analyzeQueueRepository = analyzeQueueRepository;
-                this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant);                
+                this.logitudeOceanInsightsRequestRepository = new LogitudeOceanInsightsRequestRepository(this.tenant_Zero);                
+                this.computingPartnerCode = "G-OCI";
             }
         }
 
@@ -146,7 +282,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.ConnectAnalyzeQueueToTenantAndEntity();
                 this.AnalyzeOceanInsightsParametersXML();
                 this.GetLogitudeOceanInsights();
-                this.ProcessLogitudeTenant();               
+                this.ProcessLogitudeTenant();
                 this.DoneAnalyzeQueue();
             }
 
@@ -179,11 +315,11 @@ namespace WebFreight.Web.Helpers.Analyzers
                 if (oceanInsightsParameters != null)
                 {
                     oceanInsightsEnvelopeParameters = oceanInsightsParameters.Value;
-                    this.ReadOceanInsightsParametersXMLFields();
+                    this.GetOceanInsightsParametersXMLFields();
                 }
             }
         }
-        private void ReadOceanInsightsParametersXMLFields()
+        private void GetOceanInsightsParametersXMLFields()
         {
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.LoadXml(oceanInsightsEnvelopeParameters);
@@ -192,15 +328,16 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 foreach (XmlNode item in xn.ChildNodes)
                 {
-                    this.ReadEventSectionFields(item);
-                    this.ReadShipmentSectionFields(item); 
+                    this.GetEventSectionFields(item);
+                    this.GetShipmentSectionFields(item);
                 }
             }
         }
-        private void ReadEventSectionFields(XmlNode node)
+        private void GetEventSectionFields(XmlNode node)
         {
             if (node.ChildNodes != null && node.Name == "event")
             {
+                xmlId = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "id").FirstOrDefault()?.InnerText;
                 createdDate = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "created").FirstOrDefault()?.InnerText;
                 eventCode = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "code").FirstOrDefault()?.InnerText;
 
@@ -211,51 +348,305 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
-        private void ReadShipmentSectionFields(XmlNode node)
+        private void GetShipmentSectionFields(XmlNode node)
         {
             if (node.ChildNodes != null && node.Name == "shipment")
             {
-                oceanInsightsId = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipmentsubscription_id").FirstOrDefault()?.InnerText;
-                container_number = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
-                carrier_scac = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
-                container_status = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "status").FirstOrDefault()?.InnerText;
-                weight = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "weight").FirstOrDefault()?.InnerText;
-                ETD_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
-                ETD_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
-                ATD_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_actual").FirstOrDefault()?.InnerText;
-                ATD_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_detected").FirstOrDefault()?.InnerText;
-                ETA_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
-                ETA_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_last").FirstOrDefault()?.InnerText;
-                ETA_predection = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_predection").FirstOrDefault()?.InnerText;
-                ATA_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_actual").FirstOrDefault()?.InnerText;
-                ATA_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_detected").FirstOrDefault()?.InnerText;
-                emptyPickup_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_planned_last").FirstOrDefault()?.InnerText;
-                emptyPickup_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_planned_initial").FirstOrDefault()?.InnerText;
-                emptyPickup_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_actual").FirstOrDefault()?.InnerText;
-                gateInDate_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_planned_last").FirstOrDefault()?.InnerText;
-                gateInDate_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_planned_initial").FirstOrDefault()?.InnerText;
-                gateInDate_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_actual").FirstOrDefault()?.InnerText;
-
-                XmlElement emptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_loc").FirstOrDefault();
-                XmlElement departureLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loc").FirstOrDefault();
-                XmlElement destinationLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_loc").FirstOrDefault();
-
-                if (emptyPickupLocationElement != null)
-                {
-                    emptyPickupLocation = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
-                }
-
-                if (departureLocationElement != null)
-                {
-                    departureLocation = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
-                }
-
-                if (destinationLocationElement != null)
-                {
-                    destinationLocation = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
-                }
+                this.GetDirectFieldsOfShipment(node);
+                this.GetEmptyPickupLocationElement(node);
+                this.GetDepartureLocationElement(node);
+                this.GetDestinationLocationElement(node);
+                this.GetOriginLocationElement(node);
+                this.GetTransshipment1Leg(node);
+                this.GetTransshipment2Leg(node);
+                this.GetTransshipment3Leg(node);
+                this.GetTransshipment4Leg(node);
+                this.GetLeg1Element(node);
+                this.GetLeg2Element(node);
+                this.GetLeg3Element(node);
+                this.GetLeg4Element(node);
+                this.GetLeg5Element(node);
+                this.GetDeliveryLocationElement(node);
+                this.GetLifLocationElement(node);
+                this.GetEmptyReturnElement(node);
+                this.GetAvailabilityLocationElement(node);
             }
         }
+        private void GetDirectFieldsOfShipment(XmlNode node)
+        {
+            oceanInsightsId = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "shipmentsubscription_id").FirstOrDefault()?.InnerText;
+            container_number = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
+            container_number_FromXML = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "container_number").FirstOrDefault()?.InnerText;
+            carrier_scac = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_scac").FirstOrDefault()?.InnerText;
+            container_status = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "status").FirstOrDefault()?.InnerText;
+            weight = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "weight").FirstOrDefault()?.InnerText;
+            ETD_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+            ETD_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+            ATD_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_actual").FirstOrDefault()?.InnerText;
+            ATD_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_vsldeparture_detected").FirstOrDefault()?.InnerText;
+            ETA_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+            ETA_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+            ETA_predection = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_predection").FirstOrDefault()?.InnerText;
+            ATA_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_actual").FirstOrDefault()?.InnerText;
+            ATA_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_vslarrival_detected").FirstOrDefault()?.InnerText;
+            emptyPickup_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_planned_last").FirstOrDefault()?.InnerText;
+            emptyPickup_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_planned_initial").FirstOrDefault()?.InnerText;
+            emptyPickup_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_actual").FirstOrDefault()?.InnerText;
+            gateInDate_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_planned_last").FirstOrDefault()?.InnerText;
+            gateInDate_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_planned_initial").FirstOrDefault()?.InnerText;
+            gateInDate_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_arrival_actual").FirstOrDefault()?.InnerText;
+            origin_pickup_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_pickup_planned_initial").FirstOrDefault()?.InnerText;
+            origin_pickup_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_pickup_planned_last").FirstOrDefault()?.InnerText;
+            origin_pickup_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_pickup_actual").FirstOrDefault()?.InnerText;
+            pol_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loaded_planned_initial").FirstOrDefault()?.InnerText;
+            pol_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loaded_planned_last").FirstOrDefault()?.InnerText;
+            pol_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loaded_actual").FirstOrDefault()?.InnerText;
+            ts_count = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "ts_count").FirstOrDefault()?.InnerText;
+            pod_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_planned_last").FirstOrDefault()?.InnerText;
+            pod_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_planned_initial").FirstOrDefault()?.InnerText;
+            pod_departure_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_planned_initial").FirstOrDefault()?.InnerText;
+            pod_departure_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_planned_last").FirstOrDefault()?.InnerText;
+            pod_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_departure_actual").FirstOrDefault()?.InnerText;
+            pod_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_discharge_actual").FirstOrDefault()?.InnerText;
+        }
+
+        private void GetEmptyPickupLocationElement(XmlNode node)
+        {
+            XmlElement emptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_pickup_loc").FirstOrDefault();
+            if (emptyPickupLocationElement != null)
+            {
+                emptyPickupLocation = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                emptyPickupTimeZone = emptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+            }
+        }
+        private void GetDepartureLocationElement(XmlNode node)
+        {
+            XmlElement departureLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pol_loc").FirstOrDefault();
+            if (departureLocationElement != null)
+            {
+                departureLocation = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                pol_loc_locode = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                pol_loc_timezone = departureLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+            }
+        }
+        private void GetDestinationLocationElement(XmlNode node)
+        {
+            XmlElement destinationLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "pod_loc").FirstOrDefault();
+            if (destinationLocationElement != null)
+            {
+                destinationLocation = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+                pod_loc_locode = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                pod_loc_timezone = destinationLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+
+            }
+        }
+        private void GetOriginLocationElement(XmlNode node)
+        {
+            XmlElement origin_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "origin_loc").FirstOrDefault();
+            if (origin_locElement != null)
+            {
+                origin_loc_locode = origin_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                origin_loc_timezone = origin_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+            }
+        }
+        private void GetTransshipment1Leg(XmlNode node)
+        {
+            XmlElement tsp1_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loc").FirstOrDefault();
+            if (tsp1_locElement != null)
+            {
+                tsp1_loc_locode = tsp1_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                tsp1_loc_timezone = tsp1_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+            }
+
+            tsp1_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+            tsp1_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+            tsp1_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_actual").FirstOrDefault()?.InnerText;
+            tsp1_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vslarrival_detected").FirstOrDefault()?.InnerText;
+            tsp1_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_planned_initial").FirstOrDefault()?.InnerText;
+            tsp1_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_planned_last").FirstOrDefault()?.InnerText;
+            tsp1_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_discharge_actual").FirstOrDefault()?.InnerText;
+            tsp1_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loaded_planned_initial").FirstOrDefault()?.InnerText;
+            tsp1_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loaded_planned_last").FirstOrDefault()?.InnerText;
+            tsp1_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_loaded_actual").FirstOrDefault()?.InnerText;
+            tsp1_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+            tsp1_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+            tsp1_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_actual").FirstOrDefault()?.InnerText;
+            tsp1_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp1_vsldeparture_detected").FirstOrDefault()?.InnerText;
+        }
+        private void GetTransshipment2Leg(XmlNode node)
+        {
+            XmlElement tsp2_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loc").FirstOrDefault();
+            if (tsp2_locElement != null)
+            {
+                tsp2_loc_locode = tsp2_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                tsp2_loc_timezone = tsp2_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+            }
+
+            tsp2_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+            tsp2_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+            tsp2_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_actual").FirstOrDefault()?.InnerText;
+            tsp2_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vslarrival_detected").FirstOrDefault()?.InnerText;
+            tsp2_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_planned_initial").FirstOrDefault()?.InnerText;
+            tsp2_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_planned_last").FirstOrDefault()?.InnerText;
+            tsp2_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_discharge_actual").FirstOrDefault()?.InnerText;
+            tsp2_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loaded_planned_initial").FirstOrDefault()?.InnerText;
+            tsp2_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loaded_planned_last").FirstOrDefault()?.InnerText;
+            tsp2_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_loaded_actual").FirstOrDefault()?.InnerText;
+            tsp2_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+            tsp2_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+            tsp2_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_actual").FirstOrDefault()?.InnerText;
+            tsp2_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp2_vsldeparture_detected").FirstOrDefault()?.InnerText;
+        }
+        private void GetTransshipment3Leg(XmlNode node)
+        {
+            XmlElement tsp3_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loc").FirstOrDefault();
+            if (tsp3_locElement != null)
+            {
+                tsp3_loc_locode = tsp3_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                tsp3_loc_timezone = tsp3_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+            }
+
+            tsp3_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+            tsp3_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+            tsp3_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_actual").FirstOrDefault()?.InnerText;
+            tsp3_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vslarrival_detected").FirstOrDefault()?.InnerText;
+            tsp3_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_planned_initial").FirstOrDefault()?.InnerText;
+            tsp3_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_planned_last").FirstOrDefault()?.InnerText;
+            tsp3_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_discharge_actual").FirstOrDefault()?.InnerText;
+            tsp3_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loaded_planned_initial").FirstOrDefault()?.InnerText;
+            tsp3_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loaded_planned_last").FirstOrDefault()?.InnerText;
+            tsp3_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_loaded_actual").FirstOrDefault()?.InnerText;
+            tsp3_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+            tsp3_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+            tsp3_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_actual").FirstOrDefault()?.InnerText;
+            tsp3_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp3_vsldeparture_detected").FirstOrDefault()?.InnerText;
+        }
+        private void GetTransshipment4Leg(XmlNode node)
+        {
+            XmlElement tsp4_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loc").FirstOrDefault();
+            if (tsp4_locElement != null)
+            {
+                tsp4_loc_locode = tsp4_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                tsp4_loc_timezone = tsp4_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+            }
+
+            tsp4_vslarrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_planned_initial").FirstOrDefault()?.InnerText;
+            tsp4_vslarrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_planned_last").FirstOrDefault()?.InnerText;
+            tsp4_vslarrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_actual").FirstOrDefault()?.InnerText;
+            tsp4_vslarrival_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vslarrival_detected").FirstOrDefault()?.InnerText;
+            tsp4_discharge_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_planned_initial").FirstOrDefault()?.InnerText;
+            tsp4_discharge_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_planned_last").FirstOrDefault()?.InnerText;
+            tsp4_discharge_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_discharge_actual").FirstOrDefault()?.InnerText;
+            tsp4_loaded_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loaded_planned_initial").FirstOrDefault()?.InnerText;
+            tsp4_loaded_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loaded_planned_last").FirstOrDefault()?.InnerText;
+            tsp4_loaded_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_loaded_actual").FirstOrDefault()?.InnerText;
+            tsp4_vsldeparture_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_planned_initial").FirstOrDefault()?.InnerText;
+            tsp4_vsldeparture_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_planned_last").FirstOrDefault()?.InnerText;
+            tsp4_vsldeparture_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_actual").FirstOrDefault()?.InnerText;
+            tsp4_vsldeparture_detected = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "tsp4_vsldeparture_detected").FirstOrDefault()?.InnerText;
+        }
+        private void GetLeg1Element(XmlNode node)
+        {
+            XmlElement leg1_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg1_vessel").FirstOrDefault();
+            if (leg1_vessel_Element != null)
+            {
+                leg1_vessel_name = leg1_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+            }
+            leg1_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg1_voyage").FirstOrDefault()?.InnerText;
+        }
+        private void GetLeg2Element(XmlNode node)
+        {
+            XmlElement leg2_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg2_vessel").FirstOrDefault();
+            if (leg2_vessel_Element != null)
+            {
+                leg2_vessel_name = leg2_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+            }
+            leg2_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg2_voyage").FirstOrDefault()?.InnerText;
+        }
+        private void GetLeg3Element(XmlNode node)
+        {
+            XmlElement leg3_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg3_vessel").FirstOrDefault();
+            if (leg3_vessel_Element != null)
+            {
+                leg3_vessel_name = leg3_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+            }
+            leg3_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg3_voyage").FirstOrDefault()?.InnerText;
+        }
+        private void GetLeg4Element(XmlNode node)
+        {
+            XmlElement leg4_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg4_vessel").FirstOrDefault();
+            if (leg4_vessel_Element != null)
+            {
+                leg4_vessel_name = leg4_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+            }
+            leg4_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg4_voyage").FirstOrDefault()?.InnerText;
+        }
+        private void GetLeg5Element(XmlNode node)
+        {
+            XmlElement leg5_vessel_Element = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg5_vessel").FirstOrDefault();
+            if (leg5_vessel_Element != null)
+            {
+                leg5_vessel_name = leg5_vessel_Element.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "name").FirstOrDefault()?.InnerText;
+            }
+            leg5_voyage = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "leg5_voyage").FirstOrDefault()?.InnerText;
+        }
+        private void GetDeliveryLocationElement(XmlNode node)
+        {
+            XmlElement dlv_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_loc").FirstOrDefault();
+            if (dlv_locElement != null)
+            {
+                dlv_loc_locode = dlv_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                dlv_loc_timezone = dlv_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+            }
+
+            dlv_delivery_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_planned_initial").FirstOrDefault()?.InnerText;
+            dlv_delivery_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_planned_last").FirstOrDefault()?.InnerText;
+            dlv_delivery_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "dlv_delivery_actual").FirstOrDefault()?.InnerText;
+        }
+        private void GetLifLocationElement(XmlNode node)
+        {
+            XmlElement lif_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_loc").FirstOrDefault();
+            if (lif_locElement != null)
+            {
+                lif_loc_locode = lif_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                lif_loc_timezone = lif_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+            }
+
+            lif_arrival_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_planned_last").FirstOrDefault()?.InnerText;
+            lif_arrival_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_planned_initial").FirstOrDefault()?.InnerText;
+            lif_arrival_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_arrival_actual").FirstOrDefault()?.InnerText;
+            lif_departure_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_planned_initial").FirstOrDefault()?.InnerText;
+            lif_departure_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_planned_last").FirstOrDefault()?.InnerText;
+            lif_departure_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "lif_departure_actual").FirstOrDefault()?.InnerText;
+        }
+        private void GetEmptyReturnElement(XmlNode node)
+        {
+            XmlElement empty_return_locElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_loc").FirstOrDefault();
+            if (empty_return_locElement != null)
+            {
+                empty_return_loc_locode = empty_return_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                empty_return_loc_timezone = empty_return_locElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+            }
+
+            empty_return_planned_initial = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_planned_initial").FirstOrDefault()?.InnerText;
+            empty_return_planned_last = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_planned_last").FirstOrDefault()?.InnerText;
+            empty_return_actual = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "empty_return_actual").FirstOrDefault()?.InnerText;
+            customs_release_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "customs_release_date").FirstOrDefault()?.InnerText;
+            customs_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "customs_release_state").FirstOrDefault()?.InnerText;
+            carrier_release_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_date").FirstOrDefault()?.InnerText;
+            carrier_release_state = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "carrier_release_state").FirstOrDefault()?.InnerText;
+            availability_date = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_date").FirstOrDefault()?.InnerText;
+        }
+        private void GetAvailabilityLocationElement(XmlNode node)
+        {
+            XmlElement availabilityemptyPickupLocationElement = node.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "availability_loc").FirstOrDefault();
+            if (availabilityemptyPickupLocationElement != null)
+            {
+                availability_locode = availabilityemptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "locode").FirstOrDefault()?.InnerText;
+                availability_timezone = availabilityemptyPickupLocationElement.ChildNodes.OfType<XmlElement>().Where(e => e.LocalName == "timezone").FirstOrDefault()?.InnerText;
+            }
+        }
+
         private void GetLogitudeOceanInsights()
         {
             if (!string.IsNullOrEmpty(this.oceanInsightsId))
@@ -263,10 +654,10 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.GetLogitudeOceanInsightsByOceanInsightsId();
             }
 
-            if(string.IsNullOrEmpty( this.oceanInsightsId) || this.oceanInsights == null)
+            if (string.IsNullOrEmpty(this.oceanInsightsId) || this.oceanInsights == null)
             {
                 this.GetLogitudeOceanInsightsByOceanInsightsContainerNumberAndScac();
-            }            
+            }
         }
         private void GetLogitudeOceanInsightsByOceanInsightsId()
         {
@@ -280,7 +671,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
-                oceanInsights = this.logitudeOceanInsightsRequestRepository.GetLogitudeOceanInsightsRequestByContainerNumberAndScac(this.container_number, this.carrier_scac);
+                oceanInsights = this.logitudeOceanInsightsRequestRepository.GetLogitudeOceanInsightsRequestByContainerNumberAndScac(container_number_FromXML, this.carrier_scac);
                 scope.Complete();
             }
         }
@@ -295,20 +686,23 @@ namespace WebFreight.Web.Helpers.Analyzers
                         this.logitudeTenant = item.Tenant;
                         if (this.logitudeTenant != null)
                         {
-                            this.shipmentContext = ShipmentsContext.GetContext(logitudeTenant.Value);
-                            this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(shipmentContext);
-                            this.containerRepository = new ContainerRepository(shipmentContext);
-                            this.containerQuery = new ContainerQuery(containerRepository);
-                            this.containerStatusRepository = new ContainerStatusRepository(shipmentContext);
-                            this.shipmentRepository = new ShipmentRepository(shipmentContext);
-                            this.shipmentQuery = new ShipmentQuery(shipmentRepository);
+                            this.Initialize();                            
+                            this.GetShipmentById(item);
                             this.GetContainerDataByContainerNumber(item);
-                            this.AddContainerStatusCommunicationLog();
-                            if (this.eventCode == "0")
+                            if (IsCommunicationLogsExsit())
+                            {
+                                continue;
+                            }
+                            this.AddContainerStatusCommunicationLog(item);
+                            this.CreateLogitudeOceanInsightsResponse();
+                            if (IsUpdatingShipmentAndContainer())
                             {
                                 this.CreateShipmentContainerStatus(item);
                                 this.UpdateContainer();
-                                this.UpdateShipment(item);
+                                this.UpdatePackage();
+                                this.UpdateEmptyReturnLeg();
+                                this.UpdateShipment();
+                                this.SaveShipment(shipmentPM);
                             }
                         }
                     }
@@ -316,37 +710,149 @@ namespace WebFreight.Web.Helpers.Analyzers
                 }
             }
         }
-       
+        private void Initialize()
+        {
+            this.shipmentContext = ShipmentsContext.GetContext(logitudeTenant.Value);
+            this.shipmentContainerStatusRepository = new ShipmentContainerStatusRepository(shipmentContext);
+            this.containerRepository = new ContainerRepository(shipmentContext);
+            this.containerQuery = new ContainerQuery(containerRepository);
+            this.containerStatusRepository = new ContainerStatusRepository(shipmentContext);
+            this.shipmentRepository = new ShipmentRepository(shipmentContext);
+            this.shipmentQuery = new ShipmentQuery(shipmentRepository);
+            this.portRepository = new PortRepository(logitudeTenant.Value);
+            this.vesselRepository = new VesselRepository(logitudeTenant.Value);
+            this.portTimeZoneRepository = new PortTimeZoneRepository(logitudeTenant.Value);
+            this.computingPartnerTranslator = new ComputingPartnerTranslationHelper(logitudeTenant.Value);
+            this.containersExternalDataRepository = new ContainersExternalDataRepository(shipmentContext);
+        }
+        private bool IsUpdatingShipmentAndContainer()
+        {
+            if (shipmentPM.IsOperationalClosed)
+            {
+                return false;
+            }
+            if (!IsTheSamePOLLocation())
+            {
+                return false;
+            }
+            if (!IsTheSamePODLocation())
+            {
+                return false;
+            }
+            if (this.eventCode != null && this.eventCode != "20" &&
+                                (Int32.Parse(this.eventCode) >= 0 && Int32.Parse(this.eventCode) <= 31)
+                                && !string.IsNullOrEmpty(this.container_number))
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private bool IsTheSamePOLLocation()
+        {
+            var pOLLocation = this.GetTranslatedPortCode(pol_loc_locode);
+            var polPortId = this.GetPortId(pOLLocation);
+            if (shipmentPM.MainCarriageFromPortId == polPortId)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        private bool IsTheSamePODLocation()
+        {
+            var pODLocation = this.GetTranslatedPortCode(pod_loc_locode);
+            var podPortId = this.GetPortId(pODLocation);
+            if (shipmentPM.MainCarriageFinalDestinationPortId == podPortId)
+            {
+                return true;
+            }
+
+            return false;
+        }
+        private void GetShipmentById(LogitudeOceanInsightsRequest oceanInsight)
+        {
+            shipmentPM = shipmentQuery.GetSinglePM(oceanInsight?.ShipmentId, logitudeTenant.Value);
+        }
         private void GetContainerDataByContainerNumber(LogitudeOceanInsightsRequest oceanInsight)
         {
-            var containerNumber = oceanInsight.ContainerNumber;
-            if (!string.IsNullOrEmpty(containerNumber))
-            {
-                container = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(containerNumber, oceanInsight.ShipmentId, logitudeTenant.Value);
-                containerId = container?.Id;
-                container_number = container?.ContainerNumber;
-            }
+            container_number = this.GetContainerNumber(oceanInsight);
+            container = containerQuery.GetContainerByNumberAndShipmentIdAndTenant(container_number, oceanInsight.ShipmentId, logitudeTenant.Value);
+            containerId = container?.Id;
+            shipmentPackagesId = this.GetShipmentPackagesId(container, oceanInsight);
         }
-        private void AddContainerStatusCommunicationLog()
+        private string GetContainerNumber(LogitudeOceanInsightsRequest oceanInsight)
         {
-            if (!string.IsNullOrEmpty(containerId))
-            {
-                this.commonContext = CommonDataContext.GetContext(this.logitudeTenant.Value);
-                this.communicationLogRepository = new CommunicationLogRepository(this.logitudeTenant.Value);
+            string containerNumber = "";
 
-                this.GetCommuniactionLogObjectTableId();
-                this.GetLoggedContactId();
-                this.BuildCommunicationLog();
+            if (!string.IsNullOrEmpty(oceanInsight.ContainerNumber))
+            {
+                containerNumber = oceanInsight.ContainerNumber;
             }
+            else
+            {
+                containerNumber = this.GetContainerNumberFromShipmentContainers(oceanInsight);
+            }
+
+            return containerNumber;
+        }
+        private string GetShipmentPackagesId(ContainerPM container, LogitudeOceanInsightsRequest oceanInsight)
+        {
+            string shipmentPackagesId = "";
+            if (container != null)
+            {
+                shipmentPackagesId = container.ShipmentPackagesId;
+            }
+            else
+            {
+                shipmentPackagesId = this.GetShipmentPackagesIdFromShipmentContainers(oceanInsight);
+            }
+
+            return shipmentPackagesId;
+        }
+        private string GetContainerNumberFromShipmentContainers(LogitudeOceanInsightsRequest oceanInsight)
+        {
+            string containerNumber = "";
+            var package = shipmentPM?.ShipmentPackages?.Where(a => a.ContainerNumber == container_number_FromXML).FirstOrDefault();
+            if (package != null)
+            {
+                containerNumber = package.ContainerNumber;
+            }
+            else
+            {
+                this.objectTableName = "Shipment"; // Container number does not found; open the log under shipment 
+            }
+            return containerNumber;
+        }
+        private string GetShipmentPackagesIdFromShipmentContainers(LogitudeOceanInsightsRequest oceanInsight)
+        {
+            string shipmentPackagesId = "";
+            var package = shipmentPM?.ShipmentPackages?.Where(a => a.ContainerNumber == container_number_FromXML).FirstOrDefault();
+            if (package != null)
+            {
+                shipmentPackagesId = package.Id;
+                containerId = package.ContainerEntityId;
+            }
+
+            return shipmentPackagesId;
+        }
+        private void AddContainerStatusCommunicationLog(LogitudeOceanInsightsRequest oceanInsight)
+        {
+            this.commonContext = CommonDataContext.GetContext(this.logitudeTenant.Value);
+            this.communicationLogRepository = new CommunicationLogRepository(this.logitudeTenant.Value);
+            this.GetCommuniactionLogObjectTableId();
+            this.GetLoggedContactId();
+            this.BuildCommunicationLog(oceanInsight);
         }
         private void GetCommuniactionLogObjectTableId()
         {
-            var objectTableName = "Container";
+
             ObjectTableRepository myObjectTabelRepository = new ObjectTableRepository(logitudeTenant.Value);
             ObjectTable objectTable = myObjectTabelRepository.GetObjectTableByName(objectTableName, 0, true);
             if (objectTable != null)
             {
-                containerObjectTableId = objectTable.Id;
+                objectTableId = objectTable.Id;
             }
         }
         private void GetLoggedContactId()
@@ -364,8 +870,9 @@ namespace WebFreight.Web.Helpers.Analyzers
             var loggedContact = contactRepository.GetSingleContactByEmail(email, logitudeTenant.Value);
             this.loggedContactId = loggedContact.Id;
         }
-        private void BuildCommunicationLog()
+        private void BuildCommunicationLog(LogitudeOceanInsightsRequest oceanInsight)
         {
+
             CommunicationsParams logParams = new CommunicationsParams()
             {
                 Tenant = logitudeTenant.Value,
@@ -376,16 +883,36 @@ namespace WebFreight.Web.Helpers.Analyzers
                 InOut = "I",
                 Status = "D",
                 LoggingUserId = this.loggedContactId,
-                LoggingObjectTableId = containerObjectTableId,
-                LoggingEntityId = containerId,
-                LoggingEntityReference = container_number,
+                LoggingObjectTableId = objectTableId,
+                LoggingEntityId = string.IsNullOrEmpty(container_number) ? oceanInsight?.ShipmentId : containerId,
+                LoggingEntityReference = string.IsNullOrEmpty(container_number) ? oceanInsight?.BLNumber : container_number,
                 Subject = communicationLogSubject,
                 FolderName = communicationLogTo.ToLower(),
                 ByteData = GetXMLByteDataFromText(),
+                UniqueNumber = xmlId
             };
 
+            logParams.WasAnalyzed = IsWasAnalyzed();
             Communications.AddCommunicationLog(logParams);
         }
+
+        private bool? IsWasAnalyzed()
+        {
+            if (IsUpdatingShipmentAndContainer())
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private bool IsCommunicationLogsExsit()
+        {
+            int tenant = this.logitudeTenant.Value;
+            this.communicationLogRepository = new CommunicationLogRepository(tenant);
+            var isCommunicationLogsExsit = this.communicationLogRepository.IsCommunicationLogExsit(xmlId, tenant);
+            return isCommunicationLogsExsit;
+        }
+
         private byte[] GetXMLByteDataFromText()
         {
             var doc = new XmlDocument();
@@ -402,11 +929,50 @@ namespace WebFreight.Web.Helpers.Analyzers
             byte[] documentXML = memoryStream.ToArray();
             return documentXML;
         }
+
+        private void CreateLogitudeOceanInsightsResponse()
+        {
+            if (container != null)
+            {
+                LogitudeOceanInsightsResponseRepository logitudeOceanInsightsResponseRepository = new LogitudeOceanInsightsResponseRepository(logitudeTenant.Value);
+                LogitudeOceanInsightsResponse logitudeOceanInsightsResponse = logitudeOceanInsightsResponseRepository.GetLogitudeOceanInsightsResponseByContainerNumberAndScac(container_number, carrier_scac, logitudeTenant.Value);
+                if (logitudeOceanInsightsResponse == null)
+                {
+                    logitudeOceanInsightsResponse = new LogitudeOceanInsightsResponse()
+                    {
+                        Id = IdCounter.GetNumber("LogitudeOceanInsightsResponse", logitudeTenant.Value),
+                        FirstResponseDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value),
+                        LastResponseDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value),
+                        ContainerNumber = container_number,
+                        SCACCode = carrier_scac,
+                        Tenant = logitudeTenant != null ? logitudeTenant.Value: tenant_Zero,
+                        CarrierName = GetCarrierName()
+                    };
+                    logitudeOceanInsightsResponseRepository.Add(logitudeOceanInsightsResponse);
+                }
+                else
+                {
+                    logitudeOceanInsightsResponse.LastResponseDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
+                    logitudeOceanInsightsResponseRepository.Update(logitudeOceanInsightsResponse);
+                }
+
+                logitudeOceanInsightsResponseRepository.SubmitChanges();
+            }
+        }
+
+        private string GetCarrierName()
+        {
+            string carrierName = "";
+            CardRepository cardRepository = new CardRepository(logitudeTenant.Value);
+            Card shippingLine = cardRepository.GetSingleCard(container.MainCarriageCarrierId, logitudeTenant.Value);
+            carrierName = shippingLine?.EnglishName;
+            return carrierName;
+        }
+
         private void CreateShipmentContainerStatus(LogitudeOceanInsightsRequest oceanInsight)
         {
             string iHash = this.GetHashedData(oceanInsight.ShipmentId);
-
-            DateTime logDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+            DateTime logDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
             DateTime? eventDate = this.GetEventDate();
             double containerWeight = this.GetContainerWeight();
             DateTime? departureDate = this.ComputeDepartureDate();
@@ -417,7 +983,7 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             ShipmentContainerStatus containerStatus = new ShipmentContainerStatus()
             {
-                Id = IdCounter.GetNumber("ShipmentContainerStatus", this.tenant),
+                Id = IdCounter.GetNumber("ShipmentContainerStatus", this.tenant_Zero),
                 Tenant = this.logitudeTenant.Value,
                 ShipmentId = oceanInsight.ShipmentId,
                 StatusSource = "OIN",
@@ -427,7 +993,7 @@ namespace WebFreight.Web.Helpers.Analyzers
                 Weight = containerWeight,
                 ReceivingDate = logDate,
                 EventDate = eventDate,
-                ContainerId = this.container.ShipmentPackagesId,
+                ContainerId = this.shipmentPackagesId,
                 ContainerNumber = this.container_number,
                 DepartureDate = departureDate,
                 ArrivalDate = arrivalDate,
@@ -438,13 +1004,14 @@ namespace WebFreight.Web.Helpers.Analyzers
             shipmentContainerStatusRepository.Add(containerStatus);
             shipmentContainerStatusRepository.SubmitChanges();
         }
+
         private string GetStatusDetails()
         {
             string statusDetails = null;
 
-            if(!string.IsNullOrEmpty(this.details))
+            if (!string.IsNullOrEmpty(this.details))
             {
-                if(this.details.Length > 250)
+                if (this.details.Length > 250)
                 {
                     statusDetails = this.details.Substring(0, 250);
                 }
@@ -471,31 +1038,30 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(createdDate))
             {
-                return ConvertStringToDateTime(createdDate);
+                return AnalyzeEventDateValue(createdDate);
             }
-
             return null;
         }
         private DateTime? ComputeDepartureDate()
         {
             if (!string.IsNullOrEmpty(ATD_detected))
             {
-                return ConvertStringToDateTime(ATD_detected);
+                return ConvertStringToDateTime_old(ATD_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATD_actual))
             {
-                return ConvertStringToDateTime(ATD_actual);
+                return ConvertStringToDateTime_old(ATD_actual);
             }
 
             else if (!string.IsNullOrEmpty(ETD_last))
             {
-                return ConvertStringToDateTime(ETD_last);
+                return ConvertStringToDateTime_old(ETD_last);
             }
 
             else if (!string.IsNullOrEmpty(ETD_initial))
             {
-                return ConvertStringToDateTime(ETD_initial);
+                return ConvertStringToDateTime_old(ETD_initial);
             }
 
             return null;
@@ -504,27 +1070,27 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATA_detected))
             {
-                return ConvertStringToDateTime(ATA_detected);
+                return ConvertStringToDateTime_old(ATA_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATA_actual))
             {
-                return ConvertStringToDateTime(ATA_actual);
+                return ConvertStringToDateTime_old(ATA_actual);
             }
 
             else if (!string.IsNullOrEmpty(ETA_last))
             {
-                return ConvertStringToDateTime(ETA_last);
+                return ConvertStringToDateTime_old(ETA_last);
             }
 
             else if (!string.IsNullOrEmpty(ETA_initial))
             {
-                return ConvertStringToDateTime(ETA_initial);
+                return ConvertStringToDateTime_old(ETA_initial);
             }
 
             else if (!string.IsNullOrEmpty(ETA_predection))
             {
-                return ConvertStringToDateTime(ETA_predection);
+                return ConvertStringToDateTime_old(ETA_predection);
             }
 
             return null;
@@ -584,7 +1150,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         }
         private string GetHashedData(string shipmentId)
         {
-            string information = shipmentId + tenant.ToString() + this.container_number;
+            string information = shipmentId + tenant_Zero.ToString() + this.container_number;
             byte[] byteRepresentation = UnicodeEncoding.UTF8.GetBytes(information);
             byte[] hashedTextInBytes = null;
             MD5CryptoServiceProvider myMd5 = new MD5CryptoServiceProvider();
@@ -597,6 +1163,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (container != null)
             {
+                this.GetContainersExternalData();
                 ContainerUpdatedFields containerUpdatedFields = this.BuildContainerUpdatedFields();
                 this.FillFieldsNewValues("MainCarriageETD", containerUpdatedFields.MainCarriageETD, container);
                 this.FillFieldsNewValues("MainCarriageETA", containerUpdatedFields.MainCarriageETA, container);
@@ -605,24 +1172,156 @@ namespace WebFreight.Web.Helpers.Analyzers
                 this.FillFieldsNewValues("EmptyPickupLocation", containerUpdatedFields.EmptyPickupLocation, container);
                 this.FillFieldsNewValues("EstimatedEmptyPickupDate", containerUpdatedFields.EstimatedEmptyPickupDate, container);
                 this.FillFieldsNewValues("ActualEmptyPickupDate", containerUpdatedFields.ActualEmptyPickupDate, container);
-                this.FillFieldsNewValues("EstimatedGateInDate", containerUpdatedFields.EstimatedGateInDate, container);
-                this.FillFieldsNewValues("ActualGateInDate", containerUpdatedFields.ActualGateInDate, container);
+                this.FillFieldsNewValues("EstimatedPOLArrival", containerUpdatedFields.EstimatedPOLArrival, container);
+                this.FillFieldsNewValues("ActualPOLArrival", containerUpdatedFields.ActualPOLArrival, container);
                 this.FillFieldsNewValues("DepartureLocation", containerUpdatedFields.DepartureLocation, container);
                 this.FillFieldsNewValues("DestinationLocation", containerUpdatedFields.DestinationLocation, container);
+                container.IsUpdatedOceanInsightsAnalyzer = true;
                 container.CurrentStatus = containerUpdatedFields.CurrentStatus;
                 container.CurrentLocation = containerUpdatedFields.CurrentLocation;
                 container.CurrentStatusDate = containerUpdatedFields.CurrentStatusDate;
                 container.HasContainerException = containerUpdatedFields.HasContainerException;
                 container.UpdateDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
-
+                container.PreCarriageLocation = containerUpdatedFields.OriginLocation;
+                container.PreCarriageETD = containerUpdatedFields.EstimatedOriginPickup;
+                container.PreCarriageATD = containerUpdatedFields.ActualOriginPickup;
+                container.POLLocation = containerUpdatedFields.POLLocation;
+                container.EstimatedPOLLoaded = containerUpdatedFields.EstimatedPOLLoaded;
+                container.ActualPOLLoaded = containerUpdatedFields.ActualPOLLoaded;
+                container.EstimatedPOLVesselDeparture = containerUpdatedFields.EstimatedPOLVesselDeparture;
+                container.ActualPOLVesselDeparture = containerUpdatedFields.ActualPOLVesselDeparture;
+                container.TransshipmentCount = containerUpdatedFields.TransshipmentCount;
+                container.Transshipment1Location = containerUpdatedFields.Transshipment1Location;
+                container.EstimatedTrans1VesselArrival = containerUpdatedFields.EstimatedTrans1VesselArrival;
+                container.ActualTransshipment1VesselArrival = containerUpdatedFields.ActualTransshipment1VesselArrival;
+                container.EstimatedTransshipment1Discharge = containerUpdatedFields.EstimatedTransshipment1Discharge;
+                container.ActualTransshipment1Discharge = containerUpdatedFields.ActualTransshipment1Discharge;
+                container.EstimatedTransshipment1Loaded = containerUpdatedFields.EstimatedTransshipment1Loaded;
+                container.ActualTransshipment1Loaded = containerUpdatedFields.ActualTransshipment1Loaded;
+                container.EstimatedTrans1VesselDeparture = containerUpdatedFields.EstimatedTrans1VesselDeparture;
+                container.ActualTrans1VesselDeparture = containerUpdatedFields.ActualTrans1VesselDeparture;
+                container.Transshipment2Location = containerUpdatedFields.Transshipment2Location;
+                container.EstimatedTrans2VesselArrival = containerUpdatedFields.EstimatedTrans2VesselArrival;
+                container.ActualTransshipment2VesselArrival = containerUpdatedFields.ActualTransshipment2VesselArrival;
+                container.EstimatedTransshipment2Discharge = containerUpdatedFields.EstimatedTransshipment2Discharge;
+                container.ActualTransshipment2Discharge = containerUpdatedFields.ActualTransshipment2Discharge;
+                container.EstimatedTransshipment2Loaded = containerUpdatedFields.EstimatedTransshipment2Loaded;
+                container.ActualTransshipment2Loaded = containerUpdatedFields.ActualTransshipment2Loaded;
+                container.EstimatedTrans2VesselDeparture = containerUpdatedFields.EstimatedTrans2VesselDeparture;
+                container.ActualTrans2VesselDeparture = containerUpdatedFields.ActualTrans2VesselDeparture;
+                container.Transshipment3Location = containerUpdatedFields.Transshipment3Location;
+                container.EstimatedTrans3VesselArrival = containerUpdatedFields.EstimatedTrans3VesselArrival;
+                container.ActualTransshipment3VesselArrival = containerUpdatedFields.ActualTransshipment3VesselArrival;
+                container.EstimatedTransshipment3Discharge = containerUpdatedFields.EstimatedTransshipment3Discharge;
+                container.ActualTransshipment3Discharge = containerUpdatedFields.ActualTransshipment3Discharge;
+                container.EstimatedTransshipment3Loaded = containerUpdatedFields.EstimatedTransshipment3Loaded;
+                container.ActualTransshipment3Loaded = containerUpdatedFields.ActualTransshipment3Loaded;
+                container.EstimatedTrans3VesselDeparture = containerUpdatedFields.EstimatedTrans3VesselDeparture;
+                container.ActualTrans3VesselDeparture = containerUpdatedFields.ActualTrans3VesselDeparture;
+                container.Transshipment4Location = containerUpdatedFields.Transshipment4Location;
+                container.EstimatedTrans4VesselArrival = containerUpdatedFields.EstimatedTrans4VesselArrival;
+                container.ActualTransshipment4VesselArrival = containerUpdatedFields.ActualTransshipment4VesselArrival;
+                container.EstimatedTransshipment4Discharge = containerUpdatedFields.EstimatedTransshipment4Discharge;
+                container.ActualTransshipment4Discharge = containerUpdatedFields.ActualTransshipment4Discharge;
+                container.EstimatedTransshipment4Loaded = containerUpdatedFields.EstimatedTransshipment4Loaded;
+                container.ActualTransshipment4Loaded = containerUpdatedFields.ActualTransshipment4Loaded;
+                container.EstimatedTrans4VesselDeparture = containerUpdatedFields.EstimatedTrans4VesselDeparture;
+                container.ActualTrans4VesselDeparture = containerUpdatedFields.ActualTrans4VesselDeparture;
+                container.Leg1Vessel = containerUpdatedFields.Leg1Vessel;
+                container.Leg1VesselId = containerUpdatedFields.Leg1VesselId;
+                container.Leg1Voyage = containerUpdatedFields.Leg1Voyage;
+                container.Leg2Vessel = containerUpdatedFields.Leg2Vessel;
+                container.Leg2VesselId = containerUpdatedFields.Leg2VesselId;
+                container.Leg2Voyage = containerUpdatedFields.Leg2Voyage;
+                container.Leg3Vessel = containerUpdatedFields.Leg3Vessel;
+                container.Leg3VesselId = containerUpdatedFields.Leg3VesselId;
+                container.Leg3Voyage = containerUpdatedFields.Leg3Voyage;
+                container.Leg4Vessel = containerUpdatedFields.Leg4Vessel;
+                container.Leg4VesselId = containerUpdatedFields.Leg4VesselId;
+                container.Leg4Voyage = containerUpdatedFields.Leg4Voyage;
+                container.Leg5Vessel = containerUpdatedFields.Leg5Vessel;
+                container.Leg5VesselId = containerUpdatedFields.Leg5VesselId;
+                container.Leg5Voyage = containerUpdatedFields.Leg5Voyage;
+                container.PODLocation = containerUpdatedFields.PODLocation;
+                container.EstimatedPODVesselArrival = containerUpdatedFields.EstimatedPODVesselArrival;
+                container.ActualPODVesselArrival = containerUpdatedFields.ActualPODVesselArrival;
+                container.ActualPODVesselArrival = containerUpdatedFields.ActualPODVesselArrival;
+                container.EstimatedPODDischarge = containerUpdatedFields.EstimatedPODDischarge;
+                container.ActualPODDischarge = containerUpdatedFields.ActualPODDischarge;
+                container.EstimatedPODDeparture = containerUpdatedFields.EstimatedPODDeparture;
+                container.ActualPODDeparture = containerUpdatedFields.ActualPODDeparture;
+                container.OnCarriageLocation = containerUpdatedFields.DeliveryLocation;
+                container.OnCarriageETD = containerUpdatedFields.EstimatedDelivery;
+                container.OnCarriageATD = containerUpdatedFields.ActualDelivery;
+                container.LIFLocation = containerUpdatedFields.LIFLocation;
+                container.EstimatedLIFArrival = containerUpdatedFields.EstimatedLIFArrival;
+                container.ActualLIFArrival = containerUpdatedFields.ActualLIFArrival;
+                container.EstimatedOnCarriageDeparture = containerUpdatedFields.EstimatedOnCarriageDeparture;
+                container.ActualOnCarriageDeparture = containerUpdatedFields.ActualOnCarriageDeparture;
+                container.EmptyReturnLocation = containerUpdatedFields.EmptyReturnLocation;
+                container.EstimatedEmptyReturn = containerUpdatedFields.EstimatedEmptyReturn;
+                container.ActualEmptyReturn = containerUpdatedFields.ActualEmptyReturn;
+                container.CustomsReleaseState = containerUpdatedFields.CustomsReleaseState;
+                container.CustomsReleaseDate = containerUpdatedFields.CustomsReleaseDate;
+                container.CarrierReleaseState = containerUpdatedFields.CarrierReleaseState;
+                container.CarrierReleaseDate = containerUpdatedFields.CarrierReleaseDate;
+                container.AvailablityDate = containerUpdatedFields.AvailablityDate;
+                container.AvailabilityLocation = containerUpdatedFields.AvailabilityLocation;
+                container.EmptyPickupLocationPortId = this.GetPortId(containerUpdatedFields.EmptyPickupLocation);
+                container.OnCarriageLocationPortId = this.GetPortId(containerUpdatedFields.DeliveryLocation);
+                container.EmptyReturnLocationPortId = this.GetPortId(containerUpdatedFields.EmptyReturnLocation);
+                container.AvailabilityLocationPortId = this.GetPortId(containerUpdatedFields.AvailabilityLocation);
+                container.PreCarriageLocationPortId = this.GetPortId(containerUpdatedFields.OriginLocation);
+                container.LIFLocationPortId = this.GetPortId(containerUpdatedFields.LIFLocation);
+                container.POLLocationPortId = this.GetPortId(containerUpdatedFields.POLLocation);
+                container.PODLocationPortId = this.GetPortId(containerUpdatedFields.PODLocation);
+                container.Transshipment1LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment1Location);
+                container.Transshipment2LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment2Location);
+                container.Transshipment3LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment3Location);
+                container.Transshipment4LocationPortId = this.GetPortId(containerUpdatedFields.Transshipment4Location);
+                container.IsAutomaticUpdates = true;
+                MapConcurrencyFields(container);
                 this.SaveContainer();
             }
         }
-        private void UpdatePackage(ShipmentPM shipment)
+        private void MapConcurrencyFields(ContainerPM containerPM)
         {
+            containerPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+            if (string.IsNullOrEmpty(containerPM.ShipmentId))
+            {
+                return;
+            }
+            containerPM.ShipmentConcurrencyGUID = containerRepository.GetConcurrencyGUIDByShipmentId(containerPM.ShipmentId, containerPM.Tenant);
+            containerPM.ShipmentNewConcurrencyGUID = Guid.NewGuid().ToString();
+        }
+        private void GetContainersExternalData()
+        {
+            this.containersExternal = new ContainersExternal();
+            this.containersExternalData_DB = containersExternalDataRepository.GetSingleContainersExternalData(container.Id, container.Tenant);
+            if (containersExternalData_DB == null)
+            {
+                this.containersExternalData_DB = new ContainersExternalData() { Id = container.Id, Tenant = container.Tenant };
+                containersExternal.IsNew = true;
+            }
+            containersExternal.ContainersExternalData_DB = this.containersExternalData_DB;
+            containersExternal.IsFromOceanInsights = true;
+            this.SetContainersExternalData(containersExternal);
+        }
+
+        private void SetContainersExternalData(ContainersExternal containersExternal)
+        {
+            this.containersExternalData_New = new ContainersExternalData() { Id = container.Id, Tenant = container.Tenant };
+            this.containersExternalData_New.GateIn = this.ComputePOLGateIn();
+            this.containersExternalData_New.GateOut = this.ComputPODGateOut();
+            containersExternal.ContainersExternalData_New = this.containersExternalData_New;
+        }
+
+        private void UpdatePackage()
+        {
+            this.IsUpdatingPackages = false;
             DateTime todatDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
             DateTime? eventData = this.GetEventDate();
-            ShipmentPackagePM package = shipment.ShipmentPackages.Where(a=>a.Id == this.container.ShipmentPackagesId).FirstOrDefault();
+            ShipmentPackagePM package = shipmentPM.ShipmentPackages.Where(a => a.Id == this.shipmentPackagesId).FirstOrDefault();
             string oceanInsightsSource = "OIN";
             if (package != null)
             {
@@ -630,13 +1329,14 @@ namespace WebFreight.Web.Helpers.Analyzers
                 {
                     eventData = todatDate;
                 }
+
                 if (package.LastStatusDate == null)
                 {
                     package.LastStatusCode = container_status;
                     package.LastStatusDate = eventData;
                     package.ContainerStatusSourceCode = oceanInsightsSource;
                     package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                    isSavingShipment = true;
+                    this.IsUpdatingPackages = true;
                 }
                 else if (eventData > package.LastStatusDate)
                 {
@@ -644,40 +1344,170 @@ namespace WebFreight.Web.Helpers.Analyzers
                     package.LastStatusDate = eventData;
                     package.ContainerStatusSourceCode = oceanInsightsSource;
                     package.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-                    isSavingShipment = true;
+                    this.IsUpdatingPackages = true;
                 }
             }
         }
+        private void UpdateEmptyReturnLeg()
+        {
+            this.IsUpdatingEmptyLeg = false;
+            ShipmentDeliveryPM delivery = this.GetEmptyReturnLeg();
+            if (delivery != null)
+            {
+                this.IsUpdatingEmptyLeg = true;
+                delivery.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                delivery.ETA = container.EstimatedEmptyReturn;
+                delivery.ATA = container.ActualEmptyReturn;
+            }
+        }
+        private ShipmentDeliveryPM GetEmptyReturnLeg()
+        {
+            ShipmentDeliveryPM shipmentDelivery = null;
+
+            ShipmentPickUpDeliveryPackageRepository pickUpDeliveryPackageRepository = new ShipmentPickUpDeliveryPackageRepository(shipmentContext);
+            List<ShipmentPickUpDeliveryPackage> packages = pickUpDeliveryPackageRepository.GetShipmentPickUpDeliveryPackagesByContainerIdAndTenant(containerId, logitudeTenant.Value);
+            if (packages != null && packages.Count > 0)
+            {
+                List<string> deliveryPackagesIds = packages.Select(s => s.ShipmentPickUpDeliveryId).ToList();
+                shipmentDelivery = shipmentPM.ShipmentDeliveries.Where(a => deliveryPackagesIds.Contains(a.Id) && a.PickUpDeliveryTypeCode == "EMPT").FirstOrDefault();                
+            }
+
+            return shipmentDelivery;
+        }
+
         private ContainerUpdatedFields BuildContainerUpdatedFields()
         {
             ContainerUpdatedFields containerUpdatedFields = new ContainerUpdatedFields();
+            containerUpdatedFields.CurrentStatusDate = this.GetEventDate();
+            containerUpdatedFields.CurrentStatus = this.GetContainerStatusName();
+            containerUpdatedFields.CurrentLocation = this.ComputeCurrentStatusLocation();
+            containerUpdatedFields.EmptyPickupLocation = this.GetTranslatedPortCode(emptyPickupLocation);
+            containerUpdatedFields.DepartureLocation = this.departureLocation;
+            containerUpdatedFields.DestinationLocation = this.destinationLocation;           
+            containerUpdatedFields.OriginLocation = this.GetTranslatedPortCode(origin_loc_locode);
+            containerUpdatedFields.POLLocation = this.GetTranslatedPortCode(pol_loc_locode);
+            containerUpdatedFields.Transshipment1Location = this.GetTranslatedPortCode(tsp1_loc_locode);
+            containerUpdatedFields.Transshipment2Location = this.GetTranslatedPortCode(tsp2_loc_locode);
+            containerUpdatedFields.Transshipment3Location = this.GetTranslatedPortCode(tsp3_loc_locode);
+            containerUpdatedFields.Transshipment4Location = this.GetTranslatedPortCode(tsp4_loc_locode);
+            containerUpdatedFields.PODLocation = this.GetTranslatedPortCode(pod_loc_locode);
+            containerUpdatedFields.DeliveryLocation = this.GetTranslatedPortCode(dlv_loc_locode);
+            containerUpdatedFields.LIFLocation = this.GetTranslatedPortCode(lif_loc_locode);
+            containerUpdatedFields.EmptyReturnLocation = this.GetTranslatedPortCode(empty_return_loc_locode);
+            containerUpdatedFields.AvailabilityLocation = this.GetTranslatedPortCode(availability_locode);
+            this.HandleVesselLegs(containerUpdatedFields);
+            containerUpdatedFields.Leg1Voyage = leg1_voyage;
+            containerUpdatedFields.Leg2Voyage = leg2_voyage;
+            containerUpdatedFields.Leg3Voyage = leg3_voyage;
+            containerUpdatedFields.Leg4Voyage = leg4_voyage;
+            containerUpdatedFields.Leg5Voyage = leg5_voyage;
+            containerUpdatedFields.CustomsReleaseState = customs_release_state;
+            containerUpdatedFields.CarrierReleaseState = carrier_release_state;
+            //containerUpdatedFields.TransshipmentCount = ts_count;
+
             containerUpdatedFields.MainCarriageETD = this.ComputeMainCarriageETD();
             containerUpdatedFields.MainCarriageETA = this.ComputeMainCarriageETA();
             containerUpdatedFields.MainCarriageATD = this.ComputeMainCarriageATD();
             containerUpdatedFields.MainCarriageATA = this.ComputeMainCarriageATA();
             containerUpdatedFields.EstimatedEmptyPickupDate = this.ComputeEstimatedEmptyPickupDate();
             containerUpdatedFields.ActualEmptyPickupDate = this.ComputeActualEmptyPickupDate();
-            containerUpdatedFields.EstimatedGateInDate = this.ComputeEstimatedGateInDate();
-            containerUpdatedFields.ActualGateInDate = this.ComputeActualGateInDate();
-            containerUpdatedFields.EmptyPickupLocation = this.emptyPickupLocation;
-            containerUpdatedFields.DepartureLocation = this.departureLocation;
-            containerUpdatedFields.DestinationLocation = this.destinationLocation;
-            containerUpdatedFields.CurrentStatusDate = this.GetEventDate();
-            containerUpdatedFields.CurrentStatus = this.GetContainerStatusName();
-            containerUpdatedFields.CurrentLocation = this.ComputeCurrentStatusLocation();
-
+            containerUpdatedFields.EstimatedPOLArrival = this.ComputeEstimatedGateInDate();
+            containerUpdatedFields.ActualPOLArrival = this.ComputeActualGateInDate();
+            containerUpdatedFields.EstimatedOriginPickup = this.ComputeEstimatedOriginPickup();
+            containerUpdatedFields.ActualOriginPickup = this.ComputeActualOriginPickup();            
+            containerUpdatedFields.EstimatedPOLLoaded = this.ComputeEstimatedPOLLoaded();
+            containerUpdatedFields.ActualPOLLoaded = this.ComputeActualPOLLoaded();
+            containerUpdatedFields.EstimatedPOLVesselDeparture = this.ComputeEstimatedPOLVesselDeparture();
+            containerUpdatedFields.ActualPOLVesselDeparture = ComputeActualPOLVesselDeparture();
+            containerUpdatedFields.EstimatedTrans1VesselArrival = this.ComputeEstimatedTrans1VesselArrival();
+            containerUpdatedFields.ActualTransshipment1VesselArrival = this.ComputeActualTransshipment1VesselArrival();
+            containerUpdatedFields.EstimatedTransshipment1Discharge = this.ComputeEstimatedTransshipment1Discharge();
+            containerUpdatedFields.ActualTransshipment1Discharge = ComputeActualTransshipment1Discharge();
+            containerUpdatedFields.EstimatedTransshipment1Loaded = this.ComputeEstimatedTransshipment1Loaded();
+            containerUpdatedFields.ActualTransshipment1Loaded = ComputeActualTransshipment1Loaded();
+            containerUpdatedFields.EstimatedTrans1VesselDeparture = this.ComputeEstimatedTransshipment1VesselDeparture();
+            containerUpdatedFields.ActualTrans1VesselDeparture = ComputeActualTransshipment1VesselDeparture();            
+            containerUpdatedFields.EstimatedTrans2VesselArrival = this.ComputeEstimatedTrans2VesselArrival();
+            containerUpdatedFields.ActualTransshipment2VesselArrival = this.ComputeActualTransshipment2VesselArrival();
+            containerUpdatedFields.EstimatedTransshipment2Discharge = this.ComputeEstimatedTransshipment2Discharge();
+            containerUpdatedFields.ActualTransshipment2Discharge = ComputeActualTransshipment2Discharge();
+            containerUpdatedFields.EstimatedTransshipment2Loaded = this.ComputeEstimatedTransshipment2Loaded();
+            containerUpdatedFields.ActualTransshipment2Loaded = ComputeActualTransshipment2Loaded();
+            containerUpdatedFields.EstimatedTrans2VesselDeparture = this.ComputeEstimatedTransshipment2VesselDeparture();
+            containerUpdatedFields.ActualTrans2VesselDeparture = ComputeActualTransshipment2VesselDeparture();
+            containerUpdatedFields.EstimatedTrans3VesselArrival = this.ComputeEstimatedTrans3VesselArrival();
+            containerUpdatedFields.ActualTransshipment3VesselArrival = this.ComputeActualTransshipment3VesselArrival();
+            containerUpdatedFields.EstimatedTransshipment3Discharge = this.ComputeEstimatedTransshipment3Discharge();
+            containerUpdatedFields.ActualTransshipment3Discharge = ComputeActualTransshipment3Discharge();
+            containerUpdatedFields.EstimatedTransshipment3Loaded = this.ComputeEstimatedTransshipment3Loaded();
+            containerUpdatedFields.ActualTransshipment3Loaded = ComputeActualTransshipment3Loaded();
+            containerUpdatedFields.EstimatedTrans3VesselDeparture = this.ComputeEstimatedTransshipment3VesselDeparture();
+            containerUpdatedFields.ActualTrans3VesselDeparture = ComputeActualTransshipment3VesselDeparture();
+            containerUpdatedFields.EstimatedTrans4VesselArrival = this.ComputeEstimatedTrans4VesselArrival();
+            containerUpdatedFields.ActualTransshipment4VesselArrival = this.ComputeActualTransshipment4VesselArrival();
+            containerUpdatedFields.EstimatedTransshipment4Discharge = this.ComputeEstimatedTransshipment4Discharge();
+            containerUpdatedFields.ActualTransshipment4Discharge = ComputeActualTransshipment4Discharge();
+            containerUpdatedFields.EstimatedTransshipment4Loaded = this.ComputeEstimatedTransshipment4Loaded();
+            containerUpdatedFields.ActualTransshipment4Loaded = ComputeActualTransshipment4Loaded();
+            containerUpdatedFields.EstimatedTrans4VesselDeparture = this.ComputeEstimatedTransshipment4VesselDeparture();
+            containerUpdatedFields.ActualTrans4VesselDeparture = ComputeActualTransshipment4VesselDeparture();            
+            containerUpdatedFields.EstimatedPODVesselArrival = ComputeEstimatedPODVesselArrival();
+            containerUpdatedFields.ActualPODVesselArrival = ComputeActualPODVesselArrival();
+            containerUpdatedFields.EstimatedPODDischarge = ComputeEstimatedPODDischarge();
+            containerUpdatedFields.ActualPODDischarge = ComputeActualPODDischarge();
+            containerUpdatedFields.EstimatedPODDeparture = ComputeEstimatedPODDeparture();
+            containerUpdatedFields.ActualPODDeparture = ComputeActualPODDeparture();
+            containerUpdatedFields.EstimatedDelivery = ComputeEstimatedDelivery();
+            containerUpdatedFields.ActualDelivery = ComputeActualDelivery();
+            containerUpdatedFields.EstimatedLIFArrival = ComputeEstimatedLIFArrival();
+            containerUpdatedFields.ActualLIFArrival = ComputeActualLIFArrival();
+            containerUpdatedFields.EstimatedOnCarriageDeparture = ComputeEstimatedOnCarriageDeparture();
+            containerUpdatedFields.ActualOnCarriageDeparture = this.ComputeActualOnCarriageDeparture();
+            containerUpdatedFields.EmptyReturnLocation = this.GetTranslatedPortCode(empty_return_loc_locode);
+            containerUpdatedFields.EstimatedEmptyReturn = this.ComputeEstimatedEmptyReturn();
+            containerUpdatedFields.ActualEmptyReturn = this.ComputeActualEmptyReturn();            
+            containerUpdatedFields.CustomsReleaseDate = this.ComputeCustomsReleaseDate();            
+            containerUpdatedFields.CarrierReleaseDate = this.ComputeCarrierReleaseDate();
+            containerUpdatedFields.AvailablityDate = this.ComputeAvailablityDate();
+           
             return containerUpdatedFields;
         }
+
+        private void HandleVesselLegs(ContainerUpdatedFields containerUpdatedFields)
+        {
+            var vesselLeg1 = GetVessel(leg1_vessel_name);
+            var vesselLeg2 = GetVessel(leg2_vessel_name);
+            var vesselLeg3 = GetVessel(leg3_vessel_name);
+            var vesselLeg4 = GetVessel(leg4_vessel_name);
+            var vesselLeg5 = GetVessel(leg5_vessel_name);
+            containerUpdatedFields.Leg1Vessel = vesselLeg1 == null? leg1_vessel_name: vesselLeg1.EnglishName;
+            containerUpdatedFields.Leg1VesselId = vesselLeg1?.Id;
+            containerUpdatedFields.Leg2Vessel = vesselLeg2 == null ? leg2_vessel_name : vesselLeg2.EnglishName;
+            containerUpdatedFields.Leg2VesselId = vesselLeg2?.Id;
+            containerUpdatedFields.Leg3Vessel = vesselLeg3 == null ? leg3_vessel_name : vesselLeg3.EnglishName;
+            containerUpdatedFields.Leg3VesselId = vesselLeg3?.Id;
+            containerUpdatedFields.Leg4Vessel = vesselLeg4 == null ? leg4_vessel_name : vesselLeg4.EnglishName;
+            containerUpdatedFields.Leg4VesselId = vesselLeg4?.Id;
+            containerUpdatedFields.Leg5Vessel = vesselLeg5 == null ? leg5_vessel_name : vesselLeg5.EnglishName;
+            containerUpdatedFields.Leg5VesselId = vesselLeg5?.Id;
+        }
+
+        private Vessel GetVessel(string vesselName)
+        {
+            Vessel vessel = vesselRepository.GetSingleVesselByName(vesselName, this.logitudeTenant.Value);
+            return vessel;
+        }
+
         private DateTime? ComputeMainCarriageETD()
         {
             if (!string.IsNullOrEmpty(ETD_last))
             {
-                return ConvertStringToDateTime(ETD_last);
+                return AnalyzeXMLDateValue(ETD_last, pol_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(ETD_initial))
             {
-                return ConvertStringToDateTime(ETD_initial);
+                return AnalyzeXMLDateValue(ETD_initial, pol_loc_timezone);
             }
 
             return null;
@@ -686,17 +1516,17 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ETA_last))
             {
-                return ConvertStringToDateTime(ETA_last);
+                return ConvertStringToDateTime_old(ETA_last);
             }
 
             else if (!string.IsNullOrEmpty(ETA_initial))
             {
-                return ConvertStringToDateTime(ETA_initial);
+                return ConvertStringToDateTime_old(ETA_initial);
             }
 
             else if (!string.IsNullOrEmpty(ETA_predection))
             {
-                return ConvertStringToDateTime(ETA_predection);
+                return ConvertStringToDateTime_old(ETA_predection);
             }
 
             return null;
@@ -705,12 +1535,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATD_detected))
             {
-                return ConvertStringToDateTime(ATD_detected);
+                return ConvertStringToDateTime_old(ATD_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATD_actual))
             {
-                return ConvertStringToDateTime(ATD_actual);
+                return ConvertStringToDateTime_old(ATD_actual);
             }
 
             return null;
@@ -719,12 +1549,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(ATA_detected))
             {
-                return ConvertStringToDateTime(ATA_detected);
+                return ConvertStringToDateTime_old(ATA_detected);
             }
 
             else if (!string.IsNullOrEmpty(ATA_actual))
             {
-                return ConvertStringToDateTime(ATA_actual);
+                return ConvertStringToDateTime_old(ATA_actual);
             }
 
             return null;
@@ -733,12 +1563,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(emptyPickup_last))
             {
-                return ConvertStringToDateTime(emptyPickup_last);
+                return AnalyzeXMLDateValue(emptyPickup_last, emptyPickupTimeZone);
             }
 
             else if (!string.IsNullOrEmpty(emptyPickup_initial))
             {
-                return ConvertStringToDateTime(emptyPickup_initial);
+                return AnalyzeXMLDateValue(emptyPickup_initial, emptyPickupTimeZone);
             }
 
             return null;
@@ -747,8 +1577,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(emptyPickup_actual))
             {
-                return ConvertStringToDateTime(emptyPickup_actual);
-            }            
+                return AnalyzeXMLDateValue(emptyPickup_actual, emptyPickupTimeZone);
+            }
 
             return null;
         }
@@ -756,12 +1586,12 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(gateInDate_last))
             {
-                return ConvertStringToDateTime(gateInDate_last);
+                return AnalyzeXMLDateValue(gateInDate_last, pol_loc_timezone);
             }
 
             else if (!string.IsNullOrEmpty(gateInDate_initial))
             {
-                return ConvertStringToDateTime(gateInDate_initial);
+                return AnalyzeXMLDateValue(gateInDate_initial, pol_loc_timezone);
             }
 
             return null;
@@ -770,7 +1600,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         {
             if (!string.IsNullOrEmpty(gateInDate_actual))
             {
-                return ConvertStringToDateTime(gateInDate_actual);
+                return AnalyzeXMLDateValue(gateInDate_actual, pol_loc_timezone);
             }
 
             return null;
@@ -790,114 +1620,835 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 return this.departureLocation;
             }
-            
-            else 
+
+            else
             {
                 return this.emptyPickupLocation;
             }
         }
-
-        bool isSavingShipment = false;
-        private void UpdateShipment(LogitudeOceanInsightsRequest oceanInsight)
+        private DateTime? ComputeEstimatedOriginPickup()
         {
-            ShipmentPM shipmentPM = shipmentQuery.GetSinglePM(oceanInsight.ShipmentId, logitudeTenant.Value);
-
-            if (shipmentPM == null)
+            if (!string.IsNullOrEmpty(origin_pickup_planned_last))
             {
-                throw new Exception("Analyzing shipment faild, shipment not found");
+                return AnalyzeXMLDateValue(origin_pickup_planned_last, origin_loc_timezone);
             }
 
-            else
+            else if (!string.IsNullOrEmpty(origin_pickup_planned_initial))
             {
-                isSavingShipment = false;
-                this.UpdatePackage(shipmentPM);
-                List<Container> shipmentContainers = containerRepository.GetContainesrByShipmentId(shipmentPM.Id, logitudeTenant.Value).ToList();
-                if (shipmentContainers.Count() == 1)
+                return AnalyzeXMLDateValue(origin_pickup_planned_initial, origin_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedPOLLoaded()
+        {
+            if (!string.IsNullOrEmpty(pol_loaded_planned_last))
+            {
+                return AnalyzeXMLDateValue(pol_loaded_planned_last, pol_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(pol_loaded_planned_initial))
+            {
+                return AnalyzeXMLDateValue(pol_loaded_planned_initial, pol_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeActualOriginPickup()
+        {
+            if (!string.IsNullOrEmpty(origin_pickup_actual))
+            {
+                return AnalyzeXMLDateValue(origin_pickup_actual, origin_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualPOLLoaded()
+        {
+            if (!string.IsNullOrEmpty(pol_loaded_actual))
+            {
+                return AnalyzeXMLDateValue(pol_loaded_actual, pol_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeEstimatedPOLVesselDeparture()
+        {
+            if (!string.IsNullOrEmpty(ETD_last))
+            {
+                return AnalyzeXMLDateValue(ETD_last, pol_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(ETD_initial))
+            {
+                return AnalyzeXMLDateValue(ETD_initial, pol_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeActualPOLVesselDeparture()
+        {
+            if (!string.IsNullOrEmpty(ATD_actual))
+            {
+                return AnalyzeXMLDateValue(ATD_actual, pol_loc_timezone);
+            }
+            //else if (!string.IsNullOrEmpty(ATD_detected))
+            //{
+            //    return AnalyzeXMLDateValue(ATD_detected, pol_loc_timezone);
+
+            //}
+            return null;
+        }
+        private DateTime? ComputeEstimatedTrans1VesselArrival()
+        {
+            if (!string.IsNullOrEmpty(tsp1_vslarrival_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp1_vslarrival_planned_last, tsp1_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(tsp1_vslarrival_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp1_vslarrival_planned_initial, tsp1_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment1VesselArrival()
+        {
+            if (!string.IsNullOrEmpty(tsp1_vslarrival_actual))
+            {
+                return AnalyzeXMLDateValue(tsp1_vslarrival_actual, tsp1_loc_timezone);
+            } 
+            //else if (!string.IsNullOrEmpty(tsp1_vslarrival_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp1_vslarrival_detected, tsp1_loc_timezone);
+            //}
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTransshipment1Discharge()
+        {
+            if (!string.IsNullOrEmpty(tsp1_discharge_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp1_discharge_planned_last, tsp1_loc_timezone);
+            }
+            else if (!string.IsNullOrEmpty(tsp1_discharge_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp1_discharge_planned_initial, tsp1_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment1Discharge()
+        {
+            if (!string.IsNullOrEmpty(tsp1_discharge_actual))
+            {
+                return AnalyzeXMLDateValue(tsp1_discharge_actual, tsp1_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTransshipment1Loaded()
+        {
+            if (!string.IsNullOrEmpty(tsp1_loaded_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp1_loaded_planned_last, tsp1_loc_timezone);
+            }
+            else if (!string.IsNullOrEmpty(tsp1_loaded_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp1_loaded_planned_initial, tsp1_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment1Loaded()
+        {
+            if (!string.IsNullOrEmpty(tsp1_loaded_actual))
+            {
+                return AnalyzeXMLDateValue(tsp1_loaded_actual, tsp1_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTransshipment1VesselDeparture()
+        {
+            if (!string.IsNullOrEmpty(tsp1_vsldeparture_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp1_vsldeparture_planned_last, tsp1_loc_timezone);
+            }
+            else if (!string.IsNullOrEmpty(tsp1_vsldeparture_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp1_vsldeparture_planned_initial, tsp1_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment1VesselDeparture()
+        {
+            if (!string.IsNullOrEmpty(tsp1_vsldeparture_actual))
+            {
+                return AnalyzeXMLDateValue(tsp1_vsldeparture_actual, tsp1_loc_timezone);
+            }
+            //else if (!string.IsNullOrEmpty(tsp1_vsldeparture_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp1_vsldeparture_detected, tsp1_loc_timezone);
+            //}
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTrans2VesselArrival()
+        {
+            if (!string.IsNullOrEmpty(tsp2_vslarrival_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp2_vslarrival_planned_last, tsp2_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(tsp2_vslarrival_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp2_vslarrival_planned_initial, tsp2_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment2VesselArrival()
+        {
+            if (!string.IsNullOrEmpty(tsp2_vslarrival_actual))
+            {
+                return AnalyzeXMLDateValue(tsp2_vslarrival_actual, tsp2_loc_timezone);
+            }
+            //else if (!string.IsNullOrEmpty(tsp2_vslarrival_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp2_vslarrival_detected, tsp2_loc_timezone);
+            //}
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTransshipment2Discharge()
+        {
+            if (!string.IsNullOrEmpty(tsp2_discharge_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp2_discharge_planned_last, tsp2_loc_timezone);
+            }
+            else if (!string.IsNullOrEmpty(tsp2_discharge_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp2_discharge_planned_initial, tsp2_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment2Discharge()
+        {
+            if (!string.IsNullOrEmpty(tsp2_discharge_actual))
+            {
+                return AnalyzeXMLDateValue(tsp2_discharge_actual, tsp2_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTransshipment2Loaded()
+        {
+            if (!string.IsNullOrEmpty(tsp2_loaded_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp2_loaded_planned_last, tsp2_loc_timezone);
+            }
+            else if (!string.IsNullOrEmpty(tsp2_loaded_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp2_loaded_planned_initial, tsp2_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment2Loaded()
+        {
+            if (!string.IsNullOrEmpty(tsp2_loaded_actual))
+            {
+                return AnalyzeXMLDateValue(tsp2_loaded_actual, tsp2_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTransshipment2VesselDeparture()
+        {
+            if (!string.IsNullOrEmpty(tsp2_vsldeparture_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp2_vsldeparture_planned_last, tsp2_loc_timezone);
+            }
+            else if (!string.IsNullOrEmpty(tsp2_vsldeparture_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp2_vsldeparture_planned_initial, tsp2_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment2VesselDeparture()
+        {
+            if (!string.IsNullOrEmpty(tsp2_vsldeparture_actual))
+            {
+                return AnalyzeXMLDateValue(tsp2_vsldeparture_actual, tsp2_loc_timezone);
+            }
+            //else if (!string.IsNullOrEmpty(tsp2_vsldeparture_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp2_vsldeparture_detected, tsp2_loc_timezone);
+            //}
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTrans3VesselArrival()
+        {
+            if (!string.IsNullOrEmpty(tsp3_vslarrival_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp3_vslarrival_planned_last, tsp3_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(tsp3_vslarrival_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp3_vslarrival_planned_initial, tsp3_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment3VesselArrival()
+        {
+            if (!string.IsNullOrEmpty(tsp3_vslarrival_actual))
+            {
+                return AnalyzeXMLDateValue(tsp3_vslarrival_actual, tsp3_loc_timezone);
+            }
+            //else if (!string.IsNullOrEmpty(tsp3_vslarrival_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp3_vslarrival_detected, tsp3_loc_timezone);
+            //}
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTransshipment3Discharge()
+        {
+            if (!string.IsNullOrEmpty(tsp3_discharge_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp3_discharge_planned_last, tsp3_loc_timezone);
+            }
+            else if (!string.IsNullOrEmpty(tsp3_discharge_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp3_discharge_planned_initial, tsp3_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment3Discharge()
+        {
+            if (!string.IsNullOrEmpty(tsp3_discharge_actual))
+            {
+                return AnalyzeXMLDateValue(tsp3_discharge_actual, tsp3_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTransshipment3Loaded()
+        {
+            if (!string.IsNullOrEmpty(tsp3_loaded_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp3_loaded_planned_last, tsp3_loc_timezone);
+            }
+            else if (!string.IsNullOrEmpty(tsp3_loaded_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp3_loaded_planned_initial, tsp3_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment3Loaded()
+        {
+            if (!string.IsNullOrEmpty(tsp3_loaded_actual))
+            {
+                return AnalyzeXMLDateValue(tsp3_loaded_actual, tsp3_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTransshipment3VesselDeparture()
+        {
+            if (!string.IsNullOrEmpty(tsp3_vsldeparture_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp3_vsldeparture_planned_last, tsp3_loc_timezone);
+            }
+            else if (!string.IsNullOrEmpty(tsp3_vsldeparture_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp3_vsldeparture_planned_initial, tsp3_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment3VesselDeparture()
+        {
+            if (!string.IsNullOrEmpty(tsp3_vsldeparture_actual))
+            {
+                return AnalyzeXMLDateValue(tsp3_vsldeparture_actual, tsp3_loc_timezone);
+            }
+            //else if (!string.IsNullOrEmpty(tsp3_vsldeparture_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp3_vsldeparture_detected, tsp3_loc_timezone);
+            //}
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTrans4VesselArrival()
+        {
+            if (!string.IsNullOrEmpty(tsp4_vslarrival_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp4_vslarrival_planned_last, tsp4_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(tsp4_vslarrival_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp4_vslarrival_planned_initial, tsp4_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment4VesselArrival()
+        {
+            if (!string.IsNullOrEmpty(tsp4_vslarrival_actual))
+            {
+                return AnalyzeXMLDateValue(tsp4_vslarrival_actual, tsp4_loc_timezone);
+            }
+            //else if (!string.IsNullOrEmpty(tsp4_vslarrival_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp4_vslarrival_detected, tsp4_loc_timezone);
+            //}
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTransshipment4Discharge()
+        {
+            if (!string.IsNullOrEmpty(tsp4_discharge_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp4_discharge_planned_last, tsp4_loc_timezone);
+            }
+            else if (!string.IsNullOrEmpty(tsp4_discharge_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp4_discharge_planned_initial, tsp4_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment4Discharge()
+        {
+            if (!string.IsNullOrEmpty(tsp4_discharge_actual))
+            {
+                return AnalyzeXMLDateValue(tsp4_discharge_actual, tsp4_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTransshipment4Loaded()
+        {
+            if (!string.IsNullOrEmpty(tsp4_loaded_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp4_loaded_planned_last, tsp4_loc_timezone);
+            }
+            else if (!string.IsNullOrEmpty(tsp4_loaded_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp4_loaded_planned_initial, tsp4_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment4Loaded()
+        {
+            if (!string.IsNullOrEmpty(tsp4_loaded_actual))
+            {
+                return AnalyzeXMLDateValue(tsp4_loaded_actual, tsp4_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedTransshipment4VesselDeparture()
+        {
+            if (!string.IsNullOrEmpty(tsp4_vsldeparture_planned_last))
+            {
+                return AnalyzeXMLDateValue(tsp4_vsldeparture_planned_last, tsp4_loc_timezone);
+            }
+            else if (!string.IsNullOrEmpty(tsp4_vsldeparture_planned_initial))
+            {
+                return AnalyzeXMLDateValue(tsp4_vsldeparture_planned_initial, tsp4_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualTransshipment4VesselDeparture()
+        {
+            if (!string.IsNullOrEmpty(tsp4_vsldeparture_actual))
+            {
+                return AnalyzeXMLDateValue(tsp4_vsldeparture_actual, tsp4_loc_timezone);
+            }
+            //else if (!string.IsNullOrEmpty(tsp4_vsldeparture_detected))
+            //{
+            //    return AnalyzeXMLDateValue(tsp4_vsldeparture_detected, tsp4_loc_timezone);
+            //}
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedPODVesselArrival()
+        {
+            if (!string.IsNullOrEmpty(ETA_last))
+            {
+                return AnalyzeXMLDateValue(ETA_last, pod_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(ETA_initial))
+            {
+                return AnalyzeXMLDateValue(ETA_initial, pod_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeActualPODVesselArrival()
+        {
+            if (!string.IsNullOrEmpty(ATA_actual))
+            {
+                return AnalyzeXMLDateValue(ATA_actual, pod_loc_timezone);
+            }
+            //else if (!string.IsNullOrEmpty(ATA_detected))
+            //{
+            //    return AnalyzeXMLDateValue(ATA_detected, pod_loc_timezone);
+            //}
+
+            return null;
+        }
+        private DateTime? ComputeEstimatedPODDischarge()
+        {
+            if (!string.IsNullOrEmpty(pod_discharge_planned_last))
+            {
+                return AnalyzeXMLDateValue(pod_discharge_planned_last, pod_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(pod_discharge_planned_initial))
+            {
+                return AnalyzeXMLDateValue(pod_discharge_planned_initial, pod_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualPODDischarge()
+        {
+            if (!string.IsNullOrEmpty(pod_discharge_actual))
+            {
+                return AnalyzeXMLDateValue(pod_discharge_actual, pod_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeEstimatedPODDeparture()
+        {
+            if (!string.IsNullOrEmpty(pod_departure_planned_last))
+            {
+                return AnalyzeXMLDateValue(pod_departure_planned_last, pod_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(pod_departure_planned_initial))
+            {
+                return AnalyzeXMLDateValue(pod_departure_planned_initial, pod_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualPODDeparture()
+        {
+            if (!string.IsNullOrEmpty(pod_departure_actual))
+            {
+                return AnalyzeXMLDateValue(pod_departure_actual, pod_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeEstimatedDelivery()
+        {
+            if (!string.IsNullOrEmpty(dlv_delivery_planned_last))
+            {
+                return AnalyzeXMLDateValue(dlv_delivery_planned_last, dlv_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(dlv_delivery_planned_initial))
+            {
+                return AnalyzeXMLDateValue(dlv_delivery_planned_initial, dlv_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualDelivery()
+        {
+            if (!string.IsNullOrEmpty(dlv_delivery_actual))
+            {
+                return AnalyzeXMLDateValue(dlv_delivery_actual, dlv_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeEstimatedLIFArrival()
+        {
+            if (!string.IsNullOrEmpty(lif_arrival_planned_last))
+            {
+                return AnalyzeXMLDateValue(lif_arrival_planned_last, lif_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(lif_arrival_planned_initial))
+            {
+                return AnalyzeXMLDateValue(lif_arrival_planned_initial, lif_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualLIFArrival()
+        {
+            if (!string.IsNullOrEmpty(lif_arrival_actual))
+            {
+                return AnalyzeXMLDateValue(lif_arrival_actual, lif_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeEstimatedOnCarriageDeparture()
+        {
+            if (!string.IsNullOrEmpty(lif_departure_planned_last))
+            {
+                return AnalyzeXMLDateValue(lif_departure_planned_last, lif_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(lif_departure_planned_initial))
+            {
+                return AnalyzeXMLDateValue(lif_departure_planned_initial, lif_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualOnCarriageDeparture()
+        {
+            if (!string.IsNullOrEmpty(lif_departure_actual))
+            {
+                return AnalyzeXMLDateValue(lif_departure_actual, lif_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeEstimatedEmptyReturn()
+        {
+            if (!string.IsNullOrEmpty(empty_return_planned_last))
+            {
+                return AnalyzeXMLDateValue(empty_return_planned_last, empty_return_loc_timezone);
+            }
+
+            else if (!string.IsNullOrEmpty(empty_return_planned_initial))
+            {
+                return AnalyzeXMLDateValue(empty_return_planned_initial, empty_return_loc_timezone);
+            }
+            return null;
+        }
+        private DateTime? ComputeActualEmptyReturn()
+        {
+            if (!string.IsNullOrEmpty(empty_return_actual))
+            {
+                return AnalyzeXMLDateValue(empty_return_actual, empty_return_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeCustomsReleaseDate()
+        {
+            if (!string.IsNullOrEmpty(customs_release_date))
+            {
+                return AnalyzeXMLDateValue(customs_release_date, availability_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeCarrierReleaseDate()
+        {
+            if (!string.IsNullOrEmpty(carrier_release_date))
+            {
+                return AnalyzeXMLDateValue(carrier_release_date, availability_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputeAvailablityDate()
+        {
+            if (!string.IsNullOrEmpty(availability_date))
+            {
+                return AnalyzeXMLDateValue(availability_date, availability_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputePOLGateIn()
+        {
+            if (!string.IsNullOrEmpty(gateInDate_actual))
+            {
+                return AnalyzeXMLDateValue(gateInDate_actual, pol_loc_timezone);
+            }
+
+            return null;
+        }
+        private DateTime? ComputPODGateOut()
+        {
+            if (!string.IsNullOrEmpty(pod_departure_actual))
+            {
+                return AnalyzeXMLDateValue(pod_departure_actual, pod_loc_timezone);
+            }
+
+            return null;
+        }
+        private void UpdateShipment()
+        {
+            if (FeatureToggleHelper.HasFeatureToggle("OIU", this.logitudeTenant.Value))
+            {
+                if (shipmentPM == null)
                 {
-                    shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
-                    this.UpdateShipmentDates(shipmentContainers.FirstOrDefault(), shipmentPM);
-                    isSavingShipment = true;
+                    throw new Exception("Analyzing shipment faild, shipment not found");
                 }
 
                 else
                 {
-                    List<Container> nullValuesContainers = shipmentContainers.Where(d => d.MainCarriageATA == null && d.MainCarriageATD == null 
-                    && d.MainCarriageETA == null && d.MainCarriageETD == null
-                    && string.IsNullOrEmpty(d.DepartureLocation) && string.IsNullOrEmpty(d.DestinationLocation)).ToList();
-                    
-                    shipmentContainers = shipmentContainers.Except(nullValuesContainers).ToList();
+ 
+                    this.POLShipmentUpdateIndicator = this.GetPOLShipmentUpdateIndicator(container.POLLocationPortId);
+                    this.PODShipmentUpdateIndicator = this.GetPODShipmentUpdateIndicator(container.PODLocationPortId);
 
-                    var shipmentContainers_grouped = (from s in shipmentContainers
-                                                                  group s by new
-                                                                  {
-                                                                      s.DepartureLocation,
-                                                                      s.DestinationLocation,
-                                                                      s.MainCarriageETD,
-                                                                      s.MainCarriageETA,
-                                                                      s.MainCarriageATD,
-                                                                      s.MainCarriageATA,
-                                                                  } into m
-                                                                  select new
-                                                                  {
-                                                                      MainCarriageETD = m.Key.MainCarriageETD,
-                                                                      MainCarriageETA = m.Key.MainCarriageETA,
-                                                                      MainCarriageATD = m.Key.MainCarriageATD,
-                                                                      MainCarriageATA = m.Key.MainCarriageATA,
-                                                                      GroupList = m.ToList(),
-                                                                  }).ToList();
-
-                    if (shipmentContainers_grouped != null)
+                    if (!string.IsNullOrEmpty(POLShipmentUpdateIndicator) || !string.IsNullOrEmpty(PODShipmentUpdateIndicator))
                     {
-                        if (shipmentContainers_grouped.Count() == 1)
-                        {
-                            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
-                            this.UpdateShipmentDates(shipmentContainers.FirstOrDefault(), shipmentPM);
-                            this.UpdateContainersException(shipmentContainers, true);
-                            isSavingShipment = true;
-                        }
-
-                        else
-                        {
-                            this.UpdateContainersException(shipmentContainers, false);
-                            containerRepository.SubmitChanges();
-                        }
+                        this.StartProcessingUpdateShipment();
                     }
-                }
-
-                if (isSavingShipment)
-                {
-                    this.SaveShipment(shipmentPM);
                 }
             }
         }
-        private void UpdateContainersException(List<Container> shipmentContainers, bool sameConatiner)
+
+        private string GetPortId(string portCode)
         {
-            foreach (Container item in shipmentContainers)
+            Port port = portRepository.GetOceanPortByCombinedCode(portCode, this.logitudeTenant.Value);
+            string portId = null;
+            if (port != null)
             {
-                item.HasContainerException = false;
+                portId= port.Id;
+            }
+            else
+            {
+                portId = this.CopyPortCopyToCurrentTenant(portCode);
+            }
+            return portId;
+        }
 
-                if (!sameConatiner && item.ContainerNumber != container_number)
+        private string CopyPortCopyToCurrentTenant(string portCode)
+        {
+            string portId = null;
+            PortQuery portQuery = new PortQuery(portRepository);
+            Port portZero = portRepository.GetOceanPortByCombinedCode(portCode, 0);
+            if (portZero != null)
+            {
+                var newPort = portQuery.GetPortCopyToCurrentTenant(portZero.Id, this.logitudeTenant.Value);
+                portId = newPort.Id;
+            }
+
+            return portId;
+        }
+
+        private string GetTranslatedPortCode(string XMLportCode)
+        {
+            string portCode = XMLportCode;
+
+            string translatedPortCode = this.computingPartnerTranslator.GetLogitudeCodeTranslation(XMLportCode, computingPartnerCode, "Port");
+            if (!string.IsNullOrEmpty(translatedPortCode))
+            {
+                portCode = translatedPortCode;
+            }
+
+            return portCode;
+        }
+        private string GetPOLShipmentUpdateIndicator(string portId)
+        {
+            string POLShipmentUpdateIndicator = null;
+
+            if (!string.IsNullOrEmpty(portId))
+            {
+                if (shipmentPM.PreCarriageFromPortId == portId)
                 {
-                    if (item.DepartureLocation != departureLocation || item.DestinationLocation != destinationLocation
-                        || item.MainCarriageATA != ComputeMainCarriageATA()
-                        || item.MainCarriageATD != ComputeMainCarriageATD()
-                        || item.MainCarriageETA != ComputeMainCarriageETA()
-                        || item.MainCarriageETD != ComputeMainCarriageETD())
-                    {
-                        item.HasContainerException = true;
-                    }
+                    POLShipmentUpdateIndicator = "Pre Carriage";
                 }
 
-                containerRepository.Update(item);
+                else if (shipmentPM.MainCarriageFromPortId == portId)
+                {
+                    POLShipmentUpdateIndicator = "Main Carriage";
+                }
+            }
+
+            return POLShipmentUpdateIndicator;
+        }
+        private string GetPODShipmentUpdateIndicator(string portId)
+        {
+            string PODShipmentUpdateIndicator = null;
+
+            if (!string.IsNullOrEmpty(portId))
+            {
+                if (shipmentPM.OnCarriageToPortId == portId)
+                {
+                    PODShipmentUpdateIndicator = "On Carriage";
+                }
+
+                else if (shipmentPM.MainCarriageToPortId == portId)
+                {
+                    PODShipmentUpdateIndicator = "Main Carriage";
+                }
+            }
+
+            return PODShipmentUpdateIndicator;
+        }
+        private void StartProcessingUpdateShipment()
+        {
+            shipmentPM.IsUpdatedOceanInsightsAnalyzer = true;
+            this.UpdateShipmentDates();
+            if (IsUpdatingShipmentDateFields)
+            {
+                shipmentPM.OINewConcurrencyGUID = Guid.NewGuid().ToString();
             }
         }
-        private void UpdateShipmentDates(Container container, ShipmentPM shipment)
+       
+        private void UpdateShipmentDates()
         {
-            this.FillFieldsNewValues("MainCarriageETD", container.MainCarriageETD, shipment);
-            this.FillFieldsNewValues("MainCarriageETA", container.MainCarriageETA, shipment);
-            this.FillFieldsNewValues("MainCarriageATD", container.MainCarriageATD, shipment);
-            this.FillFieldsNewValues("MainCarriageATA", container.MainCarriageATA, shipment);
+            this.UpdatePOLDates();
+            this.UpdatePODDates();
         }
+        private void UpdatePOLDates()
+        {
+            if (POLShipmentUpdateIndicator == "Pre Carriage")
+            {
+                this.FillFieldsShipmentNewValues("PreCarriageETD", container.EstimatedPOLVesselDeparture, shipmentPM);
+
+                if (shipmentPM.PreCarriageATD == null)
+                {
+                    this.FillFieldsShipmentNewValues("PreCarriageATD", container.ActualPOLVesselDeparture, shipmentPM);
+                }
+            }
+
+            else if(POLShipmentUpdateIndicator == "Main Carriage")
+            {
+                shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
+                this.FillFieldsShipmentNewValues("MainCarriageETD", container.EstimatedPOLVesselDeparture, shipmentPM);
+
+                if (shipmentPM.MainCarriageATD == null)
+                {
+                    this.FillFieldsShipmentNewValues("MainCarriageATD", container.ActualPOLVesselDeparture, shipmentPM);
+                }
+            }
+        }
+        private void UpdatePODDates()
+        {
+            if (PODShipmentUpdateIndicator == "On Carriage")
+            {
+                this.FillFieldsShipmentNewValues("OnCarriageETA", container.EstimatedPODVesselArrival, shipmentPM);
+
+                if (shipmentPM.OnCarriageATA == null)
+                {
+                    this.FillFieldsShipmentNewValues("OnCarriageATA", container.ActualPODVesselArrival, shipmentPM);
+                }                
+            }
+
+            else if (PODShipmentUpdateIndicator == "Main Carriage")
+            {
+                shipmentPM.IsUpdatedOceanInsightsMainCarriageDates = true;
+                this.FillFieldsShipmentNewValues("MainCarriageETA", container.EstimatedPODVesselArrival, shipmentPM);
+
+                if (shipmentPM.MainCarriageATA == null)
+                {
+                    this.FillFieldsShipmentNewValues("MainCarriageATA", container.ActualPODVesselArrival, shipmentPM);
+                }
+            }
+        }
+
+        private void FillFieldsShipmentNewValues(string propertyName, object newValue, object entity)
+        {
+            PropertyInfo propertyInfo = entity.GetType().GetProperty(propertyName);
+            var entityValue = propertyInfo.GetValue(entity);
+            if (propertyInfo == null || newValue == null)
+            {
+                return;
+            }
+
+            if(entityValue != null && entityValue.Equals(newValue))
+            {
+                return;
+            }
+            IsUpdatingShipmentDateFields = true;
+            propertyInfo.SetValue(entity, newValue);
+        }
+
         private void FillFieldsNewValues(string propertyName, object newValue, object entity)
         {
             PropertyInfo propertyInfo = entity.GetType().GetProperty(propertyName);
@@ -910,13 +2461,16 @@ namespace WebFreight.Web.Helpers.Analyzers
         private void SaveContainer()
         {
             ContainerService containerService = new ContainerService(shipmentContext, logitudeTenant.Value);
-            containerService.Update(container);
+            containerService.Update(container, containersExternal);
         }
         private void SaveShipment(ShipmentPM shipmentPM)
         {
-            string systemEmail = "system@tenant" + this.logitudeTenant.Value + ".com";
-            ShipmentService service = new ShipmentService(shipmentContext, shipmentPM, systemEmail);
-            service.Update(true);
+            if (shipmentPM.IsUpdatedOceanInsightsAnalyzer || this.IsUpdatingPackages || this.IsUpdatingEmptyLeg)
+            {
+                string systemEmail = "system@tenant" + this.logitudeTenant.Value + ".com";
+                ShipmentService service = new ShipmentService(shipmentContext, shipmentPM, systemEmail);
+                service.Update(true);
+            }
         }
         private void DoneAnalyzeQueue()
         {
@@ -951,12 +2505,12 @@ namespace WebFreight.Web.Helpers.Analyzers
             {
                 if (analyzeQueue.ConnectedToTenant && analyzeQueue.CommunicationLogId != null)
                 {
-                    this.communicationLogRepository = new CommunicationLogRepository(this.tenant);
-                    CommunicationLog commLog = communicationLogRepository.GetSingleCommunicationLog(analyzeQueue.CommunicationLogId, tenant);
+                    this.communicationLogRepository = new CommunicationLogRepository(this.tenant_Zero);
+                    CommunicationLog commLog = communicationLogRepository.GetSingleCommunicationLog(analyzeQueue.CommunicationLogId, tenant_Zero);
                     if (commLog != null)
                     {
                         commLog.CommunicationStatusTypeCode = "F";
-                        commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant);
+                        commLog.LastStatusDate = TenantServerConfigration.GetCurrentDateTime(logitudeTenant.Value);
                         commLog.LastStatusDateUTC = DateTime.UtcNow;
                         commLog.ExceptionMessage = analyzeQueue.ErrorMessage;
 
@@ -975,11 +2529,144 @@ namespace WebFreight.Web.Helpers.Analyzers
             analyzeQueueRepository.Update(analyzeQueue);
             analyzeQueueRepository.SubmitChanges();
         }
-        public  DateTime? ConvertStringToDateTime(string XMLValue)
+        private DateTime? AnalyzeEventDateValue(string XMLValue)
+        {
+            XMLDateParts xMLDateParts = this.GetXMLDateParts(XMLValue);
+            XMLDateParts currentTenantTimeZoneDateParts = this.GetCurrentTenantTimeZoneDateParts();
+            return ComputeDateTimeRqgardingTimeZone(xMLDateParts, currentTenantTimeZoneDateParts);
+        }
+        private XMLDateParts GetCurrentTenantTimeZoneDateParts()
+        {
+            Tenant tenant = TenantRepository.GetSingleTenant(logitudeTenant.Value, true);
+            double? currentTenantTimeZone = tenant.TimeZoneOffset;
+            XMLDateParts xMLDateParts = new XMLDateParts();
+            xMLDateParts.TimeZoneSign = currentTenantTimeZone > 0 ? "" : "-";
+            xMLDateParts.TimeZoneHoursValue = ConvertStringToInteger(currentTenantTimeZone?.ToString());
+            xMLDateParts.TimeZoneMinutsValue = 0;
+            xMLDateParts.TimeZone = new TimeSpan(xMLDateParts.TimeZoneHoursValue, xMLDateParts.TimeZoneMinutsValue, 0);
+            return xMLDateParts;
+        }
+
+        private DateTime? AnalyzeXMLDateValue(string XMLValue, string timeZone)
+        {
+            XMLDateParts xMLDateParts = this.GetXMLDateParts(XMLValue);
+            XMLDateParts portTimeZoneDateParts = this.GetPortTimeZoneDateParts(timeZone);
+            return ComputeDateTimeRqgardingTimeZone(xMLDateParts, portTimeZoneDateParts);
+        }
+        private XMLDateParts GetXMLDateParts(string XMLValue)
+        {
+            XMLDateParts xMLDateParts = new XMLDateParts();
+
+            if (string.IsNullOrEmpty(XMLValue))
+            {
+                return null;
+            }
+
+            if (XMLValue.Length > 16)
+            {
+                xMLDateParts.DateTimeValue = ConvertStringToDateTime(XMLValue.Substring(0, 16));
+                xMLDateParts.TimeZoneSign = XMLValue.Substring(16, 1);                
+                xMLDateParts.TimeZoneHoursValue = ConvertStringToInteger(XMLValue.Substring(17, 2));
+                xMLDateParts.TimeZoneMinutsValue = ConvertStringToInteger(XMLValue.Substring(19, 2));
+                xMLDateParts.TimeZone = new TimeSpan(xMLDateParts.TimeZoneHoursValue, xMLDateParts.TimeZoneMinutsValue, 0);
+            }
+
+            else
+            {
+                xMLDateParts.DateTimeValue = ConvertStringToDateTime(XMLValue);
+            }
+
+            return xMLDateParts;
+        }
+        private XMLDateParts GetPortTimeZoneDateParts(string timeZone)
+        {
+            XMLDateParts xMLDateParts = new XMLDateParts();
+            PortTimeZone portTimeZone = portTimeZoneRepository.GetSinglePortTimeZone(timeZone);
+            
+            if(portTimeZone != null && !string.IsNullOrEmpty(portTimeZone.UTCOffset))
+            {
+                xMLDateParts.TimeZoneSign = portTimeZone.UTCOffset.Substring(0, 1);
+                xMLDateParts.TimeZoneHoursValue = ConvertStringToInteger(portTimeZone.UTCOffset.Substring(1, 2));
+                xMLDateParts.TimeZoneMinutsValue = ConvertStringToInteger(portTimeZone.UTCOffset.Substring(4, 2));
+                xMLDateParts.TimeZone = new TimeSpan(xMLDateParts.TimeZoneHoursValue, xMLDateParts.TimeZoneMinutsValue, 0);
+            }
+
+            return xMLDateParts;
+        }
+
+        private DateTime? ConvertStringToDateTime(string dateValue)
+        {
+            if (!string.IsNullOrEmpty(dateValue))
+            {
+                return Convert.ToDateTime(dateValue);
+            }
+
+            else
+            {
+                return null;
+            }
+        }        
+        private int ConvertStringToInteger(string stringValue)
+        {
+            if (!string.IsNullOrEmpty(stringValue))
+            {
+                return Convert.ToInt32(stringValue);
+            }
+
+            else
+            {
+                return 0;
+            }
+        }
+        private DateTime? ComputeDateTimeRqgardingTimeZone(XMLDateParts xMLDateParts, XMLDateParts portTimeZoneDateParts)
+        {
+            if(xMLDateParts == null && portTimeZoneDateParts == null)
+            {
+                return null;
+            }
+
+            DateTime computesDateTime = xMLDateParts.DateTimeValue.Value;
+            computesDateTime = this.ProcessPortTimeZoneCalculations(computesDateTime, portTimeZoneDateParts);
+            computesDateTime = this.ProcessXMLTimeZoneCalculations(computesDateTime, xMLDateParts);
+            return computesDateTime;
+        }
+        private DateTime ProcessPortTimeZoneCalculations(DateTime computesDateTime, XMLDateParts portTimeZoneDateParts)
+        {
+            DateTime calculatedDate = computesDateTime;
+            if (portTimeZoneDateParts.TimeZoneSign == "-")
+            {
+                calculatedDate = computesDateTime.Subtract(portTimeZoneDateParts.TimeZone);
+            }
+
+            else
+            {
+                calculatedDate = computesDateTime.Add(portTimeZoneDateParts.TimeZone);
+            }
+
+            return calculatedDate;
+        }
+        private DateTime ProcessXMLTimeZoneCalculations(DateTime computesDateTime, XMLDateParts xMLDateParts)
+        {
+            DateTime calculatedDate = computesDateTime;
+            if (xMLDateParts.TimeZoneSign == "-")
+            {
+                calculatedDate = computesDateTime.Add(xMLDateParts.TimeZone);
+            }
+
+            else
+            {
+                calculatedDate = computesDateTime.Subtract(xMLDateParts.TimeZone);
+            }
+
+            return calculatedDate;
+        }
+
+        // to be deleted when deleting unwanted fields from container
+        public DateTime? ConvertStringToDateTime_old(string XMLValue)
         {
             string dateTimeString = this.GetCorrectDateTimeString(XMLValue);
 
-            if(!string.IsNullOrEmpty(dateTimeString))
+            if (!string.IsNullOrEmpty(dateTimeString))
             {
                 return Convert.ToDateTime(dateTimeString);
             }
@@ -987,7 +2674,7 @@ namespace WebFreight.Web.Helpers.Analyzers
             else
             {
                 return null;
-            }            
+            }
         }
         private string GetCorrectDateTimeString(string XMLValue)
         {
@@ -995,7 +2682,7 @@ namespace WebFreight.Web.Helpers.Analyzers
 
             if (!string.IsNullOrEmpty(XMLValue))
             {
-                if(XMLValue.Length > 16)
+                if (XMLValue.Length > 16)
                 {
                     dateTimeString = XMLValue.Substring(0, 16);
                 }
@@ -1028,7 +2715,7 @@ namespace WebFreight.Web.Helpers.Analyzers
         public string Action { get; set; }
         public List<Parameter> Parameters { get; set; }
     }
-    
+
     public class ContainerUpdatedFields
     {
         public DateTime? MainCarriageETD { get; set; }
@@ -1037,8 +2724,8 @@ namespace WebFreight.Web.Helpers.Analyzers
         public DateTime? MainCarriageATA { get; set; }
         public DateTime? EstimatedEmptyPickupDate { get; set; }
         public DateTime? ActualEmptyPickupDate { get; set; }
-        public DateTime? EstimatedGateInDate { get; set; }
-        public DateTime? ActualGateInDate { get; set; }
+        public DateTime? EstimatedPOLArrival { get; set; }
+        public DateTime? ActualPOLArrival { get; set; }
         public string EmptyPickupLocation { get; set; }
         public string DepartureLocation { get; set; }
         public string DestinationLocation { get; set; }
@@ -1046,5 +2733,120 @@ namespace WebFreight.Web.Helpers.Analyzers
         public string CurrentLocation { get; set; }
         public DateTime? CurrentStatusDate { get; set; }
         public bool HasContainerException { get; set; }
+        public DateTime? ActualEmptyPickup { get; set; }
+        public DateTime? EstimatedEmptyPickup { get; set; }
+        public string OriginLocation { get; set; }
+        public DateTime? EstimatedOriginPickup { get; set; }
+        public DateTime? ActualOriginPickup { get; set; }
+        public string POLLocation { get; set; }
+        public DateTime? EstimatedPOLLoaded { get; set; }
+        public DateTime? ActualPOLLoaded { get; set; }
+        public DateTime? EstimatedPOLVesselDeparture { get; set; }
+        public DateTime? ActualPOLVesselDeparture { get; set; }
+        public int? TransshipmentCount { get; set; }
+        public string Transshipment1Location { get; set; }
+        public DateTime? EstimatedTrans1VesselArrival { get; set; }
+        public DateTime? ActualTransshipment1VesselArrival { get; set; }
+        public DateTime? EstimatedTransshipment1Discharge { get; set; }
+        public DateTime? ActualTransshipment1Discharge { get; set; }
+        public DateTime? EstimatedTransshipment1Loaded { get; set; }
+        public DateTime? ActualTransshipment1Loaded { get; set; }
+        public DateTime? EstimatedTrans1VesselDeparture { get; set; }
+        public DateTime? ActualTrans1VesselDeparture { get; set; }
+        public string Transshipment2Location { get; set; }
+        public DateTime? EstimatedTrans2VesselArrival { get; set; }
+        public DateTime? ActualTransshipment2VesselArrival { get; set; }
+        public DateTime? EstimatedTransshipment2Discharge { get; set; }
+        public DateTime? ActualTransshipment2Discharge { get; set; }
+        public DateTime? EstimatedTransshipment2Loaded { get; set; }
+        public DateTime? ActualTransshipment2Loaded { get; set; }
+        public DateTime? EstimatedTrans2VesselDeparture { get; set; }
+        public DateTime? ActualTrans2VesselDeparture { get; set; }
+        public string Transshipment3Location { get; set; }
+        public DateTime? EstimatedTrans3VesselArrival { get; set; }
+        public DateTime? ActualTransshipment3VesselArrival { get; set; }
+        public DateTime? EstimatedTransshipment3Discharge { get; set; }
+        public DateTime? ActualTransshipment3Discharge { get; set; }
+        public DateTime? EstimatedTransshipment3Loaded { get; set; }
+        public DateTime? ActualTransshipment3Loaded { get; set; }
+        public DateTime? EstimatedTrans3VesselDeparture { get; set; }
+        public DateTime? ActualTrans3VesselDeparture { get; set; }
+        public string Transshipment4Location { get; set; }
+        public DateTime? EstimatedTrans4VesselArrival { get; set; }
+        public DateTime? ActualTransshipment4VesselArrival { get; set; }
+        public DateTime? EstimatedTransshipment4Discharge { get; set; }
+        public DateTime? ActualTransshipment4Discharge { get; set; }
+        public DateTime? EstimatedTransshipment4Loaded { get; set; }
+        public DateTime? ActualTransshipment4Loaded { get; set; }
+        public DateTime? EstimatedTrans4VesselDeparture { get; set; }
+        public DateTime? ActualTrans4VesselDeparture { get; set; }
+        public string Leg1Vessel { get; set; }
+        public string Leg1VesselId { get; set; }
+        public string Leg1Voyage { get; set; }
+        public string Leg2Vessel { get; set; }
+        public string Leg2VesselId { get; set; }
+        public string Leg2Voyage { get; set; }
+        public string Leg3Vessel { get; set; }
+        public string Leg3VesselId { get; set; }
+        public string Leg3Voyage { get; set; }
+        public string Leg4Vessel { get; set; }
+        public string Leg4VesselId { get; set; }
+        public string Leg4Voyage { get; set; }
+        public string Leg5Vessel { get; set; }
+        public string Leg5VesselId { get; set; }
+        public string Leg5Voyage { get; set; }
+        public string PODLocation { get; set; }
+        public DateTime? EstimatedPODVesselArrival { get; set; }
+        public DateTime? ActualPODVesselArrival { get; set; }
+        public DateTime? EstimatedPODDischarge { get; set; }
+        public DateTime? ActualPODDischarge { get; set; }
+        public DateTime? EstimatedPODDeparture { get; set; }
+        public DateTime? ActualPODDeparture { get; set; }
+        public string DeliveryLocation { get; set; }
+        public DateTime? EstimatedDelivery { get; set; }
+        public DateTime? ActualDelivery { get; set; }
+        public string LIFLocation { get; set; }
+        public DateTime? EstimatedLIFArrival { get; set; }
+        public DateTime? ActualLIFArrival { get; set; }
+        public DateTime? EstimatedOnCarriageDeparture { get; set; }
+        public DateTime? ActualOnCarriageDeparture { get; set; }
+        public DateTime? POLGateIn { get; set; }
+        public DateTime? PODGateOut { get; set; }
+        public string EmptyReturnLocation { get; set; }
+        public DateTime? EstimatedEmptyReturn { get; set; }
+        public DateTime? ActualEmptyReturn { get; set; }
+        public string CustomsReleaseState { get; set; }
+        public DateTime? CustomsReleaseDate { get; set; }
+        public string CarrierReleaseState { get; set; }
+        public DateTime? CarrierReleaseDate { get; set; }
+        public DateTime? AvailablityDate { get; set; }
+        public string AvailabilityLocation { get; set; }
     }
+
+    public class ContainerGroup
+    {
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
+        public List<Container> GroupList { get; set; }
+    }
+    public class XMLDateParts
+    {
+        public XMLDateParts()
+        {
+            DateTimeValue = null;
+            TimeZoneHoursValue = 0;
+            TimeZoneMinutsValue = 0;
+            TimeZoneSign = "";
+            TimeZone = new TimeSpan(0, 0, 0);
+        }
+
+        public DateTime? DateTimeValue { get; set; }
+        public int TimeZoneHoursValue { get; set; }
+        public int TimeZoneMinutsValue { get; set; }
+        public string TimeZoneSign { get; set; }
+        public TimeSpan TimeZone { get; set; }
+    }
+
 }

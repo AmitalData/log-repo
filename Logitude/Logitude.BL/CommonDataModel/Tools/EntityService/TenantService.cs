@@ -22,6 +22,7 @@ using Logitude.Server.Tools.Helpers;
 using Logitude.Infrastructure.Data.Repsitories;
 using Logitude.Infrastructure.Data.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -49,7 +50,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.isNewEntity = true;
             this.entityPM = theEntityPm;
             this.entityPM.TenantVATManagement = true;
-            
+            this.entityPM.UseNewTermsOfUse = (LogitudeSettings.DeploymentStage == "Simplog" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "Dev");
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 this.entityPM.Id = TenantCounter.GetNumber();
@@ -74,6 +75,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
+ 
                 if (setting.WorkEnvironment == "customs")
                 {
                     packageCode = "CUST";
@@ -84,7 +86,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
 
                 GlobalTenantRepository globalTenantRepository = new GlobalTenantRepository();
-                TenantManagementRepository tenantManagementRep = new TenantManagementRepository();                
+                TenantManagementRepository tenantManagementRep = new TenantManagementRepository();
 
                 GlobalDB database = GetActiveDatabaseNumber();
                 int version = globalTenantRepository.GetCurrentVersion();
@@ -110,10 +112,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     TrialStartDate = DateTime.Now,
                     TrialEndDate = DateTime.Now.AddDays(31),
                     PackageCode = packageCode,
-                    NumberOfUsers = 1,
+                    NumberOfUsers = IsEmptyTotalDefaultNumberOfUsers(theEntityPm) ? 1 : theEntityPm.TotalDefaultNumberOfUsers,
+                    TotalNumberOfUsers = IsEmptyTotalDefaultNumberOfUsers(theEntityPm) ? 1 : theEntityPm.TotalDefaultNumberOfUsers,
                     SearchFields = globalTenant.Id + "," + globalTenant.CompanyName + ",1",
-                    AWBMessagesCCSTypeCode = "CHAMP",                        
-                };
+                    AWBMessagesCCSTypeCode = "CHAMP",
+                    DPArchiveShipmentArrivalFilter = 3,
+                    DPArchiveShipmentDepartFilter = 3,
+                    DPArchiveShipmentCreateFilter = 12
+            };
 
                 Package tenantPackage = packages.Where(d => d.Code == tenantManagement.PackageCode).FirstOrDefault();
                 if (tenantPackage != null)
@@ -135,10 +141,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     //theEntityPm.ExportQuotationsToIntegratedSystem = false;
                 }
                 
+                MapNewLogboxFromCloudTenantManagement(tenantManagement, theEntityPm);
+                
                 tenantManagementRep.Add(tenantManagement);
                 tenantManagementRep.SubmitChanges();
 
-                
+
                 scope.Complete();
             }
 
@@ -182,6 +190,21 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             CreateDWHSettings();
         }
+
+        private static void MapNewLogboxFromCloudTenantManagement(TenantManagement tenantManagement, TenantPM newTenantPM)
+        {
+            if (!newTenantPM.IsNewLogboxFromCloud) return;
+
+            const string ShipperConsigneeTenantTypeCode = "SHC";
+            tenantManagement.TenantTypeCode = ShipperConsigneeTenantTypeCode;
+            tenantManagement.IsTrial = false;
+        }
+
+        private static bool IsEmptyTotalDefaultNumberOfUsers(TenantPM theEntityPm)
+        {
+            return theEntityPm.TotalDefaultNumberOfUsers == null || theEntityPm.TotalDefaultNumberOfUsers <= 0;
+        }
+
         public void Update(TenantPM theEntityPm)
         {
             string entityName = "TenantPM" + theEntityPm.Id;
@@ -201,7 +224,10 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.LBtenantsettingPoco = LBsettingentityRepository.GetSingleLBTenant(theEntityPm.Id);
             this.LBtenantsettingPoco.IsDocumentsArchive = theEntityPm.IsDocumentsArchive;
             this.LBtenantsettingPoco.CustomerTenantShareImportFile = theEntityPm.CustomerTenantShareImportFile;
-            
+            this.LBtenantsettingPoco.AutoArchiveOnInvoice = theEntityPm.AutoArchiveOnInvoice;
+            this.LBtenantsettingPoco.AutoArchiveOnPODExport = theEntityPm.AutoArchiveOnPODExport;
+            this.LBtenantsettingPoco.DocumentShareAsDefault = theEntityPm.DocumentShareAsDefault;
+
             LBsettingentityRepository.Update(this.LBtenantsettingPoco);
             LBsettingentityRepository.SubmitChanges();
         }

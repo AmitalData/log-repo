@@ -80,6 +80,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                         }
 
                         quote.LastUsageDate = initializer.TodayDateTime;
+                        initializer.EntityPM.QuoteFreightExpirationDate = quote.ExpirationDate;
                     }
 
                     if (isDisconnectingQoute)
@@ -92,7 +93,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                         else
                         {
                             quote.UsageCount -= 1;
-                        } 
+                        }
+
+                        initializer.EntityPM.QuoteFreightExpirationDate = null;
                     }
                     quoteUsageCount = quote.UsageCount;
                     quoteRepository.Update(quote);                    

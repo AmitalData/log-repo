@@ -11,168 +11,171 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
-import {ServiceResponse} from '../../DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../Validators/ClassLevelValidator';
-import {Guid} from '../../Utilities/Guid';
-import {InfraSettings} from '../../Utilities/InfraSettings';
-import {ServiceHelper} from '../../Utilities/ServiceHelper';
-import {SessionInfo} from '../../Utilities/SessionInfo';
-import {PerformanceLogger} from '../../Utilities/PerformanceLogger';
-import {CustomFieldClass} from '../../DataContracts/CustomFieldClass'
+import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { ClassLevelValidator } from '../../Validators/ClassLevelValidator';
+import { Guid } from '../../Utilities/Guid';
+import { InfraSettings } from '../../Utilities/InfraSettings';
+import { ServiceHelper } from '../../Utilities/ServiceHelper';
+import { SessionInfo } from '../../Utilities/SessionInfo';
+import { PerformanceLogger } from '../../Utilities/PerformanceLogger';
+import { CustomFieldClass } from '../../DataContracts/CustomFieldClass'
 
-import {ObjectFieldPM} from '../../EntityPMs/ObjectFieldPM';
+import { ObjectFieldPM } from '../../EntityPMs/ObjectFieldPM';
 
-import {ObjectFieldValidationPM} from '../../EntityPMs/ObjectFieldValidationPM';
+import { ObjectFieldValidationPM } from '../../EntityPMs/ObjectFieldValidationPM';
 
 @Injectable()
 
 export class ObjectFieldPMService {
- private _http: HttpClient;
- private _apiUrl: string;
- constructor() {
+    private _http: HttpClient;
+    private _apiUrl: string;
+    constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/objectfields';      
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/objectfields';
     }
 
-	get(id: string) {       
+    get(id: string) {
 
-		var callTime = new Date();		
+        var callTime = new Date();
 
-		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
-					map((response: HttpResponse<any>) => {
-						var pm = response.body;
-				
-						var entity: ObjectFieldPM;
-						if (pm) {
-							entity = this.MapJsonToEntityPM(pm);
-						}
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+                        var pm = response.body;
 
-						var serviceResponse: ServiceResponse = new ServiceResponse();
-						serviceResponse.Result = entity;
-              
-						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ObjectField", "GetSinglePM", 'id=' + id);
-				 
-						return serviceResponse;
+                        var entity: ObjectFieldPM;
+                        if (pm) {
+                            entity = this.MapJsonToEntityPM(pm);
+                        }
 
-					}),
-					
-					catchError(ServiceHelper.HandleServiceError));
-		});                    
-	}
+                        var serviceResponse: ServiceResponse = new ServiceResponse();
+                        serviceResponse.Result = entity;
 
-	insert(entityPM: ObjectFieldPM) {
- 
-		var callTime = new Date();  
-		
-		return defer(() => {
+                        var servertime = response.headers.get('ServerExecutionTime');
+                        PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ObjectField", "GetSinglePM", 'id=' + id);
 
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();                
-			var errorsArray = validator.Validate("ObjectField", entityPM);
+                        return serviceResponse;
 
+                    }),
 
-			if (errorsArray.length == 0) {
+                    catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
-				var mappedEntity: ObjectFieldPM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
+    insert(entityPM: ObjectFieldPM) {
 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: ObjectFieldPM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}						
+        var callTime = new Date();
 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ObjectField", "SaveChanges", "");                    
-												                             
-							return serviceResponse;
-						}),
+        return defer(() => {
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
-
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
-	}
-
-	update(entityPM: ObjectFieldPM) {
-
-		var callTime = new Date();     
-		
-		return defer(() => {
-
-			var serviceResponse: ServiceResponse = new ServiceResponse();
-			var validator: ClassLevelValidator = new ClassLevelValidator();               
-			var errorsArray = validator.Validate("ObjectField", entityPM);
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("ObjectField", entityPM);
 
 
-			if (errorsArray.length == 0) {
+            if (errorsArray.length == 0) {
 
-				var mappedEntity: ObjectFieldPM = this.MapJsonToEntityPM(entityPM, false);
-				
-				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
-					.pipe(
-						map((response: HttpResponse<any>) => {
-                 
-							var pm = response.body;
-							if (pm) {
-								var mappedResult: ObjectFieldPM = this.MapJsonToEntityPM(pm, true, entityPM);
-								serviceResponse.Result = mappedResult;
-							}
-							 
-							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ObjectField", "SaveChanges", "");                    
-					                           
-							return serviceResponse;
-						}),
+                var mappedEntity: ObjectFieldPM = this.MapJsonToEntityPM(entityPM, false);
 
-						catchError(ServiceHelper.HandleServiceError));
-			}
+                var mappedEntityDeepCloned = this.deepClone(mappedEntity);
 
-			else {
-				serviceResponse.HasError = true;
-				serviceResponse.ErrorsArray = errorsArray;
-				return of(serviceResponse);
-			}
-		});
-	}
+                return this._http.post(this._apiUrl, JSON.stringify(mappedEntityDeepCloned), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
 
-   
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: ObjectFieldPM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
 
-	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ObjectFieldPM = null) {
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ObjectField", "SaveChanges", "");
 
-         
+                            return serviceResponse;
+                        }),
+
+                        catchError(ServiceHelper.HandleServiceError));
+            }
+
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
+
+    update(entityPM: ObjectFieldPM) {
+
+        var callTime = new Date();
+
+        return defer(() => {
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+            var validator: ClassLevelValidator = new ClassLevelValidator();
+            var errorsArray = validator.Validate("ObjectField", entityPM);
+
+
+            if (errorsArray.length == 0) {
+
+                var mappedEntity: ObjectFieldPM = this.MapJsonToEntityPM(entityPM, false);
+
+                var mappedEntityDeepCloned = this.deepClone(mappedEntity);
+
+                return this._http.put(this._apiUrl, JSON.stringify(mappedEntityDeepCloned), ServiceHelper.GetHttpFullHeaders())
+                    .pipe(
+                        map((response: HttpResponse<any>) => {
+
+                            var pm = response.body;
+                            if (pm) {
+                                var mappedResult: ObjectFieldPM = this.MapJsonToEntityPM(pm, true, entityPM);
+                                serviceResponse.Result = mappedResult;
+                            }
+
+                            var servertime = response.headers.get('ServerExecutionTime');
+                            PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "ObjectField", "SaveChanges", "");
+
+                            return serviceResponse;
+                        }),
+
+                        catchError(ServiceHelper.HandleServiceError));
+            }
+
+            else {
+                serviceResponse.HasError = true;
+                serviceResponse.ErrorsArray = errorsArray;
+                return of(serviceResponse);
+            }
+        });
+    }
+
+
+
+    MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ObjectFieldPM = null) {
+
+
         if (!entityPM) {
-            
+
             entityPM = new ObjectFieldPM();
-			entityPM.DisableMarkAsDirty = true;
+            entityPM.DisableMarkAsDirty = true;
         }
 
-		var customFields: Array<string> = [];
+        var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
-            var jsonPMKeys = Object.keys(jsonPM);
+        var jsonPMKeys = Object.keys(jsonPM);
 
-            for (var key in jsonPMKeys) {
-			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-                var property = jsonPMKeys[key];
-				
-			  if(customFields.indexOf(property) > -1)
-                {
+            var property = jsonPMKeys[key];
+
+            if (customFields.indexOf(property) > -1) {
                 if (jsonPM[property]) {
                     var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
@@ -181,34 +184,74 @@ export class ObjectFieldPMService {
             else {
                 entityPM[property] = jsonPM[property];
             }
-                 
-            }
-			
-               this.MapObjectFieldValidations(entityPM, jsonPM, mapParent); // Call composition tables map methods
-			 
-            
 
-		if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
-			   			   
+        }
+
+        this.MapObjectFieldValidations(entityPM, jsonPM, mapParent); // Call composition tables map methods
+
+
+
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
+
             entityPM.OldEntityPM.ObjectFieldValidations = [];
             for (var item in entityPM.ObjectFieldValidations) {
-            var myObjectFieldValidationPM = entityPM.ObjectFieldValidations[item];
-            var newObjectFieldValidationPM: ObjectFieldValidationPM = this.clone(myObjectFieldValidationPM);
-						
-							 
-            entityPM.OldEntityPM.ObjectFieldValidations.push(newObjectFieldValidationPM);
+                var myObjectFieldValidationPM = entityPM.ObjectFieldValidations[item];
+                var newObjectFieldValidationPM: ObjectFieldValidationPM = this.clone(myObjectFieldValidationPM);
+
+
+                entityPM.OldEntityPM.ObjectFieldValidations.push(newObjectFieldValidationPM);
             }
-			   
-		}
+
+        }
         else {
 
             entityPM.OldEntityPM = null;
         }
-		entityPM.IsDirty = false;
-	    entityPM.DisableMarkAsDirty = false;
+        entityPM.IsDirty = false;
+        entityPM.DisableMarkAsDirty = false;
 
         return entityPM;
+    }
+
+    public deepClone(obj, hash = new WeakMap()) {
+        // Do not try to clone primitives or functions
+        if (Object(obj) !== obj || obj instanceof Function) {
+            return obj;
+        }
+
+        if (hash.has(obj)) {
+            //return hash.get(obj); // Cyclic reference
+            return;
+        }
+
+        try { // Try to run constructor (without arguments, as we don't know them)
+            var result = new obj.constructor();
+        }
+        catch (e) { // Constructor failed, create object without running the constructor
+            result = Object.create(Object.getPrototypeOf(obj));
+        }
+
+        // Optional: support for some standard constructors (extend as desired)
+        if (obj instanceof Map) {
+            Array.from(obj, ([key, val]) => result.set(this.deepClone(key, hash),
+                this.deepClone(val, hash)));
+        }
+        else if (obj instanceof Set) {
+            Array.from(obj, (key) => result.add(this.deepClone(key, hash)));
+        }
+
+        // Register in hash    
+        hash.set(obj, result);
+
+        // Clone and assign enumerable own properties recursively
+        return Object.assign(result, ...Object.keys(obj).map(
+            key => ({
+                [key]:
+
+                    key != "UIProperties" && key != "MyParentClass" && key != "ShowSampleDateCommand" && key != "Items" && key != "TooltipId" && key != "TooltipContentId" && key != "CurrentSession" ? this.deepClone(obj[key], hash) : true
+
+            })));
     }
 
     MapObjectFieldValidations(entityPM: ObjectFieldPM, jsonPM: any, mapParent: boolean = true) {
@@ -225,34 +268,33 @@ export class ObjectFieldPMService {
                 continue;
             }
             var newObjectFieldValidationPM: ObjectFieldValidationPM;
-	  
+
             if (mapParent) {
                 newObjectFieldValidationPM = new ObjectFieldValidationPM(entityPM);
             }
-            else
-            {
+            else {
                 newObjectFieldValidationPM = new ObjectFieldValidationPM(null);
             }
- 			newObjectFieldValidationPM.DisableMarkAsDirty = true;
-               
+            newObjectFieldValidationPM.DisableMarkAsDirty = true;
+
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
                 newObjectFieldValidationPM[pmProperty] = jItem[pmProperty];
             }
-           
-			 
+
+
             if (mapParent) {
                 newObjectFieldValidationPM.UniqueKey = Guid.newGuid();
                 newObjectFieldValidationPM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newObjectFieldValidationPM.OldEntityPM = this.clone(newObjectFieldValidationPM);
-//file not found! child composition ObjectFieldValidation
+                //file not found! child composition ObjectFieldValidation
 
-				
+
             }
             else {
                 if (newObjectFieldValidationPM.UniqueKey) {
@@ -261,28 +303,28 @@ export class ObjectFieldPMService {
                         newObjectFieldValidationPM.ChangeSetOp = "Update";
                 }
                 else {
-                        newObjectFieldValidationPM.ChangeSetOp = "Insert";
+                    newObjectFieldValidationPM.ChangeSetOp = "Insert";
                 }
-//file not found! child composition ObjectFieldValidation
- 
+                //file not found! child composition ObjectFieldValidation
+
                 newObjectFieldValidationPM.OldEntityPM = null;
                 newObjectFieldValidationPM.EntityParentPM = null;
             }
-			 newObjectFieldValidationPM.DisableMarkAsDirty = false;
-			 newObjectFieldValidationPM.IsDirty = false;
+            newObjectFieldValidationPM.DisableMarkAsDirty = false;
+            newObjectFieldValidationPM.IsDirty = false;
             entityPM.ObjectFieldValidations.push(newObjectFieldValidationPM);
         }
         if (oldObjectFieldValidations) {
-            
+
             for (var itemKey in oldObjectFieldValidations) {
-                if (entityPM.ObjectFieldValidations.filter(p=> p.UniqueKey === oldObjectFieldValidations[itemKey].UniqueKey).length === 0) {
-				
+                if (entityPM.ObjectFieldValidations.filter(p => p.UniqueKey === oldObjectFieldValidations[itemKey].UniqueKey).length === 0) {
+
                     if (oldObjectFieldValidations[itemKey]) {
                         //oldObjectFieldValidations[itemKey].ChangeSetOp = "Delete";
                         //entityPM.ObjectFieldValidations.push(oldObjectFieldValidations[itemKey]);
-						var oldItemJson = oldObjectFieldValidations[itemKey];
+                        var oldItemJson = oldObjectFieldValidations[itemKey];
                         var deletedPM: ObjectFieldValidationPM = new ObjectFieldValidationPM(null);
-						deletedPM.DisableMarkAsDirty = true;
+                        deletedPM.DisableMarkAsDirty = true;
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
 
@@ -294,11 +336,11 @@ export class ObjectFieldPMService {
                             deletedPM[property] = oldItemJson[property];
                         }
 
-					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.DisableMarkAsDirty = false;
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
-                        
-//file not found! child composition ObjectFieldValidation
+
+                        //file not found! child composition ObjectFieldValidation
                         deletedPM.OldEntityPM = null;
                         entityPM.ObjectFieldValidations.push(deletedPM);
                     }
@@ -306,15 +348,15 @@ export class ObjectFieldPMService {
             }
         }
     }
-//file not found! for child composition ObjectFieldValidation
+    //file not found! for child composition ObjectFieldValidation
 
-	  public clone(jsonPM: any) {
+    public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
 
         var jsonPMKeys = Object.keys(jsonPM);
         for (var key in jsonPMKeys) {
-            
+
             if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
                 continue;
             }
@@ -326,12 +368,12 @@ export class ObjectFieldPMService {
         return entityPM;
     }
 
-	  public GetNewEntityPM() {		 
-		    var entityPM: ObjectFieldPM;
-			entityPM = new ObjectFieldPM();
-			entityPM.Tenant = InfraSettings.TenantPM.Id;
-			return entityPM;
+    public GetNewEntityPM() {
+        var entityPM: ObjectFieldPM;
+        entityPM = new ObjectFieldPM();
+        entityPM.Tenant = InfraSettings.TenantPM.Id;
+        return entityPM;
     }
-		 
+
 
 }

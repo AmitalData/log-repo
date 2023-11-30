@@ -25,12 +25,12 @@ namespace Logitude.BL.QuoteModel.EntityPMs
             {
                 if (value != null)
                 {
-                    date = value.Value.Date;
+                    date = value.Value;
                 }
             }
         }
         public bool IsNew { get; set; }
-        public string Note { get; set; }
+        public string Notes { get; set; }
         public string DoneNote { get; set; }
         public DateTime? DoneDateTime { get; set; }
         public bool Done { get; set; }

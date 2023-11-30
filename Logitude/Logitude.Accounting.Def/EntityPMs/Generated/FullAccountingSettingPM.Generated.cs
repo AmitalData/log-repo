@@ -1170,7 +1170,260 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private bool isSecurityLevelActivated ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSecurityLevelActivated  
+	   {
+	    
+	     get
+		{
+		   return isSecurityLevelActivated;
+		 }
+		 set
+		 {
+		   if(isSecurityLevelActivated != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSecurityLevelActivated",OldValue=isSecurityLevelActivated,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isSecurityLevelActivated=value;
+		   }
+			
+		 }
+	   }
+	  private bool vATreportEveryTwoMonths ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool VATreportEveryTwoMonths  
+	   {
+	    
+	     get
+		{
+		   return vATreportEveryTwoMonths;
+		 }
+		 set
+		 {
+		   if(vATreportEveryTwoMonths != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VATreportEveryTwoMonths",OldValue=vATreportEveryTwoMonths,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   vATreportEveryTwoMonths=value;
+		   }
+			
+		 }
+	   }
+	  private bool createRevaluationJournal ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool CreateRevaluationJournal  
+	   {
+	    
+	     get
+		{
+		   return createRevaluationJournal;
+		 }
+		 set
+		 {
+		   if(createRevaluationJournal != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateRevaluationJournal",OldValue=createRevaluationJournal,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   createRevaluationJournal=value;
+		   }
+			
+		 }
+	   }
+	  private string taxInstitutionGLAccountId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TaxInstitutionGLAccountId  
+	   {
+	    
+	     get
+		{
+		   return taxInstitutionGLAccountId;
+		 }
+		 set
+		 {
+		   if(taxInstitutionGLAccountId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TaxInstitutionGLAccountId",OldValue=taxInstitutionGLAccountId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   taxInstitutionGLAccountId=value;
+		   }
+			
+		 }
+	   }
+	  private string hSM ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HSM  
+	   {
+	    
+	     get
+		{
+		   return hSM;
+		 }
+		 set
+		 {
+		   if(hSM != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSM",OldValue=hSM,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hSM=value;
+		   }
+			
+		 }
+	   }
+	  private string hSMtoken ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HSMtoken  
+	   {
+	    
+	     get
+		{
+		   return hSMtoken;
+		 }
+		 set
+		 {
+		   if(hSMtoken != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSMtoken",OldValue=hSMtoken,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hSMtoken=value;
+		   }
+			
+		 }
+	   }
+	  private string hSMaddress ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string HSMaddress  
+	   {
+	    
+	     get
+		{
+		   return hSMaddress;
+		 }
+		 set
+		 {
+		   if(hSMaddress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="HSMaddress",OldValue=hSMaddress,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hSMaddress=value;
+		   }
+			
+		 }
+	   }
+	  private bool allowEditingExchangeRate ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AllowEditingExchangeRate  
+	   {
+	    
+	     get
+		{
+		   return allowEditingExchangeRate;
+		 }
+		 set
+		 {
+		   if(allowEditingExchangeRate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AllowEditingExchangeRate",OldValue=allowEditingExchangeRate,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   allowEditingExchangeRate=value;
+		   }
+			
+		 }
+	   }
+	  private int? amountForConfirmationNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? AmountForConfirmationNumber  
+	   {
+	    
+	     get
+		{
+		   return amountForConfirmationNumber;
+		 }
+		 set
+		 {
+		   if(amountForConfirmationNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmountForConfirmationNumber",OldValue=amountForConfirmationNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   amountForConfirmationNumber=value;
+		   }
+			
+		 }
+	   }
+	  private bool numberingByChartOfAccount ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool NumberingByChartOfAccount  
+	   {
+	    
+	     get
+		{
+		   return numberingByChartOfAccount;
+		 }
+		 set
+		 {
+		   if(numberingByChartOfAccount != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberingByChartOfAccount",OldValue=numberingByChartOfAccount,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   numberingByChartOfAccount=value;
+		   }
+			
+		 }
+	   }
+	  private bool oppositeAccountNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool OppositeAccountNumber  
+	   {
+	    
+	     get
+		{
+		   return oppositeAccountNumber;
+		 }
+		 set
+		 {
+		   if(oppositeAccountNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OppositeAccountNumber",OldValue=oppositeAccountNumber,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   oppositeAccountNumber=value;
+		   }
+			
+		 }
+	   }
+	    }
    
 }
 	 

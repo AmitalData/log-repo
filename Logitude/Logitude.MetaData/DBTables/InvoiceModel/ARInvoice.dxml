@@ -762,6 +762,107 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MasterNumbers"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MasterShipmentNumbers"
+    OldNames="MasterShipmentNumber"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HouseNumbers"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="GlobalTaxCalculation"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PaymentReferences"
+    Type="varchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RegimenFiscalCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PeriodCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SATCancelReasonCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PaidStatus"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TotalEquation"
+    Type="varchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TotalExamptFortaxReport"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DocumentTemplateId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsSigned"
+    OldNames="is_signed"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConfirmationNumber"
+    Type="nvarchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"
@@ -892,6 +993,26 @@
     ReferencedTable="Cards"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="GlobalTaxCalculation"
+    ReferencedTable="QBOGlobalTaxCalculations"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="RegimenFiscalCode"
+    ReferencedTable="RegimenFiscals"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DocumentTemplateId"
+    ReferencedTable="DocumentTypeTemplates"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="IsSigned"
+    ReferencedTable="ARInvoicesSignedStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,InvoiceDate" />
   <Index
@@ -902,6 +1023,10 @@
     Columns="Tenant,IsCancelled,IsClosed,StatusCode" />
   <Index
     Columns="AutomaticLastUpdateDate" />
+  <Index
+    Columns="Tenant,IsClosed" />
+  <Index
+    Columns="Tenant,BillToId" />
   <UniqueConstraint
     Columns="Tenant,InvoiceNumber" />
 </Table>

@@ -234,6 +234,78 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsSecurityLevelActivated"
+    OldNames="ActiveSecurityLevel"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="VATreportEveryTwoMonths"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateRevaluationJournal"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TaxInstitutionGLAccountId"
+    OldNames="TaxInstitutionGLAccount"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSM"
+    Type="varchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSMtoken"
+    Type="varchar"
+    Size="100">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="HSMaddress"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="AllowEditingExchangeRate"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="AmountForConfirmationNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NumberingByChartOfAccount"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="OppositeAccountNumber"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultVATTypeId"
     ReferencedTable="VatTypes"
@@ -321,6 +393,11 @@
     ReferencedTableSchema="dbo" />
   <Relation
     ForeignKeyColumn="DefaultExternalDiffGLAccountId"
+    ReferencedTable="GLAccounts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TaxInstitutionGLAccountId"
     ReferencedTable="GLAccounts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />

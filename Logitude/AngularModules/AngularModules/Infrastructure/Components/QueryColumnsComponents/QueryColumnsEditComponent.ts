@@ -16,7 +16,7 @@ import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-    
+
 
     selector: 'QueryColumnEdit',
     templateUrl: './QueryColumnsEditComponent.html',
@@ -56,6 +56,11 @@ export class QueryColumnsEditComponent {
     private _http: HttpClient;
     public serviceArgs: ServiceArgs;
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsViewOnly: boolean = false;
+    public IsShowWarringMessage: boolean = false;
+
+    public LayoutDirection: string = 'ltr';
+
     constructor(private CD: ChangeDetectorRef) {
         this.serviceArgs = new ServiceArgs();
         this._http = ServiceHelper.HttpClient;
@@ -67,6 +72,9 @@ export class QueryColumnsEditComponent {
         else {
             this.SearchFieldsId = "QueryColumnSearchFields_" + this.CurrentSession.GetNewId("QueryColumnSearchFields");
         }
+
+        //RTL Layout
+        this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         //this.Run();
     }
 
@@ -76,7 +84,7 @@ export class QueryColumnsEditComponent {
         this.isNewQueryMode = args.isNewQueryMode;
         this.CurrentObjectTable = args.currentObjectTable;
 
-        
+
         this.IsEnabled = false;
         this.ObjectTable = window.ObjectTables.filter(d => d.Name == args.currentObjectTable)[0];
         this.Run();
@@ -102,10 +110,13 @@ export class QueryColumnsEditComponent {
         var copy = false;
 
         var currentQuery = window.Queries.filter(d => d.UniqueCode == this.QueryCode)[0];
+
+        this.SetIsViewOnlyOption(currentQuery);
+
         this.addedQueryColumnList = [];
         this.removedQueryColumnList = [];
         //queriesByUser = TenantContext.Current.Queries.Where(d => d.UserId == TenantContext.Current.LoggedContactId).ToList();
-        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId)
+        this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=" + SessionInfo.LoggedUserTenant + "&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=" + SessionInfo.LoggedUserId + "&getfromsystemlevel=false")
             .subscribe((response: any) => {
                 this.queryColumnsList = response;
                 // this.queryColumnsList = TenantContext.Current.GeneralContext.QueryColumnPMs.Where(d => d.QueryId == QueryId && ((d.UserId == TenantContext.Current.LoggedContactId && d.Tenant == TenantContext.Current.Id)) && d.DisplayInList).OrderBy(d => d.IndexOrder).ToList();
@@ -114,7 +125,7 @@ export class QueryColumnsEditComponent {
                 if (this.queryColumnsList.length == 0) // Copy query columns to my tenant
                 {
                     var zeroColumnsList = [];
-                    this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=0&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=null")
+                    this._http.get(ServiceHelper.GetLogitudeURL() + "api/ngMetaData?tenant=0&queryCode=" + this.QueryCode + "&objecttableid=" + this.ObjectTable.Id + "&userid=null" + "&getfromsystemlevel=false")
                         .subscribe((response: any) => {
                             zeroColumnsList = response;
                             zeroColumnsList = zeroColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
@@ -155,9 +166,7 @@ export class QueryColumnsEditComponent {
                 this.staticColumnsList = this.queryColumnsList.filter(q => q.QueryCode == this.QueryCode && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
 
                 var listColumns = this.queryColumnsList.filter(q => q.QueryCode == this.QueryCode && ((q.UserId == SessionInfo.LoggedUserId && q.Tenant == SessionInfo.LoggedUserTenant))).sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
-
-
-                this.unselectedObjectFields = window.ObjectFields.filter(a => a.ObjectTableName == this.CurrentObjectTable).filter(d => d.DisplayInList == true && (d.Tenant == SessionInfo.LoggedUserTenant || d.Tenant == 0) && ((d.ValidForQuerySection1 == currentQuery.QuerySection || d.ValidForQuerySection2 == currentQuery.QuerySection || (d.AdditionalQuerySections && d.AdditionalQuerySections.split(',').indexOf(currentQuery.QuerySection) > -1)) || d.IsCustom == true));
+                this.unselectedObjectFields = window.ObjectFields.filter(a => a.ObjectTableName == this.CurrentObjectTable).filter(d => d.DisplayInList == true && (d.Tenant == SessionInfo.LoggedUserTenant || d.Tenant == 0) && ((d.ValidForQuerySection1 == currentQuery?.QuerySection || d.ValidForQuerySection2 == currentQuery?.QuerySection || (d.AdditionalQuerySections && d.AdditionalQuerySections.split(',').indexOf(currentQuery?.QuerySection) > -1)) || d.IsCustom == true));
 
 
 
@@ -183,8 +192,18 @@ export class QueryColumnsEditComponent {
                 });
 
                 this.OrderedQueryColumnsList = this.OrderedQueryColumnsList.sort((a, b) => { return (a.IndexOrder === b.IndexOrder) ? 0 : (a.IndexOrder < b.IndexOrder) ? -1 : 1 });
+
+                if (this.QueryCode === 'ARInvoice.All Invoices' && ObjectsLocator.GlobalSetting.WorkEnvironment !== 'cloud') {
+                    this.unSelectedList = this.unSelectedList.filter(a =>
+                        a.FieldName !== 'TotalVAT' &&
+                        a.FieldName !== 'TotalExamptFortaxReport' &&
+                        a.FieldName !== 'TotalAmountNotForTaxReport' &&
+                        a.FieldName !== 'TotalAmountForTaxReport' &&
+                        a.FieldName !== 'TotaVatableAmountForTaxReport'
+                    );
+                }
                 this.CD.detectChanges();
-                //SelectedQueryColumnsList.ItemsSource = OrderedQueryColumnsList;
+
                 this.Fixedunselected = this.unSelectedList;
 
                 this.IsEnabled = true;
@@ -195,6 +214,15 @@ export class QueryColumnsEditComponent {
 
     //txtSearch_TextChanged
     private searchText: string;
+
+    private SetIsViewOnlyOption(currentQuery: any) {
+        if (!currentQuery) return;
+        if (currentQuery.SharedByUserId && currentQuery.SharedByUserId != SessionLocator.LoggedUserId && currentQuery.IsViewOnly) {
+            this.IsViewOnly = true;
+            this.IsShowWarringMessage = true;
+        }
+    }
+
     public get SearchText() { return this.searchText; }
     public set SearchText(newValue: string) {
         this.searchText = newValue;
@@ -389,7 +417,7 @@ export class QueryColumnsEditComponent {
 
             this.unSelectedList = this.unSelectedList.filter(a => a.FieldName != field.FieldName);
             this.Fixedunselected = this.Fixedunselected.filter(a => a.FieldName != field.FieldName);
-            this.IsbtnAddEnabled = false; 
+            this.IsbtnAddEnabled = false;
             this.CD.detectChanges();
 
 
@@ -399,7 +427,7 @@ export class QueryColumnsEditComponent {
             this.onUnSelectedDataLoadedEvent.emit(this.SelectedItem);
 
 
-        } 
+        }
         //this.ReorderColumnsList();
         this.onSelectedDataLoadedEvent.emit(this.FieldSelectedItem);
         this.FieldSelectedItem = null;
@@ -494,7 +522,7 @@ export class QueryColumnsEditComponent {
             var temp = this.queryColumnsList.filter(a => a.QueryCode == this.QueryCode && a.ObjectFieldCode == queryColumn.ObjectFieldCode && a.Tenant == SessionInfo.LoggedUserTenant && a.UserId == SessionInfo.LoggedUserId);
 
             if (temp.length == 0) {
-                temp = this.queryColumnsList.filter(a => a.QueryCode == this.QueryCode && a.ObjectFieldCode == queryColumn.ObjectFieldCode && a.Tenant == 0);
+                temp = this.queryColumnsList.filter(a => a.QueryCode == this.QueryCode && a.ObjectFieldCode == queryColumn.ObjectFieldCode && (a.Tenant == 0 || (a.Tenant == SessionInfo.LoggedUserTenant && a.UserId == null)));
             }
             if (temp.length == 0) {
                 temp = this.addedQueryColumnList.filter(a => a.ObjectFieldCode == queryColumn.ObjectFieldCode);
@@ -516,7 +544,7 @@ export class QueryColumnsEditComponent {
                         }
                     });
                 }
-            
+
         });
         var removedQueryLength = 0;
         this.removedQueryColumnList.forEach((queryColumn, key) => {

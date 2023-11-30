@@ -1,0 +1,112 @@
+<table>
+    <tr>
+        <td>
+            <div class="FillParent CurvedArea" style="padding:20px">
+                <table>
+                    <tr style="height:1px;" *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
+                        <td style="padding: 3px;">
+                            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                        </td>
+                    </tr>
+                    <tr *ngIf="IsExported" style="height:1px;text-align:center">
+                        <td style="width: 155px;">
+                            <div style="display:flex; flex-direction:column; align-items:center">
+                                <Label style="width: 250px;font-family:Arial; font-size:15px;color:gray; white-space: pre-line; word-wrap: break-word; text-wrap: normal;text-overflow: ellipsis;"> You can download the file from here: </Label>
+                                <button class="GreenButton"  style="height:25px; width:100px; margin-top: 10px;" (click)="DownloadFile()"> Download </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!IsExported" style="height:1px;">
+                        <td style="width: 155px;">
+                            <div style="margin-top:5px;margin-left:5px;">
+                                <Label style="width: 155px;font-family:Arial; font-size:12.5px;color:gray; white-space: pre-line; word-wrap: break-word; text-wrap: normal;text-overflow: ellipsis;">The components in the list below have dependencies, please check the 'Component Dependencies' column and add them to the package so you can export this package.</Label>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!IsExported" style="height:10px;">
+                        <td>
+                        </td>
+                    </tr>
+                    <tr *ngIf="!IsExported">
+                        <td style="height:100%; vertical-align:initial">
+                            <div class="SimpleGridView" style="height: 100%;">
+                                <div class="SimpleGridViewHeader">
+                                    <table>
+                                        <tr>
+                                            <td style="width: 150px; min-width: 150px; max-width: 150px;">Component Name</td>
+                                            <td style="width: 150px; min-width: 150px; max-width: 150px;">Data Type</td>
+                                            <td style="width: 150px; min-width: 150px; max-width: 150px;">Object</td>
+                                            <td style="width: 150px; min-width: 150px; max-width: 150px;">Component Dependencies</td>
+                                            <td style="width: 25px; max-width:25px;max-width:25px"></td>
+                                            <td> </td>
+                                        </tr>
+                                    </table>
+                                </div>
+
+                                <div class="SimpleGridViewBody" style="overflow-y:auto;overflow-x:hidden">
+                                    <table>
+                                        <tr class="SimpleGridViewRow RowHover" *ngFor="let missingDependency of MissingPackageDependiencies">
+                                            <td class="GridViewCell" title="{{missingDependency.Name}}" style="width: 150px; min-width: 150px; max-width: 150px; ">
+                                                {{missingDependency.Name}}
+                                            </td>
+                                            <td class="GridViewCell" title="{{missingDependency.DataTypeName}}" style="width: 150px; min-width: 150px;max-width:150px;">
+                                                {{missingDependency.DataTypeName}}
+                                            </td>
+                                            <td class="GridViewCell" title="{{missingDependency.EntityName}}" style="width: 150px; min-width: 150px; max-width: 150px; ">
+                                                {{missingDependency.EntityName}}
+                                            </td>
+                                            <td class="GridViewCell" title="{{missingDependency.DependencyOn}}" style="width: 150px; min-width: 150px; max-width: 150px; ">
+                                                {{missingDependency.DependencyOn}}
+                                            </td>
+                                            <td class="GridViewCell"></td>
+                                        </tr>
+                                        <tr *ngIf="IsValidForExport" style="height:1px;text-align:center">
+                                            <td style="width: 155px;">
+                                                <div style="margin-top:5px;margin-left:5px;">
+                                                    <Label style="width: 155px;font-family:Arial; font-size:13px;color:gray; white-space: pre-line; word-wrap: break-word; text-wrap: normal;text-overflow: ellipsis;"> No Data Found </Label>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="6">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr *ngIf="!IsExported">
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button id="{{'CancelButton' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                    </td>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button id="{{'OkButton' | IdGeneratorAsyncPipe | async}}" class="RedButton" [disabled]="!IsValidForExport" (click)="ExportButtonClicked()">Export</button>
+                    </td>
+                </tr>
+                <tr *ngIf="IsExported">
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button id="{{'CloseButton' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">Close</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

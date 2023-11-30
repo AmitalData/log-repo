@@ -801,7 +801,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         {
                             AccountingDate = j.AccountingDate,
                             //ActionName = "4", 
-                            ActionTypeCodeEnum = MyJournalActionTypeEnum.DebitAndCredit,
+                            ActionTypeCodeEnum = JournalActionTypeEnum.DebitAndCredit,
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                             CreditAccountId = creditCard,
                             DebitAccountId = debitCard,
@@ -822,7 +822,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         {
                             AccountingDate = j.AccountingDate,
                             //ActionName = "4", 
-                            ActionTypeCodeEnum = MyJournalActionTypeEnum.DebitCreditAndVatdeduction,
+                            ActionTypeCodeEnum = JournalActionTypeEnum.DebitCreditAndVatdeduction,
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                             CreditAccountId = creditCard,
                             DebitAccountId = debitCard,
@@ -845,7 +845,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                         {
                             AccountingDate = j.AccountingDate,
                             //ActionName = "1", 
-                            ActionTypeCodeEnum = MyJournalActionTypeEnum.Credit,
+                            ActionTypeCodeEnum = JournalActionTypeEnum.Credit,
                             ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                             CreditAccountId = creditCard,
                             DebitAccountId = null,
@@ -867,7 +867,7 @@ namespace Logitude.Accounting.BL.CoreBL.BuildTenant
                            {
                                AccountingDate = j.AccountingDate,
                                //ActionName = "2", 
-                               ActionTypeCodeEnum = MyJournalActionTypeEnum.Debit,
+                               ActionTypeCodeEnum = JournalActionTypeEnum.Debit,
                                ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
                                //CreditAccountId = "35", 
 

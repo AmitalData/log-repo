@@ -79,6 +79,20 @@ namespace MeatadataGeneratorTool.QueryModule
             }
         }
 
+        private bool customPredefined = false;
+        public bool CustomPredefined
+        {
+            get
+            {
+                return customPredefined;
+            }
+            set
+            {
+                customPredefined = value;
+                FirePropertyChanged("CustomPredefined");
+            }
+        }
+
         private string objectFieldName;
         public string ObjectFieldName
         {

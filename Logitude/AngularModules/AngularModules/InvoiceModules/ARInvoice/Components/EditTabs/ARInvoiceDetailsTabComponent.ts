@@ -39,7 +39,7 @@ export class ARInvoiceDetailsTabComponent implements AfterViewInit, OnDestroy {
     if (this.entityArgs.EditComponent) {
 
       this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
-        if (s == "ResetARInvoiceBaseDeailsTab") {
+                if (s == "ResetARInvoiceBaseDeailsTab") {
           this.InitBaseTabComponent();
         }
       });

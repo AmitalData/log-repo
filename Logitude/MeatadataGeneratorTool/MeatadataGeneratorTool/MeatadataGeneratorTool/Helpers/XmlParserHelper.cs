@@ -226,6 +226,7 @@ namespace MeatadataGeneratorTool.Helpers
             field.HelpTextDefaultText = GetAttributeStringValue(fieldNode.Attributes["HelpTextDefaultText"]);
             field.InActive = GetAttributeBoolValue(fieldNode.Attributes["InActive"]);
             field.IsCustomFilter = GetAttributeBoolValue(fieldNode.Attributes["IsCustomFilter"]);
+            field.IsListFilter = GetAttributeBoolValue(fieldNode.Attributes["IsListFilter"]);
             field.IsDBField = GetAttributeBoolValue(fieldNode.Attributes["HasDataBaseField"]);
             field.IsForeignKey = GetAttributeBoolValue(fieldNode.Attributes["IsForeignKey"]);
 
@@ -562,6 +563,8 @@ namespace MeatadataGeneratorTool.Helpers
             {
                 QueryFilter.IndexOrder = GetAttributeIntegerValue(fieldNode.Attributes["IndexOrder"]);
             }
+            QueryFilter.CustomPredefined = GetAttributeBoolValue(fieldNode.Attributes["CustomPredefined"]);
+
             return QueryFilter;
         }
 
@@ -867,6 +870,7 @@ namespace MeatadataGeneratorTool.Helpers
             DataContractViewModel DataContract = new DataContractViewModel(table, false);
             DataContract.DCName = GetAttributeStringValue(fieldNode.Attributes["Name"]);
             DataContract.DCVersion = GetAttributeStringValue(fieldNode.Attributes["Version"]);
+            DataContract.IncludeTenant0Data = GetAttributeBoolValue(fieldNode.Attributes["IncludeTenant0Data"]);
             DataContract.ComputingPartnerName = GetAttributeStringValue(fieldNode.Attributes["ComputingPartnerName"]);
             foreach (XmlNode fNode in fieldNode.ChildNodes)
             {
@@ -953,6 +957,7 @@ namespace MeatadataGeneratorTool.Helpers
             {
                 objectTable.Id = GetAttributeStringValue(entity.Attributes["Id"]);
                 objectTable.ObjectTableName = GetAttributeStringValue(entity.Attributes["ObjectTableName"]);
+                objectTable.ParentObjectTableName = GetAttributeStringValue(entity.Attributes["ParentObjectTableName"]);
                 objectTable.DBTableName = GetAttributeStringValue(entity.Attributes["DBTableName"]);
 
                 objectTable.OldDBTableName = GetAttributeStringValue(entity.Attributes["OldDBTableName"]);
@@ -1002,6 +1007,10 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.IsEditable = GetAttributeBoolValue(entity.Attributes["IsEditable"]);
                 objectTable.HasCustomFilter = GetAttributeBoolValue(entity.Attributes["HasCustomFilter"]);
                 objectTable.HasCustomFields = GetAttributeBoolValue(entity.Attributes["HasCustomFields"]);
+                objectTable.AvailableInCustomization = GetAttributeBoolValue(entity.Attributes["AvailableInCustomization"]);
+                objectTable.SupportSubEntity = GetAttributeBoolValue(entity.Attributes["SupportSubEntity"]);
+                objectTable.ApplyGenericCustomFields = GetAttributeBoolValue(entity.Attributes["ApplyGenericCustomFields"]);
+                objectTable.AvailableInDocumentTypes = GetAttributeBoolValue(entity.Attributes["AvailableInDocumentTypes"]);
                 objectTable.HasCustomValidator = GetAttributeBoolValue(entity.Attributes["HasCustomValidator"]);
                 objectTable.HasHelper = GetAttributeBoolValue(entity.Attributes["HasHelper"]);
                 objectTable.HasShortTitle = GetAttributeBoolValue(entity.Attributes["HasShortTitle"]);
@@ -1048,6 +1057,8 @@ namespace MeatadataGeneratorTool.Helpers
                 objectTable.QueryGroupName = GetAttributeStringValue(entity.Attributes["Name"]);
                 objectTable.LovDisplayMemberPath = GetAttributeStringValue(entity.Attributes["LovDisplayMemberPath"]);
                 objectTable.LovDisplayMemberPathLocal = GetAttributeStringValue(entity.Attributes["LovDisplayMemberPathLocal"]);
+                objectTable.TenantZeroData = GetAttributeBoolValue(entity.Attributes["TenantZeroData"]);
+
                 if (entity.Attributes["NoViewController"] != null)
                 {
                     objectTable.NoViewController = GetAttributeBoolValue(entity.Attributes["NoViewController"]);

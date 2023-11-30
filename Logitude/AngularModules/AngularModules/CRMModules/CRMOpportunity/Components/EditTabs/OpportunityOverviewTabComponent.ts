@@ -297,8 +297,8 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
                 if (isSaveSuccess) {
                     this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
                     // Your work after you get PM
-                    if (this.SavingMethodCode == "NewQuote")
-                        this.OpenNewQuote();
+                    if (this.SavingMethodCode == "NewQuote") this.OpenNewQuote();
+                    if (this.SavingMethodCode == "ConnectQuotes") this.ConnectQuotes();
                     this.SetUIProperties();
                     this.SavingMethodCode = "";
                     this.CurrentSession.FireEvent("SocialPostsRefresh");
@@ -320,6 +320,24 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
             });
         }
     }
+
+    ConnectQuotes() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 960;
+        logWindow.Height = 570;
+        logWindow.WindowArgs = this.EntityPM;
+        logWindow.Title = "Choose Quotes";
+        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
+            logWindow.Show('./CRMModules/CRMOpportunity/Components/EditTabs/QuotesWindowComponent');
+            logWindow.WindowClosed.subscribe(s => {
+                if (s == "ok") {
+                    this.LoadQuotesList();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                }
+            });
+        });
+    }
+    
     public ToggleButtonListService: any = [];
 
     getAdditionalSerivceList() {
@@ -424,6 +442,7 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
         var ToggleBTN = document.getElementById(this.SearchTextAdditionalServiceModeDropButtonId) as HTMLDivElement;
         ToggleBTN.className = "ToggleButtonMenu";
     }
+
     OpenNewQuote() {
         var args = new NewQuoteComponentArgs();
         args.DefaultCustomerId = this.EntityPM.CustomerId;
@@ -442,9 +461,6 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
                 }
             });
         });
-
-
-
     }
 
     public get Notes() { return this.EntityPM.Notes; }
@@ -479,24 +495,10 @@ export class OpportunityOverviewTabComponent extends BaseComponent implements On
     public get IsClosed() { return this.EntityPM.IsClosed; }
 
     ConnectQuotesMethod() {
-
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 960;
-        logWindow.Height = 570;
-        logWindow.WindowArgs = this.EntityPM;
-        logWindow.Title = "Choose Quotes";
-        this._entityResourceService.getEntityResourceByTableName("Quote", 0).subscribe((response:any) => {
-            logWindow.Show('./CRMModules/CRMOpportunity/Components/EditTabs/QuotesWindowComponent');
-            logWindow.WindowClosed.subscribe(s => {
-                if (s == "ok") {
-                    this.LoadQuotesList();
-                }
-            });
-        });
-
-
-
+        this.SavingMethodCode = "ConnectQuotes";
+        this.CurrentSession.CurrentEditComponent.SaveChanges();
     }
+
     public get ClosingBackground() {
         var myResult = "#FFFFFFFF";
         if (this.EntityPM.IsClosed) {
@@ -850,10 +852,10 @@ export class QuoteObslistItemClass{
     public get DirectionId() {return this.entityList.DirectionId; }
     public get DirectionName() { return this.entityList.DirectionName; }
     public get TransportModeId() {return this.entityList.TransportModeId; }
-    public get TransportModeName() {return this.entityList.TransportModeName; }
-        
-
+    public get TransportModeName() { return this.entityList.TransportModeName; }
+    public get StageName() { return this.entityList.StageName; }
 }
+
 export class ServiceItemClass {
     private entityPM: OpportunityPM;
     private entityList: AdditionalServiceList;

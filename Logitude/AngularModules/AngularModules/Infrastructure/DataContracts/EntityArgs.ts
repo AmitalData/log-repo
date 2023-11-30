@@ -16,6 +16,7 @@ export class EntityArgs {
     public IsFromStandAloneScreen: boolean = false;
     public PreSelectedTabCode: string = null;
     public EditComponentArgument: any = null;
+    public SelectedTabCode: string = null;
     public EntityArgEventEmitter: EventEmitter<any> = new EventEmitter<any>();
     public SendMessage(token: any) {//itzik test 
         this.EntityArgEventEmitter.emit(token);

@@ -63,7 +63,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             = GetGLAccountPM(_JournalLine.CreditAccountId, _JournalLine.Tenant);
             if (parentAccount == null)
             {
-                throw new Exception("CreditAccountId is not valid");
+                throw new ApplicationException("CreditAccountId is not valid");
             }
             if ((!string.IsNullOrWhiteSpace(parentAccount.AccountTypeCode)) &&
                 (parentAccount.AccountTypeCode != ((int)GLAccountTypePM.GLAccountTypeEnum.Card).ToString())
@@ -73,7 +73,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
 
                 if (parentAccount.ControlAccountId != _JournalLine.CreditControlAccountId)
                 {
-                    throw new Exception("(parentAccount.ControlAccountId != _JournalLine.CreditControlAccountId)");
+                    throw new ApplicationException("(parentAccount.ControlAccountId != _JournalLine.CreditControlAccountId)");
                 }
                 MyLedgerTransaction.ControlAccountId = _JournalLine.CreditControlAccountId;
                 //if (String.IsNullOrWhiteSpace(MyLedgerTransaction.ControlAccountId))
@@ -82,11 +82,11 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 //}
                 if (String.IsNullOrWhiteSpace(MyLedgerTransaction.ControlAccountId))
                 {
-                    throw new Exception("AccountType!=Card , But MyLedgerTransaction.ControlAccountId==null");
+                    throw new ApplicationException("AccountType!=Card , But MyLedgerTransaction.ControlAccountId==null");
                 }
                 //if (MyLedgerTransaction.ControlAccountId != _JournalLine.CreditControlAccountId)
                 //{
-                //    throw new Exception("(MyLedgerTransaction.ControlAccountId != _JournalLine.CreditControlAccountId)");
+                //    throw new ApplicationException("(MyLedgerTransaction.ControlAccountId != _JournalLine.CreditControlAccountId)");
                 //}
             }
             else

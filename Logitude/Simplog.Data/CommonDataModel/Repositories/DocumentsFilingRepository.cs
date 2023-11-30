@@ -56,6 +56,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return d;
         }
 
+        public DocumentsFiling GetSingleWithIncludeDocumentType(string id, int tenant)
+        {
+            DocumentsFiling d = (from a in context.DocumentsFilings.Include("DocumentType")
+                                 where a.Id == id && a.Tenant == tenant
+                                 select a).FirstOrDefault();
+            return d;
+        }
 
         public List<DocumentsFiling> GetDocumentsFilingsByEntityId1(string entityId, int tenant)
         {
@@ -112,7 +119,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             var poco = (from a in context.DocumentsFilings
-                        ///.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
+                            ///.Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
                         where a.DocumentId == DocumentId && a.Tenant == tenant
                         select a).FirstOrDefault();
             return poco;
@@ -123,7 +130,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return externalDocument;
 
         }
-        public string GetSingleDocumentsFilingIdByDocumentId(string DocumentId, int tenant)
+         public string GetSingleDocumentsFilingIdByDocumentId(string DocumentId, int tenant)
         {
 
 
@@ -134,7 +141,17 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return DocumentsFilingId;
 
         }
-        public bool CheckIfDocumentTypeHasDocumentFilling(string documentTypeId, string objectTableId, string entityId, int tenant)
+ 
+        public DocumentsFiling GetSingleDocumentFilingByDocumentId(string DocumentId, int tenant)
+        {
+
+            var poco = (from a in context.DocumentsFilings
+                                .Include("CreatedByUser.Contact").Include("Document").Include("Owner.Contact").Include("ObjectTable").Include("DocumentType")
+                        where a.DocumentId == DocumentId && a.Tenant == tenant
+                        select a).FirstOrDefault();
+            return poco;
+        }
+         public bool CheckIfDocumentTypeHasDocumentFilling(string documentTypeId, string objectTableId, string entityId, int tenant)
         {
 
             return (
@@ -237,6 +254,7 @@ namespace Simplog.Data.CommonDataModel.Repositories
             {
                 entity.ComputedForwarderDocumentId = entity.ForwarderDocumentId;
             }
+            entity.ComputedCustomerDocumentId = string.IsNullOrEmpty(entity.CustomerDocumentId) ? entity.Id : entity.CustomerDocumentId;
 
             context.DocumentsFilings.Add(entity);
         }
@@ -322,6 +340,13 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
 
 
+        public string GetDocumentIdById(string documentsFilingId, int tenant)
+        {
+            return (from a in context.DocumentsFilings
+                    where a.Id == documentsFilingId && a.Tenant == tenant
+                    select a.DocumentId).FirstOrDefault();
+
+        }
 
 
 
@@ -337,8 +362,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
         public DocumentsFiling GetSingleDocumentFilingBySecurityId(string id, int tenant)
         {
             DocumentsFiling d = (from a in context.DocumentsFilings
+                                                  .Include("CreatedByUser.Contact")
+                                                  .Include("Document")
+                                                  .Include("Owner.Contact")
+                                                  .Include("ObjectTable")
+                                                  .Include("DocumentType")
                                  where a.SecurityId == id && a.Tenant == tenant
-                                 select a).FirstOrDefault();
+                                 select a)
+                                 .FirstOrDefault();
             return d;
         }
 

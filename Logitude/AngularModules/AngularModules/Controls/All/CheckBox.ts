@@ -7,7 +7,7 @@ import { IdGeneratorPipe } from '../Pipes/IdGeneratorPipe';
 
 @Component({
     selector: "CheckBox",
-    inputs: ['IsChecked', 'IsEnabled', 'Text', 'Top', 'ZIndex'],
+    inputs: ['IsChecked', 'IsEnabled', 'Text', 'Top', 'ZIndex', 'DataCy'],
     changeDetection: ChangeDetectionStrategy.OnPush,
 
     template:
@@ -21,8 +21,9 @@ import { IdGeneratorPipe } from '../Pipes/IdGeneratorPipe';
 
         <tr>
             <td style="width: 16px; min-width: 16px; padding:0 !important;">
-                <div class="LogitudeCheckBox" [style.zIndex]="ZIndex">
-                    <input [attr.id]="ControlId" type="checkbox" [disabled]="!IsEnabled" [checked]="IsChecked" (click)="OnClick()" (blur)="OnLostFocus()" (change)="OnChecked($event)"/>
+
+                <div [attr.data-cy]="DataCy" class="LogitudeCheckBox" [style.zIndex]="ZIndex">
+                    <input [attr.data-cy]="DataCy+'_input'" [attr.id]="ControlId" type="checkbox" [disabled]="!IsEnabled" [checked]="IsChecked" (click)="OnClick()" (blur)="OnLostFocus()" (change)="OnChecked($event)" />
                     <label [attr.id]="ControlId2" [attr.for]="ControlId"></label>
                 </div>
             </td>
@@ -89,6 +90,7 @@ import { IdGeneratorPipe } from '../Pipes/IdGeneratorPipe';
 export class CheckBox{
     public ControlId: string = null;
     public ControlId2: string = null;
+    public DataCy: string = null;
 
     public Top: number = null;
     public ZIndex: number = 0;

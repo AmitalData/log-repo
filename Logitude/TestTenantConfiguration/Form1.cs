@@ -118,10 +118,12 @@ namespace TestTenantConfiguration
             LogitudeSettings.DropboxAppSecret = setting.DropboxAppSecret;
             LogitudeSettings.OceanInsightsToken = setting.OceanInsightsToken;
             LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
-        }
+			LogitudeSettings.WindWardSettings = setting.WindWardSettings;
 
-        #region Setup before creating tenant
-        private void TenantEmailTextBox_TextChanged(object sender, EventArgs e)
+		}
+
+		#region Setup before creating tenant
+		private void TenantEmailTextBox_TextChanged(object sender, EventArgs e)
         {
             if (TenantEmailTextBox.Text != null)
             {
@@ -520,7 +522,7 @@ namespace TestTenantConfiguration
         {
             this.Title = "accept terms";
             TermsofUseSignaturePM MyTenant = CreateTermInstance(this.ContactID);
-            TermsofUseSignaturePM CustomerCareTenant = CreateTermInstance(GetContactIdByEmail("specflowtest_customercare@logitudeworld.com", 0));
+            TermsofUseSignaturePM CustomerCareTenant = CreateTermInstance(GetContactIdByEmail("ahmada@logitudeworld.com", 0));
             TermsofUseSignatureService service = new TermsofUseSignatureService(MyContext, MyTenant.Tenant);
             service.Create(MyTenant);
             service.Create(CustomerCareTenant);
@@ -541,7 +543,7 @@ namespace TestTenantConfiguration
         private int LastTermOfUseLastVersion()
         {
             TermsofUseQuery termsofUseQuery = new TermsofUseQuery(this.Tenant);
-            TermsofUsePM termsofUsePM = termsofUseQuery.GetTermsofUseDefault();
+            TermsofUsePM termsofUsePM = termsofUseQuery.GetTermsofUseDefault(false);
             return termsofUsePM.VersionNumber;
         }
         #endregion
@@ -939,7 +941,7 @@ namespace TestTenantConfiguration
             SetControlPropertyValue(Timerlbl, "ForeColor", Color.DodgerBlue);
 
             string LogitudeURL = System.Configuration.ConfigurationSettings.AppSettings.Get("LogitudeURL");
-            Logitude.Test.Base.Hooks.BeforeTestRun.PrepareTheData(this.TenantEmail, this.NewPassword, LogitudeURL);
+            Logitude.Base.Hooks.BeforeTestRun.PrepareTheData(this.TenantEmail, this.NewPassword, LogitudeURL);
             Logitude.ShipmentTests.Hooks.BeforeTestRun.SetupShipmentPreparationVariables();
 
             SetControlPropertyValue(ValidatePrepareData, "Text", "The Tenant is ready with the prepared data");

@@ -1016,6 +1016,10 @@ namespace MeatadataGeneratorTool
 
             SetAttribute("HasCustomFilter", table.HasCustomFilter.ToString().ToLower(), entityElement);
             SetAttribute("HasCustomFields", table.HasCustomFields.ToString().ToLower(), entityElement);
+            SetAttribute("AvailableInCustomization", table.AvailableInCustomization.ToString().ToLower(), entityElement);
+            SetAttribute("SupportSubEntity", table.SupportSubEntity.ToString().ToLower(), entityElement);
+            SetAttribute("ApplyGenericCustomFields", table.ApplyGenericCustomFields.ToString().ToLower(), entityElement);
+            SetAttribute("AvailableInDocumentTypes", table.AvailableInDocumentTypes.ToString().ToLower(), entityElement);
 
             SetAttribute("HasHelper", table.HasHelper.ToString().ToLower(), entityElement);
             SetAttribute("HasShortTitle", table.HasShortTitle.ToString().ToLower(), entityElement);
@@ -1089,6 +1093,8 @@ namespace MeatadataGeneratorTool
             SetAttribute("HasApiHelper", table.HasApiHelper.ToString().ToLower(), entityElement);
             SetAttribute("AllowedForComputingPartners", table.AllowedForComputingPartners.ToString().ToLower(), entityElement);
             SetAttribute("IsBusinessUnitEnabled", table.IsBusinessUnitEnabled.ToString().ToLower(), entityElement);
+            SetAttribute("ParentObjectTableName", GetStringValue(table.ParentObjectTableName), entityElement);
+            SetAttribute("TenantZeroData", table.TenantZeroData.ToString().ToLower(), entityElement);
 
             if (table.IsMetadataOnlyTable != false)
             {
@@ -1212,6 +1218,7 @@ namespace MeatadataGeneratorTool
                 SetAttribute("ConverterName", GetStringValue(f.ConverterName), fieldElement, null);
                 SetAttribute("DataTemplateName", GetStringValue(f.DataTemplateName), fieldElement, null);
                 SetAttribute("IsCustomFilter", f.IsCustomFilter.ToString().ToLower(), fieldElement, null);
+                SetAttribute("IsListFilter", f.IsListFilter.ToString().ToLower(), fieldElement, null);
                 SetAttribute("Operator", GetStringValue(f.Operator), fieldElement, null);
                 SetAttribute("MultiLine", f.MultiLine.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsTimeFrameFilter", f.IsTimeFrameFilter.ToString().ToLower(), fieldElement, null);
@@ -1307,11 +1314,11 @@ namespace MeatadataGeneratorTool
 
                 SetAttribute("IsNullable", f.IsNullable.ToString().ToLower(), fieldElement, null);
                 SetAttribute("IsForeignKey", f.IsForeignKey.ToString().ToLower(), fieldElement, null);
-                SetAttribute("ForeignEntity", f.ForeignEntity, fieldElement, null);
+                SetAttribute("ForeignEntity", GetStringValue(f.ForeignEntity), fieldElement, null);
 
                 SetAttribute("DontBuildRelationOnDB", f.DontBuildRelationOnDB.ToString().ToLower(), fieldElement, null);
 
-                SetAttribute("NavigationPropertyName", f.NavigationPropertyName, fieldElement, null);
+                SetAttribute("NavigationPropertyName", GetStringValue(f.NavigationPropertyName), fieldElement, null);
 
                 SetAttribute("IsPrimaryKey", f.IsPrimaryKey.ToString().ToLower(), fieldElement, null);
                 SetAttribute("DisplayInList", f.DisplayInList.ToString().ToLower(), fieldElement, null);
@@ -1496,6 +1503,9 @@ namespace MeatadataGeneratorTool
                     }
 
                     SetAttribute("IndexOrder", q.IndexOrder.ToString(), QueryFilterElement, null);
+                    SetAttribute("CustomPredefined", q.CustomPredefined.ToString().ToLower(), QueryFilterElement, null);
+
+
 
                 }
             }
@@ -1517,7 +1527,7 @@ namespace MeatadataGeneratorTool
                 {
                     SetAttribute("Code", GetStringValue(f.Code), ScreenElement, null);
                 }
-              
+
 
                 SetAttribute("NumberOfColumns", "2", ScreenElement, null);
                 SetAttribute("NumberOfRows", "1", ScreenElement, null);
@@ -1879,6 +1889,7 @@ namespace MeatadataGeneratorTool
 
                     SetAttribute("Name", GetStringValue(f.DCName), DataContractElement, null);
                     SetAttribute("Version", GetStringValue(f.DCVersion), DataContractElement, null);
+                    SetAttribute("IncludeTenant0Data", f.IncludeTenant0Data.ToString().ToLower(), DataContractElement, null);
                     SetAttribute("ComputingPartnerName", GetStringValue(f.ComputingPartnerName), DataContractElement, null);
                     if (f.DCFieldsObsList != null)
                     {
@@ -2004,30 +2015,12 @@ namespace MeatadataGeneratorTool
                     if (File.Exists(dxmlFilePath))
                     {
                         XDocument oldDoc = XDocument.Load(dxmlFilePath);
-                        foreach (var indexElement in oldDoc.Descendants("Index").ToList())
-                        {
-                            indexElements.Add(indexElement);
-                        }
 
-                        foreach (var uniqueConstraintElement in oldDoc.Descendants("UniqueConstraint").ToList())
-                        {
-                            uniqueConstraintElements.Add(uniqueConstraintElement);
-                        }
-
-                        foreach (var columnWithDefaultValueElement in oldDoc.Descendants("Column").Where(x => x.Attribute("DefaultValue") != null).ToList())
-                        {
-                            columnWithDefaultValueElements.Add(columnWithDefaultValueElement);
-                        }
-
-                        foreach (var columnWithIdentityElement in oldDoc.Descendants("Column").Where(x => x.Attribute("Identity") != null).ToList())
-                        {
-                            columnWithIdentityElements.Add(columnWithIdentityElement);
-                        }
-
-                        foreach (var columnWithInitialValueScriptElement in oldDoc.Descendants("Column").Where(x => x.Attribute("InitialValueScript") != null).ToList())
-                        {
-                            columnWithInitialValueScriptElements.Add(columnWithInitialValueScriptElement);
-                        }
+                        indexElements = oldDoc.Descendants("Index").ToList();
+                        uniqueConstraintElements = oldDoc.Descendants("UniqueConstraint").ToList();
+                        columnWithDefaultValueElements = oldDoc.Descendants("Column").Where(x => x.Attribute("DefaultValue") != null).ToList();
+                        columnWithIdentityElements = oldDoc.Descendants("Column").Where(x => x.Attribute("Identity") != null).ToList();
+                        columnWithInitialValueScriptElements = oldDoc.Descendants("Column").Where(x => x.Attribute("InitialValueScript") != null).ToList();
                     }
 
                     XmlDocument doc = new XmlDocument();
@@ -2244,7 +2237,7 @@ namespace MeatadataGeneratorTool
                     {
                         XmlElement indexXmlElement = doc.CreateElement("Index");
 
-                        if (indexElement.Attribute("Columns") != null)
+                        indexElement.Attributes().ToList().ForEach(element =>
                         {
                             indexXmlElement.SetAttribute("Columns", indexElement.Attribute("Columns").Value);
                         }
@@ -2260,6 +2253,8 @@ namespace MeatadataGeneratorTool
                         {
                             indexXmlElement.SetAttribute("Include", indexElement.Attribute("Include").Value);
                         }
+                            indexXmlElement.SetAttribute(element.Name.LocalName, element.Value);
+                        });
 
                         tableElement.AppendChild(indexXmlElement);
                     }
@@ -2268,10 +2263,10 @@ namespace MeatadataGeneratorTool
                     {
                         XmlElement uniqueConstraintXmlElement = doc.CreateElement("UniqueConstraint");
 
-                        if (uniqueConstraintElement.Attribute("Columns") != null)
+                        uniqueConstraintElement.Attributes().ToList().ForEach(element =>
                         {
-                            uniqueConstraintXmlElement.SetAttribute("Columns", uniqueConstraintElement.Attribute("Columns").Value);
-                        }
+                            uniqueConstraintXmlElement.SetAttribute(element.Name.LocalName, element.Value);
+                        });
 
                         tableElement.AppendChild(uniqueConstraintXmlElement);
                     }

@@ -49,20 +49,14 @@ namespace Logitude.Accounting.Data.Repositories
 
         public void UpdateWhileStreaming(int tenant, string journalId,Action<Journal> updatePoco)
         {
-            var myList = LockByJournal_forUpdateNOWAIT(journalId, tenant);// lock it !!!!
-            if (!myList.Any())
+            var poco = GetSingle(journalId, tenant);
+            if (poco == null)
             {
                 var mess = ("JournalApproveService:Failed ... LockByJournal_forUpdateNOWAIT");
                 throw new Exception(mess);
             }
-            var poco = myList.First();
-            //if (poco.QueueId != null)
-            //{
-            //    throw new Exception("JournalApproveService:Failed(poco.QueueId != null) already Streamed !!!");
-            //}
-            updatePoco(poco);
-            //poco.QueueId = QueueId;
 
+            updatePoco(poco);
             this.Update(poco);
         }
         public List<Journal> GetMulti(EntityKeyFields entityKeys)
@@ -209,6 +203,24 @@ namespace Logitude.Accounting.Data.Repositories
             return q;
         }
 
+        public IQueryable<Journal> GetQueryableFailedJournals()
+        {
+            string failedJournalStatus = "4";
+            var q = (from a in context.Journals
+                     where (a.StatusCode == failedJournalStatus)
+                     select a);
+            return q;
+        }
+
+        public IQueryable<Journal> GetJournalsWithoutTransactionsForToday()
+        {
+            string approvedJournalStatus = "2";
+            var q = (from a in context.Journals
+                     where (a.IsLedgerCreated == false && a.StatusCode == approvedJournalStatus)
+                     select a);
+            return q;
+        }
+        
         public IQueryable<Journal> GetQueryablePending2ApproveOrdered(int tenant)
         {
             var q = (from a in context.Journals
@@ -323,6 +335,15 @@ namespace Logitude.Accounting.Data.Repositories
                                select a).ToList();
             return journals;
         }
+        public Journal GetJournalByAccountingEntity(string entityId, string entityTypeCode, int tenant)
+        {
+            return (from a in context.Journals.Include("AccountingEntity")
+                                      where
+                        a.Tenant == tenant &&
+                        a.AccountingEntityId == entityId &&
+                        a.AccountingEntityCode == entityTypeCode
+                                      select a).FirstOrDefault();
+        }
         public bool CheckIfExternalNoAndSystemExist(string externalNo, string externalSystem, out string journalNumber, int tenant)
         {
             bool exist;
@@ -436,12 +457,12 @@ namespace Logitude.Accounting.Data.Repositories
 
             return journals;
         }
-        public IQueryable<Journal> GetByJournalsAccountingEntityIds(List<string> entityIdS, int tenant)
+        public IQueryable<Journal> GetByJournalsAccountingEntityIds(List<string> entityIdS, int tenant, string accountingEntityCode)
         {
             var journals = (from a in context.Journals.Include("JournalStatusType")
                             where a.Tenant == tenant
                             where entityIdS.Contains(a.AccountingEntityId)
-                                    && a.AccountingEntityCode == "2"
+                                    && a.AccountingEntityCode == accountingEntityCode
                             select a);
 
             return journals;
@@ -478,7 +499,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             var journals = (from a in context.Journals.Include("JournalStatusType")
                             where a.Tenant == tenant
-                            where a.StatusCode != "0" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
+                            where a.StatusCode != "0" && a.StatusCode != "5" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
                             select a);
 
             return journals;
@@ -488,7 +509,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             var journals = (from a in context.Journals.Include("JournalStatusType")
                             where a.Tenant == tenant
-                            where a.StatusCode != "0" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
+                            where a.StatusCode != "0" && a.StatusCode != "5" && a.AccountingDate >= accountingDateFrom && a.AccountingDate <= accountingDateTo && a.IsLedgerCreated == false
                                     && a.AccountingEntityCode == entityCode
                             select a);
 
@@ -498,16 +519,19 @@ namespace Logitude.Accounting.Data.Repositories
 
         public bool CheckIfThereNonTranslatedJournalsByMonth(int year, int month, int tenant)
         {
+            string DraftStatus = "0";
+            string CancelledStatus = "5";
             return (from record in context.Journals
                     where
                         record.Tenant == tenant
                         && record.AccountingDate.Year == year
                         && record.AccountingDate.Month == month
                         && record.QueueId == null
+                        && record.StatusCode != DraftStatus && record.StatusCode != CancelledStatus
                     select record).Any();
         }
 
-        public List<TaxReportData> GetARInvoiceJournals(DateTime? taxReportMonth, int tenant)
+        public List<CustomTaxReportData> GetARInvoiceJournals(DateTime? taxReportMonth, int tenant)
         {
             int days= DateTime.DaysInMonth(taxReportMonth.Value.Year, taxReportMonth.Value.Month);
             DateTime date = new DateTime(taxReportMonth.Value.Year, taxReportMonth.Value.Month, days);
@@ -516,28 +540,47 @@ namespace Logitude.Accounting.Data.Repositories
             List<string> invoiceIds = (from a in invoicecontext.ARInvoices
                                         where a.InvoiceDate <= date && (a.TotalAmountForTaxReport != null && a.TotalAmountForTaxReport != 0)   && a.Tenant == tenant 
                                         select a.Id).ToList();
-           
-            List< Journal> journals=(from a in context.Journals
-                    join r in context.JournalLines on a.Id equals r.JournalId
-                    join m in context.JournalAdditionalDatas on a.Id equals m.JournalId
-                    where a.AccountingEntityCode == "2" && (m.TaxReportId == null ||m.TaxReportTransmitStatusCode == "2" || m.TaxReportTransmitStatusCode == null) && a.Tenant== tenant
-                    && r.DocumentDate <= date 
 
-                    select a ).ToList();
 
-           
-            List<TaxReportData> data = (from a in journals
-                                       
-                                        where invoiceIds.Contains(a.AccountingEntityId)
-                                        select new TaxReportData()
-                                        {
-                                            Id = a.Id,
-                                            AccountingEntityId = a.AccountingEntityId,
-                                           
+            List<CustomTaxReportData> list = new List<CustomTaxReportData>();
+            const int sqlLimit = 5000;
+            int iterations = invoiceIds.Count() / sqlLimit;
+            for (int i = 0; i <= iterations; i++)
+            {
+                var tempInvoiceIds = invoiceIds.Skip(i * sqlLimit).Take(sqlLimit).ToList();
+                List<CustomTaxReportData> tempList = (from j in context.Journals
+                                                      join jl in context.JournalLines on j.Id equals jl.JournalId
+                                                      join ledger in context.LedgerTransactions on new { JournalId = j.Id, JournalLineNumber = jl.Line } equals new { ledger.JournalId, ledger.JournalLineNumber }
+                                                      join adt in context.JournalAdditionalDatas on j.Id equals adt.JournalId
+                                                      where j.AccountingEntityCode == "2" && (adt.TaxReportId == null || adt.TaxReportTransmitStatusCode == "2" || adt.TaxReportTransmitStatusCode == null) && j.Tenant == tenant
+                                                            && jl.DocumentDate <= date && adt.Tenant == tenant
+                                                            && tempInvoiceIds.Contains(j.AccountingEntityId)
+                                                      select new CustomTaxReportData()
+                                                      {
+                                                          Id = j.Id,
+                                                          AccountingEntityId = j.AccountingEntityId,
+                                                          IsLedgerReconciled = (ledger == null ? false : ledger.IsReconciled),
+                                                          LedgerTransactionId = (ledger == null ? null : ledger.Id)
 
-                                        }).ToList();
+                                                      }).ToList();
+                list.AddRange(tempList);
+            }
 
-            return data;
+
+            //List<CustomTaxReportData> data = (from j in journals
+            //                                  join jl in context.JournalLines on j.Id equals jl.JournalId
+
+            //                                  where invoiceIds.Contains(j.AccountingEntityId)
+            //                                  select new CustomTaxReportData()
+            //                                  {
+            //                                      Id = j.Id,
+            //                                      AccountingEntityId = j.AccountingEntityId,
+            //                                      IsLedgerReconciled = (ledger == null ? false : ledger.IsReconciled)
+
+            //                                  }).ToList();
+
+
+            return list;
 
            
         }

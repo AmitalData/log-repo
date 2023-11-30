@@ -164,6 +164,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         {
 
             var CustomerTenantAccess = (from a in repository.context.CustomerTenantAccesses where a.Tenant == tenant && a.CustomerTenant == ImporterTenant select a).FirstOrDefault();
+            if (CustomerTenantAccess == null) return null;
             var query = (from a in repository.context.CustomerTenantAccessCardsBatches
                          where a.Tenant == tenant && a.CustomerId == CustomerId && a.CustomerTenantAccessId == CustomerTenantAccess.Id
                          orderby a.CreateDateTime ascending

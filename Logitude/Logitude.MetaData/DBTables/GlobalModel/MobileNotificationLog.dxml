@@ -154,4 +154,6 @@
     Columns="AndroidStatus,IOSStatus" />
   <Index
     Columns="Email,IsRead,IsDelete" />
+  <Index
+	Columns="CreateDate" />
 </Table>

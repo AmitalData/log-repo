@@ -125,9 +125,21 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                           TariffNumber = a.TariffNumber,
                                           TariffLineId = a.TariffLineId,
                                           TariffVersion = a.TariffVersion,
+                                          SaleTariffId = a.SaleTariffId,
+                                          SaleTariffNumber = a.SaleTariffNumber,
+                                          SaleTariffLineId = a.SaleTariffLineId,
+                                          SaleTariffVersion = a.SaleTariffVersion,
                                           IsRegionalTax = a.IsRegionalTax,
                                           SaleRatio = (a.SaleMeasurement!=null && a.SaleMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
                                           CostRatio   = (a.CostMeasurement != null && a.CostMeasurement.Code == "PDCW")  ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
+                                          QuoteChargesGroupCode = a.ChargesType == null ? "" : a.ChargesType.QuoteChargesGroupCode,
+                                          VATAmountInLocalCurrency = a.VATAmountInLocalCurrency,
+                                          VATAmountInQuoteSaleCurrency = a.VATAmountInQuoteSaleCurrency,
+                                          VATAmountInLineSaleCurrency = a.VATAmountInLineSaleCurrency,
+                                          SaleTotalAmountLocalIncludingVAT = a.SaleTotalAmountLocalIncludingVAT,
+                                          SaleAmountInSaleCurrencyIncludingVAT = a.SaleAmountInSaleCurrencyIncludingVAT,
+                                          SaleTotalAmountIncludingVAT = a.SaleTotalAmountIncludingVAT,
+                                          MarkUpCurrencyId = a.MarkUpCurrencyId
                                       }).FirstOrDefault();
 
             return myResult;
@@ -230,9 +242,21 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 TariffNumber = a.TariffNumber,
                                                 TariffLineId = a.TariffLineId,
                                                 TariffVersion = a.TariffVersion,
+                                                SaleTariffId = a.SaleTariffId,
+                                                SaleTariffNumber = a.SaleTariffNumber,
+                                                SaleTariffLineId = a.SaleTariffLineId,
+                                                SaleTariffVersion = a.SaleTariffVersion,
                                                 IsRegionalTax = a.IsRegionalTax,
                                                 SaleRatio = (a.SaleMeasurement != null && a.SaleMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
                                                 CostRatio = (a.CostMeasurement != null && a.CostMeasurement.Code == "PDCW") ? a.Quote.PickupDeliveryRatio : a.Quote.Ratio,
+                                                QuoteChargesGroupCode = a.ChargesType == null ? "" : a.ChargesType.QuoteChargesGroupCode,
+                                                VATAmountInLocalCurrency = a.VATAmountInLocalCurrency,
+                                                VATAmountInQuoteSaleCurrency = a.VATAmountInQuoteSaleCurrency,
+                                                VATAmountInLineSaleCurrency = a.VATAmountInLineSaleCurrency,
+                                                SaleTotalAmountLocalIncludingVAT = a.SaleTotalAmountLocalIncludingVAT,
+                                                SaleAmountInSaleCurrencyIncludingVAT = a.SaleAmountInSaleCurrencyIncludingVAT,
+                                                SaleTotalAmountIncludingVAT = a.SaleTotalAmountIncludingVAT,
+                                                MarkUpCurrencyId = a.MarkUpCurrencyId
                                             }).ToList();
 
             QuotePriceStepsRepository quotePriceStepsRepository = new QuotePriceStepsRepository(this.repository.context);
@@ -413,7 +437,19 @@ namespace Logitude.BL.QuoteModel.EntityQueries
                                                 TariffNumber = a.TariffNumber,
                                                 TariffLineId = a.TariffLineId,
                                                 TariffVersion = a.TariffVersion,
+                                                SaleTariffId = a.SaleTariffId,
+                                                SaleTariffNumber = a.SaleTariffNumber,
+                                                SaleTariffLineId = a.SaleTariffLineId,
+                                                SaleTariffVersion = a.SaleTariffVersion,
                                                 IsRegionalTax = a.IsRegionalTax,
+                                                QuoteChargesGroupCode = a.ChargesType == null ? "" : a.ChargesType.QuoteChargesGroupCode,
+                                                VATAmountInLocalCurrency = a.VATAmountInLocalCurrency,
+                                                VATAmountInQuoteSaleCurrency = a.VATAmountInQuoteSaleCurrency,
+                                                VATAmountInLineSaleCurrency = a.VATAmountInLineSaleCurrency,
+                                                SaleTotalAmountLocalIncludingVAT = a.SaleTotalAmountLocalIncludingVAT,
+                                                SaleAmountInSaleCurrencyIncludingVAT = a.SaleAmountInSaleCurrencyIncludingVAT,
+                                                SaleTotalAmountIncludingVAT = a.SaleTotalAmountIncludingVAT,
+                                                MarkUpCurrencyId = a.MarkUpCurrencyId
                                             }).ToList();
 
             return output.OrderBy(d => d.ViewOrder).ThenBy(d => d.ChargesTypeCode).ToList();

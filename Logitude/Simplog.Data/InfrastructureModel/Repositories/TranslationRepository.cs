@@ -38,12 +38,19 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             return result;
         }
 
-        public List<Translation> GetTranslationsByTenant(int tenant)
+        public List<Translation> GetTranslationsByTenantList(int tenant)
         {
             List<Translation> translations = (from a in context.Translations.Include("TextCode")
                                                    where a.Tenant == tenant                                                   
                                                    select a).ToList();
             return translations;
+        }
+
+        public IQueryable<Translation> GetTranslationsByTenant(int tenant)
+        {
+            return (from a in context.Translations.Include("TextCode")
+                                              where a.Tenant == tenant
+                                              select a);
         }
         //Islam: this is only for silverlight version to fix the timeout login issue.
         public List<Translation> GetTranslationsWithoutESByTenant(int tenant)
@@ -70,8 +77,20 @@ namespace Simplog.Data.InfrastructureModel.Repositories
                                               select a).ToDictionary(d=>d.TextCode.Code,a=>a);
             return translations;
         }
+        
+        public Dictionary<string, string> GetDigitalTranslationsByTenant(int tenant, string objectTableName, string lang = "")
+        {
+            var translationCodes = context.Translations
+                                          .Where(a => a.Tenant == tenant
+                                                      && (a.TextCodeCode.StartsWith(objectTableName))
+                                                      && a.TranslationHeaderCode.Equals(lang, StringComparison.InvariantCultureIgnoreCase)
+                                                      && !string.IsNullOrEmpty(a.TranslatedText))
+                                          .ToDictionary(a => a.TextCodeCode, x => x.TranslatedText);
 
-		public Translation GetLastTranslationsByTenant(int tenant)
+            return translationCodes;
+        }
+
+        public Translation GetLastTranslationsByTenant(int tenant)
 		{
 			string entityName = "LastTranslationsByTenant" + tenant;
 			Translation lastTranslation = null;

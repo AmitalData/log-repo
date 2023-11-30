@@ -104,7 +104,7 @@ export class EntityStatusListService {
 		for (var i in mykeys) {
 			var propName = mykeys[i];
 			var propValue = filters[propName];
-			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters" || propName == "TreeFilters"  || propName == "ParentEntity");
 
             if (urlparameters != "?") {
 				urlparameters = urlparameters.concat('&');
@@ -114,6 +114,14 @@ export class EntityStatusListService {
 				propValue = encodeURIComponent(propValue);
 				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
 			}
+
+			if (propName == "TreeFilters" && propValue && propValue.length > 0) {
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+			
+			if (propName == "ParentEntity" && propValue) {
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
 
 			if (propName == "AdditionalFilters" && propValue.length > 0) {
 				addtionalFiltersValues = JSON.stringify(propValue);
@@ -241,7 +249,7 @@ export class EntityStatusListService {
         for (var i in mykeys) {
             var propName = mykeys[i];
             var propValue = filters[propName];
-            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters" || propName == "TreeFilters"  || propName == "ParentEntity");
 
             if (urlparameters != "?") {
                 urlparameters = urlparameters.concat('&');
@@ -254,6 +262,14 @@ export class EntityStatusListService {
 
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
 			}
+
+			if (propName == "TreeFilters" && propValue && propValue.length > 0) {
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
+			
+			if (propName == "ParentEntity" && propValue) {
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
 
             if (propName == "AdditionalFilters" && propValue.length > 0) {
                 addtionalFiltersValues = JSON.stringify(propValue);

@@ -25,6 +25,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", authToken.Tenant);
                 IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
                 WarehouseReleasePackageQueryService warehouseReleasePackageQuery = new WarehouseReleasePackageQueryService(MyContext);
@@ -68,6 +69,7 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("WarehouseRelease", "READ", authToken.Tenant);
                 IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
                 WarehouseReleaseQueryService warehouseReleaseQueryService = new WarehouseReleaseQueryService(authToken.Tenant);

@@ -48,7 +48,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ProcessStartDate, 
 	         ProcessEndDate, 
 	         ProcessProgress, 
-	         NeedsRebulid,
+	         NeedsRebulid, 
+	         CreatedInTwoMonthsLogic, 
+	         OutputTaxAmountRound, 
+	         InputsTaxAmountRound, 
+	         ReconciliationsNumbers,
 	      }
 
 
@@ -88,7 +92,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         TaxReportLineLastLine, 
 	         NeedsRebulid, 
 	         IsNew, 
-	         UpdatedByUserName,
+	         UpdatedByUserName, 
+	         CreatedInTwoMonthsLogic, 
+	         OutputTaxAmountRound, 
+	         InputsTaxAmountRound, 
+	         ReconciliationsNumbers, 
+	         ClosingJournalNumber, 
+	         ClosingJournalId, 
+	         RecalculateData, 
+	         CanRecalculate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -225,6 +237,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NeedsRebulid))
             {
 				entityPOCO.NeedsRebulid = entityPM.NeedsRebulid;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedInTwoMonthsLogic))
+            {
+				entityPOCO.CreatedInTwoMonthsLogic = entityPM.CreatedInTwoMonthsLogic;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OutputTaxAmountRound))
+            {
+				entityPOCO.OutputTaxAmountRound = entityPM.OutputTaxAmountRound;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InputsTaxAmountRound))
+            {
+				entityPOCO.InputsTaxAmountRound = entityPM.InputsTaxAmountRound;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconciliationsNumbers))
+            {
+				entityPOCO.ReconciliationsNumbers = entityPM.ReconciliationsNumbers;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -368,6 +400,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.NeedsRebulid = entityPOCO.NeedsRebulid;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreatedInTwoMonthsLogic))
+            {
+					entityPM.CreatedInTwoMonthsLogic = entityPOCO.CreatedInTwoMonthsLogic;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OutputTaxAmountRound))
+            {
+					entityPM.OutputTaxAmountRound = entityPOCO.OutputTaxAmountRound;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.InputsTaxAmountRound))
+            {
+					entityPM.InputsTaxAmountRound = entityPOCO.InputsTaxAmountRound;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ReconciliationsNumbers))
+            {
+					entityPM.ReconciliationsNumbers = entityPOCO.ReconciliationsNumbers;
+            }
+
 		}
 
 		public void PMToOldPM(TaxReportPM entityPM, TaxReportPM oldEntityPM)
@@ -502,6 +554,26 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NeedsRebulid))
             {
                 oldEntityPM.NeedsRebulid = entityPM.NeedsRebulid;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreatedInTwoMonthsLogic))
+            {
+                oldEntityPM.CreatedInTwoMonthsLogic = entityPM.CreatedInTwoMonthsLogic;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OutputTaxAmountRound))
+            {
+                oldEntityPM.OutputTaxAmountRound = entityPM.OutputTaxAmountRound;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.InputsTaxAmountRound))
+            {
+                oldEntityPM.InputsTaxAmountRound = entityPM.InputsTaxAmountRound;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ReconciliationsNumbers))
+            {
+                oldEntityPM.ReconciliationsNumbers = entityPM.ReconciliationsNumbers;
             }
 			
 		}

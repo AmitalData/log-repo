@@ -8,12 +8,16 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using System;
+using Simplog.Data.InfrastructureModel;
+using Logitude.Server.Tools.CustomFields;
+using Logitude.BL.ShipmentsModel.Tools.DataMapping;
 
 namespace Logitude.BL.ShipmentsModel.EntityQueries
 {
     public class ShipmentPackageQuery
     {
-        ShipmentPackageRepository repository;         
+        ShipmentPackageRepository repository;
+        
         public ShipmentPackageQuery(int tenant)
         {
             repository = new ShipmentPackageRepository(tenant);
@@ -59,14 +63,12 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                     CommodityId = a.CommodityId,
                                                     NumberOfInsidePackages = a.NumberOfInsidePackages,
                                                     NumberOfInsidePackagesDetails = a.NumberOfInsidePackagesDetails,
-                                                    
-
-                                                 }).ToList();
+                                                 }).OrderBy(a => a.Id).ToList();
 
             return myResult;
         }
 
-        public ShipmentPackagePM GetSinglePM(string shipmentId, int tenant)
+        public ShipmentPackagePM GetSinglePM(string shipmentPackageId, int tenant)
         {
             InsideShipmentPackageRepository insideShipmentPackagesRepository = new InsideShipmentPackageRepository(repository.context);
             InsideShipmentPackageQuery insideShipmentPackageQuery = new InsideShipmentPackageQuery(insideShipmentPackagesRepository);
@@ -79,7 +81,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             ShipmentPackagePM myResult
                 = (from a in repository.context.ShipmentPackages.Include("PackageType").Include("LastStatus").Include("Horse")
-                   where a.ShipmentId == shipmentId && a.Tenant == tenant
+                   where a.Id == shipmentPackageId && a.Tenant == tenant
                    select new ShipmentPackagePM()
                    {
                        ClassNumber = a.ClassNumber,
@@ -191,12 +193,26 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        LCLContainerTypeId = a.LCLContainerTypeId,
                        ContainerEntityId = a.ContainerEntityId,
                        ContainerStatusSourceCode = a.ContainerStatusSourceCode,
+                       ContainerStrippedDate = a.ContainerStrippedDate,
                    }).FirstOrDefault();
 
-            myResult.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(myResult.Id, tenant);
-            myResult.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(myResult.Id, tenant);
-            myResult.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(myResult.Id, tenant);
-            this.MapTheLastStatusName(myResult);
+           
+            
+            new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+            {
+                Tenant = tenant,
+                EntityId = myResult.ShipmentId,
+                ObjectTableName = "Shipment",
+                ChildObjectTableName = "ShipmentPackage",
+                ChildEntityId = myResult?.Id,
+                ChildEntities = new List<object>() { myResult }.ToList(),
+            });
+
+            myResult.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(myResult?.Id, tenant);
+            myResult.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(myResult?.Id, tenant);
+            myResult.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(myResult?.Id, tenant);
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+            this.MapTheLastStatusName(myResult, webFreightContext);
             return myResult;
         }
 
@@ -314,15 +330,22 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                        LCLContainerTypeId = a.LCLContainerTypeId,
                        ContainerEntityId = a.ContainerEntityId,
                        ContainerStatusSourceCode = a.ContainerStatusSourceCode,
-                   }).ToList();
+                       ContainerStrippedDate = a.ContainerStrippedDate,
+                   }).OrderBy(a => a.Id).ToList();
 
             var commonContext = CommonDataContext.GetContext(tenant);
             PackageTypeRepository PTypeRepo = new PackageTypeRepository(commonContext);
             //CountryRepository CountryRepo = new CountryRepository(commonContext);
             //PackageTypeRepository PTypeRepo = new PackageTypeRepository(commonContext);
-
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
             foreach (ShipmentPackagePM package in shipmentPackages)
             {
+                package.VolumeInCBM = ShipmentMapping.GetVolumeInCBM("CBM", package.Volume);
+                package.GrossWeightInKG = ShipmentMapping.GetWeightInKG("KG", package.Weight);
+
+                package.VolumeInCBF = ShipmentMapping.GetVolumeInCBF( package.VolumeInCBM);
+                package.GrossWeightInLB = ShipmentMapping.GetWeightInLB(package.GrossWeightInKG);
+
                 package.InsideShipmentPackages = insideShipmentPackageQuery.GetInsideShipmentPackages(package.Id, package.Tenant);
                 package.ShipmentPackageItems = shipmentPackageItemQuery.GetShipmentPackageItems(package.Id, package.Tenant);
                 package.ShipmentPackageHarmonizes = shipmentPackageHarmonizeQuery.GetShipmentPackageHarmonizes(package.Id, package.Tenant);
@@ -344,38 +367,51 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                     package.ContainerSize = CurrentPackageType.ContainerSize;
                     package.PackageTypeVolume = CurrentPackageType.Volume;
                     package.IsVehicle = CurrentPackageType.IsVehicle;
-
                 }
+
                 if (!string.IsNullOrEmpty(package.CountryId))
                 {
                     package.CountryName = (from d in commonContext.Countries
-
                                            where d.Id == package.CountryId
-
-                                           select d.EnglishName).FirstOrDefault();
+                                           select d.EnglishName)
+                                           .FirstOrDefault();
 
                 }
-                this.MapTheLastStatusName(package);
+                this.MapTheLastStatusName(package, webFreightContext);
             }
+
+
+           new ChildEntitiesCustomFieldService().Set(new ChildEntitiesCustomFieldArgs()
+            {   Tenant = tenant,
+                EntityId = shipmentId ,
+                ObjectTableName = "Shipment",
+                ChildObjectTableName = "ShipmentPackage",
+                ChildEntities = shipmentPackages.Cast<object>().ToList()
+            });
+
             return shipmentPackages;
+
         }
 
-        private void MapTheLastStatusName(ShipmentPackagePM package)
+        private void MapTheLastStatusName(ShipmentPackagePM package, IWebFreightContext webFreightContext)
         {
-            if (!string.IsNullOrEmpty(package.LastStatusCode))
+            var inttra = "INT";
+            var oceanInsights = "OIN";
+            if (package.ContainerStatusSourceCode == inttra && package.LastStatusCode != null)
             {
-                if(package.ContainerStatusSourceCode == "INT")
-                {
-                    package.LastStatusName = (from d in repository.context.INTTRAStatuses
-                                              where d.Code == package.LastStatusCode
-                                              select d.Name).FirstOrDefault();
-                }
-                else if (package.ContainerStatusSourceCode == "OIN")
-                {
-                    package.LastStatusName = (from d in repository.context.ContainerStatuses
-                                              where d.Code == package.LastStatusCode
-                                              select d.Name).FirstOrDefault();
-                }
+                package.LastStatusName = (from d in repository.context.INTTRAStatuses
+                                          where d.Code == package.LastStatusCode
+                                          select d.Name).FirstOrDefault();
+
+            }
+            else if ( package.ContainerEntityId != null)
+            {
+                var statusId = (from d in repository.context.Containers
+                                where d.Id == package.ContainerEntityId
+                                select d.StatusId).FirstOrDefault();
+                package.ContainerStatusName = (from d in webFreightContext.EntityStatus
+                                               where d.Id == statusId
+                                               select d.Name).FirstOrDefault();
             }
         }
 
@@ -497,6 +533,7 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                 LCLContainerTypeId = a.LCLContainerTypeId,
                                 ContainerEntityId = a.ContainerEntityId,
                                 ContainerStatusSourceCode = a.ContainerStatusSourceCode,
+                                ContainerStrippedDate = a.ContainerStrippedDate,
                             }).ToList();
             }
 

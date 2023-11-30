@@ -9,6 +9,7 @@ import { DocumentsFilingExtendedPMService } from '../../../Common/Services/Exten
 import { ShipmentAdditionalCloudDataService } from '../../../Shipment/Services/Others/ShipmentAdditionalCloudDataService';
 import { EntityResourceService } from '../../../Infrastructure/Services/EntityResourceService';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 
 @Component({
@@ -97,7 +98,7 @@ export class RemoveTasksButtonListTemplate {
                         this.CurrentSession.StopBusyIndicator();
                         this.CurrentSession.PseventRowSelectEvent.emit("AllowLogBoxSelect");
                         this.CurrentSession.FireEvent({ Name: 'CustomReloadShipments' });
-                        
+                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Remove Task" });
                     }
                 });
             }

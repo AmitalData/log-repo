@@ -8,6 +8,8 @@ namespace Simplog.Data.InvoiceModel
     public interface IInvoiceContext : IContext
     {
         IDbSet<ARInvoice> ARInvoices { get; }
+        IDbSet<ARInvoiceAnalytic> ARInvoiceAnalytics { get; }
+        IDbSet<APInvoiceAnalytic> APInvoiceAnalytics { get; }
         IDbSet<ARInvoiceLine> ARInvoiceLines { get; }
         IDbSet<ARInvoiceType> ARInvoiceTypes { get; }
         IDbSet<ARInvoiceStatus> ARInvoiceStatuses { get; }
@@ -45,6 +47,7 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<SATPaymentMethod> SATPaymentMethods { get; }
         IDbSet<APPaymentTransferStatus> APPaymentTransferStatuses { get; }
         IDbSet<SATTransferStatus> SATTransferStatus { get; }
+        IDbSet<QBOGlobalTaxCalculation> QBOGlobalTaxCalculations { get; }
         IDbSet<SATInvoiceStatus> SATInvoiceStatus { get; }
         IDbSet<SATInterface> SATInterfaces { get; }
         IDbSet<SATInterfaceSetting> SATInterfaceSettings { get; }
@@ -54,6 +57,13 @@ namespace Simplog.Data.InvoiceModel
         IDbSet<ARInvoiceStockLine> ARInvoiceStockLines { get; }
         IDbSet<ARPaymentChequeReplica> ARPaymentChequeReplicas { get; }
         IDbSet<ARPaymentChequeStatusReplica> ARPaymentChequeStatusReplicas { get; }
+        IDbSet<ARInvoiceChargesConstraint> ARInvoiceChargesConstraints { get; }
+        IDbSet<ARPaymentBankTranfer> ARPaymentBankTranfers { get; }
+        IDbSet<DigitalInvoicesCounterDataView> DigitalInvoicesCounterDataView { get; }
+        IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView { get; }
+
+        IDbSet<ARInvoicesSignedStatus> ARInvoicesSignedStatuses { get; }
+
         void SetAsModified(object entity);
         void DetectChanges();
         int SaveChanges();

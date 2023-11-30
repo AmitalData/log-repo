@@ -1,0 +1,202 @@
+<style>
+    .link-button {
+        cursor: pointer;
+        color: #2b78e4;
+        float: left;
+    }
+
+    .link-button .plus-sign {
+        font-size: 13px;
+        font-weight: bold;
+        padding-right: 2px;
+    }
+
+    .link-button:not(.disabled):hover {
+        color: #03a9f4;
+    }
+
+    .link-button.disabled {
+        opacity: 0.5;
+    }
+
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .entity-list-container {
+        height: 30px;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+
+    .entity-list-container,
+    .trigger-radios-container {
+        width: 320px;
+    }
+
+    .trigger-radio-cell {
+        width: 80px;
+    }
+
+    .conditions-container {
+        overflow: auto;
+        width: 936px;
+        max-height: 337px;
+        padding-bottom: 16px;
+        pointer-events: auto !important;
+    }
+
+    .min-conditions-container {
+        height: 285px;
+    }
+    .break-space{
+        white-space: break-spaces;
+    }
+</style>
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Title'" [ObjectFieldName]="'Name'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                    (ValueChanged)="updateName($event)" [DataCy]="'condition-title'">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="label">Condition Requirments</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <p class="Label break-space" >Specify the conditions that must be met for the workflow to take the true path.</p>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td>
+            <div class="table-row-cell-block conditions-container"
+                [ngClass]="{'min-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
+
+                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="this.WorkflowEntityTable.Id"
+                    [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
+                    (IsValidConditionsChange)="UpdateIsValidConditions($event)"
+                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions" [FlowObject]="FlowObject"
+                    [CurrentNodeId]="CurrentNodeId">
+                </Conditions>
+
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="label">Label if the Condition is Met</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Label'" [ObjectFieldName]="'MetLabel'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="MetLabel"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'MetLabel'"
+                    (ValueChanged)="updateMetLabel($event)" [DataCy]="'met-label'">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="label">Otherwise</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="WorkflowEntity != null" class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Label'" [ObjectFieldName]="'OtherwiseLabel'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
+                    [Text]="OtherwiseLabel" [NoValidation]="true" [HideColumns]="true"
+                    [ObjectFieldName]="'OtherwiseLabel'" (ValueChanged)="updateOtherwiseLabel($event)"
+                    [DataCy]="'otherwise-label'">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+</table>

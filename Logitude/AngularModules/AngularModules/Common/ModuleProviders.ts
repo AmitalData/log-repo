@@ -88,6 +88,9 @@ import {LoginPolicyListService} from './Services/StandardLists/LoginPolicyListSe
 import {MetodoPagoListService} from './Services/StandardLists/MetodoPagoListService';
 import {CustomerTenantAccessPMService} from './Services/StandardPMs/CustomerTenantAccessPMService';
 import {UsoCFDIListService} from './Services/StandardLists/UsoCFDIListService';
+import {RegimenFiscalListService} from './Services/StandardLists/RegimenFiscalListService';
+import {PostalCodeListService} from './Services/StandardLists/PostalCodeListService';
+import {PostalCodePMService} from './Services/StandardPMs/PostalCodePMService';
 import {ReportsTemplateListService} from './Services/StandardLists/ReportsTemplateListService';
 import {ReportsTemplatesVersionListService} from './Services/StandardLists/ReportsTemplatesVersionListService';
 import {AccountingSettingPMService} from './Services/StandardPMs/AccountingSettingPMService';
@@ -173,7 +176,11 @@ import { WarehouseWeightMeasurementListService } from './Services/StandardLists/
 import { WarehouseWeightRoundingListService } from './Services/StandardLists/WarehouseWeightRoundingListService';
 import { HorseListService } from './Services/StandardLists/HorseListService';
 import { HorsePMService } from './Services/StandardPMs/HorsePMService';
-import {LogitudeGridExportToExcelExtendedPMService} from './Services/ExtendedPMs/LogitudeGridExportToExcelExtendedPMService';
+import { LogitudeGridExportToExcelExtendedPMService } from './Services/ExtendedPMs/LogitudeGridExportToExcelExtendedPMService';
+import { ShippingLineExtendedPMService } from './Services/ExtendedPMs/ShippingLineExtendedPMService';
+import { HorseGenderListService } from './Services/StandardLists/HorseGenderListService';
+import { PortGroupListService } from './Services/StandardLists/PortGroupListService';
+import { PortGroupPMService } from './Services/StandardPMs/PortGroupPMService';
 
 // Extended Lists
 import {CarrierExtendedListService} from './Services/ExtendedLists/CarrierExtendedListService';
@@ -210,8 +217,18 @@ import { ReportExecutionLogListService } from './Services/StandardLists/ReportEx
 import { ReportExecutionLogPMService } from './Services/StandardPMs/ReportExecutionLogPMService';
 import { ProductItemListService } from './Services/StandardLists/ProductItemListService';
 import { DocumentFileService } from './Services/DocumentServices/DocumentFileService';
-import { QuoteGroupSectionListService } from './Services/StandardLists/QuoteGroupSectionListService';
-
+ import { QuoteGroupSectionListService } from './Services/StandardLists/QuoteGroupSectionListService';
+ import { PortTimeZoneListService } from './Services/StandardLists/PortTimeZoneListService';
+import { PortTimeZonePMService } from './Services/StandardPMs/PortTimeZonePMService';
+import { CustomerTeamPMService } from './Services/StandardPMs/CustomerTeamPMService';
+import { CustomerTeamListService } from './Services/StandardLists/CustomerTeamListService';
+import { CustomerGroupPMService } from './Services/StandardPMs/CustomerGroupPMService';
+import { CustomerGroupListService } from './Services/StandardLists/CustomerGroupListService';
+import { MentionListService } from './Services/StandardLists/MentionListService';
+import { MentionPMService } from './Services/StandardPMs/MentionPMService';
+import { CarrierServiceLineListService } from './Services/StandardLists/CarrierServiceLineListService';
+import { WarehouseMenuButtonsHandler } from './Components/MenuButtons/WarehouseMenuButtonsHandler';
+ 
 export class ModuleProviders {
     public static GetInstance(name: string) {
 
@@ -376,6 +393,7 @@ export class ModuleProviders {
             case "TruckerMenuButtonsHandler": { myResult = new TruckerMenuButtonsHandler(); break; }
             case "AirlineMenuButtonsHandler": { myResult = new AirlineMenuButtonsHandler(); break; }
             case "AccountingPartnerMenuButtonsHandler": { myResult = new AccountingPartnerMenuButtonsHandler(); break; }
+            case "WarehouseMenuButtonsHandler": { myResult = new WarehouseMenuButtonsHandler(); break; }
             case "CarrierExtendedListService": { myResult = new CarrierExtendedListService(); break; }
             case "PortExtendedListService": { myResult = new PortExtendedListService(); break; }
             case "PaymentTermDateTypeListService": { myResult = new PaymentTermDateTypeListService(); break; }
@@ -390,6 +408,9 @@ export class ModuleProviders {
             case "FeaturePackageTypeListService": { myResult = new FeaturePackageTypeListService(); break; }
             case "MetodoPagoListService": { myResult = new MetodoPagoListService(); break; }
             case "UsoCFDIListService": { myResult = new UsoCFDIListService(); break; }
+            case "RegimenFiscalListService": { myResult = new RegimenFiscalListService(); break; }
+            case "PostalCodeListService": { myResult = new PostalCodeListService(); break; }
+            case "PostalCodePMService": { myResult = new PostalCodePMService(); break; }
             case "ComputingPartnerPMService": { myResult = new ComputingPartnerPMService(); break; }
             case "ComputingPartnerTranslationPMService": { myResult = new ComputingPartnerTranslationPMService(); break; }
             case "CustomerTenantAccessMenuButtonsHandler": { myResult = new CustomerTenantAccessMenuButtonsHandler(); break; }
@@ -424,9 +445,22 @@ export class ModuleProviders {
             case "ReportExecutionLogPMService": { myResult = new ReportExecutionLogPMService(); break; }
             case "ProductItemListService": { myResult = new ProductItemListService(); break; }
             case "DocumentFileService": { myResult = new DocumentFileService(); break; }
-            case "QuoteGroupSectionListService": { myResult = new QuoteGroupSectionListService(); break; }
+             case "QuoteGroupSectionListService": { myResult = new QuoteGroupSectionListService(); break; }
 
-        }
+             case "ShippingLineExtendedPMService": { myResult = new ShippingLineExtendedPMService(); break; }
+            case "PortTimeZoneListService": { myResult = new PortTimeZoneListService(); break; }
+            case "PortTimeZonePMService": { myResult = new PortTimeZonePMService(); break; }
+            case "CustomerTeamPMService": { myResult = new CustomerTeamPMService(); break; }
+            case "CustomerTeamListService": { myResult = new CustomerTeamListService(); break; }
+            case "CustomerGroupPMService": { myResult = new CustomerGroupPMService(); break; }
+            case "CustomerGroupListService": { myResult = new CustomerGroupListService(); break; }
+            case "MentionListService": { myResult = new MentionListService(); break; }
+            case "MentionPMService": { myResult = new MentionPMService(); break; }
+            case "CarrierServiceLineListService": { myResult = new CarrierServiceLineListService(); break; }
+            case "HorseGenderListService": { myResult = new HorseGenderListService(); break; }
+            case "PortGroupListService": { myResult = new PortGroupListService(); break; }
+            case "PortGroupPMService": { myResult = new PortGroupPMService(); break; }
+         }
 
         return myResult;
     }

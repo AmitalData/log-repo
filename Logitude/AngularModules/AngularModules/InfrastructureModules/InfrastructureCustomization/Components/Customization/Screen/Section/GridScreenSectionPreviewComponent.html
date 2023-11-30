@@ -1,0 +1,29 @@
+<style>
+	.Disabled {
+		opacity: 0.5;
+		pointer-events: none;
+	}
+</style>
+<table>
+	<tr style="height:30px;">
+		<td style="direction:rtl">
+			<button class="Button" style="width:40px;pointer-events: none;">New</button>
+		</td>
+	</tr>
+	<tr style="height:100%">
+		<td>
+			<div class="MediaFill">
+				<div class="SimpleGridView" style="background:#EFEFEF">
+					<div class="SimpleGridViewHeader">
+						<table>
+							<tr *ngIf="IsReady">
+								<td *ngFor="let screenField of ScreenFields;" style="width: 150px; min-width:150px; max-width:150px;" title="{{screenField.ObjectFieldCode | ObjectFieldTextCodeTranslationPipe}}">{{screenField.ObjectFieldCode | ObjectFieldTextCodeTranslationPipe}}</td>
+								<td style="width: 100%; min-width: 100%"></td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</td>
+	</tr>
+</table>

@@ -43,7 +43,20 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <td style="width:5px;" *ngIf="IsUpdateSalesChargesVisible">
+                                        <div></div>
+                                    </td>
 
+                                    <td [style.width.px]="UpdateSalesChargesMessageWidth + 70" *ngIf="IsUpdateSalesChargesVisible">
+                                        <div class="MediaFill">
+                                            <div class="MediaFillAbsolute OrangeInfo" style="top: 2px; bottom: 2px; padding: 0px;">
+                                                <div style="line-height: 25px; margin-left: 5px; float: left; color:black; font-size:11px;">{{UpdateSalesChargesMessage}}</div>
+                                                <div style="line-height: 25px; margin-left: 10px; float: left; width: 50px;">
+                                                    <button class="Button" style="margin-top: 1px;" [disabled]="!IsEditingEnabled" (click)="UpdateSalesChargesClicked()">Update</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
                                     <td>
                                         <div></div>
                                     </td>
@@ -80,19 +93,25 @@
                                     </td>
 
                                     <td style="width: 1px;" *ngIf="IsPriceCheckVisible">
-                                        <button id="{{'PriceCheck' | IdGeneratorPipe}}" class="Button" (click)="PriceCheck()" [disabled]="!IsEditingEnabled">{{'Quote.Features.QuotePriceCheck' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{'PriceCheck' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="PriceCheck()" [disabled]="!IsEditingEnabled">{{'Quote.Features.QuotePriceCheck' | TextCodeTranslationPipe}}</button>
+                                    </td>
+                                    <td style="width: 5px;" *ngIf="IsPriceCheckVisible">
+                                        <div></div>
+                                    </td>
+                                    <td style="width: 1px;" *ngIf="IsSalePriceCheckVisible">
+                                        <button id="{{'SalesLocalCharges' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="GenerateSalesLocalChargesClicked()" [disabled]="!IsEditingEnabled">{{'Quote.S.GenerateSalesLocalCharges' | TextCodeTranslationPipe}}</button>
                                     </td>
 
-                                    <td style="width: 5px;" *ngIf="IsPriceCheckVisible">
+                                    <td style="width: 5px;" *ngIf="IsSalePriceCheckVisible">
                                         <div></div>
                                     </td>
 
                                     <td style="width: 1px;">
-                                        <button class="Button" id="{{ 'AddCharges' | IdGeneratorPipe}}" (click)="AddChargeClicked()" [disabled]="!IsEditingEnabled">{{'Quote.B.Charges.AddCharge' | TextCodeTranslationPipe}}</button>
+                                        <button class="Button" id="{{ 'AddCharges' | IdGeneratorAsyncPipe | async}}" (click)="AddChargeClicked()" [disabled]="!IsEditingEnabled">{{'Quote.B.Charges.AddCharge' | TextCodeTranslationPipe}}</button>
                                     </td>
 
                                     <td style="width: 1px; padding-left: 5px;">
-                                        <button id="{{'DeleteAll' | IdGeneratorPipe}}" class="Button" [disabled]="IsEditingEnabled == false || ItemsSource.Length == 0" (click)="DeleteAllClicked()">Delete All</button>
+                                        <button id="{{'DeleteAll' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="IsEditingEnabled == false || ItemsSource.Length == 0" (click)="DeleteAllClicked()">Delete All</button>
                                     </td>
 
                                     <td style="width: 1px; padding-left: 5px;" *ngIf="DisplayTariffs == true">
@@ -109,7 +128,7 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="35" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                <logitude-edit-grid GridWidth="100%" [HeaderHeight]="35" GridHeight="100%" [ItemSource]="ItemsSource" (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <!-- Charges Type -->
                                     <log-column [width]="'150'" [SortFieldName]="'ChargesTypeCodeName'" [header]="'QuoteCharge.CH.ChargesTypeIdListLable' | TextCodeTranslationPipe">
@@ -334,6 +353,21 @@
                                         </ng-template>
                                     </log-column>
 
+                                    <!-- Markup currency -->
+                                    <log-column *ngIf ="IsMarkUpCurrencyHasFeatureToggle" [SortFieldName]="'MarkUpCurrencyId'" [width]="'100'" [header]="'Markup Currency'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IsEnabled]="item.IsMarkupCurrencyValid">
+                                                <div *ngIf="logcelltemplate.IsDisplayMode" class="MediaFillAbsolute">
+                                                    {{item.MarkUpCurrencyCode}}
+                                                </div>
+
+                                                <div *ngIf="logcelltemplate.IsEditMode && item.IsMarkupCurrencyValid">
+                                                    <ComboBox [FocusOnMe]="'true'" (SelectedItemChanged)="item.MarkUpCurrencySelectedItem = $event" [ItemsSource]="item.MarkupCurrencyList" [SelectedItem]="item.MarkUpCurrencySelectedItem" [Binding]="'CurrencyCode'"></ComboBox>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
                                     <!-- Sale Price -->
                                     <log-column [SortFieldName]="'SaleUnitPrice'" [width]="'100'">
                                         <ng-template let-item>
@@ -494,8 +528,32 @@
 
                                                 <div style="height: 100%; width: 100%; position:relative;">
                                                     <div class="CenterCenter" style="width: 16px;">
-                                                        <CheckBox *ngIf="item.IsAllInCheckBoxVisible" [IsChecked]="item.IsAllIN" (Checked)="item.IsAllIN = $event" [IsEnabled]="item.IsEditingEnabled"></CheckBox>
+                                                        <CheckBox *ngIf="item.IsAllInCheckBoxVisible" [IsChecked]="item.IsAllIN" (Checked)="item.IsAllIN = $event" [IsEnabled]="item.IsEditingEnabled && !IsAllowingMultipleFreightCharges"></CheckBox>
                                                     </div>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Sale  Tariff Link -->
+                                    <log-column *ngIf="IsSalePriceCheckVisible" [SortFieldName]="'SaleTariffNumber'" [header]="'Sale Tariff'" [width]="'90'" [Alignment]="'center'">
+                                        <ng-template let-item>
+                                            <log-cell-template [TabIndex]="-1" [Alignment]="'center'">
+                                                <div style="width: 100%; height: 100%; position: relative;">
+                                                    <table>
+                                                        <tr *ngIf="item.SaleTariffNumber != null">
+                                                            <td>
+                                                                <div class="MediaFill">
+                                                                    <Hyperlink class="CenterCenter" [FontSize]="12" (click)="EditSaleTariffClicked(item)">{{ item.SaleTariffNumber}}</Hyperlink>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="deleteIcon" style="height: 20px;" [class.Disable]="!item.IsEditingEnabled">
+                                                                    <img class="LeftCenter" style="width: 14px; height: 14px; cursor: pointer;" src="./Images/RedX2.png" (click)="DeleteSaleTariff(item)" />
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

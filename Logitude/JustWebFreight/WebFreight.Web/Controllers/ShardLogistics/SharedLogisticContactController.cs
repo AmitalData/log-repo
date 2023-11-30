@@ -21,6 +21,7 @@ namespace WebFreight.Web.Controllers.ShardLogistics
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 CardContactRepository cardContactRepository = new CardContactRepository(tenant);
 
@@ -54,7 +55,11 @@ namespace WebFreight.Web.Controllers.ShardLogistics
 
             try
             {
-                Authentication();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("SharedLogisticContact", sharedLogisticsContact.Tenant, authToken.Tenant);
+
 
                 SharedLogisticContactHelper sharedLogisticContactHelper = new SharedLogisticContactHelper();
                 sharedLogisticContactHelper.InternetAccessInvitation(sharedLogisticsContact, null);

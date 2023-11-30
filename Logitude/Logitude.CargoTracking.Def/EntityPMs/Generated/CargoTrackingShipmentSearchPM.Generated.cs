@@ -64,12 +64,12 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime shipmentDate ;
+	  private DateTime? shipmentDate ;
 	  	  
        
 	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime ShipmentDate  
+       public DateTime? ShipmentDate  
 	   {
 	    
 	     get
@@ -80,7 +80,7 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		 {
 		   if(shipmentDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentDate",OldValue=shipmentDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ShipmentDate",OldValue=shipmentDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   shipmentDate=value;
 		   }
@@ -177,6 +177,29 @@ namespace Logitude.CargoTracking.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReferenceType",OldValue=referenceType,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   referenceType=value;
+		   }
+			
+		 }
+	   }
+	  private string referenceFromShipmentId ;
+	  	  
+       
+	   [CustomValidation(typeof(CargoTrackingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ReferenceFromShipmentId  
+	   {
+	    
+	     get
+		{
+		   return referenceFromShipmentId;
+		 }
+		 set
+		 {
+		   if(referenceFromShipmentId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ReferenceFromShipmentId",OldValue=referenceFromShipmentId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   referenceFromShipmentId=value;
 		   }
 			
 		 }

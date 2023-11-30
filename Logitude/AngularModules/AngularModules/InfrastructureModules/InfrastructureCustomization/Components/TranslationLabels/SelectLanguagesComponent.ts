@@ -59,6 +59,9 @@ export class SelectLanguagesComponent {
         logitudeWindow.IsFillScreen = true;
         logitudeWindow.Title = "Translate Labels";
         logitudeWindow.WindowArgs = this.selectedLanguageCode;
+        let windowArgs: any = {};
+        windowArgs.TranslationLanguageCode = this.selectedLanguageCode;
+        logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/TranslationLabels/TranslateLabelsComponent');
         this.CurrentSession.CloseCurrentWindow();
     }

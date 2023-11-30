@@ -124,23 +124,35 @@
             this.label41 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.FactInvoiceslabel = new System.Windows.Forms.Label();
+            this.DimVatTypesLabel = new System.Windows.Forms.Label();
+            this.label46 = new System.Windows.Forms.Label();
+            this.DWVatTypeslabel = new System.Windows.Forms.Label();
+            this.label49 = new System.Windows.Forms.Label();
+            this.FactARInvoicesLabel = new System.Windows.Forms.Label();
+            this.label51 = new System.Windows.Forms.Label();
+            this.label40 = new System.Windows.Forms.Label();
+            this.DimShipmentSubTypesLabel = new System.Windows.Forms.Label();
+            this.label53 = new System.Windows.Forms.Label();
+            this.FactContainersLabel = new System.Windows.Forms.Label();
+            this.label48 = new System.Windows.Forms.Label();
+            this.DWContainersLabel = new System.Windows.Forms.Label();
+            this.DimPackageTypesLabel = new System.Windows.Forms.Label();
+            this.label52 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // DestinationConnectionlTextBox
             // 
-            this.DestinationConnectionlTextBox.Location = new System.Drawing.Point(293, 55);
-            this.DestinationConnectionlTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.DestinationConnectionlTextBox.Location = new System.Drawing.Point(220, 45);
             this.DestinationConnectionlTextBox.Name = "DestinationConnectionlTextBox";
-            this.DestinationConnectionlTextBox.Size = new System.Drawing.Size(644, 22);
+            this.DestinationConnectionlTextBox.Size = new System.Drawing.Size(484, 20);
             this.DestinationConnectionlTextBox.TabIndex = 70;
             this.DestinationConnectionlTextBox.TextChanged += new System.EventHandler(this.DestinationConnectionlTextBox_TextChanged);
             // 
             // SourceConnectionlTextBox
             // 
-            this.SourceConnectionlTextBox.Location = new System.Drawing.Point(293, 20);
-            this.SourceConnectionlTextBox.Margin = new System.Windows.Forms.Padding(4);
+            this.SourceConnectionlTextBox.Location = new System.Drawing.Point(220, 16);
             this.SourceConnectionlTextBox.Name = "SourceConnectionlTextBox";
-            this.SourceConnectionlTextBox.Size = new System.Drawing.Size(644, 22);
+            this.SourceConnectionlTextBox.Size = new System.Drawing.Size(484, 20);
             this.SourceConnectionlTextBox.TabIndex = 69;
             this.SourceConnectionlTextBox.TextChanged += new System.EventHandler(this.SourceConnectionlTextBox_TextChanged);
             // 
@@ -150,10 +162,9 @@
             this.DestinationConnectionlabel.BackColor = System.Drawing.SystemColors.Control;
             this.DestinationConnectionlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DestinationConnectionlabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DestinationConnectionlabel.Location = new System.Drawing.Point(31, 55);
-            this.DestinationConnectionlabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DestinationConnectionlabel.Location = new System.Drawing.Point(23, 45);
             this.DestinationConnectionlabel.Name = "DestinationConnectionlabel";
-            this.DestinationConnectionlabel.Size = new System.Drawing.Size(214, 25);
+            this.DestinationConnectionlabel.Size = new System.Drawing.Size(175, 20);
             this.DestinationConnectionlabel.TabIndex = 68;
             this.DestinationConnectionlabel.Text = "Destination Connection";
             // 
@@ -163,10 +174,9 @@
             this.SourceConnectionlabel.BackColor = System.Drawing.SystemColors.Control;
             this.SourceConnectionlabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.SourceConnectionlabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.SourceConnectionlabel.Location = new System.Drawing.Point(31, 21);
-            this.SourceConnectionlabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.SourceConnectionlabel.Location = new System.Drawing.Point(23, 17);
             this.SourceConnectionlabel.Name = "SourceConnectionlabel";
-            this.SourceConnectionlabel.Size = new System.Drawing.Size(180, 25);
+            this.SourceConnectionlabel.Size = new System.Drawing.Size(145, 20);
             this.SourceConnectionlabel.TabIndex = 67;
             this.SourceConnectionlabel.Text = "Source Connection";
             // 
@@ -176,18 +186,16 @@
             this.BuildWarehouseData.BackColor = System.Drawing.SystemColors.Control;
             this.BuildWarehouseData.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.BuildWarehouseData.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.BuildWarehouseData.Location = new System.Drawing.Point(31, 90);
-            this.BuildWarehouseData.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.BuildWarehouseData.Location = new System.Drawing.Point(23, 73);
             this.BuildWarehouseData.Name = "BuildWarehouseData";
-            this.BuildWarehouseData.Size = new System.Drawing.Size(0, 25);
+            this.BuildWarehouseData.Size = new System.Drawing.Size(0, 20);
             this.BuildWarehouseData.TabIndex = 54;
             // 
             // UpdateWarehouseDataButton
             // 
-            this.UpdateWarehouseDataButton.Location = new System.Drawing.Point(293, 87);
-            this.UpdateWarehouseDataButton.Margin = new System.Windows.Forms.Padding(4);
+            this.UpdateWarehouseDataButton.Location = new System.Drawing.Point(220, 71);
             this.UpdateWarehouseDataButton.Name = "UpdateWarehouseDataButton";
-            this.UpdateWarehouseDataButton.Size = new System.Drawing.Size(645, 28);
+            this.UpdateWarehouseDataButton.Size = new System.Drawing.Size(484, 23);
             this.UpdateWarehouseDataButton.TabIndex = 55;
             this.UpdateWarehouseDataButton.Text = "Update Warehouse Data";
             this.UpdateWarehouseDataButton.UseVisualStyleBackColor = true;
@@ -198,10 +206,9 @@
             this.DimChargesTypesLabel.AutoSize = true;
             this.DimChargesTypesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DimChargesTypesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimChargesTypesLabel.Location = new System.Drawing.Point(1028, 623);
-            this.DimChargesTypesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimChargesTypesLabel.Location = new System.Drawing.Point(771, 506);
             this.DimChargesTypesLabel.Name = "DimChargesTypesLabel";
-            this.DimChargesTypesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimChargesTypesLabel.Size = new System.Drawing.Size(0, 20);
             this.DimChargesTypesLabel.TabIndex = 217;
             // 
             // label29
@@ -210,10 +217,9 @@
             this.label29.BackColor = System.Drawing.SystemColors.Control;
             this.label29.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label29.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label29.Location = new System.Drawing.Point(744, 624);
-            this.label29.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label29.Location = new System.Drawing.Point(558, 507);
             this.label29.Name = "label29";
-            this.label29.Size = new System.Drawing.Size(219, 25);
+            this.label29.Size = new System.Drawing.Size(174, 20);
             this.label29.TabIndex = 216;
             this.label29.Text = "Dimension ChargeType";
             // 
@@ -223,10 +229,9 @@
             this.label24.BackColor = System.Drawing.SystemColors.Control;
             this.label24.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label24.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label24.Location = new System.Drawing.Point(733, 320);
-            this.label24.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label24.Location = new System.Drawing.Point(550, 260);
             this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(140, 25);
+            this.label24.Size = new System.Drawing.Size(113, 20);
             this.label24.TabIndex = 215;
             this.label24.Text = "DW ARInvoice";
             // 
@@ -236,10 +241,9 @@
             this.label25.BackColor = System.Drawing.SystemColors.Control;
             this.label25.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label25.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label25.Location = new System.Drawing.Point(733, 287);
-            this.label25.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label25.Location = new System.Drawing.Point(550, 233);
             this.label25.Name = "label25";
-            this.label25.Size = new System.Drawing.Size(177, 25);
+            this.label25.Size = new System.Drawing.Size(143, 20);
             this.label25.TabIndex = 214;
             this.label25.Text = "DW ARInvoiceLine";
             // 
@@ -249,10 +253,9 @@
             this.label35.BackColor = System.Drawing.SystemColors.Control;
             this.label35.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label35.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label35.Location = new System.Drawing.Point(733, 353);
-            this.label35.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label35.Location = new System.Drawing.Point(550, 287);
             this.label35.Name = "label35";
-            this.label35.Size = new System.Drawing.Size(166, 25);
+            this.label35.Size = new System.Drawing.Size(130, 20);
             this.label35.TabIndex = 212;
             this.label35.Text = "DW  ChargeType";
             // 
@@ -261,10 +264,9 @@
             this.DWAPInvoicesLabel.AutoSize = true;
             this.DWAPInvoicesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWAPInvoicesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWAPInvoicesLabel.Location = new System.Drawing.Point(1017, 218);
-            this.DWAPInvoicesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWAPInvoicesLabel.Location = new System.Drawing.Point(763, 177);
             this.DWAPInvoicesLabel.Name = "DWAPInvoicesLabel";
-            this.DWAPInvoicesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWAPInvoicesLabel.Size = new System.Drawing.Size(0, 20);
             this.DWAPInvoicesLabel.TabIndex = 211;
             // 
             // DWShipmentReceivablesLabel
@@ -272,10 +274,9 @@
             this.DWShipmentReceivablesLabel.AutoSize = true;
             this.DWShipmentReceivablesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWShipmentReceivablesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWShipmentReceivablesLabel.Location = new System.Drawing.Point(1017, 252);
-            this.DWShipmentReceivablesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWShipmentReceivablesLabel.Location = new System.Drawing.Point(763, 205);
             this.DWShipmentReceivablesLabel.Name = "DWShipmentReceivablesLabel";
-            this.DWShipmentReceivablesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWShipmentReceivablesLabel.Size = new System.Drawing.Size(0, 20);
             this.DWShipmentReceivablesLabel.TabIndex = 210;
             // 
             // DWARInvoiceLinesLabel
@@ -283,10 +284,9 @@
             this.DWARInvoiceLinesLabel.AutoSize = true;
             this.DWARInvoiceLinesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWARInvoiceLinesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWARInvoiceLinesLabel.Location = new System.Drawing.Point(1017, 286);
-            this.DWARInvoiceLinesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWARInvoiceLinesLabel.Location = new System.Drawing.Point(763, 232);
             this.DWARInvoiceLinesLabel.Name = "DWARInvoiceLinesLabel";
-            this.DWARInvoiceLinesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWARInvoiceLinesLabel.Size = new System.Drawing.Size(0, 20);
             this.DWARInvoiceLinesLabel.TabIndex = 209;
             // 
             // DWARInvoicesLabel
@@ -294,10 +294,9 @@
             this.DWARInvoicesLabel.AutoSize = true;
             this.DWARInvoicesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWARInvoicesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWARInvoicesLabel.Location = new System.Drawing.Point(1017, 319);
-            this.DWARInvoicesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWARInvoicesLabel.Location = new System.Drawing.Point(763, 259);
             this.DWARInvoicesLabel.Name = "DWARInvoicesLabel";
-            this.DWARInvoicesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWARInvoicesLabel.Size = new System.Drawing.Size(0, 20);
             this.DWARInvoicesLabel.TabIndex = 208;
             // 
             // DWAPInvoiceLinesLabel
@@ -305,10 +304,9 @@
             this.DWAPInvoiceLinesLabel.AutoSize = true;
             this.DWAPInvoiceLinesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWAPInvoiceLinesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWAPInvoiceLinesLabel.Location = new System.Drawing.Point(1017, 185);
-            this.DWAPInvoiceLinesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWAPInvoiceLinesLabel.Location = new System.Drawing.Point(763, 150);
             this.DWAPInvoiceLinesLabel.Name = "DWAPInvoiceLinesLabel";
-            this.DWAPInvoiceLinesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWAPInvoiceLinesLabel.Size = new System.Drawing.Size(0, 20);
             this.DWAPInvoiceLinesLabel.TabIndex = 207;
             // 
             // DWShipmentPayablesLabel
@@ -316,10 +314,9 @@
             this.DWShipmentPayablesLabel.AutoSize = true;
             this.DWShipmentPayablesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWShipmentPayablesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWShipmentPayablesLabel.Location = new System.Drawing.Point(1017, 154);
-            this.DWShipmentPayablesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWShipmentPayablesLabel.Location = new System.Drawing.Point(763, 125);
             this.DWShipmentPayablesLabel.Name = "DWShipmentPayablesLabel";
-            this.DWShipmentPayablesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWShipmentPayablesLabel.Size = new System.Drawing.Size(0, 20);
             this.DWShipmentPayablesLabel.TabIndex = 206;
             // 
             // label22
@@ -327,10 +324,9 @@
             this.label22.AutoSize = true;
             this.label22.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label22.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label22.Location = new System.Drawing.Point(732, 156);
-            this.label22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label22.Location = new System.Drawing.Point(549, 127);
             this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(210, 25);
+            this.label22.Size = new System.Drawing.Size(168, 20);
             this.label22.TabIndex = 205;
             this.label22.Text = "DW Shipment Payable";
             // 
@@ -340,10 +336,9 @@
             this.label23.BackColor = System.Drawing.SystemColors.Control;
             this.label23.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label23.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label23.Location = new System.Drawing.Point(733, 219);
-            this.label23.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label23.Location = new System.Drawing.Point(550, 178);
             this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(140, 25);
+            this.label23.Size = new System.Drawing.Size(111, 20);
             this.label23.TabIndex = 204;
             this.label23.Text = "DW APInvoice";
             // 
@@ -353,10 +348,9 @@
             this.label26.BackColor = System.Drawing.SystemColors.Control;
             this.label26.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label26.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label26.Location = new System.Drawing.Point(733, 254);
-            this.label26.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label26.Location = new System.Drawing.Point(550, 206);
             this.label26.Name = "label26";
-            this.label26.Size = new System.Drawing.Size(230, 25);
+            this.label26.Size = new System.Drawing.Size(186, 20);
             this.label26.TabIndex = 203;
             this.label26.Text = "DW ShipmentReceivable";
             // 
@@ -366,10 +360,9 @@
             this.label27.BackColor = System.Drawing.SystemColors.Control;
             this.label27.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label27.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label27.Location = new System.Drawing.Point(733, 186);
-            this.label27.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label27.Location = new System.Drawing.Point(550, 151);
             this.label27.Name = "label27";
-            this.label27.Size = new System.Drawing.Size(177, 25);
+            this.label27.Size = new System.Drawing.Size(141, 20);
             this.label27.TabIndex = 202;
             this.label27.Text = "DW APInvoiceLine";
             // 
@@ -378,10 +371,9 @@
             this.DWShipmentComputedFieldsLabel.AutoSize = true;
             this.DWShipmentComputedFieldsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWShipmentComputedFieldsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWShipmentComputedFieldsLabel.Location = new System.Drawing.Point(305, 156);
-            this.DWShipmentComputedFieldsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWShipmentComputedFieldsLabel.Location = new System.Drawing.Point(229, 127);
             this.DWShipmentComputedFieldsLabel.Name = "DWShipmentComputedFieldsLabel";
-            this.DWShipmentComputedFieldsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWShipmentComputedFieldsLabel.Size = new System.Drawing.Size(0, 20);
             this.DWShipmentComputedFieldsLabel.TabIndex = 201;
             // 
             // label16
@@ -389,10 +381,9 @@
             this.label16.AutoSize = true;
             this.label16.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.label16.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label16.Location = new System.Drawing.Point(15, 156);
-            this.label16.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label16.Location = new System.Drawing.Point(11, 127);
             this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(225, 25);
+            this.label16.Size = new System.Drawing.Size(182, 20);
             this.label16.TabIndex = 200;
             this.label16.Text = "DW ShipmentComputed";
             // 
@@ -402,10 +393,9 @@
             this.label17.BackColor = System.Drawing.SystemColors.Control;
             this.label17.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label17.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label17.Location = new System.Drawing.Point(17, 753);
-            this.label17.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label17.Location = new System.Drawing.Point(13, 612);
             this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(189, 25);
+            this.label17.Size = new System.Drawing.Size(151, 20);
             this.label17.TabIndex = 199;
             this.label17.Text = "Dimension Currency";
             // 
@@ -415,11 +405,10 @@
             this.label19.BackColor = System.Drawing.SystemColors.Control;
             this.label19.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label19.Location = new System.Drawing.Point(17, 657);
-            this.label19.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label19.Location = new System.Drawing.Point(13, 534);
             this.label19.Name = "label19";
             this.label19.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label19.Size = new System.Drawing.Size(171, 25);
+            this.label19.Size = new System.Drawing.Size(138, 20);
             this.label19.TabIndex = 198;
             this.label19.Text = "Dimension Tenant";
             // 
@@ -429,10 +418,9 @@
             this.label20.BackColor = System.Drawing.SystemColors.Control;
             this.label20.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label20.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label20.Location = new System.Drawing.Point(17, 721);
-            this.label20.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label20.Location = new System.Drawing.Point(13, 586);
             this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(184, 25);
+            this.label20.Size = new System.Drawing.Size(151, 20);
             this.label20.TabIndex = 197;
             this.label20.Text = "Dimension Incoterm";
             // 
@@ -442,10 +430,9 @@
             this.label21.BackColor = System.Drawing.SystemColors.Control;
             this.label21.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label21.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label21.Location = new System.Drawing.Point(17, 689);
-            this.label21.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label21.Location = new System.Drawing.Point(13, 560);
             this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(210, 25);
+            this.label21.Size = new System.Drawing.Size(173, 20);
             this.label21.TabIndex = 196;
             this.label21.Text = "Dimension Department";
             // 
@@ -455,10 +442,9 @@
             this.DimIncotermsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DimIncotermsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DimIncotermsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimIncotermsLabel.Location = new System.Drawing.Point(308, 721);
-            this.DimIncotermsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimIncotermsLabel.Location = new System.Drawing.Point(231, 586);
             this.DimIncotermsLabel.Name = "DimIncotermsLabel";
-            this.DimIncotermsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimIncotermsLabel.Size = new System.Drawing.Size(0, 20);
             this.DimIncotermsLabel.TabIndex = 195;
             // 
             // DimDepartmentsLabel
@@ -467,10 +453,9 @@
             this.DimDepartmentsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DimDepartmentsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DimDepartmentsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimDepartmentsLabel.Location = new System.Drawing.Point(308, 689);
-            this.DimDepartmentsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimDepartmentsLabel.Location = new System.Drawing.Point(231, 560);
             this.DimDepartmentsLabel.Name = "DimDepartmentsLabel";
-            this.DimDepartmentsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimDepartmentsLabel.Size = new System.Drawing.Size(0, 20);
             this.DimDepartmentsLabel.TabIndex = 194;
             // 
             // DimTenantsLabel
@@ -479,11 +464,10 @@
             this.DimTenantsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DimTenantsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DimTenantsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimTenantsLabel.Location = new System.Drawing.Point(308, 657);
-            this.DimTenantsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimTenantsLabel.Location = new System.Drawing.Point(231, 534);
             this.DimTenantsLabel.Name = "DimTenantsLabel";
             this.DimTenantsLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.DimTenantsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimTenantsLabel.Size = new System.Drawing.Size(0, 20);
             this.DimTenantsLabel.TabIndex = 193;
             // 
             // DimCurrenciesLabel
@@ -492,10 +476,9 @@
             this.DimCurrenciesLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DimCurrenciesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DimCurrenciesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimCurrenciesLabel.Location = new System.Drawing.Point(308, 753);
-            this.DimCurrenciesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimCurrenciesLabel.Location = new System.Drawing.Point(231, 612);
             this.DimCurrenciesLabel.Name = "DimCurrenciesLabel";
-            this.DimCurrenciesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimCurrenciesLabel.Size = new System.Drawing.Size(0, 20);
             this.DimCurrenciesLabel.TabIndex = 192;
             // 
             // label12
@@ -504,10 +487,9 @@
             this.label12.BackColor = System.Drawing.SystemColors.Control;
             this.label12.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label12.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label12.Location = new System.Drawing.Point(16, 219);
-            this.label12.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label12.Location = new System.Drawing.Point(12, 178);
             this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(250, 25);
+            this.label12.Size = new System.Drawing.Size(204, 20);
             this.label12.TabIndex = 183;
             this.label12.Text = "DW Shipment  Master Data";
             // 
@@ -517,10 +499,9 @@
             this.label11.BackColor = System.Drawing.SystemColors.Control;
             this.label11.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label11.Location = new System.Drawing.Point(17, 789);
-            this.label11.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label11.Location = new System.Drawing.Point(13, 641);
             this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(138, 25);
+            this.label11.Size = new System.Drawing.Size(113, 20);
             this.label11.TabIndex = 182;
             this.label11.Text = "Fact Shipment";
             // 
@@ -530,11 +511,10 @@
             this.label10.BackColor = System.Drawing.SystemColors.Control;
             this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label10.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label10.Location = new System.Drawing.Point(15, 560);
-            this.label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label10.Location = new System.Drawing.Point(11, 455);
             this.label10.Name = "label10";
             this.label10.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.label10.Size = new System.Drawing.Size(172, 25);
+            this.label10.Size = new System.Drawing.Size(140, 20);
             this.label10.TabIndex = 181;
             this.label10.Text = "Dimension Partner";
             // 
@@ -544,10 +524,9 @@
             this.label9.BackColor = System.Drawing.SystemColors.Control;
             this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label9.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label9.Location = new System.Drawing.Point(15, 624);
-            this.label9.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label9.Location = new System.Drawing.Point(11, 507);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(150, 25);
+            this.label9.Size = new System.Drawing.Size(122, 20);
             this.label9.TabIndex = 180;
             this.label9.Text = "Dimension User";
             // 
@@ -557,10 +536,9 @@
             this.label8.BackColor = System.Drawing.SystemColors.Control;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label8.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label8.Location = new System.Drawing.Point(15, 592);
-            this.label8.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label8.Location = new System.Drawing.Point(11, 481);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(154, 25);
+            this.label8.Size = new System.Drawing.Size(125, 20);
             this.label8.TabIndex = 179;
             this.label8.Text = "Dimension Ports";
             // 
@@ -570,10 +548,9 @@
             this.label7.BackColor = System.Drawing.SystemColors.Control;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label7.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label7.Location = new System.Drawing.Point(15, 386);
-            this.label7.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label7.Location = new System.Drawing.Point(11, 314);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(136, 25);
+            this.label7.Size = new System.Drawing.Size(109, 20);
             this.label7.TabIndex = 178;
             this.label7.Text = "DW Customer";
             // 
@@ -583,10 +560,9 @@
             this.label6.BackColor = System.Drawing.SystemColors.Control;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label6.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label6.Location = new System.Drawing.Point(15, 352);
-            this.label6.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label6.Location = new System.Drawing.Point(11, 286);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(119, 25);
+            this.label6.Size = new System.Drawing.Size(96, 20);
             this.label6.TabIndex = 177;
             this.label6.Text = "DW Contact";
             // 
@@ -596,10 +572,9 @@
             this.label5.BackColor = System.Drawing.SystemColors.Control;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label5.Location = new System.Drawing.Point(16, 320);
-            this.label5.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label5.Location = new System.Drawing.Point(12, 260);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(92, 25);
+            this.label5.Size = new System.Drawing.Size(74, 20);
             this.label5.TabIndex = 176;
             this.label5.Text = "DW User";
             // 
@@ -609,10 +584,9 @@
             this.label4.BackColor = System.Drawing.SystemColors.Control;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label4.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label4.Location = new System.Drawing.Point(16, 287);
-            this.label4.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label4.Location = new System.Drawing.Point(12, 233);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(86, 25);
+            this.label4.Size = new System.Drawing.Size(69, 20);
             this.label4.TabIndex = 175;
             this.label4.Text = "DW Port";
             // 
@@ -622,10 +596,9 @@
             this.label3.BackColor = System.Drawing.SystemColors.Control;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label3.Location = new System.Drawing.Point(16, 254);
-            this.label3.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label3.Location = new System.Drawing.Point(12, 206);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(114, 25);
+            this.label3.Size = new System.Drawing.Size(92, 20);
             this.label3.TabIndex = 174;
             this.label3.Text = "DW Partner";
             // 
@@ -635,10 +608,9 @@
             this.label1.BackColor = System.Drawing.SystemColors.Control;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label1.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label1.Location = new System.Drawing.Point(16, 186);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(12, 151);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(139, 25);
+            this.label1.Size = new System.Drawing.Size(112, 20);
             this.label1.TabIndex = 173;
             this.label1.Text = "DW Shipment ";
             // 
@@ -648,10 +620,9 @@
             this.DimUsersLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DimUsersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DimUsersLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimUsersLabel.Location = new System.Drawing.Point(305, 624);
-            this.DimUsersLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimUsersLabel.Location = new System.Drawing.Point(229, 507);
             this.DimUsersLabel.Name = "DimUsersLabel";
-            this.DimUsersLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimUsersLabel.Size = new System.Drawing.Size(0, 20);
             this.DimUsersLabel.TabIndex = 172;
             // 
             // DimPortsLabel
@@ -660,10 +631,9 @@
             this.DimPortsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DimPortsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DimPortsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimPortsLabel.Location = new System.Drawing.Point(305, 592);
-            this.DimPortsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimPortsLabel.Location = new System.Drawing.Point(229, 481);
             this.DimPortsLabel.Name = "DimPortsLabel";
-            this.DimPortsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimPortsLabel.Size = new System.Drawing.Size(0, 20);
             this.DimPortsLabel.TabIndex = 171;
             // 
             // DWShipmentsLabel
@@ -672,10 +642,9 @@
             this.DWShipmentsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DWShipmentsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DWShipmentsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWShipmentsLabel.Location = new System.Drawing.Point(305, 186);
-            this.DWShipmentsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWShipmentsLabel.Location = new System.Drawing.Point(229, 151);
             this.DWShipmentsLabel.Name = "DWShipmentsLabel";
-            this.DWShipmentsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWShipmentsLabel.Size = new System.Drawing.Size(0, 20);
             this.DWShipmentsLabel.TabIndex = 162;
             // 
             // DWShipmentMasterDatasLabel
@@ -684,10 +653,9 @@
             this.DWShipmentMasterDatasLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DWShipmentMasterDatasLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DWShipmentMasterDatasLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWShipmentMasterDatasLabel.Location = new System.Drawing.Point(305, 219);
-            this.DWShipmentMasterDatasLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWShipmentMasterDatasLabel.Location = new System.Drawing.Point(229, 178);
             this.DWShipmentMasterDatasLabel.Name = "DWShipmentMasterDatasLabel";
-            this.DWShipmentMasterDatasLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWShipmentMasterDatasLabel.Size = new System.Drawing.Size(0, 20);
             this.DWShipmentMasterDatasLabel.TabIndex = 167;
             // 
             // DWCardsLabel
@@ -696,10 +664,9 @@
             this.DWCardsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DWCardsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DWCardsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWCardsLabel.Location = new System.Drawing.Point(305, 254);
-            this.DWCardsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWCardsLabel.Location = new System.Drawing.Point(229, 206);
             this.DWCardsLabel.Name = "DWCardsLabel";
-            this.DWCardsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWCardsLabel.Size = new System.Drawing.Size(0, 20);
             this.DWCardsLabel.TabIndex = 163;
             // 
             // DWCustomersLabel
@@ -708,10 +675,9 @@
             this.DWCustomersLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DWCustomersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DWCustomersLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWCustomersLabel.Location = new System.Drawing.Point(305, 386);
-            this.DWCustomersLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWCustomersLabel.Location = new System.Drawing.Point(229, 314);
             this.DWCustomersLabel.Name = "DWCustomersLabel";
-            this.DWCustomersLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWCustomersLabel.Size = new System.Drawing.Size(0, 20);
             this.DWCustomersLabel.TabIndex = 166;
             // 
             // DimCardsLabel
@@ -720,11 +686,10 @@
             this.DimCardsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DimCardsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DimCardsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimCardsLabel.Location = new System.Drawing.Point(305, 560);
-            this.DimCardsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimCardsLabel.Location = new System.Drawing.Point(229, 455);
             this.DimCardsLabel.Name = "DimCardsLabel";
             this.DimCardsLabel.RightToLeft = System.Windows.Forms.RightToLeft.No;
-            this.DimCardsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimCardsLabel.Size = new System.Drawing.Size(0, 20);
             this.DimCardsLabel.TabIndex = 170;
             // 
             // FactShipmentsLabel
@@ -733,10 +698,9 @@
             this.FactShipmentsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.FactShipmentsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FactShipmentsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.FactShipmentsLabel.Location = new System.Drawing.Point(308, 789);
-            this.FactShipmentsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.FactShipmentsLabel.Location = new System.Drawing.Point(231, 641);
             this.FactShipmentsLabel.Name = "FactShipmentsLabel";
-            this.FactShipmentsLabel.Size = new System.Drawing.Size(0, 25);
+            this.FactShipmentsLabel.Size = new System.Drawing.Size(0, 20);
             this.FactShipmentsLabel.TabIndex = 169;
             // 
             // DWContactsLabel
@@ -745,10 +709,9 @@
             this.DWContactsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DWContactsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DWContactsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWContactsLabel.Location = new System.Drawing.Point(305, 352);
-            this.DWContactsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWContactsLabel.Location = new System.Drawing.Point(229, 286);
             this.DWContactsLabel.Name = "DWContactsLabel";
-            this.DWContactsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWContactsLabel.Size = new System.Drawing.Size(0, 20);
             this.DWContactsLabel.TabIndex = 165;
             // 
             // DWChargesTypeslabel
@@ -756,10 +719,9 @@
             this.DWChargesTypeslabel.AutoSize = true;
             this.DWChargesTypeslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWChargesTypeslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWChargesTypeslabel.Location = new System.Drawing.Point(1020, 353);
-            this.DWChargesTypeslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWChargesTypeslabel.Location = new System.Drawing.Point(765, 287);
             this.DWChargesTypeslabel.Name = "DWChargesTypeslabel";
-            this.DWChargesTypeslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWChargesTypeslabel.Size = new System.Drawing.Size(0, 20);
             this.DWChargesTypeslabel.TabIndex = 218;
             // 
             // DWUsersLabel
@@ -767,11 +729,10 @@
             this.DWUsersLabel.AutoSize = true;
             this.DWUsersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWUsersLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWUsersLabel.Location = new System.Drawing.Point(308, 319);
-            this.DWUsersLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWUsersLabel.Location = new System.Drawing.Point(231, 259);
             this.DWUsersLabel.Name = "DWUsersLabel";
             this.DWUsersLabel.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
-            this.DWUsersLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWUsersLabel.Size = new System.Drawing.Size(0, 20);
             this.DWUsersLabel.TabIndex = 219;
             // 
             // DWPortsLabel
@@ -780,10 +741,9 @@
             this.DWPortsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DWPortsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DWPortsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWPortsLabel.Location = new System.Drawing.Point(305, 287);
-            this.DWPortsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWPortsLabel.Location = new System.Drawing.Point(229, 233);
             this.DWPortsLabel.Name = "DWPortsLabel";
-            this.DWPortsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWPortsLabel.Size = new System.Drawing.Size(0, 20);
             this.DWPortsLabel.TabIndex = 168;
             // 
             // label13
@@ -792,10 +752,9 @@
             this.label13.BackColor = System.Drawing.SystemColors.Control;
             this.label13.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label13.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label13.Location = new System.Drawing.Point(16, 521);
-            this.label13.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label13.Location = new System.Drawing.Point(12, 423);
             this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(131, 25);
+            this.label13.Size = new System.Drawing.Size(103, 20);
             this.label13.TabIndex = 191;
             this.label13.Text = "DW Currency";
             // 
@@ -805,10 +764,9 @@
             this.label14.BackColor = System.Drawing.SystemColors.Control;
             this.label14.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label14.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label14.Location = new System.Drawing.Point(16, 486);
-            this.label14.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label14.Location = new System.Drawing.Point(12, 395);
             this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(126, 25);
+            this.label14.Size = new System.Drawing.Size(103, 20);
             this.label14.TabIndex = 190;
             this.label14.Text = "DW Incoterm";
             // 
@@ -818,10 +776,9 @@
             this.label15.BackColor = System.Drawing.SystemColors.Control;
             this.label15.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label15.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label15.Location = new System.Drawing.Point(17, 454);
-            this.label15.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label15.Location = new System.Drawing.Point(13, 369);
             this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(152, 25);
+            this.label15.Size = new System.Drawing.Size(125, 20);
             this.label15.TabIndex = 189;
             this.label15.Text = "DW Department";
             // 
@@ -831,10 +788,9 @@
             this.label18.BackColor = System.Drawing.SystemColors.Control;
             this.label18.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label18.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label18.Location = new System.Drawing.Point(16, 420);
-            this.label18.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label18.Location = new System.Drawing.Point(12, 341);
             this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(113, 25);
+            this.label18.Size = new System.Drawing.Size(90, 20);
             this.label18.TabIndex = 188;
             this.label18.Text = "DW Tenant";
             // 
@@ -844,10 +800,9 @@
             this.DWTenantsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DWTenantsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DWTenantsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWTenantsLabel.Location = new System.Drawing.Point(304, 417);
-            this.DWTenantsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWTenantsLabel.Location = new System.Drawing.Point(228, 339);
             this.DWTenantsLabel.Name = "DWTenantsLabel";
-            this.DWTenantsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWTenantsLabel.Size = new System.Drawing.Size(0, 20);
             this.DWTenantsLabel.TabIndex = 220;
             // 
             // DWCurrenciesLabel
@@ -856,10 +811,9 @@
             this.DWCurrenciesLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DWCurrenciesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DWCurrenciesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWCurrenciesLabel.Location = new System.Drawing.Point(305, 521);
-            this.DWCurrenciesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWCurrenciesLabel.Location = new System.Drawing.Point(229, 423);
             this.DWCurrenciesLabel.Name = "DWCurrenciesLabel";
-            this.DWCurrenciesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWCurrenciesLabel.Size = new System.Drawing.Size(0, 20);
             this.DWCurrenciesLabel.TabIndex = 223;
             // 
             // DWDepartmentsLabel
@@ -868,10 +822,9 @@
             this.DWDepartmentsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DWDepartmentsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DWDepartmentsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWDepartmentsLabel.Location = new System.Drawing.Point(305, 454);
-            this.DWDepartmentsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWDepartmentsLabel.Location = new System.Drawing.Point(229, 369);
             this.DWDepartmentsLabel.Name = "DWDepartmentsLabel";
-            this.DWDepartmentsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWDepartmentsLabel.Size = new System.Drawing.Size(0, 20);
             this.DWDepartmentsLabel.TabIndex = 221;
             // 
             // DWIncotermsLabel
@@ -880,10 +833,9 @@
             this.DWIncotermsLabel.BackColor = System.Drawing.SystemColors.Control;
             this.DWIncotermsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DWIncotermsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWIncotermsLabel.Location = new System.Drawing.Point(305, 486);
-            this.DWIncotermsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWIncotermsLabel.Location = new System.Drawing.Point(229, 395);
             this.DWIncotermsLabel.Name = "DWIncotermsLabel";
-            this.DWIncotermsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DWIncotermsLabel.Size = new System.Drawing.Size(0, 20);
             this.DWIncotermsLabel.TabIndex = 222;
             // 
             // FactChargeslabel
@@ -891,10 +843,9 @@
             this.FactChargeslabel.AutoSize = true;
             this.FactChargeslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.FactChargeslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.FactChargeslabel.Location = new System.Drawing.Point(1028, 655);
-            this.FactChargeslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.FactChargeslabel.Location = new System.Drawing.Point(771, 532);
             this.FactChargeslabel.Name = "FactChargeslabel";
-            this.FactChargeslabel.Size = new System.Drawing.Size(0, 25);
+            this.FactChargeslabel.Size = new System.Drawing.Size(0, 20);
             this.FactChargeslabel.TabIndex = 225;
             // 
             // label30
@@ -903,10 +854,9 @@
             this.label30.BackColor = System.Drawing.SystemColors.Control;
             this.label30.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label30.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label30.Location = new System.Drawing.Point(744, 657);
-            this.label30.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label30.Location = new System.Drawing.Point(558, 534);
             this.label30.Name = "label30";
-            this.label30.Size = new System.Drawing.Size(130, 25);
+            this.label30.Size = new System.Drawing.Size(105, 20);
             this.label30.TabIndex = 224;
             this.label30.Text = "Fact Charges";
             // 
@@ -915,10 +865,9 @@
             this.DimQuoteStagesLabel.AutoSize = true;
             this.DimQuoteStagesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DimQuoteStagesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimQuoteStagesLabel.Location = new System.Drawing.Point(1022, 521);
-            this.DimQuoteStagesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimQuoteStagesLabel.Location = new System.Drawing.Point(766, 423);
             this.DimQuoteStagesLabel.Name = "DimQuoteStagesLabel";
-            this.DimQuoteStagesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimQuoteStagesLabel.Size = new System.Drawing.Size(0, 20);
             this.DimQuoteStagesLabel.TabIndex = 229;
             // 
             // label31
@@ -927,10 +876,9 @@
             this.label31.BackColor = System.Drawing.SystemColors.Control;
             this.label31.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label31.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label31.Location = new System.Drawing.Point(738, 521);
-            this.label31.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label31.Location = new System.Drawing.Point(554, 423);
             this.label31.Name = "label31";
-            this.label31.Size = new System.Drawing.Size(225, 25);
+            this.label31.Size = new System.Drawing.Size(183, 20);
             this.label31.TabIndex = 228;
             this.label31.Text = "Dimension QuoteStages";
             // 
@@ -939,10 +887,9 @@
             this.DWQuoteStageslabel.AutoSize = true;
             this.DWQuoteStageslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWQuoteStageslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWQuoteStageslabel.Location = new System.Drawing.Point(1016, 386);
-            this.DWQuoteStageslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWQuoteStageslabel.Location = new System.Drawing.Point(762, 314);
             this.DWQuoteStageslabel.Name = "DWQuoteStageslabel";
-            this.DWQuoteStageslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWQuoteStageslabel.Size = new System.Drawing.Size(0, 20);
             this.DWQuoteStageslabel.TabIndex = 227;
             // 
             // label33
@@ -951,10 +898,9 @@
             this.label33.BackColor = System.Drawing.SystemColors.Control;
             this.label33.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label33.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label33.Location = new System.Drawing.Point(732, 387);
-            this.label33.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label33.Location = new System.Drawing.Point(549, 314);
             this.label33.Name = "label33";
-            this.label33.Size = new System.Drawing.Size(167, 25);
+            this.label33.Size = new System.Drawing.Size(135, 20);
             this.label33.TabIndex = 226;
             this.label33.Text = "DW QuoteStages";
             // 
@@ -963,10 +909,9 @@
             this.DimQuoteClosingReasonsLabel.AutoSize = true;
             this.DimQuoteClosingReasonsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DimQuoteClosingReasonsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimQuoteClosingReasonsLabel.Location = new System.Drawing.Point(1027, 559);
-            this.DimQuoteClosingReasonsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimQuoteClosingReasonsLabel.Location = new System.Drawing.Point(770, 454);
             this.DimQuoteClosingReasonsLabel.Name = "DimQuoteClosingReasonsLabel";
-            this.DimQuoteClosingReasonsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimQuoteClosingReasonsLabel.Size = new System.Drawing.Size(0, 20);
             this.DimQuoteClosingReasonsLabel.TabIndex = 233;
             // 
             // label32
@@ -975,10 +920,9 @@
             this.label32.BackColor = System.Drawing.SystemColors.Control;
             this.label32.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label32.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label32.Location = new System.Drawing.Point(743, 560);
-            this.label32.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label32.Location = new System.Drawing.Point(557, 455);
             this.label32.Name = "label32";
-            this.label32.Size = new System.Drawing.Size(250, 25);
+            this.label32.Size = new System.Drawing.Size(203, 20);
             this.label32.TabIndex = 232;
             this.label32.Text = "DIM QuoteClosingReasons";
             // 
@@ -987,10 +931,9 @@
             this.DWQuoteClosingReasonslabel.AutoSize = true;
             this.DWQuoteClosingReasonslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWQuoteClosingReasonslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWQuoteClosingReasonslabel.Location = new System.Drawing.Point(1016, 417);
-            this.DWQuoteClosingReasonslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWQuoteClosingReasonslabel.Location = new System.Drawing.Point(762, 339);
             this.DWQuoteClosingReasonslabel.Name = "DWQuoteClosingReasonslabel";
-            this.DWQuoteClosingReasonslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWQuoteClosingReasonslabel.Size = new System.Drawing.Size(0, 20);
             this.DWQuoteClosingReasonslabel.TabIndex = 231;
             // 
             // label36
@@ -999,10 +942,9 @@
             this.label36.BackColor = System.Drawing.SystemColors.Control;
             this.label36.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label36.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label36.Location = new System.Drawing.Point(732, 418);
-            this.label36.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label36.Location = new System.Drawing.Point(549, 340);
             this.label36.Name = "label36";
-            this.label36.Size = new System.Drawing.Size(248, 25);
+            this.label36.Size = new System.Drawing.Size(200, 20);
             this.label36.TabIndex = 230;
             this.label36.Text = "DW QuoteClosingReasons";
             // 
@@ -1011,10 +953,9 @@
             this.DimCountriesLabel.AutoSize = true;
             this.DimCountriesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DimCountriesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimCountriesLabel.Location = new System.Drawing.Point(1043, 591);
-            this.DimCountriesLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimCountriesLabel.Location = new System.Drawing.Point(782, 480);
             this.DimCountriesLabel.Name = "DimCountriesLabel";
-            this.DimCountriesLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimCountriesLabel.Size = new System.Drawing.Size(0, 20);
             this.DimCountriesLabel.TabIndex = 237;
             // 
             // label34
@@ -1023,10 +964,9 @@
             this.label34.BackColor = System.Drawing.SystemColors.Control;
             this.label34.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label34.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label34.Location = new System.Drawing.Point(743, 592);
-            this.label34.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label34.Location = new System.Drawing.Point(557, 481);
             this.label34.Name = "label34";
-            this.label34.Size = new System.Drawing.Size(193, 25);
+            this.label34.Size = new System.Drawing.Size(156, 20);
             this.label34.TabIndex = 236;
             this.label34.Text = "Dimension Countries";
             // 
@@ -1035,10 +975,9 @@
             this.DWCountrieslabel.AutoSize = true;
             this.DWCountrieslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWCountrieslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWCountrieslabel.Location = new System.Drawing.Point(1021, 453);
-            this.DWCountrieslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWCountrieslabel.Location = new System.Drawing.Point(766, 368);
             this.DWCountrieslabel.Name = "DWCountrieslabel";
-            this.DWCountrieslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWCountrieslabel.Size = new System.Drawing.Size(0, 20);
             this.DWCountrieslabel.TabIndex = 235;
             // 
             // label38
@@ -1047,10 +986,9 @@
             this.label38.BackColor = System.Drawing.SystemColors.Control;
             this.label38.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label38.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label38.Location = new System.Drawing.Point(737, 454);
-            this.label38.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label38.Location = new System.Drawing.Point(553, 369);
             this.label38.Name = "label38";
-            this.label38.Size = new System.Drawing.Size(135, 25);
+            this.label38.Size = new System.Drawing.Size(108, 20);
             this.label38.TabIndex = 234;
             this.label38.Text = "DW Countires";
             // 
@@ -1059,10 +997,9 @@
             this.FactQuoteslabel.AutoSize = true;
             this.FactQuoteslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.FactQuoteslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.FactQuoteslabel.Location = new System.Drawing.Point(1028, 684);
-            this.FactQuoteslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.FactQuoteslabel.Location = new System.Drawing.Point(771, 556);
             this.FactQuoteslabel.Name = "FactQuoteslabel";
-            this.FactQuoteslabel.Size = new System.Drawing.Size(0, 25);
+            this.FactQuoteslabel.Size = new System.Drawing.Size(0, 20);
             this.FactQuoteslabel.TabIndex = 239;
             // 
             // label28
@@ -1071,10 +1008,9 @@
             this.label28.BackColor = System.Drawing.SystemColors.Control;
             this.label28.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label28.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label28.Location = new System.Drawing.Point(744, 686);
-            this.label28.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label28.Location = new System.Drawing.Point(558, 557);
             this.label28.Name = "label28";
-            this.label28.Size = new System.Drawing.Size(119, 25);
+            this.label28.Size = new System.Drawing.Size(97, 20);
             this.label28.TabIndex = 238;
             this.label28.Text = "Fact Quotes";
             // 
@@ -1083,10 +1019,9 @@
             this.DWQuoteslabel.AutoSize = true;
             this.DWQuoteslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWQuoteslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWQuoteslabel.Location = new System.Drawing.Point(1022, 486);
-            this.DWQuoteslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWQuoteslabel.Location = new System.Drawing.Point(766, 395);
             this.DWQuoteslabel.Name = "DWQuoteslabel";
-            this.DWQuoteslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWQuoteslabel.Size = new System.Drawing.Size(0, 20);
             this.DWQuoteslabel.TabIndex = 241;
             // 
             // label37
@@ -1095,10 +1030,9 @@
             this.label37.BackColor = System.Drawing.SystemColors.Control;
             this.label37.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label37.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label37.Location = new System.Drawing.Point(738, 487);
-            this.label37.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label37.Location = new System.Drawing.Point(554, 396);
             this.label37.Name = "label37";
-            this.label37.Size = new System.Drawing.Size(115, 25);
+            this.label37.Size = new System.Drawing.Size(92, 20);
             this.label37.TabIndex = 240;
             this.label37.Text = "DW Quotes";
             // 
@@ -1108,10 +1042,9 @@
             this.DWQuoteComputedFieldslabel.BackColor = System.Drawing.SystemColors.Control;
             this.DWQuoteComputedFieldslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.DWQuoteComputedFieldslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWQuoteComputedFieldslabel.Location = new System.Drawing.Point(1024, 711);
-            this.DWQuoteComputedFieldslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWQuoteComputedFieldslabel.Location = new System.Drawing.Point(768, 578);
             this.DWQuoteComputedFieldslabel.Name = "DWQuoteComputedFieldslabel";
-            this.DWQuoteComputedFieldslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWQuoteComputedFieldslabel.Size = new System.Drawing.Size(0, 20);
             this.DWQuoteComputedFieldslabel.TabIndex = 243;
             // 
             // label39
@@ -1120,10 +1053,9 @@
             this.label39.BackColor = System.Drawing.SystemColors.Control;
             this.label39.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label39.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label39.Location = new System.Drawing.Point(745, 711);
-            this.label39.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label39.Location = new System.Drawing.Point(559, 578);
             this.label39.Name = "label39";
-            this.label39.Size = new System.Drawing.Size(248, 25);
+            this.label39.Size = new System.Drawing.Size(200, 20);
             this.label39.TabIndex = 242;
             this.label39.Text = "DW QuoteComputedFields";
             // 
@@ -1132,10 +1064,9 @@
             this.DWAPInvoiceTypeslabel.AutoSize = true;
             this.DWAPInvoiceTypeslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWAPInvoiceTypeslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWAPInvoiceTypeslabel.Location = new System.Drawing.Point(1695, 307);
-            this.DWAPInvoiceTypeslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWAPInvoiceTypeslabel.Location = new System.Drawing.Point(1271, 249);
             this.DWAPInvoiceTypeslabel.Name = "DWAPInvoiceTypeslabel";
-            this.DWAPInvoiceTypeslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWAPInvoiceTypeslabel.Size = new System.Drawing.Size(0, 20);
             this.DWAPInvoiceTypeslabel.TabIndex = 255;
             // 
             // label44
@@ -1144,10 +1075,9 @@
             this.label44.BackColor = System.Drawing.SystemColors.Control;
             this.label44.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label44.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label44.Location = new System.Drawing.Point(1411, 308);
-            this.label44.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label44.Location = new System.Drawing.Point(1058, 250);
             this.label44.Name = "label44";
-            this.label44.Size = new System.Drawing.Size(195, 25);
+            this.label44.Size = new System.Drawing.Size(153, 20);
             this.label44.TabIndex = 254;
             this.label44.Text = "DW APInvoiceTypes";
             // 
@@ -1156,10 +1086,9 @@
             this.DWARInvoiceTypeslabel.AutoSize = true;
             this.DWARInvoiceTypeslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWARInvoiceTypeslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWARInvoiceTypeslabel.Location = new System.Drawing.Point(1695, 274);
-            this.DWARInvoiceTypeslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWARInvoiceTypeslabel.Location = new System.Drawing.Point(1271, 223);
             this.DWARInvoiceTypeslabel.Name = "DWARInvoiceTypeslabel";
-            this.DWARInvoiceTypeslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWARInvoiceTypeslabel.Size = new System.Drawing.Size(0, 20);
             this.DWARInvoiceTypeslabel.TabIndex = 253;
             // 
             // label47
@@ -1168,10 +1097,9 @@
             this.label47.BackColor = System.Drawing.SystemColors.Control;
             this.label47.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label47.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label47.Location = new System.Drawing.Point(1411, 275);
-            this.label47.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label47.Location = new System.Drawing.Point(1058, 223);
             this.label47.Name = "label47";
-            this.label47.Size = new System.Drawing.Size(195, 25);
+            this.label47.Size = new System.Drawing.Size(155, 20);
             this.label47.TabIndex = 252;
             this.label47.Text = "DW ARInvoiceTypes";
             // 
@@ -1180,10 +1108,9 @@
             this.DWAPInvoiceStatuslabel.AutoSize = true;
             this.DWAPInvoiceStatuslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWAPInvoiceStatuslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWAPInvoiceStatuslabel.Location = new System.Drawing.Point(1695, 239);
-            this.DWAPInvoiceStatuslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWAPInvoiceStatuslabel.Location = new System.Drawing.Point(1271, 194);
             this.DWAPInvoiceStatuslabel.Name = "DWAPInvoiceStatuslabel";
-            this.DWAPInvoiceStatuslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWAPInvoiceStatuslabel.Size = new System.Drawing.Size(0, 20);
             this.DWAPInvoiceStatuslabel.TabIndex = 251;
             // 
             // label45
@@ -1192,10 +1119,9 @@
             this.label45.BackColor = System.Drawing.SystemColors.Control;
             this.label45.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label45.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label45.Location = new System.Drawing.Point(1411, 240);
-            this.label45.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label45.Location = new System.Drawing.Point(1058, 195);
             this.label45.Name = "label45";
-            this.label45.Size = new System.Drawing.Size(196, 25);
+            this.label45.Size = new System.Drawing.Size(158, 20);
             this.label45.TabIndex = 250;
             this.label45.Text = "DW APInvoiceStatus";
             // 
@@ -1204,10 +1130,9 @@
             this.DWARInvoiceStatuslabel.AutoSize = true;
             this.DWARInvoiceStatuslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWARInvoiceStatuslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWARInvoiceStatuslabel.Location = new System.Drawing.Point(1695, 206);
-            this.DWARInvoiceStatuslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWARInvoiceStatuslabel.Location = new System.Drawing.Point(1271, 167);
             this.DWARInvoiceStatuslabel.Name = "DWARInvoiceStatuslabel";
-            this.DWARInvoiceStatuslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWARInvoiceStatuslabel.Size = new System.Drawing.Size(0, 20);
             this.DWARInvoiceStatuslabel.TabIndex = 249;
             // 
             // label43
@@ -1216,10 +1141,9 @@
             this.label43.BackColor = System.Drawing.SystemColors.Control;
             this.label43.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label43.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label43.Location = new System.Drawing.Point(1411, 207);
-            this.label43.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label43.Location = new System.Drawing.Point(1058, 168);
             this.label43.Name = "label43";
-            this.label43.Size = new System.Drawing.Size(196, 25);
+            this.label43.Size = new System.Drawing.Size(160, 20);
             this.label43.TabIndex = 248;
             this.label43.Text = "DW ARInvoiceStatus";
             // 
@@ -1228,10 +1152,9 @@
             this.DimPaymentTermsLabel.AutoSize = true;
             this.DimPaymentTermsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DimPaymentTermsLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DimPaymentTermsLabel.Location = new System.Drawing.Point(1695, 178);
-            this.DimPaymentTermsLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DimPaymentTermsLabel.Location = new System.Drawing.Point(1271, 145);
             this.DimPaymentTermsLabel.Name = "DimPaymentTermsLabel";
-            this.DimPaymentTermsLabel.Size = new System.Drawing.Size(0, 25);
+            this.DimPaymentTermsLabel.Size = new System.Drawing.Size(0, 20);
             this.DimPaymentTermsLabel.TabIndex = 247;
             // 
             // label42
@@ -1240,10 +1163,9 @@
             this.label42.BackColor = System.Drawing.SystemColors.Control;
             this.label42.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label42.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label42.Location = new System.Drawing.Point(1411, 179);
-            this.label42.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label42.Location = new System.Drawing.Point(1058, 145);
             this.label42.Name = "label42";
-            this.label42.Size = new System.Drawing.Size(242, 25);
+            this.label42.Size = new System.Drawing.Size(194, 20);
             this.label42.TabIndex = 246;
             this.label42.Text = "Dimension PaymentTerms";
             // 
@@ -1252,10 +1174,9 @@
             this.DWPaymentTermslabel.AutoSize = true;
             this.DWPaymentTermslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.DWPaymentTermslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.DWPaymentTermslabel.Location = new System.Drawing.Point(1694, 153);
-            this.DWPaymentTermslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.DWPaymentTermslabel.Location = new System.Drawing.Point(1270, 124);
             this.DWPaymentTermslabel.Name = "DWPaymentTermslabel";
-            this.DWPaymentTermslabel.Size = new System.Drawing.Size(0, 25);
+            this.DWPaymentTermslabel.Size = new System.Drawing.Size(0, 20);
             this.DWPaymentTermslabel.TabIndex = 245;
             // 
             // label41
@@ -1264,10 +1185,9 @@
             this.label41.BackColor = System.Drawing.SystemColors.Control;
             this.label41.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label41.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label41.Location = new System.Drawing.Point(1410, 154);
-            this.label41.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label41.Location = new System.Drawing.Point(1058, 125);
             this.label41.Name = "label41";
-            this.label41.Size = new System.Drawing.Size(189, 25);
+            this.label41.Size = new System.Drawing.Size(150, 20);
             this.label41.TabIndex = 244;
             this.label41.Text = "DW  PaymentTerms";
             // 
@@ -1277,10 +1197,9 @@
             this.label2.BackColor = System.Drawing.SystemColors.Control;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label2.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.label2.Location = new System.Drawing.Point(1410, 352);
-            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label2.Location = new System.Drawing.Point(1058, 286);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(127, 25);
+            this.label2.Size = new System.Drawing.Size(103, 20);
             this.label2.TabIndex = 256;
             this.label2.Text = "Fact Invoices";
             // 
@@ -1289,17 +1208,186 @@
             this.FactInvoiceslabel.AutoSize = true;
             this.FactInvoiceslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
             this.FactInvoiceslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
-            this.FactInvoiceslabel.Location = new System.Drawing.Point(1695, 352);
-            this.FactInvoiceslabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.FactInvoiceslabel.Location = new System.Drawing.Point(1271, 286);
             this.FactInvoiceslabel.Name = "FactInvoiceslabel";
-            this.FactInvoiceslabel.Size = new System.Drawing.Size(0, 25);
+            this.FactInvoiceslabel.Size = new System.Drawing.Size(0, 20);
             this.FactInvoiceslabel.TabIndex = 257;
+            // 
+            // DimVatTypesLabel
+            // 
+            this.DimVatTypesLabel.AutoSize = true;
+            this.DimVatTypesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DimVatTypesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DimVatTypesLabel.Location = new System.Drawing.Point(1271, 326);
+            this.DimVatTypesLabel.Name = "DimVatTypesLabel";
+            this.DimVatTypesLabel.Size = new System.Drawing.Size(0, 20);
+            this.DimVatTypesLabel.TabIndex = 261;
+            // 
+            // label46
+            // 
+            this.label46.AutoSize = true;
+            this.label46.BackColor = System.Drawing.SystemColors.Control;
+            this.label46.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label46.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label46.Location = new System.Drawing.Point(1058, 327);
+            this.label46.Name = "label46";
+            this.label46.Size = new System.Drawing.Size(155, 20);
+            this.label46.TabIndex = 260;
+            this.label46.Text = "Dimension VatTypes";
+            // 
+            // DWVatTypeslabel
+            // 
+            this.DWVatTypeslabel.AutoSize = true;
+            this.DWVatTypeslabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DWVatTypeslabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DWVatTypeslabel.Location = new System.Drawing.Point(1270, 306);
+            this.DWVatTypeslabel.Name = "DWVatTypeslabel";
+            this.DWVatTypeslabel.Size = new System.Drawing.Size(0, 20);
+            this.DWVatTypeslabel.TabIndex = 259;
+            // 
+            // label49
+            // 
+            this.label49.AutoSize = true;
+            this.label49.BackColor = System.Drawing.SystemColors.Control;
+            this.label49.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label49.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label49.Location = new System.Drawing.Point(1058, 306);
+            this.label49.Name = "label49";
+            this.label49.Size = new System.Drawing.Size(111, 20);
+            this.label49.TabIndex = 258;
+            this.label49.Text = "DW  VatTypes";
+            // 
+            // FactARInvoicesLabel
+            // 
+            this.FactARInvoicesLabel.AutoSize = true;
+            this.FactARInvoicesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.FactARInvoicesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.FactARInvoicesLabel.Location = new System.Drawing.Point(773, 596);
+            this.FactARInvoicesLabel.Name = "FactARInvoicesLabel";
+            this.FactARInvoicesLabel.Size = new System.Drawing.Size(0, 20);
+            this.FactARInvoicesLabel.TabIndex = 263;
+            // 
+            // label51
+            // 
+            this.label51.AutoSize = true;
+            this.label51.BackColor = System.Drawing.SystemColors.Control;
+            this.label51.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label51.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label51.Location = new System.Drawing.Point(559, 598);
+            this.label51.Name = "label51";
+            this.label51.Size = new System.Drawing.Size(118, 20);
+            this.label51.TabIndex = 262;
+            this.label51.Text = "Fact ARInvoice";
+            // 
+            // label40
+            // 
+            this.label40.AutoSize = true;
+            this.label40.BackColor = System.Drawing.SystemColors.Control;
+            this.label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label40.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label40.Location = new System.Drawing.Point(559, 630);
+            this.label40.Name = "label40";
+            this.label40.Size = new System.Drawing.Size(227, 20);
+            this.label40.TabIndex = 264;
+            this.label40.Text = "Dimension ShipmentSubTypes";
+            // 
+            // DimShipmentSubTypesLabel
+            // 
+            this.DimShipmentSubTypesLabel.AutoSize = true;
+            this.DimShipmentSubTypesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DimShipmentSubTypesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DimShipmentSubTypesLabel.Location = new System.Drawing.Point(782, 630);
+            this.DimShipmentSubTypesLabel.Name = "DimShipmentSubTypesLabel";
+            this.DimShipmentSubTypesLabel.Size = new System.Drawing.Size(0, 20);
+            this.DimShipmentSubTypesLabel.TabIndex = 265;
+            // 
+            // label53
+            // 
+            this.label53.AutoSize = true;
+            this.label53.BackColor = System.Drawing.SystemColors.Control;
+            this.label53.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label53.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label53.Location = new System.Drawing.Point(1058, 358);
+            this.label53.Name = "label53";
+            this.label53.Size = new System.Drawing.Size(122, 20);
+            this.label53.TabIndex = 273;
+            this.label53.Text = "Fact Containers";
+            // 
+            // FactContainersLabel
+            // 
+            this.FactContainersLabel.AutoSize = true;
+            this.FactContainersLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.FactContainersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FactContainersLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.FactContainersLabel.Location = new System.Drawing.Point(1276, 358);
+            this.FactContainersLabel.Name = "FactContainersLabel";
+            this.FactContainersLabel.Size = new System.Drawing.Size(0, 20);
+            this.FactContainersLabel.TabIndex = 272;
+            // 
+            // label48
+            // 
+            this.label48.AutoSize = true;
+            this.label48.BackColor = System.Drawing.SystemColors.Control;
+            this.label48.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label48.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label48.Location = new System.Drawing.Point(1060, 385);
+            this.label48.Name = "label48";
+            this.label48.Size = new System.Drawing.Size(117, 20);
+            this.label48.TabIndex = 275;
+            this.label48.Text = "DW Containers";
+            // 
+            // DWContainersLabel
+            // 
+            this.DWContainersLabel.AutoSize = true;
+            this.DWContainersLabel.BackColor = System.Drawing.SystemColors.Control;
+            this.DWContainersLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DWContainersLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DWContainersLabel.Location = new System.Drawing.Point(1276, 385);
+            this.DWContainersLabel.Name = "DWContainersLabel";
+            this.DWContainersLabel.Size = new System.Drawing.Size(0, 20);
+            this.DWContainersLabel.TabIndex = 274;
+            // 
+            // DimPackageTypesLabel
+            // 
+            this.DimPackageTypesLabel.AutoSize = true;
+            this.DimPackageTypesLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F);
+            this.DimPackageTypesLabel.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.DimPackageTypesLabel.Location = new System.Drawing.Point(1274, 422);
+            this.DimPackageTypesLabel.Name = "DimPackageTypesLabel";
+            this.DimPackageTypesLabel.Size = new System.Drawing.Size(0, 20);
+            this.DimPackageTypesLabel.TabIndex = 277;
+            // 
+            // label52
+            // 
+            this.label52.AutoSize = true;
+            this.label52.BackColor = System.Drawing.SystemColors.Control;
+            this.label52.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label52.ForeColor = System.Drawing.Color.CornflowerBlue;
+            this.label52.Location = new System.Drawing.Point(1061, 423);
+            this.label52.Name = "label52";
+            this.label52.Size = new System.Drawing.Size(192, 20);
+            this.label52.TabIndex = 276;
+            this.label52.Text = "Dimension PackageTypes";
             // 
             // UpdateWarehouseForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1799, 830);
+            this.ClientSize = new System.Drawing.Size(1349, 674);
+            this.Controls.Add(this.DimPackageTypesLabel);
+            this.Controls.Add(this.label52);
+            this.Controls.Add(this.label48);
+            this.Controls.Add(this.DWContainersLabel);
+            this.Controls.Add(this.label53);
+            this.Controls.Add(this.FactContainersLabel);
+            this.Controls.Add(this.DimShipmentSubTypesLabel);
+            this.Controls.Add(this.label40);
+            this.Controls.Add(this.FactARInvoicesLabel);
+            this.Controls.Add(this.label51);
+            this.Controls.Add(this.DimVatTypesLabel);
+            this.Controls.Add(this.label46);
+            this.Controls.Add(this.DWVatTypeslabel);
+            this.Controls.Add(this.label49);
             this.Controls.Add(this.FactInvoiceslabel);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.DWAPInvoiceTypeslabel);
@@ -1396,7 +1484,6 @@
             this.Controls.Add(this.SourceConnectionlabel);
             this.Controls.Add(this.BuildWarehouseData);
             this.Controls.Add(this.UpdateWarehouseDataButton);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "UpdateWarehouseForm";
             this.Text = "Update Warehouse";
             this.Load += new System.EventHandler(this.UpdateWarehouseForm_Load);
@@ -1502,5 +1589,19 @@
         private System.Windows.Forms.Label label41;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label FactInvoiceslabel;
+        private System.Windows.Forms.Label DimVatTypesLabel;
+        private System.Windows.Forms.Label label46;
+        private System.Windows.Forms.Label DWVatTypeslabel;
+        private System.Windows.Forms.Label label49;
+        private System.Windows.Forms.Label FactARInvoicesLabel;
+        private System.Windows.Forms.Label label51;
+        private System.Windows.Forms.Label label40;
+        private System.Windows.Forms.Label DimShipmentSubTypesLabel;
+        private System.Windows.Forms.Label label53;
+        private System.Windows.Forms.Label FactContainersLabel;
+        private System.Windows.Forms.Label label48;
+        private System.Windows.Forms.Label DWContainersLabel;
+        private System.Windows.Forms.Label DimPackageTypesLabel;
+        private System.Windows.Forms.Label label52;
     }
 }

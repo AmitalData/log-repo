@@ -1,9 +1,18 @@
-@release @all @dev @daily 
+@stable @daily
 Feature: Shipping Agent fake Create and Edit in Maintenance Module
     The user creates a shipping agent fake create and edit another one from the Maintenance Module.
 
-    Scenario: Create a new shipping agent
+    Scenario: Add shipping agent city with lenght more than 40
         Given the user logged in and navigate to "Shipping Agents" in maintenance menu
+        When add "012345678901234567890123456789012345678901234567890123456789" as city
+        Then a validation message with "City Field length must be less than 40" error should appear
+
+    Scenario: Assert create shipping agent without compnay name
+        Given the user fill the required fields except the company
+        When create shipping agent
+        Then a validation single message with "Name Field is Required" error should appear
+
+    Scenario: Create a new shipping agent
         And a shipping agent with the following details
             | CompanyName | Testing Shipping Agent Daily Scenario |
             | LocalName   | Testing Shipping Agent Daily Scenario |
@@ -34,6 +43,7 @@ Feature: Shipping Agent fake Create and Edit in Maintenance Module
 
     Scenario: Edit the shipping agent
         Given "Test edit shipping agent" as shipping agent notes
+        And inactivate the shipping agent
         And fill the following shipping agent Billing details
             | BankName | Shipping Agent Bank |
             | IBANNo   | zero Bank           |

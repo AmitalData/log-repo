@@ -33,7 +33,8 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string LocalCustomsSentByUserId { get; set; }
         public virtual User LocalCustomsSentByUser { get; set; }
         public string ConcurrencyGUID { get; set; }
-
+        public string OIConcurrencyGUID { get; set; }
+        
         #region Fields
         public string CountryForStatisticsId { get; set; }
         public double? ProfitExchangeRate { get; set; }
@@ -173,6 +174,36 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Field38 { get; set; }
         public string Field39 { get; set; }
         public string Field40 { get; set; }
+        public string Field41 { get; set; }
+        public string Field42 { get; set; }
+        public string Field43 { get; set; }
+        public string Field44 { get; set; }
+        public string Field45 { get; set; }
+        public string Field46 { get; set; }
+        public string Field47 { get; set; }
+        public string Field48 { get; set; }
+        public string Field49 { get; set; }
+        public string Field50 { get; set; }
+        public string Field51 { get; set; }
+        public string Field52 { get; set; }
+        public string Field53 { get; set; }
+        public string Field54 { get; set; }
+        public string Field55 { get; set; }
+        public string Field56 { get; set; }
+        public string Field57 { get; set; }
+        public string Field58 { get; set; }
+        public string Field59 { get; set; }
+        public string Field60 { get; set; }
+        public string Field61 { get; set; }
+        public string Field62 { get; set; }
+        public string Field63 { get; set; }
+        public string Field64 { get; set; }
+        public string Field65 { get; set; }
+        public string Field66 { get; set; }
+        public string Field67 { get; set; }
+        public string Field68 { get; set; }
+        public string Field69 { get; set; }
+        public string Field70 { get; set; }
         public string SearchFields { get; set; }
         public double? Volume { get; set; }
         public string AWBSpecialHandlingCodeId1 { get; set; }
@@ -218,6 +249,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string CustomerContactId { get; set; }
         public string CustomerReference1 { get; set; }
         public string CustomerReference2 { get; set; }
+        public string CustomerReference3 { get; set; }
         public string FreightForwarderId { get; set; }
         public string FreightForwarderAddressId { get; set; }
         public string FreightForwarderContactId { get; set; }
@@ -227,11 +259,13 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string ShipperContactId { get; set; }
         public string ShipperReference1 { get; set; }
         public string ShipperReference2 { get; set; }
+        public string ShipperReference3 { get; set; }
         public string ConsigneeId { get; set; }
         public string ConsigneeAddressId { get; set; }
         public string ConsigneeContactId { get; set; }
         public string ConsigneeReference1 { get; set; }
         public string ConsigneeReference2 { get; set; }
+        public string ConsigneeReference3 { get; set; }
         public string AgentId { get; set; }
         public string AgentAddressId { get; set; }
         public string AgentContactId { get; set; }
@@ -250,6 +284,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string Notify1AddressId { get; set; }
         public string Notify1ContactId { get; set; }
         public string Notify1Reference { get; set; }
+        public string Notify1Reference2 { get; set; }
         public string Notify2Id { get; set; }
         public string Notify2AddressId { get; set; }
         public string Notify2ContactId { get; set; }
@@ -489,6 +524,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public int NumberOfInsidePackages { get; set; }
         public string NumberOfInsidePackagesDetails { get; set; }
         public bool ViaColoader { get; set; }
+       
         public string ShipperName { get; set; }
         public string ConsigneeName { get; set; }
         public string ForwarderShipmentNumber { get; set; }
@@ -517,6 +553,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public CustomsTransmissionsStatus CustomsTransmissionsStatus { get; set; }
         public DateTime? FreightRelease { get; set; }
         public DateTime? TerminalAvailable { get; set; }
+        public DateTime? Terminal2Available { get; set; }
         public string ISFNumber { get; set; }
         public DateTime? ISFDate { get; set; }
         public string ITNumber { get; set; }
@@ -540,6 +577,19 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public string WarehouseLegReference { get; set; }
         public DateTime? WarehouseLegCutOffDate { get; set; }
         public DateTime? WarehouseLegVGMCutOffDate { get; set; }
+        public string WarehouseLeg2WarehouseId { get; set; }
+        public string WarehouseLeg2AddressId { get; set; }
+        public string WarehouseLeg2TerminalCode { get; set; }
+        public DateTime? WarehouseLeg2ExpectedEntryDate { get; set; }
+        public DateTime? WarehouseLeg2ActualEntryDate { get; set; }
+        public DateTime? WarehouseLeg2ExpectedReleaseDate { get; set; }
+        public DateTime? WarehouseLeg2ActualReleaseDate { get; set; }
+        public string WarehouseLeg2Remarks { get; set; }
+        public virtual Address WarehouseLeg2Address { get; set; }
+        public virtual Card WarehouseLeg2Card { get; set; }
+        public string WarehouseLeg2Reference { get; set; }
+        public DateTime? WarehouseLeg2CutOffDate { get; set; }
+        public DateTime? WarehouseLeg2VGMCutOffDate { get; set; }
         #endregion
         public DateTime? RegistryDate { get; set; }
         public bool IsAssembly { get; set; }
@@ -639,12 +689,17 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public double? HousesACCTReceivablesInLocal { get; set; }
         public double? HousesACCTReceivablesInProfit { get; set; }
         public DateTime? INTTRALastEBbookingSendDate { get; set; }
-        public string TruckerId { get; set; } 
+        public string TruckerId { get; set; }
+        public virtual Address TruckerAddress { get; set; }
+        public string TruckerAddressId { get; set; }
+        public virtual Contact TruckerContact { get; set; }
+        public string TruckerContactId { get; set; }
+        public string TruckerReference1 { get; set; }
+        public string TruckerReference2 { get; set; }
+
         public DateTime? AssignedToTruckerDate { get; set; }
-        public virtual Card TruckerCard { get; set; }
-        public string AssginedtoCustomsAgentId { get; set; }
-        public DateTime? AssginedToCustomsAgentDate { get; set; }
-        public virtual Card CustomsAgentCard { get; set; }
+        public virtual Card TruckerCard { get; set; } 
+        public DateTime? AssginedToCustomsAgentDate { get; set; } 
         public string PreForwardingTransportModeId { get; set; }
         public string PreForwardingFromPortId { get; set; }
         public string PreForwardingToPortId { get; set; }
@@ -681,6 +736,11 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Card OnForwardingCarrierCard { get; set; }
         public virtual PickUpDeliveryTransportMode OnForwardingAdditionalTransportMode { get; set; }
         public bool IsStandalonePickupDelivery { get; set; }
+        public string ParentShipmentNumber { get; set; }
+        public string ParentShipmentType { get; set; }
+        public string ParentShipmentDirectionId { get; set; }
+        public virtual Direction ParentShipmentDirection { get; set; }
+
         public bool IsHTSMissing { get; set; }
         public string ForwarderStandaloneShipmentId { get; set; }
          
@@ -696,6 +756,44 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
 
         public string ForwarderPickUpDeliveryType { get; set; }
         public string StandalonePickupDeliveryId { get; set; }
+
+        public string OperationalStatusId { get; set; }
+        public string BillingStatusId { get; set; }
+        public string ShipperNotExporterReference1 { get; set; }
+        public string ShipperNotExporterReference2 { get; set; }
+
+        public virtual EntityStatus OperationalStatus { get; set; }
+
+        public virtual EntityStatus BillingStatus { get; set; }
+
+        public bool IsPODReceived { get; set; }
+
+        public DateTime? PODReceivedDate { get; set; }
+        public bool HasUnassignedData { get; set; }
+        public string DestinationWarehouseId { get; set; }
+        [ForeignKey("DestinationWarehouseId")]
+        public virtual Card DestinationWarehouseCard { get; set; }
+
+        public string PreForwardingVesselName { get; set; }
+        public string OnForwardingVesselName { get; set; }
+
+        public string ShippingAgent { get; set; }
+        public string NotesSharedWithCustomer { get; set; }
+
+        public string PrivateLabelAgentName { get; set; }
+        public string PartialStatusAmount { get; set; }
+        public bool IsShipmentOrder { get; set; }
+
+        public string FirstPickupFullAddress { get; set; }
+        public string LastDeliveryFullAddress { get; set; }
+
+        public DateTime? QuoteFreightExpirationDate { get; set; }
+        public bool IsINTTRAFROB { get; set; }
+        public string ShippingLine { get; set; }
+        public string PlaceOfDelivery { get; set; }
+        public string PickupPlace { get; set; }
+        public string SealNo { get; set; }
+        public string HSCode { get; set; }
 
     }
 }

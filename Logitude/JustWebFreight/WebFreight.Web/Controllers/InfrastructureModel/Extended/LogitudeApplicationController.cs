@@ -30,6 +30,11 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
             {
                 UserValidityResponse response = new UserValidityResponse() { IsValid = true };
 
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 IWebFreightContext ObjectContext = WebFreightContext.GetContext(tenant);
                 if (HttpContext.Current != null)
                 {
@@ -97,8 +102,6 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     }
                 }
 
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 if (authToken != null)
                 {
                     AuthenticationTokenRepository authenticationTokenRepository = new AuthenticationTokenRepository(authToken.Tenant);

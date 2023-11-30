@@ -20,6 +20,7 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Simplog.Global.Data.GlobalModel.Helpers;
 using Simplog.Server.Infrastructure;
+using System.Linq;
 //using WebFreight.Web.QuoteModel.EntityPOCOs;
 
 namespace Simplog.Data.InfrastructureModel
@@ -47,7 +48,15 @@ namespace Simplog.Data.InfrastructureModel
             this.Configuration.AutoDetectChangesEnabled = false;
             Database.CommandTimeout = ApplicationAppInfo.GetDataBaseTimeOut();
         }
-
+        public static IWebFreightContext GetSecondaryContext(int tenant)
+        {
+            GlobalDB currentDb;
+            currentDb = GlobalDbHelper.GetGlobalDB(tenant);
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+            DbConnection connection = DatabaseInitializer.GetConnection(dbSeconderyConnectionInfo, null, null);
+            WebFreightContext context = new WebFreightContext(connection);
+            return context;
+        }
         public static IWebFreightContext GetContext(int tenant)
         {
             GlobalDB currentDb;
@@ -59,10 +68,15 @@ namespace Simplog.Data.InfrastructureModel
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context;
+        }
+        public  DbContextTransaction GetSnapshotTransaction()
+        {
+            return Database.BeginTransaction(System.Data.IsolationLevel.Snapshot);
+
         }
         public override LogitudeDBSchema LogitudeDBSchema
         {
@@ -167,6 +181,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new EntityLastUpdateMap());
             modelBuilder.Configurations.Add(new EntityStatuMap());
             modelBuilder.Configurations.Add(new EventTypeMap());
+            modelBuilder.Configurations.Add(new EventRemarkMap());
             modelBuilder.Configurations.Add(new FeatureMap());
             modelBuilder.Configurations.Add(new FeatureTypeMap());
             modelBuilder.Configurations.Add(new FHLStatuMap());
@@ -179,7 +194,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new ImageDetailMap());
             modelBuilder.Configurations.Add(new ImageLibraryMap());
 
-            
+
             modelBuilder.Configurations.Add(new IncotermMap());
             modelBuilder.Configurations.Add(new InsideShipmentPackageMap());
 
@@ -329,6 +344,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new CustomerStatusMap());
             modelBuilder.Configurations.Add(new CustomerSizeMap());
             modelBuilder.Configurations.Add(new ObjectTableLastUpdateMap());
+            modelBuilder.Configurations.Add(new EntityStatusTypeMap());
 
             // InboundEmails
             modelBuilder.Configurations.Add(new InboundEmailsMap());
@@ -353,7 +369,7 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new TaskSchedulerHistoryMap());
             modelBuilder.Configurations.Add(new DWObjectTableMap());
             modelBuilder.Configurations.Add(new DWObjectFieldMap());
-            
+
 
             modelBuilder.Configurations.Add(new DWQueryMap());
             modelBuilder.Configurations.Add(new DWSubQueryMap());
@@ -367,6 +383,17 @@ namespace Simplog.Data.InfrastructureModel
             modelBuilder.Configurations.Add(new SchedulerProcedureMap());
             modelBuilder.Configurations.Add(new WorkerRoleNameMap());
             modelBuilder.Configurations.Add(new QueryExportExecutionLogMap());
+            modelBuilder.Configurations.Add(new ChildEntitiesCustomFieldMap());
+            modelBuilder.Configurations.Add(new ScreenSectionMap());
+            modelBuilder.Configurations.Add(new TabModificationMap());
+            modelBuilder.Configurations.Add(new CustomChildObjectMap());
+            modelBuilder.Configurations.Add(new DataCustomObjectMap());
+            modelBuilder.Configurations.Add(new ReferenceCustomObjectMap());
+            modelBuilder.Configurations.Add(new DeploymentPackageMap());
+            modelBuilder.Configurations.Add(new DeploymentPackagesVersionMap());
+            modelBuilder.Configurations.Add(new CustomFieldsMainObjectMap());
+            modelBuilder.Configurations.Add(new DeploymentPackageExecutionLogMap());
+
 
             modelBuilder.Entity<ObjectTable>().HasOptional(p => p.MainTip).WithMany();
             modelBuilder.Entity<Tip>().HasRequired(p => p.ObjectTable).WithMany();
@@ -459,7 +486,8 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
-        public DbSet<ObjectField> ObjectFields
+        public IQueryable<ObjectField> ObjectFields { get { return ObjectFieldsDbSet.Where(x => !x.ForMetaDataOnly); } }
+        public DbSet<ObjectField> ObjectFieldsDbSet
         {
             get;
             set;
@@ -494,7 +522,11 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
-
+       /* public IDbSet<EventRemark> EventRemark
+        {
+            get;
+            set;
+        }*/
         public IDbSet<TraceEvent> TraceEvent
         {
             get;
@@ -591,7 +623,11 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
-
+        public IDbSet<QuoteChargesGroup> QuoteChargesGroups
+        {
+            get;
+            set;
+        }
         public IDbSet<VolumeUnit> VolumeUnits
         {
             get;
@@ -732,7 +768,7 @@ namespace Simplog.Data.InfrastructureModel
             get;
             set;
         }
-    public IDbSet<ImageLibrary> ImageLibrarys
+        public IDbSet<ImageLibrary> ImageLibraries
         {
             get;
             set;
@@ -835,6 +871,25 @@ namespace Simplog.Data.InfrastructureModel
             set;
         }
 
+        public IDbSet<ChildEntitiesCustomField> ChildEntitiesCustomFields
+        {
+            get;
+            set;
+        }
+
+
+        public IDbSet<ScreenSection> ScreenSections
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<CustomChildObject> CustomChildObjects
+        {
+            get;
+            set;
+        }
+
         public void SetAsModified(object entity)
         {
             this.Entry(entity).State = EntityState.Modified;
@@ -849,9 +904,9 @@ namespace Simplog.Data.InfrastructureModel
         {
             //try
             //{
-                DetectChanges();
+            DetectChanges();
 
-                return base.SaveChanges();
+            return base.SaveChanges();
             //}
             //catch (DbEntityValidationException ex) //itzik
             //{
@@ -1012,6 +1067,61 @@ namespace Simplog.Data.InfrastructureModel
         }
 
         public IDbSet<QueryExportExecutionLog> QueryExportExecutionLogs
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<EntityStatusType> EntityStatusTypes
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<MultiEntityUpdateLog> MultiEntityUpdateLogs
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<TabModification> TabsModifications
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<DataCustomObject> DataCustomObjects
+        {
+            get;
+            set;
+        }
+        public IDbSet<ReferenceCustomObject> ReferenceCustomObjects
+        {
+            get;
+            set;
+        }
+        public IDbSet<DeploymentPackage> DeploymentPackages
+        {
+            get;
+            set;
+        }
+        public IDbSet<DeploymentPackagesVersion> DeploymentPackagesVersions
+        {
+            get;
+            set;
+        }
+        public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects
+        {
+            get;
+            set;
+        }
+        public IDbSet<DeploymentPackageExecutionLog> DeploymentPackageExecutionLogs
+        {
+            get;
+            set;
+        }
+
+        public IDbSet<EventRemark> EventRemarks
         {
             get;
             set;

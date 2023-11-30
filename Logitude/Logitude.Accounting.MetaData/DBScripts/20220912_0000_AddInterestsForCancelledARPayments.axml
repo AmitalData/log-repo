@@ -1,0 +1,25 @@
+﻿<Script DBType="Main" Module="Accounting">
+  <Sql Version="1">
+    <![CDATA[
+    insert into InterestTransactions
+    Select CONCAT('VARP-', ROW_NUMBER() OVER(ORDER BY (SELECT 1))) as Id, jl.Tenant, GETDATE(), GETDATE(), CONCAT(j.JournalNumber, ','+j.AccountingEntityReference) as SearchField,jl.CreditAccountId,
+    '2' as InterestEntityTypeCode, arp.Id as EntityId,2, (jl.LocalAmount * -1) as LocalAmount,
+    (jl.ForeignAmount * -1) as LocalAmount, jl.CurrencyId, arp.ValueDate, NULL,0,0,j.AccountingEntityCode
+    from Journals j
+    Inner join arpayments arp on j.AccountingEntityId = arp.Id AND arp.Tenant = j.Tenant
+    Inner Join JournalLines jl on j.Id = jl.JournalId AND j.Tenant = jl.Tenant
+    inner join GLAccounts gla on gla.Id = jl.CreditAccountId AND  gla.tenant = jl.tenant
+    inner Join (
+	    Select ints.Tenant, ints.EntityId, Sum(LocalAmount) as TotalLocalAmount
+	    from InterestTransactions ints
+	    Inner join arpayments arp on ints.EntityId = arp.Id AND arp.Tenant = ints.Tenant AND arp.StatusCode = 'VD' AND InterestEntityTypeCode = '2'
+	    Group by ints.Tenant, ints.EntityId) arpInt on arp.Id = arpInt.EntityId AND arpInt.Tenant = arp.Tenant AND arpInt.TotalLocalAmount != 0
+    left Join InterestTransactions ints on arp.Id = ints.EntityId AND ints.Tenant = jl.Tenant AND ints.GLAccountId = jl.CreditAccountId AND ints.LocalAmount = (jl.LocalAmount * -1)
+    AND ints.ForeignAmount = (jl.ForeignAmount * -1)  AND ints.InterestEntityTypeCode = '2' AND ints.CurrencyId = jl.CurrencyId
+    where j.AccountingEntityCode = '3' AND j.OriginalJournalId is not null
+    AND arp.StatusCode = 'VD' AND jl.ActionCode = '1' AND j.StatusCode = '2'
+    AND ints.Id is null
+     ]]>
+ </Sql>
+
+</Script>

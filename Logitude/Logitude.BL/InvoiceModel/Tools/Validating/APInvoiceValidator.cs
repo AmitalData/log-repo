@@ -45,6 +45,11 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         {
             string msgRequired = TranslateTextsClass.Translate("General.M.FieldIsRequired", entityPM.Tenant);
 
+            if (!isNew)
+            {
+                ValidateConcurrencyGUID(entityPM, entityPOCO);
+            }
+
             ValidateInvoiceFields(entityPM);
 
             AccountingSetting accountingSetting = (from d in commonContext.AccountingSettings where d.Id == entityPM.Tenant select d).FirstOrDefault();
@@ -75,8 +80,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
             
-           // CheckInvoiceNumberFormat(entityPM.InvoiceNumber, entityPM.Tenant);
-
             if (entityPM.IsMultipleEntities)
             {
                 #region
@@ -134,14 +137,14 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                     throw new ApplicationException(msg);
                 }
 
+                ValidateInvoiceAmountDue(entityPM, entityPOCO, isNew, context);
                 ValidateNormalInvoiceLines(entityPM, commonContext, accountingSetting, msgRequired);
-
                 ValidateShipmentConcurrencyGUID(entityPM, MainShipmentConcurrencyGUID);
             }
 
             ValidateOnVoid(entityPM);
             ValidateAirlineRestriction(entityPM.VendorId, entityPM.Tenant);
-            ValidateFullAccounting(entityPM);
+            ValidateFullAccounting(entityPM, isNew);
             ValidateExternalAPI(entityPM, commonContext);
             ValidateUnUpdateFields(entityPM, entityPOCO, isNew);
         }
@@ -149,7 +152,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
         private static void ValidateNormalInvoiceLines(APInvoicePM entityPM, ICommonDataContext commonContext, AccountingSetting accountingSetting, string msgRequired)
         {
             List<APInvoiceLinePM> activeLines = entityPM.InvoiceLines.Where(d => d.ChangeSetOp != Simplog.Server.Infrastructure.ChangeSetOperation.Delete).ToList();
-
+            Tenant tenantPOCO = GetTenant(entityPM.Tenant);
             if (activeLines.Count == 0)
             {
                 string msg = TranslateTextsClass.Translate("APInvoice.M.YouShouldHaveOneLineAtLeast", entityPM.Tenant);
@@ -158,8 +161,12 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
 
             else if (activeLines.Where(d => d.InvoiceCurrencyAmount == 0).Any())
             {
-                string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceLineAmountNotZero", entityPM.Tenant);
-                throw new ApplicationException(msg);
+                if (entityPM.CreatedFromAPI && entityPM.IsGeneralInvoice && tenantPOCO.AccountingActivated) {}
+                else
+                {
+                    string msg = TranslateTextsClass.Translate("APInvoice.M.InvoiceLineAmountNotZero", entityPM.Tenant);
+                    throw new ApplicationException(msg);
+                }
             }
 
             else
@@ -718,15 +725,16 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
         }
 
-        public static void ValidateFullAccounting(APInvoicePM invoicePM)//int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
+        public static void ValidateFullAccounting(APInvoicePM invoicePM,bool inNew)//int tenant, string vendorId, string invoiceCurrencyId, DateTime? accountingDate)
         {
             Tenant tenantPOCO = GetTenant(invoicePM.Tenant);
 
-            if (tenantPOCO != null && tenantPOCO.AccountingActivated)
+            if (tenantPOCO != null && tenantPOCO.AccountingActivated && !invoicePM.IsUpdateFromPaymentService)
             {
                 string errors = "";
                 ValidateInvoiceGLaccount(invoicePM, ref errors, invoicePM.Tenant);
-                ValidateAccountingPeriod(invoicePM, ref errors, invoicePM.Tenant);
+                if(inNew)
+                     ValidateAccountingPeriod(invoicePM, ref errors, invoicePM.Tenant);
                 ThrowErrors(errors);
             }
         }
@@ -737,7 +745,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
             return tenantPOCO;
         }
-
         private static void ThrowErrors(string errors)
         {
             if (!string.IsNullOrEmpty(errors))
@@ -747,7 +754,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
         }
-
 
         private static void ValidateAccountingPeriod(APInvoicePM invoicePM, ref string errors, int tenant)
         {
@@ -760,11 +766,24 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             if (accountingPeriodList != null && invoicePM.AccountingDate != null)
             {
                 var month = invoicePM.AccountingDate.Value.Month;
-                if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
-                {
 
-                    string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, showLocal);
-                    errors += msg + ";";
+                if (invoicePM.IsExternalEntity)
+                {
+                    if (month <= accountingPeriodList.ClosedMonth)
+                    {
+
+                        string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, showLocal);
+                        errors += msg + ";";
+                    }
+                }
+                else
+                {
+                    if (month > accountingPeriodList.OpenMonth || month <= accountingPeriodList.ClosedMonth)
+                    {
+
+                        string msg = TranslateTextsClass.Translate("Accounting.General.O.ClosedMonth", tenant, showLocal);
+                        errors += msg + ";";
+                    }
                 }
             }
             else
@@ -826,7 +845,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
             else return null;
         }
-
 
         private static GLAccountPM GetGLAccountByCardId(string cardId, int tenant)
         {
@@ -906,7 +924,6 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
                 }
             }
         }
-
         private static bool IsEditingEntityEnabled(APInvoice entityPOCO)
         {
             bool myResult = false;
@@ -930,6 +947,29 @@ namespace Logitude.BL.InvoiceModel.Tools.Validating
             }
 
             return myResult;
+        }
+
+        private static void ValidateInvoiceAmountDue(APInvoicePM entityPM, APInvoice entityPOCO, bool isNew, IInvoiceContext context)
+        {
+            if(!isNew && !entityPM.IsUpdateFromPaymentService)
+            {
+                IQueryable<APInvoicePayment> allConnectedPaymentsFromDB = (from a in context.APInvoicePayments where a.APInvoiceId == entityPM.Id && a.Tenant == entityPM.Tenant select a);
+                List<APInvoicePaymentPM> allConnectedPaymentsFromUI = entityPM.InvoicePayments;
+
+                if(allConnectedPaymentsFromDB.Count() != allConnectedPaymentsFromUI.Count && entityPM.AmountDue != entityPOCO.AmountDue)
+                {
+                    string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+                    throw new ApplicationException(msg);
+                }
+            }
+        }
+        private static void ValidateConcurrencyGUID(APInvoicePM entityPM, APInvoice entityPOCO)
+        {
+            if (!entityPM.ConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID) && !entityPM.NewConcurrencyGUID.Equals(entityPOCO.ConcurrencyGUID))
+            {
+                string msg = TranslateTextsClass.Translate("General.M.CantUpdateRecord", entityPM.Tenant);
+                throw new OptimisticConcurrencyException(msg);
+            }
         }
     }
 }

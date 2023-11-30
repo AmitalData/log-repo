@@ -1,4 +1,4 @@
-@smoke @release @stable @all
+@smoke @smokeAfterSwap @release @stable
 Feature: Correspondence Ticket Test
     This file will test the Reply and Add Internal Note
 

@@ -1,0 +1,70 @@
+﻿<Script DBType="Main" Module="Workflow">
+  <Sql Version="5">
+    <![CDATA[
+    
+declare @Tenant integer;
+declare @NewId as varchar(15);
+declare @UserId as varchar(15);
+declare @CurrentDate as datetime;
+
+declare TenantsCursor CURSOR
+for select [Id] from [Tenants];
+
+open TenantsCursor;
+
+fetch next from TenantsCursor into @Tenant;
+
+while @@FETCH_STATUS = 0
+  begin
+
+	set @UserId = (select top 1 [Id] from [Contacts] where [Tenant] = @Tenant and [Email] = ('system@tenant' + cast(@Tenant as varchar(100)) + '.com'));
+	set @CurrentDate = GETDATE();
+
+	if not exists (select * from [TaskStatuses] where [Code] = 'PEN' and [Tenant] = @Tenant)
+    begin
+    execute [usp_GetNextTableIdValue] @NewId OUTPUT, 'TaskStatus';
+    insert into [TaskStatuses] ([Id], [Tenant], [Code], [Name], [Closed], [CreateDate], [CreatedByUserId], [UpdateDate], [UpdatedByUserId], [SearchFields])
+    values (@NewId, @Tenant, 'PEN', 'Pending', 0, @CurrentDate, @UserId, @CurrentDate, @UserId, 'PEN,Pending');
+    end;
+    
+    
+    if not exists (select * from [TaskStatuses] where [Code] = 'DON' and [Tenant] = @Tenant)
+    begin
+    execute [usp_GetNextTableIdValue] @NewId OUTPUT, 'TaskStatus';
+    insert into [TaskStatuses] ([Id], [Tenant], [Code], [Name], [Closed], [CreateDate], [CreatedByUserId], [UpdateDate], [UpdatedByUserId], [SearchFields])
+    values (@NewId, @Tenant, 'DON', 'Done', 1, @CurrentDate, @UserId, @CurrentDate, @UserId, 'DON,Done');
+    end;
+    
+    
+    if not exists (select * from [TaskStatuses] where [Code] = 'INP' and [Tenant] = @Tenant)
+    begin
+    execute [usp_GetNextTableIdValue] @NewId OUTPUT, 'TaskStatus';
+    insert into [TaskStatuses] ([Id], [Tenant], [Code], [Name], [Closed], [CreateDate], [CreatedByUserId], [UpdateDate], [UpdatedByUserId], [SearchFields])
+    values (@NewId, @Tenant, 'INP', 'In Progress', 0, @CurrentDate, @UserId, @CurrentDate, @UserId, 'INP,In Progress');
+    end;
+    
+    
+    if not exists (select * from [TaskStatuses] where [Code] = 'TOD' and [Tenant] = @Tenant)
+    begin
+    execute [usp_GetNextTableIdValue] @NewId OUTPUT, 'TaskStatus';
+    insert into [TaskStatuses] ([Id], [Tenant], [Code], [Name], [Closed], [CreateDate], [CreatedByUserId], [UpdateDate], [UpdatedByUserId], [SearchFields])
+    values (@NewId, @Tenant, 'TOD', 'To Do', 0, @CurrentDate, @UserId, @CurrentDate, @UserId, 'TOD,To Do');
+    end;
+    
+    if not exists (select * from [TaskStatuses] where [Code] = 'CAN' and [Tenant] = @Tenant)
+    begin
+    execute [usp_GetNextTableIdValue] @NewId OUTPUT, 'TaskStatus';
+    insert into [TaskStatuses] ([Id], [Tenant], [Code], [Name], [Closed], [CreateDate], [CreatedByUserId], [UpdateDate], [UpdatedByUserId], [SearchFields])
+    values (@NewId, @Tenant, 'CAN', 'Cancelled', 1, @CurrentDate, @UserId, @CurrentDate, @UserId, 'CAN,Cancelled');
+    end;
+        
+
+    fetch next from TenantsCursor into @Tenant;
+    end;
+
+close TenantsCursor;
+deallocate TenantsCursor;
+        
+    ]]>
+  </Sql>
+</Script>

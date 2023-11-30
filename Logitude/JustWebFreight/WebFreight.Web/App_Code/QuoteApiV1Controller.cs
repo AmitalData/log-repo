@@ -23,9 +23,9 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
-                //string token = HttpContext.Current.Request.Headers["Token"];
-                //AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                int tenant = 987;// authToken.Tenant;
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant =  authToken.Tenant;
                 QuoteQueryService Service = new QuoteQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = Service.GetQuoteById(id, tenant);

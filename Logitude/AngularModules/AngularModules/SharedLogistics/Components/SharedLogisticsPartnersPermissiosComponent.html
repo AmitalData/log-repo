@@ -45,6 +45,7 @@
                                                                     <td style="width: 100%; min-width: 100%;text-align:center">Partner Type</td>
                                                                     <td style="width: 100px; min-width: 100px;text-align:center">Suggested</td>
                                                                     <td style="width:70px; min-width:70px;text-align:center ">Choose</td>
+                                                                    <td *ngIf="IsCargoTracking" style="width:150px; min-width:150px;text-align:center ">Show Contact Tel/SMS</td>
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -80,7 +81,19 @@
                                                                                                         <td style="width:30px;"><div></div></td>
 
                                                                                                         <td>
-                                                                                                            <CheckBox [IsEnabled]="item.IsEnabled" [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
+                                                                                                            <CheckBox [DataCy]="item.PartnerName" [IsEnabled]="item.IsEnabled" [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>                                                                                                
+                                                                                            </td>
+
+                                                                                            <td *ngIf="IsCargoTracking" class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
+                                                                                                <table>
+                                                                                                    <tr style="display: flex;flex-wrap: wrap;justify-content: center;padding-top: 3px;">
+                                                                                                        <td style="width:30px;"><div></div></td>
+
+                                                                                                        <td>
+                                                                                                            <CheckBox [IsEnabled]="item.IsEnabled" [IsChecked]="item.IsShowContactTelSMS" (Checked)="item.IsShowContactTelSMS = $event"></CheckBox>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </table>                                                                                                
@@ -123,9 +136,10 @@
                                                         <div class="SimpleGridViewHeader">
                                                             <table>
                                                                 <tr>
-                                                                    <td style="width: 100%; min-width: 100%;text-align:center">Shipment Carriers</td>
+                                                                    <td style="width: 100%; min-width: 100%;text-align:center">Shipment Carriers <span *ngIf="IsCargoTracking">(Routing)</span></td>
                                                                     <td style="width: 100px; min-width: 100px;text-align:center">Suggested</td>
                                                                     <td style="width:70px; min-width:70px;text-align:center ">Choose</td>
+                                                                    <td *ngIf="IsCargoTracking" style="width:150px; min-width:150px;text-align:center ">Show Contact Tel/SMS</td>
                                                                 </tr>
                                                             </table>
                                                         </div>
@@ -161,7 +175,18 @@
                                                                                                         <td style="width:30px;"><div></div></td>
 
                                                                                                         <td>
-                                                                                                            <CheckBox [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
+                                                                                                            <CheckBox [DataCy]="item.PartnerName" [IsChecked]="item.ChooseIsChecked" (Checked)="item.ChooseIsChecked = $event"></CheckBox>
+                                                                                                        </td>
+                                                                                                    </tr>
+                                                                                                </table>                                                                                                
+                                                                                            </td>
+                                                                                            <td *ngIf="IsCargoTracking" class="CellStretched" style="width: 150px; min-width: 150px; max-width: 150px; position: relative;">
+                                                                                                <table>
+                                                                                                    <tr style="display: flex;flex-wrap: wrap;justify-content: center;padding-top: 3px;">
+                                                                                                        <td style="width:30px;"><div></div></td>
+
+                                                                                                        <td>
+                                                                                                            <CheckBox [IsEnabled]="item.IsEnabled" [IsChecked]="item.IsShowContactTelSMS" (Checked)="item.IsShowContactTelSMS = $event"></CheckBox>
                                                                                                         </td>
                                                                                                     </tr>
                                                                                                 </table>                                                                                                

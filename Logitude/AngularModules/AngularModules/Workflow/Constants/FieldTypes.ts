@@ -1,0 +1,17 @@
+export enum FieldTypes {
+    LookUp = "LookUp",
+    PickList = "PickList",
+    NText = "nText",
+    Text = "Text",
+    Boolean = "Boolean",
+    DateTime = "DateTime",
+    Date = "Date",
+    BigInteger = "BigInteger",
+    Decimal = "Decimal",
+    Double = "Double",
+    Integer = "Integer",
+    SigDouble = "SigDouble",
+    UnsDecimal = "UnsDecimal",
+    UnsInteger = "UnsInteger",
+    Record = "Record",
+}

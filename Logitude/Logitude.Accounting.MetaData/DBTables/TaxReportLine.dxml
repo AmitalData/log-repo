@@ -163,9 +163,44 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="JournalLineNumber"
+    Type="int"
+    DefaultValue="0">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
     Name="PreviousReference"
     Type="varchar"
     Size="20">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VatAmountRound"
+    Type="decimal"
+    Precision="16"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LedgerTransactionId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SubTotalInLocalCurrency"
+    Type="float">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConfirmationNumber"
+    Type="nvarchar"
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>

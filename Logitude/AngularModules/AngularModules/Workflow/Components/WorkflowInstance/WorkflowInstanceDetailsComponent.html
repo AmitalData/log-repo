@@ -1,0 +1,191 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 8px;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .label-container {
+        font-weight: bold;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+        padding: 10px 0;
+    }
+</style>
+<table style="padding:10px">
+    <tr style="height:1px">
+        <td>
+            <table>
+                <tr class="FormFieldRow">
+                    <td style="width: 1px; padding-left: 5px;">
+                        <IconButton [Name]="'Refresh'" (click)="RefreshButtonClicked()"
+                            [DataCy]="'RefreshDetailsButton'">
+                        </IconButton>
+                    </td>
+                    <td style="padding-left: 5px;">
+                        <IconButton [Name]="'arrow-down'" (click)="DownloadDetails()"
+                            [DataCy]="'DownloadDetailsButton'">
+                        </IconButton>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="label-container">Workflow Instance Activities</div>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td style="vertical-align:top">
+            <div class="MediaFill">
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [UseVirtuallization]="true"
+                    [ItemSource]="ActivityItemsSource" (RowDataLoaded)="OnRowLoaded($event)"
+                    [EnableExpandCollapseAll]="'true'" [IsDarkHeader]="'true'">
+
+                    <log-row-details>
+                        <row-template>
+                            <ng-template let-item>
+                                <div style="min-height: 80px; width: 100%; background: #f27f7f; position: relative; 
+                                border:2px solid red ; border-top: none; padding: 10px;">
+                                    <p style="white-space: pre-line ; color:white;" [innerHTML]="item.ErrorMessage">
+                                    </p>
+                                </div>
+                            </ng-template>
+                        </row-template>
+                    </log-row-details>
+
+                    <!-- Sequence -->
+                    <log-column [width]="'100'" [header]="'Sequence'" [SortFieldName]="'Sequence'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.Sequence}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!-- ActionName -->
+                    <log-column [width]="'155'" [header]="'ActionName'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.ActionName}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!-- StartTime -->
+                    <log-column [width]="'155'" [header]="'StartTime'" [SortFieldName]="'StartTime'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{ item.StartTime | DateTimePipe:'DT' }}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!-- Duration -->
+                    <log-column [width]="'110'" [header]="'Duration (ms)'" [SortFieldName]="'Duration'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.Duration | number : '1.0-1'}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+
+                    <!-- StatusName -->
+                    <log-column [width]="'155'" [header]="'StatusName'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                <div
+                                    [ngStyle]="{'color': (item.StatusCode == 'FAED') ? 'red' : (item.StatusCode == 'STED') ? '#4f4ff9' :''}">
+                                    {{item.StatusName}}
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!-- Result -->
+                    <log-column [width]="'210'" [header]="'Result'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.Result}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                </logitude-edit-grid>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="IsVariablesHasPermission" class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="IsVariablesHasPermission" class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="label-container">Workflow Instance Variabels</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr *ngIf="IsVariablesHasPermission" class="Variables">
+        <td style="vertical-align:top">
+            <div class="MediaFill">
+                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [UseVirtuallization]="true"
+                    [ItemSource]="VariableItemsSource" [IsDarkHeader]="'true'">
+
+                    <!-- Name -->
+                    <log-column [width]="'180'" [header]="'Name'" [SortFieldName]="'Name'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.Name}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!-- Value -->
+                    <log-column [width]="'155'" [header]="'Value'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                <div *ngIf="item.Value !== null && (item.Type | IsObjectTypePipe)">
+                                    <Hyperlink (click)="DisplayObjectValue(item)" [FontSize]="12" [Text]="'Object'">
+                                    </Hyperlink>
+                                </div>
+                                <div *ngIf="item.Value !== null && !(item.Type | IsObjectTypePipe)">
+                                    {{item.Value}}
+                                </div>
+                                <div *ngIf="item.Value === null">Null</div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+
+                    <!-- Type -->
+                    <log-column [width]="'155'" [header]="'Type'" [SortFieldName]="'Type'">
+                        <ng-template let-item>
+                            <log-cell-template #logcelltemplate [IsEditMode]="false">
+                                {{item.Type}}
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                </logitude-edit-grid>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<BusyIndicator [Text]="'Loading ...'" [IsBusy]="IsActivitiesLoading || IsVariablesLoading" [Width]="200">
+</BusyIndicator>

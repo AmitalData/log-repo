@@ -21,5 +21,7 @@ namespace Logitude.CargoTracking.BL.APIDataContract
         public bool IsCustomerIDNumberRequired { get; set; }
         public LastMileDetails LastMileDetails { get; set; }
         public List<MilestoneData> ShipmentMilestones { get; set;}
+        public ShipmentExceptions ShipmentExceptions { get; set; }
+
     }
 }

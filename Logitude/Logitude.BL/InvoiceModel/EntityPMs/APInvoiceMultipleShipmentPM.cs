@@ -39,6 +39,9 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string Currency { get; set; }
         public double? TotalReceivables { get; set; }
         public double? Profit { get; set; }
+        public double? GrossWeightInKG { get; set; }
+        public double? VolumeinCBM { get; set; }
+        public double? TotalAmountinLocalCurrency { get; set; }
         private List<string> totalVatsList;
         public List<string> TotalVatsList
         {

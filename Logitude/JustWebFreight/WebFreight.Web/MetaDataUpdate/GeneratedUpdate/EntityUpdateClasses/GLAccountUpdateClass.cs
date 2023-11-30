@@ -74,12 +74,18 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "98526ff673hhhk662f2bjhj0bec36f732de811321";
+		public const string HashString = "501ce7aab651b4868cded991092b2c0a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -93,6 +99,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTablePlural =  "GL Accounts",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
+			      				    AvailableInCustomization =  false,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  true,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -149,6 +159,134 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						FullLocalDefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						ListLocalDefaultText =  "Id",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						ListLocalDefaultText =  "tenant",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "InternalNumber",
 					  						ObjectTableName =  "GLAccount",
 					  						FieldsDataType =  "Text",
@@ -164,6 +302,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -193,7 +332,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "InternalNumberListLable",
 					  						ListLableDefaultText =  "Internal Counter",
 					  						ListLocalDefaultText =  "מספר מערכת",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -227,6 +368,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -256,7 +398,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AccountTypeCodeListLable",
 					  						ListLableDefaultText =  "Account Type Code",
 					  						ListLocalDefaultText =  "סוג כרטיס",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "GLAccountType",
+					  						NavigationPropertyName =  "GLAccountType",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -289,6 +435,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -318,7 +465,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "DisplayNumberListLable",
 					  						ListLableDefaultText =  "Account No.",
 					  						ListLocalDefaultText =  "מספר כרטיס",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -351,6 +500,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  105,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -380,7 +530,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "LocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
 					  						ListLocalDefaultText =  "שם מקומי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -413,6 +565,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  75,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -442,7 +595,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
 					  						ListLocalDefaultText =  "שם באנגלית",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -475,6 +630,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  4000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -503,7 +659,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Account No. / Name",
 					  						ListLocalDefaultText =  "מספר / שם כרטיס",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -536,6 +694,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -565,7 +724,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IsMultiCurrencyListLable",
 					  						ListLableDefaultText =  "Multi Currency",
 					  						ListLocalDefaultText =  "רב מטבעי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -599,6 +760,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -628,7 +790,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CurrencyIdListLable",
 					  						ListLableDefaultText =  "Currency ",
 					  						ListLocalDefaultText =  "מטבע",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Currency",
+					  						NavigationPropertyName =  "Currency",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -662,6 +828,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -687,11 +854,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RevenueExpenseType",
 					  						DefaultText =  "Revenue/Expense ",
-					  						FullLocalDefaultText =  "סוג חשבון",
+					  						FullLocalDefaultText =  "האם מתאפס בהעברת שנה?",
 					  						ListFieldLable =  "RevenueExpenseTypeListLable",
 					  						ListLableDefaultText =  "Revenue/Expense ",
-					  						ListLocalDefaultText =  "סוג חשבון",
+					  						ListLocalDefaultText =  "האם מתאפס בהעברת שנה?",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "RevenueExpenseType",
+					  						NavigationPropertyName =  "RevenueExpense",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -724,6 +895,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -753,7 +925,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IsControlAccountListLable",
 					  						ListLableDefaultText =  "Control Account",
 					  						ListLocalDefaultText =  "חשבון מרכז",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -787,6 +961,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -816,7 +991,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ChartOfAccountsIdListLable",
 					  						ListLableDefaultText =  "Chart Of Accounts ",
 					  						ListLocalDefaultText =  "קבוצת מאזן",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "ChartOfAccount",
+					  						NavigationPropertyName =  "ChartOfAccount",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -849,6 +1028,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -878,7 +1058,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "InactiveListLable",
 					  						ListLableDefaultText =  "Inactive",
 					  						ListLocalDefaultText =  "חסום",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -911,6 +1093,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -940,7 +1123,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AccountTypeNameListLable",
 					  						ListLableDefaultText =  "Account Type",
 					  						ListLocalDefaultText =  "סוג חשבון",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -973,6 +1158,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1002,7 +1188,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CurrencyNameListLable",
 					  						ListLableDefaultText =  "Currency",
 					  						ListLocalDefaultText =  "שם מטבע ",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1035,6 +1223,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1064,7 +1253,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "RevenueExpenseNameListLable",
 					  						ListLableDefaultText =  "Revenue/Expense",
 					  						ListLocalDefaultText =  "הכנסות/הוצאות",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1097,6 +1288,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1126,7 +1318,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ChartOfAccountsNameListLable",
 					  						ListLableDefaultText =  "Chart of Accounts",
 					  						ListLocalDefaultText =  "קבוצת מאזן",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1160,6 +1354,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1189,7 +1384,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ChartOfAccountsTypeCodeListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Type ",
 					  						ListLocalDefaultText =  "סוג קבוצת מאזן",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "ChartOfAccountsType",
+					  						NavigationPropertyName =  "ChartOfAccountsType",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1222,6 +1421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1251,7 +1451,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ChartOfAccountsTypeNameListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Type",
 					  						ListLocalDefaultText =  "סוג קבוצת מאזן",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1284,6 +1486,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  5,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1313,7 +1516,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CurrencyCodeListLable",
 					  						ListLableDefaultText =  "Currency Code",
 					  						ListLocalDefaultText =  "קוד מטבע",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1347,6 +1552,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1376,7 +1582,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ReconcileMethodCodeListLable",
 					  						ListLableDefaultText =  "Reconcile Method ",
 					  						ListLocalDefaultText =  "שיטת התאמה",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "ReconcileMethod",
+					  						NavigationPropertyName =  "ReconcileMethod",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1409,6 +1619,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1438,7 +1649,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ReconcileMethodNameListLable",
 					  						ListLableDefaultText =  "Reconcile Method",
 					  						ListLocalDefaultText =  "שיטת התאמה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1472,6 +1685,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1501,7 +1715,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ControlAccountIdListLable",
 					  						ListLableDefaultText =  "Control Account Id",
 					  						ListLocalDefaultText =  "מספר חשבון מרכז",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "GLAccount",
+					  						NavigationPropertyName =  "ControlAccount",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1534,6 +1752,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1563,7 +1782,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ControlAccountNameListLable",
 					  						ListLableDefaultText =  "Control Account Name",
 					  						ListLocalDefaultText =  "שם חשבון מרכז",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1596,6 +1817,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1625,7 +1847,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ControlAccountNumberListLable",
 					  						ListLableDefaultText =  "Control Account Number",
 					  						ListLocalDefaultText =  "מספר חשבון מרכז",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1658,6 +1882,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1687,7 +1912,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ActiveStatusNameListLable",
 					  						ListLableDefaultText =  "Status",
 					  						ListLocalDefaultText =  "סטטוס",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1720,6 +1947,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1743,7 +1971,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OldCurrencyId",
 					  						DefaultText =  "Old CurrencyId",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1776,6 +2006,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1799,7 +2030,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "OldIsMultiCurrency",
 					  						DefaultText =  "Old IsMultiCurrency",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1833,6 +2066,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1862,7 +2096,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AutomaticReconcileIdListLable",
 					  						ListLableDefaultText =  "Automatic Reconcile Method ",
 					  						ListLocalDefaultText =  "התאמה אוטומטית",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "AutomaticReconcileMethod",
+					  						NavigationPropertyName =  "AutomaticReconcile",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1895,6 +2133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1924,7 +2163,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AutomaticReconcileNameListLable",
 					  						ListLableDefaultText =  "Automatic Reconcile",
 					  						ListLocalDefaultText =  "התאמה אוטומטית",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1957,6 +2198,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  75,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1986,7 +2228,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PreviousEnglishNameListLable",
 					  						ListLableDefaultText =  "Previous English Name",
 					  						ListLocalDefaultText =  "שם קודם באנגלית",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2019,6 +2263,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2048,7 +2293,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PreviousEnglishNameChangeDateListLable",
 					  						ListLableDefaultText =  "English Name Change Date",
 					  						ListLocalDefaultText =  "תאריך שינוי שם באנגלית",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2081,6 +2328,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  105,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2110,7 +2358,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PreviousLocalNameListLable",
 					  						ListLableDefaultText =  "Previous Local Name",
 					  						ListLocalDefaultText =  "שם קודם מקומי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2143,6 +2393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2172,7 +2423,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PreviousLocalNameChangeDateListLable",
 					  						ListLableDefaultText =  "Local Name Change Date",
 					  						ListLocalDefaultText =  "תאריך שינוי שם מקומי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2205,6 +2458,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2234,7 +2488,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PreviousNumberListLable",
 					  						ListLableDefaultText =  "Previous Number",
 					  						ListLocalDefaultText =  "מספר קודם",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2267,6 +2523,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2296,7 +2553,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PreviousNumberChangeDateListLable",
 					  						ListLableDefaultText =  "Number Change Date",
 					  						ListLocalDefaultText =  "תאריך שינוי מספר",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2329,6 +2588,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2358,7 +2618,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PreviousChartOfAccountsIdListLable",
 					  						ListLableDefaultText =  "Previous Chart of Accounts ",
 					  						ListLocalDefaultText =  "קבוצת מאזן קודמת",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "ChartOfAccount",
+					  						NavigationPropertyName =  "PreviousChartOfAccount",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2391,6 +2655,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2420,7 +2685,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PreviousChartOfAccountsChangeDateListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Change Date",
 					  						ListLocalDefaultText =  "תאריך שינוי קבוצת מאזן",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2454,6 +2721,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2483,7 +2751,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CustomerGLAccountIdListLable",
 					  						ListLableDefaultText =  "Client Account Id",
 					  						ListLocalDefaultText =  "מזהה חשבון לקוח",
+					  						IsForeignKey =  false,
+					  						ForeignEntity =  "GLAccount",
+					  						NavigationPropertyName =  "CustomerGLAccount",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2516,6 +2788,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2545,7 +2818,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CustomerGLAccountNameListLable",
 					  						ListLableDefaultText =  "Customer Account Name",
 					  						ListLocalDefaultText =  "שם חשבון לקוח",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2578,6 +2853,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2607,7 +2883,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CustomerGLAccountNumberListLable",
 					  						ListLableDefaultText =  "Customer Account Number",
 					  						ListLocalDefaultText =  "מספר חשבון לקוח",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2640,6 +2918,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2671,7 +2950,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "BalanceInLocalCurrencyListLable",
 					  						ListLableDefaultText =  "Balance in Local Currency",
 					  						ListLocalDefaultText =  "יתרה במטבע מקומי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2704,6 +2985,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2733,7 +3015,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "RevaluationEnabledListLable",
 					  						ListLableDefaultText =  "Revaluation Enabled",
 					  						ListLocalDefaultText =  "שערוך אוטומטי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2767,6 +3051,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2796,7 +3081,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ParentAccountIdListLable",
 					  						ListLableDefaultText =  "Parent Account ",
 					  						ListLocalDefaultText =  "מספר חשבון אב",
+					  						IsForeignKey =  false,
+					  						ForeignEntity =  "GLAccount",
+					  						NavigationPropertyName =  "ParentAccount",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2829,6 +3118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2858,7 +3148,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ParentAccountNameListLable",
 					  						ListLableDefaultText =  "Parent Account Name",
 					  						ListLocalDefaultText =  "שם חשבון אב",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2891,6 +3183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2920,7 +3213,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ParentAccountNumberListLable",
 					  						ListLableDefaultText =  "Parent Account Number",
 					  						ListLocalDefaultText =  "מספר חשבון אב",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2953,6 +3248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2982,7 +3278,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CustomerGLAccountInternalNumberListLable",
 					  						ListLableDefaultText =  "Customer GL Account Internal Number",
 					  						ListLocalDefaultText =  "מספר מערכת של חשבון לקוח",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3016,6 +3314,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3045,7 +3344,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Category1IdListLable",
 					  						ListLableDefaultText =  "Category 1 ",
 					  						ListLocalDefaultText =  "מזהה קטגוריה 1",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Category1",
+					  						NavigationPropertyName =  "Category1",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3078,6 +3381,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3107,7 +3411,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Category1NameListLable",
 					  						ListLableDefaultText =  "Category 1 Name",
 					  						ListLocalDefaultText =  "שם קטגוריה 1",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3141,6 +3447,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3170,7 +3477,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Category2IdListLable",
 					  						ListLableDefaultText =  "Category 2 ",
 					  						ListLocalDefaultText =  "מזהה קטגוריה 2",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Category2",
+					  						NavigationPropertyName =  "Category2",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3203,6 +3514,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3232,7 +3544,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Category2NameListLable",
 					  						ListLableDefaultText =  "Category 2 Name",
 					  						ListLocalDefaultText =  "שם קטגוריה 2",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3266,6 +3580,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3295,7 +3610,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Category3IdListLable",
 					  						ListLableDefaultText =  "Category 3 ",
 					  						ListLocalDefaultText =  "מזהה קטגוריה 3",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Category3",
+					  						NavigationPropertyName =  "Category3",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3328,6 +3647,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3357,7 +3677,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Category3NameListLable",
 					  						ListLableDefaultText =  "Category 3 Name",
 					  						ListLocalDefaultText =  "שם קטגוריה 3",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3391,6 +3713,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3420,7 +3743,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Category4IdListLable",
 					  						ListLableDefaultText =  "Category 4 ",
 					  						ListLocalDefaultText =  "מזהה קטגוריה 4",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Category4",
+					  						NavigationPropertyName =  "Category4",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3453,6 +3780,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3482,7 +3810,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Category4NameListLable",
 					  						ListLableDefaultText =  "Category 4 Name",
 					  						ListLocalDefaultText =  "שם קטגוריה 4",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3516,6 +3846,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3545,7 +3876,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Category5IdListLable",
 					  						ListLableDefaultText =  "Category 5 ",
 					  						ListLocalDefaultText =  "מזהה קטגוריה 5",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Category5",
+					  						NavigationPropertyName =  "Category5",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3578,6 +3913,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3603,11 +3939,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category5Name",
 					  						DefaultText =  "Categor 5 Name",
-					  						FullLocalDefaultText =  "שם קטגוריה ",
+					  						FullLocalDefaultText =  "שם קטגוריה 5",
 					  						ListFieldLable =  "Category5NameListLable",
 					  						ListLableDefaultText =  "Categor 5 Name",
-					  						ListLocalDefaultText =  "שם קטגוריה ",
+					  						ListLocalDefaultText =  "שם קטגוריה 5",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3640,6 +3978,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3669,7 +4008,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IsVATExemptListLable",
 					  						ListLableDefaultText =  "VAT Exempt",
 					  						ListLocalDefaultText =  "פטור ממעמ",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3702,6 +4043,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  5,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3730,7 +4072,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ChartOfAccountsCodeListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Code",
 					  						ListLocalDefaultText =  "קוד קבוצת מאזן",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3763,6 +4107,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3791,7 +4136,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CustomerCodeListLable",
 					  						ListLableDefaultText =  "Customer Code",
 					  						ListLocalDefaultText =  "קוד לקוח",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3824,6 +4171,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3852,7 +4200,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ParentAccountByCurrencyListLable",
 					  						ListLableDefaultText =  "Parent Account by Currency",
 					  						ListLocalDefaultText =  "חשבון אב לפי מטבע",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3885,6 +4235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3908,9 +4259,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityDate",
 					  						DefaultText =  "Last Activity Date",
+					  						FullLocalDefaultText =  "תאריך פעילות אחרון",
 					  						ListFieldLable =  "LastActivityDateListLable",
 					  						ListLableDefaultText =  "Last Activity Date",
+					  						ListLocalDefaultText =  "תאריך פעילות אחרון",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3943,6 +4298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3966,9 +4322,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityTypeName",
 					  						DefaultText =  "LastActivityTypeName",
+					  						FullLocalDefaultText =  "שם סוג הפעילות האחרונה",
 					  						ListFieldLable =  "LastActivityTypeNameListLable",
 					  						ListLableDefaultText =  "LastActivityTypeName",
+					  						ListLocalDefaultText =  "שם סוג הפעילות האחרונה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4001,6 +4361,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4024,9 +4385,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LastActivityByUserName",
 					  						DefaultText =  "LastActivityByUserName",
+					  						FullLocalDefaultText =  "פעילות אחרונה ע\"י",
 					  						ListFieldLable =  "LastActivityByUserNameListLable",
 					  						ListLableDefaultText =  "LastActivityByUserName",
+					  						ListLocalDefaultText =  "פעילות אחרונה ע\"י",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4059,6 +4424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  20,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4088,7 +4454,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "VatNumberListLable",
 					  						ListLableDefaultText =  "VAT No.",
 					  						ListLocalDefaultText =  "מספר ח.פ",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4121,6 +4489,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4144,7 +4513,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PaymentTermId",
 					  						DefaultText =  "Payment Term",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4178,6 +4549,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4202,7 +4574,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CollectorId",
 					  						DefaultText =  "Collector",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4235,6 +4609,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4259,9 +4634,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SalesmanUserId",
 					  						DefaultText =  "Salesman",
+					  						FullLocalDefaultText =  "איש מכירות",
 					  						ListFieldLable =  "SalesmanUserIdListLable",
 					  						ListLableDefaultText =  "Salesman",
+					  						ListLocalDefaultText =  "איש מכירות",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4294,6 +4673,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4317,7 +4697,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NewGLAccountCardId",
 					  						DefaultText =  "New GL Account Card ",
+					  						FullLocalDefaultText =  "מזהה חשבון כרטיס חדש",
+					  						ListFieldLable =  "NewGLAccountCardIdListLable",
+					  						ListLableDefaultText =  "NewGLAccountCardId",
+					  						ListLocalDefaultText =  "מזהה חשבון כרטיס חדש",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4350,6 +4736,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4381,7 +4768,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "LocalBalanceInDueListLable",
 					  						ListLableDefaultText =  "Due Balance",
 					  						ListLocalDefaultText =  "יתרה לגביה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4414,6 +4803,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -4443,7 +4833,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "NextDueDateListLable",
 					  						ListLableDefaultText =  "Next Due Date",
 					  						ListLocalDefaultText =  "תאריך הבא לחישוב יתרה לפירעון",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4476,6 +4868,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  3,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4499,9 +4892,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CurrencySign",
 					  						DefaultText =  "Currency ",
+					  						FullLocalDefaultText =  "מטבע",
 					  						ListFieldLable =  "CurrencySignListLable",
 					  						ListLableDefaultText =  "Currency",
+					  						ListLocalDefaultText =  "מטבע",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4534,6 +4931,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4557,7 +4955,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ConnectedItems",
 					  						DefaultText =  "ConnectedItems",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4590,6 +4990,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  10,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4613,7 +5014,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Type",
 					  						DefaultText =  "type",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4646,6 +5049,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4670,7 +5074,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "DeductionFileTypeId",
 					  						DefaultText =  "Deduction File Type",
 					  						FullLocalDefaultText =  "סוג עיסוק",
+					  						ListFieldLable =  "DeductionFileTypeIdListLable",
+					  						ListLableDefaultText =  "DeductionFileTypeId",
+					  						ListLocalDefaultText =  "סוג עיסוק",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "WithholdingTaxDeductionType",
+					  						NavigationPropertyName =  "WithholdingTaxDeductionType",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4703,6 +5114,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4731,7 +5143,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "DeductionFileNumberListLable",
 					  						ListLableDefaultText =  "Deduction File No.",
 					  						ListLocalDefaultText =  "תיק ניכויים",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4764,6 +5178,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4788,7 +5203,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "AssessingOfficeCode",
 					  						DefaultText =  "Assessing Office Code",
 					  						FullLocalDefaultText =  "פקיד שומה",
+					  						ListFieldLable =  "AssessingOfficeCodeListLable",
+					  						ListLableDefaultText =  "AssessingOfficeCode",
+					  						ListLocalDefaultText =  "פקיד שומה",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "TaxWithholdingAssessOffice",
+					  						NavigationPropertyName =  "TaxWithholdingAssessOffice",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4821,6 +5243,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  60,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4849,7 +5272,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "OccupationListLable",
 					  						ListLableDefaultText =  "Occupation",
 					  						ListLocalDefaultText =  "עיסוק",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4882,6 +5307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4906,7 +5332,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "DeductionTypeId",
 					  						DefaultText =  "Deduction Type",
 					  						FullLocalDefaultText =  "סוג תיק ניכויים",
+					  						ListFieldLable =  "DeductionTypeIdListLable",
+					  						ListLableDefaultText =  "DeductionTypeId",
+					  						ListLocalDefaultText =  "סוג תיק ניכויים",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "AccountingCompanyType",
+					  						NavigationPropertyName =  "AccountingCompanyType",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -4939,6 +5372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -4967,7 +5401,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ConsolidationVatListLable",
 					  						ListLableDefaultText =  "Consolidation Vat",
 					  						ListLocalDefaultText =  "איחוד עוסקים",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5000,6 +5436,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5024,7 +5461,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountWithholdingTaxes",
 					  						DefaultText =  "GLAccountWithholdingTaxes",
+					  						IsForeignKey =  false,
+					  						ThisKey =  "Id",
+					  						OtherKey =  "GLAccountId",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5057,6 +5498,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5080,7 +5522,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TaxWithholdingLastLine",
 					  						DefaultText =  "TaxWithholdingLastLine",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5113,6 +5557,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5136,7 +5581,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReconcilationCount",
 					  						DefaultText =  "ReconcilationCount",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5169,6 +5616,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5197,7 +5645,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IsEquipmentVendorListLable",
 					  						ListLableDefaultText =  "Is Equipment Supplier",
 					  						ListLocalDefaultText =  "ספק ציוד",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5230,6 +5680,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5258,7 +5709,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ExcludeFromDeductionReportListLable",
 					  						ListLableDefaultText =  "Exclude from deduction report",
 					  						ListLocalDefaultText =  "לא לכלול בדוח ניכויים",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5291,6 +5744,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5319,7 +5773,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ParentListLable",
 					  						ListLableDefaultText =  "קוד אב",
 					  						ListLocalDefaultText =  "Parent",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5352,6 +5808,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5375,7 +5832,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionTypeName",
 					  						DefaultText =  "DeductionTypeName",
+					  						FullLocalDefaultText =  "שם תיק ניכויים",
+					  						ListFieldLable =  "DeductionTypeNameListLable",
+					  						ListLableDefaultText =  "DeductionTypeName",
+					  						ListLocalDefaultText =  "שם תיק ניכויים",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5408,6 +5871,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  3,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5431,7 +5895,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionFileTypeCode",
 					  						DefaultText =  "DeductionFileTypeCode",
+					  						FullLocalDefaultText =  "קוד סוג תיק ניכוי",
+					  						ListFieldLable =  "DeductionFileTypeCodeListLable",
+					  						ListLableDefaultText =  "DeductionFileTypeCode",
+					  						ListLocalDefaultText =  "קוד סוג תיק ניכוי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5464,6 +5934,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5487,7 +5958,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionFileTypeName",
 					  						DefaultText =  "DeductionFileTypeName",
+					  						FullLocalDefaultText =  "שם סוג תיק ניכוי",
+					  						ListFieldLable =  "DeductionFileTypeNameListLable",
+					  						ListLableDefaultText =  "DeductionFileTypeName",
+					  						ListLocalDefaultText =  "שם סוג תיק ניכוי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5520,6 +5997,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5543,7 +6021,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AssessingOfficeName",
 					  						DefaultText =  "AssessingOfficeName",
+					  						FullLocalDefaultText =  "שם פקיד שומה",
+					  						ListFieldLable =  "AssessingOfficeNameListLable",
+					  						ListLableDefaultText =  "AssessingOfficeName",
+					  						ListLocalDefaultText =  "שם פקיד שומה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5576,6 +6060,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5599,7 +6084,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DeductionTypeEnglishName",
 					  						DefaultText =  "DeductionTypeEnglishName",
+					  						FullLocalDefaultText =  "סוג ניכוי שם באנגלית",
+					  						ListFieldLable =  "DeductionTypeEnglishNameListLable",
+					  						ListLableDefaultText =  "DeductionTypeEnglishName",
+					  						ListLocalDefaultText =  "סוג ניכוי שם באנגלית",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5626,12 +6117,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "LessThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5662,7 +6155,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "TotalOpenChequesInLocalCurListLable",
 					  						ListLableDefaultText =  "Unredeemed Cheques",
 					  						ListLocalDefaultText =  "המחאות שלא נפרעו",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5695,6 +6190,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5718,9 +6214,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AutomaticReconcileLocalName",
 					  						DefaultText =  "AutomaticReconcileName",
+					  						FullLocalDefaultText =  "התאמה אוטומטית של שם מקומי",
 					  						ListFieldLable =  "AutomaticReconcileLocalNameListLable",
 					  						ListLableDefaultText =  "AutomaticReconcileName",
+					  						ListLocalDefaultText =  "התאמה אוטומטית של שם מקומי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5753,6 +6253,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5776,9 +6277,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReconcileMethodLocalName",
 					  						DefaultText =  "ReconcileMethodName",
+					  						FullLocalDefaultText =  "שם פעולת התאמה",
 					  						ListFieldLable =  "ReconcileMethodLocalNameListLable",
 					  						ListLableDefaultText =  "ReconcileMethodName",
+					  						ListLocalDefaultText =  "שם פעולת התאמה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5805,12 +6310,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "LessThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5837,10 +6344,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "TotFutureOpenChequesInLocalCur",
 					  						DefaultText =  "Unredeemed Future Cheques",
+					  						FullLocalDefaultText =  "המחאות עתידיות שלא נפרעו",
 					  						ListFieldLable =  "TotFutureOpenChequesInLocalCurListLable",
 					  						ListLableDefaultText =  "Unredeemed Future Cheques",
 					  						ListLocalDefaultText =  "המחאות עתידיות שלא נפרעו",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5873,6 +6383,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -5896,7 +6407,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CardId",
 					  						DefaultText =  "CardId",
+					  						FullLocalDefaultText =  "קוד כרטיס",
+					  						ListFieldLable =  "CardIdListLable",
+					  						ListLableDefaultText =  "CardId",
+					  						ListLocalDefaultText =  "קוד כרטיס",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5930,6 +6447,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -5959,7 +6477,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CreatedByUserIdListLable",
 					  						ListLableDefaultText =  "Created By",
 					  						ListLocalDefaultText =  "נוצר על ידי",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "User",
+					  						NavigationPropertyName =  "CreatedByUser",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -5993,6 +6515,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6022,7 +6545,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "UpdatedByUserIdListLable",
 					  						ListLableDefaultText =  "Updated By",
 					  						ListLocalDefaultText =  "עודכן על ידי",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "User",
+					  						NavigationPropertyName =  "UpdatedByUser",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6055,6 +6582,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6084,7 +6612,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
 					  						ListLocalDefaultText =  "תאריך יצירה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6117,6 +6647,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6146,7 +6677,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "UpdateDateListLable",
 					  						ListLableDefaultText =  "Update Date",
 					  						ListLocalDefaultText =  "תאריך עדכון",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6179,6 +6712,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6209,7 +6743,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListLocalDefaultText =  "נוצר על ידי",
 					  						HelpTextCode =  "CreatedByUserName",
 					  						HelpTextDefaultText =  "נוצר על ידי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6242,6 +6778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6270,7 +6807,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "UpdatedByUserNameListLable",
 					  						ListLableDefaultText =  "Updated By",
 					  						ListLocalDefaultText =  "עודכן על ידי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6303,6 +6842,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6326,7 +6866,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreatedByLocalName",
 					  						DefaultText =  "Created By",
+					  						FullLocalDefaultText =  "נוצר על ידי (שם מקומי)",
+					  						ListFieldLable =  "CreatedByLocalNameListLable",
+					  						ListLableDefaultText =  "CreatedByLocalName",
+					  						ListLocalDefaultText =  "נוצר על ידי (שם מקומי)",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6359,6 +6905,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6382,7 +6929,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "UpdatedByLocalName",
 					  						DefaultText =  "Updated By",
+					  						FullLocalDefaultText =  "עודכן על ידי (שם מקומי)",
+					  						ListFieldLable =  "UpdatedByLocalNameListLable",
+					  						ListLableDefaultText =  "UpdatedByLocalName",
+					  						ListLocalDefaultText =  "עודכן על ידי (שם מקומי)",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6415,6 +6968,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6438,7 +6992,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CardCode",
 					  						DefaultText =  "CardCode",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6471,6 +7027,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6494,7 +7051,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PartnerTypeId",
 					  						DefaultText =  "PartnerTypeId",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6527,6 +7086,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6555,7 +7115,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AllowEditChequePayToNameListLable",
 					  						ListLableDefaultText =  "Allow Editing Cheque Pay To Name",
 					  						ListLocalDefaultText =  "אפשר עדכון פרטי משלם בהמחאה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6588,6 +7150,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6617,7 +7180,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ActiveForInterestListLable",
 					  						ListLableDefaultText =  "Active for Interest",
 					  						ListLocalDefaultText =  "פעיל לריבית",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6650,6 +7215,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6679,7 +7245,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "InterestCalculationStartDateListLable",
 					  						ListLableDefaultText =  "Interest Calculation Start Date",
 					  						ListLocalDefaultText =  "תאריך לחישוב ריבית",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6712,6 +7280,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6741,7 +7310,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ActiveForInterestCreditInvoiceListLable",
 					  						ListLableDefaultText =  "Active for Interest Credit invoice",
 					  						ListLocalDefaultText =  "פעיל לחשבונית זיכוי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6774,6 +7345,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6798,7 +7370,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountInterestPeriods",
 					  						DefaultText =  "GLAccount Interest Periods",
+					  						IsForeignKey =  false,
+					  						ThisKey =  "Id",
+					  						OtherKey =  "GLAccountId",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6831,6 +7407,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -6862,7 +7439,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "InterestCreditLimitListLable",
 					  						ListLableDefaultText =  "Interest Credit",
 					  						ListLocalDefaultText =  "אשראי לריבית",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6895,6 +7474,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6919,7 +7499,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "NameForPrintingCheques",
 					  						DefaultText =  "Name for printing cheques",
 					  						FullLocalDefaultText =  "שם להדפסה בשקים",
+					  						ListFieldLable =  "NameForPrintingChequesListLable",
+					  						ListLableDefaultText =  "NameForPrintingCheques",
+					  						ListLocalDefaultText =  "שם להדפסה בשקים",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -6952,6 +7537,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -6976,7 +7562,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "Smallcashbook",
 					  						DefaultText =  "Small Cashbook",
 					  						FullLocalDefaultText =  "קופה קטנה",
+					  						ListFieldLable =  "SmallcashbookListLable",
+					  						ListLableDefaultText =  "Smallcashbook",
+					  						ListLocalDefaultText =  "קופה קטנה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7009,6 +7600,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -7038,7 +7630,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "MinimumInterestInvoiceBillingListLable",
 					  						ListLableDefaultText =  "Minimum Interest Invoice billing",
 					  						ListLocalDefaultText =  "מינימום חיוב בחשבונית ריבית",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7071,6 +7665,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7094,7 +7689,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsSplitted",
 					  						DefaultText =  "IsSplitted",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7127,6 +7724,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7155,7 +7753,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "SalesmanNameListLable",
 					  						ListLableDefaultText =  "Salesman",
 					  						ListLocalDefaultText =  "איש מכירות",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7188,6 +7788,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7216,7 +7817,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CollectorNameListLable",
 					  						ListLableDefaultText =  "Collector",
 					  						ListLocalDefaultText =  "גובה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7249,6 +7852,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7276,7 +7880,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "SplitCurrencyAccountListLable",
 					  						ListLableDefaultText =  "Split Currency Account",
 					  						ListLocalDefaultText =  "כרטיסי פיצול לפי מטבע",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7309,6 +7915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7336,7 +7943,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ParentNameListLable",
 					  						ListLableDefaultText =  "Main currency glaccount",
 					  						ListLocalDefaultText =  "כרטיס מטבע ראשי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7369,6 +7978,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7393,7 +8003,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountCurrencies",
 					  						DefaultText =  "GLAccount Currencies",
+					  						IsForeignKey =  false,
+					  						ThisKey =  "Id",
+					  						OtherKey =  "MainGLAccountId",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7426,6 +8040,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7449,7 +8064,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ParentCurrencyId",
 					  						DefaultText =  "Parent Currency",
+					  						FullLocalDefaultText =  "מזהה מטבע אב",
+					  						ListFieldLable =  "ParentCurrencyIdListLable",
+					  						ListLableDefaultText =  "ParentCurrencyId",
+					  						ListLocalDefaultText =  "מזהה מטבע אב",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7482,6 +8103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7509,7 +8131,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ReportingAsAnotherDocumentListLable",
 					  						ListLableDefaultText =  "Reporting As Another Document",
 					  						ListLocalDefaultText =  "דיווח תשומות -- מסמך אחר ",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7542,6 +8166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7568,7 +8193,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullFieldLable =  "CreditAllotmentPercentage",
 					  						DefaultText =  "Credit Allotment Percentage ",
 					  						FullLocalDefaultText =  "% עמלת הקצאת אשראי",
+					  						ListFieldLable =  "CreditAllotmentPercentageListLable",
+					  						ListLableDefaultText =  "CreditAllotmentPercentage",
+					  						ListLocalDefaultText =  "% עמלת הקצאת אשראי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7601,6 +8231,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7625,9 +8256,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category1LocalName",
 					  						DefaultText =  "Category1 LocalName",
+					  						FullLocalDefaultText =  "קטגוריה 1 (שם מקומי)",
 					  						ListFieldLable =  "Category1LocalNameListLable",
 					  						ListLableDefaultText =  "Category1LocalName",
+					  						ListLocalDefaultText =  "קטגוריה 1 (שם מקומי)",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7660,6 +8295,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7684,9 +8320,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category2LocalName",
 					  						DefaultText =  "Category2LocalName",
+					  						FullLocalDefaultText =  "קטגוריה 2 (שם מקומי)",
 					  						ListFieldLable =  "Category2LocalNameListLable",
 					  						ListLableDefaultText =  "Category2LocalName",
+					  						ListLocalDefaultText =  "קטגוריה 2 (שם מקומי)",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7719,6 +8359,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7743,9 +8384,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category3LocalName",
 					  						DefaultText =  "Category3LocalName",
+					  						FullLocalDefaultText =  "קטגוריה 3 (שם מקומי)",
 					  						ListFieldLable =  "Category3LocalNameListLable",
 					  						ListLableDefaultText =  "Category3LocalName",
+					  						ListLocalDefaultText =  "קטגוריה 3 (שם מקומי)",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7778,6 +8423,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7802,9 +8448,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category4LocalName",
 					  						DefaultText =  "Category4LocalName",
+					  						FullLocalDefaultText =  "קטגוריה 4 (שם מקומי)",
 					  						ListFieldLable =  "Category4LocalNameListLable",
 					  						ListLableDefaultText =  "Category4LocalName",
+					  						ListLocalDefaultText =  "קטגוריה 4 (שם מקומי)",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7837,6 +8487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7861,9 +8512,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Category5LocalName",
 					  						DefaultText =  "Category5LocalName",
+					  						FullLocalDefaultText =  "קטגוריה 5 (שם מקומי)",
 					  						ListFieldLable =  "Category5LocalNameListLable",
 					  						ListLableDefaultText =  "Category5LocalName",
+					  						ListLocalDefaultText =  "קטגוריה 5 (שם מקומי)",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7896,6 +8551,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7923,7 +8579,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "RelatedGLAccountListLable",
 					  						ListLableDefaultText =  "Related GLAccount",
 					  						ListLocalDefaultText =  "כרטיס מקושר",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -7956,6 +8614,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  300,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -7980,9 +8639,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsEnglishName",
 					  						DefaultText =  "ChartOfAccountsEnglishName",
+					  						FullLocalDefaultText =  "טבלת חשבונות (שם באנגלית)",
 					  						ListFieldLable =  "ChartOfAccountsEnglishNameListLable",
 					  						ListLableDefaultText =  "ChartOfAccountsEnglishName",
+					  						ListLocalDefaultText =  "טבלת חשבונות (שם באנגלית)",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8015,6 +8678,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  300,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8039,7 +8703,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsTypeEnglishName",
 					  						DefaultText =  "ChartOfAccountsTypeEnglishName",
+					  						FullLocalDefaultText =  "טבלת חשבונות (שם באנגלית)",
+					  						ListFieldLable =  "ChartOfAccountsTypeEnglishNameListLable",
+					  						ListLableDefaultText =  "ChartOfAccountsTypeEnglishName",
+					  						ListLocalDefaultText =  "סוג טבלת חשבונות (שם באנגלית)",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8072,6 +8742,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  300,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8096,7 +8767,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsTypeLocalName",
 					  						DefaultText =  "ChartOfAccountsTypeLocalName",
+					  						FullLocalDefaultText =  "סוג טבלת חשבונות (שם מקומי)",
+					  						ListFieldLable =  "ChartOfAccountsTypeLocalNameListLable",
+					  						ListLableDefaultText =  "ChartOfAccountsTypeLocalName",
+					  						ListLocalDefaultText =  "סוג טבלת חשבונות (שם מקומי)",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8129,6 +8806,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  300,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8153,7 +8831,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsLocalName",
 					  						DefaultText =  "ChartOfAccountsLocalName",
+					  						FullLocalDefaultText =  "טבלת חשבונות (שם מקומי)",
+					  						ListFieldLable =  "ChartOfAccountsLocalNameListLable",
+					  						ListLableDefaultText =  "ChartOfAccountsLocalName",
+					  						ListLocalDefaultText =  "טבלת חשבונות (שם מקומי)",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8186,6 +8870,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8210,7 +8895,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountChildren",
 					  						DefaultText =  "GLAccount Children",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8243,6 +8930,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8266,7 +8954,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CardsDataId",
 					  						DefaultText =  "CardsDataId",
+					  						FullLocalDefaultText =  "מזהה נתוני כרטיסים",
+					  						ListFieldLable =  "CardsDataIdListLable",
+					  						ListLableDefaultText =  "CardsDataId",
+					  						ListLocalDefaultText =  "מזהה נתוני כרטיסים",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "GLAccountCardsData",
+					  						NavigationPropertyName =  "GLAccountCardsData",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8299,6 +8995,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  50,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -8326,7 +9023,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PaymentTermNameListLable",
 					  						ListLableDefaultText =  "Payment Term",
 					  						ListLocalDefaultText =  "תנאי תשלום",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8359,6 +9058,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8390,7 +9090,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Period0ListLable",
 					  						ListLableDefaultText =  "Period 0 ",
 					  						ListLocalDefaultText =  "תקופה גיול 0",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8423,6 +9125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8454,7 +9157,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Period1ListLable",
 					  						ListLableDefaultText =  "Period 1",
 					  						ListLocalDefaultText =  "תקופה גיול 1",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8487,6 +9192,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8518,7 +9224,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Period2ListLable",
 					  						ListLableDefaultText =  "Period 2",
 					  						ListLocalDefaultText =  "תקופה גיול 2",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8551,6 +9259,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8582,7 +9291,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Period3ListLable",
 					  						ListLableDefaultText =  "Period 3",
 					  						ListLocalDefaultText =  "תקופה גיול 3",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8615,6 +9326,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8646,7 +9358,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Period4ListLable",
 					  						ListLableDefaultText =  "Period 4",
 					  						ListLocalDefaultText =  "תקופה גיול 4",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8679,6 +9393,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8710,7 +9425,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "Period5ListLable",
 					  						ListLableDefaultText =  "Period 5",
 					  						ListLocalDefaultText =  "תקופה גיול 5",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8743,6 +9460,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8774,7 +9492,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PeriodPastListLable",
 					  						ListLableDefaultText =  "Period Past",
 					  						ListLocalDefaultText =  "לפני התקופה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8807,6 +9527,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8838,7 +9559,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PeriodFutureListLable",
 					  						ListLableDefaultText =  "Period Future",
 					  						ListLocalDefaultText =  "תקופה עתידית",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8871,6 +9594,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8900,7 +9624,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "TotalOpenTransactionsListLable",
 					  						ListLableDefaultText =  "Total Open Transactions",
 					  						ListLocalDefaultText =  "סה\"כ תנועות פתוחות",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8933,6 +9659,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -8962,7 +9689,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "LastReconciledByListLable",
 					  						ListLableDefaultText =  "Last Reconciled By",
 					  						ListLocalDefaultText =  "מבצע ההתאמה האחרונה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -8995,6 +9724,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "LessThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9024,7 +9754,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "LastReconcileDateListLable",
 					  						ListLableDefaultText =  "Last Reconcile Date",
 					  						ListLocalDefaultText =  "הותאם לאחרונה בתאריך",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9044,7 +9776,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CreditLimit",
 					  						ObjectTableName =  "GLAccount",
-					  						FieldsDataType =  "Double",
+					  						FieldsDataType =  "Decimal",
 					  						MinLength =  0,
 					  						MaxLength =  0,
 					  						IsRequired =  false,
@@ -9057,6 +9789,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "LessThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9088,7 +9821,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CreditLimitListLable",
 					  						ListLableDefaultText =  "Credit Limit",
 					  						ListLocalDefaultText =  "מסגרת אשראי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9121,6 +9856,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9150,7 +9886,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PaymentTermListLable",
 					  						ListLableDefaultText =  "Payment Term",
 					  						ListLocalDefaultText =  "תנאי תשלום",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9183,6 +9921,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "LessThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9214,7 +9953,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "TotalOpenShipmentsListLable",
 					  						ListLableDefaultText =  "Total Open Shipments",
 					  						ListLocalDefaultText =  "תיקים פתוחים",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9247,6 +9988,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9276,7 +10018,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PhoneListLable",
 					  						ListLableDefaultText =  "Phone",
 					  						ListLocalDefaultText =  " טלפון",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9309,6 +10053,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9338,7 +10083,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "SalesmanListLable",
 					  						ListLableDefaultText =  "Salesman",
 					  						ListLocalDefaultText =  "איש מכירות",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9371,6 +10118,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9400,7 +10148,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CollectorListLable",
 					  						ListLableDefaultText =  "Collector",
 					  						ListLocalDefaultText =  "גובה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9433,6 +10183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Between",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9462,7 +10213,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "FollowupDateListLable",
 					  						ListLableDefaultText =  "Follow up Date",
 					  						ListLocalDefaultText =  "תאריך למעקב",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9495,6 +10248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -9524,7 +10278,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "FollowupNotesListLable",
 					  						ListLableDefaultText =  "Follow up Notes",
 					  						ListLocalDefaultText =  "הערות למעקב",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9557,6 +10313,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9580,7 +10337,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountFollowUpDate",
 					  						DefaultText =  "GLAccountFollowUpDate",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9613,6 +10372,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9636,7 +10396,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "GLAccountFollowUpRemarks",
 					  						DefaultText =  "GLAccountFollowUpRemarks",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9669,6 +10431,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9699,7 +10462,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CalculatedAgingPeriod1ListLable",
 					  						ListLableDefaultText =  "Calculated Aging Period 1 ",
 					  						ListLocalDefaultText =  "תקופה גיול מחושבת 1",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9732,6 +10497,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9762,7 +10528,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CalculatedAgingPeriod2ListLable",
 					  						ListLableDefaultText =  " Calculated Aging Period 2",
 					  						ListLocalDefaultText =  "תקופה גיול מחושבת 2",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9795,6 +10563,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9825,7 +10594,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CalculatedAgingPeriod3ListLable",
 					  						ListLableDefaultText =  " Calculated Aging Period 3",
 					  						ListLocalDefaultText =  "תקופה גיול מחושבת 3",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9858,6 +10629,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9881,7 +10653,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FirstPeriodsMonths",
 					  						DefaultText =  "FirstPeriodsMonths",
+					  						FullLocalDefaultText =  "מחזורים ראשונים",
+					  						ListFieldLable =  "FirstPeriodsMonthsListLable",
+					  						ListLableDefaultText =  "FirstPeriodsMonths",
+					  						ListLocalDefaultText =  "מחזורים ראשונים",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9914,6 +10692,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9937,7 +10716,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SecondPeriodsMonths",
 					  						DefaultText =  "SecondPeriodsMonths",
+					  						FullLocalDefaultText =  "מחזורים שניים",
+					  						ListFieldLable =  "SecondPeriodsMonthsListLable",
+					  						ListLableDefaultText =  "SecondPeriodsMonths",
+					  						ListLocalDefaultText =  "מחזורים שניים",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -9970,6 +10755,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  200,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -9993,7 +10779,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ThirdPeriodsMonths",
 					  						DefaultText =  "ThirdPeriodsMonths",
+					  						FullLocalDefaultText =  "מחזורים שלישיים",
+					  						ListFieldLable =  "ThirdPeriodsMonthsListLable",
+					  						ListLableDefaultText =  "ThirdPeriodsMonths",
+					  						ListLocalDefaultText =  "מחזורים שלישיים",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -10026,6 +10818,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10057,7 +10850,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "InsuredCreditLimitListLable",
 					  						ListLableDefaultText =  "Insured Credit Limit",
 					  						ListLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -10090,12 +10885,81 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "LessThan",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "PostponedChequesCommission",
 					  						ListPropertyPath =  "PostponedChequesCommission",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  16,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PostponedChequesCommission",
+					  						DefaultText =  "Postponed Cheques Commission",
+					  						FullLocalDefaultText =  "עמלת שיק דחוי",
+					  						ListFieldLable =  "PostponedChequesCommissionListLable",
+					  						ListLableDefaultText =  "Postponed Cheques Commission",
+					  						ListLocalDefaultText =  "עמלת שיק דחוי ",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "BalanceInForeignCurrency",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Decimal",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "GreaterThanOrEqual",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "BalanceInForeignCurrency",
+					  						ListPropertyPath =  "BalanceInForeignCurrency",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -10116,9 +10980,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "BalanceInForeignCurrency",
 					  						DefaultText =  "Balance in Foreign Currency",
+					  						FullLocalDefaultText =  "יתרה במטבע זר",
 					  						ListFieldLable =  "BalanceInForeignCurrencyListLable",
 					  						ListLableDefaultText =  "Balance in Foreign Currency",
+					  						ListLocalDefaultText =  "יתרה במטבע זר",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -10151,6 +11019,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "GreaterThanOrEqual",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -10178,10 +11047,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignBalanceInDue",
 					  						DefaultText =  "Due Foreign Balance",
+					  						FullLocalDefaultText =  "יתרה לפרעון במטבע זר ",
 					  						ListFieldLable =  "ForeignBalanceInDueListLable",
 					  						ListLableDefaultText =  "Due Foreign Balance",
 					  						ListLocalDefaultText =  "יתרה לפרעון במטבע זר ",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -10190,6 +11062,787 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsSecurityLevelsEnabled",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsSecurityLevelsEnabled",
+					  						ListPropertyPath =  "IsSecurityLevelsEnabled",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsSecurityLevelsEnabled",
+					  						DefaultText =  "IsSecurityLevelsEnabled",
+					  						FullLocalDefaultText =  "רמת האבטחה מופעלת",
+					  						ListFieldLable =  "IsSecurityLevelsEnabledListLable",
+					  						ListLableDefaultText =  "IsSecurityLevelsEnabled",
+					  						ListLocalDefaultText =  "רמת האבטחה מופעלת",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ChartOfAccountSecurityLevel",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ChartOfAccountSecurityLevel",
+					  						ListPropertyPath =  "ChartOfAccountSecurityLevel",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ChartOfAccountSecurityLevel",
+					  						DefaultText =  "ChartOfAccountSecurityLevel",
+					  						FullLocalDefaultText =  "תרשים חשבון רמת אבטחה",
+					  						ListFieldLable =  "ChartOfAccountSecurityLevelListLable",
+					  						ListLableDefaultText =  "ChartOfAccountSecurityLevel",
+					  						ListLocalDefaultText =  "תרשים חשבון רמת אבטחה",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Access",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Access",
+					  						ListPropertyPath =  "Access",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Access",
+					  						DefaultText =  "Security Alert",
+					  						FullLocalDefaultText =  " התראת סיווג",
+					  						ListFieldLable =  "AccessListLable",
+					  						ListLableDefaultText =  "Security Alert",
+					  						ListLocalDefaultText =  " התראת סיווג",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CardCollectorId",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CardCollectorId",
+					  						ListPropertyPath =  "CardCollectorId",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CardCollectorId",
+					  						DefaultText =  "Card Collector",
+					  						FullLocalDefaultText =  "אוסף כרטיסים",
+					  						ListFieldLable =  "CardCollectorIdListLable",
+					  						ListLableDefaultText =  "Card Collector",
+					  						ListLocalDefaultText =  "אוסף כרטיסים",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsSplitGLAccout",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsSplitGLAccout",
+					  						ListPropertyPath =  "IsSplitGLAccout",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsSplitGLAccout",
+					  						DefaultText =  "IsSplitGLAccout",
+					  						FullLocalDefaultText =  "חשבון מפוצל",
+					  						ListFieldLable =  "IsSplitGLAccoutListLable",
+					  						ListLableDefaultText =  "IsSplitGLAccout",
+					  						ListLocalDefaultText =  "חשבון מפוצל",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsMainGLAccount",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsMainGLAccount",
+					  						ListPropertyPath =  "IsMainGLAccount",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsMainGLAccount",
+					  						DefaultText =  "IsMainGLAccount",
+					  						FullLocalDefaultText =  "חשבון ראשי",
+					  						ListFieldLable =  "IsMainGLAccountListLable",
+					  						ListLableDefaultText =  "IsMainGLAccount",
+					  						ListLocalDefaultText =  "חשבון ראשי",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InterestOpenBalance",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Decimal",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "GreaterThanOrEqual",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InterestOpenBalance",
+					  						ListPropertyPath =  "InterestOpenBalance",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  18,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InterestOpenBalance",
+					  						DefaultText =  "Interest Open Balance",
+					  						FullLocalDefaultText =  "יתרת פתיחה לריבית",
+					  						ListFieldLable =  "InterestOpenBalanceListLable",
+					  						ListLableDefaultText =  "Interest Open Balance",
+					  						ListLocalDefaultText =  "יתרת פתיחה לריבית",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Obligo",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Decimal",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Obligo",
+					  						ListPropertyPath =  "Obligo",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  16,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Obligo",
+					  						DefaultText =  "Obligo",
+					  						FullLocalDefaultText =  "אובליגו",
+					  						ListFieldLable =  "ObligoListLable",
+					  						ListLableDefaultText =  "Obligo",
+					  						ListLocalDefaultText =  "אובליגו",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CreditUsed",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Decimal",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CreditUsed",
+					  						ListPropertyPath =  "CreditUsed",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  16,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CreditUsed",
+					  						DefaultText =  "CreditUsed",
+					  						FullLocalDefaultText =  "מצב אשראי",
+					  						ListFieldLable =  "CreditUsedListLable",
+					  						ListLableDefaultText =  "CreditUsed",
+					  						ListLocalDefaultText =  "מצב אשראי",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "InsuredCreditPercentage",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "Double",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "InsuredCreditPercentage",
+					  						ListPropertyPath =  "InsuredCreditPercentage",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						NumberOfDigits =  18,
+					  						DigitsAfterPoint =  2,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "InsuredCreditPercentage",
+					  						DefaultText =  "Insured Credit Percentage",
+					  						FullLocalDefaultText =  "אחוז אשראי מבוטח",
+					  						ListFieldLable =  "InsuredCreditPercentageListLable",
+					  						ListLableDefaultText =  "Insured Credit Percentage",
+					  						ListLocalDefaultText =  "אחוז אשראי מבוטח",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "DateFormat",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  50,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  50,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "DateFormat",
+					  						ListPropertyPath =  "DateFormat",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "DateFormat",
+					  						DefaultText =  "DateFormat",
+					  						FullLocalDefaultText =  "פורמט לקליטת תאריך בדפי בנק",
+					  						ListFieldLable =  "DateFormatListLable",
+					  						ListLableDefaultText =  "DateFormat",
+					  						ListLocalDefaultText =  "פורמט לקליטת תאריך בדפי בנק",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "PaymentTerms",
+					  						ObjectTableName =  "GLAccount",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "PaymentTerm",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "PaymentTerms",
+					  						ListPropertyPath =  "PaymentTerms",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "GLAccount",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "PaymentTerms",
+					  						DefaultText =  "PaymentTerms",
+					  						FullLocalDefaultText =  "תנאי תשלום",
+					  						ListFieldLable =  "PaymentTermsListLable",
+					  						ListLableDefaultText =  "PaymentTerms",
+					  						ListLocalDefaultText =  "תנאי תשלום",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "PaymentTerm",
+					  						NavigationPropertyName =  "PaymentTerm",
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
@@ -10224,16 +11877,16 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature GLAccountFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.GLAccounts", NameTextCodeDefaultText = "General Ledger Accounts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode GLAccountTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Vendors", DefaultText = @"Vendor Accounts",LocalDefaultText = "ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature GLAccountFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Vendors", NameTextCodeDefaultText = "Vendor Accounts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
+			   TextCode GLAccountTextCode_1 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Clients", DefaultText = @"All Customers",LocalDefaultText = "לקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature GLAccountFeature_1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLIENTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Clients", NameTextCodeDefaultText = "All Customers Accounts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode GLAccountTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Clients", DefaultText = @"All Customers",LocalDefaultText = "לקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature GLAccountFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CLIENTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Clients", NameTextCodeDefaultText = "All Customers Accounts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
+			   TextCode GLAccountTextCode_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Collectors", DefaultText = @"My Customers (As Collectors)",LocalDefaultText = "לקוחות שלי(כגובה)", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature GLAccountFeature_2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "collectorsGLA", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.collectorsGLA", NameTextCodeDefaultText = "My Customers (As Colectors)", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
  
 
-			   TextCode GLAccountTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Collectors", DefaultText = @"My Customers (As Collectors)",LocalDefaultText = "לקוחות שלי(כגובה)", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature GLAccountFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "collectorsGLA", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.collectorsGLA", NameTextCodeDefaultText = "My Customers (As Colectors)", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
+			   TextCode GLAccountTextCode_3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.Vendors", DefaultText = @"Vendor Accounts",LocalDefaultText = "ספקים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature GLAccountFeature_3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "VENDORGLACCOUNTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Vendors", NameTextCodeDefaultText = "Vendor Accounts", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,GLAccountObjectTable, addedFeatures, addedTextCodes);
  
 
 			   TextCode GLAccountTextCode_4 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.Q.debetors", DefaultText = @"Debtors Customers",LocalDefaultText = "לקוחות חייבים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
@@ -10313,7 +11966,62 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
   
 	      
 
-			  Query VendorAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_1.Id, NameTextCodeCode = GLAccountTextCode_1.Code, ObjectTableName = "GLAccount", Code = "Vendor Accounts",  QueryGroupCode = "VNAC", IndexOrder = 1, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_1.Id,FeatureUniqeCode= GLAccountFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+			  Query AllCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_1.Id, NameTextCodeCode = GLAccountTextCode_1.Code, ObjectTableName = "GLAccount", Code = "All Customers",  QueryGroupCode = "GLAC", IndexOrder = 1, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_1.Id,FeatureUniqeCode= GLAccountFeature_1.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+	
+			 QueryColumn AllCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 73 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.InsuredCreditPercentage" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 160 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 160 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 56 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.RevenueExpenseName" , ColumnWidth = 90 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 140 }, addedQueryColumns);
+
+			 QueryColumn AllCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 56 }, addedQueryColumns);
+
+             AdvancedQueryFilter AllCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "2",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter AllCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query MyCustomersAsCollectorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_2.Id, NameTextCodeCode = GLAccountTextCode_2.Code, ObjectTableName = "GLAccount", Code = "MyCustomersAsCollectors",  QueryGroupCode = "GLAC", IndexOrder = 2, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_2.Id,FeatureUniqeCode= GLAccountFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
+	
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 220 }, addedQueryColumns);
+
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 220 }, addedQueryColumns);
+
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 90 }, addedQueryColumns);
+
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.IsMultiCurrency" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 160 }, addedQueryColumns);
+
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeName" , ColumnWidth = 170 }, addedQueryColumns);
+
+			 QueryColumn MyCustomersAsCollectorsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 56 }, addedQueryColumns);
+
+             AdvancedQueryFilter MyCustomersAsCollectorsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "2",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter MyCustomersAsCollectorsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.CardCollectorId", PredefinedValue = "#logged-user",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter MyCustomersAsCollectorsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+
+  
+	      
+
+			  Query VendorAccountsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_3.Id, NameTextCodeCode = GLAccountTextCode_3.Code, ObjectTableName = "GLAccount", Code = "Vendor Accounts",  QueryGroupCode = "VNAC", IndexOrder = 3, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_3.Id,FeatureUniqeCode= GLAccountFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
 	
 			 QueryColumn VendorAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -10333,51 +12041,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn VendorAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 60 }, addedQueryColumns);
 
-             AdvancedQueryFilter VendorAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "3",PredefinedValue2 = null, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter VendorAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
-  
-	      
 
-			  Query AllCustomersQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_2.Id, NameTextCodeCode = GLAccountTextCode_2.Code, ObjectTableName = "GLAccount", Code = "All Customers",  QueryGroupCode = "GLAC", IndexOrder = 2, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_2.Id,FeatureUniqeCode= GLAccountFeature_2.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
-	
-			 QueryColumn AllCustomersQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 73 }, addedQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 160 }, addedQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 160 }, addedQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 56 }, addedQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.RevenueExpenseName" , ColumnWidth = 90 }, addedQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 140 }, addedQueryColumns);
-
-			 QueryColumn AllCustomersQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 56 }, addedQueryColumns);
-
-             AdvancedQueryFilter AllCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = AllCustomersQuery.Id,QueryCode = AllCustomersQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
-
-  
-	      
-
-			  Query MyCustomersAsCollectorsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = GLAccountTextCode_3.Id, NameTextCodeCode = GLAccountTextCode_3.Code, ObjectTableName = "GLAccount", Code = "MyCustomersAsCollectors",  QueryGroupCode = "GLAC", IndexOrder = 3, Tenant = 0, ObjectTableId = GLAccountObjectTable.Id, QuerySection = "GLAccount", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = GLAccountFeature_3.Id,FeatureUniqeCode= GLAccountFeature_3.FeatureUniqeCode, DefaultSortName = null, DefaultSortDirection = null, Perspective = null }, addedQueries);
-	
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 220 }, addedQueryColumns);
-
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 220 }, addedQueryColumns);
-
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 90 }, addedQueryColumns);
-
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.IsMultiCurrency" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 160 }, addedQueryColumns);
-
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeName" , ColumnWidth = 170 }, addedQueryColumns);
-
-			 QueryColumn MyCustomersAsCollectorsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 56 }, addedQueryColumns);
-
-             AdvancedQueryFilter MyCustomersAsCollectorsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = MyCustomersAsCollectorsQuery.Id,QueryCode = MyCustomersAsCollectorsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter VendorAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "4",PredefinedValue2 = null, CustomPredefined = false, QueryId = VendorAccountsQuery.Id,QueryCode = VendorAccountsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10400,10 +12067,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn DebetorsCustomersQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = DebetorsCustomersQuery.Id,QueryCode = DebetorsCustomersQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 56 }, addedQueryColumns);
 
-             AdvancedQueryFilter DebetorsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id,QueryCode = DebetorsCustomersQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter DebetorsCustomersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "2",PredefinedValue2 = null, CustomPredefined = false, QueryId = DebetorsCustomersQuery.Id,QueryCode = DebetorsCustomersQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter DebetorsCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.LocalBalanceInDue", PredefinedValue = "0",PredefinedValue2 = null, QueryId = DebetorsCustomersQuery.Id,QueryCode = DebetorsCustomersQuery.UniqueCode, Tenant = 0,Operator = "LargerThan"}, addedQueryFilters);
+             AdvancedQueryFilter DebetorsCustomersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.LocalBalanceInDue", PredefinedValue = "0",PredefinedValue2 = null, CustomPredefined = false, QueryId = DebetorsCustomersQuery.Id,QueryCode = DebetorsCustomersQuery.UniqueCode, Tenant = 0,Operator = "LargerThan"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter DebetorsCustomersQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = DebetorsCustomersQuery.Id,QueryCode = DebetorsCustomersQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10424,10 +12094,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ActiveCustomersGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveCustomersGLAccountsQuery.Id,QueryCode = ActiveCustomersGLAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeName" , ColumnWidth = 170 }, addedQueryColumns);
 
-             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = ActiveCustomersGLAccountsQuery.Id,QueryCode = ActiveCustomersGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "2",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveCustomersGLAccountsQuery.Id,QueryCode = ActiveCustomersGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveCustomersGLAccountsQuery.Id,QueryCode = ActiveCustomersGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveCustomersGLAccountsQuery.Id,QueryCode = ActiveCustomersGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter ActiveCustomersGLAccountsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveCustomersGLAccountsQuery.Id,QueryCode = ActiveCustomersGLAccountsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10448,10 +12121,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn InactiveCustomersGLAccountQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveCustomersGLAccountQuery.Id,QueryCode = InactiveCustomersGLAccountQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeName" , ColumnWidth = 170 }, addedQueryColumns);
 
-             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "2",PredefinedValue2 = null, QueryId = InactiveCustomersGLAccountQuery.Id,QueryCode = InactiveCustomersGLAccountQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "2",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveCustomersGLAccountQuery.Id,QueryCode = InactiveCustomersGLAccountQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveCustomersGLAccountQuery.Id,QueryCode = InactiveCustomersGLAccountQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveCustomersGLAccountQuery.Id,QueryCode = InactiveCustomersGLAccountQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter InactiveCustomersGLAccountQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveCustomersGLAccountQuery.Id,QueryCode = InactiveCustomersGLAccountQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10476,10 +12152,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ActiveGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveGLAccountsQuery.Id,QueryCode = ActiveGLAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
 
-             AdvancedQueryFilter ActiveGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "1",PredefinedValue2 = null, QueryId = ActiveGLAccountsQuery.Id,QueryCode = ActiveGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter ActiveGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveGLAccountsQuery.Id,QueryCode = ActiveGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter ActiveGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveGLAccountsQuery.Id,QueryCode = ActiveGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter ActiveGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveGLAccountsQuery.Id,QueryCode = ActiveGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
@@ -10504,10 +12180,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn InactiveGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveGLAccountsQuery.Id,QueryCode = InactiveGLAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
 
-             AdvancedQueryFilter InactiveGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "1",PredefinedValue2 = null, QueryId = InactiveGLAccountsQuery.Id,QueryCode = InactiveGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter InactiveGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveGLAccountsQuery.Id,QueryCode = InactiveGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter InactiveGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveGLAccountsQuery.Id,QueryCode = InactiveGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter InactiveGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveGLAccountsQuery.Id,QueryCode = InactiveGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
@@ -10532,10 +12208,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OpenFilesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenFilesQuery.Id,QueryCode = OpenFilesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "5",PredefinedValue2 = null, QueryId = OpenFilesQuery.Id,QueryCode = OpenFilesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter OpenFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "5",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenFilesQuery.Id,QueryCode = OpenFilesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter OpenFilesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency", PredefinedValue = "0",PredefinedValue2 = null, QueryId = OpenFilesQuery.Id,QueryCode = OpenFilesQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+             AdvancedQueryFilter OpenFilesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency", PredefinedValue = "0",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenFilesQuery.Id,QueryCode = OpenFilesQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
   
 	      
@@ -10560,10 +12236,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ClosedFilesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ClosedFilesQuery.Id,QueryCode = ClosedFilesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
 
-             AdvancedQueryFilter ClosedFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "5",PredefinedValue2 = null, QueryId = ClosedFilesQuery.Id,QueryCode = ClosedFilesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter ClosedFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "5",PredefinedValue2 = null, CustomPredefined = false, QueryId = ClosedFilesQuery.Id,QueryCode = ClosedFilesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter ClosedFilesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency", PredefinedValue = "0",PredefinedValue2 = null, QueryId = ClosedFilesQuery.Id,QueryCode = ClosedFilesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter ClosedFilesQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency", PredefinedValue = "0",PredefinedValue2 = null, CustomPredefined = false, QueryId = ClosedFilesQuery.Id,QueryCode = ClosedFilesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
@@ -10588,7 +12264,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllFilesQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllFilesQuery.Id,QueryCode = AllFilesQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "5",PredefinedValue2 = null, QueryId = AllFilesQuery.Id,QueryCode = AllFilesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter AllFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "5",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllFilesQuery.Id,QueryCode = AllFilesQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
@@ -10613,7 +12289,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn AllJobsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllJobsQuery.Id,QueryCode = AllJobsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllJobsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "4",PredefinedValue2 = null, QueryId = AllJobsQuery.Id,QueryCode = AllJobsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter AllJobsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "4",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllJobsQuery.Id,QueryCode = AllJobsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
@@ -10634,10 +12310,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn ActiveVendorsGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ActiveVendorsGLAccountsQuery.Id,QueryCode = ActiveVendorsGLAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 60 }, addedQueryColumns);
 
-             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "3",PredefinedValue2 = null, QueryId = ActiveVendorsGLAccountsQuery.Id,QueryCode = ActiveVendorsGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveVendorsGLAccountsQuery.Id,QueryCode = ActiveVendorsGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "false",PredefinedValue2 = null, QueryId = ActiveVendorsGLAccountsQuery.Id,QueryCode = ActiveVendorsGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "false",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveVendorsGLAccountsQuery.Id,QueryCode = ActiveVendorsGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter ActiveVendorsGLAccountsQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "4",PredefinedValue2 = null, CustomPredefined = false, QueryId = ActiveVendorsGLAccountsQuery.Id,QueryCode = ActiveVendorsGLAccountsQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10658,10 +12337,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn InactiveVendorsGLAccountQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = InactiveVendorsGLAccountQuery.Id,QueryCode = InactiveVendorsGLAccountQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 60 }, addedQueryColumns);
 
-             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "3",PredefinedValue2 = null, QueryId = InactiveVendorsGLAccountQuery.Id,QueryCode = InactiveVendorsGLAccountQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "3",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveVendorsGLAccountQuery.Id,QueryCode = InactiveVendorsGLAccountQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "true",PredefinedValue2 = null, QueryId = InactiveVendorsGLAccountQuery.Id,QueryCode = InactiveVendorsGLAccountQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.Inactive", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveVendorsGLAccountQuery.Id,QueryCode = InactiveVendorsGLAccountQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+
+
+             AdvancedQueryFilter InactiveVendorsGLAccountQueryFilter_2 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeCode", PredefinedValue = "4",PredefinedValue2 = null, CustomPredefined = false, QueryId = InactiveVendorsGLAccountQuery.Id,QueryCode = InactiveVendorsGLAccountQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -10688,23 +12370,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn AllGLAccountsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "GLAccount.DisplayNumber" , ColumnWidth = 85 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "GLAccount.CreditUsed" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "GLAccount.Obligo" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 80 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "GLAccount.LocalName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.IsMultiCurrency" , ColumnWidth = 110 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "GLAccount.EnglishName" , ColumnWidth = 160 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency" , ColumnWidth = 180 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "GLAccount.CurrencyCode" , ColumnWidth = 80 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 140 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "GLAccount.IsMultiCurrency" , ColumnWidth = 110 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeName" , ColumnWidth = 160 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency" , ColumnWidth = 180 }, addedQueryColumns);
 
-			 QueryColumn AllGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
+			 QueryColumn AllGLAccountsQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.ChartOfAccountsName" , ColumnWidth = 140 }, addedQueryColumns);
 
-             AdvancedQueryFilter AllGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "1",PredefinedValue2 = null, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
+			 QueryColumn AllGLAccountsQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "GLAccount.ChartOfAccountsTypeName" , ColumnWidth = 160 }, addedQueryColumns);
+
+			 QueryColumn AllGLAccountsQueryColumn_10 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, IndexOrder = 10, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
+
+             AdvancedQueryFilter AllGLAccountsQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "1",PredefinedValue2 = null, CustomPredefined = false, QueryId = AllGLAccountsQuery.Id,QueryCode = AllGLAccountsQuery.UniqueCode, Tenant = 0,Operator = "Equals"}, addedQueryFilters);
 
   
 	      
@@ -10729,10 +12415,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OpenMastersQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenMastersQuery.Id,QueryCode = OpenMastersQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "GLAccount.Inactive" , ColumnWidth = 75 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenMastersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "4",PredefinedValue2 = null, QueryId = OpenMastersQuery.Id,QueryCode = OpenMastersQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter OpenMastersQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.AccountTypeCode", PredefinedValue = "4",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenMastersQuery.Id,QueryCode = OpenMastersQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 
-             AdvancedQueryFilter OpenMastersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency", PredefinedValue = "0",PredefinedValue2 = null, QueryId = OpenMastersQuery.Id,QueryCode = OpenMastersQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
+             AdvancedQueryFilter OpenMastersQueryFilter_1 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "GLAccount.BalanceInLocalCurrency", PredefinedValue = "0",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenMastersQuery.Id,QueryCode = OpenMastersQuery.UniqueCode, Tenant = 0,Operator = "NotEqual"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
@@ -10829,8 +12515,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature GLAccountInterestFeature_TH8 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.Interest", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GAIT", NameTextCodeDefaultText = "Interest", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
  
                  
-			   TextCode GLAccountEventsTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature GLAccountEventsFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
+			   TextCode GLAccountInterestTransactionsTextCode_TH9 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.InterestTransactions", DefaultText = "Interest Transactions",LocalDefaultText = "תנועות ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature GLAccountInterestTransactionsFeature_TH9 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccount.Tab.InterestTransactions", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccountFeatures.GLIT", NameTextCodeDefaultText = "Interest Transactions", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
+ 
+                 
+			   TextCode GLAccountEventsTextCode_TH10 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature GLAccountEventsFeature_TH10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "EVENTS", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -10838,23 +12528,25 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAOV",HtmlComponentName = "GLAccountOverviewComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountOverviewComponent", FeatureId = GLAccountOverviewFeature_TH0.Id,FeatureUniqeCode = GLAccountOverviewFeature_TH0.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountOverviewTextCode_TH0.Id, TabNameTextCodeCode = GLAccountOverviewTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GATR",HtmlComponentName = "GLAccountTransactionsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent", FeatureId = GLAccountTransactionsFeature_TH1.Id,FeatureUniqeCode = GLAccountTransactionsFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountTransactionsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTransactionsTextCode_TH1.Id, TabNameTextCodeCode = GLAccountTransactionsTextCode_TH1.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GATR",HtmlComponentName = "GLAccountTransactionsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTransactionsTabComponent", FeatureId = GLAccountTransactionsFeature_TH1.Id,FeatureUniqeCode = GLAccountTransactionsFeature_TH1.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountTransactionsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTransactionsTextCode_TH1.Id, TabNameTextCodeCode = GLAccountTransactionsTextCode_TH1.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAGC",HtmlComponentName = "GLAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountGeneralTabComponent", FeatureId = GLAccountGeneralFeature_TH2.Id,FeatureUniqeCode = GLAccountGeneralFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountGeneralTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountGeneralTextCode_TH2.Id, TabNameTextCodeCode = GLAccountGeneralTextCode_TH2.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAGC",HtmlComponentName = "GLAccountGeneralTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountGeneralTabComponent", FeatureId = GLAccountGeneralFeature_TH2.Id,FeatureUniqeCode = GLAccountGeneralFeature_TH2.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.ACC.GLAccountGeneralTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountGeneralTextCode_TH2.Id, TabNameTextCodeCode = GLAccountGeneralTextCode_TH2.Code, Tenant = 0, IndexOrder = 1 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAMR",HtmlComponentName = "ManageReconciliationsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/ManageReconciliationsTabComponent", FeatureId = GLAccountManageReconcFeature_TH3.Id,FeatureUniqeCode = GLAccountManageReconcFeature_TH3.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.RECO.GLAccountManageReconciliationsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageReconcTextCode_TH3.Id, TabNameTextCodeCode = GLAccountManageReconcTextCode_TH3.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAMR",HtmlComponentName = "ManageReconciliationsTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/ManageReconciliationsTabComponent", FeatureId = GLAccountManageReconcFeature_TH3.Id,FeatureUniqeCode = GLAccountManageReconcFeature_TH3.FeatureUniqeCode, ControlPath = "Logitude.Accounting.Views.Tabs.RECO.GLAccountManageReconciliationsTabControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageReconcTextCode_TH3.Id, TabNameTextCodeCode = GLAccountManageReconcTextCode_TH3.Code, Tenant = 0, IndexOrder = 2 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLET",HtmlComponentName = "ExternalPagesTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", FeatureId = GLAccountExternalTransactionsFeature_TH4.Id,FeatureUniqeCode = GLAccountExternalTransactionsFeature_TH4.FeatureUniqeCode, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountExternalTransactionsTextCode_TH4.Id, TabNameTextCodeCode = GLAccountExternalTransactionsTextCode_TH4.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLET",HtmlComponentName = "ExternalPagesTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", FeatureId = GLAccountExternalTransactionsFeature_TH4.Id,FeatureUniqeCode = GLAccountExternalTransactionsFeature_TH4.FeatureUniqeCode, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ExternalPagesTabComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountExternalTransactionsTextCode_TH4.Id, TabNameTextCodeCode = GLAccountExternalTransactionsTextCode_TH4.Code, Tenant = 0, IndexOrder = 3 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GMER",HtmlComponentName = "ManageExternalReconciliationTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", FeatureId = GLAccountManageExternalRecoFeature_TH5.Id,FeatureUniqeCode = GLAccountManageExternalRecoFeature_TH5.FeatureUniqeCode, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageExternalRecoTextCode_TH5.Id, TabNameTextCodeCode = GLAccountManageExternalRecoTextCode_TH5.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GMER",HtmlComponentName = "ManageExternalReconciliationTabComponent",HtmlComponentUrl = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", FeatureId = GLAccountManageExternalRecoFeature_TH5.Id,FeatureUniqeCode = GLAccountManageExternalRecoFeature_TH5.FeatureUniqeCode, ControlPath = "./Accounting/Components/Others/ReconcileExternalPage/ManageExternalReconciliationTabComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountManageExternalRecoTextCode_TH5.Id, TabNameTextCodeCode = GLAccountManageExternalRecoTextCode_TH5.Code, Tenant = 0, IndexOrder = 4 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLTX",HtmlComponentName = "GLAccountTaxWithholdingTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent", FeatureId = GLAccountTaxwithholdingFeature_TH6.Id,FeatureUniqeCode = GLAccountTaxwithholdingFeature_TH6.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTaxwithholdingTextCode_TH6.Id, TabNameTextCodeCode = GLAccountTaxwithholdingTextCode_TH6.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLTX",HtmlComponentName = "GLAccountTaxWithholdingTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountTaxWithholdingTabComponent", FeatureId = GLAccountTaxwithholdingFeature_TH6.Id,FeatureUniqeCode = GLAccountTaxwithholdingFeature_TH6.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountTaxwithholdingTextCode_TH6.Id, TabNameTextCodeCode = GLAccountTaxwithholdingTextCode_TH6.Code, Tenant = 0, IndexOrder = 5 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAAD",HtmlComponentName = "GLAccountAdditionalDataTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountAdditionalDataTabComponent", FeatureId = GLAccountAdditionalDataFeature_TH7.Id,FeatureUniqeCode = GLAccountAdditionalDataFeature_TH7.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountAdditionalDataTextCode_TH7.Id, TabNameTextCodeCode = GLAccountAdditionalDataTextCode_TH7.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAAD",HtmlComponentName = "GLAccountAdditionalDataTabComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountAdditionalDataTabComponent", FeatureId = GLAccountAdditionalDataFeature_TH7.Id,FeatureUniqeCode = GLAccountAdditionalDataFeature_TH7.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountAdditionalDataTextCode_TH7.Id, TabNameTextCodeCode = GLAccountAdditionalDataTextCode_TH7.Code, Tenant = 0, IndexOrder = 6 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAIT",HtmlComponentName = "GLAccountInterestComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountInterestComponent", FeatureId = GLAccountInterestFeature_TH8.Id,FeatureUniqeCode = GLAccountInterestFeature_TH8.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountInterestTextCode_TH8.Id, TabNameTextCodeCode = GLAccountInterestTextCode_TH8.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAIT",HtmlComponentName = "GLAccountInterestComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountInterestComponent", FeatureId = GLAccountInterestFeature_TH8.Id,FeatureUniqeCode = GLAccountInterestFeature_TH8.FeatureUniqeCode, ControlPath = "", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountInterestTextCode_TH8.Id, TabNameTextCodeCode = GLAccountInterestTextCode_TH8.Code, Tenant = 0, IndexOrder = 7 }, objectTableTabsRepository, TenantObjectTableTabs);
    
-            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = GLAccountEventsFeature_TH9.Id,FeatureUniqeCode = GLAccountEventsFeature_TH9.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountEventsTextCode_TH9.Id, TabNameTextCodeCode = GLAccountEventsTextCode_TH9.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GLIT",HtmlComponentName = "GLAccountInterestTransactionsComponent",HtmlComponentUrl = "./Accounting/Components/EditTabs/GLAccount/GLAccountInterestTransactionsComponent", FeatureId = GLAccountInterestTransactionsFeature_TH9.Id,FeatureUniqeCode = GLAccountInterestTransactionsFeature_TH9.FeatureUniqeCode, ControlPath = "GLAccountInterestTransactionsComponent", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountInterestTransactionsTextCode_TH9.Id, TabNameTextCodeCode = GLAccountInterestTransactionsTextCode_TH9.Code, Tenant = 0, IndexOrder = 8 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "GAEV",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = GLAccountEventsFeature_TH10.Id,FeatureUniqeCode = GLAccountEventsFeature_TH10.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.Views.Events.EventsControl", ObjectTableId = GLAccountObjectTable.Id, TabNameTextCodeId = GLAccountEventsTextCode_TH10.Id, TabNameTextCodeCode = GLAccountEventsTextCode_TH10.Code, Tenant = 0, IndexOrder = 9 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -11681,24 +13373,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
-                Code =  "GLRC",
-                EnglishName =  "Reporting as Another Document Changed",
-                LocalName =  " דיווח תשומות - מסמך אחר - עודכן",
-                IsManualEntry =  false,
-                ShortView =  false,
-                IsAgentView =  false,
-                IsCustomerView =  false,
-                IsSharedLogisticsEnabled =  false,
-                AllowedInAutomation =  false,
-                ManualActivatedFollowUp =  false,
-                IsFollowUp =  false,
-                ObjectTableId = GLAccountObjectTable.Id,
-				 
-            }, EventTypeRepository, tenantEventTypes);
-
-
-            AddEventTypes.AddEventType(new EventTypeDetails()
-            {
                 Code =  "IRCH",
                 EnglishName =  "Interest Credit Changed",
                 LocalName =  "Interest Credit Changed",
@@ -11751,6 +13425,42 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             }, EventTypeRepository, tenantEventTypes);
 
 
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "GCC",
+                EnglishName =  "Changed to Multi iCurrency",
+                LocalName =  "הומר לרב מטבעי",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
+            AddEventTypes.AddEventType(new EventTypeDetails()
+            {
+                Code =  "DSCS",
+                EnglishName =  "Card is connected",
+                LocalName =  "Card is connected",
+                IsManualEntry =  false,
+                ShortView =  false,
+                IsAgentView =  false,
+                IsCustomerView =  false,
+                IsSharedLogisticsEnabled =  false,
+                AllowedInAutomation =  false,
+                ManualActivatedFollowUp =  false,
+                IsFollowUp =  false,
+                ObjectTableId = GLAccountObjectTable.Id,
+				 
+            }, EventTypeRepository, tenantEventTypes);
+
+
 	    }
 	
 	    public void AddTableMenuButtons(Dictionary<string, MenuButton> tenantMenuButtons,Dictionary<string, MenuButtonGroup> tenantMenuButtonGroups, Dictionary<string, TextCode> textCodes,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, MenuButtonRepository menuButtonRepository,Dictionary<string, Feature> TenantFeatures,MenuButtonGroupRepository menuButtonGroupRepository ,IWebFreightContext ObjectContext)
@@ -11766,8 +13476,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature GLAccountFeature_MB1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "MOREGLACCOUNT", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.More", NameTextCodeDefaultText = "More Buttons", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
 
 			   Feature GLAccountFeature_MB10 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "INACITVE", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Inactive", NameTextCodeDefaultText = "Inactive", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
-             			   Feature GLAccountFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "PRINTCARDINDEX", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.PrintCardIndex", NameTextCodeDefaultText = "Print Card Index", FeatureTypeCode = "ACT", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
-             			   Feature GLAccountFeature_MB12 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccountReactivate", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reactivate", NameTextCodeDefaultText = "Reactivate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
+             			   Feature GLAccountFeature_MB11 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GLAccountReactivate", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, NameTextCodeCode = "GLAccount.Features.Reactivate", NameTextCodeDefaultText = "Reactivate", FeatureTypeCode = "ACT", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,GLAccountObjectTable);
               
 
 		   TextCodeRepository.SubmitChanges();
@@ -11841,26 +13550,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	   
 			   MenuButton GLAccountMenuButton11 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
 					{
-						EventCode = "GLAccountPrintCardIndex",
-						Index = 1, 
-						IsActive = true,
-						LabelTextCodeCode = "GLAccount.B.PrintCardIndex",
-						LabelTextCodeDefaultText = "Print Card Index",
-						Tenant = 0,
-						MenuButtonGroupId = GLAccountMenuButtonGroup.Id,
-						ParentMenuButtonId = GLAccountMenuButton1.Id,
-						ObjectTableId = GLAccountObjectTable.Id,
-						MenuButtonType = "menuitem",
-						FeatureId=  GLAccountFeature_MB11.Id,
-						Style = null,
-						LocalDefaultText = null,
-                        HtmlComponentPath=null,
-                        Width=0,
-						FeatureUniqeCode=  GLAccountFeature_MB11.FeatureUniqeCode,
-					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
-	   
-			   MenuButton GLAccountMenuButton12 = AddMenuButtonGroupAndMenuButtons.AddMenuButton(new MenuButtonDetails()
-					{
 						EventCode = "GLAccountReactivate",
 						Index = 0, 
 						IsActive = true,
@@ -11871,12 +13560,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						ParentMenuButtonId = GLAccountMenuButton1.Id,
 						ObjectTableId = GLAccountObjectTable.Id,
 						MenuButtonType = "menuitem",
-						FeatureId=  GLAccountFeature_MB12.Id,
+						FeatureId=  GLAccountFeature_MB11.Id,
 						Style = null,
 						LocalDefaultText = "הפעל מחדש",
                         HtmlComponentPath=null,
                         Width=0,
-						FeatureUniqeCode=  GLAccountFeature_MB12.FeatureUniqeCode,
+						FeatureUniqeCode=  GLAccountFeature_MB11.FeatureUniqeCode,
 					}, menuButtonRepository, tenantMenuButtons, TextCodeRepository, textCodes);
 	   
 	    }
@@ -12078,11 +13767,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountsOReconcileMethodcantUpdated = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.ReconcileMethodcantUpdated", DefaultText = "The reconcile method can’t be updated, the GLAccount has transations",LocalDefaultText = @"לא ניתן לעדכן שיטת התאמה, נרשמו תנועות על הכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLAccountsOfilter_accounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_accounting", DefaultText = "Accounting",LocalDefaultText = @"חשבונאי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLAccountsOfilter_accounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_accounting", DefaultText = "Accounting Date",LocalDefaultText = @"תאריך חשבונאי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLAccountsOfilter_reference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_reference", DefaultText = "Document",LocalDefaultText = @"אסמכתא", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLAccountsOfilter_reference = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_reference", DefaultText = "Document Date",LocalDefaultText = @"תאריך אסמכתא", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLAccountsOfilter_due = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_due", DefaultText = "Due",LocalDefaultText = @"פרעון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLAccountsOfilter_due = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.filter_due", DefaultText = "Due Date",LocalDefaultText = @"תאריך פרעון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountsOCreditDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CreditDetails", DefaultText = "Credit Details",LocalDefaultText = @"נתוני אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -12168,6 +13857,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_YearTransferORevenueExpenseType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.RevenueExpenseType", DefaultText = "A year transfer account is undefined or is not configured correctly.",LocalDefaultText = @"חשבון להעברת שנה אינו מוגדר או אינו מוגדר תקין.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GLAccountTextCode_YearTransferOTwoOrFourDigits = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.TwoOrFourDigits", DefaultText = "Enter year in either two or four digits only",LocalDefaultText = @"יש להזין שנה בשתי ספרות או בארבע ספרות בלבד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_YearTransferOPastYears = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "YearTransfer.O.PastYears", DefaultText = "Enter past years only",LocalDefaultText = @"יש להזין שנים קודמות בלבד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode GLAccountTextCode_GeneralMCACCSystem1000 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.MC.ACC.System1000", DefaultText = "System 1000",LocalDefaultText = @"מערכת 1000", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_System1000QSystem1000 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.Q.System1000", DefaultText = "System 1000",LocalDefaultText = @"מערכת 1000", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -12226,6 +13919,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_System1000ONoVendors = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.NoVendors", DefaultText = "No Vendors found with Vat Number and Deduction File Number",LocalDefaultText = @"לא אותרו ספקים עם תיק ניכויים ועם מספר עוסק מורשה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
+ 		   TextCode GLAccountTextCode_System1000OFoundVatNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "System1000.O.FoundVatNumber", DefaultText = "Found Vat Number",LocalDefaultText = @"אותר מספר עוסק מורשה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
  		   TextCode GLAccountTextCode_GLAccountONoCreditDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NoCreditDefined", DefaultText = "Credit balance not defined",LocalDefaultText = @"לא הוגדרה מסגרת אשראי ללקוח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOCreditStatus = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.CreditStatus ", DefaultText = "Credit Status",LocalDefaultText = @"מצב אשראי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
@@ -12252,7 +13947,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode GLAccountTextCode_GLAccountOFieldInterestCalculationStartDateismandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.FieldInterestCalculationStartDateismandatory", DefaultText = "Field Interest Calculation Start Date is mandatory",LocalDefaultText = @"שדה תאריך הוא חובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GLAccountTextCode_GLAccountOAtleastoneGLAccountInterestPeriodsrecordisrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", DefaultText = "At least one GLAccount Interest Periods record is required",LocalDefaultText = @"חובה להזין לפחות רשומה אחת של תקופת ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GLAccountTextCode_GLAccountOAtleastoneGLAccountInterestPeriodsrecordisrequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.AtleastoneGLAccountInterestPeriodsrecordisrequired", DefaultText = "If you want that this glaccount will be active for interest,  At least one GLAccount Interest Periods record is required",LocalDefaultText = @"אם ברצונך שחשבון זה יהיה פעיל לריבית ,יש להגדיר לפחות תקופת ריבית אחת", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOCustomer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Customer", DefaultText = "Customer",LocalDefaultText = @"לקוחות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -12321,6 +14016,56 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountOAmountIsInsured = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.AmountIsInsured", DefaultText = "of this amount is insured",LocalDefaultText = @"מהסכום הוא מבוטח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOChequesList = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ChequesList", DefaultText = "Cheques List",LocalDefaultText = @"רשימת המחאות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLaccountODebtBetween = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.DebtBetween", DefaultText = "Debt Between",LocalDefaultText = @"חוב בין", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLaccountOFrom = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.From", DefaultText = "From",LocalDefaultText = @"מ", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLaccountOTo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLaccount.O.To", DefaultText = "To",LocalDefaultText = @"עד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOLevelWarningMsg = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.LevelWarningMsg", DefaultText = "Some data has been hidden due to insufficient security clearance",LocalDefaultText = @"חלק מהמידע מוסתר , עקב הגבלת הרשאה של המשתמש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOSecurityLevelHiddenItem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.SecurityLevelHiddenItem", DefaultText = "GLAccount's data is hidden due to insufficient Security Clearance",LocalDefaultText = @"לא ניתן להציג את נתוני הדוח מכיוון שלמשתמש אין הרשאה לקבוצת המאזן שנבחרה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsORecoCurrencyErr = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.RecoCurrencyErr", DefaultText = "The reconcile method for an accounting currency account must be local currency",LocalDefaultText = @"שיטת ההתאמה עבור כרטיסים שקליים היא במטבע מקומי בלבד", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountONotIncludedInTax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.NotIncludedInTax", DefaultText = "Not included in any Tax Report",LocalDefaultText = @"לא דווחו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOTotalObligo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.TotalObligo", DefaultText = "Total Obligo",LocalDefaultText = @"אובליגו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOCustomerGLaccountDefinedSplit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.CustomerGLaccountDefinedSplit", DefaultText = "The customer GLaccount is already defined as a split by currency Account",LocalDefaultText = @"לא ניתן להוסיף את כרטיס פיצול זה מכיוון שהוא מוגדר ככרטיס ראש", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsONegativePostponedChequesCommission = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NegativePostponedChequesCommission", DefaultText = "Please enter positive values only in the postponed cheques commission",LocalDefaultText = @"Please enter positive values only in the postponed cheques commission", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOSplit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Split", DefaultText = "Split",LocalDefaultText = @"מפוצל", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOMain = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Main", DefaultText = "Main",LocalDefaultText = @"ראשי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOUnsavedChangesSaveBeforeContinue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.UnsavedChangesSaveBeforeContinue", DefaultText = "You have Unsaved changes, please save them before you continue",LocalDefaultText = @"קיימים שינויים שטרם נשמרו, אנא בצע שמירה לפני היציאה.", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOFilterInterest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Filter.Interest", DefaultText = "Interest value",LocalDefaultText = @"תאריכי ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOFilterAccounting = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Filter.Accounting", DefaultText = "Accounting",LocalDefaultText = @"תאריך חשבונאי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOFilterCreate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Filter.Create", DefaultText = "Create",LocalDefaultText = @"תאריך יצירה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOInterestReport = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.InterestReport", DefaultText = "Interest report",LocalDefaultText = @"דוח ריבית", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOClosedBalanceInLocalCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ClosedBalanceInLocalCurrency", DefaultText = "Closed balance in Local Currency",LocalDefaultText = @" סגירה יתרה במטבע מקומי", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOCollector = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Collector", DefaultText = "Collector",LocalDefaultText = @"גובה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOBalanceInHebrew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.BalanceInHebrew", DefaultText = "Balance",LocalDefaultText = @"יתרה לפי יתרה לגביה בשח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountOLocalInHebrew = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.LocalInHebrew", DefaultText = "Local",LocalDefaultText = @"שח", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOSettingOfCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.SettingOfCurrency", DefaultText = "Setting the currency on the card",LocalDefaultText = @"הגדרת המטבע בכרטיס", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOInCorrectCorrect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.InCorrectCorrect", DefaultText = "Data is Incorrect please correct",LocalDefaultText = @"שגויה יש לבצע תיקון", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "MC", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsONotRepaid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.NotRepaid", DefaultText = "Not Repaid",LocalDefaultText = @"פירוט שלא נפרעו", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountsOFutureCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheque", DefaultText = "FutureCheque",LocalDefaultText = @"פירוט המחאות עתידיות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

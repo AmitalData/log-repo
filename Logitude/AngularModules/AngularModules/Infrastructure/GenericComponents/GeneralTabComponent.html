@@ -1,8 +1,8 @@
 
 <div class="TabHolder">
     <table>
-        <tr class="TabTitleRow">
-            <td>{{'General.O.General' | TextCodeTranslationPipe}}</td>
+        <tr *ngIf="DisplayTabNameInScreen" class="TabTitleRow">
+            <td>{{title}}</td>
         </tr>
 
         <tr>

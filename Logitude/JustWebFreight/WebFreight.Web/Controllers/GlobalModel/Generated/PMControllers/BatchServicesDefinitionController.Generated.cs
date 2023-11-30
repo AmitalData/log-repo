@@ -40,6 +40,7 @@ using Logitude.BL.GlobalModel.EntityLists;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.BL.GlobalModel.Tools.EntityService;
 
+
 namespace WebFreight.Web.Controllers.GlobalModel.Generated.PMControllers
 { 
 

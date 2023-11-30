@@ -30,6 +30,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.LogBoxActivated = entityPM.LogBoxActivated;
             entityPOCO.IsPrivateLabelCustomer = entityPM.IsPrivateLabelCustomer;
             entityPOCO.RankId = entityPM.RankId;
+            entityPOCO.TeamId = entityPM.TeamId;
             entityPOCO.AccountManagerUserId = entityPM.AccountManagerUserId;
             entityPOCO.SalesmanUserId = entityPM.SalesmanUserId;
             entityPOCO.CollectorId = entityPM.CollectorId;
@@ -79,13 +80,14 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.PrimaryContactName = entityPM.PrimaryContactName;
             entityPOCO.PrimaryContactEmail = entityPM.PrimaryContactEmail;
             entityPOCO.PrimaryContactPhone = entityPM.PrimaryContactPhone;
+            entityPOCO.EmailForSendingSingArinvoice = entityPM.EmailForSendingSingArinvoice;
             entityPOCO.ActivatedByUserId = entityPM.ActivatedByUserId;
             entityPOCO.ActivationRequestedByUserId = entityPM.ActivationRequestedByUserId;
             entityPOCO.SetAsInactiveByUserId = entityPM.SetAsInactiveByUserId;
             entityPOCO.ActivationDate = entityPM.ActivationDate;
             entityPOCO.ActivationRequestDate = entityPM.ActivationRequestDate;
             entityPOCO.InactiveDate = entityPM.InactiveDate;
-            entityPOCO.EORInumber = entityPM.EORInumber;
+          
             if (!entityPM.IsHybrid || isNewState) //islam: if hybrid and not a new call dont map the field
             {
                 entityPOCO.FirstShipmentDate = entityPM.FirstShipmentDate;
@@ -139,7 +141,17 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.BillToId = entityPM.BillToId;
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
+            entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
             entityCard.IsAutonomy = entityPM.IsAutonomy;
+            entityCard.SATCustomerName = entityPM.SATCustomerName;
+            entityCard.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
+            entityCard.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
+            entityCard.EORInumber = entityPM.EORInumber;
+            entityCard.SingleInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.SingleInvoiceTemplateId : null;
+            entityCard.CustomsInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.CustomsInvoiceTemplateId : null;
+            entityCard.ConsolidationInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ConsolidationInvoiceTemplateId : null;
+            entityCard.ManifestInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ManifestInvoiceTemplateId : null;
+
             if (!entityPM.IsFirstContactToAdd)
             {
                 entityCard.PrimaryContactId = entityPM.PrimaryContactId;
@@ -231,7 +243,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             #region Custom Fields
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName("Customer", tenant).Where(o => o.DataTypeCode == "Text" || o.DataTypeCode == "nText").ToList();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             foreach (ObjectField field in customFields)
             {
                 object value = customFieldResolver.GetFieldValue(entityPM, field, tenant);
@@ -279,6 +291,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 BillToName = a.Card.EnglishName,
                 Id = a.Id,
                 RankId = a.RankId,
+                TeamId = a.TeamId,
                 AccountManagerUserId = a.AccountManagerUserId,
                 SalesmanUserId = a.SalesmanUserId,
                 SalesmanUserEnglishName = a.SalesmanUser == null ? null : (a.SalesmanUser.Contact == null ? null : a.SalesmanUser.Contact.EnglishName),
@@ -316,9 +329,11 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 Swift = a.Card.Swift,
                 AccountNumber = a.Card.AccountNumber,
                 SharedLogisticsInvitationStatusName = a.Card.SharedLogisticsInvitationStatus != null ? a.Card.SharedLogisticsInvitationStatus.Name : null,
+                CargoTrackingInvitationStatusName = a.Card.CargoTrackingInvitationStatus != null ? a.Card.CargoTrackingInvitationStatus.Name : null,
                 IsActiveForMobile = a.Card.IsActiveForMobile,
                 LastLoginDate = a.Card.LastLoginDate,
                 InvitationDate = a.Card.InvitationDate,
+                CargoTrackingInvitationDate = a.Card.CargoTrackingInvitationDate,
                 LeadSourceId = a.LeadSourceId,
                 IndustryId = a.IndustryId,
                 ClassifierId = a.ClassifierId,
@@ -343,6 +358,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 CodeMyCustomer = a.IsCustomer ? a.Card.Code + " (Customer)" : a.Card.Code,
                 PrimaryContactName = a.PrimaryContactName,
                 PrimaryContactEmail = a.PrimaryContactEmail,
+                EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
                 PrimaryContactPhone = a.PrimaryContactPhone,
                 CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
                 PrimaryContactId = a.Card.PrimaryContactId,
@@ -370,7 +386,6 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 IRSNumber = a.Card.IRSNumber,
                 IRSPlace = a.Card.IRSPlace,
                 IsPrivateLabelCustomer = a.IsPrivateLabelCustomer,
-                EORInumber = a.EORInumber,
                 Card = new CardPM()
                 {
                     Id = a.Id,

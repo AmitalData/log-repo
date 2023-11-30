@@ -18,6 +18,7 @@ using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.QuoteModel.Repositories;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Azure;
 using Simplog.Server.Infrastructure.Helpers;
@@ -28,16 +29,22 @@ using System.Text;
 using System.Transactions;
 using System.Web;
 using WebFreight.Web.Helpers.AutomationModel;
+using WebFreight.Web.Helpers.CallBack;
+using WebFreight.Web.Helpers.CallBack.Handler;
 
 namespace WebFreight.Web.Helpers
 {
     public class AutomationHelper
     {
+        private int tenant;
+        private string entityReference;
         public string ExecuteEmailAutomation(AutomationSendEmailArgs automationSendEmailArgs)
         {
             string comunicationLogId = string.Empty;
             List<Field> AutomationConditionFieldLists = automationSendEmailArgs.AutomationConditionFieldLists;
             Automation automation = automationSendEmailArgs.Automation;
+            tenant = automationSendEmailArgs.Tenant;
+            entityReference = automationSendEmailArgs.EntityReference;
 
             string objectTableName = automationSendEmailArgs.ObjectTableName;
 
@@ -58,7 +65,7 @@ namespace WebFreight.Web.Helpers
                 List<string> notifyBackPartners = new List<string>();
                 string Emails = "";
                 string NotifyBackEmails = "";
-
+                List <DocumentDefultAttachment> emptyDefaultDocuments = new List<DocumentDefultAttachment>();
                 if (allActiveUsers)
                 {
                     UserQuery userQuery = new UserQuery(automationSendEmailArgs.Tenant);
@@ -94,6 +101,10 @@ namespace WebFreight.Web.Helpers
                                 {
                                     if (!Emails.Split(';').Contains(entityContactVariable.Value)) Emails += entityContactVariable.Value + ";";
                                 }
+                                else if (automationResultEmail.RecipientType == "AllCardContacts")
+                                {
+                                    contactIds = contactIds.Concat(new CardContactQuery(automationSendEmailArgs.Tenant).GetContactsIdsByCardId(entityContactVariable.Value, automationSendEmailArgs.Tenant)).ToList();
+                                }
                                 else
                                 {
                                     if (!contactIds.Contains(entityContactVariable.Value)) contactIds.Add(entityContactVariable.Value);
@@ -124,7 +135,7 @@ namespace WebFreight.Web.Helpers
 
                 }
 
-                if (notifyBackContactIds.Count > 0 && notifyBackPartners.Count > 0)
+                if (notifyBackContactIds.Count > 0)
                 {
                     ContactQuery contactQuery = new ContactQuery(automation.Tenant);
                     List<string> notifyBackContactEmailLists = contactQuery.GetContactEmailsListsByIds(notifyBackContactIds, automation.Tenant);
@@ -150,13 +161,21 @@ namespace WebFreight.Web.Helpers
 
                     string communicationLog = AddAutomationToQueue(automation, automationSendEmailArgs, automationDocumentResult);
                     comunicationLogId = communicationLog;
+                    emptyDefaultDocuments = automationDocumentResult.EmptyDefaultDocuments;
+                 
                 }
 
-                if (!string.IsNullOrEmpty(NotifyBackEmails))
+                if (!string.IsNullOrEmpty(NotifyBackEmails) && notifyBackPartners!=null && notifyBackPartners.Count() > 0)
                 {
                     EmailCommunicationParams emailParams = BuildNotifyBackEmailCommunications(automation, notifyBackPartners, NotifyBackEmails);
                     Communications.AddEmailCommunicationLogQueue(emailParams, automation.Tenant);
                 }
+
+                if (!string.IsNullOrEmpty(NotifyBackEmails) && emptyDefaultDocuments != null && emptyDefaultDocuments.Count() > 0)
+                {
+                    new AttachmentDocumentNotifyService(emptyDefaultDocuments, automation.Tenant, automation.Name).Execute(NotifyBackEmails, automationSendEmailArgs);
+                }
+
             }
 
             return comunicationLogId;
@@ -207,29 +226,34 @@ namespace WebFreight.Web.Helpers
             return objectTableeName;
         }
 
-        private string GetAutomationNotifyBackEmailBody(string automationName, string objectTableeName, List<string> notifyBackPartners)
+        private string GetAutomationNotifyBackEmailBody(string automationName, string objectTableName, List<string> notifyBackPartners)
         {
-            string emailString = "";
             bool isMoreThanOnePartner = notifyBackPartners.Count > 1;
-            emailString += "Automation " + automationName + " failed to be sent to the following ";
-            emailString += "partner" + (isMoreThanOnePartner ? "s " : " ") + string.Join(",", notifyBackPartners.ToArray());
-            if (isMoreThanOnePartner)
+            var currentTenant = new TenantManagementRepository().GetSingleTenantManagement(tenant);
+            const string boldFontWeight = "bold";
+            const string redColor = "red";
+            const string blueColor = "#6082B6";
+            const string blackColor = "black";
+
+            string emailString = "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + automationName + "</span> Automation in ";
+            emailString += "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + currentTenant?.Name + "</span>";
+            emailString += " company failed to be sent to the following ";
+            emailString += "recipient" + (isMoreThanOnePartner ? "s for" : " for "); 
+            emailString += "<span " + GetTextColorAndWeightStyle(blackColor, boldFontWeight) + ">" + objectTableName + " number </span>";
+            emailString += "<span " + GetTextColorAndWeightStyle(blueColor, boldFontWeight) + ">" + entityReference + ":</span>";
+
+            emailString += "<div>";
+            foreach (string partner in notifyBackPartners)
             {
-                emailString = ReplaceLastOccurrence(emailString, ",", " and ");
+                emailString += "- " + partner + ": <span " + GetTextColorAndWeightStyle(redColor, boldFontWeight) + ">Since it is not defined in " + objectTableName + " level </span> <br />";
             }
-            emailString += " since "+ (isMoreThanOnePartner ? "they are" : "it is") +" not defined in " + objectTableeName + " level ";
+            emailString += "</div>";
+
             return emailString;
         }
-
-        private string ReplaceLastOccurrence(string Source, string Find, string Replace)
+        private string GetTextColorAndWeightStyle(string color, string fontWeight)
         {
-            int place = Source.LastIndexOf(Find);
-
-            if (place == -1)
-                return Source;
-
-            string result = Source.Remove(place, Find.Length).Insert(place, Replace);
-            return result;
+            return "style=\"color:" + color + "; font-weight: " + fontWeight + ";\"";
         }
 
         public string AddAutomationToQueue(Automation automation, AutomationSendEmailArgs automationSendEmailArgs, AutomationDocumentResult automationDocumentResult)
@@ -255,7 +279,7 @@ namespace WebFreight.Web.Helpers
                 documentOutId = documentOutRepository.GetDocumentOutIdByDocumentTypeIdAndEntityId(entityId, automation.DocumentTypeId, objectTableId, automation.Tenant);
                 if (string.IsNullOrEmpty(documentOutId))
                 {
-                    DocumentHelper documentHelper = new DocumentHelper();
+                    DocumentHelper documentHelper = new DocumentHelper(true);
                     DocumentOutPM documentOutPM = documentHelper.CreateDocumentOut(automation.DocumentTypeId, entityId, "", "", objectTableId, tenant, userId);
                     if (documentOutPM != null) documentOutId = documentOutPM.Id;
                 }
@@ -288,6 +312,7 @@ namespace WebFreight.Web.Helpers
                 LastStatusDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 CommunicationLogTypeCode = "E",
                 CommunicationStatusTypeCode = "W",
+                EntityReference = automationSendEmailArgs.EntityReference
 
             };
 
@@ -304,7 +329,7 @@ namespace WebFreight.Web.Helpers
             context.CommunicationLogs.Add(log);
 
             DocumentTypeTemplateDefultAttachmentService documentTypeTemplateDefultAttachmentService = new DocumentTypeTemplateDefultAttachmentService();
-            var attachments = documentTypeTemplateDefultAttachmentService.GetDefultAttachmentList(new DocumentTypeTemplateDefultAttachmentArgs() { DocumentTypeTemplateId = automation.TemplateId, EntityId = entityId, ObjectTableId = objectTableId, Tenant = tenant });
+            var attachments = documentTypeTemplateDefultAttachmentService.GetDefultAttachmentList(new DocumentTypeTemplateDefultAttachmentArgs() { DocumentTypeTemplateId = automation.TemplateId, EntityId = entityId, ObjectTableId = objectTableId, Tenant = tenant, IsAutomation  = true, ObjectTableName = automationDocumentResult.ObjectTableName });
             if (attachments.Count() > 0)
             {
                 foreach (var item in attachments)
@@ -313,10 +338,16 @@ namespace WebFreight.Web.Helpers
                     context.CommunicationAttachments.Add(attachment);
 
                 }
+            }
+            automationDocumentResult.EmptyDefaultDocuments = documentTypeTemplateDefultAttachmentService.EmptyDefaultDocuments!=null ? documentTypeTemplateDefultAttachmentService.EmptyDefaultDocuments : new List<DocumentDefultAttachment>() ;
 
+            DocumentDefultAttachment documentDefultAttachment = AddReportTemplateDocOutAttachment(automationSendEmailArgs, context, log);
+
+            if(documentDefultAttachment!=null && string.IsNullOrEmpty(documentDefultAttachment.DocumentId))
+            {
+                automationDocumentResult.EmptyDefaultDocuments.Add(documentDefultAttachment);
             }
 
-            AddReportTemplateDocOutAttachment(automationSendEmailArgs, context, log);
 
             if (!string.IsNullOrEmpty(automationSendEmailArgs.ExternalAttachmentDocumentId))
             {
@@ -324,11 +355,17 @@ namespace WebFreight.Web.Helpers
             }
 
             context.SaveChanges();
-            if (IsAllowedToSendEmail(automationSendEmailArgs, context))
+            if (IsAllowedToSendEmail(automationSendEmailArgs, context) || automation.ResultCode == "SENDDOCUMENT")
             {
-                //IQueueService queueservice = QueueServiceManager.GetQueueService("EmailQueue", tenant);
                 DbQueueService queueservice = new DbQueueService("EmailQueue", tenant);
-                queueservice.Send(new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } }, tenant);
+                Dictionary<string, string> emailQueueMessage = new Dictionary<string, string>() { { "CommunicationLogId", log.Id }, { "Tenant", tenant.ToString() } };
+
+                string callBackDetailsXml = EmailDocumentHandlerService.GetCallBackDetailsXml(new EmailDocumentHandlerArgs() {EntityId = entityId,ObjectTableId = objectTableId,Tenant = tenant, DocumentId = automation.DocumentTypeId} );
+                if (!string.IsNullOrEmpty(callBackDetailsXml))
+                {
+                    emailQueueMessage.Add("CallBackDetails", callBackDetailsXml);
+                }        
+                queueservice.Send(emailQueueMessage, tenant);
             }
             return log.Id;
         }
@@ -341,7 +378,7 @@ namespace WebFreight.Web.Helpers
             return isAllowedToSend;
         }
 
-        private  void AddReportTemplateDocOutAttachment(AutomationSendEmailArgs automationSendEmailArgs, ICommonDataContext context, CommunicationLog log)
+        private DocumentDefultAttachment AddReportTemplateDocOutAttachment(AutomationSendEmailArgs automationSendEmailArgs, ICommonDataContext context, CommunicationLog log)
         {
             if (!string.IsNullOrEmpty(automationSendEmailArgs.ReportTemplateId))
             {
@@ -362,8 +399,31 @@ namespace WebFreight.Web.Helpers
                     CommunicationAttachment attachment = GetNewCommunicationAttachment(automationSendEmailArgs.Tenant, log, documentId);
                     context.CommunicationAttachments.Add(attachment);
                 }
+
+                return !string.IsNullOrEmpty(documentId) ? new DocumentDefultAttachment() { DocumentId = documentId } :GetReportTemplateDocumentAttachment(automationSendEmailArgs, reportTemplateDocOutArgs);
             }
+            return null;
         }
+        private DocumentDefultAttachment GetReportTemplateDocumentAttachment(AutomationSendEmailArgs automationSendEmailArgs, ReportTemplateDocOutArgs reportTemplateDocOutArgs)
+        {
+            string documentTypeName = string.Empty;
+           
+            if (new DocumentTypeRepository(automationSendEmailArgs.Tenant).IsQuotationDocumentType(automationSendEmailArgs.Automation.DocumentTypeId, automationSendEmailArgs.Tenant))
+            {
+                documentTypeName = new QuoteTemplateRepository(automationSendEmailArgs.Tenant).GetSingleQuoteTemplate(automationSendEmailArgs.ReportTemplateId, automationSendEmailArgs.Tenant)?.Name;
+            }
+            else if (!string.IsNullOrEmpty(reportTemplateDocOutArgs.DocumentCopyId))
+            {
+                documentTypeName = new DocumentTypeCopyRepository(automationSendEmailArgs.Tenant).GetSingleDocumentTypeCopy(automationSendEmailArgs.DocumentCopyId)?.Name;
+            }
+            else
+            {
+                documentTypeName = new DocumentTypeRepository(automationSendEmailArgs.Tenant).GetSingleDocumentType(automationSendEmailArgs.Automation.DocumentTypeId, automationSendEmailArgs.Tenant)?.Name;
+            }
+
+            return new DocumentDefultAttachment() {DocumentTypeName = documentTypeName }; 
+        }
+
 
         private  string GetReportTemplateDocumentId(AutomationSendEmailArgs automationSendEmailArgs, ReportTemplateDocOutArgs reportTemplateDocOutArgs)
         {
@@ -720,13 +780,13 @@ namespace WebFreight.Web.Helpers
 
         public string EntityId { get; set; }
         public string ObjectTableId { get; set; }
+        public string EntityChangeId { get; set; }
 
         public string CreateByUserId { get; set; }
         public int Tenant { get; set; }
         public string ReportTemplateId { get; set; }
         public string DocumentCopyId { get; set; }
-
-
+        public string EntityReference { get; set; }
     }
 
 

@@ -1183,7 +1183,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             ObjectField objectField_Name = ObjectContext.ObjectFields.Where(d => d.FieldName == "EnglishName" && d.ObjectTableId == PaymentTermObject.Id && d.Tenant == 0).FirstOrDefault();
             ObjectField objectField_Local = ObjectContext.ObjectFields.Where(d => d.FieldName == "LocalName" && d.ObjectTableId == PaymentTermObject.Id && d.Tenant == 0).FirstOrDefault();
-            ObjectField objectField_CurrentMonth = ObjectContext.ObjectFields.Where(d => d.FieldName == "CurrentMonth" && d.ObjectTableId == PaymentTermObject.Id && d.Tenant == 0).FirstOrDefault();
+            ObjectField objectField_CurrentMonth = ObjectContext.ObjectFields.Where(d => d.FieldName == "EndOfMonth" && d.ObjectTableId == PaymentTermObject.Id && d.Tenant == 0).FirstOrDefault();
             ObjectField objectField_FromDateType = ObjectContext.ObjectFields.Where(d => d.FieldName == "FromDateTypeCode" && d.ObjectTableId == PaymentTermObject.Id && d.Tenant == 0).FirstOrDefault();
             ObjectField objectField_Days = ObjectContext.ObjectFields.Where(d => d.FieldName == "Days" && d.ObjectTableId == PaymentTermObject.Id && d.Tenant == 0).FirstOrDefault();
             ObjectField objectField_Inactive = ObjectContext.ObjectFields.Where(d => d.FieldName == "InActive" && d.ObjectTableId == PaymentTermObject.Id && d.Tenant == 0).FirstOrDefault();

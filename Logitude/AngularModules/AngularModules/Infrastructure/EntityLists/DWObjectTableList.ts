@@ -26,5 +26,6 @@ export class DWObjectTableList {
 		MaxNumberOfCustomFields: number;
 		HasCustomFields: boolean;
 		AdditionalFactRelationType: string;
+		Description: string;
 	
 }

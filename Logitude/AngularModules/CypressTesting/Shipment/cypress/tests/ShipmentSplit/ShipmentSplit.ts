@@ -69,13 +69,14 @@ Then("the direct shipment should split successfully", () => {
 
     //#region Validate for new shipment 
     Actions.ValidateShipmentNumber(shipmentNumber)
-    Actions.ValidatePackageDetails(ShipmentSelectors.ShipmentPackagesTab, containerDetailsList[1], ShipmentSelectors.Shipment_GrossWeight, false)
+    Actions.ValidatePackageDetails(ShipmentSelectors.ShipmentPackagesTab, containerDetailsList[1], ShipmentSelectors.ShipmentGrossWeight, false)
     Actions.ValidateShipmentEventActions(ShipmentSelectors.ShipmentEventTab, "Split From Shipment: " + shipmentNumber)
     //#endregion
 
     //#region Validate for old shipment
     cy.BackButton("Shipment: " + shipmentNumber);
     Actions.ValidatePackageDetails(ShipmentSelectors.PackagesTab, containerDetailsList[0], ShipmentSelectors.PackageGrossWeight, false)
+    cy.get(ShipmentSelectors.Row).should('have.length', 1)
     //#endregion
 });
 //#endregion

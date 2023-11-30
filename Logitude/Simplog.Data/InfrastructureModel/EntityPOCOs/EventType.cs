@@ -53,5 +53,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public virtual EventTypeCategory EventTypeCategory { get; set; }
 
         public bool IsStatusNotModified { get; set; }
+        public string EventTrigger { get; set; }
     }
 }

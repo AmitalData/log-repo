@@ -453,11 +453,13 @@
             window.open(url);
         }
 
-        function OnDownloadAllDocument(houseNumber) {
+        function OnDownloadAllDocument(targetURL,id) {
             $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
-            var sharedDownloadURL = "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            var sharedDownloadURL = "WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + id + ":" + $.CurrentCardType;
+            var houseNumber = targetURL.split("&securitykey=")[0];
+            var securityKey = targetURL.split("&securitykey=")[1];
             if ($.IsExternalURL) {
-                sharedDownloadURL += ":securitykey:" + $.CurrentEntityKey + "&filename=" + houseNumber;
+                sharedDownloadURL += ":securitykey:" + securityKey + "&filename=" + houseNumber;
             }
             window.open(sharedDownloadURL);
         }

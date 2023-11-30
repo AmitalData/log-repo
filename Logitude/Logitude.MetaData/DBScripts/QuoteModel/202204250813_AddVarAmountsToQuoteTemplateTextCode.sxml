@@ -1,0 +1,68 @@
+﻿<Script DBType="Main" Module="Quote">
+  <Sql Version="1">
+    <![CDATA[
+    
+declare @QuoteTemplateId as varchar(15)
+declare @QuoteTemplateTextCodeId as varchar(15)
+declare @Tenant as int
+declare @NewEntityId as varchar(15)
+
+	DECLARE QuoteTemplateCursor CURSOR READ_ONLY
+	FOR
+	SELECT Id , Tenant
+	From QuoteTemplates
+	OPEN QuoteTemplateCursor FETCH NEXT FROM QuoteTemplateCursor INTO @QuoteTemplateId , @Tenant 
+	WHILE @@FETCH_STATUS = 0
+	BEGIN
+
+	
+	 set @QuoteTemplateTextCodeId = (select Id from QuoteTemplateTextCodes where TextCode = 'VATPACKAGES' AND QuoteTemplateId = @QuoteTemplateId AND Tenant = @Tenant )
+	
+	if(@QuoteTemplateTextCodeId is null)
+	   begin
+
+	        EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
+            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'VATPACKAGES', 'VAT (Sale)', 'VAT (Sale)' , @QuoteTemplateId ,'Packages' , 'VAT (Sale)', 'VAT (Sale)' );
+			
+		    EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
+	        INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'VATCONTAINERS',  'VAT (Sale)', 'VAT (Sale)', @QuoteTemplateId ,'Containers' , 'VAT (Sale)', 'VAT (Sale)' );
+			
+			
+
+			EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
+            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'LOCALVATPACKAGES', 'VAT(Local)', 'VAT(Local)' , @QuoteTemplateId ,'Packages' , 'VAT(Local)', 'VAT(Local)' );
+
+		    EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
+	        INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'LOCALVATCONTAINERS',  'VAT(Local)', 'VAT(Local)', @QuoteTemplateId ,'Containers' , 'VAT(Local)', 'VAT(Local)' );
+			
+			
+			
+	        EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
+            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'TOTALINCLUDINGVATPACKAGES', 'Total Including VAT(Sale)', 'Total Including VAT(Sale)' , @QuoteTemplateId ,'Packages' , 'Total Including VAT(Sale)', 'Total Including VAT(Sale)' );		
+			
+	        EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
+            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'TOTALINCLUDINGVATCONTAINERS', 'Total Including VAT(Sale)', 'Total Including VAT(Sale)' , @QuoteTemplateId ,'Containers' , 'Total Including VAT(Sale)', 'Total Including VAT(Sale)' );	
+			
+			
+			
+	        EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
+            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'TOTALINCLUDINGVATLOCALPACKAGES', 'Total Including VAT(Local)', 'Total Including VAT(Local)' , @QuoteTemplateId ,'Packages' , 'Total Including VAT(Local)', 'Total Including VAT(Local)' );	
+			
+	        EXECUTE usp_GetNextTableIdValue @NewEntityId OUTPUT,'QuoteTemplateTextCode'
+            INSERT INTO QuoteTemplateTextCodes VALUES (@NewEntityId, @Tenant , 'TOTALINCLUDINGVATLOCALCONTAINERS', 'Total Including VAT(Local)', 'Total Including VAT(Local)' , @QuoteTemplateId ,'Containers' , 'Total Including VAT(Local)', 'Total Including VAT(Local)' );	
+				
+		end
+
+	FETCH NEXT FROM QuoteTemplateCursor INTO @QuoteTemplateId , @Tenant 
+
+	End
+	CLOSE QuoteTemplateCursor
+	DEALLOCATE QuoteTemplateCursor
+
+
+    ]]>
+  </Sql>
+</Script>
+
+
+

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
@@ -44,7 +43,7 @@ namespace Logitude.DBMigrations.Models
         {
             if (!ToolArguments.IsArgumentProvided(Arguments.SERVICE))
             {
-                if (!ToolArguments.IsArgumentProvided(Arguments.DEV))
+                if (!(ToolArguments.IsArgumentProvided(Arguments.DEV) || (RunSettings.DebugMode && RunSettings.DevMode)))
                 {
                     StartNormalMigrations();
                     StartZeroDownTimeMigrations();
@@ -139,7 +138,7 @@ namespace Logitude.DBMigrations.Models
 
             return generatedScript;
         }
-        
+
         protected GeneratedScript HandleSXMLFiles(List<ScriptDefinition> scriptDefinitions, bool execute, bool pre)
         {
             GeneratedScript generatedScript = null;
@@ -297,7 +296,7 @@ namespace Logitude.DBMigrations.Models
                     string[] dbTypes = new string[] { "Global", "Main", "SystemLogs", "CargoTracking" };
                     foreach (var dbType in dbTypes)
                     {
-                        if(dbType == "CargoTracking" && !IsModuleIncluded("CargoTracking"))
+                        if (dbType == "CargoTracking" && !IsModuleIncluded("CargoTracking"))
                         {
                             continue;
                         }
@@ -476,7 +475,7 @@ namespace Logitude.DBMigrations.Models
                 ExecuteScript(generatedScript.CargoTrackingScript, "CargoTracking");
             }
         }
-        
+
         protected void ExecuteScript(string script, string dbType)
         {
             if (!String.IsNullOrEmpty(script))
@@ -1132,6 +1131,7 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                     }
                     connection.Close();
+                    ExitTool("Error: Cannot Get DXML Hashes");
                 }
 
                 DXMLHashes = dxmlHashes;
@@ -1171,6 +1171,7 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                     }
                     connection.Close();
+                    ExitTool("Error: Cannot Get DXML Hashes");
                 }
 
                 DXMLHashes = dxmlHashes;
@@ -1264,7 +1265,7 @@ namespace Logitude.DBMigrations.Models
                         }
                     }
                 }
-            } 
+            }
         }
 
         protected string GenerateHashString(string anyString)
@@ -1408,7 +1409,7 @@ namespace Logitude.DBMigrations.Models
                 }
             }
 
-            if(ToolConfigurations.DatabaseType.ToLower() == "oracle")
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
                 scriptDefinitions = scriptDefinitions.Where(s => !s.AOT).ToList();
             }
@@ -1425,7 +1426,20 @@ namespace Logitude.DBMigrations.Models
                 if (aotScripts.Any() && !ToolArguments.IsArgumentProvided(Arguments.DEV))
                 {
                     string scriptsSxmlNames = string.Join("\n", aotScripts.Select(s => s.SxmlFileName).ToArray());
-                    ExitTool("Error: There Is Some Not Executed Scripts That Defined As AOT. You Need To Run The Tool With -Dev Argument. The Scripts Are:\n" + scriptsSxmlNames);
+
+                    string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env")?.ToLower();
+                    if (dbEnvConfig == "local" || dbEnvConfig == "test")
+                    {
+                        ExitTool("Error: There Is Some Not Executed Scripts That Defined As AOT. You Need To Run The Tool With -Dev Argument.\n\nThe AOT Scripts Are:\n" + scriptsSxmlNames);
+                    }
+                    else
+                    {
+                        string runCommand = ToolArguments.GetRunCommand();
+                        string exitMessage = "You should execute the following commands in order:\n" +
+                            runCommand.Replace(Arguments.EXE, Arguments.ZERODOWNTIME + " " + Arguments.EXE) + "\n" + runCommand + "\n\nThe AOT Scripts Are:\n" + scriptsSxmlNames;
+
+                        ExitTool(exitMessage);
+                    }
                 }
             }
         }
@@ -1676,10 +1690,15 @@ namespace Logitude.DBMigrations.Models
         {
             List<ExecutedSxmlFile> executedSxmlFiles = new List<ExecutedSxmlFile>();
 
-            string[] dbTypes = new string[] { "Global", "Main", "SystemLogs","CargoTracking" };
+            string[] dbTypes = new string[] { "Global", "Main", "SystemLogs", "CargoTracking" };
 
             foreach (var dbType in dbTypes)
             {
+                if (dbType == "CargoTracking" && !IsModuleIncluded("CargoTracking"))
+                {
+                    continue;
+                }
+
                 string connectionString = ToolConfigurations.GetConnectionString(dbType);
 
                 if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
@@ -1717,16 +1736,17 @@ namespace Logitude.DBMigrations.Models
                             reader.Close();
                         }
                         connection.Close();
+                        ExitTool("Error: Cannot Get Executed SXML Files From Database " + dbType);
                     }
                 }
                 else
                 {
-                    string queryString = "SELECT * FROM [dbo].[DBScriptsHistory]";
+                    string queryString = "SELECT SxmlFileName,ExecutionDate,HashValue,Version FROM [dbo].[DBScriptsHistory]";
 
                     SqlDataReader reader = null;
                     SqlConnection connection = new SqlConnection(connectionString);
                     SqlCommand command = new SqlCommand(queryString, connection);
-
+                    command.CommandTimeout = 600;
                     try
                     {
                         connection.Open();
@@ -1754,6 +1774,7 @@ namespace Logitude.DBMigrations.Models
                             reader.Close();
                         }
                         connection.Close();
+                        ExitTool("Error: Cannot Get Executed SXML Files From Database " + dbType);
                     }
                 }
             }
@@ -1779,7 +1800,7 @@ namespace Logitude.DBMigrations.Models
 
                     while (reader.Read())
                     {
-                        DBConfigurationsManager.AddDBConfiguration(reader["Type"].ToString() , reader["Value"].ToString());
+                        DBConfigurationsManager.AddDBConfiguration(reader["Type"].ToString(), reader["Value"].ToString());
                     }
 
                     reader.Close();
@@ -1792,8 +1813,8 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                     }
                     connection.Close();
+                    ExitTool("Error: Cannot Get Database Migration Configurations");
                 }
-
             }
             else
             {
@@ -1823,6 +1844,7 @@ namespace Logitude.DBMigrations.Models
                         reader.Close();
                     }
                     connection.Close();
+                    ExitTool("Error: Cannot Get Database Migration Configurations");
                 }
             }
         }
@@ -1943,7 +1965,7 @@ namespace Logitude.DBMigrations.Models
 
         protected void GetIncludedModulesFromDB()
         {
-            if(IncludedModules == null)
+            if (IncludedModules == null)
             {
                 string connectionString = ToolConfigurations.GetConnectionString("Main");
 
@@ -1983,6 +2005,7 @@ namespace Logitude.DBMigrations.Models
                             reader.Close();
                         }
                         connection.Close();
+                        ExitTool("Error: Cannot Get Database Migration Settings");
                     }
 
                     IncludedModules = includedModules;
@@ -2023,6 +2046,7 @@ namespace Logitude.DBMigrations.Models
                             reader.Close();
                         }
                         connection.Close();
+                        ExitTool("Error: Cannot Get Database Migration Settings");
                     }
 
                     IncludedModules = includedModules;
@@ -2202,14 +2226,14 @@ namespace Logitude.DBMigrations.Models
                 SqlConnectionStringBuilder globalConnectionStringBuilder = new SqlConnectionStringBuilder(globalConnectionString);
                 SqlConnectionStringBuilder mainConnectionStringBuilder = new SqlConnectionStringBuilder(mainConnectionString);
                 SqlConnectionStringBuilder systemLogsConnectionStringBuilder = new SqlConnectionStringBuilder(systemLogsConnectionString);
-                
+
                 globalDB = globalConnectionStringBuilder.InitialCatalog;
                 globalSource = globalConnectionStringBuilder.DataSource;
                 mainDB = mainConnectionStringBuilder.InitialCatalog;
                 mainSource = mainConnectionStringBuilder.DataSource;
                 systemLogsDB = systemLogsConnectionStringBuilder.InitialCatalog;
                 systemLogsSource = systemLogsConnectionStringBuilder.DataSource;
-              
+
                 databaseTypeMessage = "MSQL";
                 databaseNameMessage = "Initial Catalog";
                 if (!string.IsNullOrEmpty(cargoTrackingConnectionString))
@@ -2302,7 +2326,7 @@ namespace Logitude.DBMigrations.Models
             if (ToolArguments.IsArgumentProvided(Arguments.ZERODOWNTIME))
             {
                 Console.WriteLine("\nZero Down Time Migrations Started");
-                ZeroDownTimeMigrations zeroDownTimeMigrations  = CreateZeroDownTimeMigrations();
+                ZeroDownTimeMigrations zeroDownTimeMigrations = CreateZeroDownTimeMigrations();
                 if (zeroDownTimeMigrations != null)
                 {
                     zeroDownTimeMigrations.Start();
@@ -2312,7 +2336,7 @@ namespace Logitude.DBMigrations.Models
                 {
                     Console.WriteLine("Zero Down Time Migrations Not Implemented");
                 }
-                
+
             }
         }
 
@@ -2376,8 +2400,8 @@ namespace Logitude.DBMigrations.Models
         {
             UpdateDataScriptCounter(scriptDefinition.TargetTableName);
             int scriptExecutionNumber = GetDataScriptCounter(scriptDefinition.TargetTableName);
-            
-            if(ToolConfigurations.DatabaseType.ToLower() == "oracle")
+
+            if (ToolConfigurations.DatabaseType.ToLower() == "oracle")
             {
 
             }
@@ -2410,7 +2434,7 @@ namespace Logitude.DBMigrations.Models
                 }
             }
         }
-        
+
         protected void UpdateDBMigrationsDataScripts(ScriptDefinition scriptDefinition)
         {
             UpdateDataScriptCounter(scriptDefinition.TargetTableName);
@@ -2575,18 +2599,18 @@ namespace Logitude.DBMigrations.Models
                 Config smtpClientPasswordConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "SmtpClientPassword".ToLower()).FirstOrDefault();
                 Config fromEmailAddressConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "FromEmailAddress".ToLower()).FirstOrDefault();
                 Config toEmailAddressesConfig = Configurations.Configs.Where(c => c.Name.ToLower() == "ToEmailAddresses".ToLower()).FirstOrDefault();
-                
+
                 if (dbConfigFileNameConfig != null)
                 {
                     dbConfigFileName = dbConfigFileNameConfig.Value;
                 }
 
-                if(aotScriptsExecutionTimeOutConfig != null)
+                if (aotScriptsExecutionTimeOutConfig != null)
                 {
                     aotScriptsExecutionTimeOut = String.IsNullOrEmpty(aotScriptsExecutionTimeOutConfig.Value) ? 30 : Convert.ToInt32(aotScriptsExecutionTimeOutConfig.Value);
                 }
 
-                if(aotCreateIndexWithOnlineConfig != null)
+                if (aotCreateIndexWithOnlineConfig != null)
                 {
                     aotCreateIndexWithOnline = String.IsNullOrEmpty(aotCreateIndexWithOnlineConfig.Value) || (aotCreateIndexWithOnlineConfig.Value == "true");
                 }
@@ -2645,12 +2669,12 @@ namespace Logitude.DBMigrations.Models
                 ExitTool(validationMessage);
             }
         }
-        
+
         protected List<ScriptDefinition> FilterScriptsByEnvironmentConfiguration(List<ScriptDefinition> scriptDefinitions)
         {
             string dbEnvConfig = DBConfigurationsManager.GetDBConfigurationValue("Env")?.ToLower();
             List<ScriptDefinition> filteredScriptDefinitions = scriptDefinitions.Where(script => script.Env == null || (script.Env != null && script.Env.ToLower().Split(',').Contains(dbEnvConfig))).ToList();
-           return filteredScriptDefinitions;
+            return filteredScriptDefinitions;
         }
 
         protected void ExitTool(string message)

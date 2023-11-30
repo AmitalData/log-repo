@@ -1338,14 +1338,6 @@ export class NewFullWarehouseEntryComponent extends BaseComponent implements OnI
             this.warehouseEntryPM.FromPortId = null;
             this.warehouseEntryPM.ToPortId = null;
         }
-        else {
-            this.warehouseEntryPM.FromAddressId = null;
-            this.warehouseEntryPM.ToAddressId = null;
-            this.warehouseEntryPM.FromPartnerId = null;
-            this.warehouseEntryPM.ToPartnerId = null;
-
-
-        }
 
         if (!this.IsInlandDomestic) {
             //if (AppTool.IsNullOrEmpty(this.warehouseEntryPM.FromPortId)) {

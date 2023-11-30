@@ -1,0 +1,327 @@
+<style>
+    .slidecontainer {
+        width: 80px;
+        height: 22px;
+        background-color: var(--sliderBackground);
+    }
+
+    .slidecontainer2 {
+        width: 80px;
+        height: 22px;
+        background-color: var(--sliderBackground2);
+    }
+
+    .color-picker-wrapper {
+        border: 1px solid #464646;
+        height: 21px;
+        margin-top: 3px;
+    }
+
+    .slider {
+        border: none;
+        box-shadow: none;
+        /* width: 80px; */
+        height: 28px;
+        margin-top: 5px;
+        cursor: default;
+        background: none;
+    }
+
+    input.slider:focus,
+    input.slider:hover,
+    input.slider:active {
+        outline: none !important;
+        border: none !important;
+    }
+
+    .disabled {
+        pointer-events: none;
+        opacity: 0.7;
+        cursor: default;
+    }
+    /*.coloPicker input {
+        position: relative;
+        display: inline-block;
+    }*/
+
+    .colorPicker {
+        width: 65px;
+        height: 22px;
+        max-height: 99px;
+        box-shadow: none;
+        background: none;
+        border-radius: 0;
+        /* margin-top: 2px; */
+        border: none !important;
+        cursor: pointer;
+    }
+
+    .range {
+        position: relative;
+        width: 100px;
+        height: 5px;
+    }
+
+    .range input {
+        width: 100%;
+        /* position: absolute;
+        top: 2px; */
+        height: 0;
+        -webkit-appearance: none;
+    }
+
+    .range input::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 18px;
+        height: 18px;
+        margin: -8px 0 0;
+        border-radius: 50%;
+        background: #37adbf;
+        cursor: pointer;
+        border: 0 !important;
+    }
+
+    .range input::-moz-range-thumb {
+        width: 18px;
+        height: 18px;
+        margin: -8px 0 0;
+        border-radius: 50%;
+        background: #37adbf;
+        cursor: pointer;
+        border: 0 !important;
+    }
+
+    .range input::-ms-thumb {
+        width: 18px;
+        height: 18px;
+        margin: -8px 0 0;
+        border-radius: 50%;
+        background: #37adbf;
+        cursor: pointer;
+        border: 0 !important;
+    }
+
+    .range input::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 2px;
+        cursor: pointer;
+        background: #b2b2b2;
+    }
+
+    .range input::-moz-range-track {
+        width: 100%;
+        height: 2px;
+        cursor: pointer;
+        background: #b2b2b2;
+    }
+
+    .range input::-ms-track {
+        width: 100%;
+        height: 2px;
+        cursor: pointer;
+        background: #b2b2b2;
+    }
+
+    .range input:focus {
+        background: none;
+        outline: none;
+    }
+
+    .range input::-ms-track {
+        width: 100%;
+        cursor: pointer;
+        background: transparent;
+        border-color: transparent;
+        color: transparent;
+    }
+
+    .range-labels {
+        /* margin: 38px 0 0 -30px; */
+        position: absolute;
+        top: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .range-labels li {
+        position: relative;
+        float: left;
+        /* width: 90.25px; */
+        text-align: center;
+        color: #b2b2b2;
+        font-size: 14px;
+        cursor: pointer;
+    }
+
+    .range-labels li::before {
+        position: absolute;
+        top: -25px;
+        right: 0;
+        left: 0;
+        content: "";
+        margin: 0 auto;
+        width: 9px;
+        height: 9px;
+        background: #b2b2b2;
+        border-radius: 50%;
+    }
+
+    .range-labels .active {
+        color: #37adbf;
+    }
+
+     ::-webkit-color-swatch {
+        border: none !important;
+        margin: -4px -2px;
+        height: 19px;
+    }
+</style>
+
+<div style="height:100%;width:100%">
+
+
+    <table style="height:100%;vertical-align:top" *ngIf="IsVisibile">
+
+
+        <tr style="height:20px;">
+            <td>
+                <div style="height:5px">
+                    <span style="vertical-align:central;text-align:left;margin-left:10px;font-size:16px;color:#1B90CB">{{ECommerceBrandingTabName}}</span>
+
+                </div>
+            </td>
+        </tr>
+
+        <tr style="height:10px">
+            <td>
+                <div></div>
+            </td>
+        </tr>
+
+
+
+        <!--Fields Grid-->
+
+
+        <tr style="height:100%;vertical-align:top;">
+            <td>
+                <table>
+                    
+                    <!-- Comapny Logo -->
+           
+
+                  
+
+
+                    <tr>
+                        
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:180px;height:22px; vertical-align:top">
+                            <LogLabel [ObjectFieldName]="'ComapnylogoId'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                    
+                        <td style="vertical-align:top">
+    
+                            <div style="width:160px;height:100px">
+    
+    
+    
+                                <img style="width:90px; top: 0; left: 0; right: 0;bottom: 0; margin: auto;vertical-align:central;height:90px;background-color:white;max-width: 100%;max-height: 100%;position: absolute;border:0px solid #ffffff" [attr.id]="SmalllogoHtmlId" src="#" />
+                                <span [attr.id]="ProgressDownloadId" style="position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%;display:none"><img class="CenterCenter" src="Images/progressDownload.gif" /></span>
+
+                            </div>
+
+                            <a [class.HyperlinkDisabled]="DemoMessageVisibility" style="width: 57px;"  (click)="OpenUpLoadLogo()">Upload</a>
+                            <input [attr.id]="LogoFileHtmlId" accept=".jpg,.jpeg,.JPG,.JPEG" type="file"  (change)="UploadogoFile($event)" style="display:none" class="upload" />
+
+                        </td>
+                        <td style="width:30px">
+                            <div></div>
+                        </td>
+                        <td style="width:110px;">
+                            <LogLabel [ObjectFieldName]="'LogoURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="width:160px">
+                            <LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'LogoURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                        </td> 
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <!-- EcommerceSupportEmail -->
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:200px;">
+                            <LogLabel [ObjectFieldName]="'EcommerceSupportEmail'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="width:160px">
+                            <LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'EcommerceSupportEmail'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                  
+                    <!-- WhatsApp Messaging Phone Number -->
+                  
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:200px;">
+                            <LogLabel [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="width:160px">
+                            <LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'WhatsAppMessagingPhoneNumber'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                    <!-- Service Agreement URL -->
+                    <tr style="vertical-align:top;height:33px">
+                        <td style="width:8px">
+                            <div></div>
+                        </td>
+                        <td style="width:200px;">
+                            <LogLabel [ObjectFieldName]="'ServiceAgreementURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="width:160px">
+                            <LogTextBox style="width:160px" [HideColumns]="true" [ObjectFieldName]="'ServiceAgreementURL'" [ObjectTableName]="'TenantManagement'" [DataContext]="DataContext"></LogTextBox>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+
+
+                 
+
+                    <tr>
+                        <td colspan="4"></td>
+                    </tr>
+                </table>
+
+            </td>
+
+            </tr>
+
+
+
+
+
+
+
+    </table>
+
+
+
+
+
+</div>

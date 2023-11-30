@@ -48,6 +48,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         
                         int tenant = authToken.Tenant;
                         SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                        SecurityUtility.AuthenticateAccessibleAPI("ARInvoice Additional Data", authToken.Tenant);
+
                         if (invoiceAdditionalData != null)
                         {
                             oldEntity = LogitudeXmlSerializer.DeserializeObject<ARInvoiceAdditionalData>(LogitudeXmlSerializer.SerializeObjectToXmlString(invoiceAdditionalData));
@@ -89,7 +91,10 @@ namespace WebFreight.Web.ExternalAPIs.V1
         {
             IInvoiceContext MyContext = InvoiceContext.GetContext(invoice.Tenant);
             invoice.DocumentFilingId = invoiceAdditionalData.DocumentFilingId;
-
+            if (invoice.IsFullAccounting && invoice.IsExternalEntity && invoice.DocumentFilingId != null)
+            {
+                invoice.IsPrinted = true;
+            }
             ARInvoiceService service = new ARInvoiceService(MyContext, invoice.Tenant);
             service.Update(invoice, true);
         }

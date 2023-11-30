@@ -1,4 +1,5 @@
-﻿using Logitude.BL.Validators;
+﻿using Logitude.BL.InfrastructureModel.EntityPMs;
+using Logitude.BL.Validators;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -12,7 +13,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
     [CustomValidation(typeof(ShipmentDeliveryValidator), "IsShipmentDeliveryValid")]
-    public class ShipmentDeliveryPM
+    public class ShipmentDeliveryPM: ChildEntitiesCustomFieldPM
     {
         [Key]
         public string Id { get; set; }
@@ -23,6 +24,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PickUpDeliveryNumber { get; set; }
+        public int PickUpDeliveryIndex { get; set; }
+        public int ChildIndex { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string PickUpDeliveryTypeCode { get; set; }
@@ -118,6 +121,7 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string CarrierId { get; set; }
         public string CarrierCode { get; set; }
         public string CarrierName { get; set; }
+        public string CarrierTypeName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string CarrierNumber { get; set; }
@@ -203,5 +207,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string StandaloneShipmentId { get; set; }
         public string StandaloneShipmentNumber { get; set; }
         public bool IsConnectedToStandalone { get; set; }
+        public string CarrierLocalName { get; set; }
+
+        public string ChangeSet { get; set; }
     }
 }

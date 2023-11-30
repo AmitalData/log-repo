@@ -10,6 +10,7 @@ namespace Simplog.Data.CommonDataModel
 {
     public interface ICommonDataContext : IContext
     {
+        IDbSet<PortTimeZone> PortTimeZones { get; }
         IDbSet<TariffCarrierTranslation> TariffCarrierTranslations { get; }
         IDbSet<AddressType> AddressTypes { get; }
         IDbSet<Country> Countries { get; }
@@ -27,13 +28,14 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<CardContact> CardContacts { get; }
         IDbSet<PartnerType> PartnerTypes { get; }
         IDbSet<Rank> Ranks { get; }
+        IDbSet<CustomerTeam> CustomerTeams { get; }
+        IDbSet<CustomerGroup> CustomerGroups { get; }
         IDbSet<User> Users { get; }
         IDbSet<Department> Departments { get; }
         IDbSet<Branch> Branches { get; }
         IDbSet<Airline> Airlines { get; }
         IDbSet<CarrierArea> CarrierAreas { get; }
         IDbSet<CarrierAreasPort> CarrierAreasPorts { get; }
-
         IDbSet<ShippingLine> ShippingLines { get; }
         IDbSet<Trucker> Truckers { get; }
         IDbSet<Tenant> Tenants { get; }
@@ -201,6 +203,8 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<WarehouseType> WarehouseTypes { get; }
         IDbSet<NumberFormat> NumberFormats { get; }
         IDbSet<UsoCFDI> UsoCFDIs { get; }
+        IDbSet<RegimenFiscal> RegimenFiscals { get; }
+        IDbSet<PostalCode> PostalCodes { get; }
         IDbSet<ReportsTemplate> ReportsTemplates { get; set; }
         IDbSet<ReportsTemplatesVersion> ReportsTemplatesVersions { get; set; }
         IDbSet<FeatureChange> FeatureChanges { get; set; }
@@ -228,6 +232,7 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<DocumentsExecutionLog> DocumentsExecutionLogs { get; set; }
         IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get; set; }
         IDbSet<UserLastSettings> UserLastSettings { get; set; }
+        IDbSet<DigitalContactLastSetting> DigitalContactLastSettings { get; set; }
         IDbSet<CustomerOpenFilesAmount> CustomerOpenFilesAmounts { get; set; }
         IDbSet<VatUniquePartnerType> VatUniquePartnerTypes { get; set; }
         IDbSet<WarehouseWeightMeasurement> WarehouseWeightMeasurements { get; set; }
@@ -239,6 +244,14 @@ namespace Simplog.Data.CommonDataModel
         IDbSet<DWHEnvironmentSetting> DWHEnvironmentSettings { get; set; }
         IDbSet<ProductItem> ProductItems { get; set; }
         IDbSet<HTSCode> HTSCodes { get; set; }
+        IDbSet<CargoTenantMilestoneDefinition> CargoTenantMilestoneDefinitions { get; set; }
+        IDbSet<UnassignedEntity> UnassignedEntitys { get; set; }
+        IDbSet<Mention> Mentions { get; set; }
+        IDbSet<CarrierServiceLine> CarrierServiceLines { get; set; }
+        IDbSet<HorseGender> HorseGenders { get; set; }
+        IDbSet<PortGroup> PortGroups { get; set; }
+
+        IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; }
 
         void SetAsModified(object entity);
         void DetectChanges();

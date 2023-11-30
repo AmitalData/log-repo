@@ -470,9 +470,9 @@ export class TenantPM {
     public set IsDocumentsArchive(newValue: boolean) { if (this.isDocumentsArchive != newValue) { this.isDocumentsArchive = newValue; this.MarkAsDirty("IsDocumentsArchive"); } }
        
 	 
-    private isCustomerTenantShare: boolean;
-    public get IsCustomerTenantShare() { return this.isCustomerTenantShare; }
-    public set IsCustomerTenantShare(newValue: boolean) { if (this.isCustomerTenantShare != newValue) { this.isCustomerTenantShare = newValue; this.MarkAsDirty("IsCustomerTenantShare"); } }
+    private customerTenantShareCustomsFile: boolean;
+    public get CustomerTenantShareCustomsFile() { return this.customerTenantShareCustomsFile; }
+    public set CustomerTenantShareCustomsFile(newValue: boolean) { if (this.customerTenantShareCustomsFile != newValue) { this.customerTenantShareCustomsFile = newValue; this.MarkAsDirty("CustomerTenantShareCustomsFile"); } }
        
 	 
     private customerTenantShareImportFile: boolean;
@@ -635,6 +635,11 @@ export class TenantPM {
     public set AutoArchiveOnInvoice(newValue: boolean) { if (this.autoArchiveOnInvoice != newValue) { this.autoArchiveOnInvoice = newValue; this.MarkAsDirty("AutoArchiveOnInvoice"); } }
        
 	 
+    private autoArchiveOnPODExport: boolean;
+    public get AutoArchiveOnPODExport() { return this.autoArchiveOnPODExport; }
+    public set AutoArchiveOnPODExport(newValue: boolean) { if (this.autoArchiveOnPODExport != newValue) { this.autoArchiveOnPODExport = newValue; this.MarkAsDirty("AutoArchiveOnPODExport"); } }
+       
+	 
     private ecommerceSupportEmail: string;
     public get EcommerceSupportEmail() { return this.ecommerceSupportEmail; }
     public set EcommerceSupportEmail(newValue: string) { if (this.ecommerceSupportEmail != newValue) { this.ecommerceSupportEmail = newValue; this.MarkAsDirty("EcommerceSupportEmail"); } }
@@ -698,8 +703,11 @@ export class TenantPM {
     private sharedLogisMasterMessageLink: boolean;
     public get SharedLogisMasterMessageLink() { return this.sharedLogisMasterMessageLink; }
     public set SharedLogisMasterMessageLink(newValue: boolean) { if (this.sharedLogisMasterMessageLink != newValue) { this.sharedLogisMasterMessageLink = newValue; this.MarkAsDirty("SharedLogisMasterMessageLink"); } }
-       
-	 
+
+    private showMultiUnitsOfMeasurements: boolean;
+    public get ShowMultiUnitsOfMeasurements() { return this.showMultiUnitsOfMeasurements; }
+    public set ShowMultiUnitsOfMeasurements(newValue: boolean) { if (this.showMultiUnitsOfMeasurements != newValue) { this.showMultiUnitsOfMeasurements = newValue; this.MarkAsDirty("ShowMultiUnitsOfMeasurements"); } }
+
     private airRatio: number;
     public get AirRatio() { return this.airRatio; }
     public set AirRatio(newValue: number) { if (this.airRatio != newValue) { this.airRatio = newValue; this.MarkAsDirty("AirRatio"); } }
@@ -724,9 +732,62 @@ export class TenantPM {
     public get FTLRatio() { return this.fTLRatio; }
     public set FTLRatio(newValue: number) { if (this.fTLRatio != newValue) { this.fTLRatio = newValue; this.MarkAsDirty("FTLRatio"); } }
        
+	 
     private isQuotesRequestActivatedInShared: boolean;
     public get IsQuotesRequestActivatedInShared() { return this.isQuotesRequestActivatedInShared; }
     public set IsQuotesRequestActivatedInShared(newValue: boolean) { if (this.isQuotesRequestActivatedInShared != newValue) { this.isQuotesRequestActivatedInShared = newValue; this.MarkAsDirty("IsQuotesRequestActivatedInShared"); } }
+       
+	 
+    private isCargoTrackWebAccessActivated: boolean;
+    public get IsCargoTrackWebAccessActivated() { return this.isCargoTrackWebAccessActivated; }
+    public set IsCargoTrackWebAccessActivated(newValue: boolean) { if (this.isCargoTrackWebAccessActivated != newValue) { this.isCargoTrackWebAccessActivated = newValue; this.MarkAsDirty("IsCargoTrackWebAccessActivated"); } }
+       
+	 
+    private enableDeliveryOptions: boolean;
+    public get EnableDeliveryOptions() { return this.enableDeliveryOptions; }
+    public set EnableDeliveryOptions(newValue: boolean) { if (this.enableDeliveryOptions != newValue) { this.enableDeliveryOptions = newValue; this.MarkAsDirty("EnableDeliveryOptions"); } }
+       
+	 
+    private emptyReturnClosingDays: number;
+    public get EmptyReturnClosingDays() { return this.emptyReturnClosingDays; }
+    public set EmptyReturnClosingDays(newValue: number) { if (this.emptyReturnClosingDays != newValue) { this.emptyReturnClosingDays = newValue; this.MarkAsDirty("EmptyReturnClosingDays"); } }
+       
+	 
+    private shipmentATAClosingDays: number;
+    public get ShipmentATAClosingDays() { return this.shipmentATAClosingDays; }
+    public set ShipmentATAClosingDays(newValue: number) { if (this.shipmentATAClosingDays != newValue) { this.shipmentATAClosingDays = newValue; this.MarkAsDirty("ShipmentATAClosingDays"); } }
+       
+	 
+    private isDigitalPortalAccessActivated: boolean;
+    public get IsDigitalPortalAccessActivated() { return this.isDigitalPortalAccessActivated; }
+    public set IsDigitalPortalAccessActivated(newValue: boolean) { if (this.isDigitalPortalAccessActivated != newValue) { this.isDigitalPortalAccessActivated = newValue; this.MarkAsDirty("IsDigitalPortalAccessActivated"); } }
+       
+	 
+    private useNewTermsOfUse: boolean;
+    public get UseNewTermsOfUse() { return this.useNewTermsOfUse; }
+    public set UseNewTermsOfUse(newValue: boolean) { if (this.useNewTermsOfUse != newValue) { this.useNewTermsOfUse = newValue; this.MarkAsDirty("UseNewTermsOfUse"); } }
+       
+	 
+    private shipmentATADateIndicator: string;
+    public get ShipmentATADateIndicator() { return this.shipmentATADateIndicator; }
+    public set ShipmentATADateIndicator(newValue: string) { if (this.shipmentATADateIndicator != newValue) { this.shipmentATADateIndicator = newValue; this.MarkAsDirty("ShipmentATADateIndicator"); } }
+
+    
+    private approveUploadedDocuments: boolean;
+    public get ApproveUploadedDocuments() { return this.approveUploadedDocuments; }
+    public set ApproveUploadedDocuments(newValue: boolean) { if (this.approveUploadedDocuments != newValue) { this.approveUploadedDocuments = newValue; this.MarkAsDirty("ApproveUploadedDocuments"); } }
+
+    private dPArchiveShipmentCreateFilter: number;
+    public get DPArchiveShipmentCreateFilter() { return this.dPArchiveShipmentCreateFilter; }
+    public set DPArchiveShipmentCreateFilter(newValue: any) { if (this.dPArchiveShipmentCreateFilter != newValue) { this.dPArchiveShipmentCreateFilter = newValue; this.MarkAsDirty("DPArchiveShipmentCreateFilter"); } }
+
+    private dPArchiveShipmentArrivalFilter: number;
+    public get DPArchiveShipmentArrivalFilter() { return this.dPArchiveShipmentArrivalFilter; }
+    public set DPArchiveShipmentArrivalFilter(newValue: number) { if (this.dPArchiveShipmentArrivalFilter != newValue) { this.dPArchiveShipmentArrivalFilter = newValue; this.MarkAsDirty("DPArchiveShipmentArrivalFilter"); } }
+
+    private dPArchiveShipmentDepartFilter: number;
+    public get DPArchiveShipmentDepartFilter() { return this.dPArchiveShipmentDepartFilter; }
+    public set DPArchiveShipmentDepartFilter(newValue: number) { if (this.dPArchiveShipmentDepartFilter != newValue) { this.dPArchiveShipmentDepartFilter = newValue; this.MarkAsDirty("DPArchiveShipmentDepartFilter"); } }
 
     public OldEntityPM: TenantPM;
 		
@@ -754,4 +815,4 @@ export class TenantPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

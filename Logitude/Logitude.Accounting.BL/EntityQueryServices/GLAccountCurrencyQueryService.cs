@@ -17,6 +17,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         {
             return this.repository.GetQRelatedCurrenciesAccountByCustomerGLAccountActive(tenant, GLAccountId).Select(r => r.CurrencyId).ToList();
         }
+
+        public List<string> GetRelatedCurrenciesAccounts(int tenant, string GLAccountId)
+        {
+            return this.repository.GetQRelatedCurrenciesAccountByCustomerGLAccountActive(tenant, GLAccountId).Select(r => r.GLAccountId).ToList();
+        }
+
         public List<GLAccountCurrencyPM> GetRelatedCurrenciesAccount(int tenant, string GLAccountId)
         {
             string key = $"GetRelatedCurrenciesAccount({tenant}, {GLAccountId})";
@@ -60,6 +66,13 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             var poco = repository.GetEntityByGLAccountId(accountId, tenant);
             return poco;
+        }
+
+        public List<GLAccountCurrencyPM> GetRelatedCurrenciesAccountByCustomerGLAccount(string accountId, int tenant)
+        {
+            var relatedCurrenciesAccountByCustomerGLAccount = this.repository.
+                GetRelatedCurrenciesAccountByCustomerGLAccountAll(tenant, accountId);
+            return relatedCurrenciesAccountByCustomerGLAccount.Select(r => this.GetEntityPM(r, false)).ToList();
         }
     }
 }

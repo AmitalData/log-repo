@@ -78,7 +78,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                         _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts
                         ,null/*_Param.ChartOfAccountsTypeCode*/
                         ,null //SALESMAN 
-                        ,true
+                        ,true,false
                         );
                     _allIdAccounts = qAllIdAccounts;// new List<string>(hashsetallIdAccounts);
                 }
@@ -168,7 +168,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 _Param.DateTypeCode, To, 
                 false,
                 includeAccoutingDateLTransaction, false,
-                false);
+                false, false);
             var endAccountBalance = endAccountBalanceService.AccountBalance;
             return endAccountBalance;
         }
@@ -187,7 +187,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 openBalancePlease_ReCalcYearTransfer,
                 _Param.DateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/, _Param.From,
                 false,
-                includeAccoutingDateLTransaction, false,false);
+                includeAccoutingDateLTransaction, false,false, false);
             var startAccountBalance = startAccountBalanceService.AccountBalance;
             return startAccountBalance;
         }

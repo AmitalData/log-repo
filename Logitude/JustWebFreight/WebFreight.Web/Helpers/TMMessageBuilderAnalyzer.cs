@@ -40,7 +40,7 @@ namespace WebFreight.Web.Helpers
             {
                 // Get the specified work item
                 WorkItem workitem = witClient.GetWorkItemAsync(workItemId, null, null, WorkItemExpand.Relations).Result;
-                if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Task" || workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Bug")
+                if (IsUpdatingTaskEffort(workitem))
                 {
                     //completedWork = workitem.Fields.Where(a => a.Key == "Microsoft.VSTS.Scheduling.CompletedWork").Select(a => a).FirstOrDefault();
                     JsonPatchDocument patchDocument = new JsonPatchDocument();
@@ -63,7 +63,19 @@ namespace WebFreight.Web.Helpers
                 }
             }
         }
+        private bool IsUpdatingTaskEffort(WorkItem workitem)
+        {
+            if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Task")
+                return true;
 
+            if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Bug")
+                return true;
+
+            if (workitem.Fields.GetValueOrDefault("System.WorkItemType").ToString() == "Product Backlog Item")
+                return true;
+
+            return false;
+        }
         private string GetPersonalKey()
         {
             string personalAccessKey = "";

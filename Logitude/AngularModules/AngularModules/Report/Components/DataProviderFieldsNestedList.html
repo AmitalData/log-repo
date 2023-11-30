@@ -1,0 +1,68 @@
+<style>
+    .ListBoxItem {
+        background-color: transparent;
+    }
+
+    .ListBoxItem:hover {
+        cursor: pointer;
+        background: #ffffff;
+        /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(#ffffff, #DDE8F5);
+        /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#ffffff, #DDE8F5);
+        /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#ffffff, #DDE8F5);
+        /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#ffffff, #E6EBF0);
+        /* Standard syntax (must be last) */
+    }
+
+    .SelectedListBoxItem {
+        cursor: pointer;
+        line-height: 25px;
+        background: #E8F7FF;
+        /* For browsers that do not support gradients */
+        background: -webkit-linear-gradient(#E8F7FF, #85CAEC);
+        /* For Safari 5.1 to 6.0 */
+        background: -o-linear-gradient(#E8F7FF, #85CAEC);
+        /* For Opera 11.1 to 12.0 */
+        background: -moz-linear-gradient(#E8F7FF, #85CAEC);
+        /* For Firefox 3.6 to 15 */
+        background: linear-gradient(#E8F7FF, #85CAEC);
+        /* Standard syntax (must be last) */
+    }
+
+    .spanImg {
+        margin-right: 5px;
+        margin-top: 0px;
+        border: 0px;
+        background-color: transparent;
+        height: 12px;
+        width: 12px;
+        cursor: pointer;
+    }
+</style>
+
+<td *ngIf="ShowField(field)" style="width:  calc(100% - 20px);display: inline-block;padding: 3px;">
+    <div>
+        <div style="width:20px;display: inline;">
+            <span *ngIf="HasFields && !field.FieldsOpened" style="width:20px"><img (click)="OnShowHideColumnsClick()"
+                    class="spanImg" src="./Images/treeIcon.png" /></span>
+            <span *ngIf="HasFields && field.FieldsOpened" style="width:20px"><img (click)="OnShowHideColumnsClick()"
+                    class="spanImg" src="./Images/treeIcon2.png" /></span>
+        </div>
+        <label class="{{field.ClassName}}" style="float:left;width: 100%;"
+            [ngStyle]="HasFields ? {'float': 'none', 'padding-left': '5px','display':'inline-flex'} : {'float': 'left', 'padding-left': '23px'}"
+            (click)="SetSelected(field)">{{field.Text}}</label>
+    </div>
+
+
+    <table *ngIf="HasFields && field.FieldsOpened">
+        <tr *ngFor="let item of field.Fields" [style.background]="item.DivSelectBackgroud">
+            <DataProviderFieldsNestedList [isDestinationFields]="isDestinationFields" *ngIf="ShowField(item)"
+                (selectChangeEvent)="NestedSelectChange($event)" [margin]="margin+20" [style.marginLeft.px]="margin" [IsFromReport]="IsFromReport"
+                [field]="item">
+            </DataProviderFieldsNestedList>
+        </tr>
+    </table>
+</td>

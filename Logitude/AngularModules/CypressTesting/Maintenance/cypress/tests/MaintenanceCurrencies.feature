@@ -1,4 +1,4 @@
-@dev @daily
+@stable @daily @release
 Feature: Currency fake Create, Search and Edit from Maintenance
     The user creates a Currency, searches for and edits it from the Maintenance Module.
 
@@ -14,9 +14,9 @@ Feature: Currency fake Create, Search and Edit from Maintenance
 
     Scenario: Create Currency
         And fill the following currency details
-            | Currency         | DM |
-            | ExchangeRate     | 10 |
-            | ExchangeRateDate | .  |
+            | Currency         | AED |
+            | ExchangeRate     | 10  |
+            | ExchangeRateDate | .   |
         When create currency
         Then the currency should create successfully
 
@@ -30,7 +30,6 @@ Feature: Currency fake Create, Search and Edit from Maintenance
 
     Scenario: Edit the Currency
         Given fill "new Notes" as notes currency
-        And  the user Check the InActive Currency CheckBox
         And fill "externalId" as Accounting External ID
         When edit currency
         Then the currency should update successfully

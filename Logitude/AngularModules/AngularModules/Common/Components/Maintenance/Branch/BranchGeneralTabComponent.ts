@@ -30,6 +30,7 @@ export class BranchGeneralTabComponent extends BaseComponent implements OnDestro
         this.EntityPM = args.EntityPM;
         this.addressService = new AddressPMService();
         this.Listen();
+        this.SetUIProperties();
 
         if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
             this.IsNewEntity = true;
@@ -38,9 +39,17 @@ export class BranchGeneralTabComponent extends BaseComponent implements OnDestro
         else {
             this.IsNewEntity = false;
             this.LoadAddress();
-        }      
+        }
     }
 
+    private SetUIProperties() {
+        this.SetCounterCode_UIProperties();
+    }
+    private SetCounterCode_UIProperties() {
+        let hasBranchCounterCodeFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "BCC")[0] ? true : false;
+        if (!hasBranchCounterCodeFeature) return;
+        this.UIProperties.SetRequired("CounterCode", this.ObjectTableName, AppTool.IsNullOrEmpty(this.CounterCode));
+    }
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     Listen() {
@@ -102,6 +111,7 @@ export class BranchGeneralTabComponent extends BaseComponent implements OnDestro
         if (this.EntityPM.CounterCode != value) {
             this.EntityPM.CounterCode = value;
         }
+        this.SetCounterCode_UIProperties();
     }
 
     get InActive() { return this.EntityPM.InActive; }

@@ -16,13 +16,13 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class ReconciliationLinePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(this); 
-          this.IsDirty = false;
+	  		                        this.EntityParentPM = _entityParentPM;
+                this.UIProperties = new UIProperties(this);
+                this.IsDirty = false;
       }
 
 	 
@@ -180,6 +180,11 @@ export class ReconciliationLinePM {
     private excelTransactionAmount: number;
     public get ExcelTransactionAmount() { return this.excelTransactionAmount; }
     public set ExcelTransactionAmount(newValue: number) { if (this.excelTransactionAmount != newValue) { this.excelTransactionAmount = newValue; this.MarkAsDirty("ExcelTransactionAmount"); } }
+       
+	 
+    private refDate: Date;
+    public get RefDate() { return this.refDate; }
+    public set RefDate(newValue: Date) { if (this.refDate != newValue) { this.refDate = newValue; this.MarkAsDirty("RefDate"); } }
        
 	 
 

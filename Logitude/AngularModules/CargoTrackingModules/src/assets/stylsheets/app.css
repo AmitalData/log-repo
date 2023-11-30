@@ -99,7 +99,7 @@ h3 {
     text-transform: uppercase;
 }
 
-.mobile-only {
+.mobile-only, .mobile-only-inline-block {
     display: none;
 }
 
@@ -125,9 +125,11 @@ h3 {
 }
 
 
-@media screen and (max-width: 479px) {
+@media screen and (max-width: 479px) and (orientation: portrait),
+(max-height: 479px) and (orientation: landscape)  {
     h1 {
         font-size: 24px;
+        line-height: 22px;
     }
     h2 {
         font-size: 16px;
@@ -152,10 +154,16 @@ h3 {
         display: block;
     }
 
-
+    .mobile-only-inline-block {
+        display: inline-block !important;
+    }
+    .mobile-inline-block{
+        display: inline-block !important;
+    }
     .dashboard-container{
         padding: 50px 0px 0 0px;
     }
+    /*end of mobile style*/
 }
 
 
@@ -225,4 +233,67 @@ h3 {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+}
+
+
+.tooltip-popup{
+    max-width: 700px !important;
+    min-height: 35px;
+    max-height: 200px !important;
+    min-width: 100px;
+    background: #ffffff;
+    box-shadow: 1px 1px 2px 2px #80808026;
+    border-radius: 3px;
+    padding: 6px 10px;
+    display: block !important;
+    text-align: right;
+   
+}
+
+.tooltip-popup svg{
+    width: 16px;
+    height: 16px;
+    fill: var(--MainColor);
+    top: 3px;
+    position: relative;
+    padding: 0 4px 0 0;
+}
+.tooltip-popup .header{
+    color: var(--MainColor);
+    font-weight: bold;
+}
+
+
+.icon-danger {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 3px solid white;
+    background: red;
+    border-radius: 50%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 13px !important;
+    line-height: 16px;
+    color: white;
+}
+
+
+.input-box{
+    width: 100%;
+    padding: 7px;
+    font-size: 14px;
+    margin: 0 auto;
+    box-sizing: border-box;
+    border: none;
+    box-shadow: 0px 0px 5px 0px #00000021;
+    color: black;
+    outline: transparent;
+    background-color: white;
+}
+.word-break-all{
+    overflow-wrap: break-word;
+}
+.animate:active {
+    transform: scale(0.96);
 }

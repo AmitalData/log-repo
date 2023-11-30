@@ -79,14 +79,43 @@
 
                     <tr style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
-                        <td style="width:120px;">  <LogLabel [ObjectFieldName]="'ObjectTableId'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
+                        <td style="width:120px;">
+                            <table style="table-layout: fixed;">
+                                <tr>
+                                    <td style="width:10px; vertical-align: middle;">
+                                        <div *ngIf="!SelectedObjectTableId" style="width: 7px; height: 7px; background: #E45A26; -webkit-border-radius: 25px; -moz-border-radius: 25px; border-radius: 25px;"></div>
+                                    </td>
+                                    <td class="TextTrimming" style="text-align: left; vertical-align:middle;">
+                                        <label class="Label" [style.color]="SelectedObjectTableId ? '#6E7172':'red'" style="color:#6E7172">Object Table:</label>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
 
                         <td colspan="2">
                             <table>
 
                                 <tr>
 
-                                    <td style="width:193px"><ComboBox style="width:193px;" (SelectedItemChanged)="ObjectTableValueChanged($event)" [ItemsSource]="ObjectTablesList" [SelectedItem]="SelectedObjectTable" [Binding]="'Name'"></ComboBox></td>
+                                    <td style="width:193px">
+
+                                        <LogLov *ngIf="IsLogLovReady"
+                                                [ObjectFieldName]="'SelectedObjectTableId'"
+                                                [ObjectTableName]="'ObjectTable'"
+                                                [DataContext]="DataContext"
+                                                [LookUpTableName]="'ObjectTable'"
+                                                [NoValidation]="true"
+                                                [IsFreeText]="true"
+                                                [SelectedValue]="SelectedObjectTableId"
+                                                [HideColumns]="true"
+                                                [HideLastColumn]="true"
+                                                [DisplayMemberPath]="'FullNameTextCodeDefaultText'"
+                                                [IsDecendingSort]="false"
+                                                [QueryFilterItems]="ObjectTablesFilterItems"
+                                                [CustomizedWidth]="'193px'"
+                                                style="width: 193px">
+                                        </LogLov>
+                                    </td>
                                     <td><div style="text-align:left"><a *ngIf="IsShowAdvanceLink" style="margin-left:12px;color:#0094ff;font-size:12px;" (click)="AdvanceLinkMethod()">Advance</a></div></td>
                                 </tr>
                             </table>
@@ -117,7 +146,7 @@
                     <tr style="vertical-align:top;height:30px">
                         <td style="width:5px"><div></div></td>
                         <td style="width:120px;"><LogLabel [ObjectFieldName]="'IsDocOut'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogLabel></td>
-                        <td style="width:230px;text-align:left"><LogCheckBox (ValueChanged)="IsDocOutChange($event)"  [LogitudeForm]="myForm" [ObjectFieldName]="'IsDocOut'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogCheckBox></td>
+                        <td style="width:230px;text-align:left"><LogCheckBox [IsDisabled]="IsCustomObject" [Value]="IsDocOut" (ValueChanged)="IsDocOutChange($event)"  [LogitudeForm]="myForm" [ObjectFieldName]="'IsDocOut'" [ObjectTableName]="'DocumentType'" [DataContext]="NewDocumentTypePM"></LogCheckBox></td>
                         <td><div></div></td>
                     </tr>
 

@@ -41,7 +41,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 InterestBasesPeriod Period = PeriodRepository.GetSingleByInterestBaseStartDateAndnterestBaseTypeId(entityPM.InterestBaseStartDate, entityPM.InterestBaseTypeId, entityPM.Tenant);
                 if (Period != null)
                 {
-                    throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.Abaseperiodwiththesamestartdateexists", entityPM.Tenant, showLocals));
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.General.O.Abaseperiodwiththesamestartdateexists", entityPM.Tenant, showLocals));
                 }
             }
         }

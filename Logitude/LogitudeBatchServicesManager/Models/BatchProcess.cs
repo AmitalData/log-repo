@@ -22,6 +22,8 @@ namespace LogitudeBatchServicesManager.Models
         [XmlAttribute()]
         public int MaxMemoryMB { get; set; }
         [XmlAttribute()]
+        public string RestartTime { get; set; }
+        [XmlAttribute()]
         public int MaxWorkingTimeInMinutes { get; set; }
 
         [XmlArray("Services")]

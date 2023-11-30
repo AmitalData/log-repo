@@ -1,31 +1,71 @@
-﻿import {Component, OnInit, ViewChild, ViewContainerRef} from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ViewContainerRef} from '@angular/core';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {ARInvoicePM} from '../../../../Invoice/EntityPMs/ARInvoicePM';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { InvoiceTool } from '../../../../Invoice/Tools';
 
 @Component({
     
     templateUrl: './ARInvoiceGeneralTabComponent.html',
 })
-export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnInit {
+export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnInit, OnDestroy {
     public EntityPM: ARInvoicePM;
     public ObjectTableName: string = "ARInvoice";
-   // public TenantPM: TenantPM;
     public LabelColumnWidth: number = 100;
     public ControlColumnWidth: number = 200;
     public DataContext: ARInvoiceGeneralTabComponent = this;
     private ScreenCode: string = "ARInvoice.GeneralTabScreen";
     public DisplaySATSettings: boolean = false;
+    public DisplayQBOSettings: boolean = false;
+    public Periods: PeriodDetails[] = [];
+    public Profact4Enabled: boolean = false;
+
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(public entityArgs: EntityArgs) {
         super();
+        this.EntityPM = entityArgs.EntityPM;
+
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
+            this.FillPeriodList();
         }
-        this.EntityPM = entityArgs.EntityPM;
-        //this.TenantPM = SessionLocator.TenantPM;
+
+        if (this.IsQBOAccountingSystem() && SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "QBT")[0]) {
+            this.DisplayQBOSettings = true;
+        }
+
         this.RunComponent();
+        this.SetUIProperties();
+        this.Listen();
+    }
+
+    FillPeriodList() {
+        this.FillPeriods();
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.PeriodCode))
+            this.SelectdPeriod = null;
+        else
+            this.SelectdPeriod = this.Periods.filter(per => per.Code == this.EntityPM.PeriodCode)[0];
+    }
+
+    FillPeriods() {
+        this.Periods.push(new PeriodDetails("01", "Diario"));
+        this.Periods.push(new PeriodDetails("02", "Semanal"));
+        this.Periods.push(new PeriodDetails("03", "Quincenal"));
+        this.Periods.push(new PeriodDetails("04", "Mensual"));
+        this.Periods.push(new PeriodDetails("05", "Bimestral"));
+    }
+
+    IsQBOAccountingSystem() {
+        var isQBOAccountingSystem = false;
+        if (SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBO" || SessionLocator.AccountingSettingPM.AccountingSystemCode == "QBOG") {
+            isQBOAccountingSystem = true;
+        }
+
+        return isQBOAccountingSystem;
     }
 
     ngOnInit() {
@@ -63,13 +103,27 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
             });
     }
 
-  
-
     // Properties 
     get SATPaymentMethodCode() { return this.EntityPM.SATPaymentMethodCode; }
     set SATPaymentMethodCode(newValue: string) {
         if (this.EntityPM.SATPaymentMethodCode != newValue) {
             this.EntityPM.SATPaymentMethodCode = newValue;
+        }
+    }
+
+    get PeriodCode() { return this.EntityPM.PeriodCode; }
+    set PeriodCode(newValue: string) {
+        if (this.EntityPM.PeriodCode != newValue) {
+            this.EntityPM.PeriodCode = newValue;
+        }
+    }
+
+    private selectdPeriod: PeriodDetails;
+    get SelectdPeriod() { return this.selectdPeriod; }
+    set SelectdPeriod(value: PeriodDetails) {
+        if (this.selectdPeriod != value) {
+            this.selectdPeriod = value;
+            this.PeriodCode = !AppTool.IsNullOrEmpty(value) ? this.selectdPeriod.Code : "";
         }
     }
 
@@ -94,5 +148,53 @@ export class ARInvoiceGeneralTabComponent extends BaseComponent implements OnIni
             this.EntityPM.UsoCFDICode = newValue;
         }
     }
-     
+
+    private SaveCompletedEvent: any = null;
+    private LoadCompletedEvent: any = null;
+    private Listen() {
+        if (this.entityArgs.EditComponent != null) {
+
+            this.SaveCompletedEvent = this.entityArgs.EditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                if (isSaveSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.SetUIProperties();
+                }
+            });
+
+            this.LoadCompletedEvent = this.entityArgs.EditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
+                if (isLoadSuccess) {
+                    this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.SetUIProperties();
+                }
+            });
+        }
+    }
+    ngOnDestroy() {
+        AppTool.KillEventEmitter(this.SaveCompletedEvent);
+        AppTool.KillEventEmitter(this.LoadCompletedEvent);
+    }
+
+    get GlobalTaxCalculation() { return this.EntityPM.GlobalTaxCalculation; }
+    set GlobalTaxCalculation(newValue: string) {
+        if (this.EntityPM.GlobalTaxCalculation != newValue) {
+            this.EntityPM.GlobalTaxCalculation = newValue;
+        }
+    }
+
+    SetUIProperties() {
+        this.UIProperties.SetEnabled("GlobalTaxCalculation", this.ObjectTableName, false);
+        var isAllowedEdit = InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
+        if (isAllowedEdit && this.EntityPM.TransferStatusCode != "TR") {
+            this.UIProperties.SetEnabled("GlobalTaxCalculation", this.ObjectTableName, true);
+        }
+    }
+}
+
+class PeriodDetails {
+    constructor(code: string, name: string) {
+        this.Code = code;
+        this.Name = name;
+    }
+    Code: string;
+    Name: string;
 }

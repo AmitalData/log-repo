@@ -1,15 +1,16 @@
-@dev @weekly
+#@release @stable @weekly
+@devrelease
 Feature: Payment Terms Create, Search and Edit from Maintenance
     The user creates a payment term, searches for and edits it from the Maintenance Module.
 
     Scenario: Add Payment Term Method Code with lenght more than 4
         Given the user logged in and open "Payment Terms" in maintenance menu
         When add "12345" as payment term code
-        Then a validation message with "Code Field must be less than 4" error should appear
+        Then a validation message with "Code Field length must be less than 4" error should appear
 
     Scenario: Add Payment Term Method Code already exists
-        Given add another payment term code: "Cash"
-        Then this validation message error "Payment Term with Code Cash already exists" should appear
+        Given add another payment term code: "CH"
+        Then this validation message error "Payment Term with Code CH already exists" should appear
 
     Scenario: Create new payment term
         Given a payment term with the following details
@@ -36,6 +37,7 @@ Feature: Payment Terms Create, Search and Edit from Maintenance
         Given the user edit the following payment term details
             | Description      | New Description       |
             | LocalDescription | New Local Description |
+            | InactiveCheckBox | Yes                   |
         And fill the following payment term Accounting External ID
             | AccountingExternalID | External1 |
         When save payment term

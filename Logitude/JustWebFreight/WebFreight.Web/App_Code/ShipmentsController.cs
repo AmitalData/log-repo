@@ -448,7 +448,9 @@ namespace WebFreight.Web
                                                      ForeignPartnerCountryCode = entity.ForeignPartnerCountryCode,
                                                      House = entity.House,
                                                      LongMaster = entity.TransportModeId == "A" ? (m.AirlinePrefix != null && m.Master != null ? m.AirlinePrefix + "-" + m.Master : m.Master) : m.Master,
-                                                   
+                                                     IsStandalonePickupDelivery = entity.IsStandalonePickupDelivery,
+                                                     CustomerReference1 = entity.CustomerReference1,
+                                                     CustomerReference2 = entity.CustomerReference2,
                                                  };
             return shipments;
         }
@@ -505,6 +507,9 @@ namespace WebFreight.Web
                                                      MainCarriageETD = m.MainCarriageETD,
                                                      CustomConnectToShipment = entity.CustomConnectToShipment,
                                                      ForeignPartnerCountryCode = entity.ForeignPartnerCountryCode,
+                                                     IsStandalonePickupDelivery = entity.IsStandalonePickupDelivery,
+                                                     CustomerReference1 = entity.CustomerReference1,
+                                                     CustomerReference2 = entity.CustomerReference2,
                                                  };
             return shipments;
         }
@@ -689,7 +694,7 @@ namespace WebFreight.Web
                                 }
                             default:
                                 {
-                                    query2 = query2.OrderByDescending(d => d.StatusDate);
+                                    query2 = query2.OrderByDescending(d => d.ComputedStatusDate);
                                     break;
                                 }
                         }
@@ -703,7 +708,7 @@ namespace WebFreight.Web
             else
             {
                 //query2 = query2.OrderByDescending(d => d.LastStatusLogDate);
-                query2 = query2.OrderByDescending(d => d.StatusDate);
+                query2 = query2.OrderByDescending(d => d.ComputedStatusDate);
             }
 
 
@@ -758,7 +763,7 @@ namespace WebFreight.Web
 
 
                 query2 = filter.GetFilteredQuery<ShipmentList>(listQueryOperation, query2);
-                query2 = query2.OrderByDescending(d => d.StatusDate);
+                query2 = query2.OrderByDescending(d => d.ComputedStatusDate);
                 listQuery = query2.ToList();
 
                 BuildUnssenFollowedShipment(tenant, listQuery, table, filters.ContactId, contactsUnseenRepository, sharedFollowedShipmentRepository, SharedFollowedShipmentListIds);
@@ -834,6 +839,36 @@ namespace WebFreight.Web
                              Field38 = f.Field38,
                              Field39 = f.Field39,
                              Field40 = f.Field40,
+                             Field41 = f.Field41,
+                             Field42 = f.Field42,
+                             Field43 = f.Field43,
+                             Field44 = f.Field44,
+                             Field45 = f.Field45,
+                             Field46 = f.Field46,
+                             Field47 = f.Field47,
+                             Field48 = f.Field48,
+                             Field49 = f.Field49,
+                             Field50 = f.Field50,
+                             Field51 = f.Field51,
+                             Field52 = f.Field52,
+                             Field53 = f.Field53,
+                             Field54 = f.Field54,
+                             Field55 = f.Field55,
+                             Field56 = f.Field56,
+                             Field57 = f.Field57,
+                             Field58 = f.Field58,
+                             Field59 = f.Field59,
+                             Field60 = f.Field60,
+                             Field61 = f.Field61,
+                             Field62 = f.Field62,
+                             Field63 = f.Field63,
+                             Field64 = f.Field64,
+                             Field65 = f.Field65,
+                             Field66 = f.Field66,
+                             Field67 = f.Field67,
+                             Field68 = f.Field68,
+                             Field69 = f.Field69,
+                             Field70 = f.Field70,
                              CustomsDeclarationNumber = f.CustomsDeclarationNumber,
                              Field10 = f.Field10,
                              ChargeableWeightInKG = f.ChargeableWeightInKG,
@@ -895,6 +930,8 @@ namespace WebFreight.Web
                              FinalArrivalDate = f.FinalArrivalDate,
                              Shipper = f.ShipperName,
                              Consignee = f.ConsigneeName,
+                             ShipperCountryCode = f.ShipperCountryCode,
+                             ConsigneeCountryCode = f.ConsigneeCountryCode,
                              ShipperReference1 = f.ShipperReference1,
                              ShipperReference2 = f.ShipperReference2,
                              ConsigneeReference1 = f.ConsigneeReference1,
@@ -951,6 +988,9 @@ namespace WebFreight.Web
                              DescriptionOfGoods = f.DescriptionOfGoods,
                              ProjectNumber = f.ProjectNumber,
                              Tenant = f.Tenant,
+                             IsStandalonePickupDelivery = f.IsStandalonePickupDelivery,
+                             ComputedStatusDate = f.ComputedStatusDate,
+
                          };
 
             return query2;
@@ -1146,6 +1186,10 @@ namespace WebFreight.Web
         [WebGet(UriTemplate = "getsinglepmbykey/{securitykey}/{id}/{tenant}")]
         public ShipmentPM GetSingleShipmentPMByKey(string securitykey, string id, int tenant)
         {
+
+           // SecurityUtility.AuthenticationOnTenant(tenant);
+
+
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant); 
 
             ShipmentPM pm = shipmentQuery.GetSinglePMBySecurityKey(securitykey, id, tenant);
@@ -1159,6 +1203,9 @@ namespace WebFreight.Web
         [WebGet(UriTemplate = "getsinglepmbykeyandtenant/{securitykey}/{tenant}")]
         public ShipmentPM GetSingleShipmentPMByKeyAndTenant(string securitykey, int tenant)
         {
+
+           // SecurityUtility.AuthenticationOnTenant(tenant);
+
             ShipmentQuery shipmentQuery = new ShipmentQuery(tenant);
 
             ShipmentPM pm = shipmentQuery.GetSinglePMBySecurityKeyAndTenant(securitykey, tenant);
@@ -1620,6 +1667,7 @@ namespace WebFreight.Web
                     item.ReferenceVisibility = "visible";
                     item.Reference2Visibility = "collapse";
                     item.Reference1 = string.IsNullOrEmpty(shipment.Notify1Reference) ? "" : shipment.Notify1Reference;
+                    item.Reference2 = string.IsNullOrEmpty(shipment.Notify1Reference2) ? "" : shipment.Notify1Reference2;
                     item.PartnerType = "Notify 1";
                     item.FlagSRC = "";
                     item.Email = "";
@@ -1715,7 +1763,8 @@ namespace WebFreight.Web
                     item.Id = shipment.ShipperNotExporterId;
                     item.ReferenceVisibility = "visible";
                     item.Reference2Visibility = "collapse";
-                    item.Reference1 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference) ? "" : shipment.ShipperNotExporterReference;
+                    item.Reference1 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference1) ? "" : shipment.ShipperNotExporterReference1;
+                    item.Reference2 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference2) ? "" : shipment.ShipperNotExporterReference2;
                     item.PartnerType = "Shipper Not Exporter";
                     item.FlagSRC = "";
                     item.Email = "";
@@ -2422,6 +2471,7 @@ namespace WebFreight.Web
                     item.ReferenceVisibility = "visible";
                     item.Reference2Visibility = "collapse";
                     item.Reference1 = string.IsNullOrEmpty(shipment.Notify1Reference) ? "" : shipment.Notify1Reference;
+                    item.Reference2 = string.IsNullOrEmpty(shipment.Notify1Reference2) ? "" : shipment.Notify1Reference2;
                     item.PartnerType = "Notify 1";
                     item.FlagSRC = "";
                     item.Email = "";
@@ -2517,7 +2567,8 @@ namespace WebFreight.Web
                     item.Id = shipment.ShipperNotExporterId;
                     item.ReferenceVisibility = "visible";
                     item.Reference2Visibility = "collapse";
-                    item.Reference1 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference) ? "" : shipment.ShipperNotExporterReference;
+                    item.Reference1 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference1) ? "" : shipment.ShipperNotExporterReference1;
+                    item.Reference2 = string.IsNullOrEmpty(shipment.ShipperNotExporterReference2) ? "" : shipment.ShipperNotExporterReference2;
                     item.PartnerType = "Shipper Not Exporter";
                     item.FlagSRC = "";
                     item.Email = "";
@@ -2957,6 +3008,9 @@ namespace WebFreight.Web
                                                      ShipmentLevelCode = entity.ShipmentLevelCode,
                                                      ShipmentMasterDataId = entity.MasterShipmentDataId,
                                                      CustomConnectToShipment = entity.CustomConnectToShipment,
+                                                     IsStandalonePickupDelivery = entity.IsStandalonePickupDelivery,
+                                                     CustomerReference1 = entity.CustomerReference1,
+                                                     CustomerReference2 = entity.CustomerReference2,
                                                  };
             return shipments;
         }
@@ -3015,7 +3069,7 @@ namespace WebFreight.Web
             ShipmentMobilePM shipmentMobilePM = new ShipmentMobilePM()
             {
                 Id = pm.Id,
-             //   Declaration No
+                //   Declaration No
                 OnCarriageCarrierName = pm.OnCarriageCarrierName,
                 Transshipment1CarrierName = pm.Transshipment1CarrierName,
                 CustomConnectToShipment = pm.CustomConnectToShipment,
@@ -3025,13 +3079,13 @@ namespace WebFreight.Web
                 ExceptionDate = pm.ExceptionDate,
                 ExceptionDescription = pm.ExceptionDescription,
                 ForeignPartnerCountryCode = pm.ForeignPartnerCountryCode,
-             
-                ShipmentLevelCode = pm.ShipmentLevelCode,
-                 NumberOfContainers = pm.NumberOfContainers,
-                    AgentReference1 = pm.AgentReference1,
 
-                  CustomFileId = pm.CustomFileId,
-                  CustomFileNumber = pm.CustomFileNumber,
+                ShipmentLevelCode = pm.ShipmentLevelCode,
+                NumberOfContainers = pm.NumberOfContainers,
+                AgentReference1 = pm.AgentReference1,
+
+                CustomFileId = pm.CustomFileId,
+                CustomFileNumber = pm.CustomFileNumber,
                 CustomsDeclarationNumber = pm.CustomsDeclarationNumber,
 
                 AgentReference2 = pm.AgentReference2,
@@ -3063,17 +3117,17 @@ namespace WebFreight.Web
                 GrossWeight = pm.GrossWeight,
                 CurrentUserId = pm.CurrentUserId,
                 Tenant = pm.Tenant,
-  
+
                 ShipmentNumber = pm.ShipmentNumber,
                 DirectionId = pm.DirectionId,
                 DirectionName = pm.DirectionName,
                 TransportModeId = pm.TransportModeId,
                 TransportModeName = pm.TransportModeName,
                 ShipmentTypeId = pm.ShipmentTypeId,
-              
+
                 House = pm.House,
                 CreateDateTime = pm.CreateDateTime,
- 
+
 
                 //[Timestamp]
 
@@ -3082,7 +3136,7 @@ namespace WebFreight.Web
                 ChargeableWeightUnitCode = pm.ChargeableWeightUnitCode,
                 DimensionsUnitCode = pm.DimensionsUnitCode,
                 VolumetricWeight = pm.VolumetricWeight,
-         
+
                 Volume = pm.Volume,
                 NumberOfPackages = pm.NumberOfPackages,
 
@@ -3095,13 +3149,13 @@ namespace WebFreight.Web
                 ShipmentDeliveries = pm.ShipmentDeliveries,
                 ShipmentPackages = pm.ShipmentPackages,
                 ShipmentOrderPackages = pm.ShipmentOrderPackages,
-               
+
 
                 #endregion
 
                 #region Routings
 
-       
+
                 PreCarriageTransportModeId = pm.PreCarriageTransportModeId,
                 PreCarriageFromPortId = pm.PreCarriageFromPortId,
                 PreCarriageToPortId = pm.PreCarriageToPortId,
@@ -3126,14 +3180,14 @@ namespace WebFreight.Web
                 OnCarriageTransportModeId = pm.OnCarriageTransportModeId,
                 OnCarriageFromPortId = pm.OnCarriageFromPortId,
                 OnCarriageToPortId = pm.OnCarriageToPortId,
-              
+
                 OnCarriageCarrierNumber = pm.OnCarriageCarrierNumber,
-       
+
                 OnCarriageCarrierCode = pm.OnCarriageCarrierCode,
                 OnCarriageFromPortCode = pm.OnCarriageFromPortCode,
                 OnCarriageFromPortName = pm.OnCarriageFromPortName,
                 OnCarriageFromPortCountryCode = pm.OnCarriageFromPortCountryCode,
-               
+
                 OnCarriageToPortCode = pm.OnCarriageToPortCode,
                 OnCarriageToPortName = pm.OnCarriageToPortName,
                 OnCarriageToPortCountryCode = pm.OnCarriageToPortCountryCode,
@@ -3147,7 +3201,7 @@ namespace WebFreight.Web
                 MainCarriageCarrierCode = pm.MainCarriageCarrierCode,
                 MainCarriageFromPortCode = pm.MainCarriageFromPortCode,
                 MainCarriageFromPortName = pm.MainCarriageFromPortName,
-            
+
                 MainCarriageFromPortCountryCode = pm.MainCarriageFromPortCountryCode,
                 MainCarriageToPortCode = pm.MainCarriageToPortCode,
                 MainCarriageToPortName = pm.MainCarriageToPortName,
@@ -3179,7 +3233,7 @@ namespace WebFreight.Web
                 Transshipment1ToPortCode = pm.Transshipment1ToPortCode,
                 Transshipment1ToPortName = pm.Transshipment1ToPortName,
                 Transshipment1ToPortCountryCode = pm.Transshipment1ToPortCountryCode,
-    
+
 
                 Transshipment2FromPortId = pm.Transshipment2FromPortId,
                 Transshipment2ToPortId = pm.Transshipment2ToPortId,
@@ -3189,16 +3243,16 @@ namespace WebFreight.Web
                 Transshipment2ETA = pm.Transshipment2ETA,
 
                 Transshipment2CarrierNumber = pm.Transshipment2CarrierNumber,
-        
+
                 Transshipment2CarrierCode = pm.Transshipment2CarrierCode,
                 Transshipment2FromPortCode = pm.Transshipment2FromPortCode,
                 Transshipment2FromPortName = pm.Transshipment2FromPortName,
                 Transshipment2FromPortCountryCode = pm.Transshipment2FromPortCountryCode,
-    
+
                 Transshipment2ToPortCode = pm.Transshipment2ToPortCode,
                 Transshipment2ToPortName = pm.Transshipment2ToPortName,
                 Transshipment2ToPortCountryCode = pm.Transshipment2ToPortCountryCode,
-              
+
 
                 Transshipment3FromPortId = pm.Transshipment3FromPortId,
                 Transshipment3ToPortId = pm.Transshipment3ToPortId,
@@ -3208,51 +3262,51 @@ namespace WebFreight.Web
                 Transshipment3ETA = pm.Transshipment3ETA,
 
                 Transshipment3CarrierNumber = pm.Transshipment3CarrierNumber,
-   
+
                 Transshipment3CarrierCode = pm.Transshipment3CarrierCode,
                 Transshipment3FromPortCode = pm.Transshipment3FromPortCode,
                 Transshipment3FromPortName = pm.Transshipment3FromPortName,
                 Transshipment3FromPortCountryCode = pm.Transshipment3FromPortCountryCode,
-       
+
                 Transshipment3ToPortCode = pm.Transshipment3ToPortCode,
                 Transshipment3ToPortName = pm.Transshipment3ToPortName,
                 Transshipment3ToPortCountryCode = pm.Transshipment3ToPortCountryCode,
-   
 
 
 
 
 
- 
+
+
                 FromPortName = pm.FromPortName,
 
                 FromPortCountryName = pm.FromPortCountryName,
 
-             
+
                 ToPortName = pm.ToPortName,
-  
+
                 ToPortCountryName = pm.ToPortCountryName,
 
 
                 #endregion
 
-          
-
-               #region partner
 
 
-          ShipperName = pm.ShipperName,
+                #region partner
+
+
+                ShipperName = pm.ShipperName,
 
 
 
-          ConsigneeName = pm.ConsigneeName,
-
-
-                 #endregion
+                ConsigneeName = pm.ConsigneeName,
+                CustomerReference1 = pm.CustomerReference1,
+                CustomerReference2 = pm.CustomerReference2,
+                #endregion
             };
 
 
-            shipmentMobilePM.MobileShipmentReference = GetMobileReference(shipmentMobilePM,null);
+           shipmentMobilePM.MobileShipmentReference = GetMobileReference(shipmentMobilePM,null);
 
 
             if (pm.ShipmentLevelCode == "H" && string.IsNullOrEmpty(pm.MasterShipmentDataId))
@@ -3272,55 +3326,13 @@ namespace WebFreight.Web
 
         private string GetMobileReference(ShipmentMobilePM shipmentMobilePM , ShipmentList shipmentlist)
         {
-            string _myRef = "";
-
-            string shipmentLevelCode = shipmentMobilePM != null ? shipmentMobilePM.ShipmentLevelCode : shipmentlist.ShipmentLevelCode;
-            string directionId = shipmentMobilePM != null ? shipmentMobilePM.DirectionId : shipmentlist.DirectionId;
-
-
-            string agentReference1 = shipmentMobilePM != null ? shipmentMobilePM.AgentReference1 : shipmentlist.AgentReference1;
-            string agentReference2 = shipmentMobilePM != null ? shipmentMobilePM.AgentReference2 : shipmentlist.AgentReference2;
-
-            string shipperReference1 = shipmentMobilePM != null ? shipmentMobilePM.ShipperReference1 : shipmentlist.ShipperReference1;
-            string shipperReference2 = shipmentMobilePM != null ? shipmentMobilePM.ShipperReference2 : shipmentlist.ShipperReference2;
-
-            string consigneeReference2 = shipmentMobilePM != null ? shipmentMobilePM.ConsigneeReference2 : shipmentlist.ConsigneeReference2;
-            string consigneeReference1 = shipmentMobilePM != null ? shipmentMobilePM.ConsigneeReference1 : shipmentlist.ConsigneeReference1;
-
-            if (shipmentLevelCode == "C")
+            string customerReference1 = shipmentMobilePM != null ? shipmentMobilePM.CustomerReference1 : shipmentlist.CustomerReference1;
+            string customerReference2 = shipmentMobilePM != null ? shipmentMobilePM.CustomerReference2 : shipmentlist.CustomerReference2;
+            string _myRef = customerReference1;
+            if (!string.IsNullOrEmpty(customerReference2))
             {
-
-
-                _myRef = agentReference1;
-                if (!string.IsNullOrEmpty(agentReference2))
-                {
-                    _myRef = _myRef == "" ? agentReference2 : _myRef + ", " + agentReference2;
-                }
+                _myRef = string.IsNullOrEmpty(_myRef) ? customerReference2 : _myRef + ", " + customerReference2;
             }
-            else
-            {
-
-                if (directionId == "E" || directionId == "R")
-                {
-                    _myRef =shipperReference1;
-                    if (!string.IsNullOrEmpty(shipperReference2))
-                    {
-                        _myRef = _myRef == "" ? shipperReference2 : _myRef + ", " + shipperReference2;
-                    }
-                }
-
-                else
-                {
-                    _myRef = consigneeReference1;
-                    if (!string.IsNullOrEmpty(consigneeReference2))
-                    {
-                        _myRef = _myRef == "" ? consigneeReference2 : _myRef + ", " + consigneeReference2;
-                    }
-                }
-            }
-
-            if (_myRef == ", ") _myRef = "";
-
             return _myRef;
         }
     }
@@ -3457,6 +3469,7 @@ namespace WebFreight.Web
                 AddressId = shipment.Notify1AddressId,
                 ContactId = shipment.Notify1ContactId,
                 Reference1 = shipment.Notify1Reference,
+                Reference2 = shipment.Notify1Reference2,
                 IsShared = setting.IsNotify1Shared
             });
 
@@ -3476,7 +3489,8 @@ namespace WebFreight.Web
                 Id = shipment.ShipperNotExporterId,
                 AddressId = shipment.ShipperNotExporterAddressId,
                 ContactId = shipment.ShipperNotExporterContactId,
-                Reference1 = shipment.ShipperNotExporterReference,
+                Reference1 = shipment.ShipperNotExporterReference1,
+                Reference2 = shipment.ShipperNotExporterReference2,
                 IsShared = setting.IsShipperNotExporterShared
             });
 

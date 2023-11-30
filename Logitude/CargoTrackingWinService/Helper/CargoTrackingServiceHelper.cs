@@ -49,8 +49,8 @@ namespace CargoTrackingWinService.Helper
             string incrementalStatsNewRecoredCommand = "Insert Into [dbo].[CargoTrackingIncrementalStats] (StartDate,EndDate,ErrorLog," 
                                                         + cargoTrackingTableCopyFieldsAsString +") " +
                                                        "values ('" + 
-                                                         ApplicationInfo.StartDate+ "','"+ 
-                                                         ApplicationInfo.EndDate+ "',"+
+                                                         ApplicationInfo.StartDate?.ToString("MM/dd/yyyy hh:mm:ss.fff tt") + "','"+ 
+                                                         ApplicationInfo.EndDate?.ToString("MM/dd/yyyy hh:mm:ss.fff tt") + "',"+
                                                          error +","+
                                                          cargoTrackingTableCopyFieldsValueAsString + 
                                                         ");";

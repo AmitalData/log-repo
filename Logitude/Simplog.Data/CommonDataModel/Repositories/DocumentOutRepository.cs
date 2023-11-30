@@ -40,6 +40,16 @@ namespace Simplog.Data.CommonDataModel.Repositories
             return d;
         }
 
+
+        public byte[] GetEditableFieldsById(string id, int tenant)
+        {
+            byte[] editableFields = (from a in context.DocumentOuts
+                             where a.Id == id && a.Tenant == tenant
+                             select a.EditableFields).FirstOrDefault();
+            return editableFields;
+        }
+
+
         public DocumentOut GetDocumentOutByEntityId(string entityId, string objectTableId, int tenant)
         {
             DocumentOut documentOut = (from a in context.DocumentOuts

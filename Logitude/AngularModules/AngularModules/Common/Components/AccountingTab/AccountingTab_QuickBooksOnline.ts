@@ -27,6 +27,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
     public ExternalIDPayableOrReceivable: string = "";
     public CurrenciesListFilterd: CustomerCurrencies[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+    public IsPartnerEntity: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.EntityPM = entityArgs.EntityPM;
@@ -35,6 +36,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
         this.InitializeServices();
         this.CheckTextAccountingCurrencySimilarity();
         this.GetAccountingSystemType();
+        this.IsPartnerEntity = this.IsObjectTablePartnerEntity();
         this.Listen();
     }
 
@@ -75,6 +77,28 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
                 break;
             }
         }
+    }
+
+    private IsObjectTablePartnerEntity(): boolean {
+        var myResult: boolean = false;
+        switch (this.ObjectTableName) {
+            case "Agent":
+            case "Airline":
+            case "CustomAgent":
+            case "Customer":
+            case "ShippingAgent":
+            case "ShippingLine":
+            case "Trucker":
+            case "Warehouse":
+            case "Vendor":
+            case "AccountingPartner":
+                {
+                    myResult = true;
+                    break;
+                }
+        }
+
+        return myResult;
     }
 
     private SaveCompletedEvent: any = null;
@@ -232,6 +256,7 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
         this.CurrenciesListFilterd = [];
         this.currencyService.getAllFromCache().subscribe((result:any) => {
             this.CurrenciesList = result.Result;
+            this.CurrenciesList = this.CurrenciesList.filter(currency => !currency.InActive);
             this.CurrenciesList.forEach(currency => {
                 var item: CustomerCurrencies = new CustomerCurrencies();
                 item.CurrencyCode = currency.Code;
@@ -790,6 +815,12 @@ export class AccountingTab_QuickBooksOnline extends BaseComponent implements OnD
         }
     }
 
+    get BillToId() { return this.EntityPM.BillToId; }
+    set BillToId(value: boolean) {
+        if (this.EntityPM.BillToId != value) {
+            this.EntityPM.BillToId = value;
+        }
+    }
 }
 export class CustomerCurrencies {
     constructor() {

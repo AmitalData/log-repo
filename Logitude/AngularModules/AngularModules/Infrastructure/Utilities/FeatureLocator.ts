@@ -146,8 +146,19 @@ export class FeatureLocator {
     public static IsPackage_DVMT() {
         var myResult = false;
 
-        if (FeatureLocator.IsPackageEquals("DVMT")) {
-            myResult = true;
+        if (SessionLocator.TenantManagementJS != null && SessionLocator.TenantManagementJS.IsMultiPackage) {            
+            if (SessionLocator.TenantManagementJS.PackagesCodes_PK.length > 0) {
+                var index = SessionLocator.TenantManagementJS.PackagesCodes_PK.indexOf("DVMT");
+                if (index != -1) {
+                    myResult = true;
+                }
+            }
+        }
+
+        else {
+            if (FeatureLocator.IsPackageEquals("DVMT")) {
+                myResult = true;
+            }
         }
 
         return myResult;

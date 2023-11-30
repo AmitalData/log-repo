@@ -11,7 +11,7 @@
             <table>
                 <tr>
                     <td style="width: 340px;">
-                        <table>
+                        <table *ngIf="LegType != 'WarehouseLeg2' || IsImportShipment">
 
                             <!-- WarehouseLegWarehouseId -->
                             <tr class="FormFieldRow">
@@ -24,8 +24,7 @@
                                             [SelectedValue]="WarehouseLegWarehouseId"
                                             [ObjectTableName]="ObjectTableName"
                                             [DataContext]="DataContext"
-                                            [LookUpTableName]="'Warehouse'"
-                                            [HideMaintenanceIcon]="true">
+                                            [LookUpTableName]="'Warehouse'">
                                     </LogLov>
                                 </td>
                             </tr>
@@ -145,6 +144,118 @@
                                 </td>
                             </tr>
                         </table>
+
+                        <table *ngIf="LegType == 'WarehouseLeg2'">
+                            <!-- WarehouseLeg2WarehouseId -->
+                            <tr class="FormFieldRow">
+                                <td style="width: 120px;">
+                                    <LogLabel [ObjectFieldName]="'WarehouseLeg2WarehouseId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegWarehouseId'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'WarehouseLeg2WarehouseId'"
+                                            [SelectedValue]="WarehouseLeg2WarehouseId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Warehouse'"
+                                            [HideMaintenanceIcon]="true">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <!-- WarehouseLeg2AddressId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'WarehouseLeg2AddressId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegAddressId'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogLov [ObjectFieldName]="'WarehouseLeg2AddressId'"
+                                            [SelectedValue]="WarehouseLeg2AddressId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Address'"
+                                            [DependencyFilter1Value]="WarehouseLeg2WarehouseId"
+                                            [HideMaintenanceIcon]="true">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
+                            <tr class="FormFieldRow" style="height: 80px;">
+                                <td style="width: 110px;">
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <AddressTemplate [Address]="Warehouse2AddressList" [Right]="36"></AddressTemplate>
+                                </td>
+                            </tr>
+
+                            <!-- WarehouseLeg2Reference -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'WarehouseLeg2Reference'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegReference'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'WarehouseLeg2Reference'" [Text]="WarehouseLeg2Reference" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+                            <!-- WarehouseLeg2TerminalCode -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'WarehouseLeg2TerminalCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegTerminalCode'"></LogLabel>
+                                </td>
+
+                                <td colspan="2">
+                                    <table class="FixedTable">
+                                        <tr>
+                                            <td>
+                                                <LogTextBox [ObjectFieldName]="'WarehouseLeg2TerminalCode'" [HideColumns]="true" [Text]="WarehouseLeg2TerminalCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                            </td>
+
+                                            <td style="width: 18px;">
+                                                <HelpIcon *ngIf="IsFirmCodeVisible" [IconSize]="14" [HideHeader]="true" [Text]="'Firm Code in the US'"></HelpIcon>
+                                            </td>
+
+                                            <td style="width: 18px;">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+
+                            </tr>
+
+                            <!-- WarehouseLeg2Remarks -->
+                            <tr class="FormFieldRow">
+                                <td style="vertical-align:top;">
+                                    <LogLabel [ObjectFieldName]="'WarehouseLeg2Remarks'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegRemarks'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <table>
+                                        <tr>
+                                            <td style="height:85px;">
+                                                <div style="height: 100%; width: 100%;">
+                                                    <LogTextBox [ObjectFieldName]="'WarehouseLeg2Remarks'" [Text]="WarehouseLeg2Remarks" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td colspan="2">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
                     </td>
 
                     <td>
@@ -152,7 +263,7 @@
                     </td>
 
                     <td style="width: 420px;">
-                        <table>
+                        <table *ngIf="LegType != 'WarehouseLeg2'">
 
                             <!-- WarehouseLegExpectedEntryDate -->
                             <tr class="FormFieldRow">
@@ -492,6 +603,149 @@
                                 </td>
                             </tr>
                         </table>
+                        <table *ngIf="LegType == 'WarehouseLeg2'">
+                            <!-- WarehouseLeg2ExpectedEntryDate -->
+                            <tr class="FormFieldRow">
+                                <td style="width:80px;">
+                                    <div>
+                                        <button *ngIf="WarehouseLeg2ExpectedEntryDate && !WarehouseLeg2ActualEntryDate" (click)="SetActualDateClicked('WarehouseLeg2ExpectedEntryDate')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                    </div>
+                                </td>
+
+                                <td style="width: 120px;">
+                                    <LogLabel [ObjectFieldName]="'WarehouseLeg2ExpectedEntryDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegExpectedEntryDate'"></LogLabel>
+                                </td>
+
+                                <td style="width: 105px;">
+                                    <LogDatePicker [ObjectFieldName]="'WarehouseLeg2ExpectedEntryDate'" [SelectedDateValue]="WarehouseLeg2ExpectedEntryDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td style="width: 2px;">
+                                    <div></div>
+                                </td>
+
+                                <td style="width: 95px;">
+                                    <LogDatePicker [ObjectFieldName]="'WarehouseLeg2ExpectedEntryDate'" [SelectedDateValue]="WarehouseLeg2ExpectedEntryDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- WarehouseLeg2ExpectedReleaseDate -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <div>
+                                        <button *ngIf="WarehouseLeg2ExpectedReleaseDate && !WarehouseLeg2ActualReleaseDate" (click)="SetActualDateClicked('WarehouseLeg2ExpectedReleaseDate')" class="Button" [disabled]="!IsEditingEnabled" style="height: 18px; font-size: 10px;">Set as Actual</button>
+                                    </div>
+                                </td>
+
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'WarehouseLeg2ExpectedReleaseDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegExpectedReleaseDate'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'WarehouseLeg2ExpectedReleaseDate'" [SelectedDateValue]="WarehouseLeg2ExpectedReleaseDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'WarehouseLeg2ExpectedReleaseDate'" [SelectedDateValue]="WarehouseLeg2ExpectedReleaseDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- WarehouseLeg2ActualEntryDate -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'WarehouseLeg2ActualEntryDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegActualEntryDate'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'WarehouseLeg2ActualEntryDate'" [SelectedDateValue]="WarehouseLeg2ActualEntryDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'WarehouseLeg2ActualEntryDate'" [SelectedDateValue]="WarehouseLeg2ActualEntryDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- WarehouseLeg2ActualReleaseDate -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'WarehouseLeg2ActualReleaseDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [TextCode]="'Shipment.O.Routings.WarehouseLegActualReleaseDate'"></LogLabel>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'WarehouseLeg2ActualReleaseDate'" [SelectedDateValue]="WarehouseLeg2ActualReleaseDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+
+                                <td>
+                                    <LogDatePicker [ObjectFieldName]="'WarehouseLeg2ActualReleaseDate'" [SelectedDateValue]="WarehouseLeg2ActualReleaseDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true" [InputType]="'time'" [TimeMode]="12"></LogDatePicker>
+                                </td>
+
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+
+                            <!-- TerminalAvailable -->
+                            <tr class="FormFieldRow">
+                                <td colspan="6">
+                                    <table>
+                                        <tr>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                            <td style="width: 120px;">
+                                                <LogLabel [ObjectFieldName]="'Terminal2Available'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td style="width: 202px;">
+                                                <LogDatePicker [ObjectFieldName]="'Terminal2Available'" [SelectedDateValue]="Terminal2Available" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
+                                            </td>
+
+                                            <td style="width: 18px;">
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+
                     </td>
                 </tr>
             </table>
@@ -513,7 +767,7 @@
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button class="Button" id="{{ 'WarehouseCancelBtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{ 'WarehouseCancelBtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -521,7 +775,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" id="{{ 'WarehouseOKBtn' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" id="{{ 'WarehouseOKBtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

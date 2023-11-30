@@ -1,0 +1,156 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .name-input-container {
+        width: 320px;
+    }
+
+    .label {
+        font-weight: bold;
+    }
+
+    .table-row-cell-label {
+        padding-bottom: 6px;
+    }
+
+    .collection-variables-list-container {
+        width: 320px;
+        padding-top: 4px;
+    }
+
+    .break-space{
+        white-space: break-spaces;
+    }
+</style>
+
+<table>
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <p class="Label break-space">Start a loop path for iterating over items in a collection variable. For each iteration, the flow temporarily stores the item in the loop variable.</p>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'" [DataContext]="DataContext">
+                </LogLabel>
+            </div>
+            <div class="table-row-cell-block name-input-container">
+                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext" [Text]="Name"
+                    [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                    (ValueChanged)="updateName($event)" [DataCy]="'loop-name'">
+                </LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell-label">
+            <div class="table-row-cell-block">
+                <div class="label">Select Collection Variable</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Collection Variable'"
+                    [ObjectFieldName]="'Collection_Variable'" [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block collection-variables-list-container">
+                <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'300px'" [Value]="CollectionVariable"
+                    [IsReturnedTreeSelectItem]="true" (ValueChanged)="updateCollectionVariable($event)"
+                    [DataCy]="'collection-variables-list'">
+                </TreeSelect>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell-label">
+            <div class="table-row-cell-block">
+                <div class="label">Direction</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <table>
+                    <tr>
+                        <td>
+                            <RadioButton [Name]="'DirectionRadio'" [IsChecked]="Direction === FirstToLastDirection.Code"
+                                (Checked)="updateDirection(FirstToLastDirection.Code)"
+                                [Text]="FirstToLastDirection.Name" [Top]="5" [DataCy]="FirstToLastDirection.Code">
+                            </RadioButton>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <RadioButton [Name]="'DirectionRadio'" [IsChecked]="Direction === LastToFirstDirection.Code"
+                                (Checked)="updateDirection(LastToFirstDirection.Code)"
+                                [Text]="LastToFirstDirection.Name" [Top]="5" [DataCy]="LastToFirstDirection.Code">
+                            </RadioButton>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+</table>

@@ -7,12 +7,15 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.BL.InfrastructureModel.EntityQueries
 {
     public class RatesTableQuery
     {
         RatesTableRepository repository;
+        private bool isFullAccounting;
         public RatesTableQuery()
         {
             repository = new RatesTableRepository(); 
@@ -20,10 +23,17 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         public RatesTableQuery(int tenant)
         {
             repository = new RatesTableRepository(tenant);
+            
         }
         public RatesTableQuery(RatesTableRepository ratesTableRepository)
         {
             repository = ratesTableRepository;
+        }
+
+        public RatesTableQuery(RatesTableRepository ratesTableRepository,int tenant)
+        {
+            repository = ratesTableRepository;
+            isFullAccounting = IsFullAccountingActivated(tenant);
         }
 
         public RatesTablePM GetSinglePM(string id, int tenent)
@@ -48,7 +58,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
         public IQueryable<RatesTableList> GetIQueryableEntityList(IQueryable<RatesTable> iQueryable)
         {
-            IQueryable<RatesTableList> result = from entity in iQueryable.Include("ForeignCurrency")
+            IQueryable<RatesTableList> result = from entity in iQueryable.Include("ForeignCurrency").Include("UpdatedByUser").Include("UpdatedByUser.Contact")
                                                 select new RatesTableList()
                                                 {
                                                     Id = entity.Id,
@@ -60,6 +70,9 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                     BaseCurrencyId = entity.BaseCurrencyId,
                                                     ValueDate = entity.ValueDate,
                                                     LogDateTime = entity.LogDateTime,
+                                                    UpdatedByUserId = entity.UpdatedByUserId,
+                                                    UpdatedByUserName = entity.UpdatedByUser != null ? entity.UpdatedByUser.Contact.EnglishName : null,
+                                                    UpdatedDate = entity.UpdatedDate,
                                                 };
             return result;
         }
@@ -96,7 +109,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
         }
 
         /* By Date Last Rates */
-        public LastRate GetLastRecordByValueDate(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime? date)
+        public LastRate GetLastRecordByValueDate(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime? date,bool calculateRateAccordingNumberUnit = false)
         {
             LastRate myResult = null;
             
@@ -133,7 +146,8 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                             Id = myRecord.Id,
                             Tenant = myRecord.Tenant,
                             ValueDate = myRecord.ValueDate,
-                            Rate = myRecord.Rate,
+                            Rate = CalculatesRateAccordingNumberUnit(myRecord,calculateRateAccordingNumberUnit),
+                            Unit = myRecord.Unit,
                             ForeignCurrencyId = myRecord.ForeignCurrency.Id,
                             ForeignCurrencyCode = myRecord.ForeignCurrency.Code,
                             ForeignCurrencyName = myRecord.ForeignCurrency.EnglishName,
@@ -148,6 +162,42 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return myResult;
         }
 
+        public double getCurrencyRateAccordingUnit(RatesTable ratesTable)
+        {
+            if(ratesTable.Unit != null)
+            {
+                if(ratesTable.Unit > 0)
+                {
+                    return (double)(ratesTable.Rate * ratesTable.Unit);
+                }
+            }
+            return (double)ratesTable.Rate;
+        }
+
+        private double CalculatesRateAccordingNumberUnit(RatesTable ratesTable,bool calculateRateAccordingNumberUnit)
+        {
+            if (isFullAccounting)
+            {
+                if (calculateRateAccordingNumberUnit)
+                {
+                    return getCurrencyRateAccordingUnit(ratesTable);
+                } else
+                {
+                    return (double)ratesTable.Rate;
+                }
+            } else
+            {
+                return (double)ratesTable.Rate;
+            }
+            
+        }
+        private bool IsFullAccountingActivated(int tenant)
+        {
+            TenantRepository tenantRepository = new TenantRepository(tenant);
+            Tenant tenantPOCO = tenantRepository.GetSingleTenant(tenant);
+            bool isFullAccountingActivated = tenantPOCO.AccountingActivated;
+            return isFullAccountingActivated;
+        }
         public RatesTablePM GetLastRateByValueDate(int tenant, string foreignCurrencyId, string baseCurrencyId, DateTime? date)
         {
             RatesTablePM myResult = null;

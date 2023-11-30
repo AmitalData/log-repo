@@ -1,4 +1,5 @@
-﻿using Logitude.Accounting.BL.CoreBL.Reports;
+﻿using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL.Reports;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
@@ -22,6 +23,7 @@ using System.Xml.Serialization;
 using WebFreight.Web.AccountingModel.LedgerTransactionService;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Security;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -39,6 +41,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public DateTime? SecoundPeriodDateTo;
         public bool DetailedCurrencies;
         public bool ExpandChartOfAccountToGLAccounts;
+        public bool ExcludeZeroCloseBalance;
         private IAccountingContext accountingContext;
         private UserDefinedReportDataProvider iDataProvider;
         public List<string> AllChartsofAccountTypeCodeinReport;
@@ -66,16 +69,12 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             this.GetIncludeAnOpeningBalanceFilter(iQueryOperations);
             this.GetDetailedCurrenciesFilter(iQueryOperations);
             this.GetExpandChartOfAccountToGLAccountsFilter(iQueryOperations);
+            ExcludeZeroCloseBalance = GetFilterValue<bool>(iQueryOperations, "ExcludeZeroCloseBalance");
         }
         public byte[] GetData()
         {
             this.LoadDataProvider();
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserDefinedReportDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, iDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(iDataProvider, typeof(UserDefinedReportDataProvider), tenant);
         }
         private void LoadDataProvider()
         {
@@ -130,6 +129,15 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 MapUserDefinedReportDataProvider(userDefinedReport);
                 FillAllCalculatedChartsofAccountsLineListDataProvider();
                 SetCalculatedChartsofAccountsLinesAmountByLedgerTransactionConnectedWithAccounts(userDefinedReport);
+
+                // remove zero glaccounts
+                if (ExcludeZeroCloseBalance)
+                {
+                    this.iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods =
+                        this.iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods
+                        .Where(d=> !zeroBalanceGLAccounts.Contains(d.GLAccountId)).ToList();
+                }
+
                 AddParentLinesToAllCalculatedChartsOfAccountsLinePeriods();
                 AddSubParentLinesToAllCalculatedChartsOfAccountsLinePeriods();
             }
@@ -183,6 +191,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                                                              EnglishType = b.LineTypeCode == GLAccountType ? "GLAccount" : "Chart of Account",
                                                              LocalType = b.LineTypeCode == GLAccountType ? "כרטיס" : "קבוצת מאזן",
                                                              ChartsofAccountTypeCode = b.CalculatedChartsOfAccountsId,
+                                                             OriginalChartOfAccountTypeCode = b.ChartOfAccountTypeCode,
                                                              ParentChartsofAccountTypeCode = CalculatedChartsOfAccount.ChartOfAccountTypeCode + "_" + b.Id,
                                                              ChartsofAccountId = b.ChartOfAccountId,
                                                              LineTypeCode = b.LineTypeCode,
@@ -206,6 +215,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 LocalType = "כרטיס",
                 EnglishType = "GLAccount",
                 ChartsofAccountTypeCode = line.ChartsofAccountTypeCode,
+                OriginalChartOfAccountTypeCode = line.OriginalChartOfAccountTypeCode,
                 ParentChartsofAccountTypeCode = line.ParentChartsofAccountTypeCode,
                 LineTypeCode = GLAccountType,
             };
@@ -256,6 +266,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 IsSubParent = true,
                 ParentChartsofAccountTypeCode = period.Id,
                 ChartsofAccountTypeCode = period.ChartOfAccountTypeCode,
+                OriginalChartOfAccountTypeCode = period.ChartOfAccountTypeCode,
                 SubParentEnglishType = period.EnglishName != null ? period.EnglishName : period.LocalName,
                 SubParentLocalType = period.LocalName != null ? period.LocalName : period.EnglishName,
             }); ;
@@ -331,7 +342,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 SetParentCalculatedChartsofAccountsLinesAmountByLedgerTransactionsForGLAcountIds(SubParentLine);
             }
         }
-
+        List<string> zeroBalanceGLAccounts = new List<string>();
         private decimal GetGLAccountAmountFromLedgerTransactionBalanceFilter(string GLAccountId, DateTime FromDate, DateTime ToDate)
         {
             LedgerTransactionBalanceFilter ledgerTransactionBalanceFilter = new LedgerTransactionBalanceFilter
@@ -366,13 +377,31 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 GLAccountAmount = 0;
             }
 
+            if (GLAccountAmount == 0)
+                zeroBalanceGLAccounts.Add(GLAccountId);
+
             return GLAccountAmount;
         }
 
         private decimal GetChartsofAccountAmountFromLedgerTransactionBalanceFilter(string chartsofAccountsId, DateTime fromDate, DateTime toDate)
         {
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(accountingContext);
-            List<GLAccount> GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(this.tenant, chartsofAccountsId);
+
+            List<GLAccount> GLAccountsConnectedWithChartofAccount = new List<GLAccount>();
+
+            var chartOfAccount = iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.FirstOrDefault(r => r.ChartsofAccountId == chartsofAccountsId);
+
+            var chartOfAccountsWithControlAccounts
+                = new string[] { ChartOfAccountsTypeValues.Works, ChartOfAccountsTypeValues.Customers, ChartOfAccountsTypeValues.Vendors };
+
+            if (chartOfAccount.OriginalChartOfAccountTypeCode == ChartOfAccountsTypeValues.Works || 
+                !ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.OriginalChartOfAccountTypeCode))
+                // GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetControlAccountForChartOfAccount(tenant, chartsofAccountsId);
+                GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, chartsofAccountsId);
+            else
+                GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, chartsofAccountsId);
+
+
             decimal ChartsofAccountAmount = 0;
             foreach (GLAccount glAccount in GLAccountsConnectedWithChartofAccount)
             {
@@ -446,7 +475,25 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     itemToRemove = iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.Single(r => r.LineTypeCode == ChartofAccountType && r.ChartsofAccountId == ChartsofAccountsId);
                     iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.Remove(itemToRemove);
                 }
-                List<GLAccount> GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(this.tenant, ChartsofAccountsId);
+
+                List<GLAccount> GLAccountsConnectedWithChartofAccount = new List<GLAccount>();
+
+                //var chartOfAccount =  iDataProvider.UserDefinedReportPeriod.AllCalculatedChartsOfAccountsLinePeriods.FirstOrDefault(r => r.ChartsofAccountId == ChartsofAccountsId);
+
+                ChartOfAccountRepository repo = new ChartOfAccountRepository(tenant);
+                var chartOfAccount = repo.GetSingle(ChartsofAccountsId, tenant);
+
+                var chartOfAccountsWithControlAccounts 
+                    = new string[] {  ChartOfAccountsTypeValues.Works, ChartOfAccountsTypeValues.Customers, ChartOfAccountsTypeValues.Vendors };
+
+                if (chartOfAccount.TypeCode == ChartOfAccountsTypeValues.Works ||
+                    !ExpandChartOfAccountToGLAccounts && chartOfAccountsWithControlAccounts.Contains(chartOfAccount.TypeCode)
+                    )
+                    //GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetControlAccountForChartOfAccount(tenant, ChartsofAccountsId);
+                    GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, ChartsofAccountsId);
+                else
+                    GLAccountsConnectedWithChartofAccount = gLAccountQueryService.GetAllGLAccountIdsByChartsofAccountId(tenant, ChartsofAccountsId);
+
                 foreach (GLAccount GLAccount in GLAccountsConnectedWithChartofAccount)
                 {
                     if (this.ExpandChartOfAccountToGLAccounts)
@@ -525,6 +572,29 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     IncludeAnOpeningBalance = (bool)filterItem_IncludeAnOpeningBalance.FieldValue;
                 }
             }
+        }
+
+        public T GetFilterValue<T>(QueryOperations reportQueryOperations, string FieldName)
+        {
+            QueryFilterItem filterItem = reportQueryOperations.QueryFilterItems
+                .Where(d => d.FieldName == FieldName).FirstOrDefault();
+
+            if (filterItem != null && filterItem.FieldValue != null)
+            {
+                if (filterItem.FieldDataType == "decimal")
+                {
+                    decimal value = Convert.ToDecimal(filterItem.FieldValue);
+                    object x = value;
+
+                    return (T)x;
+                }
+                else
+                {
+                    return (T)filterItem.FieldValue;
+                }
+            }
+
+            return default(T);
         }
 
         private void GetFirstPeriodDateToFilters(QueryOperations iQueryOperations)

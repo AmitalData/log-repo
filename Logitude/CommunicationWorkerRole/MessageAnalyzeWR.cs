@@ -36,6 +36,7 @@ using Logitude.Server.Tools.Helpers;
 using CHAMP;
 using Logitude.XSD.Analyzers.CHAMPAnalyzer;
 using Logitude.Server.Tools.QueueService;
+using Simplog.Server.Infrastructure;
 
 namespace CommunicationWorkerRole
 {
@@ -48,7 +49,7 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning)
             {
-                if (!General.IsUpdating())
+                if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
                 {
                     //try
                     //{

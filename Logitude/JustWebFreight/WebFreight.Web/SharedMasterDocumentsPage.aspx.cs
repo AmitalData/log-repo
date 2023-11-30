@@ -20,8 +20,8 @@ namespace WebFreight.Web
         public int? Tenant = null;
         public List<Shipment> ConnectedHousesShipments = new List<Shipment>();
         public string Domain = "";
-        public string MainColor = "#000000";
-        public string SecondaryColor = "#000000";
+        public string MainColor = "#7FC1E3";
+        public string SecondaryColor = "#595B5B";
         protected void Page_Load(object sender, EventArgs e)
         {
             string userdata = Request.QueryString["securitykey"];
@@ -85,7 +85,7 @@ namespace WebFreight.Web
 
         private void HandlePage(string[] linkParameters)
         {
-            SetCargoTrackingBrandingData();
+            SetCargoTrackingBrandingData(linkParameters);
             SetCurrentEntityVariables(linkParameters);
             SetAllConnectedHousesShipments();
         }
@@ -104,7 +104,7 @@ namespace WebFreight.Web
             }
         }
 
-        private void SetCargoTrackingBrandingData()
+        private void SetCargoTrackingBrandingData(string[] linkParameters)
         {
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(0);
             TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePMByDomain(this.Domain);
@@ -117,6 +117,11 @@ namespace WebFreight.Web
                 this.Tenant = tenantManagementPM.Id;
                 this.MainColor = tenantManagementPM.MainColor == null ? this.MainColor : tenantManagementPM.MainColor;// ConvertHexaToRGBA(tenantManagementPM.MainColor);
                 this.SecondaryColor = tenantManagementPM.SecondaryColor == null ? this.SecondaryColor : tenantManagementPM.SecondaryColor;// ConvertHexaToRGBA(tenantManagementPM.SecondaryColor);
+            }
+            else
+            {
+                ShipmentQuery shipmentQuery = new ShipmentQuery(0);
+                this.Tenant = shipmentQuery.GetTenantBySecurityKey(linkParameters[0]);
             }
         }
 

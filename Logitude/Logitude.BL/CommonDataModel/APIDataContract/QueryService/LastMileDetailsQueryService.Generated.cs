@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,21 +42,21 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public LastMileDetails GetLastMileDetailsById(string Id,int Tenant,string ComputingPartnerName = "")
+		public LastMileDetails GetLastMileDetailsById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("Card with Id " + Id + " doesn't exist");
 
 				return LastMileDetailsDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -87,11 +89,13 @@ using Simplog.Data.CommonDataModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("Card with Id " + MyEntity.Id + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -113,10 +117,9 @@ using Simplog.Data.CommonDataModel;
 					{
 					   
 						 
-						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LogitudeCode))
-						{
-								//throw new ApplicationException("LogitudeCode Can't be update"); 
-								temp.Code = MyEntity.Code;
+						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
+						{								
+							temp.Code = MyEntity.Code;
 								
 						
 						}  
@@ -124,17 +127,17 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
-					{							//throw new ApplicationException("LocalName Can't be update"); 
-							temp.LocalName = MyEntity.LocalName;
+					if(!IsUpdate)
+					{							
+						temp.LocalName = MyEntity.LocalName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
-					{							//throw new ApplicationException("EnglishName Can't be update"); 
-							temp.EnglishName = MyEntity.EnglishName;
+					if(!IsUpdate)
+					{							
+						temp.EnglishName = MyEntity.EnglishName;
 
 										}  
 
@@ -147,6 +150,8 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

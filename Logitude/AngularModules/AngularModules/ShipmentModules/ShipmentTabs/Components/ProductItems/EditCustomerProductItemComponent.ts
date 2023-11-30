@@ -12,6 +12,7 @@ import { ShipmentTool } from '../../../../Shipment/Tools';
 import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { CountryListService } from '../../../../Common/Services/StandardLists/CountryListService';
+import { CardList } from '../../../../Common/EntityLists/CardList';
 
 @Component({
     templateUrl: './EditCustomerProductItemComponent.html',
@@ -28,9 +29,18 @@ export class EditCustomerProductItemComponent extends BaseComponent {
     public IsEditingEnabled: boolean = false;
     public CustomerMainAddressCountryName: string;
     private maxHTSCodesLineNumber: number = 0;
+    public IsUsingVirtuallization: boolean = false;
     constructor() {
         super();
+        this.SetIsUsingVirtuallization();
         this.HTSCodes = new ObservableCollection([]);
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
     }
 
     SetWindowArgs(windowArgs: any) {
@@ -156,6 +166,35 @@ export class EditCustomerProductItemComponent extends BaseComponent {
         }
     }
 
+    get ShipperId() { return this.EntityPM.ShipperId; }
+    set ShipperId(newValue: string) {
+        if (this.EntityPM.ShipperId != newValue) {
+            this.EntityPM.ShipperId = newValue;
+        }
+    }
+
+    get ShipperName() { return this.EntityPM.ShipperName; }
+    set ShipperName(newValue: string) {
+        if (this.EntityPM.ShipperName != newValue) {
+            this.EntityPM.ShipperName = newValue;
+        }
+    }
+
+    shipper: CardList;
+    get Shipper() { return this.shipper; }
+    set Shipper(value: CardList) {
+        if (this.shipper != value) {
+            this.shipper = value;
+        }
+
+        if (value) {
+            this.ShipperName = value.EnglishName;
+        }
+        else {
+            this.ShipperName = null;
+        }
+    }
+
     AddHTSCode() {
         this.ValidationErrorsList = [];
         this.ValidateHTSCodes(this.ValidationErrorsList);
@@ -177,6 +216,7 @@ export class EditCustomerProductItemComponent extends BaseComponent {
     }
 
     CancelButtonClicked() {
+        this.DataContext.maxHTSCodesLineNumber = ArrayTool.Max(this.HTSCodes.Collection, "LineNumber");
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
@@ -388,6 +428,34 @@ export class CustomerHTSCode extends BaseComponent {
     set InActive(value: boolean) {
         if (this.EntityPM.InActive != value) {
             this.EntityPM.InActive = value;
+        }
+    }
+
+    get VATPercentage() { return this.EntityPM.VATPercentage; }
+    set VATPercentage(newValue: number) {
+        if (this.EntityPM.VATPercentage != newValue) {
+            this.EntityPM.VATPercentage = AppTool.Round(newValue, 1);
+        }
+    }
+
+    get DutiesPercentage() { return this.EntityPM.DutiesPercentage; }
+    set DutiesPercentage(newValue: number) {
+        if (this.EntityPM.DutiesPercentage != newValue) {
+            this.EntityPM.DutiesPercentage = AppTool.Round(newValue, 1);
+        }
+    }
+
+    get OtherDuties() { return this.EntityPM.OtherDuties; }
+    set OtherDuties(newValue: string) {
+        if (this.EntityPM.OtherDuties != newValue) {
+            this.EntityPM.OtherDuties = newValue;
+        }
+    }
+
+    get Remarks() { return this.EntityPM.Remarks; }
+    set Remarks(newValue: string) {
+        if (this.EntityPM.Remarks != newValue) {
+            this.EntityPM.Remarks = newValue;
         }
     }
 

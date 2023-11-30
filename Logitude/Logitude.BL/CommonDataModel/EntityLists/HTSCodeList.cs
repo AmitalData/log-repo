@@ -15,5 +15,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public bool ApprovedByCustomer { get; set; }
         public bool InActive { get; set; }
         public int? LineNumber { get; set; }
+        public double? VATPercentage { get; set; }
+        public double? DutiesPercentage { get; set; }
+        public string OtherDuties { get; set; }
+        public string Remarks { get; set; }
     }
 }

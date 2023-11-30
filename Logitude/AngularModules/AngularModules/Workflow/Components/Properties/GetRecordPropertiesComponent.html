@@ -1,0 +1,419 @@
+<style>
+    .link-button {
+        cursor: pointer;
+        color: #2b78e4;
+        float: left;
+    }
+
+    .link-button .plus-sign {
+        font-size: 13px;
+        font-weight: bold;
+        padding-right: 2px;
+    }
+
+    .link-button:not(.disabled):hover {
+        color: #03a9f4;
+    }
+
+    .link-button.disabled {
+        opacity: 0.5;
+    }
+
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 8px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .name-input-container {
+        width: 320px;
+    }
+
+    .label-container {
+        font-weight: bold;
+    }
+
+    .records-limit-container {
+        width: 320px;
+    }
+
+    .records-limit-cell {
+        width: 80px;
+    }
+
+    .get-records-conditions-container {
+        overflow: auto;
+        width: 936px;
+        height: 220px;
+        margin-bottom: 6px;
+        pointer-events: auto !important;
+    }
+
+    .min-get-records-conditions-container {
+        height: 220px;
+    }
+
+    .selected-field-container {
+        display: table;
+        vertical-align: middle;
+        width: 334px;
+        padding-right: 5px;
+    }
+
+    .LogLov-selected-field-container {
+        display: table-cell;
+        width: 320px;
+        padding-right: 5px;
+    }
+
+    .selected-coulmn-container {
+        margin-top: 10px;
+    }
+
+    .selected-coulmn-list {
+        margin-top: 0px !important;
+    }
+
+    .padding-bottom-0 {
+        padding-bottom: 0px !important;
+    }
+
+    .delete-coulmn-container {
+        display: table-cell;
+        vertical-align: middle;
+        width: 18px;
+    }
+
+    .delete-coulmn-button {
+        display: block;
+        cursor: pointer;
+    }
+
+    .sort_container {
+        display: flex;
+    }
+
+    .orderBy_container {
+        width: 350px;
+    }
+
+    .sortBy_container {
+        width: 350px;
+    }
+
+    .add-buttons-container {
+        margin-top: 5px;
+    }
+
+    .get-record-properties-container {
+        height: calc(100% - 35px);
+        overflow: auto;
+        pointer-events: auto !important;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <div class="get-record-properties-container">
+                <table>
+                    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+                        <td>
+                            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+                        </td>
+                    </tr>
+                    <tr class="first-split-table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
+
+                    <!-- Name -->
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div>
+                                <LogLabel [NoObjectField]="true" [Text]="'Name'" [ObjectFieldName]="'Name'"
+                                    [DataContext]="DataContext">
+                                </LogLabel>
+                            </div>
+                            <div class="table-row-cell-block name-input-container">
+                                <LogTextBox [NoObjectField]="true" [IsFreeText]="true" [DataContext]="DataContext"
+                                    [Text]="Name" [NoValidation]="true" [HideColumns]="true" [ObjectFieldName]="'Name'"
+                                    (ValueChanged)="updateName($event)" [DataCy]="'record-name'">
+                                </LogTextBox>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
+
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="label-container">Select Records Type</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block records-type-container">
+                                <table>
+                                    <tr>
+                                        <td class="records-type-cell">
+                                            <RadioButton [Name]="'RecordsTypeRadio'"
+                                                [IsChecked]="RecordsType === GetRecordTypes.ReadOnly"
+                                                (Checked)="updateRecordsType(GetRecordTypes.ReadOnly)"
+                                                [Text]="'Read only records'" [Top]="5"
+                                                [DataCy]="'record-type-read-only'">
+                                            </RadioButton>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="records-type-cell">
+                                            <RadioButton [Name]="'RecordsTypeRadio'"
+                                                [IsChecked]="RecordsType === GetRecordTypes.Editable"
+                                                (Checked)="updateRecordsType(GetRecordTypes.Editable)"
+                                                [Text]="'Editable records'" [Top]="5" [DataCy]="'record-type-editable'">
+                                            </RadioButton>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
+
+                    <!-- Object -->
+                    <tr *ngIf="RecordsType" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="label-container">Get Records of This Object</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="RecordsType" class="table-row">
+                        <td class="table-row-cell">
+                            <div>
+                                <LogLabel [NoObjectField]="true" [Text]="'Object'" [ObjectFieldName]="'Object'"
+                                    [DataContext]="DataContext"></LogLabel>
+                            </div>
+                            <div class="table-row-cell-block">
+                                <TreeSelect *ngIf="RecordsTypeChanged" [Items]="EntitiesTreeItems" [Width]="'300px'"
+                                    [Value]="Entity" [ShowExpand]="false"
+                                    [ShowItem]="('Get' + RecordsType + 'Record') | ShowEntitiesTreeItemPipe"
+                                    (ValueChanged)="updateEntity($event)">
+                                </TreeSelect>
+                                <TreeSelect *ngIf="!RecordsTypeChanged" [Items]="EntitiesTreeItems" [Width]="'300px'"
+                                    [Value]="Entity" [ShowExpand]="false"
+                                    [ShowItem]="('Get' + RecordsType + 'Record') | ShowEntitiesTreeItemPipe"
+                                    (ValueChanged)="updateEntity($event)">
+                                </TreeSelect>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="RecordsType" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
+
+                    <!-- Condition -->
+                    <tr *ngIf="EntityId" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="label-container">Filter {{Entity | EntityLabelPipe}} Records</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="EntityId" class="table-row">
+                        <td>
+                            <div class="table-row-cell-block get-records-conditions-container"
+                                [ngClass]="{'min-get-records-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
+
+                                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
+                                    [ShowChangedOperator]="false" [AtLeastOneCondition]="true"
+                                    (IsValidConditionsChange)="updateIsValidConditions($event)"
+                                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions"
+                                    [FlowObject]="FlowObject" [CurrentNodeId]="CurrentNodeId" [IsEntityField]="true"
+                                    [EnableAdd]="EnableAddConditions"
+                                    [ShowConditionsOperation]="ShowConditionsOperation">
+                                </Conditions>
+
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="EntityId" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="label-container">How Many Records to Store</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block records-limit-container">
+                                <table>
+                                    <tr>
+                                        <td class="records-limit-cell">
+                                            <RadioButton [Name]="'RecordsLimitRadio'"
+                                                [IsChecked]="RecordsLimit === GetRecordLimits.FirstRecord"
+                                                (Checked)="updateRecordsLimit(GetRecordLimits.FirstRecord)"
+                                                [Text]="'Only the first record'" [Top]="5"
+                                                [DataCy]="'record-limit-first'">
+                                            </RadioButton>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="records-limit-cell">
+                                            <RadioButton [Name]="'RecordsLimitRadio'"
+                                                [IsChecked]="RecordsLimit === GetRecordLimits.AllRecords"
+                                                (Checked)="updateRecordsLimit(GetRecordLimits.AllRecords)"
+                                                [Text]="'All records'" [Top]="5" [DataCy]="'record-limit-all'">
+                                            </RadioButton>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="EntityId && RecordsLimit === GetRecordLimits.AllRecords && RecordsType === GetRecordTypes.ReadOnly"
+                        class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="label-container">Sort {{Entity | EntityLabelPipe}} Records</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="EntityId && RecordsLimit === GetRecordLimits.AllRecords && RecordsType === GetRecordTypes.ReadOnly"
+                        class="table-row">
+                        <td class="table-row-cell sort_container">
+                            <div class="orderBy_container">
+                                <div class="orderBy_label">
+                                    <LogLabel [NoObjectField]="true" [Text]="'Order'" [ObjectFieldName]="'Order'"
+                                        [DataContext]="DataContext"></LogLabel>
+                                </div>
+                                <div class="table-row-cell-block">
+                                    <ComboBox [ItemsSource]="SortDirectionListItems" [Binding]="'Name'"
+                                        [SelectedItem]="OrderBy | ListItemPipe"
+                                        (SelectedItemChanged)="updateOrderBy($event.Code)" [ListType]="''"
+                                        [CyData]="'orderby'">
+                                    </ComboBox>
+                                </div>
+                            </div>
+
+                            <div *ngIf="OrderBy && OrderBy !== SortDirections.NotSorted" class="sortBy_container">
+                                <div class="sortBy_label">
+                                    <LogLabel [NoObjectField]="true" [Text]="'Sort By'" [ObjectFieldName]="'SortBy'"
+                                        [DataContext]="DataContext"></LogLabel>
+                                </div>
+                                <div class="table-row-cell-block">
+                                    <TreeSelect [Items]="ObjectFieldsTreeItems" [Width]="'350px'" [Value]="SortBy"
+                                        [ShowExpand]="false" (ValueChanged)="updateSortBy($event)" [DataCy]="'SortBy'">
+                                    </TreeSelect>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="EntityId && RecordsLimit === GetRecordLimits.AllRecords && RecordsType === GetRecordTypes.ReadOnly"
+                        class="table-row">
+                        <td class="table-row-cell">
+                            <div class="split-block"></div>
+                        </td>
+                    </tr>
+
+
+                    <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row">
+                        <td class="table-row-cell">
+                            <div class="table-row-cell-block">
+                                <div class="label-container">Select Fields to Store</div>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="EntityId && RecordsType === GetRecordTypes.ReadOnly" class="table-row ">
+                        <td class="table-row-cell">
+                            <ul class="selected-coulmn-container selected-coulmn-list table-row-cell-block">
+                                <li *ngFor="let returnedField of ReturnedFields; let fieldIndex = index"
+                                    class="selected-coulmn-container">
+                                    <div class="selected-field-container">
+                                        <div class="LogLov-selected-field-container">
+                                            <TreeSelect [Items]="ObjectFieldsTreeItems" [Width]="'320px'"
+                                                [IsReturnedTreeSelectItem]="true" [Value]="returnedField.fieldCode"
+                                                [ShowExpand]="false" [IsDisabled]="fieldIndex === 0"
+                                                (ValueChanged)="updateSelectedField($event, fieldIndex)"
+                                                [DataCy]="'SelectedCoulmn_' + fieldIndex">
+                                            </TreeSelect>
+                                        </div>
+                                        <div class="delete-coulmn-container">
+                                            <img *ngIf="fieldIndex > 1 || (ReturnedFields.length > 2 && fieldIndex > 0)"
+                                                class="delete-coulmn-button" src="./Images/Trash-can.png"
+                                                (click)="deleteField(fieldIndex)"
+                                                [attr.data-cy]="'DeleteSelectedCoulmn_' + returnedField" />
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="add-buttons-container table-row-cell-block margin-left-0">
+                                <span class="link-button" (click)="addEmptyField()" [attr.data-cy]="'AddFieldToStore'"
+                                    [ngClass]="{'disabled': !IsValidReturnedFields}">
+                                    <span class="plus-sign">+</span><span>Add Field</span>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+        </td>
+    </tr>
+</table>

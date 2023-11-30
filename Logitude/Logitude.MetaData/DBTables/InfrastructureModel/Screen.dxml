@@ -31,6 +31,7 @@
     <Constraints
       Nullable="false" />
   </Column>
+	
   <Column
     Name="ObjectTableId"
     Type="varchar"
@@ -50,6 +51,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+    <Column
+      Name="Inactive"
+      Type="bit">
+        <Constraints
+          Nullable="false" />
+    </Column>
   <Column
     Name="Name"
     Type="varchar"
@@ -65,7 +72,48 @@
     <Constraints
       Nullable="true" />
   </Column>
-  
+
+  <Column
+    Name="Type"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />  
+    </Column>
+  <Column
+    Name="SortedByFieldCode"
+    Type="varchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />  
+  </Column>
+  <Column
+    Name="SortedType"
+    Type="varchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />  
+  </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="1000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+	Name="RelatedScreenCode"
+	Type="varchar"
+	Size="100">
+	<Constraints
+	Nullable="true" />
+  </Column>
+  <Column
+	 Name="IsHeaderScreen"
+	 Type="bit">
+	<Constraints
+    Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="ObjectTableId"
     ReferencedTable="ObjectTables"

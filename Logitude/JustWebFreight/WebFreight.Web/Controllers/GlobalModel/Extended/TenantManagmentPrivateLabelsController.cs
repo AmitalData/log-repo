@@ -82,6 +82,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("TenantManagmentPrivateLabels", entityPM.Tenant, authToken.Tenant);
 
                         IGlobalContext MyContext = GlobalContext.GetContext();
 
@@ -106,9 +107,18 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                             LoginProgressImageId = entityPM.LoginProgressImageId,
                             ForgetPasswordImageId = entityPM.ForgetPasswordImageId,
                             SecondaryColor = entityPM.SecondaryColor,
+                            DocumentTypeHighlightColor = entityPM.DocumentTypeHighlightColor,
+                            MainTabHighlightColor = entityPM.MainTabHighlightColor,
                             HasLogboxAccess = entityPM.HasLogboxAccess,
+                            IsCustomsActivated = entityPM.IsCustomsActivated,
+                            IsExportActivated = entityPM.IsExportActivated,
+                            QueryFiltersHighlightColor = entityPM.QueryFiltersHighlightColor,
+                            CreateShipmentsWithoutDocs = entityPM.CreateShipmentsWithoutDocs,
+                            CreateOShipmentsWithoutDocs = entityPM.CreateOShipmentsWithoutDocs,
                             SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",",
                             Id = IdCounter.GetNumber("TenantManagmentPrivateLabels", 0).ToString(),
+                            FilingInboxDomain = entityPM.FilingInboxDomain,
+                            DistributorCode = entityPM.DistributorCode
                         };
 
                         repository.Add(poco);
@@ -143,6 +153,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("TenantManagmentPrivateLabels", entityPM.Tenant, authToken.Tenant);
+
                         IGlobalContext MyContext = GlobalContext.GetContext();
 
                         TenantManagmentPrivateLabelsRepository tenantManagmentPrivateLabelsRepository = new TenantManagmentPrivateLabelsRepository(MyContext);
@@ -165,7 +177,16 @@ namespace WebFreight.Web.Controllers.GlobalModel.Extended
                         Poco.ForgetPasswordImageId = entityPM.ForgetPasswordImageId;
                         Poco.SecondaryColor = entityPM.SecondaryColor;
                         Poco.HasLogboxAccess = entityPM.HasLogboxAccess;
+                        Poco.MainTabHighlightColor = entityPM.MainTabHighlightColor;
+                        Poco.DocumentTypeHighlightColor = entityPM.DocumentTypeHighlightColor;
+                        Poco.IsCustomsActivated = entityPM.IsCustomsActivated;
+                        Poco.IsExportActivated = entityPM.IsExportActivated;
+                        Poco.CreateShipmentsWithoutDocs = entityPM.CreateShipmentsWithoutDocs;
+                        Poco.CreateOShipmentsWithoutDocs = entityPM.CreateOShipmentsWithoutDocs;
                         Poco.SearchFields = entityPM.PrivateLabelName + "," + entityPM.PrivateLabelShortName + "," + entityPM.PrivateLabelUrl + "," + entityPM.ContactUsEmail + ",";
+                        Poco.QueryFiltersHighlightColor = entityPM.QueryFiltersHighlightColor;
+                        Poco.FilingInboxDomain = entityPM.FilingInboxDomain;
+                        Poco.DistributorCode = entityPM.DistributorCode;
                         tenantManagmentPrivateLabelsRepository.Update(Poco);
                         tenantManagmentPrivateLabelsRepository.SubmitChanges();
                         scope.Complete();

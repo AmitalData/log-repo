@@ -62,6 +62,15 @@ namespace Logitude.Accounting.Data.Repositories
                     select a).FirstOrDefault();
         }
 
+        public bool CheckIfCashbookLinereateForPaymentCheque(string cashbookId, string paymentChequeId, int tenant)
+        {
+          
+            return (from a in context.CashBookLines
+                    where a.CashBookId == cashbookId && a.ARPChequeId == paymentChequeId 
+                    && a.Tenant == tenant
+                    select a).Any();
+        }
+
         public List<CashBook> GetListByPaymentAndCurrencyAndBranch(string code, string currencyId, string branch, int tenant)
         {
             List<CashBook> cashbook = (from a in context.CashBooks
@@ -80,13 +89,11 @@ namespace Logitude.Accounting.Data.Repositories
         }
         private List<string> GetEnableChequeStatusesForCashbook()
         {
-            List<string> EnablesARPChequeStatusCode = new List<string>();
-            EnablesARPChequeStatusCode.Add("1");
-            EnablesARPChequeStatusCode.Add("2");
-            EnablesARPChequeStatusCode.Add("3");
-            EnablesARPChequeStatusCode.Add("4");
-            EnablesARPChequeStatusCode.Add("7");
-
+            List<string> EnablesARPChequeStatusCode = new List<string>
+            {
+                "1",
+                "4"
+            };
             return EnablesARPChequeStatusCode;
 
         }
@@ -223,6 +230,12 @@ namespace Logitude.Accounting.Data.Repositories
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             DateTime todayDateEndDate = new DateTime(todayDate.Year, todayDate.Month, todayDate.Day, 23, 59, 59);
             return todayDateEndDate;
+        }
+        public CashBook GetCashbookByAccountId(string accountId, int tenant)
+        {
+            return (from a in context.CashBooks
+                    where a.AccountId == accountId && a.Tenant == tenant
+                    select a).FirstOrDefault();
         }
     }
 

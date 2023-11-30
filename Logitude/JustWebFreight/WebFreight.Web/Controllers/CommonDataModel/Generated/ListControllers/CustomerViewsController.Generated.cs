@@ -29,6 +29,7 @@ using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.CustomFilters;
 using Logitude.BL.CommonDataModel.BusinessUnitFilters;
 using Logitude.BL.Helpers;
+using Logitude.Server.Tools.TreeFilterQuery;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
@@ -78,7 +79,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 IQueryable<CustomerList> entityLists = customerQuery.GetIQueryableEntityList(entityPocos);
 
                 List<CustomerList> listResult = entityLists.ToList();
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Customer", authToken.Tenant, listResult.Cast<object>().ToList());
 
                 return Request.CreateResponse(HttpStatusCode.OK, listResult);
@@ -221,10 +222,24 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                     entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
                     CustomerBusinessUnitFilter myFilter = new CustomerBusinessUnitFilter(tenant);
                     entityPocos = myFilter.RunFilter(entityPocos);
+
+
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                {
+                    AdditionalTreeFilter = filters.TreeFilters,
+                    ObjectTableName = "Customer",
+                    ParentEntityId = filters.ParentEntityId,
+                    ParentObjectTableName = filters.ParentObjectTableName,
+                    Tenant = tenant,
+                    ParentEntity = filters.ParentEntity
+                };
+
+
                     entityPocos = genericFilter.GetFilteredQuery<CustomersDataView>(nonListQueryOperation, entityPocos);
                     entityLists = customerQuery.GetIQueryableEntityList(entityPocos);
                 }
                 entityLists = genericFilter.GetFilteredQuery<CustomerList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<CustomerList>(entityLists, treeFilterQueryArgs);
 
                 if (!string.IsNullOrEmpty(searchvalue))
                 {
@@ -325,7 +340,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 }
 
                 List< CustomerList > listResult = entityLists.ToList();
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Customer", authToken.Tenant, listResult.Cast<object>().ToList());
 
                 response.Result = listResult;

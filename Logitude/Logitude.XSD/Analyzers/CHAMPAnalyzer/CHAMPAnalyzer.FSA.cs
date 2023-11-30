@@ -1,4 +1,5 @@
-﻿using Logitude.BL.ShipmentsModel.EntityPMs;
+﻿using Logitude.BL.DataContracts;
+using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BookingLib.BL.EntityPMs;
 using Logitude.BookingLib.BL.EntityUpdateServices;
@@ -1304,6 +1305,8 @@ namespace Logitude.XSD.Analyzers.CHAMPAnalyzer
 
                 portRepository.Add(newPort);
                 portRepository.SubmitChanges();
+                RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
+
             }
 
             if (country == null)

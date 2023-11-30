@@ -153,7 +153,52 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
             return myResult;
         }
 
-        public List<OceanInsightsRequestPM> GetOceanInsightsRequestPMs(int tenant)
+
+		public OceanInsightsRequestPM GetSinglePMByOceanInsightsByScacCodeContainerNo(string ScacCode, string ContainerNo)
+		{
+			OceanInsightsRequestPM myResult = (from a in repository.Context.OceanInsightsRequests
+											   where a.ContainerNumber == ContainerNo && a.SCACCode == ScacCode
+											   select new OceanInsightsRequestPM()
+											   {
+												   Id = a.Id,
+												   ContainerNumber = a.ContainerNumber,
+												   CreateDate = a.CreateDate,
+												   OceanInsigntId = a.OceanInsigntId,
+												   SCACCode = a.SCACCode,
+												   Tenant = a.Tenant,
+												   UpdateDate = a.UpdateDate,
+												   Type = a.Type,
+												   BLNumber = a.BLNumber,
+												   FromPushPage = a.FromPushPage
+											   }).FirstOrDefault();
+
+
+			return myResult;
+		}
+
+		public OceanInsightsRequestPM GetSinglePMByOceanInsightsByCareierScacBLNo(string CarrierScac, string BLNumber)
+		{
+			OceanInsightsRequestPM myResult = (from a in repository.Context.OceanInsightsRequests
+											   where a.BLNumber == BLNumber && a.SCACCode == CarrierScac
+											   select new OceanInsightsRequestPM()
+											   {
+												   Id = a.Id,
+												   ContainerNumber = a.ContainerNumber,
+												   CreateDate = a.CreateDate,
+												   OceanInsigntId = a.OceanInsigntId,
+												   SCACCode = a.SCACCode,
+												   Tenant = a.Tenant,
+												   UpdateDate = a.UpdateDate,
+												   Type = a.Type,
+												   BLNumber = a.BLNumber,
+												   FromPushPage = a.FromPushPage
+											   }).FirstOrDefault();
+
+
+			return myResult;
+		}
+
+		public List<OceanInsightsRequestPM> GetOceanInsightsRequestPMs(int tenant)
         {
             List<OceanInsightsRequestPM> myResult = (from a in repository.Context.OceanInsightsRequests
                                                      where a.Tenant == tenant 

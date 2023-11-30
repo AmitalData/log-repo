@@ -9,7 +9,7 @@ namespace Logitude.Accounting.Def.BLExt
 {
     public interface IAutoReconcileServiceExt
     {
-        void InitMust(GLAccountPM glAccountBillTO, JournalPM journalARPayment, List<AutoReconcileRecord> AutoReconcileRecordList);
+        void InitMust(GLAccountPM glAccountBillTO, JournalPM journalARPayment, List<AutoReconcileRecord> AutoReconcileRecordList, string accountingEntityCode);
 
 
         void InsertJournalReconcile();

@@ -43,11 +43,13 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             port.Longtitude = portPM.Longtitude;
             port.Notes = portPM.Notes;            
             port.StateId = portPM.StateId;
-            port.CombinedCode = portPM.CountryCode+ portPM.Code;
+            port.CombinedCode = portPM.CombinedCode=  portPM.CountryCode+ portPM.Code;
             port.StateName = portPM.StateName;
             port.StateCode = portPM.StateCode;
             port.CountryCode = portPM.CountryCode;
             port.CountryName = portPM.CountryName;
+            port.PortTimeZoneCode = portPM.PortTimeZoneCode;
+            port.PortGroupId = portPM.PortGroupId;
 
             BuildSearchFields(portPM, port);
         }
@@ -65,6 +67,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 Country myCountry = CountryRepository.GetSingleCountry(entityPM.CountryId, entityPM.Tenant, true);
                 if (myCountry != null)
                 {
+                    entityPM.CombinedCode = entityPOCO.CombinedCode = (myCountry.Code + entityPM.Code); 
                     MethodHelper.AddToSearchFields(ref mySearchFields, myCountry.Code);
                     MethodHelper.AddToSearchFields(ref mySearchFields, myCountry.EnglishName);
                 }

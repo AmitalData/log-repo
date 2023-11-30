@@ -112,6 +112,26 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsSystemReportFixed"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="ObjectTableId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntityId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ReportId"
     ReferencedTable="Reports"

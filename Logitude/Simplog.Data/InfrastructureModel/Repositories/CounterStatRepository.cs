@@ -91,5 +91,24 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public List<CounterStat> GetCounterStatsByCounterIdAndPrefix(string counterId, string prefix, int tenant)
+        {
+            if (!String.IsNullOrEmpty(prefix))
+            {
+                return context.CounterStats.Where(d => d.Tenant == tenant && d.CounterId == counterId && d.Prefix == prefix).ToList();
+            }
+            else
+            {
+                return context.CounterStats.Where(d => d.Tenant == tenant && d.CounterId == counterId).ToList();
+            }
+        }
+
+        //public int GetLargestLastValueOfCounterStatsByCounterId(string counterId, int tenant)
+        //{
+        //    IQueryable<CounterStat> x = context.CounterStats.Where(d => d.Tenant == tenant && d.CounterId == counterId);
+        //    if (x.Count() == 0) return 0;
+        //    return x.Max(d => d.LastValue);
+        //}
     }
 }

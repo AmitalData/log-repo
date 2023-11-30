@@ -14,6 +14,16 @@
         -moz-box-shadow: 0px 0px 2px 2px #DADADA;
         -webkit-box-shadow: 0px 0px 2px 2px #DADADA;
     }
+
+    .SectionTitle {
+        height: 20px;
+        line-height: 20px;
+        font-size: 14px;
+        color: #1B90CB;
+        user-select: text;
+        -webkit-user-select: text;
+    }
+
 </style>
 
 
@@ -269,7 +279,7 @@
                                     </td>
 
                                     <td>
-                                        <table>
+                                        <table style="height:100px;">
 
                                             <!-- MeasurementId -->
                                             <tr class="FormFieldRow">
@@ -284,8 +294,7 @@
                                                             [LookUpTableName]="'Measurement'"
                                                             [DependencyFilter1Value]="MeasurementDependencyProperty1"
                                                             [DependencyFilter2Value]="false"
-                                                            [QueryFilterItems]="MeasurementsQueryFilters"
-                                                            >
+                                                            [QueryFilterItems]="MeasurementsQueryFilters">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -301,8 +310,25 @@
                                                             [ObjectTableName]="ObjectTableName"
                                                             [DataContext]="DataContext"
                                                             [LookUpTableName]="'PrepaidCollect'"
-                                                            [DependencyFilter1Value]="true"
-                                                            >
+                                                            [DependencyFilter1Value]="true">
+                                                    </LogLov>
+                                                </td>
+                                            </tr>
+
+                                            <!-- PayableVendorId -->
+                                            <tr class="FormFieldRow" *ngIf="DataContext.IsPayableVendorVisible">
+                                                <td style="width: 110px;">
+                                                    <LogLabel [ObjectFieldName]="'PayableVendorId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'PayableVendorId'"
+                                                            [SelectedValue]="DataContext.PayableVendorId"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [LookUpTableName]="'Card'"
+                                                            [DependencyFilter1Value]="'AG,AL,CG,SG,SL,TR,VD,WH'"
+                                                            [DependencyFilter1IsList]="true"
+                                                            (SelectedItemChanged)="DataContext.PayableVendor = $event">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -326,6 +352,26 @@
                                                 </td>
                                             </tr>
                                         </table>
+
+                                        <div style="height:5px"></div>
+                                        <!-- Additional Fields -->
+                                        <div [hidden]="DataContext.IsByContainerType" style="height:148px">
+
+                                            <div class="SectionTitle">Additional Fields</div>
+                                            <table style="height:128px">
+                                                <tr>
+                                                    <td>
+                                                        <ScrollViewer>
+
+                                                            <div class="MediaFill">
+                                                                <div class="LocationDirective" #AdditionalFieldsArea></div>
+                                                            </div>
+                                                        </ScrollViewer>
+                                                    </td>
+                                                </tr>
+                                            </table>
+
+                                        </div>
                                     </td>
                                 </tr>
                             </table>
@@ -333,16 +379,16 @@
                     </tr>
 
                     <!-- BYCT -->
-                    <tr>
-                        <td>                           
+                    <tr [style.height]="DataContext.IsByContainerType? '133px':'0px'">
+                        <td>
                             <div class="MediaFill" *ngIf="DataContext.IsByContainerType">
                                 <div class="SimpleGridView">
                                     <div class="SimpleGridViewHeader">
                                         <table>
-                                            <tr>                                                
+                                            <tr>
                                                 <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ShipmentReceivable.F.UnitPrice' | TextCodeTranslationPipe}}</td>
-                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ShipmentReceivable.F.Quantity' | TextCodeTranslationPipe}}</td>                                                
-                                                <td class="LastChild">{{'ShipmentReceivable.F.MeasurementId.Short' | TextCodeTranslationPipe}}</td>                                                
+                                                <td style="width: 100px; min-width: 100px; max-width: 100px;">{{'ShipmentReceivable.F.Quantity' | TextCodeTranslationPipe}}</td>
+                                                <td class="LastChild">{{'ShipmentReceivable.F.MeasurementId.Short' | TextCodeTranslationPipe}}</td>
                                             </tr>
                                         </table>
                                     </div>
@@ -350,7 +396,7 @@
                                     <div class="SimpleGridViewBody">
                                         <table>
                                             <tr class="SimpleGridViewRow" *ngFor="let item of DataContext.ByContainersItemsSource">
-                                                
+
                                                 <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
                                                     <LogTextBox [ObjectFieldName]="'UnitPrice'" [Text]="item.UnitPrice" [ObjectTableName]="ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
                                                 </td>
@@ -358,10 +404,10 @@
                                                 <td class="CellStretched" style="width: 100px; min-width: 100px; max-width: 100px;">
                                                     <LogTextBox [ObjectFieldName]="'Quantity'" [Text]="item.Quantity" [ObjectTableName]="ObjectTableName" [DataContext]="item" [HideColumns]="true"></LogTextBox>
                                                 </td>
-                                              
+
                                                 <td class="CellDisabled">
                                                     {{item.MeasurementCode}}
-                                                </td>                                                
+                                                </td>
                                             </tr>
 
                                             <tr>
@@ -376,11 +422,36 @@
                         </td>
                     </tr>
 
-                    <tr style="height: 5px;" *ngIf="!DataContext.IsByContainerType">
+                    <tr style="height: 10px;">
                         <td>
                             <div></div>
                         </td>
                     </tr>
+
+                    <tr [hidden]="!DataContext.IsByContainerType">
+                        <td style="vertical-align:top; padding-top:10px">
+                            <div style="height:179px">
+
+                                <div class="SectionTitle">Additional Fields</div>
+                                <table style="height:160px">
+                                    <tr>
+                                        <td>
+                                            <ScrollViewer>
+
+                                                <div class="MediaFill">
+                                                    <div class="LocationDirective" #ByContainerAdditionalFieldsArea></div>
+                                                </div>
+                                            </ScrollViewer>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
 
                     <!-- Summary -->
                     <tr style="height: 105px;" *ngIf="!DataContext.IsByContainerType">
@@ -474,7 +545,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'CancelReceivableBtn' | IdGeneratorPipe}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'CancelReceivableBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -482,7 +553,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{'Ok-AddReceivableBtn' | IdGeneratorPipe}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+                        <button id="{{'Ok-AddReceivableBtn' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()" [disabled]="!DataContext.IsEditingEnabled">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

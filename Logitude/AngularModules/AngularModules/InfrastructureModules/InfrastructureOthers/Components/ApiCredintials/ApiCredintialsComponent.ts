@@ -174,6 +174,13 @@ export class ApiCredintialsComponent extends BaseComponent {
         }
     }
 
+    get TokenExpirationTime() { return this.EntityPM.TokenExpirationTime; }
+    set TokenExpirationTime(value: number) {
+        if (this.EntityPM.TokenExpirationTime != value) {
+            this.EntityPM.TokenExpirationTime = value;
+        }
+    }
+
     //get ComputingPartnerId() { return this.EntityPM.ComputingPartnerId; }
     //set ComputingPartnerId(value: string) {
     //    if (this.EntityPM.ComputingPartnerId != value) {

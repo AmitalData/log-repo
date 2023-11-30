@@ -12,7 +12,7 @@
 
                     <!-- Name -->
                     <tr class="FormFieldRow">
-                        <td style="width:120px;">
+                        <td style="width:150px;">
                             <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
@@ -41,8 +41,8 @@
                     </tr>
 
                     <!-- Seller -->
-                    <tr class="FormFieldRow">
-                        <td>
+                    <tr class="FormFieldRow" *ngIf="IsSellerVisible">
+                        <td [attr.title]="SellerToolTip">
                             <LogLabel [ObjectFieldName]="'SellerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
 
@@ -54,10 +54,31 @@
                                     [DependencyFilter1IsList]="true"
                                     [HideMaintenanceIcon]="true"
                                     [DependencyFilter1Value]="SellerDependancy"
-                                    [LookUpTableName]="'Card'">
+                                    [LookUpTableName]="'Card'"
+                                    (SelectedItemChanged)="Seller = $event">
                             </LogLov>
                         </td>
 
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- CustomerGroupId -->
+                    <tr class="FormFieldRow" *ngIf="IsCustomerGroupVisible">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'CustomerGroupId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td>
+                            <LogLov [ObjectFieldName]="'CustomerGroupId'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [SelectedValue]="CustomerGroupId"
+                                    [DataContext]="DataContext"
+                                    [DependencyFilter1IsList]="true"
+                                    [HideMaintenanceIcon]="true"
+                                    [LookUpTableName]="'CustomerGroup'">
+                            </LogLov>
+                        </td>
                         <td>
                             <div></div>
                         </td>
@@ -76,6 +97,27 @@
                                     [DataContext]="DataContext"
                                     [HideMaintenanceIcon]="true"
                                     [LookUpTableName]="'Currency'">
+                            </LogLov>
+                        </td>
+
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+
+                    <!-- Unit Of Measurement -->
+                    <tr *ngIf="IsUnitOfMeasurementFieldVisible" class="FormFieldRow">
+                        <td>
+                            <LogLabel [ObjectFieldName]="'UnitOfMeasurementCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        </td>
+
+                        <td>
+                            <LogLov [ObjectFieldName]="'UnitOfMeasurementCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [SelectedValue]="UnitOfMeasurementCode"
+                                    [DataContext]="DataContext"
+                                    [HideMaintenanceIcon]="true"
+                                    [LookUpTableName]="'WeightUnit'">
                             </LogLov>
                         </td>
 
@@ -145,8 +187,21 @@
             <td style="width: 450px;" *ngIf="VisibileSurchargesArea">
                 <table>
                     <tr class="TabTitleRow">
-                        <td>
+                        <td *ngIf="EntityPM.TypeCode != 'ICC' && EntityPM.TypeCode != 'ECC'  && EntityPM.TypeCode != 'ICS' && EntityPM.TypeCode != 'ECS' && EntityPM.TypeCode != 'IFT'">
                             Surcharges
+                        </td>
+
+                        <td *ngIf="EntityPM.TypeCode == 'ICC' || EntityPM.TypeCode == 'ECC'">
+                            Customs Charges
+                        </td>
+
+                        <td *ngIf="EntityPM.TypeCode == 'IFT'">
+                            Charges
+                        </td>
+
+
+                        <td *ngIf="EntityPM.TypeCode == 'ICS' || EntityPM.TypeCode == 'ECS'">
+                            Local Charges
                         </td>
                     </tr>
 
@@ -538,7 +593,7 @@
                                                 [LookUpTableName]="'PackageType'"
                                                 [HideLastColumn]="true"
                                                 [RunToggleMode]="true"
-                                                [DependencyFilter1Value]="'O'"
+                                                [DependencyFilter1Value]="ContainerTypeDependencyFilter"
                                                 [DependencyFilter2Value]="true">
                                         </LogLov>
                                     </td>
@@ -556,7 +611,7 @@
                                                 [LookUpTableName]="'PackageType'"
                                                 [HideLastColumn]="true"
                                                 [RunToggleMode]="true"
-                                                [DependencyFilter1Value]="'O'"
+                                                [DependencyFilter1Value]="ContainerTypeDependencyFilter"
                                                 [DependencyFilter2Value]="true">
                                         </LogLov>
                                     </td>
@@ -574,7 +629,7 @@
                                                 [LookUpTableName]="'PackageType'"
                                                 [HideLastColumn]="true"
                                                 [RunToggleMode]="true"
-                                                [DependencyFilter1Value]="'O'"
+                                                [DependencyFilter1Value]="ContainerTypeDependencyFilter"
                                                 [DependencyFilter2Value]="true">
                                         </LogLov>
                                     </td>
@@ -592,7 +647,7 @@
                                                 [LookUpTableName]="'PackageType'"
                                                 [HideLastColumn]="true"
                                                 [RunToggleMode]="true"
-                                                [DependencyFilter1Value]="'O'"
+                                                [DependencyFilter1Value]="ContainerTypeDependencyFilter"
                                                 [DependencyFilter2Value]="true">
                                         </LogLov>
                                     </td>
@@ -610,7 +665,7 @@
                                                 [LookUpTableName]="'PackageType'"
                                                 [HideLastColumn]="true"
                                                 [RunToggleMode]="true"
-                                                [DependencyFilter1Value]="'O'"
+                                                [DependencyFilter1Value]="ContainerTypeDependencyFilter"
                                                 [DependencyFilter2Value]="true">
                                         </LogLov>
                                     </td>

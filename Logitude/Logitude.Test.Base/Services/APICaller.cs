@@ -1,5 +1,5 @@
-﻿using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.Infrastructure;
+﻿using Logitude.Base.Models.Api;
+using Logitude.Base.Models.Infrastructure;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RestSharp;
@@ -10,7 +10,7 @@ using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 
-namespace Logitude.Test.Base.Services
+namespace Logitude.Base.Services
 {
     public class APICaller
     {
@@ -40,11 +40,24 @@ namespace Logitude.Test.Base.Services
             return CallAPIProcess<T>(request, retries);
         }
 
-        public static ApiResponse<T> CallGet<T>(string url, string token, int retries = 0)
+        public static ApiResponse<T> CallGet<T>(string url, string token, int retries = 0, bool isApi = true)
         {
             ApiRequestParameters request = new ApiRequestParameters()
             {
                 Method = Method.GET,
+                Token = token,
+                Url = url,
+                IsApi = isApi
+            };
+
+            return CallAPIProcess<T>(request, retries);
+        }
+
+        public static ApiResponse<T> CallDelete<T>(string url, string token, int retries = 0)
+        {
+            ApiRequestParameters request = new ApiRequestParameters()
+            {
+                Method = Method.DELETE,
                 Token = token,
                 Url = url
             };
@@ -64,12 +77,12 @@ namespace Logitude.Test.Base.Services
             return CallAPIProcess<T>(request, apiQueryFilters);
         }
 
-        
+
         private static ApiResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters, int retries = 0)// needs refactoring
         {
             var pauseBetweenFailures = TimeSpan.FromSeconds(2);
 
-            string restClientUrl = GetRequestUrl(requestParameters.Url);
+            string restClientUrl = GetRequestUrl(requestParameters.Url, requestParameters.IsApi);
             RestClient restClient = new RestClient(restClientUrl);
             RestRequest restRequest = new RestRequest(requestParameters.Method) { RequestFormat = DataFormat.Json };
             var response = new ApiResponse<T>();
@@ -92,16 +105,28 @@ namespace Logitude.Test.Base.Services
                 {
                     restResponse = restClient.Execute<T>(restRequest);
                     response.StatusCode = restResponse.StatusCode;
-                    if (response.StatusCode == HttpStatusCode.OK)
+                    if (response.StatusCode == HttpStatusCode.OK || response.StatusCode == HttpStatusCode.Accepted)
                     {
                         response.Data = restResponse.Data;
                         break;
                     }
+                    else if(response.StatusCode == HttpStatusCode.NotFound){
+                        throw new Exception("URL NotFound");
+                    }
                     else
                     {
                         JObject jObject = JObject.Parse(restResponse.Content);
-                        response.ErrorMessage = jObject["ErrorMessage"].ToString().Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
-                        throw new Exception(response.ErrorMessage);
+                        if(jObject["ErrorMessage"] != null)
+                        {
+                            response.ErrorMessage = jObject["ErrorMessage"].ToString().Replace("\r", string.Empty).Replace("\n", string.Empty).Trim();
+                            throw new Exception(response.ErrorMessage);
+                        }
+                        else
+                        {
+                            response.ErrorMessage = "Response Status Code: " + response.StatusCode.ToString();
+                            throw new Exception(response.ErrorMessage);
+                        }
+                        
                     }
                 }
                 catch (Exception ex)
@@ -123,7 +148,7 @@ namespace Logitude.Test.Base.Services
 
         private static ApiResponse<T> CallAPIProcess<T>(ApiRequestParameters requestParameters, ApiQueryFilters apiQueryFilters)
         {
-            string restClientUrl = GetRequestUrl(requestParameters.Url);
+            string restClientUrl = GetRequestUrl(requestParameters.Url, requestParameters.IsApi);
             restClientUrl += GetQueryStringFromApiQueryFilters(apiQueryFilters);
 
             RestClient restClient = new RestClient(restClientUrl);
@@ -158,10 +183,13 @@ namespace Logitude.Test.Base.Services
             return response;
         }
 
-        private static string GetRequestUrl(string url)
+        private static string GetRequestUrl(string url, bool isApi)
         {
             string apiUrl = Settings.ServerUrl;
-
+            if (!isApi)
+            {
+                apiUrl = apiUrl.Replace("/api", "");
+            }
             if (String.IsNullOrEmpty(url))
             {
                 return null;

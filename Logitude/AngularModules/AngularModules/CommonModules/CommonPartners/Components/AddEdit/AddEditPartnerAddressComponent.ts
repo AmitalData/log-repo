@@ -16,7 +16,11 @@ import { ServiceResponse } from '../../../../Infrastructure/DataContracts/Servic
 import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 import { PartnersDomainService } from '../../../../Common/Services/PartnersDomainService';
 import { PotentialAddressService } from '../../../../Common/Services/PotentialAddressService';
-
+import { ShipmentTool } from '../../../../Shipment/Tools';
+import { ShipmentPM } from '../../../../Shipment/EntityPMs/ShipmentPM';
+import { ConfirmWindow } from '../../../../Controls/Windows/ConfirmWindow';
+import { CommonDomainService } from '../../../../Common/Services/CommonDomainService';
+import { HTSCodePM } from '../../../../Common/EntityPMs/HTSCodePM';
 
 @Component({
     templateUrl: './AddEditPartnerAddressComponent.html',
@@ -37,7 +41,8 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
     private entityPMService: AddressPMService;
     public PartnersDomainService: PartnersDomainService;
     public PotentialAddressService: PotentialAddressService;
-
+    private oldCountryId: string = null;
+    private ShipmentPM: ShipmentPM;
     constructor(private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = new AddressPM();
@@ -49,6 +54,7 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
     SetWindowArgs(args: any) {
         var entityId = args['EntityId'];
         var entityPM = args['EntityPM'];
+        this.ShipmentPM = args['ShipmentPM'];
 
         this.entityResourceService.getEntityResourceByTableName(this.ObjectTableName).subscribe((res: any) => {
             this.IsResourcesReady = true;
@@ -60,6 +66,7 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
                 this.EntityPM = entityPM;
                 this.CardId = this.EntityPM.CardId;
                 this.AddressTypeDependencyProperty1 = "O";
+                this.oldCountryId = this.EntityPM.CountryId;
                 this.LoadCard();
             }
 
@@ -74,6 +81,7 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
 
                     else {
                         this.EntityPM = myResponse.Result;
+                        this.oldCountryId = this.EntityPM.CountryId;
                         this.CardId = this.EntityPM.CardId;
                         this.AddressTypeDependencyProperty1 = this.EntityPM.AddressTypeId;
                         this.LoadCard();
@@ -461,6 +469,17 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
         this.SetUIProperties_StateRequired();
     }
 
+    SelectZipCode() {
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = "Select Zip Code";
+        logWindow.Show("./CommonModules/CommonOthers/Components/ZipCodeSelection/ZipCodeSelectionComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if ($event) {
+                this.ZipCode = $event;
+            }
+        });
+    }
+
     SelectCityCommand() {
         var args = new CitySelectionArgs(this.CountryId);
         var logWindow = new LogitudeWindow();
@@ -522,38 +541,105 @@ export class AddEditPartnerAddressComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (errors.length == 0) {
-
-            this.CurrentSession.StartBusyIndicatorSaving();
-
-            if (this.IsNewEntity) {
-
-                this.PotentialAddressService.AddAddress(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                    if (myResponse.HasError) {
-                        this.ValidationErrorsList = myResponse.ErrorsArray;
+            var updateProductItems: boolean = false
+            if (this.ShipmentPM) {
+                if (this.oldCountryId != this.EntityPM.CountryId) {
+                    if (this.ShipmentPM.ShipmentProductItems.length > 0) {
+                        if (!ShipmentTool.IsShipmentProductItemsEmpty(this.ShipmentPM.ShipmentProductItems)) {
+                            updateProductItems = true;
+                        }
                     }
+                }
+            }
 
-                    else {
-                        this.CurrentSession.CloseCurrentWindowEmit("OK");
+            if (updateProductItems) {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Title = "Country Changed";
+                confirmWindow.Show("All product items in this shipment will be updated");
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.GetHTSCodes();
                     }
-
-                    this.CurrentSession.StopBusyIndicator();
                 });
             }
 
             else {
-
-                this.PotentialAddressService.PutAddress(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
-                    if (myResponse.HasError) {
-                        this.ValidationErrorsList = myResponse.ErrorsArray;
-                    }
-
-                    else {
-                        this.CurrentSession.CloseCurrentWindowEmit("OK");
-                    }
-
-                    this.CurrentSession.StopBusyIndicator();
-                });
+                this.StartSaving();
             }
+        }
+    }
+
+    private GetHTSCodes() {
+        var productItemIds: string = "";
+        this.ShipmentPM.ShipmentProductItems.forEach(item => {
+            productItemIds += item.ProductItemId + ",";
+        });
+
+        var commonService: CommonDomainService = new CommonDomainService();
+        commonService.GetHTSCodesForProductItemsIds(productItemIds, this.CountryId).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var htsCodes: HTSCodePM[] = myResponse.Result;
+                this.UpdateShipmentProductItems(htsCodes);
+            }
+        });
+    }
+
+    UpdateShipmentProductItems(htsCodes: HTSCodePM[]) {
+        this.ShipmentPM.ShipmentProductItems.forEach(item => {
+            var hTSCodePM: HTSCodePM = htsCodes.filter(d => d.ItemId == item.ProductItemId)[0];
+
+            if (hTSCodePM) {
+                item.HTSCode = hTSCodePM.Code;
+                item.ApprovedByCustomer = hTSCodePM.ApprovedByCustomer;
+                item.VATPercentage = hTSCodePM.VATPercentage;
+                item.DutiesPercentage = hTSCodePM.DutiesPercentage;
+                item.OtherDuties = hTSCodePM.OtherDuties;
+                item.Remarks = hTSCodePM.Remarks;
+            }
+
+            else {
+                item.HTSCode = null;
+                item.ApprovedByCustomer = false;
+                item.VATPercentage = null;
+                item.DutiesPercentage = null;
+                item.OtherDuties = null;
+                item.Remarks = null;
+            }
+        });
+
+        this.CurrentSession.FireEvent("ShipmentProductItemsUpdated");
+        this.StartSaving();
+    }
+
+    private StartSaving() {
+        this.CurrentSession.StartBusyIndicatorSaving();
+
+        if (this.IsNewEntity) {
+            this.PotentialAddressService.AddAddress(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse.HasError) {
+                    this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+
+                else {
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
+                }
+
+                this.CurrentSession.StopBusyIndicator();
+            });
+        }
+
+        else {
+            this.PotentialAddressService.PutAddress(this.EntityPM).subscribe((myResponse: ServiceResponse) => {
+                if (myResponse.HasError) {
+                    this.ValidationErrorsList = myResponse.ErrorsArray;
+                }
+
+                else {
+                    this.CurrentSession.CloseCurrentWindowEmit("OK");
+                }
+
+                this.CurrentSession.StopBusyIndicator();
+            });
         }
     }
 

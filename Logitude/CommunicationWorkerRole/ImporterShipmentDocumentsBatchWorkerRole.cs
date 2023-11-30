@@ -67,17 +67,7 @@ namespace CommunicationWorkerRole
             SettingQuery SettingQuery = new SettingQuery(SettingRepository);
             URI = SettingQuery.GetSinglePM().CustomerTenantsURL.TrimEnd('/') + "/api/";
         }
-        private bool IsImporterTenantHasExportFeatureForExportShipments(int ImporterTenant, ShipmentPM entityPM, int tenant)
-        {
-            if ((entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R") && !FeatureToggleHelper.HasFeatureToggle("LEX", ImporterTenant,tenant))
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
+        
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
@@ -88,18 +78,7 @@ namespace CommunicationWorkerRole
             return base.OnStart();
         }
         string Token;
-        Contact User;
-        private bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
-        {
-            if (loggedTenant.CustomerTenantShareExportFile == true)// && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id)
-            {
-                return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
-            }
-            else
-            {
-                return false;
-            }
-        }
+        Contact User; 
         public override void Run()
         {
             try
@@ -210,7 +189,7 @@ namespace CommunicationWorkerRole
                                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, ForwarderShipment.CustomerId);
                                         var tenantQuery = new TenantQuery(ForwarderShipment.Tenant);
-                                        var tenantPM = tenantQuery.GetSinglePM(ForwarderShipment.Tenant);
+                                        var tenantPM = TenantQuery.GetSingleTenantPM(ForwarderShipment.Tenant, false);  
                                         TenantPM currentTenant = TenantQuery.GetSingleTenantPM(tenant, false);
                                         if (customerTenantAccessInfo != null)
                                         {
@@ -220,16 +199,18 @@ namespace CommunicationWorkerRole
                                                 LogPM.PartnerName = customerTenantAccess.CompanyName + " ( " + customerTenantAccess.CustomerTenant + " )";
                                             }
                                         }
-                                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.IsCustomerTenantShare)// && (tenantPM.CustomerTenantShareImportFile ? ForwarderShipment.DirectionId.ToUpper() == "I" || ForwarderShipment.DirectionId.ToUpper() == "C" : ForwarderShipment.DirectionId.ToUpper() == "C"))
+                                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.CustomerTenantShareCustomsFile)// && (tenantPM.CustomerTenantShareImportFile ? ForwarderShipment.DirectionId.ToUpper() == "I" || ForwarderShipment.DirectionId.ToUpper() == "C" : ForwarderShipment.DirectionId.ToUpper() == "C"))
                                         {
                                             importerTenant = customerTenantAccessInfo.CustomerTenant;
                                             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(tenant);
                                             ShipmentPM ImporterShipment = null;
                                             DocumentsFilingPM DocumentFilingPM = documentsFilingQuery.GetSinglePM(DocumentFilingId, tenant);
-                                            string EntityNumber = "";
+                                            string EntityNumber = "";  
                                             if (ForwarderShipment != null)
                                             {
-                                                if (!IsImporterTenantHasExportFeatureForExportShipments(importerTenant, ForwarderShipment,tenant))
+                                                PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, ForwarderShipment, customerTenantAccessInfo);
+ 
+                                                if (!privateLabelShipmentService.IsShipmentsAllowedForLogBox() && !privateLabelShipmentService.IsCustomFileShipment(ForwarderShipment))
                                                 {
                                                     queueservice.Complete();
                                                 }
@@ -262,7 +243,7 @@ namespace CommunicationWorkerRole
                                                         }
 
                                                     }
-                                                    else if (ForwarderShipment.DirectionId.ToUpper() == "C" || (IsExportShipmentsAllowedForLogBox(tenantPM, ForwarderShipment)))//&& !string.IsNullOrEmpty(ForwarderShipment.CustomFileId))
+                                                    else 
                                                     {
                                                         ImporterShipment = shipmentQuery.GetSingleShipmentPMByNumber(ForwarderShipment.CustomerShipmentNumber, importerTenant);
                                                         msg = "Getting Custom shipment number" + DateTime.Now;
@@ -751,6 +732,8 @@ namespace CommunicationWorkerRole
                                 catch (Exception ex)
                                 {
                                     #region Exception handling
+                                    ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments documents Batch worker role start", null, null);
+
                                     string Status = "F";
                                     if (ex.Message == "EntityNumber is null Or Document has No file" || ex.Message == "Customer Has No Access To send Document")
                                     {
@@ -824,7 +807,7 @@ namespace CommunicationWorkerRole
                         catch (Exception ex)
                         {
                             ConnectClient();
-                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
+                            ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments documents Batch worker role ", null, null);
                             Thread.Sleep(10000);
                         }
 
@@ -838,7 +821,7 @@ namespace CommunicationWorkerRole
             catch (Exception ex)
             {
                 ConnectClient();
-                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments worker role start", null, null);
+                ExceptionHandler.HandleException(ex, DateTime.Now, 0, null, "importer shipments documents Batch worker role ", null, null);
                 Thread.Sleep(10000);
             } 
         }

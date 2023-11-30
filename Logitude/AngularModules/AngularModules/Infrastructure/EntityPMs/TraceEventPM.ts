@@ -20,7 +20,7 @@ export class TraceEventPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -148,6 +148,26 @@ export class TraceEventPM {
     private location: string;
     public get Location() { return this.location; }
     public set Location(newValue: string) { if (this.location != newValue) { this.location = newValue; this.MarkAsDirty("Location"); } }
+       
+	 
+    private childEntityId: string;
+    public get ChildEntityId() { return this.childEntityId; }
+    public set ChildEntityId(newValue: string) { if (this.childEntityId != newValue) { this.childEntityId = newValue; this.MarkAsDirty("ChildEntityId"); } }
+       
+	 
+    private childObjectTableId: string;
+    public get ChildObjectTableId() { return this.childObjectTableId; }
+    public set ChildObjectTableId(newValue: string) { if (this.childObjectTableId != newValue) { this.childObjectTableId = newValue; this.MarkAsDirty("ChildObjectTableId"); } }
+       
+	 
+    private entityStatusCode: string;
+    public get EntityStatusCode() { return this.entityStatusCode; }
+    public set EntityStatusCode(newValue: string) { if (this.entityStatusCode != newValue) { this.entityStatusCode = newValue; this.MarkAsDirty("EntityStatusCode"); } }
+       
+	 
+    private entityStatusName: string;
+    public get EntityStatusName() { return this.entityStatusName; }
+    public set EntityStatusName(newValue: string) { if (this.entityStatusName != newValue) { this.entityStatusName = newValue; this.MarkAsDirty("EntityStatusName"); } }
        
 	 
 

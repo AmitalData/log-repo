@@ -77,6 +77,16 @@ namespace Logitude.XSD.INTTRA.BL
                 Parties = this.Context.MessagePropertiesParties.ToArray<INTTRA_Out.PartnerInformation>(),
             };
 
+            if(this.Context.ShipmentIndicator != null)
+            {
+                myResult.ShipmentIndicator = this.Context.ShipmentIndicator;
+            }
+
+            if(this.Context.HeaderCustomsInformation != null)
+            {
+                myResult.HeaderCustomsInformation = this.Context.HeaderCustomsInformation.ToArray<INTTRA_Out.HeaderCustomsFilerInstruction>();
+            }
+
             if (this.Context.Shipment.ValueOfGoodsCurrencyId != null)
             {
                 Currency myCurrency = (from d in this.Context.CommonContext.Currencies where d.Id == this.Context.Shipment.ValueOfGoodsCurrencyId select d).FirstOrDefault();

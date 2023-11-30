@@ -10,7 +10,7 @@
       (
       @QueueDefinitionCode varchar(255),
 
-      @MessageBody varchar(1000),
+      @MessageBody varchar(2000),
       @Tenant int,
       @DelaySeconds int,
       @CustomerId varchar(15),

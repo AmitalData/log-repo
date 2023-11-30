@@ -11,6 +11,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using Logitude.Accounting.Data;
+using Logitude.Server.Tools.Helpers;
+
 [assembly: InternalsVisibleTo("Logitude.UnitTest")]
 
 namespace Logitude.Accounting.BL.CoreBL
@@ -48,7 +50,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var percentagePM1 = percentageList.OrderByDescending(d => d.FromDate).ToList().Where(rec => rec.FromDate.Value.Date  <= documentDate).FirstOrDefault();
             if (percentagePM1 == null)
             {
-                throw new Exception("No Vat definition for Document Date " + documentDate.ToShortDateString());
+                throw new ApplicationException("No Vat definition for Document Date " + documentDate.ToShortDateString());
             }
 
             return Convert.ToDecimal(((percentagePM1.Percentage + 100) / 100));
@@ -65,6 +67,14 @@ namespace Logitude.Accounting.BL.CoreBL
                 var fullPm = full.GetSingleFullAccountingSetting(tenant);
 
                 var vatTypePercentageQuery = new VatTypePercentageQuery(tenant);
+                if (String.IsNullOrEmpty(fullPm.DefaultVATTypeId))
+                {
+                    string textCode = "Accounting.General.O.DefaultVATTypeMissing";
+                    bool getLocal = true;
+                    string errortext = TranslateTextsClass.Translate(textCode, tenant, getLocal);
+                    if (String.IsNullOrEmpty(errortext)) errortext = "Default VAT Type is missing in the Full Accounting Settings";
+                    throw new ApplicationException(errortext);
+                }
                 var percentagesQuery = vatTypePercentageQuery.GetVatTypePercentagesForVatType(tenant, fullPm.DefaultVATTypeId);
                 var percentagePM = percentagesQuery
                     //.Where(rec => DbFunctions.TruncateTime(rec.FromDate) <= documentDate)

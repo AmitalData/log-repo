@@ -1,0 +1,277 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-row {
+        height: 10px;
+    }
+
+    .split-row {
+        height: 10px;
+    }
+
+    .name-row {
+        height: 50px;
+    }
+
+    .description-row {
+        height: 85px;
+    }
+
+    .name-input-container,
+    .description-input-container {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .name-input-container {
+        height: 30px;
+    }
+
+    .description-input-container {
+        height: 65px;
+    }
+
+    .Additional-row {
+        height: 1px;
+    }
+
+    .AdvancedSettings {
+        font-size: 14px;
+        color: #1B90CB;
+        margin-left: 10px;
+        cursor: pointer;
+        width: fit-content;
+    }
+
+    .FormFieldRow {
+        height: 32px;
+    }
+
+    .field-name {
+        width: 130px;
+    }
+
+    .field-input {
+        width: 230px;
+    }
+
+    .padding-l-5 {
+        padding-left: 5px;
+    }
+
+    .sub-title {
+        margin: 5px 0 5px 10px;
+        color: #45494A;
+    }
+
+    .retries-delay-table {
+        margin-top: 12px;
+    }
+
+    .padding-left-10 {
+        padding-left: 10px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+        padding-top: 10px;
+    }
+
+    .trigger-radios-container {
+        width: 320px;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .trigger-radio-cell {
+        width: 80px;
+    }
+</style>
+
+<table *ngIf="EntityPM">
+
+    <tr *ngIf="ValidationErrors != null && ValidationErrors.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrors"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-row">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="name-row">
+        <td>
+            <div>
+                <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                </LogLabel>
+            </div>
+            <div class="name-input-container">
+                <LogTextBox [ObjectFieldName]="'Name'" [Text]="Name" [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext" [HideColumns]="true" [DataCy]="'Workflow_Name'"></LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row" *ngIf="IsNew">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [ObjectFieldName]="'WorkFlowTriggerTypeCode'" [ObjectTableName]="ObjectTableName"
+                    [Text]="'Workflow Type:'" [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block trigger-radios-container">
+                <table>
+                    <tr>
+                        <td class="trigger-radio-cell">
+                            <RadioButton [Name]="'TriggerRadio'"
+                                [IsChecked]="WorkFlowTriggerTypeCode === 'RecordTriggered'"
+                                (Checked)="WorkFlowTriggerTypeCode = 'RecordTriggered'" [Text]="'Record Triggered'"
+                                [Top]="5" [DataCy]="'RecordTriggered'">
+                            </RadioButton>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="trigger-radio-cell">
+                            <RadioButton [Name]="'TriggerRadio'"
+                                [IsChecked]="WorkFlowTriggerTypeCode === 'EventTriggered'"
+                                (Checked)="WorkFlowTriggerTypeCode = 'EventTriggered'"
+                                [Text]="'External Event Triggered'" [Top]="5" [DataCy]="'EventTriggered'">
+                            </RadioButton>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="split-row">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="description-row">
+        <td>
+            <div>
+                <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="description-input-container">
+                <LogTextBox [ObjectFieldName]="'Description'" [Text]="Description" [ObjectTableName]="ObjectTableName"
+                    [DataContext]="DataContext" [HideColumns]="true" [DataCy]="'Workflow_Description'"></LogTextBox>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="split-row">
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="table-row" *ngIf="!IsNew">
+        <td>
+            <div class="AdvancedSettings" (click)="showAdvancedSettings()">
+                {{AdvancedSettingsTitle}}
+            </div>
+        </td>
+    </tr>
+
+    <tr class="Additional-row" *ngIf="ShowAdvancedSettings && !IsNew">
+        <td>
+            <div>
+                <table>
+                    <tr class="table-row">
+                        <td>
+                            <div class="Label sub-title">
+                                Recovery Settings
+                            </div>
+                        </td>
+                    </tr>
+                    <tr class="FormFieldRow">
+                        <td class="field-name">
+                            <LogLabel [ObjectFieldName]="'RetriesNumber'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [Text]="'Number of Retries'"></LogLabel>
+                        </td>
+
+                        <td class="field-input">
+                            <LogTextBox [ObjectFieldName]="'RetriesNumber'" [Text]="RetriesNumber"
+                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideLastColumn]="true"
+                                [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td class="padding-l-5">
+                            <HelpIcon [HideHeader]="true" [Text]="'Number of retries once the flow fails'"></HelpIcon>
+                        </td>
+                        <td>
+                            <div></div>
+                        </td>
+                    </tr>
+                </table>
+                <table class="retries-delay-table" *ngIf="RetriesNumber > 0 && RetriesNumber <= MaxRetriesNumber">
+                    <tr class="table-row">
+                        <td>
+                            <div class="Label sub-title">Waiting time before each retry (minutes)</div>
+                        </td>
+                    </tr>
+
+                    <ng-container *ngFor="let RetryDelay of RetriesDelayArray; let currentIndex = index;">
+                        <tr>
+                            <td>
+                                <div *ngIf="currentIndex < RetriesDelayArray.length">
+                                    <table>
+                                        <tr class="FormFieldRow">
+                                            <td class="field-name">
+                                                <LogLabel [NoObjectField]="true"
+                                                    [ObjectFieldName]="RetriesDelayFieldCodePrefix + currentIndex"
+                                                    [DataContext]="DataContext"
+                                                    [Text]="RetriesDelayFieldLabelPrefix + (currentIndex + 1)">
+                                                </LogLabel>
+                                            </td>
+
+                                            <td class="field-input">
+                                                <LogTextBox [NoObjectField]="true"
+                                                    [ObjectFieldName]="RetriesDelayFieldCodePrefix + currentIndex"
+                                                    [IsFreeText]="true" [DataContext]="DataContext"
+                                                    [Text]="RetriesDelayArray[currentIndex].Value"
+                                                    [InputType]="'integer'" [HideColumns]="true" [HideLastColumn]="true"
+                                                    (ValueChanged)="updateRetriesDelay($event, currentIndex)">
+                                                </LogTextBox>
+                                            </td>
+                                            <td>
+                                                <div></div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                    </ng-container>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr *ngIf="IsNew" class="table-row">
+        <td>
+            <FooterButtons [SaveButtonLabel]="'Create'" (SaveButtonClicked)="create()" (CancelButtonClicked)="cancel()"
+                [SaveButtonDataCy]="'workflow-save-button'" [CancelButtonDataCy]="'workflow-cancel-button'">
+            </FooterButtons>
+        </td>
+    </tr>
+
+</table>
+
+<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="BusyIndicatorWidth"></BusyIndicator>

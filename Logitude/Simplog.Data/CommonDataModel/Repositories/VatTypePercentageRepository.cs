@@ -42,20 +42,21 @@ namespace Simplog.Data.CommonDataModel.Repositories
 
         public VatTypePercentage GetVatTypePercentageByDate(string vatTypeId,int tenant, DateTime? date)
         {
-            VatTypePercentage result = null;
-            if (context.VatTypePercentages.Count() > 0)
-            {
-                result =
-                    (from r in context.VatTypePercentages.Include("VatType")
-                     where r.VatTypeId == vatTypeId
-                     && r.Tenant == tenant
-                     && System.Data.Entity.DbFunctions.TruncateTime(r.FromDate) <= date
-                     select r).OrderByDescending(o => o.FromDate).FirstOrDefault();
-            }
-
-            return result;
+            return (from r in context.VatTypePercentages.Include("VatType")
+                    where r.VatTypeId == vatTypeId
+                    && r.Tenant == tenant
+                    && System.Data.Entity.DbFunctions.TruncateTime(r.FromDate) <= date
+                    select r).OrderByDescending(o => o.FromDate).FirstOrDefault();
         }
 
+
+        public VatTypePercentage GetVatTypePercentageByVatTypeId(string vatTypeId, int tenant)
+        {
+            return (from r in context.VatTypePercentages.Include("VatType")
+                    where r.VatTypeId == vatTypeId
+                    && r.Tenant == tenant
+                    select r).FirstOrDefault();
+        }
         public void Add(VatTypePercentage entity)
         {
             context.VatTypePercentages.Add(entity);

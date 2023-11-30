@@ -10,6 +10,8 @@ using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Data.Entity.Core.Objects;
+using System.Runtime.Remoting.Contexts;
+
 namespace Logitude.Accounting.Data.Repositories
 {
    public partial class ARPaymentChequeRepository:IRepository<ARPaymentCheque>
@@ -79,6 +81,32 @@ namespace Logitude.Accounting.Data.Repositories
                    where a.Tenant == tenant && ids.Contains(a.Id)
                    select a).ToList();
         }
+
+        public void RemoveARPaymentsCheques(string paymentId, List<string> arPaymentChequesIds, int tenant)
+        {
+            var aRPaymentCheques = (from a in context.ARPaymentCheques where a.PaymentId == paymentId && arPaymentChequesIds.Contains(a.Id) && a.Tenant == tenant select a).ToList();
+
+            foreach (var entity in aRPaymentCheques)
+            {
+                context.ARPaymentCheques.Attach(entity);
+                context.ARPaymentCheques.Remove(entity);
+            }
+        }
+
+        public bool IsChequeExists(string paymentId, string arPaymentChequesId, int tenant)
+        {
+            return context.ARPaymentCheques.Any(a => a.PaymentId == paymentId && a.Id == arPaymentChequesId && a.Tenant == tenant);
+        }
+
+        public string GetAccountIdForCheque(int tenant, string paymentId, int lineNumber)
+        {
+            return (from a in context.Journals
+                    join l in context.LedgerTransactions
+                    on a.Id equals l.JournalId
+                    where a.AccountingEntityId == paymentId && a.Tenant == tenant && l.JournalLineNumber == lineNumber 
+                    select l.AccountId).FirstOrDefault();
+        }
+
 
     }
 

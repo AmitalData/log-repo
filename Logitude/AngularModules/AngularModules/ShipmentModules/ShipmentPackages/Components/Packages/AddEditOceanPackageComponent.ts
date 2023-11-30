@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import { Component, ViewContainerRef, ViewChild} from '@angular/core';
 import {AppTool, FormatTool} from '../../../../Infrastructure/Tools';
 import {Validator} from '../../../../Infrastructure/Validators/Validator';
 import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeTranslator';
@@ -12,6 +12,7 @@ import {ShipmentPickUpDeliveryPackagePM} from '../../../../Shipment/EntityPMs/Sh
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { PickUpDeliveryPackageHarmonizePM } from '../../../../Shipment/EntityPMs/PickUpDeliveryPackageHarmonizePM';
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
+import { FeatureLocator } from '../../../../Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     
@@ -29,15 +30,50 @@ export class AddEditOceanPackageComponent {
     public ValidationErrorsList: string[] = [];
     public IsContainerEntityReferenceVisible: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    public IsMYGOEntity: boolean = false;
     constructor() {
+        this.RunComponent();
+    }
+    RunComponent() {
+        if (this.viewContainerRef) {
+            this.LoadChildComponent();
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
     }
 
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+    LoadChildComponent() {
+        let screenCode: string = "ShipmentPackage.AdditionalFields";
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.HideLastColumn = true;
+                cmpRef.instance.LabelWidth = 120;
+                cmpRef.instance.Run(this.EntityPM, this.ObjectTableName, screenCode);
+            });
+    }
     SetDataContext(dataContext: ShipmentPackageItem) {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.EntityPM;
         this.DataContext.FillMethodsList();
         this.IsFCLEntity = dataContext.IsFCLEntity;
         this.IsLCLEntity = dataContext.IsLCLEntity;
+        this.IsMYGOEntity = dataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "mygo";
         this.IsFromStandAloneScreen = dataContext.IsFromStandAloneScreen;
         this.SetLabels();
         this.Clone();
@@ -244,24 +280,16 @@ export class AddEditOceanPackageComponent {
     }
 
     GetContainerEntityReferenceVisiblity() {
-        var featureToggle: FeatureToggleList = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "OIC")[0];
-        if (featureToggle && !AppTool.IsNullOrEmpty(this.EntityPM?.ContainerEntityId)) {
-            this.IsContainerEntityReferenceVisible = true;
+        this.IsContainerEntityReferenceVisible = false;
+        if (FeatureLocator.HasFeaturePermession("Container", "ContainersActivated") && !AppTool.IsNullOrEmpty(this.EntityPM?.ContainerEntityId)) {
+            if (this.DataContext.ShipmentPM.TransportModeId == "O" && (this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "fcl" || this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "fcld" || this.DataContext.ShipmentPM.ShipmentTypeId.toLowerCase() == "mygo")) {
+                this.IsContainerEntityReferenceVisible = true;
+            }
         }
     }
 
     OpenContainerEntityWindow() {
-        var logWindow = new LogitudeWindow();
-        logWindow.Title = "Container";
-        logWindow.IsFillScreen = true;
-        var ContainerEntityId = this.EntityPM?.ContainerEntityId;
-        if (!AppTool.IsNullOrEmpty(ContainerEntityId)) {
-            logWindow.ShowEditComponent(ContainerEntityId, "Container");
-            logWindow.ComponentLoaded.subscribe(comp => {
-                logWindow.WindowClosed.subscribe(s => {
-                });
-            });
-        }
+        this.DataContext.fatherComponent.ViewContainerEntity(this.DataContext);
     }
 
     private myCloner: Cloner;

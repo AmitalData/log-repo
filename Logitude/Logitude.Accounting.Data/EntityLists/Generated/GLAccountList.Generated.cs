@@ -35,6 +35,8 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string CurrencyId  { get; set; }
        [DataMember]
+       public string PaymentTerms { get; set; }
+       [DataMember]
        public string RevenueExpenseType  { get; set; }
        [DataMember]
        public bool? IsControlAccount  { get; set; }
@@ -210,6 +212,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public bool ActiveForInterestCreditInvoice  { get; set; }
        [DataMember]
        public decimal? InterestCreditLimit  { get; set; }
+        [DataMember]
+        public decimal? InterestOpenBalance { get; set; }
        [DataMember]
        public string NameForPrintingCheques  { get; set; }
        [DataMember]
@@ -275,6 +279,8 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string LastReconciledBy  { get; set; }
        [DataMember]
+       public string CardCollectorId { get; set; }
+       [DataMember]
        public DateTime? LastReconcileDate  { get; set; }
        [DataMember]
        public double? CreditLimit  { get; set; }
@@ -312,7 +318,26 @@ namespace Logitude.Accounting.Data.EntityLists
        public decimal? BalanceInForeignCurrency  { get; set; }
        [DataMember]
        public decimal? ForeignBalanceInDue  { get; set; }
-   }
+
+        [DataMember]
+        public bool IsSecurityLevelsEnabled { get; set; }
+        [DataMember]
+        public int? ChartOfAccountSecurityLevel { get; set; }
+        [DataMember]
+        public bool Access { get; set; }
+        [DataMember]
+        public bool IsMainGLAccount { get; set; }
+        [DataMember]
+        public bool IsSplitGLAccout { get; set; }
+        [DataMember]
+        public decimal? Obligo { get; set; }
+        [DataMember]
+        public decimal? CreditUsed { get; set; }
+        [DataMember]
+        public double? InsuredCreditPercentage { get; set; }
+        [DataMember]
+        public string DateFormat { get; set; }
+    }
 
 }
 	 

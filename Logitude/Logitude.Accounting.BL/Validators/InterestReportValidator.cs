@@ -68,7 +68,7 @@ namespace Logitude.Accounting.BL.Validators
 
             if (!StatusesThatAllowEditing.Contains(InterestReportStatusCode) && entityPM.InterestReportStatusCode !="3")
             {
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.UpdatingInvoicepermitted", entityPM.Tenant, showLocals));
+                throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.UpdatingInvoicepermitted", entityPM.Tenant, showLocals));
             }
         }
 
@@ -78,7 +78,7 @@ namespace Logitude.Accounting.BL.Validators
             InterestReport interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.CustomerId, entityPM.Id, entityPM.InterestCalculationDate, entityPM.Tenant);
             if (interestReport != null)
             {
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasarecent", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
+                throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasarecent", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
             }
         }
 
@@ -89,7 +89,7 @@ namespace Logitude.Accounting.BL.Validators
                                                 entityPM.CustomerId, entityPM.Tenant, entityPM.InterestCalculationDate);
             if (interestReportPM != null)
             {
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.CannotCreateReportWithCalculationDateLess", entityPM.Tenant, showLocals) + " " + interestReportPM.ReportNumber + " " + TextCodesTranslator.TranslateText("InterestReport.O.on", entityPM.Tenant, showLocals) + " " + interestReportPM.InterestCalculationDate.ToString("dd/MM/yyyy") + TextCodesTranslator.TranslateText("InterestReport.O.AlreadyExists", entityPM.Tenant, showLocals));
+                throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.CannotCreateReportWithCalculationDateLess", entityPM.Tenant, showLocals) + " " + interestReportPM.ReportNumber + " " + TextCodesTranslator.TranslateText("InterestReport.O.on", entityPM.Tenant, showLocals) + " " + interestReportPM.InterestCalculationDate.ToString("dd/MM/yyyy") + TextCodesTranslator.TranslateText("InterestReport.O.AlreadyExists", entityPM.Tenant, showLocals));
             }
 
         }
@@ -99,7 +99,7 @@ namespace Logitude.Accounting.BL.Validators
             Card card = cardRepository.GetSingleCard(entityPM.CustomerId, entityPM.Tenant);
             if (card.GLAccountId == null)
             {
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotconnected", entityPM.Tenant, showLocals));
+                throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotconnected", entityPM.Tenant, showLocals));
             }
             entityPM.GLAccountId = card.GLAccountId;
 
@@ -111,9 +111,9 @@ namespace Logitude.Accounting.BL.Validators
             GLAccount gLAccount = gLAccountRepository.GetSingle(entityPM.GLAccountId, entityPM.Tenant);
             if (gLAccount.ActiveForInterest ==null || gLAccount.ActiveForInterest == false)
             {
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotdefined", entityPM.Tenant, showLocals));
+                throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.Customerisnotdefined", entityPM.Tenant, showLocals));
             }
-            entityPM.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
+         //   entityPM.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
 
         }
 
@@ -125,19 +125,19 @@ namespace Logitude.Accounting.BL.Validators
             {
                 if (interestReport.InterestReportStatusCode =="1")
                 {
-                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.CustomeralreadyhasaDraftinterest", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.CustomeralreadyhasaDraftinterest", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
 
                 }
                 else
                 {
-                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasaninprogress", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasaninprogress", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
                 }
             }
 
             //interestReport = interestReportRepository.GetSingleByGraterInterestCalculationDate(entityPM.CustomerId, entityPM.InterestCalculationDate, entityPM.Tenant);
             //if (interestReport != null)
             //{
-            //    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasarecent", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
+            //    throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.Customeralreadyhasarecent", entityPM.Tenant, showLocals) + " " + interestReport.ReportNumber);
             //}
 
         }
@@ -152,7 +152,7 @@ namespace Logitude.Accounting.BL.Validators
             if (InterestReportStatusCode != "1" && InterestReportStatusCode != "9")
             {
                 IsValid = false;
-                throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.CreatingInvoicepermitted", tenant, showLocals));
+                throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.CreatingInvoicepermitted", tenant, showLocals));
             }
 
 

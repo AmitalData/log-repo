@@ -1,6 +1,8 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -24,10 +26,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
-                TermsofUseArgs result = new TermsofUseArgs();
+                SecurityUtility.AuthenticationOnTenant(tenant);
+                bool isLogbox = LogitudeSettings.DeploymentStage == "logboxwe1";
+                bool isLogboxUrl = SecurityUtility.getLoggedDomain().IndexOf("logbox") > -1;  
 
+                TermsofUseArgs result = new TermsofUseArgs();
+                 
                 if (!string.IsNullOrEmpty(userId))
-                {
+                { 
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
@@ -36,14 +42,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     TermsofUseSignatureQuery termsofUseSignatureQuery = new TermsofUseSignatureQuery(tenant);
 
                     TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
-                    TermsofUsePM termofuse = new TermsofUsePM();
-                    termofuse = termsofUseQuery.GetTermOfUseByPrivateLabel(tenantPM.PrivateLabelId);
-                    if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null)
-                    {
-                        throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");
+                    TermsofUsePM termofuse = null;
+
+                    if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId)){
+                        termofuse = termsofUseQuery.GetTermOfUseByPrivateLabel(tenantPM.PrivateLabelId);
                     }
 
-                    if (termofuse == null) termofuse = termsofUseQuery.GetTermsofUseDefault();
+                    if (!string.IsNullOrEmpty(tenantPM.PrivateLabelId) && termofuse == null)
+                    {
+                        TenantManagmentPrivateLabelsQuery privateLabelsQuery = new TenantManagmentPrivateLabelsQuery(tenant);
+                        TenantManagmentPrivateLabelsPM privateLabelsPM = privateLabelsQuery.GetSinglePM(tenantPM.PrivateLabelId);
+                        if(privateLabelsPM.PrivateLabelUrl == SecurityUtility.getLoggedDomain())
+                        { 
+                          throw new Exception("You are unable to login without approving the terms of use, please contact your administrator!");
+                        } 
+                    }
+
+                    if (termofuse == null || isLogboxUrl) termofuse = termsofUseQuery.GetTermsofUseDefault(tenantPM.UseNewTermsOfUse);
 
                     if (termofuse == null) result.IsTermOfUse = false;
                     else
@@ -62,7 +77,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         }
                         else
                         {
-                            if (LogitudeSettings.DeploymentStage == "logboxwe1")
+                            if (isLogbox)
                             {
                                 if (string.IsNullOrEmpty(tenantPM.PrivateLabelId))
                                 {
@@ -122,6 +137,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 TermsofUseQuery termsofUseQuery = new TermsofUseQuery(tenant);
                 TermsofUsePM termsofUsePM = termsofUseQuery.GetSingleById(Id);
@@ -146,6 +162,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("", termsofUsePM.Tenant, authToken.Tenant);
+
                 //int tenant = authToken.Tenant;
                 int tenant = termsofUsePM.Tenant;
                 if (termsofUsePM.FileData == null)
@@ -167,6 +185,30 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 service.Create(termsofUsePM);
 
                 return Request.CreateResponse(HttpStatusCode.OK, termsofUsePM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetTermsofUseByTenant()
+        {
+            try
+            {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                TermsofUseQuery termsofUseQuery = new TermsofUseQuery(authToken.Tenant);
+                List<TermsofUsePM> termsofUseListPM = termsofUseQuery.GetTermsofUseByTenant(authToken.Tenant).ToList();
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, termsofUseListPM);
+
             }
 
             catch (Exception ex)

@@ -49,6 +49,8 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public string Reference4 { get; set; }
     
     public string Notes { get; set; }
+    
+    public string ChangeSetOp { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

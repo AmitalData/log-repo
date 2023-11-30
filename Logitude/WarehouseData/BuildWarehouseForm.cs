@@ -22,9 +22,9 @@ namespace WarehouseData
 {
     public partial class BuildWarehouseForm : Form
     {
-        string dbSourceConnection = "2021R1_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
+        string dbSourceConnection = "Logitude2-5_Main,sa,Saas256,.";//"LogitudeMain-PreR2,logitudemanager,!LO009008,logitudetest.database.windows.net";//"LogitudeMain-Test2,sa,Saas256,logitudetest.cloudapp.net";
 
-        string dbDestinationConnection = "2021R1_Global,sa,Saas256,.";
+        string dbDestinationConnection = "Logitude2-5_Global,sa,Saas256,.";
 
 
         public BuildWarehouseForm()
@@ -32,7 +32,9 @@ namespace WarehouseData
             InitializeComponent();
             this.SourceConnectionlTextBox.Text = dbSourceConnection;
             this.DestinationConnectionlTextBox.Text = dbDestinationConnection;
-
+            DWCheckBox.Checked = true;
+            DIMCheckBox.Checked = true;
+            FactCheckBox.Checked = true;
         }
 
 
@@ -133,105 +135,112 @@ namespace WarehouseData
 
 
                             #region Create and Build  DW Table
-
-                            TableClass waterMark = tableNameLists.Where(d => d.TableName == "WaterMark").FirstOrDefault();
-                           Parallel.ForEach(tableNameLists.Where(d => !d.HasFactTable && d.TableName != waterMark.TableName).ToList(), (table) =>
-                           {
-                               stepName = table.DBTableName;
-
-
-                               Stopwatch stopWatchDWTable = null;
-                               if (table.DispayInScreen)
-                               {
-                                   stopWatchDWTable = new Stopwatch();
-                                   stopWatchDWTable.Start();
-                                   SetControlPropertyValue("Text", "Copying...", table);
-                               }
+                            if (DWCheckBox.Checked)
+                            {
+                                TableClass waterMark = tableNameLists.Where(d => d.TableName == "WaterMark").FirstOrDefault();
+                                Parallel.ForEach(tableNameLists.Where(d => !d.HasFactTable && d.TableName != waterMark.TableName).ToList(), (table) =>
+                                {
+                                    stepName = table.DBTableName;
 
 
-                               mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, table, TotalCountLabel);
-
-                               if (table.DispayInScreen)
-                               {
-                                   stopWatchDWTable.Stop();
-                                   TimeSpan stopWatchDWTableTs = stopWatchDWTable.Elapsed;
-                                   SetControlPropertyValue("ForeColor", Color.Green, table);
-                                   SetControlPropertyValue("Text", "Done in ( " + stopWatchDWTableTs.ToString(@"hh\:mm\:ss") + " )", table);
-                               }
+                                    Stopwatch stopWatchDWTable = null;
+                                    if (table.DispayInScreen)
+                                    {
+                                        stopWatchDWTable = new Stopwatch();
+                                        stopWatchDWTable.Start();
+                                        SetControlPropertyValue("Text", "Copying...", table);
+                                    }
 
 
-                           });
+                                    mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, table, TotalCountLabel);
+
+                                    if (table.DispayInScreen)
+                                    {
+                                        stopWatchDWTable.Stop();
+                                        TimeSpan stopWatchDWTableTs = stopWatchDWTable.Elapsed;
+                                        SetControlPropertyValue("ForeColor", Color.Green, table);
+                                        SetControlPropertyValue("Text", "Done in ( " + stopWatchDWTableTs.ToString(@"hh\:mm\:ss") + " )", table);
+                                    }
 
 
-                            mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, waterMark, TotalCountLabel);
+                                });
 
+
+                                mainDataWarehouseService.BuildDWDataBase(sourceConnectionString, destinationConnectionString, waterMark, TotalCountLabel);
+                            }
                             #endregion
 
 
                             #region Create and Build Dimensions Table
 
-
-                            stepName = "BuildDateDimensionsTable";
-                            mainDataWarehouseService.ExecuteFixedDimensionScripts(destinationConnectionString);
-
-                            //mainDataWarehouseService.ExecuteScript("BuildWarehouse", "BuildDateDimensionsTable", destinationConnectionString);
-                            //mainDataWarehouseService.ExecuteScript("BuildWarehouse", "BuildInvoiceFiltersDimensionsTable", destinationConnectionString);
-
-                            stepName = "RunOtherScripte";
-                            mainDataWarehouseService.RunAdditionalScripte(destinationConnectionString, tableNameLists);
-
-
-                            Parallel.ForEach(tableNameLists.Where(d => d.HasDimensionTable).ToList(), (table) =>
+                            if (DIMCheckBox.Checked)
                             {
-                                Stopwatch stopWatchDimensionsTable = null;
 
-                               //if (table.Dw_TableName == "dw_ARInvoiceTypes")
-                               // { 
-                               // }
+                                stepName = "BuildDateDimensionsTable";
+                                mainDataWarehouseService.ExecuteFixedDimensionScripts(destinationConnectionString);
 
-                                if (table.DispayInScreen)
+                                stepName = "RunOtherScripte";
+                                mainDataWarehouseService.RunAdditionalScripte(destinationConnectionString, tableNameLists);
+
+                                Parallel.ForEach(tableNameLists.Where(d => d.HasDimensionTable).ToList(), (table) =>
                                 {
-                                    stopWatchDimensionsTable = new Stopwatch();
-                                    stopWatchDimensionsTable.Start();
-                                    SetControlPropertyValue("Text", "Building ...", table, "DIM");
-                                    SetControlPropertyValue("ForeColor", Color.Black, table, "DIM");
-                                }
+                                    Stopwatch stopWatchDimensionsTable = null;
 
-                                stepName = table.BuildScriptName;
+                                    if (table.DispayInScreen)
+                                    {
+                                        stopWatchDimensionsTable = new Stopwatch();
+                                        stopWatchDimensionsTable.Start();
+                                        SetControlPropertyValue("Text", "Building ...", table, "DIM");
+                                        SetControlPropertyValue("ForeColor", Color.Black, table, "DIM");
+                                    }
 
-                                mainDataWarehouseService.BuildDimensionTable(destinationConnectionString, table);
+                                    stepName = table.BuildScriptName;
 
-                                if (table.DispayInScreen)
-                                {
-                                    stopWatchDimensionsTable.Stop();
-                                    TimeSpan stopWatchDimensionsTableTs = stopWatchDimensionsTable.Elapsed;
-                                    SetControlPropertyValue("Text", "Done in ( " + stopWatchDimensionsTableTs.ToString(@"hh\:mm\:ss") + " )", table, "DIM");
-                                    SetControlPropertyValue("ForeColor", Color.Green, table, "DIM");
+                                    mainDataWarehouseService.BuildDimensionTable(destinationConnectionString, table);
 
-                                }
+                                    if (table.DispayInScreen)
+                                    {
+                                        stopWatchDimensionsTable.Stop();
+                                        TimeSpan stopWatchDimensionsTableTs = stopWatchDimensionsTable.Elapsed;
+                                        SetControlPropertyValue("Text", "Done in ( " + stopWatchDimensionsTableTs.ToString(@"hh\:mm\:ss") + " )", table, "DIM");
+                                        SetControlPropertyValue("ForeColor", Color.Green, table, "DIM");
 
-                            });
+                                    }
+
+                                });
+
+                            }
+
                             #endregion
 
+
+
+
+
+
                             #region  Create and Build Fact Table
-                            Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) =>
-                            {
-                                stepName = table.BuildScriptName;
 
-                                Stopwatch stopWatchDFactTable = new Stopwatch();
-                                stopWatchDFactTable.Start();
+                            if (FactCheckBox.Checked) {
 
-                                SetControlPropertyValue("ForeColor", Color.Black, table, "Fact");
-                                SetControlPropertyValue("Text", "Building...", table, "Fact");
+                                Parallel.ForEach(tableNameLists.Where(d => d.HasFactTable).ToList(), (table) =>
+                                {
+                                    stepName = table.BuildScriptName;
 
-                                mainDataWarehouseService.BuildFactTable(destinationConnectionString, table);
+                                    Stopwatch stopWatchDFactTable = new Stopwatch();
+                                    stopWatchDFactTable.Start();
 
-                                stopWatchDFactTable.Stop();
-                                TimeSpan stopWatchDFactTableTs = stopWatchDFactTable.Elapsed;
-                                SetControlPropertyValue("ForeColor", Color.Green, table, "Fact");
-                                SetControlPropertyValue("Text", "Done in ( " + stopWatchDFactTableTs.ToString(@"hh\:mm\:ss") + " )", table, "Fact");
+                                    SetControlPropertyValue("ForeColor", Color.Black, table, "Fact");
+                                    SetControlPropertyValue("Text", "Building...", table, "Fact");
 
-                            });
+                                    mainDataWarehouseService.BuildFactTable(destinationConnectionString, table);
+
+                                    stopWatchDFactTable.Stop();
+                                    TimeSpan stopWatchDFactTableTs = stopWatchDFactTable.Elapsed;
+                                    SetControlPropertyValue("ForeColor", Color.Green, table, "Fact");
+                                    SetControlPropertyValue("Text", "Done in ( " + stopWatchDFactTableTs.ToString(@"hh\:mm\:ss") + " )", table, "Fact");
+
+                                });
+                            }
 
                             #endregion
 
@@ -273,16 +282,25 @@ namespace WarehouseData
                             IsBuildDataRunning = false;
 
                         }
-                        catch (Exception ex)
+
+
+                        catch (AggregateException aggregateException)
                         {
+
+                            foreach (var exception in aggregateException.Flatten().InnerExceptions)
+                            {
+                                MessageBox.Show(GeneralDataWarehouseService.GetFullExceptionMessageFromException(exception) , stepName);
+                            }
                             IsBuildDataRunning = false;
 
-                            string message = ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : "");
-                            if (message.Length > 1500) message = message.Substring(0, 1500);
-
-
-                            MessageBox.Show(message, stepName);
                         }
+                        catch (Exception exception)
+                        {
+                            MessageBox.Show(GeneralDataWarehouseService.GetFullExceptionMessageFromException(exception) , stepName);
+                            IsBuildDataRunning = false;
+
+                        }
+
                     }
 
                 }
@@ -345,10 +363,11 @@ namespace WarehouseData
                     long countStart = System.Convert.ToInt32(
                         commandRowCount.ExecuteScalar());
                     DisplayCountValueToScreen(table, typeTable, countStart);
+                    sourceConnection.Close();
                 }
                 catch (Exception ex)
                 {
-
+                    sourceConnection.Close();
                     MessageBox.Show(ex.Message);
                 }
             }

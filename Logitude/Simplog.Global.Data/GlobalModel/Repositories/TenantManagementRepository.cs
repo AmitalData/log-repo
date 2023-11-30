@@ -5,6 +5,7 @@ using Simplog.Global.Data.GlobalModel;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using System.Security.Cryptography;
+using System;
 
 namespace Simplog.Global.Data.GlobalModel.Repositories
 {
@@ -190,6 +191,20 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
            }
 
            return isExist ;
+        }
+
+        public Tuple<bool, int?> CheckSubDomainTenantManagement(string subDomain, int tenant)
+        {
+            bool isExist = false;
+            TenantManagement myTenant = context.TenantManagements
+                                               .FirstOrDefault(a => a.CustomerURL == subDomain 
+                                                                    && a.Id != tenant);
+            if (myTenant != null)
+            {
+                isExist = true;
+            }
+
+            return Tuple.Create(isExist, myTenant?.Id);
         }
 
         public TenantManagement GetSingleTenantManagementPMByListOfEmails(List<string> emails)

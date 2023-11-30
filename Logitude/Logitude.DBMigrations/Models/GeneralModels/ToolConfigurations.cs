@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Logitude.DBMigrations.Models
+﻿namespace Logitude.DBMigrations.Models
 {
     public static class ToolConfigurations
     {
@@ -27,19 +20,19 @@ namespace Logitude.DBMigrations.Models
 
         public static string GetConnectionString(string databaseType)
         {
-            if (databaseType.ToLower() == "Global".ToLower())
+            if (databaseType?.ToLower() == "Global".ToLower())
             {
                 return GlobalConnectionString;
             }
-            else if (databaseType.ToLower() == "Main".ToLower())
+            else if (databaseType?.ToLower() == "Main".ToLower())
             {
                 return MainConnectionString;
             }
-            else if (databaseType.ToLower() == "SystemLogs".ToLower())
+            else if (databaseType?.ToLower() == "SystemLogs".ToLower())
             {
                 return SystemLogsConnectionString;
             }
-            else if (databaseType.ToLower() == "CargoTracking".ToLower())
+            else if (databaseType?.ToLower() == "CargoTracking".ToLower())
             {
                 return CargoTrackingConnectionString;
             }

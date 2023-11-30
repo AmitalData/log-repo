@@ -25,7 +25,11 @@ namespace Logitude.Social.Data.EntityListQueryServices
             this.context = context;
         }
 
-        public List<GroupList> GetList(QueryOperations queryOperations, int tenant)
+        public List<GroupList> GetList(QueryOperations queryOperations, int tenant ){
+		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
+		 }
+
+        public List<GroupList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -37,9 +41,9 @@ namespace Logitude.Social.Data.EntityListQueryServices
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
             iQueryable = filter.GetFilteredQuery<Group>(nonListQueryOperation, iQueryable);
 
@@ -48,6 +52,7 @@ namespace Logitude.Social.Data.EntityListQueryServices
             IQueryable<GroupList> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<GroupList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<GroupList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -144,7 +149,14 @@ namespace Logitude.Social.Data.EntityListQueryServices
            
         }
 
-        public int GetListCount(QueryOperations queryOperations, int tenant)
+
+		
+        public int GetListCount(QueryOperations queryOperations, int tenant ){
+		 		  return GetListCount(queryOperations,tenant, new TreeFilterQueryArgs());
+
+		 }
+
+        public int GetListCount(QueryOperations queryOperations, int tenant  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -156,20 +168,24 @@ namespace Logitude.Social.Data.EntityListQueryServices
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
             
 			iQueryable = filter.GetFilteredQuery<Group>(nonListQueryOperation, iQueryable);
+
+
 
             IQueryable<GroupList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<GroupList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<GroupList>(query2, treeFilterQueryArgs);
+
             int count = query2.Count();
             return count;
         }
 
-      
+
     }
 }
 	 

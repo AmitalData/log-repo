@@ -51,6 +51,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public string AutomationId { get; set; }
 
         public string AttachedExternalDocumentsIds { get; set; }
+        public bool IsSystem { get; set; }
 
 
         public string DefultAttachmentsXML { get; set; }
@@ -68,9 +69,9 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("AutomationId")]
         public virtual Automation Automation { get; set; }
 
+        public string EntityId { get; set; }
 
-
-
+        public string ObjectTableId { get; set; }
 
     }
 }

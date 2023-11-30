@@ -15,6 +15,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             var pmList = listPoco.Select(poco => this.GetEntityPM(poco)).ToList();
             return pmList;
         }
+        public List<TaxReportLinePM> GetAllLines(int tenant, string taxReportId)
+        {
+            var listPoco = this.repository.GetAllLines(tenant, taxReportId).ToList();
+            var pmList = listPoco.Select(poco => this.GetEntityPM(poco)).ToList();
+            return pmList;
+        }
 
     }
 }

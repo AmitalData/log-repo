@@ -4,9 +4,12 @@ using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.Data.Utilities;
 using Logitude.Accounting.Def.EntityPMs;
 using Logitude.Server.Tools.Helpers;
+using NPOI.SS.Formula.Functions;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
@@ -31,6 +34,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 {
     public partial class LedgerTransactionsController : ApiController
     {
+        decimal CumulativeLocalAmount = 0;
         [HttpGet]
         public HttpResponseMessage GetLedgerTransactionsByFilters([FromUri] ApiQueryFilters filters)
         {
@@ -40,20 +44,42 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 int tenant = AuthinticateTenant();
                 LedgerTransactionBalanceFilterCreateLTBFilter ledgerTransactionBalanceFilterCreateLTBFilter = new LedgerTransactionBalanceFilterCreateLTBFilter();
                 LedgerTransactionBalanceFilter LTBFilter = ledgerTransactionBalanceFilterCreateLTBFilter.CreateLTBFilter(filters, tenant);
-                var accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
+                LedgerTransactionHelper ledgerTransactionHelper = new LedgerTransactionHelper();
+                IAccountingContext  accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
                 var ledgerTransactionBalanceService = new LedgerTransactionBalanceService(accountingContext, LTBFilter);
-                ledgerTransactionBalanceService.Run();
+                List<LedgerTransactionList> ledgerTransactions = new List<LedgerTransactionList>();
+                
+                if (LTBFilter.UseTaxreportFilter)
+                {
+                   
+                        ledgerTransactions = GetLedgerTransactinByTaxReportId(LTBFilter);
 
+                    ledgerTransactions.ForEach(rec =>
+                    {
+                            rec.CumulativeLocalAmount = SetCumulativeLocalAmount(rec);                      
+                            ledgerTransactionBalanceService.MapLedgerTransactionLine(rec, ledgerTransactionHelper, false);
+                    });
+                }
+               
+               
+                else
+                {
+                    ledgerTransactionBalanceService.Run();
+                }
+                 
 
                 ServiceResponse response = new ServiceResponse();
+               
+                if(LTBFilter.CurrencyId != null && ledgerTransactions.Count>0)
+                {
+                    ledgerTransactions = ledgerTransactions.Where(d => d.CurrencyId == LTBFilter.CurrencyId).ToList();
+                }
                 if (filters.GetCount)
                 {
-                    int count = ledgerTransactionBalanceService.Response.TotalRowCount.Value;
-                    response.Count = count;
+                    response.Count =  LTBFilter.DateTypeCode == "4" ? LTBFilter.TaxReportTotalCount : ledgerTransactionBalanceService.Response.TotalRowCount.Value;
                 }
-
-                response.Result = ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
-                response.TookMS = ledgerTransactionBalanceService.Response.TookMS;
+                response.Result = LTBFilter.DateTypeCode == "4" ? ledgerTransactions : ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
+                response.TookMS = LTBFilter.DateTypeCode != "4" ? ledgerTransactionBalanceService.Response.TookMS: 0;
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 
@@ -65,7 +91,24 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
-        public HttpResponseMessage GetTransactionsCurrencies(string AccountId)
+
+        private decimal SetCumulativeLocalAmount(LedgerTransactionList ledger)
+        {
+            decimal LocalAmountDebit = ledger.LocalAmountDebit;
+            decimal LocalAmountCredit = ledger.LocalAmountCredit;
+            CumulativeLocalAmount += (LocalAmountDebit - LocalAmountCredit);
+            return CumulativeLocalAmount;
+        }
+
+
+        private List<LedgerTransactionList> GetLedgerTransactinByTaxReportId(LedgerTransactionBalanceFilter LTBFilter)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(LTBFilter.Tenant);
+            LedgerTransactionListQueryService ledgerTransactionListQueryService = new LedgerTransactionListQueryService(accountingContext);
+           return ledgerTransactionListQueryService.GetReportLinesLedgerTransactions(LTBFilter).OrderByDescending(d=> d.AccountingDate).ToList();                 
+        }
+
+        public HttpResponseMessage GetTransactionsCurrencies(string AccountId, bool splittedByCurrencyCheckBox, bool attachedGLAccountChanged)
         {
             try
             {
@@ -76,7 +119,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 List<string> currenciesIds = _LedgerTransactionQueryService.GetTransactionsCurrencies(AccountId, tenant);
 
+                currenciesIds = currenciesIds.Where(x => !x.Contains("1-581")).ToList();
+                if (splittedByCurrencyCheckBox) {
+                    GLAccountCurrencyQueryService accountcurrencyQueryService = new GLAccountCurrencyQueryService(tenant);
 
+                    var currencies = accountcurrencyQueryService.GetRelatedCurrenciesAccountByCustomerGLAccount(AccountId, tenant);
+                    currenciesIds.AddRange(currencies.Select(x => x.CurrencyId));
+                }
+
+                if (attachedGLAccountChanged)
+                {
+                    GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
+
+                    var childAccountsCurrencies = gLAccountQueryService.GetChildAccountsCurrencies(tenant, AccountId);
+                    currenciesIds.AddRange(childAccountsCurrencies);
+                }
+
+                
                 ServiceResponse response = new ServiceResponse();
                 response.Result = currenciesIds;
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
@@ -97,8 +156,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             try
             {
                 string accountId = GetGLAccountFilterValueFromQueryOperations(filters, tenant);
+                string cardId = GetCardIdFilterValueFromQueryOperations(filters, tenant);
+                string isFutureOpenCheques = GetIsFutureOpenChequesFilterValueFromQueryOperations(filters, tenant);
 
-                List<LedgerTransactionList> tranactions = GetAccountChequesTransactions(tenant, accountId);
+                string isUnpaidChecks = GetIsUnpaidChecksFilterValueFromQueryOperations(filters, tenant);
+
+
+                List<LedgerTransactionList> tranactions = GetAccountChequesTransactions(tenant, accountId, cardId, isFutureOpenCheques, isUnpaidChecks, filters.SortBy, filters.SortDirection);
 
                 ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
@@ -124,11 +188,34 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             return accountId;
         }
 
-        private static List<LedgerTransactionList> GetAccountChequesTransactions(int tenant, string accountId)
+        private static string GetCardIdFilterValueFromQueryOperations(ApiQueryFilters filters, int tenant)
+        {
+            QueryOperations queryOperations = BuildQueryOperationsForLedgerTransactions(filters, tenant);
+            string cardId = GetCardIdFilterValue(queryOperations);
+            return cardId;
+        }
+
+        private static string GetIsFutureOpenChequesFilterValueFromQueryOperations(ApiQueryFilters filters, int tenant)
+        {
+            QueryOperations queryOperations = BuildQueryOperationsForLedgerTransactions(filters, tenant);
+            string IsFutureOpenCheques = GetIsFutureOpenChequesFilterValue(queryOperations);
+            return IsFutureOpenCheques;
+        }
+
+        private static string GetIsUnpaidChecksFilterValueFromQueryOperations(ApiQueryFilters filters, int tenant)
+        {
+            QueryOperations queryOperations = BuildQueryOperationsForLedgerTransactions(filters, tenant);
+
+            QueryFilterItem filterItem = queryOperations?.QueryFilterItems.Find(d => d.FieldName == "IsUnpaidChecks");
+            string isUnpaidChecks = filterItem?.FieldValue.ToString();
+            return isUnpaidChecks;
+        }
+
+        private static List<LedgerTransactionList> GetAccountChequesTransactions(int tenant, string accountId,string cardId, string isFutureOpenCheques, string isUnpaidChecks, string sortBy, string sortDirection)
         {
             IAccountingContext MyContext = AccountingContext.GetContext(tenant);
-            GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, MyContext);
-            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(accountId);
+            GLAccountChequesTransactionsRetreivingService ledgerTransactionRetreivingService = new GLAccountChequesTransactionsRetreivingService(tenant, MyContext, isFutureOpenCheques == "True", isUnpaidChecks == "True");
+            List<LedgerTransactionList> tranactions = ledgerTransactionRetreivingService.GetAccountChequesTransactions(accountId, sortBy, sortDirection, cardId);
             return tranactions;
         }
 
@@ -198,6 +285,19 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == "GLAccountId");
             return filterItem?.FieldValue.ToString();
 
+        }
+
+        private static string GetCardIdFilterValue(QueryOperations queryOperations)
+        {
+            QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == "CardId");
+            return filterItem?.FieldValue.ToString();
+
+        }
+
+        private static string GetIsFutureOpenChequesFilterValue(QueryOperations queryOperations)
+        {
+            QueryFilterItem filterItem = queryOperations.QueryFilterItems.Find(d => d.FieldName == "IsFutureOpenCheques");
+            return filterItem?.FieldValue.ToString();
         }
 
         private static int AuthinticateTenant()
@@ -475,6 +575,32 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 string accountId = GetGLAccountIdForReconciledTransactions(billToGLAccountId, tenant, paymentCurrencyId);
 
                 ARPaymentInvoicesTransactionFetcher invoiceTransactionsFetcher = new ARPaymentInvoicesTransactionFetcher(arpaymentId, accountId, tenant);
+                var transactions = invoiceTransactionsFetcher.FetchSorted();
+
+                HttpResponseMessage reponseMessage = BuildResponseMessage(transactions);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        [HttpGet]
+        public HttpResponseMessage GetTransactionsForAPPayment(string appaymentId, string billToGLAccountId, string paymentCurrencyId)
+        {
+            try
+
+            {
+                int tenant = GetAuthinticatedTenant();
+
+                if (appaymentId == "undefined") appaymentId = null;
+
+                string accountId = GetGLAccountIdForReconciledTransactions(billToGLAccountId, tenant, paymentCurrencyId);
+
+                APPaymentInvoicesTransactionFetcher invoiceTransactionsFetcher = new APPaymentInvoicesTransactionFetcher(appaymentId, accountId, tenant);
                 var transactions = invoiceTransactionsFetcher.FetchSorted();
 
                 HttpResponseMessage reponseMessage = BuildResponseMessage(transactions);

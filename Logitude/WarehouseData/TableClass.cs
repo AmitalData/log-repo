@@ -33,6 +33,7 @@ namespace WarehouseData
         public string RefreshIds { get; set; }
         public string ParentKeyName { get; set; }
         public string ObjectTableName { get; set; }
+         
 
         public string AdditionalIndexes { get; set; }
         
@@ -45,6 +46,10 @@ namespace WarehouseData
         public bool HasMultipleDWTables { get; set; }
         public List<string> MultipleDW_TablesNames { get; set; }
         public List<string> MultipleTablesNames { get; set; }
+        public int BatchesCount { get; set; }
+        public bool UseBatches { get; set; }
+        public int DataCount { get; set; }
+
 
     }
 

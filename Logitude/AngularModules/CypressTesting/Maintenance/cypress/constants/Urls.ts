@@ -25,9 +25,7 @@ export class Urls {
     public static readonly PutQuoteTemplateTextDesignPMs = "**/PutQuoteTemplateTextDesignPMs";
     public static readonly PutQuoteTemplateHeaderFields = "**/PutQuoteTemplateHeaderFields";
     public static readonly PutQuoteTemplateDetailsFields = "**/PutQuoteTemplateDetailsFields";
-
     public static readonly AccountingSettings = "**/accountingsettings"
-
     public static readonly Tenants = "**/tenants"
     public static readonly PostChangePassword = '**/PostChangeUserPassword'
 
@@ -54,7 +52,7 @@ export class Urls {
     public static readonly Branches = "**/branches"
     public static readonly BranchesGetSingle = "**/branches/getsingle?**"
     public static readonly BranchesviewGetSingle = "**/branchviews/getsingle/?**";
-    public static readonly BrancheAddress = "**/addresses"
+    public static readonly Addresses = "**/addresses"
 
     public static readonly ShippingLines = "**/shippinglines"
     public static readonly ShippingLinesGetSingle = "**/shippinglines/getsingle?**"
@@ -98,6 +96,9 @@ export class Urls {
 
     public static readonly CustomAgents = "**/customagents"
     public static readonly CustomAgentsGetSingle = "**/customagents/getsingle?**"
+   
+    public static readonly Agents = "**/agents"
+    public static readonly AgentsGetSingle = "**/agents/getsingle?**"
 
     public static readonly Truckers = "**/truckers"
     public static readonly TruckersGetSingle = "**/truckers/getsingle?**"
@@ -140,11 +141,28 @@ export class Urls {
     public static readonly OccasionTypesGetSingle = "**/occasiontypes/getsingle?**";
     public static readonly OccasionTypesviewGetSingle = "**/occasiontypeviews/getsingle/?**";
 
+    public static readonly Users = "**/users";
+    public static readonly UsersGetSingle = "**/users/getsingle?**";
+
+    public static readonly Customers = "**/customers";
+    public static readonly CustomerGetSingle = "**/customers/getsingle?**";
+
+    public static readonly Report = " **/reports"
+    
+    public static readonly EntityResource = '**/EntityResource?**';
+    public static readonly ObjectFields = '**/objectfields';
+
+    public static readonly Signature='**/PutSaveDocumentTypeTemplate'
+
     public static GetFilterSearch(filterBy: string) {
         return '**/getbyfilters?**' + filterBy + '**'
     }
 
-    public static GetQuickSearch(CustomerNumber: string): string {
+    public static GetCustomersQuickSearch(CustomerNumber: string): string {
         return "**/GetCustomersQuickSearch?**" + CustomerNumber + "**";
+    }
+
+    public static GetQuickSearch(searchFieldValue: string): string {
+        return "**/GetQuickSearch?**" + searchFieldValue + "**";
     }
 }

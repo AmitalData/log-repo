@@ -63,6 +63,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     public MarkIsChecked: EventEmitter<any> = new EventEmitter();
     @Output() DataLoaded = new EventEmitter();
     @Output() CountReady = new EventEmitter();
+    @Output() AllRecordsReady = new EventEmitter();
     @Output() FirstRowSelected = new EventEmitter();
     @Output() MenuHeaderchanged = new EventEmitter();
     @Output() RowOverEvent = new EventEmitter();
@@ -644,6 +645,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
 
         }
         else if (!AppTool.IsNullOrEmpty(filters.MyName)) {
+            var filterOperator = "Between";
             var TommorowDate = DateTool.AddDays((new Date()), 1);
             TommorowDate.setUTCHours(0, 0, 0, 0);
             var TodayDate = new Date();
@@ -693,17 +695,26 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
                 filters.TextValue = LastYearFromDate;
                 filters.TextValue1 = LastYearToDate;
                 filters.MyName = "Last Year";
-
+            }
+            else if (filters.TextValue == "Less than Today") {
+                filters.TextValue = TodayDate;
+                filters.MyName = "Less than Today";
+                filterOperator ="LessThan";
+            }
+            else if (filters.TextValue == "Less than or equal Today") {
+                filters.TextValue = TommorowDate;
+                filters.MyName = "Less than or equal Today";
+                filterOperator ="LessThan";
             }
             if (this.Filters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.Filters.AdditionalFilters = this.Filters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
-            this.Filters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, "Between", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+            this.Filters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, filterOperator, filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
 
             if (this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
                 this.AdvanceFilters.AdditionalFilters = this.AdvanceFilters.AdditionalFilters.filter(a => a.FieldName != filters.FieldName);
             }
-            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, "Between", filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
+            this.AdvanceFilters.addAdditionalFilter(filters.FieldName, filters.TextValue, filters.TextValue1, null, filterOperator, filters.ObjectField.IsCustomFilter, filters.ObjectField.DisplayInList, filters.ObjectField.IsCustom, filters.ObjectField.DataTypeCode);
         }
         else if (filters.TextValue1) {
             if (this.Filters.AdditionalFilters.filter(a => a.FieldName == filters.FieldName).length > 0) {
@@ -1445,6 +1456,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     customHeight: number;
     requestedRowsReadySub: any;
     requestedRowCountSub: any;
+    allRecordsSub: any;
     SpotlightDataTemplate: string;
     public MyScrollTop: number = 0;
     public MySelectedRowIndex: number = null;
@@ -1585,6 +1597,12 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
             //    this.BackFromEditSub = null;
             //    this.MyScrollTop = (res.rowIndex * this.rowHeight) - this.rowHeight;
             //});
+        });
+        if (this.allRecordsSub) {
+            this.allRecordsSub.unsubscribe();
+        }
+        this.allRecordsSub = this.controller.allRecords.subscribe((res) => {
+            this.AllRecordsReady.emit(res);
         });
         this.GetRowCount(reload);
        };

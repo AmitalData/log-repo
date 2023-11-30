@@ -9,6 +9,8 @@ export class DocumentPermissiosViewModel {
     public CustomerChooseCheckedBoxId: string;
     public AgentSuggestedIsCheckedBoxId: string;
     public AgentChooseIsCheckedBoxId: string;
+    public CustomerPermissionCheckedBoxId: string;
+    public CustomerUploadPermissionSuggestedCheckedBoxId: string;
     public entityPM: DocumentTypePM;
 
     private entityPM_TenantZero: DocumentTypePM;
@@ -20,6 +22,8 @@ export class DocumentPermissiosViewModel {
         this.CustomerSuggestedCheckedBoxId = Guid.newGuid();
         this.AgentChooseIsCheckedBoxId = Guid.newGuid();
         this.AgentSuggestedIsCheckedBoxId = Guid.newGuid();
+        this.CustomerPermissionCheckedBoxId = Guid.newGuid();
+        this.CustomerUploadPermissionSuggestedCheckedBoxId = Guid.newGuid();
     }
 
     public get DocumentTypeName() {
@@ -28,6 +32,10 @@ export class DocumentPermissiosViewModel {
 
     public get CustomerSuggestedIsChecked() {
         return this.entityPM_TenantZero ? this.entityPM_TenantZero.IsCustomerView : false
+    }
+
+    public get CustomerUploadPermissionSuggestedIsChecked() {
+        return this.entityPM_TenantZero ? this.entityPM_TenantZero.IsCustomerUploadPermission : false
     }
 
     public get AgentSuggestedIsChecked() {
@@ -59,4 +67,18 @@ export class DocumentPermissiosViewModel {
             this.entityPM.IsAgentView = value;
         }
     }
+
+    public get CustomerPermissionIsChecked() {
+        if (this.entityPM) {
+            return this.entityPM.IsCustomerUploadPermission;
+        }
+        else return false;
+    }
+
+    public set CustomerPermissionIsChecked(value: boolean) {
+        if (this.entityPM != null) {
+            this.entityPM.IsCustomerUploadPermission = value;
+        }
+    }
+
 }

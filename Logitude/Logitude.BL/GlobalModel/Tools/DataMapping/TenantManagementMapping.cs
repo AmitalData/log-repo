@@ -117,8 +117,13 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.RegisteredAirlines = entityPM.RegisteredAirlines;
             entityPOCO.PendingAirlines = entityPM.PendingAirlines;
             entityPOCO.EnableBranding = entityPM.EnableBranding;
+            entityPOCO.EnableExportToExcel = entityPM.EnableExportToExcel;
+            entityPOCO.ActivatePrivateSite = entityPM.ActivatePrivateSite;
             entityPOCO.ContactEmail = entityPM.ContactEmail;
             entityPOCO.CustomerURL = entityPM.CustomerURL;
+            entityPOCO.ActivatedforDeclarationApprove = entityPM.ActivatedforDeclarationApprove;
+            entityPOCO.ShowMoneyOrder = entityPM.ShowMoneyOrder;
+            entityPOCO.DeclarationMessage = entityPM.DeclarationMessage;
             entityPOCO.HideSharedlogistics = entityPM.HideSharedlogistics;
             entityPOCO.SilverlightEndDate = entityPM.SilverlightEndDate;
             entityPOCO.IsParentTenant = entityPM.IsParentTenant;
@@ -127,6 +132,7 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.AgentSharedLogisticsStatisticsLastWeek = entityPM.AgentSharedLogisticsStatisticsLastWeek;
             entityPOCO.AgentSharedLogisticsStatisticsLastMonth = entityPM.AgentSharedLogisticsStatisticsLastMonth;
             entityPOCO.ChangeHeaderColor = entityPM.ChangeHeaderColor;
+            entityPOCO.HeaderColor = entityPM.HeaderColor;
             entityPOCO.StockTypeCode = entityPM.StockTypeCode;
             entityPOCO.PackageCodeSearchField = entityPM.PackageCodeSearchField;
             entityPOCO.IsINTTRAStockPrepaid = entityPM.IsINTTRAStockPrepaid;
@@ -139,12 +145,14 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.TotalFreeUsers = entityPM.TotalFreeUsers;
             entityPOCO.AveragePrice = entityPM.AveragePrice;
             entityPOCO.TotalPaymentamount = entityPM.TotalPaymentamount;
+            entityPOCO.TertiaryColor = entityPM.TertiaryColor;
             entityPOCO.SecondaryColor = entityPM.SecondaryColor;
             entityPM.MainColor = entityPM.MainColor;
             entityPM.SecondaryColor = entityPM.SecondaryColor;
             entityPOCO.ComapnylogoId = entityPM.ComapnylogoId;
             entityPOCO.InvertedLogoId = entityPM.InvertedLogoId;
             entityPOCO.BackgroundId = entityPM.BackgroundId;
+            entityPOCO.MobileBackgroundId = entityPM.MobileBackgroundId;
             entityPOCO.BrowserIconId = entityPM.BrowserIconId;
             entityPOCO.ShipmentHeaderImageId = entityPM.ShipmentHeaderImageId;
             entityPOCO.NoPaymentForChildTenants = entityPM.NoPaymentForChildTenants;
@@ -159,7 +167,24 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.LastTariffUsageDate = entityPM.LastTariffUsageDate;
             entityPOCO.LastWeekCreatedTariffs = entityPM.LastWeekCreatedTariffs;
             entityPOCO.LastMonthCreatedTariffs = entityPM.LastMonthCreatedTariffs;
+            entityPOCO.PermissionBuildMonths = entityPM.PermissionBuildMonths;
             entityPOCO.ScheduledTasksLimitPerReport = entityPM.ScheduledTasksLimitPerReport;
+            entityPOCO.WhatsAppMessagingPhoneNumber = entityPM.WhatsAppMessagingPhoneNumber;
+            entityPOCO.CargoTokenTimeout = entityPM.CargoTokenTimeout;
+            entityPOCO.IsContainerTrackingPrepaid = entityPM.IsContainerTrackingPrepaid;
+            entityPOCO.DigitalPortalLastDate = entityPM.DigitalPortalLastDate;
+            entityPOCO.DigitalPortalTotalLastWeek = entityPM.DigitalPortalTotalLastWeek;
+            entityPOCO.DigitalPortalTotalLastMonth = entityPM.DigitalPortalTotalLastMonth;
+            entityPOCO.DigitalPortalMobileLastDate = entityPM.DigitalPortalMobileLastDate;
+            entityPOCO.DigitalPortalMobTotalLastWeek = entityPM.DigitalPortalMobTotalLastWeek;
+            entityPOCO.DigitalPortalMobTotalLastMonth = entityPM.DigitalPortalMobTotalLastMonth;
+            entityPOCO.DPArchiveShipmentCreateFilter  = entityPM.DPArchiveShipmentCreateFilter;
+            entityPOCO.DPArchiveShipmentArrivalFilter = entityPM.DPArchiveShipmentArrivalFilter;
+            entityPOCO.DPArchiveShipmentDepartFilter =  entityPM.DPArchiveShipmentDepartFilter;
+            entityPOCO.CargoTrackingPublicShowEvents = entityPM.CargoTrackingPublicShowEvents;
+            entityPOCO.CargoTrackingPrivateShowEvents = entityPM.CargoTrackingPrivateShowEvents;
+            entityPOCO.LogoURL = entityPM.LogoURL;
+            entityPOCO.ServiceAgreementURL = entityPM.ServiceAgreementURL;
 
             string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -178,8 +203,9 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
                     tenant.Company = entityPM.Name;
                     if(LBtenantsetting!= null)
                     {
-    LBtenantsetting.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
-                    LBtenantsetting.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
+                        LBtenantsetting.DocumentShareAsDefault = entityPM.DocumentShareAsDefault;
+                        LBtenantsetting.AutoArchiveOnInvoice = entityPM.AutoArchiveOnInvoice;
+                        LBtenantsetting.AutoArchiveOnPODExport = entityPM.AutoArchiveOnPODExport;
                     }
                 
                     if (!entityPM.ManagesRegisteredAgent)
@@ -190,6 +216,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
 
                     tenant.IsTestTenant = entityPM.IsTestTenant;
                     tenant.IsHybrid = entityPM.IsHybrid;
+                    tenant.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
+
 
                     tenantRepository.Update(tenant);
                     tenantRepository.SubmitChanges();

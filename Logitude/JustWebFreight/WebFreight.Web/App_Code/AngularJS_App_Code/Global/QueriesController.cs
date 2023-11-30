@@ -77,6 +77,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("", entityPM.Tenant, authToken.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 QueryService service = new QueryService(objectContext, entityPM.Tenant);
                 entityPM.Id = IdCounter.GetNumber("Query", entityPM.Tenant).ToString();
@@ -103,6 +104,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("", entityPM.Tenant, authToken.Tenant);
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 QueryService service = new QueryService(objectContext, entityPM.Tenant);
                 //entityPM.OriginalQueryId = null;
@@ -190,6 +192,28 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 QueryPM queryPM = queryQuery.GetSingleQueryPM(UniqueCode, authToken.Tenant);
                 
                 return Request.CreateResponse(HttpStatusCode.OK, queryPM);
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetAllSystemViewsByObjectTable(string objectTableName)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                QueryQuery queryQuery = new QueryQuery(authToken.Tenant);
+                List<QueryPM> queriesPM = queryQuery.GetQueryPMsByTenant(authToken.Tenant).Where(query => query.ObjectTableName == objectTableName && query.SystemLevel).ToList();
+
+                return Request.CreateResponse(HttpStatusCode.OK, queriesPM);
 
             }
             catch (Exception ex)

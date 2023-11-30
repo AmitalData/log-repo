@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Accounting.Data.EntityPOCOs;
 using Logitude.Accounting.Data.EntityLists;
+using Logitude.Accounting.Data.Enums;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -41,6 +42,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                      Message = a.Message,
                                                      Status = a.Status,
                                                      StatusName = a.RevaluationStatus != null ? a.RevaluationStatus.LocalName : a.RevaluationStatus.Name,
+                                                     RevaluationsGLAccountId = a.RevaluationsGLAccountId,
+                                                     RevaluationsGLAccountName = a.RevaluationGLAccount != null ? a.RevaluationGLAccount.LocalName : null,
                                                  });
             return query;
         }
@@ -58,7 +61,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public List<RevaluationList> GetOpenRevaluationList(int tenant)
         {
             IQueryable<Revaluation> revaluationQuery = (from a in context.Revaluations
-                                                    where a.Tenant == tenant && ((a.Status == "" || a.Status != "2") && (a.RevaluationDate != null || a.RevaluationDate != DateTime.MinValue))
+                                                    where a.Tenant == tenant && ((a.Status != (int)RevaluationStatusEnum.Done +"" && a.Status != (int)RevaluationStatusEnum.Failed + "") && (a.RevaluationDate != null || a.RevaluationDate != DateTime.MinValue))
                                                     select a);
 
             IQueryable<RevaluationList> revaluationListQuery = this.GetIqueryableList(revaluationQuery);

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
 import {AppTool} from '../../Infrastructure/Tools';
@@ -18,6 +18,7 @@ import {ARPaymentInvoicePM} from '../EntityPMs/ARPaymentInvoicePM';
 import {APInvoiceMultipleShortPM} from '../EntityPMs/APInvoiceMultipleShortPM';
 import {APInvoiceLinePM} from '../EntityPMs/APInvoiceLinePM';
 import {Guid} from '../../Infrastructure/Utilities/Guid';
+import { ARInvoicePMService } from './StandardPMs/ARInvoicePMService';
 
 @Injectable()
 
@@ -101,10 +102,10 @@ export class InvoiceDomainService {
             }));
         });
     }
-    GetDebrotExposure(tenant: number, currency: number) {
+    GetDebrotExposure(currencyIndex: number) {
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDebrotExposure?tenant=' + tenant + '&currency=' + currency, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDebrotExposure?currencyIndex=' + currencyIndex, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
                 return allLists;
@@ -113,10 +114,10 @@ export class InvoiceDomainService {
 
 
     }
-    GetDebrotExposureForGridControl(index: number) {
+    GetDebrotExposureForGridControl(currencyIndex: number, isBranchRestricted: boolean) {
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetDebrotExposureForGridControl?index=' + index, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetDebrotExposureForGridControl?currencyIndex=' + currencyIndex + '&isBranchRestricted=' + isBranchRestricted, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
 
@@ -129,10 +130,10 @@ export class InvoiceDomainService {
         });
 
     }
-    GetCreditorExposure(index: number) {
+    GetCreditorExposure(currencyIndex: number, isBranchRestricted: boolean) {
 
         return defer(() => {
-            return this._http.get(this._apiUrl + '/GetCreditorExposure?index=' + index, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + '/GetCreditorExposure?currencyIndex=' + currencyIndex + '&isBranchRestricted=' + isBranchRestricted, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var allLists = response;
 
@@ -382,7 +383,7 @@ export class InvoiceDomainService {
             var mappedEntity: APInvoiceMultipleShortPM;
             mappedEntity = this.MapJsonToAPInvoiceMultipleShortPM(entityPM, false);
 
-            return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            return this._http.put(this._apiUrl + "/PutAPInvoiceMultipleShortPM", JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                     var pm = res;
                     if (pm) {
                         var mappedResult: APInvoiceMultipleShortPM;
@@ -1343,6 +1344,27 @@ export class InvoiceDomainService {
             }
         }
     }
+
+    ValidateApprovalSendToSAT(aRInvoicePM: ARInvoicePM) {
+        return defer(() => {
+
+            var serviceResponse: ServiceResponse = new ServiceResponse();
+
+            var mappedEntity: ARInvoicePM;
+            let aRInvoicePMService = new ARInvoicePMService();
+            mappedEntity = aRInvoicePMService.MapJsonToEntityPM(aRInvoicePM, false);
+
+            return this._http.put(this._apiUrl + "/PutARInvoiceSATValidation", JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders()).pipe(map((result: HttpResponse<any>) => {
+                if (result && result.body) {
+                    serviceResponse.Result = result.body;
+                }
+
+                return serviceResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
     public clone(jsonPM: any) {
         var entityPM: any;
         entityPM = {};
@@ -1417,4 +1439,7 @@ export class AccountReceivablesSummary {
     public  ARInvoicesSATFailedCount: number;
     public  ARInvoicesFailedCount: number;
     public  ARPaymentFailedCount: number;
+    public  ARInvoicesSATVoidedNotTransferredCount: number;
+    public  ARInvoiceSATWaitingCancellationCount: number;
+    public  ARPaymentSATWaitingCancellationCount: number;
 }

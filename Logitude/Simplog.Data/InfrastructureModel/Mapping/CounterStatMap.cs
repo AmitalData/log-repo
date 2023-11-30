@@ -21,6 +21,10 @@ namespace Simplog.Data.InfrastructureModel.Mapping
                 .HasMaxLength(15)
                 .IsUnicode(false);
 
+            this.Property(t => t.BranchCounterCode)
+                .HasMaxLength(5)
+                .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("CounterStats");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -28,6 +32,7 @@ namespace Simplog.Data.InfrastructureModel.Mapping
             this.Property(t => t.Prefix).HasColumnName("Prefix");
             this.Property(t => t.LastValue).HasColumnName("LastValue");
             this.Property(t => t.CounterId).HasColumnName("CounterId");
+            this.Property(t => t.BranchCounterCode).HasColumnName("BranchCounterCode");
 
             // Relationships
             //this.HasRequired(t => t.Counter)

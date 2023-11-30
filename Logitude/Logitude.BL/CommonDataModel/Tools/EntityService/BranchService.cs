@@ -45,7 +45,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.Poco = new Branch();
             this.Poco.Id = this.entityPm.Id;
 
-            BranchValidating.Validate(entityPM);
+            BranchValidating.Validate(entityPM, entityRepository);
             if (!entityPm.IsHybrid)
             {
                 BranchTracing.Trace(entityPM, Poco, isNewEntity);
@@ -62,7 +62,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.entityPm = entityPM;
             this.Poco = entityRepository.GetSingleBranch(entityPM.Id, entityPm.Tenant);
 
-            BranchValidating.Validate(entityPM);
+            BranchValidating.Validate(entityPM, entityRepository);
             if (!entityPm.IsHybrid)
             {
                 BranchTracing.Trace(entityPM, Poco, isNewEntity);

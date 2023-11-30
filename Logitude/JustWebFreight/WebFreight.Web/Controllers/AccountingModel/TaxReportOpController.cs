@@ -26,6 +26,15 @@ using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using System.Text;
+using Logitude.Accounting.BL.CoreBL.Testers;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.BL.EntityUpdateServices;
+using Simplog.Server.Infrastructure;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Transactions;
+using Logitude.Accounting.BL.CloseTables;
+using Logitude.Accounting.BL.CoreBL.Batch;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -63,6 +72,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant,authToken.Tenant);
                 SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
                 int tenant = authToken.Tenant;               
                TaxReportHelper.CheckWithoutTransmitLines(authToken,entityPM);
@@ -79,6 +89,71 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+
+        public HttpResponseMessage CancelTaxReportInBatch(TaxReportPM entityPM)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant, tenant);
+
+                BatchTaskExecutionPM batchTaskPM = TaxReportService.CancelTaxReportInBatch(entityPM.Id, tenant);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, batchTaskPM);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+        public HttpResponseMessage CancelTaxReportByTester(string taxReportId)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
+                TaxReportPM taxReportPM = taxReportQueryService.GetSingle(taxReportId, false, false);
+                taxReportPM.IsCancelled = true;
+                taxReportPM.StatusCode = VatReportStatusValues.Cancelled;
+                IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
+                TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
+                taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                try
+                {
+                    taxReportUpdateService.Update(taxReportPM, true);
+                }
+                catch(Exception ex)
+                {
+                    taxReportPM.IsCancelled = false;
+                    taxReportPM.StatusCode = VatReportStatusValues.CancelationFailed;
+                    taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+                    taxReportUpdateService.Update(taxReportPM, true);
+                }
+
+                return Request.CreateResponse(HttpStatusCode.OK, taxReportPM);
+            }
+
+            catch (Exception ex)
+            {
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private static int GetAuthinticatedTenant()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
+            int tenant = authToken.Tenant;
+            return tenant;
+        }
+
         [HttpGet]
         public HttpResponseMessage GetLinesByFilters([FromUri] ApiQueryFilters filters)
         {
@@ -230,6 +305,44 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
+        public HttpResponseMessage GetReturnToDraftButtonStatus(DateTime createDate)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                AuthenticationToken authToken = GetAuthenticationToken();
+                SecurityUtility.CheckContactFeature("TaxReport", "READ", authToken.Tenant);
+                int tenant = authToken.Tenant;
+                bool FutureReportExist = CheckIfActiveFutureReportsExist(createDate,tenant);              
+                ServiceResponse response = new ServiceResponse();
+                response.Result = FutureReportExist;
+                HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+
+                return reponseMessage;
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+        private bool CheckIfActiveFutureReportsExist(DateTime createDate, int tenant)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(tenant);
+            TaxReportQueryService taxReportQueryService = new TaxReportQueryService(MyContext);
+           return taxReportQueryService.GetFutureActiveReports(createDate, tenant).Any();
+
+        }
+        private AuthenticationToken GetAuthenticationToken()
+        {
+
+            string token = HttpContext.Current.Request.Headers["Token"];
+
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            return authToken;
+        }
         public HttpResponseMessage GetErrorsCount(string reportId)
         {
             try
@@ -269,6 +382,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant, authToken.Tenant);
+
                 SecurityUtility.CheckContactFeature("TaxReport", "UPDATE", authToken.Tenant);
                 int tenant = authToken.Tenant;             
             //    entityPM = TaxReportService.CreatetTaxReportLine(entityPM);
@@ -291,13 +406,25 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("TaxReport", entityPM.Tenant, authToken.Tenant);
+
                 SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
                 int tenant = authToken.Tenant;
+                bool batchIt = true;
+                if (batchIt)
+                {
+                    BatchTaskExecutionPM btePM = TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, tenant,entityPM.RecalculateData);
 
-                BatchTaskExecutionPM btePM = TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, tenant);
 
+                    return Request.CreateResponse(HttpStatusCode.OK, btePM);
+                }
+                else
+                {
+                    DirectRun(entityPM, tenant);
+                    var res1 = new { Success = true, Message = "" };
+                    return Request.CreateResponse(HttpStatusCode.OK, res1);
 
-                return Request.CreateResponse(HttpStatusCode.OK, btePM);
+                }
             }
 
             catch (Exception ex)
@@ -307,6 +434,161 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         }
 
+
+
+        private void DirectRun(TaxReportPM taxReportPM, int tenant)
+        {
+            IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
+
+            TaxReportUpdateService taxReportUpdateService = new TaxReportUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
+
+            // Call the service
+            List<TaxReportLinePM> lines = TaxReportService.CreateTaxReportLines(taxReportPM, tenant);
+            TaxReportService.CalculateReportTotals(taxReportPM, lines);
+            taxReportPM.ChangeSetOp = ChangeSetOperation.Update;
+            taxReportUpdateService.Update(taxReportPM, true);
+        }
+
+
+
+
+        public HttpResponseMessage GetTenantTransmittedTaxReports()
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.CheckContactFeature("TaxReport", "NEW", authToken.Tenant);
+                int tenant = authToken.Tenant;
+                TaxReportQueryService taxReportQueryService = new TaxReportQueryService(tenant);
+                List<TaxReportPM> reports= taxReportQueryService.GetTransmittedTaxReports(tenant);
+              
+
+                return Request.CreateResponse(HttpStatusCode.OK, reports);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+
+        public HttpResponseMessage PostCreateTaxReportLines(ImageParameter fileUploadParamerter)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ImageParameter", fileUploadParamerter.Tenant, authToken.Tenant);
+
+                if (fileUploadParamerter != null && !string.IsNullOrEmpty(fileUploadParamerter.Base64String))
+                {
+                    string winHebrewString = EncodeStringFromImageParameter(fileUploadParamerter);
+
+                    var myConsolidatedTaxReportFlatFileAnalyser = new ConsolidatedTaxReportFlatFileAnalyser();
+                    myConsolidatedTaxReportFlatFileAnalyser.Analyse(authToken.Tenant, fileUploadParamerter.EntityId, winHebrewString);
+
+                    return Request.CreateResponse(HttpStatusCode.OK, new { Message = "Done" });
+                }
+                else
+                {
+                    throw new Exception("fileUploadParamerter is empty");
+                }
+
+
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage GetTaxReportReconciledLines(string taxReportId)
+        {
+            try
+            {
+
+                int tenant = GetAuthinticatedTenant();
+
+                IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+                TaxReportQueryService reportService = new TaxReportQueryService(accountingContext);
+                var reconciledLines = reportService.GetTaxReportReconciledLines(taxReportId, tenant);
+
+                if(reconciledLines != null && reconciledLines.Count() > 0)
+                {
+                    string linesNumbersCS = string.Join(",", reconciledLines.Select(d=>d.Line));
+
+                    return Request.CreateResponse(HttpStatusCode.OK, new ServiceResponse { Result = linesNumbersCS });
+                }
+
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        public HttpResponseMessage PostClosingTaxReportJournal(string taxReportId)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();                
+                string batchId = new BatchClosingTaxReportJournalTask(null).CreateQBatchTaskExecution<BatchClosingTaxReportJournalTaskArgs>(
+                    new BatchClosingTaxReportJournalTaskArgs()
+                    {
+                        TaxReportId = taxReportId,
+                        Tenant = tenant
+                    }, tenant, "Closing Tax Report Journal", false);
+
+                return Request.CreateResponse(HttpStatusCode.OK, batchId);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PostCancelClosingJournal(string taxReportId)
+        {
+            try
+            {
+                int tenant = GetAuthinticatedTenant();
+                using (TransactionScope scope = TransactionFactory.GetTransaction())
+                {
+                    TaxReportClosingService closingService = new TaxReportClosingService(tenant, taxReportId, true);
+                    closingService.CancelClosingJournal();
+
+                    scope.Complete();
+                    return Request.CreateResponse(HttpStatusCode.OK, closingService.journalPM);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
+
+        private string EncodeStringFromImageParameter(ImageParameter fileUploadParamerter)
+        {
+            byte[] dataBytes = Convert.FromBase64String(fileUploadParamerter.Base64String);
+            var dosEnc = System.Text.Encoding.GetEncoding("DOS-862"); // ms-dos codepage ( US English )
+            var winHebrewEncoding = Encoding.GetEncoding("Windows-1255");
+            var hebBytes = Encoding.Convert(dosEnc, winHebrewEncoding, dataBytes);
+            string winHebrewString = winHebrewEncoding.GetString(hebBytes);
+            return winHebrewString.Replace("\r\n", "\n").Replace("\n", Environment.NewLine);
+
+        }
 
     }
 }

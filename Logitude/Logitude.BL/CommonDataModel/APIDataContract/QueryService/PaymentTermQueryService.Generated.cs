@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,59 +42,59 @@ using Simplog.Data.CommonDataModel;
         }
 
 		
-		public PaymentTerm GetPaymentTermById(string Id,int Tenant,string ComputingPartnerName = "")
+		public PaymentTerm GetPaymentTermById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("PaymentTerm with Id " + Id + " doesn't exist");
 
 				return PaymentTermDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public PaymentTerm GetPaymentTermByExternalId(string ExternalId,int Tenant,string ComputingPartnerName = "")
+		public PaymentTerm GetPaymentTermByExternalId(string ExternalId,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByExternalId(ExternalId,Tenant);				
+				var temp = query.GetSinglePMByExternalId(ExternalId, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("PaymentTerm with ExternalId " + ExternalId + " doesn't exist");
 
 				return PaymentTermDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
 		
-		public PaymentTerm GetPaymentTermByCode(string Code,int Tenant,string ComputingPartnerName = "")
+		public PaymentTerm GetPaymentTermByCode(string Code,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePMByCode(Code,Tenant);				
+				var temp = query.GetSinglePMByCode(Code, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("PaymentTerm with Code " + Code + " doesn't exist");
 
 				return PaymentTermDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -132,11 +134,11 @@ using Simplog.Data.CommonDataModel;
 					
 					if (!string.IsNullOrEmpty(MyEntity.ExternalId))
 					{
-						temp = query.GetSinglePMByExternalId(MyEntity.ExternalId, Tenant);
+						temp = query.GetSinglePMByExternalId(MyEntity.ExternalId, Tenant  );
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.Code))
 					{
-						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant);
+						temp = query.GetSinglePMByCode(MyEntity.Code, Tenant  );
 					} 
 					if (!string.IsNullOrEmpty(MyEntity.PartnerCode))
 					{
@@ -148,16 +150,17 @@ using Simplog.Data.CommonDataModel;
 						{
 						  throw new ApplicationException("PaymentTerm with Partner Code " + MyEntity.PartnerCode + " doesn't match any record");
 						}
-						temp = query.GetSinglePMByCode(MyCode, Tenant);
+						temp = query.GetSinglePMByCode(MyCode, Tenant );
 						
 						
 					}
 					
-					   					   
-					if(temp == null)
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("PaymentTerm with Code " + MyEntity.Code + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -176,33 +179,33 @@ using Simplog.Data.CommonDataModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.EnglishName))
-					{							//throw new ApplicationException("EnglishName Can't be update"); 
-							temp.EnglishName = MyEntity.EnglishName;
+					if(!IsUpdate)
+					{							
+						temp.EnglishName = MyEntity.EnglishName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.LocalName))
-					{							//throw new ApplicationException("LocalName Can't be update"); 
-							temp.LocalName = MyEntity.LocalName;
+					if(!IsUpdate)
+					{							
+						temp.LocalName = MyEntity.LocalName;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && MyEntity.Days != null)
-					{							//throw new ApplicationException("Days Can't be update"); 
-							temp.Days = MyEntity.Days;
+					if(!IsUpdate)
+					{							
+						temp.Days = MyEntity.Days;
 
 										}  
 
 					
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.ExternalId))
-					{							//throw new ApplicationException("ExternalId Can't be update"); 
-							temp.ExternalId = MyEntity.ExternalId;
+					if(!IsUpdate)
+					{							
+						temp.ExternalId = MyEntity.ExternalId;
 
 										}  
 
@@ -212,9 +215,8 @@ using Simplog.Data.CommonDataModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{
-								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;
+						{								
+							temp.Code = MyEntity.Code;
 								
 						
 						}  
@@ -226,9 +228,8 @@ using Simplog.Data.CommonDataModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.PartnerCode))
-						{
-								//throw new ApplicationException("PartnerCode Can't be update"); 
-								temp.Code = MyEntity.PartnerCode;
+						{								
+							temp.Code = MyEntity.PartnerCode;
 								
 						
 						}  
@@ -243,6 +244,8 @@ using Simplog.Data.CommonDataModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

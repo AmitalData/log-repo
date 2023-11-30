@@ -37,6 +37,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 DocumentTypeCopyQuery documentTypeCopyQuery = new DocumentTypeCopyQuery(tenant);
                 DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
@@ -62,6 +64,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 SecurityUtility.AuthenticationOnTenant(tenant); 
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 List<DocumentTypePM> documentTypes = documentTypeQuery.GetDocumentTypePMsByObjectTableAndTenant(objectTableid, tenant);
@@ -80,6 +84,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 DocumentTypePM documentType = documentTypeQuery.GetSinglePMWithOutInclude(id, tenant);
 
@@ -99,6 +105,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 List<DocumentTypePM> documentTypes = documentTypeQuery.GetDocumentTypesPMByObjectTableIdForDocumentPremissions(objectTableid, tenant).ToList();
                
@@ -110,16 +118,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
         }
 
-        public HttpResponseMessage GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(string entityId, string agentId, string agentReference, string objectTableId, string shipmentLevelCode, int tenant)
+        public HttpResponseMessage GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(string entityId, string agentId, string agentReference, string objectTableId, string shipmentLevelCode, int tenant, string shareDocumentsFrom)
         {
             try
             {
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
 
-                List<ShipmentShareDocumentsData> shareDocumentClassLists = documentTypeQuery.GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(entityId, agentId, agentReference , objectTableId, shipmentLevelCode, tenant);
+                List<ShipmentShareDocumentsData> shareDocumentClassLists = documentTypeQuery.GetShareDocumentByObjectTableAndEntityIdAndshipmentLevel(entityId, agentId, agentReference , objectTableId, shipmentLevelCode, tenant, shareDocumentsFrom);
                 return Request.CreateResponse(HttpStatusCode.OK, shareDocumentClassLists);
 
             }
@@ -135,6 +142,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 List<DocumentTypePM> documentTypes = documentTypeQuery.GetFollowUpDocumentTypeByEntityId( entityId,  objectTableName,  tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, documentTypes);
@@ -150,6 +158,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 List<DocumentTypeList> documentTypes = documentTypeQuery.GetDocumentTypeListsByObjectTableAndTenant(objectTableid, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, documentTypes);
@@ -165,6 +174,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 List<DocumentTypeList> documentTypes = documentTypeQuery.GetDocumentTypeListsByEnityIdAndTenant(transportModeId, shipmentLevelCode, objecttableId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, documentTypes);
@@ -189,6 +199,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 }
 
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 List<DocumentTypePM> documentTypes = documentTypeQuery.GetDocumentTypePMsByEnityIdAndTenant(transportModeId, shipmentLevelCode, objecttableId, tenant, childrenObjectTableIds);
                 return Request.CreateResponse(HttpStatusCode.OK, documentTypes);
@@ -205,6 +216,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, documentTypeQuery.GetDocumentTypesByTenantAndTransportMode(tenant, transportMode));
             }
@@ -219,6 +231,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 DocumentTypePM result = documentTypeQuery.GetSinglePMByCodeAndTenant(code, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -237,6 +250,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 DocumentTypeList result = documentTypeQuery.GetSingleListByCodeAndTenant(code, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -253,6 +267,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 DocumentTypeList result = documentTypeQuery.GetDocumentTypeListById(id, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -269,6 +284,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 List<DocumentTypePM> result = documentTypeQuery.GetDocumentTypePMsByTenant(tenant).Where(d => d.Name.StartsWith(name) && d.Tenant == tenant).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -284,6 +300,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                 bool a = (documentTypeRepository.GetDocumentTypes(tenant).Where(d => d.Code == code && d.Tenant == tenant)).Any();
                 return Request.CreateResponse(HttpStatusCode.OK, a);
@@ -299,6 +316,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
                 DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(id, documentOutId, tenant);
 
@@ -316,7 +334,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeCopyQuery documentTypeCopyQuery = new DocumentTypeCopyQuery(tenant);
                 List<DocumentTypeCopyPM> documentTypeCopies = documentTypeCopyQuery.GetDocumentTypeCopiesByDocumentType(id, documentOutId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, documentTypeCopies);
@@ -335,6 +353,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                 DocumentType documentType = documentTypeRepository.GetSingleDocumentTypes(id, tenant);
                 DocumentTypeList documentTypeList = null;
@@ -369,6 +388,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(documentTypeRepository);
 
@@ -388,7 +408,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(documentTypeRepository);
 
@@ -492,6 +512,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(documentTypeRepository);
 
@@ -522,7 +543,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         public HttpResponseMessage PostDocumentType(DocumentTypePM entity)
         {
-            Authentication();
+            Authentication(entity.Tenant);
             try
             {
                 ICommonDataContext objectContext = CommonDataContext.GetContext(entity.Tenant);
@@ -541,7 +562,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         public HttpResponseMessage PutDocumentType(DocumentTypePM currentEntity)
         {
-            Authentication();
+            Authentication(currentEntity.Tenant);
             try
             {
                 ICommonDataContext objectContext = CommonDataContext.GetContext(currentEntity.Tenant);
@@ -604,6 +625,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         {
             try
             {
+                Authentication(entity.Tenant);
                 ICommonDataContext objectContext = CommonDataContext.GetContext(entity.Tenant);
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(objectContext);
                 DocumentType docType = documentTypeRepository.GetSingleDocumentTypes(entity.Id, entity.Tenant);
@@ -633,7 +655,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                         foreach (DocumentTypePM documentTypePM in documentTypePMists)
                         {
-                            service.Update(documentTypePM, false);
+                          SecurityUtility.AuthenticationOnEntityTenant("",documentTypePM.Tenant,authToken.Tenant);
+                          service.Update(documentTypePM, false);
                         }
 
 
@@ -658,6 +681,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(documentTypeRepository);
 
@@ -677,6 +701,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentTypeRepository documentTypeRepository = new DocumentTypeRepository(tenant);
                 DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(documentTypeRepository);
 
@@ -726,7 +751,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
             SecurityUtility.CheckContactFeature("DocumentType", "READ", authToken.Tenant);
         }
-
+        private static void Authentication(int tenant)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnEntityTenant("", tenant, authToken.Tenant);
+        }
 
     }
 }

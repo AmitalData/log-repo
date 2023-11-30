@@ -53,6 +53,13 @@ namespace Simplog.Data.ShipmentsModel.Repositories
                     select a);
         }
 
+        public IQueryable<ShipmentSubType> GetShipmentSubTypesWithoutIncludes(int tenant)
+        {
+            return (from a in context.ShipmentSubTypes
+                    where a.Tenant == tenant
+                    select a);
+        }
+
         public void Add(ShipmentSubType entity)
         {
             context.ShipmentSubTypes.Add(entity);

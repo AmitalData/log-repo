@@ -2,6 +2,7 @@
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.Tools.EntityService;
@@ -12,6 +13,8 @@ using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InfrastructureModel.Repositories;
@@ -35,6 +38,12 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
+
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("DeclarationApprovalRequest", ApprovalRequest.Tenant, authToken.Tenant);
+
                 bool IsNewLog = false;
                 string CorrelationId = HttpContext.Current.Request.Headers["CorrelationId"];
                 IWebFreightContext webFreightContext = WebFreightContext.GetContext(ApprovalRequest.Tenant);
@@ -99,7 +108,6 @@ namespace WebFreight.Web.App_Code
                     {
                         LogPM.Refrence = LogBoxShipment.ForwarderShipmentNumber;
                         apiLogsService.Update(LogPM);
-
                         LogBoxShipment.IsImporterApprovalRequired = true;
                         LogBoxShipment.DeclarationXMLData = ApprovalRequest.DeclarationXmlData;
                         string systemEmail = "system@tenant" + ApprovalRequest.Tenant + ".com";

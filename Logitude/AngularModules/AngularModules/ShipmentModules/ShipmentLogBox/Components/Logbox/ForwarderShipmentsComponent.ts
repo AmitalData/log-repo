@@ -24,9 +24,12 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ShipmentPackagePM} from '../../../../Shipment/EntityPMs/ShipmentPackagePM';
 import {PackageTypeListService} from '../../../../Common/Services/StandardLists/PackageTypeListService';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { SystemEnvironmentService } from '../../../../Infrastructure/Utilities/SystemEnvironmentService';
+import { CustomerTenantAccessRequestExtendedPMService } from '../../../../Common/Services/ExtendedPMs/CustomerTenantAccessRequestExtendedPMService';
+import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 
 @Component({
-    
+
     templateUrl: './ForwarderShipmentsComponent.html',
     //providers: [Http, ServiceArgs, EntityListService]
 })
@@ -43,23 +46,71 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     public _ShipmentPMService: ShipmentPMService;
     public _EntityStatusExtendedListService: EntityStatusExtendedListService;
     public TransportationTypes = [new TransportationTypes("Ocean Haifa", "O", "HFA", "IL"), new TransportationTypes("Ocean Ashdod", "O", "ASH", "IL")];
+    public IsLogbox: boolean = SystemEnvironmentService.IsLogBox();
+    public IsExportActivated: boolean = false;
+    public IsCustomsActivated: boolean = false;
+    public IsPrivateLabelExportActivated: boolean = false;
+    public IsPrivateLabelCustomsActivated: boolean = false;
+    public ShowDirectionFilters: boolean = false;
+    public IsExportShipment: boolean = false;
+    public customerTenantAccessRequestExtendedPMService: CustomerTenantAccessRequestExtendedPMService;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _entityListService: EntityListService) {
         super();
         this.myShipmentDomainService = new ShipmentDomainService();
         this._PackageTypeListService = new PackageTypeListService();
         if (SessionLocator.PrivateLableSettings) {
-            this.ValidationErrorsList = [];
-            this.AgentShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
-            this.IsPrivateLabel = true;
-            this._PortExtendedPMService = new PortExtendedPMService();
-            this._ShipmentPMService = new ShipmentPMService();
-            this._EntityStatusExtendedListService = new EntityStatusExtendedListService();
+            this.handlePrivateLable();
         }
     }
     ngOnInit() {
         this.LoadImporterShipments();
     }
+
+    private handlePrivateLable() {
+        this.ValidationErrorsList = [];
+        this.AgentShortName = SessionLocator.PrivateLableSettings.PrivateLabelShortName;
+        this.IsPrivateLabel = true;
+        this._PortExtendedPMService = new PortExtendedPMService();
+        this._ShipmentPMService = new ShipmentPMService();
+        this._EntityStatusExtendedListService = new EntityStatusExtendedListService();
+        this.customerTenantAccessRequestExtendedPMService = new CustomerTenantAccessRequestExtendedPMService();
+        this.IsPrivateLabelExportActivated = SessionLocator.PrivateLableSettings.IsExportActivated;
+        this.IsPrivateLabelCustomsActivated = SessionLocator.PrivateLableSettings.IsCustomsActivated;
+        this.SetCustomerTenantAccessRequestsDirections(SessionLocator.PrivateLableSettings.HybridPartnerId);
+    }
+
+    SetCustomerTenantAccessRequestsDirections(hybridPartnerId: any) {
+        this.customerTenantAccessRequestExtendedPMService.getByForwarderId(SessionLocator.Tenant, hybridPartnerId).subscribe((result: any) => {
+            if (!result.HasError) {
+                this.SetDitections(result);
+            }
+        });
+    }
+
+    private SetDitections(result: any) {
+        this.IsCustomsActivated = (result.Result.IsCustoms && this.IsPrivateLabelCustomsActivated);
+        this.IsExportActivated = (result.Result.IsExport && this.IsPrivateLabelExportActivated);
+        this.SetDirectionsFilters();
+    }
+
+    SetDirectionsFilters() {
+        this.ShowDirectionFilters = !(this.IsPrivateLabel && this.HasOneDirectionFilter());
+    }
+
+    private HasOneDirectionFilter() {
+        return !(this.IsExportActivated && this.IsCustomsActivated);
+    }
+
+    private selectedDirectionFilter: string = "All";
+    get SelectedDirectionFilter() { return this.selectedDirectionFilter; }
+    set SelectedDirectionFilter(newValue: string) {
+        if (this.selectedDirectionFilter == newValue) return;
+        this.selectedDirectionFilter = newValue;
+        this.RefreshBtnClick();
+        ServiceLocator.SendTotangoUserActivity("LogBox", "Direction filter changed");
+    }
+
     ngAfterViewInit() {
 
     }
@@ -114,6 +165,9 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     public AllShipmentsCount: string;
     public searchFields: string;
     public HasSharedDocs: boolean = true;
+    public AllowCreateAirExportShipmentsWithoutDocuments: boolean = false;
+    public AllowCreateOceanExportShipmentsWithoutDocuments: boolean = false;
+    public ShipmentDirection: string;
     @Output() SearchFieldchangeevent = new EventEmitter();
     DataSource = {
         pageSize: 20,
@@ -133,9 +187,15 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     SetWindowArgs(args: any) {
         this.SourceEntity = args.SourceEntity;
         this.HasSharedDocs = args.HasSharedDocs;
-        if (this.SourceEntity) { 
+        this.AllowCreateAirExportShipmentsWithoutDocuments = this.SourceEntity.TransportModeId == "A" && this.SourceEntity.DirectionId == "E" && SessionLocator.PrivateLableSettings.CreateShipmentsWithoutDocs;
+        this.AllowCreateOceanExportShipmentsWithoutDocuments = this.SourceEntity.TransportModeId == "O" && this.SourceEntity.DirectionId == "E" && SessionLocator.PrivateLableSettings.CreateOShipmentsWithoutDocs;
+        if (this.SourceEntity) {
+            this.ShipmentDirection = this.SourceEntity.DirectionId;
+            this.IsExportShipment = this.ShipmentDirection == 'E';
+            this.SelectedDirectionFilter = this.ShipmentDirection;
+            this.SelectedTransportFilter = this.SourceEntity.TransportModeId;
             if (this.SourceEntity.TransportModeId == "O") {
-                this.TransportationTypes = [new TransportationTypes("Ashdod", "O", "ASH", "IL"), new TransportationTypes("Haifa", "O", "HFA", "IL"), new TransportationTypes("Eilat", "O", "ETH", "IL")];                
+                this.TransportationTypes = [new TransportationTypes("Ashdod", "O", "ASH", "IL"), new TransportationTypes("Haifa", "O", "HFA", "IL"), new TransportationTypes("Eilat", "O", "ETH", "IL")];
             }
             else if (this.SourceEntity.TransportModeId == "I") {
                 this.TransportationTypes = [new TransportationTypes("Nitzana", "I", "NZN", "IL"), new TransportationTypes("Arava", "I", "ARV", "IL"), new TransportationTypes("Alenbi", "I", "ALN", "IL"), new TransportationTypes("Jordan", "I", "JOR", "IL")];
@@ -174,7 +234,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
                 this.SelectedTransportationTypes = new TransportationTypes("Air Tel-Aviv", "A", "TLV", "IL");
             }
         }
-        this._PackageTypeListService.getAllFromCache().subscribe((myResult:any) => {
+        this._PackageTypeListService.getAllFromCache().subscribe((myResult: any) => {
             if (!myResult.HasError) {
                 this.UnAssignedPackageTypeId = myResult.Result.filter(a => a.Tenant == SessionLocator.Tenant && a.Code == '---')[0].Id;
             }
@@ -202,9 +262,11 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
         this.columns.push({
             FieldName: 'ShipperName',
             DataTypeCode: 'String',
-            Display: 'Supplier',
+            Display: 'Supplier / Consignee',
             Styles: { width: '175px' },
-            IsCustomTemplate: true
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'SupplierConsigneeListTemplate',
+            HtmlListComponentUrl: './Shipment/Components/ListTemplates/SupplierConsigneeListTemplate',
         });
         this.columns.push({
             FieldName: 'StatusName',
@@ -227,7 +289,14 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
         this.columns.push({
             FieldName: 'CustomerReference1',
             DataTypeCode: 'String',
-            Display: 'Order #',
+            Display: this.IsExportShipment ? 'Reference #' : 'Order #',
+            Styles: { width: '100px' },
+            IsCustomTemplate: true
+        });
+        this.columns.push({
+            FieldName: 'CustomerReference2',
+            DataTypeCode: 'String',
+            Display: 'My Reference',
             Styles: { width: '100px' },
             IsCustomTemplate: true
         });
@@ -235,7 +304,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
             FieldName: this.SourceEntity.Id,
             DataTypeCode: 'String',
             Display: '',
-            Styles: { width: '260px' },
+            Styles: { width: '100px' },
             HtmlListComponentName: 'ActionButtonsListTemplate',
             HtmlListComponentUrl: './Shipment/Components/ListTemplates/ConnectButtonsListTemplate',
             IsCustomTemplate: true,
@@ -249,6 +318,11 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
         filters.SortBy = "StatusDate";
         filters.SortDirection = "Descending";
         //}
+
+        if (this.SelectedDirectionFilter != "All") {
+            this.filterAgrs.addAdditionalFilter("DirectionId", this.SelectedDirectionFilter, null, null, "Equals", false, true, false, "string", this.SelectedDirectionFilter == "All" ? true : false);
+        }
+
         if (!AppTool.IsNullOrEmpty(searchfields)) {
             filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != "SearchFields");
             filters.addAdditionalFilter("SearchFields", searchfields, null, null, "Contains", false, true, false, "String");
@@ -264,7 +338,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
                 this.filterAgrs.AdditionalFilters.forEach((filter, key) => {
                     if (filters.AdditionalFilters.filter(a => a.FieldName == filter.FieldName).length > 0) {
                         filters.AdditionalFilters = filters.AdditionalFilters.filter(a => a.FieldName != filter.FieldName);
-                    } 
+                    }
                     filters.addAdditionalFilter(filter.FieldName, filter.FieldValue, filter.FieldValue2, null, filter.Operator, filter.IsCustom, filter.DisplayInList, filter.IsCustomField, filter.FieldDataType);
                 });
             }
@@ -291,6 +365,8 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
             //}
         }
 
+        this.FilterPrivateLabelShipments();
+
 
         filters.GetCount = getCount;
         filters.PageIndex = skip;
@@ -307,6 +383,19 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
 
 
         return this._entityListService.getByFilters("Shipment", filters);
+    }
+
+    FilterPrivateLabelShipments() {
+        if (this.ShowDirectionFilters && this.IsPrivateLabel) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "I", null, null, "NotEqual", true, true, false, "String");
+            return;
+        }
+        if (this.IsCustomsActivated) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "C", null, null, "Equal", true, true, false, "String");
+        }
+        if (this.IsExportActivated) {
+            this.filterAgrs.addAdditionalFilter("DirectionId", "E", null, null, "Equal", true, true, false, "String");
+        }
     }
 
 
@@ -392,9 +481,14 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     }
     public set SelectedTransportationTypes(newValue: TransportationTypes) {
         this.selectedTransportationTypes = newValue;
-        this.TransportModeId = newValue.TransporationType;
-        this.ToPortId = newValue.ToPortCode;
+        this.TransportModeId = this.IsExportShipment ? this.TransportModeId : newValue.TransporationType;
+        this.ToPortId = this.GetToPortId(newValue);
 
+    }
+
+    GetToPortId(selectedTransport: TransportationTypes) {
+        let exportShipmentDirection = "E";
+        return this.ShipmentDirection == exportShipmentDirection ? this.SourceEntity.ToPortId : selectedTransport.ToPortCode;
     }
 
     onTransportationTypeChange($event) {
@@ -404,8 +498,14 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
     public get ShipperName() { return this.SourceEntity.ShipperName }
     public set ShipperName(newValue: string) { this.SourceEntity.ShipperName = newValue; }
 
+    public get ConsigneeName() { return this.SourceEntity.ConsigneeName }
+    public set ConsigneeName(newValue: string) { this.SourceEntity.ConsigneeName = newValue; }
+
     public get CustomerReference1() { return this.SourceEntity.CustomerReference1 }
     public set CustomerReference1(newValue: string) { this.SourceEntity.CustomerReference1 = newValue; }
+
+    public get CustomerReference3() { return this.SourceEntity.CustomerReference3 }
+    public set CustomerReference3(newValue: string) { this.SourceEntity.CustomerReference3 = newValue; }
 
     public get CustomerId() { return this.SourceEntity.CustomerId }
     public set CustomerId(newValue: string) { this.SourceEntity.CustomerId = newValue; }
@@ -501,15 +601,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
         }
         this.IsCreateButtonClicked = true;
         this.ValidationErrorsList = []; 
-        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-
-        if (!this.SelectedTransportationTypes) {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", "TransportationTypes"));
-        }
-
-        if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
-            this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
-        } 
+        this.ValidateShipment(); 
         if (this.ValidationErrorsList.length == 0) {
             this._ShipmentPMService.GetSingleByCustomerReference1(this.CustomerReference1).subscribe((myResult:any) => {
                 if (myResult.Result) { 
@@ -519,7 +611,7 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
                     confirmWindow.Height = 150;
                     confirmWindow.YesButtonText = "Continue";
                     confirmWindow.NoButtonText = "Cancel";
-                    confirmWindow.Show("Shipment (" + myResult.Result.ForwarderShipmentNumber + ") with the same order number is alreay exist in the query");
+                    confirmWindow.Show(this.GetWarningMessage(myResult));
                     confirmWindow.WindowClosed.subscribe((event: any) => {
                         if (confirmWindow.Yes) {
                             this.ContinueCreateShipmentProcess(); 
@@ -549,10 +641,43 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
 
     }
 
+    private GetWarningMessage(myResult: any): string {
+        let forwarderShipmentNumber = myResult?.Result?.ForwarderShipmentNumber;
+        let fieldName = !this.IsExportShipment ? "order number" : "reference";
+
+        return "Shipment (" + forwarderShipmentNumber + ") with the same " + fieldName + " is alreay exist in the query";
+    }
+
+    ValidateShipment() {
+        var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+        if (!this.SelectedTransportationTypes && !this.IsExportShipment) {
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "TransportationTypes"));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.FromPortId) && this.IsExportShipment) {
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "Origin"));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.ToPortId) && this.IsExportShipment) {
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "Destination"));
+        }
+
+        if (AppTool.IsNullOrEmpty(this.CustomerReference1) && !this.IsExportShipment) {
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
+        }
+
+
+
+        if (AppTool.IsNullOrEmpty(this.CustomerReference3) && this.IsExportShipment) {
+            this.ValidationErrorsList.push(msg.replace("%FieldName", "Reference"));
+        }
+    }
+
     ContinueCreateShipmentProcess() {
         this._PortExtendedPMService.getSinglePort(this.SelectedTransportationTypes.ToPortCode, this.SelectedTransportationTypes.CountryCode, SessionLocator.Tenant).subscribe((myResult:any) => {
             if (myResult.Result) {
-                this.ToPortId = myResult.Result.Id;
+                this.ToPortId = this.ShipmentDirection == "E" ? this.ToPortId : myResult.Result.Id;
                 if (AppTool.IsNullOrEmpty(this.SourceEntity.FromPortId)) {
                     this._PortExtendedPMService.getSinglePort("---", "IL", SessionLocator.Tenant).subscribe((Result:any) => {
                         this.FromPortId = Result.Result.Id;
@@ -574,13 +699,15 @@ export class ForwarderShipmentsComponent extends BaseComponent implements OnInit
 
         var msg = TextCodeTranslator.Translate("General.M.FieldIsRequired");
 
-        if (!this.SelectedTransportationTypes) {
+        if (!this.SelectedTransportationTypes && !this.IsExportShipment ) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "TransportationTypes"));
         }
 
-        if (AppTool.IsNullOrEmpty(this.CustomerReference1)) {
+        if (AppTool.IsNullOrEmpty(this.CustomerReference1) && !this.IsExportShipment) {
             this.ValidationErrorsList.push(msg.replace("%FieldName", "OrderNumber"));
         }
+
+
         if (!AppTool.IsNullOrEmpty(this.ContainerNumber) && (AppTool.IsNullOrEmpty(this.SourceEntity.PackagesQuantity) || AppTool.IsNullOrEmpty(this.SourceEntity.GrossWeight))) {
             this.ValidationErrorsList.push("Weight and Quantity are required");
         }

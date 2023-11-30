@@ -16,5 +16,8 @@ export class RatesTableList {
 		Rate: number;
 		ValueDate: Date;
 		LogDateTime: Date;
+		UpdatedByUserId: string;
+		UpdatedByUserName: string;
+		UpdatedDate: Date;
 	
 }

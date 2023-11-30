@@ -8,7 +8,7 @@
                         <table>
                             <tr>
                                 <td style="width: 250px;">
-                                    <SearchBox (TextChanged)="SearchTextChanged($event)"></SearchBox>
+                                    <SearchBox  [attr.data-cy]="'SearchRulesMainComponent'" (TextChanged)="SearchTextChanged($event)"></SearchBox>
                                 </td>
                                 <td>
                                     <div></div>
@@ -73,8 +73,8 @@
 
 
                                             <td class="GridViewCell" style="width:30px; min-width:30px; max-width:30px;">
-                                                <div class="EditButton" (click)="OnEditRule(item)" style="display:inline;width:18px;">
-                                                    <IconButton [Name]="'Edit'" [IsSmall]="true" style="        display: block;
+                                                <div  class="EditButton" (click)="OnEditRule(item)" style="display:inline;width:18px;">
+                                                    <IconButton [DataCy]="'EditRule'"  [Name]="'Edit'" [IsSmall]="true" style="        display: block;
         margin-left: 7px
     "></IconButton>
                                                 </div>
@@ -117,19 +117,4 @@
         </td>
     </tr>
 
-    <tr style="height: 32px;">
-        <td style="vertical-align: bottom">
-            <table style="height: 22px;">
-                <tr>
-                    <td><div></div></td>
-
-                    <td style="width: 57px;">
-                        <button class="Button" (click)="CloseClicked()">Close</button>
-                    </td>
-
-                    
-                </tr>
-            </table>
-        </td>
-    </tr>
 </table>

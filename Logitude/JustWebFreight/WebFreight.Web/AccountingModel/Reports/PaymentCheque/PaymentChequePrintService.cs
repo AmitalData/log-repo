@@ -32,7 +32,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
 {
     public class PaymentChequePrintService
     {
-
+        public PaymentChequePM paymentChequePM;
         public void BuildPaymentChequeReport(string entityId, int tenant, string documentOutId)
         {
 
@@ -42,12 +42,14 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             // 2
             // Get byte[] of DataProvider
             XmlSerializer serializer = new XmlSerializer(typeof(PaymentChequeDataProvider));
-            MemoryStream memstream = new MemoryStream();
-            serializer.Serialize(memstream, PaymentChequeDP);
-            memstream.Seek(0, SeekOrigin.Begin);
-            var reader = new StreamReader(memstream);
-            string content = reader.ReadToEnd();
-            byte[] bytearray = memstream.ToArray();
+            using (MemoryStream memstream = new MemoryStream())
+            {
+                serializer.Serialize(memstream, PaymentChequeDP);
+                memstream.Seek(0, SeekOrigin.Begin);
+                var reader = new StreamReader(memstream);
+                string content = reader.ReadToEnd();
+                byte[] bytearray = memstream.ToArray();
+            }   
 
 
             // 3
@@ -59,12 +61,12 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             //Build report
             Byte[] templatedata = null;
             StiReport report = new StiReport();
-            DocumentTypeTemplateRepository documentTypeTemplaterep = new DocumentTypeTemplateRepository(tenant);
+            DocumentTypeTemplateQuery documentTypeTemplateQuery = new DocumentTypeTemplateQuery(tenant);
             DocumentOutRepository documentOutRepository = new DocumentOutRepository(tenant);
 
 
             DocumentOut documentOut = documentOutRepository.GetSingleDocumentOut(documentOutId, tenant);
-            DocumentTypeTemplate defaulttemplate = documentTypeTemplaterep.GetSingleDocumentTypeTemplate(documentOut.DocumentTemplateId);
+            DocumentTypeTemplatePM defaulttemplate = documentTypeTemplateQuery.GetById(documentOut.DocumentTemplateId, tenant);
 
             if (defaulttemplate != null)
                 templatedata = defaulttemplate.TemplateBody;
@@ -74,6 +76,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             {
                 if (templatedata.Length != 0)
                 {
+                    defaulttemplate.DocumentOutId = documentOut?.Id;
                     ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
                     report = exportDocumentHelper.LoadandRender(defaulttemplate, currentBusinessObject, tenant);
                 }
@@ -88,16 +91,19 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             PaymentChequeDataProvider PaymentChequeDP = new PaymentChequeDataProvider();
 
             PaymentChequeDP.CompanyLogo = WebFreight.Web.DataProviders.General.GetLogo(tenant);
-            FullAccountingSettingPM setting=   GetAccountingSettingPM(tenant);
+            FullAccountingSettingPM setting = GetAccountingSettingPM(tenant);
             byte[] byteImage = null;
-          
-                 byteImage = GetLogo(setting.PaymentChequesLogoId, tenant);
-                if (byteImage != null)
-                {
-                    PaymentChequeDP.AccountingLogo = Image.FromStream(new MemoryStream(byteImage));
-                }
 
-            
+            byteImage = GetLogo(setting.PaymentChequesLogoId, tenant);
+            if (byteImage != null)
+            {
+                using (MemoryStream memstream = new MemoryStream(byteImage))
+                {
+                    PaymentChequeDP.AccountingLogo = Image.FromStream(memstream);
+                }
+            }
+
+
 
 
             PaymentChequeQueryService PaymentChequeQuery = new PaymentChequeQueryService(tenant);
@@ -105,32 +111,36 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             //   CurrencyQuery currencyQuery = new CurrencyQuery(tenant);
             TenantQuery tenantQuery = new TenantQuery(tenant);
             TenantPM tenantPM = TenantQuery.GetSingleTenantPM(tenant, false);
-            PaymentChequePM paymentChequePM = PaymentChequeQuery.GetSingle(entityId, true, false);
+            paymentChequePM = PaymentChequeQuery.GetSingle(entityId, true, false);
             BankCodePM bankCode = GetBankCodeByPayToGLAccount(paymentChequePM);
-            if (bankCode != null) {
-             
+            if (bankCode != null)
+            {
+
                 byteImage = GetLogo(bankCode.LogoId, tenant);
-                if(byteImage != null)
+                if (byteImage != null)
                 {
-                    PaymentChequeDP.BankLogo = Image.FromStream(new MemoryStream(byteImage));
+                    using (MemoryStream memstream = new MemoryStream(byteImage))
+                    {
+                        PaymentChequeDP.BankLogo = Image.FromStream(memstream);
+                    }
                 }
             }
 
-            if(paymentChequePM.PrintDate == null)
+            if (paymentChequePM.PrintDate == null)
             {
                 UpdatePaymentChequePrintDate(paymentChequePM);
-               
-               
+
+
             }
             PaymentChequeDP.PrintDate = paymentChequePM.PrintDate;
 
-           
+
             AddressQuery addressQuery = new AddressQuery(tenant);
             AddressPM address = addressQuery.GetSinglePM(tenantPM.AddressId, tenant);
             NumbersConverterToWords numbersConverterToWords = new NumbersConverterToWords();
             //  PaymentChequeDP.APPaymentNumber = GetRelatedPayment(paymentChequePM);
             APPaymentPM appayment = GetRelatedPayment(paymentChequePM);
-            if(appayment != null)
+            if (appayment != null)
             {
                 PaymentChequeDP.APPaymentNumber = appayment.PaymentNo;
                 PaymentChequeDP.TaxDeductionLocalAmount = appayment.TaxDeductionLocalAmount;
@@ -212,8 +222,8 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
 
 
             return GetBankCodePM(bankAccount);
-            
-           
+
+
 
         }
         private void UpdatePaymentChequePrintDate(PaymentChequePM paymentCheque)
@@ -226,7 +236,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
             service.Update(paymentCheque, true);
 
         }
-        public static BankAccountPM GetBankAccountByPaymentChequet(string  bankAccountId, int tenant)
+        public static BankAccountPM GetBankAccountByPaymentChequet(string bankAccountId, int tenant)
         {
             BankAccountQueryService bankAccountQuery = new BankAccountQueryService(tenant);
             return bankAccountQuery.GetSingle(bankAccountId, false, false);
@@ -244,10 +254,10 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
         //    return gLAccountQueryService.GetSinglePM(paymentCheque.PayToGLAccountId, paymentCheque.Tenant);
 
         //}
-        public static byte[] GetLogo(string id,int tenant)
+        public static byte[] GetLogo(string id, int tenant)
         {
-           
-            ImageDetail imageDetail=   GetImageDetail(id,tenant);
+
+            ImageDetail imageDetail = GetImageDetail(id, tenant);
             if (imageDetail != null)
             {
                 return GetFile(imageDetail.Id, imageDetail.Extension, "images", tenant);
@@ -258,15 +268,15 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
         public static ImageDetail GetImageDetail(string id, int tenant)
         {
             ImageDetailRepository imageDetailsRepository = new ImageDetailRepository(tenant);
-           return imageDetailsRepository.GetSingleImageDetail(id, tenant);
-        
+            return imageDetailsRepository.GetSingleImageDetail(id, tenant);
+
         }
 
         public static byte[] GetFile(string fileid, string extention, string location, int tenant)
         {
             try
             {
-             
+
 
                 Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
                 {
@@ -308,7 +318,7 @@ namespace WebFreight.Web.AccountingModel.Reports.PaymentCheque
         {
             GLAccountQueryService accountQueryService = new GLAccountQueryService(paymentCheque.Tenant);
             GLAccountPM account = accountQueryService.GetSinglePM(paymentCheque.PayToGLAccountId, paymentCheque.Tenant);
-            if(account != null)
+            if (account != null)
             {
                 return account.DisplayNumber;
 

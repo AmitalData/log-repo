@@ -1,4 +1,4 @@
-@release @stable @all
+@release @stable
 Feature: AMANAC Ocean Shipment Validations, Marked as Blocked, Marked as Not Blocked, Transfers and Retransfer
 
     The user configures AMANAC customs for the tenant,
@@ -71,6 +71,6 @@ Feature: AMANAC Ocean Shipment Validations, Marked as Blocked, Marked as Not Blo
         Then a validation message "Transferred Successfully" should appear
         And should not appear in the "New Transfer" view in the AMANAC workspace
         And AMANAC and customs transmissions statuses should be as following
-            | Status   | Sent         |
-            | LastSent | Today        |
+            | Status   | Sent       |
+            | LastSent | Today      |
             | SentBy   | LoggedUser |

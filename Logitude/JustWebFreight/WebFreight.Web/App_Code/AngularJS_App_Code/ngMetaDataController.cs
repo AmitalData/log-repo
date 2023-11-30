@@ -47,10 +47,12 @@ using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityQueryServices;
 using WebFreight.Web.Helpers.APIHelpers;
+using Logitude.Server.Tools.Helpers;
+using Logitude.BL.InfrastructureModel.Tools.EntityService;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
-	//[ApiExceptionFilter]
+    //[ApiExceptionFilter]
     public class ngMetaDataController : ApiController
     {
 
@@ -59,18 +61,18 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-		//void AuthenticateTennatIfLogBoxOnly(int tenant)
-		//{
-		//	if (LogitudeSettings.DeploymentStage == "logboxwe1" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "Dev")
-		//	{
-		//		SecurityUtility.AuthenticationOnTenant(tenant);
-		//	}
-		//}
+        //void AuthenticateTennatIfLogBoxOnly(int tenant)
+        //{
+        //	if (LogitudeSettings.DeploymentStage == "logboxwe1" || LogitudeSettings.DeploymentStage == "Test2" || LogitudeSettings.DeploymentStage == "Dev")
+        //	{
+        //		SecurityUtility.AuthenticationOnTenant(tenant);
+        //	}
+        //}
         public UserPM GetAuthenticatedUserDetails(string userid, int tenant)
         {
 
             SecurityUtility.AuthenticationOnTenant(tenant);
-			string email = SecurityUtility.GetAuthenticatedUser();
+            string email = SecurityUtility.GetAuthenticatedUser();
             Contact contact = null;
             if (!string.IsNullOrEmpty(email))
             {
@@ -105,7 +107,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         public List<ScreenFieldPM> GetAllScreenFieldsByTenant(int tenant, string screenfields)
         {
-           //SecurityUtility.AuthenticationOnTenant(tenant);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
 
             ScreenFieldsRepository repository = new ScreenFieldsRepository(tenant);
             ScreenFieldsQuery query = new ScreenFieldsQuery(repository);
@@ -136,13 +138,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             return objectTableTabs;
         }
 
+
+
         public List<ObjectTablePM> GetAllObjectTables(int tenant, string objecttables)
         {
             //SecurityUtility.AuthenticationOnTenant(tenant);
 
             ObjectTableRepository repository = new ObjectTableRepository(tenant);
             ObjectTableQuery query = new ObjectTableQuery(repository);
-            var objectTables = query.GetObjectPMsByTenant(0).ToList();
+            var objectTables = query.GetObjectPMsByTenant(tenant).ToList();
 
             return objectTables;
         }
@@ -430,8 +434,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         public List<DirectionPM> GetDirectionsSearchResults(int tenant, string searchfields)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-			//SecurityUtility.AuthenticationOnTenant(tenant);
-			DirectionRepository repo = new DirectionRepository(0);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
+            DirectionRepository repo = new DirectionRepository(0);
             List<DirectionPM> directionsList = (from a in repo.context.Directions
                                                 where a.SearchFields.Contains(searchfields)
                                                 select new DirectionPM()
@@ -447,8 +451,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         public List<TransportModePM> GetTransportModesSearchResults(int tenant, string searchfields)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
-			//SecurityUtility.AuthenticationOnTenant(tenant);
-			TransportModeRepository repo = new TransportModeRepository(0);
+            //SecurityUtility.AuthenticationOnTenant(tenant);
+            TransportModeRepository repo = new TransportModeRepository(0);
             List<TransportModePM> transportModesList = (from a in repo.context.TransportModes
                                                         where a.SearchFields.Contains(searchfields)
                                                         select new TransportModePM()
@@ -612,12 +616,15 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 UserRepository userRepository = new UserRepository(tenant);
                 UserQuery query = new UserQuery(userRepository);
                 loggeduser = query.GetSingleUserPMByEmail(useremail, globalContact.GlobalTenantId, false);
-                if (globalContact.GlobalTenantId==0 && LogitudeSettings.IsCostomsDeploy &&  loggeduser==null)// in custom allowed sysdamin login to the tenant 
+                if (globalContact.GlobalTenantId == 0 && LogitudeSettings.IsCostomsDeploy && loggeduser == null)// in custom allowed sysdamin login to the tenant 
                 {
                     loggeduser = query.GetSingleUserPMByEmail(useremail, tenant, false);
                 }
             }
-
+            if (loggeduser != null)
+            {
+                loggeduser.DisableCachedData = FeatureToggleHelper.HasFeatureToggle("DCS", tenant);
+            }
             return loggeduser;
         }
 
@@ -661,22 +668,38 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         }
 
         [OperationContract]
-        [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryCode}/{objecttableid}/{userid}")]
-        public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryCode, string objecttableid, string userid)
+        [WebGet(UriTemplate = "getquerycolumnpms/{tenant}/{queryCode}/{objecttableid}/{userid}/{getfromsystemlevel}")]
+        public List<QueryColumnPM> GetQueryColumnPMs(int tenant, string queryCode, string objecttableid, string userid, bool getfromsystemlevel)
         {
             QueryColumnRepository queryColumnRepository = new QueryColumnRepository(tenant);
             QueryColumnQuery queryColumnQuery = new QueryColumnQuery(queryColumnRepository);
-            var querycolumns = queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, userid, queryCode);
+            var queryColumns = getfromsystemlevel ? null : queryColumnQuery.GetQueryColumnsByQueryCodeAndUser(tenant, userid, queryCode).ToList();
 
-            if (querycolumns != null && querycolumns.Count() > 0)
+            
+            if (queryColumns != null && queryColumns.Count() > 0)
             {
-                return querycolumns.OrderBy(a => a.IndexOrder).ToList();
+                if(LogitudeSettings.WorkEnvironment != "cloud")
+                {
+                    ObjectTableRepository tableRepository = new ObjectTableRepository(tenant);
+                    ObjectTable objectTable = tableRepository.GetSingleObjectTable(objecttableid, tenant, true);
+
+                    if (queryCode == "ARInvoice.All Invoices" && objectTable != null && objectTable.Name == "ARInvoice")
+                    {
+                        queryColumns.RemoveAll(q =>
+                            q.ObjectFieldName == "TotalVAT" ||
+                            q.ObjectFieldName == "TotalExamptFortaxReport" ||
+                            q.ObjectFieldName == "TotalAmountNotForTaxReport" ||
+                            q.ObjectFieldName == "TotalAmountForTaxReport" ||
+                            q.ObjectFieldName == "TotaVatableAmountForTaxReport"
+                        );
+                    }
+                }
+                return queryColumns.OrderBy(a => a.IndexOrder).ToList();
             }
-            else
-            {
-                var querycolumns2 = queryColumnQuery.GetQueryColumnsByQueryCodeAndUserAngular(0, null, queryCode);
-                return querycolumns2.OrderBy(a => a.IndexOrder).ToList();
-            }
+
+            IWebFreightContext webFreightContext = WebFreightContext.GetContext(tenant);
+            QueryColumnService queryColumnService = new QueryColumnService(webFreightContext, tenant);
+            return queryColumnService.GetSystemMetaDataQueryColumns(objecttableid, tenant, queryCode);
         }
 
         [OperationContract]
@@ -712,7 +735,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             TextCodeRepository txtCodeRep = new TextCodeRepository(translationTenant);
             TranslationRepository translationRep = new TranslationRepository(translationTenant);
 
-            List<Translation> AllTranslations = translationRep.GetTranslationsByTenant(translationTenant);
+            List<Translation> AllTranslations = translationRep.GetTranslationsByTenantList(translationTenant);
             TenantRepository tenantRep = new TenantRepository(translationTenant);
             Tenant tenantPoco = tenantRep.GetSingleByTenant(translationTenant);
             TenantManagmentPrivateLabelsPM privatelabel = null;
@@ -854,12 +877,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "accountingsettingpm/{id}")]
         public AccountingSettingPM GetAccountingSettingPM(int id)
         {
-			string token = HttpContext.Current.Request.Headers["Token"];
-			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-			if (authToken != null)
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            if (authToken != null)
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-			AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(id);
+            AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(id);
             AccountingSettingQuery accountingSettingQuery = new AccountingSettingQuery(accountingSettingRepository);
             var accountingSettingPM = accountingSettingQuery.GetSinglePM(id);
             return accountingSettingPM;
@@ -869,12 +892,12 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "customsinterfacesettingpm/{InterfaceId}")]
         public CustomsInterfaceSettingPM GetCustomsInterfaceSettingPM(int InterfaceId)
         {
-			string token = HttpContext.Current.Request.Headers["Token"];
-			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-			if (authToken != null)
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            if (authToken != null)
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-			CustomsInterfaceSettingRepository repository = new CustomsInterfaceSettingRepository(InterfaceId);
+            CustomsInterfaceSettingRepository repository = new CustomsInterfaceSettingRepository(InterfaceId);
             CustomsInterfaceSettingQuery query = new CustomsInterfaceSettingQuery(repository);
             var setting = query.GetSinglePM(InterfaceId, 0);
             return setting;
@@ -884,14 +907,27 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
         [WebGet(UriTemplate = "shaerdlogisticssettingpm/{settingId}")]
         public SharedLogisticsSettingPM GetSharedLogisticsSettingM(int settingId)
         {
-			string token = HttpContext.Current.Request.Headers["Token"];
-			AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-			if (authToken != null)
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            if (authToken != null)
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
 
-			SharedLogisticsSettingQueryService query = new SharedLogisticsSettingQueryService(settingId);
+            SharedLogisticsSettingQueryService query = new SharedLogisticsSettingQueryService(settingId);
             SharedLogisticsSettingPM setting = query.GetSingle(settingId.ToString(), false, false);
             return setting;
+        }
+
+        [OperationContract]
+        [WebGet(UriTemplate = "getObjectFieldsByObjectTable/{objectTableName}")]
+        public List<ObjectFieldPM> GetObjectFieldsByObjectTable(string objectTableName)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            ObjectTableRepository tableRepository = new ObjectTableRepository(authToken.Tenant);
+            var tableId = tableRepository.GetObjectTableByName(objectTableName, authToken.Tenant, false).Id;
+            ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(authToken.Tenant);
+            List<ObjectFieldPM> objectFields = objectFieldQuery.GetObjectFieldsByTenantAndObjectTableId(authToken.Tenant, tableId);
+            return objectFields;
         }
     }
 }

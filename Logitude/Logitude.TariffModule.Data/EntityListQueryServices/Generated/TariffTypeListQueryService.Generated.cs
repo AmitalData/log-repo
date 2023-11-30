@@ -25,7 +25,11 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
             this.context = context;
         }
 
-        public List<TariffTypeList> GetList(QueryOperations queryOperations, int tenant)
+        public List<TariffTypeList> GetList(QueryOperations queryOperations, int tenant ){
+		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
+		 }
+
+        public List<TariffTypeList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -36,9 +40,9 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
             iQueryable = filter.GetFilteredQuery<TariffType>(nonListQueryOperation, iQueryable);
 
@@ -47,6 +51,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
             IQueryable<TariffTypeList> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<TariffTypeList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<TariffTypeList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -104,7 +109,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.Name);
+                                query2 = query2.OrderByDescending(d => d.Name);
                                 break;
                             }
                     }
@@ -113,7 +118,7 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.Name);
+                query2 = query2.OrderByDescending(d => d.Name);
             }
 			if(!queryOperations.GetAll)
 			{
@@ -143,7 +148,14 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
            
         }
 
-        public int GetListCount(QueryOperations queryOperations)
+
+		
+        public int GetListCount(QueryOperations queryOperations ){
+		 		  return GetListCount(queryOperations, new TreeFilterQueryArgs());
+
+		 }
+
+        public int GetListCount(QueryOperations queryOperations  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -154,20 +166,24 @@ namespace Logitude.TariffModule.Data.EntityListQueryServices
 						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
             
 			iQueryable = filter.GetFilteredQuery<TariffType>(nonListQueryOperation, iQueryable);
+
+
 
             IQueryable<TariffTypeList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<TariffTypeList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<TariffTypeList>(query2, treeFilterQueryArgs);
+
             int count = query2.Count();
             return count;
         }
 
-      
+
     }
 }
 	 

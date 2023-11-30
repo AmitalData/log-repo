@@ -1,5 +1,5 @@
 
-<div class="panel" [attr.id]="Name" [class.transparent]="TransparentBackground" >
+<div class="panel" [style.width]="Width ?Width:'calc(100% - 150px)'" [attr.id]="Name" [class.transparent]="TransparentBackground" >
 
     <div class="header">
         <div class="title">
@@ -7,7 +7,7 @@
             <a *ngIf="HeaderLinkText" (click)="HeaderLinkClicked()" href="javascript:;">{{HeaderLinkText}}</a>
         </div>
         <div class="buttons hide-mobile">
-            <button *ngIf="HaveDetailsSection" (click)="ShowMoreDetails()">{{ShowDetailsSection?'Show less':'Show more'}}</button>
+            <button *ngIf="HaveDetailsSection && !AlwaysExpanded" (click)="ShowMoreDetails()">{{ShowDetailsSection?'Show less':'Show more'}}</button>
         </div>
     </div>
 

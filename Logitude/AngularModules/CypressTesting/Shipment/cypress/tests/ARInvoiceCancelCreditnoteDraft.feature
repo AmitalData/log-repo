@@ -1,6 +1,6 @@
-@release @stable @all
+@release @stable
 Feature: AR Invoice Cancel Credit Note Draft
-    The user creates a Direct Export Air shipment, creates receivable, creates AR Invoice, 
+    The user creates a Direct Export Air shipment, creates receivable, creates AR Invoice,
     creates credit note draft and cancels it.
 
     Scenario: Update Accounting System
@@ -41,3 +41,8 @@ Feature: AR Invoice Cancel Credit Note Draft
     Scenario: Cancel draft credit note ARInvoice
         When cancel draft
         Then the invoice should cancel successfully
+        And the status value should be "Cancelled"
+
+    Scenario: Assert invoice details screen fields after cancelling the invoice
+        Given navigates details tab
+        Then the details screen fields should be disabled

@@ -96,7 +96,7 @@ namespace WebFreight.Web.Helpers.WorkerRole
         private void DownloadExcel(BIReportXMLData bIReportXMLData)
         {
             var exportBIReportService = new ExportBIReportService();
-            var data = exportBIReportService.Run(bIReportXMLData, tenant);
+            var data = exportBIReportService.Run(bIReportXMLData, tenant, true);
             BIReportExecutionLogArgs handleReportExecutionLogArgs = new BIReportExecutionLogArgs() { ReportExecutionLog = reportExecutionLog, ReportExecutionLogRepository = reportExecutionLogRepository, StatusCode = "F", response = queueResponse };
             if (data != null)
             {

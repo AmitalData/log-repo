@@ -87,4 +87,6 @@
     ReferencedTable="FieldDataTypes"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
+  <Index
+	Columns="DocumentTypeId,Tenant" />
 </Table>

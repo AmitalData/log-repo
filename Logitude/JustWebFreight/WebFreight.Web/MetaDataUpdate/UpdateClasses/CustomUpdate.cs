@@ -134,15 +134,8 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             MenuButtonRepository = new MenuButtonRepository(ObjectContext);
             MenuButtonGroupRepository = new MenuButtonGroupRepository(ObjectContext);
             TenantSettingRepository = new TenantSettingRepository(ObjectContext);
-            //Dictionary<string, TextCode> textcodes = TextCodeRepository.GetTextCodesByTenant(0).ToDictionary(d => d.Code + d.Tenant.ToString() + d.ObjectTableId, a => a);
-            //Dictionary<string, ObjectTable> objectTables = ObjectTableRepository.GetObjectsByTenant(0).ToDictionary(d => d.Name, a => a);
-            //Dictionary<string, ObjectField> objectfields = ObjectFieldsRepository.GetObjectFieldsByTenant(0).ToDictionary(d => d.FieldName + d.ObjectTableId, a => a);
-            //Dictionary<string, Tip> tips = TipRepository.GetTips(0).ToDictionary(d => d.Code, a => a);
-
-            //CreateAllTablesTips(tips, textcodes);
 
             LoadRolesAndFeatures(0);
-            //CreateMenuButtonsForTenant(0);
             CreateTableCounters(0);
 
             this.ObjectContext.SaveChanges();

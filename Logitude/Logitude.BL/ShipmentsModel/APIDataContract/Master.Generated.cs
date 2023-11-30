@@ -143,6 +143,48 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     public DateTime? ActualFinalArrivalDate { get; set; }
     
     public bool IsHTSMissing { get; set; }
+    
+    public DateTime? PlannedCargoReadyDate { get; set; }
+    
+    public DateTime? ApprovedCargoReadyDate { get; set; }
+    
+    public User HandlerUser { get; set; }
+    
+    public string Notify1Reference { get; set; }
+    
+    public string Notify1Reference2 { get; set; }
+    
+    public string ShipperNotExporterReference1 { get; set; }
+    
+    public string ShipperNotExporterReference2 { get; set; }
+    
+    public DateTime? CustomsClearanceDate { get; set; }
+    
+    public Card Notify1 { get; set; }
+    
+    public List<Event> EventList { get; set; }
+    
+    public List<Event> AddManualEvents { get; set; }
+    
+    public Address UnassignedShipperAddress { get; set; }
+    
+    public Address UnassignedConsigneeAddress { get; set; }
+    
+    public Card Notify2 { get; set; }
+    
+    public string Notify2Reference { get; set; }
+    
+    public int? NumberOfPackages { get; set; }
+    
+    public PrepaidCollect FreightPrepaidCollect { get; set; }
+    
+    public PrepaidCollect OtherPrepaidCollect { get; set; }
+    
+    public List<AirPackage> AirPackages { get; set; }
+    
+    public List<OceanOrInlandPackage> OceanOrInlandPackages { get; set; }
+    
+    public List<Container> Containers { get; set; }
 
     public  string  ComputingPartnerCode { get; set; }
 

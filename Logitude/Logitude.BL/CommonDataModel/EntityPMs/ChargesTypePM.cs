@@ -4,11 +4,12 @@ using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure;
 using System.ComponentModel.DataAnnotations;
 using System.ServiceModel.DomainServices.Server;
+using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace Logitude.BL.CommonDataModel.EntityPMs
 {
     [CustomValidation(typeof(Validators.ClassLevelValidator), "ValidateClass")]
-    public class ChargesTypePM
+    public class ChargesTypePM : ObjectCustomFieldPM
     {
         [Key]
         public string Id { get; set; }
@@ -29,7 +30,13 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ChargesGroupId { get; set; }
-        
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string QuoteChargesGroupCode { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        public string QuoteChargesGroupId { get; set; }
+
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string MeasurementId { get; set; }
 
@@ -125,6 +132,8 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public string ReceivableCreditGLAccountId { get; set; }
+        public string RecCreditGLAcountLocalName { get; set; }
+        public string PayDebitGLAcountLocalName { get; set; }
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         public bool IsExpense { get; set; }

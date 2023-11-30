@@ -10,6 +10,7 @@ using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
@@ -34,7 +35,10 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
-                //var temp = id.Split(',');
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
                 string DocId = EntityAM.CustomerDocumentId;
                 int Tenant = EntityAM.ImporterTenant;
                 SecurityUtility.AuthenticationOnTenant(Tenant);

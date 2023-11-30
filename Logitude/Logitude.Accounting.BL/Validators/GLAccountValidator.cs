@@ -45,12 +45,16 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.AccountTypeCodeMissing", myGLAccountPM.Tenant, showLocals));
             }
-            
-            if (myGLAccountPM.IsMultiCurrency != true && String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId))
+            if (myGLAccountPM.PostponedChequesCommission < 0)
             {
-                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.CurrencyOrMulti", myGLAccountPM.Tenant, showLocals));
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.NegativePostponedChequesCommission ", myGLAccountPM.Tenant, showLocals));
             }
 
+            if (myGLAccountPM.IsMultiCurrency != true && String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId))
+            {
+                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.SettingOfCurrency", myGLAccountPM.Tenant, showLocals) + " " + myGLAccountPM.DisplayNumber + " " + TextCodesTranslator.TranslateText("GLAccounts.O.InCorrectCorrect", myGLAccountPM.Tenant, showLocals));
+            }
+            Boolean isEnableMultiCurrencyWithReconcileMethodCodeEqualOne = FeatureToggleHelper.HasFeatureToggle(toggleCode: "MC1", myGLAccountPM.Tenant);
             if (myGLAccountPM.IsMultiCurrency == true && !String.IsNullOrWhiteSpace(myGLAccountPM.CurrencyId))
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.AccountIsaMulti", myGLAccountPM.Tenant, showLocals));
@@ -174,7 +178,7 @@ namespace Logitude.Accounting.BL.Validators
                 }
             }
 
-            if (myGLAccountPM.IsMultiCurrency == true && myGLAccountPM.ReconcileMethodCode != "0")
+            if (myGLAccountPM.IsMultiCurrency == true && myGLAccountPM.ReconcileMethodCode != "0" && !isEnableMultiCurrencyWithReconcileMethodCodeEqualOne)
             {
                 return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.LocalCurrencyErr", myGLAccountPM.Tenant, showLocals));
             }
@@ -394,7 +398,7 @@ namespace Logitude.Accounting.BL.Validators
             {
                 return TextCodesTranslator.TranslateText("GLAccounts.O.CustomerAccountNotFound", tenant);
             }
-            else if (acc.AccountTypeCode != "2")
+            else if (acc.AccountTypeCode != "2" && acc.AccountTypeCode != "3")
             {
                 return TextCodesTranslator.TranslateText("GLAccounts.O.WrongCustomerAccountType", tenant);
             }
@@ -429,24 +433,6 @@ namespace Logitude.Accounting.BL.Validators
             else if (parentPM.Id == glaccountPM.Id)
             {
                 return "Parent cannot be the account itself!";
-            }
-            else if (parentPM.ChartOfAccountsTypeCode != glaccountPM.ChartOfAccountsTypeCode)
-            {
-                return TextCodesTranslator.TranslateText("GLAccounts.O.GLAParentValidation1",0);
-                //return "GLAccount and its parent must be same chart of account type!";
-            }
-            else if (parentPM.ChartOfAccountsId != glaccountPM.ChartOfAccountsId)
-            {
-                return TextCodesTranslator.TranslateText("GLAccounts.O.GLAParentValidation2",0);
-                //return "GLAccount and its parent must be same chart of account!";
-            }
-            else if (parentPM.AccountTypeCode != glaccountPM.AccountTypeCode)
-            {
-                return "GLAccount and its parent must be same account type!";
-            }
-            else if (parentPM.AccountTypeCode != glaccountPM.AccountTypeCode)
-            {
-                return "GLAccount and its parent must be same account type!";
             }
             else if (!string.IsNullOrWhiteSpace(parentPM.ParentAccountId))
             {

@@ -178,6 +178,152 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
     
     public bool IsHTSMissing { get; set; }
     
+    public DateTime? PlannedCargoReadyDate { get; set; }
+    
+    public DateTime? ApprovedCargoReadyDate { get; set; }
+    
+    public User HandlerUser { get; set; }
+    
+    public string Notify1Reference { get; set; }
+    
+    public string Notify1Reference2 { get; set; }
+    
+    public string ShipperNotExporterReference1 { get; set; }
+    
+    public string ShipperNotExporterReference2 { get; set; }
+    
+    public DateTime? CustomsClearanceDate { get; set; }
+    
+    public PickUpDeliveryFromToType InlandDomesticFromTypeCode { get; set; }
+    
+    public PickUpDeliveryFromToType InlandDomesticToTypeCode { get; set; }
+    
+    public Country InlandDomesticFromCountry { get; set; }
+    
+    public Country InlandDomesticToCountry { get; set; }
+    
+    public string InlandDomesticFromZipCode { get; set; }
+    
+    public string InlandDomesticToZipCode { get; set; }
+    
+    public string InlandDomesticFromCity { get; set; }
+    
+    public string InlandDomesticToCity { get; set; }
+    
+    public Port MainCarriageFromPort { get; set; }
+    
+    public Port MainCarriageToPort { get; set; }
+    
+    public DateTime? CutoffDate { get; set; }
+    
+    public bool IsDangerous { get; set; }
+    
+    public DateTime? HAWBDate { get; set; }
+    
+    public TransportMode OnCarriageTransportMode { get; set; }
+    
+    public Port OnCarriageFromPort { get; set; }
+    
+    public Port OnCarriageToPort { get; set; }
+    
+    public Card OnCarriageCarrier { get; set; }
+    
+    public string OnCarriageCarrierNumber { get; set; }
+    
+    public DateTime? OnCarriageATD { get; set; }
+    
+    public DateTime? OnCarriageATA { get; set; }
+    
+    public DateTime? OnCarriageETD { get; set; }
+    
+    public DateTime? OnCarriageETA { get; set; }
+    
+    public Vessel OnCarriageVessel { get; set; }
+    
+    public TransportMode PreCarriageTransportMode { get; set; }
+    
+    public Port PreCarriageFromPort { get; set; }
+    
+    public Port PreCarriageToPort { get; set; }
+    
+    public Card PreCarriageCarrier { get; set; }
+    
+    public string PreCarriageCarrierNumber { get; set; }
+    
+    public DateTime? PreCarriageATD { get; set; }
+    
+    public DateTime? PreCarriageATA { get; set; }
+    
+    public DateTime? PreCarriageETD { get; set; }
+    
+    public DateTime? PreCarriageETA { get; set; }
+    
+    public Vessel PreCarriageVessel { get; set; }
+    
+    public Card ConsigneeNotImporter { get; set; }
+    
+    public string DeclarationNumber { get; set; }
+    
+    public DateTime? DeclarationDate { get; set; }
+    
+    public string BookingConfirmationNotes { get; set; }
+    
+    public DateTime? FreightRelease { get; set; }
+    
+    public DateTime? TerminalAvailable { get; set; }
+    
+    public Card Notify1 { get; set; }
+    
+    public List<Event> EventList { get; set; }
+    
+    public List<Event> AddManualEvents { get; set; }
+    
+    public Address UnassignedShipperAddress { get; set; }
+    
+    public Address UnassignedConsigneeAddress { get; set; }
+    
+    public string PreCarriageVesselName { get; set; }
+    
+    public string OnCarriageVesselName { get; set; }
+    
+    public string FullMaster { get; set; }
+    
+    public string AgentReference1 { get; set; }
+    
+    public string AgentReference2 { get; set; }
+    
+    public Card Notify2 { get; set; }
+    
+    public string Notify2Reference { get; set; }
+    
+    public Address UnassignedShipperNotExporterAddress { get; set; }
+    
+    public Address UnassignedConsigneeNotImporterAddress { get; set; }
+    
+    public State InlandDomesticFromState { get; set; }
+    
+    public State InlandDomesticToState { get; set; }
+    
+    public string InlandDomesticToAddress1 { get; set; }
+    
+    public string InlandDomesticToAddress2 { get; set; }
+    
+    public string InlandDomesticToPhone { get; set; }
+    
+    public string InlandDomesticToFax { get; set; }
+    
+    public string InlandDomesticFromAddress1 { get; set; }
+    
+    public string InlandDomesticFromAddress2 { get; set; }
+    
+    public string InlandDomesticFromPhone { get; set; }
+    
+    public string InlandDomesticFromFax { get; set; }
+    
+    public PrepaidCollect FreightPrepaidCollect { get; set; }
+    
+    public PrepaidCollect OtherPrepaidCollect { get; set; }
+
     public  string  ComputingPartnerCode { get; set; }
 
     }

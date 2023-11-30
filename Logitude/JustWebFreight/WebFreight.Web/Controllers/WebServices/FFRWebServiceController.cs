@@ -32,9 +32,10 @@ namespace WebFreight.Web.Controllers.WebServices
                     string loggedUserEmail = authToken.Email;
 
                     SecurityUtility.AuthenticationOnTenant(tenant);
+                    SecurityUtility.AuthenticationOnTenant(myTenant);
 
                     FFRWebService myService = new FFRWebService();
-                    FFRResult myResult = myService.SendFFR(myBookingId, myTenant, myRecipient, isCancellationSent);
+                    FFRResult myResult = myService.SendFFR(myBookingId, tenant, myRecipient, isCancellationSent);
 
                     scope.Complete();
                     return Request.CreateResponse(HttpStatusCode.OK, myResult);

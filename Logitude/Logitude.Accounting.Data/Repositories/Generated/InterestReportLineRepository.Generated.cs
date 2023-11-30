@@ -49,7 +49,7 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.InterestReportId == keys.InterestReportId && a.InterestTransactionId == keys.InterestTransactionId
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(InterestReportLine entity)
         {

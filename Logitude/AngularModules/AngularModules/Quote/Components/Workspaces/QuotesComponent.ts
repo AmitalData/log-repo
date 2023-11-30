@@ -816,10 +816,15 @@ export class QuotesComponent extends BaseComponent {
                 .then(cmpRef => {
                     cmpRef.instance.ComponentRef = cmpRef;
                     cmpRef.instance.Run(listArgs);
-                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.LoadAllScreenData());
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => this.BackButtonCompleted());
                     this.CurrentSession.AddMenuReference(cmpRef);
                 });;
         }
+    }
+
+    BackButtonCompleted() {
+        this.InitializeFilters();
+        this.LoadAllScreenData();
     }
 
     OnImageError(item: any, field: string) {

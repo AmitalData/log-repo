@@ -33,6 +33,7 @@ export class NewTransferComponent extends BaseComponent {
     public ItemsSource: NewTransferLine[] = [];
     public SelectedItem: NewTransferLine = null;
     private CurrentSession = SessionLocator.SelectedSession;
+    public selectedItems: NewTransferLine[] = [];
     constructor() {
         super();
         this.CreateNewAccountingTransferHeader();
@@ -172,7 +173,7 @@ export class NewTransferComponent extends BaseComponent {
                 this.AppendDateFilter(filters, "InvoiceDate");
 
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-                    filters.addAdditionalFilter("SearchReadyInvoices", this.SearchText, null, null, "Equals", true, false, false, "string");
+                    filters.addAdditionalFilter("SearchReadyInvoices", this.SearchText, null, null, "Contains", true, false, false, "string");
                 }
 
                 if (this.entityListService == null) {
@@ -193,7 +194,7 @@ export class NewTransferComponent extends BaseComponent {
                 this.AppendDateFilter(filters, "InvoiceDate");
 
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-                    filters.addAdditionalFilter("SearchReadyInvoices", this.SearchText, null, null, "Equals", true, false, false, "string");
+                    filters.addAdditionalFilter("SearchReadyInvoices", this.SearchText, null, null, "Contains", true, false, false, "string");
                 }
 
                 if (this.entityListService == null) {
@@ -214,7 +215,7 @@ export class NewTransferComponent extends BaseComponent {
                 this.AppendDateFilter(filters, "RegisterDate");
 
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-                    filters.addAdditionalFilter("SearchReadyPayments", this.SearchText, null, null, "Equals", true, false, false, "string");
+                    filters.addAdditionalFilter("SearchReadyPayments", this.SearchText, null, null, "Contains", true, false, false, "string");
                 }
 
                 if (this.entityListService == null) {
@@ -235,7 +236,7 @@ export class NewTransferComponent extends BaseComponent {
                 this.AppendDateFilter(filters, "RegisterDate");
 
                 if (!AppTool.IsNullOrEmpty(this.SearchText)) {
-                    filters.addAdditionalFilter("SearchReadyPayments", this.SearchText, null, null, "Equals", true, false, false, "string");
+                    filters.addAdditionalFilter("SearchReadyPayments", this.SearchText, null, null, "Contains", true, false, false, "string");
                 }
 
                 if (this.entityListService == null) {
@@ -364,13 +365,21 @@ export class NewTransferComponent extends BaseComponent {
             this.CheckAllItemsAgain = false;
         }
 
+        else {
+            this.ItemsSource.forEach(item => {
+                if (this.selectedItems.filter(d => d.Id == item.Id)[0]) {
+                    item.IsChecked = true;
+                }
+            });
+        }
+
         this.IsFirstTimeLoading = false;
         this.OnLinesSelected();
     }
 
     public SelectedCount: number = 0;
     public ExportButtonIsEnabled: boolean = false;
-    public IsFirstTimeLoading: boolean = true;
+    public IsFirstTimeLoading: boolean = true;    
     OnLinesSelected() {
         this.SelectedCount = this.ItemsSource.filter(f => f.IsChecked == true).length;
         this.ExportButtonIsEnabled = this.SelectedCount > 0 ? true : false;
@@ -466,6 +475,19 @@ export class NewTransferLine {
         if (this.isChecked != value) {
             this.isChecked = value;
             this.fatherComponent.OnLinesSelected();            
+        }
+
+        var index = this.fatherComponent.selectedItems.indexOf(this);
+
+        if (value) {
+            if (index == -1) {
+                this.fatherComponent.selectedItems.push(this);
+            }
+        }
+        else {            
+            if (index > -1) {
+                this.fatherComponent.selectedItems.splice(index);
+            }
         }
     }
 }

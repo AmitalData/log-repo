@@ -11,12 +11,24 @@ namespace Simplog.Server.Infrastructure.Helpers
 {
     public class GenericSort
     {
-        public IQueryable<T> GetSorterQuery<T,N>(QueryOperations queryOperations, IQueryable<T> querableData)
+
+        int tenant = 0;
+        public GenericSort(int tenant)
         {
-            string keyName = null;
+            this.tenant = tenant;
+        }
+
+        public GenericSort()
+        {
+
+        }
+
+        public IQueryable<QueryType> GetSorterQuery<QueryType, FirstSortType>(QueryOperations queryOperations, IQueryable<QueryType> querableData)
+        {
+            string keyName = null;     
             if (!string.IsNullOrEmpty(queryOperations.ObjectTableName))
             {
-                keyName = GetObjectTableKeyName(queryOperations);
+                keyName = GetObjectTableKeyName(queryOperations , tenant);
             }
             SortParams<T, N> sortParams = new SortParams<T, N>();
             sortParams.QuerableData = querableData;
@@ -72,13 +84,13 @@ namespace Simplog.Server.Infrastructure.Helpers
             return sortExpression;
         }
 
-        private string GetObjectTableKeyName(QueryOperations queryOperations)
+        private string GetObjectTableKeyName(QueryOperations queryOperations , int tenant = 0)
         {
             string keyName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 IObjectTablePropertyGetter objectTablePropertyGetter = InjectionContainer.Container.Resolve(typeof(IObjectTablePropertyGetter), "ObjectTablePropertyGetter", new ParameterOverride("", 1)) as IObjectTablePropertyGetter;
-                keyName = objectTablePropertyGetter.GetKeyPropertyPath(queryOperations.ObjectTableName, 0);
+                keyName = objectTablePropertyGetter.GetKeyPropertyPath(queryOperations.ObjectTableName, tenant);
                 scope.Complete();
             }
             return keyName;

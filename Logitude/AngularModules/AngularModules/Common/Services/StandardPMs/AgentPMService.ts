@@ -25,6 +25,7 @@ import {AddressPM} from '../../EntityPMs/AddressPM';
 import {ContactPM} from '../../EntityPMs/ContactPM';
 
 import {CardContactAdditionalServicePM} from '../../EntityPMs/CardContactAdditionalServicePM';
+import {CardContactProductPM} from '../../EntityPMs/CardContactProductPM';
 import {CardExternalCodeByCurrencyPM} from '../../EntityPMs/CardExternalCodeByCurrencyPM';
 
 @Injectable()
@@ -162,7 +163,7 @@ export class AgentPMService {
         }
 
 		var customFields: Array<string> = [];
-        for (var i = 1; i < 11; i++) {
+        for (var i = 1; i < 51; i++) {
             customFields.push("Field" + i);
         }
             var jsonPMKeys = Object.keys(jsonPM);
@@ -215,6 +216,13 @@ export class AgentPMService {
 				    var myCardContactAdditionalServicePM =myContactPM.CardContactAdditionalServices[k];
 				    var newCardContactAdditionalServicePM=this.clone(myContactPM.CardContactAdditionalServices[k]);
                     newContactPM.CardContactAdditionalServices.push(newCardContactAdditionalServicePM);
+
+					                 }
+                newContactPM.CardContactProducts = [];
+                for (var k in myContactPM.CardContactProducts) {
+				    var myCardContactProductPM =myContactPM.CardContactProducts[k];
+				    var newCardContactProductPM=this.clone(myContactPM.CardContactProducts[k]);
+                    newContactPM.CardContactProducts.push(newCardContactProductPM);
 
 					                 }
 							 
@@ -322,7 +330,7 @@ export class AgentPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newCardExternalCodeByCurrencyPM[pmProperty] = jItem[pmProperty];
             }
            

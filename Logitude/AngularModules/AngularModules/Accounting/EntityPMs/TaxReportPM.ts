@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class TaxReportPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -192,6 +192,46 @@ export class TaxReportPM {
     private updatedByUserName: string;
     public get UpdatedByUserName() { return this.updatedByUserName; }
     public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
+    private createdInTwoMonthsLogic: boolean;
+    public get CreatedInTwoMonthsLogic() { return this.createdInTwoMonthsLogic; }
+    public set CreatedInTwoMonthsLogic(newValue: boolean) { if (this.createdInTwoMonthsLogic != newValue) { this.createdInTwoMonthsLogic = newValue; this.MarkAsDirty("CreatedInTwoMonthsLogic"); } }
+       
+	 
+    private outputTaxAmountRound: number;
+    public get OutputTaxAmountRound() { return this.outputTaxAmountRound; }
+    public set OutputTaxAmountRound(newValue: number) { if (this.outputTaxAmountRound != newValue) { this.outputTaxAmountRound = newValue; this.MarkAsDirty("OutputTaxAmountRound"); } }
+       
+	 
+    private inputsTaxAmountRound: number;
+    public get InputsTaxAmountRound() { return this.inputsTaxAmountRound; }
+    public set InputsTaxAmountRound(newValue: number) { if (this.inputsTaxAmountRound != newValue) { this.inputsTaxAmountRound = newValue; this.MarkAsDirty("InputsTaxAmountRound"); } }
+       
+	 
+    private reconciliationsNumbers: string;
+    public get ReconciliationsNumbers() { return this.reconciliationsNumbers; }
+    public set ReconciliationsNumbers(newValue: string) { if (this.reconciliationsNumbers != newValue) { this.reconciliationsNumbers = newValue; this.MarkAsDirty("ReconciliationsNumbers"); } }
+       
+	 
+    private closingJournalNumber: string;
+    public get ClosingJournalNumber() { return this.closingJournalNumber; }
+    public set ClosingJournalNumber(newValue: string) { if (this.closingJournalNumber != newValue) { this.closingJournalNumber = newValue; this.MarkAsDirty("ClosingJournalNumber"); } }
+       
+	 
+    private closingJournalId: string;
+    public get ClosingJournalId() { return this.closingJournalId; }
+    public set ClosingJournalId(newValue: string) { if (this.closingJournalId != newValue) { this.closingJournalId = newValue; this.MarkAsDirty("ClosingJournalId"); } }
+       
+	 
+    private recalculateData: boolean;
+    public get RecalculateData() { return this.recalculateData; }
+    public set RecalculateData(newValue: boolean) { if (this.recalculateData != newValue) { this.recalculateData = newValue; this.MarkAsDirty("RecalculateData"); } }
+       
+	 
+    private canRecalculate: boolean;
+    public get CanRecalculate() { return this.canRecalculate; }
+    public set CanRecalculate(newValue: boolean) { if (this.canRecalculate != newValue) { this.canRecalculate = newValue; this.MarkAsDirty("CanRecalculate"); } }
        
 	 
 

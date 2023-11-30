@@ -24,6 +24,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
     SendViaClassLists: Operator[] = [];
     FTPFolderLists: Operator[] = [];
     IsCustomerCare: boolean = false;
+    ObjectTableName: string = "";
 
     DataContext: any;
     IsRefreshComputingPartner: boolean = false;
@@ -45,12 +46,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
     }
 
     InitializeSendInterfaceResultComponent() {
-        this.SendInterfaceClassLists = [];
-        this.SendInterfaceClassLists.push(new Operator("Shipment API", "ShipmentAPI"));
-
-
-
-
+        
         this.SendFormatLists = [];
         this.SendFormatLists.push(new Operator("XML", "XML"));
         this.SendFormatLists.push(new Operator("JSON", "JSON"));
@@ -59,6 +55,7 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
         this.SendViaClassLists = [];
         this.SendViaClassLists.push(new Operator("FTP", "FTP"));
         this.SendViaClassLists.push(new Operator("Email", "EMAIL"));
+        this.SendViaClassLists.push(new Operator("WebHook", "WEBHOOK"));
 
     }
 
@@ -122,8 +119,6 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
         }
     }
 
-
-
     private computingPartnerId: string;
     get ComputingPartnerId() { return this.computingPartnerId; }
     set ComputingPartnerId(newValue: string) {
@@ -175,6 +170,20 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
 
     }
 
+    ShowWebHookDetails() {
+        var windowArgs: any = {};
+        windowArgs.WebHookDetails = this.automationSendInterface.WebHookDetails;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 450;
+        logWindow.Title = "WebHook Details";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./Infrastructure/Components/Maintenance/Automation/AutomationResult/WebHookAutomationDetailsComponent");
+        logWindow.WindowClosed.subscribe((message: any) => {
+            if (message == "Changed") this.automationSendInterface.IsChanged = true
+        });
+    }
 
     ShowFTPDetails() {
         var windowArgs: any = {};
@@ -194,6 +203,20 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
         });
     }
 
+    ShowAdvancedDetails() {
+        var windowArgs: any = {};
+        windowArgs.AutomationSendInterface = this.automationSendInterface;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 600;
+        logWindow.Height = 450;
+        logWindow.Title = "Advanced Details";
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show("./Infrastructure/Components/Maintenance/Automation/AutomationResult/AdvancedAutomationSendInterfaceDetailsComponent");
+        logWindow.WindowClosed.subscribe((message: any) => {
+            if (message == "Changed") this.automationSendInterface.IsChanged = true
+        });
+    }
 
     AddComputingPartner() {
         var windowArgs: any = {};
@@ -217,10 +240,25 @@ export class SendInterfaceResultComponent extends BaseComponent implements OnIni
         });
     }
     public automationSendInterface: AutomationSendInterface;
-    Run(automationSendInterface: AutomationSendInterface) {
+    Run(automationSendInterface: AutomationSendInterface, objectTableName: string) {
         this.automationSendInterface = automationSendInterface;
-
+        this.ObjectTableName = objectTableName;
+        this.FillInterfaces();
         this.SetSelectedDelfultData();
+    }
+
+    private FillInterfaces() {
+        this.SendInterfaceClassLists = [];
+
+        switch (this.ObjectTableName) {
+            case "ARInvoice":
+                this.SendInterfaceClassLists.push(new Operator("Advanced Generic Interface", "AdvancedARInvoiceAPI"));
+                this.SendInterfaceClassLists.push(new Operator("Generic Interface", "ARInvoiceAPI"));
+                break;
+            default:
+                this.SendInterfaceClassLists.push(new Operator("Shipment API", "ShipmentAPI"));
+                break;
+        }
     }
 }
 

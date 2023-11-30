@@ -1,3 +1,16 @@
 ﻿<div *ngIf="fieldName == 'IsCancelled'">
     <img *ngIf="rowData.IsCancelled" src="./Images/CheckBoxIcon.png" class="CenterCenter" />
 </div>
+<div class="TextTrimming" *ngIf="fieldName == 'SelectCheckBox'" style="padding: 4px;" (click)="handleDivClick()">
+    <CheckBox (Checked)="CheckBoxClicked($event)" [IsChecked]="rowData['IsChecked']"></CheckBox>
+</div>
+<div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'CreateDate'">
+    {{rowData[fieldName] | DateTimePipe:'SD' }}
+</div>
+<div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'Number'">
+    {{rowData[fieldName]}}
+</div>
+<div [style.text-align]="isRTL ? 'right' : 'left'" class="TextTrimming" *ngIf="fieldName == 'CreatedByUserName'" >
+    {{rowData[fieldName]}}
+</div>
+

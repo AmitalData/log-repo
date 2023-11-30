@@ -9,6 +9,10 @@
   ObjectTablePlural="&quot;Generals&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -35,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;1ca9&quot;"
+  Code="&quot;a44b&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -51,6 +55,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;6f7b&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -127,7 +132,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.MH.Dashboard&quot;"
-      DefaultText="&quot;Dashboard&quot;"
+      DefaultText="&quot;Custom Dashboard&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -416,8 +421,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.M.MinMax&quot;"
-      DefaultText="&quot;%FieldName Field must be less than %Maxlength and more than %Minlength&quot;"
-      LocalDefaultText="&quot;%FieldName השדה חייב להיות קטן מ- %Maxlength וגדול מ- %Minlength&quot;"
+      DefaultText="&quot;%FieldName Field length must be less than %Maxlength and more than %Minlength&quot;"
+      LocalDefaultText="&quot;%FieldName אורך השדה חייב להיות קטן מ- %Maxlength וגדול מ- %Minlength&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -2036,7 +2041,7 @@
     <TextCode
       Code="&quot;Accounting.General.O.DueDate&quot;"
       DefaultText="&quot;Due Date&quot;"
-      LocalDefaultText="&quot;תאריך לתשלום&quot;"
+      LocalDefaultText="&quot;תאריך פרעון&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -2246,6 +2251,12 @@
     <TextCode
       Code="&quot;Accounting.General.O.FullAccounting&quot;"
       DefaultText="&quot;Full Accounting&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.DefaultVATTypeMissing&quot;"
+      DefaultText="&quot;Default VAT Type is missing in the Full Accounting Settings&quot;"
+      LocalDefaultText="&quot;אין הגדרת סוג מעמ דיפולטיבי בטבלת Full Accounting Settings&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -2685,8 +2696,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.M.Max&quot;"
-      DefaultText="&quot;%FieldName Field must be less than %Maxlength&quot;"
-      LocalDefaultText="&quot;%FieldName השדה חייב להיות קטן מ- %Maxlength&quot;"
+      DefaultText="&quot;%FieldName Field length must be less than %Maxlength&quot;"
+      LocalDefaultText="&quot;%FieldName אורך השדה חייב להיות קטן מ- %Maxlength&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -3829,6 +3840,18 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;Accounting.O.TaxRepProblem&quot;"
+      DefaultText="&quot;The problem is in the line&quot;"
+      LocalDefaultText="&quot;הבעיה מצויה בשורה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.TaxRepProblem_2&quot;"
+      DefaultText="&quot;of this report in Journal No&quot;"
+      LocalDefaultText="&quot;בדוח זה בפקודת יומן מספר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;Accounting.O.MustBeLess&quot;"
       DefaultText="&quot;From date must be less than to date&quot;"
       LocalDefaultText="&quot;מ-תאריך חייב להיות קטן מ-עד תאריך&quot;"
@@ -4327,7 +4350,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.O.ShowNewRelease&quot;"
-      DefaultText="&quot;New Version is online, for more details&quot;"
+      DefaultText="&quot;Read what is new in the latest release&quot;"
       LocalDefaultText="&quot;גרסה חדשה עלתה לאוויר - לפירוט השינויים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
@@ -4446,8 +4469,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Accounting.General.O.AtleastoneGLAccountInterestPeriodsrecordisrequired&quot;"
-      DefaultText="&quot;At least one GLAccount Interest Periods record is required&quot;"
-      LocalDefaultText="&quot;חובה להזין לפחות רשומה אחת של תקופת ריבית&quot;"
+      DefaultText="&quot;If you want that this glaccount will be active for interest,  At least one GLAccount Interest Periods record is required&quot;"
+      LocalDefaultText="&quot;אם ברצונך שחשבון זה יהיה פעיל לריבית ,יש להגדיר לפחות תקופת ריבית אחת&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
@@ -5087,6 +5110,785 @@
       DefaultText="&quot;Quotes (OP)&quot;"
       LocalDefaultText="&quot; הצעות מחיר (OP)&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.ShipmentOrders&quot;"
+      DefaultText="&quot;Shipment Orders&quot;"
+      LocalDefaultText="&quot;Shipment Orders&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.TasksApp&quot;"
+      DefaultText="&quot;Tasks App&quot;"
+      LocalDefaultText="&quot;Tasks App&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.Automations&quot;"
+      DefaultText="&quot;Automations&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Others.EntityStatus&quot;"
+      DefaultText="&quot;Entity Status&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.CustomerTeam&quot;"
+      DefaultText="&quot;Customer Teams&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.WrongVatNumber&quot;"
+      DefaultText="&quot;Wrong Vat Number&quot;"
+      LocalDefaultText="&quot;חפ שגוי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Others.ImageLibraries&quot;"
+      DefaultText="&quot;Image Library&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.LedgerTransactions&quot;"
+      DefaultText="&quot;Ledger Transactions&quot;"
+      LocalDefaultText="&quot;תנועות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Between&quot;"
+      DefaultText="&quot;Between&quot;"
+      LocalDefaultText="&quot;בין&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Quotation.Mentions&quot;"
+      DefaultText="&quot;Mentions&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Local&quot;"
+      DefaultText="&quot;Local&quot;"
+      LocalDefaultText="&quot;מקומ&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Original&quot;"
+      DefaultText="&quot;Original&quot;"
+      LocalDefaultText="&quot;מקורי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Shipment.ContainerTracking&quot;"
+      DefaultText="&quot;Container Tracking Settings&quot;"
+      LocalDefaultText="&quot;Container Tracking Settings&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.M.Min&quot;"
+      DefaultText="&quot;%FieldName Field length must be more than %Minlength&quot;"
+      LocalDefaultText="&quot;%FieldName אורך השדה חייב להיות יותר מ %Minlength&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.M.EqualLength&quot;"
+      DefaultText="&quot;%FieldName Field length must equal %Equallength&quot;"
+      LocalDefaultText="&quot;%FieldName אורך השדה חייב להיות שווה %Equallength&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ReconcCancelWarning&quot;"
+      DefaultText="&quot;The reconciliation will be canceled but the adjusted journal will not be voided.&quot;"
+      LocalDefaultText="&quot;ההתאמה תבוטל אך פקודת ההפרש לא תבוטל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.GeneralInformation&quot;"
+      DefaultText="&quot;General information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.PersonalInformation&quot;"
+      DefaultText="&quot;Personal information&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.Password&quot;"
+      DefaultText="&quot;Password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.ConfirmPassword&quot;"
+      DefaultText="&quot;Confirm your current password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.O.CurrentPassword&quot;"
+      DefaultText="&quot;Current password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.EnterNewPassword&quot;"
+      DefaultText="&quot;Set a new password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.NewPassword&quot;"
+      DefaultText="&quot;New password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.ReTypePassword&quot;"
+      DefaultText="&quot;Repeat new password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.Dashboard&quot;"
+      DefaultText="&quot;Dashboard&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.ShipmentsToArriveWithinOneWeek&quot;"
+      DefaultText="&quot;Excepted shipments to arrive within one week&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.InvoiceDueDateWithinOneWeek&quot;"
+      DefaultText="&quot;Total number invoices due date is within one week&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.TotalShipmentByStatus&quot;"
+      DefaultText="&quot;Total shipments by statuses&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Dashboard.G.TotalInvoiceByStatus&quot;"
+      DefaultText="&quot;Total invoices by statuses&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.GeneralSearch&quot;"
+      DefaultText="&quot;Search by Invoice No/ Shipment No&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Reports&quot;"
+      DefaultText="&quot;Reports&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Quotes&quot;"
+      DefaultText="&quot;Quotes&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.HelpCenter&quot;"
+      DefaultText="&quot;Help center&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Dashboard&quot;"
+      DefaultText="&quot;Dashboard&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Shipment&quot;"
+      DefaultText="&quot;Shipments&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Tab.G.Invoice&quot;"
+      DefaultText="&quot;Invoicing&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.ClassicDashboard&quot;"
+      DefaultText="&quot;Dashboard&quot;"
+      LocalDefaultText="&quot;Dashboard&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.B.DownloadExcel&quot;"
+      DefaultText="&quot;Please enter 3 letters at least to start searching&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.SearchMinNumberOfChars&quot;"
+      DefaultText="&quot;Please enter 3 letters at least to start searching&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.Description&quot;"
+      DefaultText="&quot;Description&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.PhoneNumber&quot;"
+      DefaultText="&quot;Phone&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.Contact&quot;"
+      DefaultText="&quot;Contact&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.Download&quot;"
+      DefaultText="&quot;Download&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.DownloadData&quot;"
+      DefaultText="&quot;Download data&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.NoDataDefaultMSG&quot;"
+      DefaultText="&quot;You don’t have any information here All information will be displayed here, when it will be added by the forwarder&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.DownloadDataMSG&quot;"
+      DefaultText="&quot;Preparing data for downloading. This may take several seconds. Please, do not refresh the page or close this window.&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.DownloadDataSuccessMSG&quot;"
+      DefaultText="&quot;Done!&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.DownloadDataPreparing &quot;"
+      DefaultText="&quot;Preparing data...&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.RefreshMSG&quot;"
+      DefaultText="&quot;Some data might have been changed, please refresh the page to see the updated information.Refresh page&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.ShowLoginMsg&quot;"
+      DefaultText="&quot;Login to view more information about this shipment.Login Here&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.SessionExpired&quot;"
+      DefaultText="&quot;Your session has been expired&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.LoginAgainMsg&quot;"
+      DefaultText="&quot;Please, login again to continue.&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.LoginBtn&quot;"
+      DefaultText="&quot;Login&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.PersonalInformationFullName&quot;"
+      DefaultText="&quot;Full name&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.PersonalInformationDateOfBirth&quot;"
+      DefaultText="&quot;Date of birth&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.SaveChangesBtn&quot;"
+      DefaultText="&quot;Save changes&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.ChangePassword&quot;"
+      DefaultText="&quot;Change password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.LogoutBtn&quot;"
+      DefaultText="&quot;Logout&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.ConfirmLogoutBtn&quot;"
+      DefaultText="&quot;Confirm logout&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.ConfirmLogoutMsg&quot;"
+      DefaultText="&quot;Are you sure you want to logout?&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.LoginMsg&quot;"
+      DefaultText="&quot;Enter your credentials to access your account.&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.EmailPlaceholder&quot;"
+      DefaultText="&quot;email@example.com&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.PasswordPlaceholder&quot;"
+      DefaultText="&quot;password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.ForgetPasswordMsg&quot;"
+      DefaultText="&quot;Please enter your Email and press submit.&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.ResetPassword&quot;"
+      DefaultText="&quot;Reset Password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.ForgetPasswwordTroubleLogging &quot;"
+      DefaultText="&quot;Have trouble logging in?&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.CreatePassword&quot;"
+      DefaultText="&quot;Create password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.ConfirmPassword&quot;"
+      DefaultText="&quot;Confirm password&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.PasswordChange&quot;"
+      DefaultText="&quot;Password change&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.PasswordInfo1&quot;"
+      DefaultText="&quot;8 or more characters&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.PasswordInfo2&quot;"
+      DefaultText="&quot;Upper &amp; lowercase letters&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.PasswordInfo3&quot;"
+      DefaultText="&quot;At least one number&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.PasswordInfo4&quot;"
+      DefaultText="&quot;Not more than 3 consecutive repeating characters&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Shipment.G.UploadingDocumentHeaderMsg&quot;"
+      DefaultText="&quot;Uploading document&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.ClearFilter&quot;"
+      DefaultText="&quot;Clear filters&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.DownloadDataSuccessMSG2&quot;"
+      DefaultText="&quot;Done&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.CopiedToClipboard&quot;"
+      DefaultText="&quot;Copied to your clipboard&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.DownloadExcel&quot;"
+      DefaultText="&quot;Download Excel&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.ApplyFilter&quot;"
+      DefaultText="&quot;Apply filter&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.EditFilters&quot;"
+      DefaultText="&quot;Edit filters&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.ViewModeLogoutMsg&quot;"
+      DefaultText="&quot;Are you sure you want to logout from view mode?&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.ClosingViewMode&quot;"
+      DefaultText="&quot;Closing view mode&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.CloseViewMode&quot;"
+      DefaultText="&quot;Close view mode&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.ViewModeMsg&quot;"
+      DefaultText="&quot;You are viewing digital portal as an Owner&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.MultiShipments&quot;"
+      DefaultText="&quot;Multi shipments&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.NoMatchingResultsFound&quot;"
+      DefaultText="&quot;No matching results found&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.OnlineViewLoginDirective&quot;"
+      DefaultText="&quot;Login now to view all information about events, documents and more&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.InformationAvailablilityMsg&quot;"
+      DefaultText="&quot;This information is only available to logged-in users&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.SaveChangesMsg&quot;"
+      DefaultText="&quot;Your changes have been successfully saved!&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.TimeZone&quot;"
+      DefaultText="&quot;Time Zone&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.PasswordIssueMsg&quot;"
+      DefaultText="&quot;The current password is wrong!&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.PositionValidationMsg&quot;"
+      DefaultText="&quot;Position is required.&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Contact.G.FullNameValidationMsg&quot;"
+      DefaultText="&quot;Full name is required.&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.CurrentPasswordValidationMsg&quot;"
+      DefaultText="&quot;Current password is required.&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.NewPasswordValidationMsg&quot;"
+      DefaultText="&quot;New password is required.&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.NewPasswordValidationErrorMsg&quot;"
+      DefaultText="&quot;New password doesn't meet the below conditions&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.ConfirmNewPasswordValidationErrorMsg&quot;"
+      DefaultText="&quot;The passwords you entered do not match.&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.VerificationCode&quot;"
+      DefaultText="&quot;Verification code&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.CapatchPlaceholder&quot;"
+      DefaultText="&quot;Type the text you see&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.ForgotPasswordMsg&quot;"
+      DefaultText="&quot;Forgot your password?&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.SubmitBtn&quot;"
+      DefaultText="&quot;Submit&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.G.DownloadAll&quot;"
+      DefaultText="&quot;Download all&quot;"
+      TextCodeTypeCode="&quot;G&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.O.ChangeMadeToConnectedAccounts&quot;"
+      DefaultText="&quot;A change was made in the connected accounts. The connected accounts must be returned to their state as it was when the original journal was prodiced. Line &quot;"
+      LocalDefaultText="&quot;בוצע שינוי בחיבור החשבונות. יש להחזיר את חיבור החשבונות למצבם כפי שהיה בעת רישום פקודת היומן המקורית. שורה &quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Customization.Customization&quot;"
+      DefaultText="&quot;Customization&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ChartOfAccountsTypesOrder&quot;"
+      DefaultText="&quot;Chart Of Accounts Types Order&quot;"
+      LocalDefaultText="&quot;Chart Of Accounts Types Order&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.CustomObjects.CustomObjects&quot;"
+      DefaultText="&quot;Custom Objects&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Customization.DeploymentPackage&quot;"
+      DefaultText="&quot;Deployment Package&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MH.Containers&quot;"
+      DefaultText="&quot;Containers&quot;"
+      LocalDefaultText="&quot;Containers&quot;"
+      TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.Signeds&quot;"
+      DefaultText="&quot;Signed Fields&quot;"
+      LocalDefaultText="&quot;חתימה דיגיטלית&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Tasks.Tasks&quot;"
+      DefaultText="&quot;Tasks&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Tasks.TaskTypes&quot;"
+      DefaultText="&quot;Task Types&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Tasks.TaskPriorities&quot;"
+      DefaultText="&quot;Task Priorities&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Tasks.TaskStatuses&quot;"
+      DefaultText="&quot;Task Statuses&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ACC.ConsolidatedTaxReport&quot;"
+      DefaultText="&quot;Consolidated Tax Report&quot;"
+      LocalDefaultText="&quot;דיווח מס מרוכז&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.Q.ConsolidatedTaxReport&quot;"
+      DefaultText="&quot;Consolidated Tax Report&quot;"
+      LocalDefaultText="&quot;דיווח מס מרוכז&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.DeductionFileNumber&quot;"
+      DefaultText="&quot;Deduction File Number is undefined.&quot;"
+      LocalDefaultText="&quot;מספר תיק ניכויים אינו מוגדר.&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.FinishingRowType&quot;"
+      DefaultText="&quot;Finishing Row Type&quot;"
+      LocalDefaultText="&quot;רשומת סיכום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.StartingRowType&quot;"
+      DefaultText="&quot;Starting Row Type&quot;"
+      LocalDefaultText="&quot;רשומת פתיחה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.TaxLineRowType&quot;"
+      DefaultText="&quot;Tax Line Row Type&quot;"
+      LocalDefaultText="&quot;רשומת תנועה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.NotValidRowType&quot;"
+      DefaultText="&quot;Not a valid Row Type&quot;"
+      LocalDefaultText="&quot;רשומה לא מסוג תקין&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.DoesntStartWithRowType&quot;"
+      DefaultText="&quot;does not start with a Line Row Type&quot;"
+      LocalDefaultText="&quot;לא מתחיל בסוג רשומה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.NotEncountered&quot;"
+      DefaultText="&quot;not encountered&quot;"
+      LocalDefaultText="&quot;לא זוהתה עד כה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.DiffersFrom&quot;"
+      DefaultText="&quot;differs from &quot;"
+      LocalDefaultText="&quot;לא זהה ל&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.IsMissing&quot;"
+      DefaultText="&quot;is missing&quot;"
+      LocalDefaultText="&quot;חסר&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.IsEmpty&quot;"
+      DefaultText="&quot;is empty&quot;"
+      LocalDefaultText="&quot;ריק&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.NotFound&quot;"
+      DefaultText="&quot;not found&quot;"
+      LocalDefaultText="&quot;לא נמצא&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.StatusError&quot;"
+      DefaultText="&quot; - cannot update a report that was transmitted or cancelled&quot;"
+      LocalDefaultText="&quot;לא ניתן לקלוט שורות לדוח ששודר או בוטל&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.AppearsBefore&quot;"
+      DefaultText="&quot;Appears Before&quot;"
+      LocalDefaultText="&quot;מופיעה לפני&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.StartingRowDeductionFile&quot;"
+      DefaultText="&quot;Starting Row Deduction File&quot;"
+      LocalDefaultText="&quot;תיק ניכויים ברשומת הפתיחה&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.FinishingRowDeductionFile&quot;"
+      DefaultText="&quot;Finishing Row Deduction File&quot;"
+      LocalDefaultText="&quot;תיק ניכויים ברשומת הסיכום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.OurDeductionFile&quot;"
+      DefaultText="&quot;Our Deduction File Number&quot;"
+      LocalDefaultText="&quot;מספר תיק הניכויים שלנו&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.FinishingRowTotals&quot;"
+      DefaultText="&quot;Finishing Row totals do not sum up together&quot;"
+      LocalDefaultText="&quot;כמויות לא מתחברות יחד ברשימת הסיכום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.TaxLineNo&quot;"
+      DefaultText="&quot;Tax Line #&quot;"
+      LocalDefaultText="&quot;שורת תנועה מס' &quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.TaxReportId&quot;"
+      DefaultText="&quot;Tax Report Id&quot;"
+      LocalDefaultText="&quot;מזהה דו\&quot;ח מס&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.OppositeVatNumber&quot;"
+      DefaultText="&quot;Opposite VAT #&quot;"
+      LocalDefaultText="&quot;מספר תיק של צד נגדי&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.LocatedDeductionFile&quot;"
+      DefaultText="&quot;Located Deduction File&quot;"
+      LocalDefaultText="&quot;תיק ניכויים שאותר&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.LocatedVATNumber&quot;"
+      DefaultText="&quot;Located VAT Number&quot;"
+      LocalDefaultText="&quot;מספר עוסק מורשה שאותר&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.ReferenceDate&quot;"
+      DefaultText="&quot;Reference Date&quot;"
+      LocalDefaultText="&quot;תאריך אסמכתא&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.Reference&quot;"
+      DefaultText="&quot;Reference #&quot;"
+      LocalDefaultText="&quot;מספר אסמכתא&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.EndDate&quot;"
+      DefaultText="&quot;End Date&quot;"
+      LocalDefaultText="&quot;תאריך סיום&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.FailedWhilePerforming&quot;"
+      DefaultText="&quot;failed while performing&quot;"
+      LocalDefaultText="&quot;תקלה בביצוע&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;ConsolidatedTaxReport.O.NoLinesProcessed&quot;"
+      DefaultText="&quot;No Lines Processed&quot;"
+      LocalDefaultText="&quot;אין שורות לעיבוד&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.ARPaymentCheques&quot;"
+      DefaultText="&quot;ARPayment Cheques&quot;"
+      LocalDefaultText="&quot;כל השקים מהלקוחות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.UnRedeemedCheques&quot;"
+      DefaultText="&quot;UnRedeemed Cheques&quot;"
+      LocalDefaultText="&quot;המחאות שלא נפרעו&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.AllCheques&quot;"
+      DefaultText="&quot;All Cheques&quot;"
+      LocalDefaultText="&quot;כל ההמחאות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Accounting.General.O.PostponedCheques&quot;"
+      DefaultText="&quot;Postponed Cheques&quot;"
+      LocalDefaultText="&quot;המחאות דחויות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
@@ -7121,6 +7923,348 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.General.Features.OceanInsightsSettings&quot;"
       FeatureDefaultText="&quot;Ocean Insights Settings&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SHIPMENTORDERS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SHIPMENTORDERS&quot;"
+      FeatureDefaultText="&quot;Shipment Orders&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TASKSAPP&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TASKSAPP&quot;"
+      FeatureDefaultText="&quot;Tasks App&quot;"
+      IsPackagable="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TIMEZONES&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TIMEZONES&quot;"
+      FeatureDefaultText="&quot;Time Zones&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;General.Features.ContainerSettings&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.General.Features.ContainerSettings&quot;"
+      FeatureDefaultText="&quot;Container Settings&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;General.Features.CustomizationSettings&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.General.Features.CustomizationSettings&quot;"
+      FeatureDefaultText="&quot;Customization Settings&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ENTITYSTATUS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.ENTITYSTATUS&quot;"
+      FeatureDefaultText="&quot;Entity Status&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;QUOTECHARGESGROUP&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.QUOTECHARGESGROUP&quot;"
+      FeatureDefaultText="&quot;Quote Charges Types&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;General.Features.CustomerTeam&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.General.Features.CustomerTeam&quot;"
+      FeatureDefaultText="&quot;Customer Teams&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SHLOGCARGOTRACKING&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SHLOGCARGOTRACKING&quot;"
+      FeatureDefaultText="&quot;Shared Logistic Cargo Tracking&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;IMAGELIBRARIES&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.IMAGELIBRARIES&quot;"
+      FeatureDefaultText="&quot;Image Libraries&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CustomerGroups&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CustomerGroups&quot;"
+      FeatureDefaultText="&quot;Customer Groups&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;MENTIONS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.MENTIONS&quot;"
+      FeatureDefaultText="&quot;Mentions&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SHLOGDIGITALPORTAL&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SHLOGDIGITALPORTAL&quot;"
+      FeatureDefaultText="&quot;Digital Portal&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CONTAINERTRACKINGSETTINGS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CONTAINERTRACKINGSETTINGS&quot;"
+      FeatureDefaultText="&quot;Container Tracking Settings&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;MultiPrint&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.MultiPrint&quot;"
+      FeatureDefaultText="&quot;Batch Print&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CustomFieldsCustomization&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CustomFieldsCustomization&quot;"
+      FeatureDefaultText="&quot;Custom Fields Customization&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;StandardFieldsCustomization&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.StandardFieldsCustomization&quot;"
+      FeatureDefaultText="&quot;Standard Fields Customization&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ScreenLayoutCustomization&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.ScreenLayoutCustomization&quot;"
+      FeatureDefaultText="&quot;Screen Layout Customization&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;RulesCustomization&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.RulesCustomization&quot;"
+      FeatureDefaultText="&quot;Rules Customization&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TabsCustomization&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TabsCustomization&quot;"
+      FeatureDefaultText="&quot;Tabs Customization&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;LabelsCustomization&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.LabelsCustomization&quot;"
+      FeatureDefaultText="&quot;Labels Customization&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SubEntitiesCustomization&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SubEntitiesCustomization&quot;"
+      FeatureDefaultText="&quot;Sub Entities Customization&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SupportUnitMeasurements&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SupportUnitMeasurements&quot;"
+      FeatureDefaultText="&quot;Support Select Unit of Measurements&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CUSTOMDASHBOARD&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CUSTOMDASHBOARD&quot;"
+      FeatureDefaultText="&quot;Custom Dashboard&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;Customization.CreateSubObjects&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.Customization.CreateSubObjects&quot;"
+      FeatureDefaultText="&quot;Create Sub Object in Customization&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;Customization.CreateObjects&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.Customization.CreateObjects&quot;"
+      FeatureDefaultText="&quot;Create Custom object in Customization &quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;General.Features.ChartOfAccountsTypesOrder&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.General.Features.ChartOfAccountsTypesOrder&quot;"
+      FeatureDefaultText="&quot;Chart Of Accounts Types Order&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;Customization.DeploymentPackage&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.Customization.DeploymentPackage&quot;"
+      FeatureDefaultText="&quot;Deployment Package&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;QueriesCustomization&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.QueriesCustomization&quot;"
+      FeatureDefaultText="&quot;Views&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;PORTGROUPS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.PORTGROUPS&quot;"
+      FeatureDefaultText="&quot;Port Groups&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CONTAINERS&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.CONTAINERS&quot;"
+      FeatureDefaultText="&quot;Containers&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;PendingApprovalDocuments&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.PendingApprovalDocuments&quot;"
+      FeatureDefaultText="&quot;Pending Approval Documents&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TASKTYPES&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TASKTYPES&quot;"
+      FeatureDefaultText="&quot;Task Types&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TASKPRIORITIES&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TASKPRIORITIES&quot;"
+      FeatureDefaultText="&quot;Task Priorities&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;TASKSTATUSES&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.TASKSTATUSES&quot;"
+      FeatureDefaultText="&quot;Task Statuses&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;DocumentType.CustomizedInvitationDocument&quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.DocumentType.CustomizedInvitationDocument&quot;"
+      FeatureDefaultText="&quot;Customized Invitation Document&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;DocumentType.CustomizedResetPasswordEmail &quot;"
+      FeatureTypeCode="&quot;OTH&quot;"
+      FeatureTextCodeCode="&quot;General.Features.DocumentType.CustomizedResetPasswordEmail &quot;"
+      FeatureDefaultText="&quot;Customized Reset Password Email &quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SHLOGANDMOBILE&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SHLOGANDMOBILE&quot;"
+      FeatureDefaultText="&quot;Shared Logistics and Mobile&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

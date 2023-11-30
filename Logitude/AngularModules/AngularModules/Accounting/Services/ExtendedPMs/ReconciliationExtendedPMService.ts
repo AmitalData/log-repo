@@ -1,19 +1,20 @@
 import { CustomFieldClass } from './../../../Infrastructure/DataContracts/CustomFieldClass';
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import { defer, of } from 'rxjs';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
-import {Guid} from '../../../Infrastructure/Utilities/Guid';
-import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {ReconciliationPM} from '../../EntityPMs/ReconciliationPM';
-import {LedgerTransactionPM} from '../../EntityPMs/LedgerTransactionPM';
-import {JournalPM} from '../../EntityPMs/JournalPM';
-import {ReconciliationLinePM} from '../../EntityPMs/ReconciliationLinePM';
-import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { ClassLevelValidator } from '../../../Infrastructure/Validators/ClassLevelValidator';
+import { Guid } from '../../../Infrastructure/Utilities/Guid';
+import { InfraSettings } from '../../../Infrastructure/Utilities/InfraSettings';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { ReconciliationPM } from '../../EntityPMs/ReconciliationPM';
+import { LedgerTransactionPM } from '../../EntityPMs/LedgerTransactionPM';
+import { JournalPM } from '../../EntityPMs/JournalPM';
+import { ReconciliationLinePM } from '../../EntityPMs/ReconciliationLinePM';
+import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { RecoCallback } from '../../DataContracts/RecoCallback';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators'
+import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
 
 @Injectable()
 
@@ -29,18 +30,16 @@ export class ReconciliationExtendedPMService {
     insert(entityPM: ReconciliationPM) {
         var mappedEntity: ReconciliationPM;
         mappedEntity = this.MapJsonToEntityPM(entityPM, false);
-        return this.httpClient.post(this._apiUrl, JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
-            map((res:RecoCallback) => {
+        return this.httpClient.post(this._apiUrl + '/PostInsertReconciliation', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(
+            map((res: RecoCallback) => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
                 var _callBack: RecoCallback = res;
-                if(_callBack)
-                {
+                if (_callBack) {
                     serviceResponse.Result = _callBack;
 
                 }
-                else
-                {
+                else {
                     console.log("[WARNING!!] no callback for reconciliation!");
                 }
                 return serviceResponse;
@@ -49,8 +48,18 @@ export class ReconciliationExtendedPMService {
 
     }
 
+    getCommunicationLog(id: string) {
+        return this.httpClient.get(this._apiUrl + '/GetCommunicationLog?id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = res;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+    }
+
     UpdateDraftReconciliationTransactions(transactions: LedgerTransactionPM[]) {
-        return this.httpClient .put(this._apiUrl + '/PutDraftReconciliationTransactions/', JSON.stringify(transactions), ServiceHelper.GetHttpHeaders()).pipe(
+        return this.httpClient.put(this._apiUrl + '/PutDraftReconciliationTransactions/', JSON.stringify(transactions), ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();
@@ -107,16 +116,18 @@ export class ReconciliationExtendedPMService {
     CreateJournalReconcile(
         myReconciliationLines: ReconciliationLinePM[],
 
-        TheAccountId: string, AdjustAccountId: string, AccountDate: string, Ref1: string, Ref2: string, Ref3: string, Remarks: string) {
-            return this.httpClient.post(this._apiUrl + "/PostCreateJournalReconcile?"
+        TheAccountId: string, AdjustAccountId: string, AccountDate: string, DueDate: string, RefDate: string, Ref1: string, Ref2: string, Ref3: string, Remarks: string) {
+        return this.httpClient.post(this._apiUrl + "/PostCreateJournalReconcile?"
             + "&TheAccountId=" + TheAccountId
             + "&AdjustAccountId=" + AdjustAccountId
-            +"&AccountDate=" + AccountDate
-            +"&Ref1=" + Ref1
-            +"&Ref2=" + Ref2
-            +"&Ref3=" + Ref3
-            +"&Remarks=" + Remarks
-            , JSON.stringify(myReconciliationLines),  ServiceHelper.GetHttpHeaders()).pipe(
+            + "&AccountDate=" + AccountDate
+            + "&DueDate=" + DueDate
+            + "&RefDate=" + RefDate
+            + "&Ref1=" + Ref1
+            + "&Ref2=" + Ref2
+            + "&Ref3=" + Ref3
+            + "&Remarks=" + Remarks
+            , JSON.stringify(myReconciliationLines), ServiceHelper.GetHttpHeaders()).pipe(
                 map(res => {
                     var pm = res;
                     if (pm) {
@@ -136,7 +147,33 @@ export class ReconciliationExtendedPMService {
 
     }
 
-    getByNumber(number: string){
+    CreateSplitJournalReconcile(
+        myReconciliationLines: ReconciliationLinePM[],
+
+        TheAccountId: string, AdjustAccountId: string, AccountDate: string, DueDate: string, RefDate: string, Ref1: string, Ref2: string, Ref3: string, Remarks: string) {
+        return this.httpClient.post(this._apiUrl + "/PostCreateSplitJournalReconcile?"
+            + "&TheAccountId=" + TheAccountId
+            + "&AdjustAccountId=" + AdjustAccountId
+            + "&AccountDate=" + AccountDate
+            + "&DueDate=" + DueDate
+            + "&RefDate=" + RefDate
+            + "&Ref1=" + Ref1
+            + "&Ref2=" + Ref2
+            + "&Ref3=" + Ref3
+            + "&Remarks=" + Remarks
+            , JSON.stringify(myReconciliationLines), ServiceHelper.GetHttpHeaders()).pipe(
+                map(res => {
+                    if (res) {
+                        var serviceResponse: ServiceResponse;
+                        serviceResponse = new ServiceResponse();
+                        serviceResponse.Result = res;
+                    }
+                    return serviceResponse;
+                }),
+                catchError(ServiceHelper.HandleServiceError));
+    }
+
+    getByNumber(number: string) {
 
         return this.httpClient.get(this._apiUrl + '/GetByNumber?number=' + number, ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
@@ -144,10 +181,10 @@ export class ReconciliationExtendedPMService {
 
 
 
-                        var serviceResponse = new ServiceResponse();
-                        serviceResponse.Result = entity;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = entity;
 
-                        return serviceResponse;
+                return serviceResponse;
             }),
             catchError(ServiceHelper.HandleServiceError));
 
@@ -155,7 +192,7 @@ export class ReconciliationExtendedPMService {
     }
 
     GetSingleWithoutLines(id: string) {
-        return this.httpClient.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id ,  ServiceHelper.GetHttpHeaders()).pipe(
+        return this.httpClient.get(this._apiUrl + '/GetSingleWithoutLines?id=' + id, ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var pm = res;
 
@@ -172,7 +209,16 @@ export class ReconciliationExtendedPMService {
             catchError(ServiceHelper.HandleServiceError));
 
     }
-
+    CancelSelectedReco(selectedIds: string[]) {
+        return this.httpClient.post(this._apiUrl + '/CancelSelectedReco', { selectedIds }, ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                debugger;
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError)
+        );
+    }
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReconciliationPM = null) {
 
 
@@ -181,21 +227,20 @@ export class ReconciliationExtendedPMService {
             entityPM = new ReconciliationPM();
         }
 
-		var customFields: Array<string> = [];
+        var customFields: Array<string> = [];
         for (var i = 1; i < 11; i++) {
             customFields.push("Field" + i);
         }
-            var jsonPMKeys = Object.keys(jsonPM);
+        var jsonPMKeys = Object.keys(jsonPM);
 
-            for (var key in jsonPMKeys) {
-			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+        for (var key in jsonPMKeys) {
+            if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
 
                 continue;
             }
-                var property = jsonPMKeys[key];
+            var property = jsonPMKeys[key];
 
-			  if(customFields.indexOf(property) > -1)
-                {
+            if (customFields.indexOf(property) > -1) {
                 if (jsonPM[property]) {
                     var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
                     entityPM[property] = customFieldClass;
@@ -205,30 +250,30 @@ export class ReconciliationExtendedPMService {
                 entityPM[property] = jsonPM[property];
             }
 
-            }
+        }
 
-               this.MapReconciliationLines(entityPM, jsonPM, mapParent); // Call composition tables map methods
+        this.MapReconciliationLines(entityPM, jsonPM, mapParent); // Call composition tables map methods
 
 
 
-		if (mapParent) {
-                entityPM.OldEntityPM = this.clone(entityPM);
+        if (mapParent) {
+            entityPM.OldEntityPM = this.clone(entityPM);
 
             entityPM.OldEntityPM.ReconciliationLines = [];
             for (var item in entityPM.ReconciliationLines) {
-            var myReconciliationLinePM = entityPM.ReconciliationLines[item];
-            var newReconciliationLinePM: ReconciliationLinePM = this.clone(myReconciliationLinePM);
+                var myReconciliationLinePM = entityPM.ReconciliationLines[item];
+                var newReconciliationLinePM: ReconciliationLinePM = this.clone(myReconciliationLinePM);
 
 
-            entityPM.OldEntityPM.ReconciliationLines.push(newReconciliationLinePM);
+                entityPM.OldEntityPM.ReconciliationLines.push(newReconciliationLinePM);
             }
 
-		}
+        }
         else {
 
             entityPM.OldEntityPM = null;
         }
-		entityPM.IsDirty = false;
+        entityPM.IsDirty = false;
         return entityPM;
     }
 
@@ -250,14 +295,13 @@ export class ReconciliationExtendedPMService {
             if (mapParent) {
                 newReconciliationLinePM = new ReconciliationLinePM(entityPM);
             }
-            else
-            {
+            else {
                 newReconciliationLinePM = new ReconciliationLinePM(null);
             }
 
             var pmKeysArray = Object.keys(jItem);
             for (var pmKey in pmKeysArray) {
-                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM") || pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
                 var pmProperty = pmKeysArray[pmKey];
@@ -280,25 +324,25 @@ export class ReconciliationExtendedPMService {
                         newReconciliationLinePM.ChangeSetOp = "Update";
                 }
                 else {
-                        newReconciliationLinePM.ChangeSetOp = "Insert";
+                    newReconciliationLinePM.ChangeSetOp = "Insert";
                 }
 
                 newReconciliationLinePM.OldEntityPM = null;
                 newReconciliationLinePM.EntityParentPM = null;
             }
 
-			 newReconciliationLinePM.IsDirty = false;
+            newReconciliationLinePM.IsDirty = false;
             entityPM.ReconciliationLines.push(newReconciliationLinePM);
         }
         if (oldReconciliationLines) {
 
             for (var itemKey in oldReconciliationLines) {
-                if (entityPM.ReconciliationLines.filter(p=> p.UniqueKey === oldReconciliationLines[itemKey].UniqueKey).length === 0) {
+                if (entityPM.ReconciliationLines.filter(p => p.UniqueKey === oldReconciliationLines[itemKey].UniqueKey).length === 0) {
 
                     if (oldReconciliationLines[itemKey]) {
                         //oldReconciliationLines[itemKey].ChangeSetOp = "Delete";
                         //entityPM.ReconciliationLines.push(oldReconciliationLines[itemKey]);
-						var oldItemJson = oldReconciliationLines[itemKey];
+                        var oldItemJson = oldReconciliationLines[itemKey];
                         var deletedPM: ReconciliationLinePM = new ReconciliationLinePM(null);
                         var pmKeys = Object.keys(oldItemJson);
                         for (var key in pmKeys) {
@@ -390,4 +434,47 @@ export class ReconciliationExtendedPMService {
         return entityPM;
     }
 
+
+    PostReconcileExcelData(args: ReconcileExcelDataArgs) {
+        return this.httpClient.post(this._apiUrl + '/PostReconcileExcelData?', JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(
+            map((res: RecoCallback) => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var _callBack: RecoCallback = res;
+                if (_callBack) {
+                    serviceResponse.Result = _callBack;
+                }
+                else {
+                    console.log("[WARNING!!] no callback for reconciliation!");
+                }
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
+
+    PostReconcileExtExcelData(args: ReconcileExcelDataArgs) {
+        return this.httpClient.post(this._apiUrl + '/PostReconcileExtExcelData?', JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(
+            map((res: RecoCallback) => {
+                var serviceResponse: ServiceResponse;
+                serviceResponse = new ServiceResponse();
+                var _callBack: RecoCallback = res;
+                if (_callBack) {
+                    serviceResponse.Result = _callBack;
+                }
+                else {
+                    console.log("[WARNING!!] no callback for reconciliation!");
+                }
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
+}
+
+export class ReconcileExcelDataArgs {
+    Title: string;
+    Data: any[] = [];
+    QueryColumns: QueryColumnPM[] = [];
+    Tenant: number;
 }

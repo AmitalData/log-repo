@@ -16,7 +16,6 @@ export class HorseGeneralTabComponent extends BaseComponent implements OnInit {
     public ObjectTableName: string = "Horse";
     public EntityPM: HorsePM;
     public Years: number[];
-    public Genders: string[];
     constructor(public entityArgs: EntityArgs) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;       
@@ -31,14 +30,10 @@ export class HorseGeneralTabComponent extends BaseComponent implements OnInit {
 
     private FillComboBoxes() {
         this.Years = [];
-        this.Genders = [];
 
         for (var i = new Date().getFullYear(); i >= 1950; i--) {
             this.Years.push(i);
         }
-
-        this.Genders.push("Male");
-        this.Genders.push("Female");
     }
 
     private SetUIProperties() {       
@@ -65,10 +60,10 @@ export class HorseGeneralTabComponent extends BaseComponent implements OnInit {
         }
     }
 
-    get Gender() { return this.EntityPM.Gender; }
-    set Gender(newValue: string) {
-        if (this.EntityPM.Gender != newValue) {
-            this.EntityPM.Gender = newValue;
+    get GenderCode() { return this.EntityPM.GenderCode; }
+    set GenderCode(newValue: string) {
+        if (this.EntityPM.GenderCode != newValue) {
+            this.EntityPM.GenderCode = newValue;
         }
     }
 

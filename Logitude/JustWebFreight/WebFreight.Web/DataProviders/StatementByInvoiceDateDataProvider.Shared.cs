@@ -7,6 +7,7 @@ namespace WebFreight.Web.DataProviders
     public class StatementByInvoiceDateDataProvider: BaseDataProvider
     {
         public string CustomerName { get; set; }
+        public string PartnerName { get; set; }
         public DateTime CurrentDate { get; set; }
         public string TenantName { get; set; }
         public string Address1 { get; set; }
@@ -71,6 +72,8 @@ namespace WebFreight.Web.DataProviders
             public int DueAge { get; set; }
             public string Customer { get; set; }
             public string Salesman { get; set; }
+            public string ShipperRef1 { get; set; }
+            public string ShipperRef2 { get; set; }
         }
     }
 }

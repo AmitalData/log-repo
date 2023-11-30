@@ -20,7 +20,7 @@ export class RatesTablePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -65,9 +65,29 @@ export class RatesTablePM {
     public set Rate(newValue: number) { if (this.rate != newValue) { this.rate = newValue; this.MarkAsDirty("Rate"); } }
        
 	 
+    private unit: number;
+    public get Unit() { return this.unit; }
+    public set Unit(newValue: number) { if (this.unit != newValue) { this.unit = newValue; this.MarkAsDirty("Unit"); } }
+       
+	 
     private valueDate: Date;
     public get ValueDate() { return this.valueDate; }
     public set ValueDate(newValue: Date) { if (this.valueDate != newValue) { this.valueDate = newValue; this.MarkAsDirty("ValueDate"); } }
+       
+	 
+    private updatedByUserId: string;
+    public get UpdatedByUserId() { return this.updatedByUserId; }
+    public set UpdatedByUserId(newValue: string) { if (this.updatedByUserId != newValue) { this.updatedByUserId = newValue; this.MarkAsDirty("UpdatedByUserId"); } }
+       
+	 
+    private updatedByUserName: string;
+    public get UpdatedByUserName() { return this.updatedByUserName; }
+    public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
+       
+	 
+    private updatedDate: Date;
+    public get UpdatedDate() { return this.updatedDate; }
+    public set UpdatedDate(newValue: Date) { if (this.updatedDate != newValue) { this.updatedDate = newValue; this.MarkAsDirty("UpdatedDate"); } }
        
 	 
 

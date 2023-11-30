@@ -448,7 +448,7 @@
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
                                                                                     [LookUpTableName]="'Carrier'"
-                                                                                    [DependencyFilter1Value]="CarrierDependencyProperty1">
+                                                                                    [DependencyFilter1Value]="CarrierDependencyProperty1" [ShowInActive]="CarrierDependencyProperty1=='SL'" [ShowInActivePopUpWindow]="'true'">
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
@@ -482,14 +482,31 @@
 
                                                                     <tr class="FormFieldRow" *ngIf="TransportModeId == 'O'">
                                                                         <td [style.width.px]="LabelColumnWidth">
-                                                                            <LogLabel [ObjectFieldName]="'MainCarriageVesselId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                                            <LogLabel [ObjectFieldName]="'MainCarriageVesselName'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                                         </td>
-                                                                        <td [style.width.px]="ControlColumnWidth">
+
+                                                                        <td [style.width.px]="ControlColumnWidth" *ngIf="IsVesselFreeTextVisible">
+                                                                            <table>
+                                                                                <tr>
+                                                                                    <td>
+                                                                                        <LogTextBox [HideLastColumn]="true" [ObjectFieldName]="'MainCarriageVesselName'" [Text]="MainCarriageVesselName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                                                    </td>
+                                                                                    <td style="width: 20px; left:-15px;">
+                                                                                        <span *ngIf="IsChooseVesselVisible" class="hyperlink" [class.HyperlinkDisabled]="!IsScreenEnabled" (click)="ChooseVesselClicked()">
+                                                                                            <img style="vertical-align: middle; width: 14px; height: 14px; cursor: pointer;" src="./Images/LOVSearch.png" />
+                                                                                        </span>
+                                                                                    </td>
+                                                                                </tr>
+                                                                            </table>
+                                                                        </td>
+
+                                                                        <td [style.width.px]="ControlColumnWidth" *ngIf="!IsVesselFreeTextVisible">
                                                                             <LogLov [ObjectFieldName]="'MainCarriageVesselId'"
                                                                                     [SelectedValue]="MainCarriageVesselId"
                                                                                     [ObjectTableName]="ObjectTableName"
                                                                                     [DataContext]="DataContext"
-                                                                                    [LookUpTableName]="'Vessel'">
+                                                                                    [LookUpTableName]="'Vessel'"
+                                                                                    (SelectedItemChanged)="MainCarriageVessel = $event">
                                                                             </LogLov>
                                                                         </td>
                                                                     </tr>
@@ -866,7 +883,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" id="{{'MasterCancelbtn' | IdGeneratorPipe}}" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" id="{{'MasterCancelbtn' | IdGeneratorAsyncPipe | async}}" (click)="CancelButtonClicked()">Cancel</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -874,7 +891,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'MasterCreatebtn' | IdGeneratorPipe}}" [disabled]="!IsScreenEnabled">{{OkButtonLabel}}</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" id="{{'MasterCreatebtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled">{{OkButtonLabel}}</button>
                     </td>
                 </tr>
             </table>

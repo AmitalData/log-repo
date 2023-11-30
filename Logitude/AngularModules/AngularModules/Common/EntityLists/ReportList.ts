@@ -26,5 +26,7 @@ export class ReportList {
 		FeatureUniqeCode: string;
 		AvailableForScheduling: boolean;
 		DisablePreview: boolean;
+		DefaultExcelTemplateId: string;
+		IsExcelReportAllowed: boolean;
 	
 }

@@ -74,6 +74,12 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
 
 //using Amital.QuoteOPM.BL.CLoseTable;
 using Amital.QuoteOPM.Data.Repsitories;
@@ -135,6 +141,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						ObjectTableName =  "CustomerSalesNote",
+					  						FieldsDataType =  "Text",
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						FullLocalDefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						ListLocalDefaultText =  "Id",
+					  						IsRequired =  false,
+					  						DisplayInList =  false,
+					  						NoMetaDataField =  true,
+					  						MaxLength =  15,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "CustomerSalesNote",
+					  						FieldsDataType =  "Integer",
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						ListLocalDefaultText =  "Tenant",
+					  						IsRequired =  false,
+					  						DisplayInList =  false,
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "CustomerId",
 					  						ObjectTableName =  "CustomerSalesNote",
 					  						FieldsDataType =  "LookUp",
@@ -186,6 +235,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Card",
+					  						NavigationPropertyName =  "Customer",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -244,6 +297,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "User",
+					  						NavigationPropertyName =  "CreatedByUser",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -302,6 +359,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "User",
+					  						NavigationPropertyName =  "UpdatedByUser",
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -359,6 +420,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -416,6 +478,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
@@ -473,6 +536,102 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						CopyToDW =  false,
 					  						HasTemplate =  false,
 					  						IsRequired =  false,
+					  						NoMetaDataField =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "CreatedByUserName",
+					  						PMPropertyPath =  "CreatedByUserName",
+					  						ListPropertyPath =  "CreatedByUserName",
+					  						FullFieldLable =  "CreatedByUserName",
+					  						DefaultText =  "CreatedByUserName",
+					  						FullLocalDefaultText =  "CreatedByUserName",
+					  						ListFieldLable =  "CreatedByUserNameListLable",
+					  						ListLableDefaultText =  "CreatedByUserName",
+					  						ListLocalDefaultText =  "CreatedByUserName",
+					  						ObjectTableName =  "CustomerSalesNote",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "UpdatedByUserName",
+					  						PMPropertyPath =  "UpdatedByUserName",
+					  						ListPropertyPath =  "UpdatedByUserName",
+					  						FullFieldLable =  "UpdatedByUserName",
+					  						DefaultText =  "UpdatedByUserName",
+					  						FullLocalDefaultText =  "UpdatedByUserName",
+					  						ListFieldLable =  "UpdatedByUserNameListLable",
+					  						ListLableDefaultText =  "UpdatedByUserName",
+					  						ListLocalDefaultText =  "UpdatedByUserName",
+					  						ObjectTableName =  "CustomerSalesNote",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "ChangeSetOp",
+					  						PMPropertyPath =  "ChangeSetOp",
+					  						ListPropertyPath =  "ChangeSetOp",
+					  						FullFieldLable =  "ChangeSetOp",
+					  						DefaultText =  "ChangeSetOp",
+					  						FullLocalDefaultText =  "ChangeSetOp",
+					  						ListFieldLable =  "ChangeOpListLable",
+					  						ListLableDefaultText =  "ChangeSetOp",
+					  						ListLocalDefaultText =  "ChangeSetOp",
+					  						ObjectTableName =  "CustomerSalesNote",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Text",
+					  						FieldName =  "EventLabel",
+					  						PMPropertyPath =  "EventLabel",
+					  						ListPropertyPath =  "EventLabel",
+					  						FullFieldLable =  "EventLabel",
+					  						DefaultText =  "EventLabel",
+					  						FullLocalDefaultText =  "EventLabel",
+					  						ListFieldLable =  "EventLabelListLable",
+					  						ListLableDefaultText =  "EventLabel",
+					  						ListLocalDefaultText =  "EventLabel",
+					  						ObjectTableName =  "CustomerSalesNote",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldsDataType =  "Boolean",
+					  						FieldName =  "PostToFollowers",
+					  						PMPropertyPath =  "PostToFollowers",
+					  						ListPropertyPath =  "PostToFollowers",
+					  						FullFieldLable =  "PostToFollowers",
+					  						DefaultText =  "PostToFollowers",
+					  						FullLocalDefaultText =  "PostToFollowers",
+					  						ListFieldLable =  "PostToFollowersListLable",
+					  						ListLableDefaultText =  "PostToFollowers",
+					  						ListLocalDefaultText =  "PostToFollowers",
+					  						ObjectTableName =  "CustomerSalesNote",
+					  						NoMetaDataField =  true,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  

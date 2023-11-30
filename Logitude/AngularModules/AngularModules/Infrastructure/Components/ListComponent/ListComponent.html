@@ -119,6 +119,11 @@
     .Hide {
         display: none;
     }
+    .MultiUpdateIcon {
+        cursor: pointer; 
+        margin-right: 20px;
+        width: 30px;
+    }
 </style>
 
 <div style="position: absolute; top:0px; bottom:0px; left:0px; right:0px;margin:auto; background:white;" *ngIf="IsDemoTenant">
@@ -196,7 +201,11 @@
                             <div *ngIf="HasActionBar()" id="ActionBar" LocationDirective Code="MNA"></div>
                             <div *ngIf="!HasActionBar()"></div>
                         </td>
-                    </tr>
+ 
+                        <td style="width: 920px;">
+                            <div LocationDirective Code="MNH"></div>
+                        </td>
+                     </tr>
                 </table>
             </td>
         </tr>
@@ -224,7 +233,7 @@
                 <table>
                     <tr>
                         <td style="width: 21px;">
-                            <IconButton [Name]="'Refresh'" (click)="RefreshBtnClick()"></IconButton>
+                            <IconButton [disabled]="!SelectedQuery" [Name]="'Refresh'" (click)="RefreshBtnClick()" [DataCy]="'Refresh' + ObjectTableName"></IconButton>
                         </td>
 
                         <td style="width: 5px;" *ngIf="IsNewEntityButtonVisible">
@@ -233,7 +242,7 @@
 
                         <!-- <td style="width: 96px;"> -->
                         <td style="width: 1px;" *ngIf="IsNewEntityButtonVisible">
-                            <button [attr.id]="NewButtonId  | IdGeneratorPipe" [disabled]="IsNewEntityButtonDisabled" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="AddNewEntity()">{{NewEntityButtonLabel}}</button>
+                            <button [attr.id]="NewButtonId  | IdGeneratorAsyncPipe | async" [disabled]="IsNewEntityButtonDisabled" style="min-width: 95px; padding-left: 5px; padding-right: 5px;" class="Button" (click)="AddNewEntity()">{{NewEntityButtonLabel}}</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -249,7 +258,7 @@
                         </td>
 
                         <td style="width: 22px; vertical-align: middle;" *ngIf="HasExcelExportButton">
-                            <button class="Button" (click)="btnExcelCLicked()"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
+                            <button [disabled]="!SelectedQuery" class="Button" (click)="btnExcelCLicked()" [attr.data-cy]="'Export' + ObjectTableName"><img class="CenterCenter" title="Export To Excel" src="./Images/Buttons/excelicon.png" /></button>
                         </td>
 
                         <td style="width: 10px;" *ngIf="HasExcelExportButton">
@@ -280,49 +289,23 @@
                         </td>
 
                         <td style="vertical-align: middle;width:170px">
-                            <QueryList *ngIf="(ShowViews || EnglishView) && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
-
-
-
-                            <!--<select style="width: 150px;" [(ngModel)]="SelectedQueryId" (change)="QueryValueChanged($event.target.value)">
-            <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
-        </select>-->
-                            <!--<div class="dropdown">
-        <div style="float:left;">
-            <button (click)="ShowFieldsList()" class="dropbtn " id="AddFilterButton" style="width:80px;">{{'General.B.AddFilter' | TextCodeTranslationPipe}}</button>
-            <div id="FieldsDropdown" class="dropdown-content" style="border:solid 1px #AAAAAA;">-->
-                            <!--<select [(ngModel)]="SelectedQueryId" (change)="QueryValueChanged($event.target.value)" style="height:244px;" multiple>
-            <option *ngFor="let q of Queries" [value]="q.Id">{{q.NameTextCodeCode | TextCodeTranslationPipe}}</option>
-        </select>-->
-                            <!--       <div *ngFor="let q of Queries">
-                            <label>{{q.NameTextCodeCode | TextCodeTranslationPipe}}</label>
-                        </div>
-                        <div style="height:27px;background-color:#dfecf7;">
-                            <a href="#">New View</a>
-                        </div>
-
-
-                </div>
-            </div>
-        </div>-->
-                        </td>
-                        <td *ngIf="IsPhysicalCheckObjectTable || IsLogisticActionRequestObjectTable" style="width: 100px;">
+                             <QueryList *ngIf="ShowViews && ResourcesLoaded" [ItemsSource]="Queries" [UserItemSource]="UserQueries" [Binding]="'NameTextCodeCode'" [onSelectedQueryChangeEvent]="onSelectedQueryChangeEvent" [SelectedItem]="SelectedQuery" [ObjectTableName]="ObjectTableName" (itemSelectedEvent)="QueryValueChanged($event)" [QueryListSourceChanged]="QueryListSourceChanged" (QueriesChangedEvent)="QueriesChangedEvent($event)" [LoadResourceCompleted]="LoadResourceCompleted" [pubSubAdvanceQueryFiltersService]="AdvanceQFiltersService" (NewViewClosedEvent)="NewViewClosedEvent($event)"></QueryList>
+                         </td>
+                         <td *ngIf="IsPhysicalCheckObjectTable || IsLogisticActionRequestObjectTable" style="width: 100px;">
                             <div LocationDirective Code="MNO"></div>
                         </td>
-                        <td style="width:200px;vertical-align:central">
-
+ 
+                        <td style="width: 40px;"> <img *ngIf="HasMutliUpdateFeature" src="./Images/Icons/MultiUpdate.png" title="Multi Update" (click)="MutliUpdate()" class="CenterCenter MultiUpdateIcon" /></td>
+                        <td style="width: 40px;"> <img *ngIf="HasMultiPrintFeature" src="./Images/Icons/multi-print.png" title="Multi Print" (click)="MultiPrintClicked()" class="CenterCenter MultiUpdateIcon" /></td>
+                         <td style="width:200px;vertical-align:central">
                             <div style="width:200px;height:20px">
-                                <p *ngIf="IsShowAddReportFromLibraryLink" (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px">Add Report From Library</p>
-
+                                <p *ngIf="IsShowAddReportFromLibraryLink" (click)="LinkAddReportFromLibraryClick()" class="CustomLink" style="font-size:12px;float:right;width:200px;height:20px;">Add Report From Library</p>
                             </div>
-
                         </td>
-
 
                         <td *ngIf="(dataSource && dataSource.rowCount == ConstantPageSize && DontApplyVirtualization)" style="color: #666666; font-size: 11px; padding-left:5px;padding-right:5px;width:1px;background-color:#FFFBDA">
                             <div>  <span>Showing the first {{ConstantPageSize}} rows, use the search field to find more results.</span></div>
                         </td>
-
 
                         <td>
                             <div></div>
@@ -344,7 +327,7 @@
                         </td>
 
                         <td style="width: 250px; vertical-align: middle;">
-                            <SearchTextBox [IsDisabled]="SeachBoxIsDisabled" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)"></SearchTextBox>
+                            <SearchTextBox [IsDisabled]="SeachBoxIsDisabled || !SelectedQuery" [SearchText]="searchFields" [ObjectTableName]="ObjectTableName" (SearchTextChangeEvent)="onSearchTextChangeEvent($event)" [DataCy]="'Search' + ObjectTableName"></SearchTextBox>
                         </td>
 
 
@@ -352,9 +335,9 @@
                             <div></div>
                         </td>
 
-                        <td style="width: 17px; vertical-align: middle; position:relative;">
-                            <img *ngIf="HasFilters == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" title="No filters have been set" (click)="onOpenFilterAreaClick()" class="CenterCenter" />
-                            <img *ngIf="HasFilters == true" src="./Images/Filter.png" style="cursor: pointer;" title="Some filters have been set" (click)="onCloseFilterAreaClick()" class="CenterCenter" />
+                        <td [attr.data-cy]="ObjectTableName + '_AddFilterIcon'" style="width: 17px; vertical-align: middle; position:relative;">
+                            <img  *ngIf="HasFilters == false" src="./Images/FilterGrayTrans.png" style="cursor: pointer;" title="No filters have been set" (click)="onOpenFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
+                            <img *ngIf="HasFilters == true" src="./Images/Filter.png" style="cursor: pointer;" title="Some filters have been set" (click)="onCloseFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
                         </td>
 
                         <td style="width: 3px;">
@@ -362,8 +345,8 @@
                         </td>
 
                         <td style="width: 12px; vertical-align: middle; position:relative;">
-                            <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/FiltersOpen.png" style="cursor: pointer;" (click)="onOpenFilterAreaClick()" class="CenterCenter" />
-                            <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/FiltersClose.png" style="cursor: pointer;" (click)="onCloseFilterAreaClick()" class="CenterCenter" />
+                            <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/FiltersOpen.png" style="cursor: pointer;" (click)="onOpenFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
+                            <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/FiltersClose.png" style="cursor: pointer;" (click)="onCloseFilterAreaClick()" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
                         </td>
 
                         <td style="width: 10px;">
@@ -380,7 +363,7 @@
 
                         <td style="width: 15px; vertical-align: middle; position:relative;">
                             <img *ngIf="IsAdvancedSearchOpened == true" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;pointer-events:none;opacity:0.5" class="CenterCenter" />
-                            <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;" class="CenterCenter" />
+                            <img *ngIf="IsAdvancedSearchOpened == false" src="./Images/Columns.png" (click)="onColumnsClick()" title="Add/Remove columns" style="cursor: pointer;" class="CenterCenter" [style.pointer-events] ="SelectedQuery ? 'all' : 'none'" [style.opacity] ="SelectedQuery ? '1' : '0.5'"/>
                         </td>
                     </tr>
                 </table>
@@ -407,15 +390,15 @@
                 <div class="CellContent">
                     <!--<div class="GeneratedGridContainer">-->
                     <!--*ngIf="!DestroyMe" only in customs-->
-                    <logitude-grid *ngIf="1" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
+                    <!-- <logitude-grid *ngIf="1" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                       [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                       [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
                                       [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition"
                                       [rowCount]="rowCount" [searchFields]="searchFields" [queryId]="SelectedQueryId" [queryCode]="SelectedQueryCode" (rowSelectedEvent)="onRowSelected($event)"
                                       (AfterViewInitCompleted)="ViewInitCompleted($event)" [ReattachToDetection]="ReattachToDetection" [MyScrollTop]="MyScrollTop" [MySelectedRowIndex]="MySelectedRowIndex" [SortServerProp]="SortServerProp" (SortInvoked)="OnSortInvoked($event)"
                                        [FilterChangedEvent]="FilterChangedEvent">
-                    </logitude-grid>
-                    <logitude-grid-v2 *ngIf="0" [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
+                    </logitude-grid> -->
+                    <logitude-grid-v2 [dataSource]="dataSource" [QueryChangeEvent]="onQueryChangeEvent" [pubSubAdvanceQueryFiltersServiceRecived]="pubSubAdvanceQueryFiltersServiceRecived" [Filterchangeevent]="Filterchangeevent"
                                       [rows]="items" [SearchFieldchangeevent]="SearchFieldchangeevent" [MenuHeaderchangeevent]="MenuHeaderchangeevent"
                                       [columns]="columns" (ColumnResisedevent)="ColumnResisedevent($event)" (MenuHeaderchanged)="onMenuHeaderchanged($event)"
                                       [ObjectTable]="ObjectTable" [ColumnsReady]="ColumnsReady" [HasPermition]="HasPermition" [DontApplyVirtualization]="DontApplyVirtualization"

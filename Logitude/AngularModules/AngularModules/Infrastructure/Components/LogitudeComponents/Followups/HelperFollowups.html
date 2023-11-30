@@ -1,4 +1,4 @@
-﻿
+
 <style type="text/css">
     .LogitudeHelperFollowups {
         position: relative;
@@ -99,7 +99,8 @@
     <!-- Head -->
     <div class="MediaFillAbsolute" [class.LogitudeHelperFollowupsHeadOpened]="IsOpened">
         <div class="CenterCenter" style="width: 34px; height: 14px;">
-            <button [attr.id]="ComponentButtonId"
+            <button [attr.data-cy]="'HelperFollowups'" 
+                    [attr.id]="ComponentButtonId"
                     class="MediaFillRelative"
                     (click)="OnButtonClicked()"
                     (blur)="OnButtonLostFocus()"
@@ -130,7 +131,7 @@
          (mouseleave)="IsMouseOver = false;">
 
         <div class="MediaFillRelative">
-            <div style="height: 6px; width: 38px; background: #F2F4F4; position: absolute; top:-4px; right:0; z-index: 2;"></div>
+            <div style="height: 6px; width: 38px; background: #F2F4F4; position: absolute; top:-4px; right:0; z-index: 1;"></div>
 
             <!-- Normal View -->
             <table *ngIf="IsNormalViewVisible">
@@ -295,7 +296,17 @@
                                                     </td>
 
                                                     <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
-                                                        <ComboBox [ItemsSource]="EventTypes" [Binding]="'EnglishName'" [SelectedItem]="AddDataContext.SelectedEventType" (SelectedItemChanged)="AddDataContext.SelectedEventType = $event" (LostFocus)="OnInputBoxLostFocus()"></ComboBox>
+                                                        <LogLov [ObjectFieldName]="'EventTypeId'"
+                                                                [SelectedValue]="AddDataContext.EventTypeId"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="AddDataContext"
+                                                                [LookUpTableName]="'EventType'"
+                                                                [DependencyFilter2Value]="ObjectTableId"
+                                                                [DependencyFilter3Value]="true"
+                                                                (SelectedItemChanged)="AddDataContext.EventTypeChange($event)"
+                                                                
+                                                                >
+                                                        </LogLov>    
                                                     </td>
                                                 </tr>
 
@@ -322,6 +333,17 @@
                                                                 </td>
                                                             </tr>
                                                         </table>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Time -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <LogLabel [ObjectFieldName]="'Date'" [ObjectTableName]="ObjectTableName" [DataContext]="AddDataContext" [Text]="'Time'"></LogLabel>
+                                                    </td>
+
+                                                    <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                        <LogDatePicker [InputType]="'time'" [TimeMode]="12" [ObjectFieldName]="'Date'" [SelectedDateValue]="AddDataContext.Date" [ObjectTableName]="ObjectTableName" [DataContext]="AddDataContext" [HideColumns]="true" (LostFocus)="OnInputBoxLostFocus()"></LogDatePicker>
                                                     </td>
                                                 </tr>
 
@@ -479,6 +501,17 @@
                                                                 </td>
                                                             </tr>
                                                         </table>
+                                                    </td>
+                                                </tr>
+
+                                                <!-- Time -->
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <LogLabel [ObjectFieldName]="'Date'" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext" [Text]="'Time'"></LogLabel>
+                                                    </td>
+
+                                                    <td (mouseover)="IsMouseOverInputBox = true;" (mouseleave)="IsMouseOverInputBox = false;">
+                                                        <LogDatePicker [InputType]="'time'" [TimeMode]="12" [ObjectFieldName]="'Date'" [SelectedDateValue]="EditDataContext.Date" [ObjectTableName]="ObjectTableName" [DataContext]="EditDataContext" [HideColumns]="true" (LostFocus)="OnInputBoxLostFocus()"></LogDatePicker>
                                                     </td>
                                                 </tr>
 

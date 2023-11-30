@@ -21,7 +21,8 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
     DocumentPermissiosSelectedViewModel: SharedDocumentsPermissionsViewModel;
     DocumentPermissiosLists: SharedDocumentsPermissionsViewModel[];
     ObjectTableId: string;
-    FullComponentsVisibility: boolean = false;
+    FullComponentsVisibility: boolean = true;
+    FromAgentView: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypePMExtendedService: DocumentTypePMExtendedService) {
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -79,18 +80,18 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
         this.CurrentSession.CloseCurrentWindow();
     }
     
-    SaveButtonClicked() {
+    SaveButtonClicked(incomingDocumentTypes?: DocumentTypePM[]) {
         var documentTypePMList: DocumentTypePM[] = [];
 
         this.CurrentSession.StartBusyIndicatorSaving();
 
         this.DocumentPermissiosLists.forEach((item) => {
-
             if (item.EntityPM.IsDirty) {
                 documentTypePMList.push(item.EntityPM);
             }
         });
 
+        if(incomingDocumentTypes && incomingDocumentTypes.length > 0) this.MapIncomingDocumentTypes(incomingDocumentTypes,documentTypePMList);
         if (documentTypePMList.length > 0) {
 
             this._documentTypePMExtendedService.update(documentTypePMList).subscribe((res:any) => {
@@ -103,6 +104,15 @@ export class SharedDocumentsPermissionsComponent implements OnInit {
 
 
     }
+
+    MapIncomingDocumentTypes(incomingDocumentTypes: DocumentTypePM[], documentTypePMList: DocumentTypePM[]) {
+        documentTypePMList.forEach(element => {
+           var incomingDocument = incomingDocumentTypes.find(x=>x.Id == element.Id);
+           if(!incomingDocument) return;
+           element.IsCustomerView = incomingDocument.IsCustomerView;
+       });
+    }
+
     onSearchTextChangeEvent(searchText) {
         if (!searchText) searchText = "";
 

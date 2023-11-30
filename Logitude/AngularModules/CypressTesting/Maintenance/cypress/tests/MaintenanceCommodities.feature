@@ -1,11 +1,16 @@
-@release @stable @all 
+@release @stable 
 Feature: Commodity Create, Edit and Inactivate in Maintenance Module
     The user creates a commodity, edits and inactivates it from the Maintenance Module.
 
     Scenario: Add CommodityCode with lenght less than 4
         Given the user logged in and navigate to "Commodities" in maintenance menu
         When add "123" as Commodity code
-        Then a validation message with "Code Field must be less than 15 and more than 4" error should appear
+        Then a validation message with "Code Field length must be more than 4" error should appear
+
+    Scenario: Add CommodityCode with lenght more than 15
+        Given the user logged in and navigate to "Commodities" in maintenance menu
+        When add "123123123123123123" as Commodity code
+        Then a validation message with "Code Field length must be less than 15" error should appear
 
     Scenario: Add Commodity
         Given a commodity with the following details

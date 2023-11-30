@@ -25,8 +25,8 @@ namespace Logitude.Server.Tools.EntityChanges
         public bool IsDelayAutomation { get; set; }
         public List<c> Changefields = new List<c>();
         public bool IsChangeSLA { get; set; }
-        private List<IAutomationResultService> AutomationResultLists {get;set;}
-        private EntityChangeArgs entityChangeArgs { get; set; }
+        public List<IAutomationResultService> AutomationResultLists {get;set;}
+        public EntityChangeArgs entityChangeArgs { get; set; }
         private DateTime startDate {get;set;}
         private AutomationObjectTableClass automationObjectTable { get; set; }
         private AutomationObjectTableClass otherAutomationObjectTable { get; set; }
@@ -34,11 +34,15 @@ namespace Logitude.Server.Tools.EntityChanges
         private GeneralEntityChangeService generalEntityChangeService { get; set; }
         private AutomationObjectFieldService automationObjectFieldService { get; set; }
         private EntityChangeRepository entityChangeRepository { get; set; }
+        private string loggedUserEmail { get; set; }
+        public bool IsChild { get; set; }
+
         public MainEntityChangeService(EntityChangeArgs entityChangeArgs)
         {
             this.entityChangeArgs = entityChangeArgs;
+            loggedUserEmail = entityChangeArgs.LoggedUserEmail;
             startDate = entityChangeArgs.StartDate != null ? (DateTime)entityChangeArgs.StartDate : DateTime.Now;
-           
+
             entityChangeRepository = new EntityChangeRepository(entityChangeArgs.Tenant);
             automationObjectFieldService = new AutomationObjectFieldService(entityChangeArgs);
             generalEntityChangeService = new GeneralEntityChangeService();
@@ -50,7 +54,7 @@ namespace Logitude.Server.Tools.EntityChanges
 
             AutomationResultLists = GetAutomationResultLists();
         }
-
+        private AutomationResultArgs automationResultArgs = null;
         public void AddEntityChangesAutomation(EntityChangeAutomation entityChangesAutomation)
         {
             if (entityChangesAutomation.IsConditionTrue) EntityChangesAutomationsSsucceedList.Add(entityChangesAutomation);
@@ -60,27 +64,30 @@ namespace Logitude.Server.Tools.EntityChanges
         private List<IAutomationResultService> GetAutomationResultLists()
         {
             var result = new List<IAutomationResultService>();
-            result.Add(new AutomationFollowUpResultService());
+            result.Add(new AutomationFollowUpResultService(this.entityChangeArgs.ProcessType));
             result.Add(new AutomationSetValueResultService());
             result.Add(new AutomationSLAResultService());
-            result.Add(new AutomationQueuedTaskResultService());
+            result.Add(new AutomationQueuedTaskResultService(this.entityChangeArgs.ProcessType));
             result.Add(new AutomationSendInterfaceResultService());
-            result.Add(new AutomationEmailResultService());
-            result.Add(new AutomationSendDocumentResultService());
-            result.Add(new AutomationCreateTaskService());
+            result.Add(new AutomationEmailResultService(this.entityChangeArgs.ProcessType));
+            result.Add(new AutomationSendDocumentResultService(this.entityChangeArgs.ProcessType));
+            result.Add(new AutomationCreateTaskService(this.entityChangeArgs.ProcessType));
+            result.Add(new AutomationEventCreationService(this.entityChangeArgs.ProcessType));
+            result.Add(new AutomationOnUpdateDocumentService(this.entityChangeArgs.ProcessType));
             return result;
         }
 
         public void AddEntityChange()
         {
-           var entityChange = CreateEntityChange(automationObjectTable.OriginalId);
-
+            var entityChange = CreateEntityChange(automationObjectTable.OriginalId);
+            var automationResultLists = new List<IAutomationResultService>();
             var isHaveAutomation = false;
             if (!string.IsNullOrEmpty(automationObjectTable.AutomationLastUpdate) || (otherAutomationObjectTable != null && !string.IsNullOrEmpty(otherAutomationObjectTable.AutomationLastUpdate)))
             {
                 var automationLists = GetAutomationLists();
                 if (automationLists.Count() > 0)
                 {
+                    SetEntityPM();
                     isHaveAutomation = true;
                     BuildAutomationsObjectFieldLists(automationLists);
                     var resolverAutomationObjectFieldService = new ResolverAutomationObjectFieldService(entityChangeArgs);
@@ -91,11 +98,13 @@ namespace Logitude.Server.Tools.EntityChanges
                     AutomationConditionFields automationConditionFields = automationObjectFieldService.GetAutomationConditionFields(automationFieldLists, automationObjectTable, otherAutomationObjectTable);
                     entityChange.AutomationConditionFieldsXml = LogitudeXmlSerializer.SerializeObjectToXmlString(automationConditionFields);
 
-                    AutomationResultArgs automationResultArgs = new AutomationResultArgs() { EntityPM = entityChangeArgs.EntityPM, EntityChange = entityChange, AutomationLists = automationLists, AutomationFieldLists = automationFieldLists, AutomationObjectTable = automationObjectTable, OtherAutomationObjectTable = otherAutomationObjectTable, EntityChangeArgs = entityChangeArgs, MainEntityChangeService = this };
-                    foreach (IAutomationResultService service in AutomationResultLists)
+                    automationResultArgs = new AutomationResultArgs() { EntityPM = entityChangeArgs.EntityPM, EntityChange = entityChange, AutomationLists = automationLists, AutomationFieldLists = automationFieldLists, AutomationObjectTable = automationObjectTable, OtherAutomationObjectTable = otherAutomationObjectTable, EntityChangeArgs = entityChangeArgs, MainEntityChangeService = this, ExtraDetails = entityChangeArgs.ExtraDetails, EntityReference = entityChangeArgs.EntityReference };
+                    automationResultLists = entityChangeArgs.DontExecuteAutomationThatDependencyOnLastEntityUpdate ? AutomationResultLists.Where(d=>d.DependencyOnLastEntityUpdate == false).ToList() : AutomationResultLists;
+                    foreach (IAutomationResultService service in automationResultLists)
                     {
                         service.Run(automationResultArgs);
                     }
+         
 
                     UpdateEntityAutomationResulltXml(entityChange);
 
@@ -108,7 +117,38 @@ namespace Logitude.Server.Tools.EntityChanges
                 }
             }
 
+
+
             SaveEntityChange(entityChange, isHaveAutomation);
+            AddAutomationsQueues(automationResultLists);
+
+        }
+
+        private void AddAutomationsQueues(List<IAutomationResultService> automationResultLists)
+        {
+            if (automationResultLists == null) return;
+
+            GeneralAutomationResultService automationResultService = new GeneralAutomationResultService();
+            foreach (IAutomationResultService service in automationResultLists.Where(d=>d.AutomationQueues != null && d.AutomationQueues.Count()>0))
+            {
+                AddAutomationQueues(automationResultService, service);
+            }
+        }
+
+        private static void AddAutomationQueues(GeneralAutomationResultService automationResultService, IAutomationResultService service)
+        {
+            foreach (AutomationQueueArgs automationQueue in service.AutomationQueues)
+            {
+                automationResultService.AddAutomationQueue(automationQueue);
+            }
+        }
+
+        private void SetEntityPM()
+        {
+            if (entityChangeArgs.EntityPM == null)
+            {
+                entityChangeArgs.EntityPM = InjectionUtil.Instance.GetEntityByObjectTableNameAndEntityId(entityChangeArgs.ObjectTableName, entityChangeArgs.EntityId, entityChangeArgs.Tenant);
+            }
         }
 
         private string GetChangesAutomationFieldsXml(EntityChange entityChange)
@@ -132,6 +172,8 @@ namespace Logitude.Server.Tools.EntityChanges
             entityChange.SendInterfaceAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "SENDINTERFACE").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "SENDINTERFACE").ToList()) : "";
             entityChange.SendDocumentAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "SENDDOCUMENT").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "SENDDOCUMENT").ToList()) : "";
             entityChange.CreateTaskAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "Create Task").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "Create Task").ToList()) : "";
+            entityChange.OnUpdateDocumentAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "ONUPDATEDOCUMENT").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "ONUPDATEDOCUMENT").ToList()) : "";
+            entityChange.EventAutomationFailedXml = EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "Event Creation").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsFailedList.Where(d => d.ResultCode == "Event Creation").ToList()) : "";
 
 
             entityChange.SetAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Set Fields Value").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Set Fields Value").ToList()) : "";
@@ -141,6 +183,10 @@ namespace Logitude.Server.Tools.EntityChanges
             entityChange.SendInterfaceAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "SENDINTERFACE").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "SENDINTERFACE").ToList()) : "";
             entityChange.SendDocumentAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "SENDDOCUMENT").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "SENDDOCUMENT").ToList()) : "";
             entityChange.CreateTaskAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Create Task").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Create Task").ToList()) : "";
+            entityChange.OnUpdateDocumentAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "ONUPDATEDOCUMENT").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "ONUPDATEDOCUMENT").ToList()) : "";
+            entityChange.EventAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Event Creation").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "Event Creation").ToList()) : "";
+            entityChange.OnUpdateDocumentAutomationSsucceedXml = EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "ONUPDATEDOCUMENT").ToList().Count > 0 ? LogitudeXmlSerializer.SerializeObjectToXmlString(EntityChangesAutomationsSsucceedList.Where(d => d.ResultCode == "ONUPDATEDOCUMENT").ToList()) : "";
+
 
         }
 
@@ -193,13 +239,13 @@ namespace Logitude.Server.Tools.EntityChanges
 
         private EntityChange CreateEntityChange(string objectTableId)
         {
-          var entityChange =  new EntityChange()
+            var entityChange =  new EntityChange()
             {
                 Id = IdCounter.GetNumber("EntityChange", entityChangeArgs.Tenant),
                 Tenant = entityChangeArgs.Tenant,
                 EntityId = entityChangeArgs.EntityId,
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(entityChangeArgs.Tenant),
-                CreateByUserId = generalEntityChangeService.GetLoggedContactId(entityChangeArgs.Tenant),
+                CreateByUserId = generalEntityChangeService.GetLoggedContactId(entityChangeArgs.Tenant, loggedUserEmail),
                 ObjectTableId = objectTableId,
                 ChangesFieldsXml = entityChangeArgs.EntityChangeFieldXml,
                 CheckStartDate = TenantServerConfigration.GetCurrentDateTime(entityChangeArgs.Tenant),
@@ -209,6 +255,31 @@ namespace Logitude.Server.Tools.EntityChanges
             return entityChange;
         }
 
+        public void ExecuteAutomationThatDependencyOnLastEntityUpdate(object entity, string entityReference)
+        {
+            automationResultArgs.EntityPM = entity;
+            automationResultArgs.EntityReference = entityReference;
+            foreach (IAutomationResultService service in AutomationResultLists.Where(d => d.DependencyOnLastEntityUpdate).ToList())
+            {
+                service.Run(automationResultArgs);
+            }
+
+            AddAutomationsQueues(AutomationResultLists.Where(d => d.DependencyOnLastEntityUpdate).ToList());
+
+        }
+
+        public bool CheckIfUserDefinedAutomationDependencyOnLastEntityUpdate()
+        {
+            if (automationResultArgs == null) return false;
+            foreach (IAutomationResultService automationResultService in AutomationResultLists.Where(d => d.DependencyOnLastEntityUpdate).ToList())
+            {
+                if(automationResultArgs.AutomationLists.Where(d=>d.ResultCode == automationResultService.ResultCode).Count() > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
 
 
 
@@ -226,6 +297,24 @@ namespace Logitude.Server.Tools.EntityChanges
         public int Tenant { get; set; }
         public string OtherObjectTableName { get; set; }
         public Object ExternalEntity { get; set; }
+        public bool DontExecuteAutomationThatDependencyOnLastEntityUpdate { get; set; }
+        public object ExtraDetails { get; set; }
+        public string EntityReference { get; set; }
+        public string LoggedUserEmail { get; set; }
+    }
+
+    public class OnUpdateDocumentDetails
+    {
+        public string Type { get; set; }
+        public string DocumentId { get; set; }
+        public List<DocumentTypeCopiesDetails> DocumentTypeCopiesDetails { get; set; }
+        public string DocumentTypeId { get; set; }
+    }
+
+    public class DocumentTypeCopiesDetails
+    {
+        public string DocumentTypeCopyId { get; set; }
+        public string DocumentId { get; set; }
     }
 
 
@@ -239,9 +328,8 @@ namespace Logitude.Server.Tools.EntityChanges
         public List<Field> AutomationFieldLists { get; set; }
         public MainEntityChangeService MainEntityChangeService { get; set; }
         public Object EntityPM { get; set; }
-
-
-
+        public object ExtraDetails { get; set; }
+        public string EntityReference { get; set; }
     }
 
     public class AutomationObjectTableClass

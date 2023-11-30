@@ -54,6 +54,8 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.CurrencyId).HasColumnName("CurrencyId").HasMaxLength(15).IsUnicode(false);
 
+            this.Property(t => t.PaymentTerms).HasColumnName("PaymentTerms").HasMaxLength(15).IsUnicode(false);
+
             this.Property(t => t.RevenueExpenseType).HasColumnName("RevenueExpenseType").IsRequired().HasMaxLength(1).IsUnicode(false);
 
             this.Property(t => t.IsControlAccount).HasColumnName("IsControlAccount");
@@ -147,6 +149,8 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.InterestCreditLimit).HasColumnName("InterestCreditLimit").HasPrecision(18, 2);
 
+            this.Property(t => t.InterestOpenBalance).HasColumnName("InterestOpenBalance").HasPrecision(18, 2);
+
             this.Property(t => t.NameForPrintingCheques).HasColumnName("NameForPrintingCheques").HasMaxLength(1000).IsUnicode(true);
 
             this.Property(t => t.Smallcashbook).HasColumnName("Smallcashbook");
@@ -160,6 +164,9 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.CardsDataId).HasColumnName("CardsDataId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.PostponedChequesCommission).HasColumnName("PostponedChequesCommission").HasPrecision(16, 2);
+
+            this.Property(t => t.DateFormat).HasColumnName("DateFormat").HasMaxLength(50).IsUnicode(true);
+
         }
     }
 }

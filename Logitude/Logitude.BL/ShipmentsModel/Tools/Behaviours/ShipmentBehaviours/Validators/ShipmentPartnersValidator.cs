@@ -24,7 +24,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validat
 
         private void RunValidator()
         {
-            if (this.serviceInitializer != null)
+            if (this.serviceInitializer != null && !this.serviceInitializer.EntityPM.IsHybrid)
             {
                 if (!string.IsNullOrEmpty(this.serviceInitializer.EntityPM.ShipperId))
                 {

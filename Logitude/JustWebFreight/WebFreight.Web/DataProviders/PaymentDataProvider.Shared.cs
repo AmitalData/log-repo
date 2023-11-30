@@ -10,6 +10,7 @@ namespace WebFreight.Web.DataProviders
         public string BillToName { get; set; }
         public string BillToAddress { get; set; }
         public string BillToVatNo { get; set; }
+        public string BillToWebsite { get; set; }
         public DateTime Today { get; set; }
 
         public DateTime? RegisterDate { get; set; }
@@ -91,9 +92,13 @@ namespace WebFreight.Web.DataProviders
         public string ARPaymentField8 { get; set; }
         public string ARPaymentField9 { get; set; }
         public string ARPaymentField10 { get; set; }
+        public string BillToBankAccountNumber { get; set; }
+        public string BillToBankName { get; set; }
+		public string GLAccountDisplayNumber { get; set; }
 
-        public class InvoicePayments
+		public class InvoicePayments
         {
+            public string ProjectNumber { get; set; }
             public string InvoiceNumber { get; set; }
             public string Reference { get; set; }
             public double? AmountPaid { get; set; }
@@ -114,6 +119,7 @@ namespace WebFreight.Web.DataProviders
             public decimal ImpPagado { get; set; }
             public decimal ImpSaldoInsoluto { get; set; }
             public double? InvoicePaymentExchangeRate { get; set; }
+            public string CustomerRef { get; set; }
 
 
             //            UUID

@@ -64,7 +64,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
                 OpportunityListQueryService opportunityQuery = new OpportunityListQueryService(MyContext);
                 OpportunityList opportunityList = opportunityQuery.GetSingle(id);
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Opportunity",  authToken.Tenant, new List<OpportunityList> { opportunityList }.Cast<object>().ToList());
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
@@ -89,7 +89,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
                 OpportunityListQueryService opportunityQuery = new OpportunityListQueryService(MyContext);
                 List<OpportunityList> result = opportunityQuery.GetList(authToken.Tenant);
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Opportunity",  authToken.Tenant, result.Cast<object>().ToList());
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
@@ -159,7 +159,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
 
                         }
                         else
@@ -189,7 +189,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
 
                         }
                         else
@@ -202,17 +202,28 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICRMContext MyContext = CRMContext.GetContext(tenant);
 				OpportunityListQueryService opportunityQuery = new OpportunityListQueryService(MyContext);
 
-                List<OpportunityList> entityLists = opportunityQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "Opportunity",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<OpportunityList> entityLists = opportunityQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = opportunityQuery.GetListCount(queryOperations, tenant);
+                    int count = opportunityQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
                     response.Count = count;
                 }
 
                 response.Result = entityLists;
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("Opportunity",  authToken.Tenant, entityLists.Cast<object>().ToList());
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);

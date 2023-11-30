@@ -24,6 +24,8 @@ import { ShipmentTool } from '../../../../Shipment/Tools';
 import { NewShipmentComponentArgs } from '../../../../Shipment/Args';
 import { FeatureToggleList } from '../../../../Infrastructure/EntityLists/FeatureToggleList';
 import { ShipmentDomainService } from '../../../../Shipment/Services/ShipmentDomainService';
+import { PackageTypePMService } from '../../../../Common/Services/StandardPMs/PackageTypePMService';
+import { WarehouseEntryListExtendedService } from '../../../../Warehouse/Services/ExtendedLists/WarehouseEntryListExtendedService';
 
 @Component({    
     templateUrl: './AddEditPickupComponent.html',
@@ -33,19 +35,23 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
   public SelectedTab: any;
     public EntityPM: ShipmentPickUpPM;
     public ShipmentPM: ShipmentPM;
+    public ConnectedWarehouseEntry: any;
     public ObjectTableName: string = "ShipmentPickUpDelivery";
     public IsNewEntity: boolean = false;   
     public TabsItemsSource: TabItem[] = [];
     public IsResourcesReady: boolean = false;
     public ValidationErrorsList: string[] = [];
     public IsShowNewWarehouseEntryButton: boolean = false;
+    public IsFromCallBack: boolean = false;
     private myCardListService: CardListService;
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     private CurrentSession = SessionLocator.SelectedSession;
     public IsAddingStandaloneShipmentVisible: boolean = false;
     public IsEditingEnabled: boolean = true;
+    private warehouseEntryListExtendedService: WarehouseEntryListExtendedService;
     constructor(private entityResourceService: EntityResourceService) {
-        this.myCardListService = new CardListService();        
+        this.myCardListService = new CardListService();
+        this.warehouseEntryListExtendedService = new WarehouseEntryListExtendedService();     
     }
 
     SavedEntityId: string;
@@ -87,17 +93,27 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
   
         this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDelivery").subscribe((res: any) => {
             this.entityResourceService.getEntityResourceByTableName("ShipmentPickUpDeliveryPackage").subscribe((res2: any) => {
-                this.IsResourcesReady = true;
-                this.LoadTemplate();
+                this.LoadConnectedWarehouseEntry();
                 this.Listen();
             });
+        });
+    }
+
+    LoadConnectedWarehouseEntry() {
+        this.warehouseEntryListExtendedService.GetActiveWarehouseEntriesByShipmentId(this.ShipmentPM.Id).subscribe((serviceResponse: ServiceResponse) => {
+            var warehouseEntries = serviceResponse.Result;
+            if (warehouseEntries && warehouseEntries.length > 0) {
+                this.ConnectedWarehouseEntry = warehouseEntries.filter(warehouseEntry => warehouseEntry.ConnectedToReferenceNumber == this.EntityPM.PickUpDeliveryNumber)[0];
+            }
+            this.IsResourcesReady = true;
+            this.LoadTemplate();
         });
     }
 
     get IsCreateStandaloneShipmentEnabled() {
         var isEnabled: boolean = false;
 
-        if (this.EntityPM.FullResponsibility && this.EntityPM.PickUpDeliveryFromTypeCode == "PART" && this.EntityPM.PickUpDeliveryToTypeCode == "PART") {
+        if (this.EntityPM.FullResponsibility) {
             isEnabled = true;
         }
 
@@ -119,6 +135,8 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
     private SaveCompletedEvent: any = null;
     private LoadCompletedEvent: any = null;
     private SessionEvent: any = null;
+    private BackCompletedEvent: any = null;
+
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
@@ -135,6 +153,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 }
             });
+
 
             if (this.LoadCompletedEvent == null) {
                 this.LoadCompletedEvent = this.CurrentSession.CurrentEditComponent.LoadCompleted.subscribe((isLoadSuccess: boolean) => {
@@ -280,7 +299,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
     SaveChangesAndClose() {
         this.Save(true);
     }
-    Save(isClosingWindow: boolean) {
+    Save(isClosingWindow: boolean, callbackMethod: string = "") {
 
         var isValid = this.Validate();
 
@@ -298,7 +317,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                 if (!this.SaveCompletedEvent) {
 
                     this.SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                        this.OnSaveCompleted(isSaveSuccess, isClosingWindow);
+                        this.OnSaveCompleted(isSaveSuccess, isClosingWindow, callbackMethod);
                     });
 
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
@@ -326,7 +345,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         return isValid;
     }
 
-    OnSaveCompleted(isSaveSuccess: boolean, isClosingWindow: boolean) {
+    OnSaveCompleted(isSaveSuccess: boolean, isClosingWindow: boolean, callbackMethod: string = "") {
         if (isSaveSuccess) {
 
             if (this.IsNewEntity) {
@@ -345,6 +364,10 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
             else {
                 this.ResetEntityPM();
             }
+
+            if (!isClosingWindow && !AppTool.IsNullOrEmpty(callbackMethod)) {
+                this.CallBack(callbackMethod);
+            }
         }
 
         else {
@@ -353,6 +376,14 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
 
         AppTool.KillEventEmitter(this.SaveCompletedEvent);
         this.SaveCompletedEvent = null;     
+    }
+
+    CallBack(callbackMethod) {
+        this.IsFromCallBack = true;
+
+        if (callbackMethod == "NewWarehouseEntryButtonClicked") {
+            this.NewWarehouseEntryButtonClicked();
+        }
     }
 
     ResetEntityPM() {
@@ -409,6 +440,14 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
     }
 
     NewWarehouseEntryButtonClicked() {
+        if (AppTool.IsNullOrEmpty(this.SavedEntityId) && !this.IsFromCallBack) {
+            this.Save(false, "NewWarehouseEntryButtonClicked");
+        }
+        this.IsFromCallBack = false;
+
+        if (AppTool.IsNullOrEmpty(this.SavedEntityId)) {
+            return;
+        }
 
         if (this.ShipmentPM.IsDirty) {
             var errors: any[] = [];
@@ -455,18 +494,32 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                 if (!myResponse.HasError) {
                     var myCardList: CardList = myResponse.Result;
                     if (myCardList && myCardList.PartnerTypeId == "WH") {
-                        this.OpenWareHouseEntryWindow(myCardList.Id);
+                        this.LoadAddViewWarehouseEntryWindow(myCardList.Id, false);
 
-                    } else this.OpenWareHouseEntryWindow("");
-                } else this.OpenWareHouseEntryWindow("");
+                    } else this.LoadAddViewWarehouseEntryWindow("");
+                } else this.LoadAddViewWarehouseEntryWindow("");
             });
 
 
         } else {
-            this.OpenWareHouseEntryWindow("");
+            this.LoadAddViewWarehouseEntryWindow("");
         }
     }
+
+    ViewWareHouseEntry() {
+        if (!this.ConnectedWarehouseEntry || !this.ConnectedWarehouseEntry.Id) return;
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef).then(cmpRef => {
+            cmpRef.instance.ComponentRef = cmpRef;
+            cmpRef.instance.Run({ EntityId: this.ConnectedWarehouseEntry.Id, ObjectTableName: 'WarehouseEntry', BackButtonLabel: "Shipment pickup" + ": " + this.EntityPM.PickUpDeliveryNumber });
+            cmpRef.instance.BackCompleted.subscribe(ok => {
+                //
+            });
+        });
+    }
+
     OpenWareHouseEntryWindow(warehouseId: string) {
+        this.CurrentSession.StopBusyIndicator();
         var windowArgs: any = {};
         windowArgs.ExpectedEntryDate = this.EntityPM.ETA;
         windowArgs.ActualEntryDate = this.EntityPM.ATA;
@@ -476,11 +529,65 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         windowArgs.PageRequest = "ShipmentPickUp";
         windowArgs.ConnectedTo = "PickUp";
         windowArgs.ChildEntityReference = this.EntityPM.PickUpDeliveryNumber;
+        windowArgs.ParentComponent = this;
 
         var warehouseHelper: WarehouseHelper = new WarehouseHelper();
         warehouseHelper.ShowNewWarehouseEntryComponent(windowArgs);
 
+    }
 
+    LoadAddViewWarehouseEntryWindow(warehouseId: string, getWarehouseFromShipment: boolean = true) {
+        if (getWarehouseFromShipment) {
+            warehouseId = this.ShipmentPM.WarehouseLegWarehouseId;
+        }
+        this.CurrentSession.StartBusyIndicator("Loading...");
+        this.warehouseEntryListExtendedService.GetActiveWarehouseEntriesByWarehouseId(warehouseId).subscribe((serviceResponse: ServiceResponse) => {
+            var warehouseEntries = serviceResponse.Result;
+            this.LoadWarehouseEntryWindow(warehouseId, warehouseEntries, getWarehouseFromShipment)
+        });
+    }
+
+    LoadWarehouseEntryWindow(warehouseId, warehouseEntries, getWarehouseFromShipment) {
+        if (warehouseEntries && warehouseEntries.length > 0) {
+            warehouseEntries = warehouseEntries.filter(warehouseEntry => this.FilterActiveWarehouseEntries(warehouseEntry));
+        }
+        if (warehouseEntries && warehouseEntries.length > 0) {
+            this.ShowSelectionAddChooseWarehouseEntryWindow(warehouseId, warehouseEntries);
+            return;
+        }
+        if (!getWarehouseFromShipment) {
+            this.OpenWareHouseEntryWindow(warehouseId);
+            return;
+        }
+
+        this.OpenWareHouseEntryWindow("");
+    }
+
+
+    private FilterActiveWarehouseEntries(warehouseEntry: any) {
+        if (warehouseEntry.CustomerId != this.ShipmentPM.CustomerId) return false;
+        if (warehouseEntry.ConnectedToShipment) return false;
+        if (!AppTool.IsNullOrEmpty(warehouseEntry.ConnectedToReferenceNumber)) return false;
+
+        return true;
+    }
+
+    ShowSelectionAddChooseWarehouseEntryWindow(warehouseId, warehouseEntries) {
+        this.CurrentSession.StopBusyIndicator();
+        var windowArgs: any = {};
+        windowArgs.ExpectedEntryDate = this.EntityPM.ETA;
+        windowArgs.ActualEntryDate = this.EntityPM.ATA;
+        windowArgs.WarehouseId = warehouseId;
+        windowArgs.WarehouseEntries = warehouseEntries;
+        windowArgs.EntityPM = this.ShipmentPM;
+        windowArgs.EntityChildPM = this.EntityPM;
+        windowArgs.PageRequest = "ShipmentPickUp";
+        windowArgs.ConnectedTo = "PickUp";
+        windowArgs.ChildEntityReference = this.EntityPM.PickUpDeliveryNumber;
+        windowArgs.ParentComponent = this;
+
+        var warehouseHelper: WarehouseHelper = new WarehouseHelper();
+        warehouseHelper.ShowSelectionAddChooseWarehouseEntryWindow(windowArgs);
     }
 
     private myCloner: Cloner;
@@ -508,7 +615,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
             oldItem.JobId = item.JobId;
             oldItem.LegType = item.LegType;
             oldItem.ManualActivatedFollowUp = item.ManualActivatedFollowUp;
-            oldItem.Note = item.Note;
+            oldItem.Notes = item.Notes;
             oldItem.OwnerUserId = item.OwnerUserId;
             oldItem.OwnerUserName = item.OwnerUserName;
             oldItem.ShipmentId = item.ShipmentId;
@@ -621,7 +728,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
                     });
                 }
             }
-
+            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
             this.myCloner.RejectChanges();
         }
     }
@@ -697,7 +804,7 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
 
         if (buttonCode == "CreateStandalone") {
             this.ValidateNumberOfPickupPackages("Create");
-            this.CreateStandaloneShipmentClicked();
+            this.ValidateTypeOfPickUpPackages();
         }
 
         else if (buttonCode == "ConnectStandalone") {
@@ -716,6 +823,48 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         }
 
         this.ValidationErrorsList = errors;
+    }
+
+    ValidateTypeOfPickUpPackages() {
+        var shipmentPickUpDeliveryPackage = this.EntityPM?.ShipmentPickUpDeliveryPackages?.find(d => d != null && d.ChangeSetOp != "3");
+        if (shipmentPickUpDeliveryPackage == null) {
+            this.CreateStandaloneShipmentClicked();
+        }
+
+        this.CompareCompatiblityOfPackgeAndShipmentTypes(shipmentPickUpDeliveryPackage?.PackageTypeId);
+    }
+
+    CompareCompatiblityOfPackgeAndShipmentTypes(packageTypeId: string) {
+        if (AppTool.IsNullOrEmpty(packageTypeId))
+            return;
+
+        var isContainer = false;
+        var packageTypePMService: PackageTypePMService = new PackageTypePMService();
+
+        packageTypePMService.get(packageTypeId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) {
+                return;
+            }
+
+            var packageTypePM = myResponse.Result;
+            if (packageTypePM) {
+                isContainer = packageTypePM.IsContainer
+                this.ValidateCompatiblityOfPackgeAndShipmentTypes(isContainer);
+            }
+        });
+    }
+
+    ValidateCompatiblityOfPackgeAndShipmentTypes(isContainer: boolean) {
+        var isFCLShipment = AppTool.IsFCLEntity(this.ShipmentPM?.TransportModeId, this.ShipmentPM?.ShipmentTypeId);
+        var isLCLShipment = AppTool.IsLCLEntity(this.ShipmentPM?.TransportModeId, this.ShipmentPM?.ShipmentTypeId);
+
+        if (isLCLShipment && isContainer) {
+            this.ValidationErrorsList.push("The container type is not compatible with the standalone shipment (LTL)");
+        } else if (isFCLShipment && !isContainer) {
+            this.ValidationErrorsList.push("The package type is not compatible with the standalone shipment (FTL)");
+        } else {
+            this.CreateStandaloneShipmentClicked();
+        }
     }
 
     private isCreateStandaloneShipmentClicked: boolean = false;
@@ -799,8 +948,16 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
         logWindow.Title = "Shipments Search";
         var args: any = {};        
         args.ShipmentType = this.ShipmentPM?.ShipmentTypeId;
+        args.FromType = this.EntityPM.PickUpDeliveryFromTypeCode;
+        args.ToType = this.EntityPM.PickUpDeliveryToTypeCode;
         args.FromPartnerId = this.EntityPM.FromPartnerCardId;
         args.ToPartnerId = this.EntityPM.ToPartnerCardId;
+        args.FromPortId = this.EntityPM.FromPortId;
+        args.ToPortId = this.EntityPM.ToPortId;        
+        args.FromCity = this.EntityPM.FromAddressCity;
+        args.ToCity = this.EntityPM.ToAddressCity;
+        args.FromCountryId = this.EntityPM.FromAddressCountryId;
+        args.ToCountryId = this.EntityPM.ToAddressCountryId;
         args.CarrierId = this.EntityPM.CarrierId;
         args.NumberOfPackages = this.EntityPM.ShipmentPickUpDeliveryPackages != null ? this.EntityPM.ShipmentPickUpDeliveryPackages.length : 0;
         logWindow.WindowArgs = args;
@@ -822,26 +979,10 @@ export class AddEditPickupComponent implements AfterViewInit, OnDestroy {
             .then(cmpRef => {
                 cmpRef.instance.ComponentRef = cmpRef;
                 cmpRef.instance.Run({ EntityId: this.EntityPM.StandaloneShipmentId, ObjectTableName: 'Shipment', BackButtonLabel: "Shipment" + ": " + this.ShipmentPM.ShipmentNumber });
-
-                let isEditComponentSaved = false;
-
                 cmpRef.instance.BackCompleted.subscribe(bk => {
-                    if (isEditComponentSaved) {                        
-                        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    }
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                 });
 
-                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
-                });
-
-                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
-                    if (isSaveSuccess) {
-                        isEditComponentSaved = true;
-                    }
-                });
             });
     }    
 

@@ -154,10 +154,10 @@ namespace Simplog.Server.Infrastructure
             //< add name = "Globalstr" connectionString = "Logitude2-5_Global,sa,Saas256!,10.10.10.48:49172\ITZIK" />
             //< add name = "Globalstr" connectionString = "Logitude2-5_Global,sa,Saas256!,servername:port\Instance" />
             string servername = information[3].Replace(":",",");
-
-               // Initialize the connection string builder for the
-               // underlying provider.
-               SqlConnectionStringBuilder sqlBuilder =
+            string applicationIntent = information.Length > 4 ? information[4] : "";
+            // Initialize the connection string builder for the
+            // underlying provider.
+            SqlConnectionStringBuilder sqlBuilder =
                 new SqlConnectionStringBuilder();
 
             // Set the properties for the data source.
@@ -168,6 +168,12 @@ namespace Simplog.Server.Infrastructure
             sqlBuilder.Password = pass;
             sqlBuilder.UserID = userName;
             sqlBuilder.MultipleActiveResultSets = true;
+            if (!string.IsNullOrEmpty(applicationIntent))
+            {
+                sqlBuilder.ApplicationIntent = applicationIntent == "ReadOnly" ? ApplicationIntent.ReadOnly : ApplicationIntent.ReadWrite;
+            }
+
+
             if (connectionLifetime.HasValue && connectionLifetime.Value > 0)
             {
                 sqlBuilder.ConnectTimeout = connectionLifetime.Value;

@@ -870,6 +870,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         public string ChartOfAccountTypeName { get; set; }
         public string ChartOfAcountType { get; set; }
+        public int? ChartOfAcountTypeOrder { get; set; }
         public string ChartOfAcount1 { get; set; }
         public string ChartOfAcount2 { get; set; }
         public string ChartOfAcount3 { get; set; }
@@ -1005,7 +1006,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
             set
             {
-
+                _GLAccountLevel_ChartOfAccountsTypeCodeList = value;
             }
         }
         /// <summary>

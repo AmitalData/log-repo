@@ -89,6 +89,21 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return null;
         }
 
+        public LeadSourcePM GetSinglePMByCode(string code, int tenant)
+        {
+            return (from a in repository.context.LeadSources
+                    where a.Tenant == tenant && a.Code == code
+                    select new LeadSourcePM()
+                    {
+                        Name = a.Name,
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        SearchFields = a.SearchFields,
+                        Code = a.Code,
+                        InActive = a.InActive,
+                    }).FirstOrDefault();
+        }
+
         public IQueryable<LeadSourcePM> GetLeadSourcePMsByTenant(int tenant)
         {
             IQueryable<LeadSourcePM> LeadSourcees = from a in repository.context.LeadSources

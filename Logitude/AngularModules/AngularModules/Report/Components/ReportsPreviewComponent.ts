@@ -48,6 +48,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
     widthwindow: number;
     PartnersObslist: EntityPartner[];
     ReportsTemplateLists: ReportsTemplateList[];
+    MessageTemplateLists: ReportsTemplateList[];
     ReportFilterConmponent: any;
     FilterConrolHeight: number = null;
     @ViewChild('FiltersLocation', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
@@ -60,6 +61,13 @@ export class ReportsPreviewComponent implements AfterViewInit {
     private CurrentSession = SessionLocator.SelectedSession;
 
     IsHaveRunReportViewWorkerRoleToggleFeature: boolean = true;
+    TemplateType: string;
+    DefaultMessageTemplateId: string
+    ResultType: string;
+    ReportEntityId: string;
+    ObjectTableId: string;
+    public MessageTemplateIds: string[] = [];
+
     constructor(public _reportService: ReportService, private cd: ChangeDetectorRef) {
         var idIndex = this.CurrentSession.GetNewId("ReportsPreviewComponent");
         this.ComponentId = "ReportsPreview_" + idIndex;
@@ -73,10 +81,12 @@ export class ReportsPreviewComponent implements AfterViewInit {
     ReportsPreview(GroupList: ReportGroupList, ReportList: ReportList, reportTemplateLists: ReportsTemplateList[]) {
         this.Report = ReportList;
         this.ReportGroup = GroupList;
-        this.ReportsTemplateLists = reportTemplateLists;
+        this.ReportsTemplateLists = reportTemplateLists.filter(temp => temp.TemplateType == "R");
+        this.MessageTemplateLists = reportTemplateLists.filter(temp => temp.TemplateType == "M");
         this.Title = SessionLocator.LoggedUserPM.DontShowLocal ? ReportList.Name : ReportList.LocalName;
         this.FilterControlName = ReportList.FilterControlName;
         this.ReportsRunUsingWR = true;
+        this.ObjectTableId = window.ObjectTables.filter(table => table.Name == "TasksScheduler")[0]?.Id;
         this.RunComponent();
     }
 
@@ -114,12 +124,40 @@ export class ReportsPreviewComponent implements AfterViewInit {
         return reportTemplateId;
     }
 
+    GetReportTemplateType() {
+        const templateType: string = this.StimulsoftArg.StimulsoftViewerComponent.TemplateType;
+        return templateType;
+    }
+
     SetReportTemplate(reportTemplateId: string) {
         if (reportTemplateId) {
             this.DefaultReportTemplateId = reportTemplateId;
         }
     }
 
+    SetReportTemplateType(templateType: string) {
+        this.TemplateType = templateType;
+    }
+
+    GetMessageTemplateId() {
+        const messageTemplateId: string = this.StimulsoftArg.DefaultMessageTemplateId;
+        return messageTemplateId;
+    }
+    SetMessageTemplateId(messageTemplateId: string) {
+        if (AppTool.IsNullOrEmpty(messageTemplateId)) return;
+        this.DefaultMessageTemplateId = messageTemplateId;
+    }
+    GetResultType() {
+        return this.StimulsoftArg.ResultType;
+    }
+    SetResultType(resultType: string) {
+        if (AppTool.IsNullOrEmpty(resultType)) return;
+        this.ResultType = resultType;
+    }
+    SetReportEntityId(reportEntityId: string) {
+        if (AppTool.IsNullOrEmpty(reportEntityId)) return;
+        this.ReportEntityId = reportEntityId;
+    }
 
     private Retries: number = 0;
     private timerToken: any;
@@ -204,6 +242,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 if (this.IsSchedulerReport) {
                     this.StimulsoftArg.IsSchedulerReport = true;
                 }
+                this.StimulsoftArg.IsExcelReportAllowed = this.Report.IsExcelReportAllowed;
                 this.FilterConrolHeight = filtersArea.clientHeight;
                 this.StimulsoftArg.Tenant = SessionLocator.Tenant;
                 this.StimulsoftArg.ReportsPreviewComponent = this;
@@ -214,6 +253,7 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.StimulsoftArg.IsShowExportMicrosoftExcel = true;
                 this.StimulsoftArg.IsShowSendButton = true;
                 this.StimulsoftArg.BuildStimulReportResult = null;
+                this.StimulsoftArg.TemplateType = this.TemplateType;
 
                 if (this.DefaultReportTemplateId) {
                     this.Report.DefaultTemplateId = this.DefaultReportTemplateId;
@@ -228,6 +268,12 @@ export class ReportsPreviewComponent implements AfterViewInit {
                     this.StimulsoftArg.TemplateDescription = this.ReportsTemplateLists.filter(d => d.Id == this.Report.DefaultTemplateId)[0].Description;
                 }
 
+                this.StimulsoftArg.MessageTemplateLists = this.MessageTemplateLists;
+
+                this.StimulsoftArg.DefaultMessageTemplateId =  this.DefaultMessageTemplateId ? this.DefaultMessageTemplateId : this.Report.DefaultMessageTemplateId;
+                this.StimulsoftArg.ResultType = this.ResultType;
+                this.StimulsoftArg.EntityId = this.ReportEntityId;
+                this.StimulsoftArg.ObjectTableId = this.ObjectTableId;
                 this.ComputeSize(Component.clientWidth, Component.clientHeight);
 
                 window.onresize = (e) => {
@@ -264,14 +310,15 @@ export class ReportsPreviewComponent implements AfterViewInit {
         }
     }
 
-    ValiditySelectedTemplate() {
+    ValiditySelectedTemplate():boolean {
 
         if (AppTool.IsNullOrEmpty(this.ReportFliter.DefaultTemplateId)) {
             var messageWindow = new MessageWindow();
             messageWindow.Show("Please select a template");
             this.IsUsedReportsRunUsingWR = false;
-            return;
+            return false;
         }
+        return true;
     }
 
 
@@ -286,8 +333,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
                 this.IsRunReportSucceeded = false;
                 this.IsRunReportFailed = false;
 
-                this.ValiditySelectedTemplate();
-
+                var isValid = this.ValiditySelectedTemplate();
+                if (!isValid) {
+                    this.StopBusyIndicator();
+                    return;
+                }
                 this.StartBusyIndicator("Generating...");
 
                 if (this.ReportsRunUsingWR && !this.IsHaveRunReportViewWorkerRoleToggleFeature) {
@@ -314,6 +364,11 @@ export class ReportsPreviewComponent implements AfterViewInit {
             }
 
             else {
+                var isValid = this.ValiditySelectedTemplate();
+                if (!isValid) {
+                    this.StopBusyIndicator();
+                    return;
+                }
                 this.StartBuildStimulReportViaWorkerRole(this.ReportFliter, true);
             }
         }
@@ -654,5 +709,9 @@ export class ReportsPreviewComponent implements AfterViewInit {
 
         this.ShowBusyIndicator = false;
 
+    }
+
+    Refresh() {
+        this.StimulsoftArg.StimulsoftViewerComponent.RefreshMessageTemplate(this.ResultType);
     }
 }

@@ -191,6 +191,13 @@ export class QueryPM {
     public get IsViewOnly() { return this.isViewOnly; }
     public set IsViewOnly(newValue: boolean) { this.isViewOnly = newValue; }
 
+    private isDefault: boolean;
+    public get IsDefault() { return this.isDefault; }
+    public set IsDefault(newValue: boolean) { this.isDefault = newValue; }
+
+    private isFromCustomObjectTable: boolean;
+    public get IsFromCustomObjectTable() { return this.isFromCustomObjectTable; }
+    public set IsFromCustomObjectTable(newValue: boolean) { this.isFromCustomObjectTable = newValue; }
 
     private sharedUserQueries: SharedUserQueryPM[];
     get SharedUserQueries() {

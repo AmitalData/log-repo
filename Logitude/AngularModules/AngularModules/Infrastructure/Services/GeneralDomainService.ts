@@ -12,6 +12,8 @@ import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { Guid } from '../Utilities/Guid';
 import { defer, of } from 'rxjs';
+import { ScreenSectionPMService } from './StandardPMs/ScreenSectionPMService';
+import { ScreenSectionPM } from '../EntityPMs/ScreenSectionPM';
 
 @Injectable()
 export class GeneralDomainService {
@@ -429,8 +431,11 @@ export class GeneralDomainService {
             entities = new ScreenLayoutArgs();
             entities.ScreenFields = [];
             entities.RemovedScreenFields = [];
+            entities.ScreenSections = [];
+
         }
 
+        if (jsonPM.ScreenSections) jsonPM.ScreenSections = this.MapScreenSections(jsonPM.ScreenSections);
         var jsonPMKeys = Object.keys(jsonPM);
 
         for (var key in jsonPMKeys) {
@@ -637,6 +642,17 @@ export class GeneralDomainService {
         }
         return entityPM;
     }
+
+
+    
+    private MapScreenSections(screenSections: ScreenSectionPM[]) {
+        var results = [];
+        var screenSectionPMService: ScreenSectionPMService = new ScreenSectionPMService();
+        screenSections.forEach((screenSection) => {
+            results.push(screenSectionPMService.MapJsonToEntityPM(screenSection, false));
+        });
+        return results;
+    }
 }
 
 export class FieldsTranslations {
@@ -695,3 +711,4 @@ export class FieldsUpdateHelper {
     public Tenant: number;
     public Items: FieldsTranslations[] = [];
 }
+

@@ -66,6 +66,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ChartOfAccountSecurityLevel"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ParentId"
     ReferencedTable="ChartOfAccounts"

@@ -572,7 +572,7 @@
                         }
 
                         else {
-                            var url = "../WebPages/HowToDownloadPage.aspx";
+                            var url = "../WebPages/HowToDownloadPage.aspx?id="+myCode;
                             var mapForm = document.createElement("form");
                             var iToken = $("#TokenForResources").val();
                             mapForm.target = "_blank";

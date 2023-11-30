@@ -93,7 +93,7 @@
                                                                                 <div style="width:80px">Name</div>
                                                                             </td>
                                                                             <td style="width:200px;height:30px;vertical-align:top">
-                                                                                <input type="text" style="height:22px;width:200px;" [(ngModel)]="Name" value="" />
+                                                                                <input [attr.data-cy]="'AutomationName'" type="text" style="height:22px;width:200px;" [(ngModel)]="Name" value="" />
                                                                             </td>
                                                                         </tr>
                                                                         <tr *ngIf="!IsShowAutomationCodeField" style="height:5px">
@@ -103,7 +103,7 @@
                                                                             <td style="width:100px;vertical-align:top">inactive</td>
 
                                                                             <td style="vertical-align:top">
-                                                                                <CheckBox [IsChecked]="Inactive" (Checked)="Inactive = $event"></CheckBox>
+                                                                                <CheckBox [DataCy]="'Inactive'" [IsChecked]="Inactive" (Checked)="Inactive = $event"></CheckBox>
                                                                             </td>
                                                                         </tr>
 
@@ -124,7 +124,7 @@
                                                                                 <div style="width:80px;vertical-align:top">Description</div>
                                                                             </td>
                                                                             <td style="width:200px;vertical-align:top">
-                                                                                <textarea [(ngModel)]="Description" type="text" style="float:left;opacity:1;width:200px;height:60px;max-height:60px;background-color:white;border:1px solid #a8a8a8;font-size:12px;border-radius:2px;color:gray;resize:none;overflow:auto"></textarea>
+                                                                                <textarea [attr.data-cy]="'AutomationDescription'" [(ngModel)]="Description" type="text" style="float:left;opacity:1;width:200px;height:60px;max-height:60px;background-color:white;border:1px solid #a8a8a8;font-size:12px;border-radius:2px;color:gray;resize:none;overflow:auto"></textarea>
 
                                                                             </td>
                                                                         </tr>
@@ -160,7 +160,7 @@
                                                 <!--ANY Conditions in this area-->
                                                 <tr style="height:150px">
                                                     <td>
-                                                        <AutomationsConditionAreaComponent [AutomationCondationLists]="AutomationCondationOrList" [Title]="'Conditions (meet ANY Conditions in this area)'" [TiggerComponent]="DataContext" [CondationListType]="'Or'"></AutomationsConditionAreaComponent>
+                                                        <AutomationsConditionAreaComponent [AutomationCondationLists]="AutomationCondationOrList"    [Title]="'Conditions (meet ANY Conditions in this area)'" [TiggerComponent]="DataContext" [CondationListType]="'Or'"></AutomationsConditionAreaComponent>
                                                     </td>
                                                 </tr>
 
@@ -223,11 +223,13 @@
                                                                                             </td>
                                                                                             <td [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'270px':'200px'">
                                                                                                 <div [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'270px':'200px'" style="text-align:left;">
-                                                                                                    <ComboBox [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'270px':'200px'" (SelectedItemChanged)="ResultCodeListValueChanged($event)" [ItemsSource]="ResultCodeList" [SelectedItem]="ResultCodeSelected" [Binding]="'Name'"></ComboBox>
+                                                                                                    <ComboBox [IsDisabled]="!IsCustomerCareUser && ResultCodeSelected.Code =='SENDINTERFACE'" [CyData]="'AutomationResultList'" [ListType]="''" [style.width]="(ResultCodeSelected.Code =='FOLLOWUP' ||ResultCodeSelected.Code =='DOCOUTFOLLOWUP'|| ResultCodeSelected.Code =='DOCINFOLLOWUP') ?'270px':'200px'" (SelectedItemChanged)="ResultCodeListValueChanged($event)" [ItemsSource]="ResultCodeList" [SelectedItem]="ResultCodeSelected" [Binding]="'Name'"></ComboBox>
                                                                                                 </div>
                                                                                             </td>
                                                                                             <td>
-                                                                                                <div></div>
+                                                                                                <div style="margin-left:5px">
+                                                                                                    <HelpIcon *ngIf="(IsSendDocument && ObjectTableName == 'Shipment')" [HideHeader]="true" [Text]="'Using this result, your document will be built automatically and sent to the Recipients Emails'"></HelpIcon>
+                                                                                                </div>
                                                                                             </td>
                                                                                         </tr>
 
@@ -256,7 +258,7 @@
                                                                                                 <table  style="vertical-align:top;height:25px">
                                                                                                     <tr style="vertical-align:top;height:25px">
                                                                                                         <td style="vertical-align:central;width:100px;">
-                                                                                                            <RadioButton [Name]="'DateRadio'" [Text]="'Immediately'" [IsChecked]="IsSelectedImmediatly" (Checked)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')"></RadioButton>
+                                                                                                            <RadioButton [IsEnabled]="!DisableTimeTypeSelector" [Name]="'DateRadio'" [Text]="'Immediately'" [IsChecked]="IsSelectedImmediatly" (Checked)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')"></RadioButton>
                                                                                                             <!--<div class="RadioButton" style="width:100px;display:inline">
                             <input [attr.id]="ImmediatlyHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Immeduiatly')" name="DateRadio" [checked]="IsSelectedImmediatly" />
                             <label [attr.for]="ImmediatlyHtmlinputId" style="font-size: 12px">
@@ -265,7 +267,7 @@
                         </div>-->
                                                                                                         </td>
                                                                                                         <td style="vertical-align:central;width:100px;">
-                                                                                                            <RadioButton [Name]="'DateRadio'" [Text]="'Delayed'" [IsChecked]="IsSelectedDelayed" (Checked)="SelectedDelayedImmediatlRadioClcik('Delayed')"></RadioButton>
+                                                                                                            <RadioButton [IsEnabled]="!DisableTimeTypeSelector" [Name]="'DateRadio'" [Text]="'Delayed'" [IsChecked]="IsSelectedDelayed" (Checked)="SelectedDelayedImmediatlRadioClcik('Delayed')"></RadioButton>
                                                                                                             <!--<div class="Delayed" style="width:100px;display:inline">
                             <input [attr.id]="DelayedHtmlinputId" type="radio" (click)="SelectedDelayedImmediatlRadioClcik('Delayed')" name="DateRadio" [checked]="IsSelectedDelayed" />
                             <label [attr.for]="DelayedHtmlinputId" style="font-size: 12px">
@@ -383,6 +385,12 @@
 
                                                                                         </tr>
 
+                                                                                        <tr style="height:1px">
+                                                                                            <td colspan="4">
+                                                                                                <div class="LocationDirective" LocationDirective Code="ONUPDATEDOCUMENT"> </div>
+                                                                                            </td>
+                                                                                        </tr>
+
                                                                                         <tr *ngIf="ResultCodeSelected.Code =='SETSLA'" style="height:25px">
                                                                                             <td style="width:10px">
                                                                                                 <div></div>
@@ -393,7 +401,7 @@
                                                                                             </td>
                                                                                             <td style="width:200px">
                                                                                                 <div style="text-align:left;width:200px">
-                                                                                                    <ComboBox style="width:200px" (SelectedItemChanged)="SLAHeaderValueChanged($event)" [ItemsSource]="SLAHeaderLists" [SelectedItem]="SLAHeaderSelected" [Binding]="'Name'"></ComboBox>
+                                                                                                    <ComboBox [CyData]="'TicketSLAList'" style="width:200px" (SelectedItemChanged)="SLAHeaderValueChanged($event)" [ItemsSource]="SLAHeaderLists" [SelectedItem]="SLAHeaderSelected" [Binding]="'Name'"></ComboBox>
                                                                                                 </div>
                                                                                             </td>
                                                                                             <td>
@@ -416,7 +424,6 @@
                                                                                             </td>
                                                                                         </tr>
 
-
                                                                                         <!--Documen tType Area-->
                                                                                         <tr *ngIf="IsResultEmail || IsSendDocument" style="height:2px;">
                                                                                             <td colspan="4" style="height:2px">
@@ -430,7 +437,7 @@
                                                                                                     <p style="font-size:11px;margin-top:1px;color:Gray;margin-left:10px">Email Body</p>
 
                                                                                                 </div>
-                                                                                                <div [style.border]="ResultCodeSelected.Code !='EMAIL' ?'2px solid #E4E3E1':''" [style.padding-top]="ResultCodeSelected.Code !='EMAIL' ?'7px':''" [style.padding-bottom]="ResultCodeSelected.Code !='EMAIL' ?'7px':''" style="border-radius: 5px">
+                                                                                                <div [style.border]="ResultCodeSelected.Code !='EMAIL' && !(IsSendDocument && ObjectTableName == 'Shipment' && AutomationSendDocument.SendVia == 'EMAIL') ?'2px solid #E4E3E1':''" [style.padding-top]="ResultCodeSelected.Code !='EMAIL' && !(IsSendDocument && ObjectTableName == 'Shipment' && AutomationSendDocument.SendVia == 'EMAIL') ?'7px':''" [style.padding-bottom]="ResultCodeSelected.Code !='EMAIL' && !(IsSendDocument && ObjectTableName == 'Shipment' && AutomationSendDocument.SendVia == 'EMAIL') ?'7px':''" style="border-radius: 5px">
                                                                                                     <table>
                                                                                                         <tr>
                                                                                                             <td style="width:10px">
@@ -441,9 +448,9 @@
                                                                                                             <td style="width:120px">
                                                                                                                 <p style="font-size:11px;margin-top:1px;color:#6E7172">Document</p>
                                                                                                             </td>
-                                                                                                            <td style="width:200px">
-                                                                                                                <div style="text-align:left;width:200px;">
-                                                                                                                    <ComboBox style="width:200px;" (SelectedItemChanged)="DocumentTypeSelected = $event" [ItemsSource]="DocumentTypeLists" [SelectedItem]="DocumentTypeSelected" [Binding]="'Name'"></ComboBox>
+                                                                                                            <td style="width:203px">
+                                                                                                                <div style="text-align:left;width:203px;">
+                                                                                                                    <ComboBox [CyData]="'DocumentTypeList'" [ListType]="''" style="width:203px;" (SelectedItemChanged)="DocumentTypeSelected = $event" [ItemsSource]="DocumentTypeLists" [SelectedItem]="DocumentTypeSelected" [Binding]="'Name'"></ComboBox>
                                                                                                                 </div>
                                                                                                             </td>
                                                                                                             <td>
@@ -464,7 +471,7 @@
 
                                                                                                                                             <td style="vertical-align:central;width:203px">
                                                                                                                                                 <div style="text-align:left;width:203px;vertical-align:central">
-                                                                                                                                                    <ComboBox style="width:203px;" (SelectedItemChanged)="DocumentTypeTemplateSelected=$event" [ItemsSource]="DocumentTypeTemplateLists" [SelectedItem]="DocumentTypeTemplateSelected" [Binding]="'Description'"></ComboBox>
+                                                                                                                                                    <ComboBox [CyData]="'DocumentTypeTemplateList'" style="width:203px;" (SelectedItemChanged)="DocumentTypeTemplateSelected=$event" [ItemsSource]="DocumentTypeTemplateLists" [SelectedItem]="DocumentTypeTemplateSelected" [Binding]="'Description'"></ComboBox>
                                                                                                                                                 </div>
                                                                                                                                             </td>
 
@@ -502,7 +509,7 @@
 
                                                                                         </tr>
 
-                                                                                        <tr *ngIf="ResultCodeSelected.Code =='EMAIL' && DocumentTypeSelected && DocumentTypeSelected.TemplateFormatCode=='P'" style="height:25px">
+                                                                                        <tr *ngIf="(ResultCodeSelected.Code =='EMAIL' || (IsSendDocument && ObjectTableName == 'Shipment' && AutomationSendDocument.SendVia == 'EMAIL')) && DocumentTypeSelected && DocumentTypeSelected.TemplateFormatCode=='P'" style="height:25px">
                                                                                             <td colspan="4">
 
                                                                                                 <div>
@@ -532,7 +539,7 @@
 
                                                                                                                             <td style="vertical-align:central;width:203px">
                                                                                                                                 <div style="text-align:left;width:203px;vertical-align:central">
-                                                                                                                                    <ComboBox style="width:203px;" (SelectedItemChanged)="DocumentTypeTemplateReportSelected = $event" [ItemsSource]="DocumentTypeTemplateReportLists" [SelectedItem]="DocumentTypeTemplateReportSelected" [Binding]="DocumentTypeReportTemplateBinding"></ComboBox>
+                                                                                                                                    <ComboBox [CyData]="'DocumentTypeTemplatesList'" [ListType]="''" style="width:203px;" (SelectedItemChanged)="DocumentTypeTemplateReportSelected = $event" [ItemsSource]="DocumentTypeTemplateReportLists" [SelectedItem]="DocumentTypeTemplateReportSelected" [Binding]="DocumentTypeReportTemplateBinding"></ComboBox>
 
                                                                                                                                 </div>
                                                                                                                             </td>
@@ -577,9 +584,9 @@
                                                                                                                                 <p style="font-size:12px;color:#6E7172">Copy Name</p>
                                                                                                                             </td>
 
-                                                                                                                            <td style="vertical-align:central;width:200px">
-                                                                                                                                <div style="text-align:left;width:200px;vertical-align:central">
-                                                                                                                                    <ComboBox style="width:200px;" (SelectedItemChanged)="DocumentTypeCopySelected = $event" [ItemsSource]="DocumentTypeCopyLists" [SelectedItem]="DocumentTypeCopySelected" [Binding]="'Name'"></ComboBox>
+                                                                                                                            <td style="vertical-align:central;width:203px">
+                                                                                                                                <div style="text-align:left;width:203px;vertical-align:central">
+                                                                                                                                    <ComboBox style="width:203px;" (SelectedItemChanged)="DocumentTypeCopySelected = $event" [ItemsSource]="DocumentTypeCopyLists" [SelectedItem]="DocumentTypeCopySelected" [Binding]="'Name'"></ComboBox>
                                                                                                                                 </div>
                                                                                                                             </td>
 
@@ -646,7 +653,7 @@
                                                                                                             <td>
                                                                                                                 <div style="height:50px;width:100%;" class="ScrollViewer">
                                                                                                                     <div class="ScrollContent" style="margin-left:6px;">
-                                                                                                                        <div *ngFor="let item of EmailRecipientFieldLists" style="height:20px;width:175px;background-color:white;float:left;margin-left:0px;margin-bottom:4px;vertical-align:central">
+                                                                                                                        <div *ngFor="let item of EmailRecipientFieldLists" style="height:20px;width:200px;background-color:white;float:left;margin-left:0px;margin-bottom:4px;vertical-align:central">
 
 
                                                                                                                             <table style="vertical-align:top">
@@ -754,7 +761,7 @@
 
                                                                                         </tr>
 
-                                                                                        <tr style="height:40px" *ngIf="SelectedNotRequiredFields.length > 0">
+                                                                                        <tr style="height:40px">
 
                                                                                             <td colspan="3">
 
@@ -843,7 +850,7 @@
                                                                                             </td>
                                                                                             <td>
 
-                                                                                                <AutomationsConditionAreaComponent [AutomationCondationLists]="AutomationSetValueLists" [Title]="'Set value area'" [TiggerComponent]="DataContext" [CondationListType]="'Set'" [NoEntity]="true"></AutomationsConditionAreaComponent>
+                                                                                                <AutomationsConditionAreaComponent [AutomationCondationLists]="AutomationSetValueLists" [Title]="'Set value area'" [TiggerComponent]="DataContext" [CondationListType]="'Set'" ></AutomationsConditionAreaComponent>
 
                                                                                             </td>
 
@@ -885,7 +892,7 @@
 
                                                                                                             <td>
                                                                                                                 <div style="text-align:left;width:270px;">
-                                                                                                                    <ComboBox style="width:270px;" (SelectedItemChanged)="FollowUpTypeComboBoxChanged($event)" [ItemsSource]="EventFollowUpTypeLists" [SelectedItem]="FollowUpTypeSelected" [Binding]="'EnglishName'"></ComboBox>
+                                                                                                                    <ComboBox  *ngIf="EventFollowUpTypeLists && EventFollowUpTypeLists.length > 0" [CyData]="'AutomationFollowUpList'" style="width:270px;" (SelectedItemChanged)="FollowUpTypeComboBoxChanged($event)" [ItemsSource]="EventFollowUpTypeLists" [SelectedItem]="FollowUpTypeSelected" [Binding]="'EnglishName'"></ComboBox>
                                                                                                                 </div>
 
                                                                                                             </td>
@@ -939,7 +946,7 @@
                                                                                                                         <tr>
                                                                                                                             <td style="text-align:left;width:240px;">
                                                                                                                                 <div style="text-align:left;width:270px;">
-                                                                                                                                    <ComboBox style="width:270px;" (SelectedItemChanged)="FollowUpOwnerObjectFieldComboBoxChanged($event)" [ItemsSource]="FollowUpOwnerObjectFieldLists" [SelectedItem]="FollowUpOwnerObjectFieldSelected" [Binding]="'FullNameTextCodeDefaultText'"></ComboBox>
+                                                                                                                                    <ComboBox [CyData]="'FollowUpOwnerList'" style="width:270px;" (SelectedItemChanged)="FollowUpOwnerObjectFieldComboBoxChanged($event)" [ItemsSource]="FollowUpOwnerObjectFieldLists" [SelectedItem]="FollowUpOwnerObjectFieldSelected" [Binding]="'FullNameTextCodeDefaultText'"></ComboBox>
                                                                                                                                 </div>
                                                                                                                             </td>
                                                                                                                             <td style="width:20px">
@@ -995,7 +1002,7 @@
 
                                                                                                             <td>
                                                                                                                 <div style="text-align:left;width:270px;">
-                                                                                                                    <ComboBox style="width:270px;" (SelectedItemChanged)="FollowUpDateObjectFieldComboBoxChanged($event)" [ItemsSource]="FollowUpDateObjectFieldLists" [SelectedItem]="FollowUpDateObjectFieldSelected" [Binding]="'FullNameTextCodeDefaultText'"></ComboBox>
+                                                                                                                    <ComboBox [CyData]="'FollowUpDateList'" style="width:270px;" (SelectedItemChanged)="FollowUpDateObjectFieldComboBoxChanged($event)" [ItemsSource]="FollowUpDateObjectFieldLists" [SelectedItem]="FollowUpDateObjectFieldSelected" [Binding]="'FullNameTextCodeDefaultText'"></ComboBox>
                                                                                                                 </div>
                                                                                                             </td>
 
@@ -1335,8 +1342,10 @@
 
                                                                                 </td>
                                                                             </tr>
-                                                                            <!-------------------->
 
+                                                                            <div class="LocationDirective" LocationDirective Code="EVENTCREATION"> </div>
+
+                                                                            <!-------------------->
                                                                             <tr style="height:5px;">
                                                                                 <td colspan="2">
                                                                                     <div style="height:5px"></div>

@@ -6,6 +6,7 @@ using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityPMs;
+using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -39,7 +40,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
-                
+                SecurityUtility.AuthenticateAccessibleAPI("APInvoice", authToken.Tenant);
+
                 APInvoiceQueryService Service = new APInvoiceQueryService(tenant);
                 ServiceResponse response = new ServiceResponse();
                 var Result = new APInvoice();
@@ -92,6 +94,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticateAccessibleAPI("APInvoice", authToken.Tenant);
                         int tenant = authToken.Tenant;
 
                         //SecurityUtility.AuthenticateAPICall(authToken.Tenant);
@@ -160,9 +163,14 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         {
                             apinvoice.Tenant = tenant;
                             apinvoiceQuery.CustomeValidateAPInvoice(apinvoice);
+                            apinvoice = apinvoiceQuery.SetAPInvoiceSystemUser(apinvoice);
+
                             apinvoicePM = apinvoiceQuery.APInvoiceDataMappingAndValidatin(apinvoice, tenant);
                             apinvoiceQuery.APInvoiceCustomDataMapping(apinvoice, tenant);
-                            apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant);
+                            GLAccountQueryService gLAccountQuery = new GLAccountQueryService(tenant);
+                            GLAccountPM glaccountPM = gLAccountQuery.GetSinglePMByInternalNumber(apinvoicePM.VendorGLAccountId, tenant);
+
+                            apinvoiceQuery.PaymentTermMapAndValidate(apinvoice, apinvoicePM, tenant, glaccountPM?.PaymentTermId);
                             CalculateTotalsIfEmpty(apinvoicePM);
                             // SET approved
                             apinvoicePM.SetVoided = false;
@@ -198,6 +206,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                         }
 
                         APInvoiceService apinvoiceService = new APInvoiceService(MyContext, tenant);
+                        apinvoicePM.IsExternalEntity = true;
                         apinvoiceService.Create(apinvoicePM);
 
                         APIHelper.AddCommunicationLog("D", oldEntity, apinvoice, "APInvoice", apinvoicePM.Id, "APInvoice API", tenant);
@@ -274,6 +283,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
 
         private void MapLines(APInvoice apinvoice, int tenant, APInvoicePM apinvoicePM)
         {
+            GLAccountQueryService gLAccountService = new GLAccountQueryService(tenant);
             foreach (APInvoiceLinePM line in apinvoicePM.InvoiceLines)
             {
                 line.Tenant = apinvoice.Tenant;
@@ -328,16 +338,38 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 // get charges
                 ChargesTypeQuery chargesTypeQuery = new ChargesTypeQuery(tenant);
                 ChargesTypePM charge = chargesTypeQuery.GetSinglePM(line.ChargesTypeId, tenant);
+                
+                line.LocalDescription = line.LocalDescription ?? line.Description ?? charge.LocalName ?? charge.EnglishName;
 
                 if (string.IsNullOrWhiteSpace(line.Description))
                     line.Description = charge.EnglishName;
-                if (string.IsNullOrWhiteSpace(line.LocalDescription))
-                    line.LocalDescription = charge.LocalName ?? charge.EnglishName;
 
-                line.ChargeTypeGLAccountId = charge.PayableDebitGLAcountId;
+                this.mapPayableDebitGLAcountId(line, charge, gLAccountService, tenant);
+
             }
 
           
+        }
+
+        private void mapPayableDebitGLAcountId(APInvoiceLinePM line, ChargesTypePM charge, GLAccountQueryService gLAccountService, int tenant)
+        {
+            if (string.IsNullOrEmpty(line.ChargeTypeGLAccountId))
+            {
+                line.ChargeTypeGLAccountId = charge.PayableDebitGLAcountId;
+            }
+            else
+            {
+                GLAccountPM gLAccountPM = gLAccountService.GetByInternalNumber(line.ChargeTypeGLAccountId, tenant);
+                if (gLAccountPM != null)
+                {
+                    line.ChargeTypeGLAccountId = gLAccountPM.Id;
+                }
+                else
+                {
+                    throw new ApplicationException("GLAccount with internal number "+ line.ChargeTypeGLAccountId +" doesn't exist");
+                }
+
+            }
         }
       
 

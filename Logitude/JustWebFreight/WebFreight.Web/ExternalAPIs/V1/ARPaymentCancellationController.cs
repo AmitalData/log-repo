@@ -44,6 +44,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     int tenant = authToken.Tenant;
                     SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                    SecurityUtility.AuthenticateAccessibleAPI("Cancel ARPayment", authToken.Tenant);
+
                     ARPaymentCancellation = entity;
 
                     ARPaymentQueryService Service = new ARPaymentQueryService(tenant);
@@ -65,8 +67,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
             catch (Exception ex)
             {
                 var apiExceptionResult = ApiExceptionHandler.HandleException(ex);
-                APIHelper.AddCommunicationLog("F", paymentPM, apiExceptionResult.Exception, "ARPayment", null, "ARPayment API");
-                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception);
+                APIHelper.AddCommunicationLog("F", paymentPM, apiExceptionResult.Exception + ex.StackTrace , "ARPayment", null, "ARPayment API");
+                return Request.CreateResponse(apiExceptionResult.StatusCode, apiExceptionResult.Exception+";" + ex.StackTrace);
             }
         }
 

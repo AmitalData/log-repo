@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Logitude.Test.Base.Models.Api
+namespace Logitude.Base.Models.Api
 {
     public class ApiQueryFiltersBuilder
     {
@@ -49,6 +49,36 @@ namespace Logitude.Test.Base.Models.Api
         public ApiQueryFiltersBuilder Filter2Operator(string Filter2Operator)
         {
             _apiQueryFilters.Filter2Operator = Filter2Operator;
+            return this;
+        }
+        public ApiQueryFiltersBuilder Filter3Name(string name)
+        {
+            _apiQueryFilters.Filter3Name = name;
+            return this;
+        }
+        public ApiQueryFiltersBuilder Filter3Value(string value)
+        {
+            _apiQueryFilters.Filter3Value = value;
+            return this;
+        }
+        public ApiQueryFiltersBuilder Filter3Operator(string operatr)
+        {
+            _apiQueryFilters.Filter3Operator = operatr;
+            return this;
+        }
+        public ApiQueryFiltersBuilder PageSize(int pageSize)
+        {
+            _apiQueryFilters.PageSize = pageSize;
+            return this;
+        }
+        public ApiQueryFiltersBuilder SortBy(string sortBy)
+        {
+            _apiQueryFilters.SortBy = sortBy;
+            return this;
+        }
+        public ApiQueryFiltersBuilder SortDirection(string sortDirection)
+        {
+            _apiQueryFilters.SortDirection = sortDirection;
             return this;
         }
 

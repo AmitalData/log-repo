@@ -130,11 +130,18 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="DIM_QuoteStatges.dwml" />
+    <None Include="Files\DIM_Addresses.dwml">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Files\DIM_ARInvoiceTransferStatus.dwml" />
+    <None Include="Files\DIM_ContainerStatuses.dwml" />
     <None Include="Files\DIM_Countries.dwml" />
+    <None Include="Files\DIM_CustomerTeams.dwml" />
     <None Include="Files\DIM_InvoiceMainTypes.dwml" />
     <None Include="Files\DIM_InvoiceStatus.dwml" />
     <None Include="Files\DIM_InvoiceTypes.dwml" />
     <None Include="Files\DIM_OBLType.dwml" />
+    <None Include="Files\DIM_PackageTypes.dwml" />
     <None Include="Files\DIM_PaymentTerms.dwml" />
     <None Include="Files\DIM_QuoteClosingReasons.dwml" />
     <None Include="Files\DIM_QuoteStages.dwml" />
@@ -162,11 +169,17 @@
     <None Include="Files\DIM_ShipmentStatuses.dwml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Files\DIM_ShipmentSubTypes.dwml" />
     <None Include="Files\DIM_Tenants.dwml" />
     <None Include="Files\DIM_TransportModes.dwml" />
     <None Include="Files\DIM_Types.dwml" />
+    <None Include="Files\DIM_Contacts.dwml" />
     <None Include="Files\DIM_Users.dwml" />
+    <None Include="Files\DIM_VatTypes.dwml" />
+    <None Include="Files\Fact_ARInvoices.dwml" />
     <None Include="Files\Fact_Charges.dwml" />
+    <None Include="Files\Fact_Containers.dwml" />
+    <None Include="Files\Fact_InlandDomesticShipments.dwml" />
     <None Include="Files\Fact_Invoices.dwml" />
     <None Include="Files\Fact_MasterCharges.dwml" />
     <None Include="Files\Fact_Masters.dwml" />

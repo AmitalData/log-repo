@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace Logitude.BL.ShipmentsModel.EntityLists
-{
+{ 
     public class ShipmentList
     {
         public string Id { get; set; }
@@ -22,7 +22,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public double? OpenPayablesInProfitCurrency { get; set; }
         public double? AccountedPayablesInProfitCurrency { get; set; }
         #endregion
-        
+
         public string LocalCustomsTransmissionsStatusCode { get; set; }
         public string LocalCustomsTransmissionsStatusName { get; set; }
         public string LocalCustomsTransmissionsStatusError { get; set; }
@@ -57,6 +57,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string TruckNumber { get; set; }
         public string MainCarriageCarrierCode { get; set; }
         public string MainCarriageCarrierName { get; set; }
+        public string Agent { get; set; }
         public string AgentComputed { get; set; }
         public string AgentComputedName { get; set; }
 
@@ -77,6 +78,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string AMSBL { get; set; }
         public string House { get; set; }
         public string ShipmentType { get; set; }
+        public string ShipmentTypeName { get; set; }
         public string ShipmentTypeId { get; set; }
         public string FollowUpType { get; set; }
         public string FollowUpTypeId { get; set; }
@@ -139,6 +141,36 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string Field38 { get; set; }
         public string Field39 { get; set; }
         public string Field40 { get; set; }
+        public string Field41 { get; set; }
+        public string Field42 { get; set; }
+        public string Field43 { get; set; }
+        public string Field44 { get; set; }
+        public string Field45 { get; set; }
+        public string Field46 { get; set; }
+        public string Field47 { get; set; }
+        public string Field48 { get; set; }
+        public string Field49 { get; set; }
+        public string Field50 { get; set; }
+        public string Field51 { get; set; }
+        public string Field52 { get; set; }
+        public string Field53 { get; set; }
+        public string Field54 { get; set; }
+        public string Field55 { get; set; }
+        public string Field56 { get; set; }
+        public string Field57 { get; set; }
+        public string Field58 { get; set; }
+        public string Field59 { get; set; }
+        public string Field60 { get; set; }
+        public string Field61 { get; set; }
+        public string Field62 { get; set; }
+        public string Field63 { get; set; }
+        public string Field64 { get; set; }
+        public string Field65 { get; set; }
+        public string Field66 { get; set; }
+        public string Field67 { get; set; }
+        public string Field68 { get; set; }
+        public string Field69 { get; set; }
+        public string Field70 { get; set; }
 
         public bool NewMessage { get; set; }
        
@@ -153,10 +185,11 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public string StatusId { get; set; }
         public string StatusName { get; set; }
+        public string StatusCode { get; set; }
         public string ExactStatusName { get; set; }
         public DateTime? StatusDate { get; set; }
         public string StatusLocation { get; set; }
-
+        public string PartialStatusAmount { get; set; }
         public string Master { get; set; }
         public string DirectionName { get; set; }
         public string TransportModeName { get; set; }
@@ -172,6 +205,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? LastUpdateDate { get; set; }
       
         public string DepartmentId { get; set; }
+        public string DepartmentName { get; set; }
         public string BranchId { get; set; }
 
         public string LongMaster { get; set; }
@@ -258,10 +292,14 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string ShipperId { get; set; }
         public string ShipperReference1 { get; set; }
         public string ShipperReference2 { get; set; }
+        public string ShipperReference3 { get; set; }
+        public string ShipperCountryCode { get; set; }
+        public string ConsigneeCountryCode { get; set; }
 
         public string Consignee { get; set; }
         public string ConsigneeReference1 { get; set; }
         public string ConsigneeReference2 { get; set; }
+        public string ConsigneeReference3 { get; set; }
 
         public string FromCountryCode { get; set; }
         public string ToCountryCode { get; set; }
@@ -330,6 +368,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string CustomerName { get; set; }
         public string CustomerReference1 { get; set; }
         public string CustomerReference2 { get; set; }
+        public string CustomerReference3 { get; set; }
 
         public string ConsolidatorId { get; set; }
         public string ConsolidatorName { get; set; }
@@ -429,6 +468,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public DateTime? FreightRelease { get; set; }
         public DateTime? TerminalAvailable { get; set; }
+        public DateTime? Terminal2Available { get; set; }
         public string ISFNumber { get; set; }
         public DateTime? ISFDate { get; set; }
         public string ITNumber { get; set; }
@@ -451,12 +491,13 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public DateTime? ManifestLastSharingDate { get; set; }
         //public string MainCarriageFinalDestinationPortId { get; set; }
         public string MainCarriageFinalDestinationPortCode { get; set; }
-        //public string MainCarriageFinalDestinationPortName { get; set; }
-        //public string MainCarriageFinalDestinationCountryCode { get; set; }
-        //public string MainCarriageFinalDestinationCountryName { get; set; }
+		//public string MainCarriageFinalDestinationPortName { get; set; }
+		//public string MainCarriageFinalDestinationCountryCode { get; set; }
+		//public string MainCarriageFinalDestinationCountryName { get; set; }
 
-        #region WarehouseLeg
-        public string WarehouseLegWarehouseId { get; set; }
+		#region WarehouseLeg
+		public string WarehouseLegWarehouseName { get; set; }
+		public string WarehouseLegWarehouseId { get; set; }
         public string WarehouseLegAddressId { get; set; }
         public string WarehouseLegTerminalCode { get; set; }
         public DateTime? WarehouseLegExpectedEntryDate { get; set; }
@@ -473,6 +514,22 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
         public string WarehouseLegAddressCountryCode { get; set; }
         public DateTime? WarehouseLegVGMCutOffDate { get; set; }
         public DateTime? WarehouseLegCutOffDate { get; set; }
+        public string WarehouseLeg2WarehouseId { get; set; }
+        public string WarehouseLeg2AddressId { get; set; }
+        public string WarehouseLeg2TerminalCode { get; set; }
+        public DateTime? WarehouseLeg2ExpectedEntryDate { get; set; }
+        public DateTime? WarehouseLeg2ActualEntryDate { get; set; }
+        public DateTime? WarehouseLeg2ExpectedReleaseDate { get; set; }
+        public DateTime? WarehouseLeg2ActualReleaseDate { get; set; }
+        public string WarehouseLeg2Remarks { get; set; }
+        public string WarehouseLeg2Reference { get; set; }
+        public string WarehouseLeg2TerminalName { get; set; }
+        public DateTime? WarehouseLeg2EntryDate { get; set; }
+        public DateTime? WarehouseLeg2ReleaseDate { get; set; }
+        public string WarehouseLeg2AddressCountryName { get; set; }
+        public string WarehouseLeg2AddressCountryCode { get; set; }
+        public DateTime? WarehouseLeg2VGMCutOffDate { get; set; }
+        public DateTime? WarehouseLeg2CutOffDate { get; set; }
         #endregion 
 
         public DateTime? FirstOperationalCloseDate { get; set; }
@@ -511,6 +568,7 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
        
 
         public string Notify1Reference { get; set; }
+        public string Notify1Reference2 { get; set; }
         public string Notify2Reference { get; set; }
         public string ShipperNotExporterReference { get; set; }
         public string ConsigneeNotImporterReference { get; set; }
@@ -550,21 +608,94 @@ namespace Logitude.BL.ShipmentsModel.EntityLists
 
         public string PreForwardingFromPortId { get; set; }
         public string OnForwardingToPortId { get; set; }
-        public bool IsStandalonePickupDelivery { get; set; } 
-
+        public bool IsStandalonePickupDelivery { get; set; }
+        public string ParentShipmentNumber { get; set; }
+        public string ParentShipmentType { get; set; }
+        public string ParentShipmentDirectionId { get; set; }
         public bool IsHTSMissing { get; set; }
-
         public string PrivateLabelInvoiceNumber { get; set; } 
         public DateTime? RequestedFlightDate { get; set; }
         public bool PrivateLabelIncludePickup { get; set; }
         public bool PrivateLabelIncludeDelivery { get; set; }
-
-
         public DateTime? PlannedCargoReadyDate { get; set; }
         public DateTime? ApprovedCargoReadyDate { get; set; }
         public string HandlerUserId { get; set; }
-        
+        public string HandlerUserName { get; set; }
         public string StandalonePickupDeliveryId { get; set; }
+        public string GrossWeightUnitCode { get; set; }
+        public string OperationalStatusId { get; set; }
+        public string OperationalStatusName { get; set; }
+        public string BillingStatusId { get; set; }
+        public string ShipperNotExporterReference1 { get; set; }
+        public string ShipperNotExporterReference2 { get; set; } 
+        public string TruckContainerNumber { get; set; }
+        public string ContainersNumbersandTypesArray { get; set; }
+        public string CustomerContactName { get; set; }
+        public string CustomerContactEmail { get; set; }
+        public DateTime? PODReceivedDate { get; set; }
+        public bool HasUnassignedData { get; set; }
+        public string DestinationWarehouseId { get; set; }
+        public string DestinationWarehouseName { get; set; } 
+        public string ShippingAgent { get; set; }
+        public string PrivateLabelAgentName { get; set; }
+        public int? StatusWeight { get; set; }
+        public bool IsShipmentOrder { get; set; }
+        public string FirstPickupFullAddress { get; set; }
+        public string LastDeliveryFullAddress { get; set; }
+        public DateTime? QuoteFreightExpirationDate { get; set; }
+        public DateTime? MainCarriageETDTime { get; set; }
+        public DateTime? MainCarriageETATime { get; set; }
+        public string PackagesQuantityAndType { get; set; }
+        public bool ConnectedtoMaster { get; set; }
+
+
+        public string InlandDomesticToAddress1 { get; set; }
+        public string InlandDomesticToAddress2 { get; set; }
+        public string InlandDomesticToPhone { get; set; }
+        public string InlandDomesticToFax { get; set; }
+        public string InlandDomesticToStateId { get; set; }
+        public string InlandDomesticToStateName { get; set; }
+
+        public string InlandDomesticFromAddress1 { get; set; }
+        public string InlandDomesticFromAddress2 { get; set; }
+        public string InlandDomesticFromPhone { get; set; }
+        public string InlandDomesticFromFax { get; set; }
+        public string InlandDomesticFromStateId { get; set; }
+        public string InlandDomesticFromStateName { get; set; }
+        public string DigitalPortalSearchFields { get; set; }
+        public int? NumberOfTransshipments { get; set; }
+        public string Transshipments { get; set; }
+        public TimeLineData TimeLineData { get; set; }
+
+        public DateTime? Transshipment1ATD { get; set; }
+        public DateTime? Transshipment1ATA { get; set; }
+        public DateTime? Transshipment1ETD { get; set; }
+        public DateTime? Transshipment1ETA { get; set; }
+        public DateTime? Transshipment2ATD { get; set; }
+        public DateTime? Transshipment2ATA { get; set; }
+        public DateTime? Transshipment2ETD { get; set; }
+        public DateTime? Transshipment2ETA { get; set; }
+        public DateTime? Transshipment3ATD { get; set; }
+        public DateTime? Transshipment3ATA { get; set; }
+        public DateTime? Transshipment3ETD { get; set; }
+        public DateTime? Transshipment3ETA { get; set; }
+        public string InlandDomesticFromCity { get; set; }
+        public string InlandDomesticToCity { get; set; }
+        public string InlandDomesticToTypeCode { get; set; }
+        public string InlandDomesticFromTypeCode { get; set; }
+        public string InlandDomesticFromCountryId { get; set; }
+        public string InlandDomesticToCountryId { get; set; }
+        public string ShippingLine { get; set; }
+        public string PlaceOfDelivery { get; set; }
+        public string PickupPlace { get; set; }
+        public string SealNo { get; set; }
+        public string HSCode { get; set; }
+
+        public bool IsCustomerArchived { get; set; }
+        public string NotesSharedWithCustomer { get; set; }
+        public double? Volume { get; set; }
+        public bool IsDocumentsNeedApprove { get; set; }
+        public string ContainersNumbers { get; set; }
 
     }
 }

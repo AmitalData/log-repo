@@ -1,4 +1,4 @@
-@release @stable @all
+@release @stable
 Feature: Edit Currency Rate Value in Settings
     The user edits the currency exchange rate and validates it in quote, receivable and invoice.
 
@@ -61,6 +61,3 @@ Feature: Edit Currency Rate Value in Settings
     Scenario: Check ARInvoice cost currency in old date
         When fill "25/06/2019" as ARInvoice date
         Then the invoice exchange rate should equal "4"
-
-
-

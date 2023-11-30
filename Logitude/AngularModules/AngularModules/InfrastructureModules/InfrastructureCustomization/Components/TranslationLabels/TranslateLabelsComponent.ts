@@ -35,11 +35,16 @@ export class TranslateLabelsComponent extends BaseComponent {
         this.BuildFilters();
     }
 
+    IsFromCustomizedScreen: boolean;
     private selectedLanguageCode: string;
     private allTranslationsList: FieldsTranslations[];
-    SetWindowArgs(args: string) {
-        this.selectedLanguageCode = args;
-        
+    SetWindowArgs(args: any) {
+        this.selectedLanguageCode = args.TranslationLanguageCode;
+        if (args.ObjectTableId) {
+            this.IsFromCustomizedScreen = true;
+            this.ObjectTableId = args.ObjectTableId;
+        }
+
         this.allTranslationsList = [];
         this.LoadAllTranslationMethod();
     }

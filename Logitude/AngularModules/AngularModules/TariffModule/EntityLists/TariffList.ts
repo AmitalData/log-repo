@@ -41,6 +41,14 @@ export class TariffList {
 	SellerPartnerTypeId: string;
 	LastUsedDate: Date;
 	FreightChargeId: string;
+	CustomsBrokerId: string;
+	CustomsBrokerName: string;
+	CustomsBrokerPartnerTypeId: string;
+	DirectionCode: string;
+	DirectionName: string;
+	UnitOfMeasurementCode: string;
+	CustomerGroupId: string;
+	CustomerGroupName: string;
 	
 }
  

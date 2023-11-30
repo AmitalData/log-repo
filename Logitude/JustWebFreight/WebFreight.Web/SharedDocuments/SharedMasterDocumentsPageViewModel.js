@@ -103,6 +103,9 @@
                     $.GetLogginData();
                     $.GetCompanyLogo();
                 }
+                else if (CanOpenWithoutBranding()){
+                    $.GetTenantBySecurityKeyWithoutToken();
+                }
                 else {
                     $.GetCargoLoginTenant(myDomain + "/cargotracking");
                 }
@@ -113,6 +116,32 @@
                 $("#DocumentsPageBusyIndicator").hide();
                 $("#Container").hide();
                 $("#InvalidKeyArea").show();
+            }
+        });
+
+    });
+
+    jQuery.GetTenantBySecurityKeyWithoutToken = (function () {
+
+        var url = "api/shipment/GetTenantBySecurityKeyWithoutToken?securityKey=" + $.CurrentEntityKey;
+
+        $.ajax({
+            url: url,
+            type: 'GET',
+            contentType: 'application/json',
+
+            success: function (result) {
+                if (result != null) {
+                    SetTenantData(result);
+                }
+                else {
+                    HandleError();
+                }
+            },
+
+            error: function (jqXHR, textStatus, errorThrown) {
+                $.CheckUserException(jqXHR);
+                HandleError();
             }
         });
 
@@ -231,7 +260,7 @@
                 let documentsTabPageControlId = "#DocumentsTabPageControl" + myEntityId;
                 if (result.length > 0) {
                     $("#DownloadAllConnectedDocuments").show();
-                    ko.applyBindings(BuildMasterDocumentsTabPageViewModel(myEntityId, result, fileName, ""), document.getElementById(documentsTabPageControlId));
+                    ko.applyBindings(BuildMasterDocumentsTabPageViewModel(myEntityId, result, fileName, "", myEntityKey), document.getElementById(documentsTabPageControlId));
                 }
 
                 else {
@@ -342,6 +371,23 @@
     });
 
 }(jQuery));
+
+function SetTenantData(result) {
+    $.CurrentTenant = result;
+
+    $.GetLogginData();
+    $.GetCompanyLogo();
+}
+
+function HandleError() {
+    $("#DocumentsPageBusyIndicator").hide();
+    $("#Container").hide();
+    $("#InvalidKeyArea").show();
+}
+
+function CanOpenWithoutBranding() {
+    return location.href.toLowerCase().indexOf('localhost') > -1 || location.href.toLowerCase().indexOf('.logitudeworld.com') > -1;
+}
 
 function SetShipmentPM(shipmentPM) {
     $.CurrentEntityPM = shipmentPM;

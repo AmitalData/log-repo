@@ -150,8 +150,12 @@
     <Reference Include="Microsoft.WindowsAzure.StorageClient">
       <HintPath>..\..\..\main\JustWebFreight\WebFreight.Web\bin\Microsoft.WindowsAzure.StorageClient.dll</HintPath>
     </Reference>
-    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Syncfusion.XlsIO.Web, Version=10.104.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.XlsIO.Web.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -164,8 +168,12 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.ServiceModel.DomainServices.Hosting, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\RIAServices.Server.4.2.0\lib\Net40\System.ServiceModel.DomainServices.Hosting.dll</HintPath>
+    </Reference>
     <Reference Include="System.ServiceModel.DomainServices.Server, Version=4.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <Private>True</Private>
+      <HintPath>..\packages\RIAServices.Server.4.2.0\lib\Net40\System.ServiceModel.DomainServices.Server.dll</HintPath>
     </Reference>
     <Reference Include="System.Spatial, Version=5.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Spatial.5.7.0\lib\net40\System.Spatial.dll</HintPath>
@@ -307,6 +315,12 @@
       <DependentUpon>CustomsBooModel.edmx</DependentUpon>
     </Compile>
     <Compile Include="SqlFilesExecuter.cs" />
+    <Compile Include="Update Entity\Update Entity.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Update Entity\Update Entity.Designer.cs">
+      <DependentUpon>Update Entity.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="AddStates.resx">
       <DependentUpon>AddStates.cs</DependentUpon>
     </EmbeddedResource>
@@ -350,6 +364,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SandBox\FormAccountingTester.resx">
       <DependentUpon>FormAccountingTester.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Update Entity\Update Entity.resx">
+      <DependentUpon>Update Entity.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config">
       <SubType>Designer</SubType>
@@ -444,6 +461,10 @@
     <ProjectReference Include="..\Logitude.CustomsMessaging\Logitude.CustomsMessaging.csproj">
       <Project>{7994d6f2-00a7-4c0d-a7d3-fd7d5304b665}</Project>
       <Name>Logitude.CustomsMessaging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Logitude.DashboardModule.MetaData\Logitude.DashboardModule.MetaData.csproj">
+      <Project>{e6e7db5e-6c25-41e2-819e-9f52c7b4ffb9}</Project>
+      <Name>Logitude.DashboardModule.MetaData</Name>
     </ProjectReference>
     <ProjectReference Include="..\Logitude.Infrastructure.BL\Logitude.Infrastructure.BL.csproj">
       <Project>{bd959ab6-4476-48b3-aa4d-cfd7ed120e55}</Project>

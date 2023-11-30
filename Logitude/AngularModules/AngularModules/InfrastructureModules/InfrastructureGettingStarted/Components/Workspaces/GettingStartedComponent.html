@@ -85,7 +85,7 @@
                                                                         <td>
                                                                             <span (click)="item.HowToMethod()" class="QueryLink">{{item.HowToContent}}</span>
                                                                             <span *ngIf="item.IsNew" style="font-size:9px;color:orange;padding-left:10px;">New </span>
-                                                                            <span *ngIf="item.IsNew" style="font-size:9px;padding-left:10px;color:#6E7172;">Septemper 2020</span>
+                                                                            <span *ngIf="item.IsNew" style="font-size:9px;padding-left:10px;color:#6E7172;">{{ReleaseDateString}}</span>
                                                                         </td>
                                                                     </tr>
                                                                 </table>
@@ -176,31 +176,86 @@
                                                         <div>Master Data</div>
                                                         <div>
                                                             <table>
-                                                                <tr>
-                                                                    <td style="width: 150px;">
+                                                                <tr style="height:21px;" *ngIf="CustomerInfoVisibility">
+                                                                    <td style="width:115px;">
                                                                         <p *ngIf="CustomerInfoVisibility" (click)="ViewList('Customer')" class="QueryLink">Customers ({{CustomersCount}})</p>
-                                                                        <p *ngIf="AgentInfoVisibility" (click)="ViewList('Agent')" class="QueryLink">Agents ({{AgentsCount}})</p>
-                                                                        <p *ngIf="UserInfoVisibility" (click)="ViewList('User')" class="QueryLink">Users ({{UsersCount}})</p>
-                                                                        <p *ngIf="PortInfoVisibility" (click)="ViewList('Port')" class="QueryLink">Ports ({{PortsCount}})</p>
-                                                                        <p *ngIf="AirlineInfoVisibility" (click)="ViewList('Airline')" class="QueryLink">Airlines ({{AirlinesCount}})</p>
-                                                                        <p *ngIf="ShippingLineInfoVisibility" (click)="ViewList('ShippingLine')" class="QueryLink">Shipping Lines ({{ShippinglinesCount}})</p>
                                                                     </td>
 
-                                                                    <td style="width: 15px;">
-                                                                        <p class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
-                                                                        <p class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
-                                                                        <p class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
-                                                                        <p class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
-                                                                        <p class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
-                                                                        <p class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
+                                                                    <td style="width:15px;">
+                                                                        <p *ngIf="AddCustomerVisibility" class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
                                                                     </td>
 
                                                                     <td>
                                                                         <p *ngIf="AddCustomerVisibility" (click)="New('Customer')" class="QueryLink">New</p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr style="height:21px;" *ngIf="AgentInfoVisibility">
+                                                                    <td style="width:115px;">
+                                                                        <p *ngIf="AgentInfoVisibility" (click)="ViewList('Agent')" class="QueryLink">Agents ({{AgentsCount}})</p>
+                                                                    </td>
+
+                                                                    <td style="width:15px;">
+                                                                        <p *ngIf="AddAgentVisibility" class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
+                                                                    </td>
+
+                                                                    <td>
                                                                         <p *ngIf="AddAgentVisibility" (click)="New('Agent')" class="QueryLink">New</p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr style="height:21px;" *ngIf="UserInfoVisibility">
+                                                                    <td style="width:115px;">
+                                                                        <p *ngIf="UserInfoVisibility" (click)="ViewList('User')" class="QueryLink">Users ({{UsersCount}})</p>
+                                                                    </td>
+
+                                                                    <td style="width:15px;">
+                                                                        <p *ngIf="AddUserVisibility" class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
+                                                                    </td>
+
+                                                                    <td>
                                                                         <p *ngIf="AddUserVisibility" (click)="New('User')" class="QueryLink">New</p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr style="height:21px;" *ngIf="PortInfoVisibility">
+                                                                    <td style="width:115px;">
+                                                                        <p *ngIf="PortInfoVisibility" (click)="ViewList('Port')" class="QueryLink">Ports ({{PortsCount}})</p>
+                                                                    </td>
+
+                                                                    <td style="width:15px;">
+                                                                        <p *ngIf="AddPortVisibility" class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
+                                                                    </td>
+
+                                                                    <td>
                                                                         <p *ngIf="AddPortVisibility" (click)="New('Port')" class="QueryLink">Add</p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr style="height:21px;" *ngIf="AirlineInfoVisibility">
+                                                                    <td style="width:115px;">
+                                                                        <p *ngIf="AirlineInfoVisibility" (click)="ViewList('Airline')" class="QueryLink">Airlines ({{AirlinesCount}})</p>
+                                                                    </td>
+
+                                                                    <td style="width:15px;">
+                                                                        <p *ngIf="AddAirlineVisibility" class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
+                                                                    </td>
+
+                                                                    <td>
                                                                         <p *ngIf="AddAirlineVisibility" (click)="New('Airline')" class="QueryLink">Add</p>
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr style="height:21px;" *ngIf="ShippingLineInfoVisibility">
+                                                                    <td style="width:115px;">
+                                                                        <p *ngIf="ShippingLineInfoVisibility" (click)="ViewList('ShippingLine')" class="QueryLink">Shipping Lines ({{ShippinglinesCount}})</p>
+                                                                    </td>
+
+                                                                    <td style="width:15px;">
+                                                                        <p *ngIf="AddShippingLineVisibility" class="QueryLink" style="font-weight:bolder; color:green; line-height:20px">+</p>
+                                                                    </td>
+
+                                                                    <td>
                                                                         <p *ngIf="AddShippingLineVisibility" (click)="New('ShippingLine')" class="QueryLink">Add</p>
                                                                     </td>
                                                                 </tr>

@@ -15,6 +15,9 @@ import {ObjectFieldPMService} from '../../../../Infrastructure/Services/Standard
 import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
 import {CachedDataManager} from '../../../../Infrastructure/Utilities/CachedDataManager';
 import {LoginService} from '../../../../Infrastructure/Services/LoginService';
+import { ApiQueryFilters } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ObjectFieldPMExtendedService } from '../../../../Infrastructure/Services/ExtendedPMs/ObjectFieldPMExtendedService';
+import { EntityResourceService } from '../../../../Infrastructure/Services/EntityResourceService';
 
 
 declare var window: any;
@@ -40,7 +43,17 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     ContolFieldsList2: any[];
     CustomPickListsList: string[];
     loginService: LoginService;
+    DefaultAdditionalTreeFilters: any;
+    ShownAdditionalFilters: boolean;
     private CurrentSession = SessionLocator.SelectedSession;
+    EntityResourceService: EntityResourceService = new EntityResourceService();
+    AdditionalFiltersData: any = [];
+    ShownAdditionalFiltersSettings: boolean;
+    ObjectTableName: string;
+    private objectFieldPMExtendedService = new ObjectFieldPMExtendedService();
+    public IsPartner: boolean = false;
+    public PartnersDictionary: { [key: string]: any } = {};
+    public partnerTypes: string[];
     constructor() {
         super();
         this.loginService = new LoginService();
@@ -49,7 +62,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.CustomPickListsList = [];
         this.LookUpTables = window.ObjectTables.filter(o => o.IsLookUp && !AppTool.IsNullOrEmpty(o.LookUp1));
         var picklistslist = [];
-        this._customPickListListService.getAll().subscribe((response:any) => {
+        this._customPickListListService.getAllFromCache().subscribe((response:any) => {
             var temp = response.Result.filter(p => p.Tenant == SessionLocator.Tenant);
             var list = new GroupByPipe().transform(temp, "Code");
             list.forEach((value, key) => {
@@ -73,24 +86,80 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         //}
 
         //CustomPickListsList = new ObservableCollection<string>(picklistslist);
+        this.CurrentSession.SessionEvent.subscribe((res) => {
+            if (res.Name == "RefreshAdditionalFiltersData") {
+                this.AdditionalFiltersData = res.Value;
+            }
+        });
         this.UIProperties.SetRequired("Code", "ObjectField", true);
+    }
+    SetCheckedPartners() {
+        if (this.IsNew)
+            return;
+        let partnersHaveThisField = this.GetPartnersHaveThisField();
+        this.CheckPartners(partnersHaveThisField);
+    }
+    CheckPartners(partners: any) {
+        partners.forEach((partner) => {
+            this.PartnersDictionary[partner] = 1;
+        });
+    }
+    GetPartnersHaveThisField() : any {
+        let fieldCopies: any[] = window.ObjectFields.filter(field => this.IsFieldCopy(field));
+        let PartnersName = Array<string>();
+        fieldCopies.forEach((element) => { PartnersName.push(element.ObjectTableName) });
+        return PartnersName;
+    }
+    IsFieldCopy(field: any) {
+        return (field.FieldName == this.objectField.FieldName) && (this.partnerTypes.indexOf(field.ObjectTableName) > -1);
+    }
+
+    InitializeDictionary() {
+        this.partnerTypes.forEach((partnerName) => {
+            this.PartnersDictionary[partnerName] = 0;
+        });
+    }
+    IsCardObjectTable() {
+        if (this.ObjectTableName == "Card")
+            return true;
+        return false;
+    }
+
+    ShowAdditionalFiltersSettingsClicked() {
+        this.ShownAdditionalFiltersSettings = !this.ShownAdditionalFiltersSettings;
     }
 
     SetWindowArgs(args: any) {
-        //this.ShipmentList = args.SelectedShipment;
+        this.InitLookUpTables();
         this.IsNew = args.IsNew;
         this.objectField = args.objectField;
-        this.DataTypeCollection = args.DataTypeCollection;
+        this.LookUpTableId = this.objectField.LookUpTableId;
+        this.DataTypeCollection = args.DataTypeCollection.filter(dataType => dataType.Code != "Time");
+        this.ObjectTableName = args.ObjectTableName;
+        this.IsPartner = args.IsPartner;
+        this.partnerTypes = ["AccountingPartner", "Agent", "Airline", "CustomClearance", "CustomAgent", "CustomsShipper", "Coloader", "Customer", "Freelancer", "PotentialCustomer", "Participant",
+            "ShippingAgent", "ShippingLine", "Trucker", "Vendor", "Warehouse"];
+        this.InitializeDictionary();
         if (this.IsNew) {
-
+            
         }
         else {
             this.DataTypeSelectionMethod({ Code: this.objectField.DataTypeCode });
-            this.LookUpTablesSelectionMethod("");
+            //this.LookUpTablesSelectionMethod("");
             this.PickListSelectionMethod(this.objectField.CustomPickListCode);
             this.UIProperties.SetEnabled("Code", "ObjectField", false);
+            this.SetCheckedPartners();
         }
     }
+
+    LookUpTablesFilterItems: ApiQueryFilters;
+    InitLookUpTables() {
+        this.LookUpTablesFilterItems = new ApiQueryFilters();
+        this.LookUpTablesFilterItems.addAdditionalFilter("IsLookUp", true, null, null, "Equals", false, false, false, "boolean");
+        this.LookUpTablesFilterItems.addAdditionalFilter("LookUp1", "", null, null, "IsNotNull", false, false, false, "string");
+        this.LookUpTablesFilterItems.addAdditionalFilter("ClientModuleName", "", null, null, "IsNotNull", false, false, false, "string");
+    }
+
     public get CustomFieldDataType() {
         var fieldDataType = this.DataTypeCollection.filter(d => d.Code == this.objectField.DataTypeCode)[0];
         return fieldDataType;
@@ -176,8 +245,15 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         return this.objectField.LookUpTableId;
     }
     public set LookUpTableId(value: string) {
+        if (!AppTool.IsNullOrEmpty(value) && !AppTool.IsNullOrEmpty(this.LookUpTableId) && this.LookUpTableId != value) {
+            this.AdditionalFiltersData = [];
+        }
+
         if (value) {
             this.objectField.LookUpTableId = value;
+        }
+        else {
+            this.lookUpTableName = "";
         }
     }
 
@@ -218,13 +294,32 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.objectField.MaxLength = value;
     }
 
+    public get NumberOfDigits() {
+        return this.objectField.NumberOfDigits;
+    }
+    public set NumberOfDigits(value: number) {
+        this.objectField.NumberOfDigits = value;
+    }
+
+    public get DigitsAfterPoint() {
+        return this.objectField.DigitsAfterPoint;
+    }
+    public set DigitsAfterPoint(value: number) {
+        this.objectField.DigitsAfterPoint = value;
+    }
+
     public get IsMultiline() {
         return this.objectField.MultiLine;
     }
     public set IsMultiline(value: boolean) {
         this.objectField.MultiLine = value;
     }
-
+    public get IsRequired() {
+        return this.objectField.IsRequiered;
+    }
+    public set IsRequired(value: boolean) {
+        this.objectField.IsRequiered = value;
+    }
     PickListItem: string;
     //public get PickListItem() {
     //    if (this.objectField.DataTypeCode == "PickList") {
@@ -260,7 +355,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
     PickListSelectionMethod(item) {
         if (this.objectField.DataTypeCode == "PickList") {
             if (!AppTool.IsNullOrEmpty(this.objectField.CustomPickListCode)) {
-                this._customPickListListService.getAll().subscribe((response:any) => {
+                this._customPickListListService.getAllFromCache().subscribe((response:any) => {
                     var temp = response.Result.filter(p => p.Code == this.objectField.CustomPickListCode);
                     if (temp.length > 0) {
                         this.PickListItem = temp[0].Code;
@@ -324,9 +419,24 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         this.IsMultiline = event;
     }
 
+    onIsRequiredChange(event) {
+        this.IsRequired = event;
+    }
+
+    lookUpTableName: string;
+    public get LookUpTableName() { return this.lookUpTableName; }
+    public set LookUpTableName(newValue: string) {
+        this.lookUpTableName = newValue;
+    }
+
     LookUpTablesSelectionMethod(item) {
+        if (!item) {
+            this.LookUpTableId = "";
+            return;
+        }
         this.ContolFieldsList1 = [];
         this.ContolFieldsList2 = [];
+        this.LookUpTableName = "";
         
         if (!AppTool.IsNullOrEmpty(this.LookUpTableId)) {
             this.LookUpTableId = item.Id;
@@ -335,7 +445,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             if (lookupTable != null) {
                 this.ContolFieldsList1 = window.ObjectFields.filter(f => f.FieldName == lookupTable.DependencyFilter1 && f.DataTypeCode == "LookUp" && f.ObjectTableId == this.objectField.ObjectTableId);
                 this.ContolFieldsList2 = window.ObjectFields.filter(f => f => f.FieldName == lookupTable.DependencyFilter2 && f.DataTypeCode == "LookUp" && f.ObjectTableId == this.objectField.ObjectTableId);
-
+                this.LookUpTableName = lookupTable.Name;
             }
         }
         else {
@@ -345,7 +455,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             if (lookupTable != null) {
                 this.ContolFieldsList1 = window.ObjectFields.filter(f => f.FieldName == lookupTable.DependencyFilter1 && f.DataTypeCode == "LookUp" && f.ObjectTableId == this.objectField.ObjectTableId);
                 this.ContolFieldsList2 = window.ObjectFields.filter(f => f => f.FieldName == lookupTable.DependencyFilter2 && f.DataTypeCode == "LookUp" && f.ObjectTableId == this.objectField.ObjectTableId);
-
+                this.LookUpTableName = lookupTable.Name;
             }
         }
     }
@@ -357,12 +467,14 @@ export class AddEditCustomFieldComponent extends BaseComponent {
 
         else {
             this.objectField.DataTypeCode = fieldDataType.Code;
+            this.ShownAdditionalFilters = false;
             switch (fieldDataType.Code) {
                 case "LookUp":
                     {
                         this.ControlField1Visibile = true;
                         this.ControlField2Visibile = true;
                         this.PickListVisibile = false;
+                        this.ShowAdditionalFilters();
                         break;
                     }
                 case "nText":
@@ -416,6 +528,58 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         else {
 
         }
+        if (fieldDataType.Code == "Decimal" || fieldDataType.Code == "Text" || fieldDataType.Code == "nText") {
+            this.SetCustomFieldsLengths();
+        }
+
+    }
+
+    ShowAdditionalFilters() {
+        this.LoadDefaultAdditionalFilters();
+    }
+
+    LoadDefaultAdditionalFilters() {
+        this.LookUpTableName = this.LookUpTableName ? this.LookUpTableName : window.ObjectTables.filter(t => t.Id == this.LookUpTableId)[0]?.Name;
+        //if (this.LookUpTableName) {
+        //    this.LoadLookUpTableResources();
+        //}
+        //else {
+            this.StartLoadDefaultAdditionalFilters();
+        //}
+    }
+
+    LoadLookUpTableResources() {
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+        this.EntityResourceService.getEntityResourceByTableName(this.LookUpTableName).subscribe((response: any) => {
+            //this.CurrentSession.StopBusyIndicator();
+            this.StartLoadDefaultAdditionalFilters();
+        }); 
+    }
+
+    StartLoadDefaultAdditionalFilters() {
+        if (!this.objectField || !this.objectField.Id || (this.AdditionalFiltersData && this.AdditionalFiltersData.length == 1)) {
+            this.ShownAdditionalFilters = true;
+            return;
+        }
+
+
+        if (!this.LookUpTableId) return;
+        if (!this.LookUpTableName) return;
+        this.objectFieldPMExtendedService.GetDefaultAdditionalFiltersById(this.objectField.Id, this.objectField.Tenant).subscribe((serviceResponse: any) => {
+            var result: ServiceResponse = serviceResponse;
+            if (!result.HasError) {
+                this.FillAdditionalFiltersData(result);
+            }
+        });
+    }
+
+    private FillAdditionalFiltersData(result: ServiceResponse) {
+        let additionalFiltersData = [];
+        if (result.Result) {
+            additionalFiltersData.push(result.Result);
+        }
+        this.AdditionalFiltersData = additionalFiltersData;
+        this.ShownAdditionalFilters = true;
     }
 
     public authHeader;
@@ -436,13 +600,11 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.ValidationErrorsList.push("Field Label is Required");
         }
 
-        if (this.objectField.DataTypeCode == "LookUp" && this.objectField.LookUpTableId == null) {
+        if (this.objectField.DataTypeCode == "LookUp" && (AppTool.IsNullOrEmpty(this.objectField.LookUpTableId) || AppTool.IsNullOrEmpty(this.LookUpTableName))) {
             this.ValidationErrorsList.push("LookUp table is Required");
         }
 
-        if ((this.objectField.DataTypeCode == "Text" || this.objectField.DataTypeCode == "nText") && this.objectField.MaxLength > 2000) {
-            this.ValidationErrorsList.push("Maximum length of the text is 2000");
-        }
+        this.ValidateObjectFields();
 
         if (this.ValidationErrorsList.length == 0) {
             this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving ...");
@@ -451,7 +613,11 @@ export class AddEditCustomFieldComponent extends BaseComponent {
             this.authHeader.append('Accept', 'application/json');
             this.loginService.AuthHeader = this.authHeader;
             this.loginService.CurrentTenant = SessionLocator.Tenant;
+            this.objectField.DefaultAdditionalTreeFilters = this.AdditionalFiltersData[0];
             if (this.IsNew == true) {
+                if (this.IsCardTable(this.objectField.ObjectTableId)) {
+                    this.objectField.RelatedEntities = this.GetRelatedEntities();
+                }
                 this._ObjectFieldPMService.insert(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -465,22 +631,21 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                                 var index = window.ObjectFields.indexOf(oldItem);
                                 window.ObjectFields.splice(index, 1);
                             }
+                            item.ObjectTable_LookUpTableName = this.LookUpTableName;
+                            item.ObjectTableName = this.ObjectTableName;
                             window.ObjectFields.push(item);
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            this.CurrentSession.CloseCurrentWindow();
-                            //    this.loginService.GetObjectFields().subscribe((myResult:any) => {
-                            //        if (myResult != null) { 
-                            //            window.ObjectFields = myResult;
-                            //            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            //            this.CurrentSession.CloseCurrentWindow();
-                            //        }
-                            //    });  
-                            //});
+                            this.CurrentSession.CloseCurrentWindowEmit("Refresh");
+                            this.CurrentSession.SessionEvent.emit({ Name: "ReloadGridComponent" });
+
                         });
                     }
                 });
             }
             else {
+                if (this.IsCardTable(this.objectField.ObjectTableId)) {
+                    this.objectField.RelatedEntities = this.GetRelatedEntities();
+                }
                 this._ObjectFieldPMService.update(this.objectField).subscribe(Fieldresponse => {
                     if (Fieldresponse.HasError) {
                         this.CurrentSession.CurrentWindow.StopBusyIndicator();
@@ -494,9 +659,11 @@ export class AddEditCustomFieldComponent extends BaseComponent {
                                 var index = window.ObjectFields.indexOf(oldItem);
                                 window.ObjectFields.splice(index, 1);
                             }
+                            item.ObjectTable_LookUpTableName = this.LookUpTableName;
+                            item.ObjectTableName = this.ObjectTableName;
                             window.ObjectFields.push(item);
                             this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                            this.CurrentSession.CloseCurrentWindow();
+                            this.CurrentSession.CloseCurrentWindowEmit("Refresh");
                             //this.loginService.GetObjectFields().subscribe((myResult:any) => {
                             //    if (myResult != null) {
                             //        window.ObjectFields = myResult;
@@ -515,6 +682,120 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         }
     }
 
+    public GetRelatedEntities() : string{
+        let selectedPartners = "";
+        for (let key in this.PartnersDictionary) {
+            if (this.PartnersDictionary[key])
+                selectedPartners += key + ',';
+        }
+        return selectedPartners.substring(0, selectedPartners.length - 1);
+    }
+    public IsCardTable(ObjectTableId): boolean {
+        let objectTableName = window.ObjectTables.filter(table => table.Id == ObjectTableId)[0].Name;
+        return objectTableName == "Card";
+    }
+    public ChangeCheckBoxValue(objectTableName: string, event) {
+        if (this.PartnersDictionary[objectTableName] && !this.IsNew) return;
+        this.PartnersDictionary[objectTableName] = event;
+    }
+    public IsEnable(text: string): boolean {
+        if (this.IsPartner)
+            return false;
+        if (this.IsNew)
+            return true;
+        //if (!this.PartnersDictionary[text])
+        //    return true;
+        if (!(window.ObjectFields.filter(field => field.FieldName == this.objectField.FieldName && field.ObjectTableName == text)[0]))
+            return true;
+        false;
+    }
+    private ValidateObjectFields() {
+        this.ValidateTextObjectField();
+        this.ValidateNumberObjectField();
+    }
+
+    private ValidateTextObjectField() {
+        if (this.objectField.DataTypeCode != "Text" && this.objectField.DataTypeCode != "nText") return;
+
+        if (this.objectField.MaxLength > 2000) {
+            this.ValidationErrorsList.push("Maximum length of the text is 2000");
+        }
+
+        if (this.objectField.MinLength > 2000) {
+            this.ValidationErrorsList.push("Minimum length of the text is 2000");
+        }
+
+        if (this.objectField.MaxLength == 0) {
+            this.ValidationErrorsList.push("Max length number shouldn't be 0");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.objectField.MinLength)) {
+            this.ValidationErrorsList.push("Min length Field is Required");
+        }
+
+        if (AppTool.IsNullOrEmpty(this.objectField.MaxLength)) {
+            this.ValidationErrorsList.push("Max length Field is Required");
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.objectField.MaxLength) &&!AppTool.IsNullOrEmpty(this.objectField.MinLength) && this.objectField.MinLength > this.objectField.MaxLength) {
+            this.ValidationErrorsList.push("Min length number shouldn't be more than Max length number");
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.objectField.MinLength) && this.objectField.MinLength < 0) {
+            this.ValidationErrorsList.push("Min length number shouldn't be less than 0");
+        }
+
+        if (!AppTool.IsNullOrEmpty(this.objectField.MaxLength) && this.objectField.MaxLength < 0) {
+            this.ValidationErrorsList.push("Max length number shouldn't be less than 0");
+        }
+    }
+
+    private ValidateNumberObjectField() {
+        if (this.objectField.DataTypeCode != "Decimal") return;
+
+        if (this.objectField.NumberOfDigits > 12) {
+            this.ValidationErrorsList.push("Maximum length of the Number is 12");
+        }
+        if (this.objectField.NumberOfDigits == 0) {
+            this.ValidationErrorsList.push("Length of the Number shouldn't be 0");
+        }
+        if (AppTool.IsNullOrEmpty(this.objectField.NumberOfDigits)) {
+            this.ValidationErrorsList.push("Length Field is Required");
+        }
+        if (!AppTool.IsNullOrEmpty(this.objectField.NumberOfDigits) && this.objectField.NumberOfDigits < 0) {
+            this.ValidationErrorsList.push("Length of the Number shouldn't be less than 0");
+        }
+        if (AppTool.IsNullOrEmpty(this.objectField.DigitsAfterPoint)) {
+            this.ValidationErrorsList.push("Decimal digits Field is Required");
+        }
+        if (this.objectField.DigitsAfterPoint > 3) {
+            this.ValidationErrorsList.push("Maximum decimal digits is 3");
+        }
+        if (!AppTool.IsNullOrEmpty(this.objectField.DigitsAfterPoint) && this.objectField.DigitsAfterPoint < 0) {
+            this.ValidationErrorsList.push("Decimal digits of the Number shouldn't be less than 0");
+        }
+
+    }
+
+    private SetCustomFieldsLengths() {
+        this.SetTextMaxMinLengths();
+        this.SetNumberLengthAndDecimalDigits();
+    }
+
+    private SetTextMaxMinLengths() {
+        if (this.objectField.DataTypeCode != "Text" && this.objectField.DataTypeCode != "nText") return;
+
+        this.objectField.MaxLength = (AppTool.IsNullOrEmpty(this.objectField.MaxLength)) ? 2000 : this.objectField.MaxLength;
+        this.objectField.MinLength = (AppTool.IsNullOrEmpty(this.objectField.MinLength)) ? 0 : this.objectField.MinLength;
+    }
+
+    private SetNumberLengthAndDecimalDigits() {
+        if (this.objectField.DataTypeCode != "Decimal") return;
+
+        this.objectField.NumberOfDigits = (AppTool.IsNullOrEmpty(this.objectField.NumberOfDigits)) ? 12 : this.objectField.NumberOfDigits;
+        this.objectField.DigitsAfterPoint = (AppTool.IsNullOrEmpty(this.objectField.DigitsAfterPoint)) ? 0 : this.objectField.DigitsAfterPoint;
+    }
+
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindow();
     }
@@ -528,7 +809,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditPickListComponent');
         logWindow.WindowClosed.subscribe((event: any) => {
-            this._customPickListListService.getAll().subscribe((response:any) => {
+            this._customPickListListService.getAllFromCache().subscribe((response:any) => {
                 var temp = response.Result.filter(p => p.Tenant == SessionLocator.Tenant);
                 var list = new GroupByPipe().transform(temp, "Code");
                 this.CustomPickListsList = [];
@@ -548,7 +829,7 @@ export class AddEditCustomFieldComponent extends BaseComponent {
         logWindow.WindowArgs = windowArgs;
         logWindow.Show('./InfrastructureModules/InfrastructureCustomization/Components/Customization/AddEditPickListComponent');
         logWindow.WindowClosed.subscribe((event: any) => {
-            this._customPickListListService.getAll().subscribe((response:any) => {
+            this._customPickListListService.getAllFromCache().subscribe((response:any) => {
                 var temp = response.Result.filter(p => p.Tenant == SessionLocator.Tenant);
                 var list = new GroupByPipe().transform(temp, "Code");
                 this.CustomPickListsList = [];

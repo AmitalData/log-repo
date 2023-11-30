@@ -156,6 +156,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="Service References\EntityStatusProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Service References\ExternalTasksQueueProxy\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -566,6 +571,22 @@
     <None Include="Service References\DocumentInProxy\HypredTest.DocumentInProxy.GetDocumentDataByExternalIdWithoutBinarayResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService1.wsdl" />
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService51.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService52.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService53.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService54.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\ExternalTasksQueueProxy\ExternalTasksQueueWcfService.wsdl" />
     <None Include="Service References\ExternalTasksQueueProxy\ExternalTasksQueueWcfService.xsd">
       <SubType>Designer</SubType>
@@ -952,6 +973,13 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <None Include="Service References\EntityStatusProxy\EntityStatusWcfService1.disco" />
+    <None Include="Service References\EntityStatusProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Service References\EntityStatusProxy\configuration.svcinfo" />
+    <None Include="Service References\EntityStatusProxy\configuration91.svcinfo" />
     <None Include="Service References\AddressProxy\Reference.svcmap">
       <Generator>WCF Proxy Generator</Generator>
       <LastGenOutput>Reference.cs</LastGenOutput>
@@ -1147,6 +1175,7 @@
     <WCFMetadataStorage Include="Service References\CustomerProxy\" />
     <WCFMetadataStorage Include="Service References\DepartmentProxy\" />
     <WCFMetadataStorage Include="Service References\DocumentInProxy\" />
+    <WCFMetadataStorage Include="Service References\EntityStatusProxy\" />
     <WCFMetadataStorage Include="Service References\ExternalTasksQueueProxy\" />
     <WCFMetadataStorage Include="Service References\HybridTenantStateProxy\" />
     <WCFMetadataStorage Include="Service References\InsertCommTaskProxy\" />

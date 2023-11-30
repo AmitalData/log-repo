@@ -176,6 +176,36 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                              Field38 = f.Field38,
                              Field39 = f.Field39,
                              Field40 = f.Field40,
+                             Field41 = f.Field41,
+                             Field42 = f.Field42,
+                             Field43 = f.Field43,
+                             Field44 = f.Field44,
+                             Field45 = f.Field45,
+                             Field46 = f.Field46,
+                             Field47 = f.Field47,
+                             Field48 = f.Field48,
+                             Field49 = f.Field49,
+                             Field50 = f.Field50,
+                             Field51 = f.Field51,
+                             Field52 = f.Field52,
+                             Field53 = f.Field53,
+                             Field54 = f.Field54,
+                             Field55 = f.Field55,
+                             Field56 = f.Field56,
+                             Field57 = f.Field57,
+                             Field58 = f.Field58,
+                             Field59 = f.Field59,
+                             Field60 = f.Field60,
+                             Field61 = f.Field61,
+                             Field62 = f.Field62,
+                             Field63 = f.Field63,
+                             Field64 = f.Field64,
+                             Field65 = f.Field65,
+                             Field66 = f.Field66,
+                             Field67 = f.Field67,
+                             Field68 = f.Field68,
+                             Field69 = f.Field69,
+                             Field70 = f.Field70,
                              ChargeableWeightInKG = f.ChargeableWeightInKG,
                              ChargeableWeight = f.ChargeableWeight,
                              GrossWeight = f.GrossWeight,
@@ -229,6 +259,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                              FNAReason = f.FNAReason,
                              FinalArrivalDate = f.FinalArrivalDate,
                              Shipper = f.ShipperName,
+                             ShipperCountryCode = f.ShipperCountryCode,
+                             ConsigneeCountryCode = f.ConsigneeCountryCode,
                              Consignee = f.ConsigneeName,
                              ShipperReference1 = f.ShipperReference1,
                              ShipperReference2 = f.ShipperReference2,
@@ -406,6 +438,36 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 Field38 = f.Field38,
                 Field39 = f.Field39,
                 Field40 = f.Field40,
+                Field41 = f.Field41,
+                Field42 = f.Field42,
+                Field43 = f.Field43,
+                Field44 = f.Field44,
+                Field45 = f.Field45,
+                Field46 = f.Field46,
+                Field47 = f.Field47,
+                Field48 = f.Field48,
+                Field49 = f.Field49,
+                Field50 = f.Field50,
+                Field51 = f.Field51,
+                Field52 = f.Field52,
+                Field53 = f.Field53,
+                Field54 = f.Field54,
+                Field55 = f.Field55,
+                Field56 = f.Field56,
+                Field57 = f.Field57,
+                Field58 = f.Field58,
+                Field59 = f.Field59,
+                Field60 = f.Field60,
+                Field61 = f.Field61,
+                Field62 = f.Field62,
+                Field63 = f.Field63,
+                Field64 = f.Field64,
+                Field65 = f.Field65,
+                Field66 = f.Field66,
+                Field67 = f.Field67,
+                Field68 = f.Field68,
+                Field69 = f.Field69,
+                Field70 = f.Field70,
                 ChargeableWeightInKG = f.ChargeableWeightInKG,
                 ChargeableWeight = f.ChargeableWeight,
                 GrossWeight = f.GrossWeight,
@@ -614,6 +676,36 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             shipmentPM.Field38 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field38" };
             shipmentPM.Field39 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field39" };
             shipmentPM.Field40 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field40" };
+            shipmentPM.Field41 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field41" };
+            shipmentPM.Field42 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field42" };
+            shipmentPM.Field43 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field43" };
+            shipmentPM.Field44 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field44" };
+            shipmentPM.Field45 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field45" };
+            shipmentPM.Field46 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field46" };
+            shipmentPM.Field47 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field47" };
+            shipmentPM.Field48 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field48" };
+            shipmentPM.Field49 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field49" };
+            shipmentPM.Field50 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field50" };
+            shipmentPM.Field51 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field51" };
+            shipmentPM.Field52 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field52" };
+            shipmentPM.Field53 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field53" };
+            shipmentPM.Field54 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field54" };
+            shipmentPM.Field55 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field55" };
+            shipmentPM.Field56 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field56" };
+            shipmentPM.Field57 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field57" };
+            shipmentPM.Field58 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field58" };
+            shipmentPM.Field59 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field59" };
+            shipmentPM.Field60 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field60" };
+            shipmentPM.Field61 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field61" };
+            shipmentPM.Field62 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field62" };
+            shipmentPM.Field63 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field63" };
+            shipmentPM.Field64 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field64" };
+            shipmentPM.Field65 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field65" };
+            shipmentPM.Field66 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field66" };
+            shipmentPM.Field67 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field67" };
+            shipmentPM.Field68 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field68" };
+            shipmentPM.Field69 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field69" };
+            shipmentPM.Field70 = new CustomFieldClass { TableName = "Shipment", FieldName = "Field70" };
 
             shipmentPM.FHLStatusCode = "NSEN";
             shipmentPM.FWBStatusCode = "NSEN";
@@ -684,7 +776,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                 IShipmentsContext objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
                 ShipmentService service = new ShipmentService(objectContext, entityPM, SecurityUtility.GetAuthenticatedUser());
-                service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), entityPM.ShipmentReceivables, entityPM.ShipmentPayables, new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(),new List<ShipmentProductItemPM>());
+                service.SetChangeSet(entityPM.ShipmentPackages, new List<ShipmentOrderPackagePM>(), new List<ShipmentPickUpPM>(), new List<ShipmentDeliveryPM>(), entityPM.ShipmentReceivables, entityPM.ShipmentPayables, new List<ShipmentFollowUpPM>(), new List<ShipmentAWBPrintOnlyPM>(), new List<ConsoleShipmentPM>(), new List<ShipmentCarrierStatusPM>(), new List<AWBOCIPM>(), new List<ShipmentCommodityPM>(), new List<ShipmentAssemblyPM>(), new List<ShipmentStoragePricingPM>(),new List<ShipmentProductItemPM>(), new List<ShipmentUnassignedFieldPM>());
                 service.Update();
                 //query = new ShipmentQuery(shipmentPM.Tenant);
                 //var shipmentPM2 = query.GetSinglePM(shipmentPM.Id, shipmentPM.Tenant);

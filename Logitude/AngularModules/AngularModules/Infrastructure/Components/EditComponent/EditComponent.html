@@ -142,10 +142,10 @@
         font-family: sans-serif;
     }
 </style>
-<LogitudeHotKeysComponent (CTRL_S_HotKey)="OnSaveHotKeyPressed()" (RightArrowHotKey)="OnArrowRightHotKeyPressed()"
-    (LeftArrowHotKey)="OnArrowLeftHotKeyPressed()" (ESCHotKey)="OnEscHotKeyPressed()"
-    (CTRL_Shift_S_HotKey)="OnSaveAndCloseHotKey()"></LogitudeHotKeysComponent>
-
+ 
+<LogitudeHotKeysComponent  (CTRL_S_HotKey)="OnSaveHotKeyPressed()" (RightArrowHotKey)="OnArrowRightHotKeyPressed()"
+ (LeftArrowHotKey) ="OnArrowLeftHotKeyPressed()" (ESCHotKey)="OnEscHotKeyPressed()" (CTRL_Shift_S_HotKey)="OnSaveAndCloseHotKey()"></LogitudeHotKeysComponent>
+ 
 <div class="MediaFillAbsolute LogitudeEditComponent" [ngStyle]="{background: ComponentBackground}">
     <div class="MarginAbsolute10" style="top: 5px; bottom: 8px;"
         [style.overflow-y]="IsSplitBtnVisible ? 'auto' : 'none'">
@@ -252,10 +252,9 @@
                                     <table>
                                         <tr>
                                             <td style="width: 1px;">
-                                                <BackButton [LayoutDirection]="LayoutDirection"
-                                                    id="{{'BackButton' | IdGeneratorPipe}}" [Text]="BackButtonLabel"
-                                                    (click)="BackButtonClicked()"></BackButton>
-                                            </td>
+ 
+                                                <BackButton  [LayoutDirection]="LayoutDirection" id="{{'BackButton' | IdGeneratorAsyncPipe | async}}" [Text]="BackButtonLabel" (click)="BackButtonClicked()"></BackButton>
+                                             </td>
 
                                             <td style="width: 10px; min-width: 10px;">
                                                 <div></div>
@@ -285,40 +284,24 @@
                                             <!-- Save -->
                                             <td style="width: 55px; min-width: 55px;" *ngIf="IsSaveBtnVisible">
 
-                                                <button id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}"
-                                                    [disabled]="IsSaveBtnDisable" *ngIf="!IsEntityLoaded"
-                                                    class="Button">
-                                                    <img [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}"
-                                                        src="./Images/Buttons/Save.png"
-                                                        [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" />
-                                                    <span style="line-height: 19px;"
-                                                        [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save'
-                                                        | TextCodeTranslationPipe}}</span>
-                                                </button>
+ 
+                                                <button id="{{ ObjectTableName+'-Save' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="!IsEntityLoaded" class="Button">
+                                                    <img [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" />
+                                                    <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
+                                                 </button>
 
                                                 <div *ngIf="IsEntityLoaded">
-                                                    <button id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}"
-                                                        [disabled]="IsSaveBtnDisable"
-                                                        *ngIf="EntityPM && !EntityPM.IsDirty" class="Button">
-                                                        <img [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}"
-                                                            src="./Images/Buttons/Save.png"
-                                                            [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" />
-                                                        <span style="line-height: 19px;"
-                                                            [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save'
-                                                            | TextCodeTranslationPipe}}</span>
-                                                    </button>
+ 
+                                                    <button id="{{ ObjectTableName+'-Save' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && !EntityPM.IsDirty" class="Button">
+                                                        <img [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" src="./Images/Buttons/Save.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" />
+                                                        <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
+                                                     </button>
 
-                                                    <button id="{{ ObjectTableName+'-Save' | IdGeneratorPipe}}"
-                                                        [disabled]="IsSaveBtnDisable"
-                                                        *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton"
-                                                        (click)="SaveChanges()">
-                                                        <img src="./Images/Buttons/Save.Red.png"
-                                                            [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'"
-                                                            [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" />
-                                                        <span style="line-height: 19px;"
-                                                            [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save'
-                                                            | TextCodeTranslationPipe}}</span>
-                                                    </button>
+ 
+                                                    <button [attr.data-cy]="'Edit'+ObjectTableName+'_Save'" id="{{ ObjectTableName+'-Save' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChanges()">
+                                                        <img src="./Images/Buttons/Save.Red.png" [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '2px'} : {'margin-left': '2px'}" />
+                                                        <span style="line-height: 19px;" [ngStyle]="LayoutDirection == 'rtl' ? {'margin-right': '17px'} : {'margin-left': '17px'}">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
+                                                     </button>
                                                 </div>
                                             </td>
 
@@ -328,34 +311,26 @@
 
                                             <!-- Save & Close -->
                                             <td style="width: 25px; min-width: 25px;" *ngIf="IsSaveBtnVisible">
-                                                <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorPipe}}"
-                                                    [disabled]="IsSaveBtnDisable" *ngIf="!IsEntityLoaded" class="Button"
-                                                    [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe"
-                                                    (click)="SaveChangesAndClose()">
-                                                    <img class="CenterCenter" src="./Images/Buttons/Save.png" />
+ 
+                                                <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="!IsEntityLoaded" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
+                                                     <img class="CenterCenter" src="./Images/Buttons/Save.png" />
                                                     <img src="./Images/RedX2.png"
                                                         style="width: 7px; height: 7px; position: absolute; top:1px; "
                                                         [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
                                                 </button>
 
                                                 <div *ngIf="IsEntityLoaded">
-                                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorPipe}}"
-                                                        [disabled]="IsSaveBtnDisable"
-                                                        *ngIf="EntityPM && !EntityPM.IsDirty" class="Button"
-                                                        [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe"
-                                                        (click)="SaveChangesAndClose()">
-                                                        <img class="CenterCenter" src="./Images/Buttons/Save.png" />
+ 
+                                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && !EntityPM.IsDirty" class="Button" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
+                                                         <img class="CenterCenter" src="./Images/Buttons/Save.png" />
                                                         <img src="./Images/RedX2.png"
                                                             style="width: 7px; height: 7px; position: absolute; top:1px;"
                                                             [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
                                                     </button>
 
-                                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorPipe}}"
-                                                        [disabled]="IsSaveBtnDisable"
-                                                        *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton"
-                                                        [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe"
-                                                        (click)="SaveChangesAndClose()">
-                                                        <img class="CenterCenter" src="./Images/Buttons/Save.Red.png" />
+ 
+                                                    <button id="{{ ObjectTableName+'-SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="IsSaveBtnDisable" *ngIf="EntityPM && EntityPM.IsDirty" class="EntityChangesButton" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe" (click)="SaveChangesAndClose()">
+                                                         <img class="CenterCenter" src="./Images/Buttons/Save.Red.png" />
                                                         <img src="./Images/RedX2.png"
                                                             style="width: 7px; height: 7px; position: absolute; top:1px;"
                                                             [ngStyle]="LayoutDirection == 'rtl' ? {'left': '1px'} : {'right': '1px'}" />
@@ -420,21 +395,11 @@
                                                                     {{row.Label}}
                                                                 </td>
 
-                                                                <td *ngIf="row.HideField == false"
-                                                                    class="HeaderScreenValue"
-                                                                    [style.height.px]="HeaderScreenRowHeight">
-                                                                    <div [style.height.px]="HeaderScreenRowHeight"
-                                                                        [style.line-height.px]="HeaderScreenRowHeight"
-                                                                        style="width: 100%; position: relative;"
-                                                                        *ngIf="EntityPM">
-                                                                        <ObjectFieldTemplate
-                                                                            [Direction]="LayoutDirection"
-                                                                            [ObjectTable]="ObjectTable"
-                                                                            [ObjectField]="row.ObjectField"
-                                                                            [Entity]="EntityPM"
-                                                                            [IsHeaderScreenTemplate]="true">
-                                                                        </ObjectFieldTemplate>
-                                                                    </div>
+ 
+                                                                <td  attr.data-cy="{{'Header_' + row.Label}}"  *ngIf="row.HideField == false" class="HeaderScreenValue" [style.height.px]="HeaderScreenRowHeight">
+                                                                    <div [style.height.px]="HeaderScreenRowHeight" [style.line-height.px]="HeaderScreenRowHeight" style="width: 100%; position: relative;" *ngIf="EntityPM">
+                                                                        <ObjectFieldTemplate [ObjectTable]="ObjectTable" [ObjectField]="row.ObjectField" [Entity]="EntityPM" [IsHeaderScreenTemplate]="true"></ObjectFieldTemplate>
+                                                                     </div>
                                                                 </td>
                                                             </tr>
 
@@ -458,21 +423,12 @@
                                                             [className]="LayoutDirection == 'rtl' ? 'MediaFill AppLeftMenuBackgroundRTL' : 'MediaFill AppLeftMenuBackground'">
                                                             <div class="MediaFillAbsolute" style="top: 5px;">
                                                                 <ul>
-                                                                    <li class="DefaultMenuItem"
-                                                                        id="{{ item.TextCode | IdGeneratorPipe  }}"
-                                                                        *ngFor="let item of TabsItemsSource ; first as TabFirst;"
-                                                                        (click)="SelectionChanged(item)"
-                                                                        [class.SelectedMenuItem]="item === SelectedTab"
-                                                                        [class.DisabledTabItem]="item.IsDisabled == true"
-                                                                        [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
-                                                                        <div class="TextTrimming">{{item.TextCode |
-                                                                            TextCodeTranslationPipe}}</div>
-                                                                        <img [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'"
-                                                                            [class.FlipImgHoriz]="LayoutDirection == 'rtl'"
-                                                                            [hidden]="item != SelectedTab"
-                                                                            src="./Images/SelectedMenuArrow.png"
-                                                                            style="margin-right: -1px;" />
-                                                                    </li>
+ 
+                                                                    <li [attr.data-cy]="item.TextCodeId" class="DefaultMenuItem" id="{{ item.TextCode | IdGeneratorAsyncPipe | async  }}" *ngFor="let item of TabsItemsSource" (click)="SelectionChanged(item)" [class.SelectedMenuItem]="item === SelectedTab" [class.DisabledTabItem]="item.IsDisabled == true" [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'">
+                                                                        <div class="TextTrimming" *ngIf="item.EntityPM.Name">{{item.EntityPM.Name}}</div>
+                                                                        <div class="TextTrimming" *ngIf="!item.EntityPM.Name">{{item.TextCode | TextCodeTranslationPipe}}</div>
+                                                                        <img [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [class.FlipImgHoriz]="LayoutDirection == 'rtl'" [hidden]="item != SelectedTab" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
+                                                                     </li>
                                                                 </ul>
                                                             </div>
                                                         </div>

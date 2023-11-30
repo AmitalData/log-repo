@@ -4,10 +4,11 @@ import { Inject, Injectable } from '@angular/core';
 import { HttpClient, HttpResponse, HttpHeaders } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer } from 'rxjs';
-import {CargoTrackingShipmentSearchList} from '../../EntityLists/CargoTrackingShipmentSearchList';
-import { CargoTrackingShipmentFilters } from 'src/CargoTracking/DataContracts/CargoTrackingShipmentFilters';
+import { CargoTrackingShipmentSearchInput } from 'src/CargoTracking/DataContracts/CargoTrackingShipmentFilters';
 import { CaptchaParameters } from 'src/CargoTracking/DataContracts/CaptchaParameters';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
+import { SessionInfo } from 'src/Infrastructure/Utilities/SessionInfo';
+import { CargoTrackingSearchRequest } from 'src/CargoTracking/DataContracts/CargoTrackingSearchRequest';
 
 @Injectable()
 export class CargoTrackingSearchService {
@@ -19,12 +20,13 @@ export class CargoTrackingSearchService {
     }
 
 
-	getShipments(searchKey: string, tenant: number) {
+	getShipments(searchRequest:CargoTrackingSearchRequest) {
         var authHeaders = ServiceHelper.GetHeaders();
 
+        var urlparameters = this.BuildURLParameters(searchRequest);
 
 		return defer(() => {
-            return this._http.get(this._apiUrl + '/GetShipments/?' + 'searchKey=' + searchKey + '&tenant=' + tenant,
+            return this._http.get(this._apiUrl + urlparameters,
              {headers: authHeaders})
 				.pipe(
 					map((response: HttpResponse<any>) => {
@@ -37,28 +39,34 @@ export class CargoTrackingSearchService {
 					})));
 		});
 	}
-    GetUserShipments(pageIndex: number, pageSize: number, shipmentFilters: CargoTrackingShipmentFilters) {
-        var authHeaders = ServiceHelper.GetHeaders();
+    private BuildURLParameters(searchRequest: any)
+    {
+        var urlparameters = '/GetShipments?';
+        var mykeys = Object.keys(searchRequest);
+        var addtionalFiltersValues = null;
 
-        var urlparameters = '';
-		var mykeys = Object.keys(shipmentFilters);
-		var addtionalFiltersValues = null;
+        for (var i in mykeys) {
+            var propName = mykeys[i];
+            var propValue = searchRequest[propName];
+            var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
-		for (var i in mykeys) {
-			var propName = mykeys[i];
-			var propValue = shipmentFilters[propName];
+            if (urlparameters != "?") {
+                urlparameters = urlparameters.concat('&');
+            }
 
-            propValue = encodeURIComponent(propValue);
-            urlparameters = urlparameters.concat(propName.concat('=').concat(propValue)).concat('&');
-
+            if (!ignoreFilter) {
+                propValue = encodeURIComponent(propValue);
+                urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
+            }
         }
+        return urlparameters;
+    }
 
-
+    GetUserShipments(shipmentFilters: CargoTrackingShipmentSearchInput) {
+        var authHeaders = ServiceHelper.GetHeadersWithToken();
 		return defer(() => {
-            return this._http.get(this._apiUrl + '/GetUserShipments/?' + urlparameters
-            + '&pageIndex=' + pageIndex
-            + '&pageSize=' + pageSize,
-             {headers: authHeaders})
+            return this._http.post(this._apiUrl + '/GetUserShipments',shipmentFilters,
+            authHeaders)
 				.pipe(
 					map((response: HttpResponse<any>) => {
 
@@ -70,10 +78,26 @@ export class CargoTrackingSearchService {
 					})));
 		});
     }
-    GetUserShipmentsCounter(shipmentFilters: CargoTrackingShipmentFilters) {
+
+    GetUserShipmentsCustomers(tenant: number) {
+        var authHeaders = ServiceHelper.GetHeadersWithToken();
 		return defer(() => {
-            return this._http.get(this._apiUrl + '/GetUserShipmentsCount/?' + this.ParseFiltersIntoURL(shipmentFilters),
-             {headers: ServiceHelper.GetHeaders()})
+            return this._http.get(this._apiUrl + '/GetUserCustomers?tenant=' + tenant ,authHeaders)
+				.pipe(
+					map((response: HttpResponse<any>) => {
+						return response;
+					},catchError(error=>{
+						return error;
+					})));
+		});
+    }
+
+
+    GetUserShipmentsCounter(shipmentFilters: CargoTrackingShipmentSearchInput) {
+        var authHeaders = ServiceHelper.GetHeadersWithToken();
+		return defer(() => {
+            return this._http.post(this._apiUrl + '/GetUserShipmentsCount/' , shipmentFilters,
+            authHeaders)
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						return response;
@@ -110,7 +134,7 @@ export class CargoTrackingSearchService {
 
 
 
-    private ParseFiltersIntoURL(shipmentFilters: CargoTrackingShipmentFilters)
+    private ParseFiltersIntoURL(shipmentFilters: CargoTrackingShipmentSearchInput)
     {
         var urlparameters = '';
         var keys = Object.keys(shipmentFilters);
@@ -140,6 +164,24 @@ export class CargoTrackingSearchService {
 					}));
 		});
     }
+
+    getUserShipment(SecurityKey: string, tenant: number) {
+        var authHeaders = ServiceHelper.GetHeadersWithToken();
+
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetUserShipment/?' + 'SecurityKey=' + SecurityKey + '&tenant=' + tenant,
+            authHeaders)
+                .pipe(
+                    map((response: HttpResponse<any>) => {
+
+                        var list = response;
+
+                        return list;
+                    }));
+        });
+    }
+
     GetPublicShipmentReferences(securityKey: string, tenant: number) {
         var authHeaders = ServiceHelper.GetHeaders();
 
@@ -170,6 +212,7 @@ export class CargoTrackingSearchService {
         //     }),
         //     catchError(null));
     }
+
 
 
 }

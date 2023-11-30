@@ -84,6 +84,24 @@ namespace Logitude.Accounting.BL
                 SearchFields = "9,The VAT amount in the record is higher than the percentage of VAT allowed,סכום המע''מ ברשומה גבוה מאחוז המע''מ המותר", 
                 LocalName = "סכום המע''מ ברשומה גבוה מאחוז המע''מ המותר", 
 			});
+			 
+            all.Add(new TaxReportLineStatusDetails()
+            {    
+                Code = "10", 
+                EnglishName = "Small Cash APinvoice from the previous month", 
+                LocalName = "חשבונית קופה קטנה מחודש קודם", 
+                SearchFields = "10,Small Cash APinvoice from the previous month,חשבונית קופה קטנה מחודש קודם", 
+                Inactive = false, 
+			});
+			 
+            all.Add(new TaxReportLineStatusDetails()
+            {    
+                Code = "11", 
+                EnglishName = "Missing confirmation number", 
+                LocalName = "חסר מספר הקצאה", 
+                SearchFields = "11,Missing confirmation number,חסר מספר הקצאה", 
+                Inactive = false, 
+			});
 			
             return all;
        }

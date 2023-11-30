@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -40,21 +42,21 @@ using Simplog.Data.InfrastructureModel;
         }
 
 		
-		public ChargesGroup GetChargesGroupById(string Id,int Tenant,string ComputingPartnerName = "")
+		public ChargesGroup GetChargesGroupById(string Id,int Tenant,  string ComputingPartnerName = "")
         { 
 		    try
             {
-
+				 
 				
-				var temp = query.GetSinglePM(Id,Tenant);				
+				var temp = query.GetSinglePM(Id, Tenant);				
 				 if (temp == null)
                     throw new ApplicationException("ChargesGroup with Id " + Id + " doesn't exist");
 
 				return ChargesGroupDataMapping(temp,Tenant,ComputingPartnerName);
 			}
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
@@ -86,11 +88,13 @@ using Simplog.Data.InfrastructureModel;
 					{
 						temp = query.GetSinglePM(MyEntity.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("ChargesGroup with Id " + MyEntity.Id + " doesn't exist");
 					} 
+				 
 					
 					if(string.IsNullOrEmpty(temp.Id))
 					{
@@ -113,9 +117,8 @@ using Simplog.Data.InfrastructureModel;
 					   
 						 
 						if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Code))
-						{
-								//throw new ApplicationException("Code Can't be update"); 
-								temp.Code = MyEntity.Code;
+						{								
+							temp.Code = MyEntity.Code;
 								
 						
 						}  
@@ -123,9 +126,9 @@ using Simplog.Data.InfrastructureModel;
 						
 					}
                     
-					if(!IsUpdate)// && !string.IsNullOrEmpty(MyEntity.Name))
-					{							//throw new ApplicationException("Name Can't be update"); 
-							temp.Name = MyEntity.Name;
+					if(!IsUpdate)
+					{							
+						temp.Name = MyEntity.Name;
 
 										}  
 
@@ -138,6 +141,8 @@ using Simplog.Data.InfrastructureModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

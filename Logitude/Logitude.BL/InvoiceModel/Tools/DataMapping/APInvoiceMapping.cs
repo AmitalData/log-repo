@@ -8,6 +8,7 @@ using Logitude.BL.Security;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools.Helpers;
+using System;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
@@ -23,7 +24,10 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 if (isNewState)
                 {
                     entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-                    entityPM.CreatedByUserId = loggedContact.Id;
+                    if (string.IsNullOrWhiteSpace(entityPM.CreatedByUserId))
+                    {
+                        entityPM.CreatedByUserId = loggedContact.Id;
+                    }
                     entity.Id = entityPM.Id;
                     entity.InternalNumber = entityPM.InternalNumber;
                     entity.Tenant = entityPM.Tenant;
@@ -54,6 +58,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.VendorGLAccountId = entityPM.VendorGLAccountId;
                 entity.AccountingDate = entityPM.AccountingDate;
                 entity.IsExternalEntity = entityPM.IsExternalEntity;
+                entity.TotalEquation = entityPM.TotalEquation;
 
                 if (entityPM.InvoiceNumber != null)
                 {
@@ -84,8 +89,41 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 }
             }
 
+            if (entityPM.HouseNumbers != null)
+            {
+                entityPM.HouseNumbers = entityPM.HouseNumbers.Trim();
+
+                if (string.IsNullOrEmpty(entityPM.HouseNumbers))
+                {
+                    entityPM.HouseNumbers = null;
+                }
+            }
+
+            if (entityPM.MasterNumbers != null)
+            {
+                entityPM.MasterNumbers = entityPM.MasterNumbers.Trim();
+
+                if (string.IsNullOrEmpty(entityPM.MasterNumbers))
+                {
+                    entityPM.MasterNumbers = null;
+                }
+            }
+
+            if (entityPM.MasterShipmentNumbers != null)
+            {
+                entityPM.MasterShipmentNumbers = entityPM.MasterShipmentNumbers.Trim();
+
+                if (string.IsNullOrEmpty(entityPM.MasterShipmentNumbers))
+                {
+                    entityPM.MasterShipmentNumbers = null;
+                }
+            }
+
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
-            entityPM.UpdatedByUserId = loggedContact.Id;
+            if (string.IsNullOrWhiteSpace(entityPM.UpdatedByUserId))
+            {
+                entityPM.UpdatedByUserId = loggedContact.Id;
+            }
             entity.UpdateDate = entityPM.UpdateDate;
             entity.UpdatedByUserId = entityPM.UpdatedByUserId;
             entity.MainEntityId = entityPM.MainEntityId;
@@ -102,13 +140,15 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.CreditAccount = entityPM.CreditAccount;
             entity.TransferTries = entityPM.TransferTries;
             entity.IsTransferStarted = entityPM.IsTransferStarted;
-            entity.TransferStatusCode = entityPM.TransferStatusCode;
+            entity.TransferStatusCode = entity.TransferStatusCode == "TR" && entityPM.TransferStatusCode == "IP" ?
+                                        entity.TransferStatusCode : entityPM.TransferStatusCode;
             entity.AccountingExternalCode = entityPM.AccountingExternalCode;
             entity.PaymentTermExternalId = entityPM.PaymentTermExternalId;
             entity.ApprovedDate = entityPM.ApprovedDate;
             entity.ApprovedByUserId = entityPM.ApprovedByUserId;
             entity.IsGeneralInvoice = entityPM.IsGeneralInvoice;
-            entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
+            if (!string.IsNullOrEmpty(entityPM.ExternalAccountingEntityId))
+                entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
             entity.CreatedByPartner = entityPM.CreatedByPartner;
             entity.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
             entity.Field2 = entityPM.Field2 != null ? entityPM.Field2.Value : null;
@@ -123,6 +163,12 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.TotalVATOnly = entityPM.TotalVATOnly;
             entity.PaidDate = entityPM.PaidDate;
             entity.ShipmentsNumbers = entityPM.ShipmentsNumbers;
+            entity.MasterNumbers = entityPM.MasterNumbers;
+            entity.MasterShipmentNumbers = entityPM.MasterShipmentNumbers;
+            entity.HouseNumbers = entityPM.HouseNumbers;
+            entity.GlobalTaxCalculation = entityPM.GlobalTaxCalculation == "None" ? null : entityPM.GlobalTaxCalculation;
+            entity.IsEquipment = entityPM.IsEquipment;
+            entity.ConnectedPaymentsNumbers = entityPM.ConnectedPaymentsNumbers;
 
             if (entityPM.SetApproved)
             {
@@ -153,6 +199,18 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetCancelApproval = false;
             entityPM.SetReTransfer = false;
             entityPM.SetReSendQBO = false;
+
+            if (isNewState)
+            {
+                if (entityPM.NewConcurrencyGUID == null)
+                {
+                    entityPM.NewConcurrencyGUID = Guid.NewGuid().ToString();
+                }
+            }
+
+            entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
+            entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
+            entity.ConfirmationNumber = entityPM.ConfirmationNumber;
         }
 
         public static void MapInvoiceLine(APInvoiceLinePM entityPM, APInvoiceLine entity, bool isNewState)

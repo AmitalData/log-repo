@@ -11,9 +11,9 @@ using Logitude.BL.Resolvers;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
-    public class ARPaymentMapping
+    public partial class ARPaymentMapping
     {
-
+        
         public static void MapEntity(ARPaymentPM entityPM, ARPayment entity, bool isNewState)
         {
             ContactPM loggedContact = GetLoggedContactPM(entityPM.Tenant);
@@ -45,8 +45,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                         entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
                     }
                 }
-
-                entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
+                if (!string.IsNullOrEmpty(entityPM.ExternalAccountingEntityId))
+                    entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
                 entity.BranchId = entityPM.BranchId;
                 entity.ARAccountId = entityPM.ARAccountId;
                 entity.AccountingPaymentMethodId = entityPM.AccountingPaymentMethodId;
@@ -75,7 +75,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             {
                 entityPM.UpdatedByUserId = loggedContact.Id;
             }
-           
+
             entity.RegisterDate = entityPM.RegisterDate;
             entity.UpdateDate = entityPM.UpdateDate;
             entity.UpdatedByUserId = entityPM.UpdatedByUserId;
@@ -108,6 +108,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.FirstApproveDate = entityPM.FirstApproveDate;
             entity.IsFullAccounting = entityPM.IsFullAccounting;
             entity.IsExternalEntity = entityPM.IsExternalEntity;
+
             if (entityPM.IsExternalEntity) {
                 entity.ChequeOrPaymentRef = entityPM.ChequeOrPaymentRef;
                 entity.CreateDate = entityPM.CreateDate;
@@ -124,7 +125,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
 
             entity.FechaPago = entityPM.FechaPago;
-
 
             if (entityPM.StatusCode == "AD" && entityPM.OpenAmount == 0)
             {
@@ -168,6 +168,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Field8 = entityPM.Field8 != null ? entityPM.Field8.Value : null;
             entity.Field9 = entityPM.Field9 != null ? entityPM.Field9.Value : null;
             entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
+
+            MapConcurrencyFields(entityPM, entity, isNewState);
         }
         public static ContactPM GetLoggedContactPM(int tenant)
         {

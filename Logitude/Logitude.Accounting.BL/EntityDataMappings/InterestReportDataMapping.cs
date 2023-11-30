@@ -56,20 +56,33 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.ReportNumber = entityPM.ReportNumber;
                 entityPOCO.InterestReportStatusCode = entityPM.InterestReportStatusCode;
                 entityPOCO.CreatedByUserId = entityPM.CreatedByUserId;
-
-            }
+                SetInterestReportGLAccountFields(entityPM);  
+                             
+             }
+            CustomerPM customerPM = new CustomerPM();
             if (entityPM.CustomerId != null)
             {
                 CustomerQuery customerQuery = new CustomerQuery(entityPM.Tenant);
-                CustomerPM customerPM = customerQuery.GetBasicSinglePM(entityPM.CustomerId, entityPM.Tenant, true);
+                customerPM = customerQuery.GetBasicSinglePM(entityPM.CustomerId, entityPM.Tenant, true);
                 entityPM.CustomerName = customerPM.EnglishName;
                 entityPM.CustomerLocalName = customerPM.LocalName;
 
             }
+           
+            FillSearchFields(entityPM, customerPM);
 
-            FillSearchFields(entityPM);
-
-
+        }
+        private void SetInterestReportGLAccountFields(InterestReportPM interestReport)
+        {
+            if (interestReport.GLAccountId != null)
+            {
+                GLAccountRepository gLAccountRepository = new GLAccountRepository(interestReport.Tenant);
+                GLAccount gLAccount = gLAccountRepository.GetSingle(interestReport.GLAccountId, interestReport.Tenant);
+                interestReport.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;
+                interestReport.CreditAllotmentPercentage = gLAccount.CreditAllotmentPercentage;
+                interestReport.GLAccountInterestCreditLimit = gLAccount.InterestCreditLimit;
+                interestReport.GLAccountDisplayNumber = gLAccount.DisplayNumber;
+            }
         }
 
         public void CustomPOCOToPM(InterestReportPM entityPM, InterestReport entityPOCO)
@@ -123,14 +136,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
             }
 
-            if (entityPOCO.GLAccountId != null)
-            {
-                GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPOCO.Tenant);
-                GLAccount gLAccount = gLAccountRepository.GetSingle(entityPOCO.GLAccountId, entityPOCO.Tenant);
-                entityPM.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;
-                entityPM.CreditAllotmentPercentage = gLAccount.CreditAllotmentPercentage;
-
-            }
+           
 
  
             if (entityPM.InterestReportStatusCode=="1")
@@ -150,8 +156,15 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPM.CanRecalculate = true;
             }
-            
- 
+            if (entityPOCO.GLAccountId != null )
+            {
+                GLAccountRepository gLAccountRepository = new GLAccountRepository(entityPOCO.Tenant);
+                GLAccount gLAccount = gLAccountRepository.GetSingle(entityPOCO.GLAccountId, entityPOCO.Tenant);
+                entityPM.GLAccountMinimumInterest = gLAccount.MinimumInterestInvoiceBilling;
+                entityPM.GLAccountLocalName = gLAccount.LocalName;
+            }
+
+
 
         }
 
@@ -172,9 +185,13 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 
         }
 
-        private void FillSearchFields(InterestReportPM entityPM)
+        private void FillSearchFields(InterestReportPM entityPM, CustomerPM customerPM)
         {
-            entityPM.SearchFields = entityPM.ReportNumber + "," + entityPM.CustomerName + "," + entityPM.CustomerLocalName;
+            entityPM.SearchFields = entityPM.ReportNumber + "," + entityPM.CustomerName + "," + entityPM.CustomerLocalName + "," + entityPM.GLAccountDisplayNumber + "," + entityPM.GLAccountLocalName;
+
+            if (customerPM != null && customerPM.Code != null) {
+                entityPM.SearchFields = entityPM.SearchFields + "," + customerPM.Code;
+            }
         }
 
         private static string GetLoggedContactId(InterestReportPM entityPM)

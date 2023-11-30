@@ -1682,6 +1682,144 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string customsBrokerId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsBrokerId  
+	   {
+	    
+	     get
+		{
+		   return customsBrokerId;
+		 }
+		 set
+		 {
+		   if(customsBrokerId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsBrokerId",OldValue=customsBrokerId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsBrokerId=value;
+		   }
+			
+		 }
+	   }
+	  private string customsBrokerName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsBrokerName  
+	   {
+	    
+	     get
+		{
+		   return customsBrokerName;
+		 }
+		 set
+		 {
+		   if(customsBrokerName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsBrokerName",OldValue=customsBrokerName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsBrokerName=value;
+		   }
+			
+		 }
+	   }
+	  private string customsBrokerPartnerTypeId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsBrokerPartnerTypeId  
+	   {
+	    
+	     get
+		{
+		   return customsBrokerPartnerTypeId;
+		 }
+		 set
+		 {
+		   if(customsBrokerPartnerTypeId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsBrokerPartnerTypeId",OldValue=customsBrokerPartnerTypeId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsBrokerPartnerTypeId=value;
+		   }
+			
+		 }
+	   }
+	  private string unitOfMeasurementCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UnitOfMeasurementCode  
+	   {
+	    
+	     get
+		{
+		   return unitOfMeasurementCode;
+		 }
+		 set
+		 {
+		   if(unitOfMeasurementCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UnitOfMeasurementCode",OldValue=unitOfMeasurementCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   unitOfMeasurementCode=value;
+		   }
+			
+		 }
+	   }
+	  private string customerGroupId ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerGroupId  
+	   {
+	    
+	     get
+		{
+		   return customerGroupId;
+		 }
+		 set
+		 {
+		   if(customerGroupId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerGroupId",OldValue=customerGroupId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerGroupId=value;
+		   }
+			
+		 }
+	   }
+	  private string customerGroupName ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomerGroupName  
+	   {
+	    
+	     get
+		{
+		   return customerGroupName;
+		 }
+		 set
+		 {
+		   if(customerGroupName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomerGroupName",OldValue=customerGroupName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customerGroupName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -21,6 +21,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
                 entityPOCO.CreateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
+                entityPOCO.UpdateDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
                 TenantPM tenant = GetCurrentTenant(entityPM.Tenant);
                 entityPOCO.DontShowLocalLabels = tenant.LayoutDirection == "rtl" ? false : true; //bug 44449
             }
@@ -48,6 +49,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.BirthDayOfYear = entityPM.Birthday != null ? entityPM.Birthday.Value.DayOfYear : 0;
             entityPOCO.ContactDoneMethodCode = entityPM.ContactDoneMethodCode;
             entityPOCO.Position = entityPM.Position;
+            entityPOCO.UpdateDate = entityPM.UpdateDate;
+            entityPOCO.DigitalPortalLanguage = entityPM.DigitalPortalLanguage;
 
             if (LogitudeSettings.DeploymentStage == "Simplog")
             {

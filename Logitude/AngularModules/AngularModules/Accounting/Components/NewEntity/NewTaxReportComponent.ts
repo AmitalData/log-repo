@@ -101,11 +101,6 @@ export class NewTaxReportComponent extends BaseComponent {
             this.selectedMonth = value;
             if (value != null) {
                 this.UIProperties.SetRequired("TaxReportMonth", this.ObjectTableName, false);
-                this.entityPM.TaxReportMonth = new Date();
-                this.entityPM.TaxReportMonth.setMonth(+value.Code - 1);
-                if (this.entityPM.Year != null) {
-                    this.entityPM.TaxReportMonth.setFullYear(this.entityPM.Year);
-                }
             }
             else {
                 this.UIProperties.SetRequired("TaxReportMonth", this.ObjectTableName, true);
@@ -122,7 +117,7 @@ export class NewTaxReportComponent extends BaseComponent {
         this.entityPM.UpdatedByUserId = SessionLocator.LoggedUserId;
         var errors: string[] = [];
         this.FIELD_IS_REQUIERD = TextCodeTranslator.Translate("General.M.FieldIsRequired");
-        Validator.TryValidateObject(this.entityPM, this.ObjectTableName, errors);
+        // Validator.TryValidateObject(this.entityPM, this.ObjectTableName, errors);
 
         if (AppTool.IsNullOrEmpty(this.entityPM.Year)) {
             var s: string = this.FIELD_IS_REQUIERD.replace("%FieldName", TextCodeTranslator.Translate("TaxReport.F.Year"));
@@ -139,6 +134,8 @@ export class NewTaxReportComponent extends BaseComponent {
         this.ValidationErrorsList = errors;
 
         if (this.ValidationErrorsList.length == 0) {
+            
+            this.entityPM.TaxReportMonth = new Date(this.entityPM.Year, (+this.SelectedMonth.Code -1), 15, 0, 0, 0, 0);
             this.CurrentSession.StartBusyIndicator("");
             this.TaxReportPMService.insert(this.entityPM).subscribe((myResult:any) => {
 

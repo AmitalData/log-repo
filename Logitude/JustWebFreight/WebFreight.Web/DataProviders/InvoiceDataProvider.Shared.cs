@@ -7,7 +7,12 @@ namespace WebFreight.Web.DataProviders
 {
     public class InvoiceDataProvider : BaseDataProvider
     {
+        public string StockDescription { get; set; }
+        public DateTime? StockExpirationDate { get; set; }
+        public string StockStartNumberPrefix { get; set; }
+        public string StockEndNumberPrefix { get; set; }
         public string ProjectNumber { get; set; }
+        public string Notify1Name { get; set; }
         public string TenantStateCode { get; set; }
         public string BranchSignature { get; set; }
         public string PackageDetails { get; set; }
@@ -27,6 +32,7 @@ namespace WebFreight.Web.DataProviders
         public string BillTo { get; set; }
         public string BillTo_LocalName { get; set; }
         public string BillToAddress { get; set; }
+        public string BillToAddressName { get; set; }
         public string BillToAddress_NoName { get; set; }
         public string BillToAddress_OneLine { get; set; }
         public string BillToAddressDescription { get; set; }
@@ -45,6 +51,7 @@ namespace WebFreight.Web.DataProviders
         public string WaterMark { get; set; }
         public string IssuedByUser { get; set; }
         public string IssuedByUser_LocalName { get; set; }
+        public string IssuedByUserEmail { get; set; }
         public string MainCarriageLastDestination { get; set; }
         public string MainCarriageLastDestination_label { get; set; }
         public string MainCarriageLastDestinationPortCode { get; set; }
@@ -52,7 +59,8 @@ namespace WebFreight.Web.DataProviders
         public string MainCarriageMAWBOBLBL_label { get; set; }
         public string GrossWeight { get; set; }
         public string ChargeableWeight { get; set; }
-        public string WeightUnitCode { get; set; }
+        public double? ChargeableWeight_Double { get; set; }
+        public string ChargeableWeightUnitCode { get; set; }
         public string MainCarriageFromPortName { get; set; }
         public string MainCarriageFromPort_LocalName { get; set; }
         public string MainCarriageToPortName { get; set; }
@@ -156,9 +164,11 @@ namespace WebFreight.Web.DataProviders
 
         public string BillToAddress1 { get; set; }
         public string BillToAddress2 { get; set; }
+        public string BillToFax { get; set; }
         public string BillToCity { get; set; }
         public string BillToCountry { get; set; }
         public string BillToState { get; set; }
+        public string BillToIndustry { get; set; }
 
         public string Via1 { get; set; }
         public string Via2 { get; set; }
@@ -269,6 +279,36 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
+        public string ShipmentField41 { get; set; }
+        public string ShipmentField42 { get; set; }
+        public string ShipmentField43 { get; set; }
+        public string ShipmentField44 { get; set; }
+        public string ShipmentField45 { get; set; }
+        public string ShipmentField46 { get; set; }
+        public string ShipmentField47 { get; set; }
+        public string ShipmentField48 { get; set; }
+        public string ShipmentField49 { get; set; }
+        public string ShipmentField50 { get; set; }
+        public string ShipmentField51 { get; set; }
+        public string ShipmentField52 { get; set; }
+        public string ShipmentField53 { get; set; }
+        public string ShipmentField54 { get; set; }
+        public string ShipmentField55 { get; set; }
+        public string ShipmentField56 { get; set; }
+        public string ShipmentField57 { get; set; }
+        public string ShipmentField58 { get; set; }
+        public string ShipmentField59 { get; set; }
+        public string ShipmentField60 { get; set; }
+        public string ShipmentField61 { get; set; }
+        public string ShipmentField62 { get; set; }
+        public string ShipmentField63 { get; set; }
+        public string ShipmentField64 { get; set; }
+        public string ShipmentField65 { get; set; }
+        public string ShipmentField66 { get; set; }
+        public string ShipmentField67 { get; set; }
+        public string ShipmentField68 { get; set; }
+        public string ShipmentField69 { get; set; }
+        public string ShipmentField70 { get; set; }
 
         public string ARInvoiceField1 { get; set; }
         public string ARInvoiceField2 { get; set; }
@@ -286,6 +326,7 @@ namespace WebFreight.Web.DataProviders
         public string CustomsDeclarationNumber { get; set; }
         public string Origin { get; set; }
         public string FinalDestination { get; set; }
+        public DateTime? LastDeliveryATD { get; set; }
         public string LoadingPlace { get; set; }
         public string LoadingPlaceShipper { get; set; }
         public string PlaceOfDelivery { get; set; }
@@ -323,7 +364,7 @@ namespace WebFreight.Web.DataProviders
         public double? VatableAmount_ZERO { get; set; }
         public double? VatableAmount_REIM { get; set; }
         public double? VatableAmount_12 { get; set; }
-        
+
         public string FreightPC { get; set; }
         public double? USD_MXN_ExchangeRate { get; set; }
         public double? InvoiceToAccountingExchangeRate { get; set; }
@@ -390,7 +431,7 @@ namespace WebFreight.Web.DataProviders
         }
 
         public decimal AmountInWords { get; set; }
-         
+
         public string DeclarationNumber { get; set; }
         public DateTime? DeclarationDate { get; set; }
         public DateTime? CustomsClearanceDate { get; set; }
@@ -401,6 +442,7 @@ namespace WebFreight.Web.DataProviders
         public string NewAmountInWordsFrenchWithFraction { get; set; }
 
         public string AmountInWordsSpanish { get; set; }
+        public string LocalAmountInWordsSpanish { get; set; }
         public string AmountInWordsSpanishWithZero { get; set; }
         public string AmountInWordsEnglish { get; set; }
         public string AmountInWordsEnglishNoFR { get; set; }
@@ -423,13 +465,18 @@ namespace WebFreight.Web.DataProviders
 
         public string TotalVATableAmountInInvoiceCurrency { get; set; }
         public string TotalNONVATableAmountInInvoiceCurrency { get; set; }
+        public string TotalVATableAmountInLocalCurrency { get; set; }
+        public string TotalNONVATableAmountInLocalCurrency { get; set; }
 
         public string CompleteShipmentType { get; set; }
 
         public double TotalProfitCurr { get; set; }
-        
+
         public string Notify1Address { get; set; }
         public string Notify1VATNumber { get; set; }
+
+        public string ToCasualAddressZipCode { get; set; }
+        public string FromCasualAddressZipCode { get; set; }
 
         public string Transshipment1MasterNumber { get; set; }
         public string Transshipment1FromPortName { get; set; }
@@ -481,9 +528,40 @@ namespace WebFreight.Web.DataProviders
             public string ShipmentField38 { get; set; }
             public string ShipmentField39 { get; set; }
             public string ShipmentField40 { get; set; }
+            public string ShipmentField41 { get; set; }
+            public string ShipmentField42 { get; set; }
+            public string ShipmentField43 { get; set; }
+            public string ShipmentField44 { get; set; }
+            public string ShipmentField45 { get; set; }
+            public string ShipmentField46 { get; set; }
+            public string ShipmentField47 { get; set; }
+            public string ShipmentField48 { get; set; }
+            public string ShipmentField49 { get; set; }
+            public string ShipmentField50 { get; set; }
+            public string ShipmentField51 { get; set; }
+            public string ShipmentField52 { get; set; }
+            public string ShipmentField53 { get; set; }
+            public string ShipmentField54 { get; set; }
+            public string ShipmentField55 { get; set; }
+            public string ShipmentField56 { get; set; }
+            public string ShipmentField57 { get; set; }
+            public string ShipmentField58 { get; set; }
+            public string ShipmentField59 { get; set; }
+            public string ShipmentField60 { get; set; }
+            public string ShipmentField61 { get; set; }
+            public string ShipmentField62 { get; set; }
+            public string ShipmentField63 { get; set; }
+            public string ShipmentField64 { get; set; }
+            public string ShipmentField65 { get; set; }
+            public string ShipmentField66 { get; set; }
+            public string ShipmentField67 { get; set; }
+            public string ShipmentField68 { get; set; }
+            public string ShipmentField69 { get; set; }
+            public string ShipmentField70 { get; set; }
             public string BillToVatNumber { get; set; }
             public string InvoiceType { get; set; }
             public string InvoiceNumber { get; set; }
+            public Decimal? TotalAmountForTaxReport { get; set; }
             public string InternalNumber { get; set; }
             public string BillTo { get; set; }
             public string PartnerName { get; set; }
@@ -499,12 +577,10 @@ namespace WebFreight.Web.DataProviders
             public string LocalCurrency { get; set; }
             public DateTime? CreateDate { get; set; }
             public DateTime? DueDate { get; set; }
-            
             public double? VAT1Amount { get; set; }
             public double? VAT2Amount { get; set; }
             public double? VAT3Amount { get; set; }
             public double? VAT4Amount { get; set; }
-
             public string ARInvoiceField1 { get; set; }
             public string ARInvoiceField2 { get; set; }
             public string ARInvoiceField3 { get; set; }
@@ -523,6 +599,34 @@ namespace WebFreight.Web.DataProviders
             public double? ExpenseChargesInLocalCurrency { get; set; }
             public string UUID { get; set; }
             public string BillToCode { get; set; }
+            public string BillToType { get; set; }
+            public double? VatableAmountLocalCurrency { get; set; }
+            public double? NonVatableAmountLocalCurrency { get; set; }
+            public double? RegionalTaxAmountLocalCurrency { get; set; }
+            public double? VatableAmountInvoiceCurrency { get; set; }
+            public double? NonVatableAmountInvoiceCurrency { get; set; }
+            public double? RegionalTaxAmountInvoiceCurrency { get; set; }
+            public DateTime? PaidDate { get; set; }
+            public string BillToContactName { get; set; }
+            public string BillToContactEmail { get; set; }
+            public string BillToAddress1 { get; set; }
+            public string BillToAddress2 { get; set; }
+            public string BillToCity { get; set; }
+            public string BillToState { get; set; }
+            public string BillToZipCode { get; set; }
+            public string BillToCountry { get; set; }
+            public string CustomerField1 { get; set; }
+            public string CustomerField2 { get; set; }
+            public string CustomerField3 { get; set; }
+            public string CustomerField4 { get; set; }
+            public string CustomerField5 { get; set; }
+            public string CustomerField6 { get; set; }
+            public string CustomerField7 { get; set; }
+            public string CustomerField8 { get; set; }
+            public string CustomerField9 { get; set; }
+            public string CustomerField10 { get; set; }
+            public string BranchCode { get; set; }
+            public DateTime? ShipmentMainCarriageETA  { get; set; }
         }
 
         public class InvoiceTotals
@@ -533,7 +637,7 @@ namespace WebFreight.Web.DataProviders
             public double? TotalGrands { get; set; }
             public string Currency { get; set; }
             public double? totalGrandTotal { get; set; }
-            
+
             public double? VAT1Amount { get; set; }
             public double? VAT2Amount { get; set; }
             public double? VAT3Amount { get; set; }
@@ -582,7 +686,7 @@ namespace WebFreight.Web.DataProviders
         public string CarrierCBSA { get; set; }
         public string CarrierCAAT { get; set; }
         public string AccountDisplayNumber { get; set; }
-        
+
         public string ShipperNotExporter { get; set; }
         public string ShipperNotExporterAddress { get; set; }
         public string ConsigneeNotImporter { get; set; }
@@ -600,8 +704,37 @@ namespace WebFreight.Web.DataProviders
         public int? StorageFreeDays { get; set; }
         public int? StorageDays { get; set; }
         public List<StoragePricing> ShipmentStoragePricings { get; set; }
-    }
+        public List<Payment> Payments { get; set; }
 
+        public string Transshipment1FlightNumber { get; set; }
+        public DateTime? Transshipment1ETD { get; set; }
+        public DateTime? Transshipment1ETA { get; set; }
+        public DateTime? Transshipment1ATD { get; set; }
+        public DateTime? Transshipment1ATA { get; set; }
+        public string Transshipment1VesselName { get; set; }
+        public string Transhipment1VoyageNo { get; set; }
+        public string Transshipment2VesselName { get; set; }
+        public string Transhipment2VoyageNo { get; set; }
+        public string Transshipment3VesselName { get; set; }
+        public string Transhipment3VoyageNo { get; set; }
+        public string PreForwardingFromPortName { get; set; }
+        public string PreForwardingFromPortCode { get; set; }
+        public string PreForwardingToPortName { get; set; }
+        public string PreForwardingToPortCode { get; set; }
+        public string ConnectedQuoteNumber { get; set; }
+        public string FirstPickupEmptyContainer { get; set; }
+        public string LastDeliveryEmptyContainerReturn { get; set; }
+    }
+    public class Payment
+    {
+        public string PaymentMethod { get; set; }
+        public string PaymentNumber { get; set; }
+        public string PaymentReferenceNumber { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public string BankName { get; set; }
+        public string PaymentCurrency { get; set; }
+        public double? PaymentAmount { get; set; }
+    }
     public class SAT
     {
         public string SelloSAT { get; set; }
@@ -625,14 +758,21 @@ namespace WebFreight.Web.DataProviders
         public string usoCFDI { get; set; }
         public string TipoRelacion { get; set; }
         public string CFDIRelacionado { get; set; }
-        
+
         public Image QRImage { get; set; }
+        public string RegimenFiscalReceptor { get; set; }
+        public string RegimenFiscalReceptorCode { get; set; }
+        public string BillToSATName { get; set; }
+        public string BillToCity { get; set; }
+        public string BillToCountry { get; set; }
+        public string BillToPostalCode { get; set; }
+        public string SATForeignRFC { get; set; }
     }
 
     public class ReportConstituentInvoiceLine
     {
         public string InvoiceId { get; set; }
-        public string InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; }      
         public string CustomerRef { get; set; }
         public string InvoiceDate { get; set; }
         public string BillToName { get; set; }
@@ -651,6 +791,8 @@ namespace WebFreight.Web.DataProviders
         public string Volume { get; set; }
         public string GrossWeight { get; set; }
         public string ChargeableWeight { get; set; }
+        public double? ChargeableWeight_Double { get; set; }
+        public string ChargeableWeightUnitCode { get; set; }
         public string PackagesQuantity { get; set; }
         public string SubTotalInInvoiceCurrency { get; set; }
         public string SubTotalInLocalCurrency { get; set; }
@@ -674,12 +816,90 @@ namespace WebFreight.Web.DataProviders
         public DateTime? MainCarriageATD { get; set; }
         public string ShipmentNumber { get; set; }
         public string ShipmentRouting { get; set; }
+        public DateTime? LastDeliveryATD { get; set; }
+        public string ConnectedQuoteNumber { get; set; }
+        public string ShipmentField1 { get; set; }
+        public string ShipmentField2 { get; set; }
+        public string ShipmentField3 { get; set; }
+        public string ShipmentField4 { get; set; }
+        public string ShipmentField5 { get; set; }
+        public string ShipmentField6 { get; set; }
+        public string ShipmentField7 { get; set; }
+        public string ShipmentField8 { get; set; }
+        public string ShipmentField9 { get; set; }
+        public string ShipmentField10 { get; set; }
+        public string ShipmentField11 { get; set; }
+        public string ShipmentField12 { get; set; }
+        public string ShipmentField13 { get; set; }
+        public string ShipmentField14 { get; set; }
+        public string ShipmentField15 { get; set; }
+        public string ShipmentField16 { get; set; }
+        public string ShipmentField17 { get; set; }
+        public string ShipmentField18 { get; set; }
+        public string ShipmentField19 { get; set; }
+        public string ShipmentField20 { get; set; }
+        public string ShipmentField21 { get; set; }
+        public string ShipmentField22 { get; set; }
+        public string ShipmentField23 { get; set; }
+        public string ShipmentField24 { get; set; }
+        public string ShipmentField25 { get; set; }
+        public string ShipmentField26 { get; set; }
+        public string ShipmentField27 { get; set; }
+        public string ShipmentField28 { get; set; }
+        public string ShipmentField29 { get; set; }
+        public string ShipmentField30 { get; set; }
+        public string ShipmentField31 { get; set; }
+        public string ShipmentField32 { get; set; }
+        public string ShipmentField33 { get; set; }
+        public string ShipmentField34 { get; set; }
+        public string ShipmentField35 { get; set; }
+        public string ShipmentField36 { get; set; }
+        public string ShipmentField37 { get; set; }
+        public string ShipmentField38 { get; set; }
+        public string ShipmentField39 { get; set; }
+        public string ShipmentField40 { get; set; }
+        public string ShipmentField41 { get; set; }
+        public string ShipmentField42 { get; set; }
+        public string ShipmentField43 { get; set; }
+        public string ShipmentField44 { get; set; }
+        public string ShipmentField45 { get; set; }
+        public string ShipmentField46 { get; set; }
+        public string ShipmentField47 { get; set; }
+        public string ShipmentField48 { get; set; }
+        public string ShipmentField49 { get; set; }
+        public string ShipmentField50 { get; set; }
+        public string ShipmentField51 { get; set; }
+        public string ShipmentField52 { get; set; }
+        public string ShipmentField53 { get; set; }
+        public string ShipmentField54 { get; set; }
+        public string ShipmentField55 { get; set; }
+        public string ShipmentField56 { get; set; }
+        public string ShipmentField57 { get; set; }
+        public string ShipmentField58 { get; set; }
+        public string ShipmentField59 { get; set; }
+        public string ShipmentField60 { get; set; }
+        public string ShipmentField61 { get; set; }
+        public string ShipmentField62 { get; set; }
+        public string ShipmentField63 { get; set; }
+        public string ShipmentField64 { get; set; }
+        public string ShipmentField65 { get; set; }
+        public string ShipmentField66 { get; set; }
+        public string ShipmentField67 { get; set; }
+        public string ShipmentField68 { get; set; }
+        public string ShipmentField69 { get; set; }
+        public string ShipmentField70 { get; set; }
+        public string ProjectNumber { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? FinalMainCarriageATA { get; set; }
     }
 
-    public class ReportInvoiceLine
+    public class ReportInvoiceLine : CustomFieldDataProviedr
     {
         public string Description { get; set; }
         public string Quantity { get; set; }
+        public double? QuantityDouble { get; set; }
         public string Measurement { get; set; }
         public string UnitPrice { get; set; }
         public double UnitPriceDouble { get; set; }
@@ -696,8 +916,8 @@ namespace WebFreight.Web.DataProviders
         public string LocalDescription { get; set; }
         public string VatAmountInLocalCurrency { get; set; }
         public string VatAmountInInvoiceCurrency { get; set; }
+        public double? VatAmountInInvoiceCurrency_Double { get; set; }
         public string VatAmountIncludeMultiInInvoiceCurrency { get; set; }
-
         public string VatIndication { get; set; }
         public string ChrageTypeCode { get; set; }
         public string DebitInLocalAmount { get; set; }
@@ -724,15 +944,21 @@ namespace WebFreight.Web.DataProviders
 
         public double? VATableAmountInInvoiceCurrency_double { get; set; }
         public double? NONVATableAmountInInvoiceCurrency_double { get; set; }
+        public double? VATableAmountInLocalCurrency_double { get; set; }
+        public double? NONVATableAmountInLocalCurrency_double { get; set; }
 
         public string VatAmountInForeignCurrency { get; set; }
+        public double? VatAmountInForeignCurrency_Double { get; set; }
         public string ForeignToInvoiceExchangeRate { get; set; }
+        public double? ForeignToInvoiceExchangeRate_Double { get; set; }
 
         public double? LocalAmountWithVAT { get; set; }
         public string VATDescription { get; set; }
         public string VATLocalDescription { get; set; }
         public bool IsRegionalTax { get; set; }
         public string ChargeTypeDescription { get; set; }
+        public double? TotalAmount { get; set; }
+        public string ChargeTypeId { get; set; }
     }
 
     public class TotalVat

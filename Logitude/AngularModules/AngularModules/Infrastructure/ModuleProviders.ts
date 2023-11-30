@@ -21,8 +21,10 @@ import {BusinessHoursHolidayPMService} from './Services/StandardPMs/BusinessHour
 import {ChargesGroupPMService} from './Services/StandardPMs/ChargesGroupPMService';
 import { CustomPickListPMService } from './Services/StandardPMs/CustomPickListPMService';
 import { BluesnapContractPMService } from './Services/StandardPMs/BluesnapContractPMService';
+import { QuoteChargesGroupListService } from './Services/StandardLists/QuoteChargesGroupListService';
+import { QuoteChargesGroupPMService } from './Services/StandardPMs/QuoteChargesGroupPMService';
 
-//import {EntityStatusPMService} from './Services/StandardPMs/EntityStatusPMService';
+import {EntityStatusPMService} from './Services/StandardPMs/EntityStatusPMService';
 //import {EventTypeCategoryPMService} from './Services/StandardPMs/EventTypeCategoryPMService';
 import {EventTypePMService} from './Services/StandardPMs/EventTypePMService';
 import {GeneralEntitiesService} from './Services/StandardPMs/GeneralEntitiesService';
@@ -34,6 +36,7 @@ import {ObjectFieldPMService} from './Services/StandardPMs/ObjectFieldPMService'
 import {QueriesPMService} from './Services/StandardPMs/QueriesPMService';
 import {QueryColumnsPMService} from './Services/StandardPMs/QueryColumnsPMService';
 import {RatesTablePMService} from './Services/StandardPMs/RatesTablePMService';
+import {ScreenSectionPMService} from './Services/StandardPMs/ScreenSectionPMService';
 //import {SharedLogisticsInvitationStatusPMService} from './Services/StandardPMs/SharedLogisticsInvitationStatusPMService';
 import {TenantManagementPMService} from './Services/StandardPMs/TenantManagementPMService';
 import {TextCodePMService} from './Services/StandardPMs/TextCodePMService';
@@ -68,11 +71,12 @@ import { BatchTaskExecutionPMService } from './Services/StandardPMs/BatchTaskExe
 
 import { AnalyzeQueueMenuButtonsHandler } from './Components/MenuButtons/AnalyzeQueueMenuButtonsHandler';
 import {TenantManagementMenuButtonsHandler} from './Components/MenuButtons/TenantManagementMenuButtonsHandler';
+import {DeploymentPackageMenuButtonsHandler} from './Components/MenuButtons/DeploymentPackageMenuButtonsHandler';
 //
-import {BusinessProcessQueueListService} from  './Services/StandardLists/BusinessProcessQueueListService'; 
+import {BusinessProcessQueueListService} from  './Services/StandardLists/BusinessProcessQueueListService';
 import {BusinessProcessQueuePMService} from  './Services/StandardPMs/BusinessProcessQueuePMService';
-import {TeamListService} from  './Services/StandardLists/TeamListService'; 
-import {TeamPMService} from './Services/StandardPMs/TeamPMService'; 
+import {TeamListService} from  './Services/StandardLists/TeamListService';
+import {TeamPMService} from './Services/StandardPMs/TeamPMService';
 import { DWQueryBuilderService } from './Services/ExtendedPMs/DWQueryBuilderService';
 
 import { BIReportFolderListService } from './Services/StandardLists/BIReportFolderListService';
@@ -96,9 +100,36 @@ import { PriceStepListService } from './Services/StandardLists/PriceStepListServ
 import { PriceStepPMService } from './Services/StandardPMs/PriceStepPMService';
 import { HelpResourceListService } from './Services/StandardLists/HelpResourceListService';
 import { HelpResourcePMService } from './Services/StandardPMs/HelpResourcePMService';
+import { MultiEntityUpdateLogPMService } from './Services/StandardPMs/MultiEntityUpdateLogPMService';
+import { EntityStatusTypeListService } from './Services/StandardLists/EntityStatusTypeListService';
+
+import { ImageLibraryListService } from './Services/StandardLists/ImageLibraryListService';
+import { ImageLibraryPMService } from './Services/StandardPMs/ImageLibraryPMService';
+import { TableTabService } from './Services/ExtendedPMs/TableTabService';
+import { ScreenSectionListService } from './Services/StandardLists/ScreenSectionListService';
+import { ScreenListService } from './Services/StandardLists/ScreenListService';
+import { ScreenPMService } from './Services/StandardPMs/ScreenPMService';
+import { DigitalPortalScreenListService } from './Services/StandardLists/DigitalPortalScreenListService';
+import { DigitalPreDefinedComponentListService } from './Services/StandardLists/DigitalPreDefinedComponentListService';
+import { DeploymentPackagePMService } from './Services/StandardPMs/DeploymentPackagePMService';
+import { DeploymentPackageListService } from './Services/StandardLists/DeploymentPackageListService';
+import { CustomFieldsMainObjectPMService } from './Services/StandardPMs/CustomFieldsMainObjectsPMService';
+import { CustomFieldsMainObjectListService } from './Services/StandardLists/CustomFieldsMainObjectListService';
+import { DigitalCustomizationService } from './Services/WebServices/DigitalCustomizationService';
+import { ReferenceCustomObjectPMService } from './Services/StandardPMs/ReferenceCustomObjectPMService';
+import { ReferenceCustomObjectListService } from './Services/StandardLists/ReferenceCustomObjectListService';
+import { DataCustomObjectPMService } from './Services/StandardPMs/DataCustomObjectPMService';
+import { DataCustomObjectListService } from './Services/StandardLists/DataCustomObjectListService';
+import { ReferantTeamListService } from '../Customs/Services/StandardLists/ReferantTeamListService';
+import { DeploymentPackageExecutionLogPM } from './EntityPMs/DeploymentPackageExecutionLogPM';
+import { DeploymentPackageExecutionLogList } from './EntityLists/DeploymentPackageExecutionLogList';
+import { DeploymentPackageExecutionLogPMService } from './Services/StandardPMs/DeploymentPackageExecutionLogPMService';
+import { DeploymentPackageExecutionLogListService } from './Services/StandardLists/DeploymentPackageExecutionLogListService';
+import { DeploymentPackageExecutionLogListExtendedService } from './Services/ExtendedLists/DeploymentPackageExecutionLogListExtendedService';
+import { SchedulerReportMessageTemplateService } from './Components/StimulsoftComponent/Services/SchedulerReportMessageTemplateService';
 
 export class ModuleProviders {
-    
+
     public static GetInstance(name: string) {
 
         var myResult: any = null;
@@ -122,7 +153,9 @@ export class ModuleProviders {
             case "PrepaidCollectListService": { myResult = new PrepaidCollectListService(); break; }
             case "RatesTableListService": { myResult = new RatesTableListService(); break; }
             case "ObjectFieldListService": { myResult = new ObjectFieldListService(); break; }
-                
+            case "QuoteChargesGroupListService": { myResult = new QuoteChargesGroupListService(); break; }
+            case "QuoteChargesGroupPMService": { myResult = new QuoteChargesGroupPMService(); break; }
+
             //case "SharedLogisticsInvitationStatusListService": { myResult = new SharedLogisticsInvitationStatusListService(); break; }
             case "TenantManagementListService": { myResult = new TenantManagementListService(); break; }
             case "TransportModeListService": { myResult = new TransportModeListService(); break; }
@@ -131,7 +164,7 @@ export class ModuleProviders {
             case "BusinessHoursHolidayPMService": { myResult = new BusinessHoursHolidayPMService(); break; }
             case "ChargesGroupPMService": { myResult = new ChargesGroupPMService(); break; }
             case "CustomPickListPMService": { myResult = new CustomPickListPMService(); break; }
-            //case "EntityStatusPMService": { myResult = new EntityStatusPMService(); break; }
+            case "EntityStatusPMService": { myResult = new EntityStatusPMService(); break; }
             //case "EventTypeCategoryPMService": { myResult = new EventTypeCategoryPMService(); break; }
             case "EventTypePMService": { myResult = new EventTypePMService(); break; }
             case "GeneralEntitiesService": { myResult = new GeneralEntitiesService(); break; }
@@ -143,6 +176,7 @@ export class ModuleProviders {
             case "QueriesPMService": { myResult = new QueriesPMService(); break; }
             case "QueryColumnsPMService": { myResult = new QueryColumnsPMService(); break; }
             case "RatesTablePMService": { myResult = new RatesTablePMService(); break; }
+            case "ScreenSectionPMService": { myResult = new ScreenSectionPMService(); break; }
             //case "SharedLogisticsInvitationStatusPMService": { myResult = new SharedLogisticsInvitationStatusPMService(); break; }
             case "TenantManagementPMService": { myResult = new TenantManagementPMService(); break; }
             case "TextCodePMService": { myResult = new TextCodePMService(); break; }
@@ -153,16 +187,16 @@ export class ModuleProviders {
             case "APILogsPMService": { myResult = new APILogsPMService(); break; }
             case "EmailAlertSettingPMService": { myResult = new EmailAlertSettingPMService(); break; }
             case "BluesnapContractListService": { myResult = new BluesnapContractListService(); break; }
-            case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }                
-            case "BluesnapContractPMService": { myResult = new BluesnapContractPMService(); break; }                
-            case "TenantTypeListService": { myResult = new TenantTypeListService(); break; }   
+            case "BluesnapContractTypeListService": { myResult = new BluesnapContractTypeListService(); break; }
+            case "BluesnapContractPMService": { myResult = new BluesnapContractPMService(); break; }
+            case "TenantTypeListService": { myResult = new TenantTypeListService(); break; }
             case "BusinessHourListService": { myResult = new BusinessHourListService(); break; }
             case "PaymentChannelListService": { myResult = new PaymentChannelListService(); break; }
             case "InboundEmailListService": { myResult = new InboundEmailListService(); break; }
             case "InboundEmailPMService": { myResult = new InboundEmailPMService(); break; }
-            case "PaymentMethodListService": { myResult = new PaymentMethodListService(); break; }   
-            case "RecurringPeriodListService": { myResult = new RecurringPeriodListService(); break; }   
-            case "TenantManagmentPrivateLabelsListService": { myResult = new TenantManagmentPrivateLabelsListService(); break; }   
+            case "PaymentMethodListService": { myResult = new PaymentMethodListService(); break; }
+            case "RecurringPeriodListService": { myResult = new RecurringPeriodListService(); break; }
+            case "TenantManagmentPrivateLabelsListService": { myResult = new TenantManagmentPrivateLabelsListService(); break; }
             case "PaymentCurrencyListService": { myResult = new PaymentCurrencyListService(); break; }
             case "AWBMessagesCCSTypeListService": { myResult = new AWBMessagesCCSTypeListService(); break; }
             case "AnalyzeQueueListService": { myResult = new AnalyzeQueueListService(); break; }
@@ -170,20 +204,21 @@ export class ModuleProviders {
             case "ErrorLogListService": { myResult = new ErrorLogListService(); break; }
             case "BatchTaskExecutionListService": { myResult = new BatchTaskExecutionListService(); break; }
             case "ErrorLogPMService": { myResult = new ErrorLogPMService(); break; }
-            case "ApiCredintialsListService": { myResult = new ApiCredintialsListService(); break; }                
+            case "ApiCredintialsListService": { myResult = new ApiCredintialsListService(); break; }
             case "AnalyzeQueueMenuButtonsHandler": { myResult = new AnalyzeQueueMenuButtonsHandler(); break; }
             case "TenantManagementMenuButtonsHandler": { myResult = new TenantManagementMenuButtonsHandler(); break; }
+            case "DeploymentPackageMenuButtonsHandler": { myResult = new DeploymentPackageMenuButtonsHandler(); break; }
             case "ErrorLogPMFileLoggerService": { myResult = new ErrorLogPMFileLoggerService(); break; }
-            case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }  
-            case "BusinessProcessQueuePMService": { myResult = new BusinessProcessQueuePMService(); break; }  
+            case "BusinessProcessQueueListService": { myResult = new BusinessProcessQueueListService(); break; }
+            case "BusinessProcessQueuePMService": { myResult = new BusinessProcessQueuePMService(); break; }
             case "BusinessRoleListService": { myResult = new BusinessRoleListService(); break; }
             case "BIReportExtendedListService": { myResult = new BIReportExtendedListService(); break; }
             case "LastRunDetailExtendedPMService": { myResult = new LastRunDetailExtendedPMService(); break; }
-            case "DWObjectTableExtendedListService": { myResult = new DWObjectTableExtendedListService(); break; }  
-            case "BusinessRolePMService": { myResult = new BusinessRolePMService(); break; }  
-            case "TeamListService": { myResult = new TeamListService(); break; }   
-            case "TeamPMService": { myResult = new TeamPMService(); break; }   
-            case "BatchTaskExecutionPMService": { myResult = new BatchTaskExecutionPMService(); break; } 
+            case "DWObjectTableExtendedListService": { myResult = new DWObjectTableExtendedListService(); break; }
+            case "BusinessRolePMService": { myResult = new BusinessRolePMService(); break; }
+            case "TeamListService": { myResult = new TeamListService(); break; }
+            case "TeamPMService": { myResult = new TeamPMService(); break; }
+            case "BatchTaskExecutionPMService": { myResult = new BatchTaskExecutionPMService(); break; }
             case "DWQueryBuilderService": { myResult = new DWQueryBuilderService(); break; }
             case "WebhookKeysListService": { myResult = new WebhookKeysListService(); break; }
             case "FeatureToggleListService": { myResult = new FeatureToggleListService(); break; }
@@ -198,6 +233,29 @@ export class ModuleProviders {
             case "HelpResourceListService": { myResult = new HelpResourceListService(); break; }
             case "HelpResourcePMService": { myResult = new HelpResourcePMService(); break; }
             case "BIReportFolderExtendedListService": { myResult = new BIReportFolderExtendedListService(); break; }
+            case "MultiEntityUpdateLogPMService": { myResult = new MultiEntityUpdateLogPMService(); break; }
+            case "EntityStatusTypeListService": { myResult = new EntityStatusTypeListService(); break; }
+            case "ImageLibraryListService": { myResult = new ImageLibraryListService(); break; }
+            case "ImageLibraryPMService": { myResult = new ImageLibraryPMService(); break; }
+            case "TableTabService": { myResult = new TableTabService(); break; }
+            case "ScreenSectionListService": { myResult = new ScreenSectionListService(); break; }
+            case "ScreenListService": { myResult = new ScreenListService(); break; }
+            case "ScreenPMService": { myResult = new ScreenPMService(); break; }
+            case "DigitalPortalScreenListService": { myResult = new DigitalPortalScreenListService(); break; }
+            case "DigitalPreDefinedComponentListService": { myResult = new DigitalPreDefinedComponentListService(); break; }
+            case "DeploymentPackagePMService": { myResult = new DeploymentPackagePMService(); break; }
+            case "DeploymentPackageListService": { myResult = new DeploymentPackageListService(); break; }
+            case "CustomFieldsMainObjectPMService": { myResult = new CustomFieldsMainObjectPMService(); break; }
+            case "CustomFieldsMainObjectListService": { myResult = new CustomFieldsMainObjectListService(); break; }
+            case "DigitalCustomizationService": { myResult = new DigitalCustomizationService(); break; }
+            case "DataCustomObjectPMService": { myResult = new DataCustomObjectPMService(); break; }
+            case "DataCustomObjectListService": { myResult = new DataCustomObjectListService(); break; }
+            case "ReferenceCustomObjectPMService": { myResult = new ReferenceCustomObjectPMService(); break; }
+            case "ReferenceCustomObjectListService": { myResult = new ReferenceCustomObjectListService(); break; }
+            case "DeploymentPackageExecutionLogPMService": { myResult = new DeploymentPackageExecutionLogPMService(); break; }
+            case "DeploymentPackageExecutionLogListService": { myResult = new DeploymentPackageExecutionLogListService(); break; }
+            case "DeploymentPackageExecutionLogListExtendedService": { myResult = new DeploymentPackageExecutionLogListExtendedService(); break; }
+            case "SchedulerReportMessageTemplateService": { myResult = new SchedulerReportMessageTemplateService(); break;}
         }
 
         return myResult;

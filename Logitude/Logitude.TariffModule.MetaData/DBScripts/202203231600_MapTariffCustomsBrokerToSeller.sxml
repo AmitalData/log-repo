@@ -1,0 +1,14 @@
+﻿<Script DBType="Main" Module="Tariff" AOT="true" TargetTableName="Tariffs">
+  <Sql Version="1">
+    <![CDATA[
+    
+    update Tariffs set SellerId = CustomsBrokerId, SellerPartnerTypeId = CustomsBrokerPartnerTypeId
+    where (TypeCode = 'ICC' or TypeCode = 'ECC') and $LastCounterWhere$
+
+    ]]>
+  </Sql>
+</Script>
+
+
+
+

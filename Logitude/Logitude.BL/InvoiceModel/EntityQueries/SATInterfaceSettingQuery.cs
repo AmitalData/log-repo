@@ -43,6 +43,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         SATInterfaceName = a.SATInterface.Name,
                         ActivationDate = a.ActivationDate,
                         MetodoPagoCode = a.MetodoPagoCode,
+                        IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
+                        IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
+                        SATCompanyName = a.SATCompanyName,
+                        TransferExpenseCharges = a.TransferExpenseCharges,
                     }).FirstOrDefault();
         }
 
@@ -60,7 +64,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                         SATInterfaceName = a.SATInterface.Name,
                         ActivationDate = a.ActivationDate,
                         MetodoPagoCode = a.MetodoPagoCode,
-
+                        IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
+                        IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
+                        SATCompanyName = a.SATCompanyName,
+                        TransferExpenseCharges = a.TransferExpenseCharges,
                     }).FirstOrDefault();
         }
 
@@ -75,7 +82,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                        SATInterfaceName = a.SATInterface.Name,
                        ActivationDate = a.ActivationDate,
                        MetodoPagoCode = a.MetodoPagoCode,
-
+                       IsARInvoiceTransferEnabled = a.IsARInvoiceTransferEnabled,
+                       IsCartaPorteTransferEnabled = a.IsCartaPorteTransferEnabled,
+                       SATCompanyName = a.SATCompanyName,
+                       TransferExpenseCharges = a.TransferExpenseCharges,
                    };
         }
 
@@ -90,7 +100,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                              Token = entity.Token,
                                                              ActivationDate = entity.ActivationDate,
                                                              MetodoPagoCode = entity.MetodoPagoCode,
-
+                                                             IsARInvoiceTransferEnabled = entity.IsARInvoiceTransferEnabled,
+                                                             IsCartaPorteTransferEnabled = entity.IsCartaPorteTransferEnabled,
+                                                             SATCompanyName = entity.SATCompanyName,
+                                                             TransferExpenseCharges = entity.TransferExpenseCharges,
                                                          };
             return result;
         }

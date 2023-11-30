@@ -108,6 +108,13 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
         this.LastWeekCreatedTariffs = this.EntityPM.LastWeekCreatedTariffs;
         this.LastMonthCreatedTariffs = this.EntityPM.LastMonthCreatedTariffs;
 
+        this.DigitalPortalLastDate = this.EntityPM.DigitalPortalLastDate;
+        this.DigitalPortalMobTotalLastMonth = this.EntityPM.DigitalPortalMobTotalLastMonth;
+        this.DigitalPortalMobTotalLastWeek = this.EntityPM.DigitalPortalMobTotalLastWeek;
+        this.DigitalPortalMobileLastDate = this.EntityPM.DigitalPortalMobileLastDate;
+        this.DigitalPortalTotalLastMonth = this.EntityPM.DigitalPortalTotalLastMonth;
+        this.DigitalPortalTotalLastWeek = this.EntityPM.DigitalPortalTotalLastWeek;
+
         this.SetColors();
     }
 
@@ -124,6 +131,8 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
         this.ActivityLastDateColor = FontTool.Gray;
         this.ShardLogisticLastDateColor = FontTool.Gray;
         this.MobileLastDateColor = FontTool.Gray;
+        this.DigitalPortalMobileLastDateColor = FontTool.Gray;
+        this.DigitalPortalLastDateColor = FontTool.Gray;
 		this.AgentSharedLogisticsStatisticsLastDateColor = FontTool.Gray;
 		
 
@@ -198,8 +207,24 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
                 this.MobileLastDateColor = FontTool.Red;
             }
         }
+
+        if (this.EntityPM.DigitalPortalLastDate != null) {
+            var myDate = new Date(this.EntityPM.DigitalPortalLastDate.valueOf()).valueOf();
+
+            if (myDate < date7) {
+                this.DigitalPortalLastDateColor = FontTool.Red;
+            }
+        }
+        
+        if (this.EntityPM.DigitalPortalMobileLastDate != null) {
+            var myDate = new Date(this.EntityPM.DigitalPortalMobileLastDate.valueOf()).valueOf();
+
+            if (myDate < date7) {
+                this.DigitalPortalMobileLastDateColor = FontTool.Red;
+            }
+        }
 		
-		    if (this.EntityPM.AgentSharedLogisticsStatisticsLastDate != null) {
+		if (this.EntityPM.AgentSharedLogisticsStatisticsLastDate != null) {
             var myDate = new Date(this.EntityPM.AgentSharedLogisticsStatisticsLastDate.valueOf()).valueOf();
 
             if (myDate < date7) {
@@ -280,6 +305,16 @@ export class TenantManagementStatisticsTabComponent extends BaseComponent implem
     public LastTariffUsageDate: Date;
     public LastWeekCreatedTariffs: number;
     public LastMonthCreatedTariffs: number;
+
+    DigitalPortalLastDate: Date;
+    DigitalPortalTotalLastWeek: number;
+    DigitalPortalTotalLastMonth: number;
+    DigitalPortalMobileLastDate: Date;
+    DigitalPortalMobTotalLastWeek: number;
+    DigitalPortalMobTotalLastMonth: number;
+
+    public DigitalPortalMobileLastDateColor: string
+    public DigitalPortalLastDateColor: string
 
     RefreshClicked() {
         this.CurrentSession.StartBusyIndicator("Refreshing....");

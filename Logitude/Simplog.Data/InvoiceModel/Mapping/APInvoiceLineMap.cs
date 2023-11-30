@@ -13,7 +13,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.LineNumber).HasDatabaseGeneratedOption(null);
             this.Property(t => t.ChargesTypeId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.VatTypeId).IsRequired().HasMaxLength(15).IsUnicode(false);
-            this.Property(t => t.Notes).HasMaxLength(250).IsUnicode(true);
+            this.Property(t => t.Notes).HasMaxLength(1000).IsUnicode(true);
             this.Property(t => t.EntityId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.EntityPayableId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.ForiegnCurrencyId).HasMaxLength(15).IsUnicode(false);

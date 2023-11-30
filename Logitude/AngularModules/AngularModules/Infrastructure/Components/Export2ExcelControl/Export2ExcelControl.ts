@@ -17,10 +17,11 @@ import { LogitudeGridExportToExcelExtendedPMService } from 'Common/Services/Exte
 import { interval, Observable, TimeInterval, timer } from 'rxjs';
 import { takeUntil, timeInterval } from 'rxjs/operators';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ReconcileExcelDataArgs, ReconciliationExtendedPMService } from 'Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 
 
 @Component({
-    
+
 
     templateUrl: './Export2ExcelControl.html',
     //pipes: [TextCodeTranslationPipe],
@@ -46,12 +47,16 @@ export class Export2ExcelControl {
     queryId: string;
     userid: string;
     QueryType: string;
+    Type: string
     ExportExcelArgs: any;
     WebFreightDomainService: WebFreightDomainService;
+    ReconcileExcelDataArgs : ReconcileExcelDataArgs;
     SetWindowArgs(args: any) {
         this.QueryType = args.QueryType ? args.QueryType : "";
         this.queryName = args.QueryName;
         this.ExportExcelArgs = args.ExportExcelArgs;
+        this.ReconcileExcelDataArgs = args.ReconcileExcelDataArgs;
+        this.Type = args.Type ? args.Type : "";
 
        if (this.QueryType == "LogBox") {
             var logboxShipmentExportExcelService: LogboxShipmentExportExcelService = new LogboxShipmentExportExcelService();
@@ -69,7 +74,22 @@ export class Export2ExcelControl {
             });
 
         }
+        else if (this.QueryType == "DraftReconciliation") {
+            var reconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
+            reconciliationExtendedPMService.PostReconcileExcelData(this.ReconcileExcelDataArgs).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) this.CompleteExcelData(myResponse.Result);
+                else this.CompleteExcelData("Faild");
+            });
 
+        }
+        else if (this.QueryType == "DraftReconciliationExt") {
+            var reconciliationExtendedPMService: ReconciliationExtendedPMService = new ReconciliationExtendedPMService();
+            reconciliationExtendedPMService.PostReconcileExtExcelData(this.ReconcileExcelDataArgs).subscribe((myResponse: ServiceResponse) => {
+                if (!myResponse.HasError) this.CompleteExcelData(myResponse.Result);
+                else this.CompleteExcelData("Faild");
+            });
+
+        }
         else {
             this.WebFreightDomainService = new WebFreightDomainService();
             this.ObjectTableName = args.currentObjectTable;
@@ -84,7 +104,7 @@ export class Export2ExcelControl {
                this.HandleExportResult(myResult);
            }, error => { this.OnError(error)});
         }
-         
+
     }
 
     OnError(error) {
@@ -110,7 +130,7 @@ export class Export2ExcelControl {
 
     initializeStartExecutionLogCheckTimer() {
         const source = interval(2000);
-        const timer$ = timer(300000); //complete after
+        const timer$ = timer(1200000); //complete after
         //return interval(2000).pipe(takeUntil(timer$));
 
         return source.pipe(takeUntil(timer$));
@@ -134,9 +154,9 @@ export class Export2ExcelControl {
             }
 
             if (this.IsStartExecutionLogCheckTimer) {
-                
+
                 this.WebFreightDomainService ?? new WebFreightDomainService();
-                
+
 
                 this.WebFreightDomainService.GetQueryExportExecutionLogStatus(logId).subscribe(
                     (res: ServiceResponse) => {
@@ -215,22 +235,22 @@ export class Export2ExcelControl {
     }
 
 
-    SaveExcelFile(tenant: number, FileName: string, OTName: string) {
+    SaveExcelFile(tenant: number, FileName: string, OTName: string , Type: string) {
         var tempDate = new Date();
         var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() +  "&qname=" + this.queryName + "_" + MyDate;
+        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() +  "&qname=" + this.queryName + "_" + MyDate+ "&type=" + this.Type ;
         //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         //    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(url);
         //} else
         {
             window.open(url);
         }
-        
+
         this.CurrentSession.CloseCurrentWindow();
     }
 
     SaveBtnCLicked() {
-        this.SaveExcelFile(this.tenant, this.FileName, this.ObjectTableName);
+        this.SaveExcelFile(this.tenant, this.FileName, this.ObjectTableName, this.Type);
     }
     RetryBtnClicked() {
 
@@ -267,7 +287,7 @@ export class Export2ExcelControl {
         this.CurrentSession.CloseCurrentWindow();
     }
 
-    
+
 
 }
 

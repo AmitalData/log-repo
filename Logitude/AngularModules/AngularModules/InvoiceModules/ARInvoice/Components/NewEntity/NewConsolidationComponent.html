@@ -60,7 +60,7 @@
                                     </td>
                                 </tr>
 
-                                <!-- PartnerId -->
+                                <!-- PartnerId & Template -->
                                 <tr class="FormFieldRow">
                                     <td>
                                         <LogLabel [ObjectFieldName]="'PartnerId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
@@ -74,14 +74,42 @@
                                                 [LookUpTableName]="'Card'"
                                                 [DependencyFilter1Value]="BillToDependencyValue1"
                                                 [DependencyFilter2Value]="BillToDependencyValue2"
-                                                [DependencyFilter1IsList]="BillToDependencyValue1IsList">
+                                                [DependencyFilter1IsList]="BillToDependencyValue1IsList"
+                                                [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                                         </LogLov>
                                     </td>
 
                                     <td>
-                                        <div></div>
-                                    </td>
+                                        <div>
+                                            <table *ngIf="IsHaveARInvoicePrintToogleFeature() && IsLoadDocumentTemplateReady">
+                                                <tr class="FormFieldRow">
+                                                    <td>
+                                                        <LogLabel [ObjectFieldName]="'DocumentTemplateId'" [ObjectTableName]="ObjectTableName"
+                                                                  [DataContext]="DataContext"></LogLabel>
+                                                    </td>
+                                                    <td style="width:230px;">
+                                                        <table>
+                                                            <tr>
+                                                                <td>
+                                                                    <ComboBox *ngIf="IsDocumentTypeTemplateChange" [ItemsSource]="documentTypeTemplates" [Binding]="'Description'"
+                                                                              [SelectedItem]="selectedDocumentTypeTemplate" (SelectedItemChanged)="OnDocumentTypeTemplateSelectedChanged($event)"></ComboBox>
 
+                                                                    <ComboBox *ngIf="!IsDocumentTypeTemplateChange" [ItemsSource]="documentTypeTemplates" [Binding]="'Description'"
+                                                                              [SelectedItem]="selectedDocumentTypeTemplate" (SelectedItemChanged)="OnDocumentTypeTemplateSelectedChanged($event)"></ComboBox>
+
+
+                                                                </td>
+                                                                <td style="width: 36px;">
+                                                                    <div></div>
+                                                                </td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
                                 </tr>
                                 <!-- BillToId -->
                                 <tr class="FormFieldRow">
@@ -95,7 +123,8 @@
                                                 [ObjectTableName]="ObjectTableName"
                                                 [DataContext]="DataContext"
                                                 [LookUpTableName]="'Card'"
-                                               >
+                                                [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                                         </LogLov>
                                     </td>
 
@@ -250,6 +279,29 @@
 
                                     <td>
                                         <div></div>
+                                    </td>
+                                </tr>
+
+                                <!-- Period -->
+                                <tr *ngIf="DisplaySATSettings && Profact4Enabled" class="FormFieldRow">
+                                    <td>
+                                        <LogLabel [ObjectFieldName]="'PeriodCode'"
+                                                  [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                        </LogLabel>
+                                    </td>
+                                    <td>
+                                        <table>
+                                            <tr>
+                                                <td>
+                                                    <ComboBox (SelectedItemChanged)="SelectdPeriod = $event"
+                                                              [SelectedItem]="SelectdPeriod" [ItemsSource]="Periods"
+                                                              [Binding]="'Name'"></ComboBox>
+                                                </td>
+                                                <td style="width:35px;">
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+                                        </table>
                                     </td>
                                 </tr>
 

@@ -19,5 +19,6 @@ export class QuoteComputedFieldList {
 		EstimatedPayablesInLocal: number;
 		EstimatedReceivablesInLocal: number;
 		EstimatedReceivablesInSales: number;
+		MarkupPercentage: number;
 	
 }

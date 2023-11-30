@@ -138,6 +138,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             GenericSort sortClass = new GenericSort();
             FollowUpsCustomFilter customfilters = new FollowUpsCustomFilter(tenant);
             IQueryable<ShipmentFollowUpDataView> shipments = shipmentRepository.GetShipmentFollowUpDataViewByTenant(tenant);
+
             shipments = customfilters.GetShipmentFollowUpFilteredQuery(queryOperations, shipments);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
@@ -208,6 +209,36 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   Field38 = f.Field38,
                                   Field39 = f.Field39,
                                   Field40 = f.Field40,
+                                  Field41 = f.Field41,
+                                  Field42 = f.Field42,
+                                  Field43 = f.Field43,
+                                  Field44 = f.Field44,
+                                  Field45 = f.Field45,
+                                  Field46 = f.Field46,
+                                  Field47 = f.Field47,
+                                  Field48 = f.Field48,
+                                  Field49 = f.Field49,
+                                  Field50 = f.Field50,
+                                  Field51 = f.Field51,
+                                  Field52 = f.Field52,
+                                  Field53 = f.Field53,
+                                  Field54 = f.Field54,
+                                  Field55 = f.Field55,
+                                  Field56 = f.Field56,
+                                  Field57 = f.Field57,
+                                  Field58 = f.Field58,
+                                  Field59 = f.Field59,
+                                  Field60 = f.Field60,
+                                  Field61 = f.Field61,
+                                  Field62 = f.Field62,
+                                  Field63 = f.Field63,
+                                  Field64 = f.Field64,
+                                  Field65 = f.Field65,
+                                  Field66 = f.Field66,
+                                  Field67 = f.Field67,
+                                  Field68 = f.Field68,
+                                  Field69 = f.Field69,
+                                  Field70 = f.Field70,
                                   ChargeableWeightInKG = f.ChargeableWeightInKG,
                                   ChargeableWeight = f.ChargeableWeight,
                                   GrossWeight = f.GrossWeight,
@@ -341,6 +372,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   Notify1Reference = f.Notify1Reference,
                                   Notify2Reference = f.Notify2Reference,
                                   ShipperNotExporterReference = f.ShipperNotExporterReference,
+                                  ShipperNotExporterReference1 = f.ShipperNotExporterReference1,
+                                  ShipperNotExporterReference2 = f.ShipperNotExporterReference2,
                                   ConsigneeNotImporterReference = f.ConsigneeNotImporterReference,
                                   MoveTypeName = f.MoveTypeName,
                                   ContainerLastStatusDate = f.ContainerLastStatusDate,
@@ -358,10 +391,17 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                                   MainCarriageVesselName = f.MainCarriageVesselName,
                                   PreForwardingETD = f.PreForwardingETD,
                                   PreCarriageETD = f.PreCarriageETD,
+                                  PlannedCargoReadyDate = f.PlannedCargoReadyDate,
+                                  ApprovedCargoReadyDate = f.ApprovedCargoReadyDate,
+                                  HandlerUserId = f.HandlerUserId,
+                                  HandlerUserName = f.HandlerUserName,
+                                  DestinationWarehouseId = f.DestinationWarehouseId,
+                                  DestinationWarehouseName = f.DestinationWarehouseName,
+                                  OperationalStatusName = f.OperationalStatusName,
                               };
-
+                       
             entityLists = genericFilter.GetFilteredQuery<ShipmentList>(listQueryOperation, entityLists);
-
+            
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
                 PropertyInfo propInfo = typeof(ShipmentList).GetProperty(queryOperations.SortByColumnName);
@@ -438,7 +478,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
             List<ShipmentList> listQuery = entityLists.ToList();
             response.Result = listQuery;
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Shipment", tenant, listQuery.Cast<object>().ToList());
             HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
             if (filters.GetCount)

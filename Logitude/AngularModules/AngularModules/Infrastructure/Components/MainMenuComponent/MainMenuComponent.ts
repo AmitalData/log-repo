@@ -14,6 +14,7 @@ import {QueryPM} from '../../../Infrastructure/EntityPMs/QueryPM';
 import {ObjectsLocator} from '../../Locators/ObjectsLocator';
 import {ServiceLocator} from '../../Locators/ServiceLocator';
 import { retry } from 'rxjs/operators';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 
 @Component({
     
@@ -33,19 +34,20 @@ export class MainMenuComponent {
     LayoutDirection: string = 'ltr';
     @Output() SelectionChanging: EventEmitter<any> = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
+
+    public hasMainTabHighlightColor = SessionLocator.PrivateLableSettings ? (SessionLocator.PrivateLableSettings.MainTabHighlightColor == null ? false : true) : false; 
+    public privateLabelClass = {
+        background: SessionLocator.PrivateLableSettings ? SessionLocator.PrivateLableSettings.MainTabHighlightColor : "", 
+    }
+
     constructor() {
         this.MainMenuItems = new Array<MainMenuItem>();
         this.MainMenuItems = this.GetMainMenuItemsFromWindow();
-        var hasCToolToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "CTL")[0]
-        if (hasCToolToggleFeature) {
-            var tasksAppItem = new MainMenuItem("General.MH.TasksApp", AppTool.GetMainMenuIconCode("General.MH.Depositions"));
-            tasksAppItem.IndexOfOrder = 100;
-            tasksAppItem.ObjectTableId = null;
-            tasksAppItem.HtmlView = null;
-            tasksAppItem.ObjectTableName = null;
-            tasksAppItem.QuerySection = null;
-            this.MainMenuItems.push(tasksAppItem);
-        } 
+        var hasCToolToggleFeature = SessionLocator.FeatureToggles.filter(f => f.ToggleCode === "CTL")[0];
+        if(hasCToolToggleFeature === undefined || (hasCToolToggleFeature !== undefined && hasCToolToggleFeature.Inactive)){
+            this.MainMenuItems = this.MainMenuItems.filter(m => m.TextCode !== "General.MH.TasksApp");
+        }
+
         // Layout Direction
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         var defaultStatus: string = LastFilterClass.GetFilterValue("Simplog.Infrastructure.Views.MenuView", "Sidebar");
@@ -76,7 +78,7 @@ export class MainMenuComponent {
             }
 
 
-            if (isAddingItem) {
+            if (isAddingItem) { 
                 var menuItem: MainMenuItem = new MainMenuItem(item.TextCode, AppTool.GetMainMenuIconCode(item.TextCode));
                 menuItem.IndexOfOrder = item.IndexOfOrder;
                 menuItem.ObjectTableId = item.ObjectTableId;
@@ -291,8 +293,18 @@ export class MainMenuComponent {
                         break;
                     }
 
+                    case "General.MH.Automations": {
+                        myComponentPath = "./Infrastructure/Components/Maintenance/Automation/MainMenuAutomationComponent";
+                        break;
+                    }
+
+
                     case "General.MH.ContainersFU": {
                         myComponentPath = "./Shipment/Components/Workspaces/ContainersFUsComponent";
+                        break;
+                    }
+                    case "General.MH.Containers": {
+                        myComponentPath = "./Shipment/Components/Workspaces/ContainerComponent";
                         break;
                     }
 
@@ -307,6 +319,7 @@ export class MainMenuComponent {
                     }
 
                     case "General.MH.FilingInbox": {
+                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Filing Inbox" });
                         myComponentPath = "./CommonModules/CommonFilingInbox/Components/FilingInboxWorkspaceComponent";
                         break;
                     }
@@ -325,7 +338,7 @@ export class MainMenuComponent {
 
                         break;
                     }
-                    case "General.MH.QuotesOP": {
+                     case "General.MH.QuotesOP": {
                         this._entityResourceService.getEntityResourceByTableName("QuoteOP", 0).subscribe((response: any) => { });
                         ServiceLocator.SendTotangoUserActivity("QuoteOP", "List View");
                         myComponentPath = "./QuoteOPM/Components/Workspaces/QuotesComponent";
@@ -338,8 +351,15 @@ export class MainMenuComponent {
                         break;
                     }
                     case "General.MH.Dashboard": {
-                        ServiceLocator.SendTotangoUserActivity("Dashboard", "Main View");
+                     case "General.MH.ClassicDashboard": {
+                         ServiceLocator.SendTotangoUserActivity("Dashboard", "Main View");
                         myComponentPath = "./Dashboard/Components/Workspace/DashboardComponent";
+                        break;
+                    }
+
+                    case "General.MH.Dashboard": {
+                        MixPanelLocator.PostDashboardAction({ ActionName: "Custom Dashboard Tab Click" });
+                        myComponentPath = "./DashboardModule/Components/Workspace/Layout/CustomDashboardComponent";
                         break;
                     }
 
@@ -628,25 +648,9 @@ export class MainMenuComponent {
                         break;
                     }
                         
-                    case "General.MH.Tasks": {
-                        ServiceLocator.SendTotangoUserActivity("Tasks", "Main View");
-                        this._entityResourceService.getEntityResourceByTableName("Activity", 0).subscribe((response:any) => {
-                            SessionLocator.DynamicLoader.Load('./InfrastructureModules/InfrastructureBusinessProcess/Components/Workspaces/TasksWorkspaceComponent', this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                                .then(cmpRef => {
-                                    this.CurrentSession.DestroyMenuReferences();
-                                    this.CurrentSession.DestroyListComponentReferences();
-                                    this.CurrentSession.AddMenuReference(cmpRef);
-                                    this.ChangeSessionHeader(this.SelectedMenu);
-                                    this.isChangingSelected = false;
-                                    //this.pointerEvents = 'all';
-                                });
-                            //myComponentPath = "./InfrastructureModules/InfrastructureBusinessProcess/Components/Workspaces/TasksWorkspaceComponent";
-                        });
-                        break;
-                    }
-
                     case "General.MH.Depositions": {
                         ServiceLocator.SendTotangoUserActivity("Customs Shipper", "List View");
+                        MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Deposition Query" });
                         var listArgs = this.GetNewListComponentArgs();
                         listArgs.QueryCode = "AllDepositionsQuery";
                         listArgs.ObjectTableName = "CustomsShipper";

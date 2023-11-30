@@ -6,12 +6,20 @@ using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using System.Linq;
 using System.Data.SqlClient;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Simplog.Data.ShipmentsModel
 {
     public interface IShipmentsContext : IContext
     {
+        IDbSet<DigitalShipmentsDataView> ShipmentDigitalDataViews
+        {
+            get; 
+        }
+
+
         IDbSet<Shipment> Shipments { get; }
+        IDbSet<ShipmentDocsField> ShipmentDocsFields { get; }
         IDbSet<ShipmentType> ShipmentTypes { get; }
         IDbSet<ShipmentMasterData> ShipmentMasterDatas { get; }
         IDbSet<ShipmentReceivable> ShipmentReceivables { get; }
@@ -33,6 +41,9 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<NextLeg> NextLegs { get; }
         IDbSet<ShipmentPayableAmountType> ShipmentPayableAmountTypes { get; }
         IDbSet<ShipmentLevel> ShipmentLevels { get; }
+        IDbSet<ContainerTrackingProvider> ContainerTrackingProviders { get; }
+        IDbSet<ContainerTrackingResponse> ContainerTrackingResponses { get; }
+        IDbSet<ContainerTrackingRequest> ContainerTrackingRequests { get; }
         IDbSet<AWBChargesCode> AWBChargeCodes { get; }
         IDbSet<AWBSpecialHandlingCode> AWBHandlingCodes { get; }
         IDbSet<FWBStatus> FWBStatus { get; }
@@ -51,8 +62,11 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ManifestStatus> ManifestStatus { get; }
         IDbSet<AWBAdditionalHandlingInfo> AWBAdditionalHandlingInfos { get; }
         IDbSet<ShipmentComputedFields> ShipmentComputedFields { get; }
+        IDbSet<ShipmentDigitalField> ShipmentDigitalFields { get; }
+        IDbSet<ContainersExternalData> ContainersExternalDatas { get; }
         IDbSet<OceanInsightsRequest> OceanInsightsRequests { get; }
         IDbSet<LogitudeOceanInsightsRequest> LogitudeOceanInsightsRequests { get; }
+        IDbSet<LogitudeOceanInsightsResponse> LogitudeOceanInsightsResponses { get; }
         IDbSet<OceanInsightsRequestsCount> OceanInsightsRequestsCounts { get; }
         IDbSet<OceanInsightsStatuses> OceanInsightsStatuses { get; }
         IDbSet<OtherParticipantId> OtherParticipantIds { get; }
@@ -80,10 +94,19 @@ namespace Simplog.Data.ShipmentsModel
         IDbSet<ShipmentStoragePricing> ShipmentStoragePricings { get; set; }
         IDbSet<ShipmentProductItem> ShipmentProductItems { get; set; }
         IDbSet<Container> Containers { get; set; }
+        IDbSet<ShipmentUnassignedField> ShipmentUnassignedFields { get; set; }
         IDbSet<ContainerStatus> ContainerStatuses { get; }
         IDbSet<ContainerStatusSource> ContainerStatusSources { get; }
-        IQueryable<TOutput> FunctionTableValue<TOutput>(string functionName, SqlParameter[] parameters);
+        IDbSet<ARInvoice> ARInvoicesForReports{ get; }
+        IDbSet<PayableProratedAmount> PayableProratedAmounts { get; }
+        IDbSet<ShipmentAnalytic> ShipmentAnalytics { get; set; }
+        IDbSet<ContainerAnalytic> ContainerAnalytics { get; set; }
+        IDbSet<ContainerDiscrepancy> ContainerDiscrepancies { get; set; }
+		IDbSet<OceanInsightsStatusLog> OceanInsightsStatusLogs { get; set; }
+
+		IQueryable<TOutput> FunctionTableValue<TOutput>(string functionName, SqlParameter[] parameters);
         IQueryable<ShipmentDataView> ShipmentSearch(string SearchFields);
+
 
         void SetAsModified(object entity);
         void DetectChanges();

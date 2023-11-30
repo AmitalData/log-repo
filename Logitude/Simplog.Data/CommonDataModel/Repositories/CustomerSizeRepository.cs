@@ -36,7 +36,11 @@ namespace Simplog.Data.CommonDataModel.Repositories
         {
             return (from record in context.CustomerSizes where record.Id == id && record.Tenant == tenant select record).FirstOrDefault();
         }
-        
+
+        public CustomerSize GetSingleCustomerSizeByCode(string code, int tenant)
+        {
+            return (from record in context.CustomerSizes where record.Code == code && record.Tenant == tenant select record).FirstOrDefault();
+        }
         public void Add(CustomerSize entity)
         {
             context.CustomerSizes.Add(entity);

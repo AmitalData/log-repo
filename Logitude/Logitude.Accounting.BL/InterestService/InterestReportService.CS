@@ -87,11 +87,11 @@ namespace Logitude.Accounting.BL.InterestService
                 BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
                 BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(InterestLastBatchService.CreateInvoicesBatchId, false, false);
 
-                if (batchTaskExecutionPM.StatusCode != "D" && batchTaskExecutionPM.StatusCode != "F")
+                if (batchTaskExecutionPM != null && batchTaskExecutionPM.StatusCode != "D" && batchTaskExecutionPM.StatusCode != "F")
                 {
                     ContactPM contact = GetLoggedContact(tenant);
                     bool showLocals = !contact.DontShowLocal;
-                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
                 }
             }
 
@@ -110,7 +110,7 @@ namespace Logitude.Accounting.BL.InterestService
                 BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
                 BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(InterestLastBatchService.CreateInvoicesBatchId, false, false);
 
-                if (batchTaskExecutionPM.StatusCode == "D" || batchTaskExecutionPM.StatusCode == "F")
+                if (batchTaskExecutionPM == null || batchTaskExecutionPM.StatusCode == "D" || batchTaskExecutionPM.StatusCode == "F")
                 {
                     BatchId = CreateBatchInvoice(interestReportArgs, tenant, email);
                     InterestLastBatchService.CreateInvoicesBatchId = BatchId;
@@ -121,7 +121,7 @@ namespace Logitude.Accounting.BL.InterestService
                 {
                     ContactPM contact = GetLoggedContact(tenant);
                     bool showLocals = !contact.DontShowLocal;
-                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
                 }
             }
             else if (InterestLastBatchService != null && string.IsNullOrEmpty(InterestLastBatchService.CreateInvoicesBatchId))
@@ -158,11 +158,11 @@ namespace Logitude.Accounting.BL.InterestService
                 BatchTaskExecutionQueryService batchTaskExecutionQueryService = new BatchTaskExecutionQueryService(tenant);
                 BatchTaskExecutionPM batchTaskExecutionPM = batchTaskExecutionQueryService.GetSingle(InterestLastBatchService.CreateInvoicesBatchId, false, false);
 
-                if (batchTaskExecutionPM.StatusCode != "D" && batchTaskExecutionPM.StatusCode != "F")
+                if (batchTaskExecutionPM != null && batchTaskExecutionPM.StatusCode != "D" && batchTaskExecutionPM.StatusCode != "F")
                 {
                     ContactPM contact = GetLoggedContact(tenant);
                     bool showLocals = !contact.DontShowLocal;
-                    throw new Exception(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("InterestReport.O.AnotherBatchInvoiceStillInProgress", tenant, showLocals));
                 }
             }
             interestReportArgs.Tenant = tenant;
@@ -293,7 +293,7 @@ namespace Logitude.Accounting.BL.InterestService
         private InterestTransactionList FillDataInterestTransaction(InterestTransactionList interestTransactionLists, List<string> JournalNumbers, List<string> CurencyCodes)
         {
             InterestEntityResult entityResult = GetInterestEntityResultByInterestTransaction(interestTransactionLists);
-         
+        
             interestTransactionLists.JournalNumber = GetSingleJournalnumberByInterestTransaction(entityResult, interestTransactionLists, JournalNumbers);
             interestTransactionLists.InterestEntityNumber = entityResult.EntityNumber;
             interestTransactionLists.InterestEntityType = entityResult.EntityType;
@@ -301,7 +301,7 @@ namespace Logitude.Accounting.BL.InterestService
             interestTransactionLists.JournalId = entityResult.JournalId;
             interestTransactionLists.AccountEntityCode = entityResult.AccountCode;
             interestTransactionLists.CurrencyCode = GetSingleCurrencyCodeByInterestTransaction(interestTransactionLists, CurencyCodes);
-  
+
             return interestTransactionLists;
         }
 
@@ -395,6 +395,7 @@ namespace Logitude.Accounting.BL.InterestService
                 UpdateDateTime = interestReport.UpdateDateTime,
                 Tenant = interestReport.Tenant,
                 CalCreditAllotmentCommission = interestReport.CalCreditAllotmentCommission,
+                CalculatedPostponedChequesCommision = interestReport.CalculatedPostponedChequesCommision,
                 CreateDateTime = interestReport.CreateDateTime,
                 CreatedByUserId = interestReport.CreatedByUserId,
                 CustomerId = interestReport.CustomerId,
@@ -460,6 +461,8 @@ namespace Logitude.Accounting.BL.InterestService
                                                                               OriginalEntityLineNumber = a.InterestTransaction.OriginalEntityLineNumber,
 
                                                                               SearchFields = a.InterestTransaction.SearchFields,
+
+                                                                              AccountingEntityCode = a.InterestTransaction.AccountingEntityCode
  
                                                                           });
             return interestTransactionLists;
@@ -474,9 +477,11 @@ namespace Logitude.Accounting.BL.InterestService
             }
 
             IQueryable<InterestTransactionList> interestTransactionLists = (from a in MyContext.InterestReportLines.Include("InterestTransaction").Include("InterestTransaction.GLAccount")
-                                                                            where a.Tenant == Tenant  &&a.InterestReportId == ReportId && a.InterestTransaction.GLAccountId !=null && a.InterestTransaction.GLAccount.ActiveForInterest ==true   && a.InterestTransaction.IsCancelled == false
+                                                                            where a.Tenant == Tenant  &&a.InterestReportId == ReportId && a.InterestTransaction.GLAccountId !=null && a.InterestTransaction.IsCancelled == false
                                                                             select new InterestTransactionList()
                                                                             {
+                                                                                Id=a.InterestTransactionId,
+
                                                                                 Tenant = a.Tenant,
 
                                                                                 CurrencyId = a.InterestTransaction.CurrencyId,
@@ -490,6 +495,8 @@ namespace Logitude.Accounting.BL.InterestService
                                                                                 ForeignAmount = a.InterestTransaction.ForeignAmount,
 
                                                                                 InterestValueDate = a.InterestTransaction.InterestValueDate,
+
+                                                                                Notes=a.InterestTransaction.Notes,
 
                                                                             });
             return interestTransactionLists;

@@ -38,6 +38,31 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="IsARInvoiceTransferEnabled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsCartaPorteTransferEnabled"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="SATCompanyName"
+    Type="nvarchar"
+    Size="200">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TransferExpenseCharges"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="SATInterfaceCode"
     ReferencedTable="SATInterfaces"

@@ -1,4 +1,5 @@
-﻿using Logitude.SystemLogs;
+﻿using Logitude.Server.Tools.Helpers;
+using Logitude.SystemLogs;
 using Logitude.SystemLogs.POCOs;
 using Logitude.SystemLogs.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -43,6 +44,8 @@ namespace WebFreight.Web.Controllers.SystemLogsModel
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(entity.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("ErrorLog", entity.Tenant, authToken.Tenant);
                 //SecurityUtility.CheckContactFeature("ErrorLog", "NEW", authToken.Tenant);
 
                 using (TransactionScope scope = TransactionFactory.GetNewTransaction())
@@ -109,62 +112,10 @@ namespace WebFreight.Web.Controllers.SystemLogsModel
 				string token = HttpContext.Current.Request.Headers["Token"];
 				AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
 				SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-				//SecurityUtility.CheckContactFeature("ErrorLog", "NEW", authToken.Tenant);
+         
+                PerformanceLogger.AddPerformanceLogsList(logsList); 
 
-				using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-				{
-					IGlobalContext globalContext = GlobalContext.GetContext();
-
-					PerformanceLogRepository performanceLogRepository = new PerformanceLogRepository(globalContext);
-
-					try
-					{
-						string ip = "";
-						if (HttpContext.Current != null && HttpContext.Current.Request != null)
-						{
-							string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
-							if (string.IsNullOrEmpty(currentIP))
-							{
-								currentIP = HttpContext.Current.Request.UserHostAddress;
-							}
-							ip = currentIP;
-						}
-						if (logsList != null && logsList.Count > 0)
-						{
-							foreach (var entity in logsList)
-							{
-								entity.UserIP = ip;
-
-								entity.LogDateTimeGMT = DateTime.UtcNow;
-
-								performanceLogRepository.Add(entity);
-							}
-
-							performanceLogRepository.SubmitChanges();
-						}
-						scope.Complete();
-
-					}
-					catch (Exception ex)
-					{
-						if (ex.InnerException != null)
-						{
-							if (ex.InnerException.Message.Contains("Violation of PRIMARY KEY constraint") || ex.Message.Contains("Violation of PRIMARY KEY constraint"))
-							{
-								//entity.Id = Guid.NewGuid().ToString();
-								//performanceLogRepository.SubmitChanges();
-								scope.Complete();
-							}
-						}
-						else
-							throw ex;
-						//Cannot insert duplicate key in object 
-
-					}
-					//  scope.Complete();
-				}
-
-				return Request.CreateResponse(HttpStatusCode.OK, "");
+                return Request.CreateResponse(HttpStatusCode.OK, "");
 			}
 
 			catch (Exception ex)

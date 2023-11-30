@@ -16,11 +16,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class ExternalReconciliationPM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -127,6 +127,11 @@ export class ExternalReconciliationPM {
     private accountLocalName: string;
     public get AccountLocalName() { return this.accountLocalName; }
     public set AccountLocalName(newValue: string) { if (this.accountLocalName != newValue) { this.accountLocalName = newValue; this.MarkAsDirty("AccountLocalName"); } }
+       
+	 
+    private crossYearReconcile: boolean;
+    public get CrossYearReconcile() { return this.crossYearReconcile; }
+    public set CrossYearReconcile(newValue: boolean) { if (this.crossYearReconcile != newValue) { this.crossYearReconcile = newValue; this.MarkAsDirty("CrossYearReconcile"); } }
        
 	 
 

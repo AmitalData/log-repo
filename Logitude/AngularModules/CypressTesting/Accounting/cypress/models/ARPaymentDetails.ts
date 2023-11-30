@@ -3,7 +3,10 @@ export interface ARPaymentDetails {
     Partner: string,
     BillToAddress: number,
     PaymentCurrency:string,
-    RegisterDate:number,
+    RegisterDate:string,
     PaymentMethod:string,
     PaymentAmount:string,
+    MetodoPago:string,
+    FormaPago:string,
+    Branch: string
 }

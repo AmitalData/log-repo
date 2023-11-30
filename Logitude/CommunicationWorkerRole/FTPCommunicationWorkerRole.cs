@@ -313,7 +313,7 @@ namespace CommunicationWorkerRole
                     Logitude.XSD.Artemus.CommunicationLogSettings settingsData = JsonConvert.DeserializeObject<Logitude.XSD.Artemus.CommunicationLogSettings>(waitingCommLog.LogSettings);
                     if (settingsData != null)
                     {
-                        string ftpHostIP = @"ftp://" + settingsData.host;
+                        string ftpHostIP = settingsData.host;
                         string ftpUserName = settingsData.username;
                         string ftpPassword = settingsData.password;
                         string ftpFolderName = settingsData.folder;
@@ -406,6 +406,7 @@ namespace CommunicationWorkerRole
 
         private void UpdateEntity(CommunicationLog commLog)
         {
+            if (commLog.Subject.Contains("Automation Interface")) return;
             string transferStatus = "TR";
             if(commLog.CommunicationStatusTypeCode == "F")
             {

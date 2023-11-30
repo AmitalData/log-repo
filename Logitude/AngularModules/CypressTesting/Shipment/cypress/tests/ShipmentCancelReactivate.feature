@@ -1,6 +1,4 @@
-@smoke @release @stable @all 
-#cancel it's smoke and relese
-#reactivate is release
+@smoke @smoke1 @release @stable
 Feature: Cancel and Reactivate Shipment
   The user creates a shipment, cancels the shipment,
   makes sure that the system does not allow the user to edit the shipment,

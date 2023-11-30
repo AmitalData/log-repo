@@ -30,9 +30,25 @@ using System.Net.Http;
 using System.ServiceModel.DomainServices.Server;
 using System.Web;
 using System.Web.Http;
+using Logitude.Accounting.BL.EntityQueryServices;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
+
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
+using Logitude.Server.Tools;
+using Microsoft.Practices.Unity;
+using System.IdentityModel.Metadata;
+using Logitude.BL.DataContracts;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using DocumentsFiling = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentsFiling;
+using Logitude.AmitalMessaging.Infrastructure.Transmission;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Accounting.Def.EntityPMs;
+using System.Linq.Dynamic.Core;
+using Logitude.Accounting.Data;
+using Logitude.Accounting.Data.EntityPOCOs;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -43,6 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 List<DocumentOutPM> result = documentOutQuery.GetDocumentOutPMsByTenant(tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -58,6 +75,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 List<DocumentOutPM> result = documentOutQuery.GetDocumentOutPMsByEntityId(entityId, tenant);
 
@@ -74,6 +92,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 List<DocumentOutPM> result = documentOutQuery.GetDocumentOutPMsByTenant(tenant).Where(d => d.DocumentTypeCode == docType && d.Tenant == tenant).ToList();
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -89,6 +108,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             try
             {
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 DocumentOutPM documentOutPM = documentOutQuery.GetSinglePM(id, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
@@ -107,6 +127,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (objectTableId == "null" || objectTableId == "undefined") objectTableId = null;
                 if (entityId == "null" || entityId == "undefined") entityId = null;
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 List<DocumentOutPM> result = documentOutQuery.GetDocumentOutPMsByEntityIdAndObjectTableAndChildEntityId(entityId, childEntityId, objectTableId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -117,14 +138,14 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
         }
 
-    
 
-        public HttpResponseMessage GetDocumentOutByDocumentTypeEntityAndChild(string entityId,int tenant ,  string childEntityId, string documentTypeId )
+
+        public HttpResponseMessage GetDocumentOutByDocumentTypeEntityAndChild(string entityId, int tenant, string childEntityId, string documentTypeId)
         {
             try
             {
                 if (childEntityId == "null" || childEntityId == "undefined") childEntityId = null;
-
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityId, childEntityId, documentTypeId, tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
@@ -146,6 +167,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (childentityreference == "null" || childentityreference == "undefined") childentityreference = null;
 
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 DocumentOutPM documentout = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityId, childEntityId, documentTypeId, tenant);
                 if (documentout == null)
@@ -168,7 +190,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
             try
             {
-                Authentication();
+                Authentication(currentEntity.Tenant);
                 ICommonDataContext objectContext = CommonDataContext.GetContext(currentEntity.Tenant);
 
                 //DocumentOutCopyRepository documentOutCopyRepository = new DocumentOutCopyRepository(currentEntity.Tenant);
@@ -183,7 +205,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 //            item.DocumentId = documentOutCopy.DocumentId;
                 //        }
                 //    }
-                   
+
                 //    DocumentOutCopy  documentCopy = MapDocumentOutCopyDocumentOutCopyPM(item, documentOutCopy);
                 //    documentOutCopyRepository.Update(documentCopy);
                 //}
@@ -240,6 +262,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (childReference == "null" || childReference == "undefined") childReference = null;
 
                 Authentication();
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
                 DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(entityId, childEntityId, documentTypeId, tenant);
                 if (documentOutPM == null)
@@ -265,15 +288,27 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 if (createDocumentOutArgs.ChildEntityId == "null" || createDocumentOutArgs.ChildEntityId == "undefined") createDocumentOutArgs.ChildEntityId = null;
                 if (createDocumentOutArgs.ChildReference == "null" || createDocumentOutArgs.ChildReference == "undefined") createDocumentOutArgs.ChildReference = null;
 
-                Authentication();
+                Authentication(createDocumentOutArgs.Tenant);
+
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(createDocumentOutArgs.Tenant);
                 DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.Tenant);
                 if (documentOutPM == null)
                 {
                     DocumentHelper documentHelper = new DocumentHelper();
-                    documentOutPM = documentHelper.CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant);
+                    documentOutPM = documentHelper.CreateDocumentOut(createDocumentOutArgs.DocumentTypeId, createDocumentOutArgs.EntityId, createDocumentOutArgs.ChildEntityId, createDocumentOutArgs.ChildReference, createDocumentOutArgs.ObjectTableId, createDocumentOutArgs.Tenant, null, createDocumentOutArgs.DocumentTypeTemplateId);
+                  if (createDocumentOutArgs.SignHSM)
+                    {
+                        IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+                        FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(createDocumentOutArgs.Tenant);
+
+                        if(accountingSettings.AccountingActivated && !string.IsNullOrEmpty(accountingSettings.HSM) &&! string.IsNullOrEmpty(accountingSettings.HSMaddress )&& !string.IsNullOrEmpty(accountingSettings.HSMtoken))
+
+                        this.CheckDetailsToHSM(documentOutPM.Id,createDocumentOutArgs.Tenant, accountingSettings);
+                        
+                    }
+              
                 }
-         
+
                 return Request.CreateResponse(HttpStatusCode.OK, documentOutPM);
             }
             catch (Exception ex)
@@ -281,18 +316,72 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public void CheckDetailsToHSM(string documentOutId,int tenant, FullAccountingSettingPM accountingSettings)
+        {
+            DocumentHelper documentHelper = new DocumentHelper();
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+            ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
 
-     
+
+            var documentsFiling = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault();
+            ARInvoice invocie = repository.GetARInvoiceById(tenant, documentsFiling.EntityId).FirstOrDefault();
+
+            if (invocie != null)
+            {
+                string contactEmail = this.IsSignatureHtmlPresentByBillToId(invocie.BillToId, tenant);
+                if (!string.IsNullOrEmpty(contactEmail))
+                {
+                    this.CreatePdfDoc(documentsFiling, invocie);
+                    documentHelper.StartSignPDFInvoice(invocie, invocie.Tenant, repository, contactEmail,  accountingSettings);
+                }
+            }
+        }
+        private void CreatePdfDoc(DocumentsFiling documentsFiling, ARInvoice invocie)
+        {
+
+            ExportDocumentHelper exportDocumentHelper = new ExportDocumentHelper();
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(invocie.Tenant);
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(invocie.Tenant);
+            DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentsFiling.DocumentTypeId, documentsFiling.Id, invocie.Tenant);
+
+            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(invocie.Tenant);
+            var objectTable = objectTableRepository.GetObjectTableByName("ARInvoice", invocie.Tenant, true);
+
+            documentTypePM.DocumentTypeCopies.ForEach(doc =>
+            {
+                exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, invocie.Id, objectTable.Id, null, null, documentsFiling.Id, invocie.Tenant, doc.Id, resolveLoggingUserId);
+            });
+
+        }
+
+        private string IsSignatureHtmlPresentByBillToId(string Billto,int tenant)
+        {
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+
+            if (string.IsNullOrEmpty(Billto)) return "";
+            var EmailForSendingSingArinvoice = (from customer in objectContext.Customers
+                                                where customer.Id == Billto
+                                                // join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
+                                                select customer.EmailForSendingSingArinvoice).FirstOrDefault();
+            string email = "";
+            if (!string.IsNullOrEmpty(EmailForSendingSingArinvoice))
+            {
+                  email = objectContext.Contacts.Where(contact => contact.Id == EmailForSendingSingArinvoice ).FirstOrDefault().Email;
+                if(!string.IsNullOrEmpty(email))
+                   return email;
+            }
+            return email;
+        }
         private static void Authentication()
         {
             string token = HttpContext.Current.Request.Headers["Token"];
             AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
             SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-           // SecurityUtility.CheckContactFeature("DocumentOut", "READ", authToken.Tenant);
+            // SecurityUtility.CheckContactFeature("DocumentOut", "READ", authToken.Tenant);
         }
-        
-        public HttpResponseMessage GetEntityPartners(string entityId, string objectTableName , string childEntityId , string childobjectTableName)
-        {            
+
+        public HttpResponseMessage GetEntityPartners(string entityId, string objectTableName, string childEntityId, string childobjectTableName, string gLAccountId = null)
+        {
             try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
@@ -349,7 +438,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             }
                         }
 
-                        if (shipment.AgentId != null )
+                        if (shipment.AgentId != null)
                         {
                             list.Add(new EntityPartner()
                             {
@@ -366,7 +455,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             {
                                 Id = idCounter++,
                                 PartnerId = shipment.IssuingCarrierAgentId,
-                                PartnerType = "Issuing Carrier Agent",                                
+                                PartnerType = "Issuing Carrier Agent",
                             });
                         }
 
@@ -381,7 +470,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             });
                         }
 
-                        if (shipment.CustomAgentImportId != null )
+                        if (shipment.CustomAgentImportId != null)
                         {
                             list.Add(new EntityPartner()
                             {
@@ -425,7 +514,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             });
                         }
 
-                        if (shipment.ConsigneeNotImporterId != null )
+                        if (shipment.ConsigneeNotImporterId != null)
                         {
                             list.Add(new EntityPartner()
                             {
@@ -436,7 +525,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             });
                         }
 
-                        if (shipment.FreightForwarderId != null )
+                        if (shipment.FreightForwarderId != null)
                         {
                             list.Add(new EntityPartner()
                             {
@@ -469,7 +558,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             });
                         }
 
-                        if (shipment.ConsolidatorId != null )
+                        if (shipment.ConsolidatorId != null)
                         {
                             list.Add(new EntityPartner()
                             {
@@ -578,7 +667,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                             {
                                 Id = idCounter++,
                                 PartnerId = quote.MainCarriageCarrierId,
-                                PartnerType = "Carrier",                                
+                                PartnerType = "Carrier",
                             });
                         }
                     }
@@ -592,7 +681,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                     OpportunityPM entityPM = opportunityQuery.GetSingle(entityId, false, false);
                     if (entityPM != null)
                     {
-                        if (!string.IsNullOrEmpty(entityPM.CustomerId) )
+                        if (!string.IsNullOrEmpty(entityPM.CustomerId))
                         {
                             list.Add(new EntityPartner()
                             {
@@ -604,6 +693,23 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         }
                     }
 
+                    #endregion
+                }
+
+                else if (objectTableName == "Report" && !string.IsNullOrWhiteSpace(gLAccountId))
+                {
+                    #region Report
+
+                    GLAccountConnectedPartnerService gLAccountConnectedPartnerService = new GLAccountConnectedPartnerService(authToken.Tenant);
+                    List<ShortPartnersDetails> connectedPartners = gLAccountConnectedPartnerService.GetAllConnectedPartnersByGLAccountId(gLAccountId);
+
+
+                    list.Add(new EntityPartner()
+                    {
+                        Id = 1,
+                        PartnerId = string.Join(",", connectedPartners.Select(a => a.PartnerId)),
+                        PartnerType = "Customer Contacts"
+                    });
                     #endregion
                 }
 
@@ -630,9 +736,9 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                         case "ARInvoice":
                             {
                                 ARInvoice iEntity = (from d in invoiceContext.ARInvoices where d.Id == entityId select d).FirstOrDefault();
-                                if(iEntity != null)
+                                if (iEntity != null)
                                 {
-                                    if(iEntity.BillToId != null)
+                                    if (iEntity.BillToId != null)
                                     {
                                         list.Add(new EntityPartner()
                                         {
@@ -706,6 +812,25 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
                     #endregion
                 }
+                else if(objectTableName == "InterestReport")
+                {
+
+                    IAccountingContext accountingContext = AccountingContext.GetContext(authToken.Tenant);
+                    InterestReport iEntity = (from d in accountingContext.InterestReports where d.Id == entityId select d).FirstOrDefault();
+                    if (iEntity != null)
+                    {
+                        if (iEntity.CustomerId != null)
+                        {
+                            list.Add(new EntityPartner()
+                            {
+                                Id = 1,
+                                PartnerId = iEntity.CustomerId,
+                                PartnerType = "Bill To",
+                            });
+                        }
+                    }
+
+                }
 
                 return Request.CreateResponse(HttpStatusCode.OK, list);
             }
@@ -716,7 +841,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             }
         }
 
-        public HttpResponseMessage GetCalculatedFileNameForDocumentOutCopy(string documentOutId , string documentTypeCopyId)
+        public HttpResponseMessage GetCalculatedFileNameForDocumentOutCopy(string documentOutId, string documentTypeCopyId)
         {
             try
             {
@@ -726,7 +851,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
 
                 DocumentOutQuery documentOutQuery = new DocumentOutQuery(authToken.Tenant);
-                string fileName = documentOutQuery.GetCalculatedFileNameForDocumentOutCopy(documentOutId, documentTypeCopyId , authToken.Tenant);
+                string fileName = documentOutQuery.GetCalculatedFileNameForDocumentOutCopy(documentOutId, documentTypeCopyId, authToken.Tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, fileName);
             }
             catch (Exception ex)
@@ -736,7 +861,13 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
 
         }
 
-
+        private static void Authentication(int tenant)
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnEntityTenant("", tenant, authToken.Tenant);
+        }
 
 
 

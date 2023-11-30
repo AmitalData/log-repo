@@ -1,6 +1,4 @@
-﻿
-using Logitude.Customs.Data.EntityListQueryServices;
-using Logitude.Customs.Data.EntityPOCOs;
+﻿using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -11,8 +9,6 @@ using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Web;
 
 namespace Logitude.Customs.Data.Utils
@@ -36,12 +32,11 @@ namespace Logitude.Customs.Data.Utils
         /// <returns>Array of freelancer connected customer Ids</returns>
         public List<string> GetConnectedCustomersIds(int tenant)
         {
-            List<string> customersIds = new List<string>();
-
             if (!IsConnectedCustomerCached()) // if the cache is empty, cache the connected customers
                 CacheConnectedCustomers();
 
-            customersIds = GetFromCache();
+            var customersIds = GetFromCache();
+
             return customersIds;
         }
 
@@ -53,13 +48,13 @@ namespace Logitude.Customs.Data.Utils
 
             return customers != null;
         }
+
         private List<string>  GetFromCache()
         {
             List<string> customersIds = new List<string>();
 
             List<Customer> customers = (List<Customer>)CacheManager.CacheWrapper.Get(keyCombination);
 
-            // 2-fill ids list
             if (customers != null)// dsv error log customers shouldn't be null and if it is null it must not crash.
             {
                 foreach (Customer customer in customers)
@@ -70,6 +65,7 @@ namespace Logitude.Customs.Data.Utils
 
             return customersIds;
         }
+
         private void CacheConnectedCustomers()
         {
             CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(user.Tenant);
@@ -133,6 +129,7 @@ namespace Logitude.Customs.Data.Utils
 
             }
         }
+
         private User GetLoggedUser(int tenant)
         {
             ICommonDataContext commonContext = CommonDataContext.GetContext(tenant);
@@ -145,6 +142,7 @@ namespace Logitude.Customs.Data.Utils
 
             return user;
         }
+
         private string GetAuthenticatedUser()
         {
             if (HttpContext.Current != null)
@@ -167,8 +165,10 @@ namespace Logitude.Customs.Data.Utils
                     throw new Exception("Sorry! this user is not authorized!");
                 }
             }
+
             throw new Exception("Sorry! this user is not authorized!");
         }
+
         private bool IsAuthenticatedUserExists()
         {
             bool exists = false;
@@ -182,6 +182,7 @@ namespace Logitude.Customs.Data.Utils
 
             return exists;
         }
+
         public static int GetLoggedTenant()
         {
             if (HttpContext.Current != null)
@@ -196,6 +197,7 @@ namespace Logitude.Customs.Data.Utils
 
                 throw new Exception("Sorry! this user is not authorized!");
             }
+
             throw new Exception("Sorry! this user is not authorized!");
         }
     }

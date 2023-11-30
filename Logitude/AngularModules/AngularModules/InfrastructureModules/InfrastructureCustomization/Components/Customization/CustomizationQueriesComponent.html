@@ -1,0 +1,111 @@
+
+<style>
+    .Disabled {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <table>
+                <tr style="height: 20px;">
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td style="width: 20px; padding-right: 2px;float:right;vertical-align:central;">
+                                    <IconButton [Name]="'Add'" [IsSmall]="true" [IsEnabled]="IsAddButtonEnabled && AllowQueries" (click)="AddCustomView()"></IconButton>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr style="height: 5px;">
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td [style.height]="AllowQueries? '100%': '80px'">
+                        <div class="MediaFill" style="overflow-x: hidden;">
+                            <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="CustomQueriesCollection">
+                                <!-- QueryName -->
+                                <log-column [header]="'View Name'" [width]="'260'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                            <div class="TextTrimming">
+                                                <span>{{item.NameTextCodeCode | TextCodeTranslationPipe}}</span>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+                                <!-- IsDefault -->
+                                <log-column [header]="'Is Default'" [width]="'80'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                            <div class="CheckBox" style="margin-left:3px; margin-top:5px;">
+                                                <CheckBox [DataCy]="'Is Default'" [IsChecked]="item.IsDefault" (Checked)="IsDefaultClicked(item,$event)"></CheckBox>
+                                            </div>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+                                <!-- Buttons -->
+                                <log-column [width]="'30'" [Alignment]="'left'">
+                                    <ng-template let-item>
+                                        <log-cell-template [IgnoreMods]="true">
+                                            <IconButton [DataCy]="item.NameTextCodeCode" [Name]="'edit'" [IsSmall]="true"
+                                                        style="display: block; float: left; margin-left:3px; margin-top:4px;" (click)="EditCustomView(item)"></IconButton>
+                                        </log-cell-template>
+                                    </ng-template>
+                                </log-column>
+                            </logitude-edit-grid>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div style="font-weight:bold;height:30px">Advanced Settings:</div>
+                        <table>
+                            <tr>
+                                <td style="width:10px;"></td>
+                                <td style="width:80px;">
+                                    New Screen:
+                                </td>
+                                <td style="width:200px;">
+                                    <LogLov (SelectedItemChanged)="NewScreensSelectionChanged($event)"
+                                            [ObjectFieldName]="'SelectedNewScreenId'"
+                                            [ObjectTableName]="'Screen'"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Screen'"
+                                            [SelectedValue]="SelectedNewScreenId"
+                                            [NoValidation]="true"
+                                            [IsFreeText]="true"
+                                            [HideColumns]="true"
+                                            [HideLastColumn]="true"
+                                            [DisplayMemberPath]="'Name'"
+                                            [QueryFilterItems]="NewScreenFilterItems">
+                                    </LogLov>
+                                </td>
+                                <td><div></div></td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr style="height: 35px;">
+                    <td></td>
+                </tr>
+                <tr *ngIf="!AllowQueries">
+                    <td style="vertical-align: top">
+                        <div style="display: table; margin: 0 auto">
+                            <label>
+                                Views are not supported on this object
+                            </label>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

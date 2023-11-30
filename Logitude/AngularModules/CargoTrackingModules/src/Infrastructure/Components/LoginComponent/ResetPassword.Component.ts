@@ -28,6 +28,9 @@ export class ResetPasswordComponent implements OnInit {
     public MainColor: string = null;
     public SecondaryColor: string = null;
     public CustomerURL: string = "";
+    public ContactEmail: string = "mailto:support@amital.co.il";
+    public BackGroundImg: string;
+
     constructor(private router: Router,
         private route: ActivatedRoute,
         private loginExtendedService: LoginExtendedService,
@@ -54,6 +57,8 @@ export class ResetPasswordComponent implements OnInit {
                 this.LogoImgSrc = this.loginServiceHelper.GetLoginLogoImg();
                 this.MainColor = response.Result.MainColor;
                 this.SecondaryColor = response.Result.SecondaryColor;
+                this.SetContactEmail(response.Result.ContactEmail);
+                this.BackGroundImg = CargoTrackingBrandingData.BackgroundURL;
             }
             else{
                 this.GoToError401();
@@ -61,6 +66,10 @@ export class ResetPasswordComponent implements OnInit {
         });
     }
 
+    SetContactEmail(contactEmail: string) {
+        if(!contactEmail || contactEmail.length == 0) return;
+        this.ContactEmail = 'mailto:' + contactEmail;
+    }
 
     ngOnInit() {
         this.initComponent();

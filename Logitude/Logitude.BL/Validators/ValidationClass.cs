@@ -8,6 +8,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Simplog.Server.Infrastructure.DataContracts;
 using Logitude.Server.Tools.Helpers;
+using Simplog.Data.Helpers;
 
 namespace Logitude.BL.Validators
 {
@@ -92,15 +93,9 @@ namespace Logitude.BL.Validators
                     }
 
                     string valueString = value != null ? value.ToString() : "";
-                    if (!string.IsNullOrEmpty(valueString))
+                    if (FieldValueValidator.IsNotValidMinMaxValue(field, valueString))
                     {
-                        if (!field.IsMaxLength)
-                        {
-                            if (valueString.Length > field.MaxLength || valueString.Length < field.MinLength)
-                            {
-                                valid = false;
-                            }
-                        }
+                        valid = false;
                     }
                 }
 
@@ -176,15 +171,9 @@ namespace Logitude.BL.Validators
                 }
 
                 string valueString = value != null ? value.ToString() : "";
-                if (!string.IsNullOrEmpty(valueString))
+                if (FieldValueValidator.IsNotValidMinMaxValue(field, valueString))
                 {
-                    if (!field.IsMaxLength)
-                    {
-                        if (valueString.Length > field.MaxLength || valueString.Length < field.MinLength)
-                        {
-                            error = TranslateTextsClass.GetTranslation("General.M.MinMax", field.FullNameTextCode.Code, field.MinLength.ToString(), field.MaxLength.ToString(), field.Tenant);
-                        }
-                    }
+                    error = TranslateTextsClass.GetTranslation("General.M.MinMax", field.FullNameTextCode.Code, field.MinLength.ToString(), field.MaxLength.ToString(), field.Tenant);
                 }
             }
 

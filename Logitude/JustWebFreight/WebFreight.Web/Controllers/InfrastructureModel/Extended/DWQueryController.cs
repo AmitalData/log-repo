@@ -98,6 +98,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("DWQuery", entityPM.Tenant, authToken.Tenant);
+
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 DWQueryService service = new DWQueryService(objectContext, entityPM.Tenant);
 
@@ -119,6 +121,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("DWQuery", entityPM.Tenant, authToken.Tenant);
+
                 IWebFreightContext objectContext = WebFreightContext.GetContext(entityPM.Tenant);
                 DWQueryService service = new DWQueryService(objectContext, entityPM.Tenant);
 
@@ -138,6 +142,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 IWebFreightContext objectContext = WebFreightContext.GetContext(tenant);
                 DWQueryRepository Repo = new DWQueryRepository(objectContext);
                 var entity = Repo.GetSingleDWQuery(id, authToken.Tenant);

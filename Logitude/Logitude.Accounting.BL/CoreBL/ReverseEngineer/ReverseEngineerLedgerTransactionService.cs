@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 using Logitude.Accounting.Data.Repositories;
+using Logitude.Accounting.BL.CoreBL.ReverseEngineer;
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -92,6 +93,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     debugIt = xml;
                 }
 
+                
+                Convert2DisplayNumber(CompareReport.rows, _Tenant);
+
             }
             finally
             {
@@ -99,6 +103,33 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             //return xml;
 
+        }
+
+        private void Convert2DisplayNumber(List<JournalLineLedgerDTO> rows, int tenant)
+        {
+            if (rows==null)
+            {
+                return;
+            }
+            try
+            {
+                var AccountIdList= rows.Where(r => !string.IsNullOrWhiteSpace(r.AccountId)).Select(x => x.AccountId).Distinct().ToList();
+                var repo = new GLAccountRepository(tenant);
+                var res=repo.GetDisplayNumberList(AccountIdList.ToHashSet(), tenant);
+                foreach (var item in rows)
+                {
+                    var display = res.FirstOrDefault(r => r.Key == item.AccountId); 
+                    if (string.IsNullOrEmpty(display.Value)){
+                        continue;
+                    }
+                    item.AccountDisplayNumber = display.Value;
+                }
+            }
+            catch (Exception)
+            {
+
+                
+            }
         }
 
         private List<JournalLineLedgerDTO> GetJournal_failed_notStreamedSlowQueue(DateTime start, DateTime end)
@@ -293,6 +324,7 @@ and JournalActionTypes.Code =4
 
         public List<GLAccountBalanceDTO> GLAccountBalanceList { get; set; }
         public List<GLAccountBalanceDTO> TotalOpenReconciliation { get; set; }
+        public List<InterestReportDiff> InterestReportDiffList { get; set; }
     }
     
 }

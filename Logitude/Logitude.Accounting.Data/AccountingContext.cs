@@ -72,6 +72,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new AccountingEntityMap());
 	
+            modelBuilder.Configurations.Add(new AccountingEntityJournalMap());
+	
             modelBuilder.Configurations.Add(new AccountingIntegrityCheckMap());
 	
             modelBuilder.Configurations.Add(new AccountingNoteMap());
@@ -81,6 +83,8 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new ARPaymentChequeMap());
 	
             modelBuilder.Configurations.Add(new ARPaymentChequeStatusMap());
+	
+            modelBuilder.Configurations.Add(new ARPaymentsJournalMap());
 	
             modelBuilder.Configurations.Add(new AutomaticExternalRconcilMthodMap());
 	
@@ -123,6 +127,8 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new ChartOfAccountMap());
 	
             modelBuilder.Configurations.Add(new ChartOfAccountsTypeMap());
+	
+            modelBuilder.Configurations.Add(new CopyFromTenant0Map());
 	
             modelBuilder.Configurations.Add(new ExternalPageAdditionalDataMap());
 	
@@ -248,6 +254,8 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new TaxWithholdingAssessOfficeMap());
 	
+            modelBuilder.Configurations.Add(new TenantIdleStatusMap());
+	
             modelBuilder.Configurations.Add(new TestEntityMap());
 	
             modelBuilder.Configurations.Add(new UserDefinedReportMap());
@@ -280,6 +288,8 @@ namespace Logitude.Accounting.Data
 			modelBuilder.Entity<GLAccount>().Property(x => x.CreditAllotmentPercentage).HasPrecision(4, 2);
 				
 			modelBuilder.Entity<GLAccount>().Property(x => x.PostponedChequesCommission).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<GLAccount>().Property(x => x.InterestOpenBalance).HasPrecision(18, 2);
 				
 			modelBuilder.Entity<GLAccountAgingData>().Property(x => x.PeriodPast).HasPrecision(16, 2);
 				
@@ -427,11 +437,17 @@ namespace Logitude.Accounting.Data
 				
 			modelBuilder.Entity<TaxReport>().Property(x => x.AmountForPayRefund).HasPrecision(16, 2);
 				
+			modelBuilder.Entity<TaxReport>().Property(x => x.OutputTaxAmountRound).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<TaxReport>().Property(x => x.InputsTaxAmountRound).HasPrecision(16, 2);
+				
 			modelBuilder.Entity<TaxReportLine>().Property(x => x.VatAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<TaxReportLine>().Property(x => x.VatableInvoiceAmount).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<TaxReportLine>().Property(x => x.TotalInvoiceAmount).HasPrecision(16, 2);
+				
+			modelBuilder.Entity<TaxReportLine>().Property(x => x.VatAmountRound).HasPrecision(16, 2);
 						 
             #region
             modelBuilder.Configurations.Add(new AccountingSystemMap());
@@ -723,6 +739,12 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
+	 public IDbSet<AccountingEntityJournal> AccountingEntitiesJournals 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<AccountingIntegrityCheck> AccountingIntegrityChecks 
 	 {
 	      get; set;
@@ -748,6 +770,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<ARPaymentChequeStatus> ARPaymentChequeStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ARPaymentsJournal> ARPaymentsJournals 
 	 {
 	      get; set;
 	 
@@ -874,6 +902,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<ChartOfAccountsType> ChartOfAccountsTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CopyFromTenant0> CopyFromTenant0 
 	 {
 	      get; set;
 	 
@@ -1246,6 +1280,12 @@ namespace Logitude.Accounting.Data
 	 }
 	
 	 public IDbSet<TaxWithholdingAssessOffice> TaxWithholdingAssessOffices 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TenantIdleStatus> TenantIdleStatuses 
 	 {
 	      get; set;
 	 

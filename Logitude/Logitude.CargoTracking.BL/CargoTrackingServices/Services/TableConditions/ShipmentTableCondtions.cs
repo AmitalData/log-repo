@@ -1,23 +1,76 @@
-﻿using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
-using Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelper;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.CargoTracking.BL.CargoTrackingServices.HelperClasses;
+using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure;
+using Logitude.CargoTracking.BL.CoreBL.Batch;
 
-namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructure
+namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableConditions
 {
     public static class ShipmentTableCondtions
     {
 
-
-
-        public static string GetAllCustomsShipmentsThatContainForwardingShipments(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs, 
+        public static string GetAllCustomsShipmentsThatContainForwardingShipments(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs,
             CargoTrackingTable table, string LastUpdate)
         {
-            string shipmentFields = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ?  cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
+            string shipmentFields = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ? cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
             shipmentFields = " C." + shipmentFields.Replace(",", " ,C.");
+            string updatedShipmentFields = shipmentFields.Replace("C.ConsigneeName",
+                $@"(case 
+                        when C.DirectionId = 'E' AND C.ConsigneeId IS NOT NULL AND ConsigneeCard.LocalName IS NOT NULL then ConsigneeCard.LocalName
+                        when C.DirectionId = 'E' AND C.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName 
+                        when C.DirectionId = 'E' AND C.ConsigneeId IS NULL then C.ConsigneeName 
+
+                        when C.DirectionId = 'R' AND (
+                        left(C.ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                        left(C.ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS 
+                        ) AND C.ConsigneeId IS NOT NULL AND ConsigneeCard.LocalName IS NOT NULL then ConsigneeCard.LocalName
+
+                        when C.DirectionId = 'R' AND (
+                        left(C.ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                        left(C.ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS ) AND C.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName 
+
+                        when C.DirectionId = 'R' AND (
+                        left(C.ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                        left(C.ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS  ) AND C.ConsigneeId IS NULL then C.ConsigneeName 
+
+                        end) 
+                as ConsigneeName");
+
+            updatedShipmentFields = updatedShipmentFields.Replace("C.ShipperName",
+                $@"(case 
+
+                        when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NOT NULL AND ShipperCard.LocalName IS NOT NULL then ShipperCard.LocalName 
+                        when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NOT NULL then ShipperCard.EnglishName 
+                        when (C.DirectionId = 'I' OR C.ShipmentLevelCode = 'A') AND C.ShipperId IS NULL then C.ShipperName 
+
+                        when (C.DirectionId = 'R' AND (left(C.ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                        left(C.ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                        )) AND C.ShipperId IS NOT NULL AND ShipperCard.LocalName IS NOT NULL then ShipperCard.LocalName 
+
+                        when (C.DirectionId = 'R' AND (
+                        left(C.ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                        left(C.ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                        )) AND C.ShipperId IS NOT NULL then ShipperCard.EnglishName 
+
+                        when (C.DirectionId = 'R' AND (
+                        left(C.ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                        left(C.ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                        )) AND C.ShipperId IS NULL then C.ShipperName 
+                        
+                        end) 
+                    as ShipperName");
+
+
+            updatedShipmentFields = updatedShipmentFields.Replace("C.ToPortId", $@"(case 
+                when (C.MasterShipmentDataId is null)  then C.ToPortId 
+                when (C.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is not null) then Mas.Transshipment3ToPortId
+                when (C.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is null AND Mas.Transshipment2ToPortId is not null) then Mas.Transshipment2ToPortId
+                when (C.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is null AND Mas.Transshipment2ToPortId is null AND Mas.Transshipment1ToPortId is not null) then Mas.Transshipment1ToPortId
+                when (C.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is null AND Mas.Transshipment2ToPortId is null AND Mas.Transshipment1ToPortId is null) then Mas.MainCarriageToPortId
+            end)
+            as ToPortId");
 
             var shipmentComputedFields =
                  "com.ContainersNumbers as ContainersNumbers," +
@@ -25,25 +78,106 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "com.FinalDeliveryETD as FinalDeliveryETD,com.FinalDeliveryATD as FinalDeliveryATD" +
                 ",com.FirstPickupATD as FirstPickupATD";
 
-            var shipmentMasterFields =
-                 "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
-                ", Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA ";
+            var shipmentMasterFields = $@"
+                  Mas.Master as Master , 
+                (
+                  case 
+                  when Mas.MainCarriageATD is not null or Mas.MainCarriageETD is not null  then Mas.MainCarriageATD
+                  when Mas.Transshipment1ATD is not null or Mas.Transshipment1ETD is not null then Mas.Transshipment1ATD
+                  when Mas.Transshipment2ATD is not null or Mas.Transshipment2ETD is not null then Mas.Transshipment2ATD
+                  when Mas.Transshipment3ATD is not null or Mas.Transshipment3ETD is not null then Mas.Transshipment3ATD
+                  ELSE Mas.MainCarriageATD
+                  END
+                ) as MainCarriageATD,
+                (
+                  case 
+                  when Mas.MainCarriageETD is not null then Mas.MainCarriageETD
+                  when Mas.Transshipment1ETD is not null then Mas.Transshipment1ETD
+                  when Mas.Transshipment2ETD is not null then Mas.Transshipment2ETD
+                  when Mas.Transshipment3ETD is not null then Mas.Transshipment3ETD
+                  ELSE  Mas.MainCarriageETD
+                  END
+                ) as MainCarriageETD,                
+
+                (
+                  case 
+                  when Mas.Transshipment3ATA is not null or Mas.Transshipment3ETA is not null  then Mas.Transshipment3ATA
+                  when Mas.Transshipment2ATA is not null or Mas.Transshipment3ETA is not null then Mas.Transshipment2ATA
+                  when Mas.Transshipment1ATA is not null or Mas.Transshipment3ETA is not null then Mas.Transshipment1ATA
+                  ELSE  Mas.MainCarriageATA
+                  END
+                  ) as MainCarriageATA,
+                  (
+                  case 
+                  when Mas.Transshipment3ETA is not null then Mas.Transshipment3ETA
+                  when Mas.Transshipment2ETA is not null then Mas.Transshipment2ETA
+                  when Mas.Transshipment1ETA is not null then Mas.Transshipment1ETA
+                  ELSE  Mas.MainCarriageETA
+                  END
+                 ) as MainCarriageETA
+
+                , Mas.ImportManifest as ImportManifest ";
+
+            var forwardingShipmentFields =
+                "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
+                " min(P.CustomerReference3) as ForwardingCustomerReference3, " +
+                " min(ForwardingComputed.ContainersNumbers) as ForwardingContainersNumbers, " +
+                " min(P.House) as ForwardingHouse, " +
+                " min(ForwardingMaster.Master) as ForwardingMaster, " +
+                " min(P.CustomFileNumber) as ForwardingCustomFileNumber, " +
+                " min(P.CustomsDeclarationNumber) as ForwardingCustomsDeclarationNumber, " +
+                " min(P.ShipperName) as ForwardingShipperName, " +
+                " min(P.ConsigneeName) as ForwardingConsigneeName, " +
+                " min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
 
 
-            var groupSelect = "Min(P.Id) as ForwardingIdForCustom" +
-                            ", min(P.ShipmentNumber) as ForwardingShipmentNumber " + 
-                            ", min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
+            var shipmentAdditionalDataFields =
+             "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
+             "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "min(AdditionalData.InvoiceIssuedDate) as InvoiceIssuedDate , " +
+             "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
+             "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
+             "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
 
-            var selectScript = $"SELECT {shipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} ";
+            var shipmentOrderFields =
+             "min(SHO.Master) as OrderMaster, " +
+             "min(SHO.Id) as OrderId, " +
+             "min(SHO.House) as OrderHouse, " +
+             "min(SHO.CasualImporterName) as OrderShipperName, " +
+             "min(SHO.OrderNumber) as OrderShipmentNumber, " +
+             "min(SHO.PoNumber) as OrderPoNumber, " +
+             "min(SHO.BookingConfirmationNumber) as OrderBookingNumber, " +
+             "min(SHO.CustomerReferences) as OrderCustomerReference ";
 
 
 
-            var fromScript = $"FROM dbo.{table.DBTableName} P ";
+            var carrierCardFields =
+            "min(CarrierCard.EnglishName) as CarrierEnglishName, " +
+            "min(CarrierCard.LocalName) as CarrierLocalName ";
 
-            var joinScript = $"JOIN dbo.{table.DBTableName} C                   ON P.CustomFileId = C.Id " +
+            var incotermField = "min(Inco.Code) as IncotermName ";
+
+            var groupSelect = "Min(P.Id) as ForwardingIdForCustom";
+
+            var selectScript = $"SELECT {updatedShipmentFields}, {shipmentComputedFields}, {shipmentMasterFields}, {groupSelect} , {forwardingShipmentFields} , {shipmentAdditionalDataFields},{shipmentOrderFields}, {carrierCardFields}, {incotermField}";
+
+
+
+
+            var fromScript = $"FROM dbo.{table.DBTableName} C ";
+
+            var joinScript = $"left  OUTER JOIN dbo.{table.DBTableName} P                   ON P.CustomFileId = C.Id " +
                              $"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = C.Id " +
-                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId ";
+                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = C.MasterShipmentDataId " +
+                             $"LEFT OUTER JOIN dbo.ShipmentMasterDatas ForwardingMaster    ON ForwardingMaster.Id = P.MasterShipmentDataId " +
+                             $"LEFT OUTER JOIN dbo.ShipmentComputedFields ForwardingComputed    ON ForwardingComputed.Id = P.Id " +
+                             $"LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = C.Id " +
+                             $"LEFT OUTER JOIN dbo.ShipmentPickUpDeliveries ShipmentDeliveries    ON ShipmentDeliveries.ShipmentId = C.Id " +
+                             $"LEFT OUTER JOIN dbo.Cards CarrierCard    ON CarrierCard.Id = ShipmentDeliveries.CarrierId " +
+                             $"LEFT OUTER JOIN dbo.Cards ConsigneeCard    ON ConsigneeCard.Id = C.ConsigneeId " +
+                             $"LEFT OUTER JOIN dbo.ShipmentOrders SHO    ON P.Id = SHO.ShipmentId " +
+                             $"LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = C.ShipperId " +
+                             $"LEFT OUTER JOIN dbo.Incoterms Inco    ON Inco.Id = C.IncotermId";
 
 
             List<string> whereConditions = new List<string>();
@@ -52,34 +186,26 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
-                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName, cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+                LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
 
-                string lastUpdateCondition = $" (C.AutomaticLastUpdateDate > '{LastUpdate}')";
+                string lastUpdateCondition = $" C.CreateDateTime >= DATEADD(M, -6, GETDATE()) AND (C.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else
             {
-                if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
-                {
-                    string tenantCondition = $" C.Tenant = {cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant}";
-                    whereConditions.Add(tenantCondition);
-                }
-
-
-                var createDateWithoutTime = "DATEADD(dd, DATEDIFF(dd, 0, C.CreateDateTime ), 0)";
-                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date}' and" +
-                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date}'";
-                whereConditions.Add(datePeriodCondition);
+                AddTenantAndDateFilter("C", whereConditions);
             }
 
-            var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
+            var whereScript = " WHERE C.ShipmentLevelCode = 'A' AND " + string.Join(" AND ", whereConditions);
 
 
 
 
             var groupByScript =
                 $" GROUP BY {shipmentFields}" +
-                @",com.ContainersNumbers,
+                @", ConsigneeCard.EnglishName,
+                    ShipperCard.EnglishName,
+                    com.ContainersNumbers,
                     com.FinalDeliveryETA,
                     com.FinalDeliveryATA,
                     com.FirstPickupATD,
@@ -89,17 +215,35 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     Mas.MainCarriageATD,
                     Mas.MainCarriageETD,
                     Mas.MainCarriageATA,
-                    Mas.MainCarriageETA";
+                    Mas.ImportManifest,
+                    Mas.MainCarriageETA,
+                    Mas.Transshipment3ATA,
+					Mas.Transshipment2ATA,
+					Mas.Transshipment1ATA,
+					Mas.Transshipment3ETA,
+					Mas.Transshipment2ETA,
+					Mas.Transshipment1ETA,
+                    Mas.Transshipment3ATD,
+					Mas.Transshipment2ATD,
+					Mas.Transshipment1ATD,
+					Mas.Transshipment3ETD,
+					Mas.Transshipment2ETD,
+					Mas.Transshipment1ETD,
+					Mas.Transshipment3ToPortId,
+					Mas.Transshipment2ToPortId,
+					Mas.Transshipment1ToPortId,
+					Mas.MainCarriageToPortId,
+					Mas.MainCarriageFromPortId,
+                    ConsigneeCard.LocalName,
+                    ShipperCard.LocalName,
+                    Inco.Code";
 
 
-            string sqlQuery = string.Join(Environment.NewLine, selectScript , fromScript , joinScript , whereScript , groupByScript);
+            string sqlQuery = string.Join(Environment.NewLine, " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ", selectScript, fromScript, joinScript, whereScript, groupByScript);
 
 
             return sqlQuery;
         }
-
-
-
 
         public static string GetAllNonCustomShipmentsThatContainForwardingShipments(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs,
             CargoTrackingTable table, string LastUpdate)
@@ -110,6 +254,69 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
             string shipmentFields = !string.IsNullOrEmpty(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName) ? cargoTrackingDataBaseArgs.BuildCargoArgs.Table.FieldsDBName : "*";
 
             shipmentFields = " P." + shipmentFields.Replace(",", " ,P.");
+            string updatedShipmentFields = shipmentFields.Replace("P.ConsigneeName", $@"(case 
+                    when P.DirectionId = 'E' AND P.ConsigneeId IS NOT NULL AND ConsigneeCard.LocalName IS NOT NULL then ConsigneeCard.LocalName 
+                    when P.DirectionId = 'E' AND P.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName 
+                    when P.DirectionId = 'E' AND P.ConsigneeId IS NULL then P.ConsigneeName 
+
+                    when P.DirectionId = 'R' AND (
+                    left(P.ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                    left(P.ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS 
+                    ) AND ConsigneeCard.LocalName IS NOT NULL then ConsigneeCard.LocalName 
+
+                    when P.DirectionId = 'R' AND (
+                    left(P.ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                    left(P.ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS 
+                    ) AND P.ConsigneeId IS NOT NULL then ConsigneeCard.EnglishName 
+
+                    when P.DirectionId = 'R' AND (
+                    left(P.ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                    left(P.ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS  
+                    ) AND P.ConsigneeId IS NULL then P.ConsigneeName 
+
+                end)
+                as ConsigneeName");
+
+            updatedShipmentFields = updatedShipmentFields.Replace("P.ShipperName", $@"(case 
+
+                when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NOT NULL AND ShipperCard.LocalName IS NOT NULL then ShipperCard.LocalName 
+                when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NOT NULL then ShipperCard.EnglishName 
+                when (P.DirectionId = 'I' OR P.ShipmentLevelCode = 'A') AND P.ShipperId IS NULL then P.ShipperName
+
+                when (P.DirectionId = 'R' AND (
+                    left(P.ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                    left(P.ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS  
+                    )) AND P.ShipperId IS NOT NULL AND ShipperCard.LocalName IS NOT NULL then ShipperCard.LocalName 
+
+                when (P.DirectionId = 'R' AND (
+                    left(P.ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                    left(P.ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                    )) AND P.ShipperId IS NOT NULL then ShipperCard.EnglishName 
+
+                when (P.DirectionId = 'R' AND (
+                    left(P.ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                    left(P.ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                    )) AND P.ShipperId IS NULL then P.ShipperName
+
+end)
+            as ShipperName");
+
+
+
+            updatedShipmentFields = updatedShipmentFields.Replace("P.FromPortId", $@"(case 
+                when (P.MasterShipmentDataId is null)  then P.FromPortId 
+                when (P.MasterShipmentDataId is not null) then Mas.MainCarriageFromPortId 
+             end)
+            as FromPortId");
+            updatedShipmentFields = updatedShipmentFields.Replace("P.ToPortId", $@"(case 
+                when (P.MasterShipmentDataId is null)  then P.ToPortId 
+                when (P.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is not null) then Mas.Transshipment3ToPortId
+                when (P.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is null AND Mas.Transshipment2ToPortId is not null) then Mas.Transshipment2ToPortId
+                when (P.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is null AND Mas.Transshipment2ToPortId is null AND Mas.Transshipment1ToPortId is not null) then Mas.Transshipment1ToPortId
+                when (P.MasterShipmentDataId is not null AND Mas.Transshipment3ToPortId is null AND Mas.Transshipment2ToPortId is null AND Mas.Transshipment1ToPortId is null) then Mas.MainCarriageToPortId
+            end)
+            as ToPortId");
+
 
             var shipmentComputedFields =
                  "com.ContainersNumbers as ContainersNumbers," +
@@ -117,15 +324,83 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                 "com.FinalDeliveryETD as FinalDeliveryETD,com.FinalDeliveryATD as FinalDeliveryATD" +
                 ",com.FirstPickupATD as FirstPickupATD";
 
-            var shipmentMasterFields =
-                 "Mas.MainCarriageATD as MainCarriageATD, Mas.Master as Master " +
-                ",  Mas.MainCarriageETD  as MainCarriageETD , Mas.MainCarriageATA  as MainCarriageATA " +
-                ", Mas.MainCarriageETA  as MainCarriageETA," +
-                "min(P.ShipmentNumber) as ForwardingShipmentNumber , " + 
-                " min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
+            var shipmentMasterFields = $@"
+                  Mas.Master as Master ,
+                (
+                  case 
+                  when Mas.MainCarriageATD is not null or Mas.MainCarriageETD is not null  then Mas.MainCarriageATD
+                  when Mas.Transshipment1ATD is not null or Mas.Transshipment1ETD is not null then Mas.Transshipment1ATD
+                  when Mas.Transshipment2ATD is not null or Mas.Transshipment2ETD is not null then Mas.Transshipment2ATD
+                  when Mas.Transshipment3ATD is not null or Mas.Transshipment3ETD is not null then Mas.Transshipment3ATD
+                  ELSE Mas.MainCarriageATD
+                  END
+                ) as MainCarriageATD,
+                (
+                  case 
+                  when Mas.MainCarriageETD is not null then Mas.MainCarriageETD
+                  when Mas.Transshipment1ETD is not null then Mas.Transshipment1ETD
+                  when Mas.Transshipment2ETD is not null then Mas.Transshipment2ETD
+                  when Mas.Transshipment3ETD is not null then Mas.Transshipment3ETD
+                  ELSE  Mas.MainCarriageETD
+                  END
+                ) as MainCarriageETD,
+                
+                
+                (
+                  case 
+                  when Mas.Transshipment3ATA is not null or Mas.Transshipment3ETA is not null  then Mas.Transshipment3ATA
+                  when Mas.Transshipment2ATA is not null or Mas.Transshipment2ETA is not null then Mas.Transshipment2ATA
+                  when Mas.Transshipment1ATA is not null or Mas.Transshipment1ETA is not null then Mas.Transshipment1ATA
+                  ELSE  Mas.MainCarriageATA
+                  END
+                  ) as MainCarriageATA,
+                 (
+                  case 
+                  when Mas.Transshipment3ETA is not null then Mas.Transshipment3ETA
+                  when Mas.Transshipment2ETA is not null then Mas.Transshipment2ETA
+                  when Mas.Transshipment1ETA is not null then Mas.Transshipment1ETA
+                  ELSE  Mas.MainCarriageETA
+                  END
+                 ) as MainCarriageETA
+                , Mas.ImportManifest as ImportManifest ";
 
+            var forwardingShipmentFields =
+              "min(P.ShipmentNumber) as ForwardingShipmentNumber , " +
+              " null as ForwardingCustomerReference3, " +
+              " min(com.ContainersNumbers) as ForwardingContainersNumbers, " +
+              " min(P.House) as ForwardingHouse, " +
+              " min(Mas.Master) as ForwardingMaster, " +
+              " min(P.CustomFileNumber) as ForwardingCustomFileNumber, " +
+              " min(P.CustomsDeclarationNumber) as ForwardingCustomsDeclarationNumber, " +
+              " min(P.ShipperName) as ForwardingShipperName, " +
+              " min(P.ConsigneeName) as ForwardingConsigneeName, " +
+              " min(P.ShipmentLevelCode) as ForwardingShipmentLevelCode ";
 
-            var selectScript = $"Select {shipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} ";
+            var shipmentAdditionalDataFields =
+             "min(AdditionalData.GoodsClassification) as GoodsClassification, " +
+             "min(AdditionalData.DocumentInspection) as DocumentInspection , " +
+             "min(AdditionalData.InvoiceIssuedDate) as InvoiceIssuedDate , " +
+             "min(AdditionalData.PaymentDateTime) as PaymentDateTime , " +
+             "min(AdditionalData.PaymentRequestDateTime) as PaymentRequestDateTime , " +
+             "min(AdditionalData.GatepassDocumentsReady) as GatepassDocumentsReady ";
+
+            var shipmentOrderFields =
+             "min(SHO.Master) as OrderMaster, " +
+             "min(SHO.House) as OrderHouse, " +
+             "min(SHO.CasualImporterName) as OrderShipperName, " +
+             "min(SHO.OrderNumber) as OrderShipmentNumber, " +
+             "min(SHO.PoNumber) as OrderPoNumber, " +
+             "min(SHO.BookingConfirmationNumber) as OrderBookingNumber, " +
+             "min(SHO.CustomerReferences) as OrderCustomerReference, " +
+             "min(SHO.Id) as OrderId ";
+
+            var carrierCardFields =
+            "min(CarrierCard.EnglishName) as CarrierEnglishName, " +
+            "min(CarrierCard.LocalName) as CarrierLocalName ";
+
+            var incotermField = "min(Inco.Code) as IncotermName ";
+
+            var selectScript = $"Select {updatedShipmentFields} , {shipmentComputedFields} , {shipmentMasterFields} , {forwardingShipmentFields} , {shipmentAdditionalDataFields} , {shipmentOrderFields}, {carrierCardFields}, {incotermField} ";
 
 
 
@@ -136,48 +411,47 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
 
 
             var joinScript = @"LEFT OUTER JOIN dbo.ShipmentComputedFields com ON com.Id = P.Id 
-                         LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = P.MasterShipmentDataId ";
+                            LEFT OUTER JOIN dbo.ShipmentOrders SHO    ON SHO.ShipmentId = P.Id
+                            LEFT OUTER JOIN dbo.ShipmentMasterDatas Mas    ON Mas.Id = P.MasterShipmentDataId
+                            LEFT OUTER JOIN dbo.ShipmentAdditionalCloudDatas AdditionalData    ON AdditionalData.Id = P.Id
+                            LEFT OUTER JOIN dbo.ShipmentPickUpDeliveries ShipmentDeliveries    ON ShipmentDeliveries.ShipmentId = P.Id
+							LEFT OUTER JOIN dbo.Cards CarrierCard    ON CarrierCard.Id = ShipmentDeliveries.CarrierId
+							LEFT OUTER JOIN dbo.Cards ConsigneeCard    ON ConsigneeCard.Id = P.ConsigneeId
+							LEFT OUTER JOIN dbo.Cards ShipperCard    ON ShipperCard.Id = P.ShipperId
+                            LEFT OUTER JOIN dbo.Incoterms Inco    ON Inco.Id = P.IncotermId";
 
 
 
             // Where
             List<string> whereConditions = new List<string>();
 
-            var notCustomShipment = $" P.Id NOT IN (SELECT C.Id FROM  dbo.{table.DBTableName } SH " +
-                                                    $"JOIN  dbo.{table.DBTableName}  C  ON SH.CustomFileId = C.Id) ";
+            var notCustomShipment = $" P.ShipmentLevelCode <> 'A'";//P.Id NOT IN (SELECT C.Id FROM  dbo.{table.DBTableName } SH " +
+                                                                   // $"JOIN  dbo.{table.DBTableName}  C  ON SH.CustomFileId = C.Id) ";
             whereConditions.Add(notCustomShipment);
 
 
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
             {
-                LastUpdate = ServiceHelper.GetTableLastUpdate(cargoTrackingDataBaseArgs.BuildCargoArgs.Table.Main_CargoTracking_TableName,cargoTrackingDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+                LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
 
-                string lastUpdateCondition = $" (P.AutomaticLastUpdateDate > '{LastUpdate}')";
+                string lastUpdateCondition = $" P.CreateDateTime >= DATEADD(M, -6, GETDATE()) AND (P.AutomaticLastUpdateDate > '{LastUpdate}')";
                 whereConditions.Add(lastUpdateCondition);
             }
             else
             {
+                AddTenantAndDateFilter("P", whereConditions);
 
-                if (cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant != null)
-                {
-                    string tenantCondition = $" P.Tenant = {cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant}";
-                    whereConditions.Add(tenantCondition);
-                }
-
-
-                var createDateWithoutTime = "DATEADD(dd, DATEDIFF(dd, 0, P.CreateDateTime ), 0)";
-                string datePeriodCondition = $" {createDateWithoutTime} >= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.FromDate.Value.Date}' and" +
-                                             $" {createDateWithoutTime} <= '{cargoTrackingDataBaseArgs.CargoTrackingArguments.ToDate.Value.Date}'";
-                whereConditions.Add(datePeriodCondition );
             }
 
-            var whereScript = " WHERE " +  string.Join(" AND ", whereConditions);
+            var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
 
 
             // Group By
             var groupByScript =
                 $" GROUP BY {shipmentFields}" +
-                @",com.ContainersNumbers,
+                @", ConsigneeCard.EnglishName,
+                    ShipperCard.EnglishName,
+                    com.ContainersNumbers,
                     com.FinalDeliveryETA,
                     com.FinalDeliveryATA,
                     com.FirstPickupATD,
@@ -187,13 +461,219 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableStructur
                     Mas.MainCarriageATD,
                     Mas.MainCarriageETD,
                     Mas.MainCarriageATA,
-                    Mas.MainCarriageETA";
+                    Mas.ImportManifest,
+                    Mas.MainCarriageETA,
+                    Mas.Transshipment3ATA,
+					Mas.Transshipment2ATA,
+					Mas.Transshipment1ATA,
+					Mas.Transshipment3ETA,
+					Mas.Transshipment2ETA,
+					Mas.Transshipment1ETA,
+                    Mas.Transshipment3ATD,
+					Mas.Transshipment2ATD,
+					Mas.Transshipment1ATD,
+					Mas.Transshipment3ETD,
+					Mas.Transshipment2ETD,
+					Mas.Transshipment1ETD,
+					Mas.Transshipment3ToPortId,
+					Mas.Transshipment2ToPortId,
+					Mas.Transshipment1ToPortId,
+					Mas.MainCarriageToPortId,
+					Mas.MainCarriageFromPortId,
+                    ShipperCard.LocalName,
+                    ConsigneeCard.LocalName,
+                    Inco.Code";
 
 
-            string sqlQuery = selectScript + fromScript + joinScript + whereScript + groupByScript;
+            string sqlQuery = " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED " + selectScript + fromScript + joinScript + whereScript + groupByScript;
 
             return sqlQuery;
         }
 
+        public static string GetShipmentOrders(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs,
+           CargoTrackingTable table, string LastUpdate)
+        {
+            var shipmentTableStructure = new CargoTrackingShipmentTableStructure();
+            string shipmentOrderColumns = shipmentTableStructure.GetShipmentOrderFields();
+            var shipmentOrderFields = string.Join(",", shipmentOrderColumns);
+            shipmentOrderFields = " SHO." + shipmentOrderFields.Replace(",", " ,SHO.");
+            var cargoTrackingShipmentDefaultFields =
+                "NULL as FirstPickupETD," +
+                "NULL as WarehouseLegActualEntryDate," +
+                "NULL as WarehouseLegExpectedEntryDate," +
+                "NULL as DeclarationDate," +
+                "NULL as CustomsClearanceDate," +
+                "NULL as FirstPickupETA," +
+                "NULL as AssginedToCustomsAgentDate," +
+                "NULL as AssignedToTruckerDate," +
+                "NULL as ExceptionDate," +
+                "NULL as FromWarehouseEstimationDate," +
+                "NULL as ContainersNumbers," +
+                "SHO.IsOperationalClosed as IsOperationalClosed," +
+                "SHO.OrderNumber as ShipmentNumber," +
+
+                "0 as CreateDone," +
+                "0 as PickupDone," +
+                "0 as DepartureDone," +
+                "0 as ArrivalDone," +
+                "0 as ToWarehouseDone," +
+                "0 as CustomsPaymentDone," +
+                "0 as ClearanceDone," +
+                "0 as DeliveredDone," +
+                "0 as FromWarehouseDone," +
+                "0 as AssignedTruckerDone," +
+                "0 as AssignedCustomsAgentDone," +
+                "0 as DeliveryDone," +
+                "0 as DocumentInspectionDone," +
+                "0 as InvoicedDone," +
+                "0 as GoodsClassificationDone," +
+                "0 as PaymentRequiredDone," +
+                "0 as PaymentReceivedDone," +
+                "0 as GatepassArrivedDone," +
+                "0 as ShipmentPickUpIndex," +
+                "SHO.Quantity as PackagesQuantity," +
+
+                " '' as CustomFileNumber," +
+                " '' as ForwarderShipmentNumber," +
+                " '' as ForwardingShipmentLevelCode," +
+                " '' as CustomsDeclarationNumber," +
+                $@" (
+                    case 
+                    when DirectionId = 'I' and ShipperCard.LocalName is not null then ShipperCard.LocalName
+                    when DirectionId = 'I' and ShipperCard.EnglishName is not null then ShipperCard.EnglishName 
+                    when DirectionId = 'I' and ShipperCard.EnglishName is null then CasualSupplierName  
+
+                    when  (DirectionId = 'R' AND (
+                        left(ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                        left(ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                        )) and ShipperCard.LocalName is not null then ShipperCard.LocalName
+
+                     when  (DirectionId = 'R' AND (
+                        left(ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                        left(ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                        )) and ShipperCard.EnglishName is not null then ShipperCard.EnglishName 
+
+                     when  (DirectionId = 'R' AND (
+                        left(ShipmentNumber, 2) <> 'EF' COLLATE Latin1_General_CS_AS  AND
+                        left(ShipmentNumber, 2) <> 'MF' COLLATE Latin1_General_CS_AS 
+                        ))and ShipperCard.EnglishName is null then CasualSupplierName 
+
+                    end
+                    )as ShipperName," +
+                " '' as MasterShipmentDataId," +
+                " '' as FromPortId," +
+                " '' as ToPortId," +
+                " '' as CustomConnectToShipment," +
+                " '' as CustomFileId," +
+                $@" (
+                    case 
+
+                    when DirectionId = 'E' and ConsigneeCard.LocalName is not null then ConsigneeCard.LocalName 
+                    when DirectionId = 'E' and ConsigneeCard.EnglishName is not null then ConsigneeCard.EnglishName 
+                    when DirectionId = 'E' and ConsigneeCard.EnglishName is null then CasualImporterName  
+
+                    when DirectionId = 'E'  AND (
+                        left(ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                        left(ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS 
+                    ) and ConsigneeCard.LocalName is not null then ConsigneeCard.LocalName 
+
+                    when DirectionId = 'E'  AND (
+                        left(ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                        left(ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS 
+                    ) and ConsigneeCard.EnglishName is not null then ConsigneeCard.EnglishName
+
+                    when DirectionId = 'E'  AND (
+                        left(ShipmentNumber, 2) = 'EF' COLLATE Latin1_General_CS_AS  OR
+                        left(ShipmentNumber, 2) = 'MF' COLLATE Latin1_General_CS_AS 
+                    ) and ConsigneeCard.EnglishName is null then CasualImporterName  
+
+                    end
+                    ) as ConsigneeName," +
+                " '' as CustomerReference3," +
+                " '' as WarehouseLegRemarks," +
+                " '' as GrossWeightUnitCode," +
+                " '' as ShipmentTypeId," +
+                " NULL as ChargeableWeightInKG," +
+                " NULL as ChargeableWeight," +
+                " NULL as ChargeableWeightUnitCode," +
+                " '' as ExceptionDescription," +
+
+                "'O' as EntityType," +
+                "SHO.CreateDate as CreateDateTime," +
+                "(case when SHO.AutomaticLastUpdateDate is null then SHO.UpdateDate when SHO.AutomaticLastUpdateDate is not null then SHO.AutomaticLastUpdateDate end) as AutomaticLastUpdateDate," +
+                "PickupActualDateTime as PickupDate," +
+                "PickupEstimatedDateTime as PickupEstimationDate," +
+                "OnHandNumber as FromWarehouseNotes," +
+                "OnHandDate as FromWarehouseDate," +
+                "Inco.Code as IncotermName";
+
+
+            var selectScript = $"SELECT {shipmentOrderFields} , {cargoTrackingShipmentDefaultFields} ";
+
+            var fromScript = $@"FROM dbo.ShipmentOrders SHO 
+                                left join Cards ConsigneeCard on SHO.ConsigneeId = ConsigneeCard.id
+                                left join Cards ShipperCard on SHO.ShipperId = ShipperCard.id
+                                LEFT JOIN Incoterms Inco    ON SHO.IncotermId = Inco.Id
+                                ";
+
+
+            List<string> whereConditions = new List<string>();
+
+            if (cargoTrackingDataBaseArgs.CargoTrackingArguments == null)
+            {
+                LastUpdate = cargoTrackingDataBaseArgs.ShipmentsWaterMark;
+                string lastUpdateCondition = $" SHO.CreateDate >= DATEADD(M, -6, GETDATE()) AND (SHO.AutomaticLastUpdateDate > '{LastUpdate}')";
+                whereConditions.Add(lastUpdateCondition);
+            }
+            else
+            {
+                AddTenantAndDateFilter("SHO", whereConditions);
+            }
+
+            var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
+
+            string sqlQuery = string.Join(Environment.NewLine, " SET TRANSACTION ISOLATION LEVEL READ UNCOMMITTED ", selectScript, fromScript, whereScript);
+
+            return sqlQuery;
+        }
+
+
+        private static void AddTenantAndDateFilter(string tableName, List<string> whereConditions)
+        {
+            string condition = "(";
+            List<CargoTrackingXMLParameters> tenantsList = new List<CargoTrackingXMLParameters>();
+            
+            tenantsList.Add(new CargoTrackingXMLParameters()
+            {
+                ToDate = DateTime.Now.Date,
+                FromDate = DateTime.Now.AddMonths(-6).Date,
+            });
+
+            tenantsList.AddRange(new TenantManagementQuery(0).GetWhereHavePermissionBuildMonths().Select(x => new CargoTrackingXMLParameters()
+            {
+                Tenant = x.Id,
+                ToDate = DateTime.Now.Date,
+                FromDate = x.ActivatePrivateSite ?
+                    DateTime.Now.AddMonths(Convert.ToInt32(x.PermissionBuildMonths.Value) * -1) :
+                    DateTime.Now.AddMonths(-6).Date
+            }));
+
+            tenantsList.ForEach(t =>
+            {                
+                if (t.Tenant != null)
+                    condition += $" OR ( {tableName}.Tenant = {t.Tenant} AND ";
+
+                string columnCreateDateName = tableName == "SHO" ? "CreateDate" : "CreateDateTime";
+                string createDateWithoutTime = $"DATEADD(dd, DATEDIFF(dd, 0, {tableName}.{columnCreateDateName} ), 0)";
+                condition += $"( {createDateWithoutTime} >= '{t.FromDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}' and" +
+                             $" {createDateWithoutTime} <= '{t.ToDate.Value.Date.ToString("MM/dd/yyyy hh:mm:ss.fff tt")}')";
+
+                if (t.Tenant != null)
+                    condition += ")";
+            });
+            
+            condition += ")";
+            whereConditions.Add(condition);
+        }
     }
 }

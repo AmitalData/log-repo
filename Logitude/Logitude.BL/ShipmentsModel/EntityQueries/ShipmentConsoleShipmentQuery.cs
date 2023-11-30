@@ -173,5 +173,15 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
 
             return allConnectedHouses;
         }
+
+
+        public IQueryable<Shipment> GetDigitalPortalMasterConnectedHouseShipments(string entityId, int tenant)
+        {
+            var allConnectedHouses = myRepository.GetDigitalPortalHouseShipmentsForMaster(entityId, tenant);
+
+            return allConnectedHouses;
+        }
+
+        
     }
 }

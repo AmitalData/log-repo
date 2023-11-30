@@ -10,6 +10,10 @@ using WebFreight.Web.Helpers;
 using System.Text.RegularExpressions;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.CoreBL.Batch;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using WebFreight.Web.Security;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace WebFreight.Web.Controllers.AccountingModel
 {
@@ -23,10 +27,13 @@ namespace WebFreight.Web.Controllers.AccountingModel
 
         public HttpResponseMessage GetReconciliationStageB(int tenant)
         {
-            try
+            bool retry = true;
+            int timeoutinmin = 10; try
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
-
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 bool batchIt = true;
                 if (batchIt)
                 {
@@ -38,6 +45,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         new ReconciliationStageBArg()
                         {
                             Tenant = tenant,
+                            GLAccountId = "",
                         }, tenant, subj, false);
 
 
@@ -47,11 +55,29 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 else
                 {
                     ReconciliationStageBBatch reconciliationStageBBatch = new ReconciliationStageBBatch();
-                    ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
+                    retry = true;
+                    while (retry)
                     {
-                        Tenant = tenant,
-                    };
-                    reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg);
+                        retry = false;
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
+                        {
+
+                            try
+                            {
+                                ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
+                                {
+                                    Tenant = tenant,
+                                    GLAccountId = "",
+                                };
+                                reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg, timeoutinmin - 1, ref retry);
+                                scope.Complete();
+                            }
+                            catch (Exception e)
+                            {
+                                throw;
+                            }
+                        }
+                    }
                     string responseText = reconciliationStageBBatch.ResponseText();
                     HttpStatusCode StatusCode = reconciliationStageBBatch.StatusCode();
                     var res1 = new { Success = true, Message = responseText };
@@ -70,8 +96,12 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
+                bool retry = true;
+                int timeoutinmin = 10; 
                 string token = HttpContext.Current.Request.Headers["Token"];
-
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 bool batchIt = true;
                 if (noBatch == 1) batchIt = false;
                 if (batchIt)
@@ -84,6 +114,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                         new ReconciliationStageBArg()
                         {
                             Tenant = tenant,
+                            GLAccountId = "",
                         }, tenant, subj, false);
 
 
@@ -93,11 +124,30 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 else
                 {
                     ReconciliationStageBBatch reconciliationStageBBatch = new ReconciliationStageBBatch();
-                    ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
+                    retry = true;
+                    while (retry)
                     {
-                        Tenant = tenant,
-                    };
-                    reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg);
+                        retry = false;
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
+                        {
+
+                            try
+                            {
+                                ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
+                                {
+                                    Tenant = tenant,
+                                    GLAccountId = "",
+                                };
+                                reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg, timeoutinmin - 1, ref retry);
+                                scope.Complete();
+                            }
+                            catch (Exception e)
+                            {
+                                throw;
+                            }
+                        }
+                    }
+
                     string responseText = reconciliationStageBBatch.ResponseText();
                     HttpStatusCode StatusCode = reconciliationStageBBatch.StatusCode();
                     var res1 = new { Success = true, Message = responseText };
@@ -116,8 +166,12 @@ namespace WebFreight.Web.Controllers.AccountingModel
         {
             try
             {
+                bool retry = true;
+                int timeoutinmin = 10; 
                 string token = HttpContext.Current.Request.Headers["Token"];
-
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 bool batchIt = true;
                 if (noBatch == 1) batchIt = false;
                 if (batchIt)
@@ -140,12 +194,30 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 else
                 {
                     ReconciliationStageBBatch reconciliationStageBBatch = new ReconciliationStageBBatch();
-                    ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
+                    retry = true;
+                    while (retry)
                     {
-                        Tenant = tenant,
-                        GLAccountId = gLAccountId,
-                    };
-                    reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg);
+                        retry = false;
+                        using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(timeoutinmin)))
+                        {
+
+                            try
+                            {
+                                ReconciliationStageBArg reconciliationStageBArg = new ReconciliationStageBArg()
+                                {
+                                    Tenant = tenant,
+                                    GLAccountId = gLAccountId,
+                                };
+                                reconciliationStageBBatch.RunReconciliationStageB(reconciliationStageBArg, timeoutinmin - 1, ref retry);
+                                scope.Complete();
+                            }
+                            catch (Exception e)
+                            {
+                                throw;
+                            }
+                        }
+                    }
+
                     string responseText = reconciliationStageBBatch.ResponseText();
                     HttpStatusCode StatusCode = reconciliationStageBBatch.StatusCode();
                     var res1 = new { Success = true, Message = responseText };

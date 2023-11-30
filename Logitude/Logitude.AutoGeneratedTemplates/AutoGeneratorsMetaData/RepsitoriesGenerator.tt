@@ -150,7 +150,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+<#+ 
+if(tableName != "Task" && tableName != "TaskStatus")
+{
+#>
 using System.Threading.Tasks;
+<#+
+}
+#>
 using System.ComponentModel.DataAnnotations;
 using <#= pocosspacestring #>
 using <#= keysspacestring #>
@@ -199,7 +206,14 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
+<#+ 
+if(tableName != "Task" && tableName != "TaskStatus")
+{
+#>
 using System.Threading.Tasks;
+<#+
+}
+#>
 using System.ComponentModel.DataAnnotations;
 using <#= pocosspacestring #>
 using <#= keysspacestring #>
@@ -303,10 +317,26 @@ namespace <#= repnamespacestring #>
 		 <#+
 		 
 		#>
-        
+		                 
+<#+
+			if(tableName == "Opportunity")
+			{
+ #>
+        partial void OnEntityAdd(<#=tableName #> entity);
+<#+
+			}
+#>
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(<#=tableName #> entity)
         {
+<#+
+			if(tableName == "Opportunity")
+			{
+#>
+            OnEntityAdd(entity);
+<#+
+			}
+#>
             onAdd();
             context.<#=dBTableName #>.Add(entity);
         }
@@ -317,9 +347,25 @@ namespace <#= repnamespacestring #>
             context.<#=dBTableName #>.Remove(entity);
         }
 
+<#+
+			if(tableName == "Opportunity")
+			{
+	   #>
+        partial void OnEntityUpdate(<#=tableName #> entity);
+<#+
+			}
+#>
         partial void onUpdate();//Partial Methods Definition in Generated
         public void Update(<#=tableName #> entity)
         {
+<#+
+			if(tableName == "Opportunity")
+			{
+#>
+            OnEntityUpdate(entity);
+<#+
+			}
+#>
             onUpdate();
             context.<#=dBTableName #>.Attach(entity);
             context.SetAsModified(entity);

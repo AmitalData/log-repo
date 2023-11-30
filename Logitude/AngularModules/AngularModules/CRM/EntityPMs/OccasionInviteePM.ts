@@ -20,9 +20,9 @@ export class OccasionInviteePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(this); 
-          this.IsDirty = false;
+	                  this.EntityParentPM = _entityParentPM;
+                this.UIProperties = new UIProperties(this);
+                this.IsDirty = false;
       }
 
 	 

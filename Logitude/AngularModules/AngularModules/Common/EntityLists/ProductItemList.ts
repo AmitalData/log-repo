@@ -20,5 +20,11 @@ export class ProductItemList {
 		UPC: string;
 		OriginCountryId: string;
 		OriginCountryName: string;
+		ShipperId: string;
+		ShipperName: string;
+		ProductValue: number;
+		ProductValueCurrencyId: string;
+		Quantity: number;
+		ProductValueCurrencyCode: string;
 	
 }

@@ -48,16 +48,25 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
                     item.NextETD = initializer.EntityPOCO.NextETD;
                     item.NextLeg = initializer.EntityPOCO.NextLeg;
                     item.NextLegCode = initializer.EntityPOCO.NextLegCode;
-
+                    
                     if (string.IsNullOrEmpty(item.AgentId))
                     {
                         item.AgentComputed = initializer.EntityPM.AgentId;
                     }
 
+                    this.UpdateHouseTransshipmentsField(item);
                     initializer.Repository.Update(item);
                 }
                 initializer.Repository.SubmitChanges();
             }
+        }
+        private void UpdateHouseTransshipmentsField(Shipment house)
+        {
+            ShipmentComputedFields houseComputedFields = initializer.ShipmentContext.ShipmentComputedFields.Where(d => d.Id == house.Id).FirstOrDefault();
+            if (houseComputedFields == null) return;
+
+            houseComputedFields.Transshipments = initializer.EntityPM.Transshipments;
+            initializer.ShipmentComputedFieldsRepository.Update(houseComputedFields);
         }
         private void UpdateMasterHousesWithConcurrencyGuid()
         {
@@ -86,11 +95,13 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
             iHousePM.IsCancelled = initializer.EntityPM.IsCancelled;
             iHousePM.CancelledDate = this.initializer.EntityPM.CancelledDate;
             iHousePM.IsOperationalClosed = this.initializer.EntityPM.IsOperationalClosed;
+            iHousePM.IsHouseUpdatedByMaster = true;
             iHousePM.OperationalClosedByUserId = this.initializer.EntityPM.OperationalClosedByUserId;
             iHousePM.OperationalCloseDate = this.initializer.EntityPM.OperationalCloseDate;
             iHousePM.FirstOperationalCloseDate = this.initializer.EntityPM.FirstOperationalCloseDate;
             iHousePM.IsAccountingClosed = this.initializer.EntityPM.IsAccountingClosed;
             iHousePM.AccountingCloseDate = this.initializer.EntityPM.AccountingCloseDate;
+            iHousePM.AccountingClosedByUserId = this.initializer.EntityPM.AccountingClosedByUserId;
             iHousePM.FirstAccountingCloseDate = this.initializer.EntityPM.FirstAccountingCloseDate;
         }
         private void MapMasterHouseFromPortFields()
@@ -166,7 +177,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours
         private void UpdateShipment(bool mapComposition = false)
         {
             ShipmentService iShipmentService = new ShipmentService(initializer.ShipmentContext, iHousePM, initializer.LoggedContactEmail);
-            iShipmentService.SetChangeSet(iHousePM.ShipmentPackages, iHousePM.ShipmentOrderPackages, iHousePM.ShipmentPickUps, iHousePM.ShipmentDeliveries, iHousePM.ShipmentReceivables, iHousePM.ShipmentPayables, iHousePM.FollowUps, iHousePM.ShipmentAWBPrintOnlies, iHousePM.ShipmentConsoleShipments, iHousePM.ShipmentCarrierStatuses, iHousePM.AWBOCIPMs, iHousePM.ShipmentCommodities, iHousePM.ShipmentAssemblies, iHousePM.ShipmentStoragePricings, iHousePM.ShipmentProductItems);
+            iShipmentService.SetChangeSet(iHousePM.ShipmentPackages, iHousePM.ShipmentOrderPackages, iHousePM.ShipmentPickUps, iHousePM.ShipmentDeliveries, iHousePM.ShipmentReceivables, iHousePM.ShipmentPayables, iHousePM.FollowUps, iHousePM.ShipmentAWBPrintOnlies, iHousePM.ShipmentConsoleShipments, iHousePM.ShipmentCarrierStatuses, iHousePM.AWBOCIPMs, iHousePM.ShipmentCommodities, iHousePM.ShipmentAssemblies, iHousePM.ShipmentStoragePricings, iHousePM.ShipmentProductItems, iHousePM.ShipmentUnassignedFields);
             iShipmentService.Update(mapComposition);
         }
         private void UpdateMasterHouses(List<string> ids, bool isDisconnecting)

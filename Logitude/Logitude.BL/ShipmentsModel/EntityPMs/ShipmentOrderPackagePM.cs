@@ -45,5 +45,8 @@ namespace Logitude.BL.ShipmentsModel.EntityPMs
         public string PackageTypeName { get; set; }
         public string Dimensions { get; set; }
         public ChangeSetOperation ChangeSetOp { get; set; }
+
+        public string ContainerNumber { get; set; }
+        public string PackageTypeCode { get; set; }
     }
 }

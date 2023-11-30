@@ -85,8 +85,10 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                         DeliveryNoticeSent = a.DeliveryNoticeSent,
                         ExpectedArrivalNoticeSent = a.ExpectedArrivalNoticeSent,
                         T1Received = a.T1Received,
-
-    }).FirstOrDefault();
+                        AccountingClosedByUserId = a.AccountingClosedByUserId,
+                        PackagesQuantityAndType = a.PackagesQuantityAndType,
+                        IsDocumentsNeedApprove = a.IsDocumentsNeedApprove,
+                    }).FirstOrDefault();
         }
 
         public IQueryable<ShipmentComputedFieldsList> GetIQueryableEntityList(IQueryable<ShipmentComputedFields> iQueryable)
@@ -148,6 +150,13 @@ namespace Logitude.BL.ShipmentsModel.EntityQueries
                                                                  DeliveryNoticeSent = a.DeliveryNoticeSent,
                                                                  ExpectedArrivalNoticeSent = a.ExpectedArrivalNoticeSent,
                                                                  T1Received = a.T1Received,
+                                                                 AccountingClosedByUserId = a.AccountingClosedByUserId,
+                                                                 MainCarriageATA = a.MainCarriageATA,
+                                                                 MainCarriageETD = a.MainCarriageETD,
+                                                                 MainCarriageETA = a.MainCarriageETA,
+                                                                 MainCarriageATD = a.MainCarriageATD,
+                                                                 PackagesQuantityAndType = a.PackagesQuantityAndType,
+                                                                 IsDocumentsNeedApprove = a.IsDocumentsNeedApprove,
                                                              });
             return result;
         }

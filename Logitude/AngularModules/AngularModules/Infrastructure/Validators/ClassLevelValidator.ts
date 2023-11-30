@@ -3,6 +3,8 @@ declare var System: any;
 import {TextCodeTranslator} from '../Utilities/TextCodeTranslator';
 import {AppTool} from '../Tools';
 import {RulesValidator} from './RulesValidator';
+import { FieldValidator } from './FieldValidator';
+import { time } from 'console';
 
 export class ClassLevelValidator {
     public ErrorsArray: any[];
@@ -43,7 +45,7 @@ export class ClassLevelValidator {
             this._RulesValidator.Initizialize();
         }
         this._RulesValidator.ValidateAllTableRules(entityPM, objectTable.Id,errorsArray);
-         
+
         objectFields.forEach((objectfield, key) => {
             if (objectfield.ObjectTableId === objectTableId) {
                 if (objectfield.IsRequiered === true) {
@@ -73,27 +75,22 @@ export class ClassLevelValidator {
                         case "SigDouble":
                         case "UnsDecimal":
                         case "UnsInteger":
-                            {
-                                if (AppTool.IsNullOrEmpty(entityPM[objectfield.FieldName]))
-                                {
-                                    var fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
-                                    var fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
-                                    errorsArray.push(fieldError);
-                                }
-
-                                break;
-                            }
-
                         case "Text":
                         case "nText":
                         case "LookUp":
                         case "DateTime":
                             {
-                                if (AppTool.IsNullOrEmpty(entityPM[objectfield.FieldName]))
-                                {
-                                    var fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
-                                    var fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
-                                    errorsArray.push(fieldError);
+                                if (this.IsNullFieldValue(entityPM, objectfield)) {
+                                    errorsArray.push(this.GetTranslatedRequiredError(objectfield, translatedRequiredError));
+                                }
+                                break;
+                            }
+                        case "Date":
+                        case "PickList":
+                        case "Time":
+                            {
+                                if (objectfield.IsCustom && this.IsNullCustomFieldValue(entityPM, objectfield)) {
+                                    errorsArray.push(this.GetTranslatedRequiredError(objectfield, translatedRequiredError));
                                 }
 
                                 break;
@@ -101,59 +98,119 @@ export class ClassLevelValidator {
                     }
                 }
 
-                if (entityPM[objectfield.FieldName]) {
-                    if (objectfield.DataTypeCode === "Text" || objectfield.DataTypeCode === "nText") {
-                        if (objectfield.MaxLength !== 0 || objectfield.MinLength !== 0) {
-                            if (entityPM[objectfield.FieldName]) {
-                                var fieldvalue = "";
-                                if (objectfield.IsCustom === true) {
-                                    fieldvalue = entityPM[objectfield.FieldName].Value;
-                                }
-                                else
-                                    fieldvalue = entityPM[objectfield.FieldName];
 
-                                if (fieldvalue == null || fieldvalue == undefined) {
-                                    fieldvalue = "";
-                                }
-
-                                if (!objectfield.IsMaxLength &&
-                                    (fieldvalue.length > objectfield.MaxLength || fieldvalue.length < objectfield.MinLength)) {
-
-                                    var errorMsg = "";
-                                    if (objectfield.MinLength == 0)
-                                    {
-                                        // display only max length error
-                                        var fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
-                                        var error: string = translatedMaxError.replace("%Maxlength", objectfield.MaxLength);
-                                        error = error.replace("%FieldName", fieldName);
-                                        errorMsg = error;
-                                    }
-                                    else
-                                    {
-                                        //display min max errors
-                                        var fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
-                                        var minFieldError: string = translatedMinMaxError.replace("%Minlength", objectfield.MinLength);
-                                        minFieldError = minFieldError.replace("%Maxlength", objectfield.MaxLength);
-                                        minFieldError = minFieldError.replace("%FieldName", fieldName);
-                                        errorMsg = minFieldError;
-                                    }
-                                    
-                                    errorsArray.push(errorMsg);
-
-                                }
-                            }
-                        }
-                    }
-                }
+                this.validateTextAndNumberDataTypes(entityPM, objectfield, errorsArray);
             }
         });
-            
+
         return errorsArray;
+    }
+
+    private GetTranslatedRequiredError(objectfield: any, translatedRequiredError: string) {
+        let fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
+        let fieldError: string = translatedRequiredError.replace("%FieldName", fieldName);
+
+        return fieldError;
+    }
+
+    private IsNullFieldValue(entityPM: any, objectfield: any) {
+        if (objectfield.IsCustom) {
+            return this.IsNullCustomFieldValue(entityPM, objectfield);
+        }
+
+        return AppTool.IsNullOrEmpty(entityPM[objectfield.FieldName]);
+
+    }
+
+    private IsNullCustomFieldValue(entityPM: any, objectfield: any) {
+        let customFieldObject = entityPM[objectfield.FieldName];
+        return !customFieldObject || AppTool.IsNullOrEmpty(customFieldObject.Value);
+
+    }
+
+
+    public ValidateCustomEntity(objectTableName, entityPM) {
+
+        var errorsArray = [];
+        var translatedRequiredError: string = TextCodeTranslator.Translate("General.M.FieldIsRequired");
+
+        var objectTable = window.ObjectTables.filter(x => x.Name === objectTableName)[0];
+        var objectFields = window.ObjectFields.filter(x => x.ObjectTableId === objectTable.Id);
+
+        objectFields.filter(d => d.IsRequiered).forEach((objectfield, key) => {
+            let fieldError = this.ValidateCustomField(entityPM, objectfield, translatedRequiredError);
+            if (fieldError) errorsArray.push(fieldError);
+        });
+
+        return errorsArray;
+    }
+
+
+    private ValidateCustomField(entityPM: any, objectfield: any, translatedRequiredError: string) {
+        let fieldValue = this.GetFieldValue(entityPM, objectfield);
+        if (!AppTool.IsNullOrEmpty(fieldValue)) return;
+        var fieldName: string = TextCodeTranslator.Translate(objectfield.FullNameTextCodeCode);
+        return translatedRequiredError.replace("%FieldName", fieldName);
+
+    }
+
+    private validateTextAndNumberDataTypes(entityPM: any, objectfield: any, errorsArray: any[]) {
+        if (!entityPM[objectfield.FieldName]) return;
+
+        this.validateTextDataType(objectfield, entityPM, errorsArray);
+        this.validateNumberDataType(objectfield, entityPM, errorsArray);
+
+    }
+
+    private validateNumberDataType(objectfield: any, entityPM: any, errorsArray: any[]) {
+        if (objectfield.DataTypeCode !== "Decimal") return;
+        var fieldValidator: FieldValidator = new FieldValidator();
+        var fieldvalue = this.GetFieldValue(entityPM, objectfield);
+        let isNotValid = this.GetIsNotValidValue(entityPM, objectfield);
+        if (!fieldValidator.IsValidValue(objectfield, fieldvalue, isNotValid)) {
+            errorsArray.push(fieldValidator.GetValidationErrorMessage(objectfield, fieldvalue));
+        }
+    }
+
+    private validateTextDataType(objectfield: any, entityPM: any, errorsArray: any[]) {
+        if (objectfield.DataTypeCode !== "Text" && objectfield.DataTypeCode !== "nText") return;
+        if (objectfield.MaxLength === 0 && objectfield.MinLength === 0) return;
+        var fieldValidator: FieldValidator = new FieldValidator();
+        var fieldvalue = this.GetFieldValue(entityPM, objectfield);
+        if (!fieldValidator.IsValidValue(objectfield, fieldvalue, false)) {
+            errorsArray.push(fieldValidator.GetValidationErrorMessage(objectfield, fieldvalue));
+        }
+
+    }
+
+    private GetIsNotValidValue(entityPM: any, objectfield: any) {
+        if (entityPM[objectfield.FieldName] && objectfield.IsCustom) {
+            return entityPM[objectfield.FieldName].IsNotValid;
+        }
+        return false;
+    }
+
+    private GetFieldValue(entityPM: any, objectfield: any) {
+        if (entityPM[objectfield.FieldName]) {
+            var fieldvalue = "";
+            if (objectfield.IsCustom === true) {
+                fieldvalue = entityPM[objectfield.FieldName].Value;
+            }
+
+            else
+                fieldvalue = entityPM[objectfield.FieldName];
+
+            if (fieldvalue == null || fieldvalue == undefined) {
+                fieldvalue = "";
+            }
+
+        }
+        return fieldvalue;
     }
 
     public IsValid(entityPM) {
         var isValid: boolean;
 
         return isValid;
-    }    
+    }
 }

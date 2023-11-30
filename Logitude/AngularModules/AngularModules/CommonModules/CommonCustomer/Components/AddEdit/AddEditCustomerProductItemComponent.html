@@ -9,11 +9,11 @@
         <td>
             <table>
                 <tr>
-                    <td style="width:340px;">
+                    <td style="width:380px;">
                         <table>
                             <!-- SKU -->
                             <tr class="FormFieldRow">
-                                <td style="width:120px;">
+                                <td style="width:160px;">
                                     <LogLabel [ObjectFieldName]="'SKU'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -23,7 +23,7 @@
 
                             <!-- Name -->
                             <tr class="FormFieldRow">
-                                <td>
+                                <td style="width:160px;">
                                     <LogLabel [ObjectFieldName]="'Name'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -33,7 +33,7 @@
 
                             <!-- Brand -->
                             <tr class="FormFieldRow">
-                                <td>
+                                <td style="width:160px;">
                                     <LogLabel [ObjectFieldName]="'Brand'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -41,9 +41,26 @@
                                 </td>
                             </tr>
 
+                            <!-- Shipper -->
+                            <tr class="FormFieldRow">
+                                <td style="width:160px;">
+                                    <LogLabel [ObjectFieldName]="'ShipperId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'ShipperId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Card'"
+                                            [SelectedValue]="DataContext.ShipperId"
+                                            (SelectedItemChanged)="DataContext.Shipper = $event"
+                                            [DependencyFilter1Value]="'CS'">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
                             <!-- Origin Country -->
                             <tr class="FormFieldRow">
-                                <td>
+                                <td style="width:160px;">
                                     <LogLabel [ObjectFieldName]="'OriginCountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -57,9 +74,21 @@
                                 </td>
                             </tr>
 
+                            
+                            <!-- Quantity -->
+                            <tr class="FormFieldRow">
+                                <td style="width:160px;">
+                                    <LogLabel [ObjectFieldName]="'Quantity'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogTextBox [ObjectFieldName]="'Quantity'" [Text]="DataContext.Quantity" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                            </tr>
+
+
                             <!-- InActive -->
                             <tr class="FormFieldRow">
-                                <td>
+                                <td style="width:160px;">
                                     <LogLabel [ObjectFieldName]="'InActive'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -84,7 +113,7 @@
                         <table>
                             <!-- ASIN -->
                             <tr class="FormFieldRow">
-                                <td style="width:80px;">
+                                <td style="width:100px;">
                                     <LogLabel [ObjectFieldName]="'ASIN'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="width:250px;">
@@ -98,7 +127,7 @@
 
                             <!-- UPC -->
                             <tr class="FormFieldRow">
-                                <td style="width:80px;">
+                                <td style="width:100px;">
                                     <LogLabel [ObjectFieldName]="'UPC'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td>
@@ -110,6 +139,36 @@
                                 </td>
                             </tr>
 
+                            <!-- ProductValue -->
+                            <tr class="FormFieldRow">
+                                <td style="width:100px;">
+                                    <LogLabel [ObjectFieldName]="'ProductValue'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td style="width:250px;">
+                                    <LogTextBox [ObjectFieldName]="'ProductValue'" [Text]="DataContext.ProductValue" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                </td>
+                                <td>
+                                    <div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <!-- ProductValueCurrencyId -->
+                            <tr class="FormFieldRow">
+                                <td>
+                                    <LogLabel [ObjectFieldName]="'ProductValueCurrencyId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                </td>
+                                <td>
+                                    <LogLov [ObjectFieldName]="'ProductValueCurrencyId'"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Currency'"
+                                            [SelectedValue]="DataContext.ProductValueCurrencyId"
+                                            (SelectedItemChanged)="DataContext.ProductValueCurrency = $event">
+                                    </LogLov>
+                                </td>
+                            </tr>
+
                             <tr style="height:5px;">
                                 <td>
                                     <div></div>
@@ -118,7 +177,7 @@
 
                             <!-- Description -->
                             <tr class="FormFieldRow" style="height:50px;">
-                                <td style="width:80px;vertical-align:top">
+                                <td style="width:100px;vertical-align:top">
                                     <LogLabel [ObjectFieldName]="'Description'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                 </td>
                                 <td style="height:60px;">
@@ -177,7 +236,7 @@
                                     <div class="MediaFill" style="overflow-x: hidden;">
                                         <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="DataContext.HTSCodes" [Disabled]="!IsEditingEnabled" (RowEnded)="OnRowEnded($event)">
                                             <!-- Line -->
-                                            <log-column [header]="'Line'" [width]="'80'" [Alignment]="'left'">
+                                            <log-column [header]="'Line'" [width]="'50'" [Alignment]="'left'">
                                                 <ng-template let-item>
                                                     <log-cell-template #logcelltemplate>
                                                         <span>{{item.LineNumber}}</span>
@@ -226,6 +285,91 @@
                                                 </ng-template>
                                             </log-column>
 
+                                            <!-- VATPercentage -->
+                                            <log-column [header]="'VAT %'" [width]="'80'" [Alignment]="'left'">
+                                                <ng-template let-item>
+                                                    <log-cell-template #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <span>{{item.VATPercentage}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogTextBox [FocusOnMe]="'true'"
+                                                                        [ObjectFieldName]="'VATPercentage'"
+                                                                        [DataContext]="item"
+                                                                        [Text]="item.VATPercentage"
+                                                                        [DigitsAfterPoint]="1"
+                                                                        [ObjectTableName]="'HTSCode'"
+                                                                        [HideColumns]="true">
+                                                            </LogTextBox>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+
+                                            <!-- DutiesPercentage -->
+                                            <log-column [header]="'Duties %'" [width]="'80'" [Alignment]="'left'">
+                                                <ng-template let-item>
+                                                    <log-cell-template #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <span>{{item.DutiesPercentage}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogTextBox [FocusOnMe]="'true'"
+                                                                        [ObjectFieldName]="'DutiesPercentage'"
+                                                                        [DataContext]="item"
+                                                                        [Text]="item.DutiesPercentage"
+                                                                        [DigitsAfterPoint]="1"
+                                                                        [ObjectTableName]="'HTSCode'"
+                                                                        [HideColumns]="true">
+                                                            </LogTextBox>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+
+                                            <!-- OtherDuties -->
+                                            <log-column [header]="'Other Duties'" [width]="'150'" [Alignment]="'left'">
+                                                <ng-template let-item>
+                                                    <log-cell-template #logcelltemplate>
+                                                        <div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <span>{{item.OtherDuties}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogTextBox [FocusOnMe]="'true'"
+                                                                        [ObjectFieldName]="'OtherDuties'"
+                                                                        [DataContext]="item"
+                                                                        [Text]="item.OtherDuties"
+                                                                        [ObjectTableName]="'HTSCode'"
+                                                                        [HideColumns]="true">
+                                                            </LogTextBox>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+
+                                            <!-- Remarks -->
+                                            <log-column [header]="'Remarks'" [width]="'100'" [Alignment]="'center'">
+                                                <ng-template let-item>
+                                                    <log-cell-template #logcelltemplate>
+                                                        <!--<div class="TextTrimming" *ngIf="logcelltemplate.IsDisplayMode">
+                                                            <span>{{item.Remarks}}</span>
+                                                        </div>
+                                                        <div *ngIf="logcelltemplate.IsEditMode">
+                                                            <LogTextBox [FocusOnMe]="'true'"
+                                                                        [ObjectFieldName]="'Remarks'"
+                                                                        [DataContext]="item"
+                                                                        [Text]="item.Remarks"
+                                                                        [ObjectTableName]="'HTSCode'"
+                                                                        [HideColumns]="true">
+                                                            </LogTextBox>
+                                                        </div>-->
+                                                        <div>
+                                                            <HelperNotes [Title]="'Remarks'" [Text]="item.Remarks" (TextChanged)="item.Remarks = $event"></HelperNotes>
+                                                        </div>
+                                                    </log-cell-template>
+                                                </ng-template>
+                                            </log-column>
+
                                             <!-- ApprovedByCustomer -->
                                             <log-column [header]="'Approved'" [width]="'80'" [Alignment]="'left'">
                                                 <ng-template let-item>
@@ -240,7 +384,7 @@
                                             </log-column>
 
                                             <!-- InActive -->
-                                            <log-column [header]="'Inactive'" [width]="'80'" [Alignment]="'left'">
+                                            <log-column [header]="'Inactive'" [width]="'70'" [Alignment]="'left'">
                                                 <ng-template let-item>
                                                     <log-cell-template #logcelltemplate>
                                                         <div style="height: 100%; width: 100%; position:relative;">
@@ -259,8 +403,6 @@
                             </div>
                         </td>
                     </tr>
-
-
                 </table>
             </div>
         </td>

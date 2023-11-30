@@ -28,6 +28,7 @@ export class ARPaymentChequeList {
 	BankAccount: string;
 	StatusCode: string;
 	ExchangeRate: number;
+	StatusName: string;
 	
 }
  

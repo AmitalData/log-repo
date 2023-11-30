@@ -16,6 +16,7 @@ import { CustomsTransferHeaderPMService } from './StandardPMs/CustomsTransferHea
 import { ShipmentTool } from '../Tools';
 import { BaseService } from '../../Abstractions/Services/BaseService';
 import { Observable } from 'rxjs';
+import { AddressPM } from '../../Common/EntityPMs/AddressPM';
 
 @Injectable()
 
@@ -76,9 +77,9 @@ export class ShipmentDomainService extends BaseService  {
         });
     }
 
-    CheckHousesOpenAmounts(masterId) {
+    CheckHousesOpenAmounts(masterId: string) {
 
-        var url = this._apiUrl + '/CheckHousesOpenAmounts?masterId=' + masterId;
+        var url = this._apiUrl + '/GetCheckHousesOpenAmounts?masterId=' + masterId;
 
         return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -255,6 +256,20 @@ export class ShipmentDomainService extends BaseService  {
     GetInvoiceOpenAmountReceivables(invoiceTypeCode: string, entityId: string) {
 
         var url = this._apiUrl + '/GetInvoiceOpenAmountReceivables?invoiceTypeCode=' + invoiceTypeCode + '&entityId=' + entityId;
+
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var myJsonResult = response;
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myJsonResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+    GetShipmentReceivablePMsByShipmentId(shipmentId: any, tenant: number) {
+        var url = this._apiUrl + '/GetShipmentReceivablePMsByShipmentId?shipmentId=' + shipmentId + '&tenant=' + tenant;
 
         return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -492,9 +507,9 @@ export class ShipmentDomainService extends BaseService  {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
-    GetSingleShipmentPMWithoutComposition(id: string) {
+    GetSingleShipmentPMWithoutComposition(id: string, includePackages: boolean = false) {
 
-        var url = this._apiUrl + '/GetSingleShipmentPMWithoutComposition?id=' + id;
+        var url = this._apiUrl + '/GetSingleShipmentPMWithoutComposition?id=' + id + '&includePackages=' + includePackages;
 
         return defer(() => {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
@@ -591,6 +606,18 @@ export class ShipmentDomainService extends BaseService  {
             return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
                 var myResult = response;
 
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    DisconnectStandaloneShipment(shipmentId: string) {
+        var url = this._apiUrl + '/GetDisconnectStandaloneShipment?shipmentId=' + shipmentId;
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var myResult = response;
                 var serviceResponse = new ServiceResponse();
                 serviceResponse.Result = myResult;
                 return serviceResponse;
@@ -945,21 +972,6 @@ export class ShipmentDomainService extends BaseService  {
         });
     }
 
-    GetNumberOfShipmentPackages(shipmentId: string) {
-
-        var url = this._apiUrl + '/GetNumberOfShipmentPackages?shipmentId=' + shipmentId;
-        return defer(() => {
-            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-
-                var result = response;
-                  
-                var serviceResponse = new ServiceResponse();
-                serviceResponse.Result = result;
-                return serviceResponse;
-            }), catchError(ServiceHelper.HandleServiceError));
-        });
-    }
-
     GetIfShipmentPackageConnectedToPickUpDeliveryPackage(containerId: string) {
 
         var url = this._apiUrl + '/GetIfShipmentPackageConnectedToPickUpDeliveryPackage?containerId=' + containerId;
@@ -1013,6 +1025,53 @@ export class ShipmentDomainService extends BaseService  {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    LoadAddresseFromUnassignedXML(shipmentId: string, fieldName: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetAddressFromUnassignedXML?shipmentId=' + shipmentId + "&fieldName=" + fieldName;
+
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetShipmentsForAutomaticRequest() {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        var url = this._apiUrl + '/GetShipmentsForAutomaticRequest';
+
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    SendVizionAutomaticRequests(request: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        var url = this._apiUrl + '/GetSendVizionAutomaticRequests?request=' + request;
+
+        return defer(() => {
+            return this._httpClient.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = result;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 }
 
 export class ShipmentsSummary {
@@ -1031,7 +1090,8 @@ export class ShipmentsSummary {
     public ExpectedDeparturesNotTransmittedCount: number;
     public ShippingInstructionsLast7DaysCount: number;
     public ContainerStatusLast7DaysCount: number;
-    public EBookingInProgressCount: number; 
+    public EBookingInProgressCount: number;
+    public PendingApprovalDocumentsCount: number;
 }
 export class FlightSummary {
     public Id: string;
@@ -1106,9 +1166,9 @@ export class ShipmentConnectedEntity {
     public EntityStatus: string;
     public OpenDate: Date;
     public AcceptedDate: Date;
-    public Salesman: string;    
+    public Salesman: string;
+    public ExpirationDate: Date;
 }
-
 export class ExcelPackageFilter {
     Tenant: number;
     FileData: string;
@@ -1130,7 +1190,6 @@ export class ExcelPackage {
     IsRefrigerated: boolean;
     HasErrors: boolean;
 }
-
 export class ShipmentsQueriesCountsArgs {
     Tenant: number;
     TransportModeId: string;
@@ -1139,4 +1198,13 @@ export class ShipmentsQueriesCountsArgs {
     ServiceContextUser: string;
     TypeCode: string = null;
     ForwarderPartnerId: string;
+    DirectionOperator: string;
+}
+export class ShipmentsForAutomaticRequest {    
+    ShipmentId: string;
+    ShipmentNumber: string;
+    ContainerNumber: string;
+    NumberOfContainers: string;
+    SentSuccesfully: boolean;
+    ErrorMessage: string;
 }

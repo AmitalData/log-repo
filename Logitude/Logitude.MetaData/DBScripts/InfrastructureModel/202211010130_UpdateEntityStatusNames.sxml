@@ -1,0 +1,11 @@
+﻿<Script DBType="Main" Module="Infrastructure">
+	<Sql Version="2">
+		<![CDATA[
+    update EntityStatus set SearchFields ='ONFD,On Forwarding Departed', name ='On Forwarding Departed', DisplayName='On Forwarding Departed' where id IN (select EntityStatusId from EventTypes where code  ='ONFD')
+    update EntityStatus set SearchFields ='PRFD,Pre Forwarding Departed', name ='Pre Forwarding Departed', DisplayName='Pre Forwarding Departed' where id IN (select EntityStatusId from EventTypes where code  ='PRFD')
+    update EntityStatus set SearchFields ='PRFA,Pre Forwarding Arrived', name ='Pre Forwarding Arrived', DisplayName='Pre Forwarding Arrived' where id IN (select EntityStatusId from EventTypes where code  ='PRFA')
+    update EntityStatus set SearchFields ='ORFA,On Forwarding Arrived', name ='On Forwarding Arrived', DisplayName='On Forwarding Arrived' where id IN (select EntityStatusId from EventTypes where code  ='ORFA')
+    update ObjectTableLastUpdates set LastUpdateDate = GETDATE() where ObjectTableId = (select id from ObjectTables where Name = 'EntityStatus')
+   ]]>
+	</Sql>
+</Script>

@@ -1,0 +1,241 @@
+<style>
+    .table-container {
+        table-layout: fixed;
+    }
+
+    .link-button {
+        cursor: pointer;
+        color: #2b78e4;
+    }
+
+    .link-button .plus-sign {
+        font-size: 13px;
+        font-weight: bold;
+        padding-right: 2px;
+    }
+
+    .link-button:not(.disabled):hover {
+        color: #03a9f4;
+    }
+
+    .link-button.disabled {
+        opacity: 0.5;
+    }
+
+    .add-group-button {
+        margin-left: 20px;
+    }
+
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 10px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .table-row-cell-block {
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+
+    .select-entity-label {
+        padding-bottom: 4px;
+    }
+
+    .entity-list-container {
+        height: 30px;
+    }
+
+    .select-entity-label,
+    .set-conditions-label,
+    .select-trigger-label {
+        font-weight: bold;
+    }
+
+    .entity-list-container,
+    .trigger-radios-container {
+        width: 320px;
+    }
+
+    .trigger-radio-cell {
+        width: 80px;
+    }
+
+    .start-conditions-container {
+        overflow: auto;
+        width: 100%;
+        height: 337px;
+    }
+
+    .min-start-conditions-container {
+        height: 285px;
+    }
+
+    .break-space {
+        white-space: break-spaces;
+    }
+</style>
+
+
+
+<table class="table-container">
+
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="select-entity-label">Select Object</div>
+                <div class="Label">Select the object whose records trigger the flow when they're created or updated
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Object'" [ObjectFieldName]="'Object'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block entity-list-container">
+                <TreeSelect [Items]="EntitiesTreeItems" [Width]="'300px'" [Value]="Entity" [ShowExpand]="false"
+                    [ShowItem]="'Start' | ShowEntitiesTreeItemPipe" (ValueChanged)="updateEntity($event)"
+                    [DataCy]="'TriggerEntity'">
+                </TreeSelect>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="select-trigger-label">Configure Trigger</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <LogLabel [NoObjectField]="true" [Text]="'Trigger the flow when'" [ObjectFieldName]="'Trigger'"
+                    [DataContext]="DataContext"></LogLabel>
+            </div>
+            <div class="table-row-cell-block trigger-radios-container">
+                <table>
+                    <tr>
+                        <td class="trigger-radio-cell">
+                            <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'create'"
+                                (Checked)="updateTrigger('create')" [Text]="'A record is created'" [Top]="5"
+                                [DataCy]="'CreateTrigger'">
+                            </RadioButton>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="trigger-radio-cell">
+                            <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'update'"
+                                (Checked)="updateTrigger('update')" [Text]="'A record is updated'" [Top]="5"
+                                [DataCy]="'UpdateTrigger'">
+                            </RadioButton>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="trigger-radio-cell">
+                            <RadioButton [Name]="'TriggerRadio'" [IsChecked]="Trigger === 'createOrUpdate'"
+                                (Checked)="updateTrigger('createOrUpdate')" [Text]="'A record is created or updated'"
+                                [Top]="5" [DataCy]="'CreateOrUpdateTrigger'"></RadioButton>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <div class="set-conditions-label">Set Conditions</div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div class="table-row-cell-block">
+                <p class="Label break-space">Specify entry conditions to reduce the number of records that trigger the
+                    flow and the number of
+                    times the flow is executed. Minimizing unnecessary flow executions <br />helps to conserve your
+                    tenant's resources
+                    <br /><br />If you create a flow that's triggered when the record is updated or when the record is
+                    created or updated, we recommend defining entry condition when a field value is changed.
+                </p>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td>
+            <div class="table-row-cell-block start-conditions-container"
+                [ngClass]="{'min-start-conditions-container': (ValidationErrorsList != null && ValidationErrorsList.length > 0)}">
+
+                <div *ngIf="Conditions && Conditions.length === 0">
+                    <span class="link-button" [ngClass]="{'disabled': !EntityId}" (click)="addCondition()"
+                        [attr.data-cy]="'AddConditionButton'">
+                        <span class="plus-sign">+</span><span>Add Condition</span>
+                    </span>
+
+                    <span class="link-button add-group-button" [ngClass]="{'disabled': !EntityId}"
+                        (click)="addCondition(true)" [attr.data-cy]="'AddGroupButton'">
+                        <span class="plus-sign">+</span><span>Add Group</span>
+                    </span>
+                </div>
+
+                <Conditions *ngIf="Conditions && Conditions.length > 0" [EntityId]="EntityId"
+                    [ShowChangedOperator]="Trigger !== CreateTrigger"
+                    (IsValidConditionsChange)="updateIsValidConditions($event)"
+                    [(ConditionsOperation)]="ConditionsOperation" [(Conditions)]="Conditions" [IsEntityField]="true"
+                    [IsEntityFieldValue]="true">
+                </Conditions>
+
+            </div>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+</table>

@@ -20,7 +20,7 @@ export class SharedLogisticsPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -58,6 +58,26 @@ export class SharedLogisticsPM {
     private inviteeName: string;
     public get InviteeName() { return this.inviteeName; }
     public set InviteeName(newValue: string) { if (this.inviteeName != newValue) { this.inviteeName = newValue; this.MarkAsDirty("InviteeName"); } }
+       
+	 
+    private uRLprivateCargoTracking: string;
+    public get URLprivateCargoTracking() { return this.uRLprivateCargoTracking; }
+    public set URLprivateCargoTracking(newValue: string) { if (this.uRLprivateCargoTracking != newValue) { this.uRLprivateCargoTracking = newValue; this.MarkAsDirty("URLprivateCargoTracking"); } }
+       
+	 
+    private brandingURL: string;
+    public get BrandingURL() { return this.brandingURL; }
+    public set BrandingURL(newValue: string) { if (this.brandingURL != newValue) { this.brandingURL = newValue; this.MarkAsDirty("BrandingURL"); } }
+       
+	 
+    private brandingURLButton: string;
+    public get BrandingURLButton() { return this.brandingURLButton; }
+    public set BrandingURLButton(newValue: string) { if (this.brandingURLButton != newValue) { this.brandingURLButton = newValue; this.MarkAsDirty("BrandingURLButton"); } }
+       
+	 
+    private resetPasswordButton: string;
+    public get ResetPasswordButton() { return this.resetPasswordButton; }
+    public set ResetPasswordButton(newValue: string) { if (this.resetPasswordButton != newValue) { this.resetPasswordButton = newValue; this.MarkAsDirty("ResetPasswordButton"); } }
        
 	 
 

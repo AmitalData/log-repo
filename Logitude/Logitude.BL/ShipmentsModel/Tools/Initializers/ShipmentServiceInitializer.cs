@@ -5,6 +5,7 @@ using Logitude.BL.ShipmentsModel.Tools.Behaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.CompositionBehaviours;
 using Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours.Validators;
+using Logitude.Infrastructure.Data;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel;
@@ -23,15 +24,17 @@ using System.Threading.Tasks;
 
 namespace Logitude.BL.ShipmentsModel.Tools.Initializers
 {
-    public class ShipmentServiceInitializer: IServiceInitializer
+    public class ShipmentServiceInitializer : IServiceInitializer
     {
         public int Tenant { get; private set; }
         public bool IsNewEntity { get; private set; }
         public Shipment EntityPOCO { get; private set; }
         public ShipmentPM EntityPM { get; private set; }
+        public bool IsUpdateFromUpdateTool { get; set; }
         public ShipmentMasterData EntityMasterData { get; set; } //private set;
         public IShipmentsContext ShipmentContext { get; private set; }
         public ICommonDataContext CommonContext { get; private set; }
+        public IInfrastructureContext IInfrastructureContext { get; private set; }
         public ShipmentRepository Repository { get; private set; }
         public ShipmentMasterDataRepository MasterDataRepository { get; private set; }
         public CardRepository CardRepository { get; private set; }
@@ -43,7 +46,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public ShipmentPackageItemRepository ShipmentPackageItemRepository { get; private set; }
         public ShipmentPackageHarmonizeRepository ShipmentPackageHarmonizeRepository { get; private set; }
         public ShipmentOrderPackageRepository ShipmentOrderPackageRepository { get; private set; }
-
+        public PortRepository PortRepository { get; private set; }
+        public ShipmentComputedFieldsRepository ShipmentComputedFieldsRepository { get; private set; }
         public Tenant LoggedTenant { get; private set; }
         public ContactPM LoggedContact { get; private set; }
         public string LoggedContactId { get; private set; }
@@ -67,6 +71,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public ShipmentPackagePM StandalonePackage { get; set; }
         public List<string> DeletedHousesIds { get; set; }
         public List<string> ConnectedHousesIds { get; set; }
+        public ShipmentDocsField ShipmentDocsFieldFromWorkerRole { get; set; }
 
         public List<ShipmentPackagePM> ShipmentPackagesChangeSet { get; set; }
         public List<ShipmentOrderPackagePM> ShipmentOrderPackagesChangeSet;
@@ -83,6 +88,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         public List<ShipmentAssemblyPM> ShipmentAssembliesChangeSet;
         public List<ShipmentStoragePricingPM> ShipmentStoragePricingsChangeSet;
         public List<ShipmentProductItemPM> ShipmentProductItemsChangeSet;
+        public List<ShipmentUnassignedFieldPM> ShipmentUnassignedFieldChangeSet;
+
         public Customer Customer { get; private set; }
 
         public ShipmentServiceInitializer(IShipmentsContext ShipmentContext, ShipmentPM entityPM, string loggedEmail)
@@ -106,10 +113,12 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
             this.ShipmentPackageItemRepository = new ShipmentPackageItemRepository(ShipmentContext);
             this.ShipmentPackageHarmonizeRepository = new ShipmentPackageHarmonizeRepository(ShipmentContext);
             this.ShipmentOrderPackageRepository = new ShipmentOrderPackageRepository(ShipmentContext);
-
+            this.ShipmentComputedFieldsRepository = new ShipmentComputedFieldsRepository(ShipmentContext);
+            this.IInfrastructureContext = InfrastructureContext.GetContext(0);
             this.CardRepository = new CardRepository(this.CommonContext);
             this.AddressRepository = new AddressRepository(this.CommonContext);
             this.ContactRepository = new ContactRepository(this.CommonContext);
+            this.PortRepository = new PortRepository(this.CommonContext);
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
             this.TodayDate = this.TodayDateTime.Date;
 
@@ -236,6 +245,23 @@ namespace Logitude.BL.ShipmentsModel.Tools.Initializers
         internal void SetCustomer(Customer customer)
         {
             this.Customer = customer;
+        }
+
+        public bool IsFirstFourDigitsOfMasterNumberAreLetters()
+        {
+            if (this.EntityPM.Master.Length < 4)
+            {
+                return false;
+            }
+            string masterNumber = this.EntityPM.Master.Substring(0, 4);
+            if (masterNumber.All(char.IsLetter))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

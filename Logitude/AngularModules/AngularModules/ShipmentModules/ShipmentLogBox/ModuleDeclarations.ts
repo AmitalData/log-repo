@@ -8,7 +8,7 @@ import {AddEditImporterShipmentComponent} from './Components/Logbox/AddEditImpor
 import {ForwarderShipmentsComponent} from './Components/Logbox/ForwarderShipmentsComponent';
 import {MultiArchiveShipmentsComponent} from './Components/Logbox/MultiArchiveShipmentsComponent';
 import { DownloadAllFilesComponent } from './Components/Logbox/DownloadAllFilesComponent';
-import {AddEditPrivateLabelShipmentComponent} from './Components/Logbox/AddEditPrivateLabelShipmentComponent';
+import {AddEditPrivateLabelCustomsShipmentComponent} from './Components/Logbox/AddEditPrivateLabelCustomsShipmentComponent';
 import { DSVApprovePaymentComponent } from './Components/Logbox/DSVApprovePaymentComponent';
 import { LogBoxApprovePaymentComponent } from './Components/Logbox/LogBoxApprovePaymentComponent';
 import {PrivateLabelApprovebyMobileComponent} from './Components/Logbox/PrivateLabelApprovebyMobileComponent';
@@ -21,8 +21,9 @@ import {DepositionRequestComponent} from './Components/Logbox/DepositionRequestC
 import { UserIdNumberMobileComponent } from './Components/Logbox/UserIdNumberMobileComponent';
 import { WarningApprovePaymentComponent } from './Components/Logbox/WarningApprovePaymentComponent';
 import { PrivateLabelApprovePaymentComponent } from './Components/Logbox/PrivateLabelApprovePaymentComponent';
-import { ApprovePaymentBaseComponent } from './Components/Logbox/ApprovePaymentBaseComponent';
-
+import { ApprovePaymentBaseComponent } from './Components/Logbox/ApprovePaymentBaseComponent'; 
+import { PrivateLabelPackageComponent } from './Components/Logbox/PrivateLabelPackageComponent';
+import { AddEditPrivateLabelShipmentComponent } from './Components/Logbox/AddEditPrivateLabelShipmentComponent';
 
 
 export const Components =
@@ -35,7 +36,7 @@ export const Components =
         ForwarderShipmentsComponent,
         MultiArchiveShipmentsComponent,
         DownloadAllFilesComponent,
-        AddEditPrivateLabelShipmentComponent,
+        AddEditPrivateLabelCustomsShipmentComponent,
         DSVApprovePaymentComponent,
         LogBoxApprovePaymentComponent,
         PrivateLabelApprovebyMobileComponent,
@@ -51,6 +52,8 @@ export const Components =
         WarningApprovePaymentComponent,
         PrivateLabelApprovePaymentComponent,
         ApprovePaymentBaseComponent,
+        AddEditPrivateLabelShipmentComponent,
+        PrivateLabelPackageComponent,
     ];
 
 
@@ -68,7 +71,7 @@ export class ModuleDeclarations {
             case "ForwarderShipmentsComponent": { myResult = ForwarderShipmentsComponent; break; }
             case "MultiArchiveShipmentsComponent": { myResult = MultiArchiveShipmentsComponent; break; };
             case "DownloadAllFilesComponent": { myResult = DownloadAllFilesComponent; break; }
-            case "AddEditPrivateLabelShipmentComponent": { myResult = AddEditPrivateLabelShipmentComponent; break; }
+            case "AddEditPrivateLabelCustomsShipmentComponent": { myResult = AddEditPrivateLabelCustomsShipmentComponent; break; }
             case "DSVApprovePaymentComponent": { myResult = DSVApprovePaymentComponent; break; }
             case "LogBoxApprovePaymentComponent": { myResult = LogBoxApprovePaymentComponent; break; }
             case "PrivateLabelApprovebyMobileComponent": { myResult = PrivateLabelApprovebyMobileComponent; break; }
@@ -83,7 +86,10 @@ export class ModuleDeclarations {
             case "UserIdNumberMobileComponent": { myResult = UserIdNumberMobileComponent; break; }
             case "WarningApprovePaymentComponent": { myResult = WarningApprovePaymentComponent; break; }
             case "PrivateLabelApprovePaymentComponent": { myResult = PrivateLabelApprovePaymentComponent; break; }            
-            case "ApprovePaymentBaseComponent": { myResult = ApprovePaymentBaseComponent; break; }            
+            case "ApprovePaymentBaseComponent": { myResult = ApprovePaymentBaseComponent; break; }
+            case "AddEditPrivateLabelShipmentComponent": { myResult = AddEditPrivateLabelShipmentComponent; break; }
+            case "PrivateLabelPackageComponent": { myResult = PrivateLabelPackageComponent; break; }
+                 
         }
 
         return myResult;

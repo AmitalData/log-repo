@@ -20,6 +20,7 @@ using System.Windows.Forms;
 using Simplog.Server.Infrastructure.Helpers;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.IO;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.Update
 {
@@ -243,6 +244,8 @@ namespace Logitude.Update
 
 
                     };
+                    UpdatePortSearchFieldService.Update(NewPort);
+
                     AmitalPortsRepository.Add(NewPort);
                 }
 
@@ -329,6 +332,7 @@ namespace Logitude.Update
                             TemplateBodyjson = SourceDocumentTypeHtmlTemplate.TemplateBodyjson,
                             TemplateHeaderHeight = SourceDocumentTypeHtmlTemplate.TemplateHeaderHeight,
                             TemplateHeaderHtml = SourceDocumentTypeHtmlTemplate.TemplateHeaderHtml,
+                            IsSystem = SourceDocumentTypeHtmlTemplate.IsSystem,
 
 
 
@@ -369,6 +373,7 @@ namespace Logitude.Update
                             TemplateBodyjson = SourceDocumentTypeReportTemplate.TemplateBodyjson,
                             TemplateHeaderHeight = SourceDocumentTypeReportTemplate.TemplateHeaderHeight,
                             TemplateHeaderHtml = SourceDocumentTypeReportTemplate.TemplateHeaderHtml,
+                            IsSystem = SourceDocumentTypeHtmlTemplate.IsSystem,
 
                         };
                         DestinationDocumentTypeTemplateRepository.Add(AmitalDocumentTypeReportTemplate);
@@ -974,6 +979,8 @@ namespace Logitude.Update
 
 
                     };
+                    UpdatePortSearchFieldService.Update(NewPort);
+
                     AmitalPortsRepository.Add(NewPort);
                 }
 
@@ -1090,6 +1097,7 @@ namespace Logitude.Update
                                     Signature = oldContact.Signature,
                                     SignatureHtml = oldContact.SignatureHtml,
                                     UserType = oldContact.UserType,
+                                    DigitalPortalLanguage = oldContact.DigitalPortalLanguage
                                 };
 
                                 CardContact cardContact = new CardContact()

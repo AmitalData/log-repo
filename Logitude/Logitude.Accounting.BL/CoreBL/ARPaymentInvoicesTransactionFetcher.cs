@@ -7,6 +7,7 @@ using Logitude.Accounting.Def.EntityPMs;
 using Logitude.BL.DataContracts;
 using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InvoiceModel.CloseTables;
+using Logitude.BL.InvoiceModel.EntityLists;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.EntityQueries;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
@@ -30,7 +31,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
         LedgerTransaction paymentTransaction;
         List<LedgerTransactionPM> transactions;
-
+        private ARInvoiceQuery aRInvoiceQuery;
         public ARPaymentInvoicesTransactionFetcher(string arpaymentId, string glaccountId, int tenant)
         {
             this.tenant = tenant;
@@ -41,6 +42,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 paymentTransaction = GetPaymentTransaction();
 
             transactions = new List<LedgerTransactionPM>();
+            aRInvoiceQuery = new ARInvoiceQuery(tenant);
         }
 
         public List<LedgerTransactionPM> FetchSorted()
@@ -136,9 +138,11 @@ namespace Logitude.Accounting.BL.CoreBL
             reconciledTransactions = GetTransactionsById(recoLinesTransactionsId);
 
             // exclude partially reconcile transactions
-            reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == AccountingEntityValues.ARInvoice).ToList();
+            reconciledTransactions = reconciledTransactions.Where(d => d.IsReconciled == true && d.SourceTypeCode == CloseTables.AccountingEntityValues.ARInvoice).ToList();
 
             FillTransactionsAmountToReconcile(reconciledTransactions);
+
+            reconciledTransactions = SetRefernceToLedgerTransaction(reconciledTransactions);
 
             return reconciledTransactions;
         }
@@ -219,16 +223,34 @@ namespace Logitude.Accounting.BL.CoreBL
         private List<LedgerTransactionPM> GetInvoicesTransactions()
         {
             LedgerTransactionQueryService transactionQueryService = new LedgerTransactionQueryService(tenant);
-            IQueryable<LedgerTransactionPM> invoicesTransactions = transactionQueryService.GetInvoicesTransactions(tenant);
+            IQueryable<LedgerTransactionPM> invoicesTransactions = transactionQueryService.GetInvoicesTransactions(tenant, AccountingEntities.ARInvoice);
             invoicesTransactions = invoicesTransactions
                     .Where(d =>
                         d.AccountId == glaccountId
                         && d.Tenant == tenant
                         && d.IsReconciled == false
-                        && d.SourceTypeCode == AccountingEntityValues.ARInvoice)
+                        && d.SourceTypeCode == CloseTables.AccountingEntityValues.ARInvoice)
                     .OrderBy(b => b.AccountingDate).ThenByDescending(b => b.JournalId);
-
+         
             var transactionsList = invoicesTransactions.ToList();
+            transactionsList = SetRefernceToLedgerTransaction(transactionsList);
+            return transactionsList;
+        }
+
+        private List<LedgerTransactionPM> SetRefernceToLedgerTransaction(List<LedgerTransactionPM> transactionsList)
+        {
+            var transactionsListSourceId = transactionsList.Select(tr => tr.SourceId).ToList();
+            List<ARInvoicePM> aRInvoicePMList = aRInvoiceQuery.GetARInvoicePMsByIdList(transactionsListSourceId, tenant).ToList();
+            
+            foreach(LedgerTransactionPM ledgerTransaction in transactionsList)
+            {
+                ARInvoicePM aRInvoicePM = aRInvoicePMList.Where(arInvoice => arInvoice.Id == ledgerTransaction.SourceId).FirstOrDefault();
+                if(aRInvoicePM != null)
+                {
+                    ledgerTransaction.Reference3 = aRInvoicePM.ShipmentsNumbers;
+                }
+            }
+           
             return transactionsList;
         }
 

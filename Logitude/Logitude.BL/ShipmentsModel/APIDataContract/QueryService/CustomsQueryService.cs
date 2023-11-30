@@ -40,7 +40,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 {
                     temp = query.GetSinglePM(MyEntity.Id, Tenant);
                 }
-
              
                 if (temp == null)
                 {
@@ -50,6 +49,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 {
                     temp.Id = MyEntity.Id;
                 }
+
+                CardQueryService cardQueryService = new CardQueryService(Tenant);
+                PortQueryService portQueryService = new PortQueryService(Tenant);
                 ShipmentTypeQueryService ShipmentTypeShipmentTypeService = new ShipmentTypeQueryService(Tenant);
                 if (MyEntity.ShipmentType != null)
                 {
@@ -58,7 +60,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     {
                         temp.ShipmentTypeId = myShipmentTypePM.Id;
                     }
-
                 }
 
                 TransportModeQueryService TransportModeTransportModeService = new TransportModeQueryService(Tenant);
@@ -69,66 +70,51 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     {
                         temp.TransportModeId = myTransportModePM.Id;
                     }
-
                 }
 
-                CardQueryService ShipperCardService = new CardQueryService(Tenant);
                 if (MyEntity.Shipper != null)
                 {
-                    var myShipperPM = ShipperCardService.CardDataMappingAndValidatin(MyEntity.Shipper, Tenant, ComputingPartnerName);
+                    var myShipperPM = cardQueryService.CardDataMappingAndValidatin(MyEntity.Shipper, Tenant, ComputingPartnerName);
                     if (myShipperPM != null)
                     {
                         temp.ShipperId = myShipperPM.Id;
                     }
-
                 }
 
-
-                temp.ShipperReference1 = MyEntity.ShipperReference1;
-                temp.ShipperReference2 = MyEntity.ShipperReference2; CardQueryService ConsigneeCardService = new CardQueryService(Tenant);
                 if (MyEntity.Consignee != null)
                 {
-                    var myConsigneePM = ConsigneeCardService.CardDataMappingAndValidatin(MyEntity.Consignee, Tenant, ComputingPartnerName);
+                    var myConsigneePM = cardQueryService.CardDataMappingAndValidatin(MyEntity.Consignee, Tenant, ComputingPartnerName);
                     if (myConsigneePM != null)
                     {
                         temp.ConsigneeId = myConsigneePM.Id;
                     }
-
                 }
 
-
-                temp.ConsigneeReference1 = MyEntity.ConsigneeReference1;
-                temp.ConsigneeReference2 = MyEntity.ConsigneeReference2; CardQueryService CustomerCardService = new CardQueryService(Tenant);
                 if (MyEntity.Customer != null)
                 {
-                    var myCustomerPM = CustomerCardService.CardDataMappingAndValidatin(MyEntity.Customer, Tenant, ComputingPartnerName);
+                    var myCustomerPM = cardQueryService.CardDataMappingAndValidatin(MyEntity.Customer, Tenant, ComputingPartnerName);
                     if (myCustomerPM != null)
                     {
                         temp.CustomerId = myCustomerPM.Id;
                     }
-
                 }
-
-                PortQueryService FromPortPortService = new PortQueryService(Tenant);
+                
                 if (MyEntity.FromPort != null)
                 {
-                    var myFromPortPM = FromPortPortService.PortDataMappingAndValidatin(MyEntity.FromPort, Tenant, ComputingPartnerName);
+                    var myFromPortPM = portQueryService.PortDataMappingAndValidatin(MyEntity.FromPort, Tenant, ComputingPartnerName);
                     if (myFromPortPM != null)
                     {
                         temp.FromPortId = myFromPortPM.Id;
                     }
-
                 }
 
-                PortQueryService ToPortPortService = new PortQueryService(Tenant);
                 if (MyEntity.ToPort != null)
                 {
-                    var myToPortPM = ToPortPortService.PortDataMappingAndValidatin(MyEntity.ToPort, Tenant, ComputingPartnerName);
+                    var myToPortPM = portQueryService.PortDataMappingAndValidatin(MyEntity.ToPort, Tenant, ComputingPartnerName);
                     if (myToPortPM != null)
                     {
                         temp.ToPortId = myToPortPM.Id;
                     }
-
                 }
 
                 WeightUnitQueryService GrossWeightUnitWeightUnitService = new WeightUnitQueryService(Tenant);
@@ -139,7 +125,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     {
                         temp.GrossWeightUnitCode = myGrossWeightUnitPM.Code;
                     }
-
                 }
 
                 WeightUnitQueryService ChargeableWeightUnitWeightUnitService = new WeightUnitQueryService(Tenant);
@@ -150,7 +135,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     {
                         temp.ChargeableWeightUnitCode = myChargeableWeightUnitPM.Code;
                     }
-
                 }
 
                 VolumeUnitQueryService VolumeUnitVolumeUnitService = new VolumeUnitQueryService(Tenant);
@@ -161,7 +145,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     {
                         temp.VolumeUnitCode = myVolumeUnitPM.Code;
                     }
-
                 }
 
                 IncotermQueryService IncotermIncotermService = new IncotermQueryService(Tenant);
@@ -172,35 +155,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     {
                         temp.IncotermId = myIncotermPM.Id;
                     }
-
                 }
 
-
-                temp.House = MyEntity.HouseNo;
-                temp.HAWBDate = MyEntity.HouseDate;
-                temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
-                if (MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
-                {
-                    AirPackageQueryService AirPackageService15 = new AirPackageQueryService(Tenant);
-                    temp.ShipmentPackages = AirPackageService15.AirPackageCustomDataMappingAndValidatin(MyEntity, MyEntity.AirPackages, Tenant, ComputingPartnerName);
-                }
-
-
-                if (MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
-                {
-                    OceanOrInlandPackageQueryService OceanOrInlandPackageService15 = new OceanOrInlandPackageQueryService(Tenant);
-                    temp.ShipmentPackages = OceanOrInlandPackageService15.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity, MyEntity.OceanOrInlandPackages, Tenant, ComputingPartnerName);
-                }
-
-
-                if (MyEntity.Containers != null && MyEntity.Containers.Count > 0)
-                {
-                    ContainerQueryService ContainerService15 = new ContainerQueryService(Tenant);
-                    temp.ShipmentPackages = ContainerService15.ContainerCustomDataMappingAndValidatin(MyEntity, MyEntity.Containers, Tenant, ComputingPartnerName);
-                }
-
-
-                temp.AWBCommodityItemNumber = MyEntity.Commodity; BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
+                BranchQueryService BranchBranchService = new BranchQueryService(Tenant);
                 if (MyEntity.Branch != null)
                 {
                     var myBranchPM = BranchBranchService.BranchDataMappingAndValidatin(MyEntity.Branch, Tenant, ComputingPartnerName);
@@ -208,7 +165,6 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     {
                         temp.BranchId = myBranchPM.Id;
                     }
-
                 }
 
                 DepartmentQueryService DepartmentDepartmentService = new DepartmentQueryService(Tenant);
@@ -219,10 +175,51 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                     {
                         temp.DepartmentId = myDepartmentPM.Id;
                     }
-
                 }
 
+                if (MyEntity.MainCarriageCarrier != null)
+                {
+                    var myMainCarriageCarrierPM = cardQueryService.CardDataMappingAndValidatin(MyEntity.MainCarriageCarrier, Tenant, ComputingPartnerName);
+                    if (myMainCarriageCarrierPM != null)
+                    {
+                        temp.MainCarriageCarrierId = myMainCarriageCarrierPM.Id;
+                    }
+                }
 
+                CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant, "Shipment");
+                if (MyEntity.CustomFields != null)
+                {
+                    customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);
+                }
+
+                if (MyEntity.AirPackages != null && MyEntity.AirPackages.Count > 0)
+                {
+                    AirPackageQueryService AirPackageService15 = new AirPackageQueryService(Tenant);
+                    temp.ShipmentPackages = AirPackageService15.AirPackageCustomDataMappingAndValidatin(MyEntity, MyEntity.AirPackages, Tenant, ComputingPartnerName);
+                }
+
+                if (MyEntity.OceanOrInlandPackages != null && MyEntity.OceanOrInlandPackages.Count > 0)
+                {
+                    OceanOrInlandPackageQueryService OceanOrInlandPackageService15 = new OceanOrInlandPackageQueryService(Tenant);
+                    temp.ShipmentPackages = OceanOrInlandPackageService15.OceanOrInlandPackageCustomDataMappingAndValidatin(MyEntity, MyEntity.OceanOrInlandPackages, Tenant, ComputingPartnerName);
+                }
+
+                if (MyEntity.Containers != null && MyEntity.Containers.Count > 0)
+                {
+                    ContainerQueryService ContainerService15 = new ContainerQueryService(Tenant);
+                    temp.ShipmentPackages = ContainerService15.ContainerCustomDataMappingAndValidatin(MyEntity, MyEntity.Containers, Tenant, ComputingPartnerName);
+                }
+
+                temp.ShipperReference1 = MyEntity.ShipperReference1;
+                temp.ShipperReference2 = MyEntity.ShipperReference2;
+                temp.ShipperReference3 = MyEntity.ShipperReference3;
+                temp.ConsigneeReference1 = MyEntity.ConsigneeReference1;
+                temp.ConsigneeReference2 = MyEntity.ConsigneeReference2;
+                temp.ConsigneeReference3 = MyEntity.ConsigneeReference3;
+                temp.House = MyEntity.HouseNo;
+                temp.HAWBDate = MyEntity.HouseDate;
+                temp.DescriptionOfGoods = MyEntity.DescriptionOfGoods;
+                temp.AWBCommodityItemNumber = MyEntity.Commodity;
                 temp.TEU = MyEntity.TEU;
                 temp.NumberOfPackages = MyEntity.NumberOfPackages;
                 temp.GrossWeight = MyEntity.GrossWeight;
@@ -232,37 +229,21 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.ShipmentNumber = MyEntity.ShipmentNumber;
                 temp.Master = MyEntity.Master;
                 temp.CustomsClearanceDate = MyEntity.CustomsClearanceDate;
-                temp.DeclarationNumber = MyEntity.DeclarationNumber; CardQueryService MainCarriageCarrierCardService = new CardQueryService(Tenant);
-                if (MyEntity.MainCarriageCarrier != null)
-                {
-                    var myMainCarriageCarrierPM = MainCarriageCarrierCardService.CardDataMappingAndValidatin(MyEntity.MainCarriageCarrier, Tenant, ComputingPartnerName);
-                    if (myMainCarriageCarrierPM != null)
-                    {
-                        temp.MainCarriageCarrierId = myMainCarriageCarrierPM.Id;
-                    }
-
-                }
-
-
-                CustomFieldQueryService customFieldService = new CustomFieldQueryService(Tenant, "Shipment");
-                if (MyEntity.CustomFields != null)
-                {
-                    customFieldService.CustomFieldCustomDataMappingAndValidatin(MyEntity.CustomFields, temp, Tenant);
-                }
-
-
+                temp.DeclarationNumber = MyEntity.DeclarationNumber;
                 temp.ShipperName = MyEntity.ShipperName;
                 temp.DeclarationXMLData = MyEntity.DeclarationXMLData;
                 temp.DeclarationDate = MyEntity.DeclarationDate;
+                temp.CustomerReference1 = MyEntity.CustomerReference1;
+                temp.CustomerReference2 = MyEntity.CustomerReference2;
+                temp.CustomerReference3 = MyEntity.CustomerReference3;
                 return temp;
             }
+
             catch (Exception ex)
             {
-
                 throw ex;
             }
         }
-
 
         public ShipmentPM CustomsCustomDataMappingAndValidatin(Customs MyEntity, int Tenant)
         {
@@ -304,6 +285,9 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 temp.Master = MyEntity.Master;
                 temp.ShipperName = MyEntity.ShipperName;
                 temp.DeclarationDate = MyEntity.DeclarationDate;
+                temp.CustomerReference1 = MyEntity.CustomerReference1;
+                temp.CustomerReference2 = MyEntity.CustomerReference2;
+                temp.CustomerReference3 = MyEntity.CustomerReference3;
 
                 if (temp.DeclarationDate != null || !string.IsNullOrEmpty(temp.DeclarationNumber))
                 {

@@ -24,11 +24,12 @@ using WebFreight.Web.Helpers;
 {
     public class InterestPrintService
     {
+        public InterestReportPM InteerstReportPM;
         public InterestDataProvider LoadDataProvider(string entityId, int tenant)
         {
             InterestDataProvider InterestReportDP = new InterestDataProvider();
             InterestReportQueryService InterestReportQuery = new InterestReportQueryService(tenant);
-            InterestReportPM InteerstReportPM = InterestReportQuery.GetSingle(entityId, true, false);
+            InteerstReportPM = InterestReportQuery.GetSingle(entityId, true, false);
             InterestReportService interestReportService = new InterestReportService();
             List<InterestTransactionList> interestTransactionLists = interestReportService.GetAllInterestTransactionByDate(entityId, null, tenant, null).interestTransactionLists;
 
@@ -68,6 +69,7 @@ using WebFreight.Web.Helpers;
                    }).ToList(),
             }).ToList();
 
+            GetGLAccountDisplayNumber(tenant, InterestReportDP, InteerstReportPM);
 
             InterestReportDP.OpenBalance = InteerstReportPM.OpenBalance;
             InterestReportDP.CustomerName = InteerstReportPM.CustomerName;
@@ -77,13 +79,21 @@ using WebFreight.Web.Helpers;
             InterestReportDP.TotalAmount = InteerstReportPM.TotalAmount;
             InterestReportDP.CreditAllotmentPercentage = InteerstReportPM.CreditAllotmentPercentage;
             InterestReportDP.CalCreditAllotmentCommission = InteerstReportPM.CalCreditAllotmentCommission;
+            InterestReportDP.CalculatedPostponedChequesCommision = InteerstReportPM.CalculatedPostponedChequesCommision;
             InterestReportDP.AllotmentCommession = InteerstReportPM.CalCreditAllotmentCommission;
-            InterestReportDP.AllotmentCalculation= SetAllotmentCalculationEquation(InterestReportDP, InteerstReportPM);
+            InterestReportDP.AllotmentCalculation = SetAllotmentCalculationEquation(InterestReportDP, InteerstReportPM);
 
             return InterestReportDP;
         }
 
-         private static string SetAllotmentCalculationEquation(InterestDataProvider InterestReportDP, InterestReportPM InteerstReportPM)
+        private static void GetGLAccountDisplayNumber(int tenant, InterestDataProvider InterestReportDP, InterestReportPM InteerstReportPM)
+        {
+            GLAccountQueryService glAccountQuery = new GLAccountQueryService(tenant);
+            GLAccountPM gLAccount = glAccountQuery.GetSinglePM(InteerstReportPM.GLAccountId, tenant);
+            InterestReportDP.GLAccountDisplayNumber = gLAccount.DisplayNumber;
+        }
+
+        private static string SetAllotmentCalculationEquation(InterestDataProvider InterestReportDP, InterestReportPM InteerstReportPM)
         {
             if (InteerstReportPM.CreditAllotmentPercentage != null)
             {

@@ -44,7 +44,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         ExternalOpenAmount, 
 	         ExternalReconcileNumber, 
 	         IsExternalReconcile, 
-	         ActionId,
+	         ActionId, 
+	         ConfirmationNumber,
 	      }
 
 
@@ -87,7 +88,12 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         IsDebitAccountMulti, 
 	         ExternalReconcileNumber, 
 	         IsExternalReconcile, 
-	         ActionId,
+	         ActionId, 
+	         CreditAccountCOACode, 
+	         DebitAccountCOACode, 
+	         DebitAccountEnglishName, 
+	         CreditAccountEnglishName, 
+	         ConfirmationNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -199,6 +205,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActionId))
             {
 				entityPOCO.ActionId = entityPM.ActionId;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConfirmationNumber))
+            {
+				entityPOCO.ConfirmationNumber = entityPM.ConfirmationNumber;
 			}
 			}
 
@@ -320,6 +331,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ActionId = entityPOCO.ActionId;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ConfirmationNumber))
+            {
+					entityPM.ConfirmationNumber = entityPOCO.ConfirmationNumber;
+            }
+
 		}
 
 		public void PMToOldPM(JournalLinePM entityPM, JournalLinePM oldEntityPM)
@@ -431,6 +447,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.ActionId = entityPM.ActionId;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ConfirmationNumber))
+            {
+                oldEntityPM.ConfirmationNumber = entityPM.ConfirmationNumber;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(JournalLinePM entityPM)
@@ -455,6 +476,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.Notes)) //T4 find type == nText 
             {
                 entityPM.Notes = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Notes));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.ConfirmationNumber)) //T4 find type == nText 
+            {
+                entityPM.ConfirmationNumber = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ConfirmationNumber));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

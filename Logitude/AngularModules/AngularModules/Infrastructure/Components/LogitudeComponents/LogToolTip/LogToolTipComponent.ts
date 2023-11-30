@@ -14,7 +14,7 @@ export class LogToolTipComponent implements AfterViewInit {
 
     public isRTL: boolean = false;
     public ArrowTop:number = 36;
- 
+
     @Input() public title: string;
     @Input() public name: string = 'no1';
     @Input() public direction: string = 'bottomright';
@@ -31,7 +31,7 @@ export class LogToolTipComponent implements AfterViewInit {
     constructor() {
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-       
+
     }
     ngOnInit(){
         this.SetComponentId();
@@ -104,9 +104,9 @@ export class LogToolTipComponent implements AfterViewInit {
         switch (this.direction) {
             case 'topright':
             {
-                element.style.bottom = (this.getScreenHeight() - itemRect.top + 20) + 'px';
+                element.style.bottom = (this.getScreenHeight() - itemRect.top + 20) + (this.bottom||0) + 'px';
                 element.style.left = (itemRect.left - 15) + 'px';
- 
+
                 var ImgItem = document.getElementById(this.mode+this.name);
                 var ImgItemRect = ImgItem.getBoundingClientRect();
                 this.MaxWidthOfToolTip =  document.body.clientWidth - ImgItemRect.left ;
@@ -162,39 +162,39 @@ export class LogToolTipComponent implements AfterViewInit {
     }
     GetArrowClassName(){
         var className = "small-tooltip-arrow";
-        
- 
+
+
         switch (this.direction) {
             case 'topright':
             {
 
                 var bodyItem = document.getElementById("tooltip-body" + this.name);
                 var bodyItemRect = bodyItem.getBoundingClientRect();
-                this.ArrowTop =  bodyItemRect.height +5;
- 
+                this.ArrowTop =  bodyItemRect.height - 2;
+
 
                 className += " arrow-top"
                 break;
             }
             case 'topleft':
 
-            {  
+            {
                 var bodyItem = document.getElementById("tooltip-body" + this.name);
                 var bodyItemRect = bodyItem.getBoundingClientRect();
-                this.ArrowTop =  bodyItemRect.height +5;
- 
+                this.ArrowTop =  bodyItemRect.height - 2;
+
 
                 className += " arrow-topleft"
                 break;
             }
             case 'bottomright':
-            {   
+            {
                 this.ArrowTop =  6;
                 className += " arrow-left"
                 break;
             }
             case 'bottomleft':
-            {   
+            {
                 this.ArrowTop =  6;
                 className += " arrow-right"
                 break;

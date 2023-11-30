@@ -1,6 +1,7 @@
 import {ApiQueryFilters} from '../DataContracts/ApiQueryFilters';
 import {BluesnapContractListService} from '../Services/StandardLists/BluesnapContractListService';
-import {ChargesGroupListService} from '../Services/StandardLists/ChargesGroupListService';
+import { ChargesGroupListService } from '../Services/StandardLists/ChargesGroupListService';
+import { QuoteChargesGroupListService } from '../Services/StandardLists/QuoteChargesGroupListService';
 import {CustomPickListListService} from '../Services/StandardLists/CustomPickListListService';
 import {EntityStatusListService} from '../Services/StandardLists/EntityStatusListService';
 import {EventTypeListService} from '../Services/StandardLists/EventTypeListService';
@@ -10,6 +11,7 @@ import {RatesTableListService} from '../Services/StandardLists/RatesTableListSer
 import {BookingProductListService} from '../../Booking/Services/StandardLists/BookingProductListService';
 import { QuoteStageListService } from '../../Quote/Services/StandardLists/QuoteStageListService';
 import { QuoteClosingReasonListService } from '../../Quote/Services/StandardLists/QuoteClosingReasonListService';
+import { ValidByTypeListService } from '../../Quote/Services/StandardLists/ValidByTypeListService';
 import {AWBSpecialHandlingCodeListService} from '../../Shipment/Services/StandardLists/AWBSpecialHandlingCodeListService';
 import {AccountingPaymentMethodListService} from '../../Invoice/Services/StandardLists/AccountingPaymentMethodListService';
 import {CreditCardTypeListService} from '../../Invoice/Services/StandardLists/CreditCardTypeListService';
@@ -57,6 +59,10 @@ import {WarehouseListService} from '../../Common/Services/StandardLists/Warehous
 import { JournalActionTypeListService } from '../../Accounting/Services/StandardLists/JournalActionTypeListService';
 import { BluesnapContractTypeListService } from '../Services/StandardLists/BluesnapContractTypeListService'; 
 import { HorseListService } from '../../Common/Services/StandardLists/HorseListService';
+import { PortTimeZoneListService } from '../../Common/Services/StandardLists/PortTimeZoneListService';
+import { CustomerTeamListService } from '../../Common/Services/StandardLists/CustomerTeamListService';
+import { CarrierServiceLineListService } from '../../Common/Services/StandardLists/CarrierServiceLineListService';
+import { PortGroupListService } from '../../Common/Services/StandardLists/PortGroupListService';
 
 //customs
 import {InternationalSiteListService} from '../../Customs/Services/StandardLists/InternationalSiteListService'; 
@@ -150,6 +156,7 @@ export class CachedDataManagerServices {
         switch (name) { 
             case "BluesnapContractListService": { myResult = new BluesnapContractListService(); break; }
             case "ChargesGroupListService": { myResult = new ChargesGroupListService(); break; }
+            case "QuoteChargesGroupListService": { myResult = new QuoteChargesGroupListService(); break; }
             case "CustomPickListListService": { myResult = new CustomPickListListService(); break; }
             case "EntityStatusListService": { myResult = new EntityStatusListService(); break; }
             case "EventTypeListService": { myResult = new EventTypeListService(); break; }
@@ -159,6 +166,7 @@ export class CachedDataManagerServices {
             case "BookingProductListService": { myResult = new BookingProductListService(); break; }
             case "QuoteStageListService": { myResult = new QuoteStageListService(); break; }
             case "QuoteClosingReasonListService": { myResult = new QuoteClosingReasonListService(); break; }
+            case "ValidByTypeListService": { myResult = new ValidByTypeListService(); break; }
             case "AWBSpecialHandlingCodeListService": { myResult = new AWBSpecialHandlingCodeListService(); break; }            
             case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }
             case "CreditCardTypeListService": { myResult = new CreditCardTypeListService(); break; }
@@ -246,24 +254,28 @@ export class CachedDataManagerServices {
             case "Customs.CancellationReasonRequestTypeListService": { myResult = new CancellationReasonRequestTypeListService(); break; }
             case "Customs.CancellationRequestStatusListService": { myResult = new CancellationRequestStatusListService(); break; }
             case "Customs.ReferantTeamListService": { myResult = new ReferantTeamListService(); break; }
-            case "Customs.CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
+             case "Customs.CancelRequestRejectReasonTypeListService": { myResult = new CancelRequestRejectReasonTypeListService(); break; }
             case "Customs.LogisticsReferenceTypeListService": { myResult = new LogisticsReferenceTypeListService(); break; }
             case "Customs.ReferenceInputTypeListService": { myResult = new ReferenceInputTypeListService(); break; }
             case "Customs.ReferenceStatusListService": { myResult = new ReferenceStatusListService(); break; }
             case "Customs.BuyerRoleTypeListService": { myResult = new BuyerRoleTypeListService(); break; }
-
-
-            case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }
  
+
+            case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; } 
             case "TariffProductListService": { myResult = new TariffProductListService(); break; }    
             case "AWBAdditionalHandlingInfoListService": { myResult = new AWBAdditionalHandlingInfoListService(); break; }    
             case "TariffProductListService": { myResult = new TariffProductListService(); break; }
             case "ShipmentSubTypeListService": { myResult = new ShipmentSubTypeListService(); break; }
             case "HorseListService": { myResult = new HorseListService(); break; }
-            case "LogisticActionResponseReqSListService": { myResult = new LogisticActionResponseReqSListService(); break; }
+             case "LogisticActionResponseReqSListService": { myResult = new LogisticActionResponseReqSListService(); break; }
             case "CurrencyTypeTenantListService": { myResult = new CurrencyTypeTenantListService(); break; }
             
-            default: {
+             case "PortTimeZoneListService": { myResult = new PortTimeZoneListService(); break; }
+            case "CustomerTeamListService": { myResult = new CustomerTeamListService(); break; }
+            case "CarrierServiceLineListService": { myResult = new CarrierServiceLineListService(); break; }
+            case "PortGroupListService": { myResult = new PortGroupListService(); break; }
+
+             default: {
 
                 if (ObjectsLocator.GlobalSetting && ObjectsLocator.GlobalSetting.WorkEnvironment == "customs") {
                     console.error(name + " is not declared in CachedDataManagerServices")

@@ -33,6 +33,8 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return new List<OpportunityDW>();
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
@@ -69,13 +71,14 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return 0;
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
                 OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
                 return opportunityQueryService.GetOpportunitiesCountDWByDates(tenant, fromDate, toDate);
-
 
             }
             catch (Exception ex)
@@ -105,13 +108,14 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return new List<OpportunityDW>();
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);//UPDATE//READ
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
                 OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
                 return opportunityQueryService.GetOpportunitiesDWByUpdateDate(tenant, updateDate, skip, take);
-
 
             }
             catch (Exception ex)
@@ -141,13 +145,14 @@ namespace WebFreight.Web.WcfApi
 
             try
             {
+                if (CrmWebServicesValidator.IsDisabled(tenant)) return 0;
+
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 SecurityUtility.CheckContactFeature("Opportunity", "READ", tenant);
                 ICRMContext objectContext = CRMContext.GetContext(tenant);
 
                 OpportunityQueryService opportunityQueryService = new OpportunityQueryService(objectContext);
                 return opportunityQueryService.GetOpportunitiesDWCountByUpdateDate(tenant, updateDate);
-
 
             }
             catch (Exception ex)

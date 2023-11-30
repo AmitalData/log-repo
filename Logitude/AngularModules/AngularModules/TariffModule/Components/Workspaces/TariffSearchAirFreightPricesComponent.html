@@ -150,10 +150,15 @@
                                             <td style="width:150px">
                                                 <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
                                             </td>
-
                                             <td>
-                                                <div></div>
+                                                <div float-end>
+                                                    <LogToolTip [bottom]="5"
+                                                                [mode]="'Info'" [title]="''">
+                                                        {{BetweenDateHelpIconMassage}}
+                                                    </LogToolTip>
+                                                </div>
                                             </td>
+                                        
                                         </tr>
                                     </table>
                                 </td>
@@ -199,7 +204,7 @@
                                 </td>
                             </tr>
 
-                            <tr class="FormFieldRow" *ngIf="TariffType != 'OFC'">
+                            <tr class="FormFieldRow" *ngIf="TariffType != 'OFC' && TariffType !='IFT'" >
                                 <td>
                                     <table>
                                         <tr>
@@ -247,13 +252,13 @@
                                 </td>
                             </tr>
 
-                            <tr style="height:5px;" *ngIf="TariffType != 'OFC'">
+                            <tr style="height:5px;" *ngIf="TariffType != 'OFC' && TariffType !='IFT'">
                                 <td>
                                     <div></div>
                                 </td>
                             </tr>
 
-                            <tr class="FormFieldRow" *ngIf="TariffType == 'OFC'">
+                            <tr class="FormFieldRow" *ngIf="TariffType == 'OFC' || TariffType =='IFT'">
                                 <td>
                                     <table>
                                         <tr>
@@ -548,20 +553,22 @@
                                                             <LogLabel [ObjectFieldName]="'Date'" [NoObjectField]="true" [Text]="'Date'" [DataContext]="DataContext"></LogLabel>
                                                         </td>
 
-                                                        <td style="width:180px">
-                                                            <table>
-                                                                <tr>
-                                                                    <td>
-                                                                        <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext"></LogDatePicker>
-
-                                                                    </td>
-
-                                                                </tr>
-                                                            </table>
+                                                        <td style="width:160px">
+                                                            <LogDatePicker [ObjectFieldName]="'Date'" [SelectedDateValue]="Date" [NoObjectField]="true" [DataContext]="DataContext" [HideLastColumn]="true" [HideColumns]="true"></LogDatePicker>
+                                                        </td>
+                                                        <td style="width: 10px">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:20px">
+                                                            <div>
+                                                                <HelpIcon [Header]="'Help'" [Text]="BetweenDateHelpIconMassage"></HelpIcon>
+                                                            </div>
                                                         </td>
 
-
-                                                        <td></td>
+                                                        <td>
+                                                            <div>
+                                                            </div>
+                                                        </td>
 
                                                     </tr>
                                                 </table>
@@ -599,7 +606,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr *ngIf="TariffType == 'OFC'">
+                                        <tr *ngIf="TariffType == 'OFC' || TariffType =='IFT'">
                                             <td>
                                                 <table>
                                                     <tr>
@@ -710,7 +717,7 @@
                                             </td>
                                         </tr>
 
-                                        <tr *ngIf="TariffType != 'OFC'">
+                                        <tr *ngIf="TariffType != 'OFC' && TariffType !='IFT'">
                                             <td>
                                                 <table>
                                                     <tr>
@@ -901,7 +908,7 @@
                                                                         <td>
                                                                             <table style="border-radius: 8px; border:1px solid rgba(149, 149, 149, 0.5);">
                                                                                 <tr>
-                                                                                    <td style="width:150px;min-width:150px">
+                                                                                    <td *ngIf="TariffType != 'IFT'" style="width:150px;min-width:150px">
                                                                                         <div>
                                                                                             <img style="width:120px;height:100px;" *ngIf="item.ImageId" class="CenterCenter" [attr.id]="item.Name" src="{{item.ImageId}}" />
                                                                                         </div>
@@ -976,13 +983,13 @@
                                                                                             <tr style="height:22px;">
                                                                                                 <td class="Value" style="font-size:12px;">Remarks</td>
                                                                                             </tr>
-                                                                                            <tr style="height:22px;">
+                                                                                            <tr style="height:22px;" *ngIf="TariffType !='IFT'" >
                                                                                                 <td class="Value" style="font-size:12px;">All-In</td>
                                                                                             </tr>
-                                                                                            <tr style="height:22px;">
+                                                                                            <tr style="height:22px;" *ngIf="TariffType != 'IFT'">
                                                                                                 <td class="Value" style="font-size:12px;">Validity</td>
                                                                                             </tr>
-                                                                                            <tr style="height:22px;">
+                                                                                            <tr style="height:22px;" *ngIf="TariffType !='IFT'" >
                                                                                                 <td class="Value" style="font-size:12px;">Estimated Transit</td>
                                                                                             </tr>
 
@@ -1017,13 +1024,13 @@
                                                                                                     </table>
                                                                                                 </td>
                                                                                             </tr>
-                                                                                            <tr style="height:22px;">
+                                                                                            <tr style="height:22px;" *ngIf="TariffType !='IFT'" >
                                                                                                 <td class="Label TextTrimming" style="font-size:11px; width:500px; max-width:500px;">{{item.AllIn}}</td>
                                                                                             </tr>
-                                                                                            <tr style="height:22px;">
+                                                                                            <tr style="height:22px;" *ngIf="TariffType != 'IFT'">
                                                                                                 <td class="Label" style="font-size:11px;">{{item.ValidityDate}}</td>
                                                                                             </tr>
-                                                                                            <tr style="height:22px;">
+                                                                                            <tr style="height:22px;" *ngIf="TariffType !='IFT'" >
                                                                                                 <td class="Label" style="font-size:11px;">{{item.TransitTime}}</td>
                                                                                             </tr>
 
@@ -1095,7 +1102,7 @@
 
                                                                                                             <td style="width:20px">
                                                                                                                 <img *ngIf="item.IsShown" (click)="ShowTariffclicked(item)" src="./Images/Buttons/uparrow.png" style="cursor:pointer;width:15px;float:right" />
-                                                                                                                <img *ngIf="!item.IsShown" attr.data-cy="{{'DownArrow' | IdGeneratorPipe}}" (click)="ShowTariffclicked(item)" src="./Images/Buttons/downarrow.png" style="cursor:pointer;width:15px;float:right" />
+                                                                                                                <img *ngIf="!item.IsShown" attr.data-cy="{{'DownArrow' | IdGeneratorAsyncPipe | async}}" (click)="ShowTariffclicked(item)" src="./Images/Buttons/downarrow.png" style="cursor:pointer;width:15px;float:right" />
                                                                                                             </td>
 
                                                                                                         </tr>
@@ -1132,7 +1139,7 @@
                                                                             <div></div>
                                                                         </td>
 
-                                                                        <td style="width:150px;">
+                                                                        <td *ngIf="TariffType != 'IFT'" style="width:150px;">
                                                                             <table>
                                                                                 <tr class="FormFieldRow">
                                                                                     <td class="Value" style="font-size:16px; font-weight: 700;">{{FreightLabel}}</td>
@@ -1140,7 +1147,7 @@
                                                                                 </tr>
 
                                                                                 <tr class="FormFieldRow">
-                                                                                    <td class="Value" style="font-size:16px; font-weight: 700;" attr.data-cy="{{'FreightPriceValue' | IdGeneratorPipe}}">{{item.Price  | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
+                                                                                    <td class="Value" style="font-size:16px; font-weight: 700;" attr.data-cy="{{'FreightPriceValue' | IdGeneratorAsyncPipe | async}}">{{item.Price  | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
                                                                                     <td style="width:18px;">
                                                                                         <img *ngIf="item.IsMinIconVisible" src="./Images/CellIcons/M-icon.png" style="display: block; margin: auto; width: 16px; height: 16px;" [attr.title]="'Min Price'" />
                                                                                     </td>
@@ -1148,7 +1155,7 @@
 
                                                                                 <tr class="FormFieldRow">
                                                                                     <td colspan="2" (click)="PriceClick(item)">
-                                                                                        <p class="hyperlink" attr.data-cy="{{'FreightTariffLink' | IdGeneratorPipe}}" >View Tariff</p>
+                                                                                        <p class="hyperlink" attr.data-cy="{{'FreightTariffLink' | IdGeneratorAsyncPipe | async}}" >View Tariff</p>
                                                                                     </td>
                                                                                 </tr>
 
@@ -1164,7 +1171,7 @@
                                                                             <div></div>
                                                                         </td>
 
-                                                                        <td style="width:220px;" class="SmallLabel">
+                                                                        <td *ngIf="TariffType != 'IFT'"  style="width:220px;" class="SmallLabel">
                                                                             <ScrollViewer [Small]="true">
                                                                                 <table>
                                                                                     <tr style="height:5px;">
@@ -1209,19 +1216,26 @@
                                                                         <td style="width:100px;">
                                                                             <table>
                                                                                 <tr class="FormFieldRow">
-                                                                                    <td class="Value" style="font-size:16px; font-weight: 700;">Surcharges</td>
+                                                                                    <td class="Value" style="font-size:16px; font-weight: 700;">{{SurchargesLable}}</td>
                                                                                 </tr>
 
                                                                                 <tr class="FormFieldRow">
-                                                                                    <td class="Value" style="font-size:16px; font-weight: 700;" attr.data-cy="{{'SurchargePriceValue' | IdGeneratorPipe}}">{{item.SurchargesPrice  | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
+                                                                                    <td class="Value" style="font-size:16px; font-weight: 700;" attr.data-cy="{{'SurchargePriceValue' | IdGeneratorAsyncPipe | async}}">{{item.SurchargesPrice  | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
                                                                                 </tr>
 
-                                                                                <tr class="FormFieldRow">
+                                                                                <tr class="FormFieldRow" *ngIf="TariffType != 'IFT'" >
                                                                                     <td>
-                                                                                        <Hyperlink [IsEnabled]="item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length != 0" (click)="ViewSurchargesClicked(item)" attr.data-cy="{{'SurchargeTariffLink' | IdGeneratorPipe}}">View Tariff</Hyperlink>
+                                                                                        <Hyperlink [IsEnabled]="item.SurchargesWithoutAllIn != null && item.SurchargesWithoutAllIn.length != 0" (click)="ViewSurchargesClicked(item)" attr.data-cy="{{'SurchargeTariffLink' | IdGeneratorAsyncPipe | async}}">View Tariff</Hyperlink>
                                                                                         <!--<p class="hyperlink" [class.HyperlinkDisabled]="!IsViewSurchargesClickedEnabled">View Tariff</p>-->
                                                                                     </td>
                                                                                 </tr>
+
+                                                                                <tr class="FormFieldRow" *ngIf="TariffType == 'IFT'" >
+                                                                                    <td (click)="PriceClick(item)">
+                                                                                        <p class="hyperlink" attr.data-cy="{{'FreightTariffLink' | IdGeneratorAsyncPipe | async}}">View Tariff</p>
+                                                                                    </td>
+                                                                                </tr>
+
 
                                                                                 <tr>
                                                                                     <td>
@@ -1314,7 +1328,7 @@
                                                                                             </tr>
 
                                                                                             <tr style="height:28px;">
-                                                                                                <td style="font-size:16px; font-weight: 700; text-align:center" class="ColorBlue" attr.data-cy="{{'WholePrice' | IdGeneratorPipe}}">{{item.WholePriceWithoutAllIn | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
+                                                                                                <td style="font-size:16px; font-weight: 700; text-align:center" class="ColorBlue" attr.data-cy="{{'WholePrice' | IdGeneratorAsyncPipe | async}}">{{item.WholePriceWithoutAllIn | NumbersPipe:'N2'}} {{item.CurrencySign}}</td>
                                                                                             </tr>
 
                                                                                             <tr>

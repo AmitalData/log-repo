@@ -23,10 +23,10 @@ export class ProductItemPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
+	  		            this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-      }
+       }
 
 	 
     
@@ -93,6 +93,36 @@ export class ProductItemPM {
     private originCountryName: string;
     public get OriginCountryName() { return this.originCountryName; }
     public set OriginCountryName(newValue: string) { if (this.originCountryName != newValue) { this.originCountryName = newValue; this.MarkAsDirty("OriginCountryName"); } }
+       
+	 
+    private shipperId: string;
+    public get ShipperId() { return this.shipperId; }
+    public set ShipperId(newValue: string) { if (this.shipperId != newValue) { this.shipperId = newValue; this.MarkAsDirty("ShipperId"); } }
+       
+	 
+    private shipperName: string;
+    public get ShipperName() { return this.shipperName; }
+    public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
+       
+	 
+    private productValue: number;
+    public get ProductValue() { return this.productValue; }
+    public set ProductValue(newValue: number) { if (this.productValue != newValue) { this.productValue = newValue; this.MarkAsDirty("ProductValue"); } }
+       
+	 
+    private productValueCurrencyId: string;
+    public get ProductValueCurrencyId() { return this.productValueCurrencyId; }
+    public set ProductValueCurrencyId(newValue: string) { if (this.productValueCurrencyId != newValue) { this.productValueCurrencyId = newValue; this.MarkAsDirty("ProductValueCurrencyId"); } }
+       
+	 
+    private quantity: number;
+    public get Quantity() { return this.quantity; }
+    public set Quantity(newValue: number) { if (this.quantity != newValue) { this.quantity = newValue; this.MarkAsDirty("Quantity"); } }
+       
+	 
+    private productValueCurrencyCode: string;
+    public get ProductValueCurrencyCode() { return this.productValueCurrencyCode; }
+    public set ProductValueCurrencyCode(newValue: string) { if (this.productValueCurrencyCode != newValue) { this.productValueCurrencyCode = newValue; this.MarkAsDirty("ProductValueCurrencyCode"); } }
        
 	 
     private changeSetOp: string;

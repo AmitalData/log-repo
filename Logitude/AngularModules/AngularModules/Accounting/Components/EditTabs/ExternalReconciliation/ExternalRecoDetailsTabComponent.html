@@ -481,11 +481,11 @@
                                                 </ng-template>
                                                 </log-column>
 
-                                                <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.DocumentDate' | TextCodeTranslationPipe" [width]="'100'" [binding]="'DocumentDate'">
+                                                <log-column [Alignment]="isRTL ? 'right' : 'left'" [header]="'LedgerTransaction.F.AccountingDate' | TextCodeTranslationPipe" [width]="'100'" [binding]="'AccountingDate'">
                                                     <ng-template let-item>
                                                     <log-cell-template   #logcelltemplate [IgnoreMods]="true">
                                                         <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                            <span>{{item.DocumentDate | DateTimeToDatePipe }}</span>
+                                                            <span>{{item.AccountingDate | DateTimeToDatePipe }}</span>
                                                         </div>
                                                     </log-cell-template>
                                                 </ng-template>

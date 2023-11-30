@@ -179,6 +179,11 @@
                             </StackPanel>
 
                             <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
+                                <TextBlock Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Use Unit Selection:" />
+                                <CheckBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" IsChecked="{Binding UseUnitSelection , Mode=TwoWay}" IsThreeState="False"/>
+                            </StackPanel>
+
+                            <StackPanel Orientation="Horizontal" Margin="0 5 0 0">
                                 <TextBlock  Width="220"   VerticalAlignment="Center" FontWeight="Bold" Text="Record Type:" />
                                 <TextBox  Margin="1 0 0 0" Width="220" Height="22" VerticalAlignment="Center" Text="{Binding RecordType, Mode=TwoWay}" />
                             </StackPanel>

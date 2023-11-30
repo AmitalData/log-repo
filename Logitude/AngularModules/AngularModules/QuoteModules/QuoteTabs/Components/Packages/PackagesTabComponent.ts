@@ -34,7 +34,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     public QuoteIsFCL: boolean = true;    
     private CurrentSession = SessionLocator.SelectedSession;
     public IsHybrid: boolean;
-
+    public IsUsingVirtuallization: boolean = false;
     constructor(public entityArgs: EntityArgs, private entityResourceService: EntityResourceService) {
         super();
         this.EntityPM = this.entityArgs.EntityPM;
@@ -51,11 +51,18 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.entityResourceService.getEntityResourceByTableName("QuotePackage").subscribe((res: any) => {
                 this.IsResourcesReady = true;
             });
-
+            this.SetIsUsingVirtuallization();
             this.GetDescriptionFlowDirection();
             this.SetLabels();
             this.SetUIProperties();
             this.BuildItemsSource();
+        }
+    }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
         }
     }
 
@@ -336,7 +343,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
             this.DimensionsDependencyProperty1IsList = false;
         }
 
-        this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
+        //this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
     }
 
     
@@ -896,6 +903,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
 
         this.ComputeGrossWeigh_Kg_Ton();
         this.ChargeableWeight_Kg();
+        this.ComputeVolume_CBM();
         QuoteTool.OnQuoteQuantitiesChanged(this.EntityPM);
 
         this.SetUIProperties_Totals();
@@ -904,7 +912,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     get GrossWeight() { return this.EntityPM.GrossWeight; }
     set GrossWeight(newValue: number) {
         if (this.EntityPM.GrossWeight != newValue) {
-            this.EntityPM.GrossWeight = AppTool.Round(newValue, 2);
+            this.EntityPM.GrossWeight = AppTool.Round(newValue, 3);
             this.ComputeChargeableWeight();
             //this.EntityPM.ChargeableWeight = QuoteUtilities.ComputeChargeableWeight(this.EntityPM);
         }
@@ -913,7 +921,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     get Volume() { return this.EntityPM.Volume; }
     set Volume(newValue: number) {
         if (this.EntityPM.Volume != newValue) {
-            this.EntityPM.Volume = AppTool.Round(newValue, 2);
+            this.EntityPM.Volume = AppTool.Round(newValue, 3);
             this.ComputeVolumetricWeight();
             //this.EntityPM.VolumetricWeight = QuoteUtilities.ComputeVolumetricWeight(this.EntityPM);
         }
@@ -959,6 +967,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     }
 
     private ComputeVolume_CBM() {
+
         var volume_CBM: number = null;
 
         if (this.Volume != null) {
@@ -1006,7 +1015,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     get PickupDeliveryChargeableWeight() { return AppTool.IsNullOrZero(this.EntityPM.PickupDeliveryChargeableWeight) ? null : this.EntityPM.PickupDeliveryChargeableWeight; }
     set PickupDeliveryChargeableWeight(newValue: number) {
         if (this.EntityPM.PickupDeliveryChargeableWeight != newValue) {
-            var result = AppTool.Round(newValue, 2);
+            var result = AppTool.Round(newValue, 3);
             this.EntityPM.PickupDeliveryChargeableWeight = result;
 
             if (this.GrossWeight == null && this.EntityPM.PickupDeliveryVolumetricWeight == null) {
@@ -1020,7 +1029,7 @@ export class PackagesTabComponent extends BaseComponent implements OnInit, OnDes
     get ChargeableWeight() { return AppTool.IsNullOrZero(this.EntityPM.ChargeableWeight) ? null : this.EntityPM.ChargeableWeight; }
     set ChargeableWeight(newValue: number) {
         if (this.EntityPM.ChargeableWeight != newValue) {
-            var result = AppTool.Round(newValue, 2);
+            var result = AppTool.Round(newValue, 3);
             this.EntityPM.ChargeableWeight = result;
 
             if (this.GrossWeight == null && this.EntityPM.VolumetricWeight == null) {

@@ -92,8 +92,8 @@
                 <tr style="height:15px;">
                     <td style="vertical-align:top">
                         <div *ngIf="ShowAreaButton">
-                            <button *ngIf="IsShowEditButon" class="Button" style="float:right;width:55px;" (click)="EditShipment(null)"><span>Edit</span></button>
-                            <button [disabled]="!IsEnableCreateMasterButton || IsDisableEdit" *ngIf="!IsShowEditButon" class="GreenButton" style="float:right;width:55px" (click)="OpenSharedManifestAdditionalComponent(null)"><span>Create</span></button>
+                            <button [attr.data-cy]="'Edit'" *ngIf="IsShowEditButon" class="Button" style="float:right;width:55px;" (click)="EditShipment(null)"><span>{{'General.B.Edit' | TextCodeTranslationPipe}}</span></button>
+                            <button [attr.data-cy]="'Create'" [disabled]="!IsEnableCreateMasterButton || IsDisableEdit" *ngIf="!IsShowEditButon" class="GreenButton" style="float:right;width:55px" (click)="OpenSharedManifestAdditionalComponent(null)"><span>{{'General.B.Create' | TextCodeTranslationPipe}}</span></button>
                         </div>
 
 
@@ -250,8 +250,8 @@
                                                                         <td style="width:90px;">
 
                                                                             <div style="vertical-align:central">
-                                                                                <button *ngIf="!item.EntityId" [disabled]="!IsEnableCreateHouse ||  IsDisableEdit" class="GreenButton" style="float:right;width:55px;margin-right:10px" (click)="OpenSharedManifestAdditionalComponent(item)"><span>Create</span></button>
-                                                                                <button *ngIf="item.EntityId" class="Button" style="float:right;width:55px;margin-right:10px" (click)="EditShipment(item)"><span>Edit</span></button>
+                                                                                <button *ngIf="!item.EntityId" [disabled]="!IsEnableCreateHouse ||  IsDisableEdit" class="GreenButton" style="float:right;width:55px;margin-right:10px" (click)="OpenSharedManifestAdditionalComponent(item)"><span>{{'General.B.Create' | TextCodeTranslationPipe}}</span></button>
+                                                                                <button *ngIf="item.EntityId" class="Button" style="float:right;width:55px;margin-right:10px" (click)="EditShipment(item)"><span>{{'General.B.Edit' | TextCodeTranslationPipe}}</span></button>
                                                                             </div>
                                                                           
                                                                         </td>
@@ -306,7 +306,7 @@
 
                     <td  *ngIf="IsShowMarkASCompleted" style="width:120px">
                         <div>
-                            <button   [disabled]="IsDisableEdit"  class="Button" (click)="MarkASCompleted()"><span>Mark as Completed</span></button>
+                            <button [attr.data-cy]="'Mark as Completed'"  [disabled]="IsDisableEdit"  class="Button" (click)="MarkASCompleted()"><span>Mark as Completed</span></button>
                         </div>
                     </td>
 
@@ -316,7 +316,7 @@
                     </td>
                     <td *ngIf="ShowAreaButton" style="width:150px">
                         <div>
-                            <button [disabled]="IsDisableEdit"  [style.width]="WidthButtonStatusChange" *ngIf="!IsShowEditButon" class="Button" (click)="ChangeStatusAgentSharedManifest()"><span>{{ButtonChangeStatusLable}}</span></button>
+                            <button [attr.data-cy]="ButtonChangeStatusLable" [disabled]="IsDisableEdit"  [style.width]="WidthButtonStatusChange" *ngIf="!IsShowEditButon" class="Button" (click)="ChangeStatusAgentSharedManifest()"><span>{{ButtonChangeStatusLable}}</span></button>
                         </div>
                     </td>
 
@@ -333,7 +333,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CloseButtonClicked()">Close</button>
+                        <button [attr.data-cy]="'Close'" class="Button" (click)="CloseButtonClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

@@ -54,6 +54,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
     constructor(private _entityResourceService: EntityResourceService, private entityArgs: EntityArgs) {
         super();
         this._entityResourceService.getEntityResourceByTableName("Card", 0).subscribe((response: any) => {
+            this.ComputeCustomerDependency();
         });
         this.EntityPM = entityArgs.EntityPM;
         this.Listen();
@@ -63,7 +64,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
     ngOnInit() {
         this.SetFieldsEnabled();
         this.SetUIProperties();
-
+        this.ComputeCustomerDependency();
     }
 
     ngAfterViewInit() {
@@ -156,10 +157,29 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
                 this.UIProperties.SetEnabled("ContactId", this.ObjectTableName, !AppTool.IsNullOrEmpty(value));
 
             }
-
+       
         }
 
     }
+
+    //Customer
+    public CustomerDependencyProperty1: string = "PO,CS";
+    public CustomerDependencyProperty1IsList: boolean = true;
+    public CustomerDependencyProperty2: string = "True";
+
+    private ComputeCustomerDependency() {
+        var allowAgentFeatureToggle = this.IsAllowAgentFeatureToggle();
+        if (SessionLocator.TenantPM.AllowAgentInCustomersLOV && allowAgentFeatureToggle != null) {
+            this.CustomerDependencyProperty1 = "PO,CS,AG";
+            this.CustomerDependencyProperty2 = null;
+        }
+    }
+
+    IsAllowAgentFeatureToggle() {
+        var isAllowAgentFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "SAC")[0];
+        return isAllowAgentFeatureToggle;
+    }
+
 
     private UpdateCustomerContact() {
         var myContactId: string = null;
@@ -333,7 +353,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
     SetUIProperties() {
         var oppTypeListService: OpportunityTypeListService = new OpportunityTypeListService();
         oppTypeListService.getAllFromCache().subscribe((result:any) => {
-
+           
             var typeList: OpportunityTypeList = result.Result.filter(d => d.Id == this.EntityPM.OpportunityTypeId)[0];
             var typeCode: string = typeList == null ? null : typeList.Code;
 
@@ -378,9 +398,7 @@ export class OpportunityGeneralTabComponent extends BaseComponent implements OnI
            // this.UIProperties.SetEnabled("ContactId", "Opportunity", !AppTool.IsNullOrEmpty(this.EntityPM.CustomerId));
             this.ContactIdVisibility = !AppTool.IsNullOrEmpty(this.EntityPM.CustomerId);
 
-        });
-
-
+        });       
     }
 
     public get LeadSourceId() { return this.EntityPM.LeadSourceId; }

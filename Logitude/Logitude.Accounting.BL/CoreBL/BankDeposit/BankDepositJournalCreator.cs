@@ -46,6 +46,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             journal = InitJournal();
             CreateJournalLines();
             SubmitJournal();
+            AddAccountingEntityJournal(AccountingEntityJournalActions.BankDepositApprove);
+
         }
         private void CreateJournalLines()
         {
@@ -100,6 +102,11 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
 
         private void AddSumOfDebitLinesForJournalLines(List<JournalLinePM> _journalLines)
         {
+            bool showLocal = true;
+            string notes = TextCodesTranslator.TranslateText("BankDeposit.O.ChequeDeposit", 0, showLocal);
+            if (String.IsNullOrEmpty(notes))
+                notes = "Cheque Deposit";
+
             JournalLinePM Sum_Line = _journalLines.FirstOrDefault();
             Sum_Line.DueDate = journal.AccountingDate;
             Sum_Line.ForeignAmount = _journalLines.Sum(s => s.ForeignAmount);
@@ -107,10 +114,16 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             Sum_Line.ExternalOpenAmount = _journalLines.Sum(s => s.ExternalOpenAmount);
             Sum_Line.Reference1 = DepositPM.DepositNumber.ToString();
             Sum_Line.Reference2 = DepositPM!= null? DepositPM.BankDepositLines.Count==1? DepositPM.BankDepositLines.FirstOrDefault().ChequeNumber:null:null;
+            Sum_Line.Notes = notes;
             journal.JournalLines.Add(Sum_Line);
         }
         private JournalLinePM CreateDebitLineForChequeDeposit(ref int LineNumber, BankDepositLinePM item, ARPaymentChequePM cheque)
         {
+            bool showLocal = true;
+            string notes = TextCodesTranslator.TranslateText("BankDeposit.O.ChequeDeposit", 0, showLocal);
+            if (String.IsNullOrEmpty(notes))
+                notes = "Cheque Deposit";
+
             JournalLinePM chequeDebitLine = new JournalLinePM
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
@@ -125,7 +138,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 AccountingDate = DepositPM.DepositDate,
                 Reference1 = DepositPM.DepositNumber.ToString(),
                 Reference2 = cheque.ChequeNumber,
-                ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount
+                ExchangeRate = cheque.LocalAmount / cheque.ForeignAmount,
+                Notes = notes,
             };
 
             DateTime todayDateTime = GetCurrentDateTime();
@@ -141,12 +155,18 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             GLAccountPM gLAccount = GetGLAccountById(chequeDebitLine.DebitAccountId, true);
             chequeDebitLine.DebitControlAccountId = gLAccount?.ControlAccountId;
 
-            //opposit account
+            //opposite account
             chequeDebitLine.CreditAccountId = CashbookPM.AccountId;
             return chequeDebitLine;
         }
         private JournalLinePM CreateDebitLineForCashCashbook(int LineNumber)
         {
+            bool showLocal = true;
+            string notes = TextCodesTranslator.TranslateText("BankDeposit.O.CashDeposit", 0, showLocal);
+            if (String.IsNullOrEmpty(notes))
+                notes = "Cheque Deposit";
+
+
             JournalLinePM newDebitJournalLine = new JournalLinePM
             {
                 ChangeSetOp = ChangeSetOperation.Insert,
@@ -159,7 +179,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 DebitAccountId = BankAccount.GLAccountId,
                 DebitControlAccountId = BankGLAccount?.ControlAccountId,
 
-                // opposit account
+                // opposite account
                 CreditAccountId = CashbookPM.AccountId,
 
                 DueDate = DepositPM.CreateDate,
@@ -167,7 +187,8 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 ForeignAmount = DepositPM.ForeignAmount,
                 CurrencyId = DepositPM.DepositCurrencyId,
                 ExchangeRate = DepositPM.LocalDepositAmount / DepositPM.ForeignAmount,
-                Reference1 = DepositPM.DepositNumber.ToString()
+                Reference1 = DepositPM.DepositNumber.ToString(),
+                Notes = notes,  
             };
             return newDebitJournalLine;
         }
@@ -192,6 +213,12 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             myJournalUpdateService.Update(journal, true);
         }
 
+        public void AddAccountingEntityJournal(string actionName, string childEntityId = null)
+        {
+            IAccountingContext context = AccountingContext.GetContext(journal.Tenant);
+            AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+            service.AddAccountingEntitieJournal(journal, actionName, childEntityId);
+        }
         private CashBookPM GetCashbookById(string id)
         {
             CashBookQueryService cashBookQueryService = new CashBookQueryService(Tenant);
@@ -268,13 +295,17 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
             newCreditJournalLine.CreditControlAccountId = CashbookGLAccount?.ControlAccountId;
 
 
-            // opposit account
+            // opposite account
             newCreditJournalLine.DebitAccountId
                 = cheque.ValueDate <= TenantServerConfigration.GetCurrentDateTime(DepositPM.Tenant)
                                     ? BankGLAccount.Id : BankDeferedGLAccount.Id;
 
             newCreditJournalLine.Reference1 = DepositPM.DepositNumber.ToString();
             newCreditJournalLine.Reference2 = cheque.ChequeNumber;
+            bool showLocal = true;
+            newCreditJournalLine.Notes = TextCodesTranslator.TranslateText("BankDeposit.O.ChequeDeposit", 0, showLocal);
+            if (String.IsNullOrEmpty(newCreditJournalLine.Notes))
+                newCreditJournalLine.Notes = "Cheque Deposit";
             return newCreditJournalLine;
         }
 
@@ -299,10 +330,14 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
 
             newCreditJournalLine.CreditControlAccountId = CashbookGLAccount?.ControlAccountId;
 
-            // opposit account
+            // opposite account
             newCreditJournalLine.DebitAccountId = BankGLAccount.Id;
 
             newCreditJournalLine.Reference1 = DepositPM.DepositNumber.ToString();
+            bool showLocal = true;
+            newCreditJournalLine.Notes = TextCodesTranslator.TranslateText("BankDeposit.O.CashDeposit", 0, showLocal);
+            if (String.IsNullOrEmpty(newCreditJournalLine.Notes))
+                newCreditJournalLine.Notes = "Cash Deposit";
             return newCreditJournalLine;
         }
 

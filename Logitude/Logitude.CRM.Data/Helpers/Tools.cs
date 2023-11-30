@@ -12,8 +12,13 @@ namespace Logitude.CRM.Data.Helpers
 {
     public class Tools
     {
+        [ThreadStatic] public static string AuthenticatedUserEmail = string.Empty;
         public static string GetAuthenticatedUser()
         {
+            if(HttpContext.Current == null && !string.IsNullOrEmpty(AuthenticatedUserEmail))
+            {
+                return AuthenticatedUserEmail;
+            }
             if (HttpContext.Current != null)
             {
                 if (!string.IsNullOrEmpty(HttpContext.Current.User.Identity.Name))

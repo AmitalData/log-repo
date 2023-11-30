@@ -38,6 +38,7 @@ using Logitude.CRM.Data.EntityPOCOs;
 using Logitude.CRM.BL.EntityPMs;
 using Logitude.CRM.Data;
 using Logitude.CRM.BL;
+using Logitude.BL.Helpers;
 using Logitude.CRM.Data.EntityLists;
 using Logitude.CRM.BL.EntityUpdateServices;
 using Logitude.CRM.Data.EntityListQueryServices;
@@ -63,6 +64,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
                 TicketListQueryService ticketQuery = new TicketListQueryService(MyContext);
                 TicketList ticketList = ticketQuery.GetSingle(id);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("Ticket",  authToken.Tenant, new List<TicketList> { ticketList }.Cast<object>().ToList());
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  ticketList);
@@ -86,6 +89,8 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 	                ICRMContext MyContext = CRMContext.GetContext(authToken.Tenant);
                 TicketListQueryService ticketQuery = new TicketListQueryService(MyContext);
                 List<TicketList> result = ticketQuery.GetList(authToken.Tenant);
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("Ticket",  authToken.Tenant, result.Cast<object>().ToList());
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
                 return Request.CreateResponse(HttpStatusCode.OK, result);
@@ -154,7 +159,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							  queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
 
                         }
                         else
@@ -184,7 +189,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode);
+							  queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList, field.IsCustom, field.DataTypeCode, field.IsListFilter);
 
                         }
                         else
@@ -197,16 +202,29 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 ICRMContext MyContext = CRMContext.GetContext(tenant);
 				TicketListQueryService ticketQuery = new TicketListQueryService(MyContext);
 
-                List<TicketList> entityLists = ticketQuery.GetList(queryOperations, tenant);
-				
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "Ticket",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
+
+                List<TicketList> entityLists = ticketQuery.GetList(queryOperations, tenant , treeFilterQueryArgs);
+
 				ServiceResponse response = new ServiceResponse();
                 if (filters.GetCount)
                 {
-                    int count = ticketQuery.GetListCount(queryOperations, tenant);
+                    int count = ticketQuery.GetListCount(queryOperations, tenant , treeFilterQueryArgs);
                     response.Count = count;
                 }
 
                 response.Result = entityLists;
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+                customFieldResolver.SetCustomFieldsValues("Ticket",  authToken.Tenant, entityLists.Cast<object>().ToList());
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 

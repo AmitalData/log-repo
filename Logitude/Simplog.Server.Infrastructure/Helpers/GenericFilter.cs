@@ -4,8 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text.RegularExpressions;
-
 
 namespace Simplog.Server.Infrastructure.Helpers
 {
@@ -14,17 +12,14 @@ namespace Simplog.Server.Infrastructure.Helpers
         CustomFieldClass customFilterClass = new CustomFieldClass();
         public IQueryable<T> GetFilteredQuery<T>(QueryOperations operations, IQueryable<T> queryableData)
         {
-            
             List<QueryFilterItem> queryFilters = operations.QueryFilterItems;
            
             if (queryFilters.Count != 0)
             {
                 Expression grandExpression = null;
-
                 ParameterExpression pe = Expression.Parameter(typeof(T), "item");
                 foreach (QueryFilterItem item in queryFilters)
                 {
-
                     if (LogitudeSettings.WorkEnvironment == "customs")
                     {
                         if (item.FieldName == "SearchFields")
@@ -32,13 +27,13 @@ namespace Simplog.Server.Infrastructure.Helpers
                            item.FieldValue=  item.FieldValue.ToString().ToLower();
                         }
                     }
+
                     if (!item.IsCustom)
                     {
                         GetCustomFieldStringValue(item);
 
                         if (item.Operator != null)
                         {
-                            
                             switch (item.Operator)
                             {
                                 case "LargerThan":
@@ -46,14 +41,14 @@ namespace Simplog.Server.Infrastructure.Helpers
 
                                         if (item.IsCustomField)
                                         {
-                                            System.Linq.Expressions.Expression left = System.Linq.Expressions.Expression.Property(pe, typeof(T).GetProperty(item.FieldName));
-                                            System.Linq.Expressions.Expression right = System.Linq.Expressions.Expression.Constant(item.FieldValue, left.Type);
+                                            Expression left = Expression.Property(pe, typeof(T).GetProperty(item.FieldName));
+                                            Expression right = Expression.Constant(item.FieldValue, left.Type);
                                             MethodInfo mi = typeof(String).GetMethod("CompareTo", new Type[] { typeof(String) });
 
                                             MemberExpression field = Expression.PropertyOrField(pe, item.FieldName);
 
                                             MethodCallExpression compareExpression = Expression.Call(field, mi, Expression.Constant(item.FieldValue));
-                                            System.Linq.Expressions.Expression zeroExpression = System.Linq.Expressions.Expression.Constant(0, typeof(int));
+                                            Expression zeroExpression = Expression.Constant(0, typeof(int));
 
                                             if (grandExpression == null)
                                             {
@@ -322,34 +317,27 @@ namespace Simplog.Server.Infrastructure.Helpers
 
                                 case "InListExact":
                                     {
-
                                         string[] listOfValus = item.FieldValue.ToString().Split(',');
-                                        System.Linq.Expressions.Expression e1 = null;
+                                        Expression e1 = null;
                                         foreach (string v in listOfValus)
                                         {
-
-                                            MemberExpression field = System.Linq.Expressions.Expression.PropertyOrField(pe, item.FieldName);
-
-
-                                            System.Linq.Expressions.Expression left = System.Linq.Expressions.Expression.Property(pe, typeof(T).GetProperty(item.FieldName));
-                                            System.Linq.Expressions.Expression right = System.Linq.Expressions.Expression.Constant(v);
+                                            MemberExpression field = Expression.PropertyOrField(pe, item.FieldName);
+                                            Expression left = Expression.Property(pe, typeof(T).GetProperty(item.FieldName));
+                                            Expression right = Expression.Constant(v);
                                             if (v != null && v.ToLower() == "null")
                                             {
-                                                right = System.Linq.Expressions.Expression.Constant(null);
+                                                right = Expression.Constant(null);
                                             }
-                                                 
 
                                             if (e1 == null)
                                             {
-                                                e1 = System.Linq.Expressions.Expression.Equal(left, right);
+                                                e1 = Expression.Equal(left, right);
                                             }
                                             else
                                             {
-                                                System.Linq.Expressions.Expression e2 = System.Linq.Expressions.Expression.Equal(left, right);
-                                                e1 = System.Linq.Expressions.Expression.Or(e1, e2);
+                                                Expression e2 = Expression.Equal(left, right);
+                                                e1 = Expression.Or(e1, e2);
                                             }
-
-
                                         }
 
                                         if (grandExpression == null)
@@ -359,86 +347,24 @@ namespace Simplog.Server.Infrastructure.Helpers
                                         }
                                         else
                                         {
-                                            System.Linq.Expressions.Expression expression = e1;
-                                            grandExpression = System.Linq.Expressions.Expression.And(grandExpression, e1);
+                                            Expression expression = e1;
+                                            grandExpression = Expression.And(grandExpression, e1);
                                         }
 
-
-
                                         break;
-
-
-
                                     }
-
-                                //case "InListExact":
-                                //    {
-
-                                //        string[] listOfValus = item.FieldValue.ToString().Split(',');
-                                //        System.Linq.Expressions.Expression e1 = null;
-                                //        foreach (string v in listOfValus)
-                                //        {
-
-                                //            MemberExpression field = System.Linq.Expressions.Expression.PropertyOrField(pe, item.FieldName);
-
-                                         
-                                //            System.Linq.Expressions.Expression left = System.Linq.Expressions.Expression.Property(pe, typeof(T).GetProperty(item.FieldName));
-                                //            System.Linq.Expressions.Expression right = System.Linq.Expressions.Expression.Constant(v);
-
-                                        
-                                //            if (e1 == null)
-                                //            {
-                                //                e1 = System.Linq.Expressions.Expression.Equal(left, right);
-                                //            }
-                                //            else
-                                //            {
-                                //                System.Linq.Expressions.Expression e2 = System.Linq.Expressions.Expression.Equal(left, right);
-                                //                e1 = System.Linq.Expressions.Expression.Or(e1, e2);
-                                //            }
-
-
-                                //        }
-
-                                //        if (grandExpression == null)
-                                //        {
-
-                                //            grandExpression = e1;
-                                //        }
-                                //        else
-                                //        {
-                                //            System.Linq.Expressions.Expression expression = e1;
-                                //            grandExpression = System.Linq.Expressions.Expression.And(grandExpression, e1);
-                                //        }
-
-
-
-                                //        break;
-
-
-
-                                //    }
-
                                 case "Between":
                                     {
                                         string[] propertyinfo = item.FieldName.Split('.');
-                                        if (propertyinfo.Count() > 1)
-                                        {
-                                            //PropertyInfo info = typeof(T).GetProperty(propertyinfo[0]);
-                                            //object relatedEntity = info.GetValue(,null);
-                                        }
                                         Expression middle = Expression.Property(pe, typeof(T).GetProperty(item.FieldName));
 
                                         if (item.FieldValue != null && item.FieldValue2 != null)
                                         {
                                             if (item.IsCustomField)
                                             {
-
                                                 Expression leftValue = Expression.Constant(item.FieldValue, middle.Type);
                                                 Expression rightValue = Expression.Constant(item.FieldValue2, middle.Type);
-
                                                 MethodInfo mi = typeof(String).GetMethod("CompareTo", new Type[] { typeof(String) });
-
-
                                                 MethodCallExpression leftCompareExpression = Expression.Call(middle, mi, Expression.Constant(item.FieldValue));
                                                 MethodCallExpression rightCompareExpression = Expression.Call(middle, mi, Expression.Constant(item.FieldValue2));
                                                 System.Linq.Expressions.Expression zeroExpression = System.Linq.Expressions.Expression.Constant(0, typeof(int));
@@ -602,7 +528,7 @@ namespace Simplog.Server.Infrastructure.Helpers
 
                                 case "Exclude":
                                     {
-                                         string[] listOfValus = item.FieldValue.ToString().Split(',');
+                                        string[] listOfValus = item.FieldValue.ToString().Split(new string[] { ",", "%2C" }, StringSplitOptions.None);
                                         Expression notInListExpression = null;
                                         foreach (string v in listOfValus)
                                         {
@@ -727,16 +653,10 @@ namespace Simplog.Server.Infrastructure.Helpers
                                             grandExpression = System.Linq.Expressions.Expression.And(grandExpression, expression);
                                         }
 
-
-
                                         break;
-
-
-
                                     }
-
                                 default:
-                                    {
+                                     {
                                         Expression left = Expression.Property(pe, typeof(T).GetProperty(item.FieldName));
 
                                         Expression right = Expression.Constant(item.FieldValue, left.Type);
@@ -754,13 +674,11 @@ namespace Simplog.Server.Infrastructure.Helpers
                                                 grandExpression = Expression.Or(grandExpression, e1);
                                             }
                                         }
-
                                         else if (item.FieldValue2 != null)
                                         {
                                             Expression e1 = Expression.Constant(item.FieldValue2, left.Type);
                                             Expression e2 = Expression.Equal(left, e1);
                                             Expression e3 = Expression.Equal(left, right);
-
 
                                             if (grandExpression == null)
                                             {
@@ -773,11 +691,8 @@ namespace Simplog.Server.Infrastructure.Helpers
                                                 grandExpression = Expression.And(grandExpression, e4);
                                             }
                                         }
-
-
                                         else
                                         {
-
                                             if (grandExpression == null)
                                             {
 
@@ -789,10 +704,10 @@ namespace Simplog.Server.Infrastructure.Helpers
                                                 grandExpression = Expression.And(grandExpression, e1);
                                             }
                                         }
-                                        break;
-                                    }
-                            }
 
+                                        break;
+                                     }
+                            }
                         }
                         else
                         {
@@ -809,14 +724,9 @@ namespace Simplog.Server.Infrastructure.Helpers
                                 grandExpression = Expression.And(grandExpression, e1);
                             }
                         }
-
-
-
-
                     }
-
-
                 }
+
                 if (grandExpression == null)
                 {
                     return queryableData;
@@ -830,21 +740,14 @@ namespace Simplog.Server.Infrastructure.Helpers
                        queryableData.Expression,
                        Expression.Lambda<Func<T, bool>>(grandExpression, new ParameterExpression[] { pe }));
                     IQueryable<T> result = queryableData.Provider.CreateQuery<T>(whereCallExpression);
-
-
-
                     return result;
                 }
-
             }
             else
             {
                 return queryableData;
             }
         }
-
-      
-
         private void GetCustomFieldStringValue(QueryFilterItem filterItem)
         {
             if (filterItem.IsCustomField)
@@ -856,17 +759,14 @@ namespace Simplog.Server.Infrastructure.Helpers
                         filterItem.FieldValue = null;
                   
                 }
+
                 if (filterItem.FieldValue2 != null)
                 {
                     filterItem.FieldValue2 = customFilterClass.SetFieldDataType(filterItem.FieldDataType, filterItem.FieldValue2);
                     if (filterItem.FieldValue2 != null && filterItem.FieldValue2.ToString().ToLower() == "false")
                         filterItem.FieldValue2 = null;
                 }
-
             }
         }
-
-     
-
     }
 }

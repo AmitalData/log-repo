@@ -9,6 +9,7 @@ import { APPaymentGeneralTabComponent } from './Components/EditTabs/APPaymentGen
 import { APPaymentCancelationDetailsComponent } from './Components/EditTabs/APPaymentCancelationDetailsComponent';
 import { CancelAPPaymentComponent } from './Components/Other/CancelAPPaymentComponent';
 import { ExternalPaymentComponent } from './Components/Other/ExternalPaymentComponent';
+import { NewAPPaymentComponent } from './Components/NewEntity/NewAPPaymentComponent';
 
 export const Components =
     [
@@ -22,7 +23,8 @@ export const Components =
         APPaymentGeneralTabComponent,
         CancelAPPaymentComponent,
         APPaymentCancelationDetailsComponent,
-        ExternalPaymentComponent
+        ExternalPaymentComponent,
+        NewAPPaymentComponent
     ];
 
 export class ModuleDeclarations {
@@ -41,7 +43,8 @@ export class ModuleDeclarations {
             case "APPaymentGeneralTabComponent": { myResult = APPaymentGeneralTabComponent; break; }
             case "CancelAPPaymentComponent": { myResult = CancelAPPaymentComponent; break; }
             case "APPaymentCancelationDetailsComponent": { myResult = APPaymentCancelationDetailsComponent; break; }
-            case "ExternalPaymentComponent": { myResult = ExternalPaymentComponent; break; }                
+            case "ExternalPaymentComponent": { myResult = ExternalPaymentComponent; break; }
+            case "NewAPPaymentComponent": { myResult = NewAPPaymentComponent; break; }
         }
 
         return myResult;

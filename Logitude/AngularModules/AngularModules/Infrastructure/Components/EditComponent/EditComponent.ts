@@ -25,7 +25,7 @@ import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../Infrastructure/Locators/ServiceLocator';
 import { HeaderScreenDataResult } from '../../Interface/IHeaderScreenService';
-import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
+ import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { DeclarationEventManager } from 'Customs/Utilities/DeclarationEventManager';
 
 import { CustomsSettingListService } from 'Customs/Services/StandardLists/CustomsSettingListService';
@@ -35,10 +35,19 @@ import { CustomsSettingList } from 'Customs/EntityLists/CustomsSettingList';
 import { CustomsClosedTablePM } from '../../../Customs/EntityPMs/CustomsClosedTablePM';
 import { CustomsSettingExtendedListService } from '../../../Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
+ import { TableTabService } from 'Infrastructure/Services/ExtendedPMs/TableTabService';
+import { ObjectTableTabPM } from 'Infrastructure/EntityPMs/ObjectTableTabPM';
+import { CloneDeep } from 'Infrastructure/Helpers/LodashClone';
+import { WorkFlowVersionPMService } from 'Workflow/Services/StandardPMs/WorkFlowVersionPMService';
+//import { CloneEntityPM } from 'Infrastructure/Helpers/SafeCloneDeep';
+import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 
 
+const InterestTransactionTabCode = 'GLIT';
+const CustomerGLAccountTypeCode = "2";
+ 
 
-@Component({    
+@Component({
     templateUrl: './EditComponent.html',
     providers: [EntityArgs],
 })
@@ -57,7 +66,10 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     @Output() OnFirstTimeAfterSingleDataLoaded: EventEmitter<string> = new EventEmitter<string>();
     public ComponentRef: ComponentRef<EditComponent>;
     public EntityPM: any = null;
+    public ClonedEntityPM: any = null;
     public EntityId: string = null;
+    public JournalNumber: string = null;
+   
     public ObjectTable: ObjectTablePM;
     public ObjectTableId: string;
     public ObjectTableName: string;
@@ -69,6 +81,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     public HasShortTitle: boolean = false;
     public HasMenuButtons: boolean = false;
     public IsTabsHidden: boolean = false;
+    public IsFirstOpen: boolean = false;
 
     public IsEntityLoaded: boolean = false;
     public ComponentBackground: string = "white";
@@ -79,6 +92,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     public NeedRefresh: boolean = false;
 
     public EditComponentArgument: any = null;
+    public InterestInvoiceARInvoiceType: string = "IT";
 
     EntityParentPM: any;
     ShowWindowsOverEditComponent: boolean = false;
@@ -96,11 +110,12 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentSession = SessionLocator.SelectedSession;
     public IsReloadNeeded: boolean = false;
-    public isEntityChange: boolean = false;
-     
-
+     public isEntityChange: boolean = false;
     private static _CustomsSettingList:CustomsSettingList=null;
+    tabsService = new TableTabService();
+    public IsDigitalAddsOn: boolean = false;
 
+ 
     constructor(private entityPMService: EntityPMService, private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private _totangoService: TotangoService, private cd: ChangeDetectorRef) {
         this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
         this.ComponentIndex = this.CurrentSession.GetNewEditComponentIndex();
@@ -109,7 +124,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         this.EditComponentCellId = "EditComponentCellId_" + this.CurrentSession.SessionIndex + "_" + this.ComponentIndex;
         this.LayoutDirection = ObjectsLocator.GlobalSetting == undefined ? "ltr" : ObjectsLocator.GlobalSetting.LayoutDirection;
         this.WorkEnvironment = ObjectsLocator.GlobalSetting == undefined ? "logitude" : ObjectsLocator.GlobalSetting.WorkEnvironment;
-        this.FetchCustomsSetting();
+         this.FetchCustomsSetting();
         
     }
 
@@ -129,6 +144,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 }
             }, 3000);
         }
+        }
     }
 
     findParentWithNonZeroScrollTop(element) {
@@ -144,50 +160,55 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
     OnSaveAndCloseHotKey(){
         if(!this.IsSaveBtnDisable){
-        this.SaveChangesAndClose();
+
+            this.SaveChangesAndClose();
         }
     }
 
-    OnSaveHotKeyPressed(){
+    OnSaveHotKeyPressed() {
         console.log("saving the edit component ");
-        if(this.EntityPM && this.EntityPM.IsDirty){
-        this.SaveChanges();
+        if (this.EntityPM && this.EntityPM.IsDirty) {
+            this.SaveChanges();
         }
     }
 
-    OnArrowLeftHotKeyPressed(){
-        if(this.PreviousButtonDisabled==false 
-                     && this.NextPreviousVisible==true){
-        console.log("Moving Previous ");
-        this.Previous();
-                     }
+    OnArrowLeftHotKeyPressed() {
+        if (this.PreviousButtonDisabled == false
+            && this.NextPreviousVisible == true) {
+            console.log("Moving Previous ");
+            this.Previous();
+        }
     }
 
-    OnEscHotKeyPressed(){
+    OnEscHotKeyPressed() {
         console.log("Back from edit ");
         this.BackButtonClicked();
     }
 
-    OnArrowRightHotKeyPressed(){
-            if(this.NextButtonDisabled==false
-            && this.NextPreviousVisible==true){
-        console.log("Moving Next ");
-        this.Next();
-            }
+    OnArrowRightHotKeyPressed() {
+        if (this.NextButtonDisabled == false
+            && this.NextPreviousVisible == true) {
+            console.log("Moving Next ");
+            this.Next();
+        }
     }
 
     private QuerySection: string;
+    private SelectedQueryCode: string;
     private EntityFields: any[] = null;
     private _CustomsClosedTablePM: CustomsClosedTablePM =null; 
     private _CustomsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     public async Run(args: any) {
+
+
+
         this.EntityId = args['EntityId'];
         this.EntityPM = args['EntityPM'];
         this.EntityParentPM = args['EntityParentPM'];
         this.ObjectTableName = args['ObjectTableName'];
         this.PreSelectedTabCode = args['SelectedTabCode'];
-        this.QuerySection = !AppTool.IsNullOrEmpty(args['QuerySection']) ? args['QuerySection']:null ;
-
+        this.QuerySection = !AppTool.IsNullOrEmpty(args['QuerySection']) ? args['QuerySection'] : null;
+        this.SelectedQueryCode = !AppTool.IsNullOrEmpty(args['SelectedQueryCode']) ? args['SelectedQueryCode'] : null;
         this.BackButtonLabel = !AppTool.IsNullOrEmpty(args['BackButtonLabel']) ? args['BackButtonLabel'] : TextCodeTranslator.Translate("General.B.Back");  // "Back";
         this.ObjectTable = window.ObjectTables.filter(x => x.Name === this.ObjectTableName)[0];
         this.ObjectTableId = this.ObjectTable.Id;
@@ -198,8 +219,10 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         this.IsTabsHidden = this.ObjectTable.IsTabsHidden;
         this.NavigationIds = args['NavigationIds'];
         this.EntityFields = args['EntityFields'];
-
-
+ 
+        this.IsFirstOpen = args['IsFirstOpen'];
+        this.JournalNumber = args['JournalNumber']
+ 
         if (this.ObjectTableName == "Customs.ExportStorge" || this.ObjectTableName == "QuoteOP"  ) {
             this.LayoutDirection = 'ltr'
         }
@@ -228,69 +251,90 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         }
                         resolve()
                     }
-                );
+
+                 );
             })
         }
         await new Promise<void>(resolve => {
             this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
-                if (this.EntityPM != null) {
-                    this.entityArgs.EntityPM = this.EntityPM;
-                    this.entityArgs.ObjectTableName = this.ObjectTableName;
-                    this.entityArgs.EditComponent = this;
-                    this.BuildComponent();
-                }
 
-                else if (this.EntityId != null) {
-                    this.LoadEntityPM();
-                }
+ 
+            if (this.EntityPM != null) {
 
-                if (this.ObjectTableName != "Country" && this.ObjectTableName != "PackageType") {
-                    this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "View " + this.ObjectTableName);
-                }
+                this.entityArgs.EntityPM = this.EntityPM;
 
-                if (this.ObjectTableName == "CommunicationLog") {
-                    this.IsSaveBtnDisable = true;
-                }
+                this.entityArgs.ObjectTableName = this.ObjectTableName;
+
+                this.entityArgs.EditComponent = this;
+
+                this.BuildComponent();
+                 }
+ 
+
+                 else if (this.EntityId != null) {
+ 
+                     this.LoadEntityPM();
+ 
+ 
+            }
+  
+            if (this.ObjectTableName != "Country" && this.ObjectTableName != "PackageType") {
+ 
+                this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "View " + this.ObjectTableName);
+ 
+            }
+ 
+                 if (this.ObjectTableName == "CommunicationLog") {
+ 
+                     this.IsSaveBtnDisable = true;
+ 
+                 }
+ 
 
 
-                this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible;
-
-                // Split Component
-                var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
-                if (!AppTool.IsNullOrEmpty(feature)) { // granted
-
-                    //if (this.ObjectTable.Name == "Customs.Declaration")
-                    //    this.IsSplitBtnVisible = true;
-
-                    if (!AppTool.IsNullOrEmpty(this.ObjectTable.SplitComponentPath)) {
-                        this.IsSplitBtnVisible = true;
-                        this.ShowWindowsOverEditComponent = true;
-                    }
-                }
-
-                //fullaccounting => hide arpayment save btn for new arp entity
-                var isNewEntity = true;
-                if (this.EntityId || (this.EntityId && this.EntityPM.Id))
-                    isNewEntity = false;
-
-                if ((this.ObjectTableName == "ARPayment") && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
-                    this.IsSaveBtnVisible = false;
-                }
+ 
+            this.IsSaveBtnVisible = this.ObjectTable.IsSaveButtonVisible || (this.ObjectTable.IsCustom && AppTool.IsNullOrEmpty(this.ObjectTable.ParentObjectTableId));
+ 
+            var feature = FeatureLocator.Features.filter(d => d.Code == "SPLIT")[0];
+  
+            if (!AppTool.IsNullOrEmpty(feature)) { // granted
+ 
+                if (!AppTool.IsNullOrEmpty(this.ObjectTable.SplitComponentPath)) {
+ 
+                    this.IsSplitBtnVisible = true;
+                         this.ShowWindowsOverEditComponent = true;
+ 
+                     }
+ 
+ 
+            }
+ 
+            var isNewEntity = true;
+ 
+            if (this.EntityId || (this.EntityId && this.EntityPM.Id))
+ 
+                isNewEntity = false;
+ 
+            if ((this.ObjectTableName == "ARPayment") && SessionLocator.TenantPM.AccountingActivated && isNewEntity) {
+ 
+                this.IsSaveBtnVisible = false;
+ 
+            }
                 resolve();
-                //
+
+ 
             });
-            
+             
         });
 
     }
 
     private LoadEntityPM() {
 
-        if (this.ObjectTableName == "Reconciliation")
-        {
+        if (this.ObjectTableName == "Reconciliation") {
             var service = new ReconciliationExtendedPMService();
-            service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
-            {
+            service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) => {
+                
                 console.log("[ReconciliationExtendedPMService.GetSingleWithoutLines] ", response);
 
                 if (!response.HasError) {
@@ -308,8 +352,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         }
         else if (this.ObjectTableName == "CashBook") {
             let service = new CashBookExtendedPMService();
-            service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
-            {
+            service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) => {
                 console.log("[CashBookExtendedPMService.GetSingleWithoutLines] ", response);
 
                 if (!response.HasError) {
@@ -325,8 +368,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
 
         }
-        else
-        {
+        else {
             this.entityPMService.getSingle(this.ObjectTableName, this.EntityId).then((response: any) => {
                 response.subscribe((res) => {
                     var pmResponse: ServiceResponse = res;
@@ -348,8 +390,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
     }
     
-    private SetEntityPMAfterLoadIt(result)
-    {
+    private SetEntityPMAfterLoadIt(result) {
         
         if (this.WorkEnvironment.toLowerCase() =="customs"  && !AppTool.IsNullOrEmpty(result["Tenant"])){
             const entityTenant:number =result["Tenant"];
@@ -368,9 +409,11 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         }
 
         this.EntityPM = result;
+
+        this.ClonedEntityPM = CloneDeep(this.EntityPM);
+
         if (this.EntityFields) {
-            this.EntityFields.forEach(itemField =>
-            {
+            this.EntityFields.forEach(itemField => {
                 this.EntityPM[itemField["FieldName"]] = itemField["FieldValue"];
             });
             this.EntityPM.IsDirty = false;
@@ -407,28 +450,51 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     private BuildComponent() {
         if (this.EntityPM) {
             this.IsEntityLoaded = true;
+            this.CheckDigtialPortalAddsOnPackage();
+        }
+    }
 
-            this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response:any) => {
-                this.GetControllerByTableName(this.ObjectTableName).then(EditComponentController => {
-                    //this.EditComponentController = EditComponentController as IEditComponentController;
-                    this.CurrentSession.AddEditComponent(this);
-                    this.EditComponentController = EditComponentController as IEditComponentController;
-                    this.EditComponentController.OnFirstTimeAfterSingleDataLoaded(this.EntityPM).then((isLock) => {
-                        this.OnFirstTimeAfterSingleDataLoaded.emit(".EditComponentController.OnFirstTimeAfterSingleDataLoaded");
-                        if (this.EditComponentController.ToCancell) {
-                            this.Close();
-                        }
+    CheckDigtialPortalAddsOnPackage() {
+        if (this.ObjectTableName == "TenantManagement") {
+            this.IsDigitalAddsOn = false;
+            var globalDomainService = new GlobalDomainService();
+            globalDomainService.CheckDigitalPortalAddsOn(this.EntityPM.Id).subscribe((result: any) => {
+                var addOnPackage = result.Result;
+                if (addOnPackage != null) {
+                    this.IsDigitalAddsOn = true;
+                }
 
-                        else {
+                this.ContinueBuildComponent();
 
-                            this._SubEditComponentDefaultController =
-                                this.SaveCompleted.subscribe(isSaved => {
-                                    if (isSaved) {
-                                        this.EditComponentController.HaveSaved = true;
-                                        this._SubEditComponentDefaultController.unsubscribe();
-                                        this._SubEditComponentDefaultController == null;
-                                    }
-                                });
+            });
+        }
+        else {
+            this.ContinueBuildComponent();
+        }
+    }
+
+    private ContinueBuildComponent() {
+        this._entityResourceService.getEntityResourceByTableName(this.ObjectTableName, 0).subscribe((response: any) => {
+            this.GetControllerByTableName(this.ObjectTableName).then(EditComponentController => {
+                //this.EditComponentController = EditComponentController as IEditComponentController;
+                this.CurrentSession.AddEditComponent(this);
+                this.EditComponentController = EditComponentController as IEditComponentController;
+                this.EditComponentController.OnFirstTimeAfterSingleDataLoaded(this.EntityPM).then((isLock) => {
+                    this.OnFirstTimeAfterSingleDataLoaded.emit(".EditComponentController.OnFirstTimeAfterSingleDataLoaded");
+                    if (this.EditComponentController.ToCancell) {
+                        this.Close();
+                    }
+
+                    else {
+
+                        this._SubEditComponentDefaultController =
+                            this.SaveCompleted.subscribe(isSaved => {
+                                if (isSaved) {
+                                    this.EditComponentController.HaveSaved = true;
+                                    this._SubEditComponentDefaultController.unsubscribe();
+                                    this._SubEditComponentDefaultController == null;
+                                }
+                            });
                             let sync: boolean = true;
                             if (sync) {
                                 this.BuildEditTabs(() => {
@@ -438,20 +504,22 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                                 });
 
                             } else {
-                                // if (this.CurrentNavigatedIndex ==0) {
-                                this.BuildEditTabs(null);
-                                //}
-                                this.RunComponent();
-                                this.StopBusyIndicator();
+ 
+                                 this.BuildEditTabs(null);
+ 
+                                 this.RunComponent();
+ 
+                                 this.StopBusyIndicator();
+ 
+ 
+                    }
+ 
 
-                            }
-
-
-                        }
+                         }
                     });
-                });
+ 
             });
-        }
+        });
     }
 
     private isLoaderReady: boolean = false;
@@ -528,7 +596,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
                 SessionLocator.DynamicLoader.Load(myComponentPath, this.MenuButtonsViewContainerRef)
                     .then(cmpRef => {
-                        cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTable: this.ObjectTable, QuerySection : this.QuerySection});
+                        cmpRef.instance.Run({ EntityPM: this.EntityPM, ObjectTable: this.ObjectTable, QuerySection: this.QuerySection });
                     });
             }
         }
@@ -569,7 +637,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         var myComponentPath = "./" + this.ObjectTable.ClientModuleName + "/MetaDataServices/HeaderScreenServices/" + this.GetObjectTableName() + "HeaderScreenService";
         SessionLocator.DynamicLoader.GetInstance(myComponentPath, true).then((headerScreenService: any) => {
             if (headerScreenService) {
-                let result: HeaderScreenDataResult  = headerScreenService.GetHeaderScreens({ ObjectTableId: this.ObjectTableId, EntityPM: this.EntityPM });
+                let result: HeaderScreenDataResult = headerScreenService.GetHeaderScreens({ ObjectTableId: this.ObjectTableId, EntityPM: this.EntityPM });
                 this.GenerateHeaderScreen(result.HeaderScreen, result.ObjectFields);
             }
             else {
@@ -582,7 +650,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
     BuildStandardHeaderScreen() {
 
-        var myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code.indexOf("HeaderScreen") != -1 )[0];
+        var myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && (d.Code.indexOf("HeaderScreen") != -1 || d.IsHeaderScreen == true))[0];
 
         var myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
 
@@ -617,11 +685,17 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
             //get f. acc. Settings
             if (SessionLocator.TenantPM.AccountingActivated) {
+                if (this.EntityPM.ARInvoiceTypeCode == "IT") {
+                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.InterestInvoiceHeaderScreen")[0];
 
-                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.FullAccHeaderScreen")[0];
+                }
+                else {
+                    myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.FullAccHeaderScreen")[0];
+                }
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
+
             else {
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "ARInvoice.HeaderScreen")[0];
 
@@ -657,21 +731,32 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
+
             else {
-
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code == "APPayment.HeaderScreen")[0];
-
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
         }
+
         else if (this.ObjectTableName == "APInvoice") {
             this.GenerateAPInvoiceHeader(myHeaderScreen, myObjectFields);
-
-
         }
+
         else if (this.ObjectTableName == "Tariff") {
-            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS") {
+            if (this.EntityPM.TypeCode == "ASC" || this.EntityPM.TypeCode == "OSC" || this.EntityPM.TypeCode == "OFS" || this.EntityPM.TypeCode == "IFT") {
                 myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.SurchagesHeaderScreen")[0];
+                myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
+            }
+
+            else if (this.EntityPM.TypeCode == "ECC" || this.EntityPM.TypeCode == "ICC") {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.CustomsChargesHeaderScreen")[0];
+                myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
+                this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
+            }
+
+            else if (this.EntityPM.TypeCode == "ICS" || this.EntityPM.TypeCode == "ECS") {
+                myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === this.ObjectTableId && d.Code == "Tariff.SaleLocalChargesHeaderScreen")[0];
                 myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === this.ObjectTableId);
                 this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
             }
@@ -682,42 +767,12 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             }
         }
 
-        //else if (this.ObjectTableName == "Customs.Declaration") {
-        //    if (this.EntityPM.IsCourierDeclaration == true) {
-        //        this._entityResourceService.getEntityResourceByTableName("Customs.CourierDeclaration", 0).subscribe((response:any) => {
-        //            var myObjectTable = window.ObjectTables.filter(x => x.Name === "Customs.CourierDeclaration")[0];
-        //            var myObjectTableId = myObjectTable.Id;
-
-        //            myHeaderScreen = window.Screens.filter(d => d.ObjectTableId === myObjectTableId && d.Code.indexOf("HeaderScreen") != -1)[0];
-        //            myObjectFields = window.ObjectFields.filter(d => d.ObjectTableId === myObjectTableId);
-        //            this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
-        //        });
-        //    }
-        //    else {
-        //        this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
-        //    }
-        //}
-
         else {
             this.GenerateHeaderScreen(myHeaderScreen, myObjectFields);
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    private GenerateAPInvoiceHeader(headerScreen:any, objectFields:any) {
+    private GenerateAPInvoiceHeader(headerScreen: any, objectFields: any) {
 
 
         if (SessionLocator.TenantPM.AccountingActivated) {
@@ -726,7 +781,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
             headerScreen = window.Screens.filter(d => d.ObjectTableId === objectTableId && d.Code == "APInvoice.FullACCHeaderScreen")[0];
             objectFields = window.ObjectFields.filter(d => d.ObjectTableId === objectTableId);
-            this.GenerateHeaderScreen(headerScreen,objectFields);
+            this.GenerateHeaderScreen(headerScreen, objectFields);
         }
         else {
             this.GenerateHeaderScreen(headerScreen, objectFields);
@@ -745,7 +800,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         if (element) {
 
 
-            this.GenerateHeaderScreen(HeaderScreen,ObjectFields);
+            this.GenerateHeaderScreen(HeaderScreen, ObjectFields);
         }
 
         else {
@@ -754,7 +809,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
 
             if (this.FindHeaderRetries < 3) {
-                this.FindHeaderTimerToken = setTimeout(() => this.RunFindHeaderTimer(HeaderScreen,ObjectFields), 1);
+                this.FindHeaderTimerToken = setTimeout(() => this.RunFindHeaderTimer(HeaderScreen, ObjectFields), 1);
             }
         }
     }
@@ -763,7 +818,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
         var element = document.getElementById(this.HeaderId);
         if (element == null) {
-            this.RunFindHeaderTimer(HeaderScreen,ObjectFields);
+            this.RunFindHeaderTimer(HeaderScreen, ObjectFields);
         }
 
         else {
@@ -877,6 +932,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         else {
             
             this.BuildTabsItemsSource(onCallBack);
+
         }
     }
     private BuildSingleEditTab() {
@@ -890,7 +946,14 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         }
     }
 
-
+    private CheckTabVisibility() {
+        if (this.ObjectTableName != "EntityStatus" && this.ObjectTableName != "DeploymentPackage") return false;
+        let isAllowedUser = SessionLocator.LoggedUserPM.IsCustomerCare || SessionLocator.LoggedUserPM.IsDistributor;
+        if (this.ObjectTableName == "DeploymentPackage")
+            return isAllowedUser;
+        let entityStatusFeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EST")[0];
+        return (isAllowedUser && entityStatusFeatureToggle);
+    }
 
     FillTabsItemsSource(allTabs: any[]) {
 
@@ -899,8 +962,8 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         allTabs = this.FilterTabs(allTabs);
         allTabs = allTabs.sort((a, b) => { return a.IndexOrder - b.IndexOrder });
         for (var i = 0; i < allTabs.length; i++) {
-            var tab = allTabs[i];
 
+            var tab: ObjectTableTabPM = allTabs[i];
             if (tab.ControlPath != null) {
                 if (tab.ControlPath.indexOf("ExternalDocumentsControl") != -1) {
                     if (!FeatureLocator.HasFeaturePermession(this.ObjectTableName, "DOCSIN")) {
@@ -915,58 +978,73 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         continue;
                     }
                 }
-                
-                if (
+
+            }
+ 
+
+            if (this.ObjectTableName == "PortTimeZone") {
+                myTabsSorted.push(tab);
+                 if (
                     AmitalGatewayUtil.Instance.AmitalBrowserInUse && 
                     (this.QuerySection === "Customs.ExportDeclaration" || this.BackButtonLabel.includes(TextCodeTranslator.Translate("Customs.Containerization.O.ExportFile"))) && 
                     tab.ControlPath.includes(".DeclarationDocsInControl"))
                     continue;                    
             }
 
-            if (FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
+            else {
 
-                if (this.ObjectTableName == "GLAccount") {
 
-                    switch (tab.Code) {
+                if (tab.Type == 'Custom' || this.CheckTabVisibility() || FeatureLocator.IsFeatureGrantedByUniqeCode(tab.FeatureUniqeCode)) {
 
-                        case "GAAD":
-                            {
-                                if (this.EntityPM.AccountTypeCode == "2" || this.EntityPM.AccountTypeCode == "3")
+                    if (this.ObjectTableName == "GLAccount") {
+
+                        switch (tab.Code) {
+
+                            case "GAAD":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "2" || this.EntityPM.AccountTypeCode == "3")
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            case "GLTX":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "3")
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            case "GAOV":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            case "GAIT":
+                                {
+                                    if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            case InterestTransactionTabCode:
+                                {
+                                    if (this.EntityPM.AccountTypeCode == CustomerGLAccountTypeCode)
+                                        myTabsSorted.push(tab);
+                                    break;
+                                }
+                            default:
+                                {
                                     myTabsSorted.push(tab);
-                                break;
-                            }
-                        case "GLTX":
-                            {
-                                if (this.EntityPM.AccountTypeCode == "3")
-                                    myTabsSorted.push(tab);
-                                break;
-                            }
-                        case "GAOV":
-                            {
-                                if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
-                                    myTabsSorted.push(tab);
-                                break;
-                            }
-                        case "GAIT":
-                            {
-                                if (this.EntityPM.AccountTypeCode == "2")  // 2- Customer GLAccount
-                                    myTabsSorted.push(tab);
-                                break;
-                            }
-                        default:
-                            {
-                                myTabsSorted.push(tab);
-                                break;
-                            }
+                                    break;
+                                }
+                        }
                     }
+                    else
+                        myTabsSorted.push(tab);
                 }
-                else
-                    myTabsSorted.push(tab);
             }
         }
-        myTabsSorted.forEach(item => {
 
-            var itemTab: TabItem = new TabItem(item);
+        myTabsSorted.forEach(item => {
+            var itemTab: TabItem = new TabItem(item, this.EntityId, this);
             itemTab.IsDisabled = this.EditComponentController.IsDisabled(itemTab.Code)
             if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
                 if (item.ControlPath.indexOf("Doc") > -1) {
@@ -998,7 +1076,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             if (tabsService) {
                 allTabs = tabsService.GetTabs({ ObjectTableId: this.ObjectTableId, EntityPM: this.EntityPM });
             }
-     
+
             this.FillTabsItemsSource(allTabs);
             if (this.TabControlBodyViewContainerRef)
                 this.SetSelectedTab();
@@ -1014,7 +1092,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
         if (this.ObjectTable.Name.indexOf('Customs.') > -1) {
             return this.ObjectTable.Name.split('.')[1];
-        } 
+        }
         else return this.ObjectTable.Name;
     }
 
@@ -1035,6 +1113,13 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                     // SHMS: Shipment Master
                     if (this.EntityPM.ShipmentLevelCode != "H") {
                         var indexOfTab = allTabs.findIndex(t => t.Code == "SHMS");
+                        if (indexOfTab > -1) {
+                            allTabs.splice(indexOfTab, 1);
+                        }
+                    }
+
+                    if (this.EntityPM.ShipmentLevelCode == "C") {
+                        var indexOfTab = allTabs.findIndex(t => t.Code == "SHPI");
                         if (indexOfTab > -1) {
                             allTabs.splice(indexOfTab, 1);
                         }
@@ -1123,14 +1208,16 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 break;
             }
 
-          
+
             case "ARPayment": {
 
                 if (this.EntityPM.IsFullAccounting) {
                     let indexOfTab = allTabs.findIndex(t => t.Code == 'ARPD');
                     if (indexOfTab > -1)
                         allTabs.splice(indexOfTab, 1);
-                } else {
+
+                }
+                else {
                     let indexOfTab = allTabs.findIndex(t => t.Code == 'PYDF');
                     if (indexOfTab > -1)
                         allTabs.splice(indexOfTab, 1);
@@ -1138,12 +1225,18 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
                 break;
             }
+
         }
         this.EditComponentController.FilterTabs(allTabs);
-          
-          
-          
+
+
+
         return allTabs;
+    }
+    private RemoveItemByCode(items: any[], code: string) {
+        let indexOfTab = items.findIndex(t => t.Code == code);
+        if (indexOfTab > -1)
+            items.splice(indexOfTab, 1);
     }
     private OnEntityCreated() {
         switch (this.ObjectTableName) {
@@ -1176,7 +1269,6 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
                         this.entityArgs.PreSelectedTabCode = this.PreSelectedTabCode;
                         this.entityArgs.EditComponentArgument = this.EditComponentArgument;
-
                         cmpRef.instance.CurrentlySelected = true;
                         cmpRef.instance.Run(this.SingleDetailsTab.Code, this.SingleDetailsTab.HtmlComponentUrl);
                     });
@@ -1186,9 +1278,17 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         else {
             if (this.TabsItemsSource != null) {
                 var selected: any = null;
+                if (this.IsPendingApprovalDocumentQuery())
+                    selected = this.TabsItemsSource.filter(d => d.Code == "SHDI")[0];
 
-                if (this.PreSelectedTabCode != null) {
-                    selected = this.TabsItemsSource.filter(d => d.Code == this.PreSelectedTabCode)[0];
+                if (this.ObjectTableName == "Container" && FeatureLocator.IsFeatureGrantedByUniqeCode("Container.Container.Tab.Routings")) {
+                    selected = this.TabsItemsSource.filter(d => d.Code == "CORO")[0];
+                }
+
+                else {
+                    if (this.PreSelectedTabCode != null) {
+                        selected = this.TabsItemsSource.filter(d => d.Code == this.PreSelectedTabCode)[0];
+                    }
                 }
 
                 if (selected == null) {
@@ -1200,14 +1300,24 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         }
     }
 
-    SelectionChanged(mySelectedTab: TabItem) {
+    IsPendingApprovalDocumentQuery(): boolean {
+        if (!FeatureLocator.IsFeatureGrantedByUniqeCode("Shipment.DOCSIN"))
+            return false;
+        if (this.ObjectTableName != "Shipment")
+            return false;
+        if (this.SelectedQueryCode != "Pending Approval Documents")
+            return false;
+        return true;
+    }
 
+    SelectionChanged(mySelectedTab: TabItem) {
         if (this.SelectedTab != mySelectedTab) {
             this.SelectedTab = mySelectedTab;
 
             if (this.LoadedTabsList == null) {
                 this.LoadedTabsList = [];
             }
+            this.entityArgs.SelectedTabCode = this.SelectedTab ? this.SelectedTab.Code : "";
 
             this.LoadedTabsList.forEach(item => {
                 if (item.EditTabComponent) {
@@ -1328,6 +1438,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     }
 
     private LoadTabComponent(loadedItem: LoadedTabItem) {
+        
         if (loadedItem != null) {
             if (loadedItem.ComponentPath != null) {
                 if (!loadedItem.IsLoaded) {
@@ -1368,9 +1479,20 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     BackButtonClicked() {
         var IsARInvoiceNeedsConfirmation = this.CheckIfFullAccountingARInvoiceNeedsConfirmation();
         var isNeedingConfirmation = this.NeedCloseConfirmation();
+        const showBankTransferConfirmation = (this.EntityPM.IsDirty && this.ObjectTableName == "ARPayment" && this.EntityPM.ForceUsingBankTransferMethod && SessionLocator.TenantPM.AccountingActivated);
 
-        if (IsARInvoiceNeedsConfirmation) {
+        const showAPPAymentConfirmation = (this.EntityPM.IsDirty && this.ObjectTableName == "APPayment" && this.EntityPM.ReconcileInternalTransIds && SessionLocator.TenantPM.AccountingActivated);
+
+        if (showBankTransferConfirmation) {
+            this.ShowBankTransferConfirmationMessage();
+        }
+
+        else if (IsARInvoiceNeedsConfirmation) {
             this.ShowConfirmationMessageForARInvoice();
+        }
+
+        else if (showAPPAymentConfirmation) {
+            this.ShowAPPaymentConfirmationMessage();
         }
 
         else if (isNeedingConfirmation) {
@@ -1407,6 +1529,15 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         else if (this.ObjectTableName == "TaxReport" || this.ObjectTableName == "BankDeposit") {
             myResult = false;
         }
+
+        if (this.ObjectTableName == "ARInvoice" && this.EntityPM.ARInvoiceTypeCode == this.InterestInvoiceARInvoiceType) {
+            myResult = false;
+        }
+
+        if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true) {
+            myResult = true;
+        }
+
         return myResult;
     }
 
@@ -1490,6 +1621,37 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         });
     }
 
+    ShowBankTransferConfirmationMessage() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        confirmWindow.ShowCancelButton = true;
+        confirmWindow.ShowNoButton = false;
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
+        confirmWindow.Show(TextCodeTranslator.Translate("ExternalReconciliation.O.BTUnsavedChanges"));
+
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes)
+                this.Close();
+        });
+    }
+
+    ShowAPPaymentConfirmationMessage() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 450;
+        confirmWindow.Height = 190;
+        confirmWindow.ShowCancelButton = true;
+        confirmWindow.ShowNoButton = false;
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.UnSavedChanges");
+        confirmWindow.YesButtonText = TextCodeTranslator.Translate("General.B.Ok");
+        confirmWindow.Show(TextCodeTranslator.Translate("APPayment.M.UnsavedAPPaymentAlert"));
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes)
+                this.Close();
+        });
+    }
+
 
     SaveChanges(busyIndicatorText: string = null) {
 
@@ -1524,7 +1686,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             this.SaveStart.emit(this.EntityPM)
 
             if ((this.ObjectTableName == "ARInvoice" || this.ObjectTableName == "APInvoice" || this.ObjectTableName == "ARPayment" || this.ObjectTableName == "APPayment"
-                || this.ObjectTableName == "BankDeposit"|| this.ObjectTableName == "UserDefinedReport"  || this.ObjectTableName == "Journal" || this.ObjectTableName == "AccountingIntegrityCheck") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration
+                || this.ObjectTableName == "BankDeposit" || this.ObjectTableName == "UserDefinedReport" || this.ObjectTableName == "Journal" || this.ObjectTableName == "AccountingIntegrityCheck") && AppTool.IsNullOrEmpty(this.EntityPM.Id)) { // customs: notification defenetion, new declaration
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "New " + this.ObjectTableName);
                 this.entityPMService.insert(this.ObjectTableName, this.EntityPM).then((res: any) => {
                     res.subscribe((myResponse: ServiceResponse) => {
@@ -1588,10 +1750,41 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                 });
             }
 
+            else if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true) {
+                this.entityPMService.update(this.ObjectTableName, this.EntityPM, this.ClonedEntityPM).then((res: any) => {
+                    res.subscribe((myResponse: ServiceResponse) => {
+                        if (myResponse.HasError) {
+                            this.OnSavingFailed();
+                            this.ValidationErrorsList = myResponse.ErrorsArray;
+                            this.FireSaveCompleted(false);
+                        }
+                        else {
+                            this.EntityPM = myResponse.Result;
+                            this.entityArgs.EntityPM = this.EntityPM;
+
+                            this.SaveDraftVersion(isClosing);
+
+                            this.SaveAndCloseCompleted.emit(true);
+
+
+                            this.ClonedEntityPM = CloneDeep(this.EntityPM);
+                        }
+
+                    }, error => {
+                        this.OnSavingFailed();
+                        this.StopBusyIndicator();
+                        var myErrors: string[] = [];
+                        myErrors.push(error.message);
+                        this.ValidationErrorsList = myErrors;
+                        this.FireSaveCompleted(false);
+                    });
+                });
+            }
+
             else {
                 this._totangoService.SendTotangoUserActivity(this.ObjectTableName, "Edit " + this.ObjectTableName);
 
-                this.entityPMService.update(this.ObjectTableName, this.EntityPM).then((res: any) => {
+                this.entityPMService.update(this.ObjectTableName, this.EntityPM, this.ClonedEntityPM).then((res: any) => {
                     res.subscribe((myResponse: ServiceResponse) => {
 
                         this.StopBusyIndicator();
@@ -1644,7 +1837,10 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
                             }
                         }
-
+ ====
+                            this.ClonedEntityPM = CloneDeep(this.EntityPM);
+                        }
+ 
                     }, error => {
                         this.OnSavingFailed();
                         this.StopBusyIndicator();
@@ -1657,8 +1853,32 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             }
         }
 
+        else if (this.ObjectTableName == "WorkFlow" && this.entityArgs?.EditComponentArgument?.HasChanges! == true) {
+            this.SaveDraftVersion(isClosing);
+        }
+
         else {
             this.Close();
+        }
+    }
+
+    public WorkFlowVersionPMService: WorkFlowVersionPMService = new WorkFlowVersionPMService();
+    SaveDraftVersion(isClosing: boolean) {
+        var CurrentDisplayedVersionId = this.entityArgs.EditComponentArgument?.CurrentDisplayedVersionId
+        var version = this.EntityPM.WorkFlowVersions.find(v => v.Id == CurrentDisplayedVersionId);
+
+        this.StartBusyIndicator("Saving ...");
+
+        this.WorkFlowVersionPMService.update(version).subscribe((serviceResponse: ServiceResponse) => { this.handleSaveDraftVersionResponse(serviceResponse, isClosing); });
+    }
+    handleSaveDraftVersionResponse(serviceResponse: ServiceResponse, isClosing: boolean) {
+        if (!serviceResponse.HasError) {
+            this.StopBusyIndicator();
+            this.entityArgs.EditComponentArgument = { ...this.entityArgs.EditComponentArgument, HasChanges: false }
+            this.entityArgs.SendMessage("RefreshWorkflowButtons");
+            if (isClosing) {
+                this.Close();
+            }
         }
     }
 
@@ -1691,11 +1911,9 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         if (this.EntityId) {
             this.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Loading"));
 
-            if (this.ObjectTableName == "Reconciliation")
-            {
+            if (this.ObjectTableName == "Reconciliation") {
                 let service = new ReconciliationExtendedPMService();
-                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
-                {
+                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) => {
                     console.log("[GetSingleWithoutLines] ", response);
 
                     if (!response.HasError) {
@@ -1704,8 +1922,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         this.EntityPM = reconciliation;
                         this.entityArgs.EntityPM = this.EntityPM;
 
-                        this.EditComponentController.OnReloadEntityPM().then((isLock) =>
-                        {
+                        this.EditComponentController.OnReloadEntityPM().then((isLock) => {
                             this.StopBusyIndicator();
                             this.UpdateComponentMembers();
                             this.LoadCompleted.emit(true);
@@ -1721,11 +1938,9 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
 
             }
-            else if (this.ObjectTableName == "CashBook")
-            {
+            else if (this.ObjectTableName == "CashBook") {
                 let service = new CashBookExtendedPMService();
-                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
-                {
+                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) => {
                     console.log("[GetSingleWithoutLines] ", response);
 
                     if (!response.HasError) {
@@ -1734,8 +1949,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         this.EntityPM = cashbook;
                         this.entityArgs.EntityPM = this.EntityPM;
 
-                        this.EditComponentController.OnReloadEntityPM().then((isLock) =>
-                        {
+                        this.EditComponentController.OnReloadEntityPM().then((isLock) => {
                             this.StopBusyIndicator();
                             this.UpdateComponentMembers();
                             this.LoadCompleted.emit(true);
@@ -1751,11 +1965,9 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
 
             }
-            else if (this.ObjectTableName == "BankDeposit")
-            {
+            else if (this.ObjectTableName == "BankDeposit") {
                 let service = new BankDepositExtendedPMService();
-                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) =>
-                {
+                service.GetSingleWithoutLines(this.EntityId).subscribe((response: ServiceResponse) => {
                     console.log("[GetSingleWithoutLines] ", response);
 
                     if (!response.HasError) {
@@ -1764,8 +1976,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
                         this.EntityPM = bankdeposit;
                         this.entityArgs.EntityPM = this.EntityPM;
 
-                        this.EditComponentController.OnReloadEntityPM().then((isLock) =>
-                        {
+                        this.EditComponentController.OnReloadEntityPM().then((isLock) => {
                             this.StopBusyIndicator();
                             this.UpdateComponentMembers();
                             this.LoadCompleted.emit(true);
@@ -1781,8 +1992,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
 
             }
-            else
-            {
+            else {
                 this.entityPMService.getSingle(this.ObjectTableName, this.EntityId).then((res: any) => {
                     res.subscribe((myResponse: ServiceResponse) => {
 
@@ -1970,7 +2180,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
 
     LoadSplitComponent() {
 
-       
+
         let locs = this.AllLocations.toArray();
         let myLocation: LocationDirective = locs.filter(f => f.Code == 'SplitComponentLocation')[0];
 
@@ -2135,6 +2345,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     }
     LoadNextPreviousEntity_AfterCloseEditControl(selectedTab:any) {
         this.CurrentSession.RemoveEditComponent(this);
+ 
         this.ngOnDestroy();
         var args: any = {};
         args.EntityId = this.NavigationIds[this.CurrentNavigatedIndex];
@@ -2147,8 +2358,7 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     }
 
     SetNextPreviousButtonsEnablity() {
-        if(this.NavigationIds)
-        {
+        if (this.NavigationIds) {
             if (this.CurrentNavigatedIndex == 0) {
                 this.PreviousButtonDisabled = true;
             }
@@ -2201,12 +2411,36 @@ export class TabItem {
     public Code: string;
     public EntityPM: any;
     public TextCode: string;
+    public TextCodeId: string;
     public IsDisabled: boolean = false;
-    constructor(itemPM: any) {
+    private entityId: string;
+    constructor(itemPM: any, entityId: any, public fatherComponent: EditComponent) {
         this.Code = itemPM.Code;
         this.EntityPM = itemPM;
-        this.TextCode = itemPM.TabNameTextCodeCode;
+        this.entityId = entityId;
+        this.TextCode = this.GetTextCode(itemPM);
+        this.TextCodeId = AppTool.Replace(this.TextCode, ".", "");
     }
+
+    private GetTextCode(itemPM: any) {
+        var textCode = itemPM.TabNameTextCodeCode;
+
+        if (itemPM.TabNameTextCodeCode == "TenantManagement.TH.CargoTrackingBranding") {
+            return this.CheckDigtialPortalAddsOnPackage(itemPM);
+        }
+
+        return textCode;
+    }
+
+    CheckDigtialPortalAddsOnPackage(itemPM: any): string {
+        var textCode = itemPM.TabNameTextCodeCode;
+        if (this.fatherComponent.IsDigitalAddsOn) {
+            textCode = "TenantManagement.TH.LogitudeDigitalBranding";
+        }
+
+        return textCode;
+    }
+
 }
 class LoadedTabItem {
     public Code: string;

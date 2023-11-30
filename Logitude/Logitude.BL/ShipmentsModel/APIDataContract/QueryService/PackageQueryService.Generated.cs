@@ -10,6 +10,8 @@ using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.QuoteModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.BL.ShipmentsModel.Tools.EntityService;
 using Logitude.BL.QuoteModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.InfrastructureModel.EntityQueries;
@@ -60,7 +62,8 @@ using Simplog.Data.ShipmentsModel;
 				   temp.ContainerNumber = item.ContainerNumber;
 				   temp.Volume = item.Volume;
 				   temp.Weight = item.Weight;
-				   temp.Description = item.Description;					
+				   temp.Description = item.Description;
+				   temp.ChangeSetOp = item.ChangeSet;					
 					MyList.Add(temp);
 				}
 					
@@ -86,11 +89,13 @@ using Simplog.Data.ShipmentsModel;
 					{
 						temp = query.GetSinglePM(item.Id, Tenant);
 					} 
-										   
-					if(temp == null)
+					
+					
+			  	   if(temp == null)
 					{   
 					    throw new ApplicationException("ShipmentPickUpDeliveryPackage with Id " + item.Id + " doesn't exist");
 					} 
+				 
 										 
 					if(IsUpdate == true)
 					{
@@ -122,12 +127,9 @@ using Simplog.Data.ShipmentsModel;
 						if(myPackageTypePM != null)
 						{ 
 
-						 
-							if(!IsUpdate)
-							{								//throw new ApplicationException("PackageType Can't be update"); 
+						 								
 								temp.PackageTypeId = myPackageTypePM.Id;
 						  
-							}  
 
 							
 						} 
@@ -135,44 +137,40 @@ using Simplog.Data.ShipmentsModel;
 					}
 			
 					
-                    
-					if(!IsUpdate)// && item.Quantity != null)
-					{							//throw new ApplicationException("Quantity Can't be update"); 
-							temp.Quantity = item.Quantity;
+                    							
+						temp.Quantity = item.Quantity;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.ContainerNumber))
-					{							//throw new ApplicationException("ContainerNumber Can't be update"); 
-							temp.ContainerNumber = item.ContainerNumber;
+                    							
+						temp.ContainerNumber = item.ContainerNumber;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && item.Volume != null)
-					{							//throw new ApplicationException("Volume Can't be update"); 
-							temp.Volume = item.Volume;
+                    							
+						temp.Volume = item.Volume;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && item.Weight != null)
-					{							//throw new ApplicationException("Weight Can't be update"); 
-							temp.Weight = item.Weight;
+                    							
+						temp.Weight = item.Weight;
 
-										}  
+					 
 
 					
-                    
-					if(!IsUpdate)// && !string.IsNullOrEmpty(item.Description))
-					{							//throw new ApplicationException("Description Can't be update"); 
-							temp.Description = item.Description;
+                    							
+						temp.Description = item.Description;
 
-										}  
+					 
+
+					
+                    							
+						temp.ChangeSet = item.ChangeSetOp;
+
+					 
 
 										   
 						MyList.Add(temp);
@@ -186,6 +184,8 @@ using Simplog.Data.ShipmentsModel;
                 throw ex;
             } 
         }
-		 
+
+
+						   
    }
 }

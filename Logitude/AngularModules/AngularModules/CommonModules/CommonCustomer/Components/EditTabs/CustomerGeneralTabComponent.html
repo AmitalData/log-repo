@@ -117,6 +117,10 @@
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'EnglishName'" [Text]="EnglishName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
+
+                                                <td style="width: 18px;">
+                                                    <div></div>
+                                                </td>
                                             </tr>
 
                                             <!-- LocalName -->
@@ -127,6 +131,10 @@
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'LocalName'" [Text]="LocalName" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
                                                 </td>
 
                                             </tr>
@@ -141,10 +149,14 @@
                                                     <LogTextBox [ObjectFieldName]="'VatNumber'" [Text]="VatNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
 
+                                                <td>
+                                                    <div></div>
+                                                </td>
+
                                             </tr>
 
                                             <!-- EORI number -->
-                                            <tr class="FormFieldRow" *ngIf ="!IsAmitalCloudEnvironment">
+                                            <tr class="FormFieldRow" *ngIf="!IsAmitalCloudEnvironment">
                                                 <td>
                                                     <LogLabel [ObjectFieldName]="'EORInumber'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                                                 </td>
@@ -153,6 +165,9 @@
                                                     <LogTextBox [ObjectFieldName]="'EORInumber'" [Text]="EORInumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
 
+                                                <td style="width: 18px;">
+                                                    <HelpIcon [Header]="'Customer.F.EORInumber' | TextCodeTranslationPipe" [Text]="'Customer.EORInumberHelpText' | TextCodeTranslationPipe" [IconSize]="14"></HelpIcon>
+                                                </td>
                                             </tr>
 
                                             <!-- PaymentTermId -->
@@ -170,6 +185,9 @@
                                                     </LogLov>
                                                 </td>
 
+                                                <td>
+                                                    <div></div>
+                                                </td>
                                             </tr>
 
                                             <!-- Website -->
@@ -181,7 +199,9 @@
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'Website'" [Text]="Website" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
-
+                                                <td>
+                                                    <div></div>
+                                                </td>
                                             </tr>
 
                                             <!-- KnownConsignor -->
@@ -193,7 +213,9 @@
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'KnownConsignor'" [Text]="KnownConsignor" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
-
+                                                <td>
+                                                    <div></div>
+                                                </td>
                                             </tr>
 
                                             <!-- KCExpirationDate -->
@@ -205,7 +227,9 @@
                                                 <td>
                                                     <LogDatePicker [ObjectFieldName]="'KCExpirationDate'" [ObjectTableName]="ObjectTableName" [InputType]="'date'" [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                                                 </td>
-
+                                                <td>
+                                                    <div></div>
+                                                </td>
                                             </tr>
 
                                             <!--Storage Free Days-->
@@ -217,16 +241,19 @@
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'StorageFreeDays'" [Text]="StorageFreeDays" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
                                             </tr>
 
                                             <tr style="height:10px;">
-                                                <td colspan="2">
+                                                <td colspan="3">
                                                     <div></div>
                                                 </td>
                                             </tr>
 
                                             <tr>
-                                                <td colspan="2">
+                                                <td colspan="3">
                                                     <table>
                                                         <tr style="height: 1px;">
                                                             <td class="SectionTitle">Additional Fields</td>
@@ -312,7 +339,7 @@
                                                 </td>
 
                                                 <td>
-                                                    <LogTextBox [ObjectFieldName]="'LeadDescription'" [Text]="VatNumber" [ObjectTableName]="Customer" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                    <LogTextBox [ObjectFieldName]="'LeadDescription'" [Text]="VatNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
                                                 </td>
                                             </tr>
 
@@ -940,6 +967,28 @@
                                                                         [DataContext]="DataContext"
                                                                         [LookUpTableName]="'User'"
                                                                         [HideColumns]="true">
+                                                                </LogLov>
+                                                            </td>
+
+                                                            <td>
+                                                                <div></div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                    <table *ngIf="ShowCustomerTeamField">
+                                                        <!-- TeamId -->
+                                                        <tr class="FormFieldRow">
+                                                            <td style="width:130px;">
+                                                                <LogLabel [ObjectFieldName]="'TeamId'" [ObjectTableName]="'Customer'" [DataContext]="DataContext"></LogLabel>
+                                                            </td>
+
+                                                            <td style="width:196px">
+                                                                <LogLov [ObjectFieldName]="'TeamId'"
+                                                                        [SelectedValue]="TeamId"
+                                                                        [ObjectTableName]="'Customer'"
+                                                                        [DataContext]="DataContext"
+                                                                        [IgnoreFeatureCheck]="true"
+                                                                        [LookUpTableName]="'CustomerTeam'">
                                                                 </LogLov>
                                                             </td>
 

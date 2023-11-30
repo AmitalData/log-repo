@@ -137,4 +137,17 @@ export class TermsofUseService {
         }), catchError(ServiceHelper.HandleServiceError));
     }
 
+    GetTermsOfUseByTenant() {
+        var url = this._apiUrl;
+
+        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
+
 }

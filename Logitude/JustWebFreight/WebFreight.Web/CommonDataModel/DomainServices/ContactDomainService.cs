@@ -427,6 +427,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             contact.Position = contactPm.Position;
             contact.ExternalId = contactPm.ExternalId;
             contact.CreateDate = contactPm.CreateDate;
+            contact.DigitalPortalLanguage = contactPm.DigitalPortalLanguage;
         }
 
         public void InsertContact(ContactPM entityPM)

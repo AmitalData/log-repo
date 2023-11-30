@@ -67,29 +67,8 @@ namespace CommunicationWorkerRole
         string Token;
         Contact User;
         string CorrelationId;
-        private bool IsImportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
-        {
-            if (loggedTenant.CustomerTenantShareImportFile == true)
-            {
-                return (entityPM.DirectionId.ToUpper() == "I");
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        private bool IsExportShipmentsAllowedForLogBox(TenantPM loggedTenant, ShipmentPM entityPM)
-        {
-            if (loggedTenant.CustomerTenantShareExportFile == true)// && FeatureToggleHelper.HasFeatureToggle("LEX", loggedTenant.Id)
-            {
-                return (entityPM.DirectionId.ToUpper() == "E" || entityPM.DirectionId.ToUpper() == "R");
-            }
-            else
-            {
-                return false;
-            }
-        }
+      
+ 
         public override void Run()
         {
             APICredentialsParameters APICredentialsParam = new APICredentialsParameters()
@@ -208,9 +187,11 @@ namespace CommunicationWorkerRole
                                         CustomerTenantAccessQuery customerTenantAccessQuery = new CustomerTenantAccessQuery(tenant);
                                         CustomerTenantAccessInfo customerTenantAccessInfo = customerTenantAccessQuery.GetCustomerTenantAccessInfo(tenant, ForwarderShipment.CustomerId);
                                         var tenantQuery = new TenantQuery(ForwarderShipment.Tenant);
-                                        var tenantPM = tenantQuery.GetSinglePM(ForwarderShipment.Tenant);
+                                        var tenantPM = TenantQuery.GetSingleTenantPM(ForwarderShipment.Tenant, false);
 
-                                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.IsCustomerTenantShare && (ForwarderShipment.DirectionId.ToUpper() == "C" || IsImportShipmentsAllowedForLogBox(tenantPM, ForwarderShipment) || IsExportShipmentsAllowedForLogBox(tenantPM,ForwarderShipment)))
+                                        PrivateLabelShipmentService privateLabelShipmentService = new PrivateLabelShipmentService(tenantPM, ForwarderShipment, customerTenantAccessInfo);
+
+                                        if (customerTenantAccessInfo != null && customerTenantAccessInfo.HasAccess && tenantPM.CustomerTenantShareCustomsFile && (privateLabelShipmentService.IsShipmentsAllowedForLogBox() || privateLabelShipmentService.IsCustomFileShipment(ForwarderShipment)))
                                         {
                                             var customerTenantAccess = customerTenantAccessQuery.GetCustomerTenantAccessPMsByTenantCustomerTenant(tenant, customerTenantAccessInfo.CustomerTenant);
 

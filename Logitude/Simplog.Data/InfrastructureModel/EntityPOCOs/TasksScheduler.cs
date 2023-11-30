@@ -60,6 +60,6 @@ namespace Simplog.Data.InfrastructureModel.EntityPOCOs
         public string ResultType { get; set; }
         public string Format { get; set; }
         public string AdvancedFormat { get; set; }
-
+        public string ExecutedByServerName { get; set; }
     }
 }

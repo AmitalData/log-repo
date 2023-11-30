@@ -88,6 +88,28 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.SecondPeriodsMonths).HasColumnName("SecondPeriodsMonths").HasMaxLength(100).IsUnicode(false);
 
             this.Property(t => t.ThirdsPeriodsMonths).HasColumnName("ThirdsPeriodsMonths").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.IsSecurityLevelActivated).HasColumnName("IsSecurityLevelActivated");
+
+            this.Property(t => t.VATreportEveryTwoMonths).HasColumnName("VATreportEveryTwoMonths");
+
+            this.Property(t => t.CreateRevaluationJournal).HasColumnName("CreateRevaluationJournal");
+
+            this.Property(t => t.TaxInstitutionGLAccountId).HasColumnName("TaxInstitutionGLAccountId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.HSM).HasColumnName("HSM").IsMaxLength().IsUnicode(false);
+
+            this.Property(t => t.HSMtoken).HasColumnName("HSMtoken").HasMaxLength(100).IsUnicode(false);
+
+            this.Property(t => t.HSMaddress).HasColumnName("HSMaddress").HasMaxLength(50).IsUnicode(false);
+
+            this.Property(t => t.AllowEditingExchangeRate).HasColumnName("AllowEditingExchangeRate");
+
+            this.Property(t => t.AmountForConfirmationNumber).HasColumnName("AmountForConfirmationNumber");
+
+            this.Property(t => t.NumberingByChartOfAccount).HasColumnName("NumberingByChartOfAccount");
+
+            this.Property(t => t.OppositeAccountNumber).HasColumnName("OppositeAccountNumber");
         }
     }
 }

@@ -1,4 +1,4 @@
-@release @dev @all
+@release @stable
 Feature:  Run, Print, Save and Send Automation Test Report in Reports Module
     The user Runs, Prints, Saves and Sends Automation Test Report in Reports Module.
 

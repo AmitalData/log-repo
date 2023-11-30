@@ -33,6 +33,7 @@ import {DocumentTypeMetaDataExtendedService} from '../../../../Common/Services/E
 import {ServiceLocator} from '../../../../Infrastructure/Locators/ServiceLocator';
 
 import {DownloadManager} from '../../../../Infrastructure/Utilities/DownloadManager';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 @Component({
     
     templateUrl: './DSVApprovePaymentComponent.html'
@@ -87,7 +88,7 @@ export class DSVApprovePaymentComponent extends BaseComponent implements OnInit,
             this.AdditionalData = args.AdditionalData;
             
                 if (!AppTool.IsNullOrEmpty(this.AdditionalData.DenyReason)) {
-                    this.DimDenyButton = true;
+                    //this.DimDenyButton = true;
                 }
                 if (!AppTool.IsNullOrEmpty(this.AdditionalData.ApprovedByUserName) && !AppTool.IsNullOrEmpty(this.AdditionalData.VersionApproved) && (this.AdditionalData.VersionApproved == this.AdditionalData.VersionId)) {
                     var today = new Date(this.AdditionalData.ApproveDateTime);
@@ -176,7 +177,7 @@ export class DSVApprovePaymentComponent extends BaseComponent implements OnInit,
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
             var entity = AdditionalResult.Result;
             this.CurrentSession.CurrentWindow.StopBusyIndicator(); 
-            if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName) || !AppTool.IsNullOrEmpty(entity.DenyReason)) {
+            if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {//!AppTool.IsNullOrEmpty(entity.DenyReason) || 
                 this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;
@@ -230,6 +231,7 @@ export class DSVApprovePaymentComponent extends BaseComponent implements OnInit,
         entity.DenyReason = "";
         this._ShipmentAdditionalCloudDataService.update(entity).subscribe((AdditionalResult: any) => {
             ServiceLocator.SendTotangoUserActivity("LogBox", "Approve Declaration");
+            MixPanelLocator.Action({ ProjectName:"LogBox", ActionName: "Approve Declaration" });
             this.DimApproveButton = true;
             var today = new Date();
             var d = today.getDate();
@@ -301,7 +303,7 @@ export class DSVApprovePaymentComponent extends BaseComponent implements OnInit,
         
         this._ShipmentAdditionalCloudDataService.getsingledata(this.EntityPm.Id).subscribe((AdditionalResult:any) => {
             var entity = AdditionalResult.Result
-            if (!AppTool.IsNullOrEmpty(entity.DenyReason) || !AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {
+            if (!AppTool.IsNullOrEmpty(entity.ApprovedByUserName)) {//!AppTool.IsNullOrEmpty(entity.DenyReason) || 
                 this.messageWindow.RTL = this.RTL;
                 this.messageWindow.Width = 300;
                 this.messageWindow.Height = 150;

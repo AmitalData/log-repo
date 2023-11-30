@@ -142,7 +142,7 @@ export class ARPaymentGeneralTabComponent extends BaseComponent implements OnIni
     }
 
     ValidateTipoCadenaPagoFields() {
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (!AppTool.IsNullOrEmpty(this.TipoCadenaPago) && this.TipoCadenaPago == "01" && this.SATPaymentMethodCode == "03") {
                 if (AppTool.IsNullOrEmpty(this.CertPago))
                     this.UIProperties.SetRequired("CertPago", "ARPayment", true);

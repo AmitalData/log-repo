@@ -67,14 +67,12 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public bool ShowLocalNameInLOV { get; set; }
         public string UserRoles { get; set; }
         public bool AdditionalPackagesOnly { get; set; }
-
+        public int? SecurityLevel { get; set; }
 
         public DateTime? AutomaticLastUpdateDate { get; set; }
 
         public string LayoutDirection { get; set; }
 
-
         public string SignatureImageId { get; set; }
-
     }
 }

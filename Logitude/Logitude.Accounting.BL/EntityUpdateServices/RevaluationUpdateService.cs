@@ -142,7 +142,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             //if (pm.IsCancelled)
             //{
-            //    throw new Exception("Revaluation already  Cancelled");
+            //    throw new ApplicationException("Revaluation already  Cancelled");
             //}
             //pm.IsCancelled = true;
             pm.ChangeSetOp = ChangeSetOperation.Update;

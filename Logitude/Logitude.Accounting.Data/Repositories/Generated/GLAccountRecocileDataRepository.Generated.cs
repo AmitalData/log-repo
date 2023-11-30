@@ -49,7 +49,7 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.AccountId == keys.AccountId
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(GLAccountRecocileData entity)
         {

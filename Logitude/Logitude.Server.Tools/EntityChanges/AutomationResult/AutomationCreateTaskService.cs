@@ -13,21 +13,36 @@ namespace Logitude.Server.Tools.EntityChanges.AutomationResult
 {
     public class AutomationCreateTaskService : GeneralAutomationResultService, IAutomationResultService
     {
+
+        public List<AutomationQueueArgs> AutomationQueues { get; set; }
         private AutomationResultArgs automationResultArgs { get; set; }
         private int tenant;
         private EntityChange entityChange;
         private object entityPM;
         private MainEntityChangeService mainEntityChangeService { get; set; }
         private List<Automation> createTaskAutomations = new List<Automation>();
+        public string ResultCode { get { return "CREATETASK"; } }
+
+
+        public  bool DependencyOnLastEntityUpdate { get { return (processType == "OnCreate") ? true : false; } }
+
+        private string processType = string.Empty;
+        public AutomationCreateTaskService(string processType)
+        {
+            this.processType = processType;
+        }
+
+
 
         public void Run(AutomationResultArgs automationResultArgs)
         {
+            AutomationQueues = new List<AutomationQueueArgs>();
             this.automationResultArgs = automationResultArgs;
             this.entityChange = automationResultArgs.EntityChange;
             this.entityPM = automationResultArgs.EntityPM;
             this.tenant = this.entityChange.Tenant;
             mainEntityChangeService = automationResultArgs.MainEntityChangeService;
-            createTaskAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == "CREATETASK").ToList();
+            createTaskAutomations = automationResultArgs.AutomationLists.Where(d => d.ResultCode == ResultCode).ToList();
             if (createTaskAutomations.Count > 0)
             {
                 ApplyCreateTaskAutomations();

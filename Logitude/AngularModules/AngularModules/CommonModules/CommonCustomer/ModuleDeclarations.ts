@@ -86,7 +86,7 @@ export class ModuleDeclarations {
             case "CustomerMediatorByProductSplitComponent": { myResult = CustomerMediatorByProductSplitComponent; break }
             case "CustomerOccasionsTabComponent": { myResult = CustomerOccasionsTabComponent; break }
             case "CustomerProductItemsTabComponent": { myResult = CustomerProductItemsTabComponent; break }
-            case "AddEditCustomerProductItemComponent": { myResult = AddEditCustomerProductItemComponent; break }   
+            case "AddEditCustomerProductItemComponent": { myResult = AddEditCustomerProductItemComponent; break }
         }
 
         return myResult;

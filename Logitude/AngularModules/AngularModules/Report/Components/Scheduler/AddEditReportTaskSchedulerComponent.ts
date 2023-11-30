@@ -21,7 +21,7 @@ import { AddEditReportSchedulerComponent } from './AddEditReportSchedulerCompone
 
 @Component({
     templateUrl: './AddEditReportTaskSchedulerComponent.html',
-   
+
 })
 export class AddEditReportTaskSchedulerComponent {
     public EntityPM: TasksSchedulerPM;
@@ -31,30 +31,36 @@ export class AddEditReportTaskSchedulerComponent {
     public SchedulerFormats: CodeNameClass[] = [];
     public SelectedFormat: CodeNameClass;
     public SelectedFormatAdvanced: string;
+    public IsBIReport: boolean;
     schedulerExtendedPMService: SchedulerExtendedPMService;
     private parentComponent: AddEditReportSchedulerComponent;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor() {
         this.schedulerExtendedPMService = new SchedulerExtendedPMService();
-        if (SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") {
-            this.DisplayFTPOption = true;
-        }
     }
 
     SetDataContext(DataContext: any) {
         this.DataContext = DataContext['DataContext'];
         this.EntityPM = DataContext['DataContext'].EntityPM;
-        this.EntityPM.EntityId = this.DataContext.fatherComponent.ReportList.Id;
+        this.IsBIReport = this.DataContext.fatherComponent.IsBIReport;
+        this.EntityPM.EntityId = this.IsBIReport ? this.DataContext.fatherComponent.BIReportEntity['Id'] : this.DataContext.fatherComponent.ReportList.Id;
         this.FillSchedulerFormats();
         this.SetSchedulerFormat();
         this.SetSchedulerResultType();
-        this.EntityPM.ProcedureCode = 'ReportSchedulerTask';
+        this.EntityPM.ProcedureCode = this.IsBIReport ? 'BIReportSchedulerTask' : 'ReportSchedulerTask';
         this.parentComponent = DataContext['parentComponent'];
         this.BuildSchedulerDetailsData();
         this.Clone();
         this.SetTigger(this.DataContext.TriggerType);
+        this.SendValidation();
     }
-     
+
+    SendValidation() {
+        if ((SessionLocator.LoggedUserPM.IsCustomerCare || ObjectsLocator.GlobalSetting.DeploymentStage == "Dev") && this.DataContext?.fatherComponent?.ReportList?.Code != "RSTA") {
+            this.DisplayFTPOption = true;
+        }
+    }
+
     private FillSchedulerFormats() {
         this.SchedulerFormats.push(new CodeNameClass("PDF", "PDF"));
         this.SchedulerFormats.push(new CodeNameClass("EXCL", "Excel File"));
@@ -64,6 +70,8 @@ export class AddEditReportTaskSchedulerComponent {
     private SetSchedulerFormat() {
         this.SelectedFormat = this.SchedulerFormats.filter(format => format.Code == this.EntityPM.Format)[0];
         this.SelectedFormatAdvanced = this.EntityPM.AdvancedFormat;
+        let pdfFormatCode = 'PDF';
+        if (AppTool.IsNullOrEmpty(this.SelectedFormat)) this.FormatSelectionChanged(this.SchedulerFormats.filter(format => format.Code == pdfFormatCode)[0]);
     }
 
     private SetSchedulerResultType() {
@@ -234,7 +242,7 @@ export class AddEditReportTaskSchedulerComponent {
 
 
         if (this.IsFTP) {
-            
+
 
             if (AppTool.IsNullOrEmpty(this.DataContext.UserName)) errors.push(msg.replace("%FieldName", "UserName"));
             if (AppTool.IsNullOrEmpty(this.DataContext.Password)) errors.push(msg.replace("%FieldName", "Password"));
@@ -318,22 +326,25 @@ export class AddEditReportTaskSchedulerComponent {
     }
 
     FormatSelectionChanged(selectControl: any) {
-        if (selectControl) {
-            this.SelectedFormat = selectControl;
-            this.EntityPM.Format = selectControl.Code;
-            if (AppTool.IsNullOrEmpty(this.SelectedFormatAdvanced) && selectControl.Code == 'EXCLA') {
-                this.SetFormatAdvanced('DO');
-            }
-            else if (selectControl.Code != 'EXCLA') {
-                this.SetFormatAdvanced('');
-            }
+        if (!selectControl) return;
+        this.SelectedFormat = selectControl;
+        this.EntityPM.Format = selectControl.Code;
+        let includeTotalFormatCode = 'IT';
+        let dataOnlyFormatCode = 'DO';
+        if (AppTool.IsNullOrEmpty(this.SelectedFormatAdvanced) && selectControl.Code == 'EXCLA') {
+            this.SetFormatAdvanced(this.IsBIReport ? includeTotalFormatCode : dataOnlyFormatCode);
+        }
+        else if (selectControl.Code != 'EXCLA') {
+            this.SetFormatAdvanced('');
         }
     }
 
     SaveButtonClicked(reportSchedulerDetails: ReportSchedulerDetails) {
         this.CurrentSession.StartBusyIndicatorSaving();
-
-        this.SetReportDetails(reportSchedulerDetails);
+        if (reportSchedulerDetails) {
+            this.SetReportDetails(reportSchedulerDetails);
+            this.EntityPM.DocumentTypeTemplateIds = reportSchedulerDetails.DocumentTypeTemplateIds;
+        }
         if (this.DataContext.IsNew) {
             this.DataContext.SchedulerDetails.ReportDetails.CreatedByUserId =
                 SessionLocator.LoggedUserId;
@@ -404,6 +415,12 @@ export class AddEditReportTaskSchedulerComponent {
         this.DataContext.SchedulerDetails.ReportDetails.MainCustomerFieldName = reportSchedulerDetails.MainCustomerFieldName;
         this.DataContext.SchedulerDetails.ReportDetails.ReportFilterItems = reportSchedulerDetails.ReportFilterItems;
         this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateId = reportSchedulerDetails.ReportTemplateId;
+        this.DataContext.SchedulerDetails.ReportDetails.BIReportEntityId = reportSchedulerDetails.BIReportEntityId;
+        this.DataContext.SchedulerDetails.ReportDetails.DWQueryId = reportSchedulerDetails.DWQueryId;
+        this.DataContext.SchedulerDetails.ReportDetails.ReportTemplateType = reportSchedulerDetails.ReportTemplateType;
+        this.DataContext.SchedulerDetails.ReportDetails.DWQueryFilterData = reportSchedulerDetails.DWQueryFilterData;
+        this.DataContext.SchedulerDetails.ReportDetails.DocumentTypeTemplateId = reportSchedulerDetails.DocumentTypeTemplateId;
+        this.DataContext.SchedulerDetails.ReportDetails.MessageTemplateId = reportSchedulerDetails.MessageTemplateId;
         const recepients = reportSchedulerDetails.Recepients;
         this.DataContext.SchedulerDetails.ReportDetails.Recepients.To = recepients.To
             ? recepients.To.toString().split(',').join(';')
@@ -424,6 +441,10 @@ export class AddEditReportTaskSchedulerComponent {
     GetReportTemplateId() {
         return this.EntityPM.SchedulerDetailsData.ReportDetails
             .ReportTemplateId;
+    }
+    GetMessageTemplateId() {
+        return this.EntityPM.SchedulerDetailsData.ReportDetails
+            .MessageTemplateId;
     }
 
     private myCloner: Cloner;

@@ -119,7 +119,7 @@
                                     <tr>
                                         <td style="vertical-align: top;">
                                             <ul *ngIf="IsResourcesReady">
-                                                <li id="{{ item.TextCode | IdGeneratorPipe}}" class="DefaultMenuItem" *ngFor="let item of TabsItemsSource" (click)="SelectedTabCode = item.Code" [class.SelectedMenuItem]="item.Code === SelectedTabCode" [class.DisabledTabItem]="item.IsDisabled == true">
+                                                <li id="{{ item.TextCode | IdGeneratorAsyncPipe | async}}" class="DefaultMenuItem" *ngFor="let item of TabsItemsSource" (click)="SelectedTabCode = item.Code" [class.SelectedMenuItem]="item.Code === SelectedTabCode" [class.DisabledTabItem]="item.IsDisabled == true">
                                                     <div>{{item.TextCode | TextCodeTranslationPipe}}</div>
                                                     <img class="RightCenter" *ngIf="item == SelectedTab" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
                                                 </li>
@@ -169,8 +169,12 @@
                         <div></div>
                     </td>
 
-                    <td *ngIf="IsShowNewWarehouseEntryButton" style="width: 130px;">
+                    <td *ngIf="IsShowNewWarehouseEntryButton && !ConnectedWarehouseEntry && IsResourcesReady" style="width: 130px;">
                         <button style="width:130px;float:right;" class="Button" (click)="NewWarehouseEntryButtonClicked()">New Cross Dock Entry</button>
+                    </td>
+
+                    <td *ngIf="IsShowNewWarehouseEntryButton && ConnectedWarehouseEntry && IsResourcesReady" style="width: 130px;">
+                        <span class="hyperlink" style="width:90px;float:right;" (click)="ViewWareHouseEntry()">View Entry {{ConnectedWarehouseEntry.EntryNumber}}</span>
                     </td>
 
                     <td *ngIf="IsShowNewWarehouseEntryButton" style="width: 5px;">
@@ -184,7 +188,7 @@
                                         class="RedButton"
                                         [disabled]="!IsCreateStandaloneShipmentEnabled"
                                         style="width:190px;border-radius: 0px 5px 5px 0px;float:right">
-                                         Create Standalone Shipment
+                                    Create Standalone Shipment
                                 </button>
                                 <button [attr.id]="'arrow'" class="x-button x-button-drop"
                                         style="width: 20px;border-radius: 5px 0px 0px 5px;color:gray;float:right"
@@ -211,7 +215,7 @@
                     </td>
 
                     <td style="width: 57px;">
-                        <button id="{{ 'CloseBtn' | IdGeneratorPipe}}" class="Button" (click)="CloseClicked()">Close</button>
+                        <button id="{{ 'CloseBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseClicked()">{{'General.B.Close' | TextCodeTranslationPipe}}</button>
                     </td>
 
                     <td style="width: 5px;">
@@ -220,14 +224,14 @@
 
                     <!-- Save -->
                     <td style="width: 57px;">
-                        <button id="{{ 'SaveBtn' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" *ngIf="!EntityPM.IsDirty" class="Button">
+                        <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" *ngIf="!EntityPM.IsDirty" class="Button">
                             <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
-                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                            <span style="line-height: 19px; margin-left: 17px;">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
                         </button>
 
-                        <button id="{{ 'SaveBtn' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="OkButtonClicked()">
+                        <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="OkButtonClicked()">
                             <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
-                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                            <span style="line-height: 19px; margin-left: 17px;">{{'General.B.Save' | TextCodeTranslationPipe}}</span>
                         </button>
                     </td>
 
@@ -237,12 +241,12 @@
 
                     <!-- Save & Close -->
                     <td style="width: 25px;">
-                        <button id="{{ 'SaveClose' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" *ngIf="!EntityPM.IsDirty" class="Button" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
+                        <button id="{{ 'SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" *ngIf="!EntityPM.IsDirty" class="Button" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
                             <img class="CenterCenter" src="./Images/Buttons/Save.png" />
                             <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" />
                         </button>
 
-                        <button id="{{ 'SaveClose' | IdGeneratorPipe}}" [disabled]="!IsEditingEnabled" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
+                        <button id="{{ 'SaveClose' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsEditingEnabled" *ngIf="EntityPM.IsDirty" class="EntityChangesButton" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
                             <img class="CenterCenter" src="./Images/Buttons/Save.Red.png" />
                             <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" />
                         </button>

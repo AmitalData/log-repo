@@ -3,17 +3,10 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
-using Simplog.Data.ShipmentsModel.Repositories;
 using System;
-using System.Collections.Generic;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
-using Logitude.BL.Helpers;
 using Logitude.BL.InvoiceModel.EntityPMs;
-using Logitude.BL.Security;
-using Logitude.BL.ShipmentsModel.EntityPMs;
-using Logitude.BL.ShipmentsModel.EntityQueries;
-using System.Linq;
 using Logitude.Accounting.Data.Repositories;
 using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools;
@@ -22,8 +15,10 @@ using Logitude.Accounting.Def.EntityPMs;
 
 namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 {
-    public class ARInvoiceMapping
+    public partial class ARInvoiceMapping
     {
+        private const string sATSolvedManualStatusCode = "SM";
+
         public static void MapEntity(ARInvoicePM entityPM, ARInvoice entity, bool isNewState, string loggedContactId)
         {
             DateTime todayDateTime = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
@@ -34,7 +29,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.Tenant = entityPM.Tenant;
                 entityPM.CreateDate = todayDateTime;
 
-                if (entityPM.IsExternalAPI )
+                if (entityPM.IsExternalAPI)
                 {
                     entity.IssuedByUserId = entityPM.IssuedByUserId;
                     entity.CreatedByUserId = entityPM.CreatedByUserId;
@@ -42,8 +37,15 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
 
                 else
                 {
-                    entity.IssuedByUserId = loggedContactId;
-                    entity.CreatedByUserId = loggedContactId;
+                    if (!string.IsNullOrEmpty(entityPM.IssuedByUserId))
+                        entity.IssuedByUserId = entityPM.IssuedByUserId;
+                    else
+                        entity.IssuedByUserId = loggedContactId;
+
+                    if (!string.IsNullOrEmpty(entityPM.CreatedByUserId))
+                        entity.CreatedByUserId = entityPM.CreatedByUserId;
+                    else
+                        entity.CreatedByUserId = loggedContactId;
                 }
 
                 entity.CreateDate = entityPM.CreateDate;
@@ -53,11 +55,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.Description = entityPM.Description;
                 entity.IsConstituentInvoice = entityPM.IsConstituentInvoice;
                 entity.IsConsolidationInvoice = entityPM.IsConsolidationInvoice;
-                entity.SATInvoiceStatusCode = entityPM.SATInvoiceStatusCode;
-                entity.SATTransferStatusCode = entityPM.SATTransferStatusCode;
-
-
-
             }
 
             entity.ProfitCurrencyExchangeRate = entityPM.ProfitCurrencyExchangeRate;
@@ -87,12 +84,18 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsExternalEntity = entityPM.IsExternalEntity;
             entity.IsGeneralInvoice = entityPM.IsGeneralInvoice;
             entity.SalesmanUserId = entityPM.SalesmanUserId;
-            entity.IsCustomsChargesOnly = entityPM.IsCustomsChargesOnly;
-            entity.ExternalAccountingEntityId = entityPM.ExternalAccountingEntityId;
+            entity.IsCustomsChargesOnly = entityPM.IsCustomsChargesOnly;           
             entity.IsFromInterestBatchInvoice = entityPM.IsFromInterestBatchInvoice;
             entity.PartnerId = entityPM.PartnerId;
             entity.ShipmentsNumbers = entityPM.ShipmentsNumbers;
-
+            entity.MasterNumbers = entityPM.MasterNumbers;
+            entity.MasterShipmentNumbers = entityPM.MasterShipmentNumbers;
+            entity.HouseNumbers = entityPM.HouseNumbers;
+            entity.GlobalTaxCalculation = entityPM.GlobalTaxCalculation == "None" ? null : entityPM.GlobalTaxCalculation;
+            entity.PaymentReferences = entityPM.PaymentReferences;
+            entity.SATCancelReasonCode = entityPM.SATCancelReasonCode;
+            entity.TotalEquation = entityPM.TotalEquation;
+            
             if (entityPM.HouseNumber != null)
             {
                 entityPM.HouseNumber = entityPM.HouseNumber.Trim();
@@ -112,6 +115,37 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                     entityPM.MasterNumber = null;
                 }
             }
+
+            if (entityPM.HouseNumbers != null)
+            {
+                entityPM.HouseNumbers = entityPM.HouseNumbers.Trim();
+
+                if (string.IsNullOrEmpty(entityPM.HouseNumbers))
+                {
+                    entityPM.HouseNumbers = null;
+                }
+            }
+
+            if (entityPM.MasterNumbers != null)
+            {
+                entityPM.MasterNumbers = entityPM.MasterNumbers.Trim();
+
+                if (string.IsNullOrEmpty(entityPM.MasterNumbers))
+                {
+                    entityPM.MasterNumbers = null;
+                }
+            }
+
+            if (entityPM.MasterShipmentNumbers != null)
+            {
+                entityPM.MasterShipmentNumbers = entityPM.MasterShipmentNumbers.Trim();
+
+                if (string.IsNullOrEmpty(entityPM.MasterShipmentNumbers))
+                {
+                    entityPM.MasterShipmentNumbers = null;
+                }
+            }
+
             entity.IsExternalEntity = entityPM.IsExternalEntity;
             entity.HouseNumber = entityPM.HouseNumber;
             entity.MasterNumber = entityPM.MasterNumber;
@@ -131,11 +165,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.IsAutoCredit = entityPM.IsAutoCredit;
             entity.IsCancelled = entityPM.IsCancelled;
             entity.CancelledByARInvoiceId = entityPM.CancelledByARInvoiceId;
-            entity.CreditedByARInvoiceId = entityPM.CreditedByARInvoiceId;
-            entity.IsPrinted = entityPM.IsPrinted;
-            entity.PrintNotes = entityPM.PrintNotes;
-            entity.PrintByUserId = entityPM.PrintByUserId;
-            entity.PrintDate = entityPM.PrintDate;            
+            entity.CreditedByARInvoiceId = entityPM.CreditedByARInvoiceId;            
+            entity.PrintNotes = entityPM.PrintNotes;            
             entity.InternalNotes = entityPM.InternalNotes;
             entity.PaymentTermExternalId = entityPM.PaymentTermExternalId;
             entity.Field1 = entityPM.Field1 != null ? entityPM.Field1.Value : null;
@@ -150,14 +181,11 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.Field10 = entityPM.Field10 != null ? entityPM.Field10.Value : null;
             entity.DebitAccount = entityPM.DebitAccount;
             entity.TransferTries = entityPM.TransferTries;
-            entity.IsTransferStarted = entityPM.IsTransferStarted;
-            entity.TransferStatusCode = entityPM.TransferStatusCode;
             entity.AccountingExternalCode = entityPM.AccountingExternalCode;
             entity.ConsolidationInvoiceId = entityPM.ConsolidationInvoiceId;
             entity.ApprovedDate = entityPM.ApprovedDate;
             entity.ApprovedByUserId = entityPM.ApprovedByUserId;
-            entity.SATPaymentMethodCode = entityPM.SATPaymentMethodCode;
-            entity.TransmissionError = entityPM.TransmissionError;
+            entity.SATPaymentMethodCode = entityPM.SATPaymentMethodCode;            
             entity.MetodoPagoCode = entityPM.MetodoPagoCode;
             entity.RelatedInvoice = entityPM.RelatedInvoice;
             entity.Intercompany = entityPM.Intercompany;
@@ -170,8 +198,11 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ARInvoiceStockId = entityPM.ARInvoiceStockId;
             entity.IsInvoiceNumberFromStock = entityPM.IsInvoiceNumberFromStock;
             entity.UsoCFDICode = entityPM.UsoCFDICode;
-            entity.RelatedInvoice  = entityPM.RelatedInvoice;
+            entity.RegimenFiscalCode = entityPM.RegimenFiscalCode;
+            entity.PeriodCode = entityPM.PeriodCode;
+            entity.RelatedInvoice = entityPM.RelatedInvoice;
             entity.DocumentFilingId = entityPM.DocumentFilingId;
+            entity.ConfirmationNumber = entityPM.ConfirmationNumber;
             entityPM.SetVoided = false;
             entityPM.SetAsSent = false;
             entityPM.SetApproved = false;
@@ -179,18 +210,12 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entityPM.SetCancelDraft = false;
             entityPM.SetReSendQBO = false;
 
-            string transferError = entityPM.TransferError;
+            if (entityPM.TotalAmountForTaxReport == null)
+                entityPM.TotalAmountForTaxReport = 0;
+            if (entityPM.TotaVatableAmountForTaxReport == null)
+                entityPM.TotaVatableAmountForTaxReport = 0;
 
-            if (!string.IsNullOrEmpty(transferError))
-            {
-                if (transferError.Length > 250)
-                {
-                    transferError = transferError.Substring(0, 250);
-                }
-            }
-
-            entityPM.TransferError = transferError;
-            entity.TransferError = transferError;
+            entity.TotalExamptFortaxReport = entityPM.TotalAmountForTaxReport - entityPM.TotaVatableAmountForTaxReport;            
 
             //Full Accounting 
             TenantRepository tenantRepository = new TenantRepository(entityPM.Tenant);
@@ -198,7 +223,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             if (tenantPOCO != null && tenantPOCO.AccountingActivated)
             {
                 JournalRepository rep = new JournalRepository(entityPM.Tenant);
-                JournalEntity journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id,"2", entityPM.Tenant);
+                JournalEntity journal = rep.GetJournalByAccountingEntityIdAndTypeCode(entityPM.Id, "2", entityPM.Tenant);
 
                 if (journal != null)
                 {
@@ -230,6 +255,9 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.RegionalTaxId = entityPM.RegionalTaxId;
             entity.RegionalTaxPercentage = entityPM.RegionalTaxPercentage;
             entity.PaidDate = entityPM.PaidDate;
+            entity.PaidStatus= entityPM.PaidStatus;
+            entity.DocumentTemplateId = entityPM.DocumentTemplateId;
+            MapConcurrencyFields(entityPM, entity, isNewState);
         }
 
         public static void MapInvoiceLine(ARInvoiceLinePM entityPM, ARInvoiceLine entity, bool isNewState)
@@ -295,15 +323,16 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ForeignCurrencyId = entityPM.ForeignCurrencyId;
             entity.ExchangeRate = entityPM.ExchangeRate;
             entity.PaymentAmount = entityPM.PaymentAmount;
-
+            
         }
 
-        public static string GetBillToGLAccountId(string billToId,int tenant)
+        public static string GetBillToGLAccountId(string billToId, int tenant)
         {
             IGLAccountQueryServiceExt glAccountQuery = ContainerAccessor.Container.Resolve(typeof(IGLAccountQueryServiceExt), "GLAccountQueryServiceExt", new ParameterOverride("", 1)) as IGLAccountQueryServiceExt;
             CardPM card = GetCardById(billToId, tenant);
+            if(card.GLAccountId == null) return null;
             GLAccountPM billToAccount = glAccountQuery.GetSingleGLAccountPM(card.GLAccountId, tenant);
-            if(billToAccount != null)
+            if (billToAccount != null)
             {
                 return billToAccount.Id;
             }
@@ -311,7 +340,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             {
                 return null;
             }
-            
+
         }
 
         private static CardPM GetCardById(string id, int tenant)

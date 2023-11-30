@@ -111,8 +111,11 @@
                                     <div></div>
                                 </td>
 
-                                <td style="vertical-align: middle;" [ngStyle]="{color: StringColor}">
+                                <td *ngIf="!IsMultipleMessages" style="vertical-align: middle;" [ngStyle]="{color: StringColor}">
                                     <div [ngStyle]="{color: StringColor}" style="width: 100%; white-space:pre-line; overflow-x: hidden; overflow-y:auto; font-size: 11px;">{{Message}}</div>
+                                </td>
+                                <td *ngIf="IsMultipleMessages" style="vertical-align: middle;" [ngStyle]="{color: StringColor}">
+                                    <div [ngStyle]="{color: StringColor}" style="width: 100%; white-space:pre-line; overflow-x: hidden; overflow-y:auto; font-size: 11px;" *ngFor="let singleMessage of MultipleMessages;">{{singleMessage}}</div>
                                 </td>
                             </tr>
 

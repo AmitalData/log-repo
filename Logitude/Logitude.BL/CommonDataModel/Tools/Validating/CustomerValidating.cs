@@ -9,6 +9,10 @@ using Logitude.BL.CommonDataModel.EntityPMs;
 using System.Text.RegularExpressions;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Helpers;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.CustomsMessaging.Common.Gen;
+using Logitude.Server.Tools.Helpers;
 
 namespace Logitude.BL.CommonDataModel.Tools.Validating
 {
@@ -16,13 +20,26 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
     {
         public static void Validate(CustomerPM entityPM, bool isNewEntity, ICommonDataContext myContext)
         {
+            // ValidateVatNumber(entityPM);
+
             int tenant = entityPM.Tenant;
             TenantRepository tenantRepository = new TenantRepository(myContext);
             Tenant myTenant = tenantRepository.GetSingleTenantOnly(tenant);
 
             foreach (AddressPM itemPM in entityPM.Addresses)
             {
-                AddressValidating.Validate(itemPM);
+                if (entityPM.IsHybrid)
+                {
+                    var err = AddressValidating.ValidateVendorOrCustomerAddress(itemPM);
+                    if (err == "This city doesn't exist in cities table")
+                    {
+                        itemPM.City = null;
+                    }
+                }
+                else
+                {
+                    AddressValidating.Validate(itemPM);
+                }
             }
 
             if (entityPM.IsCustomer && !entityPM.IsLogBox)// to allow batches for logbox
@@ -330,6 +347,25 @@ namespace Logitude.BL.CommonDataModel.Tools.Validating
                     }
                 }
             }
+        }
+        private static void ValidateVatNumber(CustomerPM entityPM)
+        {
+            bool isAccountingActivated = CheckFullAccountingActivated(entityPM.Tenant);
+
+            if (isAccountingActivated && !string.IsNullOrEmpty(entityPM.VatNumber))
+            {
+                var isValid = LuhnAlgorithm.IsVatNumberValid(entityPM.VatNumber);
+                var isZeros = Int32.Parse(entityPM.VatNumber) == 0;
+                if (!isValid || isZeros)
+                    throw new ApplicationException(TranslateTextsClass.Translate("General.O.WrongVatNumber", entityPM.Tenant));
+            }
+        }
+
+        private static bool CheckFullAccountingActivated(int tenantNumber)
+        {
+            var tenant = TenantQuery.GetSingleTenantPM(tenantNumber);
+            var isAccountingActivated = tenant.AccountingActivated;
+            return isAccountingActivated;
         }
     }
 }

@@ -6,6 +6,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using System.Collections.Generic;
 using System.Linq;
 using Simplog.Server.Infrastructure.Helpers;
+using Simplog.Data.Helpers;
 
 namespace Logitude.Server.Tools.Helpers
 {
@@ -37,69 +38,55 @@ namespace Logitude.Server.Tools.Helpers
                             else
                             {
                                 DateTime date = Convert.ToDateTime(value);
-                                //string dateToStore = ConvertToString(date);
                                 return date;
                             }
                         }
 
                     case "Decimal":
                         {
-                            decimal d = 0;
-                            decimal.TryParse(value.ToString(), out d);
-
+                            decimal.TryParse(value.ToString(), out decimal d);
                             return d;
                         }
 
                     case "UnsDecimal":
                         {
-                            decimal d = 0;
-                            decimal.TryParse(value.ToString(), out d);
-
+                            decimal.TryParse(value.ToString(), out decimal d);
                             return d;
                         }
 
                     case "Integer":
                         {
-                            int d = 0;
-                            int.TryParse(value.ToString(), out d);
-
+                            int.TryParse(value.ToString(), out int d);
                             return d;
                         }
 
                     case "UnsInteger":
                         {
-                            int d = 0;
-                            int.TryParse(value.ToString(), out d);
-
+                            int.TryParse(value.ToString(), out int d);
                             return d;
                         }
 
                     case "Double":
                         {
-                            double d = 0;
-                            double.TryParse(value.ToString(), out d);
-
+                            double.TryParse(value.ToString(), out double d);
                             return d;
                         }
 
                     case "SigDouble":
                         {
-                            double d = 0;
-                            double.TryParse(value.ToString(), out d);
-
+                            double.TryParse(value.ToString(), out double d);
                             return d;
                         }
 
                     case "Boolean":
                         {
-                            bool f = false;
-                            bool.TryParse(value, out f);
+                            bool.TryParse(value, out bool f);
                             return f;
                         }
 
                     default:
                         {
-                            return (value != null ? value.ToString() : null);
+                            return (value?.ToString());
                         }
                 }
             }
@@ -265,182 +252,57 @@ namespace Logitude.Server.Tools.Helpers
 
         public static string ConvertToString(DateTime date)
         {
-            string time = "";
             string month, day, minuit, second, hour;
 
             if (date.Month < 10)
             {
                 month = "0" + date.Month.ToString();
             }
-            else { month = date.Month.ToString(); }
+            else 
+            {
+                month = date.Month.ToString();
+            }
 
             if (date.Day < 10)
             {
                 day = "0" + date.Day.ToString();
             }
-            else { day = date.Day.ToString(); }
+            else 
+            { 
+                day = date.Day.ToString();
+            }
 
             if (date.Hour < 10)
             {
                 hour = "0" + date.Hour.ToString();
             }
-            else { hour = date.Hour.ToString(); }
+            else 
+            {
+                hour = date.Hour.ToString();
+            }
 
             if (date.Minute < 10)
             {
                 minuit = "0" + date.Minute.ToString();
             }
-            else { minuit = date.Minute.ToString(); }
+            else 
+            {
+                minuit = date.Minute.ToString(); 
+            }
 
             if (date.Second < 10)
             {
                 second = "0" + date.Second.ToString();
             }
-            else { second = date.Second.ToString(); }
+            else 
+            {
+                second = date.Second.ToString();
+            }
 
-            time = date.Year.ToString() + month + day + hour + minuit + second;
-
-            return time;
+            return date.Year.ToString() + month + day + hour + minuit + second;
         }
 
         #endregion
-
-        //#region ConvertToString Integer
-
-        //public static string ConvertToString(int d)
-        //{
-        //    string dstring = d.ToString();
-        //    string s = "";
-        //    if (dstring.Length == 1)
-        //    {
-        //        s = "0000000" + dstring;
-        //    }
-
-        //    if (dstring.Length == 2)
-        //    {
-        //        s = "000000" + dstring;
-        //    }
-        //    if (dstring.Length == 3)
-        //    {
-        //        s = "00000" + dstring;
-        //    }
-        //    if (dstring.Length == 4)
-        //    {
-        //        s = "0000" + dstring;
-        //    }
-        //    if (dstring.Length == 5)
-        //    {
-        //        s = "000" + dstring;
-        //    }
-        //    if (dstring.Length == 6)
-        //    {
-        //        s = "00" + dstring;
-        //    }
-
-        //    if (dstring.Length == 7)
-        //    {
-        //        s = "0" + dstring;
-        //    }
-        //    if (dstring.Length >= 8)
-        //    {
-        //        s = dstring;
-        //    }
-        //    return s;
-        //}
-
-        //#endregion
-
-        //#region ConvertToString Double
-
-        //public static string ConvertToString(double d)
-        //{
-        //    string dstring = d.ToString();
-        //    string s = "";
-        //    if (dstring.Length == 1)
-        //    {
-        //        s = "0000000" + dstring;
-        //    }
-
-        //    if (dstring.Length == 2)
-        //    {
-        //        s = "000000" + dstring;
-        //    }
-        //    if (dstring.Length == 3)
-        //    {
-        //        s = "00000" + dstring;
-        //    }
-        //    if (dstring.Length == 4)
-        //    {
-        //        s = "0000" + dstring;
-        //    }
-        //    if (dstring.Length == 5)
-        //    {
-        //        s = "000" + dstring;
-        //    }
-        //    if (dstring.Length == 6)
-        //    {
-        //        s = "00" + dstring;
-        //    }
-
-        //    if (dstring.Length == 7)
-        //    {
-        //        s = "0" + dstring;
-        //    }
-        //    if (dstring.Length >= 8)
-        //    {
-        //        s = dstring;
-        //    }
-        //    return s;
-        //}
-
-        //#endregion
-
-        //#region ConvertToString Decimal
-
-        //public static string ConvertToString(decimal d)
-        //{
-        //    string dstring = d.ToString();
-        //    string s = "";
-        //    if (dstring.Length == 1)
-        //    {
-        //        s = "0000000" + dstring;
-        //    }
-
-        //    if (dstring.Length == 2)
-        //    {
-        //        s = "000000" + dstring;
-        //    }
-        //    if (dstring.Length == 3)
-        //    {
-        //        s = "00000" + dstring;
-        //    }
-        //    if (dstring.Length == 4)
-        //    {
-        //        s = "0000" + dstring;
-        //    }
-        //    if (dstring.Length == 5)
-        //    {
-        //        s = "000" + dstring;
-        //    }
-        //    if (dstring.Length == 6)
-        //    {
-        //        s = "00" + dstring;
-        //    }
-
-        //    if (dstring.Length == 7)
-        //    {
-        //        s = "0" + dstring;
-        //    }
-        //    if (dstring.Length >= 8)
-        //    {
-        //        s = dstring;
-        //    }
-        //    return s;
-        //}
-
-        //#endregion
-
-
         
         #region ConvertToDate
 
@@ -570,12 +432,9 @@ namespace Logitude.Server.Tools.Helpers
             }
             else if (field.DataTypeCode == "Text" || field.DataTypeCode == "nText")
             {
-                if (!field.IsMaxLength)
+                if (result != null && FieldValueValidator.IsNotValidMinMaxValue(field, result.ToString()))
                 {
-                    if (result.ToString().Length > field.MaxLength || result.ToString().Length < field.MinLength)
-                    {
-                        throw new ApplicationException("Custom Field with Code " + field.Code + " must be less than " + field.MaxLength + " and more than " + field.MinLength);
-                    }
+                    throw new ApplicationException("Custom Field with Code " + field.Code + " must be less than " + field.MaxLength + " and more than " + field.MinLength);
                 }
 
             }

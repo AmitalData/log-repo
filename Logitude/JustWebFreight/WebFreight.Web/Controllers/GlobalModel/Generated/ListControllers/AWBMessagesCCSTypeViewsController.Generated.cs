@@ -33,6 +33,8 @@ using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Logitude.Server.Tools.TreeFilterQuery;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Simplog.Global.Data.GlobalModel;
@@ -62,8 +64,8 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 				AWBMessagesCCSTypeRepository  aWBMessagesCCSTypeRepository = new AWBMessagesCCSTypeRepository(MyContext);
 				AWBMessagesCCSTypeList entityList = null;
 				AWBMessagesCCSType entityPoco = aWBMessagesCCSTypeRepository.GetSingleAWBMessagesCCSType(code );
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
 									List<AWBMessagesCCSType> singleEntityList = new List<AWBMessagesCCSType>();
 					singleEntityList.Add(entityPoco);
@@ -169,7 +171,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -198,7 +200,7 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                         {
@@ -210,6 +212,16 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
 
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "AWBMessagesCCSType",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								
                 IGlobalContext MyContext = GlobalContext.GetContext();
@@ -219,15 +231,16 @@ namespace WebFreight.Web.Controllers.GlobalModel.Generated.ListControllers
                 AWBMessagesCCSTypeQuery aWBMessagesCCSTypeQuery = new AWBMessagesCCSTypeQuery(aWBMessagesCCSTypeRepository);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				
                 entityPocos = genericFilter.GetFilteredQuery<AWBMessagesCCSType>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
                 IQueryable<AWBMessagesCCSTypeList> entityLists = aWBMessagesCCSTypeQuery.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<AWBMessagesCCSTypeList>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<AWBMessagesCCSTypeList>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								

@@ -20,7 +20,7 @@ export class CommunicationLogPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -263,6 +263,16 @@ export class CommunicationLogPM {
     private responseDocumentId: string;
     public get ResponseDocumentId() { return this.responseDocumentId; }
     public set ResponseDocumentId(newValue: string) { if (this.responseDocumentId != newValue) { this.responseDocumentId = newValue; this.MarkAsDirty("ResponseDocumentId"); } }
+       
+	 
+    private uniqueNumber: string;
+    public get UniqueNumber() { return this.uniqueNumber; }
+    public set UniqueNumber(newValue: string) { if (this.uniqueNumber != newValue) { this.uniqueNumber = newValue; this.MarkAsDirty("UniqueNumber"); } }
+       
+	 
+    private wasAnalyzed: boolean;
+    public get WasAnalyzed() { return this.wasAnalyzed; }
+    public set WasAnalyzed(newValue: boolean) { if (this.wasAnalyzed != newValue) { this.wasAnalyzed = newValue; this.MarkAsDirty("WasAnalyzed"); } }
        
 	 
 

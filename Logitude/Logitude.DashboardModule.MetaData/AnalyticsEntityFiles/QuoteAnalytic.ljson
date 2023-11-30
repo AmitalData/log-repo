@@ -1,0 +1,743 @@
+{
+  "HashString": "53087fa61efb4385bf33ef0754411903",
+  "Name": "Quotes Statistics",
+  "TableName": "QuoteAnalytics",
+  "ObjectTableName": "Quote",
+  "AnalyticsFactsFieldsMetaDatas": [
+    {
+      "HashString": "cbefdde481dd40b4b042dea59f2d093e",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "LastStageDate",
+      "DisplayName": "Last Stage Date",
+      "DisplayNamePlural": "Last Stage Date"
+    },
+    {
+      "HashString": "2192ddc147fb46ca9eac3ad9650d665f",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsSaleCurrencySameAsCost",
+      "DisplayName": "Sale Currency Same as Cost",
+      "DisplayNamePlural": "Sale Currency Same as Cost"
+    },
+    {
+      "HashString": "b3dcf3d419be4ccc87e3ce91c0a50dc9",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsFixedPrice",
+      "DisplayName": "Fixed Price",
+      "DisplayNamePlural": "Fixed Price"
+    },
+    {
+      "HashString": "1a95ccb131a54718b20e64b175d3865e",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "SaleCurrencyId",
+      "DisplayName": "Sale Currency",
+      "DisplayNamePlural": "Sale Currency",
+      "JoinedTableName": "Currency",
+      "JoinedTableDBName": "Currencies",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Code"
+    },
+    {
+      "HashString": "e2b20735ad324037a61e2b172e00ff21",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsCancelled",
+      "DisplayName": "Is Cancelled",
+      "DisplayNamePlural": "Is Cancelled"
+    },
+    {
+      "HashString": "b280b8102c9e4c65b8c7bcf295fcd1ab",
+      "DataTypeCode": "Text",
+      "FieldCode": "QuoteNumber",
+      "DisplayName": "Quote Number",
+      "DisplayNamePlural": "Quote Number"
+    },
+    {
+      "HashString": "5844e754cc8f4120a80e51de64ad7fd6",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "MainCarriageCarrierId",
+      "DisplayName": "Main Carriage Carrier",
+      "DisplayNamePlural": "Main Carriage Carrier",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "2f90534efe294f2eb77b03140cec7ffb",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "DirectionId",
+      "DisplayName": "Direction",
+      "DisplayNamePlural": "Direction",
+      "JoinedTableName": "Direction",
+      "JoinedTableDBName": "Directions",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Name",
+      "CommonFilterCode": "Direction",
+      "AllowTenantZeroFilter": true
+    },
+    {
+      "HashString": "e53be5c3cbfd4af5ae24b0ef25479774",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "TransportModeId",
+      "DisplayName": "Transport Mode",
+      "DisplayNamePlural": "Transport Mode",
+      "JoinedTableName": "TransportMode",
+      "JoinedTableDBName": "TransportModes",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Name",
+      "CommonFilterCode": "TransportMode",
+      "AllowTenantZeroFilter": true
+    },
+    {
+      "HashString": "0a3754bb33aa4f4c8f113d9f27e76e03",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "DepartmentId",
+      "DisplayName": "Department",
+      "DisplayNamePlural": "Department",
+      "JoinedTableName": "Department",
+      "JoinedTableDBName": "Departments",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "99412b19a5064b758940101f35834d0b",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "BranchId",
+      "DisplayName": "Branch",
+      "DisplayNamePlural": "Branch",
+      "JoinedTableName": "Branch",
+      "JoinedTableDBName": "Branches",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "40e7ebbf9e0147c9ab2947e3bd195fad",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "ShipmentTypeId",
+      "DisplayName": "Shipment Type",
+      "DisplayNamePlural": "Shipment Type",
+      "JoinedTableName": "ShipmentType",
+      "JoinedTableDBName": "ShipmentTypes",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
+    },
+    {
+      "HashString": "98ab603c2d874459878c3382127e8905",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "CustomerId",
+      "DisplayName": "Customer",
+      "DisplayNamePlural": "Customer",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "9773cd13356c4e15895a4dc538348281",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "ShipperId",
+      "DisplayName": "Shipper",
+      "DisplayNamePlural": "Shipper",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "8614c4f7f68a4619bab4c17562f84326",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "ConsigneeId",
+      "DisplayName": "Consignee",
+      "DisplayNamePlural": "Consignee",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "2721ad424bb3403ba01c6431076b3d3e",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "FromPortId",
+      "DisplayName": "From Port",
+      "DisplayNamePlural": "From Port",
+      "JoinedTableName": "Port",
+      "JoinedTableDBName": "Ports",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "83d381c8ccbb4a129963cfab635d4050",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "ToPortId",
+      "DisplayName": "To Port",
+      "DisplayNamePlural": "To Port",
+      "JoinedTableName": "Port",
+      "JoinedTableDBName": "Ports",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "d99e2aaf77bf4a998640692706b0807d",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "IncotermId",
+      "DisplayName": "Incoterm",
+      "DisplayNamePlural": "Incoterms",
+      "JoinedTableName": "Incoterm",
+      "JoinedTableDBName": "Incoterms",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Name"
+    },
+    {
+      "HashString": "30e72f122e554e3392e0256fbb12c23f",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "SalesmanUserId",
+      "DisplayName": "Salesman",
+      "DisplayNamePlural": "Salesman",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "372031b2dfa74f199e9689e44e650209",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "CreatedByUserId",
+      "DisplayName": "Created by",
+      "DisplayNamePlural": "Created by",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "dbb9986e81dc44b496b05aefaa049174",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "OpenDate",
+      "DisplayName": "Open Date",
+      "DisplayNamePlural": "Open Date",
+      "CommonFilterCode": "CreateDate"
+    },
+    {
+      "HashString": "658141da036d4fb29c53e9a7432d630c",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsClosed",
+      "DisplayName": "Is Closed",
+      "DisplayNamePlural": "Is Closed"
+    },
+    {
+      "HashString": "e97a5ae7d1ee429eb2b12c6b45978f4c",
+      "DataTypeCode": "Integer",
+      "CanMeasure": true,
+      "FieldCode": "NumberOfPackages",
+      "DisplayName": "Number of Packages",
+      "DisplayNamePlural": "Number of Packages"
+    },
+    {
+      "HashString": "671581b883974353836ff5b2ae818241",
+      "DataTypeCode": "Integer",
+      "CanMeasure": true,
+      "FieldCode": "NumberOfContainers",
+      "DisplayName": "Number of Containers",
+      "DisplayNamePlural": "Number of Containers"
+    },
+    {
+      "HashString": "2845fe539f154b3b94c6f21a96242cf1",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsDangerous",
+      "DisplayName": "Is Dangerous",
+      "DisplayNamePlural": "Is Dangerous"
+    },
+    {
+      "HashString": "f94d117ea5eb42b99283f8bbcc4eeac9",
+      "DataTypeCode": "Integer",
+      "CanMeasure": true,
+      "FieldCode": "ExpirationDays",
+      "DisplayName": "Expiration Days",
+      "DisplayNamePlural": "Expiration Days"
+    },
+    {
+      "HashString": "95d659d161504651800cb095e31fa2ac",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "ExpirationDate",
+      "DisplayName": "Expiration Date",
+      "DisplayNamePlural": "Expiration Date"
+    },
+    {
+      "HashString": "938887361d6d4a21b2694c3f6a014017",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "QuoteTypeCode",
+      "DisplayName": "Quote Type",
+      "DisplayNamePlural": "Quote Type",
+      "JoinedTableName": "QuoteType",
+      "JoinedTableDBName": "QuoteTypes",
+      "JoinedTableKey": "Code",
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
+    },
+    {
+      "HashString": "68460bca4cc240a19a5eb4e019d3b009",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IncludePickUp",
+      "DisplayName": "Include PickUp",
+      "DisplayNamePlural": "Include PickUp"
+    },
+    {
+      "HashString": "9e39864a061e42328649577c6da3dac3",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IncludeDelivery",
+      "DisplayName": "Include Delivery",
+      "DisplayNamePlural": "Include Delivery"
+    },
+    {
+      "HashString": "cede021ee94148a9b7274aaa4c70fecb",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "SentDate",
+      "DisplayName": "Sent Date",
+      "DisplayNamePlural": "Sent Date"
+    },
+    {
+      "HashString": "dcdb56cd2dfa4850aa70953097122726",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "AcceptedDate",
+      "DisplayName": "Accepted Date",
+      "DisplayNamePlural": "Accepted Date"
+    },
+    {
+      "HashString": "f5169a0aeefa498d9a349fa8118c9e2e",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "DeclinedDate",
+      "DisplayName": "Declined Date",
+      "DisplayNamePlural": "Declined Date"
+    },
+    {
+      "HashString": "5748a1861b494bbcaad9847522248ecb",
+      "DataTypeCode": "Integer",
+      "CanMeasure": true,
+      "FieldCode": "UsageCount",
+      "DisplayName": "Usage Count",
+      "DisplayNamePlural": "Usage Count"
+    },
+    {
+      "HashString": "119deddc707e45c9b95d8e50fa363132",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "LastUsageDate",
+      "DisplayName": "Last Usage Date",
+      "DisplayNamePlural": "Last Usage Date"
+    },
+    {
+      "HashString": "509e038bcbbe4552b92d1797006ae4b2",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "BusinessUnitId",
+      "DisplayName": "Business Unit",
+      "DisplayNamePlural": "Business Unit",
+      "JoinedTableName": "BusinessUnit",
+      "JoinedTableDBName": "BusinessUnits",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Name"
+    },
+    {
+      "HashString": "76ac503448444aaf89c470efb834e729",
+      "DataTypeCode": "Text",
+      "FieldCode": "Subject",
+      "DisplayName": "Subject",
+      "DisplayNamePlural": "Subject"
+    },
+    {
+      "HashString": "77b9857528134437bbbaa3da8ef67879",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "StageId",
+      "DisplayName": "Stage",
+      "DisplayNamePlural": "Stage",
+      "JoinedTableName": "QuoteStage",
+      "JoinedTableDBName": "QuoteStages",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Name"
+    },
+    {
+      "HashString": "9699bcb42ecc43faa37011695410bcac",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "StageDueDate",
+      "DisplayName": "Stage Due Date",
+      "DisplayNamePlural": "Stage Due Date"
+    },
+    {
+      "HashString": "65e29091f82648178acf7d30da33f9dc",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "RatingCode",
+      "DisplayName": "Rating",
+      "DisplayNamePlural": "Rating",
+      "JoinedTableName": "QuoteRating",
+      "JoinedTableDBName": "QuoteRatings",
+      "JoinedTableKey": "Code",
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
+    },
+    {
+      "HashString": "7805c37e85a04975a15ab59966c0761f",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsAutomaticallyClosed",
+      "DisplayName": "Automatically Closed",
+      "DisplayNamePlural": "Automatically Closed"
+    },
+    {
+      "HashString": "dc87992935f64549a9c5978eb1200090",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "AutomaticallyCloseDate",
+      "DisplayName": "Automatically Close Date",
+      "DisplayNamePlural": "Automatically Close Date"
+    },
+    {
+      "HashString": "ff6317ec227a4c19b083f5e68f3f3dc6",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "UpdatedByUserId",
+      "DisplayName": "Updated by",
+      "DisplayNamePlural": "Updated by",
+      "JoinedTableName": "Contact",
+      "JoinedTableDBName": "Contacts",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "1d24d8c473d34d5b85e5edac163c13f8",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "UpdateDate",
+      "DisplayName": "Update Date",
+      "DisplayNamePlural": "Update Date"
+    },
+    {
+      "HashString": "d49a1a0bc85c4a4387957b81aea678fd",
+      "DataTypeCode": "Integer",
+      "CanMeasure": true,
+      "FieldCode": "AutomaticallyCloseDays",
+      "DisplayName": "Automatically Close Days",
+      "DisplayNamePlural": "Automatically Close Days"
+    },
+    {
+      "HashString": "ba9ef48be1ee40b59f3fae367b064002",
+      "DataTypeCode": "Text",
+      "FieldCode": "TransitTime",
+      "DisplayName": "Transit Time",
+      "DisplayNamePlural": "Transit Time"
+    },
+    {
+      "HashString": "22784b532ac64e2782a2afbfb75d9a14",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "ETD",
+      "DisplayName": "ETD",
+      "DisplayNamePlural": "ETD"
+    },
+    {
+      "HashString": "7abeda31791c4295bcb6773e0f2489f1",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "ETA",
+      "DisplayName": "ETA",
+      "DisplayNamePlural": "ETA"
+    },
+    {
+      "HashString": "663462b554984f3fbc6d9d4754926740",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "AgentId",
+      "DisplayName": "Agent",
+      "DisplayNamePlural": "Agent",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "12da5df357ac463c987be73b6526802b",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "MoveTypeId",
+      "DisplayName": "Move Type",
+      "DisplayNamePlural": "Move Type",
+      "JoinedTableName": "MoveType",
+      "JoinedTableDBName": "MoveTypes",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "MoveTypeEnglishName"
+    },
+    {
+      "HashString": "8c1c5ef7b297419eb1639fe0fef78673",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "TEU",
+      "DisplayName": "TEU",
+      "DisplayNamePlural": "TEU"
+    },
+    {
+      "HashString": "2f5360fb17e94e6a8e472b9d5d307c64",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsChargesByVAT",
+      "DisplayName": "Is Charges by VAT",
+      "DisplayNamePlural": "Is Charges by VAT"
+    },
+    {
+      "HashString": "bab4aeb5a36b4761b46cb48f99c3eec4",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "GrossWeightInKG",
+      "DisplayName": "Gross Weight in KG",
+      "DisplayNamePlural": "Gross Weight in KG",
+      "HasUnit": true,
+      "Unit": "KG"
+    },
+    {
+      "HashString": "2bc6eff20c574ce79b2acb138c89892e",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "GrossWeightPerTon",
+      "DisplayName": "Gross Weight per Ton",
+      "DisplayNamePlural": "Gross Weight per Ton",
+      "HasUnit": true,
+      "Unit": "MT"
+    },
+    {
+      "HashString": "b59a158b68454ee5956ade326936ff96",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "NotifyId",
+      "DisplayName": "Notify",
+      "DisplayNamePlural": "Notify",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "debba827aca540368bee4e9daab23b12",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "ConsigneeNotImporterId",
+      "DisplayName": "Consignee Not Importer",
+      "DisplayNamePlural": "Consignee Not Importer",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "5a7c26d6a6a143d89e178758dfe4e3eb",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "ChargeableWeightInKG",
+      "DisplayName": "Chargeable Weight in KG",
+      "DisplayNamePlural": "Chargeable Weight in KG",
+      "HasUnit": true,
+      "Unit": "KG"
+    },
+    {
+      "HashString": "b1777eb61f5b4b179d7a84064197d9e2",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "VolumeInCBM",
+      "DisplayName": "Volume in CBM",
+      "DisplayNamePlural": "Volume in CBM",
+      "HasUnit": true,
+      "Unit": "CBM"
+    },
+    {
+      "HashString": "16c5244bcff04839a323bfebc6a270a8",
+      "DataTypeCode": "DateTime",
+      "CanMeasure": true,
+      "CanGroup": true,
+      "FieldCode": "StartDate",
+      "DisplayName": "Start Date",
+      "DisplayNamePlural": "Start Date"
+    },
+    {
+      "HashString": "5883a82efc0a43888c02018b13e5e31a",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "EstimatedProfitInLocal",
+      "DisplayName": "Estimated Profit in Local",
+      "DisplayNamePlural": "Estimated Profit in Local",
+      "HasUnit": true,
+      "Unit": "{(LocalCurrency)}"
+    },
+    {
+      "HashString": "c6b45c544c244e969374da2bb6cf717b",
+      "DataTypeCode": "Decimal",
+      "CanMeasure": true,
+      "FieldCode": "EstimatedProfitInProfit",
+      "DisplayName": "Estimated Profit in Profit",
+      "DisplayNamePlural": "Estimated Profit in Profit",
+      "HasUnit": true,
+      "Unit": "{(ProfitCurrency)}"
+    },
+    {
+      "HashString": "527d9facf2b44609961c5258feb5927f",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "ProfitCurrencyId",
+      "DisplayName": "Profit Currency",
+      "DisplayNamePlural": "Profit Currency",
+      "JoinedTableName": "Currency",
+      "JoinedTableDBName": "Currencies",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Code"
+    },
+    {
+      "HashString": "3d90f021faae45e295b92cd408a11561",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "QuoteClosingReasonId",
+      "DisplayName": "Closing Reason",
+      "DisplayNamePlural": "Closing Reason",
+      "JoinedTableName": "QuoteClosingReason",
+      "JoinedTableDBName": "QuoteClosingReasons",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Name"
+    },
+    {
+      "HashString": "86b0b779b1a6458589607a5a124e8e50",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "CanSecondaryGroup": true,
+      "FieldCode": "ShipmentSubTypeId",
+      "DisplayName": "Shipment Sub Type",
+      "DisplayNamePlural": "Shipment Sub Type",
+      "JoinedTableName": "ShipmentSubType",
+      "JoinedTableDBName": "ShipmentSubTypes",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "Name"
+    },
+    {
+      "HashString": "efaac19766d14d0593f56af7c9571525",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "RegionalTaxId",
+      "DisplayName": "Regional Tax",
+      "DisplayNamePlural": "Regional Tax",
+      "JoinedTableName": "VatType",
+      "JoinedTableDBName": "VatTypes",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "eaea829b73a94e45ad29ca838bff5f87",
+      "DataTypeCode": "Decimal",
+      "FieldCode": "RegionalTaxPercentage",
+      "DisplayName": "Regional Tax Percentage",
+      "DisplayNamePlural": "Regional Tax Percentage"
+    },
+    {
+      "HashString": "698d58bd980646f1b27ef5123c011761",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "IsMultiCurrency",
+      "DisplayName": "Is Multi Currency",
+      "DisplayNamePlural": "Is Multi Currency"
+    },
+    {
+      "HashString": "d9e91e58476d4854b7cfa20bc2ae5dd2",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "SpecialServicesTypeId",
+      "DisplayName": "Special Services Type",
+      "DisplayNamePlural": "Special Services Type",
+      "JoinedTableName": "SpecialServicesType",
+      "JoinedTableDBName": "SpecialServicesTypes",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "bfedf464c64a42dc81b0c37fd83d513d",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "ValidByTypeCode",
+      "DisplayName": "Valid by Type",
+      "DisplayNamePlural": "Valid by Type",
+      "JoinedTableName": "ValidByType",
+      "JoinedTableDBName": "ValidByTypes",
+      "JoinedTableKey": "Code",
+      "JoinedTableDisplayField": "Name"
+    },
+    {
+      "HashString": "c5ae39365d6f4ca3a30cfeaec74083c7",
+      "DataTypeCode": "Boolean",
+      "FieldCode": "ConnectedToOpportunity",
+      "DisplayName": "Connected to Opportunity",
+      "DisplayNamePlural": "Connected to Opportunity"
+    },
+    {
+      "HashString": "7966ef311738440aaa0ec936ab362145",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "ShipperNotExporterId",
+      "DisplayName": "Shipper Not Exporter",
+      "DisplayNamePlural": "Shipper Not Exporter",
+      "JoinedTableName": "Card",
+      "JoinedTableDBName": "Cards",
+      "JoinedTableKey": "Id",
+      "JoinedTableDisplayField": "EnglishName"
+    },
+    {
+      "HashString": "d3fb9f55cd5a4df98b3b12db4f100858",
+      "DataTypeCode": "LookUp",
+      "CanGroup": true,
+      "FieldCode": "ProductCode",
+      "DisplayName": "Product",
+      "DisplayNamePlural": "Product",
+      "JoinedTableName": "ProductType",
+      "JoinedTableDBName": "ProductTypes",
+      "JoinedTableKey": "Code",
+      "JoinedTableDisplayField": "Name",
+      "AllowTenantZeroFilter": true
+    }
+  ]
+}

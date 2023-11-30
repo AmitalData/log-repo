@@ -174,15 +174,22 @@ namespace Logitude.Accounting.BL.CoreBL
 
         public GLAccountPM GetGLAccount(string GLAccountId, int tenant)
         {
+            bool fromCache = true;//ohad said :NOT USUAL SCENARIO
             var a = new GLAccountQueryService(_AccountingContext);
-            return a.GetSingle(GLAccountId, false, true);
+            return a.GetSingle(GLAccountId, false, fromCache);
         }
 
 
         public Logitude.BL.CommonDataModel.EntityPMs.CurrencyPM GetCurrency(string CurrencyId, int tenant)
         {
-            var a = new CurrencyQuery(tenant);
-            return a.GetSinglePM(CurrencyId, tenant);
+
+
+            string key = $"GetCurrency_P({tenant})";
+            return CacheManager.GetOrInsertNewObject<Logitude.BL.CommonDataModel.EntityPMs.CurrencyPM>(key, () =>
+            {
+                var a = new CurrencyQuery(tenant);
+                return a.GetSinglePM(CurrencyId, tenant);
+            });
         }
 
 

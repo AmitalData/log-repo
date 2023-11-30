@@ -95,6 +95,7 @@ string validationclassname = "ValidationClass";
  private void WritePMMethod(dynamic entity)
 {
 	string tableName = entity.ObjectTableName.Trim('"');
+	string tableSupportSubEntity = entity.SupportSubEntity.ToString();
 	string dBTableName = entity.DBTableName.Trim('"');
 	string schema ="";
 	 
@@ -134,6 +135,8 @@ using System.ServiceModel.DomainServices.Server;
 using Logitude.Server.Tools; 
 using System.Runtime.Serialization;
 using Simplog.Server.Infrastructure.DataContracts; 
+<#+ if(entity.SupportSubEntity.ToString() == "true") {#>using Logitude.BL.InfrastructureModel.EntityPMs;
+<#+}#>
 using <#= validatorsnamespace #>
   
 namespace <#= pmnamespacestring #>
@@ -176,8 +179,20 @@ namespace <#= pmnamespacestring #>
            }
 	 }
 
-	  
+	  if(entity.SupportSubEntity.ToString() == "true") {WriteSubEntityProperty();}
 
+	 #>
+	 <#+
+	 if(entity.ApplyGenericCustomFields.ToString() == "true"){
+		 int maxNumberOfCustomFields;
+		 if(String.IsNullOrEmpty(entity.MaxNumberOfCustomFields)) maxNumberOfCustomFields = 0;
+		 else maxNumberOfCustomFields = Int32.Parse(entity.MaxNumberOfCustomFields);
+		 if(maxNumberOfCustomFields > 0){
+			 for(int customFieldNumber = 1; customFieldNumber<=maxNumberOfCustomFields;customFieldNumber++){
+				WriteGenericCustomFieldProperty(customFieldNumber);
+			 }
+		 }
+	 }
 	 #>
    }
    
@@ -242,7 +257,33 @@ else
   
  }
 
-
+public void WriteGenericCustomFieldProperty(int customFieldNumber){
+#>
+	   <#+
+	string privatepropname = FirstCharacterToLower("Field" + customFieldNumber.ToString().Trim('"'));#>
+private CustomFieldClass <#= privatepropname #>;
+	   [CustomValidation(typeof(<#= validationclassname #>), "ValidateClass")]
+	   [DataMember]
+       public CustomFieldClass Field<#= customFieldNumber.ToString().Trim('"') #>  
+	   {
+	    
+	     get
+		{
+		   return <#= privatepropname #>;
+		 }
+		 set
+		 {
+		   if(<#= privatepropname #> != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Field<#= customFieldNumber.ToString().Trim('"') #>",OldValue=<#= privatepropname #>,NewValue=value,PropertyType="CustomFieldClass"};
+		    NotifyPropertyChanged(values);
+		   <#= privatepropname #>=value;
+		   }
+			
+		 }
+	   }
+<#+
+}
 
 public void WritePMProperty(dynamic field)
 {
@@ -296,7 +337,26 @@ else
  }
 #>
 
+<#+
+public void WriteSubEntityProperty(){
+#>
 
+	   private List<CustomChildEntity> customChildEntities;
+	   [CustomValidation(typeof(<#= validationclassname #>), "ValidateClass")]
+	   [DataMember]
+       public List<CustomChildEntity> CustomChildEntities
+	   {
+	     get { return customChildEntities; }
+		 set {
+		   if(customChildEntities == value) return;
+		   NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomChildEntities",OldValue=customChildEntities,NewValue=value,PropertyType="List<CustomChildEntity>"};
+		   NotifyPropertyChanged(values);
+		   customChildEntities=value;
+		 }
+	   }
+<#+
+}
+#>
 
 <#+
 public void WritePMList(dynamic field)

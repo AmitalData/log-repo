@@ -20,6 +20,9 @@ import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldCl
 import { ShipmentAssemblyPM } from './ShipmentAssemblyPM';
 import { ShipmentStoragePricingPM } from './ShipmentStoragePricingPM';
 import { ShipmentProductItemPM } from './ShipmentProductItemPM';
+import { ShipmentUnassignedFieldPM } from './ShipmentUnassignedFieldPM';
+import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
+import { ShipmentAdditionalData } from '../DataContract/ShipmentAdditionalData';
 
 export class ShipmentPM {
     public UIProperties: UIProperties;
@@ -48,6 +51,14 @@ export class ShipmentPM {
     public get IsHybrid() { return this.isHybrid; }
     public set IsHybrid(newValue: boolean) { if (this.isHybrid != newValue) { this.isHybrid = newValue; this.MarkAsDirty("IsHybrid"); } }
 
+
+    private ismultiUpdate: boolean;
+    public get IsMultiUpdate() { return this.ismultiUpdate; }
+    public set IsMultiUpdate(newValue: boolean) { if (this.ismultiUpdate != newValue) { this.ismultiUpdate = newValue; this.MarkAsDirty("IsMultiUpdate"); } }
+
+    private isDocumentsNeedApprove: boolean;
+    public get IsDocumentsNeedApprove() { return this.isDocumentsNeedApprove; }
+    public set IsDocumentsNeedApprove(newValue: boolean) { if (this.isDocumentsNeedApprove != newValue) { this.isDocumentsNeedApprove = newValue; this.MarkAsDirty("IsDocumentsNeedApprove"); } }
 
     private baseShipmentNumber: string;
     public get BaseShipmentNumber() { return this.baseShipmentNumber; }
@@ -465,6 +476,10 @@ export class ShipmentPM {
     private notes: string;
     public get Notes() { return this.notes; }
     public set Notes(newValue: string) { if (this.notes != newValue) { this.notes = newValue; this.MarkAsDirty("Notes"); } }
+      
+    private notesSharedWithCustomer: string;
+    public get NotesSharedWithCustomer() { return this.notesSharedWithCustomer; }
+    public set NotesSharedWithCustomer(newValue: string) { if (this.notesSharedWithCustomer != newValue) { this.notesSharedWithCustomer = newValue; this.MarkAsDirty("Notes"); } }
        
 	 
     private descriptionOfGoods: string;
@@ -671,6 +686,156 @@ export class ShipmentPM {
     public set Field40(newValue: CustomFieldClass) { this.field40 = newValue; this.MarkAsDirty("Field40"); }
 
 
+    private field41: CustomFieldClass;
+    public get Field41() { if (!this.field41) { this.field41 = new CustomFieldClass(null, "Field41", "Shipment"); } return this.field41; }
+    public set Field41(newValue: CustomFieldClass) { this.field41 = newValue; this.MarkAsDirty("Field41"); }
+
+
+    private field42: CustomFieldClass;
+    public get Field42() { if (!this.field42) { this.field42 = new CustomFieldClass(null, "Field42", "Shipment"); } return this.field42; }
+    public set Field42(newValue: CustomFieldClass) { this.field42 = newValue; this.MarkAsDirty("Field42"); }
+
+
+    private field43: CustomFieldClass;
+    public get Field43() { if (!this.field43) { this.field43 = new CustomFieldClass(null, "Field43", "Shipment"); } return this.field43; }
+    public set Field43(newValue: CustomFieldClass) { this.field43 = newValue; this.MarkAsDirty("Field43"); }
+
+
+    private field44: CustomFieldClass;
+    public get Field44() { if (!this.field44) { this.field44 = new CustomFieldClass(null, "Field44", "Shipment"); } return this.field44; }
+    public set Field44(newValue: CustomFieldClass) { this.field44 = newValue; this.MarkAsDirty("Field44"); }
+
+
+    private field45: CustomFieldClass;
+    public get Field45() { if (!this.field45) { this.field45 = new CustomFieldClass(null, "Field45", "Shipment"); } return this.field45; }
+    public set Field45(newValue: CustomFieldClass) { this.field45 = newValue; this.MarkAsDirty("Field45"); }
+
+
+    private field46: CustomFieldClass;
+    public get Field46() { if (!this.field46) { this.field46 = new CustomFieldClass(null, "Field46", "Shipment"); } return this.field46; }
+    public set Field46(newValue: CustomFieldClass) { this.field46 = newValue; this.MarkAsDirty("Field46"); }
+
+
+    private field47: CustomFieldClass;
+    public get Field47() { if (!this.field47) { this.field47 = new CustomFieldClass(null, "Field47", "Shipment"); } return this.field47; }
+    public set Field47(newValue: CustomFieldClass) { this.field47 = newValue; this.MarkAsDirty("Field47"); }
+
+
+    private field48: CustomFieldClass;
+    public get Field48() { if (!this.field48) { this.field48 = new CustomFieldClass(null, "Field48", "Shipment"); } return this.field48; }
+    public set Field48(newValue: CustomFieldClass) { this.field48 = newValue; this.MarkAsDirty("Field48"); }
+
+
+    private field49: CustomFieldClass;
+    public get Field49() { if (!this.field49) { this.field49 = new CustomFieldClass(null, "Field49", "Shipment"); } return this.field49; }
+    public set Field49(newValue: CustomFieldClass) { this.field49 = newValue; this.MarkAsDirty("Field49"); }
+
+
+    private field50: CustomFieldClass;
+    public get Field50() { if (!this.field50) { this.field50 = new CustomFieldClass(null, "Field50", "Shipment"); } return this.field50; }
+    public set Field50(newValue: CustomFieldClass) { this.field50 = newValue; this.MarkAsDirty("Field50"); }
+
+
+    private field51: CustomFieldClass;
+    public get Field51() { if (!this.field51) { this.field51 = new CustomFieldClass(null, "Field51", "Shipment"); } return this.field51; }
+    public set Field51(newValue: CustomFieldClass) { this.field51 = newValue; this.MarkAsDirty("Field51"); }
+
+
+    private field52: CustomFieldClass;
+    public get Field52() { if (!this.field52) { this.field52 = new CustomFieldClass(null, "Field52", "Shipment"); } return this.field52; }
+    public set Field52(newValue: CustomFieldClass) { this.field52 = newValue; this.MarkAsDirty("Field52"); }
+
+
+    private field53: CustomFieldClass;
+    public get Field53() { if (!this.field53) { this.field53 = new CustomFieldClass(null, "Field53", "Shipment"); } return this.field53; }
+    public set Field53(newValue: CustomFieldClass) { this.field53 = newValue; this.MarkAsDirty("Field53"); }
+
+
+    private field54: CustomFieldClass;
+    public get Field54() { if (!this.field54) { this.field54 = new CustomFieldClass(null, "Field54", "Shipment"); } return this.field54; }
+    public set Field54(newValue: CustomFieldClass) { this.field54 = newValue; this.MarkAsDirty("Field54"); }
+
+
+    private field55: CustomFieldClass;
+    public get Field55() { if (!this.field55) { this.field55 = new CustomFieldClass(null, "Field55", "Shipment"); } return this.field55; }
+    public set Field55(newValue: CustomFieldClass) { this.field55 = newValue; this.MarkAsDirty("Field55"); }
+
+
+    private field56: CustomFieldClass;
+    public get Field56() { if (!this.field56) { this.field56 = new CustomFieldClass(null, "Field56", "Shipment"); } return this.field56; }
+    public set Field56(newValue: CustomFieldClass) { this.field56 = newValue; this.MarkAsDirty("Field56"); }
+
+
+    private field57: CustomFieldClass;
+    public get Field57() { if (!this.field57) { this.field57 = new CustomFieldClass(null, "Field57", "Shipment"); } return this.field57; }
+    public set Field57(newValue: CustomFieldClass) { this.field57 = newValue; this.MarkAsDirty("Field57"); }
+
+
+    private field58: CustomFieldClass;
+    public get Field58() { if (!this.field58) { this.field58 = new CustomFieldClass(null, "Field58", "Shipment"); } return this.field58; }
+    public set Field58(newValue: CustomFieldClass) { this.field58 = newValue; this.MarkAsDirty("Field58"); }
+
+
+    private field59: CustomFieldClass;
+    public get Field59() { if (!this.field59) { this.field59 = new CustomFieldClass(null, "Field59", "Shipment"); } return this.field59; }
+    public set Field59(newValue: CustomFieldClass) { this.field59 = newValue; this.MarkAsDirty("Field59"); }
+
+
+    private field60: CustomFieldClass;
+    public get Field60() { if (!this.field60) { this.field60 = new CustomFieldClass(null, "Field60", "Shipment"); } return this.field60; }
+    public set Field60(newValue: CustomFieldClass) { this.field60 = newValue; this.MarkAsDirty("Field60"); }
+
+
+    private field61: CustomFieldClass;
+    public get Field61() { if (!this.field61) { this.field61 = new CustomFieldClass(null, "Field61", "Shipment"); } return this.field61; }
+    public set Field61(newValue: CustomFieldClass) { this.field61 = newValue; this.MarkAsDirty("Field61"); }
+
+
+    private field62: CustomFieldClass;
+    public get Field62() { if (!this.field62) { this.field62 = new CustomFieldClass(null, "Field62", "Shipment"); } return this.field62; }
+    public set Field62(newValue: CustomFieldClass) { this.field62 = newValue; this.MarkAsDirty("Field62"); }
+
+
+    private field63: CustomFieldClass;
+    public get Field63() { if (!this.field63) { this.field63 = new CustomFieldClass(null, "Field63", "Shipment"); } return this.field63; }
+    public set Field63(newValue: CustomFieldClass) { this.field63 = newValue; this.MarkAsDirty("Field63"); }
+
+
+    private field64: CustomFieldClass;
+    public get Field64() { if (!this.field64) { this.field64 = new CustomFieldClass(null, "Field64", "Shipment"); } return this.field64; }
+    public set Field64(newValue: CustomFieldClass) { this.field64 = newValue; this.MarkAsDirty("Field64"); }
+
+
+    private field65: CustomFieldClass;
+    public get Field65() { if (!this.field65) { this.field65 = new CustomFieldClass(null, "Field65", "Shipment"); } return this.field65; }
+    public set Field65(newValue: CustomFieldClass) { this.field65 = newValue; this.MarkAsDirty("Field65"); }
+
+
+    private field66: CustomFieldClass;
+    public get Field66() { if (!this.field66) { this.field66 = new CustomFieldClass(null, "Field66", "Shipment"); } return this.field66; }
+    public set Field66(newValue: CustomFieldClass) { this.field66 = newValue; this.MarkAsDirty("Field66"); }
+
+
+    private field67: CustomFieldClass;
+    public get Field67() { if (!this.field67) { this.field67 = new CustomFieldClass(null, "Field67", "Shipment"); } return this.field67; }
+    public set Field67(newValue: CustomFieldClass) { this.field67 = newValue; this.MarkAsDirty("Field67"); }
+
+
+    private field68: CustomFieldClass;
+    public get Field68() { if (!this.field68) { this.field68 = new CustomFieldClass(null, "Field68", "Shipment"); } return this.field68; }
+    public set Field68(newValue: CustomFieldClass) { this.field68 = newValue; this.MarkAsDirty("Field68"); }
+
+
+    private field69: CustomFieldClass;
+    public get Field69() { if (!this.field69) { this.field69 = new CustomFieldClass(null, "Field69", "Shipment"); } return this.field69; }
+    public set Field69(newValue: CustomFieldClass) { this.field69 = newValue; this.MarkAsDirty("Field69"); }
+
+
+    private field70: CustomFieldClass;
+    public get Field70() { if (!this.field70) { this.field70 = new CustomFieldClass(null, "Field70", "Shipment"); } return this.field70; }
+    public set Field70(newValue: CustomFieldClass) { this.field70 = newValue; this.MarkAsDirty("Field70"); }
+
+
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
@@ -809,7 +974,11 @@ export class ShipmentPM {
 	 
     private statusLocation: string;
     public get StatusLocation() { return this.statusLocation; }
-    public set StatusLocation(newValue: string) { if (this.statusLocation != newValue) { this.statusLocation = newValue; this.MarkAsDirty("StatusLocation"); } }
+    public set StatusLocation(newValue: string) { if (this.statusLocation != newValue) { this.statusLocation = newValue; this.MarkAsDirty("PartialStatusAmount"); } }
+
+    private partialStatusAmount: string;
+    public get PartialStatusAmount() { return this.partialStatusAmount; }
+    public set PartialStatusAmount(newValue: string) { if (this.partialStatusAmount != newValue) { this.partialStatusAmount = newValue; this.MarkAsDirty("StatusLocation"); } }
 
     private statusWeight: number;
     public get StatusWeight() { return this.statusWeight; }
@@ -838,23 +1007,8 @@ export class ShipmentPM {
     private shipmentType: string;
     public get ShipmentType() { return this.shipmentType; }
     public set ShipmentType(newValue: string) { if (this.shipmentType != newValue) { this.shipmentType = newValue; this.MarkAsDirty("ShipmentType"); } }
-       
-	 
-    private followUpType: string;
-    public get FollowUpType() { return this.followUpType; }
-    public set FollowUpType(newValue: string) { if (this.followUpType != newValue) { this.followUpType = newValue; this.MarkAsDirty("FollowUpType"); } }
-       
-	 
-    private followUpId: string;
-    public get FollowUpId() { return this.followUpId; }
-    public set FollowUpId(newValue: string) { if (this.followUpId != newValue) { this.followUpId = newValue; this.MarkAsDirty("FollowUpId"); } }
-       
-	 
-    private followUpDate: Date;
-    public get FollowUpDate() { return this.followUpDate; }
-    public set FollowUpDate(newValue: Date) { if (this.followUpDate != newValue) { this.followUpDate = newValue; this.MarkAsDirty("FollowUpDate"); } }
-       
-	 
+
+ 
     private shipmentPMId: string;
     public get ShipmentPMId() { return this.shipmentPMId; }
     public set ShipmentPMId(newValue: string) { if (this.shipmentPMId != newValue) { this.shipmentPMId = newValue; this.MarkAsDirty("ShipmentPMId"); } }
@@ -869,12 +1023,7 @@ export class ShipmentPM {
     public get NewMessage() { return this.newMessage; }
     public set NewMessage(newValue: boolean) { if (this.newMessage != newValue) { this.newMessage = newValue; this.MarkAsDirty("NewMessage"); } }
        
-	 
-    private followUpNotes: string;
-    public get FollowUpNotes() { return this.followUpNotes; }
-    public set FollowUpNotes(newValue: string) { if (this.followUpNotes != newValue) { this.followUpNotes = newValue; this.MarkAsDirty("FollowUpNotes"); } }
-       
-	 
+	
     private isAnyConversation: boolean;
     public get IsAnyConversation() { return this.isAnyConversation; }
     public set IsAnyConversation(newValue: boolean) { if (this.isAnyConversation != newValue) { this.isAnyConversation = newValue; this.MarkAsDirty("IsAnyConversation"); } }
@@ -898,7 +1047,11 @@ export class ShipmentPM {
     private mainCarriageFinalDestinationPortName: string;
     public get MainCarriageFinalDestinationPortName() { return this.mainCarriageFinalDestinationPortName; }
     public set MainCarriageFinalDestinationPortName(newValue: string) { if (this.mainCarriageFinalDestinationPortName != newValue) { this.mainCarriageFinalDestinationPortName = newValue; this.MarkAsDirty("MainCarriageFinalDestinationPortName"); } }
-       
+
+    private mainCarriageFinalDestinationPortCountryId: string;
+    public get MainCarriageFinalDestinationPortCountryId() { return this.mainCarriageFinalDestinationPortCountryId; }
+    public set MainCarriageFinalDestinationPortCountryId(newValue: string) { if (this.mainCarriageFinalDestinationPortCountryId != newValue) { this.mainCarriageFinalDestinationPortCountryId = newValue; this.MarkAsDirty("MainCarriageFinalDestinationPortCountryId"); } }
+
 	 
     private mainCarriageFinalDestinationPortCountryCode: string;
     public get MainCarriageFinalDestinationPortCountryCode() { return this.mainCarriageFinalDestinationPortCountryCode; }
@@ -1128,6 +1281,11 @@ export class ShipmentPM {
     private customerReference2: string;
     public get CustomerReference2() { return this.customerReference2; }
     public set CustomerReference2(newValue: string) { if (this.customerReference2 != newValue) { this.customerReference2 = newValue; this.MarkAsDirty("CustomerReference2"); } }
+
+
+    private customerReference3: string;
+    public get CustomerReference3() { return this.customerReference3; }
+    public set CustomerReference3(newValue: string) { if (this.customerReference3 != newValue) { this.customerReference3 = newValue; this.MarkAsDirty("CustomerReference3"); } }
        
 	 
     private customerName: string;
@@ -1239,12 +1397,16 @@ export class ShipmentPM {
     public get ShipperReference2() { return this.shipperReference2; }
     public set ShipperReference2(newValue: string) { if (this.shipperReference2 != newValue) { this.shipperReference2 = newValue; this.MarkAsDirty("ShipperReference2"); } }
        
-	 
+    private shipperReference3: string;
+    public get ShipperReference3() { return this.shipperReference3; }
+    public set ShipperReference3(newValue: string) { if (this.shipperReference3 != newValue) { this.shipperReference3 = newValue; this.MarkAsDirty("ShipperReference3"); } }
+
     private shipperName: string;
     public get ShipperName() { return this.shipperName; }
     public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
        
-	 
+     
+
     private shipperNote: string;
     public get ShipperNote() { return this.shipperNote; }
     public set ShipperNote(newValue: string) { if (this.shipperNote != newValue) { this.shipperNote = newValue; this.MarkAsDirty("ShipperNote"); } }
@@ -1283,8 +1445,17 @@ export class ShipmentPM {
     private consigneeReference2: string;
     public get ConsigneeReference2() { return this.consigneeReference2; }
     public set ConsigneeReference2(newValue: string) { if (this.consigneeReference2 != newValue) { this.consigneeReference2 = newValue; this.MarkAsDirty("ConsigneeReference2"); } }
-       
-	 
+
+
+    private consigneeReference3: string;
+    public get ConsigneeReference3() { return this.consigneeReference3; }
+    public set ConsigneeReference3(newValue: string) { if (this.consigneeReference3 != newValue) { this.consigneeReference3 = newValue; this.MarkAsDirty("ConsigneeReference3"); } }
+
+    private shippingAgent: string;
+    public get ShippingAgent() { return this.shippingAgent; }
+    public set ShippingAgent(newValue: string) { if (this.shippingAgent != newValue) { this.shippingAgent = newValue; this.MarkAsDirty("ShippingAgent"); } }
+
+
     private consigneeName: string;
     public get ConsigneeName() { return this.consigneeName; }
     public set ConsigneeName(newValue: string) { if (this.consigneeName != newValue) { this.consigneeName = newValue; this.MarkAsDirty("ConsigneeName"); } }
@@ -2323,12 +2494,7 @@ export class ShipmentPM {
     private transshipment3ToPortCountryName: string;
     public get Transshipment3ToPortCountryName() { return this.transshipment3ToPortCountryName; }
     public set Transshipment3ToPortCountryName(newValue: string) { if (this.transshipment3ToPortCountryName != newValue) { this.transshipment3ToPortCountryName = newValue; this.MarkAsDirty("Transshipment3ToPortCountryName"); } }
-       
-	 
- 
-	 
-   
-	 
+     
     private fromCountryIsEC: boolean;
     public get FromCountryIsEC() { return this.fromCountryIsEC; }
     public set FromCountryIsEC(newValue: boolean) { if (this.fromCountryIsEC != newValue) { this.fromCountryIsEC = newValue; this.MarkAsDirty("FromCountryIsEC"); } }
@@ -2336,6 +2502,18 @@ export class ShipmentPM {
     private toCountryIsEC: boolean;
     public get ToCountryIsEC() { return this.toCountryIsEC; }
     public set ToCountryIsEC(newValue: boolean) { if (this.toCountryIsEC != newValue) { this.toCountryIsEC = newValue; this.MarkAsDirty("ToCountryIsEC"); } }
+
+    private transshipment1ToCountryIsEC: boolean;
+    public get Transshipment1ToCountryIsEC() { return this.transshipment1ToCountryIsEC; }
+    public set Transshipment1ToCountryIsEC(newValue: boolean) { if (this.transshipment1ToCountryIsEC != newValue) { this.transshipment1ToCountryIsEC = newValue; this.MarkAsDirty("Transshipment1ToCountryIsEC"); } }
+
+    private transshipment2ToCountryIsEC: boolean;
+    public get Transshipment2ToCountryIsEC() { return this.transshipment2ToCountryIsEC; }
+    public set Transshipment2ToCountryIsEC(newValue: boolean) { if (this.transshipment2ToCountryIsEC != newValue) { this.transshipment2ToCountryIsEC = newValue; this.MarkAsDirty("Transshipment2ToCountryIsEC"); } }
+
+    private transshipment3ToCountryIsEC: boolean;
+    public get Transshipment3ToCountryIsEC() { return this.transshipment3ToCountryIsEC; }
+    public set Transshipment3ToCountryIsEC(newValue: boolean) { if (this.transshipment3ToCountryIsEC != newValue) { this.transshipment3ToCountryIsEC = newValue; this.MarkAsDirty("Transshipment3ToCountryIsEC"); } }
 
     private finalDistenationPortId: string;
     public get FinalDistenationPortId() { return this.finalDistenationPortId; }
@@ -3131,8 +3309,22 @@ export class ShipmentPM {
     private trailerNumber: string;
     public get TrailerNumber() { return this.trailerNumber; }
     public set TrailerNumber(newValue: string) { if (this.trailerNumber != newValue) { this.trailerNumber = newValue; this.MarkAsDirty("TrailerNumber"); } }
-       
-	 
+
+
+    private transshipment1TrailerNumber: string;
+    public get Transshipment1TrailerNumber() { return this.transshipment1TrailerNumber; }
+    public set Transshipment1TrailerNumber(newValue: string) { if (this.transshipment1TrailerNumber != newValue) { this.transshipment1TrailerNumber = newValue; this.MarkAsDirty("Transshipment1TrailerNumber"); } }
+
+
+    private transshipment2TrailerNumber: string;
+    public get Transshipment2TrailerNumber() { return this.transshipment2TrailerNumber; }
+    public set Transshipment2TrailerNumber(newValue: string) { if (this.transshipment2TrailerNumber != newValue) { this.transshipment2TrailerNumber = newValue; this.MarkAsDirty("Transshipment2TrailerNumber"); } }
+
+
+    private transshipment3TrailerNumber: string;
+    public get Transshipment3TrailerNumber() { return this.transshipment3TrailerNumber; }
+    public set Transshipment3TrailerNumber(newValue: string) { if (this.transshipment3TrailerNumber != newValue) { this.transshipment3TrailerNumber = newValue; this.MarkAsDirty("Transshipment3TrailerNumber"); } }
+      	 
     private asAgreedFreight: boolean;
     public get AsAgreedFreight() { return this.asAgreedFreight; }
     public set AsAgreedFreight(newValue: boolean) { if (this.asAgreedFreight != newValue) { this.asAgreedFreight = newValue; this.MarkAsDirty("AsAgreedFreight"); } }
@@ -3407,7 +3599,34 @@ export class ShipmentPM {
     public get SpecialServicesTypeName() { return this.specialServicesTypeName; }
     public set SpecialServicesTypeName(newValue: string) { if (this.specialServicesTypeName != newValue) { this.specialServicesTypeName = newValue; this.MarkAsDirty("SpecialServicesTypeName"); } }
        
-	 
+
+  
+    private containerNumber1: string;
+    public get ContainerNumber1() { return this.containerNumber1; }
+    public set ContainerNumber1(newValue: string) { if (this.containerNumber1 != newValue) { this.containerNumber1 = newValue; this.MarkAsDirty("ContainerNumber1"); } }
+
+
+
+    private containerNumber2: string;
+    public get ContainerNumber2() { return this.containerNumber2; }
+    public set ContainerNumber2(newValue: string) { if (this.containerNumber2 != newValue) { this.containerNumber2 = newValue; this.MarkAsDirty("ContainerNumber2"); } }
+
+
+    private containerNumber3: string;
+    public get ContainerNumber3() { return this.containerNumber3; }
+    public set ContainerNumber3(newValue: string) { if (this.containerNumber3 != newValue) { this.containerNumber3 = newValue; this.MarkAsDirty("ContainerNumber3"); } }
+
+
+    private containerNumber4: string;
+    public get ContainerNumber4() { return this.containerNumber4; }
+    public set ContainerNumber4(newValue: string) { if (this.containerNumber4 != newValue) { this.containerNumber4 = newValue; this.MarkAsDirty("ContainerNumber4"); } }
+
+    private containerNumber5: string;
+    public get ContainerNumber5() { return this.containerNumber5; }
+    public set ContainerNumber5(newValue: string) { if (this.containerNumber5 != newValue) { this.containerNumber5 = newValue; this.MarkAsDirty("ContainerNumber5"); } }
+
+
+
     private quantity1: number;
     public get Quantity1() { return this.quantity1; }
     public set Quantity1(newValue: number) { if (this.quantity1 != newValue) { this.quantity1 = newValue; this.MarkAsDirty("Quantity1"); } }
@@ -3803,8 +4022,19 @@ export class ShipmentPM {
     private declarationXMLData: string;
     public get DeclarationXMLData() { return this.declarationXMLData; }
     public set DeclarationXMLData(newValue: string) { if (this.declarationXMLData != newValue) { this.declarationXMLData = newValue; this.MarkAsDirty("DeclarationXMLData"); } }
-       
-	 
+
+    private documentInspection: Date;
+    public get DocumentInspection() { return this.documentInspection; }
+    public set DocumentInspection(newValue: Date) { if (this.documentInspection != newValue) { this.documentInspection = newValue; this.MarkAsDirty("DocumentInspection"); } }
+
+    private gatepassDocumentsReady: Date;
+    public get GatepassDocumentsReady() { return this.gatepassDocumentsReady; }
+    public set GatepassDocumentsReady(newValue: Date) { if (this.gatepassDocumentsReady != newValue) { this.gatepassDocumentsReady = newValue; this.MarkAsDirty("GatepassDocumentsReady"); } }
+
+    private goodsClassification: Date;
+    public get GoodsClassification() { return this.goodsClassification; }
+    public set GoodsClassification(newValue: Date) { if (this.goodsClassification != newValue) { this.goodsClassification = newValue; this.MarkAsDirty("GoodsClassification"); } }
+
     private isImporterApprovalRequired: boolean;
     public get IsImporterApprovalRequired() { return this.isImporterApprovalRequired; }
     public set IsImporterApprovalRequired(newValue: boolean) { if (this.isImporterApprovalRequired != newValue) { this.isImporterApprovalRequired = newValue; this.MarkAsDirty("IsImporterApprovalRequired"); } }
@@ -3832,7 +4062,12 @@ export class ShipmentPM {
     private shipmentAddtionalDataXML: string;
     public get ShipmentAddtionalDataXML() { return this.shipmentAddtionalDataXML; }
     public set ShipmentAddtionalDataXML(newValue: string) { if (this.shipmentAddtionalDataXML != newValue) { this.shipmentAddtionalDataXML = newValue; this.MarkAsDirty("ShipmentAddtionalDataXML"); } }
-       
+
+
+    private shipmentAdditionalData: ShipmentAdditionalData;
+    public get ShipmentAdditionalData() { return this.shipmentAdditionalData; }
+    public set ShipmentAdditionalData(newValue: ShipmentAdditionalData) { if (this.shipmentAdditionalData != newValue) { this.shipmentAdditionalData = newValue; this.MarkAsDirty("ShipmentAdditionalData"); } }
+
 	 
     private originShipmentId: string;
     public get OriginShipmentId() { return this.originShipmentId; }
@@ -3853,7 +4088,10 @@ export class ShipmentPM {
     public get TerminalAvailable() { return this.terminalAvailable; }
     public set TerminalAvailable(newValue: Date) { if (this.terminalAvailable != newValue) { this.terminalAvailable = newValue; this.MarkAsDirty("TerminalAvailable"); } }
        
-	 
+    private terminal2Available: Date;
+    public get Terminal2Available() { return this.terminal2Available; }
+    public set Terminal2Available(newValue: Date) { if (this.terminal2Available != newValue) { this.terminal2Available = newValue; this.MarkAsDirty("Terminal2Available"); } }
+
     private iSFNumber: string;
     public get ISFNumber() { return this.iSFNumber; }
     public set ISFNumber(newValue: string) { if (this.iSFNumber != newValue) { this.iSFNumber = newValue; this.MarkAsDirty("ISFNumber"); } }
@@ -3950,6 +4188,53 @@ export class ShipmentPM {
     private warehouseLegAddressCountryCode: string;
     public get WarehouseLegAddressCountryCode() { return this.warehouseLegAddressCountryCode; }
     public set WarehouseLegAddressCountryCode(newValue: string) { this.warehouseLegAddressCountryCode = newValue; this.MarkAsDirty(); }
+    private warehouseLeg2ExpectedEntryDate: Date;
+    public get WarehouseLeg2ExpectedEntryDate() { return this.warehouseLeg2ExpectedEntryDate; }
+    public set WarehouseLeg2ExpectedEntryDate(newValue: Date) { this.warehouseLeg2ExpectedEntryDate = newValue; this.MarkAsDirty("WarehouseLeg2ExpectedEntryDate"); }
+
+    private warehouseLeg2ActualEntryDate: Date;
+    public get WarehouseLeg2ActualEntryDate() { return this.warehouseLeg2ActualEntryDate; }
+    public set WarehouseLeg2ActualEntryDate(newValue: Date) { this.warehouseLeg2ActualEntryDate = newValue; this.MarkAsDirty("WarehouseLeg2ActualEntryDate"); }
+
+    private warehouseLeg2ExpectedReleaseDate: Date;
+    public get WarehouseLeg2ExpectedReleaseDate() { return this.warehouseLeg2ExpectedReleaseDate; }
+    public set WarehouseLeg2ExpectedReleaseDate(newValue: Date) { this.warehouseLeg2ExpectedReleaseDate = newValue; this.MarkAsDirty("WarehouseLeg2ExpectedReleaseDate"); }
+
+    private warehouseLeg2ActualReleaseDate: Date;
+    public get WarehouseLeg2ActualReleaseDate() { return this.warehouseLeg2ActualReleaseDate; }
+    public set WarehouseLeg2ActualReleaseDate(newValue: Date) { this.warehouseLeg2ActualReleaseDate = newValue; this.MarkAsDirty("WarehouseLeg2ActualReleaseDate"); }
+
+    private warehouseLeg2WarehouseId: string;
+    public get WarehouseLeg2WarehouseId() { return this.warehouseLeg2WarehouseId; }
+    public set WarehouseLeg2WarehouseId(newValue: string) { this.warehouseLeg2WarehouseId = newValue; this.MarkAsDirty(); }
+
+    private isUpdateWarehouseLeg2Data: boolean;
+    public get IsUpdateWarehouseLeg2Data() { return this.isUpdateWarehouseLeg2Data; }
+    public set IsUpdateWarehouseLeg2Data(newValue: boolean) { this.isUpdateWarehouseLeg2Data = newValue; this.MarkAsDirty("IsUpdateWarehouseLeg2Data"); }
+
+    private warehouseLeg2AddressId: string;
+    public get WarehouseLeg2AddressId() { return this.warehouseLeg2AddressId; }
+    public set WarehouseLeg2AddressId(newValue: string) { this.warehouseLeg2AddressId = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2Remarks: string;
+    public get WarehouseLeg2Remarks() { return this.warehouseLeg2Remarks; }
+    public set WarehouseLeg2Remarks(newValue: string) { this.warehouseLeg2Remarks = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2TerminalCode: string;
+    public get WarehouseLeg2TerminalCode() { return this.warehouseLeg2TerminalCode; }
+    public set WarehouseLeg2TerminalCode(newValue: string) { this.warehouseLeg2TerminalCode = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2Reference: string;
+    public get WarehouseLeg2Reference() { return this.warehouseLeg2Reference; }
+    public set WarehouseLeg2Reference(newValue: string) { this.warehouseLeg2Reference = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2AddressCountryName: string;
+    public get WarehouseLeg2AddressCountryName() { return this.warehouseLeg2AddressCountryName; }
+    public set WarehouseLeg2AddressCountryName(newValue: string) { this.warehouseLeg2AddressCountryName = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2AddressCountryCode: string;
+    public get WarehouseLeg2AddressCountryCode() { return this.warehouseLeg2AddressCountryCode; }
+    public set WarehouseLeg2AddressCountryCode(newValue: string) { this.warehouseLeg2AddressCountryCode = newValue; this.MarkAsDirty(); }
 
     private isAssembly: boolean;
     public get IsAssembly() { return this.isAssembly; }
@@ -3998,16 +4283,13 @@ export class ShipmentPM {
 
     //end
 
-
     private warehouseLegTerminalName: string;
     public get WarehouseLegTerminalName() { return this.warehouseLegTerminalName; }
     public set WarehouseLegTerminalName(newValue: string) { this.warehouseLegTerminalName = newValue; this.MarkAsDirty(); }
 
-
     private warehouseLegEntryDate: Date;
     public get WarehouseLegEntryDate() { return this.warehouseLegEntryDate; }
     public set WarehouseLegEntryDate(newValue: Date) { this.warehouseLegEntryDate = newValue; this.MarkAsDirty(); }
-
 
     private warehouseLegReleaseDate: Date;
     public get WarehouseLegReleaseDate() { return this.warehouseLegReleaseDate; }
@@ -4019,15 +4301,35 @@ export class ShipmentPM {
 
     private warehouseLegCutOffDate: Date;
     public get WarehouseLegCutOffDate() { return this.warehouseLegCutOffDate; }
-    public set WarehouseLegCutOffDate(newValue: Date) { this.warehouseLegCutOffDate = newValue; this.MarkAsDirty(); }
+    public set WarehouseLegCutOffDate(newValue: Date) { this.warehouseLegCutOffDate = newValue; this.MarkAsDirty("WarehouseLegCutOffDate"); }
 
     private warehouseLegVGMCutOffDate: Date;
     public get WarehouseLegVGMCutOffDate() { return this.warehouseLegVGMCutOffDate; }
-    public set WarehouseLegVGMCutOffDate(newValue: Date) { this.warehouseLegVGMCutOffDate = newValue; this.MarkAsDirty(); }
+    public set WarehouseLegVGMCutOffDate(newValue: Date) { this.warehouseLegVGMCutOffDate = newValue; this.MarkAsDirty("WarehouseLegVGMCutOffDate"); }
+
+    private warehouseLeg2TerminalName: string;
+    public get WarehouseLeg2TerminalName() { return this.warehouseLeg2TerminalName; }
+    public set WarehouseLeg2TerminalName(newValue: string) { this.warehouseLeg2TerminalName = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2EntryDate: Date;
+    public get WarehouseLeg2EntryDate() { return this.warehouseLeg2EntryDate; }
+    public set WarehouseLeg2EntryDate(newValue: Date) { this.warehouseLeg2EntryDate = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2ReleaseDate: Date;
+    public get WarehouseLeg2ReleaseDate() { return this.warehouseLeg2ReleaseDate; }
+    public set WarehouseLeg2ReleaseDate(newValue: Date) { this.warehouseLeg2ReleaseDate = newValue; this.MarkAsDirty(); }
+
+    private warehouseLeg2CutOffDate: Date;
+    public get WarehouseLeg2CutOffDate() { return this.warehouseLeg2CutOffDate; }
+    public set WarehouseLeg2CutOffDate(newValue: Date) { this.warehouseLeg2CutOffDate = newValue; this.MarkAsDirty("WarehouseLeg2CutOffDate"); }
+
+    private warehouseLeg2VGMCutOffDate: Date;
+    public get WarehouseLeg2VGMCutOffDate() { return this.warehouseLeg2VGMCutOffDate; }
+    public set WarehouseLeg2VGMCutOffDate(newValue: Date) { this.warehouseLeg2VGMCutOffDate = newValue; this.MarkAsDirty("WarehouseLeg2VGMCutOffDate"); }
 
     private aMSClosingDate: Date;
     public get AMSClosingDate() { return this.aMSClosingDate; }
-    public set AMSClosingDate(newValue: Date) { this.aMSClosingDate = newValue; this.MarkAsDirty(); }
+    public set AMSClosingDate(newValue: Date) { this.aMSClosingDate = newValue; this.MarkAsDirty("AMSClosingDate"); }
 
     private updatedByPartner: string;
     public get UpdatedByPartner() { return this.updatedByPartner; }
@@ -4124,6 +4426,32 @@ export class ShipmentPM {
     public set ProjectNumber(newValue: string) { if (this.projectNumber != newValue) { this.projectNumber = newValue; this.MarkAsDirty("ProjectNumber"); } }
 
 
+
+    private privateLabelInvoiceNumber: string;
+    public get PrivateLabelInvoiceNumber() { return this.privateLabelInvoiceNumber; }
+    public set PrivateLabelInvoiceNumber(newValue: string) { if (this.privateLabelInvoiceNumber != newValue) { this.privateLabelInvoiceNumber = newValue; this.MarkAsDirty(); } }
+
+    private privateLabelIncludePickup: boolean;
+    public get PrivateLabelIncludePickup() { return this.privateLabelIncludePickup; }
+    public set PrivateLabelIncludePickup(newValue: boolean) { if (this.privateLabelIncludePickup != newValue) { this.privateLabelIncludePickup = newValue; this.MarkAsDirty(); } }
+
+    private privateLabelIncludeDelivery: boolean;
+    public get PrivateLabelIncludeDelivery() { return this.privateLabelIncludeDelivery; }
+    public set PrivateLabelIncludeDelivery(newValue: boolean) { if (this.privateLabelIncludeDelivery != newValue) { this.privateLabelIncludeDelivery = newValue; this.MarkAsDirty(); } }
+
+    private requestedFlightDate: Date;
+    public get RequestedFlightDate() { return this.requestedFlightDate; }
+    public set RequestedFlightDate(newValue: Date) { if (this.requestedFlightDate != newValue) { this.requestedFlightDate = newValue; this.MarkAsDirty(); } }
+
+    private hasUnassignedData: boolean;
+    public get HasUnassignedData() { return this.hasUnassignedData; }
+    public set HasUnassignedData(newValue: boolean) { if (this.hasUnassignedData != newValue) { this.hasUnassignedData = newValue; this.MarkAsDirty("HasUnassignedData"); } }
+
+    private privateLabelAgentName: string;
+    public get PrivateLabelAgentName() { return this.privateLabelAgentName; }
+    public set PrivateLabelAgentName(newValue: string) { if (this.privateLabelAgentName != newValue) { this.privateLabelAgentName = newValue; this.MarkAsDirty("PrivateLabelAgentName"); } }
+
+
     private notify1Reference: string;
     public get Notify1Reference() { return this.notify1Reference; }
     public set Notify1Reference(newValue: string) {
@@ -4132,6 +4460,16 @@ export class ShipmentPM {
             this.MarkAsDirty("Notify1Reference");
         }
     }
+
+    private notify1Reference2: string;
+    public get Notify1Reference2() { return this.notify1Reference2; }
+    public set Notify1Reference2(newValue: string) {
+        if (this.notify1Reference2 != newValue) {
+            this.notify1Reference2 = newValue;
+            this.MarkAsDirty("Notify1Reference2");
+        }
+    }
+
 
     private notify2Reference: string;
     public get Notify2Reference() { return this.notify2Reference; }
@@ -4151,12 +4489,21 @@ export class ShipmentPM {
         }
     }
 
-    private shipperNotExporterReference: string;
-    public get ShipperNotExporterReference() { return this.shipperNotExporterReference; }
-    public set ShipperNotExporterReference(newValue: string) {
-        if (this.shipperNotExporterReference != newValue) {
-            this.shipperNotExporterReference = newValue;
-            this.MarkAsDirty("ShipperNotExporterReference");
+    private shipperNotExporterReference1: string;
+    public get ShipperNotExporterReference1() { return this.shipperNotExporterReference1; }
+    public set ShipperNotExporterReference1(newValue: string) {
+        if (this.shipperNotExporterReference1 != newValue) {
+            this.shipperNotExporterReference1 = newValue;
+            this.MarkAsDirty("ShipperNotExporterReference1");
+        }
+    }
+
+    private shipperNotExporterReference2: string;
+    public get ShipperNotExporterReference2() { return this.shipperNotExporterReference2; }
+    public set ShipperNotExporterReference2(newValue: string) {
+        if (this.shipperNotExporterReference2 != newValue) {
+            this.shipperNotExporterReference2 = newValue;
+            this.MarkAsDirty("ShipperNotExporterReference2");
         }
     }
 
@@ -4882,6 +5229,39 @@ export class ShipmentPM {
     public get OnForwardingATA_Original() { return this.onForwardingATA_Original; }
     public set OnForwardingATA_Original(newValue: Date) { if (this.onForwardingATA_Original != newValue) { this.onForwardingATA_Original = newValue; this.MarkAsDirty("OnForwardingATA_Original"); } }
 
+    private assignedToTruckerDate: Date;
+    public get AssignedToTruckerDate() { return this.assignedToTruckerDate; }
+    public set AssignedToTruckerDate(newValue: Date) { if (this.assignedToTruckerDate != newValue) { this.assignedToTruckerDate = newValue; this.MarkAsDirty("AssignedToTruckerDate"); } }
+
+    private truckerId: string;
+    public get TruckerId() { return this.truckerId; }
+    public set TruckerId(newValue: string) { if (this.truckerId != newValue) { this.truckerId = newValue; this.MarkAsDirty("TruckerId"); } }
+     
+    private truckerAddressId: string;
+    public get TruckerAddressId() { return this.truckerAddressId; }
+    public set TruckerAddressId(newValue: string) { if (this.truckerAddressId != newValue) { this.truckerAddressId = newValue; this.MarkAsDirty("TruckerAddressId"); } }
+
+    private truckerContactId: string;
+    public get TruckerContactId() { return this.truckerContactId; }
+    public set TruckerContactId(newValue: string) { if (this.truckerContactId != newValue) { this.truckerContactId = newValue; this.MarkAsDirty("TruckerContactId"); } }
+
+    private truckerReference1: string;
+    public get TruckerReference1() { return this.truckerReference1; }
+    public set TruckerReference1(newValue: string) { if (this.truckerReference1 != newValue) { this.truckerReference1 = newValue; this.MarkAsDirty("TruckerReference1"); } }
+
+    private truckerReference2: string;
+    public get TruckerReference2() { return this.truckerReference2; }
+    public set TruckerReference2(newValue: string) { if (this.truckerReference2 != newValue) { this.truckerReference2 = newValue; this.MarkAsDirty("TruckerReference2"); } }
+
+    private truckerName: string;
+    public get TruckerName() { return this.truckerName; }
+    public set TruckerName(newValue: string) { if (this.truckerName != newValue) { this.truckerName = newValue; this.MarkAsDirty("TruckerName"); } }
+
+
+    private truckerNote: string;
+    public get TruckerNote() { return this.truckerNote; }
+    public set TruckerNote(newValue: string) { if (this.truckerNote != newValue) { this.truckerNote = newValue; this.MarkAsDirty("TruckerNote"); } }
+
     private originPreCarriageFromPortId: string;
     public get OriginPreCarriageFromPortId() { return this.originPreCarriageFromPortId; }
     public set OriginPreCarriageFromPortId(newValue: string) {
@@ -4935,7 +5315,18 @@ export class ShipmentPM {
     public get StandalonePickupDeliveryNumber() { return this.standalonePickupDeliveryNumber; }
     public set StandalonePickupDeliveryNumber(newValue: string) { if (this.standalonePickupDeliveryNumber != newValue) { this.standalonePickupDeliveryNumber = newValue; this.MarkAsDirty("StandalonePickupDeliveryNumber"); } }      
 
+    private parentShipmentDirectionId: string;
+    public get ParentShipmentDirectionId() { return this.parentShipmentDirectionId; }
+    public set ParentShipmentDirectionId(newValue: string) { if (this.parentShipmentDirectionId != newValue) { this.parentShipmentDirectionId = newValue; this.MarkAsDirty("ParentShipmentDirectionId"); } }      
 
+    private parentShipmentNumber: string;
+    public get ParentShipmentNumber() { return this.parentShipmentNumber; }
+    public set ParentShipmentNumber(newValue: string) { if (this.parentShipmentNumber != newValue) { this.parentShipmentNumber = newValue; this.MarkAsDirty("ParentShipmentNumber"); } }      
+
+    private parentShipmentType: string;
+    public get ParentShipmentType() { return this.parentShipmentType; }
+    public set ParentShipmentType(newValue: string) { if (this.parentShipmentType != newValue) { this.parentShipmentType = newValue; this.MarkAsDirty("ParentShipmentType"); } }      
+ 
     private isProductItemsUpdated: boolean;
     public get IsProductItemsUpdated() { return this.isProductItemsUpdated; }
     public set IsProductItemsUpdated(newValue: boolean) { if (this.isProductItemsUpdated != newValue) { this.isProductItemsUpdated = newValue; this.MarkAsDirty("IsProductItemsUpdated"); } }
@@ -4959,6 +5350,168 @@ export class ShipmentPM {
     private handlerUserId: string;
     public get HandlerUserId() { return this.handlerUserId; }
     public set HandlerUserId(newValue: string) { if (this.handlerUserId != newValue) { this.handlerUserId = newValue; this.MarkAsDirty("HandlerUserId"); } }
+
+    private destinationWarehouseId: string;
+    public get DestinationWarehouseId() { return this.destinationWarehouseId; }
+    public set DestinationWarehouseId(newValue: string) { if (this.destinationWarehouseId != newValue) { this.destinationWarehouseId = newValue; this.MarkAsDirty("DestinationWarehouseId"); } }
+
+    private inlandDomesticFromZipCode: string;
+    public get InlandDomesticFromZipCode() { return this.inlandDomesticFromZipCode; }
+    public set InlandDomesticFromZipCode(newValue: string) { if (this.inlandDomesticFromZipCode != newValue) { this.inlandDomesticFromZipCode = newValue; this.MarkAsDirty("InlandDomesticFromZipCode"); } }
+
+    private inlandDomesticToZipCode: string;
+    public get InlandDomesticToZipCode() { return this.inlandDomesticToZipCode; }
+    public set InlandDomesticToZipCode(newValue: string) { if (this.inlandDomesticToZipCode != newValue) { this.inlandDomesticToZipCode = newValue; this.MarkAsDirty("InlandDomesticToZipCode"); } }
+
+    private inlandDomesticFromCity: string;
+    public get InlandDomesticFromCity() { return this.inlandDomesticFromCity; }
+    public set InlandDomesticFromCity(newValue: string) { if (this.inlandDomesticFromCity != newValue) { this.inlandDomesticFromCity = newValue; this.MarkAsDirty("InlandDomesticFromCity"); } }
+
+    private inlandDomesticToCity: string;
+    public get InlandDomesticToCity() { return this.inlandDomesticToCity; }
+    public set InlandDomesticToCity(newValue: string) { if (this.inlandDomesticToCity != newValue) { this.inlandDomesticToCity = newValue; this.MarkAsDirty("InlandDomesticToCity"); } }
+
+    private inlandDomesticFromCountryId: string;
+    public get InlandDomesticFromCountryId() { return this.inlandDomesticFromCountryId; }
+    public set InlandDomesticFromCountryId(newValue: string) { if (this.inlandDomesticFromCountryId != newValue) { this.inlandDomesticFromCountryId = newValue; this.MarkAsDirty("InlandDomesticFromCountryId"); } }
+
+    private inlandDomesticToCountryId: string;
+    public get InlandDomesticToCountryId() { return this.inlandDomesticToCountryId; }
+    public set InlandDomesticToCountryId(newValue: string) { if (this.inlandDomesticToCountryId != newValue) { this.inlandDomesticToCountryId = newValue; this.MarkAsDirty("InlandDomesticToCountryId"); } }
+
+    private inlandDomesticFromTypeCode: string;
+    public get InlandDomesticFromTypeCode() { return this.inlandDomesticFromTypeCode; }
+    public set InlandDomesticFromTypeCode(newValue: string) { if (this.inlandDomesticFromTypeCode != newValue) { this.inlandDomesticFromTypeCode = newValue; this.MarkAsDirty("InlandDomesticFromTypeCode"); } }
+
+    private inlandDomesticToTypeCode: string;
+    public get InlandDomesticToTypeCode() { return this.inlandDomesticToTypeCode; }
+    public set InlandDomesticToTypeCode(newValue: string) { if (this.inlandDomesticToTypeCode != newValue) { this.inlandDomesticToTypeCode = newValue; this.MarkAsDirty("InlandDomesticToTypeCode"); } }
+
+    private mainCarriageFromPortAddress: string;
+    public get MainCarriageFromPortAddress() { return this.mainCarriageFromPortAddress; }
+    public set MainCarriageFromPortAddress(newValue: string) { if (this.mainCarriageFromPortAddress != newValue) { this.mainCarriageFromPortAddress = newValue; this.MarkAsDirty("MainCarriageFromPortAddress"); } }
+
+    private mainCarriageToPortAddress: string;
+    public get MainCarriageToPortAddress() { return this.mainCarriageToPortAddress; }
+    public set MainCarriageToPortAddress(newValue: string) { if (this.mainCarriageToPortAddress != newValue) { this.mainCarriageToPortAddress = newValue; this.MarkAsDirty("MainCarriageToPortAddress"); } }
+
+    private houseMasterConcurrencyGUID: string;
+    public get HouseMasterConcurrencyGUID() { return this.houseMasterConcurrencyGUID; }
+    public set HouseMasterConcurrencyGUID(newValue: string) { if (this.houseMasterConcurrencyGUID != newValue) { this.houseMasterConcurrencyGUID = newValue; this.MarkAsDirty("HouseMasterConcurrencyGUID"); } }
+
+    private houseMasterNewConcurrencyGUID: string;
+    public get HouseMasterNewConcurrencyGUID() { return this.houseMasterNewConcurrencyGUID; }
+    public set HouseMasterNewConcurrencyGUID(newValue: string) { if (this.houseMasterNewConcurrencyGUID != newValue) { this.houseMasterNewConcurrencyGUID = newValue; this.MarkAsDirty("HouseMasterNewConcurrencyGUID"); } }
+
+    private billingStatusId: string;
+    public get BillingStatusId() { return this.billingStatusId; }
+    public set BillingStatusId(newValue: string) { if (this.billingStatusId != newValue) { this.billingStatusId = newValue; this.MarkAsDirty("BillingStatusId"); } }
+
+    private operationalStatusId: string;
+    public get OperationalStatusId() { return this.operationalStatusId; }
+    public set OperationalStatusId(newValue: string) { if (this.operationalStatusId != newValue) { this.operationalStatusId = newValue; this.MarkAsDirty("OperationalStatusId"); } }
+
+    private operationalStatusName: string;
+    public get OperationalStatusName() { return this.operationalStatusName; }
+    public set OperationalStatusName(newValue: string) { if (this.operationalStatusName != newValue) { this.operationalStatusName = newValue; this.MarkAsDirty("OperationalStatusName"); } }
+
+    private billingStatusName: string;
+    public get BillingStatusName() { return this.billingStatusName; }
+    public set BillingStatusName(newValue: string) { if (this.billingStatusName != newValue) { this.billingStatusName = newValue; this.MarkAsDirty("BillingStatusName"); } }
+
+    private isShipmentOrder: boolean;
+    public get IsShipmentOrder() { return this.isShipmentOrder; }
+    public set IsShipmentOrder(newValue: boolean) { if (this.isShipmentOrder != newValue) { this.isShipmentOrder = newValue; this.MarkAsDirty("IsShipmentOrder"); } }
+
+    private carrierServiceLineId: string;
+    public get CarrierServiceLineId() { return this.carrierServiceLineId; }
+    public set CarrierServiceLineId(newValue: string) { if (this.carrierServiceLineId != newValue) { this.carrierServiceLineId = newValue; this.MarkAsDirty("CarrierServiceLineId"); } }
+
+    private inlandDomesticToAddress1: string;
+    public get InlandDomesticToAddress1() { return this.inlandDomesticToAddress1; }
+    public set InlandDomesticToAddress1(newValue: string) { if (this.inlandDomesticToAddress1 != newValue) { this.inlandDomesticToAddress1 = newValue; this.MarkAsDirty("InlandDomesticToAddress1"); } }
+
+    private inlandDomesticToAddress2: string;
+    public get InlandDomesticToAddress2() { return this.inlandDomesticToAddress2; }
+    public set InlandDomesticToAddress2(newValue: string) { if (this.inlandDomesticToAddress2 != newValue) { this.inlandDomesticToAddress2 = newValue; this.MarkAsDirty("InlandDomesticToAddress2"); } }
+
+    private inlandDomesticToPhone: string;
+    public get InlandDomesticToPhone() { return this.inlandDomesticToPhone; }
+    public set InlandDomesticToPhone(newValue: string) { if (this.inlandDomesticToPhone != newValue) { this.inlandDomesticToPhone = newValue; this.MarkAsDirty("InlandDomesticToPhone"); } }
+
+    private inlandDomesticToFax: string;
+    public get InlandDomesticToFax() { return this.inlandDomesticToFax; }
+    public set InlandDomesticToFax(newValue: string) { if (this.inlandDomesticToFax != newValue) { this.inlandDomesticToFax = newValue; this.MarkAsDirty("InlandDomesticToFax"); } }
+
+    private inlandDomesticToStateId: string;
+    public get InlandDomesticToStateId() { return this.inlandDomesticToStateId; }
+    public set InlandDomesticToStateId(newValue: string) { if (this.inlandDomesticToStateId != newValue) { this.inlandDomesticToStateId = newValue; this.MarkAsDirty("InlandDomesticToStateId"); } }
+
+    private inlandDomesticFromAddress1: string;
+    public get InlandDomesticFromAddress1() { return this.inlandDomesticFromAddress1; }
+    public set InlandDomesticFromAddress1(newValue: string) { if (this.inlandDomesticFromAddress1 != newValue) { this.inlandDomesticFromAddress1 = newValue; this.MarkAsDirty("InlandDomesticFromAddress1"); } }
+
+    private inlandDomesticFromAddress2: string;
+    public get InlandDomesticFromAddress2() { return this.inlandDomesticFromAddress2; }
+    public set InlandDomesticFromAddress2(newValue: string) { if (this.inlandDomesticFromAddress2 != newValue) { this.inlandDomesticFromAddress2 = newValue; this.MarkAsDirty("InlandDomesticFromAddress2"); } }
+
+    private inlandDomesticFromPhone: string;
+    public get InlandDomesticFromPhone() { return this.inlandDomesticFromPhone; }
+    public set InlandDomesticFromPhone(newValue: string) { if (this.inlandDomesticFromPhone != newValue) { this.inlandDomesticFromPhone = newValue; this.MarkAsDirty("InlandDomesticFromPhone"); } }
+
+    private inlandDomesticFromFax: string;
+    public get InlandDomesticFromFax() { return this.inlandDomesticFromFax; }
+    public set InlandDomesticFromFax(newValue: string) { if (this.inlandDomesticFromFax != newValue) { this.inlandDomesticFromFax = newValue; this.MarkAsDirty("InlandDomesticFromFax"); } }
+
+    private inlandDomesticFromStateId: string;
+    public get InlandDomesticFromStateId() { return this.inlandDomesticFromStateId; }
+    public set InlandDomesticFromStateId(newValue: string) { if (this.inlandDomesticFromStateId != newValue) { this.inlandDomesticFromStateId = newValue; this.MarkAsDirty("InlandDomesticFromStateId"); } }
+
+
+    private customChildEntities: CustomChildEntity[];
+    public get CustomChildEntities() { return this.customChildEntities; }
+    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
+
+    private isINTTRAFROB: boolean;
+    public get IsINTTRAFROB() { return this.isINTTRAFROB; }
+    public set IsINTTRAFROB(newValue: boolean) { if (this.isINTTRAFROB != newValue) { this.isINTTRAFROB = newValue; this.MarkAsDirty("IsINTTRAFROB"); } }
+
+    private shippingLine: string;
+    public get ShippingLine() { return this.shippingLine; }
+    public set ShippingLine(newValue: string) { if (this.shippingLine != newValue) { this.shippingLine = newValue; this.MarkAsDirty("ShippingLine"); } }
+
+    private placeOfDelivery: string;
+    public get PlaceOfDelivery() { return this.placeOfDelivery; }
+    public set PlaceOfDelivery(newValue: string) { if (this.placeOfDelivery != newValue) { this.placeOfDelivery = newValue; this.MarkAsDirty("PlaceOfDelivery"); } }
+
+    private pickupPlace: string;
+    public get PickupPlace() { return this.pickupPlace; }
+    public set PickupPlace(newValue: string) { if (this.pickupPlace != newValue) { this.pickupPlace = newValue; this.MarkAsDirty("PickupPlace"); } }
+
+    private sealNo: string;
+    public get SealNo() { return this.sealNo; }
+    public set SealNo(newValue: string) { if (this.sealNo != newValue) { this.sealNo = newValue; this.MarkAsDirty("SealNo"); } }
+
+    private hSCode: string;
+    public get HSCode() { return this.hSCode; }
+    public set HSCode(newValue: string) { if (this.hSCode != newValue) { this.hSCode = newValue; this.MarkAsDirty("HSCode"); } }
+
+    private weight1: number;
+    public get Weight1() { return this.weight1; }
+    public set Weight1(newValue: number) { if (this.weight1 != newValue) { this.weight1 = newValue; this.MarkAsDirty("Weight1"); } }
+
+    private weight2: number;
+    public get Weight2() { return this.weight2; }
+    public set Weight2(newValue: number) { if (this.weight2 != newValue) { this.weight2 = newValue; this.MarkAsDirty("Weight2"); } }
+
+    private weight3: number;
+    public get Weight3() { return this.weight3; }
+    public set Weight3(newValue: number) { if (this.weight3 != newValue) { this.weight3 = newValue; this.MarkAsDirty("Weight3"); } }
+
+    private weight4: number;
+    public get Weight4() { return this.weight4; }
+    public set Weight4(newValue: number) { if (this.weight4 != newValue) { this.weight4 = newValue; this.MarkAsDirty("Weight4"); } }
+
 
     public OldEntityPM: ShipmentPM;
 
@@ -5422,6 +5975,39 @@ export class ShipmentPM {
             var index = this.ShipmentProductItems.indexOf(item);
             if (index > -1) {
                 this.ShipmentProductItems.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+
+    private shipmentUnassignedFields: ShipmentUnassignedFieldPM[];
+    get ShipmentUnassignedFields() {
+        if (this.shipmentUnassignedFields == null) {
+            this.shipmentUnassignedFields = [];
+        }
+
+        return this.shipmentUnassignedFields;
+    }
+    set ShipmentUnassignedFields(newValue: ShipmentUnassignedFieldPM[]) {
+        if (this.shipmentUnassignedFields != newValue) {
+            this.shipmentUnassignedFields = newValue;
+        }
+    }
+    public AddShipmentUnassignedField(item: ShipmentUnassignedFieldPM) {
+        if (item != null) {
+            var index = this.shipmentUnassignedFields.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this.shipmentUnassignedFields.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveShipmentUnassignedFields(item: ShipmentUnassignedFieldPM) {
+        if (item != null) {
+            var index = this.shipmentUnassignedFields.indexOf(item);
+            if (index > -1) {
+                this.shipmentUnassignedFields.splice(index, 1);
                 this.MarkAsDirty();
             }
         }

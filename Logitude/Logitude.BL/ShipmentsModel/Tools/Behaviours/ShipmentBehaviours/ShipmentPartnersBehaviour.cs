@@ -33,6 +33,10 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
             HandleCustomAgentImport();
             HandleReleasingAgent();
             HandleFreightForwarder();
+            HandleNotify1();
+            HandleNotify2();
+            HandleInlandDemosticPartners();            
+            HandleConsigneeNotImporter();
         }
 
         private void HandleShipper()
@@ -47,8 +51,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ShipperAddressId = null;
                 entityPM.ShipperMainAddressId = null;
                 entityPM.ShipperAddressText = null;
-                entityPM.ShipperReference1 = null;
-                entityPM.ShipperReference2 = null;
+                entityPM.ShipperReference1 = IsShipmentFromToLogbox() ? entityPM.ShipperReference1 : null;
+                entityPM.ShipperReference2 = IsShipmentFromToLogbox() ? entityPM.ShipperReference2 : null;
+                entityPM.ShipperReference3 = IsShipmentFromToLogbox() ? entityPM.ShipperReference3 : null;
             }
 
             else if (entityPM.IsExternalAPI || entityPM.IsHybrid)
@@ -91,8 +96,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ConsigneeAddressId = null;
                 entityPM.ConsigneeMainAddressId = null;
                 entityPM.ConsigneeAddressText = null;
-                entityPM.ConsigneeReference1 = null;
-                entityPM.ConsigneeReference2 = null;
+                entityPM.ConsigneeReference1 = IsShipmentFromToLogbox() ? entityPM.ConsigneeReference1 : null;
+                entityPM.ConsigneeReference2 = IsShipmentFromToLogbox() ? entityPM.ConsigneeReference2 : null;
+                entityPM.ConsigneeReference3 = IsShipmentFromToLogbox() ? entityPM.ConsigneeReference3 : null;
             }
 
             else if (entityPM.IsExternalAPI)
@@ -120,6 +126,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             if (string.IsNullOrEmpty(cardId))
             {
+                entityPM.PrivateLabelAgentName = IsShipmentFromToLogbox() ? entityPM.PrivateLabelAgentName : null;
                 entityPM.AgentName = null;
                 entityPM.AgentNote = null;
                 entityPM.AgentContactId = null;
@@ -135,6 +142,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 if (card != null)
                 {
                     entityPM.AgentName = card.EnglishName;
+                    entityPM.PrivateLabelAgentName = card.EnglishName;
 
                     if (string.IsNullOrEmpty(entityPM.AgentContactId))
                     {
@@ -150,10 +158,11 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
 
             else
             {
+                Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
+                entityPM.PrivateLabelAgentName = card?.EnglishName;
                 // from new shipment screen: additional fields
                 if (string.IsNullOrEmpty(entityPM.AgentAddressId))
-                {
-                    Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
+                {        
                     if (card != null)
                     {
                         entityPM.AgentName = card.EnglishName;
@@ -161,6 +170,8 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                         entityPM.AgentAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
                     }
                 }
+
+
             }            
         }
         private void HandleShipperNotExporter()
@@ -174,6 +185,9 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 entityPM.ShipperNotExporterContactId = null;
                 entityPM.ShipperNotExporterAddressId = null;
                 entityPM.ShipperNotExporterReference = null;
+                entityPM.ShipperNotExporterReference1 = null;
+                entityPM.ShipperNotExporterReference2 = null;
+
             }
 
             else if (entityPM.IsExternalAPI)
@@ -292,11 +306,214 @@ namespace Logitude.BL.ShipmentsModel.Tools.Behaviours.ShipmentBehaviours
                 }
             }
         }
+        private void HandleNotify1()
+        {
+            string cardId = entityPM.Notify1Id;
+
+            if (string.IsNullOrEmpty(cardId))
+            {
+                ResetNotify1Properties();
+            }
+
+            else if (entityPM.IsExternalAPI || entityPM.IsHybrid)
+            {
+                MapNotify1FieldsFromNotify1Card(cardId);
+            }
+        }
+        private void ResetNotify1Properties()
+        {
+            entityPM.Notify1Name = IsShipmentFromToLogbox() || entityPM.IsExternalAPI ? entityPM.Notify1Name : null;
+            entityPM.Notify1Note = null;
+            entityPM.Notify1ContactId = null;
+            entityPM.Notify1AddressId = null;
+            entityPM.Notify1Reference = null;
+            entityPM.Notify1Reference2 = null;
+        }
+        private void MapNotify1FieldsFromNotify1Card(string cardId)
+        {
+            Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
+            if (card != null)
+            {
+                entityPM.Notify1Name = card.EnglishName;
+                MapNotify1Address(card);
+                MapNotify1Contact(card);
+            }
+        }
+        private void MapNotify1Address(Card card)
+        {
+            if (entityPM.IsExternalAPI)
+            {
+                if (string.IsNullOrEmpty(entityPM.Notify1AddressId))
+                {
+                    entityPM.Notify1AddressId = initializer.AddressRepository.GetMainAddressId(card.Id, initializer.Tenant);
+                }
+            }
+
+            else
+            {
+                entityPM.Notify1AddressId = initializer.AddressRepository.GetMainAddressId(card.Id, initializer.Tenant);
+            }
+        }
+        private void MapNotify1Contact(Card card)
+        {
+            if (entityPM.IsExternalAPI)
+            {
+                if (string.IsNullOrEmpty(entityPM.Notify1ContactId))
+                {
+                    entityPM.Notify1ContactId = card.PrimaryContactId;
+                }
+            }
+
+            else
+            {
+                entityPM.Notify1ContactId = card.PrimaryContactId;
+            }
+        }
+
+        private void HandleNotify2()
+        {
+            string cardId = entityPM.Notify2Id;
+
+            if (string.IsNullOrEmpty(cardId))
+            {
+                ResetNotify2Properties();
+            }
+
+            else if (entityPM.IsExternalAPI || entityPM.IsHybrid)
+            {
+                MapNotify2FieldsFromNotify2Card(cardId);
+            }
+        }
+        private void ResetNotify2Properties()
+        {
+            entityPM.Notify2Name = IsShipmentFromToLogbox() || entityPM.IsExternalAPI ? entityPM.Notify2Name : null;
+            entityPM.Notify2Note = null;
+            entityPM.Notify2ContactId = null;
+            entityPM.Notify2AddressId = null;
+            entityPM.Notify2Reference = null;
+        }
+        private void MapNotify2FieldsFromNotify2Card(string cardId)
+        {
+            Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
+            if (card != null)
+            {
+                entityPM.Notify2Name = card.EnglishName;
+                MapNotify2Address(card);
+                MapNotify2Contact(card);
+            }
+        }
+        private void MapNotify2Address(Card card)
+        {
+            if (entityPM.IsExternalAPI)
+            {
+                if (string.IsNullOrEmpty(entityPM.Notify2AddressId))
+                {
+                    entityPM.Notify2AddressId = initializer.AddressRepository.GetMainAddressId(card.Id, initializer.Tenant);
+                }
+            }
+
+            else
+            {
+                entityPM.Notify2AddressId = initializer.AddressRepository.GetMainAddressId(card.Id, initializer.Tenant);
+            }
+        }
+        private void MapNotify2Contact(Card card)
+        {
+            if (entityPM.IsExternalAPI)
+            {
+                if (string.IsNullOrEmpty(entityPM.Notify2ContactId))
+                {
+                    entityPM.Notify2ContactId = card.PrimaryContactId;
+                }
+            }
+
+            else
+            {
+                entityPM.Notify2ContactId = card.PrimaryContactId;
+            }
+        }
+
+        private void HandleConsigneeNotImporter()
+        {
+            string cardId = entityPM.ConsigneeNotImporterId;
+
+            if (string.IsNullOrEmpty(cardId))
+            {
+                entityPM.ConsigneeNotImporterName = null;
+                entityPM.ConsigneeNotImporterNote = null;
+                entityPM.ConsigneeNotImporterContactId = null;
+                entityPM.ConsigneeNotImporterAddressId = null;
+                entityPM.ConsigneeNotImporterReference = null;
+            }
+
+            else if (entityPM.IsExternalAPI)
+            {
+                Card card = CardRepository.GetSingleCard(cardId, initializer.Tenant, true);
+                if (card != null)
+                {
+                    entityPM.ConsigneeNotImporterName = card.EnglishName;
+
+                    if (string.IsNullOrWhiteSpace(entityPM.ConsigneeNotImporterContactId))
+                    {
+                        entityPM.ConsigneeNotImporterContactId = card.PrimaryContactId;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(entityPM.ConsigneeNotImporterAddressId))
+                    {
+                        entityPM.ConsigneeNotImporterAddressId = initializer.AddressRepository.GetMainAddressId(cardId, initializer.Tenant);
+                    }
+                }
+            }
+        }
+
         private bool IsShipmentFromToLogbox()
         {
             bool isShipmentFromUNF = entityPM.IsHybrid;
             bool isShipmentFromOrToLogbox = isShipmentFromUNF || entityPM.IsImporterShipment || !string.IsNullOrEmpty(entityPM.ForwarderShipmentNumber);
             return isShipmentFromOrToLogbox;
+        }
+        private void HandleInlandDemosticPartners()
+        {
+            if (!IsInlandDomesticShipment())
+            {
+                return ;
+            }
+
+            if (entityPM.InlandDomesticFromTypeCode == "PART")
+            {
+                HandleMainCarrigeFromPartner();
+            }
+            if (entityPM.InlandDomesticToTypeCode == "PART")
+            {
+                HandleMainCarrigeToPartner();
+            }
+
+        }
+        private bool IsInlandDomesticShipment()
+        {
+            return entityPM.DirectionId == "D" && entityPM.TransportModeId == "I";
+        }
+        private void HandleMainCarrigeFromPartner()
+        {
+            if (!entityPM.IsExternalAPI)
+            {
+                return ;
+            }
+            if (string.IsNullOrWhiteSpace(entityPM.MainCarriageFromAddressId))
+            {
+                entityPM.MainCarriageFromAddressId = initializer.AddressRepository.GetMainAddressId(entityPM.MainCarriageFromPartnerId, initializer.Tenant);
+            }
+        }
+        private void HandleMainCarrigeToPartner()
+        {
+            if (!entityPM.IsExternalAPI)
+            {
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(entityPM.MainCarriageToAddressId))
+            {
+                entityPM.MainCarriageToAddressId = initializer.AddressRepository.GetMainAddressId(entityPM.MainCarriageToPartnerId, initializer.Tenant);
+            }
         }
     }
 }

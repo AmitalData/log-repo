@@ -46,13 +46,10 @@ namespace WebFreight.Web.DataProviders
         public string WeightUnit { get; set; }
         public string VolumeUnit { get; set; }
         public string ReleaseDateIndicator { get; set; }
-
         public string Trucker { get; set; }
         public string TruckNumber { get; set; }
-
         public List<ReleasePackage> ReleasePackages { get; set; }
         public List<ReleasePackageGroup> ReleasePackagesGroupList { get; set; }
-
         public DateTime? DeclarationDate { get; set; }
         public string DeclarationNumber { get; set; }
         public int NumberofDaysInTheWarehouse { get; set; }
@@ -63,7 +60,6 @@ namespace WebFreight.Web.DataProviders
         public string ValueofGoodsCurrency { get; set; }
         public string IncotermCode { get; set; }
         public string IncotermName { get; set; }
-
         public string GeneralDescriptionofGoods { get; set; }
         public string ShipperVATNumber { get; set; }
         public string ShipperContactPersonName { get; set; }
@@ -78,12 +74,10 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField8 { get; set; }
         public string ShipmentField9 { get; set; }
         public string ShipmentField10 { get; set; }
-
         public string ActualEntryDate { get; set; }
         public string EntryTruckerName { get; set; }
         public string EntryTruckerReference { get; set; }
-        public string TerminalCode { get; set; }
-        
+        public string TerminalCode { get; set; }        
         public string ImportManifest { get; set; }
         public string MasterImportManifest { get; set; }
         public string ConnectedShipmentTransportMode { get; set; }
@@ -92,7 +86,7 @@ namespace WebFreight.Web.DataProviders
         public string ProjectNumber { get; set; }
         public int? StorageFreeDays { get; set; }
         public string MainCarriageTruckerNumber { get; set; }
-
+        public string MasterShipmentNumber { get; set; }
     }
 
 

@@ -15,9 +15,9 @@ export class SharedLogisticsService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/SharedLogistics';
     }
 
-    getSharedLogisticsStatistics(tenant: number) {
+    getSharedLogisticsStatistics(tenant: number, invitationStatusType: string) {
 
-        return this._http.get(this._apiUrl + '/getSharedLogisticsStatistics/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+        return this._http.get(this._apiUrl + '/getSharedLogisticsStatistics/?' + 'tenant=' + tenant + '&invitationStatusType=' + invitationStatusType, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 
@@ -58,10 +58,38 @@ export class SharedLogisticsService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
+    getDigitalSharedLogisticsSummaryData(tenant: number) {
+        return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/DigitalActivity/GetDigitalSharedLogisticsSummaryData/?' + 'tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }), catchError(ServiceHelper.HandleServiceError));
+    }
+
+    getDigitalCardLogDetails(partnerTypeId: string, dateParameter: string, tenant: number)
+    {
+        return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/DigitalActivity/GetDigitalCardLogDetails/?' + 'partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+    }
+
     getCardLogActivityDetailsList(cardId: string, contactId: string, partnerTypeId: string, dateParameter: string, tenant: number) {
 
 
         return this._http.get(this._apiUrl + '/getcardlogactivitydetailslist/?' + 'cardId=' + cardId + '&contactId=' + contactId + '&partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+            pmresponse.Result = response;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+    }
+
+    getDigitalCardLogActivityDetailsList(cardId: string, contactId: string, partnerTypeId: string, dateParameter: string, tenant: number) {
+        return this._http.get(ServiceHelper.GetLogitudeURL() + 'api/DigitalActivity/getcardlogactivitydetailslist/?' + 'cardId=' + cardId + '&contactId=' + contactId + '&partnerTypeId=' + partnerTypeId + '&dateParameter=' + dateParameter + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
             pmresponse.Result = response;

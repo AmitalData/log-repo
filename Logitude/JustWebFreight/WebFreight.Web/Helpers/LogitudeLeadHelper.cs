@@ -123,7 +123,9 @@ namespace WebFreight.Web.Helpers
                         CASSCode = leadPM.CASSCode,
                         LeadSource = leadPM.LeadSource,
                         VatNumber = leadPM.VatNumber,
-
+                        ClientId = leadPM.ClientId,
+                        LeadOrigin = leadPM.LeadOrigin,
+                        Campaign = leadPM.Campaign,
                     };
 
                     logitudeLeadService.Create(LogitudeLeadpm);
@@ -132,7 +134,6 @@ namespace WebFreight.Web.Helpers
             }
             return null;
         }
-
 
         public void AddCommunicationLog(LogitudeLeadPM leadPM , string subject)
         {

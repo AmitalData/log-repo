@@ -23,6 +23,8 @@ import {HtmlEditorService} from '../../../../Common/Services/DocumentServices/Ht
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {MessageWindow} from '../../../../Controls/Windows/MessageWindow';
 import {ReportsTemplatePMExtendedService} from '../../../../Common/Services/ExtendedPMs/ReportsTemplatePMExtendedService';
+import { ReportsTemplatePMService } from '../../../../Common/Services/StandardPMs/ReportsTemplatePMService';
+import { ReportsTemplatePM } from '../../../../Common/EntityPMs/ReportsTemplatePM';
 declare var insertAtSubject, StringToBase64, querySelection, resultToUnitArray, Base64ToString: any;
 
 @Component({
@@ -74,7 +76,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     CCId: string;
     BCCId: string;
     TOId: string;
-
+    ReportTemplatePM: ReportsTemplatePM;
 
 
     CC: string;
@@ -97,7 +99,8 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
     RequsetPageName: string;
     public AutomationId: string;
-
+    HideEntityDataFields: boolean = false;
+    IsFromScheduler: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public _documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService, private cd: ChangeDetectorRef, public _htmlEditorService: HtmlEditorService) {
         if (this.documentTypeTemplatePMService == null) {
@@ -121,6 +124,9 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
 
     DontShowToField: boolean = false;
+    DontShowBCCField: boolean = false;
+
+    
     public DataViewModel: any;
     SetWindowArgs(args: any) {
 
@@ -136,9 +142,11 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         this.ChildEntityId = args.ChildEntityId ? args.ChildEntityId : "";
         this.ChildObjectTableId = args.ChildObjectTableId ? args.ChildObjectTableId : "";
         this.DontShowToField = args.DontShowToField;
+        this.DontShowBCCField = args.DontShowBCCField;
+
         this.RequsetPageName = args.RequsetPageName;
         this.AutomationId = args.AutomationId;
-
+        this.ReportTemplatePM = args.ReportTemplatePM;
         if (args.ObjectType) this.ObjectType = args.ObjectType;
        
         this.TemplatePMLists = args.DocumentTypeTemplatePMLists;
@@ -162,7 +170,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
 
 
-
+        this.IsFromScheduler = args.IsFromScheduler;        
         if (this.TemplateId) this.Run(args);
 
     }
@@ -171,7 +179,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
 
 
-    IsShowDefultAttachment: boolean = false;
+    IsShowAttachmentLinks: boolean = false;
 
 
     Run(args: any) {
@@ -180,7 +188,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
         this.froalaEditorSetting.PageType = "HtmlDocumentPreview";
 
-        this.froalaEditorSetting.Id = Guid.newGuid();
+        this.froalaEditorSetting.Id = Guid.newGuid();       
         this.SubjectId = Guid.newGuid();
         this.FromId = Guid.newGuid();
         this.ReplyToId = Guid.newGuid();
@@ -237,7 +245,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             else if (this.PageType == "ReportTemplate") {
                 this.IsShowAreaDataField = true;
                 this.IsShowUploadAndDownloadButtons = true;
-                if (args.ReportComponentArea == "Maintenance") {
+                if (args.ReportComponentArea == "Maintenance" || args.ReportComponentArea == "Scheduler") {
                     this.IsShowButtonSaveAs = false;
                 }
                 this.froalaEditorSetting.Height = window.innerHeight - 310;
@@ -250,7 +258,8 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
         this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading...");
 
-
+        this.SetVisiablity();
+       
 
         if (this.IsPreviewMode) {
             this.LoadHtmlTemplateData();
@@ -262,28 +271,11 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             }
             else {
 
-                if (this.PageType == "ReportTemplate") {
-
-                    this.template = args.ReportTemplatePM;
-                    if (this.template) {
-                        this.FillProp();
-                        if (args.IsNewEntity) {
-                            if (this.template.TemplateData && this.template.TemplateData.length > 0) {
-                                var htmlBody = Base64ToString(this.template.TemplateData);
-
-                                this.froalaEditorSetting.HtmlString = htmlBody;
-                                if (this.froalaEditorSetting.froalaEditorComponent) {
-                                    this.froalaEditorSetting.froalaEditorComponent.SetHtml(htmlBody);
-                                    this.ReloadFroalaEditor();
-                                }
-                            }
-
-                            this.CurrentSession.CurrentWindow.StopBusyIndicator();
-
-                        } else this.LoadReportTemplateDate();               
-
-                    } else this.CurrentSession.CurrentWindow.StopBusyIndicator();
-                  
+                if (this.PageType == "ReportTemplate" && !this.IsFromScheduler) {
+                    this.LoadReportTemplate(args);                 
+                }
+                else if (this.PageType == "ReportTemplate" && this.IsFromScheduler) {
+                    this.LoadReportTemplatePM(args);
                 }
 
                 else  if (this.PageType == "Signature") {
@@ -324,8 +316,62 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
         }
     }
+    private LoadReportTemplate(args: any) {
+        this.template = args.ReportTemplatePM;
+        if (!this.template) {
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            return;
+        }
+
+        this.FillProp();
+        this.SetVisiablity();
+        if (!args.IsNewEntity) {
+            this.LoadReportTemplateDate();
+            return;
+        }
+
+        if (!this.template.TemplateData || this.template.TemplateData.length == 0) {
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            return;
+        }
+
+        let htmlBody = Base64ToString(this.template.TemplateData);
+
+        this.froalaEditorSetting.HtmlString = htmlBody;
+        if (this.froalaEditorSetting.froalaEditorComponent) {
+            this.froalaEditorSetting.froalaEditorComponent.SetHtml(htmlBody);
+            this.ReloadFroalaEditor();
+        }
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+            
+           
+    }
+
+    SetVisiablity() {
+        let objectTableName = this.GetObjectTableName();
+
+        if (this.RequsetPageName == "Signature" || this.RequsetPageName == "BIReport" || objectTableName == "BIReport") {
+            this.HideEntityDataFields = true;
+            this.IsShowAreaDataField = false;
+            this.IsShowAttachmentLinks = false;
+        }
+        if(this.IsFromScheduler){
+            this.HideEntityDataFields = true;
+        }
 
 
+        if ((this.RequsetPageName == "BIReport" || this.RequsetPageName == "Scheduler") && this.template && !this.template.EntityId) {
+            this.IsShowSaveAsButtonOnly = true;
+        }
+
+    }
+
+    GetObjectTableName() {
+        if (AppTool.IsNullOrEmpty(this.ObjectTableId)) return null;
+        let objectTable = window.ObjectTables.filter(f => f.Id == this.ObjectTableId)[0];
+        return objectTable ? objectTable.Name : null;
+
+    }
 
     LoadReportTemplateDate() {
 
@@ -393,11 +439,9 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
             }
 
-
-
             if (this.template.TemplateType == "M") {
                 if (this.PageType == "Send" || this.PageType == "ManageTemplate" || this.PageType =="Maintenance") {
-                    this.IsShowDefultAttachment = true;
+                    this.IsShowAttachmentLinks = true;
                 }
             }
 
@@ -429,7 +473,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
             } else htmlBody = "";
 
             this.froalaEditorSetting.HtmlString = htmlBody;
-
+            this.SetVisiablity();
 
       
 
@@ -572,23 +616,29 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         reportsTemplatePMExtendedService.SaveReportTemplateMessageBody(this.template).subscribe((res:any) => {
 
             var pmResponse: ServiceResponse = res;
+            if (pmResponse.HasError && pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
+                this.HandleSaveReportTemplateMessageBodyException(pmResponse.ErrorsArray[0]);
+                return;
+            }
+
             if (!pmResponse.HasError) {
                 var myResult = pmResponse.Result;
                 this.template = myResult;
-
-            } else {
-
-                if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
-                    this.ShowMessage(pmResponse.ErrorsArray[0], "Logitude Message");
-                }
-                this.CurrentSession.CurrentWindow.StopBusyIndicator();
             }
 
+            if (!pmResponse.HasError && this.IsFromScheduler) {
+                this.DataViewModel.EditMessageTemplateListFromPM(this.template);
+            }
             this.CurrentSession.CurrentWindow.StopBusyIndicator();
             this.CloseButtonClicked();
         });
 
 
+    }
+    HandleSaveReportTemplateMessageBodyException(error: string) {
+        this.ShowMessage(error, "Logitude Message");
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        this.CloseButtonClicked();
     }
 
 
@@ -858,7 +908,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
 
 
     }
-    
+
 
     ViewDataField(type: string,  objectTypeField:string , tableId:string) {
 
@@ -867,8 +917,8 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         windowArgs.ObjectTypeField = objectTypeField;
         windowArgs.InSertDataFieldType = type;
         windowArgs.DocumentTypeCode = this.DocumentTypeCode;
-        
-        if (this.PageType == "Signature") windowArgs.ObjectTableId = null;
+        windowArgs.ReportTemplatePM = this.ReportTemplatePM;
+        if (this.HideEntityDataFields) windowArgs.ObjectTableId = null;
         this.InSertDataFieldType = type;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 500;
@@ -1100,7 +1150,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     CheckIsValidEmail(email: string) {
 
         var IsOk = true;
-        var EMAIL_REGEXP1 = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+        var EMAIL_REGEXP1 = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,9}$/;
         var EMAIL_REGEXP2 = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
         if (email) {
@@ -1123,7 +1173,7 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
     CheckIsValidEmails(mailsList: string) {
 
         var IsOk = true;
-        var EMAIL_REGEXP1 = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/;
+        var EMAIL_REGEXP1 = /^[A-Za-z0-9'._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
         var EMAIL_REGEXP2 = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if (mailsList) {
             var emails = mailsList.split(';');
@@ -1194,6 +1244,17 @@ export class HtmlDocumentPreviewComponent implements OnInit, AfterViewInit {
         logWindow.Height = 500;
         logWindow.WindowArgs = windowArgs;
         logWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/DocumentDefaultExternalAttachmentsComponent");
+    }
+
+    LoadReportTemplatePM(args: any) {
+        if (!args.TemplateId) return;
+        this.CurrentSession.CurrentWindow.StartBusyIndicator("Loading ...");
+        new ReportsTemplatePMService().get(args.TemplateId).subscribe((response: ServiceResponse) => {
+            if (response.HasError || !response.Result) return;
+            args.ReportTemplatePM = response.Result;
+            this.LoadReportTemplate(args);
+            this.CurrentSession.CurrentWindow.StopBusyIndicator();
+        });
     }
 
 }

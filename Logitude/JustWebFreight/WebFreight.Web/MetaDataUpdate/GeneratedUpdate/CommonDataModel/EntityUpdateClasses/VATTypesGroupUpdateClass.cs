@@ -74,6 +74,12 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
 
 //using Amital.QuoteOPM.BL.CLoseTable;
 using Amital.QuoteOPM.Data.Repsitories;
@@ -137,7 +143,116 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	
 	    public void AddObjectFields(Dictionary<string, ObjectField> objectFields, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectFieldRepository ObjectFieldsRepository,TextCodeRepository TextCodeRepository, List<ObjectField> addedFields, List<TextCode> addedTextCodes)
 	    {
-	         	    }
+	         
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "GroupVATTypeId",
+					  						ObjectTableName =  "VATTypesGroup",
+					  						FieldsDataType =  "Text",
+					  						PMPropertyPath =  "GroupVATTypeId",
+					  						ListPropertyPath =  "GroupVATTypeId",
+					  						FullFieldLable =  "GroupVATTypeId",
+					  						DefaultText =  "GroupVATTypeId",
+					  						FullLocalDefaultText =  "GroupVATTypeId",
+					  						ListFieldLable =  "GroupVATTypeIdListLable",
+					  						ListLableDefaultText =  "GroupVATTypeId",
+					  						ListLocalDefaultText =  "GroupVATTypeId",
+					  						IsRequired =  false,
+					  						DisplayInList =  false,
+					  						NoMetaDataField =  true,
+					  						MaxLength =  15,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "VatType",
+					  						NavigationPropertyName =  "GroupVATType",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SingleVATTypeId",
+					  						ObjectTableName =  "VATTypesGroup",
+					  						FieldsDataType =  "Text",
+					  						PMPropertyPath =  "SingleVATTypeId",
+					  						ListPropertyPath =  "SingleVATTypeId",
+					  						FullFieldLable =  "SingleVATTypeId",
+					  						DefaultText =  "SingleVATTypeId",
+					  						FullLocalDefaultText =  "SingleVATTypeId",
+					  						ListFieldLable =  "SingleVATTypeIdListLable",
+					  						ListLableDefaultText =  "SingleVATTypeId",
+					  						ListLocalDefaultText =  "SingleVATTypeId",
+					  						IsRequired =  false,
+					  						DisplayInList =  false,
+					  						NoMetaDataField =  true,
+					  						MaxLength =  15,
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "VatType",
+					  						NavigationPropertyName =  "SingleVATType",
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "VATTypesGroup",
+					  						FieldsDataType =  "Integer",
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						ListLocalDefaultText =  "Tenant",
+					  						IsRequired =  false,
+					  						DisplayInList =  false,
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SingleVATTypeName",
+					  						FieldsDataType =  "Text",
+					  						PMPropertyPath =  "SingleVATTypeName",
+					  						ListPropertyPath =  "SingleVATTypeName",
+					  						FullFieldLable =  "SingleVATTypeName",
+					  						DefaultText =  "SingleVATTypeName",
+					  						FullLocalDefaultText =  "SingleVATTypeName",
+					  						ListFieldLable =  "SingleVATTypeNameListLable",
+					  						ListLableDefaultText =  "SingleVATTypeName",
+					  						ListLocalDefaultText =  "SingleVATTypeName",
+					  						ObjectTableName =  "VATTypesGroup",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "SingleVATTypePercentage",
+					  						FieldsDataType =  "Double",
+					  						PMPropertyPath =  "SingleVATTypePercentage",
+					  						ListPropertyPath =  "SingleVATTypePercentage",
+					  						FullFieldLable =  "SingleVATTypePercentage",
+					  						DefaultText =  "SingleVATTypePercentage",
+					  						FullLocalDefaultText =  "SingleVATTypePercentage",
+					  						ListFieldLable =  "SingleVATTypePercentageListLable",
+					  						ListLableDefaultText =  "SingleVATTypePercentage",
+					  						ListLocalDefaultText =  "SingleVATTypePercentage",
+					  						ObjectTableName =  "VATTypesGroup",
+					  						NoMetaDataField =  true,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {    

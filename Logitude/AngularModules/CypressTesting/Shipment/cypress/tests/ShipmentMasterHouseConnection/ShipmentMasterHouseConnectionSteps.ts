@@ -50,11 +50,12 @@ When("create house with {string} as Shipper", (Shipper) => {
 Then("the house should create successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200).then((interception) => {
         ShipmentContext.HouseNumber = interception.response.body.House;
-    })
+    })    
 });
 
 Then("the house should connect successfully", () => {
     Actions.CheckBusyIndicator()
+    Actions.ViewAttachedHouse()
     Actions.ValidateCheckHouseCheckBox();
 });
 //#endregion
@@ -66,7 +67,7 @@ When("the user goes to the main carriage leg of the created house", () => {
 });
 
 Then("all fields of the main carriage leg should be dim", () => {
-    Actions.AssertMainCarriageLegFieldsDisableForConnectedHouse()
+    Actions.AssertMainCarriageLegFieldsDisable()
 });
 //#endregion
 
@@ -83,6 +84,7 @@ When("disconnect shipment", () => {
 Then("the shipment should disconnect successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200)
     Actions.CheckBusyIndicator()
+    Actions.ViewAttachedHouse()
 });
 //#endregion
 
@@ -118,6 +120,7 @@ When("connect the house shipment", () => {
 
 Then("the shipment should connect successfully", () => {
     BaseAssertion.AssertStatusCode(RequestAliases.ShipmentRequest, 200);
+    Actions.ViewAttachedHouse()
     Actions.CheckBusyIndicator()
 });
 //#endregion

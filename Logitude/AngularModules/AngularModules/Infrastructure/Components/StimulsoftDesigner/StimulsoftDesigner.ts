@@ -26,6 +26,8 @@ export class StimulsoftDesigner {
     private windowArgs: any;
     public TemplateId: string;
     public ReportTemplateId: string = "";
+    public ReportsTemplateId: string = "";
+    public TemplateType: string = "";
     ProcessType: string;
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private _ngZone: NgZone) {
@@ -56,9 +58,11 @@ export class StimulsoftDesigner {
         this.windowArgs = args;
         this.TemplateId = !AppTool.IsNullOrEmpty(this.windowArgs.TemplateId) ? this.windowArgs.TemplateId:"";
         this.ReportTemplateId = !AppTool.IsNullOrEmpty(this.windowArgs.ReportTemplateId) ? this.windowArgs.ReportTemplateId : "";
+        this.ReportsTemplateId = !AppTool.IsNullOrEmpty(this.windowArgs.ReportsTemplateId) ? this.windowArgs.ReportsTemplateId : "";
+        this.TemplateType = !AppTool.IsNullOrEmpty(this.windowArgs.TemplateType) ? this.windowArgs.TemplateType : "";
         this.ProcessType = !AppTool.IsNullOrEmpty(this.windowArgs.ProcessType) ? this.windowArgs.ProcessType : "";
 
-        this.URI = AppTool.GetLogitudeURL() + "/Stimulsoft/Designer.aspx?token=" + SessionInfo.Token + "&tenant=" + SessionInfo.LoggedUserTenant + "&templateId=" + this.TemplateId + "&sessionId=" + sessionId + "&reportTemplateId=" + this.ReportTemplateId + "&processType=" + this.ProcessType;
+        this.URI = AppTool.GetLogitudeURL() + "/Stimulsoft/Designer.aspx?token=" + SessionInfo.Token + "&tenant=" + SessionInfo.LoggedUserTenant + "&templateId=" + this.TemplateId + "&sessionId=" + sessionId + "&reportTemplateId=" + this.ReportTemplateId + "&processType=" + this.ProcessType + "&reportsTemplateId=" + this.ReportsTemplateId + "&templateType=" + this.TemplateType;
 
 
       //var observable = this.signalRChannelService.subscribeChannel("User" + SessionInfo.LoggedUserId + SessionInfo.LoggedUserTenant + sessionId).subscribe(

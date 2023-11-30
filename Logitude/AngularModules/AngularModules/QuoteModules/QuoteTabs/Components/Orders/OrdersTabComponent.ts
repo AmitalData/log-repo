@@ -156,19 +156,26 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
         this.UIProperties.SetVisibility("DimFactor", this.ObjectTableName, isDimFactorVisibile);
     }
     private SetUIProperties_EntityClosed() {
-        this.EntityPM.UIProperties.SetEnabled("IncotermId", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.EntityPM.UIProperties.SetEnabled("MoveTypeId", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.EntityPM.UIProperties.SetEnabled("ExpirationDays", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.EntityPM.UIProperties.SetEnabled("StartDate", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.EntityPM.UIProperties.SetEnabled("ExpirationDate", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.EntityPM.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.EntityPM.UIProperties.SetEnabled("GrossWeightUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.EntityPM.UIProperties.SetEnabled("ChargeableWeightUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.EntityPM.UIProperties.SetEnabled("Ratio", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.EntityPM.UIProperties.SetEnabled("DimFactor", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.EntityPM.UIProperties.SetEnabled("TransitTime", this.ObjectTableName, this.IsQuoteEditEnabled);
-        this.EntityPM.UIProperties.SetEnabled("DepartureFrequency", this.ObjectTableName, this.IsQuoteEditEnabled);
-
+        this.UIProperties.SetEnabled("IncotermId", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("MoveTypeId", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("ExpirationDays", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("StartDate", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("ExpirationDate", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("VolumeUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("GrossWeightUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("ChargeableWeightUnitCode", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("Ratio", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("DimFactor", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("TransitTime", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("DepartureFrequency", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("SpecialServicesTypeId", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("IncludeInsurance", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("IsStackable", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("IncludeImportDutyCharges", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("InsuranceValue", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("ValueOfGoodsCurrencyId", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("ValueOfGoodsCurrencyId", this.ObjectTableName, this.IsQuoteEditEnabled);
+        this.UIProperties.SetEnabled("ValueOfGoods", this.ObjectTableName, this.IsQuoteEditEnabled);
         ServiceLocator.RulesValidator.ApplyAllConditionalBlockFieldRules(this.EntityPM, this.ObjectTableName);
     }
     private SetUIProperties_AutomaticallyClosed() {
@@ -196,7 +203,7 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
             this.DimensionsDependencyProperty1IsList = false;
         }
 
-        this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
+        //this.UIProperties.SetEnabled("DimensionsUnitCode", this.ObjectTableName, isFieldEnabled);
     }
     private InitalizeFeatureOfClosedAutomatically() {
         this.IsQuoteClosedAutomaticallyEnabled = FeatureLocator.HasFeaturePermession("Quote", "QuoteClosedAutomatically");
@@ -218,6 +225,20 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
 
         else {
             this.MeasurmentsButtonToolTip = TextCodeTranslator.Translate("Quote.B.Details.HideMeasurmentsSettings");
+        }
+    }
+
+    get ValueOfGoods() { return this.EntityPM.ValueOfGoods; }
+    set ValueOfGoods(newValue: number) {
+        if (this.EntityPM.ValueOfGoods != newValue) {
+            this.EntityPM.ValueOfGoods = newValue;
+        }
+    }
+
+    get ValueOfGoodsCurrencyId() { return this.EntityPM.GrossWeightUnitCode; }
+    set ValueOfGoodsCurrencyId(newValue: string) {
+        if (this.EntityPM.ValueOfGoodsCurrencyId != newValue) {
+            this.EntityPM.ValueOfGoodsCurrencyId = newValue;
         }
     }
 
@@ -468,10 +489,48 @@ export class OrdersTabComponent extends BaseComponent implements OnInit, AfterVi
         }
     }
 
+    get SpecialServicesTypeId() { return this.EntityPM.SpecialServicesTypeId; }
+    set SpecialServicesTypeId(newValue: string) {
+        if (this.EntityPM.SpecialServicesTypeId != newValue) {
+            this.EntityPM.SpecialServicesTypeId = newValue;
+        }
+    }
+
+    get IncludeInsurance() { return this.EntityPM.IncludeInsurance; }
+    set IncludeInsurance(newValue: boolean) {
+        if (this.EntityPM.IncludeInsurance != newValue) {
+            this.EntityPM.IncludeInsurance = newValue;
+        }
+    }
+
+    get IsStackable() { return this.EntityPM.IsStackable; }
+    set IsStackable(newValue: boolean) {
+        if (this.EntityPM.IsStackable != newValue) {
+            this.EntityPM.IsStackable = newValue;
+        }
+    }
+
+    get IncludeImportDutyCharges() { return this.EntityPM.IncludeImportDutyCharges; }
+    set IncludeImportDutyCharges(newValue: boolean) {
+        if (this.EntityPM.IncludeImportDutyCharges != newValue) {
+            this.EntityPM.IncludeImportDutyCharges = newValue;
+        }
+    }
+
+    get InsuranceValue() { return this.EntityPM.InsuranceValue; }
+    set InsuranceValue(newValue: number) {
+        if (this.EntityPM.InsuranceValue != newValue) {
+            this.EntityPM.InsuranceValue = newValue;
+        }
+    }
+
     get TransitTime() { return this.EntityPM.TransitTime; }
     set TransitTime(newValue: string) {
         if (this.EntityPM.TransitTime != newValue) {
             this.EntityPM.TransitTime = newValue;
         }
     }
+
+
+
 }

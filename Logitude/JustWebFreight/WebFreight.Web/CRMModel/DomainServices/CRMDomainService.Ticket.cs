@@ -174,7 +174,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             TicketListQueryService listService = new TicketListQueryService(crmContext);
             TicketList myResult = listService.GetSingle(id);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Ticket", tenant, new List<TicketList> { myResult }.Cast<object>().ToList());
 
             return myResult;
@@ -198,7 +198,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             TicketListQueryService listService = new TicketListQueryService(crmContext);
             List<TicketList> myResult = listService.GetList(tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myResult.Cast<object>().ToList());
 
             return myResult;
@@ -224,7 +224,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
 
             List<TicketList> myResult = listService.GetList(queryOperations, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myResult.Cast<object>().ToList());
 
             return myResult.AsQueryable();
@@ -243,7 +243,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
 
             List<TicketList> myResult = listService.GetList(queryOperations, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myResult.Cast<object>().ToList());
 
             return myResult;
@@ -499,7 +499,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             TicketListQueryService queryService = new TicketListQueryService(crmContext);
             IQueryable<TicketList> myResult = queryService.GetRecentEntityLists(ownerId, employeeGroupId , tenant, contact.Id, objectTable.Id).AsQueryable();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }
@@ -617,7 +617,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             TicketListQueryService listService = new TicketListQueryService(crmContext);
             List<TicketList> myResult = listService.GetTicketListByShipmentIdList(shipmentId,tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Ticket", tenant, myResult.Cast<object>().ToList());
 
             return myResult;

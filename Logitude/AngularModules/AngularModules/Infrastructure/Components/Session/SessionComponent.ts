@@ -7,8 +7,8 @@ import {ListComponent} from '../ListComponent/ListComponent';
 import {SessionTabItem} from '../HomeComponent/HomeComponent';
 import {TextCodeTranslator} from '../../Utilities/TextCodeTranslator';
 import {LogitudeGridHelper} from '../../Utilities/LogitudeGridHelper';
-import {PubSubFiltersChangeEventService} from '../../Utilities/events/ApiFiltersChangeEvent'; 
-import {MainMenuComponent} from '../MainMenuComponent/MainMenuComponent'; 
+import {PubSubFiltersChangeEventService} from '../../Utilities/events/ApiFiltersChangeEvent';
+import {MainMenuComponent} from '../MainMenuComponent/MainMenuComponent';
 import {AmitalGatewayUtil} from '../../Utilities/AmitalGatewayUtil';
 import { Subscription, TeardownLogic } from 'rxjs';//itzik
 import {EntityResourceService} from '../../Services/EntityResourceService';
@@ -16,18 +16,19 @@ import { LogitudeHotKeysComponent } from 'Controls/LogitudeHotkeysComponent/Logi
 
 @Component({
     selector: 'SessionComponent',
-    
+
     templateUrl: "./SessionComponent.html",
     providers: [PubSubFiltersChangeEventService],
 })
 
 export class SessionComponent {
     public SessionIndex: number;
-    public SessionTabItem: SessionTabItem; 
-    public Sessionkey: string;    
+    public SessionTabItem: SessionTabItem;
+    public Sessionkey: string;
     public Imgs: any[];
     public LogitudeGridHelper: LogitudeGridHelper;
     public CopiedCell: any;
+    public TransferAccountId: any;
     public ComponentRef: ComponentRef<SessionComponent>
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     @Output() SessionEvent: EventEmitter<any> = new EventEmitter();
@@ -35,7 +36,7 @@ export class SessionComponent {
     @Output() SessionSeleced: EventEmitter<boolean> = new EventEmitter();
     public MainMenuComponent: MainMenuComponent;
     entityResourceService: EntityResourceService = new EntityResourceService();
-    
+
     constructor(private temp: PubSubFiltersChangeEventService, public ChangeDetectorRef: ChangeDetectorRef) {
         this.PubSubFiltersChangeEventService = temp;
         this.SessionWindowIndex = null;
@@ -49,7 +50,7 @@ export class SessionComponent {
 
         window.onresize = this.onWindowResized.bind(this);
         //window.onmouseup = this.onMouseUp.bind(this);
-        window.onmousedown = this.onMouseDown.bind(this); 
+        window.onmousedown = this.onMouseDown.bind(this);
     }
 
     private iSessionLocation: LocationDirective;
@@ -80,6 +81,34 @@ export class SessionComponent {
         }
     }
 
+    private iSessionWorkflowVersionLocation: LocationDirective;
+    public get SessionWorkflowVersionLocation() { return this.iSessionWorkflowVersionLocation; }
+    public set SessionWorkflowVersionLocation(value: LocationDirective) {
+        if (this.iSessionWorkflowVersionLocation != value) {
+            if (value) {
+                this.iSessionWorkflowVersionLocation = value;
+            }
+
+            else if (this.isDestroingSession) {
+                this.iSessionWorkflowVersionLocation = value;
+            }
+        }
+    }
+
+    private iSessionWorkflowInstanceLocation: LocationDirective;
+    public get SessionWorkflowInstanceLocation() { return this.iSessionWorkflowInstanceLocation; }
+    public set SessionWorkflowInstanceLocation(value: LocationDirective) {
+        if (this.iSessionWorkflowInstanceLocation != value) {
+            if (value) {
+                this.iSessionWorkflowInstanceLocation = value;
+            }
+
+            else if (this.isDestroingSession) {
+                this.iSessionWorkflowInstanceLocation = value;
+            }
+        }
+    }
+
     OnSessionMouseUp($event) {
         this.MouseUpEvent.emit(event);
     }
@@ -104,7 +133,7 @@ export class SessionComponent {
                 }
 
                 this.SessionInitialize.emit(true);
-                
+
                 if (!SessionLocator.IsNewSignupTenant) {
                     this.entityResourceService.getEntityResourceByTableName("General", 0).subscribe((response:any) => {
                     SessionLocator.DynamicLoader.Load("./Infrastructure/Components/MainMenu/MainMenuComponent", this.SessionLocation.viewContainerRef).then(cmpRef => {
@@ -209,7 +238,7 @@ export class SessionComponent {
 
     @Output() LostFocusEvent: EventEmitter<any> = new EventEmitter();
     public IsShowErrorWindow: boolean = false;
-    
+
     private _Subscription: Subscription = new Subscription();//itzik///https://stackoverflow.com/a/42274637
     public SubscriptionAdd(teardown: TeardownLogic) {
         //    this.someService.change.subscribe(() => {
@@ -224,11 +253,11 @@ export class SessionComponent {
 
     private onWindowResized(event: UIEvent): void {
         this.WindowResizeEvent.emit(event);
-    }   
+    }
     private onMouseDown(event: UIEvent): void {
         this.MouseDownEvent.emit(event);
     }
-  
+
     private onMouseUp(event: UIEvent): void {
         this.MouseUpEvent.emit(event);
     }
@@ -326,7 +355,7 @@ export class SessionComponent {
 
         this.MenuReferences = [];
     }
-    
+
     // Windows
     public Windows: Array<LogitudeWindow>;
     public CurrentWindow: LogitudeWindow = null;
@@ -386,6 +415,11 @@ export class SessionComponent {
     public CloseCurrentWindowEmit(emit: any) {
         if (this.CurrentWindow != null) {
             this.CurrentWindow.Close(emit);
+        }
+    }
+    public CloseCurrentWindowData(data: any) {
+        if (this.CurrentWindow != null) {
+            this.CurrentWindow.Close(data);
         }
     }
     public DestroyWindows() {
@@ -500,7 +534,7 @@ export class SessionComponent {
         this.ListControls = new Array<ListComponent>();
         this.CurrentListComponent = null;;
 
-        
+
     }
     public RemoveListComponent(element: ListComponent) {
         var newCurrentListComponent: ListComponent = null;
@@ -565,7 +599,7 @@ export class SessionComponent {
         this.logitudeHotkeysComponents.push(element);
         this.CurrentLogitudeHotKeysComponent = element;
     }
-   
+
     public RemoveLogitudeHotKeysComponent(element: LogitudeHotKeysComponent) {
         var newCurrentLogitudeHotKeysComponent: LogitudeHotKeysComponent = null;
         if (this.logitudeHotkeysComponents != null) {
@@ -589,7 +623,7 @@ export class SessionComponent {
 
         this.CurrentLogitudeHotKeysComponent = newCurrentLogitudeHotKeysComponent;
     }
-    
+
     public DestroyLogitudeHotKeysControls() {
         if (this.logitudeHotkeysComponents == null) {
             this.logitudeHotkeysComponents = new Array<LogitudeHotKeysComponent>();
@@ -621,6 +655,8 @@ export class SessionComponent {
 
         this.SessionLocation = null;
         this.SessionMenuLocation = null;
+        this.SessionWorkflowVersionLocation = null;
+        this.SessionWorkflowInstanceLocation = null;
 
         if (this.BusyIndicatorTimer) {
             clearTimeout(this.BusyIndicatorTimer);
@@ -641,7 +677,7 @@ export class SessionComponent {
         } else {
             this.ChangeDetectorRef.detach();
         }
-        
+
     }
     StartChangeDetection() {
         this.ChangeDetectorRef.reattach();

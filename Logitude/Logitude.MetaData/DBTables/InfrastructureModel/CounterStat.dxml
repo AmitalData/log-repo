@@ -37,9 +37,20 @@
     <Constraints
       Nullable="false" />
   </Column>
+	<Column
+		Name="BranchCounterCode"
+		Type="varchar"
+		Size="5">
+		<Constraints
+		  Nullable="true" />
+	</Column>
   <Relation
     ForeignKeyColumn="CounterId"
     ReferencedTable="Counters"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Index
+	Columns="CounterId,Tenant" />
+  <Index
+	Columns="CounterId,Prefix,Tenant" />
 </Table>

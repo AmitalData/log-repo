@@ -85,6 +85,11 @@ export class QuoteComputedFieldPM {
     public set EstimatedReceivablesInSales(newValue: number) { if (this.estimatedReceivablesInSales != newValue) { this.estimatedReceivablesInSales = newValue; this.MarkAsDirty("EstimatedReceivablesInSales"); } }
        
 	 
+    private markupPercentage: number;
+    public get MarkupPercentage() { return this.markupPercentage; }
+    public set MarkupPercentage(newValue: number) { if (this.markupPercentage != newValue) { this.markupPercentage = newValue; this.MarkAsDirty("MarkupPercentage"); } }
+       
+	 
 
     public OldEntityPM: QuoteComputedFieldPM;
 		

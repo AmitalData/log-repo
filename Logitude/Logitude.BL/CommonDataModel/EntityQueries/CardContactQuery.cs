@@ -180,6 +180,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     PartnerTypeName = card.PartnerType == null ? null : card.PartnerType.Name,
                     SalesmanUserId = card.Customer != null ? card.Customer.SalesmanUserId : "",
                     AccountManagerUserId = card.Customer != null ? card.Customer.AccountManagerUserId : "",
+                    TeamId = card.Customer != null ? card.Customer.TeamId : "",
                     Website = card.Website,
                     InvoiceCurrencyId = card.InvoiceCurrencyId,
                     VatTypeId = card.VatTypeId,
@@ -190,8 +191,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     Swift = card.Swift,
                     IBANNumber = card.IBANNumber,
                     InvitationDate = card.InvitationDate,
+                    CargoTrackingInvitationDate = card.CargoTrackingInvitationDate,
                     SharedLogisticsInvitationStatusCode = card.SharedLogisticsInvitationStatusCode,
                     SharedLogisticsInvitationStatusName = card.SharedLogisticsInvitationStatus != null ? card.SharedLogisticsInvitationStatus.Name : null,
+                    CargoTrackingInvitationStatusCode = card.CargoTrackingInvitationStatusCode,
+                    CargoTrackingInvitationStatusName = card.CargoTrackingInvitationStatus != null ? card.CargoTrackingInvitationStatus.Name : null,
                     LastLoginDate = card.LastLoginDate,
                     ContactId = contactId,
                     CityName = card.CityName,
@@ -234,6 +238,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
 
             return myResult;
+        }
+
+        public List<string> GetContactsIdsByCardId(string cardId, int tenant)
+        {
+            List<string> cardContactsIds = (from a in repository.context.CardContacts
+                                      where a.CardId == cardId && a.Tenant == tenant
+                                      select a.ContactId).ToList();
+            return cardContactsIds;
         }
     }
 }

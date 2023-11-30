@@ -45,7 +45,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 }
                 if (!ptenant.HasValue)
                 {
-                    throw new Exception("unable to find tenantFromPage4Tester ");
+                    throw new ApplicationException("unable to find tenantFromPage4Tester ");
                 }
                 int tenant = ptenant.Value;
 
@@ -134,12 +134,12 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (MyCSVFlatFileLoadResult.ErrorRowList.Count > 0)
                         {
                             string text_1 = MyCSVFlatFileLoadResult.ErrorRowList.FirstOrDefault();
-                            throw new Exception($"{text_1}");
+                            throw new ApplicationException($"{text_1}");
                         }
                         //    if (MyFlatFileLoadResult.ExceptionVendorList.Count > 0)
                         //    {
                         //        string text = MyFlatFileLoadResult.ExceptionVendorList.FirstOrDefault();
-                        //        throw new Exception($"{text}");
+                        //        throw new ApplicationException($"{text}");
                         //    }
                         scope.Complete();
 
@@ -150,9 +150,10 @@ namespace Logitude.Accounting.BL.CoreBL
             }
             catch (Exception e)
             {
-                string text = TranslateTextsClassTranslate("JournalsCSV.O.FailedWhilePerforming", 0, useLocal);
+                //string text = TranslateTextsClassTranslate("JournalsCSV.O.FailedWhilePerforming", 0, useLocal);
 
-                throw new Exception($"{text} ", e);
+                //throw new ApplicationException($"{text} ", e);
+                throw;
             }
 
 
@@ -191,9 +192,11 @@ namespace Logitude.Accounting.BL.CoreBL
             bool finished = false;
             var JournalSrcLines = new List<JournalSrcLineDTO>();
             var lines = FileContent.Split(new string[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries).ToList();
+            int currentLine = 0;
 
             foreach (string rawLine in lines)
             {
+                currentLine++;
                 if (rawLine.StartsWith("//"))//edi
                 {
                     if (rawLine.StartsWith("//Tenant="))//for tester 
@@ -218,16 +221,16 @@ namespace Logitude.Accounting.BL.CoreBL
                         string text_3 = TranslateTextsClassTranslate("JournalsCSV.O.AccountLine", 0, useLocal);
                         string text_44 = TranslateTextsClassTranslate("JournalsCSV.O.AppearsBefore", 0, useLocal);
                         string text_2 = TranslateTextsClassTranslate("JournalsCSV.O.HeaderType", 0, useLocal);
-                        throw new Exception($"{text_3} {rowtype} {text_44} {text_2} {Opening_LineDTO_JCSV.RowType} ");
+                        throw new ApplicationException($"{text_3} {rowtype} {text_44} {text_2} {Opening_LineDTO_JCSV.RowType} ");
                     }
-                    JournalSrcLineDTO taxLine = JournalSrcLineDTO.Create(rawLine);
+                    JournalSrcLineDTO taxLine = JournalSrcLineDTO.Create(rawLine, currentLine);
                     JournalSrcLines.Add(taxLine);
 
                 }
                 else
                 {
                     string text = TranslateTextsClassTranslate("JournalsCSV.O.NotValidRowType", 0, useLocal);
-                    throw new Exception($"{text}  {rawLine}");
+                    throw new ApplicationException($"{text}  {rawLine}");
                 }
                 if (finished)
                 {
@@ -238,14 +241,15 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
 
-        public static DateTime TryGetDateTime(string rawLine, string txtDateTime, string fieldname, string pos, string @format = "yyyyMMddHHmm")
+        public static DateTime TryGetDateTime(string rawLine, string txtDateTime, string fieldname, string pos, int currentLine, string @format = "yyyyMMddHHmm")
         {
             DateTime date = DateTime.MinValue;
             DateTime.TryParseExact(txtDateTime, @format/*"yyyyMMddHHmm"*/, CultureInfo.InvariantCulture, DateTimeStyles.None, out date);
             if (date == DateTime.MinValue)
             {
                 throw new
-                    Exception($"{fieldname} should be  yyyyMMddHHmm  Substring({pos}) ={txtDateTime}  ");
+                //  Exception($"{fieldname} should be  yyyyMMddHHmm  Substring({pos}) ={txtDateTime}  ");
+                    Exception($"Line {currentLine}: {fieldname} should be {@format}  Substring({pos}) ={txtDateTime}  ");
             }
 
             return date;
@@ -266,13 +270,13 @@ namespace Logitude.Accounting.BL.CoreBL
             var myFullAccountingSettingPM = myFullAccountingSettingQueryService.GetSingleFullAccountingSetting(tenant);
             if (myFullAccountingSettingPM == null)
             {
-                throw new Exception("No FullAccountingSettingPM  for tenant ");
+                throw new ApplicationException("No FullAccountingSettingPM  for tenant ");
             }
             //if (string.IsNullOrWhiteSpace(myFullAccountingSettingPM.DeductionFileNumber))
             //{
             //    text = TranslateTextsClassTranslate("JournalsCSV.O.DeductionFileNumber", 0, useLocal);
             //    // Deduction File Number is undefined.
-            //    throw new Exception(text);
+            //    throw new ApplicationException(text);
             //}
             return myFullAccountingSettingPM;
         }
@@ -287,13 +291,13 @@ namespace Logitude.Accounting.BL.CoreBL
             //{
             //    text = TranslateTextsClassTranslate("JournalsCSV.O.HeaderLine", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.NotEncountered", 0, useLocal);
-            //    throw new Exception($"{text} {Opening_LineDTO_JCSV.RowType} {text_2}  ");
+            //    throw new ApplicationException($"{text} {Opening_LineDTO_JCSV.RowType} {text_2}  ");
             //}
             //if (Closing_Line == null)
             //{
             //    text = TranslateTextsClassTranslate("JournalsCSV.O.StartingRowType", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.NotEncountered", 0, useLocal);
-            //    throw new Exception($"{text} {Closing_LineDTO.RowType} {text_2}  ");
+            //    throw new ApplicationException($"{text} {Closing_LineDTO.RowType} {text_2}  ");
             //}
 
             //if (Closing_Line.DeductionFileNum != Opening_Line.DeductionFileNum)
@@ -301,7 +305,7 @@ namespace Logitude.Accounting.BL.CoreBL
             //    text = TranslateTextsClassTranslate("JournalsCSV.O.StartingRowDeductionFile", 0, useLocal);
             //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.DiffersFrom", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.FinishingRowDeductionFile", 0, useLocal);
-            //    throw new Exception($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {Opening_Line.DeductionFileNum} ");
+            //    throw new ApplicationException($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {Opening_Line.DeductionFileNum} ");
             //}
             //string myDeduc = _FullAccountingSettingPM.DeductionFileNumber.Replace(" ", "").PadLeft(9, '0').Substring(0, 9);
             //if (Closing_Line.DeductionFileNum != myDeduc)
@@ -309,13 +313,13 @@ namespace Logitude.Accounting.BL.CoreBL
             //    text = TranslateTextsClassTranslate("JournalsCSV.O.StartingRowDeductionFile", 0, useLocal);
             //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.DiffersFrom", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.OurDeductionFile", 0, useLocal);
-            //    throw new Exception($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {myDeduc} ");
+            //    throw new ApplicationException($"{text} {Closing_Line.DeductionFileNum} {text_44}{text_2} {myDeduc} ");
             //}
 
             //if (Opening_Line.TotalInvalidRecords + Opening_Line.TotalValidRecords != Opening_Line.TotalVendorNumber)
             //{
             //    text = TranslateTextsClassTranslate("JournalsCSV.O.FinishingRowTotals", 0, useLocal);
-            //    throw new Exception($"{text} {Opening_Line.TotalInvalidRecords} + {Opening_Line.TotalValidRecords} != {Opening_Line.TotalVendorNumber} ");
+            //    throw new ApplicationException($"{text} {Opening_Line.TotalInvalidRecords} + {Opening_Line.TotalValidRecords} != {Opening_Line.TotalVendorNumber} ");
             //}
 
             //if (Opening_Line.TotalValidRecords != _VendorLinesDTO.Count)
@@ -323,15 +327,15 @@ namespace Logitude.Accounting.BL.CoreBL
             //    text = TranslateTextsClassTranslate("JournalsCSV.O.FinishingRowTotalVendors", 0, useLocal);
             //    text_44 = TranslateTextsClassTranslate("JournalsCSV.O.DiffersFrom", 0, useLocal);
             //    text_2 = TranslateTextsClassTranslate("JournalsCSV.O.CountVendorRows", 0, useLocal);
-            //    throw new Exception($"{text} {Opening_Line.TotalValidRecords} {text_44}{text_2} {_VendorLinesDTO.Count}");
+            //    throw new ApplicationException($"{text} {Opening_Line.TotalValidRecords} {text_44}{text_2} {_VendorLinesDTO.Count}");
             //}
 
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(tenant);
             long count = 1;
             foreach (JournalSrcLineDTO jLine in _JournalSrcLinesDTO)
             {
-               // if (jLine.ActionCode != "2")
-               // {
+                if (jLine.ActionCode != "2")
+                {
                     if (String.IsNullOrEmpty(jLine.CreditGLAccount))
                     {
                         text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
@@ -363,9 +367,9 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         jLine.CreditGLAccountId = creditPM.Id;
                     }
-             //   }
-            //    if (jLine.ActionCode != "1")
-             //   {
+                }
+                if (jLine.ActionCode != "1")
+                {
                     if (String.IsNullOrEmpty(jLine.DebitGLAccount))
                     {
                         text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
@@ -397,7 +401,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         jLine.DebitGLAccountId = debitPM.Id;
                     }
-            //    }
+                }
                 //if (String.IsNullOrWhiteSpace(jLine.LocalName) && String.IsNullOrWhiteSpace(jLine.EnglishName))
                 //{
                 //    text = TranslateTextsClassTranslate("JournalsCSV.O.JournalLine", 0, useLocal);
@@ -487,7 +491,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (!startsWithRowTypeOk || actualRowType == "")
             {
                 string text = TranslateTextsClassTranslate("JournalsCSV.O.DoesntStartWithHeaderLine", 0, useLocal);
-                throw new Exception($"{text} {RowType} ");
+                throw new ApplicationException($"{text} {RowType} ");
             }
 
             var rec = new Opening_LineDTO_JCSV();
@@ -520,7 +524,7 @@ namespace Logitude.Accounting.BL.CoreBL
     //        if (!rawLine.StartsWith(RowType))
     //        {
     //            string text = TranslateTextsClassTranslate("JournalsCSV.O.DoesntStartWithRowType", 0, useLocal);
-    //            throw new Exception($"{text} {RowType} ");
+    //            throw new ApplicationException($"{text} {RowType} ");
     //        }
 
     //        var rec = new Closing_LineDTO();
@@ -542,7 +546,7 @@ namespace Logitude.Accounting.BL.CoreBL
     class JournalSrcLineDTO
     {
         public static List<String> RowType = new List<String>(new string[]
-            { "d", "c", "D", "C", "ז", "ח", "1", "2", "3"});
+            { "d", "c", "D", "C", "ז", "ח", "1", "2", "3", "DC", "CD"});
 
         public const string _EmptyDate = "00000000";
         private const bool useLocal = true;
@@ -581,22 +585,44 @@ namespace Logitude.Accounting.BL.CoreBL
         // public string Cancelled { get; private set; }
         // public bool IsCancelled { get; private set; }
 
-        internal static JournalSrcLineDTO Create(string rawLine)
+        internal static JournalSrcLineDTO Create(string rawLine, int currentLine)
         {
 
             rawLine = rawLine ?? "";
             bool startsWithRowTypeOk = false;
             string actualRowType = "";
+            bool is_cddc = false;
+            string cddc = "";
             if (rawLine.Length >= 1)
             {
-                actualRowType = rawLine.Substring(0, 1);
-                if (RowType.Contains(actualRowType)) startsWithRowTypeOk = true;
+                if (rawLine.Length >= 2)
+                {
+                    cddc = rawLine.Substring(0, 2).ToUpperInvariant();
+                    if (cddc == "CD")
+                    {
+                        actualRowType = "3";
+                        is_cddc = true;
+                        startsWithRowTypeOk = true;
+
+                    }
+                    else if (cddc == "DC")
+                    {
+                        actualRowType = "3";
+                        is_cddc = true;
+                        startsWithRowTypeOk = true;
+                    }
+                }
+                if (!is_cddc)
+                {
+                    actualRowType = rawLine.Substring(0, 1);
+                    if (RowType.Contains(actualRowType)) startsWithRowTypeOk = true;
+                }
             }
 
             if (!startsWithRowTypeOk || actualRowType == "")
             {
                 string text = TranslateTextsClassTranslate("JournalsCSV.O.DoesntStartWithCoAType", 0, useLocal);
-                throw new Exception($"{text} {RowType.ToString()} ");
+                throw new ApplicationException($"{text} {RowType.ToString()} ");
             }
 
             var rec = new JournalSrcLineDTO();
@@ -606,30 +632,73 @@ namespace Logitude.Accounting.BL.CoreBL
             int count = values.Count();
             if (count > 0) //rec.ActionCode = values[0];
             {
-                switch (values[0])
+                if (is_cddc)
                 {
-                    case "c":
-                    case "C":
-                    case "ז":
-                    case "2": //  2 = credit in the input file
-                        rec.ActionCode = "1";
-                        break;
-                    case "d":
-                    case "D":
-                    case "ח":
-                    case "1": //  1 = debit in the input file
-                        rec.ActionCode = "2";
-                        break;
-                    case "3":
-                        rec.ActionCode = "3";
-                        break;
-                    default:
-                        break;
+                    rec.ActionCode = "3";
+                }
+                else
+                {
+                    switch (values[0])
+                    {
+                        case "c":
+                        case "C":
+                        case "ז":
+                        case "2": //  2 = credit in the input file
+                            rec.ActionCode = "1";
+                            break;
+                        case "d":
+                        case "D":
+                        case "ח":
+                        case "1": //  1 = debit in the input file
+                            rec.ActionCode = "2";
+                            break;
+                        case "3":
+                            rec.ActionCode = "3";
+                            break;
+                        default:
+                            break;
+                    }
                 }
             }
 
-            if (count > 1) rec.DebitGLAccount = values[1].TrimStart('G');
-            if (count > 2) rec.CreditGLAccount = values[2].TrimStart('G');
+            if (count > 1)
+            {
+                if (rec.ActionCode == "1") // credit 
+                {
+                    rec.CreditGLAccount = values[1].TrimStart('G');
+                }
+                else if (rec.ActionCode == "3" && cddc == "CD")
+                {
+                    rec.CreditGLAccount = values[1].TrimStart('G');
+                }
+                else if (rec.ActionCode == "3" && cddc == "DC")
+                {
+                    rec.DebitGLAccount = values[1].TrimStart('G');
+                }
+                else // debit
+                {
+                    rec.DebitGLAccount = values[1].TrimStart('G');
+                }
+            }
+            if (count > 2)
+            {
+                if (rec.ActionCode == "1") // credit 
+                {
+                    rec.DebitGLAccount = values[2].TrimStart('G'); // opposite
+                }
+                else if (rec.ActionCode == "3" && cddc == "CD")
+                {
+                    rec.DebitGLAccount = values[2].TrimStart('G');
+                }
+                else if (rec.ActionCode == "3" && cddc == "DC")
+                {
+                    rec.CreditGLAccount = values[2].TrimStart('G');
+                }
+                else // debit
+                {
+                    rec.CreditGLAccount = values[2].TrimStart('G'); // opposite 
+                }
+            }
             string txtDateTime = "";
             string fieldname = "";
             string pos = "";
@@ -637,41 +706,123 @@ namespace Logitude.Accounting.BL.CoreBL
 
             if (count > 3)
             {
-                txtDateTime = values[3].Substring(0, 8);
-                rec.AccountingDateString = txtDateTime;
-                if (rec.AccountingDateString != _EmptyDate)
+                //txtDateTime = values[3].Substring(0, 8);
+                //rec.AccountingDateString = txtDateTime;
+                //if (rec.AccountingDateString != _EmptyDate)
+                //{
+                //    fieldname = "AccountingDate";
+                //    pos = "0, 8";
+                //    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
+                //    rec.AccountingDate = date;
+                //}
+                txtDateTime = values[3].TrimEnd(' ');
+                if (txtDateTime.Length >= 10)
                 {
-                    fieldname = "AccountingDate";
-                    pos = "0, 8";
-                    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, format: "dd.MM.yy");
-                    rec.AccountingDate = date;
+                    txtDateTime = txtDateTime.Substring(0, 10);
+                    rec.AccountingDateString = txtDateTime;
+                    if (rec.AccountingDateString != _EmptyDate)
+                    {
+                        fieldname = "AccountingDate";
+                        pos = "0, 10";
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yyyy");
+                        rec.AccountingDate = date;
+                    }
                 }
+                else
+                {
+                    if (txtDateTime.Length >= 8) txtDateTime = txtDateTime.Substring(0, 8);
+                    rec.AccountingDateString = txtDateTime;
+                    if (rec.AccountingDateString != _EmptyDate)
+                    {
+                        fieldname = "AccountingDate";
+                        pos = "0, 8";
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[3], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
+                        rec.AccountingDate = date;
+                    }
+                }
+
             }
 
             if (count > 4)
             {
-                txtDateTime = values[4].Substring(0, 8);
-                rec.DocumentDateString = txtDateTime;
-                if (rec.DocumentDateString != _EmptyDate)
+                //txtDateTime = values[4].Substring(0, 8);
+                //rec.DocumentDateString = txtDateTime;
+                //if (rec.DocumentDateString != _EmptyDate)
+                //{
+                //    fieldname = "DocumentDate";
+                //    pos = "0, 8";
+                //    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
+                //    rec.DocumentDate = date;
+                //}
+                txtDateTime = values[4].TrimEnd(' ');
+                if (txtDateTime.Length >= 10)
                 {
-                    fieldname = "DocumentDate";
-                    pos = "0, 8";
-                    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, format: "dd.MM.yy");
-                    rec.DocumentDate = date;
+                    txtDateTime = txtDateTime.Substring(0, 10);
+                    rec.DocumentDateString = txtDateTime;
+                    if (rec.DocumentDateString != _EmptyDate)
+                    {
+                        fieldname = "DocumentDate";
+                        pos = "0, 10";
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yyyy");
+                        rec.DocumentDate = date;
+                    }
                 }
+                else
+                {
+                    if (txtDateTime.Length >= 8) txtDateTime = txtDateTime.Substring(0, 8);
+                    rec.DocumentDateString = txtDateTime;
+                    if (rec.DocumentDateString != _EmptyDate)
+                    {
+                        fieldname = "DocumentDate";
+                        pos = "0, 8";
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[4], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
+                        rec.DocumentDate = date;
+                    }
+                }
+
             }
 
             if (count > 5)
             {
-                txtDateTime = values[5].Substring(0, 8);
-                rec.DueDateString = txtDateTime;
-                if (rec.DueDateString != _EmptyDate)
+                //txtDateTime = values[5].Substring(0, 8);
+                //rec.DueDateString = txtDateTime;
+                //if (rec.DueDateString != _EmptyDate)
+                //{
+                //    fieldname = "DueDate";
+                //    pos = "0, 8";
+                //    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
+                //    rec.DueDate = date;
+                //}
+
+                txtDateTime = values[5].TrimEnd(' ');
+                if (txtDateTime.Length >= 10)
                 {
-                    fieldname = "DueDate";
-                    pos = "0, 8";
-                    date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, format: "dd.MM.yy");
-                    rec.DueDate = date;
+                    txtDateTime = txtDateTime.Substring(0, 10);
+                    rec.DueDateString = txtDateTime;
+                    if (rec.DueDateString != _EmptyDate)
+                    {
+                        fieldname = "DueDate";
+                        pos = "0, 10";
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yyyy");
+                        rec.DueDate = date;
+                    }
                 }
+                else
+                {
+                    if (txtDateTime.Length >= 8) txtDateTime = txtDateTime.Substring(0, 8);
+                    rec.DueDateString = txtDateTime;
+                    if (rec.DueDateString != _EmptyDate)
+                    {
+                        fieldname = "DueDate";
+                        pos = "0, 8";
+                        date = JournalsCSVFlatFileAnalyser.TryGetDateTime(values[5], txtDateTime, fieldname, pos, currentLine, format: "dd.MM.yy");
+                        rec.DueDate = date;
+                    }
+                }
+
+
+
+
             }
 
             if (count > 6)

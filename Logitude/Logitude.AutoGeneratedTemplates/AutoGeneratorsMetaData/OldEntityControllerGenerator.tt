@@ -406,6 +406,7 @@ using <#= listspacestring #>
 using <#= queryeservicespacestring #>
 using <#= servicenamespacestring #>
 
+
 namespace <#=controllerNameSpace#>
 { 
 
@@ -708,6 +709,7 @@ if(hasTenant)
 	string apiHelpernamespacestring =  "WebFreight.Web.Controllers."+ modelname+".ApiHelpers;";
 	
 	string context = FirstServiceCharacterToLower(contextName);
+    string tableNameFirstToLower = FirstServiceCharacterToLower(tableName);
 	string queryName = FirstServiceCharacterToLower(tableName)+"Query";
 	string repositoryName = FirstServiceCharacterToLower(tableName)+"Repository";
 
@@ -757,7 +759,21 @@ if(hasTenant)
 	    enableSecurity = (entity.EnableSecurity == "true");
 				 
     }
+
+    bool applyGenericCustomFields = false;
+	if( entity.ApplyGenericCustomFields.GetType() == typeof(string))
+	{
+	    applyGenericCustomFields = (entity.ApplyGenericCustomFields == "true");
+				 
+    }
 	
+    
+
+    if(tableName == "Card")
+	{
+        blspacestring += Environment.NewLine + "using Logitude.Server.Tools.CustomFields;"; 
+    }
+
 	bool hasCompactSearch = false;
 	if( entity.HasCompactSearch.GetType() == typeof(string))
 	{
@@ -893,6 +909,8 @@ using System.Web.Http;
 using Logitude.BL.Helpers;
 using System.Web.Script.Serialization;
 using WebFreight.Web.DataContracts;
+using Logitude.Server.Tools.TreeFilterQuery.Interpreter;
+using Logitude.Server.Tools.TreeFilterQuery;
 using <#= pocosspacestring #>
 using <#= pmsspacestring #>
 using <#= dataspacestring #>
@@ -953,17 +971,46 @@ else
 				
 		    	I<#= contextName #> MyContext = <#= contextName #>.GetContext(<#= databaseConnTenant #>);
 				<#= tableName #>Repository  <#= repositoryName #> = new <#= tableName #>Repository(MyContext);
+<#+
+if(!applyGenericCustomFields)
+{
+#>
 				<#= tableName #>List entityList = null;
 				<#= tableName #> entityPoco = <#= repositoryName #>.GetSingle<#= tableName #>(<#= primaryonlyparam #> <#= tenantonlyParam #>);
-
-				if (entityPoco != null)
+                
+                if (entityPoco != null)
 				{
+<#+
+}
+#>
 				<#+
 if(tableName == "Card")
 {
 #>
+					<#= tableName #>List entityList = null;
+					<#= tableName #> entityPoco = <#= repositoryName #>.GetSingle<#= tableName #>(<#= primaryonlyparam #> <#= tenantonlyParam #>);
 					CardQuery cardQuery = new CardQuery(cardRepository);
                     entityList = cardQuery.GetSingleCardList(entityPoco);
+                    new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { EntityId = id, ObjectTableName = "<#= tableName #>", Tenant = authToken.Tenant, Type = "List", Entities = new List<<#= listName #>> { entityList }.Cast<object>().ToList() }).Set();
+<#+
+}else{
+#>
+<#+
+if(applyGenericCustomFields)
+{
+#>
+
+				<#= tableName #>Query  <#= queryName #> = new <#= tableName #>Query(<#= repositoryName #>);
+				IQueryable<<#= tableName #>> <#= tableNameFirstToLower #>s = <#= repositoryName #>.Get<#= dBTableName #>(authToken.Tenant).Where(a=><#= primarykeyCondition #>);
+				<#= tableName #>List entityList = <#= queryName #>.GetIQueryableEntityList(<#= tableNameFirstToLower #>s).FirstOrDefault();
+<#+
+if(!hasApiHelper && hasCustomFields){
+#>
+				CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
+				customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, new List<<#= listName #>> { entityList }.Cast<object>().ToList());
+<#+
+}
+#>
 <#+
 }else{
 #>
@@ -977,8 +1024,18 @@ if(tableName == "Card")
 <#+
 }
 #>
+<#+
+}
+#>
+<#+
+if(!applyGenericCustomFields)
+{
+#>
 
 			    }
+<#+
+}
+#>
 <#+
 if(hasApiHelper)
 {
@@ -988,7 +1045,7 @@ if(hasApiHelper)
 <#+
 if(hasCustomFields){
 #>
-                	CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                	CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 	customFieldResolver.SetCustomFieldsValues("<#= tableName #>",  authToken.Tenant, new List<<#= listName #>> { entityList }.Cast<object>().ToList());
 <#+
 }
@@ -1044,7 +1101,7 @@ else
 <#+
 if(hasCustomFields){
 #>
-                CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                 customFieldResolver.SetCustomFieldsValues("<#= tableName #>", authToken.Tenant, listResult.Cast<object>().ToList());
 <#+
 }
@@ -1134,7 +1191,7 @@ else
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -1163,7 +1220,7 @@ else
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                         {
@@ -1183,6 +1240,16 @@ if(hasApiHelper)
 #>
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
+                
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "<#= entity.ObjectTableName.Trim('"') #>",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
 
 								<#+ 
 if(tableName == "Card" || tableName == "Customer")
@@ -1201,15 +1268,26 @@ else
 				#>
 
                 I<#= contextName #> MyContext = <#= contextName #>.GetContext(<#= contextTenantParam #>);
+<#+ 
+if(tableName == "ARInvoice" || tableName == "CommunicationLog")
+{
+#>              
+
+                if (FeatureToggleHelper.HasFeatureToggle("SCD", tenant))
+                {
+                  MyContext = <#= contextName #>.GetSecContext(<#= contextTenantParam #>);
+                }
+<#+
+}#>
                 <#= tableName #>Repository  <#= repositoryName #> = new <#= tableName #>Repository(MyContext);
                 IQueryable<<#= tableName #>> entityPocos = <#= repositoryName #>.Get<#= dBTableName #>(<#= filterTenantParam #>);
 
                 <#= tableName #>Query <#= queryName #> = new <#= tableName #>Query(<#= repositoryName #>);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				<#+
 if(hasCustomFilter)
 {
@@ -1234,6 +1312,7 @@ if(hasApiHelper)
                 IQueryable<<#= listName #>> entityLists = <#= queryName #>.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<<#= listName #>>(listQueryOperation, entityLists);
+                entityLists = new TreeFilterQueryService().Apply<<#= listName #>>(entityLists , treeFilterQueryArgs);
 
 		      
 			  								<#+ 
@@ -1356,7 +1435,7 @@ else
 <#+
 if(hasCustomFields){
 #>
-               CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+               CustomFieldResolver customFieldResolver = new CustomFieldResolver(authToken.Tenant);
                customFieldResolver.SetCustomFieldsValues("<#= tableName #>", authToken.Tenant, listResult.Cast<object>().ToList());
 <#+
 }
@@ -1448,7 +1527,7 @@ else
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filterName, value1, field.IsCustomFilter, filterOperator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                             queryOperations.SetFilter(filterName, filterValue1, false, filterOperator, filterValue2, true);
@@ -1477,7 +1556,7 @@ else
                             object value2 = Logitude.Server.Tools.Helpers.FieldValueResolver.GetFieldDataValue(field, valuestring2);
 
                             //queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList);
-							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode);
+							queryOperations.SetFilter(filter.FieldName, value1, field.IsCustomFilter, filter.Operator, value2, field.DisplayInList,field.IsCustom,field.DataTypeCode, field.IsListFilter);
                         }
                         else
                         {
@@ -1491,6 +1570,16 @@ else
                 GenericFilter genericFilter = new GenericFilter();
                 GenericSort sortClass = new GenericSort();
 
+                TreeFilterQueryArgs treeFilterQueryArgs = new TreeFilterQueryArgs()
+                 { 
+                     AdditionalTreeFilter = filters.TreeFilters,
+                     ObjectTableName = "<#= entity.ObjectTableName.Trim('"') #>",
+                     ParentEntityId = filters.ParentEntityId,
+                     ParentObjectTableName = filters.ParentObjectTableName, 
+                     Tenant = tenant ,
+                     ParentEntity = filters.ParentEntity
+                 };
+
                 QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField").FirstOrDefault();
                 queryOperations.QueryFilterItems.Remove(item);
                 object compactSeachvalue = item != null ? item.FieldValue : null;
@@ -1502,9 +1591,9 @@ else
                 <#= tableName #>Query <#= queryName #> = new <#= tableName #>Query(<#= repositoryName #>);
                 
 				QueryOperations nonListQueryOperation = new QueryOperations();
-                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+                nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
                 QueryOperations listQueryOperation = new QueryOperations();
-                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+                listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 				<#+
 if(hasCustomFilter)
 {
@@ -1521,7 +1610,7 @@ if(hasCustomFilter)
                 IQueryable<<#= listName #>> entityLists = <#= queryName #>.GetIQueryableEntityList(entityPocos);
 
                 entityLists = genericFilter.GetFilteredQuery<<#= listName #>>(listQueryOperation, entityLists);
-				 
+                entityLists = new TreeFilterQueryService().Apply<<#= listName #>>(entityLists , treeFilterQueryArgs);
 
                 ServiceResponse response = new ServiceResponse();
                 if(compactSeachvalue != null)

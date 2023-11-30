@@ -89,8 +89,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             IQueryable<GLAccountTotalByMonthsDTOAging> qTotalByMonthAcc = null;
 
 
-            using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(10)))
-            {
+            
                 _AccountingContext = AccountingContext.GetContext(_Param.Tenant);
                 (_AccountingContext as System.Data.Entity.DbContext).Database.CommandTimeout = 300;
 
@@ -359,7 +358,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                              ChartOfAccountsEnglishName = acc.ChartOfAccountsEnglishName,
                              ChartOfAccountsTypeEnglishName = acc.ChartOfAccountsTypeEnglishName,
                              ChartOfAccountsTypeLocalName = acc.ChartOfAccountsTypeLocalName,
-
+                             ChartOfAccountSecurityLevel = acc.ChartOfAccountSecurityLevel,
 
 
 
@@ -393,13 +392,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                              TotalOpenShipments = card != null ? card.TotalOpenShipments : 0,
                              TotalFutureOpenCheques = moredata != null ? (decimal)moredata.TotFutureOpenChequesInLocalCur : 0,
                              TotalOpenCheques = moredata != null ? (decimal)moredata.TotalOpenChequesInLocalCur : 0,
-
+                             IsMultiCurrency = acc.IsMultiCurrency,
                              AccountEnglishName = acc.EnglishName,
                              AccountLocalName = acc.LocalName,
                              AccountCurrencyCode = acc.ReconcileMethodCode == "0" ? tenant.CurrencyCode : acc.CurrencyCode,
                              AccountPhone = card.Phone,
-                             InsuredCreditLimit = card != null ? card.InsuredcreditLimit : 0
-
+                             InsuredCreditLimit = card != null ? (card.InsuredcreditLimit != null ? (double)card.InsuredcreditLimit : 0) : 0
+                            
                          }
 
                      ).ToList();
@@ -442,6 +441,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          CurrencyId = r.CurrencyId,
                          CurrencyCode = r.CurrencyCode,
                          Total = r.Total,
+                         IsMultiCurrency = r.IsMultiCurrency,
                          AccountEnglishName = r.AccountEnglishName,
                          AccountLocalName = r.AccountLocalName,
                          AccountDisplayNumber = r.AccountDisplayNumber,
@@ -476,6 +476,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          CustomerVatNumber = r.CustomerVatNumber,
                          BalanceInLocalAccountingDate = a.LocalAmountDebit - a.LocalAmountCredit,
                          BalanceInLocalDueDate = d.LocalAmountDebit - d.LocalAmountCredit,
+                         BalanceInForeignAccountingDate = r.IsMultiCurrency == true ? a.LocalAmountDebit - a.LocalAmountCredit  : a.ForeignAmountDebit - a.ForeignAmountCredit,
+                         BalanceInForeignDueDate = r.IsMultiCurrency == true ? a.LocalAmountDebit - a.LocalAmountCredit : a.ForeignAmountDebit - a.ForeignAmountCredit,
 
 
                          AccountSalesmanName = r.AccountSalesmanName,
@@ -500,8 +502,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          ChartOfAccountsEnglishName = r.ChartOfAccountsEnglishName,
                          ChartOfAccountsTypeEnglishName = r.ChartOfAccountsTypeEnglishName,
                          ChartOfAccountsTypeLocalName = r.ChartOfAccountsTypeLocalName,
-
-
+                         ChartOfAccountSecurityLevel = r.ChartOfAccountSecurityLevel,
+                         AccountPhone = r.AccountPhone
 
                      }
                     ).ToList();
@@ -546,7 +548,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     //LogitudeXmlSerializer.SerializeObjectToJosnString<DataTable>(_PivotTable);
                 }
                 return xml;
-            }
         }
 
         private void InitDates(out List<DateTime> listPeriods, out DateTime lessThan, out DateTime graterThen_OpenTransactionsFutureDueDate, out DateTime myorderLessThanExclusive, out List<DateTime> listLessThanExclusivePeriods)
@@ -650,14 +651,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
 
             //_notMultiCurrencyAccountListId = _GLAccounts.Where(rec => !rec.IsMultiCurrency.GetValueOrDefault()).Select(rec => rec.Id).ToList();
+            var _AccountListId_PleaseTake_ForeignAmountList = _AccountListId_PleaseTake_ForeignAmount.ToList();
+
             var qTotalByMonthAcc_NOTMultiCurrencySooGet_ForeignAmount = ///GLAccount that is not multi Currency Get Foreign 
                     qTotalByMonthAcc
-                .Where(rec => _AccountListId_PleaseTake_ForeignAmount.Contains(rec.AccountId));
+                .Where(rec => _AccountListId_PleaseTake_ForeignAmountList.Contains(rec.AccountId));
 
 
             var qTotalByMonthAcc_ISMultiCurrencySooGet_LocalAmount = ///GLAccount that is not multi Currency Get Foreign 
                     qTotalByMonthAcc
-                .Where(rec => !_AccountListId_PleaseTake_ForeignAmount.Contains(rec.AccountId));
+                .Where(rec => _AccountListId_PleaseTake_ForeignAmountList.Contains(rec.AccountId));
 
 
 
@@ -765,9 +768,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 var _6 = qOpenTransactionsFutureDueDate_InForeign.ToList();
             }
             var theDBList = qPeriodInLocalAmount.Union(qLessThanExclusiveBasicInLocal)
-                .Union(qPeriodInForeign).Union(qLessThanExclusiveBasicInForeign)
-                .Union(qOpenTransactionsFutureDueDate_InLocal).Union(qOpenTransactionsFutureDueDate_InForeign)
-                .ToList();
+              .Union(qPeriodInForeign).Union(qLessThanExclusiveBasicInForeign)
+              .Union(qOpenTransactionsFutureDueDate_InLocal).Union(qOpenTransactionsFutureDueDate_InForeign)
+              .ToList();
             theDBList = theDBList.OrderBy(rec => rec.AccountId).ThenBy(rec => rec.OrderDate).ThenBy(rec => rec.CurrencyId)
 .ToList();
             return theDBList;
@@ -787,7 +790,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             int tenant = _Param.Tenant;
             //DateTime endOfYearUserInput = _Param.AgingForDate.Date;
-            var endAccountBalanceService = new AccountBalanceByDateCodeService(_AccountingContext, tenant, listOfAccountId.First(),
+            var firstAccountId = listOfAccountId.Count() > 0 ? listOfAccountId.First() : null;
+
+            var endAccountBalanceService = new AccountBalanceByDateCodeService(_AccountingContext, tenant, firstAccountId,
                  listOfAccountId
                 );
 
@@ -797,7 +802,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             endAccountBalanceService.CalculateBalance(
 true,
 dateTypeCode /*GLAccountTotalDateTypeValues.Accountingdate*/,
-_Param.AgingForDate.Date, false, true, true,false);
+_Param.AgingForDate.Date, false, true, true,false, false);
 
             
             var totals = (from rec in endAccountBalanceService.AccountBalance.verbose.CurrencySumUntillMounth.Union(endAccountBalanceService.AccountBalance.verbose.TheMounthCurrencySum)
@@ -827,7 +832,17 @@ _Param.AgingForDate.Date, false, true, true,false);
             //              )
             //          select rec)
             //          .ToList();
-
+            if (totals.Count == 0) {
+                foreach (var item in listOfAccountId) {
+                    totals.Add(new CurrencySum() {
+                        AccountId = item,
+                        LocalAmountCredit = 0,
+                        LocalAmountDebit = 0,
+                        ForeignAmountCredit = 0,
+                        ForeignAmountDebit = 0
+                    });
+                }
+            }
 
             return totals;
         }
@@ -1013,8 +1028,8 @@ _Param.AgingForDate.Date, false, true, true,false);
                                                       //from account in accJoin.DefaultIfEmpty()
 
 
-                                                  let account = periodMExtendeds.First(account => account.AccountId == line.AccountId)
-                                                  let splitAccount = periodMExtendeds.FirstOrDefault(account => account.AccountId == line.SplitAccountId)
+                                                  let account = periodMExtendeds.Count > 0 ? periodMExtendeds.First(account => account.AccountId == line.AccountId): null
+                                                  let splitAccount = periodMExtendeds.Count > 0 ? periodMExtendeds.FirstOrDefault(account => account.AccountId == line.SplitAccountId): null
 
                                                   //join currency in currencies
                                                   //  on line.CurrencyId equals currency.Id into currencyJoin
@@ -1030,54 +1045,55 @@ _Param.AgingForDate.Date, false, true, true,false);
                                                       CurrencyId = line.CurrencyId,
                                                       CurrencyCode = currency == null ? null : currency.Code,
                                                       Total = line.Total,
-                                                      AccountEnglishName = account.AccountEnglishName,
-                                                      AccountLocalName = account.AccountLocalName,
-                                                      AccountDisplayNumber = account.AccountDisplayNumber,
-                                                      AccountInternalNumber = account.AccountInternalNumber,
-                                                      AccountCurrencyCode = account.AccountCurrencyCode,
-                                                      AccountTermName = account.AccountTermName,
+                                                      IsMultiCurrency = account != null ? account.IsMultiCurrency : null,
+                                                      AccountEnglishName = account != null ? account.AccountEnglishName : null,
+                                                      AccountLocalName = account != null ? account.AccountLocalName: null,
+                                                      AccountDisplayNumber = account != null ? account.AccountDisplayNumber : null,
+                                                      AccountInternalNumber = account != null ? account.AccountInternalNumber : null,
+                                                      AccountCurrencyCode = account != null ? account.AccountCurrencyCode : null,
+                                                      AccountTermName = account != null ? account.AccountTermName : null,
 
-                                                      CreditLimitAmount = account.CreditLimitAmount,
-                                                      InterestCreditLimit = account.InterestCreditLimit,
-                                                      InsuredCreditLimit = account.InsuredCreditLimit,
-                                                      CreditStatusAmount_AsIs = account.CreditStatusAmount_AsIs,
-                                                      BalanceInLocalCurrency = splitAccount != null ? splitAccount.BalanceInLocalCurrency : account.BalanceInLocalCurrency,
-                                                      LocalBalanceInDue = splitAccount != null ? splitAccount.LocalBalanceInDue : account.LocalBalanceInDue,
-                                                      TotalOpenShipments = account.TotalOpenShipments,
-                                                      TotalFutureOpenCheques = account.TotalFutureOpenCheques,
-                                                      TotalOpenCheques = account.TotalOpenCheques,
+                                                      CreditLimitAmount = account != null ? account.CreditLimitAmount : null,
+                                                      InterestCreditLimit = account != null ? account.InterestCreditLimit : null,
+                                                      InsuredCreditLimit = account != null ? account.InsuredCreditLimit : null,
+                                                      CreditStatusAmount_AsIs = account != null ? account.CreditStatusAmount_AsIs : null,
+                                                      BalanceInLocalCurrency = splitAccount != null ? splitAccount.BalanceInLocalCurrency : account != null ? account.BalanceInLocalCurrency : null,
+                                                      LocalBalanceInDue = splitAccount != null ? splitAccount.LocalBalanceInDue : account != null ? account.LocalBalanceInDue : null,
+                                                      TotalOpenShipments = account != null ? account.TotalOpenShipments : null,
+                                                      TotalFutureOpenCheques = account != null ? account.TotalFutureOpenCheques : null,
+                                                      TotalOpenCheques = account != null ? account.TotalOpenCheques : null,
                                                       OpenCredit = line.OpenCredit,
                                                       OpenDebit = line.OpenDebit,
                                                       TotalOpenTransactions = line.TotalOpenTransactions,
-                                                      CreditStatusAmount = account.CreditStatusAmount,
-                                                      GLAccountStandardInterestRate = account.GLAccountStandardInterestRate,
-                                                      CustomerVatNumber = account.CustomerVatNumber,
-                                                      AccountTermLocalName = account.AccountTermLocalName,
+                                                      CreditStatusAmount = account != null ? account.CreditStatusAmount : null,
+                                                      GLAccountStandardInterestRate = account != null ? account.GLAccountStandardInterestRate : 0,
+                                                      CustomerVatNumber = account != null ? account.CustomerVatNumber : null,
+                                                      AccountTermLocalName = account != null ? account.AccountTermLocalName : null,
 
-                                                      AccountSalesmanName = account.AccountSalesmanName,
-                                                      AccountSalesmanLocalName = account.AccountSalesmanLocalName,
-                                                      AccountCollectorName = account.AccountCollectorName,
-                                                      AccountCollectorLocalName = account.AccountCollectorLocalName,
+                                                      AccountSalesmanName = account != null ? account.AccountSalesmanName : null,
+                                                      AccountSalesmanLocalName = account != null ? account.AccountSalesmanLocalName : null,
+                                                      AccountCollectorName = account != null ? account.AccountCollectorName : null,
+                                                      AccountCollectorLocalName = account != null ? account.AccountCollectorLocalName : null,
 
-                                                      Category1Name = account.Category1Name,
-                                                      Category2Name = account.Category2Name,
-                                                      Category3Name = account.Category3Name,
-                                                      Category4Name = account.Category4Name,
-                                                      Category5Name = account.Category5Name,
+                                                      Category1Name = account != null ? account.Category1Name : null,
+                                                      Category2Name = account != null ? account.Category2Name : null,
+                                                      Category3Name = account != null ? account.Category3Name : null,
+                                                      Category4Name = account != null ? account.Category4Name : null,
+                                                      Category5Name = account != null ? account.Category5Name : null,
 
-                                                      Category1LocalName = account.Category1LocalName,
-                                                      Category2LocalName = account.Category2LocalName,
-                                                      Category3LocalName = account.Category3LocalName,
-                                                      Category4LocalName = account.Category4LocalName,
-                                                      Category5LocalName = account.Category5LocalName,
-
-
-                                                      ChartOfAccountsLocalName = account.ChartOfAccountsLocalName,
-                                                      ChartOfAccountsEnglishName = account.ChartOfAccountsEnglishName,
-                                                      ChartOfAccountsTypeEnglishName = account.ChartOfAccountsTypeEnglishName,
-                                                      ChartOfAccountsTypeLocalName = account.ChartOfAccountsTypeLocalName,
+                                                      Category1LocalName = account != null ? account.Category1LocalName : null,
+                                                      Category2LocalName = account != null ? account.Category2LocalName : null,
+                                                      Category3LocalName = account != null ? account.Category3LocalName : null,
+                                                      Category4LocalName = account != null ? account.Category4LocalName : null,
+                                                      Category5LocalName = account != null ? account.Category5LocalName : null,
 
 
+                                                      ChartOfAccountsLocalName = account != null ? account.ChartOfAccountsLocalName : null,
+                                                      ChartOfAccountsEnglishName = account != null ? account.ChartOfAccountsEnglishName : null,
+                                                      ChartOfAccountsTypeEnglishName = account != null ? account.ChartOfAccountsTypeEnglishName : null,
+                                                      ChartOfAccountsTypeLocalName = account != null ? account.ChartOfAccountsTypeLocalName : null,
+                                                      ChartOfAccountSecurityLevel = account != null ? account.ChartOfAccountSecurityLevel : null,
+                                                      AccountPhone = account != null ? account.AccountPhone : null,
                                                   }).ToList();
             return namedPeriods;
         }
@@ -1520,7 +1536,7 @@ _Param.AgingForDate.Date, false, true, true,false);
             if (!String.IsNullOrWhiteSpace(_Param.CollectorId))
             {
 
-                var qGLAccIdByCollectorId = _myGLAccountQueryService.GetQGLAccIdByCollectorId(_Param.Tenant, _Param.CollectorId, GetAccountType(_Param.Aging4AccountTypeCode));
+                var qGLAccIdByCollectorId = _myGLAccountQueryService.GetQGLAccIdByCollectorId_ForAgingReport(_Param.Tenant, _Param.CollectorId, GetAccountType(_Param.Aging4AccountTypeCode));
                 Join_AccountIdList(qGLAccIdByCollectorId);
 
             }
@@ -1836,6 +1852,7 @@ Period	Acc	Currency	Total
     }
     public class PeriodMExtended: PeriodM
     {
+        public bool? IsMultiCurrency { get; set; }
         public string AccountEnglishName { get; set; }
         public string AccountLocalName { get; set; }
 
@@ -1898,6 +1915,8 @@ Period	Acc	Currency	Total
         public string SplitAccountId { get;  set; }
         public decimal BalanceInLocalAccountingDate { get; set; }
         public decimal BalanceInLocalDueDate { get; set; }
+        public decimal BalanceInForeignAccountingDate { get; set; }
+        public decimal BalanceInForeignDueDate { get; set; }
         public string AccountSalesmanName { get; set; }
         public string AccountSalesmanLocalName { get; set; }
 
@@ -1920,6 +1939,7 @@ Period	Acc	Currency	Total
         public string ChartOfAccountsEnglishName { get; set; }
         public string ChartOfAccountsTypeEnglishName { get; set; }
         public string ChartOfAccountsTypeLocalName { get; set; }
+        public int? ChartOfAccountSecurityLevel { get; set; }
     }
 
     public class AgingReportParam
@@ -1985,9 +2005,9 @@ TRUE= כאשר מבקשים עם ריכוז לפי כרטיס אב (פיצול �
 
         public string ChartOfAccountsId { get; set; }
 
-        
-        
+        public string CurrencyOriginalLocalValue { get; set; }
 
+        
 
 
         //public string ChartOfAccountIdV1NotInUse { get; set; }

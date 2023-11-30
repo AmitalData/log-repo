@@ -1,0 +1,177 @@
+
+<div *ngIf="IsDataReady" [style.margin]="'auto'"
+     [style.position]="'absolute'"
+     [style.padding]="IsWindowMode ? '5px' : '0'"
+     [style.top.px]="IsWindowMode ? '10' : '0'"
+     [style.bottom.px]="IsWindowMode ? '10' : '0'"
+     [style.left.px]="IsWindowMode ? '10' : '0'"
+     [style.right.px]="IsWindowMode ? '10' : '0'">
+
+    <table>
+        <tr>
+            <td>
+                <table>
+                    <tr style="height: 1px;">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="width: 100px;">
+                                        <button class="Button" (click)="AddFieldClicked()">Add a field </button>
+                                    </td>
+
+                                    <td>
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 400px;">
+                                        <SearchBox (TextChanged)="SearchText = $event"></SearchBox>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+
+                    <tr style="height: 5px;">
+                        <td></td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="MediaFill">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="FieldsItemsSource">
+                                    <!-- Field Name -->
+                                    <log-column [width]="'250'" [header]="'Field Name'" [Alignment]="'left'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [Alignment]="'left'" [CellColor]="item.Background">
+                                                <div style="width: 100%; text-align: left;">
+                                                    {{item.FieldCode}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Has permission -->
+                                    <log-column [width]="'100'" [header]="'Has Permission'" [Editable]="true" [Alignment]="'left'">
+                                        <ng-template let-item>
+                                            <log-cell-template [IgnoreMods]="true" #logcelltemplate [CellColor]="item.Background">
+                                                <div style="width: 100%; text-align: left;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="padding-top: 1px; width: 18px; height:20px;float:left;vertical-align:central">
+                                                                <LogCheckBox [Checked]="item.HasPermission" [NoObjectField]="true"
+                                                                             [ObjectFieldName]="'HasPermission'" [DataContext]="item.DataContext" [HideColumns]="true"></LogCheckBox>
+                                                            </td>
+                                                            <td>
+                                                                <div> </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+
+                                    </log-column>
+
+                                    <!-- Default Text -->
+                                    <log-column [width]="'200'" [header]="'Default Text'" [Alignment]="'left'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [Alignment]="'left'" [CellColor]="item.DefaultTextBackground" [IsEnabled]="false">
+                                                <div style="width: 100%; text-align: left;">
+                                                    {{item.DefaultText}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- Display Label -->
+                                    <log-column [width]="'200'" [header]="'Display Text'" [Alignment]="'left'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [Alignment]="'left'" [CellColor]="item.Background">
+                                                <div *ngIf="logcelltemplate.IsDisplayMode" style="width: 100%; text-align: left;">
+                                                    {{item.DisplayText}}
+                                                </div>
+                                                <div style="width: 100%; text-align: left;" *ngIf="logcelltemplate.IsEditMode">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 100%; float: left; ">
+                                                                <LogTextBox [FocusOnMe]="'true'" [ObjectFieldName]="'DisplayText'" [Text]="item.DisplayText" [DataContext]="item.DataContext" [NoObjectField]="true" [HideColumns]="true"></LogTextBox>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- ModifiedBy -->
+                                    <log-column [width]="'200'" [header]="'Modified By'" [Alignment]="'left'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [Alignment]="'left'" [CellColor]="item.Background">
+                                                <div style="width: 100%; text-align: left;">
+                                                    {{item.ModifiedBy}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                    <!-- ModifiedOn -->
+                                    <log-column [width]="'150'" [header]="'Modified On'" [Alignment]="'left'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [Alignment]="'left'" [CellColor]="item.Background">
+                                                <div style="width: 100%; text-align: left;">
+                                                    {{item.ModifiedOn | DateTimePipe:'DT'}}
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
+
+                                </logitude-edit-grid>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr *ngIf="IsWindowMode" style="height:25px">
+                        <td>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div></div>
+                                    </td>
+                                    <td style="width: 57px;">
+                                        <button id="{{ 'CloseBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseClicked()">Close</button>
+                                    </td>
+
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <!-- Save -->
+                                    <td style="width: 57px;">
+                                        <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" *ngIf="!IsDirty" class="Button" (click)="Save()">
+                                            <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
+                                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                                        </button>
+
+                                        <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" class="EntityChangesButton" *ngIf="IsDirty" (click)="Save()">
+                                            <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
+                                            <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                                        </button>
+                                    </td>
+
+                                    <td style="width: 5px;">
+                                        <div></div>
+                                    </td>
+
+                                    <td style="width: 12px;">
+                                        <div></div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+
+</div>

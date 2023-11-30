@@ -99,7 +99,7 @@
                                         <!--<div>{{'Customs.CourierMaster.O.CourierMasterQueries' | TextCodeTranslationPipe}}</div>-->
                                         <!--
             <div [style.right]="isRTL ? 'initial' : '2px'" [style.left]="isRTL ? '2px' : 'initial'" style="height:22px; width: 45px; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box; position: absolute; top:2px;">
-                <button id="{{'NewGLAccount' | IdGeneratorPipe}}" class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
+                <button id="{{'NewGLAccount' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="RunNewGLAccountWizard()">{{'Accounting.General.O.New' | TextCodeTranslationPipe}}</button>
             </div>
                                                             -->
                                         <div>שטרי מטען</div>

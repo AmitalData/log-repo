@@ -33,6 +33,7 @@ export class ActivityWorkspaceComponent extends BaseComponent {
     public DataContext = this;
     public QuickSearchItems: ActivityList[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
+
     constructor() {
         super(); 
         this.ChartID = "ChartID_" + this.CurrentSession.GetChartId();
@@ -211,7 +212,6 @@ export class ActivityWorkspaceComponent extends BaseComponent {
     set SelectedRecordsTypeFilter(value: CodeNameClass) {
         if (this.selectedRecordsTypeFilter != value) {
             this.selectedRecordsTypeFilter = value;
-
             this.RecordsTypeFilterCode = value == null ? "S" : value.Code;
             this.BusinessUnitFilterCode = "M";
             this.CreatedByTypeFilterCode = "M";
@@ -498,6 +498,7 @@ export class ActivityWorkspaceComponent extends BaseComponent {
         //    var itemViewModel: UpcomingActivityItem = new UpcomingActivityItem(item, this, null);
         //    this.UpcomingActivitiesList.push(itemViewModel);
         //});
+
     }
 
     // Chart

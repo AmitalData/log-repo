@@ -7,6 +7,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.DataContracts;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -85,6 +86,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("TasksScheduler", entityPM.Tenant, authToken.Tenant);
 
                         SecurityUtility.CheckContactFeature("TasksScheduler", "NEW", authToken.Tenant);
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
@@ -99,16 +101,24 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                             }
 
                             entityPM.SchedulerDetailsData.Tenant = entityPM.Tenant;
-
+                            
                             System.Type type1 = typeof(FTPSchedulerDetails);
                             System.Type type2 = "string".GetType();
                             System.Type type3 = typeof(ReportSchedulerDetails);
                             System.Type type4 = typeof(ReportSchedulerRecepients);
-                            System.Type[] types = new System.Type[4];
+                            System.Type type5 = typeof(DWObjectFieldsDetails);
+                            System.Type type6 = typeof(MultiSelectedValue);
+                            System.Type type7 = typeof(ValueDetails);
+                            System.Type type8 = typeof(ObjectFieldOperator);
+                            System.Type[] types = new System.Type[8];
                             types[0] = type1;
                             types[1] = type2;
                             types[2] = type3;
                             types[3] = type4;
+                            types[4] = type5;
+                            types[5] = type6;
+                            types[6] = type7;
+                            types[7] = type8;
 
                             entityPM.SchedulerDetailsXML = LogitudeXmlSerializer.SerializeObjectToElementString(entityPM.SchedulerDetailsData, types);
 
@@ -145,6 +155,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     string token = HttpContext.Current.Request.Headers["Token"];
                     AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                     SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                    SecurityUtility.AuthenticationOnEntityTenant("TasksScheduler", entityPM.Tenant, authToken.Tenant);
                     SecurityUtility.CheckContactFeature("TasksScheduler", "UPDATE", authToken.Tenant);
 
 
@@ -195,10 +206,12 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 IWebFreightContext MyContext = WebFreightContext.GetContext(tenant);
 
                 SecurityUtility.CheckContactFeature("TasksScheduler", "READ", authToken.Tenant);
-                TasksSchedulerService service = new TasksSchedulerService(MyContext, tenant);
+                TasksSchedulerService service = new TasksSchedulerService(MyContext,tenant);
                 TasksSchedulerQuery tasksSchedulerQuery = new TasksSchedulerQuery(tenant);
 
                 bool isExceedsScheduledTasksLimitPerReport = service.isExceedsScheduledTasksLimitPerReport(tenant, entityId);
@@ -212,6 +225,27 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     throw new ArgumentException("You have exceeded the defined quota. Contact your account manager if you need to add more!");
                 }
 
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetIsEntityHasScheduler(string entityId, int tenant)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("TasksScheduler", authToken.Tenant, tenant);
+
+                TasksSchedulerQuery tasksSchedulerQuery = new TasksSchedulerQuery(tenant);
+                bool hasScheduler = tasksSchedulerQuery.GetIsEntityHasScheduler(entityId, tenant);
+                
+                return Request.CreateResponse(HttpStatusCode.OK, hasScheduler);
             }
 
             catch (Exception ex)

@@ -90,7 +90,7 @@ import {ObjectsLocator} from '../../Infrastructure/Locators/ObjectsLocator';
 
     .SingleError{
         white-space: normal;
-        max-height: 40px;
+        max-height: 60px;
         padding-top: 2px;
     }
     `],

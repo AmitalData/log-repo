@@ -33,8 +33,12 @@ namespace Logitude.BL.DataContracts
         public string TargetEnv { get; set; }
         public string DocumentsApprovedByUserName { get; set; }
         public string DeclarationStatus { get; set; }
+        public string ImporterId { get; set; }
+        public string CargoIdentifier1 { get; set; }
+        public string CargoIdentifier2 { get; set; }
+        public string CargoIdentifier3 { get; set; }
 
-
+        public DateTime? PaymentRequestDateTime { get; set; }
 
         //public string VersionId { get; set; }
 
@@ -105,5 +109,6 @@ namespace Logitude.BL.DataContracts
         public string thtk { get; set; }
         public string TargetEnv { get; set; }
         public string u71 { get; set; }
+        public bool UseTestLink { get; set; }
     }
 }

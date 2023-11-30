@@ -48,7 +48,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>All Models Metadata Only Generator.tt</DependentUpon>
     </Compile>
-    <Compile Include="AutoGenerators\CommonClassesGenerator1.cs">
+    <Compile Include="AutoGenerators\CommonClassesGenerator.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CommonClassesGenerator.tt</DependentUpon>
@@ -108,6 +108,86 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldBIReportsExecutionLogs.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldReportExecutionLogs.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldDocumentsExecutionLogs.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldPerformanceLogs.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldMobileNotificationLogs.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldAnalyzeQueues.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldContactActivityLogs.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\ResetFullTextSearchIndexChangeTracking.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\usp_GetNextTableNumberValueSupportBranchCounterCodeWithSnapshot.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Procedures\usp_GetNextTableNumberValueWithSnapshotView.dxml" />
+    <None Include="DBOthers\InvoiceModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateARInvoiceTransferStatus.dxml" />
+    <None Include="DBOthers\InvoiceModel\Triggers\Trigger_AutomaticLastUpdateDateARInvoiceTransferStatus.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_AnalyzeQueues_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_BIReportsExecutionLogs_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_DocumentsExecutionLogs_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_ErrorLogs_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_MobileNotificationLogs_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_PerformanceLogs_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InfrastructureModel\Views\DBA_View_ReportsExecutionLogs_ToBeDeleted.dxml" />
+    <None Include="DBOthers\InvoiceModel\Views\ControlForInvoiceLinesDataView.dxml" />
+    <None Include="DBOthers\InvoiceModel\Views\DigitalInvoicesCounterDataView.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePayablesData.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Views\DigitalShipmentDataView.dxml" />
+    <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedLogbox2Ignore.Ignoresxml" />
+    <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedCloud2Ignore.Ignoresxml" />
+    <None Include="DBScripts\CommonModel\202208160224_AddBinaryTypeToFieldDataTypes.sxml" />
+    <None Include="DBScripts\CommonModel\202212070128_AddSaleTextCodesQuotationTemplate.sxml" />
+    <None Include="DBScripts\CommonModel\202217101053_UpdateLastLoginUserIP.sxml" />
+    <None Include="DBScripts\CommonModel\202302220800UpdateBillingRoleDescription.sxml" />
+    <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedCloudIgnore.Ignoresxml" />
+    <None Include="DBScripts\CommonModel\202304051240_MarkDuplicatedDocumentsAsDeletedLogboxIgnore.Ignoresxml" />
+    <None Include="DBScripts\CommonModel\202307021535_FillCargoTrackingInvitationFromSharedLogistics.sxml" />
+    <None Include="DBScripts\CommonModel\202308031135_FillEORInumberCardFromCustomer.sxml" />
+    <None Include="DBScripts\CommonModel\FillCodeForCustomerSizes.sxml" />
+    <None Include="DBScripts\CommonModel\FillTenantManagmentArchiveShipmentFilters.sxml" />
+    <None Include="DBScripts\CommonModel\FillContactsLanguageCode.sxml" />
+    <None Include="DBScripts\GlobalModel\2023010151536_AddWorkflowsEnginWR.sxml" />
+    <None Include="DBScripts\GlobalModel\2022090261326_AddDigitalPortalExportWR.sxml" />
+    <None Include="DBScripts\GlobalModel\202209271124_AddQboBaseUrl.sxml" />
+    <None Include="DBScripts\GlobalModel\202305281050_AddImporterEntityStatusesWorkerRole.sxml" />
+    <None Include="DBScripts\GlobalModel\202305251050_AddImporterEventTypesWorkerRole.sxml" />
+    <None Include="DBScripts\GlobalModel\202304151630_AddReportsLogsExecutionV2WorkerRole.sxml" />
+    <None Include="DBScripts\GlobalModel\202315031845_AddDocumentsExecutionV2WorkerRole.sxml" />
+    <None Include="DBScripts\GlobalModel\202303141233_AddImporterPortsWorkerRole.sxml" />
+    <None Include="DBScripts\GlobalModel\AddInProgressStatusToAnalyzeQueue.sxml" />
+    <None Include="DBScripts\GlobalModel\202302271155_AddDeploymnetPackageWR.sxml" />
+    <None Include="DBScripts\GlobalModel\AddReconciliationWorkerRole.sxml" />
+    <None Include="DBScripts\GlobalModel\AddWorkflowEngineWorkerBatchService.sxml" />
+    <None Include="DBScripts\GlobalModel\AddWorkflowTaskDoneWorkerBatchService.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202302051135_UpdateObjectTableFullNameTextCode.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202301161230_InsertCustomObjectTableQueryGroup.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202212141022_FillRelatedScreenCodeInScreensTable.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202205100957_UpdateDoubleFieldDataTypeDisplayName.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202209101038_UpdateFieldDataTypesDefaults.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202211101058_AddConsolidationCreditNoteInvoiceCounterToTenants.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202221121646_AddCustomObjectsMenuItemCategoryType.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202227091630_UpdateFieldDataTypesDisplayNames.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202211010130_UpdateEntityStatusNames.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202221080915_UpdateDigitalPortalEntityStatuses.sxml" />
+    <None Include="DBScripts\GlobalModel\AddOpportunityStageChangingBatchService.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202209260235_UpdateEntityStatusDelivery.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202303081102_UpdateAvailableInDocumentTypesForCustomObjects.sxml" />
+    <None Include="DBScripts\InfrastructureModel\AddIdFieldToScreenSectionTable.sxml" />
+    <None Include="DBScripts\InfrastructureModel\UpdateScreenSectionTable.sxml" />
+    <None Include="DBScripts\InvoiceModel\202201160900_UpdateAutomaticLastUpdateDateOnARInvoiceTransferStatus.sxml" />
+    <None Include="DBScripts\InvoiceModel\202209061205_FillPaidStatusOfARInvoices.sxml" />
+    <None Include="DBScripts\InvoiceModel\202212201040_FillTotalExamptFortaxReport.sxml" />
+    <None Include="DBScripts\QuoteModel\202209100331_FillQuoteClosingReasonNotes.sxml" />
+    <None Include="DBScripts\QuoteModel\202218091107_FillMarkupCurrenciesOnQuoteCharges.sxml" />
+    <None Include="DBScripts\ShipmentModel\202302070144_UpdateVisionEventNames.sxml" />
+    <None Include="DBScripts\ShipmentModel\202211010300_AddNewSpecialHandlingCode.sxml" />
+    <None Include="DBScripts\ShipmentModel\202207210955_FillTransshipmentsRouting.soxml" />
+    <None Include="DBScripts\CommonModel\202203291200_AddShipmentOrderDocumentTypes.sxml" />
+    <None Include="DBScripts\CommonModel\202206020830_FillHorsesGenderCode.sxml" />
+    <None Include="DBScripts\CommonModel\202206191403_UpdateChargesTypesGLAccountLocalName.sxml" />
+    <None Include="DBScripts\CommonModel\202215031220_AddGeneralGustomerGroups.sxml" />
+    <None Include="DBScripts\GlobalModel\202203271236_AddImporterShipmentOrderDocumentsWR.sxml" />
+    <None Include="DBScripts\InvoiceModel\202203021250_FillAPInvoicePaymentsNumbers.sxml" />
+    <None Include="DBScripts\CommonModel\202208071040_FillCustomerGroupOnCardLevel.sxml" />
+    <None Include="DBScripts\GlobalModel\AddStarWorkflowInstanceRetryWorkerBatchService.sxml" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -121,8 +201,8 @@
     </Content>
     <Content Include="AutoGenerators\CommonClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastOutputs>.\CommonClassesGenerator1.cs</LastOutputs>
-      <LastGenOutput>CommonClassesGenerator1.cs</LastGenOutput>
+      <LastOutputs>.\CommonClassesGenerator.cs</LastOutputs>
+      <LastGenOutput>CommonClassesGenerator.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGenerators\EntityControllersGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -151,8 +231,8 @@
     </Content>
     <Content Include="AutoGenerators\InvoiceClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>InvoiceClassesGenerator.cs</LastGenOutput>
       <LastOutputs>.\InvoiceClassesGenerator.cs</LastOutputs>
+      <LastGenOutput>InvoiceClassesGenerator.cs</LastGenOutput>
     </Content>
     <Content Include="AutoGenerators\LogitudeClassesGenerator.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -179,6 +259,138 @@
       <LastGenOutput>ControllersGenerator.cs</LastGenOutput>
       <LastOutputs>.\ControllersGenerator.cs</LastOutputs>
     </Content>
+    <None Include="DBOthers\CommonDataModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDatePackageTypes.dxml" />
+    <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdatePackageTypes.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Functions\BuildFullAddressTextFunction.sxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentPackages.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentPackages.dxml" />
+    <None Include="DBScripts\CommonModel\202202171100_RemoveQBOOptionFromDropDown.sxml" />
+    <None Include="DBScripts\CommonModel\UpdateSharedLogisticsInvitationStatusCode.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202202171015_FillEventTriggerField.sxml" />
+    <None Include="DBScripts\InvoiceModel\202203021250_FillAPPaymentInvoicesNumbers.sxml" />
+    <None Include="DBScripts\CommonModel\202223031100_UpdateAutomaticLastUpdateDateOnPackageTypes.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202202171015_FillEventTriggerField.sxml" />
+    <None Include="DBScripts\InvoiceModel\202205300930_FillARPaymentInvoicesNumbers.sxml" />
+    <None Include="DBScripts\QuoteModel\202204250813_AddVarAmountsToQuoteTemplateTextCode.sxml" />
+    <None Include="DBScripts\QuoteModel\202202101211_FillConnectedToQuoteField.sxml" />
+    <None Include="DBScripts\QuoteModel\202231032230_FillVATAmountsOnQuoteCharges.sxml" />
+    <None Include="DBScripts\ShipmentModel\202204191435_AddHorseNameToShipmentsSearchFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202205191150_FillShipmentPackagesTypeAndQuantity.soxml" />
+    <None Include="DBScripts\ShipmentModel\202207192359_FillContainersTransshipmentsFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202207200042_FillShipmentNumberOfTransshipments.soxml" />
+    <None Include="DBScripts\ShipmentModel\202208051503_UpdateContainerSearchFields.soxml" />
+    <None Include="DBScripts\ShipmentModel\202205220940_CreateRequestContainerStatusWorkerRole.sxml" />
+    <None Include="DBScripts\ShipmentModel\202210101334_AddContainerStrippedEventAndStatus.sxml" />
+    <None Include="DBScripts\ShipmentModel\202220090925_FillShipmentDigitalFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
+    <None Include="DBScripts\ShipmentModel\202221040255_FillQuoteFreightExpirationDateOfShipment.sxml" />
+    <None Include="DBScripts\ShipmentModel\202223031230_UpdateAutomaticLastUpdateDateOnShipmentPackage.sxml" />
+    <None Include="DBScripts\ShipmentModel\202213031031_UpdateDomesticInlandStatusLocation.scxml" />
+    <None Include="DBScripts\CommonModel\UpdateSharedLogisticsInvitationStatusCode.sxml" />
+    <None Include="DBScripts\ShipmentModel\202211041202_SetConcurrencyGuidForOceanInsightsShipmentField.sxml" />
+    <None Include="DBScripts\ShipmentModel\202227030327_SetConcurrencyGuidForContainer.sxml" />
+    <None Include="DBScripts\ShipmentModel\202213031031_UpdateDomesticInlandStatusLocation.scxml" />
+    <None Include="DBScripts\ShipmentModel\202202241410_FillLastDeilverypFullAddress.sxml" />
+    <None Include="DBScripts\ShipmentModel\202202241400_FillFirstPickUpFullAddress.sxml" />
+    <None Include="DBScripts\ShipmentModel\202302151452_AddHouseMasterNumberToShipmentsSearchFields.sxml.ignore" />
+    <None Include="DBScripts\ShipmentModel\202303120234_AddTrailerNumberFieldToShipmentSearchFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\202303230231_FillContainerShipmentFinalLegDates.sxml" />
+    <None Include="DBScripts\ShipmentModel\202304051240_MarkDuplicatedShipmentsAsCancelled - logbox.sxml" />
+    <None Include="DBScripts\ShipmentModel\FillContainersDataFromPackages.sxml" />
+    <None Include="DBTables\CommonDataModel\DigitalContactLastSetting.dxml" />
+    <None Include="DBTables\CommonDataModel\HorseGender.dxml" />
+    <None Include="DBScripts\ShipmentModel\202205160324_UpdateContainerStatusWorkerRole.sxml" />
+    <None Include="DBTables\CommonDataModel\HTSCode.dxml" />
+    <None Include="DBTables\CommonDataModel\PortGroup.dxml" />
+    <None Include="DBTables\InfrastructureModel\ChildEntitiesCustomField.dxml" />
+    <None Include="DBTables\InfrastructureModel\CustomChildObject.dxml" />
+    <None Include="DBTables\InfrastructureModel\DataCustomObject.dxml" />
+    <None Include="DBTables\InfrastructureModel\EventRemark.dxml" />
+    <None Include="DBTables\InfrastructureModel\ReferenceCustomObject.dxml" />
+    <None Include="DBTables\InvoiceModel\ARInvoicesSignedStatus.dxml" />
+    <None Include="DBTables\QuoteModel\ValidByType.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerDiscrepancy.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerTrackingProvider.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerTrackingRequest.dxml" />
+    <None Include="DBTables\ShipmentsModel\ContainerTrackingResponse.dxml" />
+    <None Include="DBTables\ShipmentsModel\OceanInsightsStatusLog.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentAnalytic.dxml" />
+    <None Include="DBTables\ShipmentsModel\ShipmentDigitalField.dxml" />
+    <None Include="EntityFiles\CommonDataModel\CarrierServiceLine.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerGroup.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\DeploymentPackageExecutionLog.lxml" />
+    <None Include="EntityFiles\CommonDataModel\HorseGender.lxml" />
+    <None Include="EntityFiles\CommonDataModel\Mention.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PortGroup.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\ChildEntitiesCustomField.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\CustomFieldsMainObjects.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\CustomChildObject.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\DataCustomObject.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\DeploymentPackagesVersion.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\EventRemark.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\ImageLibrary.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\ReferenceCustomObject.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\ScreenSection.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARInvoicesSignedStatus.lxml" />
+    <None Include="EntityFiles\QuoteModel\QuoteSalesAmountWithVATDetails.lxml" />
+    <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ContainerDiscrepancy.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ContainerTrackingResponse.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ContainerTrackingRequest.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ContainersExternalData.lxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdatePortSearchFieldsFunction.dxml" />
+    <None Include="DBOthers\CommonDataModel\Procedures\usp_UpdateShippingLineSearchFieldsFunction.dxml" />
+    <None Include="DBOthers\CommonDataModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateVatTypes.dxml" />
+    <None Include="DBOthers\CommonDataModel\Triggers\TriggerOnCreate_AutomaticLastUpdateCustomerTeams.dxml" />
+    <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateVatTypes.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateContainers.dxml" />
+    <None Include="DBOthers\CommonDataModel\Triggers\Trigger_AutomaticLastUpdateDateCustomerTeams.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDatePayableProratedAmounts.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\TriggerOnCreate_AutomaticLastUpdateDateContainerStatuses.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateContainerStatuses.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDatePayableProratedAmounts.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateShipmentSubTypes.dxml" />
+    <None Include="DBOthers\ShipmentsModel\Triggers\Trigger_AutomaticLastUpdateDateContainers.dxml" />
+    <None Include="DBScripts\CommonModel\202111301830_UpdateContainerEntityStatusesNames.sxml" />
+    <None Include="DBScripts\CommonModel\202111122000_QBODocumnetsUploaderWR.sxml" />
+    <None Include="DBScripts\CommonModel\202111011306_PODDocumentWR.sxml" />
+    <None Include="DBScripts\CommonModel\202111101034_UpdateUsersSecurityLevelWithNullValues.sxml" />
+    <None Include="DBScripts\CommonModel\202109021051_AddDefaultValueForSecurityLevel.sxml" />
+    <None Include="DBScripts\CommonModel\202109021049_UpdateUsersSecurityLevel.sxml" />
+    <None Include="DBScripts\CommonModel\202112191200_UpdateReportExcelAllowed.sxml" />
+    <None Include="DBScripts\CommonModel\202201261145_FillPostalCodesTable.sxml" />
+    <None Include="DBScripts\CommonModel\202201101050_AddHRAdminRole.sxml" />
+    <None Include="DBScripts\CommonModel\202201310232_UpdateDeliveryArrivedEventStatus.sxml" />
+    <None Include="DBScripts\CommonModel\202202030232_SetAllowPartialStatuses.sxml" />
+    <None Include="DBScripts\CommonModel\202202141153_AddPartiallyStatuses.sxml" />
+    <None Include="DBScripts\CommonModel\UpdateAutomaticLastUpdateDateOnCustomerTeam.sxml" />
+    <None Include="DBScripts\CommonModel\UpdateDocumentKPIFields.sxml" />
+    <None Include="DBScripts\CommonModel\UpdatePortsSearchFields.sxml" />
+    <None Include="DBScripts\CommonModel\UpdateShippingLinesSearchFields.sxml" />
+    <None Include="DBScripts\GlobalModel\202201131010_AddImporterShipmentOrdersWR.sxml" />
+    <None Include="DBScripts\GlobalModel\202110271507_AddMultiEntityUpdateWR.sxml" />
+    <None Include="DBScripts\GlobalModel\AddCargoDisconnectWorkerRole.sxml" />
+    <None Include="DBScripts\GlobalModel\AddCargoTrackingImporterApprovalReceivedWR.sxml" />
+    <None Include="DBScripts\GlobalModel\AddCollaborationToolContainerWRsBatchService.sxml" />
+    <None Include="DBScripts\CommonModel\UpdateAutomaticLastUpdateDateOnVatType.sxml" />
+    <None Include="DBScripts\GlobalModel\AddCargoReferencesSyncWorkerRole.sxml" />
+    <None Include="DBScripts\GlobalModel\AddUpdatePortTimeZoneWRBatchService.sxml" />
+    <None Include="DBScripts\GlobalModel\DeleteTenantManagmentPrivateLabelsConstraint.a" />
+    <None Include="DBScripts\GlobalModel\PODImageConverterServiceBatchService.sxml" />
+    <None Include="DBScripts\GlobalModel\AddCollaborationToolContainerWRsBatchService.sxml" />
+    <None Include="DBScripts\GlobalModel\RemoveEntityChangeWorkerRole.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202111301850_UpdateContainerEntityStatuesNames.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202111081530_FillEntityStatusTypes.sxml" />
+    <None Include="DBScripts\InfrastructureModel\202201160624_FillQuoteChargesGroup.sxml" />
+    <None Include="DBScripts\InfrastructureModel\UpdateEntityStatusLocalWeight.sxml" />
+    <None Include="DBScripts\InvoiceModel\202201152150_UpgradeSATProf32ToProf33.sxml" />
+    <None Include="DBScripts\InvoiceModel\202111041254_FillARPaymentBankTranferFromARPayment.sxml" />
+    <None Include="DBScripts\InvoiceModel\202109051322_FillARInvoiceShipmentsDataBackward.sxml" />
+    <None Include="DBScripts\InvoiceModel\202109051324_FillAPInvoiceShipmentsDataBackward.sxml" />
+    <None Include="DBScripts\InvoiceModel\202110271103_SetConcurrencyGuidForAPInvoice.sxml" />
+    <None Include="DBScripts\InvoiceModel\202111091101_AddChequeNumberToARPaymentsSearchFields.sxml" />
+    <None Include="DBScripts\InvoiceModel\202119801206_UpdateSATInterfaceSettings.sxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_APInvoices.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_APPayments.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\usp_ChangeTenantLocalCurrency_ARInvoices.dxml" />
@@ -211,6 +423,7 @@
     <None Include="DBScripts\GlobalModel\202105301502_AddContainerStatusesMonitorWR.sxml" />
     <None Include="DBScripts\GlobalModel\202106060833_AddContainerStatusesReceiverWR.sxml" />
     <None Include="DBScripts\GlobalModel\202106081600_AddContainerStatusesConnecterWR.sxml" />
+    <None Include="DBScripts\GlobalModel\202108021331_AddWebHookWR.sxml" />
     <None Include="DBScripts\GlobalModel\AddCollaborationToolSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\GlobalModel\AddShipmentCreateSgipmentUpdateBatchService.sxml" />
     <None Include="DBScripts\GlobalModel\AddShipmentUpdateSgipmentUpdateBatchService.sxml" />
@@ -299,7 +512,7 @@
     <None Include="DBScripts\CommonModel\202012080423_FillAirLineCardSearchData.sxml" />
     <None Include="DBScripts\CommonModel\202012080427_PreparerUpdateCardSearchData.sxml" />
     <None Include="DBScripts\CommonModel\202012080440_FillContactCardSearchData.sxml" />
-    <None Include="DBScripts\CommonModel\202012100811_QueryExportExecutionLogWorkerRole.sxml" />
+    <None Include="DBScripts\CommonModel\202012100811_QueryExportExecutionLogWorkerRole.asxml" />
     <None Include="DBScripts\CommonModel\202012211256_AddNewPickupDeliveryEventTypesToShipment.sxml" />
     <None Include="DBScripts\CommonModel\202012301040_UpdateChargeGroupById.sxml" />
     <None Include="DBScripts\CommonModel\UpdateAutomationWorkerRoleName.sxml" />
@@ -318,17 +531,29 @@
     <None Include="DBScripts\InvoiceModel\202101231210_FillPartnerIdARInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\202101231212_FillPartnerIdARPayments.sxml" />
     <None Include="DBScripts\InvoiceModel\202107111221_FillBankAccountLiteSearchFields.sxml" />
+    <None Include="DBScripts\InvoiceModel\202108161155_ClearReceivableIdFromAutoCreditInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoices.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoiceStatus.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnAPInvoiceTypes.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnARInvoiceStatus.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnARInvoiceTypes.sxml" />
     <None Include="DBScripts\InvoiceModel\2021137249_UpdateAutomaticLastUpdateDateOnPaymentTerms.sxml" />
+    <None Include="DBScripts\InvoiceModel\202108081200_UpdateCancledARInvoiceLinesConnectedToReceivable.sxml" />
+    <None Include="DBScripts\InvoiceModel\202108081230_FillARInvoiceChargesConstraints.sxml" />
+    <None Include="DBScripts\InvoiceModel\20220103148001_FillARInvoicesPaymentReferences.soxml" />
     <None Include="DBScripts\QuoteModel\202103071310_RemoveQuoteComputedFileds.sxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="DBScripts\InvoiceModel\202104120952_FillARInvoiceShipmentsNumbersBackward.sxml" />
     <None Include="DBScripts\InvoiceModel\202104121143_FillAPInvoiceShipmentsNumbersBackward.sxml" />
+    <None Include="DBScripts\QuoteModel\202107251450_AddFromToLocationIncludeCountryToQuoteTemplateTextCode.sxml" />
+    <None Include="DBScripts\QuoteModel\202108312250_DeleteFromRelatedDataToQuoteField.sxml" />
+    <None Include="DBScripts\QuoteModel\202108312330_FillQuotePackagesQuantity.sxml" />
+    <None Include="DBScripts\ShipmentModel\202109121000_FillShipperNotExporterReference1.ssxxml" />
+    <None Include="DBScripts\QuoteModel\202109141136_FillFromToInlandDomesticTypes.sxml" />
+    <None Include="DBScripts\ShipmentModel\202107291118_CalculateVolumetricWeightForShipmentsAndShipmentPackages.sxml">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="DBScripts\ShipmentModel\202103201130_CreateCalculatePayableVatOpenAmountFunction.sxml" />
     <None Include="DBScripts\ShipmentModel\202103211530_FillVatAmountLocalVatAmountProfitInShipmentReceivables.sxml" />
     <None Include="DBScripts\ShipmentModel\202103211530_FillVatAmountLocalVatAmountProfitInShipmentReceivablesOpenLines.sxml" />
@@ -337,9 +562,6 @@
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToAPPaymentSearchField.sxml" />
     <None Include="DBScripts\InvoiceModel\202128011350_AddNotesToARInvoiceSearchField.sxml" />
     <None Include="DBScripts\QuoteModel\202103081133_CalculateReceivablesPayablesQuoteComputedFileds.sxml">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="DBScripts\QuoteModel\202103071547_FillQuoteComputedFileds.sxml">
       <SubType>Designer</SubType>
     </None>
     <None Include="DBScripts\QuoteModel\202103071234_CalculateCostAmountInSaleCurrencyInQouteCharges.sxml">
@@ -421,7 +643,6 @@
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateCustomConnectToShipment.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateInsidePackagesVolumetric.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePackagesVolumetric.dxml" />
-    <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdatePayablesData.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateReceivablesData.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentARInvoices.dxml" />
     <None Include="DBOthers\ShipmentsModel\Procedures\usp_UpdateShipmentFinalArrivalDate.dxml" />
@@ -519,10 +740,21 @@
     <None Include="DBScripts\ShipmentModel\202106171540_FillContainerStatusSources.sxml" />
     <None Include="DBScripts\ShipmentModel\202104251340_UpdateCustomClearanceStatusWeight.sxml" />
     <None Include="DBScripts\ShipmentModel\202106231025_AddOceatInsightUpdateEventToTenants.sxml" />
+    <None Include="DBScripts\ShipmentModel\202107251340_TransferCargoDataFromCustomFieldsToGenericFields.ssxxml" />
     <None Include="DBScripts\ShipmentModel\202107071258_UpdateHorseShipmentSubTypeCode.sxml" />
+    <None Include="DBScripts\ShipmentModel\202107151520_UpdateIsAddedManuallyShipmentSubTypes.sxml" />
+    <None Include="DBScripts\ShipmentModel\202108260927_UpdateContainersFieldsFromShipmentField.sxml" />
+    <None Include="DBScripts\ShipmentModel\202109021032_FillDomesticFromToAdPartner.sxml" />
+    <None Include="DBScripts\ShipmentModel\202112261340_FillVesselNamesFieldsOnShipment.soxml" />
+    <None Include="DBScripts\ShipmentModel\202202141010_UpdateAutomaticLastUpdateDateOnPayableProratedAmounts.sxml" />
+    <None Include="DBScripts\ShipmentModel\202211010335_UpdateAutomaticLastUpdateDateOnContainerStatuses.sxml" />
     <None Include="DBScripts\ShipmentModel\202122031108_UpdateFollowUpForwardingEvents.sxml" />
-    <None Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.sxml" />
-    <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.sxml" />
+    <None Include="DBScripts\ShipmentModel\202201031148_FillProratedAmountTable.soxml" />
+    <None Include="DBScripts\ShipmentModel\DeleteShipmentAssginedtoCustomsAgentId.sxml" />
+    <None Include="DBScripts\ShipmentModel\FillAccountingClosedByUserInShipmentComputedFields.sxml" />
+    <None Include="DBScripts\ShipmentModel\UpdateAutomaticLastUpdateDateOnContainer.sxml" />
+    <Content Include="DBScripts\ShipmentModel\UpdateshipmentsCalculateDocumentsKPIFields.txt" />
+    <None Include="DBScripts\ShipmentModel\UpdateShipmentsCalculateSendDocumentField.soxml" />
     <None Include="DBTables\CommonDataModel\CardSearch.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingCard.dxml" />
     <None Include="DBTables\CommonDataModel\CargoTrackingShipmentSearchField.dxml" />
@@ -607,6 +839,7 @@
     <None Include="DBTables\CommonDataModel\CustomerSalesNote.dxml" />
     <None Include="DBTables\CommonDataModel\CustomerSize.dxml" />
     <None Include="DBTables\CommonDataModel\CustomerStatus.dxml" />
+    <None Include="DBTables\CommonDataModel\CustomerTeam.dxml" />
     <None Include="DBTables\CommonDataModel\CustomerTenantAccess.dxml" />
     <None Include="DBTables\CommonDataModel\CustomerTenantAccessCard.dxml" />
     <None Include="DBTables\CommonDataModel\CustomerTenantAccessCardsBatch.dxml" />
@@ -686,6 +919,7 @@
     <None Include="DBTables\CommonDataModel\PaymentTerm.dxml" />
     <None Include="DBTables\CommonDataModel\PaymentTermDateType.dxml" />
     <None Include="DBTables\CommonDataModel\Port.dxml" />
+    <None Include="DBTables\CommonDataModel\PostalCode.dxml" />
     <None Include="DBTables\CommonDataModel\ProductItem.dxml" />
     <None Include="DBTables\CommonDataModel\ProductPeriod.dxml" />
     <None Include="DBTables\CommonDataModel\ProductType.dxml" />
@@ -693,6 +927,7 @@
     <None Include="DBTables\CommonDataModel\QuoteGroupSection.dxml" />
     <None Include="DBTables\CommonDataModel\Rank.dxml" />
     <None Include="DBTables\CommonDataModel\RateClass.dxml" />
+    <None Include="DBTables\CommonDataModel\RegimenFiscal.dxml" />
     <None Include="DBTables\CommonDataModel\Region.dxml" />
     <None Include="DBTables\CommonDataModel\RegistryDateType.dxml" />
     <None Include="DBTables\CommonDataModel\Report.dxml" />
@@ -832,6 +1067,7 @@
     <None Include="DBTables\InfrastructureModel\EntityLastActivityType.dxml" />
     <None Include="DBTables\InfrastructureModel\EntityLastUpdate.dxml" />
     <None Include="DBTables\InfrastructureModel\EntityStatus.dxml" />
+    <None Include="DBTables\InfrastructureModel\EntityStatusType.dxml" />
     <None Include="DBTables\InfrastructureModel\EventType.dxml" />
     <None Include="DBTables\InfrastructureModel\EventTypeCategory.dxml" />
     <None Include="DBTables\InfrastructureModel\FieldDataType.dxml" />
@@ -866,6 +1102,7 @@
     <None Include="DBTables\InfrastructureModel\QueueDefinition.dxml" />
     <None Include="DBTables\InfrastructureModel\QueueMessage.dxml" />
     <None Include="DBTables\InfrastructureModel\QueueMessageMoreDetails.dxml" />
+    <None Include="DBTables\InfrastructureModel\QuoteChargesGroup.dxml" />
     <None Include="DBTables\InfrastructureModel\RatesTable.dxml" />
     <None Include="DBTables\InfrastructureModel\RuleConditionField.dxml" />
     <None Include="DBTables\InfrastructureModel\RuleNotificationType.dxml" />
@@ -915,6 +1152,7 @@
     <None Include="DBTables\InvoiceModel\APPaymentStatus.dxml" />
     <None Include="DBTables\InvoiceModel\APPaymentTransferStatus.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoice.dxml" />
+    <None Include="DBTables\InvoiceModel\ARInvoiceChargesConstraint.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoiceEntity.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoiceLine.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoiceLineAction.dxml" />
@@ -927,6 +1165,7 @@
     <None Include="DBTables\InvoiceModel\ARInvoiceTransferStatus.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoiceType.dxml" />
     <None Include="DBTables\InvoiceModel\ARPayment.dxml" />
+    <None Include="DBTables\InvoiceModel\ARPaymentBankTranfer.dxml" />
     <None Include="DBTables\InvoiceModel\ARPaymentStatus.dxml" />
     <None Include="DBTables\InvoiceModel\ARPaymentTransferStatus.dxml" />
     <None Include="DBTables\InvoiceModel\BankAccountLite.dxml" />
@@ -940,6 +1179,7 @@
     <None Include="DBTables\InvoiceModel\SATInvoiceStatus.dxml" />
     <None Include="DBTables\InvoiceModel\SATPaymentMethod.dxml" />
     <None Include="DBTables\InvoiceModel\SATTransferStatus.dxml" />
+    <None Include="DBTables\QuoteModel\202103071547_FillQuoteComputedFileds.sxml" />
     <None Include="DBTables\QuoteModel\BorderType.dxml" />
     <None Include="DBTables\QuoteModel\MarkUpType.dxml" />
     <None Include="DBTables\QuoteModel\Quote.dxml" />
@@ -991,6 +1231,7 @@
     <None Include="DBTables\ShipmentsModel\INTTRASIStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\INTTRAStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\LogitudeOceanInsightsRequest.dxml" />
+    <None Include="DBTables\ShipmentsModel\LogitudeOceanInsightsResponse.dxml" />
     <None Include="DBTables\ShipmentsModel\ManifestStatus.dxml" />
     <None Include="DBTables\ShipmentsModel\MessagingStock.dxml" />
     <None Include="DBTables\ShipmentsModel\MessagingStockUsageHistory.dxml" />
@@ -1000,6 +1241,7 @@
     <None Include="DBTables\ShipmentsModel\OceanInsightsRequestsCount.dxml" />
     <None Include="DBTables\ShipmentsModel\OceanInsightsStatuses.dxml" />
     <None Include="DBTables\ShipmentsModel\OtherParticipantId.dxml" />
+    <None Include="DBTables\ShipmentsModel\PayableProratedAmount.dxml" />
     <None Include="DBTables\ShipmentsModel\PickUpDeliveryFromToType.dxml" />
     <None Include="DBTables\ShipmentsModel\PickUpDeliveryPackageHarmonize.dxml" />
     <None Include="DBTables\ShipmentsModel\PickUpDeliveryTransportMode.dxml" />
@@ -1044,14 +1286,20 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\CommonDataModel\CardSearch.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CargoTenantMilestoneDefinition.lxml" />
+    <None Include="EntityFiles\CommonDataModel\CustomerTeam.lxml" />
     <None Include="EntityFiles\CommonDataModel\Horse.lxml" />
     <None Include="EntityFiles\CommonDataModel\HTSCode.lxml" />
     <None Include="EntityFiles\CommonDataModel\HybridTenantState.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PortTimeZone.lxml" />
+    <None Include="EntityFiles\CommonDataModel\PostalCode.lxml" />
     <None Include="EntityFiles\CommonDataModel\ProductItem.lxml" />
+    <None Include="EntityFiles\CommonDataModel\RegimenFiscal.lxml" />
     <None Include="EntityFiles\CommonDataModel\ReportExecutionLog.lxml" />
     <None Include="EntityFiles\CommonDataModel\TariffCarrierTranslation.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\CommonDataModel\UnassignedEntity.lxml" />
     <None Include="EntityFiles\CommonDataModel\VatUniquePartnerType.lxml" />
     <None Include="EntityFiles\CommonDataModel\WarehouseStoragePricing.lxml" />
     <None Include="EntityFiles\CommonDataModel\QuoteGroupSection.lxml" />
@@ -1060,8 +1308,15 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="EntityFiles\InfrastructureModel\DescriptionOfGoods.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\EntityStatusType.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\MultiEntityUpdateLog.lxml" />
     <None Include="EntityFiles\InfrastructureModel\QueryExportExecutionLog.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\QuoteChargesGroup.lxml" />
     <None Include="EntityFiles\InfrastructureModel\WorkerRoleName.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ARPaymentBankTranfer.lxml">
+      <SubType>Component</SubType>
+    </None>
+    <None Include="EntityFiles\InvoiceModel\QBOGlobalTaxCalculation.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteComputedField.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesTotal.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteTemplateSectionType.lxml" />
@@ -1139,6 +1394,7 @@
     <None Include="EntityFiles\ShipmentsModel\Container.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerStatusSource.lxml" />
+    <None Include="EntityFiles\InfrastructureModel\DeploymentPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OBLType.lxml" />
     <None Include="EntityFiles\CommonDataModel\PaymentGatewayPartner.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteVATsTotal.lxml" />
@@ -1571,6 +1827,8 @@
     <None Include="EntityFiles\ShipmentsModel\ManifestStatus.lxml" />
     <None Include="EntityFiles\ShipmentsModel\MessagingStockUsageHistory.lxml" />
     <None Include="EntityFiles\ShipmentsModel\OtherParticipantId.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\PayableProratedAmount.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryFromToType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\PickUpDeliveryPackageHarmonize.lxml">
       <SubType>Designer</SubType>
     </None>
@@ -1589,6 +1847,8 @@
     <None Include="EntityFiles\ShipmentsModel\ShipmentCustomsTransmission.lxml">
       <SubType>Designer</SubType>
     </None>
+    <None Include="EntityFiles\ShipmentsModel\ContainerTrackingProvider.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentDigitalField.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentLevel.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentOrderPackage.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentPackage.lxml">
@@ -1608,6 +1868,7 @@
     <None Include="EntityFiles\ShipmentsModel\ShipmentStoragePricing.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentSubType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ShipmentType.lxml" />
+    <None Include="EntityFiles\ShipmentsModel\ShipmentUnassignedField.lxml" />
     <None Include="EntityFiles\ShipmentsModel\SpecialServicesType.lxml" />
     <None Include="EntityFiles\InfrastructureModel\PrepaidCollect.lxml" />
     <None Include="EntityFiles\SystemLogsModel\BatchServicesLog.lxml" />

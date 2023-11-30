@@ -11,4 +11,5 @@ export class AutomationSetValue {
     public FieldName: string;
     public DataTypeCode: string;
     public IsCustomField: boolean;
+    public PartnerObjectFieldCode: string;
 }

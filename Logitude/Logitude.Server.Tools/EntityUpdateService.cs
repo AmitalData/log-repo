@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Logitude.Server.Tools.Counters;
-using System.Data.Entity;
-using Logitude.Customs.Data;
+﻿using Logitude.Infrastructure.Data.Models.AuditLog;
+using Logitude.Infrastructure.Data.Repsitories;
 using Simplog.Server.Infrastructure;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity.Validation;
 using System.IO;
-using System.Xml.Serialization;
-using System.Xml;
+using System.Linq;
 using System.Transactions;
-using Simplog.Server.Infrastructure.Helpers;
-using Simplog.Server.Infrastructure.DataContracts;
+using System.Xml;
+using System.Xml.Serialization;
 
 namespace Logitude.Server.Tools
 {
@@ -41,6 +38,10 @@ namespace Logitude.Server.Tools
         protected TEntityParentPM EntityParentPM;
         protected List<string> ErrorsList;
         protected bool ThrowValidationException;
+
+        protected List<FieldChange> FieldChanges;
+        protected AuditLogRepository AuditLogRepository;
+
         public EntityUpdateService()
         {
 
@@ -53,6 +54,9 @@ namespace Logitude.Server.Tools
             this.MainContext = mainContext;
             this.ErrorsList = new List<string>();
             this.ThrowValidationException = true;
+
+            FieldChanges = new List<FieldChange>();
+            AuditLogRepository = new AuditLogRepository(tenant);
         }
 
         public void UpdateMulti(List<TEntityPM> entityPMList, List<TEntityPM> deletedEntityPMList, TEntityParentPM entityParentPM, bool commit)
@@ -139,6 +143,8 @@ namespace Logitude.Server.Tools
                             OldEntityPM = new TEntityPM();
                             ChangeTrackingEntityPM = new TEntityPM();
                             Mapping.POCOToPM(OldEntityPM, EntityPOCO);
+                            //Mapping.CustomPOCOToPM(OldEntityPM, EntityPOCO);
+
                             Mapping.POCOToPM(ChangeTrackingEntityPM, EntityPOCO);
                             Mapping.PMToOldPM(entityPM, ChangeTrackingEntityPM);
                             break;

@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
 using Logitude.InvoiceTests.Models.Payment;
-using Logitude.Test.Base.Context;
-using Logitude.Test.Base.Services;
+using Logitude.Base.Context;
+using Logitude.Base.Services;
 using TechTalk.SpecFlow;
 using System.Collections.Generic;
 using System.Linq;
-using Logitude.Test.Base.Models.Api;
-using Logitude.Test.Base.Models.UserTenantPreparation;
-using Logitude.Test.Base.Models.Shared;
+using Logitude.Base.Models.Api;
+using Logitude.Base.Models.UserTenant;
+using Logitude.Base.Models.Shared;
 
 namespace Logitude.InvoiceTests.Steps.SecurityTests
 {

@@ -1,0 +1,224 @@
+<style>
+    .SidebarCollapseButton:hover {
+        opacity: 1;
+    }
+
+    .SidebarCollapseButton {
+        opacity: 0.75;
+        cursor: pointer;
+        float: right;
+        margin-right: 5px;
+    }
+
+    .FlipImgHoriz {
+        transform: rotate(180deg);
+    }
+</style>
+<table>
+    <tr>
+        <td>
+            <table style="margin-top: -30px">
+                <tr style="height: 5px;">
+                    <td></td>
+                </tr>
+
+                <tr style="height: 70px; ">
+                    <td>
+                        <table>
+                            <tr><td></td></tr>
+                            <tr style="height: 70px;">
+                                <td style="width: 60px; height:70px">
+                                    <img src="./Images/Customization/CustomizationIcon.png" class="CenterCenter" style="height: 60px; width: 60px" />
+                                </td>
+                                <td>
+
+
+                                    <table style="width: 130px; height:50px">
+                                        <tr>
+                                            <td><label style="padding-left: 10px; color: rgb(96, 96, 96); font-size: 18px; font-weight: bold; font-family: system-ui ">Customization</label></td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div>
+                                                    <label style="padding-left: 10px; color: #0072e8; font-size: 22px; font-weight: bold; font-family: system-ui ">{{Title}} Manager</label>
+                                                </div>
+                                            </td>
+
+                                        </tr>
+
+
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr><td></td></tr>
+                        </table>
+                    </td>
+                </tr>
+
+
+                <tr style="height: 5px;">
+                    <td></td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="MediaFillAbsolute MarginAbsolute10" style="background: white;">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <div class="MediaFill CurvedArea">
+                                            <table>
+                                                <tr>
+
+                                                    <!-- Tabs -->
+                                                    <td [style.width.px]="MainMenuWidth">
+                                                        <div [className]="LayoutDirection == 'rtl' ? 'MediaFill AppLeftMenuBackgroundRTL' : 'MediaFill AppLeftMenuBackground'">
+                                                            <table class="PreventSelect">
+                                                                <tr style="height: 20px;">
+                                                                    <td>
+                                                                        <img *ngIf="IsMainSidebarCollapsed == true" src="./_Resources/Images/Icons/All/SidebarRight_big.png" class="SidebarCollapseButton" (click)="IsMainSidebarCollapsed = false" />
+                                                                        <img *ngIf="IsMainSidebarCollapsed == false" src="./_Resources/Images/Icons/All/SidebarLeft_big.png" class="SidebarCollapseButton" (click)="IsMainSidebarCollapsed = true" />
+                                                                    </td>
+                                                                </tr>
+
+                                                                <tr style="background: rgba(212, 212, 212, 0.5);">
+                                                                    <td>
+                                                                        <table>
+                                                                            <tr style="height: 1px; background: #CCCCCC;">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr>
+                                                                                <td style="vertical-align:top">
+                                                                                    <ul>
+                                                                                        <li class="DefaultMenuItem" id="{{item.TextCode | IdGeneratorAsyncPipe | async}}" *ngFor="let item of filterMainMenuItems()"
+                                                                                            (click)="SelectionChanged(item)"
+                                                                                            [style.text-align]="LayoutDirection=='rtl' ? 'right' : 'left'"
+                                                                                            [ngStyle]="(item === SelectedMenu) && hasMainTabHighlightColor? privateLabelClass : ''"
+                                                                                            [class.SelectedMenuItem]="(item === SelectedMenu) && !hasMainTabHighlightColor">
+                                                                                            <img [attr.title]="item.TextCode" *ngIf="item != SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto; height:17px; width:17px" [attr.src]="item.IconSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '5px'} : {'left': '5px'}" />
+                                                                                            <img [attr.title]="item.TextCode" *ngIf="item == SelectedMenu" style="position: absolute; top: 0; bottom: 0; margin: auto; height: 17px; width: 17px " [attr.src]="item.IconSelectedSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '6px'} : {'left': '6px'}" />
+                                                                                            <div [hidden]="IsMainSidebarCollapsed" style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px;" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '30px','padding-right':'0px'} : {'left': '20px'}"><span>{{item.TextCode}}</span></div>
+                                                                                            <img *ngIf="item == SelectedMenu" [className]="LayoutDirection == 'rtl' ? 'LeftCenter' : 'RightCenter'" [class.FlipImgHoriz]="LayoutDirection == 'rtl'" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px;" />
+                                                                                        </li>
+                                                                                    </ul>
+                                                                                </td>
+                                                                            </tr>
+
+                                                                            <tr style="height: 1px; background: #CCCCCC;">
+                                                                                <td>
+                                                                                    <div></div>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </td>
+
+                                                    <!-- Tab Body -->
+                                                    <td>
+                                                        <div *ngIf="SelectedMenu" class="MediaFill">
+
+                                                            <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'CUSTOMFIELD'">
+                                                                <div LocationDirective Code="CUSTOMFIELD"></div>
+                                                            </div>
+                                                            <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'STANDARDFIELD'">
+                                                                <div LocationDirective Code="STANDARDFIELD"></div>
+                                                            </div>
+                                                            <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'SCREENLAYOUT'">
+                                                                <div LocationDirective Code="SCREENLAYOUT"></div>
+                                                            </div>
+                                                            <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'TABS'">
+                                                                <div LocationDirective Code="TABS"></div>
+                                                            </div>
+                                                            <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'RULES'">
+                                                                <div LocationDirective Code="RULES"></div>
+                                                            </div>
+                                                            <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'SUBENTITIES'">
+                                                                <div LocationDirective Code="SUBENTITIES"></div>
+                                                            </div>
+                                                            <div class="MediaFillAbsolute MarginAbsolute10" [hidden]="SelectedMenu.Code != 'QUERIES'">
+                                                                <div LocationDirective Code="QUERIES"></div>
+                                                            </div>
+
+                                                        </div>
+                                                    </td>
+
+
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </td>
+                </tr>
+                <tr style="height:25px">
+                    <td>
+                        <table>
+                            <tr>
+                                <td>
+                                    <div></div>
+                                </td>
+                                <td style="width: 57px;">
+                                    <button id="{{ 'CloseBtn' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="CloseClicked()">Close</button>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <!-- Save -->
+                                <td style="width: 57px;">
+                                    <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" *ngIf="!IsDirty" class="Button" (click)="OkButtonClicked()">
+                                        <!-- add this to button prop => *ngIf="!EntityPM.IsDirty"-->
+                                        <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.png" />
+                                        <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                                    </button>
+
+                                    <button id="{{ 'SaveBtn' | IdGeneratorAsyncPipe | async}}" class="EntityChangesButton" *ngIf="IsDirty" (click)="OkButtonClicked()">
+                                        <img class="LeftCenter" style="margin-left: 2px;" src="./Images/Buttons/Save.Red.png" />
+                                        <span style="line-height: 19px; margin-left: 17px;">Save</span>
+                                    </button>
+                                </td>
+
+                                <td style="width: 5px;">
+                                    <div></div>
+                                </td>
+
+                                <!-- Save & Close -->
+                                <td style="width: 25px;">
+                                    <button id="{{ 'SaveClose' | IdGeneratorAsyncPipe | async}}" *ngIf="!IsDirty" class="Button" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
+                                        <!-- add this to button prop => *ngIf="!EntityPM.IsDirty"-->
+                                        <img class="CenterCenter" src="./Images/Buttons/Save.png" />
+                                        <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" />
+                                    </button>
+
+                                    <button id="{{ 'SaveClose' | IdGeneratorAsyncPipe | async}}" class="EntityChangesButton" *ngIf="IsDirty" (click)="SaveChangesAndClose()" [title]="'General.B.SaveAndClose' | TextCodeTranslationPipe">
+                                        <img class="CenterCenter" src="./Images/Buttons/Save.Red.png" />
+                                        <img src="./Images/RedX2.png" style="width: 7px; height: 7px; position: absolute; top:1px;" />
+                                    </button>
+                                </td>
+                                <td style="width: 12px;">
+                                    <div></div>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+    <tr>
+        <td>
+        </td>
+    </tr>
+</table>
+
+

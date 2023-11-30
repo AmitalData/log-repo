@@ -351,6 +351,9 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
                 TenantManagementRepository tenantMngmentRep = new TenantManagementRepository();
                 TenantManagement tenantMngment = tenantMngmentRep.GetSingleTenantManagement(currentTenant.Id);
                 tenantMngment.Name = currentTenant.Company;
+                tenantMngment.DPArchiveShipmentArrivalFilter = currentTenant.DPArchiveShipmentArrivalFilter;
+                tenantMngment.DPArchiveShipmentDepartFilter = currentTenant.DPArchiveShipmentDepartFilter;
+                tenantMngment.DPArchiveShipmentCreateFilter = currentTenant.DPArchiveShipmentCreateFilter;
                 tenantMngmentRep.Update(tenantMngment);
                 tenantMngmentRep.SubmitChanges();
 
@@ -364,6 +367,7 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             LogBoxTenantSetting logBoxTenantSetting = logBoxTenantSettingRepository.GetSingleLogBoxTenantSetting(currentTenant.Id);
             logBoxTenantSetting.CustomerTenantShareImportFile = currentTenant.CustomerTenantShareImportFile;
             logBoxTenantSetting.AutoArchiveOnInvoice = currentTenant.AutoArchiveOnInvoice;
+            logBoxTenantSetting.AutoArchiveOnPODExport = currentTenant.AutoArchiveOnPODExport;
             logBoxTenantSetting.DocumentShareAsDefault = currentTenant.DocumentShareAsDefault;
             logBoxTenantSetting.LogBoxAdminUserId = currentTenant.LogBoxAdminUserId;
 

@@ -40,6 +40,7 @@ using Logitude.BL.ShipmentsModel.EntityLists;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.BL.ShipmentsModel.Tools.EntityService;
 
+
 namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
 { 
 

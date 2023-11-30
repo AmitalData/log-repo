@@ -29,6 +29,8 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 AuthenticationToken authToken = GetAuthenticationToken();
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticateAPICall(authToken.Tenant);
+                SecurityUtility.AuthenticateAccessibleAPI("GL Account More Data", authToken.Tenant);
+
                 GLAccount account= GetGLAccountByNumber(number, tenant);
                 GLAccountMoreData gLAccountMoreData = GetSingleGLAccountMoreDataByGLAccountId(account);
                 return Request.CreateResponse(HttpStatusCode.OK, gLAccountMoreData);
@@ -85,7 +87,7 @@ namespace WebFreight.Web.ExternalAPIs.V1
                 accountMoreData.AccountId = null;
                 accountMoreData.GLAccountTotalsByCurrencies = GetTotalByCurrencies(account);
 
-                accountMoreData.TotFutureOpenChequesInLocalCur += GetAccountExternalTransactionTotal(account.Tenant, account.Id);
+                //accountMoreData.TotFutureOpenChequesInLocalCur += GetAccountExternalTransactionTotal(account.Tenant, account.Id);
 
                 return accountMoreData;
             }

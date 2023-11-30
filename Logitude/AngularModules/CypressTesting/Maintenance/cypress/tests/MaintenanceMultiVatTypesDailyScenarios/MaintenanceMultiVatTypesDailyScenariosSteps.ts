@@ -9,6 +9,7 @@ import { EventTypeDetails } from "../../../../Base/cypress/models/EventTypeDetai
 import * as GeneralActions from "../../actions/BaseActions";
 import { Urls } from "../../constants/Urls";
 import { BaseSelectors } from "../../../../Base/cypress/selectors/BaseSelectors";
+import { GenerateRandomNumberAndString } from '../../../../Base/cypress/actions/GenerateRandoms';
 
 //#region Enable Multi-percentage
 Given("the user logged in and open {string} in maintenance menu", (maintenanceItemName) => {
@@ -90,6 +91,7 @@ Given("fill the following multi vat type Accounting details", (dataTable) => {
     let vatTypeDetails = Assists.CreateInstance<VatTypeDetails>(dataTable, true);
     cy.Navigate(VatTypesSelectors.AccountingTab);
     vatTypeActions.FillVatTypeAccountingTab(vatTypeDetails)
+    cy.FillLogTextBox(VatTypesSelectors.AccountingPayablesExternalId, GenerateRandomNumberAndString(5));
 });
 
 When("save multi vat type", () => {

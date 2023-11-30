@@ -32,6 +32,7 @@ export class CashBookList {
 	BranchId: string;
 	CurrencySign: string;
 	BranchName: string;
+	InDepositingProgress: boolean;
 	
 }
  

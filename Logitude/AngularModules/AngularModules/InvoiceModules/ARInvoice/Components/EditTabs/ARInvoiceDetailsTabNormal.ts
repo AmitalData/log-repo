@@ -35,6 +35,7 @@ import {ConfirmWindow} from '../../../../Controls/Windows/ConfirmWindow';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { ARInvoiceStockLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
+import { AccountingSettingListService } from '../../../../Common/Services/StandardLists/AccountingSettingListService';
 
 @Component({
     
@@ -58,7 +59,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     private CurrentSession = SessionLocator.SelectedSession;
     public InvoiceNumberFilterList: CodeNameClass[] = [];
     public NumbersPipe: NumbersPipe;
-
+    public IsUsingVirtuallization: boolean = false;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.NumbersPipe = new NumbersPipe();
@@ -77,7 +78,6 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.Listen();
 
         this.BuildEntityWarnings();
-
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
@@ -428,7 +428,42 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
         this.UIProperties.SetEnabled("DueDate", this.ObjectTableName, AllowManuallyDueDate);
     }
-
+    private GetDocumentTypeTemplates() {
+        if (!this.IsHaveARInvoicePrintToogleFeature()) return;
+        if (!this.PartnerId) return;
+        this.CurrentSession.StartBusyIndicatorLoading();
+        let documentTypeCode: string = this.GetDocumentTypeCode();
+        this.BuildDocumentTypeTemplateDependedOnPartnerDefaultTemplate(documentTypeCode);
+    }
+    IsHaveARInvoicePrintToogleFeature() {
+        return SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ARP")[0];
+    }
+    private GetDocumentTypeCode() {
+        if (this.EntityPM.IsConsolidationInvoice) return "999C";
+        if (this.EntityPM.IsGeneralInvoice) return "999G";
+        if (this.EntityPM.ARInvoiceTypeCode == "MN") return "999M";
+        if (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") return "999CI";
+        return "999S";
+    }
+    BuildDocumentTypeTemplateDependedOnPartnerDefaultTemplate(documentTypeCode: string): any {
+        let selectedDocumentTypeTemplateId: string = null;
+        this.myCardListService.getSingle(this.PartnerId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) return;
+            let cardList: CardList = myResponse.Result;
+            selectedDocumentTypeTemplateId = this.GetPartnerDocumentTypeTemplatetDefault(cardList, documentTypeCode);
+            if (selectedDocumentTypeTemplateId) {
+                this.EntityPM.DocumentTemplateId = selectedDocumentTypeTemplateId;    
+            }
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+    GetPartnerDocumentTypeTemplatetDefault(cardList: CardList, documentTypeCode: string) {
+        if (!cardList) return null;
+        if (documentTypeCode == "999S") return cardList.SingleInvoiceTemplateId;
+        if (documentTypeCode == "999C") return cardList.ConsolidationInvoiceTemplateId;
+        if (documentTypeCode == "999CI") return cardList.CustomsInvoiceTemplateId;
+        if (documentTypeCode == "999M") return cardList.ManifestInvoiceTemplateId;
+    }
     get PartnerId() { return this.EntityPM.PartnerId; }
     set PartnerId(newValue: string) {
         if (this.EntityPM.PartnerId != newValue) {
@@ -441,6 +476,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                     if (!myResponse.HasError) {
                         var list: CardList = myResponse.Result;
                         if (list != null) {
+                            this.GetDocumentTypeTemplates();
                             this.BillToId = list.BillToId;
                             if (AppTool.IsNullOrEmpty(this.BillToId)) {
                                 this.BillToId = newValue;
@@ -1019,6 +1055,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     }
 
     BuildScreenData() {
+        this.SetIsUsingVirtuallization();
         if (this.IsEditingEnabled) {
             this.LoadData();
         }
@@ -1027,6 +1064,14 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.BuildInvoiceLines();
         }
     }
+
+    SetIsUsingVirtuallization() {
+        var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
+        if (hasGridVirtuallizationToggleFeature) {
+            this.IsUsingVirtuallization = true;
+        }
+    }
+
     BuildInvoiceLines() {
 
         this.ItemsSource = [];
@@ -1267,15 +1312,19 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
     }
 
+    private AmountInLocalCurrencyEquations: string[];
+    private AmountInInvoiceCurrencyEquations: string[];
     public SummaryItems: SummaryItem[] = [];
     ComputeTotals() {
+        this.AmountInLocalCurrencyEquations = [];
+        this.AmountInInvoiceCurrencyEquations = [];
         this.BuildTotalVATs();
 
         this.SubTotalInLocalCurrency = AppTool.Round(ArrayTool.Sum(this.EntityPM.InvoiceLines, "LocalCurrencyAmount"), 2);
         this.SubTotalInInvoiceCurrency = AppTool.Round(ArrayTool.Sum(this.EntityPM.InvoiceLines, "InvoiceCurrencyAmount"), 2);
         this.AmountInLocalCurrency = AppTool.Round(this.EntityPM.SubTotalInLocalCurrency + ArrayTool.Sum(this.EntityPM.TotalVATs, "LocalVATAmount"), 2);
         this.AmountInInvoiceCurrency = AppTool.Round(this.EntityPM.SubTotalInInvoiceCurrency + ArrayTool.Sum(this.EntityPM.TotalVATs, "InvoiceCurrencyVATAmount"), 2);
-
+        this.BuildTotalEquation();
         if (this.EntityPM.ProfitCurrencyId == SessionLocator.LocalCurrencyId) {
             this.AmountInProfitCurrency = this.EntityPM.AmountInLocalCurrency;
         }
@@ -1296,6 +1345,25 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
 
         this.BuildSummary();
     }
+
+    BuildTotalEquation() {
+        var equation = "";
+        var amountInLocalCurrencyEquation = "(";
+        this.AmountInLocalCurrencyEquations.forEach(item => {
+            amountInLocalCurrencyEquation = amountInLocalCurrencyEquation == "(" ? amountInLocalCurrencyEquation + item : amountInLocalCurrencyEquation + " + " + item;
+        });
+
+        var amountInInvoiceCurrencyEquation = "(";
+        this.AmountInInvoiceCurrencyEquations.forEach(item => {
+            amountInInvoiceCurrencyEquation = amountInInvoiceCurrencyEquation == "(" ? amountInInvoiceCurrencyEquation + item : amountInInvoiceCurrencyEquation + " + " + item;
+        });
+
+        amountInLocalCurrencyEquation = amountInLocalCurrencyEquation + ")"
+        equation = "AmountInLocalCurrency { " + this.AmountInLocalCurrency + " From ((" + this.EntityPM.SubTotalInLocalCurrency +  " + " + amountInLocalCurrencyEquation + ")R2) }" ;
+        equation = equation + " AmountInInvoiceCurrency { " + this.AmountInInvoiceCurrency + " From ((" + this.EntityPM.SubTotalInInvoiceCurrency +  " + " + amountInInvoiceCurrencyEquation + ")R2) }" ;
+        this.TotalEquation = equation;
+    }
+
     BuildTotalVATs() {
         this.EntityPM.TotalVATs = [];
 
@@ -1424,9 +1492,12 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                 itemTotalVAT.ProfitCurrencyVATAmount = AppTool.Round((itemTotalVAT.ProfitVatableAmount * itemTotalVAT.VATPercent / 100), 2);
                 itemTotalVAT.VatTypeCell = itemTotalVAT.VatTypeName + " (" + this.NumbersPipe.transform(itemTotalVAT.VATPercent, "N3") + "%)";
                 this.EntityPM.AddARInvoiceTotalVATPM(itemTotalVAT);
+
+                this.AmountInLocalCurrencyEquations.push(itemTotalVAT.LocalVATAmount + " From ((" + itemTotalVAT.LocalVatableAmount + "*" + itemTotalVAT.VATPercent + "/100)R2)");
+                this.AmountInInvoiceCurrencyEquations.push(itemTotalVAT.InvoiceCurrencyVATAmount + " From ((" + itemTotalVAT.InvoiceCurrencyVatableAmount + "*" + itemTotalVAT.VATPercent + "/100)R2)");
             });
         }
-    }
+    } 
     BuildSummary() {
         this.SummaryItems = [];
         var selectedCurrencyCode = this.IsTotalInLocalCurrency ? "(" + this.LocalCurrencyCode + ")" : "(" + this.InvoiceCurrencyCode + ")";
@@ -1485,6 +1556,13 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     set AmountInInvoiceCurrency(value: number) {
         if (this.EntityPM.AmountInInvoiceCurrency != value) {
             this.EntityPM.AmountInInvoiceCurrency = AppTool.Round(value, 2);
+        }
+    }
+
+    get TotalEquation() { return this.EntityPM.TotalEquation; }
+    set TotalEquation(value: string) {
+        if (this.EntityPM.TotalEquation != value) {
+            this.EntityPM.TotalEquation = value;
         }
     }
 
@@ -1779,6 +1857,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
             this.ComputeTotals();
         }
     }
+
 }
 export class ARInvoiceLineItem extends BaseComponent {
     public EntityPM: ARInvoiceLinePM = null;

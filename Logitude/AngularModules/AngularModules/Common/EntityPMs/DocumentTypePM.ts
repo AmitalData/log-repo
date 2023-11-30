@@ -26,7 +26,7 @@ export class DocumentTypePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -169,6 +169,11 @@ export class DocumentTypePM {
     private isCustomerView: boolean;
     public get IsCustomerView() { return this.isCustomerView; }
     public set IsCustomerView(newValue: boolean) { if (this.isCustomerView != newValue) { this.isCustomerView = newValue; this.MarkAsDirty("IsCustomerView"); } }
+       
+	 
+    private isCustomerUploadPermission: boolean;
+    public get IsCustomerUploadPermission() { return this.isCustomerUploadPermission; }
+    public set IsCustomerUploadPermission(newValue: boolean) { if (this.isCustomerUploadPermission != newValue) { this.isCustomerUploadPermission = newValue; this.MarkAsDirty("IsCustomerUploadPermission"); } }
        
 	 
     private isHybrid: boolean;

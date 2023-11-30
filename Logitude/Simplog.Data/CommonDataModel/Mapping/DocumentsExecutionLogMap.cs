@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace Simplog.Data.CommonDataModel.Mapping
 {
 
-    
+
     public class DocumentsExecutionLogMap : EntityTypeConfiguration<DocumentsExecutionLog>
     {
         public DocumentsExecutionLogMap()
@@ -64,6 +64,10 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(8000)
                 .IsUnicode(true);
 
+            this.Property(t => t.ExecutedByServerName)
+                .HasMaxLength(100)
+                .IsUnicode(false);
+
             // Table & Column Mappings
             this.ToTable("DocumentsExecutionLogs");
             this.Property(t => t.Id).HasColumnName("Id");
@@ -81,6 +85,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.StartDate).HasColumnName("StartDate");
             this.Property(t => t.Logs).HasColumnName("Logs");
             this.Property(t => t.Subject).HasColumnName("Subject");
+            this.Property(t => t.ExecutedByServerName).HasColumnName("ExecutedByServerName");
 
             // Relationships
 

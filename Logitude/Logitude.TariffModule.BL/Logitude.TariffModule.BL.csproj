@@ -48,14 +48,8 @@
       <HintPath>..\Logitude.SystemLogs\bin\Debug\Logitude.SystemLogs.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
-    <Reference Include="Simplog.Data">
-      <HintPath>..\Simplog.Data\bin\Debug\Simplog.Data.dll</HintPath>
-    </Reference>
     <Reference Include="Simplog.Data.Global">
       <HintPath>..\Simplog.Global.Data\bin\Debug\Simplog.Data.Global.dll</HintPath>
-    </Reference>
-    <Reference Include="Simplog.Server.Infrastructure">
-      <HintPath>..\Simplog.Global.Data\bin\Debug\Simplog.Server.Infrastructure.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.Composition" />
@@ -135,6 +129,7 @@
     <Compile Include="EntityQueryServices\TariffLinesContainersPriceQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffSurchargesUpdateQueryService.cs" />
+    <Compile Include="EntityQueryServices\TariffTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffVersionQueryService.cs" />
     <Compile Include="EntityQueryServices\TariffVersionUploadedExcelQueryService.cs" />
     <Compile Include="EntityUpdateServices\Generated\TariffLinesContainersPriceUpdateService.Generated.cs" />
@@ -156,8 +151,11 @@
     <Compile Include="EntityUpdateServices\TariffVersionAllInChargeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffVersionUpdateService.cs" />
     <Compile Include="EntityUpdateServices\TariffVersionUploadedExcelUpdateService.cs" />
+    <Compile Include="Helpers\CustomsChargesGenerator.cs" />
     <Compile Include="Helpers\PriceCheckManager.cs" />
+    <Compile Include="Helpers\SalesLocalChargesGenerator.cs" />
     <Compile Include="Helpers\TariffLineHelper.cs" />
+    <Compile Include="Helpers\TariffPricesHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Validators\TariffModuleClassLevelValidator.cs" />
     <Compile Include="Validators\TariffModuleValidationClass.cs" />
@@ -181,6 +179,14 @@
     <ProjectReference Include="..\Logitude.TariffModule.Data\Logitude.TariffModule.Data.csproj">
       <Project>{0a2a3ab8-4d14-4140-be2f-2d95b235bb7c}</Project>
       <Name>Logitude.TariffModule.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Data\Simplog.Data.csproj">
+      <Project>{78ec8434-e6ad-4e93-9b17-c746f5403f7b}</Project>
+      <Name>Simplog.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simplog.Server.Infrastructure\Simplog.Server.Infrastructure.csproj">
+      <Project>{acc2ea9e-e150-4099-8aa1-66326ab14be8}</Project>
+      <Name>Simplog.Server.Infrastructure</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

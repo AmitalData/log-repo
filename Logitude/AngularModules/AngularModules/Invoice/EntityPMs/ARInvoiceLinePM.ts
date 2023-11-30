@@ -21,10 +21,10 @@ export class ARInvoiceLinePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
+	            this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-      }
+       }
 
 	 
     
@@ -187,7 +187,10 @@ export class ARInvoiceLinePM {
     public get InvoiceCurrencyCode() { return this.invoiceCurrencyCode; }
     public set InvoiceCurrencyCode(newValue: string) { if (this.invoiceCurrencyCode != newValue) { this.invoiceCurrencyCode = newValue; this.MarkAsDirty("InvoiceCurrencyCode"); } }
        
-	 
+    private invoiceCurrencyId: string;
+    public get InvoiceCurrencyId() { return this.invoiceCurrencyId; }
+    public set InvoiceCurrencyId(newValue: string) { if (this.invoiceCurrencyId != newValue) { this.invoiceCurrencyId = newValue; this.MarkAsDirty("InvoiceCurrencyId"); } }
+
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
@@ -232,7 +235,7 @@ export class ARInvoiceLinePM {
     public get LineActionCode() { return this.lineActionCode; }
     public set LineActionCode(newValue: string) { if (this.lineActionCode != newValue) { this.lineActionCode = newValue; this.MarkAsDirty("LineActionCode"); } }
        
-	 
+     
     private isCustomsCharge: boolean;
     public get IsCustomsCharge() { return this.isCustomsCharge; }
     public set IsCustomsCharge(newValue: boolean) { if (this.isCustomsCharge != newValue) { this.isCustomsCharge = newValue; this.MarkAsDirty("IsCustomsCharge"); } }
@@ -257,7 +260,17 @@ export class ARInvoiceLinePM {
     public get InvoiceCurrencyExchangeRate() { return this.invoiceCurrencyExchangeRate; }
     public set InvoiceCurrencyExchangeRate(newValue: number) { if (this.invoiceCurrencyExchangeRate != newValue) { this.invoiceCurrencyExchangeRate = newValue; this.MarkAsDirty("InvoiceCurrencyExchangeRate"); } }
        
-	 
+    private reportedinTaxReport: string;
+    public get ReportedinTaxReport() { return this.reportedinTaxReport; }
+    public set ReportedinTaxReport(newValue: string) { if (this.reportedinTaxReport != newValue) { this.reportedinTaxReport = newValue; this.MarkAsDirty("ReportedinTaxReport"); } }
+
+    private gLAccountLocalName: string;
+    public get GLAccountLocalName() { return this.gLAccountLocalName; }
+    public set GLAccountLocalName(newValue: string) { if (this.gLAccountLocalName != newValue) { this.gLAccountLocalName = newValue; this.MarkAsDirty("GLAccountLocalName"); } }
+
+    private gLAccountDisplayNumber: string;
+    public get GLAccountDisplayNumber() { return this.gLAccountDisplayNumber; }
+    public set GLAccountDisplayNumber(newValue: string) { if (this.gLAccountDisplayNumber != newValue) { this.gLAccountDisplayNumber = newValue; this.MarkAsDirty("GLAccountDisplayNumber"); } }
 
     public OldEntityPM: ARInvoiceLinePM;
 	    
@@ -293,4 +306,4 @@ export class ARInvoiceLinePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

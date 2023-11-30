@@ -1,6 +1,7 @@
 import { FilterMetadata, LazyLoadEvent } from 'primeng/api';
 import { AppTool } from '../Tools';
 import { ApiQueryFiltersAddParams } from './ApiQueryFiltersAddParams';
+import { QueryFilterViewItem } from './QueryFilterViewItem';
 export class ApiQueryFilters {
 
     constructor(getAll: boolean = false,private usePrimNG = false) {
@@ -13,9 +14,14 @@ export class ApiQueryFilters {
     public GetCount: boolean;
     public Tenant: number;
     public AdditionalFilters: FilterItem[] = [];
+    public TreeFilters: string = '';
+    public ParentEntityId: string = '';
+    public ParentEntity: string = '';
+    public ParentObjectTableName: string = '';
     public ForceCacheRefresh: boolean = false;
     public DontApplyVirtualization: boolean = false;
-
+    public ProfileCode: string;
+    public ObjectTableId: string;
     public MyAmitalLazyLoadEvent: AmitalLazyLoadEvent ;
     AddAmitaFilterMetadata(prop: string, propValue: any, matchMode: string, operator: string) {
         if (AppTool.IsNullOrEmpty(this.MyAmitalLazyLoadEvent)) {
@@ -161,6 +167,14 @@ export class ApiQueryFilters {
             this.AdditionalFilters.splice(index, 1);
         }
     }
+
+    removeAdditionalFilterForNoneLookUpfilter(FieldName: string) {
+      var item = this.AdditionalFilters.filter(d=> d.FieldName == FieldName)[0];
+      if (item) {
+          var index = this.AdditionalFilters.indexOf(item);
+          this.AdditionalFilters.splice(index, 1);
+      }
+    }
     
     pushAdditionalFilter(params:ApiQueryFiltersAddParams){
       if (!params.IsCacheOnClient) {
@@ -267,18 +281,20 @@ export class ApiQueryFilters {
 
 export class FilterItem {
     constructor(
-        public FieldName: string,
-        public FieldValue: any,
-        public FieldValue2: any,
-        public FieldValue3: any,
-        public Operator: string,
-        public IsCustom: boolean,
-        public DisplayInList: boolean,
-        public IsCustomField: boolean,
-        public FieldDataType: string,
-        public IgnoreFilter: boolean,
+        public FieldName: string = '',
+        public FieldValue: any = null,
+        public FieldValue2: any = null,
+        public FieldValue3: any = null,
+        public Operator: string = '',
+        public IsCustom: boolean = false,
+        public DisplayInList: boolean = false,
+        public IsCustomField: boolean = false,
+        public FieldDataType: string = '',
+        public IgnoreFilter: boolean = false,
         public IsCacheOnClient: boolean = false,
-        public IsLookUpfilter:boolean=false) { }
+        public IsLookUpfilter: boolean = false,
+        public QueryFilterItems: QueryFilterViewItem[] = null) { }
+        public FilterType: string = 'And'
         
 
 }

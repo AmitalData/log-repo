@@ -637,7 +637,14 @@ export class ExternalPagesTabComponent extends BaseComponent implements OnInit, 
             this.CurrentSession.StopBusyIndicator();
         });
     }
+    get DateFormat() { return this.EntityPM.DateFormat; }
+    set DateFormat(value: string) {
+        if (this.EntityPM.DateFormat != value) {
+            this.EntityPM.DateFormat = value;
 
+
+        }
+    }
     showReconcileWindow(currency: any)
     {
 

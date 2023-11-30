@@ -250,6 +250,52 @@ namespace Logitude.TariffModule.BL.EntityPMs
 			
 		 }
 	   }
+	  private string airUnitOfMeasurementCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string AirUnitOfMeasurementCode  
+	   {
+	    
+	     get
+		{
+		   return airUnitOfMeasurementCode;
+		 }
+		 set
+		 {
+		   if(airUnitOfMeasurementCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AirUnitOfMeasurementCode",OldValue=airUnitOfMeasurementCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   airUnitOfMeasurementCode=value;
+		   }
+			
+		 }
+	   }
+	  private string lCLUnitOfMeasurementCode ;
+	  	  
+       
+	   [CustomValidation(typeof(TariffModuleValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LCLUnitOfMeasurementCode  
+	   {
+	    
+	     get
+		{
+		   return lCLUnitOfMeasurementCode;
+		 }
+		 set
+		 {
+		   if(lCLUnitOfMeasurementCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LCLUnitOfMeasurementCode",OldValue=lCLUnitOfMeasurementCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lCLUnitOfMeasurementCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -99,6 +99,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public DateTime? DueDate { get; set; }
         [Column("CurrencyId")]
 	    public string CurrencyId { get; set; }
+        [Column("SecurityLevel")]
+	    public int? SecurityLevel { get; set; }
     }
 }
 	 

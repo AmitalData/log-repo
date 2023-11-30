@@ -1,0 +1,298 @@
+﻿using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.Helpers;
+using Logitude.BL.ShipmentsModel.APIDataContract.ApiV1;
+using Logitude.BL.ShipmentsModel.EntityPMs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Xml.Serialization;
+
+namespace Logitude.BL.CommonDataModel.APIDataContract.QueryService
+{
+    public class APIUnassignedDataHandler
+    {
+        public bool HasUnassignedData;
+        public List<APICard> ReceivedCodes;
+        private CardQuery query = null;
+        private int tenant;
+        private string computingPartnerName = null;
+        private ComputingPartnerTranslationHelper computingPartnerTranslationHelper = null;
+        private ObjectTableRepository objectTableRepository;
+        private UnassignedEntityQuery unassignedEntityQuery;
+        private string customerObjectTableName = "Customer";
+        private string CardTypeSameAsCustomerCode = "";
+        public APIUnassignedDataHandler(int tenant, string computingPartnerName)
+        {
+            this.tenant = tenant;
+            this.query = new CardQuery(tenant);
+            this.computingPartnerTranslationHelper = new ComputingPartnerTranslationHelper(this.tenant);
+            this.objectTableRepository = new ObjectTableRepository(this.tenant);
+            this.unassignedEntityQuery = new UnassignedEntityQuery(this.tenant);
+            this.computingPartnerName = computingPartnerName;
+            this.HasUnassignedData = false;
+            this.ReceivedCodes = new List<APICard>();
+        }
+
+        public Direct HandleUnassignedDirectShipmentData(Direct shipment)
+        {
+            if (shipment == null)
+                return shipment;
+
+            shipment.Shipper = this.HandleUnassignedCard(shipment.Shipper, CardsTypes.Shipper.ToString(), customerObjectTableName);
+            shipment.Consignee = this.HandleUnassignedCard(shipment.Consignee, CardsTypes.Consignee.ToString(), customerObjectTableName);
+            shipment.ShipperNotExporter = this.HandleUnassignedCard(shipment.ShipperNotExporter, CardsTypes.ShipperNotExporter.ToString(), customerObjectTableName);
+            shipment.ConsigneeNotImporter = this.HandleUnassignedCard(shipment.ConsigneeNotImporter, CardsTypes.ConsigneeNotImporter.ToString(), customerObjectTableName);
+            shipment.Customer = this.HandleCustomerUnassignedCard(shipment.Customer, shipment);
+            
+            return shipment;
+        }
+
+        public House HandleUnassignedHouseShipmentData(House shipment)
+        {
+            if (shipment == null)
+                return shipment;
+
+            shipment.Shipper = this.HandleUnassignedCard(shipment.Shipper, CardsTypes.Shipper.ToString(), customerObjectTableName);
+            shipment.Consignee = this.HandleUnassignedCard(shipment.Consignee, CardsTypes.Consignee.ToString(), customerObjectTableName);
+            shipment.Customer = this.HandleCustomerUnassignedCard(shipment.Customer, shipment);
+            return shipment;
+        }
+
+        public Master HandleUnassignedMasterShipmentData(Master shipment)
+        {
+            if (shipment == null)
+                return shipment;
+
+            shipment.Shipper = this.HandleUnassignedCard(shipment.Shipper, CardsTypes.Shipper.ToString(), customerObjectTableName);
+            shipment.Consignee = this.HandleUnassignedCard(shipment.Consignee, CardsTypes.Consignee.ToString(), customerObjectTableName);
+           
+            return shipment;
+        }
+
+        public ShipmentPM AddDirectShipmentUnassignedData(Direct shipment, ShipmentPM shipmentPM)
+        {
+            shipmentPM.ShipmentUnassignedFields = new List<ShipmentUnassignedFieldPM>();
+
+            this.HandleShipmentUnassignedData(shipment.UnassignedShipperAddress, shipmentPM, CardsTypes.Shipper.ToString());
+            this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeAddress, shipmentPM, CardsTypes.Consignee.ToString());
+            this.HandleShipmentUnassignedData(shipment.UnassignedShipperNotExporterAddress, shipmentPM, CardsTypes.ShipperNotExporter.ToString());
+            this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeNotImporterAddress, shipmentPM, CardsTypes.ConsigneeNotImporter.ToString());
+            this.HandleUnassignedCustomerType(shipmentPM);
+
+            return shipmentPM;
+        }
+
+        public ShipmentPM AddHouseShipmentUnassignedData(House shipment, ShipmentPM shipmentPM)
+        {
+            shipmentPM.ShipmentUnassignedFields = new List<ShipmentUnassignedFieldPM>();
+            this.HandleShipmentUnassignedData(shipment.UnassignedShipperAddress, shipmentPM, CardsTypes.Shipper.ToString());
+            this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeAddress, shipmentPM, CardsTypes.Consignee.ToString());
+            this.HandleUnassignedCustomerType(shipmentPM);
+
+            return shipmentPM;
+        }
+
+        public ShipmentPM AddMasterShipmentUnassignedData(Master shipment, ShipmentPM shipmentPM)
+        {
+            shipmentPM.ShipmentUnassignedFields = new List<ShipmentUnassignedFieldPM>();
+            this.HandleShipmentUnassignedData(shipment.UnassignedShipperAddress, shipmentPM, CardsTypes.Shipper.ToString());
+            this.HandleShipmentUnassignedData(shipment.UnassignedConsigneeAddress, shipmentPM, CardsTypes.Consignee.ToString());
+
+            return shipmentPM;
+        }
+
+        private Card HandleUnassignedCard(Card card, string cardType, string cardTypeObjectTableName)
+        {
+            
+            if (card == null)
+                return null;
+
+            if (!card.AllowUnassignedEntry)
+                return card;
+
+            if (!string.IsNullOrEmpty(card.PartnerCode))
+                card.Code = null;
+
+            if (this.IsCardExsist(card, cardType))
+                return card;
+
+            ReceivedCodes.Add(new APICard()
+            {
+                PartnerType = cardType, 
+                OurCode = card.Code,
+                PartnerCode = card.PartnerCode,
+            });
+
+            card.Code = GetUnassignedCardCode(cardTypeObjectTableName);
+            card.PartnerCode = null;
+            this.HasUnassignedData = card.Code != null ? true : this.HasUnassignedData;
+
+            return card;
+        }
+
+        private Card HandleCustomerUnassignedCard(Card card, dynamic shipment)
+        {
+            if (card == null)
+                return null;
+
+            if (!ReceivedCodes.Where(d => d.PartnerCode == card.PartnerCode || d.OurCode == card.Code).Any())
+                return card;
+
+            this.CardTypeSameAsCustomerCode = ReceivedCodes.Where(d => d.PartnerCode == card.PartnerCode || d.OurCode == card.Code).FirstOrDefault()?.PartnerType;
+
+            if (this.CardTypeSameAsCustomerCode == CardsTypes.Shipper.ToString())
+                card.Code = shipment?.Shipper?.Code;
+
+            else if (this.CardTypeSameAsCustomerCode == CardsTypes.Consignee.ToString())
+                card.Code = shipment?.Consignee?.Code;
+
+            else if (this.CardTypeSameAsCustomerCode == CardsTypes.ShipperNotExporter.ToString())
+                card.Code = shipment?.ShipperNotExporter?.Code;
+
+            else if (this.CardTypeSameAsCustomerCode == CardsTypes.ConsigneeNotImporter.ToString())
+                card.Code = shipment?.ConsigneeNotImporter?.Code;
+
+            card.PartnerCode = null;
+            return card;
+        }
+
+        private bool IsCardExsist(Card card, string cardType)
+        {
+            this.ValidateCardPartnerCode(card, cardType);
+            if (!string.IsNullOrEmpty(card.Id))
+            {
+                return query.IsCardExisitByCardId(card.Id, this.tenant);
+            }
+            if (!string.IsNullOrEmpty(card.Code))
+            {
+                return query.IsCardExisitByCardCode(card.Code, this.tenant);
+            }
+            if (!string.IsNullOrEmpty(card.PartnerCode) && !string.IsNullOrEmpty(computingPartnerName))
+            {
+                var cardCode = this.computingPartnerTranslationHelper.GetLogitudeCodeTranslation(card.PartnerCode, computingPartnerName, "Card");
+                return query.IsCardExisitByCardCode(cardCode, this.tenant);
+            }
+            return false;
+        }
+
+        private void ValidateCardPartnerCode(Card card, string cardType)
+        {
+            if (!string.IsNullOrEmpty(card.Id))
+                return;
+
+            if (!string.IsNullOrEmpty(card.Code))
+                return;
+
+            if (!string.IsNullOrEmpty(card.PartnerCode))
+                return;
+
+            throw new ApplicationException(cardType + " PartnerCode is required");
+        }
+
+        private string GetUnassignedCardCode(string objectTableName)
+        {
+            UnassignedEntityPM unassignedEntityPM = this.unassignedEntityQuery.GetSinglePMByObjectTableId(GetObjectTableId(objectTableName), this.tenant);
+            string unassignedCardCode = unassignedEntityPM?.UnassignedCode;
+
+            return unassignedCardCode;
+        }
+
+        private string GetObjectTableId(string objectTableName)
+        {
+            ObjectTable objectTable = this.objectTableRepository.GetObjectTableByName(objectTableName, this.tenant, true);
+            string objectTableId = objectTable?.Id;
+
+            return objectTableId;
+        }
+
+        private void HandleShipmentUnassignedData(Address address, ShipmentPM shipmentPM, string cardtype)
+        {
+            if (!this.HasUnassignedData)
+                return;
+
+            if (!ReceivedCodes.Where(d => d.PartnerType == cardtype).Any())
+                return;
+
+            APICard aPICard = ReceivedCodes.Where(d => d.PartnerType == cardtype).FirstOrDefault();
+            if (aPICard != null && string.IsNullOrEmpty(aPICard.PartnerCode) && string.IsNullOrEmpty(aPICard.OurCode))
+                return;
+
+            shipmentPM.ShipmentUnassignedFields.Add(this.GetShipmentUnassignedField(address, cardtype));
+        }
+
+        private ShipmentUnassignedFieldPM GetShipmentUnassignedField(Address address, string cardtype)
+        {
+            APICard aPICard = ReceivedCodes.Where(d => d.PartnerType == cardtype).FirstOrDefault();
+            ShipmentUnassignedFieldPM shipmentUnassignedFieldPM = new ShipmentUnassignedFieldPM();
+            if (aPICard != null)
+            {                
+                shipmentUnassignedFieldPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
+                shipmentUnassignedFieldPM.FieldName = cardtype;
+                shipmentUnassignedFieldPM.ReceivedData = this.ConvertAddressToXML(address);
+                shipmentUnassignedFieldPM.ReceivedCode = !string.IsNullOrEmpty(aPICard.PartnerCode) ? aPICard.PartnerCode : aPICard.OurCode;
+                shipmentUnassignedFieldPM.ObjectTableId = this.GetObjectTableId("Card");
+                shipmentUnassignedFieldPM.ComputingPartnrCode = computingPartnerName;
+            }
+
+            return shipmentUnassignedFieldPM;
+        }
+
+        private string ConvertAddressToXML(Address address)
+        {
+            if (address == null)
+                return "";
+
+            using (var stringWriter = new System.IO.StringWriter())
+            {
+                var serializer = new XmlSerializer(address.GetType());
+                serializer.Serialize(stringWriter, address);
+                return stringWriter.ToString();
+            }
+        }
+
+        private void HandleUnassignedCustomerType(ShipmentPM shipmentPM)
+        {
+            if (string.IsNullOrEmpty(this.CardTypeSameAsCustomerCode))
+                return;
+
+            if (this.CardTypeSameAsCustomerCode == CardsTypes.Shipper.ToString())
+            {
+                shipmentPM.ShipmentCustomerTypeCode = "SHI";
+            }
+
+            else if (this.CardTypeSameAsCustomerCode == CardsTypes.Consignee.ToString())
+            {
+                shipmentPM.ShipmentCustomerTypeCode = "CON";
+            }
+
+            else if (this.CardTypeSameAsCustomerCode == CardsTypes.ShipperNotExporter.ToString())
+            {
+                shipmentPM.ShipmentCustomerTypeCode = "SNE";
+            }
+
+            else if (this.CardTypeSameAsCustomerCode == CardsTypes.ConsigneeNotImporter.ToString())
+            {
+                shipmentPM.ShipmentCustomerTypeCode = "CNI";
+            }
+        }
+    }
+
+    public enum CardsTypes
+    {
+        Shipper,
+        Consignee,
+        ShipperNotExporter,
+        ConsigneeNotImporter,
+    }
+
+    public class APICard
+    {
+        public string PartnerType { get; set; }
+        public string PartnerCode { get; set; }
+        public string OurCode { get; set; }
+    }
+}

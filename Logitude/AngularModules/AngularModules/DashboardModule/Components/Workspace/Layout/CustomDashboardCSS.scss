@@ -1,0 +1,388 @@
+@import "primereact/resources/themes/lara-light-indigo/theme.css";
+@import "primereact/resources/primereact.css";
+@import "primeicons/primeicons.css";
+@import "react-grid-layout/css/styles";
+@import "react-resizable/css/styles";
+@import "logitude-dashboard-library/dist/assets/styles/fonts.scss";
+@import "logitude-dashboard-library/dist/assets/styles/global.scss";
+@import "logitude-dashboard-library/dist/assets/styles/colors.scss";
+@import "logitude-dashboard-library/dist/assets/styles/dl-dashboard.scss";
+
+.Table-cell10 {
+    width: 10px;
+}
+
+.Table-cell05 {
+    width: 5px;
+}
+
+.Table-cell2 {
+    width: 2px;
+}
+
+.Dashboard-body {
+    height: 100%;
+    margin: 0;
+    font-family: Manrope;
+    flex: none;
+    font-style: normal;
+    top: -10px;
+    position: relative;
+    height: 100%;
+    flex-direction: column;
+}
+
+.custom-layout-container {
+    height: 100%;
+    margin: 0;
+    font-family: Manrope;
+    flex: none;
+    font-style: normal;
+    flex: 1 1 auto;
+    overflow: auto;
+    margin-top: 12px;
+    min-width: 1220px;
+}
+
+.custom-layout-container::-webkit-scrollbar {
+    width: 4px;
+    height: 6px;
+    border-radius: 9px;
+    background: #F6F6F6;
+}
+
+.custom-layout-container::-webkit-scrollbar-track {
+    background: none;
+}
+
+.custom-layout-container::-webkit-scrollbar-thumb {
+    border-radius: 110px;
+    width: 4px;
+    background: #7F7F7F;
+}
+
+.DashboardTabHeadLi {
+    flex-basis: 100%;
+    max-width: 157px;
+    width: 157px;
+}
+
+.DashboardTabHeadLi:not(.DashboardTabSelected):hover {
+    height: 19px;
+    background-color: #F3F3F3;
+}
+
+.DashboardTabHeadLi:not(.DashboardTabSelected) {
+    height: 19px;
+}
+
+.DashboardTabHeadLi.DashboardTabSelected {
+    height: 19px;
+    background-color: #F3F3F3;
+    color: #5FAFDA;
+}
+
+.DashboardTabHeadLi:not(:first-child):not(.DashboardTabSelected) {
+    border-left: 2px solid #F3F3F3;
+}
+
+.DashboardInnerTab {
+    padding-left: 8px;
+    font-size: 11px;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-start;
+    align-items: center;
+}
+
+.DashboardTabHeadLi:not(.DashboardTabSelected) {
+    color: #292D30;
+}
+
+.DashboardTabHeadLi {
+    height: 19px;
+    line-height: 19px;
+    display: inline-block;
+    float: left;
+    cursor: default;
+    border-bottom: none;
+    overflow: hidden;
+}
+
+.DashboardTab .DashboardTabBody {
+    position: absolute;
+    left: -10px;
+    right: -10px;
+    bottom: -5px;
+    top: 19px;
+    border-top: none;
+    background: #F3F3F3;
+}
+
+.DashboardTab .DashboardTabHead {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 19px;
+}
+
+.DashboardTab {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    height: calc(100% - 20px);
+}
+
+.dl-info-card {
+    margin: 12px;
+    background-color: white;
+    border: 1px solid #F0F0F0;
+    border-radius: 4px;
+    padding-bottom: 40px;
+}
+
+.dl-info-image-cotainer {
+    display: table;
+    margin: 0 auto;
+    margin-top: 37px;
+}
+
+.dl-info-header-text {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 24px;
+    color: #292D30;
+}
+
+.dl-info-description-text {
+    font-family: 'Manrope';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    color: #292D30;
+    margin-top: 4px;
+}
+
+.dl-info-center-div {
+    display: table;
+    margin: 0 auto;
+}
+
+.TabButton {
+    font-size: 12px;
+    color: #46494A;
+    font-style: normal;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 4px;
+    gap: 4px;
+    height: 22px;
+    background: linear-gradient(180deg, #F8FAFB 20.94%, #C9D5E4 77.13%);
+    border: 1px solid #708197;
+    border-radius: 4px;
+}
+
+.TabButton_orange {
+    font-size: 12px;
+    color: #46494A;
+    font-style: normal;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 5px 4px;
+    gap: 4px;
+    height: 22px;
+    background: -moz-linear-gradient(50% 0% -90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0, rgba(255, 255, 255, 1)), color-stop(1, rgba(237, 192, 147, 1)));
+    background: -o-linear-gradient(-90deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 1) 0%, rgba(237, 192, 147, 1) 100%);
+    border: 1px solid #708197;
+    border-radius: 4px;
+}
+
+.Dashboard-create-button {
+    font-style: normal;
+    color: #46494A;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    text-align: center;
+    background: linear-gradient(180deg, #FFFFFE 0%, #E8C39B 100%);
+    border: 1px solid #708197;
+    border-radius: 4px;
+
+}
+
+.Dashboard-create-button:hover {
+    cursor: pointer;
+}
+
+.dl-flobal-filter-container {
+    background: #FFFFFF;
+    border: 1px solid #F0F0F0;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    height: 80px;
+    margin-top: 12px;
+    margin-left: 12px;
+    margin-right: 11px;
+    flex: 0 0 auto;
+    min-width: 1220px;
+    padding: 12px;
+}
+
+.dl-tab-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.dl-tab-container::-webkit-scrollbar {
+    width: 6px;
+    height: 8px;
+}
+
+.dl-tab-container::-webkit-scrollbar-track {
+    background: none;
+}
+
+.dl-tab-container::-webkit-scrollbar-thumb {
+    border-radius: 110px;
+    background: rgba(193, 193, 193, 1);
+}
+
+.dl-tab-btn {
+    fill: #A4A4A4;
+}
+
+.Dashboard-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 4px 0px;
+    position: absolute;
+    width: 129px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.15);
+    z-index: 1;
+}
+
+Dashboard-menu-oneRow {
+    height: 28px;
+}
+
+.Dashboard-menu-button {
+    font-family: Manrope;
+    height: 24px;
+    top: 4px;
+    cursor: pointer;
+    text-align: left;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 16px;
+    color: #454545;
+    background: #FFFFFF;
+    flex: none;
+    order: 0;
+    flex-grow: 0;
+    padding-top: 4px;
+    padding-left: 8px;
+    padding-bottom: 2px;
+    width: 100%;
+}
+
+.dl-tab-text {
+    font-weight: 500;
+    font-size: 13px;
+    font-family: 'Manrope';
+    flex-grow: 1;
+}
+
+.dl-pin-image {
+    display: none;
+    cursor: pointer;
+}
+
+.dl-tab-svg {
+    display: block;
+    cursor: pointer;
+}
+
+
+.DashboardTabHeadLi:hover .dl-pin-image {
+    display: block;
+}
+
+.dl-tab-btn-div:hover .dl-tab-btn {
+    fill: #292D30;
+}
+
+.dl-tab-bts-container {
+    height: 100%;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center flex-start;
+    align-items: center;
+    gap: 8px;
+    padding-top: 4.5px;
+    padding-bottom: 4.5px;
+    padding-right: 6px;
+    padding-left: 8px;
+}
+
+@media only screen and (max-width: 1200px) {
+    .dl-tab-exit-container {
+        display: none;
+    }
+}
+
+.dl-panel h1 {
+    font-size: 14px;
+}
+
+.dashboard-outline-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 8px;
+    width: 50px;
+    height: 22px;
+    color: #A4A4A4;
+    background: #FFFFFF;
+    border: 1px solid #D9D9D9;
+    border-radius: 0px 2px 2px 0px;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.dashboard-outline-active-btn {
+    color: #5FAFDA;
+    border: 1px solid #5FAFDA;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2px 8px;
+    width: 50px;
+    height: 22px;
+    background: #FFFFFF;
+    border-radius: 2px 0px 0px 2px;
+    font-weight: 500;
+    font-size: 13px;
+    cursor: pointer;
+}

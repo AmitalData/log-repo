@@ -27,6 +27,19 @@
                             </td>
                         </tr>
 
+                        <tr style="height: 28px;" *ngIf="IsUpdateQuantitiesVisible">
+                            <td>
+                                <div class="MediaFill">
+                                    <div class="MediaFillAbsolute OrangeInfo">
+                                        <div style="line-height: 25px; margin-left: 5px; float: left; color:black; font-size:11px;">{{UpdateQuantitiesMessage}}</div>
+                                        <div style="line-height: 25px; margin-left: 10px; float: left; width: 50px;">
+                                            <button class="Button" style="margin-top: 1px;" [disabled]="!IsEditingEnabled" (click)="UpdateQuantitiesClicked()">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
                         <tr style="height: 28px;">
                             <td>
                                 <table>
@@ -47,7 +60,7 @@
 
                                         <td style="width: 70px; vertical-align: middle;">
                                             <div>
-                                                <RadioButton [Name]="'PCRadio'" [IsChecked]="IsPrepaidSelected" (Checked)="SetIsPrepaidSelected(true)" [Text]="'Prepaid'" [IsEnabled]="IsEditingEnabled"></RadioButton>                                               
+                                                <RadioButton [Name]="'PCRadio'" [IsChecked]="IsPrepaidSelected" (Checked)="SetIsPrepaidSelected(true)" [Text]="'Prepaid'" [IsEnabled]="IsEditingEnabled"></RadioButton>
                                             </div>
                                         </td>
 
@@ -58,7 +71,7 @@
                                         </td>
 
                                         <td style="width: 70px; vertical-align: middle;">
-                                            <button id="{{'ApplyToAll' | IdGeneratorPipe}}" class="Button" (click)="ApplyToAllClicked()" [disabled]="!IsEditingEnabled">Apply to All</button>
+                                            <button id="{{'ApplyToAll' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="ApplyToAllClicked()" [disabled]="!IsEditingEnabled">Apply to All</button>
                                         </td>
 
                                         <td>
@@ -66,7 +79,7 @@
                                         </td>
 
                                         <td style="width: 70px; vertical-align: middle;">
-                                            <button id="{{'AddCharge' | IdGeneratorPipe}}" class="Button" (click)="Add()" [disabled]="!IsEditingEnabled">Add Charge</button>
+                                            <button id="{{'AddCharge' | IdGeneratorAsyncPipe | async}}" class="Button" (click)="Add()" [disabled]="!IsEditingEnabled">Add Charge</button>
                                         </td>
 
                                         <td style="width: 5px;">
@@ -74,7 +87,7 @@
                                         </td>
 
                                         <td style="width: 70px; vertical-align: middle;">
-                                            <div id="{{'ManageDefaults' | IdGeneratorPipe}}" class="hyperlink" (click)="ManageDefaultsClicked()" [class.HyperlinkDisabled]="!IsEditingEnabled">Manage defaults</div>
+                                            <div id="{{'ManageDefaults' | IdGeneratorAsyncPipe | async}}" class="hyperlink" (click)="ManageDefaultsClicked()" [class.HyperlinkDisabled]="!IsEditingEnabled">Manage defaults</div>
                                         </td>
                                     </tr>
                                 </table>
@@ -191,10 +204,10 @@
                                             </table>
                                         </div>
                                     </div>
-                                </div>                                
+                                </div>
 
                                 <div class="CenterCenter" style="width: 350px; height: 30px;" *ngIf="IsGeneratingVisible">
-                                    <div id="{{'GenerateAutoDisplayCharge' | IdGeneratorPipe}}" class="hyperlink" style="text-align:center" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="GenerateClicked()">Generate auto display charges</div>
+                                    <div id="{{'GenerateAutoDisplayCharge' | IdGeneratorAsyncPipe | async}}" class="hyperlink" style="text-align:center" [class.HyperlinkDisabled]="!IsEditingEnabled" (click)="GenerateClicked()">Generate auto display charges</div>
                                     <div class="NoDataTextStyle">Or click Add Charge Button to add new charges</div>
                                 </div>
                             </td>

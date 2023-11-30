@@ -77,6 +77,31 @@ namespace Simplog.Data.InvoiceModel.Repositories
             return context.APInvoices.Where(d => d.Tenant == tenant && d.StatusCode != "WA" && d.StatusCode != "VD");
         }
 
+
+        public APInvoice GetSingleAPInvoiceByNumberAndExternalId(string number, string externalId, int tenant)
+        {
+            APInvoice APInvoice = (from a in context.APInvoices
+                                   where a.InternalNumber == number && a.ExternalAccountingEntityId == externalId && a.Tenant == tenant
+                                   select a).FirstOrDefault();
+            return APInvoice;
+        }
+
+        public APInvoice GetSingleAPInvoiceByNumber(string number, int tenant)
+        {
+            APInvoice APInvoice = (from a in context.APInvoices
+                                   where a.InternalNumber == number && a.Tenant == tenant
+                                   select a).FirstOrDefault();
+            return APInvoice;
+        }
+
+        public APInvoice GetSingleAPInvoiceByExternalId(string externalId, int tenant)
+        {
+            APInvoice APInvoice = (from a in context.APInvoices
+                                   where a.ExternalAccountingEntityId == externalId && a.Tenant == tenant
+                                   select a).FirstOrDefault();
+            return APInvoice;
+        }
+
         public IQueryable<APInvoice> GetAPInvoices(int tenant)
         {
             return (from a in context.APInvoices where a.Tenant == tenant select a);
@@ -103,7 +128,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
 
         public bool IsInvoiceNumberExists(string invoiceNumber, int tenent)
         {
-            return context.ARInvoices.Where(d => d.InvoiceNumber == invoiceNumber && d.Tenant == tenent).Any();
+            return context.APInvoices.Where(d => d.InvoiceNumber == invoiceNumber && d.Tenant == tenent).Any();
         }
 
         public IQueryable<APAgingReportDataView> GetAgingReportAPInvoiceDataView(int tenant, int index)
@@ -266,7 +291,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
                                     where a.Tenant == tenant
                                     && a.EntityId == shipmentId
                                     && (a.ObjectTable.Name == "Shipment" || a.ObjectTable.Name == "Master")
-                                    select a.APInvoice).ToList();
+                                    select a.APInvoice).OrderBy(a => a.Id).ToList();
             return list;
         }
 

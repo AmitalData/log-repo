@@ -44,7 +44,7 @@ export class DocsInDataViewModel extends BaseComponent{
     //DocumentId: string;
     ReceivedByUserId: string;
     ReceivedByUserName: string;
-
+    ReceivedByPartner: string;
     private receivedDate: Date;
     public get ReceivedDate() {
         if (this.CurrentDocument) {
@@ -288,6 +288,7 @@ export class DocsInDataViewModel extends BaseComponent{
          
             this.ReceivedByUserId = this.CurrentDocument.ReceivedByUserId;
             this.ReceivedByUserName = this.CurrentDocument.ReceivedByUserName;
+            this.ReceivedByPartner = this.CurrentDocument.ReceivedByPartner;
             this.ExternalDocumentId = this.CurrentDocument.Id;
             this.FollowUpId = this.CurrentDocument.FollowUpId;
             this.ReceivedDate = this.CurrentDocument.ReceivedDate;
@@ -328,6 +329,7 @@ export class DocsInDataViewModel extends BaseComponent{
 
             this.ReceivedByUserId = this.CurrentDocument.ReceivedByUserId;
             this.ReceivedByUserName = this.CurrentDocument.ReceivedByUserName;
+            this.ReceivedByPartner = this.CurrentDocument.ReceivedByPartner;
             this.ReceivedDate = this.CurrentDocument.ReceivedDate;
             this.DocumentHasFile = true;
             this.SetAttachedButtonVisibility = false;
@@ -601,7 +603,7 @@ export class DocsInDataViewModel extends BaseComponent{
     ShowAttachExternal() {
  
 
-
+        this.FirstTime = true;
         this.IsEnableLinkAttachExternal = false;
         var windowArgs: any = {};
         windowArgs.EntityId = this.EntityId;
@@ -609,16 +611,18 @@ export class DocsInDataViewModel extends BaseComponent{
         windowArgs.RequsetPageName = "DocIn";
         windowArgs.CurrentDocument = this.CurrentDocument;
         windowArgs.TiggerViewModel = this;
-
+        let hasUploadDragDropFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "UDD")[0] ? true : false;
         var logitudeWindow = new LogitudeWindow();
-        logitudeWindow.Width = 450;
-        logitudeWindow.Height = 300;
-        logitudeWindow.Title = "File Uploading";
+        logitudeWindow.Width = hasUploadDragDropFeature ? 900 : 450;
+        logitudeWindow.Height = hasUploadDragDropFeature ? 600 : 300;
+        logitudeWindow.Title = hasUploadDragDropFeature && this.CurrentDocument ? this.CurrentDocument.DocumentTypeName + " File Uploading" : "File Uploading";
         logitudeWindow.WindowArgs = windowArgs;
         logitudeWindow.Show("./InfrastructureModules/InfrastructureDocuments/Components/DocumentComponent/AttachDocs/AttachmentUploaderComponent");
         logitudeWindow.WindowClosed.subscribe(($event: any) => {
         
             this.DocsInComponent.IsClickToUpload = false;
+            if (this.DocsInComponent.IsShipmentPendingApprovalList() && this.DocumentHasFile)
+                this.DocsInComponent.RefreshButtonClicked();
         });
 
 

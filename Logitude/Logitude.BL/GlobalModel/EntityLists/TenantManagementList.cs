@@ -114,6 +114,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int MobileTotalLastWeek { get; set; }
         public int MobileTotalLastMonth { get; set; }
         public bool EnableBranding { get; set; }
+        public bool EnableExportToExcel { get; set; }
         public string CustomerURL { get; set; }
         public bool HideSharedlogistics { get; set; }
         public string ContactEmail { get; set; }
@@ -122,6 +123,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public string PendingAirlines { get; set; }
         [DataMember]
         public string PrivateLabelId { get; set; }
+        public string PrivateLabelName { get; set; }
 
         public bool IsParentTenant { get; set; }
         public int? ParentTenantId { get; set; }
@@ -140,6 +142,7 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public double? TotalPrice { get; set; }
         public string MainColor { get; set; }
         public string SecondaryColor { get; set; }
+        public string TertiaryColor { get; set; }
         public decimal Opacity { get; set; }
         public string BackgroundId { get; set; }
         public string ComapnylogoId { get; set; }
@@ -165,5 +168,27 @@ namespace Logitude.BL.GlobalModel.EntityLists
         public int LastMonthCreatedTariffs { get; set; }
         public int ScheduledTasksLimitPerReport { get; set; }
         public bool IsHybrid { get; set; }
+        public string WhatsAppMessagingPhoneNumber { get; set; }
+        public bool ActivatedforDeclarationApprove { get; set; }
+        public string DeclarationMessage { get; set; }
+        public bool ActivatePrivateSite { get; set; }       
+        public bool IsContainerTrackingPrepaid { get; set; }
+        public DateTime? DigitalPortalLastDate { get; set; }
+        public int? DigitalPortalTotalLastWeek { get; set; }
+        public int? DigitalPortalTotalLastMonth { get; set; }
+        public DateTime? DigitalPortalMobileLastDate { get; set; }
+        public int? DigitalPortalMobTotalLastWeek { get; set; }
+        public int? DigitalPortalMobTotalLastMonth{ get; set; }
+        public int? DPArchiveShipmentCreateFilter { get; set; }
+        public int? DPArchiveShipmentArrivalFilter { get; set; }
+        public int? DPArchiveShipmentDepartFilter { get; set; }
+        public bool ShowMoneyOrder { get; set; }
+        public bool CargoTrackingPublicShowEvents { get; set; }
+        public bool CargoTrackingPrivateShowEvents { get; set; }
+
+        public string LogoURL { get; set; }
+        public string ServiceAgreementURL { get; set; }
+        public string EcommerceSupportEmail { get; set; }
+
     }
 }

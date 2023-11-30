@@ -101,7 +101,7 @@
                                         (MouseOverChanged)="SetMouseHoverRow($event, true)"
                                         (MouseleaveChanged)="SetMouseHoverRow($event, false)"
                                         [EnableExpandCollapseAll]="true"
-                                        [ChangeScrollPosition]="changeScrollPosition">
+                                        [ChangeScrollPosition]="changeScrollPosition" [UseVirtuallization]="IsUsingVirtuallization">
 
                         <log-row-details>
                             <ng-template let-item>

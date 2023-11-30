@@ -82,7 +82,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.RegulatedAgentNumber = entityPM.RegulatedAgentNumber;
             poco.RegulatedAgentRegimeActivated = entityPM.RegulatedAgentRegimeActivated;
             poco.CustomerId = entityPM.CustomerId;
-            poco.IsCustomerTenantShare = entityPM.IsCustomerTenantShare;
+            poco.CustomerTenantShareCustomsFile = entityPM.CustomerTenantShareCustomsFile;
   
             poco.CustomerTenantShareExportFile = entityPM.CustomerTenantShareExportFile;
             poco.AllowAgentInCustomersLOV = entityPM.AllowAgentInCustomersLOV;
@@ -96,6 +96,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
       
      
             poco.IsWebAccessActivated = entityPM.IsWebAccessActivated;
+            poco.IsCargoTrackWebAccessActivated = entityPM.IsCargoTrackWebAccessActivated;
+            poco.IsDigitalPortalAccessActivated = entityPM.IsDigitalPortalAccessActivated;
             poco.IsCorrespondenceRightToLeftEnabled = entityPM.IsCorrespondenceRightToLeftEnabled;
             poco.IsNotesRightToLeftEnabled = entityPM.IsNotesRightToLeftEnabled;
             poco.AccountingActivationDate = entityPM.AccountingActivationDate;
@@ -113,6 +115,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.DefaultSLAId = entityPM.DefaultSLAId;
             poco.IsIncrementalBuildRunning = entityPM.IsIncrementalBuildRunning;
             poco.SharedLogisMasterMessageLink = entityPM.SharedLogisMasterMessageLink;
+            poco.ShowMultiUnitsOfMeasurements = entityPM.ShowMultiUnitsOfMeasurements;
 
             poco.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
             poco.CBSA = entityPM.CBSA;
@@ -143,7 +146,11 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             }
 
             poco.IsQuotesRequestActivatedInShared = entityPM.IsQuotesRequestActivatedInShared;
-
+            poco.EmptyReturnClosingDays = entityPM.EmptyReturnClosingDays;
+            poco.ShipmentATAClosingDays = entityPM.ShipmentATAClosingDays;
+            poco.UseNewTermsOfUse = entityPM.UseNewTermsOfUse;
+            poco.ShipmentATADateIndicator = entityPM.ShipmentATADateIndicator;
+            poco.ApproveUploadedDocuments = entityPM.ApproveUploadedDocuments;
             // poco.StorageEncryptionKey = entityPM.StorageEncryptionKey;
             BuildSearchFields(entityPM, poco);
         }

@@ -45,6 +45,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
         {
             bool shouldFix=false;
             string stringXML = string.Empty;
+            string stringXML_toSend = string.Empty;
             try
             {
 
@@ -132,6 +133,28 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                     entityPM.ShouldFix = res.ShouldFix;
                     // serialize resultXML
                     stringXML = LogitudeXmlSerializer.SerializeObjectToXmlString<AccountingIntegrityResult>(res);
+                    List<AccountingIntegrityStep> errorSteps = new List<AccountingIntegrityStep>();
+                    res.MyAccountingIntegrityStep.ForEach(s =>
+                    {
+                        if (s != null && (!String.IsNullOrEmpty(s.ExceptionMessage) || s.ShouldFix || s.BadRows > 0))
+                        {
+                            errorSteps.Add(s);
+                        }
+                    });
+                    AccountingIntegrityResult res_toSend = new AccountingIntegrityResult()
+                    {
+                        LedgerOpenAmount = res.LedgerOpenAmount,
+                        MyAccountingIntegrityStep = errorSteps,
+                        BalanceInLocalCurrencyResult = res.BalanceInLocalCurrencyResult,
+                        DueLocalBalance = res.DueLocalBalance,
+                        HasException = res.HasException,
+                        JournalLineToLedgerResult = res.JournalLineToLedgerResult,
+                        LedgerToMounthTotalResult = res.LedgerToMounthTotalResult,
+                        ShouldFix = res.ShouldFix,
+                        TotalOpenReconciliationResult = res.TotalOpenReconciliationResult,
+                        InterestReportResult = res.InterestReportResult
+                    };
+                    stringXML_toSend = LogitudeXmlSerializer.SerializeObjectToXmlString<AccountingIntegrityResult>(res_toSend);
 
                     // update
                     entityPM.ResultXML = stringXML;
@@ -148,7 +171,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 {
                     if (shouldFix)
                     {
-                        SendEmailWhileError(args.Tenant, "has been failed", stringXML);
+                        SendEmailWhileError(args.Tenant, "has been failed", stringXML_toSend);
                     }
                     else
                     {
@@ -184,7 +207,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 emailParams = new EmailCommunicationParams()
                 {
                     From = "admin@fnarsoft.com",
-                    To = "eyal@amital.co.il;yaronc@amital.co.il;ohad@amital.co.il",
+                    To = "eyal@amital.co.il;ohad@amital.co.il",
                     Subject = error,
                     EmailBody = emailbody,
                     Tenant = tenant,

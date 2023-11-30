@@ -163,7 +163,7 @@ namespace WebFreight.Web.App_Code
                                 var Contact = Repos.GetSingleContact(currentTenant.LogBoxAdminUserId, entityPM.Tenant);
                                 var emailMessage = GetEmailMessage(entityPM);
 
-                                string env = entityPM.IsPrivateLabelCustomer? "DSV Digital": "Logbox";
+                                string env = entityPM.IsPrivateLabelCustomer? entityAM.PrivateLabelName : "Logbox";
                                 var subject = "New Request From "+ env + " - " + entityPM.CompanyName;
                                 EmailCommunicationParams emailParams = new EmailCommunicationParams()
                                 {

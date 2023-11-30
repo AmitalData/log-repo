@@ -2,13 +2,17 @@
 using Logitude.Social.BL.EntityQueryServices;
 using Logitude.Social.BL.EntityUpdateServices;
 using Logitude.Social.Data;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
+using WebFreight.Web.Security;
 
 namespace WebFreight.Web.App_Code
 {
@@ -16,6 +20,12 @@ namespace WebFreight.Web.App_Code
     {
         public string PostInsertPostLike(PostLikePM likePM)
         {
+
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnEntityTenant("PostLike", likePM.Tenant, authToken.Tenant);
+
 
             ISocialContext socialContext = SocialContext.GetContext(likePM.Tenant);
             PostLikeUpdateService postLikeUpdateService = new PostLikeUpdateService(socialContext);
@@ -43,6 +53,13 @@ namespace WebFreight.Web.App_Code
         public string DeletePostLike(string PostId, string UserId, int tenant)
             
         {
+
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+            SecurityUtility.AuthenticationOnTenant(tenant);
+
+
             ISocialContext socialContext = SocialContext.GetContext(tenant);
             PostUpdateService service = new PostUpdateService(socialContext, new Dictionary<string, IContext>(), tenant);
             PostQueryService postQueryService = new PostQueryService(socialContext);

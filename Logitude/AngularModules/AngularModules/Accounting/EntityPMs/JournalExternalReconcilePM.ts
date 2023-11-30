@@ -16,13 +16,13 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class JournalExternalReconcilePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
-          this.UIProperties = new UIProperties(this); 
-          this.IsDirty = false;
+	  		                        this.EntityParentPM = _entityParentPM;
+                this.UIProperties = new UIProperties(this);
+                this.IsDirty = false;
       }
 
 	 
@@ -50,6 +50,21 @@ export class JournalExternalReconcilePM {
     private reconcileExternalPageLineId: string;
     public get ReconcileExternalPageLineId() { return this.reconcileExternalPageLineId; }
     public set ReconcileExternalPageLineId(newValue: string) { if (this.reconcileExternalPageLineId != newValue) { this.reconcileExternalPageLineId = newValue; this.MarkAsDirty("ReconcileExternalPageLineId"); } }
+       
+	 
+    private skipAccountsValidation: boolean;
+    public get SkipAccountsValidation() { return this.skipAccountsValidation; }
+    public set SkipAccountsValidation(newValue: boolean) { if (this.skipAccountsValidation != newValue) { this.skipAccountsValidation = newValue; this.MarkAsDirty("SkipAccountsValidation"); } }
+       
+	 
+    private journalNumber: string;
+    public get JournalNumber() { return this.journalNumber; }
+    public set JournalNumber(newValue: string) { if (this.journalNumber != newValue) { this.journalNumber = newValue; this.MarkAsDirty("JournalNumber"); } }
+       
+	 
+    private originalJournalId: string;
+    public get OriginalJournalId() { return this.originalJournalId; }
+    public set OriginalJournalId(newValue: string) { if (this.originalJournalId != newValue) { this.originalJournalId = newValue; this.MarkAsDirty("OriginalJournalId"); } }
        
 	 
 

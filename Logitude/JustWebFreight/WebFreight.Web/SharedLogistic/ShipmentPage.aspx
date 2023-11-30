@@ -97,6 +97,30 @@
         -webkit-border-radius: 1px;
         -moz-border-radius: 1px;
     }
+
+    .showNoteButton {
+        background-color: #faf0b4;
+    }
+
+    .noteDiv {
+        padding: 2px;
+        border-radius: 4px 4px 0px 0px;
+    }
+
+        .noteDiv:hover {
+            cursor: pointer;
+        }
+
+    .noteDetils {
+        position: absolute;
+        width: 150px;
+        background-color: #faf0b4;
+        right: 0px;
+        border-radius: 4px 0px 4px 4px;
+        padding: 3px;
+        z-index:1;
+        box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5); 
+    }
 </style>
 
 </head>
@@ -202,15 +226,33 @@
                                 <td style="width:5px;"></td>
 
                                 <td style="width:70px; vertical-align:bottom;">
-                                    <div id="BackButton"></div>                                    
+                                    <div id="BackButton"></div>                                 
                                 </td>
 
                                 <td style="vertical-align:central;">
-                                    <div class="ShowOnDataControl" style="display:none; background:#F2F2F2; float:left; padding:2px 10px 2px 2px">
-                                        <img style="width:20px; display:inline; height:20px; vertical-align:bottom" data-bind="attr: { src: DirectionSRC }" />
-                                        <img style="width:20px; display:inline; height:20px; vertical-align:bottom" data-bind="attr: { src: TransportSRC }" />
-                                        <span style="font-size:15px; display:inline; color:#1B90CB;" data-bind="text: ShipmentNumber"> </span>
+                                    <div style="    display: flex; justify-content: space-between;">
+                                        <div class="ShowOnDataControl" style="display:none; background:#F2F2F2; float:left; padding:2px 10px 2px 2px">
+                                            <img style="width:20px; display:inline; height:20px; vertical-align:bottom" data-bind="attr: { src: DirectionSRC }" />
+                                            <img style="width:20px; display:inline; height:20px; vertical-align:bottom" data-bind="attr: { src: TransportSRC }" />
+                                            <span style="font-size:15px; display:inline; color:#1B90CB;" data-bind="text: ShipmentNumber"> </span>
+                                        </div>
+                                        <div id="noteAria" style="position:relative">
+                                            <div class="noteDiv" id="noteButton" onclick="showHideNote()">
+                                                <img width="25px" height="20px" data-bind="attr: { src: noteSRC }" />
+                                            </div>
+                                            <div id="noteDetilsid" class="noteDetils" style="display:none" >
+                                                <div style="line-height: 25px;color: #1B90CB;font-size: 14px; padding: 6px 0px 0px 6px;">Notes</div>
+                                                <div style="padding: 0px 1px;">
+                                                    <pre style="background:none !important;min-height:150px;" data-bind="text: NotesSharedWithCustomer">
+                                                    
+                                                </pre>
+                                                </div>
+                                                
+                                            </div>
+
+                                        </div>
                                     </div>
+                                    
                                 </td>
 
                                 <td style="width:10px;"></td>
@@ -1005,7 +1047,7 @@
         function OnDownloadAllDocument() {
             $.SendContactsActivity($.CurrentEmail, "Shipment", "Document Download", $.CurrentTenant, $.CurrentCardId);
 
-            var url = "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":" + $.CurrentCardType;
+            var url = "../WebPages/SharedDownloadPage.aspx?id=" + $.CurrentTenant + ":" + null + ":ship:" + $.CurrentEntityId + ":CS";
 
             if ($.IsExternalURL) {
                 url += ":securitykey:" + $.CurrentEntityKey;
@@ -1050,6 +1092,38 @@
                 },
             });
         });
+
+
+        function showHideNote() {
+            if ($("#noteButton").hasClass('showNoteButton'))
+                hideNote();
+            else
+                showNote();
+        }
+        function showNote() {
+            var item = $("#noteButton");
+            item.addClass('showNoteButton')
+            item.isShow = true;
+            var noteDetils = $("#noteDetilsid");
+            noteDetils.show();
+
+
+        }
+
+        function hideNote() {
+            var item = $("#noteButton");
+            item.removeClass('showNoteButton')
+            var noteDetils = $("#noteDetilsid");
+            noteDetils.hide();
+        }
+
+            $('#noteAria').click(e => {
+                e.stopPropagation();
+            })
+            $(document).click(e => {
+                hideNote();
+            })
+
     </script>
 
     <style>

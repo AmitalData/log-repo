@@ -9,10 +9,11 @@ declare namespace Cypress {
     }
 }
 
-Cypress.Commands.add("Login", (customerCareUser = false) => {
+Cypress.Commands.add("Login", (customerCareUser = false ) => {
     let mode = Cypress.env("Mode");
     if (mode.toLowerCase() === "development") {
         cy.fixture("Login.json").then(loginData => {
+            debugger
             let email = customerCareUser ? loginData.customerCareEmail : loginData.email;
             let password = customerCareUser ? loginData.customerCarePassword : loginData.password;
             let url = loginData.url;
@@ -44,6 +45,7 @@ Cypress.Commands.add("GetCurrentPassword", (customerCareUser = false) => {
     let mode = Cypress.env("Mode");
     if (mode.toLowerCase() === "development") {
         cy.fixture("Login.json").then(loginData => {
+            debugger
             return customerCareUser ? loginData.customerCarePassword : loginData.password;
         });
     }
@@ -76,7 +78,7 @@ Cypress.Commands.add("RedirectToLogin", () => {
     }
 })
 
-function CompleteLoginProcess(Email: string, Password: string, URL: string, Tenant?: number) {
+export function CompleteLoginProcess(Email: string, Password: string, URL: string, Tenant?: number) {
     cy.visit(URL)
     cy.intercept("**/ObjectTableLastUpdate/**").as("LoadDataCompleted")
     cy.window().then(win => { win.sessionStorage.setItem("ControlledByCypress", "true") })

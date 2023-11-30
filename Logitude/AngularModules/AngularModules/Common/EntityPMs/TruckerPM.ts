@@ -19,13 +19,15 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { ObjectCustomFieldPM } from '../../Infrastructure/EntityPMs/ObjectCustomFieldPM';
 
 
-export class TruckerPM {
+export class TruckerPM extends ObjectCustomFieldPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
+		  super("Trucker");
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
@@ -390,6 +392,25 @@ export class TruckerPM {
     private transmitToPort: boolean;
     public get TransmitToPort() { return this.transmitToPort; }
     public set TransmitToPort(newValue: boolean) { if (this.transmitToPort != newValue) { this.transmitToPort = newValue; this.MarkAsDirty("TransmitToPort"); } }
+    private regimenFiscalCode: string;
+    public get RegimenFiscalCode() { return this.regimenFiscalCode; }
+    public set RegimenFiscalCode(newValue: string) { if (this.regimenFiscalCode != newValue) { this.regimenFiscalCode = newValue; this.MarkAsDirty("RegimenFiscalCode"); } }
+       
+	 
+    private sATReceptorName: string;
+    public get SATReceptorName() { return this.sATReceptorName; }
+    public set SATReceptorName(newValue: string) { if (this.sATReceptorName != newValue) { this.sATReceptorName = newValue; this.MarkAsDirty("SATReceptorName"); } }
+       
+	 
+    private importLocalCustomerGroupId: string;
+    public get ImportLocalCustomerGroupId() { return this.importLocalCustomerGroupId; }
+    public set ImportLocalCustomerGroupId(newValue: string) { if (this.importLocalCustomerGroupId != newValue) { this.importLocalCustomerGroupId = newValue; this.MarkAsDirty("ImportLocalCustomerGroupId"); } }
+       
+	 
+    private exportLocalCustomerGroupId: string;
+    public get ExportLocalCustomerGroupId() { return this.exportLocalCustomerGroupId; }
+    public set ExportLocalCustomerGroupId(newValue: string) { if (this.exportLocalCustomerGroupId != newValue) { this.exportLocalCustomerGroupId = newValue; this.MarkAsDirty("ExportLocalCustomerGroupId"); } }
+
        
 	 
 
@@ -419,4 +440,4 @@ export class TruckerPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

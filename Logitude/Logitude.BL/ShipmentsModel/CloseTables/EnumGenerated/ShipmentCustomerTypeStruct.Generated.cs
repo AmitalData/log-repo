@@ -26,6 +26,7 @@ namespace Logitude.BL.ShipmentsModel.CloseTables
        public const string ReleasingAgent = "REA";  
        public const string Shipper = "SHI";  
        public const string ShipperNotExporter = "SNE";  
+       public const string Trucker = "TRK";  
     }
 }
 

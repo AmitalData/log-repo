@@ -26,6 +26,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.PrimaryContactName = entityPM.PrimaryContactName;
             entityPOCO.PrimaryContactEmail = entityPM.PrimaryContactEmail;
             entityPOCO.PrimaryContactPhone = entityPM.PrimaryContactPhone;
+            entityPOCO.CreditLimit = entityPM.CreditLimit;
+            entityPOCO.InsuredCreditlimit = entityPM.InsuredCreditlimit;
 
             entityCard.UpdateDate = entityPM.UpdateDate;
             entityCard.UpdatedByUserId = entityPM.UpdatedByUserId;
@@ -58,6 +60,13 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode; 
             entityCard.CollectorId = entityPM.CollectorId;
+            entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
+            entityCard.SATCustomerName = entityPM.SATReceptorName;
+            entityCard.SingleInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.SingleInvoiceTemplateId : null;
+            entityCard.CustomsInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.CustomsInvoiceTemplateId : null;
+            entityCard.ConsolidationInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ConsolidationInvoiceTemplateId : null;
+            entityCard.ManifestInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ManifestInvoiceTemplateId : null;
+
             if (!entityPM.IsFirstContactToAdd)
             {
                 entityCard.PrimaryContactId = entityPM.PrimaryContactId;

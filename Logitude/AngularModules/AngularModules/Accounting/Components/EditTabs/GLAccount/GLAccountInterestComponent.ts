@@ -33,6 +33,7 @@ export class GLAccountInterestComponent extends BaseComponent {
     public TenantPM: TenantPM;
     public IsNew: boolean = false;
     public isRTL: boolean = false;
+    public WasActiveActiveForInterest: boolean = false;
     public ValidationErrorsList: string[] = [];
     myService: GLAccountPMService;
     constructor(public entityArgs: EntityArgs) {
@@ -49,6 +50,7 @@ export class GLAccountInterestComponent extends BaseComponent {
         this.myService = new GLAccountPMService();
         this.GLAccountInterestPeriodsList = new ObservableCollection([]);
         this.EntityPM.OldEntityPM = this.EntityPM;
+        this.WasActiveActiveForInterest = this.EntityPM.ActiveForInterest.valueOf();
         this.BuildData();
         this.SetUIProperties();
         this.Listen();
@@ -67,10 +69,16 @@ export class GLAccountInterestComponent extends BaseComponent {
             this.Disabled = false;
         }
         if (this.EntityPM.ActiveForInterest) {
-            if(!this.EntityPM.IsSplitted){
-                this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", true);
+            if (!this.EntityPM.IsSplitted) {
+                if (this.WasActiveActiveForInterest) {
+                    this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", false);
+                }
+                else {
+                    this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", true);
+                }
                 this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", true);
                 this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", true);
+                this.UIProperties.SetEnabled("InterestOpenBalance", "GLAccount", false);
                 this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", true);
             }
             else if(this.EntityPM.IsSplitted){
@@ -78,13 +86,15 @@ export class GLAccountInterestComponent extends BaseComponent {
                 this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", false);
                 this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", false);
                 this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", false);
+                this.UIProperties.SetEnabled("InterestOpenBalance", "GLAccount", false);
             }
         }
         else {
                this.UIProperties.SetEnabled("ActiveForInterestCreditInvoice", "GLAccount", false);
-               this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", false);
+               this.UIProperties.SetEnabled("InterestCalculationStartDate", "GLAccount", true);
                this.UIProperties.SetEnabled("MinimumInterestInvoiceBilling", "GLAccount", false);
                this.UIProperties.SetEnabled("InterestCreditLimit", "GLAccount", false);
+               this.UIProperties.SetEnabled("InterestOpenBalance", "false", false);
         }
     }
     SetWindowArgs(args) {
@@ -260,6 +270,12 @@ export class GLAccountInterestComponent extends BaseComponent {
     set InterestCreditLimit(newValue: number) {
         this.EntityPM.InterestCreditLimit = newValue;
     }
+    get InterestOpenBalance() {
+        return this.EntityPM.InterestOpenBalance;
+    }
+    set InterestOpenBalance(newValue: number) {
+        this.EntityPM.InterestOpenBalance = newValue;
+    }
 
     get CreditAllotmentPercentage() { return this.EntityPM.CreditAllotmentPercentage; }
     set CreditAllotmentPercentage(newValue: number) {
@@ -273,6 +289,12 @@ export class GLAccountInterestComponent extends BaseComponent {
             }
             this.EntityPM.CreditAllotmentPercentage = newValue;
         }
+    }
+
+
+    get PostponedChequesCommission() { return this.EntityPM.PostponedChequesCommission; }
+    set PostponedChequesCommission(newValue: number) {
+        this.EntityPM.PostponedChequesCommission = newValue;
     }
 
     ngOnDestroy() {

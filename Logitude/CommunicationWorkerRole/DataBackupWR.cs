@@ -53,14 +53,13 @@ namespace CommunicationWorkerRole
                         LastActivity = DateTime.UtcNow;
                         if (clientdatapackupmsg != null)
                         {
-                            string[] result = clientdatapackupmsg.AsString.Split(',');
-                            clientdatapackupqueue.DeleteMessage(clientdatapackupmsg);
-                            string messageType = result[0];
-                            string tenantString = result[1];
-                            int.TryParse(tenantString, out tenant);
-
                             try
                             {
+                                string[] result = clientdatapackupmsg.AsString.Split(',');
+                                clientdatapackupqueue.DeleteMessage(clientdatapackupmsg);
+                                string messageType = result[0];
+                                string tenantString = result[1];
+                                int.TryParse(tenantString, out tenant);
                                 switch (messageType)
                                 {
                                     case "ClientDataBackup":
@@ -84,9 +83,6 @@ namespace CommunicationWorkerRole
                                             break;
                                         }
                                 }
-
-
-
 
 
                             }
@@ -585,7 +581,7 @@ namespace CommunicationWorkerRole
                 //GlobalDBRep = new GlobalDBRepository();
                 currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
             }
-            string dbConnectionInfo = currentDb.DBConnection;
+            string dbConnectionInfo = !string.IsNullOrEmpty(currentDb.SecondaryAzureDBConnection) ? currentDb.SecondaryAzureDBConnection: currentDb.DBConnection;
 
             // Specify the provider name, server and database.
             string providerName = "System.Data.SqlClient";

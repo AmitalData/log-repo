@@ -42,6 +42,7 @@ using Logitude.BL.InfrastructureModel.EntityQueries;
 using Logitude.BL.InfrastructureModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Simplog.Server.Infrastructure;
 
 namespace CommunicationWorkerRole
 {
@@ -53,7 +54,7 @@ namespace CommunicationWorkerRole
         {
             while (IsRunning)
             {
-                if (!General.IsUpdating())
+                if (!General.IsUpdating() && LogitudeSettings.WorkerRoleName.ToLower() != "staging")
                 {
                     try
                     {
@@ -85,7 +86,7 @@ namespace CommunicationWorkerRole
 
                     catch (Exception e)
                     {
-                        ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "ShipmentExternalUpdateWorkerRole : Run() Method", null);
+                        ExceptionHandler.HandleException(e, DateTime.Now, 0, "", "WorkerRole", "EntityExternalUpdateWorkerRole : Run() Method", null);
                         Thread.Sleep(5000);
                     }
                 }
@@ -127,6 +128,8 @@ namespace CommunicationWorkerRole
 
         private void OnCatchAnalyzingError(Exception ex )
         {
+            ExceptionHandler.HandleException(ex, DateTime.Now, 0, "", "WorkerRole", "EntityExternalUpdateWorkerRole : Run() Method", null);
+
             analyzeQueue.ErrorMessage = ex.Message + (ex.InnerException != null ? Environment.NewLine + "InnerException: " + ex.InnerException.Message : "");
             analyzeQueue.StackTrace = (ex.StackTrace != null ? Environment.NewLine + "Stack Trace: " + ex.StackTrace : "");
             analyzeQueue.ErrorMessage = analyzeQueue.ErrorMessage.Length > 7950 ? analyzeQueue.ErrorMessage.Substring(0, 7950) : analyzeQueue.ErrorMessage;

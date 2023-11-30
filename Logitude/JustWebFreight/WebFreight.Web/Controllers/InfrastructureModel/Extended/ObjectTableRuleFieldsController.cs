@@ -56,6 +56,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ObjectTableRuleField", entityPM.Tenant, authToken.Tenant);
 
                         IWebFreightContext MyContext = WebFreightContext.GetContext(entityPM.Tenant);
                         ObjectTableRuleFieldService service = new ObjectTableRuleFieldService(MyContext, entityPM.Tenant);
@@ -89,6 +90,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                        SecurityUtility.AuthenticationOnEntityTenant("ObjectTableRuleField", entityPM.Tenant, authToken.Tenant);
 
                         string entityName = "ObjectTableRuleField" + entityPM.Id + entityPM.Tenant;
                         string entityPmName = "ObjectTableRuleFieldPM" + entityPM.Id + entityPM.Tenant;
@@ -139,6 +141,10 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                     ObjectTableRuleFieldService service = new ObjectTableRuleFieldService(ObjectContext, authToken.Tenant);
                     foreach (ObjectTableRuleFieldPM entityPM in fuleFieldsPMList)
                     {
+                        SecurityUtility.AuthenticationOnEntityTenant("ObjectTableRuleField", entityPM.Tenant, authToken.Tenant);
+
+
+
                         switch (entityPM.ChangeSetOp)
                         {
                             case ChangeSetOperation.Insert:
@@ -174,6 +180,7 @@ namespace WebFreight.Web.Controllers.InfrastructureModel.Extended
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ObjectTableRuleFieldQuery objectTableRuleFieldQuery = new ObjectTableRuleFieldQuery(tenant);
                 List<ObjectTableRuleFieldPM> result = objectTableRuleFieldQuery.GetObjectTableRuleFieldPMsByTenant(tenant).ToList();

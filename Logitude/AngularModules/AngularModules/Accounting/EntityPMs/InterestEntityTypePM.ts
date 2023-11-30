@@ -15,11 +15,11 @@ import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/Propert
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
 export class InterestEntityTypePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -42,6 +42,11 @@ export class InterestEntityTypePM {
     private localName: string;
     public get LocalName() { return this.localName; }
     public set LocalName(newValue: string) { if (this.localName != newValue) { this.localName = newValue; this.MarkAsDirty("LocalName"); } }
+       
+	 
+    private accountingEntityCode: string;
+    public get AccountingEntityCode() { return this.accountingEntityCode; }
+    public set AccountingEntityCode(newValue: string) { if (this.accountingEntityCode != newValue) { this.accountingEntityCode = newValue; this.MarkAsDirty("AccountingEntityCode"); } }
        
 	 
 

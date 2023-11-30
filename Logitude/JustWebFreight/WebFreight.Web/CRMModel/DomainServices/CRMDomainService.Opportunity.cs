@@ -62,7 +62,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             OpportunityListQueryService listService = new OpportunityListQueryService(crmContext);
             OpportunityList myResult = listService.GetSingle(id);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Opportunity", tenant, new List<OpportunityList> { myResult }.Cast<object>().ToList());
 
             return myResult;
@@ -86,7 +86,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             OpportunityListQueryService listService = new OpportunityListQueryService(crmContext);
             List<OpportunityList> myResult = listService.GetList(tenant);       
     
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Opportunity", tenant, myResult.Cast<object>().ToList());
 
             return myResult;
@@ -109,7 +109,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
 
             List<OpportunityList> myResult = listService.GetList(queryOperations, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Opportunity", tenant, myResult.Cast<object>().ToList());
 
             return myResult;
@@ -133,7 +133,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
 
             List<OpportunityList> myResult = listService.GetList(queryOperations, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Opportunity", tenant, myResult.Cast<object>().ToList());
 
             return myResult;
@@ -175,7 +175,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             OpportunityListQueryService queryService = new OpportunityListQueryService(crmContext);
             IQueryable<OpportunityList> myResult = queryService.GetRecentEntityLists(ownerId, businessUnitId, tenant, contact.Id, objectTable.Id).AsQueryable();
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Opportunity", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }
@@ -455,7 +455,7 @@ namespace WebFreight.Web.CRMModel.DomainServices
             OpportunityListQueryService listService = new OpportunityListQueryService(crmContext);
             List<OpportunityList> myResult = listService.GetOpportunitiesByCustomerId(customerId, tenant);
 
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             customFieldResolver.SetCustomFieldsValues("Opportunity", tenant, myResult.Cast<object>().ToList());
             return myResult.ToList();
         }

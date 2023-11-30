@@ -105,7 +105,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         [ForeignKey("DocumentTypeCategoryCode")]
         public virtual DocumentTypeCategory DocumentTypeCategory { get; set; }
 
-
+        public bool IsCustomerUploadPermission { get; set; }
         ////[Include]
         ////[Association("DocumentTypeFollowUpType", "FollowUpTypeId", "Id", IsForeignKey = true)]
         //public virtual FollowUpType FollowUpType { get; set; }

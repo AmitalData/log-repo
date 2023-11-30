@@ -42,16 +42,17 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     if (CacheManager.CacheWrapper.Get(entityName) == null)
                     {
                         var CustomerSizes = (from a in repository.context.CustomerSizes
-                                        where a.Tenant == tenant
+                                             where a.Tenant == tenant
                                              select new CustomerSizePM()
-                                        {
-                                            Name = a.Name,
-                                            Id = a.Id,
-                                            Tenant = a.Tenant,
-                                            SearchFields = a.SearchFields,
-                                            Order = a.OrderNumber,
-                                            InActive = a.InActive,
-                                        });
+                                             {
+                                                 Name = a.Name,
+                                                 Id = a.Id,
+                                                 Tenant = a.Tenant,
+                                                 SearchFields = a.SearchFields,
+                                                 Order = a.OrderNumber,
+                                                 InActive = a.InActive,
+                                                 Code = a.Code,
+                                             });
 
                         foreach (var c in CustomerSizes)
                         {
@@ -82,6 +83,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   SearchFields = a.SearchFields,
                                   Order = a.OrderNumber,
                                   InActive = a.InActive,
+                                  Code = a.Code,
                               }).FirstOrDefault();
                 }
 
@@ -90,34 +92,53 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return null;
         }
 
+        public CustomerSizePM GetSinglePMByCode(string code, int tenant)
+        {
+            return (from a in repository.context.CustomerSizes
+                    where a.Tenant == tenant
+                    && a.Code == code
+                    select new CustomerSizePM()
+                    {
+                        Name = a.Name,
+                        Id = a.Id,
+                        Tenant = a.Tenant,
+                        SearchFields = a.SearchFields,
+                        Order = a.OrderNumber,
+                        InActive = a.InActive,
+                        Code = a.Code,
+                    }).FirstOrDefault();
+        }
+
         public IQueryable<CustomerSizePM> GetCustomerSizePMsByTenant(int tenant)
         {
             IQueryable<CustomerSizePM> CustomerSizes = from a in repository.context.CustomerSizes
-                                            where a.Tenant == tenant
+                                                       where a.Tenant == tenant
                                                        select new CustomerSizePM()
-                                            {
-                                                Name = a.Name,
-                                                Id = a.Id,
-                                                Tenant = a.Tenant,
-                                                SearchFields = a.SearchFields,
-                                                Order = a.OrderNumber,
-                                                InActive = a.InActive,
-                                            };
+                                                       {
+                                                           Name = a.Name,
+                                                           Id = a.Id,
+                                                           Tenant = a.Tenant,
+                                                           SearchFields = a.SearchFields,
+                                                           Order = a.OrderNumber,
+                                                           InActive = a.InActive,
+                                                           Code = a.Code,
+                                                       };
             return CustomerSizes;
         }
 
         public IQueryable<CustomerSizeList> GetIQueryableEntityList(IQueryable<CustomerSize> iQueryable)
         {
             IQueryable<CustomerSizeList> result = from a in iQueryable
-                                                select new CustomerSizeList()
-                                            {
-                                                Name = a.Name,
-                                                Id = a.Id,
-                                                Tenant = a.Tenant,
-                                                SearchFields = a.SearchFields,
-                                                Order = a.OrderNumber,
-                                                InActive = a.InActive,
-                                            };
+                                                  select new CustomerSizeList()
+                                                  {
+                                                      Name = a.Name,
+                                                      Id = a.Id,
+                                                      Tenant = a.Tenant,
+                                                      SearchFields = a.SearchFields,
+                                                      Order = a.OrderNumber,
+                                                      InActive = a.InActive,
+                                                      Code = a.Code,
+                                                  };
             return result;
         }
 

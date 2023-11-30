@@ -21,10 +21,10 @@ export class ShipmentProductItemPM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
+	            this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-      }
+       }
 
 	 
     
@@ -103,9 +103,39 @@ export class ShipmentProductItemPM {
     public set IsEmptyLine(newValue: boolean) { if (this.isEmptyLine != newValue) { this.isEmptyLine = newValue; this.MarkAsDirty("IsEmptyLine"); } }
        
 	 
+    private vATPercentage: number;
+    public get VATPercentage() { return this.vATPercentage; }
+    public set VATPercentage(newValue: number) { if (this.vATPercentage != newValue) { this.vATPercentage = newValue; this.MarkAsDirty("VATPercentage"); } }
+       
+	 
+    private dutiesPercentage: number;
+    public get DutiesPercentage() { return this.dutiesPercentage; }
+    public set DutiesPercentage(newValue: number) { if (this.dutiesPercentage != newValue) { this.dutiesPercentage = newValue; this.MarkAsDirty("DutiesPercentage"); } }
+       
+	 
+    private otherDuties: string;
+    public get OtherDuties() { return this.otherDuties; }
+    public set OtherDuties(newValue: string) { if (this.otherDuties != newValue) { this.otherDuties = newValue; this.MarkAsDirty("OtherDuties"); } }
+       
+	 
+    private remarks: string;
+    public get Remarks() { return this.remarks; }
+    public set Remarks(newValue: string) { if (this.remarks != newValue) { this.remarks = newValue; this.MarkAsDirty("Remarks"); } }
+       
+	 
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
+       
+	 
+    private shipperId: string;
+    public get ShipperId() { return this.shipperId; }
+    public set ShipperId(newValue: string) { if (this.shipperId != newValue) { this.shipperId = newValue; this.MarkAsDirty("ShipperId"); } }
+       
+	 
+    private shipperName: string;
+    public get ShipperName() { return this.shipperName; }
+    public set ShipperName(newValue: string) { if (this.shipperName != newValue) { this.shipperName = newValue; this.MarkAsDirty("ShipperName"); } }
        
 	 
 

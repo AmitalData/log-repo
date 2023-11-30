@@ -10,6 +10,8 @@ using System;
 using Simplog.Server.Infrastructure.Helpers;
 using Devart.Data.Oracle;
 using Logitude.Server.Tools.Helpers;
+using System.Collections.Generic;
+using System.Net.Http.Headers;
 
 namespace Logitude.Server.Tools.Counters
 {
@@ -20,9 +22,8 @@ namespace Logitude.Server.Tools.Counters
         {
             int number = 0;
             string strConnString = GetConnection(tenant);
-            lock (thisLock)
-            {
-                if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+
+           if (LogitudeSettings.DatabaseManagementSystem == "oracle")
                 {
                     if (InOracleCreateNewTransaction)
                     {
@@ -41,16 +42,20 @@ namespace Logitude.Server.Tools.Counters
 
                     return number;
                 }
-                else
+            else
+            {
+                int Retry = 0;
+                try
                 {
 
-                    using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
+                    using (TransactionScope scope = TransactionFactory.GetNewTransaction(TimeSpan.FromSeconds(3)))
                     {
-                        //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                        //{
+
                         using (SqlConnection cn = new SqlConnection(strConnString))
                         {
-                            SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
+
+                            SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValueWithSnapShot", cn);
+
                             cmd.CommandType = CommandType.StoredProcedure;
 
                             SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.Int);
@@ -73,16 +78,27 @@ namespace Logitude.Server.Tools.Counters
                             cn.Close();
                             number = (int)cmd.Parameters["@pLastNumber"].Value;
 
-                            //}
-                            //
                         }
 
                         scope.Complete();
                         return number;
                     }
                 }
-
+                catch (Exception ex)
+                {
+                    if (Retry == 0)
+                    {
+                        Retry++;
+                        return GetNumber(tableName, tenant);
+                    }
+                    else
+                    {
+                        throw ex;
+                    }
+                }
             }
+
+
         }
 
         private static int GetCodeValueFromOracle(string tableName, int tenant, string strConnString)
@@ -186,43 +202,33 @@ namespace Logitude.Server.Tools.Counters
             }
             else
             {
-                lock (thisLock)
+                using (SqlConnection cn = new SqlConnection(strConnString))
                 {
-                    //using (TransactionScope scope = TransactionFactory.GetNewReadCommittedTransaction())
-                    //{
-                        //using (TransactionScope scope = TransactionFactory.GetNewTransaction())
-                        //{
-                        using (SqlConnection cn = new SqlConnection(strConnString))
-                        {
-                            SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
-                            cmd.CommandType = CommandType.StoredProcedure;
+                    SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                            SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.Int);
-                            SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.NVarChar);
-                            SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
+                    SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.Int);
+                    SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.NVarChar);
+                    SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
 
-                            lastNumberPar.Direction = ParameterDirection.Output;
-                            tableNamePar.Direction = ParameterDirection.Input;
-                            tenantPar.Direction = ParameterDirection.Input;
+                    lastNumberPar.Direction = ParameterDirection.Output;
+                    tableNamePar.Direction = ParameterDirection.Input;
+                    tenantPar.Direction = ParameterDirection.Input;
 
-                            tenantPar.Value = tenant;
-                            tableNamePar.Value = tableName;
+                    tenantPar.Value = tenant;
+                    tableNamePar.Value = tableName;
 
-                            cmd.Parameters.Add(lastNumberPar);
-                            cmd.Parameters.Add(tenantPar);
-                            cmd.Parameters.Add(tableNamePar);
-                            cn.Open();
-                            cmd.ExecuteNonQuery();
-                            cn.Close();
-                            number = (int)cmd.Parameters["@pLastNumber"].Value;
-                            //}
-                            //
-                        }
-                       // scope.Complete();
-                        return number;
-                   // }
+                    cmd.Parameters.Add(lastNumberPar);
+                    cmd.Parameters.Add(tenantPar);
+                    cmd.Parameters.Add(tableNamePar);
+                    cmd.CommandTimeout = 3;
+                    cn.Open();
+                    cmd.ExecuteNonQuery();
+                    cn.Close();
+                    number = (int)cmd.Parameters["@pLastNumber"].Value;
+
                 }
-
+                return number;
             }
         }
         public static int GetNumber(string tableName, int tenant, string connectionString)
@@ -239,7 +245,7 @@ namespace Logitude.Server.Tools.Counters
                 {
                     OracleCommand cmd = new OracleCommand();
                     cmd.Connection = cn;
-                    cmd.CommandText = 
+                    cmd.CommandText =
                     DbContextBaseUtil.GetStoredProcedureName("usp_GetNextTableCodeValue", LogitudeDBSchema.LOGITUDE_MAIN,
                     cmd.Connection.ConnectionString);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -284,31 +290,40 @@ namespace Logitude.Server.Tools.Counters
             }
             else
             {
-                using (SqlConnection cn = new SqlConnection(strConnString))
+                using (TransactionScope scope = TransactionFactory.GetNewTransaction())
                 {
-                    SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
-                    cmd.CommandType = CommandType.StoredProcedure;
+                    using (SqlConnection cn = new SqlConnection(strConnString))
+                    {
+                        SqlCommand cmd = new SqlCommand("dbo.usp_GetNextTableCodeValue", cn);
+                        var myTenants = new List<int>() { 1, 42, 2889 };
+                        if (tenant < 3000)//myTenants.Contains(tenant))
+                        {
+                            cmd = new SqlCommand("dbo.usp_GetNextTableCodeValueWithSnapShot", cn);
+                        }
+                        cmd.CommandType = CommandType.StoredProcedure;
 
-                    SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.Int);
-                    SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.NVarChar);
-                    SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
+                        SqlParameter lastNumberPar = new SqlParameter("@pLastNumber", SqlDbType.Int);
+                        SqlParameter tableNamePar = new SqlParameter("@pTableName", SqlDbType.NVarChar);
+                        SqlParameter tenantPar = new SqlParameter("@pTenant", SqlDbType.Int);
 
 
-                    lastNumberPar.Direction = ParameterDirection.Output;
-                    tableNamePar.Direction = ParameterDirection.Input;
-                    tenantPar.Direction = ParameterDirection.Input;
+                        lastNumberPar.Direction = ParameterDirection.Output;
+                        tableNamePar.Direction = ParameterDirection.Input;
+                        tenantPar.Direction = ParameterDirection.Input;
 
-                    tenantPar.Value = tenant;
-                    tableNamePar.Value = tableName;
+                        tenantPar.Value = tenant;
+                        tableNamePar.Value = tableName;
 
-                    cmd.Parameters.Add(lastNumberPar);
-                    cmd.Parameters.Add(tenantPar);
-                    cmd.Parameters.Add(tableNamePar);
-                    cn.Open();
-                    cmd.ExecuteNonQuery();
-                    cn.Close();
-                    number = (int)cmd.Parameters["@pLastNumber"].Value;
+                        cmd.Parameters.Add(lastNumberPar);
+                        cmd.Parameters.Add(tenantPar);
+                        cmd.Parameters.Add(tableNamePar);
+                        cn.Open();
+                        cmd.ExecuteNonQuery();
+                        cn.Close();
+                        number = (int)cmd.Parameters["@pLastNumber"].Value;
 
+                    }
+                    scope.Complete();
                 }
 
                 return number;
@@ -328,7 +343,7 @@ namespace Logitude.Server.Tools.Counters
             string dbConnectionInfo = currentDb.DBConnection;
             string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
 
-            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo,dbSeconderyConnectionInfo);
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
             WebFreightContext context = new WebFreightContext(connection);
 
             return context.Database.Connection.ConnectionString;// entityBuilder.ConnectionString;
@@ -371,7 +386,7 @@ namespace Logitude.Server.Tools.Counters
 
         public int GetNumber(string tableName, int tenant, string connectionString)
         {
-            
+
 
             if (!_InNewTransaction)
             {

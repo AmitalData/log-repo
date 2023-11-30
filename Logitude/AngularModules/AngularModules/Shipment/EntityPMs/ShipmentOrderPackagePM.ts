@@ -21,10 +21,10 @@ export class ShipmentOrderPackagePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	        constructor(_entityParentPM: any) {
-          this.EntityParentPM = _entityParentPM;
+	            this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
-      }
+       }
 
 	 
     
@@ -106,6 +106,16 @@ export class ShipmentOrderPackagePM {
     private changeSetOp: string;
     public get ChangeSetOp() { return this.changeSetOp; }
     public set ChangeSetOp(newValue: string) { if (this.changeSetOp != newValue) { this.changeSetOp = newValue; this.MarkAsDirty("ChangeSetOp"); } }
+       
+	 
+    private containerNumber: string;
+    public get ContainerNumber() { return this.containerNumber; }
+    public set ContainerNumber(newValue: string) { if (this.containerNumber != newValue) { this.containerNumber = newValue; this.MarkAsDirty("ContainerNumber"); } }
+       
+	 
+    private packageTypeCode: string;
+    public get PackageTypeCode() { return this.packageTypeCode; }
+    public set PackageTypeCode(newValue: string) { if (this.packageTypeCode != newValue) { this.packageTypeCode = newValue; this.MarkAsDirty("PackageTypeCode"); } }
        
 	 
 

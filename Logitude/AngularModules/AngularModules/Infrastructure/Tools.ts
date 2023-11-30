@@ -80,6 +80,10 @@ export class AppTool {
     }
 
     public static TenantPM: any;
+    public static IsNullOrUndefined(myFieldValue: any) {
+        return myFieldValue == null || myFieldValue == undefined;
+    }
+    
     public static IsNullOrEmpty(myFieldValue: any) {
         var myResult: boolean = false;
 
@@ -238,6 +242,9 @@ export class AppTool {
 
         return myResult;
     }
+    public static IsNil(myFieldValue: any) {
+        return myFieldValue && myFieldValue[0] && myFieldValue[0]['@nil'] == 'true';
+    }
 
     public static GetNewGuid() {
 
@@ -253,8 +260,7 @@ export class AppTool {
         var logitude_url = location.href.replace('index.html', '');
 
         if (location.href.indexOf('localhost') > -1) {
-            logitude_url = 'http://localhost:9996/';//test.logitudeworld.com/test/';//
-
+            return 'http://localhost:9996/';
         }
 
         else {
@@ -850,7 +856,7 @@ export class AppTool {
         var result: number = myArgs;
 
         if (chargeableWeightUnitCode != "MT") {
-            if (directionId == "E" && transportModeId == "A") {
+            if (directionId == "R" || (directionId == "E" && transportModeId == "A")) {
                 if (result != null) {
 
                     var toString: string = result.toString();
@@ -1019,7 +1025,6 @@ export class AppTool {
                 myResult = "FollowUps";
                 break;
             }
-
             case "General.MH.Quotes": {
                 myResult = "Quote";
                 break;
@@ -1033,6 +1038,7 @@ export class AppTool {
             case "General.MH.CRM":
             case "General.MH.Dashboard":
             case "General.MH.Importers":
+            case "General.MH.ClassicDashboard":
                 {
                     myResult = "Bars";
                     break;
@@ -1114,7 +1120,20 @@ export class AppTool {
                 myResult = "Tariff";
                 break;
             }
-                
+            case "General.MH.Automations": {
+                myResult = "AutomationBlueIcon";
+                break;
+            }
+
+            case "General.MH.Containers": {
+                myResult = "Containers";
+                break;
+            }
+
+            case "General.MH.Tasks": {
+                myResult = "Table";
+                break;
+            }
 
             default: {
                 myResult = "Person";
@@ -1268,12 +1287,12 @@ export class DateTool {
         myResult.setUTCMilliseconds(0);
         return myResult;
     }
-    public static GetCurrentDateAsUtcForAccountingValidation() {
+    public static GetCurrentDateAsUtcForAccountingValidation(timeZoneOffset:number) {
         var myResult: Date = new Date();
         myResult.setUTCFullYear(myResult.getUTCFullYear());
         myResult.setUTCMonth(myResult.getUTCMonth());
         myResult.setUTCDate(myResult.getUTCDate());
-        myResult.setUTCHours(0);
+        myResult.setUTCHours(myResult.getUTCHours() + timeZoneOffset);
         myResult.setUTCMinutes(0);
         myResult.setUTCSeconds(0);
         myResult.setUTCMilliseconds(0);
@@ -1782,7 +1801,7 @@ export class DateTool {
         if (dateFormats) {
 
             var dayIndex = dateFormats.DateParts.DateObject.getDay();
-            var monthIndex = dateFormats.DateParts.DateObject.getMonth();
+            var monthIndex = dateFormats.DateParts.Month - 1;
 
             switch (dayIndex) {
                 case 0: { dateFormats.DayName = "Sunday", dateFormats.DayNameShort = "Sun"; break; }
@@ -2201,6 +2220,35 @@ export class FormatTool {
 
         return myResult;
     }
+
+    public static IsValidNameText(input: string): boolean {
+        var isvalid = true;
+
+        if (!AppTool.IsNullOrEmpty(input)) {
+            let firstChar = input.charAt(0);
+
+            if (this.IsNumeric(firstChar) || !this.IsText(input)) {
+                isvalid = false;
+            }
+        }
+
+        return isvalid
+    }
+
+    public static IsTextBeginWithNumber(input: string): boolean {
+        var isvalid = false;
+
+        if (!AppTool.IsNullOrEmpty(input)) {
+            let firstChar = input.charAt(0);
+
+            if (this.IsNumeric(firstChar)) {
+                isvalid = true;
+            }
+        }
+
+        return isvalid
+    }
+
     public static IsAlpha(input: string): boolean {
         var myResult = true;
 

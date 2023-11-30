@@ -19,5 +19,6 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string ParentRoleId { get; set; }
         public bool IsCustomRole { get; set; }
         public string SearchFields { get; set; }
+        public bool Inactive { get; set; }
     }
 }

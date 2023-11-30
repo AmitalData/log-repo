@@ -250,7 +250,31 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string revenueExpenseType ;
+
+        [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+        [DataMember]
+        private string paymentTerms;
+
+        public string PaymentTerms
+        {
+            get
+            {
+                return paymentTerms;
+            }
+            set
+            {
+                if (paymentTerms != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "PaymentTerms", OldValue = paymentTerms, NewValue = value, PropertyType = "string"};
+                    NotifyPropertyChanged(values);
+                    paymentTerms = value;
+                }
+            }
+        }
+
+
+
+        private string revenueExpenseType ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
@@ -2505,7 +2529,28 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string nameForPrintingCheques ;
+		private decimal? interestOpenBalance;
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public decimal? InterestOpenBalance
+		{
+
+			get
+			{
+				return interestOpenBalance;
+			}
+			set
+			{
+				if (interestOpenBalance != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "InterestOpenBalance", OldValue = interestOpenBalance, NewValue = value, PropertyType = "decimal?" };
+					NotifyPropertyChanged(values);
+					interestOpenBalance = value;
+				}
+
+			}
+		}
+		private string nameForPrintingCheques ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
@@ -3539,7 +3584,103 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-   }
+	  private int? chartOfAccountSecurityLevel ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? ChartOfAccountSecurityLevel  
+	   {
+	    
+	     get
+		{
+		   return chartOfAccountSecurityLevel;
+		 }
+		 set
+		 {
+		   if(chartOfAccountSecurityLevel != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChartOfAccountSecurityLevel",OldValue=chartOfAccountSecurityLevel,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   chartOfAccountSecurityLevel=value;
+		   }
+			
+		 }
+	   }
+
+
+
+		private bool access;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public bool Access
+		{
+
+			get
+			{
+				return access;
+			}
+			set
+			{
+				if (access != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "Access", OldValue = Access, NewValue = value, PropertyType = "bool" };
+					NotifyPropertyChanged(values);
+					access = value;
+				}
+
+			}
+		}
+
+		private double? insuredCreditPercentage;
+
+
+		[CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+		[DataMember]
+		public double? InsuredCreditPercentage
+		{
+
+			get
+			{
+				return insuredCreditPercentage;
+			}
+			set
+			{
+				if (insuredCreditPercentage != value)
+				{
+					NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "InsuredCreditPercentage", OldValue = insuredCreditPercentage, NewValue = value, PropertyType = "double?" };
+					NotifyPropertyChanged(values);
+					insuredCreditPercentage = value;
+				}
+
+			}
+		}
+        private string dateFormat;
+
+
+        [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+        [DataMember]
+        public string DateFormat
+        {
+
+            get
+            {
+                return dateFormat;
+            }
+            set
+            {
+                if (dateFormat != value)
+                {
+                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "DateFormat", OldValue = dateFormat, NewValue = value, PropertyType = "string" };
+                    NotifyPropertyChanged(values);
+                    dateFormat = value;
+                }
+
+            }
+        }
+}
    
 }
 	 

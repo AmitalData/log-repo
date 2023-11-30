@@ -23,6 +23,8 @@ import {InvoiceDomainService} from '../../../../Invoice/Services/InvoiceDomainSe
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceLocator } from '../../../../Infrastructure/Locators/ServiceLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { DocumentTypeTemplatePMExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
+import { DocumentTypeTemplateList } from '../../../../Common/EntityLists/DocumentTypeTemplateList';
 declare var window: any;
 
 @Component({
@@ -40,8 +42,15 @@ export class NewConsolidationComponent extends BaseComponent {
     public DisplaySATSettings: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
     public isRTL: boolean = false;
+    public Periods: PeriodDetails[] = [];
+    public Profact4Enabled: boolean = false;
 
     private CurrentSession = SessionLocator.SelectedSession;
+    public documentTypeTemplates: DocumentTypeTemplateList[] = [];
+    public selectedDocumentTypeTemplate: DocumentTypeTemplateList;
+    public IsLoadDocumentTemplateReady = false;
+    public IsDocumentTypeTemplateChange = false;
+
     constructor(private entityResourceService: EntityResourceService) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");          
@@ -57,12 +66,14 @@ export class NewConsolidationComponent extends BaseComponent {
     private myPaymentTermListService: PaymentTermListService;
     private myInvoiceDomainService: InvoiceDomainService;
     private myEntityPMService: ARInvoicePMService;
+    private documentTypeTemplatePMExtendedService: DocumentTypeTemplatePMExtendedService;
     InitializeServices() {
         this.myCardListService = new CardListService();
         this.myCurrencyListService = new CurrencyListService();
         this.myPaymentTermListService = new PaymentTermListService();
         this.myInvoiceDomainService = new InvoiceDomainService();
         this.myEntityPMService = new ARInvoicePMService();
+        this.documentTypeTemplatePMExtendedService = new DocumentTypeTemplatePMExtendedService();
     }
    
     SetWindowArgs(typeCode: string) {
@@ -77,22 +88,123 @@ export class NewConsolidationComponent extends BaseComponent {
 
             this.SetUIProperties();
             this.BuildPartnersTypes();
+            this.GetDocumentTypeTemplates();
+
           this.LoadData();
 
-          if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             this.DisplaySATSettings = true;
             this.MetodoPagoCode = SessionLocator.SATInterfaceSettings.MetodoPagoCode;
 
             if (AppTool.IsNullOrEmpty(this.MetodoPagoCode)) {
               this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, true);
             }
+
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
+            this.FillPeriodList();
           }
         });
+    }
+
+    FillPeriodList() {
+        this.FillPeriods();
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.PeriodCode))
+            this.SelectdPeriod = null;
+        else
+            this.SelectdPeriod = this.Periods.filter(per => per.Code == this.EntityPM.PeriodCode)[0];
+    }
+
+    FillPeriods() {
+        this.Periods.push(new PeriodDetails("01", "Diario"));
+        this.Periods.push(new PeriodDetails("02", "Semanal"));
+        this.Periods.push(new PeriodDetails("03", "Quincenal"));
+        this.Periods.push(new PeriodDetails("04", "Mensual"));
+        this.Periods.push(new PeriodDetails("05", "Bimestral"));
     }
 
 
     ngOnInit() {
         this.BuildAdditionalFields();
+    }
+
+    IsHaveARInvoicePrintToogleFeature() {
+        return SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "ARP")[0];
+    }
+
+    private GetDocumentTypeCode() {
+        if (this.EntityPM.IsConsolidationInvoice) return "999C";
+        if (this.EntityPM.IsGeneralInvoice) return "999G";
+        if (this.EntityPM.ARInvoiceTypeCode == "MN") return "999M";
+        if (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") return "999CI";
+        return "999S";
+    }
+
+    private GetDocumentTypeTemplates() {
+        if (!this.IsHaveARInvoicePrintToogleFeature()) return;
+        this.CurrentSession.StartBusyIndicatorLoading();
+        let documentTypeCode: string = this.GetDocumentTypeCode();
+        this.BuildDocumentTypeTemplateDependedOnPartnerDefaultTemplate(documentTypeCode);        
+    }
+
+    OnDocumentTypeTemplateSelectedChanged(documentTypeTemplate) {
+        if (!documentTypeTemplate) return;
+        this.selectedDocumentTypeTemplate = documentTypeTemplate;
+        if (this.EntityPM) {
+            this.EntityPM.DocumentTemplateId = this.selectedDocumentTypeTemplate.Id;
+        }
+    }
+
+    GetPartnerDocumentTypeTemplatetDefault(cardList: CardList , documentTypeCode:string) {
+        if (!cardList) return null;
+        if (documentTypeCode == "999S") return cardList.SingleInvoiceTemplateId;
+        if (documentTypeCode == "999C") return cardList.ConsolidationInvoiceTemplateId;
+        if (documentTypeCode == "999CI") return cardList.CustomsInvoiceTemplateId;
+        if (documentTypeCode == "999M") return cardList.ManifestInvoiceTemplateId;
+    }
+
+    BuildDocumentTypeTemplateDependedOnPartnerDefaultTemplate(documentTypeCode: string): any {
+        if (!this.PartnerId) this.LoadDocumentTypeTemplate(documentTypeCode);
+        this.myCardListService.getSingle(this.PartnerId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse.HasError) return;
+            let cardList: CardList = myResponse.Result;
+            let selectedDocumentTypeTemplateId = this.GetPartnerDocumentTypeTemplatetDefault(cardList, documentTypeCode);
+            this.LoadDocumentTypeTemplate(documentTypeCode, selectedDocumentTypeTemplateId);
+        });
+    }
+
+    LoadDocumentTypeTemplate(documentTypeCode: string, selectedTemplateId: string = null) {
+        if (this.documentTypeTemplates.length > 0) {
+            this.SetDocumentTypeTemplateDefult(selectedTemplateId);
+            return;
+        }
+        this.documentTypeTemplates = [];
+        this.documentTypeTemplatePMExtendedService.getDocumentTypeTemplatesByDocumentTypeCode(documentTypeCode, SessionLocator.Tenant).subscribe((res: any) => {
+            var pmResponse: ServiceResponse = res;
+            this.documentTypeTemplates = pmResponse.Result;
+            this.SetDocumentTypeTemplateDefult(selectedTemplateId);
+        });
+    }
+
+
+    SetDocumentTypeTemplateDefult(selectedTemplateId) {
+        let selectedDocumentTypeTemplate: any;
+        if (selectedTemplateId) {
+            selectedDocumentTypeTemplate = this.documentTypeTemplates.filter(d => d.Id == selectedTemplateId)[0];
+        }
+        if (!selectedDocumentTypeTemplate) {
+            selectedDocumentTypeTemplate = this.documentTypeTemplates.filter(d => d.IsDefault == true)[0];
+        }
+
+        if (!selectedDocumentTypeTemplate) {
+            selectedDocumentTypeTemplate = this.documentTypeTemplates[0];
+        }
+        if (!selectedDocumentTypeTemplate) return;
+        this.OnDocumentTypeTemplateSelectedChanged(selectedDocumentTypeTemplate);
+        this.IsLoadDocumentTemplateReady = true;
+        this.IsDocumentTypeTemplateChange = !this.IsDocumentTypeTemplateChange;
+
+        this.CurrentSession.CurrentWindow.StopBusyIndicator();
     }
 
     private timerToken: any;
@@ -235,7 +347,7 @@ export class NewConsolidationComponent extends BaseComponent {
     SetUIProperties_Payment() {
         this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, false);
         this.UIProperties.SetRequired("MetodoPagoCode", this.ObjectTableName, false);
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, true);
           }
@@ -254,7 +366,24 @@ export class NewConsolidationComponent extends BaseComponent {
         this.SetUIProperties_Payment();
       }
     }
-  }
+    }
+
+    get PeriodCode() { return this.EntityPM.PeriodCode; }
+    set PeriodCode(newValue: string) {
+        if (this.EntityPM.PeriodCode != newValue) {
+            this.EntityPM.PeriodCode = newValue;
+        }
+    }
+
+    private selectdPeriod: PeriodDetails;
+    get SelectdPeriod() { return this.selectdPeriod; }
+    set SelectdPeriod(value: PeriodDetails) {
+        if (this.selectdPeriod != value) {
+            this.selectdPeriod = value;
+            this.PeriodCode = !AppTool.IsNullOrEmpty(value) ? this.selectdPeriod.Code : "";
+        }
+    }
+
     // BillTo
     public BillToDependencyValue1: string = "CS";
     public BillToDependencyValue2: boolean = false;
@@ -303,6 +432,8 @@ export class NewConsolidationComponent extends BaseComponent {
                 });
             }
         }
+
+        this.GetDocumentTypeTemplates();
     }
 
     get BillToPartnerTypeId() { return this.EntityPM.BillToPartnerTypeId; }
@@ -675,7 +806,7 @@ export class NewConsolidationComponent extends BaseComponent {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.InvoiceDate")));
         }
 
-        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
+        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
             errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));
         }
 
@@ -689,7 +820,7 @@ export class NewConsolidationComponent extends BaseComponent {
             }
         }
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.SATPaymentMethodCode")));
             }
@@ -904,4 +1035,13 @@ export class NewConsolidationComponent extends BaseComponent {
             this.IsCreditLimitHasAction = (ObjectsLocator.CreditLimitSettingPM.InvoiceCreationBlock == true || ObjectsLocator.CreditLimitSettingPM.InvoiceCreationWarning == true) ? true : false;
         }
     }
+}
+
+class PeriodDetails {
+    constructor(code: string, name: string) {
+        this.Code = code;
+        this.Name = name;
+    }
+    Code: string;
+    Name: string;
 }

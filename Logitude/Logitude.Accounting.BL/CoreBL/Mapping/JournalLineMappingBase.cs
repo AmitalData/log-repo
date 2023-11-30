@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Logitude.Accounting.BL;
+using Logitude.Accounting.BL.CloseTables;
 using Logitude.Accounting.BL.Validators;
 
 namespace Logitude.Accounting.BL.CoreBL.Mapping
@@ -57,11 +58,11 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             MyLedgerTransaction.ForeignAmountCredit = System.Math.Round(MyLedgerTransaction.ForeignAmountCredit , 2);
             MyLedgerTransaction.ForeignAmountDebit = System.Math.Round(MyLedgerTransaction.ForeignAmountDebit , 2);
 
-
-
             MyLedgerTransaction.OpenAmount = System.Math.Round(MyLedgerTransaction.OpenAmount, 2);//new Code Not Test
-            
 
+            if (_JournalPM.AccountingEntityCode == AccountingEntityValues.Revaluation &&
+                MyLedgerTransaction.OpenAmount == 0)
+                MyLedgerTransaction.IsReconciled = true;
 
             MyGLAccountTotalByMonth = DefaultMapGLAccountTotalByMounth(MyLedgerTransaction);
             AddGLAccountTotalByMounth(MyGLAccountTotalByMonth, MyLedgerTransaction);
@@ -120,39 +121,39 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             var journalKey = string.Join(",", new string[] { _JournalPM.Tenant.ToString(), _JournalPM.Id });
             if (journalLineKey != journalKey)
             {
-                throw new Exception("if (journalLineKey !=journalKey )");
+                throw new ApplicationException("if (journalLineKey !=journalKey )");
             }
             switch (_JournalLine.EnsureSettingActionTypeCodeEnum())
             {
-                case MyJournalActionTypeEnum.Credit:
+                case JournalActionTypeEnum.Credit:
                     if (this.MyMappingTypeEnum != MappingTypeEnum.Credit)
                     {
-                        throw new Exception("this.MyMappingTypeEnum != MappingTypeEnum.Credit");
+                        throw new ApplicationException("this.MyMappingTypeEnum != MappingTypeEnum.Credit");
                     }
                     break;
-                case MyJournalActionTypeEnum.Debit:
+                case JournalActionTypeEnum.Debit:
                     if (this.MyMappingTypeEnum != MappingTypeEnum.Debit)
                     {
-                        throw new Exception("this.MyMappingTypeEnum != MappingTypeEnum.Debit");
+                        throw new ApplicationException("this.MyMappingTypeEnum != MappingTypeEnum.Debit");
                     }
                     break;
-                case MyJournalActionTypeEnum.DebitAndCredit:
+                case JournalActionTypeEnum.DebitAndCredit:
                     if (this.MyMappingTypeEnum == MappingTypeEnum.Debit || this.MyMappingTypeEnum == MappingTypeEnum.Credit)
                     {
 
                     }
                     else
                     {
-                        throw new Exception("not if (this.MyMappingTypeEnum == MappingTypeEnum.Debit || this.MyMappingTypeEnum == MappingTypeEnum.Credit)");
+                        throw new ApplicationException("not if (this.MyMappingTypeEnum == MappingTypeEnum.Debit || this.MyMappingTypeEnum == MappingTypeEnum.Credit)");
                     }
                     break;
-                case MyJournalActionTypeEnum.DebitCreditAndVatdeduction:
+                case JournalActionTypeEnum.DebitCreditAndVatdeduction:
                     // all ok 
                     break;
-                case MyJournalActionTypeEnum.NotValid:
-                    throw new Exception("case MyJournalActionTypeEnum.NotValid");
+                case JournalActionTypeEnum.NotValid:
+                    throw new ApplicationException("case MyJournalActionTypeEnum.NotValid");
                 default:
-                    throw new Exception("JournalApproveParser():JournalActionType is must ");
+                    throw new ApplicationException("JournalApproveParser():JournalActionType is must ");
                     break;
             }
         }
@@ -196,7 +197,7 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
             //MyLedgerTransaction.AccountingDate = _JournalPM.AccountingDate;
             if (_JournalLine.AccountingDate == DateTime.MinValue)
             {
-                throw new Exception("_JournalLine.AccountingDate is must");//20180111-Bug 44298: באג בתאריך חשבונאי בהעברת פקודת יומן לתנועה
+                throw new ApplicationException("_JournalLine.AccountingDate is must");//20180111-Bug 44298: באג בתאריך חשבונאי בהעברת פקודת יומן לתנועה
             }
             MyLedgerTransaction.AccountingDate = _JournalLine.AccountingDate;//20180111-Bug 44298: באג בתאריך חשבונאי בהעברת פקודת יומן לתנועה
             
@@ -266,12 +267,13 @@ namespace Logitude.Accounting.BL.CoreBL.Mapping
                 //    MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
                 //}
                 MyLedgerTransaction.OpenAmount = _JournalLine.ExternalOpenAmount.GetValueOrDefault();
-                if (_JournalLine.ActionTypeCodeEnum == MyJournalActionTypeEnum.Credit)
+                if (_JournalLine.ActionTypeCodeEnum == JournalActionTypeEnum.Credit)
                 {
                     MyLedgerTransaction.OpenAmount = -1 * _JournalLine.ExternalOpenAmount.GetValueOrDefault();
                 }
             }
             MyLedgerTransaction.IsExternalReconcile = _JournalLine.IsExternalReconcile;
+
         }
 
 

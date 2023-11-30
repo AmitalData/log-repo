@@ -1,4 +1,6 @@
-@release @FeatureToggle @NewDev
+@devrelease
+#@release 
+@FeatureToggle
 Feature: Ocean FCL Price Check
     The authenticated user will create new ocean FCL freight cost tariff,
     add tariff line in draft version tab, then approve it,
@@ -7,9 +9,10 @@ Feature: Ocean FCL Price Check
     Scenario: Login and create new ocean FCL freight cost
         Given the user logged in and navigate to tariff workspace
         And an ocean FCL freight cost with the following details
-            | Name      | TestOceanFCLFreightCost |
-            | Seller    | MAEU                    |
-            | StartDate | Today                   |
+            | Name           | TestOceanFCLFreightCost        |
+            | Seller         | Yangming marine transport corp |
+            | StartDate      | Today                          |
+            | ExpirationDate | Today                          |
         When create freight cost
         Then the freight cost should create successfully
 
@@ -21,9 +24,23 @@ Feature: Ocean FCL Price Check
         When approve version
         Then the version should approve successfully
 
-    Scenario: Edit Ocean FCL surcharge cost if need
+    Scenario: Create new ocean FCL surcharge cost
+        Given an ocean FCL surcharge cost with the following details
+            | Name   | TestOceanFCLSurchargeCost      |
+            | Seller | Yangming marine transport corp |
+        And add the following surcharges
+            | Name                     |
+            | Bunker Adjustment Factor |
+            | B/L Fee                  |
+        When create surcharge cost
+        Then the surcharge cost should create successfully
+
+    Scenario: Edit Surcharge
         Given the user in "OceanFCL" surchage workspace
-        And open surchage with "Maersk lines; INC." as seller
+        And open surchage with "Yangming marine transport corp" as seller
+        And add the following surcharge line
+            | FromPort | ToPort | StartDate | Step1Price | Step2Price |
+            | LHR      | MIA    | Today     | 30         | 30         |
         When copy into new version if start date is not "Today"
         Then new version should approve successfully
 
@@ -38,6 +55,6 @@ Feature: Ocean FCL Price Check
             | Quantity3 | 10    |
         When search about prices
         Then ocean FCL price should equal the following
-            | AirFreight | 600.00   |
-            | Surcharges | 1,200.00 |
-            | Total      | 1,800.00 |
+            | AirFreight | 600.00 ₪   |
+            | Surcharges | 600.00 ₪   |
+            | Total      | 1,200.00 ₪ |

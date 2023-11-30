@@ -68,8 +68,10 @@ Then("the quote header template should update successfully", () => {
 //#region Edit the quote template's Quote Details
 Given("drag and drop the following details in quote details settings", (dataTable) => {
     let fieldDetails = Assists.CreateSet<QuoteTemplateDetails>(dataTable);
+    cy.wait(5000)
     Actions.OpenQuoteDetailsSection();
     Actions.AssertGetQuoteDetails()
+    cy.wait(5000)
     Actions.DragAndDropFields(fieldDetails);
 });
 

@@ -39,14 +39,14 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 myLedgerTransactionBalanceFilter
                     .ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts = 
                     !(myLedgerTransactionBalanceFilter.IncludeChildAccounts || myLedgerTransactionBalanceFilter.IncludeRelatedCurrenciesAccount);
-                var myLedgerTransactionBalanceService = new LedgerTransactionBalanceService(_AccountingContext, myLedgerTransactionBalanceFilter);
+                var myLedgerTransactionBalanceService = new LedgerTransactionBalanceService(_AccountingContext, myLedgerTransactionBalanceFilter, this._Param.IsReconciled);
                 myLedgerTransactionBalanceService.Run();
-                if (this._Param.IsReconciled.HasValue /*&& _Param.IsReconciled==false*/)
-                {
-                    bool IsReconciled =this._Param.IsReconciled.GetValueOrDefault();
-                    myLedgerTransactionBalanceService.Response.MyLedgerTransactionList = myLedgerTransactionBalanceService.Response.MyLedgerTransactionList
-                        .Where(r => r.IsReconciled == IsReconciled).ToList();
-                }
+                //if (this._Param.IsReconciled.HasValue /*&& _Param.IsReconciled==false*/)
+                //{
+                //    bool IsReconciled =this._Param.IsReconciled.GetValueOrDefault();
+                //    myLedgerTransactionBalanceService.Response.MyLedgerTransactionList = myLedgerTransactionBalanceService.Response.MyLedgerTransactionList
+                //        .Where(r => r.IsReconciled == IsReconciled).ToList();
+                //}
                 myLedgerTransactionBalanceService.Response.GLAccountId = currGLAccountId;
                 CardIndexs.Add(myLedgerTransactionBalanceService.Response);
 
@@ -69,7 +69,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     _Param.Category3Id, _Param.Category4Id, _Param.Category5Id, _Param.AccountTypeCode, _Param.ChartOfAccountsId, _Param.IncludeChildAccounts,
                     _Param.ChartOfAccountsTypeCode,
                     _Param.SalesmanId,
-                    includeControlAccount);
+                    includeControlAccount,_Param.UseSecurityLevel);
                 var hash = new HashSet<string>(hashsetallIdAccounts);
                 _allIdAccounts = new List<string>(hash);// hashsetallIdAccounts);
             }
@@ -122,6 +122,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public bool? IsReconciled { get; set; }
         public string ChartOfAccountsTypeCode { get;  set; }
         public string SalesmanId { get; set; }
+        public bool UseSecurityLevel { get; set; }
 
         //public bool IncludeRelatedCurrenciesAccount { get; set; }
         

@@ -15,14 +15,20 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
     public EntityPM: any;
     public ObjectTableName: string;
     public DataContext = this;
+    public Profact4Enabled: boolean = false;
+
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
+    @ViewChild('ARInvoiceDocumentTypeTemplateArea', { read: ViewContainerRef, static: false }) documentTemplateViewContainerRef: ViewContainerRef;
     constructor(private entityArgs: EntityArgs) {
         super();
         this.ScreenCode = entityArgs.ObjectTableName + ".BillingTabScreen";
-        this.RunComponent();
+        this.ObjectTableName = this.entityArgs.ObjectTableName;
+        this.EntityPM = this.entityArgs.EntityPM;
+        this.LoadGeneratedComponents();
 
         if (SessionLocator.SATInterfaceSettings.SATInterfaceCode != "NONE") {
             this.DisplaySATSettings = true;
+            this.Profact4Enabled = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40";
         }
     }
 
@@ -49,27 +55,17 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
         AppTool.KillEventEmitter(this.LoadCompletedEvent);
     }
 
-    RunComponent() {
-        this.ObjectTableName = this.entityArgs.ObjectTableName;
-        this.EntityPM = this.entityArgs.EntityPM;
-
-        if (this.viewContainerRef) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', this.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, this.ScreenCode);
-                });
-
-            this.Listen();
+    LoadGeneratedComponents() {
+        if (!this.viewContainerRef) {
+            this.RunComponentTimer("Child");
+            return;
         }
-
-        else {
-            this.RunComponentTimer();
-        }
+        this.LoadChildComponent(this.viewContainerRef);     
     }
 
     private Retries: number = 0;
     private timerToken: any;
-    private RunComponentTimer() {
+    private RunComponentTimer(componentName: String) {
         this.Retries++;
 
         if (this.timerToken) {
@@ -77,8 +73,33 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
         }
 
         if (this.Retries < 20) {
-            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+            this.timerToken = componentName == "ARInvoiceDocumentTypeTemplateComponent" ? setTimeout(() => this.LoadARInvoiceDocumentTypeTemplateComponent(), 1) : setTimeout(() => this.LoadGeneratedComponents(), 1);
         }
+    }
+
+    private LoadChildComponent(viewContainerRef) {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/GenericComponents/GeneratedComponent', viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.Run(this.entityArgs.EntityPM, this.entityArgs.ObjectTableName, this.ScreenCode);
+                if (viewContainerRef == this.viewContainerRef) this.LoadARInvoiceDocumentTypeTemplateComponent();
+            });
+
+        this.Listen();
+    }
+
+    IsARInvoiceDocumentTypeTemplateAreaLoaded: boolean = false;
+    public LoadARInvoiceDocumentTypeTemplateComponent() {
+        if (this.IsARInvoiceDocumentTypeTemplateAreaLoaded) return;
+        this.Retries = 0;
+        if (!this.documentTemplateViewContainerRef) {
+            this.RunComponentTimer("ARInvoiceDocumentTypeTemplateComponent");
+            return;
+        }
+        SessionLocator.DynamicLoader.Load('./CommonModules/CommonPartners/Components/Templates/PartnerARInvoiceDocumentTypeTemplateComponent', this.documentTemplateViewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.Run(this.entityArgs.EntityPM);
+            });
+        this.IsARInvoiceDocumentTypeTemplateAreaLoaded = true;
     }
 
     get PaymentMethodCode() { return this.entityArgs.EntityPM.PaymentMethodCode; }
@@ -99,6 +120,20 @@ export class BillingTabComponent extends BaseComponent implements OnDestroy {
     set UsoCFDICode(newValue: string) {
         if (this.EntityPM.UsoCFDICode != newValue) {
             this.EntityPM.UsoCFDICode = newValue;
+        }
+    }
+
+    get RegimenFiscalCode() { return this.EntityPM.RegimenFiscalCode; }
+    set RegimenFiscalCode(newValue: string) {
+        if (this.EntityPM.RegimenFiscalCode != newValue) {
+            this.EntityPM.RegimenFiscalCode = newValue;
+        }
+    }
+
+    get SATReceptorName() { return this.EntityPM.SATReceptorName; }
+    set SATReceptorName(newValue: string) {
+        if (this.EntityPM.SATReceptorName != newValue) {
+            this.EntityPM.SATReceptorName = newValue;
         }
     }
 

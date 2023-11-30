@@ -1,6 +1,7 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.Helpers;
+using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
@@ -49,28 +50,49 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private bool isDropBox = false;
         private bool UsingFTP = false;
         private string FTPDetailId;
+        private bool ReturnEntityFile = false;
         public ARInvoiceMessageHelper(List<ARInvoice> invoices, string filename, int tenant,  bool isDropBox = false, bool isFTP = false)
         {
-            this.tenant = tenant;
+            Initialize(invoices, tenant);
             this.filename = filename;
+            this.isDropBox = isDropBox;
+            this.UsingFTP = isFTP;
+        }
+
+        public ARInvoiceMessageHelper(ARInvoicePM arInvoicePM, int tenant, string selectedInterfaceCode)
+        {
+            //For Automation Send Interface
+            ARInvoice arInvoice = new ARInvoice(); 
+            Tools.DataMapping.ARInvoiceMapping.MapEntity(arInvoicePM, arInvoice, true, arInvoicePM.CreatedByUserId);
+            arInvoice.UpdatedByUserId = arInvoicePM.UpdatedByUserId;
+            
+            List<ARInvoice> invoices = new List<ARInvoice> { arInvoice };
+            Initialize(invoices, tenant);
+            ReturnEntityFile = true;
+            myAccountingSystemCode = selectedInterfaceCode;
+        }
+
+        private void Initialize(List<ARInvoice> invoices, int tenant)
+        {
+            this.tenant = tenant;
             this.invoices = invoices;
             this.invoiceCotnext = InvoiceContext.GetContext(tenant);
             this.commonContext = CommonDataContext.GetContext(tenant);
             this.shipmentsContext = ShipmentsContext.GetContext(tenant);
             this.Helper = new MessageTransferHelper(tenant, this.invoiceCotnext, this.commonContext, this.shipmentsContext);
-            this.isDropBox = isDropBox;
-            this.UsingFTP = isFTP;
 
             AccountingSettingRepository accountingSettingRepository = new AccountingSettingRepository(commonContext);
             AccountingSetting accountingSetting = accountingSettingRepository.GetSingleAccountSetting(tenant);
-            if (accountingSetting != null)
-            {
-                myVATableTempCard = accountingSetting.ReceivableVATableTempCard;
-                myVATExemptTempCard = accountingSetting.ReceivableVATExemptTempCard;
-                myAccountingSystemCode = accountingSetting.AccountingSystemCode;
-                FTPDetailId = accountingSetting.TransferFTPDetailId;
-            }
+            
+            if (accountingSetting == null) return;
+
+            myVATableTempCard = accountingSetting.ReceivableVATableTempCard;
+            myVATExemptTempCard = accountingSetting.ReceivableVATExemptTempCard;
+            myAccountingSystemCode = accountingSetting.AccountingSystemCode;
+            FTPDetailId = accountingSetting.TransferFTPDetailId;
+
         }
+
         public ARInvoiceMessageHelper(int tenant)
         {
             this.tenant = tenant;
@@ -89,16 +111,16 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             }
         }
 
-        public void Transfer()
+        public object Transfer()
         {
             if (myAccountingSystemCode == "GI" || myAccountingSystemCode == "AI")
             {
-                this.GetGenericInterfaceData();
+                return this.GetGenericInterfaceData();
             }
 
             else
             {
-                this.GetOriginalTranferData();
+                return this.GetOriginalTranferData();
             }
         }
         public void RebuildFile()
@@ -114,7 +136,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
             }
         }
 
-        private void GetGenericInterfaceData()
+        private ARInvoiceRoot GetGenericInterfaceData()
         {
             ARInvoiceRoot log = new ARInvoiceRoot();
             log.Invoices = new List<ARInvoiceElement>();
@@ -177,7 +199,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 invoiceElement.InvoiceNumber = item.InvoiceNumber;
                 invoiceElement.InvoiceDate = item.InvoiceDate;
                 invoiceElement.InvoiceNotes = item.PrintNotes;
-                invoiceElement.InvoiceCurrency = item.InvoiceCurrency.Code;
+                invoiceElement.InvoiceCurrency = GetInvoiceCurrencyCode(item);
                 invoiceElement.ShipmentNumber = item.MainEntityReference;
                 invoiceElement.MasterReference = item.MasterNumber;
                 invoiceElement.HouseReference = item.HouseNumber;
@@ -216,7 +238,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     invoiceElement.Card.Name = myPartnerCard.EnglishName;
                     invoiceElement.Card.VATNumber = myPartnerCard.VatNumber;
 
-                    AddressPM address = addressQuery.GetSingleAddressPM(item.BillToAddressId, tenant, true);
+                    AddressPM address = addressQuery.GetSingleAddressPM(item.BillToAddressId, tenant, !ReturnEntityFile);
                     if (address != null)
                     {
                         invoiceElement.Card.Address1 = address.Address1;
@@ -937,10 +959,34 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 #endregion
 
                 log.Invoices.Add(invoiceElement);
+
+            }
+            if (ReturnEntityFile)
+            {
+                return log;
             }
 
             this.BuildXMLFile(log, tenant, filename);
+
+            return log;
         }
+
+        private string GetInvoiceCurrencyCode(ARInvoice item)
+        {
+            if (item.InvoiceCurrency != null)
+            {
+                return item.InvoiceCurrency.Code;
+            }
+
+            Currency currency = CurrencyRepository.GetSingleCurrency(item.InvoiceCurrencyId, tenant, true);
+            if (currency != null)
+            {
+                return currency.Code;
+            }
+
+            return null;
+        }
+
         private void SetPreCarriageValues(ARInvoiceElement invoiceElement, ShipmentPM shipment)
         {
             invoiceElement.ShipmentDetails.PreCarriageTransportMode = this.Helper.GetTransportModes(shipment.PreCarriageTransportModeId);
@@ -1100,7 +1146,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 invoiceElement.ShipmentDetails.FinalAddress = this.Helper.GetAddress(finalAddress);
             }
         }
-        private void GetOriginalTranferData()
+        private object GetOriginalTranferData()
         {
             string allInvoicesMessage = "";
             ARInvoiceLineRepository invoiceLineRepository = new ARInvoiceLineRepository(tenant);
@@ -1123,8 +1169,13 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 Encoding encoding = new UTF8Encoding();
                 stringbuilder.AppendLine(allInvoicesMessage);
                 byte[] errordata = encoding.GetBytes(stringbuilder.ToString());
-                string[] fileProps = filename.Split('.');
+                
+                if (ReturnEntityFile)
+                {
+                    return errordata;
+                }
 
+                string[] fileProps = filename.Split('.');
                 Logitude.Server.Tools.BlobFileInfo fileInfo = new Logitude.Server.Tools.BlobFileInfo()
                 {
                     FileName = fileProps[0],
@@ -1138,6 +1189,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 Logitude.Server.Tools.StorageService.IBlobService storageservice = Logitude.Server.Tools.ContainerAccessor.Container.Resolve(typeof(Logitude.Server.Tools.StorageService.IBlobService), "StorageService", new ParameterOverride("", 1)) as Logitude.Server.Tools.StorageService.IBlobService;
                 storageservice.Write(errordata, fileInfo);
             }
+            return null;
         }
 
         private string Compute(ARInvoice invoice, List<ARInvoiceLine> lines)
@@ -1788,7 +1840,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     }
                 }
 
-                if (string.IsNullOrEmpty(income.CreditAccount1))
+                if (!ReturnEntityFile && string.IsNullOrEmpty(income.CreditAccount1))
                 {
                     throw new ApplicationException("Error: Missing CreditAccount");
                 }
@@ -1917,7 +1969,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     }
                 }
 
-                if (string.IsNullOrEmpty(income.CreditAccount1))
+                if (!ReturnEntityFile && string.IsNullOrEmpty(income.CreditAccount1))
                 {
                     throw new ApplicationException("Error: Missing CreditAccount");
                 }
@@ -2111,7 +2163,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 }                
             }
 
-            if (string.IsNullOrEmpty(myResult))
+            if (!ReturnEntityFile && string.IsNullOrEmpty(myResult))
             {
                 throw new ApplicationException("Error: Missing Debit Account 1");
             }
@@ -2143,7 +2195,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                 }
             }
 
-            if (string.IsNullOrEmpty(myResult))
+            if (!ReturnEntityFile && string.IsNullOrEmpty(myResult))
             {
                 throw new ApplicationException("Error: Missing Credit Account");
             }
@@ -2153,7 +2205,7 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
         private void SetCustomFields(string objectTableName, int tenant, Object entity, ARShipmentDetailsElement element)
         {
             TextCodeRepository textCodeRepository = new TextCodeRepository(this.tenant);
-            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
             List<ObjectField> customFields = ObjectFieldRepository.GetCustomObjectFieldsByObjectTableName(objectTableName, tenant).ToList();
 
             foreach (ObjectField field in customFields)
@@ -2168,7 +2220,10 @@ namespace Logitude.BL.InvoiceModel.EntityOtherServices
                     {
                         string fieldName = textCodeRepository.GetSingleTextCodeByTenant(field.FullNameTextCodeCode, tenant).DefaultText;
                         PropertyInfo namePropInfo = element.GetType().GetProperty(objectTableName + field.FieldName + "Name");
-                        namePropInfo.SetValue(element, fieldName, null);
+                        if (namePropInfo != null)
+                        {
+                            namePropInfo.SetValue(element, fieldName, null);
+                        }
                     }
                 }
             }

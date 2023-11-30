@@ -42,7 +42,8 @@
 		End
 	CLOSE CustomPickListsCursor
 	DEALLOCATE CustomPickListsCursor
+
+		update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'CustomPickList'
 	
 End
 
-	update dw_WaterMarks set LastUpdateDate = @MaxAutomaticLastUpdateDate where TableName = 'CustomPickList'

@@ -38,6 +38,8 @@ export class CustomAgentList {
 		PrimaryContactEmail: string;
 		PrimaryContactPhone: string;
 		StateName: string;
+		RegimenFiscalCode: string;
+		SATReceptorName: string;
 		GLAccountNumber: string;
 	
 }

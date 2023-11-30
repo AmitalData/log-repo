@@ -13,10 +13,14 @@ import { defer } from 'rxjs';
 @Injectable()
 export class ObjectFieldPMExtendedService {
     private _http: HttpClient;
+    logitudeURL: string = null;
     private _apiUrl: string;
+    baseMetaUrlApi: string = null;
     constructor() {
         this._http = ServiceHelper.HttpClient;
-        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/ObjectFieldExtended';
+        this.logitudeURL = ServiceHelper.GetLogitudeURL();
+        this._apiUrl = this.logitudeURL + 'api/ObjectFieldExtended';
+        this.baseMetaUrlApi = this.logitudeURL + "api/ngMetaData";
     }
 
     GetObjectFieldByName(objectfieldName: string,querySection:string) {
@@ -61,6 +65,19 @@ export class ObjectFieldPMExtendedService {
 
             return serviceResponse;
         }),catchError(ServiceHelper.HandleServiceError));
+    }
+
+    GetDefaultAdditionalFiltersById(objectFieldId: string, tenant: number) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+        return this._http.get(this._apiUrl + "/GetDefaultAdditionalFiltersById" + '?objectFieldId=' + objectFieldId + '&tenant=' + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+            var pmresponse: ServiceResponse = new ServiceResponse();
+
+            pmresponse.Result = response;
+            return pmresponse;
+
+        }), catchError(ServiceHelper.HandleServiceError));
     }
 
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ObjectFieldPM = null) {
@@ -227,5 +244,13 @@ export class ObjectFieldPMExtendedService {
 
         }
         return entityPM;
+    }
+
+    GetObjectFieldsByObjectTable(objectTableName: string) {
+        var url = this.baseMetaUrlApi +'/getObjectFieldsByObjectTable' + '?objectTableName=' + objectTableName;
+
+        return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return response;
+        }), catchError(ServiceHelper.HandleServiceError));
     }
 }

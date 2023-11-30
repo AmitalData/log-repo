@@ -16,6 +16,7 @@ export class MainReportSchedulerComponent implements OnInit {
     public ShowPreviewReport: boolean = false;
     public ReportGroupList: ReportGroupList;
     public ReportList: ReportList;
+    public BIReportEntity: any;
     constructor() {
     }
 
@@ -25,6 +26,7 @@ export class MainReportSchedulerComponent implements OnInit {
     SetWindowArgs(windowArgs) {
         this.ReportGroupList = windowArgs.ReportGroupList;
         this.ReportList = windowArgs.ReportList;
+        this.BIReportEntity = windowArgs.BIReportEntity;
         this.RunComponent();
     }
 
@@ -78,7 +80,7 @@ export class MainReportSchedulerComponent implements OnInit {
                         SessionLocator.DynamicLoader.Load('./Report/Components/Scheduler/TaskReportSchedulerComponent', myLocation.viewContainerRef)
                             .then(cmpRef => {
                                 this.PageChild_RETASK = cmpRef.instance;
-                                this.PageChild_RETASK.SetWindowArgs({ ReportGroupList: this.ReportGroupList, ReportList: this.ReportList });
+                                this.PageChild_RETASK.SetWindowArgs({ ReportGroupList: this.ReportGroupList, ReportList: this.ReportList, BIReportEntity: this.BIReportEntity });
                             });
                     }
                     break;

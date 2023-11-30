@@ -88,13 +88,13 @@
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button class="Button" (click)="CancelButtonClicked()">Cancel</button>
+                        <button class="Button" (click)="CancelButtonClicked()">{{'General.B.Cancel' | TextCodeTranslationPipe}}</button>
                     </td>
                     <td style="width: 5px;">
                         <div></div>
                     </td>
                     <td style="width: 57px;">
-                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled" tabindex="0">Ok</button>
+                        <button class="RedButton" (click)="OkButtonClicked()" [disabled]="!IsEditingEnabled" tabindex="0">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
                     </td>
                 </tr>
             </table>

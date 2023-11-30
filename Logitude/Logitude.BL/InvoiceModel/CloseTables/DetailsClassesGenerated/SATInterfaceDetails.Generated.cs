@@ -37,16 +37,16 @@ namespace Logitude.BL.InvoiceModel
 			 
             all.Add(new SATInterfaceDetails()
             {    
-                Code = "PROF", 
-                SearchFields = "prof,profact 3.2", 
-                Name = "Profact 3.2", 
+                Code = "PROF33", 
+                SearchFields = "prof33,profact 3.3", 
+                Name = "Profact 3.3", 
 			});
 			 
             all.Add(new SATInterfaceDetails()
             {    
-                Code = "PROF33", 
-                SearchFields = "prof33,profact 3.3", 
-                Name = "Profact 3.3", 
+                Code = "PROF40", 
+                Name = "Profact 4.0", 
+                SearchFields = "prof40,profact 4.0", 
 			});
 			
             return all;

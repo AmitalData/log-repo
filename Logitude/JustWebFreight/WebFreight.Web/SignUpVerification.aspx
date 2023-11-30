@@ -48,7 +48,7 @@
                     <td></td>
                     <td style="width: 1024px; text-align: center; vertical-align: top;">
                         <a href="http://www.logitudeworld.com/" target="_blank">
-                            <img width="290" height="114" style="margin-top: 50px;" src="images/LoginScreen/header.jpg" />
+                            <img width="290" height="114" style="margin-top: 50px;" src="images/ApplicationLogo/LogitudeLogo.jpg" />
                         </a>
                     </td>
                     <td></td>

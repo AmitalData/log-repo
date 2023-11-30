@@ -9,6 +9,10 @@
   ObjectTablePlural="&quot;Communication Log Types&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -36,7 +40,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Communication Log Type&quot;"
-  Code="&quot;e09c&quot;"
+  Code="&quot;d26e&quot;"
   Name="&quot;CommunicationLogType&quot;"
   CloseTableCode="&quot;Code&quot;"
   CloseTableName="&quot;Name&quot;"
@@ -53,6 +57,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;83b6&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -85,6 +90,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -159,6 +165,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -236,6 +243,7 @@
     SystemMaxLength="40"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -336,8 +344,8 @@
       Name="&quot;Document Backup&quot;" />
     <Record
       Code="&quot;E&quot;"
-      SearchFields="&quot;E,Email,&quot;"
-      Name="&quot;Email&quot;" />
+      SearchFields="&quot;E,Outgoing Email,&quot;"
+      Name="&quot;Outgoing Email&quot;" />
     <Record
       Code="&quot;SMS&quot;"
       SearchFields="&quot;SMS,Mobile SMS&quot;"
@@ -354,6 +362,10 @@
       Code="&quot;Lead&quot;"
       Name="&quot;LogitudeLead&quot;"
       SearchFields="&quot;Lead,LogitudeLead&quot;" />
+    <Record
+      Code="&quot;IE&quot;"
+      SearchFields="&quot;IE,Incoming Email&quot;"
+      Name="&quot;Incoming Email&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

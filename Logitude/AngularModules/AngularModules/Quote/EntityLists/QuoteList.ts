@@ -17,6 +17,7 @@ export class QuoteList {
 		QuoteTemplateId: string;
 		QuoteCutomerTypeCode: string;
 		CustomerName: string;
+		CustomerCode: string;
 		CustomerId: string;
 		CustomerReference1: string;
 		CustomerReference2: string;
@@ -25,6 +26,7 @@ export class QuoteList {
 		ShipperId: string;
 		ShipperReference1: string;
 		ShipperReference2: string;
+		ShipperCode: string;
 		Consignee: string;
 		ConsigneeId: string;
 		ConsigneeReference1: string;
@@ -147,6 +149,7 @@ export class QuoteList {
 		AutomaticallyCloseDays: number;
 		UpdateDate: Date;
 		UpdatedByUserId: string;
+		UpdatedByUser: string;
 		ProductCode: string;
 		IncotermCode: string;
 		TransitTime: string;
@@ -168,11 +171,24 @@ export class QuoteList {
 		IsQuoteDataExternal: boolean;
 		IsQuoteDocumentExternal: boolean;
 		QuotationSections: string;
+		ConsigneeNotImporterReference: string;
 		NotifyId: string;
 		NotifyAddressId: string;
 		NotifyContactId: string;
 		NotifyName: string;
 		NotifyNote: string;
+		NotifyReference1: string;
+		NotifyReference2: string;
+		ConsigneeNotImporterId: string;
+		ConsigneeNotImporterAddressId: string;
+		ConsigneeNotImporterContactId: string;
+		ConsigneeNotImporterName: string;
+		ConsigneeNotImporterNote: string;
+		ShipperNotExporterId: string;
+		ShipperNotExporterAddressId: string;
+		ShipperNotExporterContactId: string;
+		ShipperNotExporterName: string;
+		ShipperNotExporterNote: string;
 		NumberOfFollowUps: number;
 		IsDangerous: boolean;
 		QuoteHTMLDocumentId: string;
@@ -194,5 +210,20 @@ export class QuoteList {
 		PickupDeliveryVolumetricWeight: number;
 		RegionalTaxId: string;
 		RegionalTaxPercentage: number;
+		PackagesQuantity: number;
+		InlandDomesticFromCountryId: string;
+		InlandDomesticToCountryId: string;
+		TicketId: string;
+		SpecialServicesTypeId: string;
+		IncludeInsurance: boolean;
+		IsStackable: boolean;
+		IncludeImportDutyCharges: boolean;
+		InsuranceValue: number;
+		ValidByTypeCode: string;
+		ValidByTypeName: string;
+		ConnectedToOpportunity: boolean;
+		QuoteClosingReasonNotes: string;
+		DigitalPortalSearchFields: string;
+		StageCode: string;
 	
 }

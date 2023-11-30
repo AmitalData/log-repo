@@ -14,13 +14,14 @@ import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
 import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
+import { CustomChildEntity } from '../../Infrastructure/EntityPMs/CustomChildEntity';
 
 export class WarehouseReleasePM {
-
+      
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+                    this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -349,11 +350,28 @@ export class WarehouseReleasePM {
     public set MasterShipmentNumber(newValue: string) { if (this.masterShipmentNumber != newValue) { this.masterShipmentNumber = newValue; this.MarkAsDirty("MasterShipmentNumber"); } }
        
 	 
+    private isUpdateByAutomation: boolean;
+    public get IsUpdateByAutomation() { return this.isUpdateByAutomation; }
+    public set IsUpdateByAutomation(newValue: boolean) { if (this.isUpdateByAutomation != newValue) { this.isUpdateByAutomation = newValue; this.MarkAsDirty("IsUpdateByAutomation"); } }
+       
+	 
+    private customerPrimaryContactId: string;
+    public get CustomerPrimaryContactId() { return this.customerPrimaryContactId; }
+    public set CustomerPrimaryContactId(newValue: string) { if (this.customerPrimaryContactId != newValue) { this.customerPrimaryContactId = newValue; this.MarkAsDirty("CustomerPrimaryContactId"); } }
+       
+	 
+    private customChildEntities: CustomChildEntity[];
+    public get CustomChildEntities() { return this.customChildEntities; }
+    public set CustomChildEntities(newValue: CustomChildEntity[]) { if (this.customChildEntities != newValue) { this.customChildEntities = newValue; this.MarkAsDirty("CustomChildEntities"); } }
+
 
     public OldEntityPM: WarehouseReleasePM;
 		
     public IsDirty: boolean;
+    public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
+       if(!this.DisableMarkAsDirty)
+       {
         this.IsDirty = true;
 		  	
         if (propertyName != null) {
@@ -361,6 +379,7 @@ export class WarehouseReleasePM {
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "WarehouseRelease");
            
         }
+       }
     }
 
     private MyClone: WarehouseReleasePM;

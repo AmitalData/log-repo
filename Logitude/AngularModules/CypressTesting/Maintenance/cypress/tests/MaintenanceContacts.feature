@@ -1,9 +1,9 @@
-@release @all @stable 
-Feature: Contact Create, Edit, Save and Anonymize in Maintenance Module
+@release @stable 
+Feature: Contact Create, Edit, Save and Anonymize
     The user creates a contact, search for, edits, saves and anonymizes it from the Maintenance Module.
 
     Scenario: Create new contact
-        Given the user logged in and open maintenance menu
+        Given the user logged in and open contacts menu
         And a contact with the following details
             | Email               | Random              |
             | EnglishName         | TestContact         |

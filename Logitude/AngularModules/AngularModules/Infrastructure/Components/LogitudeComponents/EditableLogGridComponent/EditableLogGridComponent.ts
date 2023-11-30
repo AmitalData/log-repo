@@ -21,7 +21,8 @@ declare var styleDisplay, EditgriditemStyling;
     selector: 'logitude-edit-grid',
     templateUrl: './EditableLogGridComponent.html',
     //directives: [CORE_DIRECTIVES, EditableListTemplateComponent],
-    inputs: ['columns:columns', 'GridWidth', 'GridHeight', 'groupby', 'ItemSource', 'EnableLines', 'DisableRowByFieldValue', 'DisableRowByFieldName', 'SelectedRow', 'Disabled', 'HeaderHeight', 'ShowCount', 'ReloadDetails', 'ReRenderGrid', 'IsReadOnly', 'IsDarkHeader', 'EnableMultiSelection', 'SelectedRows', 'FooterTop', 'UseVirtuallization', 'EnableGridViewRowBackground', 'ChangeScrollPosition', 'EnableExpandCollapseAll', 'LastDefaultSpace','ColumnName','Condition'],
+     inputs: ['columns:columns', 'GridWidth', 'GridHeight', 'groupby', 'ItemSource', 'EnableLines', 'DisableRowByFieldValue', 'DisableRowByFieldName', 'SelectedRow', 'Disabled', 'HeaderHeight', 'ShowCount', 'ReloadDetails', 'ReRenderGrid', 'IsReadOnly', 'IsDarkHeader', 'EnableMultiSelection', 'SelectedRows', 'FooterTop', 'UseVirtuallization', 'EnableGridViewRowBackground', 'ChangeScrollPosition', 'EnableExpandCollapseAll', 'LastDefaultSpace','ColumnName','Condition', 'ShowNoDataFoundText'],
+ 
 })
 
 export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterContentInit {
@@ -39,6 +40,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
     ItemSourceLoaded: EventEmitter<any>;
     MyTimer = null
     EnableExpandCollapseAll = false;
+    ShowNoDataFoundText = false;
     ShowCollapseAllIcon = false;
     Condition:string=""
     ColumnName:string=""
@@ -1915,7 +1917,7 @@ export class EditableLogGridComponent implements OnInit, AfterViewInit, AfterCon
                     this.ViewPortRowCount = this.rowCount;
                 }
                 else {
-                    this.ViewPortRowCount = (this.viewportSize - this.HeaderHeight) > 0 ? (this.viewportSize - this.HeaderHeight) : 30; // + this.extraRows;
+                    this.ViewPortRowCount = (this.viewportSize - this.HeaderHeight) > 0 ? (this.viewportSize - Math.ceil(this.HeaderHeight / this.rowHeight) ): 30; // + this.extraRows;
                 }
                 var top = 0;
                 var Bodytop = this.HeaderHeight;

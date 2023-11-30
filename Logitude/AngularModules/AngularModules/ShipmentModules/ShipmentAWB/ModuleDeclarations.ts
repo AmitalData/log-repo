@@ -28,6 +28,7 @@ import {PurchaseStockComponent} from './Components/AWBWizard/Others/PurchaseStoc
 import {SendFSRComponent} from './Components/FSRWizard/SendFSRComponent';
 import {FSRWizardComponent} from './Components/FSRWizard/FSRWizardComponent';
 import {SendShipmentFSRComponent} from './Components/FSRWizard/SendShipmentFSRComponent';
+import { TestMultiHarmonizeComponent } from './Components/AWBWizard/TestMultiHarmonizeComponent';
 
 export const Components = 
     [
@@ -61,6 +62,7 @@ export const Components =
         SendFSRComponent,
         FSRWizardComponent,
         SendShipmentFSRComponent,
+        TestMultiHarmonizeComponent,
     ];
 
 export class ModuleDeclarations {
@@ -99,6 +101,7 @@ export class ModuleDeclarations {
             case "SendFSRComponent": { myResult = SendFSRComponent; break; }
             case "FSRWizardComponent": { myResult = FSRWizardComponent; break; }
             case "SendShipmentFSRComponent": { myResult = SendShipmentFSRComponent; break; }
+            case "TestMultiHarmonizeComponent": { myResult = TestMultiHarmonizeComponent; break; }
         }
 
         return myResult;

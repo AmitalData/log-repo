@@ -1,0 +1,23 @@
+<table>
+     <tr>
+
+          <td style="width:10px;">
+               <div></div>
+          </td>
+          <td style="width:16px;">
+               <img *ngIf="!rowData.InternalNote" style="vertical-align: middle; display: block;"
+                    src="./Images/Notes_notexists.png" />
+               <img *ngIf="rowData.InternalNote" style="vertical-align: middle; display: block;"
+                    src="./Images/Notes_exists.png" />
+          </td>
+
+          <td style="width:20px;height:16px;padding-left:1px;">
+               <IconButton [Name]="'Edit'" [IsSmall]="true" [Left]="3" (click)="OpenLedgerTransactionInternalNote(rowData);$event.stopPropagation()">
+               </IconButton>
+          </td>
+
+          <td style="width:10px;">
+               <div></div>
+          </td>
+     </tr>
+</table>

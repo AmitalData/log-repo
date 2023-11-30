@@ -60,7 +60,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         this.interestReportExtendedListService = new InterestReportExtendedListService();
 
      }
- 
+
 
     public CheckButtonState(menuButtons: MenuButtonPM[]) {
         if (this.EntityPM != null) {
@@ -182,7 +182,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
     ShowErrorMessage() {
 
         var messageWindow = new MessageWindow();
-        messageWindow.Show(TextCodeTranslator.Translate("InterestReport.O.CantCancel")); 
+        messageWindow.Show(TextCodeTranslator.Translate("InterestReport.O.CantCancel"));
     }
     UpdateReport(event: any) {
         if (event != "Cancel" ) {
@@ -201,7 +201,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         let confirmWindow = new ConfirmWindow();
       if (this.EntityPM.InterestReportStatusCode == "1" || this.EntityPM.InterestReportStatusCode == "4" || this.EntityPM.InterestReportStatusCode == "6" || this.EntityPM.InterestReportStatusCode == "9") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.ConfirmCancelling");
-           
+
         } else if (this.EntityPM.InterestReportStatusCode == "2") {
             confirmMessage = TextCodeTranslator.Translate("InterestReport.O.CancelingInvoicedReportMessage");
         }
@@ -215,7 +215,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         confirmWindow.Width = 400;
         confirmWindow.YesButtonText = TextCodeTranslator.Translate('Accounting.General.B.OK');
         confirmWindow.NoButtonText = TextCodeTranslator.Translate('Accounting.General.B.Cancel');
-        
+
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 if(this.EntityPM.InterestReportStatusCode == "5"){
@@ -287,7 +287,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
         });
     }
 
-    
+
     private CheckInterestReportStatusCodeAndCreateInvoice(){
         this.CurrentSession.StartBusyIndicatorLoading();
         this.interestReportExtendedListService.IsCreateInvoicedValid(this.EntityPM).subscribe((myResult: ServiceResponse) => {
@@ -300,10 +300,10 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
                 if ((!this.EntityPM.TotalAmount) ||
                    (!this.EntityPM.TotalAmount && !this.EntityPM.GLAccountMinimumInterest) ||
                    (this.EntityPM.GLAccountMinimumInterest && this.EntityPM.GLAccountMinimumInterest >= this.EntityPM.TotalAmount)) {
-                      
+
                        this.ConfirmCreateInvoice(TextCodeTranslator.Translate('InterestReport.O.ReportTotalAmountIslowerthanGLAccountMinimumamount'));
                     }
-               
+
                 else {
 
                      this.GeTARInvoice();
@@ -317,7 +317,7 @@ export class InterestReportMenuButtonsHandler extends BaseComponent  {
             else {
                 this.entityArgs.EditComponent.ValidationErrorsList = response.ErrorsArray;
                 this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                
+
             }
         });
     }
@@ -330,43 +330,43 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
         _ARInvoicePM.InvoiceLines.push(_ARInvoiceLinePM);
         return _ARInvoicePM;
   }
- 
 
-  private getMappingARInvoiceLinePM(_ARInvoicePM: ARInvoicePM ){
-      
 
-    var  CreditAllotmentCommission = this.EntityPM.CalCreditAllotmentCommission?this.EntityPM.CalCreditAllotmentCommission:0
+    private getMappingARInvoiceLinePM(_ARInvoicePM: ARInvoicePM) {
 
-    var _ARInvoiceLinePM: ARInvoiceLinePM = new ARInvoiceLinePM(_ARInvoicePM);
-    _ARInvoiceLinePM.DateForInterest = _ARInvoicePM.InvoiceDate;
-    _ARInvoiceLinePM.Tenant = this.TenantPM.Id;
-    _ARInvoiceLinePM.InvoiceLocalCurrencyCode = this.TenantPM.CurrencyCode;
-    _ARInvoiceLinePM.ForiegnCurrencyCode = this.TenantPM.CurrencyCode;
-    _ARInvoiceLinePM.ForiegnCurrencyId = this.TenantPM.CurrencyId;
-    _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount;
-      _ARInvoiceLinePM.Quantity = 1;
-      _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount + CreditAllotmentCommission;
-      _ARInvoiceLinePM.ForiegnCurrencyAmount = this.EntityPM.TotalAmount + CreditAllotmentCommission;
-      _ARInvoiceLinePM.InvoiceCurrencyAmount = this.EntityPM.TotalAmount + CreditAllotmentCommission;
-      _ARInvoiceLinePM.ProfitCurrencyAmount = this.EntityPM.TotalAmount + CreditAllotmentCommission;
-      _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount + CreditAllotmentCommission;
+        var CreditAllotmentCommission = this.EntityPM.CalCreditAllotmentCommission ? this.EntityPM.CalCreditAllotmentCommission : 0;
+        var CalculatedPostponedChequesCommision = this.EntityPM.CalculatedPostponedChequesCommision ? this.EntityPM.CalculatedPostponedChequesCommision : 0;
+
+        var _ARInvoiceLinePM: ARInvoiceLinePM = new ARInvoiceLinePM(_ARInvoicePM);
+        _ARInvoiceLinePM.DateForInterest = _ARInvoicePM.InvoiceDate;
+        _ARInvoiceLinePM.Tenant = this.TenantPM.Id;
+        _ARInvoiceLinePM.InvoiceLocalCurrencyCode = this.TenantPM.CurrencyCode;
+        _ARInvoiceLinePM.ForiegnCurrencyCode = this.TenantPM.CurrencyCode;
+        _ARInvoiceLinePM.ForiegnCurrencyId = this.TenantPM.CurrencyId;
+        _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount;
+        _ARInvoiceLinePM.Quantity = 1;
+        _ARInvoiceLinePM.UnitPrice = this.EntityPM.TotalAmount + CreditAllotmentCommission + CalculatedPostponedChequesCommision;
+        _ARInvoiceLinePM.ForiegnCurrencyAmount = this.EntityPM.TotalAmount + CreditAllotmentCommission + CalculatedPostponedChequesCommision;
+        _ARInvoiceLinePM.InvoiceCurrencyAmount = this.EntityPM.TotalAmount + CreditAllotmentCommission + CalculatedPostponedChequesCommision;
+        _ARInvoiceLinePM.ProfitCurrencyAmount = this.EntityPM.TotalAmount + CreditAllotmentCommission + CalculatedPostponedChequesCommision;
+        _ARInvoiceLinePM.LocalCurrencyAmount = this.EntityPM.TotalAmount + CreditAllotmentCommission + CalculatedPostponedChequesCommision;
         _ARInvoiceLinePM.InvoiceCurrencyCode = this.TenantPM.CurrencyCode;
         var length = this.EntityPM.InterestReportLinesByDates.length;
-        _ARInvoiceLinePM.Description = "Interest between " +this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[0].FromDate) + " and " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length-1].ToDate);
-        _ARInvoiceLinePM.LocalDescription = "ריבית לתאריכים " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[0].FromDate) + " עד " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length-1].ToDate);
-     _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList? this.chargesTypeList.Id:null;
-        _ARInvoiceLinePM.VatTypeId =  this.chargesTypeList.VatTypeId; 
-     _ARInvoiceLinePM.GLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
-    _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
-    _ARInvoiceLinePM.VatPercentage = this.GetVatTypePercentage(_ARInvoiceLinePM.VatTypeId);
-      _ARInvoiceLinePM.VatTypeName = this.VatTypeName;
-      _ARInvoiceLinePM.LineActionCode = "1";
-      return  _ARInvoiceLinePM;
-  }
+        _ARInvoiceLinePM.Description = "Interest  For" + " " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length - 1].ToDate);
+        _ARInvoiceLinePM.LocalDescription = "ריבית ל" + " " + this.getDateString(this.EntityPM.InterestReportLinesByDates.sort()[length - 1].ToDate);
+        _ARInvoiceLinePM.ChargesTypeId = this.chargesTypeList ? this.chargesTypeList.Id : null;
+        _ARInvoiceLinePM.VatTypeId = this.chargesTypeList.VatTypeId;
+        _ARInvoiceLinePM.GLAccountId = this.chargesTypeList.ReceivableCreditGLAccountId;
+        _ARInvoiceLinePM.ForiegnExchangeRate = _ARInvoiceLinePM.ForiegnCurrencyAmount / _ARInvoiceLinePM.LocalCurrencyAmount;
+        _ARInvoiceLinePM.VatPercentage = this.GetVatTypePercentage(_ARInvoiceLinePM.VatTypeId);
+        _ARInvoiceLinePM.VatTypeName = this.VatTypeName;
+        _ARInvoiceLinePM.LineActionCode = this.chargesTypeList.IsExpense ? '2' : '1';
+        return _ARInvoiceLinePM;
+    }
 
 
   private getMappingARInvoiceEntityPM(){
-      
+
     var _ARInvoiceEntityPM: ARInvoiceEntityPM = new ARInvoiceEntityPM();
     _ARInvoiceEntityPM.Tenant = this.TenantPM.Id;
     _ARInvoiceEntityPM.EntityId = this.EntityPM.Id;
@@ -420,7 +420,10 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
      InvoiceTool.ComputeARInvoiceDueDate(_ARInvoicePM);
     _ARInvoicePM.ProfitCurrencyId = SessionLocator.TenantPM.ProfitCurrencyId;
     _ARInvoicePM.ProfitCurrencyCode = SessionLocator.TenantPM.ProfitCurrencyCode;
-    if (this.cardList  != null) {
+    _ARInvoicePM.MasterShipmentNumbers = null;
+    _ARInvoicePM.MasterNumbers = null;
+    _ARInvoicePM.HouseNumbers = null;
+      if (this.cardList != null) {
          _ARInvoicePM.BillToName = this.cardList .EnglishName;
          _ARInvoicePM.BillToLocalName = this.cardList .LocalName;
         if (!AppTool.IsNullOrEmpty(this.cardList .SATPaymentMethodCode)) {
@@ -449,7 +452,7 @@ public GetARInvoicePMWithLine(): ARInvoicePM {
 
     }
     return _ARInvoicePM;
-  
+
   }
   public  getDateString(DateTime: Date): string {
         var month =DateTool.GetDateParts(DateTime).Month;
@@ -535,8 +538,8 @@ public VatTypeName:string;
             if (myResponse != null) {
                 if (!myResponse.HasError) {
                     this.chargesTypeList = myResponse.Result[0];
-                    this.GetBillToCard( this.EntityPM.CustomerId).then(res => {  
-                        this.getVatTypePercentegeListByDates().then(res => {   
+                    this.GetBillToCard( this.EntityPM.CustomerId).then(res => {
+                        this.getVatTypePercentegeListByDates().then(res => {
                             this.GetVatTypeName(this.chargesTypeList.VatTypeId).then(res => {
                                 this._ARInvoicePM = this.GetARInvoicePMWithLine();
                                    this.LoadCurrencyRates().then(res => {
@@ -551,13 +554,13 @@ public VatTypeName:string;
                         });
                       });
                     });
-                 
+
                 }
             }
         });
     }
-    
- 
+
+
     private LastRatesList: LastRate[] = [];
     LoadCurrencyRates() {
         return new Promise(resolve => {
@@ -609,12 +612,12 @@ public VatTypeName:string;
             else {
                 reject();
             }
-        }); 
+        });
     });
    }
 
 
 
-     
+
 
 }

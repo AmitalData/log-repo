@@ -10,6 +10,10 @@
   DescriptionDefaultText="&quot;Cheque Line&quot;"
   HasCustomFilter="false"
   HasCustomFields="false"
+  AvailableInCustomization="false"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -33,14 +37,14 @@
   InActive="false"
   IsSaveButtonVisible="false"
   IsComposition="false"
-  EnableSecurity="false"
+  EnableSecurity="true"
   AllowCustomFields="false"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;BR&quot;"
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;שורת המחאה&quot;"
   DefaultText="&quot;Cheque Line&quot;"
-  Code="&quot;2923&quot;"
+  Code="&quot;f3c3&quot;"
   Name="&quot;ARPaymentCheque Query Group&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Accounting&quot;"
@@ -55,6 +59,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;2283&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -86,6 +91,7 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -160,6 +166,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -234,6 +241,7 @@
     SystemMaxLength="4000"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -258,8 +266,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;SearchFields&quot;"
     DefaultText="&quot;Search ...&quot;"
+    FullLocalDefaultText="&quot;חיפוש&quot;"
     ListFieldLable="&quot;SearchFieldsListLable&quot;"
     ListLableDefaultText="&quot;Search ...&quot;"
+    ListLocalDefaultText="&quot;חיפוש&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -307,6 +317,7 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -338,9 +349,9 @@
     ListLocalDefaultText="&quot;קבלה&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="ARPayment"
+    ForeignEntity="&quot;ARPayment&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="Payment"
+    NavigationPropertyName="&quot;Payment&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -384,6 +395,7 @@
     SystemMaxLength="20"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -459,6 +471,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;GreaterThanOrEqual&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -534,6 +547,7 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -559,10 +573,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ChequeNumber&quot;"
     DefaultText="&quot;Cheque No.&quot;"
-    FullLocalDefaultText="&quot;סטאטוס המחאה&quot;"
+    FullLocalDefaultText="&quot;מספר המחאה&quot;"
     ListFieldLable="&quot;ChequeNumberListLable&quot;"
     ListLableDefaultText="&quot;Cheque No.&quot;"
-    ListLocalDefaultText="&quot;סטאטוס המחאה&quot;"
+    ListLocalDefaultText="&quot;מספר המחאה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -609,6 +623,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Between&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -685,6 +700,7 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -716,9 +732,9 @@
     ListLocalDefaultText="&quot;מטבע&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="Currency"
+    ForeignEntity="&quot;Currency&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="Currency"
+    NavigationPropertyName="&quot;Currency&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -762,6 +778,7 @@
     SystemMaxLength="5"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -837,6 +854,7 @@
     SystemMaxLength="100"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -912,6 +930,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;GreaterThanOrEqual&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -989,6 +1008,7 @@
     SystemMaxLength="0"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;GreaterThanOrEqual&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1016,10 +1036,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ForeignAmount&quot;"
     DefaultText="&quot;Foreign Amount&quot;"
-    FullLocalDefaultText="&quot;סך בטבע חוץ&quot;"
+    FullLocalDefaultText="&quot;סך במטבע חוץ&quot;"
     ListFieldLable="&quot;ForeignAmountListLable&quot;"
     ListLableDefaultText="&quot;Foreign Amount&quot;"
-    ListLocalDefaultText="&quot;סך בטבע חוץ&quot;"
+    ListLocalDefaultText="&quot;סך במטבע חוץ&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1066,6 +1086,7 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1141,6 +1162,7 @@
     SystemMaxLength="3"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1216,6 +1238,7 @@
     SystemMaxLength="60"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;StartsWith&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1291,6 +1314,7 @@
     SystemMaxLength="30"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1366,6 +1390,7 @@
     SystemMaxLength="15"
     DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     Operator="&quot;Contains&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
@@ -1435,13 +1460,15 @@
     CopyToDW="false"
     DisplayOnLookUp="false"
     DisplayOnLookUpLocal="false"
-    CanFilter="false"
+    CanFilter="true"
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="15"
-    DisplayInList="false"
-    IsCustomFilter="false"
+    DisplayInList="true"
+    IsCustomFilter="true"
+    IsListFilter="false"
+    Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1472,9 +1499,9 @@
     ListLocalDefaultText="&quot;סטטוס המחאה&quot;"
     IsNullable="false"
     IsForeignKey="true"
-    ForeignEntity="ARPaymentChequeStatus"
+    ForeignEntity="&quot;ARPaymentChequeStatus&quot;"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="ARPaymentChequeStatus"
+    NavigationPropertyName="&quot;ARPaymentChequeStatus&quot;"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1518,6 +1545,7 @@
     SystemMaxLength="0"
     DisplayInList="false"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1590,8 +1618,9 @@
     SystemRequired="false"
     ObjectFieldNotRequired="false"
     SystemMaxLength="70"
-    DisplayInList="false"
+    DisplayInList="true"
     IsCustomFilter="false"
+    IsListFilter="false"
     MultiLine="false"
     IsTimeFrameFilter="false"
     DisplayInSearchWindowList="false"
@@ -1605,6 +1634,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;ARPaymentCheque&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -1615,6 +1645,9 @@
     DisplayLongName="false"
     FullFieldLable="&quot;StatusName&quot;"
     DefaultText="&quot;Status Name&quot;"
+    ListFieldLable="&quot;StatusNameListLable&quot;"
+    ListLableDefaultText="&quot;Cheque Status Name&quot;"
+    ListLocalDefaultText="&quot;סטטוס המחאה&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -1624,7 +1657,7 @@
     IsComposition="false"
     IsMaxLength="false"
     NoMetaDataField="false"
-    GenerateInList="false"
+    GenerateInList="true"
     IsFixedLength="false"
     EnableAutoFill="false"
     IncludeInSearchField="false"
@@ -1639,6 +1672,199 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;UnRedeemed Cheques&quot;"
+    TextCode="&quot;UnRedeemed Cheques&quot;"
+    LocalTextCode="&quot;המחאות שלא נפרעו&quot;"
+    QueryGroupCode="&quot;f3c3&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;ARPaymentCheque&quot;"
+    QuerySection="&quot;ARPaymentCheque&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;ChequeNumber&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ChequeNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;PaymentNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;ValueDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;BankId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;BankBranch&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;BankAccount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;LocalAmount&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;UnRedeemed Cheques&quot;"
+        PredefinedValue="&quot;5&quot;"
+        ObjectFieldName="&quot;StatusCode&quot;"
+        IsPredefined="true"
+        PredefinedValue2="&quot;6&quot;"
+        Operator="&quot;Custom&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
+  </Query>
+  <Query
+    Code="&quot;All Cheques&quot;"
+    TextCode="&quot;All Cheques&quot;"
+    LocalTextCode="&quot;כל ההמחאות&quot;"
+    QueryGroupCode="&quot;f3c3&quot;"
+    IndexOrder="1"
+    ObjectTableName="&quot;ARPaymentCheque&quot;"
+    QuerySection="&quot;ARPaymentCheque&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;ChequeNumber&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ChequeNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ValueDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;BankId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;BankBranch&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;BankAccount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;LocalAmount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;All Cheques&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;PaymentNumber&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
+  <Query
+    Code="&quot;Postponed Cheques&quot;"
+    TextCode="&quot;Postponed Cheques&quot;"
+    LocalTextCode="&quot;המחאות דחויות&quot;"
+    QueryGroupCode="&quot;f3c3&quot;"
+    IndexOrder="2"
+    ObjectTableName="&quot;ARPaymentCheque&quot;"
+    QuerySection="&quot;ARPaymentCheque&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="true"
+    IsPackagable="true"
+    DefaultSortName="&quot;ChequeNumber&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;ChequeNumber&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;ValueDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;BankId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;BankBranch&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;BankAccount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="5"
+        ObjectFieldName="&quot;LocalAmount&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="6"
+        ObjectFieldName="&quot;StatusName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;Postponed Cheques&quot;"
+        IndexOrder="7"
+        ObjectFieldName="&quot;PaymentNumber&quot;"
+        ColumnWidth="100" />
+    </QueryColumns>
+    <QueryFilters>
+      <QueryFilter
+        QueryCode="&quot;Postponed Cheques&quot;"
+        PredefinedValue="&quot;#today&quot;"
+        ObjectFieldName="&quot;ValueDate&quot;"
+        IsPredefined="true"
+        Operator="&quot;GreaterThanOrEqual&quot;"
+        IndexOrder="0"
+        CustomPredefined="false" />
+    </QueryFilters>
+  </Query>
   <Screen
     Name="&quot;ARPaymentChequeHeaderScreen&quot;"
     ObjectTableName="&quot;ARPaymentCheque&quot;"
@@ -1706,7 +1932,8 @@
   <DataContracts>
     <DataContract
       Name="&quot;Cheque&quot;"
-      Version="&quot;ApiV1&quot;">
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
       <DCField
         DCFieldName="&quot;Id&quot;"
         FieldName="&quot;Id&quot;"

@@ -1,0 +1,35 @@
+<style>
+    .footer-buttons-table {
+        height: 22px;
+    }
+
+    .footer-button-cell {
+        width: 57px;
+    }
+
+    .footer-buttons-split {
+        width: 5px;
+    }
+</style>
+
+<table class="footer-buttons-table">
+    <tr>
+        <td>
+            <div></div>
+        </td>
+
+        <td *ngIf="!ShowSaveOnly" class="footer-button-cell">
+            <button class="Button" (click)="cancelButtonClicked()" [disabled]="IsCancelButtonDisabled"
+                [attr.data-cy]="CancelButtonDataCy">{{CancelButtonLabel}}</button>
+        </td>
+
+        <td *ngIf="!ShowSaveOnly" class="footer-buttons-split">
+            <div></div>
+        </td>
+
+        <td class="footer-button-cell">
+            <button class="RedButton" (click)="saveButtonClicked()" [disabled]="IsSaveButtonDisabled"
+                [attr.data-cy]="SaveButtonDataCy">{{SaveButtonLabel}}</button>
+        </td>
+    </tr>
+</table>

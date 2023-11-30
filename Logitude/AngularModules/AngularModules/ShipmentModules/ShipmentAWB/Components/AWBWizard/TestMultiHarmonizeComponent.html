@@ -1,0 +1,15 @@
+
+
+<table>
+    <tr class="FormFieldRow">
+        <td>
+            <CheckBox [Text]="'Is Multi HS Codes'" (Checked)="IsChecked = $event" [IsChecked]="IsChecked"></CheckBox>
+        </td>
+    </tr>
+
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <button class="RedButton" (click)="OkClicked()">{{'General.B.Ok' | TextCodeTranslationPipe}}</button>
+        </td>
+    </tr>
+</table>

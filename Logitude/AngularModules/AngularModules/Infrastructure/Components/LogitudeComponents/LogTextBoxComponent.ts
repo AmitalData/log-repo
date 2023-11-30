@@ -36,13 +36,13 @@ export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descr
 }
 
 @Component({
-    
+
     selector: 'LogTextBox',
     templateUrl: "./LogTextBoxComponent.html",
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext',
         "IsMultiline", "InputType", "HideColumns", "HideLastColumn",
         "DigitsAfterPoint", "FocusOnMe", "IsFreeText", "IsAccumulative",
-        "AllowPercentage", "UseArialFont", "DontAllowAutoSelect", 'IsRatioBox'],
+        "AllowPercentage", "UseArialFont", "DontAllowAutoSelect", 'IsRatioBox', 'IsDisabledWithColor', 'DataCy', 'ForceTextValueChanges'],
 })
 
 export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewInit, OnDestroy {
@@ -75,6 +75,12 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     public uiProperty: UIProperty;
     private show: boolean;
     IsDisabled: boolean;
+    IsDisabledWithColor: boolean;
+
+    public DataCy: string;
+
+    public ForceTextValueChanges: boolean = false;
+
     private timerToken: any;
     private textValue;
     public get TextValue() {
@@ -112,7 +118,6 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             this.textValue = newValue;
             this.TextValueChanges(newValue);
         }
-
     }
     ErrorPopUpId: string;
     InputId: string;
@@ -206,6 +211,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     @Input() LogitudeForm: FormGroup;
     @Output() OriginalText = new EventEmitter();
     @Input() DebounceTime: number;
+    @Input() ForceDisabled: boolean = false;
 
 
     constructor(private ngzone: NgZone, private cd: ChangeDetectorRef,
@@ -220,7 +226,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         //this.CurrentSession.isTabWithShiftClicked = false;
 
     }
-
+    
     ngOnInit() {
 
         this.StaticPlaceHolder = this.Placeholder;
@@ -234,22 +240,30 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         this.counterId = null;
         var baseIdCombination = null;
         if (this.ObjectTableName) {
-           
+
             baseIdCombination = this.ObjectTableName + "_" + this.ObjectFieldName;
         }
         else {
             baseIdCombination = this.ObjectFieldName;
         }
+        
         if (this.CheckIfExists(baseIdCombination)) {
-            this.counterId = ControlsIdCounter.GetNextControlIdCounter(baseIdCombination);
-        }
+                this.counterId = ControlsIdCounter.GetNextControlIdCounter(baseIdCombination);
+                if (this.counterId != null) {
+                    baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
+                }
 
-        if (this.counterId != null) {
-            baseIdCombination = baseIdCombination + '_' + this.counterId.toString();
+                setTimeout(() => { 
+                    if (!this.CheckIfExists(baseIdCombination.replace('_' + this.counterId.toString(),''))) {
+                        baseIdCombination = baseIdCombination.replace('_' + this.counterId.toString(),'');
+                        this.SetControlIds(baseIdCombination);
+                        this.cd.detectChanges();
+                    }
+                }, 1000)
         }
 
         this.SetControlIds(baseIdCombination);
-
+        
         if (this.FocusOnMe) {// it means it is inside a grid.
             this.CopyValueSubs = this.CurrentSession.CopyCellIntoMemory.subscribe((id) => {
                 if (id == this.InputId) {
@@ -290,21 +304,21 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             objectFieldAvailable = false;
         }
 
-         this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
+        this.uiProperty = this.DataContext.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext);
 
-        this.IsDisabled = !this.uiProperty.IsEnabled;
+        this.IsDisabled = !this.uiProperty.IsEnabled || this.ForceDisabled; 
 
-        if (this.IsDisabled || this.ForceDisable) {
-            this.SetDisabled();
-        }
-        else {
-            this.SetEnabled();
-        }
-
-        this.uiProperty.UIPropertyChanged.subscribe((value) => {
-            this.HandleUIPropertyChanged(value);
-            //this.DetectChanges();
-        });
+             if (this.IsDisabled || this.ForceDisable) {
+                this.SetDisabled();
+            }
+            else {
+                this.SetEnabled();
+            }
+            
+            this.uiProperty.UIPropertyChanged.subscribe((value) => {
+                this.HandleUIPropertyChanged(value);
+             }); 
+       
 
         // if(this.DataContext.EntityPM){
         //     const pmuiProperty = this.DataContext.EntityPM.UIProperties.GetUIProperty(this.ObjectFieldName, this.ObjectTableName, this.DataContext.EntityPM);
@@ -313,7 +327,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         //         //this.DetectChanges();
         //     });
         // }
-         
+
         //if there is an objectfield in the metadata:
         if (objectFieldAvailable) {
 
@@ -386,7 +400,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             if (uiProperty.FieldName == this.ObjectFieldName && uiProperty.ObjectTableName == this.ObjectTableName) {
                 if (uiPropertyArgs.property == "IsEnabled") {
                     var isEnabled = uiPropertyArgs.newValue;
-                    this.IsDisabled = !isEnabled;
+                    this.IsDisabled = !isEnabled || this.ForceDisabled;
                     this.uiProperty.IsEnabled = isEnabled;
                     if (this.IsDisabled) {
                         this.SetDisabled();
@@ -441,8 +455,8 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         }
         this.ngzone.runOutsideAngular(() => {
             var input = document.getElementById(this.InputId);
-          this._debounceTimeSub =
-            fromEvent(input, 'keydown').pipe(
+            this._debounceTimeSub =
+                fromEvent(input, 'keydown').pipe(
                     debounceTime(this.DebounceTime))
                     .subscribe(keyboardEvent => {
                         var which = keyBoardWhich(keyboardEvent);
@@ -849,7 +863,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     {
                         if (decimalSigdoubleKeys.indexOf(key) > -1 || keyChar == this.decimalSeparator) {
 
-                            if (key == SUBTRACT || key == DASH || key == 173) {
+                            if (key == SUBTRACT || key == DASH || key == 173 || this.IsFranchDash(key, keyChar)) {
 
                                 if (!AppTool.IsNullOrEmpty(this.TextValue) && this.TextValue.toString().indexOf('-') > -1) {
                                     var selection = window.getSelection().toString();
@@ -919,7 +933,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                 case 'integer':
                     {
                         if (integerKeys.indexOf(key) > -1) {
-                            if (key == SUBTRACT || key == DASH || key == 173) {
+                            if (key == SUBTRACT || key == DASH || key == 173 || this.IsFranchDash(key, keyChar)) {
 
                                 if (!AppTool.IsNullOrEmpty(this.TextValue) && this.TextValue.toString().indexOf('-') > -1) {
                                     var selection = window.getSelection().toString();
@@ -1153,7 +1167,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     {
                         if ((key >= 48 && key <= 57) || (key >= 96 && key <= 105) || key == BACKSPACE || key == TAB || key == DELETE || key == END
                             || key == HOME || key == SHIFT || key == PAGEUP || key == PAGEDOWN || key == LEFT || key == UP || key == RIGHT || key == DOWN || key == SUBTRACT || key == DASH) {
-                            if (key == SUBTRACT || key == DASH) {
+                            if (key == SUBTRACT || key == DASH || this.IsFranchDash(key, keyChar)) {
 
                                 if (!AppTool.IsNullOrEmpty(this.TextValue) && this.TextValue.toString().indexOf('-') > -1) {
                                     var selection = window.getSelection().toString();
@@ -1191,6 +1205,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         else {
             return key;
         }
+    }
+
+    IsFranchDash(key: number, keyChar: string): boolean {
+        return (key == 54 && keyChar == '-');
     }
 
     onchange(event) {
@@ -1250,17 +1268,18 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));//"Invalid Input");
                             }
                             else {
-                                if (!this.DisableZeroPadding) {                                    
+                                if (!this.DisableZeroPadding) {
                                     if (AppTool.IsNullOrEmpty(this.DigitsAfterPoint)) {
                                         this.DigitsAfterPoint = 3;
                                     }
-                                    if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1){
+                                    if (this.AllowPercentage && (this.TextValue + "").indexOf('%') > -1) {
                                         this.TextValue = val.toFixed(4);
                                     }
+                                    else if (this.ObjectField && this.ObjectField.IsCustom && this.ObjectField.DataTypeCode == "Decimal") {
+                                        this.TextValue = val + "";
+                                    }
                                     else {
-                                       this.TextValue = AppTool.Round(val, this.DigitsAfterPoint).toString();
-                                       // this.TextValue = val.toFixed(this.DigitsAfterPoint);
-                                       
+                                        this.TextValue = AppTool.Round(val, this.DigitsAfterPoint).toString();
                                     }
                                     if (this.TextValue.indexOf('.') > -1 && this.decimalSeparator != '.') {
                                         this.TextValue = this.TextValue.split('.').join(this.decimalSeparator);//.replace(new RegExp('.', 'g'), this.decimalSeparator);
@@ -1353,7 +1372,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     }
 
     FormatTextValue(txtValue: any) {
-        let valueFromField  = txtValue;
+        let valueFromField = txtValue;
         if (!AppTool.IsNullOrEmpty(valueFromField)) {
             this.OriginalText.emit(valueFromField);
             if (this.InputType) {
@@ -1406,7 +1425,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 //this.SetValidity(false, TextCodeTranslator.Translate("General.O.InvalidInput"));//"Invalid Input");
                             }
                             else {
-                                if (!this.DisableZeroPadding) {                                    
+                                if (!this.DisableZeroPadding) {
                                     if (AppTool.IsNullOrEmpty(this.DigitsAfterPoint)) {
                                         this.DigitsAfterPoint = 3;
                                     }
@@ -1431,7 +1450,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 txtNum = this.GetNumber(valueFromField);
                                 // }
 
-                                 
+
                                 //if (this.thousandsSeparator == ",") {
                                 var textWithCommas: string = numberWithSeparators(valueFromField, this.thousandsSeparator);
                                 if (textWithCommas.indexOf(this.decimalSeparator) > -1) {
@@ -1476,7 +1495,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                             break;
                         }
                     case "integertext": {
-                         
+
                         break;
                     }
                     default:
@@ -1495,16 +1514,15 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
     TextValueChanges(res: any) {
         let newValue = this.DataContext[this.ObjectFieldName];
-        if(!isNullOrUndefined(this.ObjectField) && this.ObjectField.IsCustom)
-        {
-            const customField:CustomFieldClass = this.DataContext[this.ObjectFieldName];
+        if (!isNullOrUndefined(this.ObjectField) && this.ObjectField.IsCustom) {
+            const customField: CustomFieldClass = this.DataContext[this.ObjectFieldName];
             if (customField != null && customField != undefined) {
                 newValue = customField.GetFieldDataTypeValue(this.ObjectField, customField.Value);
-                newValue =  this.FormatTextValue(newValue);
+                newValue = this.FormatTextValue(newValue);
             }
         }
 
-        if (newValue + "" != this.TextValue) {
+        if (newValue + "" != this.TextValue || this.ForceTextValueChanges) {
 
             if (this.TextValue) {
                 switch (this.InputType) {
@@ -1548,8 +1566,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                                 if (isok) {
                                     if (this.ObjectField && this.ObjectField.IsCustom) {
                                         var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
+                                        let fieldValidator = new FieldValidator();
                                         if (customFieldClass != null && customFieldClass != undefined) {
-                                            customFieldClass.Value = customFieldClass.SetFieldDataType(this.ObjectField, this.TextValue);// this.TextValue;
+                                            this.ValidateNumberCustomField(customFieldClass, fieldValidator);// this.TextValue;
+
                                         }
                                         else {
                                             console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
@@ -1644,6 +1664,11 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         }
     }
 
+    private ValidateNumberCustomField(customFieldClass: CustomFieldClass, fieldValidator: FieldValidator) {
+        customFieldClass.IsNotValid = !fieldValidator.IsValidCustomNumberValue(this.ObjectField, this.TextValue);
+        customFieldClass.Value = customFieldClass.IsNotValid ? this.TextValue : customFieldClass.SetFieldDataType(this.ObjectField, this.TextValue);
+    }
+
     DataContextValueChanges(res: any) {
         var dataContextValue = this.DataContext[this.ObjectFieldName];
 
@@ -1672,7 +1697,12 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
                     var customFieldClass: CustomFieldClass = this.DataContext[this.ObjectFieldName];
                     if (customFieldClass != null && customFieldClass != undefined) {
                         var customRes = customFieldClass.GetFieldDataTypeValue(this.ObjectField, customFieldClass.Value);//customFieldClass.Value;
-                        this.TextValue = (customRes != null && customRes != undefined) ? customRes + '' : customRes;
+                        let numberValue = (customRes != null && customRes != undefined) ? customRes + '' : customRes;
+
+                        if (this.thousandsSeparator == '.') {
+                            numberValue = numberValue.replace('.', ',');
+                        }
+                        this.TextValue = numberValue;
                     }
                     else {
                         console.warn("Custom Fields are not implemented in: " + this.ObjectTableName);
@@ -1722,10 +1752,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
     SetDisabled() {
         var inputDiv = document.getElementById(this.InputDivId);//("DatePickerInputDiv");
-        if (inputDiv && !this.IsMultiline) {
+        if (inputDiv && !this.IsMultiline && !this.IsDisabledWithColor) {
             inputDiv.classList.add("InputDivDisabled");
         }
-        if (this.IsMultiline) {
+        if (this.IsMultiline && !this.IsDisabledWithColor) {
             var input = document.getElementById(this.InputId);
             if (input) {
                 input.classList.add("TextAreaDisabled");
@@ -1737,10 +1767,10 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
     SetEnabled() {
         var inputDiv = document.getElementById(this.InputDivId);//("DatePickerInputDiv");
-        if (inputDiv && !this.IsMultiline) {
+        if (inputDiv && !this.IsMultiline && !this.IsDisabledWithColor) {
             inputDiv.classList.remove("InputDivDisabled");
         }
-        if (this.IsMultiline) {
+        if (this.IsMultiline && !this.IsDisabledWithColor) {
             var input = document.getElementById(this.InputId);
             if (input) {
                 input.classList.remove("TextAreaDisabled");
@@ -1904,7 +1934,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
             wind.Title = "";
 
         wind.Show("./Infrastructure/Component/LogitudeComponents/MultilineTextBoxWindow");
-        wind.WindowClosed.subscribe((res:any) => {
+        wind.WindowClosed.subscribe((res: any) => {
             console.log("Rsukt--", res);
             if (res != "<!#cancelled>") {
                 this.TextValue = res;
@@ -1939,7 +1969,9 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     FormatTextValueNumbers(textValue: string) {//60,5 ---- 60.5   1.111-----1,111
         var formattedTxt = textValue;
         var textnumber = Number(textValue);
-        if (this.DataContext[this.ObjectFieldName] == textnumber && SessionLocator.TenantPM.NumberFormatCode == "DC") {
+
+        const datacontextValue = this.ObjectField?.IsCustom ? this.DataContext[this.ObjectFieldName]?.ResolvedValue : this.DataContext[this.ObjectFieldName];
+        if (datacontextValue == textnumber && SessionLocator.TenantPM.NumberFormatCode == "DC") {
 
             if (this.InputType != "text" && this.InputType != "ntext") {
                 if (!AppTool.IsNullOrEmpty(this.TextValue)) {
@@ -1965,12 +1997,16 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
 
     ReplaceDecimalSeparatorWithADot(value: string) {
         if (this.decimalSeparator != '.') {
-            value = value.split(this.decimalSeparator).join('.');
+            if (!AppTool.IsNullOrEmpty(value)) {
+                value = value.toString().split(this.decimalSeparator).join('.');
+            }
         }
         return value;
     }
 
     RemoveThousandsSeparator(value: string) {
+        if (AppTool.IsNullOrEmpty(value)) return value;
+        value = value + "";
         if ((this.TextValue + "").indexOf(this.thousandsSeparator) > -1) {
             value = value.split(this.thousandsSeparator).join('');
         }

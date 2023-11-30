@@ -80,8 +80,6 @@ export class UserExtendedPMService {
         }),catchError(ServiceHelper.HandleServiceError));
     }
 
-
-
     Anonymization(userId: string) {
         var authHeader = new Headers();
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
@@ -188,6 +186,18 @@ export class UserExtendedPMService {
         authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
 
         return this._http.get(this._apiUrl + '/GetAddUserToReleaseNotesUsers?userId=' + userId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            var pmresponse: ServiceResponse;
+            pmresponse = new ServiceResponse();
+
+            pmresponse.Result = response;
+            return pmresponse;
+        }),catchError(ServiceHelper.HandleServiceError));
+    }
+    MarkShowDashboardToolTip(userId: string) {
+        var authHeader = new Headers();
+        authHeader.append('Token', ServiceHelper.GetLoggedUserToken());
+
+        return this._http.get(this._apiUrl + '/GetMarkShowDashboardToolTip?userId=' + userId,ServiceHelper.GetHttpHeaders()).pipe(map(response => {
             var pmresponse: ServiceResponse;
             pmresponse = new ServiceResponse();
 

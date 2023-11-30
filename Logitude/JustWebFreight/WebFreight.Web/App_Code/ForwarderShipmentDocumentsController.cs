@@ -8,6 +8,8 @@ using Logitude.BL.ShipmentsModel.EntityPMs;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
+using Logitude.ShipmentOrderModule.BL.EntityQueryServices;
+using Logitude.ShipmentOrderModule.Def.EntityPMs;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -50,8 +52,12 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(EntityPM.Tenant);
-                //SecurityUtility.CheckContactFeature("DocumentsFiling", "NEW", EntityPM.Tenant);
+
+
                 bool IsNewLog = false;
                 APIException Result = null;
                 string CorrelationId = HttpContext.Current.Request.Headers["CorrelationId"];
@@ -290,8 +296,11 @@ namespace WebFreight.Web.App_Code
         {
             try
             {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 SecurityUtility.AuthenticationOnTenant(EntityPM.Tenant);
-                //SecurityUtility.CheckContactFeature("DocumentsFiling", "UPDATE", EntityPM.Tenant);
+
                 bool IsNewLog = false;
                 DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(EntityPM.Tenant);
                 DocumentsFilingPM DocumentFilingPM = documentsFilingQuery.GetSinglePMByCustomerId(EntityPM.CustomerDocumentId, EntityPM.Tenant);
@@ -525,21 +534,8 @@ namespace WebFreight.Web.App_Code
                 EntityPM.CustomerDocumentId = newEntityPM.CustomerDocumentId;
 
             }
-            if (!string.IsNullOrEmpty(newEntityPM.EntityId))
-            {
-                EntityPM.EntityNumber = newEntityPM.EntityId;
-                ShipmentQuery shipmentQuery = new ShipmentQuery(newEntityPM.Tenant);
-                ShipmentPM Shipment = shipmentQuery.GetSingleShipmentPMByNumber(newEntityPM.EntityId, newEntityPM.Tenant);
-                if (Shipment != null)
-                {
-                    EntityPM.EntityId = Shipment.Id; 
-
-                }
-                else
-                {
-                    EntityPM.EntityId = null;
-                }
-            }
+            EntityPM.EntityNumber = GetEntityNumber(newEntityPM);
+            EntityPM.EntityId = GetEntityId(newEntityPM);
             if (!string.IsNullOrEmpty(newEntityPM.Description))
             {
                 EntityPM.Description = newEntityPM.Description;
@@ -594,7 +590,7 @@ namespace WebFreight.Web.App_Code
             EntityPM.DontAddToQueue = true;
             EntityPM.IsSharedWithCustomer = newEntityPM.IsSharedWithCustomer;
             EntityPM.IsSharedWithForwarder = newEntityPM.IsSharedWithForwarder;
-            EntityPM.CustomerTenantNumber = newEntityPM.CustomerTenantNumber; 
+            EntityPM.CustomerTenantNumber = newEntityPM.CustomerTenantNumber;
 
             if (newEntityPM.DocumentTypeCode != null)
             {
@@ -621,5 +617,47 @@ namespace WebFreight.Web.App_Code
             return null;
         }
 
+        private string GetEntityNumber(DocumentsFilingPM newEntityPM)
+        {
+            if (string.IsNullOrEmpty(newEntityPM.EntityId)) return null;
+            return newEntityPM.EntityId;
+        }
+
+        private string GetEntityId(DocumentsFilingPM newEntityPM)
+        {
+            if (string.IsNullOrEmpty(newEntityPM.EntityId)) return null;
+            const string shipmentOrderTableName = "ShipmentOrder";
+
+            if (newEntityPM.ObjectTableName == shipmentOrderTableName)
+            {
+                return GetEntityIdForShipmentOrder(newEntityPM);
+            }
+
+            return GetEntityIdForShipment(newEntityPM);
+        }
+
+        private string GetEntityIdForShipmentOrder(DocumentsFilingPM newEntityPM)
+        {
+            ShipmentOrderQueryService shipmentOrderQuery = new ShipmentOrderQueryService(newEntityPM.Tenant);
+            ShipmentOrderPM shipmentOrder = shipmentOrderQuery.GetSinglePMByOrderNumber(newEntityPM.EntityId, newEntityPM.Tenant);
+            if (shipmentOrder != null)
+            {
+                return shipmentOrder.Id;
+            }
+
+            return null;
+        }
+
+        private string GetEntityIdForShipment(DocumentsFilingPM newEntityPM)
+        {
+            ShipmentQuery shipmentQuery = new ShipmentQuery(newEntityPM.Tenant);
+            ShipmentPM Shipment = shipmentQuery.GetSingleShipmentPMByNumber(newEntityPM.EntityId, newEntityPM.Tenant);
+            if (Shipment != null)
+            {
+                return Shipment.Id;
+            }
+
+            return null;
+        }
     }
 }

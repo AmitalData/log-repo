@@ -45,6 +45,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                                                     Operator = a.Operator,
                                                                     PredefinedValue = a.PredefinedValue,
                                                                     PredefinedValue2 = a.PredefinedValue2,
+                                                                    CustomPredefined = a.CustomPredefined,
                                                                     QueryCode = a.QueryCode,
                                                                     QueryId = a.QueryId,
                                                                     QueryObjectTableName = a.Query.ObjectTable.Name,
@@ -125,6 +126,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                           ObjectFieldOperator = a.ObjectField.Operator,
                                           UserId = a.UserId,
                                           ObjectFieldCode = a.ObjectFieldCode,
+                                          CustomPredefined = a.CustomPredefined
                                       };
 
  
@@ -133,7 +135,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                 else
                 {
                     advancedFilters = from a in repository.context.AdvancedQueryFilters.Include("ObjectField").Include("Query").Include("Query.ObjectTable")
-                                      where (a.Tenant == tenant && (a.Query.UserId == userId && a.UserId != null) && a.QueryCode == queryCode) || (a.Tenant == tenant && a.QueryCode == queryCode && a.UserId == userId) || (a.Tenant == 0 && a.QueryCode == queryCode && a.UserId == null)
+                                      where (a.Tenant == tenant && (a.Query.UserId == userId && a.UserId != null) && a.QueryCode == queryCode) || (a.Tenant == tenant && a.QueryCode == queryCode && a.UserId == userId) || ((a.Tenant == 0 || (a.Tenant == tenant && a.IsPredefined)) && a.QueryCode == queryCode && a.UserId == null)
                                       select new AdvancedQueryFilterPM()
                                       {
                                           DisplayInList = a.ObjectField.DisplayInList,
@@ -155,6 +157,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
                                           ObjectFieldOperator = a.ObjectField.Operator,
                                           UserId = a.UserId,
                                           ObjectFieldCode = a.ObjectFieldCode,
+                                          CustomPredefined = a.CustomPredefined
                                       };
 
                  }

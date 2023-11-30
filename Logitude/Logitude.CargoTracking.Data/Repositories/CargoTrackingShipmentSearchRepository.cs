@@ -15,8 +15,11 @@ namespace Logitude.CargoTracking.Data.Repositories
 {
    public partial class CargoTrackingShipmentSearchRepository:IRepository<CargoTrackingShipmentSearch>
    {
-        
-		public List<CargoTrackingShipmentSearch> GetMulti(EntityKeyFields entityKeys)
+        const string ForwardingShipmentNumberType = "Forwarding Shipment Number";
+        const string OrderShipmentNumberType = "Order Shipment Number";
+
+
+        public List<CargoTrackingShipmentSearch> GetMulti(EntityKeyFields entityKeys)
         {
             
 			throw new NotImplementedException();
@@ -24,12 +27,14 @@ namespace Logitude.CargoTracking.Data.Repositories
 
         public IQueryable<CargoTrackingShipmentSearch> GetShipmentSearchEntities(string searchField, int tenant)
         {
+            DateTime minDate = DateTime.Now.AddDays(-183);
             IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntities = (from searchEntity in currentContext.CargoTrackingShipmentSearches
                          where 
                             
                             searchEntity.Tenant == tenant &&
                             searchEntity.SearchFields == searchField &&
-                            searchEntity.IsPublic == true
+                            searchEntity.ShipmentDate > minDate &&
+                            searchEntity.IsPublic == true                             
                             orderby searchEntity.ShipmentDate descending
                             select searchEntity
                             
@@ -75,6 +80,12 @@ namespace Logitude.CargoTracking.Data.Repositories
 
             return shipmentsSearchEntities;
         }
+
+        public List<CargoTrackingShipmentSearch> GetConnectedShipmentNumbersByShipmentIds(List<string> shipmentIds)
+        {
+            return currentContext.CargoTrackingShipmentSearches.Where(e => shipmentIds.Contains(e.ShipmentId) && (e.ReferenceType == ForwardingShipmentNumberType || e.ReferenceType == OrderShipmentNumberType)).ToList();
+        }
+
         public List<CargoTrackingShipmentSearch> GetShipmentSearchBySecurityKeys(string ShipmentId, int tenant)
         {
             List<CargoTrackingShipmentSearch> shipmentsSearchEntities = (from searchEntity in currentContext.CargoTrackingShipmentSearches

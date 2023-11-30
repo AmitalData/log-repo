@@ -123,7 +123,9 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            
                 int myTenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(myTenant);
 
                 try
                 {
@@ -175,7 +177,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int myTenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(myTenant);
                 BookingsDomainService bookingService = new BookingsDomainService();
                 BookingValidatorResultClass myResult = bookingService.ValidateBookingForSending(bookingId, myTenant, isCancellationSent);
 
@@ -195,7 +197,8 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int myTenant = authToken.Tenant;
-
+                SecurityUtility.AuthenticationOnTenant(myTenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 BookingsDomainService bookingService = new BookingsDomainService();
                 List<ChartingDataClass> myResult = bookingService.GetBookingsDashBoard(tenant);
 

@@ -111,5 +111,6 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
         public double? ExternalPaymentAmount { get; set; }
         public DateTime? ExternalPaymentDate { get; set; }
         public string ExternalPaymentNotes { get; set; }
+        public string ConnectedInvoicesNumbers { get; set; }
     }
 }

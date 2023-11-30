@@ -97,6 +97,14 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityCard.MetodoPagoCode = entityPM.MetodoPagoCode;
             entityCard.UsoCFDICode = entityPM.UsoCFDICode;
             entityCard.ImageDetailId = entityPM.ImageDetailId;
+            entityCard.RegimenFiscalCode = entityPM.RegimenFiscalCode;
+            entityCard.SATCustomerName = entityPM.SATReceptorName;
+            entityCard.ExportLocalCustomerGroupId = entityPM.ExportLocalCustomerGroupId;
+            entityCard.ImportLocalCustomerGroupId = entityPM.ImportLocalCustomerGroupId;
+            entityCard.SingleInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.SingleInvoiceTemplateId : null;
+            entityCard.CustomsInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.CustomsInvoiceTemplateId : null;
+            entityCard.ConsolidationInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ConsolidationInvoiceTemplateId : null;
+            entityCard.ManifestInvoiceTemplateId = entityPM.Card != null ? entityPM.Card.ManifestInvoiceTemplateId : null;
 
             if (!entityPM.IsFirstContactToAdd)
             {

@@ -20,6 +20,7 @@ import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
 import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
 import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import { CustomChildObjectPMService } from '../../../Infrastructure/Services/ExtendedPMs/CustomChildObjectPMService'
 import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
 
 import {ARInvoicePM} from '../../EntityPMs/ARInvoicePM';
@@ -123,7 +124,7 @@ export class ARInvoicePMService {
 	}
 
 	update(entityPM: ARInvoicePM) {
-
+        
 		var callTime = new Date();     
 		
 		return defer(() => {
@@ -140,9 +141,7 @@ export class ARInvoicePMService {
 			}
 
 			if (errorsArray.length == 0) {
-
 				var mappedEntity: ARInvoicePM = this.MapJsonToEntityPM(entityPM, false);
-				
 				return this._http.put(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
@@ -213,7 +212,9 @@ export class ARInvoicePMService {
                this.MapInvoiceTransfers(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapConstituentInvoices(entityPM, jsonPM, mapParent); // Call composition tables map methods
                this.MapTotalVATs(entityPM, jsonPM, mapParent); // Call composition tables map methods
-			 
+		 let customChildObjectPMService: CustomChildObjectPMService = new CustomChildObjectPMService(entityPM, "ARInvoice");
+		 customChildObjectPMService.MapCustomChildEntities(jsonPM, mapParent);
+		 			 
             
 
 		if (mapParent) {
@@ -313,7 +314,7 @@ export class ARInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newARInvoiceLinePM[pmProperty] = jItem[pmProperty];
             }
            
@@ -431,7 +432,7 @@ export class ARInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newARInvoicePaymentPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -549,7 +550,7 @@ export class ARInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newConstituentPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -645,7 +646,7 @@ export class ARInvoicePMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newARInvoiceTotalVATPM[pmProperty] = jItem[pmProperty];
             }
            

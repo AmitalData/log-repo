@@ -38,7 +38,7 @@ import { reject } from 'q';
 
 @Component({
     selector: 'NewGeneralARInvoiceComponent',
-    
+
     templateUrl: './NewGeneralARInvoiceComponent.html',
 })
 
@@ -69,7 +69,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
 
         });
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             this.DisplaySATPaymentMethod = true;
         }
 
@@ -133,6 +133,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.EntityPM.BillToPartnerTypeId = null;
         this.EntityPM.StatusCode = "DR";
         this.EntityPM.StatusName = "Draft";
+        this.EntityPM.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityPM.IssuedByUserId = SessionLocator.LoggedUserId;
         this.EntityPM.CreatedByUserId = SessionLocator.LoggedUserId;
@@ -177,6 +178,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.SetUIProperties_BillToAddress();
         this.SetUIProperties_VatNumber();
         this.SetUIProperties_ExchangeRate();
+        this.SetUIProperties_PrintNotes();
         //this.SetUIProperties_General(false);
         this.SetUIProperties_DueDate();
         this.SetUIProperties_Payment();
@@ -201,6 +203,17 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             this.UIProperties.SetRequired("VatNumber", this.ObjectTableName, isFieldRequired);
         }
     }
+
+
+    SetUIProperties_PrintNotes() {
+        var isFieldRequired = false;
+
+
+
+        this.UIProperties.SetRequired("PrintNotes", this.ObjectTableName, isFieldRequired);
+
+    }
+
     SetUIProperties_ExchangeRate() {
         var isFieldtEnabled = false;
 
@@ -234,7 +247,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
     SetUIProperties_Payment() {
         this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, false);
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 this.UIProperties.SetRequired("SATPaymentMethodCode", this.ObjectTableName, true);
             }
@@ -496,6 +509,13 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             this.SetUIProperties_VatNumber();
         }
     }
+    get PrintNotes() { return this.EntityPM.PrintNotes; }
+    set PrintNotes(newValue: string) {
+        if (this.EntityPM.PrintNotes != newValue) {
+            this.EntityPM.PrintNotes = newValue;
+            this.SetUIProperties_PrintNotes();
+        }
+    }
 
     get PaymentTermId() { return this.EntityPM.PaymentTermId; }
     set PaymentTermId(newValue: string) {
@@ -699,7 +719,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindow();
     }
     OkButtonClicked() {
- 
+
         this.EntityPM.BillToPartnerTypeId = this.BillToPartnerTypeId;
         this.CurrentSession.StartBusyIndicatorLoading();
 
@@ -755,7 +775,9 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
 
         else {
             var date1 = new Date(this.InvoiceDate.toString());
-            var date2 = DateTool.GetCurrentDateAsUtcForAccountingValidation();
+            var date2 = new Date();
+            date2.setHours(23);
+            date2.setMinutes(59);
 
             if (date1.valueOf() > date2.valueOf()) {
                 this.errors.push(TextCodeTranslator.Translate("ARInvoice.M.CantIssueInvoiceWithFutureDate"));
@@ -772,7 +794,7 @@ export class NewGeneralARInvoiceComponent extends BaseComponent {
             }
         }
 
-        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33") {
+        if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF33" || SessionLocator.SATInterfaceSettings.SATInterfaceCode == "PROF40") {
             if (AppTool.IsNullOrEmpty(this.SATPaymentMethodCode)) {
                 this.errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("ARInvoice.F.SATPaymentMethodCode")));
             }

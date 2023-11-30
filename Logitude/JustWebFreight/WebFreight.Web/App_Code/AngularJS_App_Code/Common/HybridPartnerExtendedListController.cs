@@ -26,6 +26,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Common
                 string loggedUserEmail = authToken.Email;
 
                 SecurityUtility.AuthenticationOnTenant(Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
                 var HybridPartnerQuery = new HybridPartnerQuery(tenant);
 
                 var requestsList = HybridPartnerQuery.GetHybridPartnerLists(tenant);

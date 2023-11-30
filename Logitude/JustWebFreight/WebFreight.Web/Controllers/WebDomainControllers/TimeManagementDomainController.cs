@@ -1230,6 +1230,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     table.Rows.Add(row);
                 }
             }
+
             sheet1.ImportDataTable(table, true, 1, 1);
             workbook.Version = ExcelVersion.Excel2007;
             workbook.SaveAs(memory);

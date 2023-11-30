@@ -17,6 +17,12 @@ using Logitude.BL.InfrastructureModel.Tools.DataMapping;
 using Logitude.BL.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Server.Tools.QueueService;
+using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.Server.Tools;
+using System.Text.Json;
+using Simplog.Server.Infrastructure.DataContracts;
+using Logitude.BL.InfrastructureModel.Services;
 
 namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 {
@@ -38,6 +44,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
         private TextCodeRepository textCodeRepository;
         private ObjectTableRepository objectTableRepository;
         private ObjectFieldValidationRepository objectFieldValidationRepository;
+        
         public ObjectFieldService(IWebFreightContext objectContext, int tenant)
         {
             this.tenant = tenant;
@@ -59,13 +66,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             textCodeRepository = new TextCodeRepository(ObjectContext);
             objectTableRepository = new ObjectTableRepository(ObjectContext);
             objectFieldValidationRepository = new ObjectFieldValidationRepository(ObjectContext);
-            string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, 0, false).Name;
+            ObjectTable objectTable = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, true);
+            string objectTableName = objectTable != null ? objectTable.Name : null;
             string tenantListName = "tabletenantobjectfields" + objectTableName.ToLower() + tenant;
-            string zerolistAutomationObjectFields = "tabletenantzeroAutomationConditionsObjectFields" + theEntityPm.ObjectTableId.ToLower();
+            //string zerolistAutomationObjectFields = "tabletenantzeroAutomationConditionsObjectFields" + theEntityPm.ObjectTableId.ToLower();
             string tenantListAutomationObjectFields = "tabletenantAutomationConditionsObjectFields" + theEntityPm.ObjectTableId.ToLower() + theEntityPm.Tenant;
 			string objectFieldsListName = objectTableName.ToLower() + "customobjectfields" + theEntityPm.Tenant;
 
-			if (CacheManager.CacheWrapper.Get(zerolistAutomationObjectFields) != null) CacheManager.CacheWrapper.Invalidate(zerolistAutomationObjectFields);
+			//if (CacheManager.CacheWrapper.Get(zerolistAutomationObjectFields) != null) CacheManager.CacheWrapper.Invalidate(zerolistAutomationObjectFields);
             if (CacheManager.CacheWrapper.Get(tenantListAutomationObjectFields) != null) CacheManager.CacheWrapper.Invalidate(tenantListAutomationObjectFields);
             if (CacheManager.CacheWrapper.Get(tenantListName) != null) CacheManager.CacheWrapper.Invalidate(tenantListName);
 			if (CacheManager.CacheWrapper.Get(objectFieldsListName) != null) CacheManager.CacheWrapper.Invalidate(objectFieldsListName);
@@ -75,42 +83,40 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             {
                 if (!string.IsNullOrEmpty(theEntityPm.Code))
                 {
-                    bool exists = entityRepository.GetSingleObjectFieldByCode(theEntityPm.Code, theEntityPm.ObjectTableId, theEntityPm.Tenant) != null ? true : false;
+                    bool exists = entityRepository.IsExistsCustomObjectFieldByCode(theEntityPm.Code, theEntityPm.ObjectTableId, theEntityPm.Tenant);
                     if(exists)
                         throw new ApplicationException("An Object Field with the same code already exists");
-                }
+                } 
                 else
                 {
                     throw new ApplicationException("Code Field is required");
                 }
 
                 #region
-                tenant = theEntityPm.Tenant;
-                string ObjectTableId = theEntityPm.ObjectTableId;
-                ObjectTable ObjectTable = objectTableRepository.GetObjects().Where(o => o.Id == ObjectTableId).FirstOrDefault();
-               
+                //List<ObjectField> list = entityRepository.GetCustomObjectFields(theEntityPm.ObjectTableId, tenant);
 
-                List<ObjectField> list = entityRepository.GetObjectFieldsByTenant(tenant).Where(o => o.ObjectTableId == ObjectTableId && o.IsCustom == true).ToList<ObjectField>();
-
-                int count = 0;
+                int count = entityRepository.GetObjectFieldsByTenant(tenant).Where(objectfield => objectfield.ObjectTableId == theEntityPm.ObjectTableId && objectfield.IsCustom == true).Count();
                 int allowedCount = 10;
-                if (list != null)
+                //if (list != null)
+                //{
+                //    count = list.Count;
+                //}
+                if(objectTable.AllowCustomFields && objectTable.IsComposition && objectTable.MaxNumberOfCustomFields > 0)
                 {
-                    count = list.Count;
+                    allowedCount = objectTable.MaxNumberOfCustomFields;
                 }
 
-                if(ObjectTable.Name == "Shipment" || ObjectTable.Name == "Master")
+                else if(objectTable.Name == "Shipment" || objectTable.Name == "Quote" || objectTable.Name == "Opportunity" || objectTable.Name == "Container" || objectTable.Name == "Card" || objectTable.ApplyGenericCustomFields || objectTable.IsCustom)
                 {
-                    allowedCount = 40;
+                    allowedCount = objectTable.MaxNumberOfCustomFields;
                 }
-                else if (ObjectTable.Name == "Quote") allowedCount = 20;
+                else if (objectTable.Name == "Master") allowedCount = 70;
 
-                if (count < allowedCount)
+                if (count < allowedCount || theEntityPm.IsRelatedEntity)
                 {
                     TextCode newCustomFieldTextCode = new TextCode();
-                    ObjectTable ob = objectTableRepository.GetObjects().Where(o => o.Id == theEntityPm.ObjectTableId).FirstOrDefault();
 
-                    newCustomFieldTextCode.Code = ob.Name + ".Field" + (count + 1).ToString();
+                    newCustomFieldTextCode.Code = objectTable.Name + (theEntityPm.IsRelatedEntity ? "."+ theEntityPm.FieldName : (".Field" + (count + 1).ToString()));
                     newCustomFieldTextCode.Tenant = theEntityPm.Tenant;
                     newCustomFieldTextCode.TextCodeTypeCode = "F";
                     newCustomFieldTextCode.ObjectTableId = theEntityPm.ObjectTableId;
@@ -119,7 +125,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     textCodeRepository.Add(newCustomFieldTextCode);
                     theEntityPm.FullNameTextCodeId = newCustomFieldTextCode.Id;
                     theEntityPm.FullNameTextCodeCode = newCustomFieldTextCode.Code;
-
+                    theEntityPm.FullNameTextCodeDefaultText = newCustomFieldTextCode.DefaultText;
                     if (!string.IsNullOrEmpty(theEntityPm.HelpTextCodeCode))
                     {
                         TextCode newHelpTextCode = new TextCode();
@@ -128,7 +134,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                         newHelpTextCode.DefaultText = theEntityPm.HelpTextCodeCode;
                         newHelpTextCode.Id = IdCounter.GetNumber("TextCode", theEntityPm.Tenant).ToString();
                         newHelpTextCode.Tenant = theEntityPm.Tenant;
-                        newHelpTextCode.Code = ob.Name + ".Field" + (count + 1).ToString() + ".HelpText";
+                        newHelpTextCode.Code = objectTable.Name + (theEntityPm.IsRelatedEntity ? "." + theEntityPm.FieldName : ".Field" + (count + 1).ToString()) + ".HelpText";
                         textCodeRepository.Add(newHelpTextCode);
                         theEntityPm.HelpTextCodeId = newHelpTextCode.Id;
                         theEntityPm.HelpTextCodeCode = newHelpTextCode.Code;
@@ -138,7 +144,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     if (!string.IsNullOrEmpty(theEntityPm.ListTextCodeCode) && theEntityPm.DisplayInList)
                     {
                         TextCode listFieldLableTextCode = new TextCode();
-                        listFieldLableTextCode.Code = ob.Name + ".Field" + (count + 1).ToString() + "ListLable";
+                        listFieldLableTextCode.Code = objectTable.Name + (theEntityPm.IsRelatedEntity ? "." + theEntityPm.FieldName : ".Field" + (count + 1).ToString()) + "ListLable";
                         listFieldLableTextCode.DefaultText = theEntityPm.ListTextCodeCode;
                         listFieldLableTextCode.Id = IdCounter.GetNumber("TextCode", theEntityPm.Tenant).ToString();
                         listFieldLableTextCode.ObjectTableId = theEntityPm.ObjectTableId;
@@ -153,9 +159,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     theEntityPm.FullNameTextCodeCode = newCustomFieldTextCode.Code;
                     theEntityPm.FullNameTextCodeDefaultText = newCustomFieldTextCode.DefaultText;
 
-                    string fieldname = "Field" + (count + 1).ToString();
+                    string fieldname = (theEntityPm.IsRelatedEntity ? theEntityPm.FieldName : "Field" + (count + 1).ToString());
                     theEntityPm.FieldName = fieldname;
-                    theEntityPm.FieldCode = ObjectTable.Name +"." + tenant.ToString() +  "." + theEntityPm.FieldName;
+                    theEntityPm.FieldCode = objectTable.Name +"." + tenant.ToString() +  "." + theEntityPm.FieldName;
                     theEntityPm.PMPropertyPath = fieldname;
                     theEntityPm.ListPropertyPath = fieldname;
                     theEntityPm.DisplayInList = true;
@@ -240,6 +246,14 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 #endregion
             }
 
+            if (IsMetConditionsToSendCToolMessage(theEntityPm))
+            {
+                AddKafkaQueueMessage();
+            }
+            if(objectTableName == "Card" && theEntityPm.IsCustom && !String.IsNullOrEmpty(theEntityPm.RelatedEntities))
+            {
+                new PartnersObjectFieldService(objectContext, tenant).Create(theEntityPm);
+            }
         }
 
         public void Update(ObjectFieldPM theEntityPm , List<ObjectFieldValidationPM> objectfieldValidationList = null)
@@ -255,7 +269,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             ObjectTableRepository objectTableRepository = new ObjectTableRepository(ObjectContext);
             ObjectFieldValidationRepository objectFieldValidationRepository = new ObjectFieldValidationRepository(ObjectContext);
 
-            string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, 0, false).Name;
+            string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, false).Name;
             string tenantListName = "tabletenantobjectfields" + objectTableName.ToLower() + tenant;
 
             string zerolistAutomationObjectFields = "tabletenantzeroAutomationConditionsObjectFields" + theEntityPm.ObjectTableId.ToLower();
@@ -300,7 +314,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 TextCode helpTextCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.HelpTextCodeCode && o.Tenant == theEntityPm.Tenant).FirstOrDefault();
                 if (helpTextCode == null)
                 {
-                    ObjectTable ob = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, 0, true);
+                    ObjectTable ob = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, true);
 
                     TextCode newHelpTextCode = new TextCode();
                     newHelpTextCode.TextCodeTypeCode = "H";
@@ -312,6 +326,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     textCodeRepository.Add(newHelpTextCode);
                     theEntityPm.HelpTextCodeId = newHelpTextCode.Id;
                     theEntityPm.HelpTextCodeCode = newHelpTextCode.Code;
+                    theEntityPm.HelpTextCodeDefaultText = newHelpTextCode.DefaultText;
                 }
 
                 else
@@ -387,14 +402,19 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 }
                 # endregion
             }
-            entityRepository.Update(Poco);
-            entityRepository.SubmitChanges();
-
             ObjectFieldValidating.Validate(theEntityPm);
             ObjectFieldTracing.Trace(theEntityPm, Poco, isNewEntity);
 
+            entityRepository.Update(Poco);
+            entityRepository.SubmitChanges();
+
+            
             //TableLastUpdateClass.UpdateSystemMetaDataHistory(true);
-          
+            if (IsMetConditionsToSendCToolMessage(theEntityPm))
+            {
+                AddKafkaQueueMessage();
+            }
+            
         }
 
         public void Update(ObjectFieldPM theEntityPm, bool mapComposition = false)
@@ -403,29 +423,31 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
             this.entityPM = theEntityPm;
             this.Poco = entityRepository.GetSingleObjectField(theEntityPm.Id);
 
-
-
-
             TextCodeRepository textCodeRepository = new TextCodeRepository(ObjectContext);
-            ObjectTableRepository objectTableRepository = new ObjectTableRepository(ObjectContext);
             ObjectFieldValidationRepository objectFieldValidationRepository = new ObjectFieldValidationRepository(ObjectContext);
+            objectTableRepository = new ObjectTableRepository(ObjectContext);
 
-
-
-			string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, 0, false).Name;
+            string objectTableName = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, tenant, true)?.Name;
 			string tenantListName = "tabletenantobjectfields" + objectTableName.ToLower() + tenant;
-			string zerolistAutomationObjectFields = "tabletenantzeroAutomationConditionsObjectFields" + theEntityPm.ObjectTableId.ToLower();
+			//string zerolistAutomationObjectFields = "tabletenantzeroAutomationConditionsObjectFields" + theEntityPm.ObjectTableId.ToLower();
 			string tenantListAutomationObjectFields = "tabletenantAutomationConditionsObjectFields" + theEntityPm.ObjectTableId.ToLower() + theEntityPm.Tenant;
 			string objectFieldsListName = objectTableName.ToLower() + "customobjectfields" + theEntityPm.Tenant;
 
-			if (CacheManager.CacheWrapper.Get(zerolistAutomationObjectFields) != null) CacheManager.CacheWrapper.Invalidate(zerolistAutomationObjectFields);
+			//if (CacheManager.CacheWrapper.Get(zerolistAutomationObjectFields) != null) CacheManager.CacheWrapper.Invalidate(zerolistAutomationObjectFields);
 			if (CacheManager.CacheWrapper.Get(tenantListAutomationObjectFields) != null) CacheManager.CacheWrapper.Invalidate(tenantListAutomationObjectFields);
 			if (CacheManager.CacheWrapper.Get(tenantListName) != null) CacheManager.CacheWrapper.Invalidate(tenantListName);
 			if (CacheManager.CacheWrapper.Get(objectFieldsListName) != null) CacheManager.CacheWrapper.Invalidate(objectFieldsListName);
 
-			if (!string.IsNullOrEmpty(theEntityPm.FullNameTextCodeCode))
+            List<string> textCodes = new List<string>();
+            textCodes.Add(theEntityPm.FullNameTextCodeCode);
+            textCodes.Add(theEntityPm.ListTextCodeCode);
+            textCodes.Add(theEntityPm.HelpTextCodeCode);
+
+            List<TextCode> textCodesList = textCodeRepository.GetTextCodes().Where(t => textCodes.Contains(t.Code) && t.Tenant == tenant).ToList();
+
+            if (!string.IsNullOrEmpty(theEntityPm.FullNameTextCodeCode))
             {
-                TextCode textCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.FullNameTextCodeCode && o.Tenant == theEntityPm.Tenant).FirstOrDefault();
+                TextCode textCode = textCodesList.Where(t => t.Code == theEntityPm.FullNameTextCodeCode).FirstOrDefault();
                 if (textCode != null)
                 {
                     if (textCode.DefaultText != theEntityPm.FullNameTextCodeDefaultText)
@@ -438,7 +460,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             if (!string.IsNullOrEmpty(theEntityPm.ListTextCodeCode) && !string.IsNullOrEmpty(theEntityPm.ListTextCodeDefaultText))
             {
-                TextCode textCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.ListTextCodeCode && o.Tenant == theEntityPm.Tenant).FirstOrDefault();
+                TextCode textCode = textCodesList.Where(t => t.Code == theEntityPm.ListTextCodeCode).FirstOrDefault();
                 if (textCode != null)
                 {
                     if (textCode.DefaultText != theEntityPm.ListTextCodeDefaultText)
@@ -452,10 +474,9 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
 
             if (!string.IsNullOrEmpty(theEntityPm.HelpTextCodeCode))
             {
-                TextCode helpTextCode = textCodeRepository.GetTextCodes().Where(o => o.Code == theEntityPm.HelpTextCodeCode && o.Tenant == theEntityPm.Tenant).FirstOrDefault();
+                TextCode helpTextCode = textCodesList.Where(t => t.Code == theEntityPm.HelpTextCodeCode).FirstOrDefault();
                 if (helpTextCode == null)
                 {
-                    ObjectTable ob = objectTableRepository.GetSingleObjectTable(theEntityPm.ObjectTableId, 0, true);
 
                     TextCode newHelpTextCode = new TextCode();
                     newHelpTextCode.TextCodeTypeCode = "H";
@@ -463,7 +484,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                     newHelpTextCode.DefaultText = theEntityPm.HelpTextCodeCode;
                     newHelpTextCode.Id = IdCounter.GetNumber("TextCode", theEntityPm.Tenant).ToString();
                     newHelpTextCode.Tenant = theEntityPm.Tenant;
-                    newHelpTextCode.Code = ob.Name + "." + theEntityPm.FieldName + ".HelpText";
+                    newHelpTextCode.Code = objectTableName + "." + theEntityPm.FieldName + ".HelpText";
                     textCodeRepository.Add(newHelpTextCode);
                     theEntityPm.HelpTextCodeId = newHelpTextCode.Id;
                     theEntityPm.HelpTextCodeCode = newHelpTextCode.Code;
@@ -553,14 +574,72 @@ namespace Logitude.BL.InfrastructureModel.Tools.EntityService
                 }
                 # endregion
             }
-            entityRepository.Update(Poco);
-            entityRepository.SubmitChanges();
 
             ObjectFieldValidating.Validate(theEntityPm);
             ObjectFieldTracing.Trace(theEntityPm, Poco, isNewEntity);
 
-            //TableLastUpdateClass.UpdateSystemMetaDataHistory(true);
+            entityRepository.Update(Poco);
+            entityRepository.SubmitChanges();
+    
 
+            //TableLastUpdateClass.UpdateSystemMetaDataHistory(true);
+            if (IsMetConditionsToSendCToolMessage(theEntityPm))
+            {
+                AddKafkaQueueMessage();
+            }
+            if (objectTableName == "Card" && theEntityPm.IsCustom && !String.IsNullOrEmpty(theEntityPm.RelatedEntities))
+            {
+                new PartnersObjectFieldService(objectContext, tenant).Update(theEntityPm);
+            }
+        }
+
+        private bool IsMetConditionsToSendCToolMessage(ObjectFieldPM theEntityPm)
+        {
+            return FeatureToggleHelper.HasFeatureToggle("CTL", theEntityPm.Tenant) &&
+                IsTargetedObjectTableToSendCToolMessage() &&
+                theEntityPm.IsCustom.Equals(true);
+        }
+
+        private bool IsTargetedObjectTableToSendCToolMessage()
+        {
+            return this.entityPM.ObjectTableId.Equals(ObjectTableQuery.GetObjectTableByCode("Shipment", this.entityPM.Tenant)?.Id) ||
+                this.entityPM.ObjectTableId.Equals(ObjectTableQuery.GetObjectTableByCode("Container", this.entityPM.Tenant)?.Id);
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "ObjectField" },
+                { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
+        }
+
+        public QueryFilterItem GetDefaultAdditionalFiltersByIdAndTenant(string Id, int tenant)
+        {
+            ObjectFieldQuery objectFieldQuery = new ObjectFieldQuery(tenant);
+            string defaultAdditionalFilters = objectFieldQuery.GetDefaultAdditionalFiltersByIdAndTenant(Id, tenant);
+            QueryFilterItem defaultAdditionalTreeFilters = new QueryFilterItem();
+            if (!string.IsNullOrEmpty(defaultAdditionalFilters))
+            {
+                
+                defaultAdditionalTreeFilters = JsonSerializer.Deserialize<QueryFilterItem>(defaultAdditionalFilters);
+                HandleObjectFieldValue(defaultAdditionalTreeFilters);
+            }
+
+            return defaultAdditionalTreeFilters;
+        }
+
+        private void HandleObjectFieldValue(QueryFilterItem queryFilterItem)
+        {
+            queryFilterItem.FieldValue = queryFilterItem.FieldValue != null ? queryFilterItem.FieldValue.ToString() : queryFilterItem.FieldValue;
+            if (queryFilterItem.QueryFilterItems == null) return;
+ 
+                queryFilterItem.QueryFilterItems.ForEach(queryFilter => {
+                    HandleObjectFieldValue(queryFilter);
+            });
         }
     }
 }

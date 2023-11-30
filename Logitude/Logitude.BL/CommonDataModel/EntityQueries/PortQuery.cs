@@ -22,7 +22,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public PortQuery()
         {
-            repository = new PortRepository(); 
+            repository = new PortRepository();
         }
 
         public PortQuery(int tenant)
@@ -83,6 +83,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                       CombinedCode = a.CombinedCode,
                                       StateCode = a.StateCode,
                                       StateName = a.StateName,
+                                      PortTimeZoneCode = a.PortTimeZoneCode,
+                                      PortGroupId = a.PortGroupId,
                                   }).FirstOrDefault();
 
                         if (entity != null)
@@ -138,6 +140,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CountryEC = a.Country.EC,
                                   StateName = a.StateName,
                                   StateCode = a.StateCode,
+                                  PortTimeZoneCode = a.PortTimeZoneCode,
+                                  PortGroupId = a.PortGroupId,
                               }).FirstOrDefault();
                 }
 
@@ -157,64 +161,65 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                 PortPM entity;
 
                 if (getFromCache)
-                {                  
-                        if (CacheManager.CacheWrapper.Get(entityName) == null)
+                {
+                    if (CacheManager.CacheWrapper.Get(entityName) == null)
+                    {
+                        PortRepository myRepository = new PortRepository(tenant);
+
+                        entity = (from a in myRepository.context.Ports.Include("Country")
+                                  where a.Tenant == tenant && a.Id == id
+                                  select new PortPM()
+                                  {
+                                      AddedManually = a.AddedManually,
+                                      Code = a.Code,
+                                      CountryId = a.CountryId,
+                                      EnglishName = a.EnglishName,
+                                      Field1 = a.Field1,
+                                      Field2 = a.Field2,
+                                      Field3 = a.Field3,
+                                      Field4 = a.Field4,
+                                      Field5 = a.Field5,
+                                      Field6 = a.Field6,
+                                      Field7 = a.Field7,
+                                      Field8 = a.Field8,
+                                      Field9 = a.Field9,
+                                      Field10 = a.Field10,
+                                      Id = a.Id,
+                                      InActive = a.InActive,
+                                      IsAir = a.IsAir,
+                                      IsInland = a.IsInland,
+                                      IsOcean = a.IsOcean,
+                                      Latitude = a.Latitude,
+                                      LocalName = a.LocalName,
+                                      Longtitude = a.Longtitude,
+                                      Notes = a.Notes,
+                                      Tenant = a.Tenant,
+                                      CountryName = a.CountryName,
+                                      CountryCode = a.CountryCode,
+                                      ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
+                                      SearchFields = a.SearchFields,
+                                      CountryEC = a.Country.EC,
+                                      StateId = a.StateId,
+                                      StateCode = a.StateCode,
+                                      CombinedCode = a.CombinedCode,
+                                      StateName = a.StateName,
+                                      CountryIsNorthAmerica = a.Country.IsNorthAmerica,
+                                      CountryIsGreaterChinese = a.Country.IsGreaterChina,
+                                      PortTimeZoneCode = a.PortTimeZoneCode,
+                                  }).FirstOrDefault();
+
+                        if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
                         {
-                            PortRepository myRepository = new PortRepository(tenant);
-
-                            entity = (from a in myRepository.context.Ports.Include("Country")
-                                      where a.Tenant == tenant && a.Id == id
-                                      select new PortPM()
-                                      {
-                                          AddedManually = a.AddedManually,
-                                          Code = a.Code,
-                                          CountryId = a.CountryId,
-                                          EnglishName = a.EnglishName,
-                                          Field1 = a.Field1,
-                                          Field2 = a.Field2,
-                                          Field3 = a.Field3,
-                                          Field4 = a.Field4,
-                                          Field5 = a.Field5,
-                                          Field6 = a.Field6,
-                                          Field7 = a.Field7,
-                                          Field8 = a.Field8,
-                                          Field9 = a.Field9,
-                                          Field10 = a.Field10,
-                                          Id = a.Id,
-                                          InActive = a.InActive,
-                                          IsAir = a.IsAir,
-                                          IsInland = a.IsInland,
-                                          IsOcean = a.IsOcean,
-                                          Latitude = a.Latitude,
-                                          LocalName = a.LocalName,
-                                          Longtitude = a.Longtitude,
-                                          Notes = a.Notes,
-                                          Tenant = a.Tenant,
-                                          CountryName = a.CountryName,
-                                          CountryCode = a.CountryCode,
-                                          ComputedLocalName = string.IsNullOrEmpty(a.LocalName) ? a.EnglishName : a.LocalName,
-                                          SearchFields = a.SearchFields,
-                                          CountryEC = a.Country.EC,
-                                          StateId = a.StateId,
-                                          StateCode = a.StateCode,
-                                          CombinedCode = a.CombinedCode,
-                                          StateName = a.StateName,
-                                          CountryIsNorthAmerica = a.Country.IsNorthAmerica,
-                                      }).FirstOrDefault();
-                            
-                            if (CacheManager.CacheWrapper.Get(entityName) == null && entity != null)
-                            {
-                                CacheManager.CacheWrapper.Insert(entityName, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
-                            }
+                            CacheManager.CacheWrapper.Insert(entityName, entity, null, DateTime.UtcNow.AddMinutes(30), TimeSpan.Zero);
                         }
+                    }
 
-                        else
-                        {
-                            entity = (PortPM)CacheManager.CacheWrapper.Get(entityName);
-                        }
-                    
+                    else
+                    {
+                        entity = (PortPM)CacheManager.CacheWrapper.Get(entityName);
+                    }
 
-                   
+
                 }
 
                 else
@@ -259,6 +264,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                   CombinedCode = a.CombinedCode,
                                   StateName = a.StateName,
                                   CountryIsNorthAmerica = a.Country.IsNorthAmerica,
+                                  CountryIsGreaterChinese = a.Country.IsGreaterChina,
+                                  PortTimeZoneCode = a.PortTimeZoneCode,
                               }).FirstOrDefault();
                 }
 
@@ -306,6 +313,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             CombinedCode = a.CombinedCode,
                                             StateName = a.StateName,
                                             StateCode = a.StateCode,
+                                            PortTimeZoneCode = a.PortTimeZoneCode,
                                         });
             return ports;
         }
@@ -314,7 +322,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         public IQueryable<Port> GetAllPorts()
         {
             IQueryable<Port> ports = (from a in repository.context.Ports select a);
-                                      
+
             return ports;
         }
 
@@ -357,6 +365,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                             CombinedCode = a.CombinedCode,
                                             StateName = a.StateName,
                                             StateCode = a.StateCode,
+                                            PortTimeZoneCode = a.PortTimeZoneCode,
                                         });
             return ports;
         }
@@ -401,6 +410,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CombinedCode = a.CombinedCode,
                                                 StateName = a.StateName,
                                                 StateCode = a.StateCode,
+                                                PortTimeZoneCode = a.PortTimeZoneCode,
                                             });
                 return ports;
             }
@@ -442,6 +452,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                 CombinedCode = a.CombinedCode,
                                                 StateName = a.StateName,
                                                 StateCode = a.StateCode,
+                                                PortTimeZoneCode = a.PortTimeZoneCode,
                                             });
                 return ports;
             }
@@ -491,6 +502,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              CombinedCode = a.CombinedCode,
                              StateName = a.StateName,
                              StateCode = a.StateCode,
+                             PortTimeZoneCode = a.PortTimeZoneCode,
                          }).AsQueryable();
 
             IQueryable<PortPM> query2 = null;
@@ -522,7 +534,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<PortList> GetIQueryableEntityList(IQueryable<Port> iQueryable)
         {
-            IQueryable<PortList> result = from f in iQueryable.Include("Country")
+            IQueryable<PortList> result = from f in iQueryable.Include("Country").Include("State")
                                           select new PortList()
                                           {
                                               Code = f.Code,
@@ -543,8 +555,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                               TransportModeId = (f.IsAir ? "A" : "") + (f.IsInland ? "I" : "") + (f.IsOcean ? "O" : ""),
                                               StateId = f.StateId,
                                               CombinedCode = f.CombinedCode,
-                                              StateName = f.StateName,
+                                              StateName = f.State!=null ? f.State.EnglishName:null,
                                               StateCode = f.StateCode,
+                                              Longtitude = f.Longtitude,
+                                              Latitude = f.Latitude,
+
                                           };
             return result;
         }
@@ -604,23 +619,58 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             IQueryable<PortList> query2 = GetIQueryableEntityList(iQueryable);
 
             query2 = EntityListFilter.ApplyEntityListFilters(queryOperations, query2);
-           
+
             return query2.Count();
         }
 
         public PortList GetPortCopyToCurrentTenant(string zeroPortId, int tenant)
         {
-            ICommonDataContext objectContext= CommonDataContext.GetContext(tenant);
+            Port newPort;
+            Country country;
+            GetPortCopy(zeroPortId, tenant, out newPort, out country);
+
+            PortList portList = new PortList()
+            {
+                Code = newPort.Code,
+                EnglishName = newPort.EnglishName,
+                Id = newPort.Id,
+                Tenant = newPort.Tenant,
+                CountryCode = newPort.CountryCode,
+                CountryName = newPort.CountryName,
+                CountryEC = country.EC,
+                IsAir = newPort.IsAir,
+                IsOcean = newPort.IsOcean,
+                IsInland = newPort.IsInland,
+                AddedManually = newPort.AddedManually,
+                SearchFields = newPort.SearchFields,
+                Notes = newPort.Notes,
+                InActive = newPort.InActive,
+                TransportModeId = (newPort.IsAir ? "A" : "") + (newPort.IsInland ? "I" : "") + (newPort.IsOcean ? "O" : ""),
+                CombinedCode = newPort.CombinedCode,
+                StateName = newPort.StateName,
+                StateCode = newPort.StateCode,
+            };
+
+            return portList;
+        }
+        public Port GetPortCopyToCurrentTenantPoco(string zeroPortId, int tenant)
+        {
+            Port newPort;
+            Country country;
+            GetPortCopy(zeroPortId, tenant, out newPort, out country);
+            return newPort;
+        }
+
+        private static void GetPortCopy(string zeroPortId, int tenant, out Port newPort, out Country country)
+        {
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
 
             PortRepository portRepository = new PortRepository(objectContext);
             CountryRepository countryRepository = new CountryRepository(objectContext);
             GlobalZoneRepository globalZoneRepository = new GlobalZoneRepository(objectContext);
-
-            Port newPort;
             Port port = portRepository.GetSinglePort(0, zeroPortId);
             newPort = portRepository.GetSinglePortByCodeCountryCode(tenant, port.Code, port.Country.Code, false);
-            Country country = null;
-
+            country = null;
             if (newPort == null)
             {
                 country = countryRepository.GetSingleCountryByCode(port.Country.Code, tenant, true);
@@ -688,6 +738,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                     StateCode = port.StateCode,
                     CountryCode = port.CountryCode,
                     CountryName = port.CountryName,
+                    PortTimeZoneCode = port.PortTimeZoneCode,
                 };
 
                 portRepository.Add(newPort);
@@ -700,30 +751,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             {
                 country = countryRepository.GetSingleCountryByCode(port.Country.Code, tenant, true);
             }
-
-            PortList portList = new PortList()
-            {
-                Code = newPort.Code,
-                EnglishName = newPort.EnglishName,
-                Id = newPort.Id,
-                Tenant = newPort.Tenant,
-                CountryCode = newPort.CountryCode,
-                CountryName = newPort.CountryName,
-                CountryEC = country.EC,
-                IsAir = newPort.IsAir,
-                IsOcean = newPort.IsOcean,
-                IsInland = newPort.IsInland,
-                AddedManually = newPort.AddedManually,
-                SearchFields = newPort.SearchFields,
-                Notes = newPort.Notes,
-                InActive = newPort.InActive,
-                TransportModeId = (newPort.IsAir ? "A" : "") + (newPort.IsInland ? "I" : "") + (newPort.IsOcean ? "O" : ""),
-                CombinedCode = newPort.CombinedCode,
-                StateName = newPort.StateName,
-                StateCode = newPort.StateCode,
-            };
-
-            return portList;
         }
 
         public PortPM GetSinglePortPMByCodeCountryCode(string Code, string CountryCode, int tenant)
@@ -951,12 +978,103 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             }
             return port;
         }
-    
-        public PortPM GetSinglePMByCombinedCode(string CombindCode,int Tenant)
+
+        public PortPM GetSinglePMByCombinedCode(string CombindCode, int Tenant)
         {
             var CountryCode = CombindCode.Substring(0, 2);
             var PortCode = CombindCode.Substring(2);
-            return GetSinglePortPMByCodeCountryCode(PortCode, CountryCode,Tenant);
+            return GetSinglePortPMByCodeCountryCode(PortCode, CountryCode, Tenant);
+        }
+        public PortPM GetSinglePMByCode(string Code, int Tenant)
+        {
+            return GetSinglePortPMByCode(Code, Tenant);
+        }
+
+        public PortPM GetSinglePortPMByCode(string Code, int tenant)
+        {
+            if (Code == "---")
+            {
+                return GetNotAssignedPortPM(tenant);
+            }
+            PortPM port = GetSinglePortByCode(Code, tenant);
+            if (port != null)
+            {
+                return port;
+            }
+
+            port = GetSinglePortByCode(Code, 0);
+            if (port == null)
+            {
+                return null;
+            }
+
+            var newport = GetPortCopyToCurrentTenant(port.Id, tenant);
+            port = new PortPM()
+            {
+                AddedManually = newport.AddedManually,
+                Code = newport.Code,
+                CountryId = newport.CountryId,
+                EnglishName = newport.EnglishName,
+                Id = newport.Id,
+                InActive = newport.InActive,
+                IsAir = newport.IsAir,
+                IsInland = newport.IsInland,
+                IsOcean = newport.IsOcean,
+                Notes = newport.Notes,
+                Tenant = newport.Tenant,
+                CountryName = newport.CountryName,
+                SearchFields = newport.SearchFields,
+                CountryCode = newport.CountryCode,
+                StateId = newport.StateId,
+                CombinedCode = newport.CombinedCode,
+                StateName = newport.StateName,
+                StateCode = newport.StateCode,
+            };
+
+            return port;
+
+        }
+
+        private PortPM GetSinglePortByCode(string Code, int tenant)
+        {
+            IQueryable<PortPM> ports = (from a in repository.context.Ports.Include("Country")
+                                        where a.Tenant == tenant && a.Code.ToUpper() == Code.ToUpper().Trim()
+                                        select new PortPM()
+                                        {
+                                            AddedManually = a.AddedManually,
+                                            Code = a.Code,
+                                            CountryId = a.CountryId,
+                                            EnglishName = a.EnglishName,
+                                            Field1 = a.Field1,
+                                            Field2 = a.Field2,
+                                            Field3 = a.Field3,
+                                            Field4 = a.Field4,
+                                            Field5 = a.Field5,
+                                            Field6 = a.Field6,
+                                            Field7 = a.Field7,
+                                            Field8 = a.Field8,
+                                            Field9 = a.Field9,
+                                            Field10 = a.Field10,
+                                            Id = a.Id,
+                                            InActive = a.InActive,
+                                            IsAir = a.IsAir,
+                                            IsInland = a.IsInland,
+                                            IsOcean = a.IsOcean,
+                                            Latitude = a.Latitude,
+                                            LocalName = a.LocalName,
+                                            Longtitude = a.Longtitude,
+                                            Notes = a.Notes,
+                                            Tenant = a.Tenant,
+                                            CountryName = a.CountryName,
+                                            SearchFields = a.SearchFields,
+                                            CountryCode = a.CountryCode,
+                                            CountryEC = a.Country.EC,
+                                            StateId = a.StateId,
+                                            CombinedCode = a.CombinedCode,
+                                            StateName = a.StateName,
+                                            StateCode = a.StateCode,
+                                        });
+            return ports.FirstOrDefault();
         }
 
         public List<PortList> GetPortListsByListIds(List<string> PortIds, int tenant)
@@ -973,5 +1091,47 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return PortLists;
         }
 
+        public IQueryable<PortPM> GetPortPMsByCombinedCode(string combinedCode)
+        {
+            IQueryable<PortPM> ports = (from a in repository.context.Ports
+                                        where a.CombinedCode == combinedCode
+                                        select new PortPM()
+                                        {
+                                            AddedManually = a.AddedManually,
+                                            Code = a.Code,
+                                            CountryId = a.CountryId,
+                                            EnglishName = a.EnglishName,
+                                            Field1 = a.Field1,
+                                            Field2 = a.Field2,
+                                            Field3 = a.Field3,
+                                            Field4 = a.Field4,
+                                            Field5 = a.Field5,
+                                            Field6 = a.Field6,
+                                            Field7 = a.Field7,
+                                            Field8 = a.Field8,
+                                            Field9 = a.Field9,
+                                            Field10 = a.Field10,
+                                            Id = a.Id,
+                                            InActive = a.InActive,
+                                            IsAir = a.IsAir,
+                                            IsInland = a.IsInland,
+                                            IsOcean = a.IsOcean,
+                                            Latitude = a.Latitude,
+                                            LocalName = a.LocalName,
+                                            Longtitude = a.Longtitude,
+                                            Notes = a.Notes,
+                                            Tenant = a.Tenant,
+                                            CountryName = a.CountryName,
+                                            SearchFields = a.SearchFields,
+                                            CountryCode = a.CountryCode,
+                                            CountryEC = a.Country.EC,
+                                            StateId = a.StateId,
+                                            CombinedCode = a.CombinedCode,
+                                            StateName = a.StateName,
+                                            StateCode = a.StateCode,
+                                            PortTimeZoneCode = a.PortTimeZoneCode,
+                                        });
+            return ports;
+        }
     }
 }

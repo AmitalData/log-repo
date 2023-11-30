@@ -3,17 +3,14 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
 using System;
 using System.Collections.Generic;
-using System.Linq;
- 
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 
 namespace CommunicationWorkerRole
 {
     public class QueryExportExecutionLogWR : WorkerEntryPoint
     {
         DbQueueService queueservice;
+
         public override bool OnStart()
         {
             ThreadId = Guid.NewGuid().ToString();
@@ -22,6 +19,7 @@ namespace CommunicationWorkerRole
             ConnectClient();
             return base.OnStart();
         }
+
         private void ExecuteQueue()
         {
             queueservice = new DbQueueService("QueryExportExecutionLogQueue", 0);
@@ -29,8 +27,9 @@ namespace CommunicationWorkerRole
             if (queueResponse != null && queueResponse.MessageId != null)
             {
                 ThreadStart reportExecutionServiceThreadStart = (() =>
-                     new QueryExportLogExecutionService(queueservice, queueResponse).ExecuteQueryExportExecutionLog()
-                );
+                     new QueryExportLogExecutionService(queueservice, queueResponse)
+                         .ExecuteQueryExportExecutionLog());
+
                 reportExecutionServiceThreadStart += () => { LogDoneItemInMemory(); };
                 new Thread(reportExecutionServiceThreadStart) { IsBackground = true }.Start();
                 queueservice.Complete();
@@ -67,7 +66,6 @@ namespace CommunicationWorkerRole
             {
                 queueservice = new DbQueueService();
                 queueservice.InitializeQueue("QueryExportExecutionLogQueue", 0);
-
             }
             catch (Exception ex)
             {

@@ -31,7 +31,11 @@
                                                             [DependencyFilter1IsList]="true"
                                                             [DisplayFieldsFromList]="DisplayFieldsFromList"
                                                             [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                                            [CustomizedWidth]="VendorLovSizeForFullAccounting">
+                                                            [ForceShowLocalAndEnglishColumns]="forceShowLocalAndEnglishColumns"
+                                                            [CustomizedWidth]="VendorLovSizeForFullAccounting"
+                                                            [ColumnsWidths]="ColumnsWidths"
+                                                            [StartSearchFromChar]="3"
+                                            [StartSearchFromNumber]="6">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -72,6 +76,34 @@
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'AmountInInvoiceCurrency'" [Text]="AmountInInvoiceCurrency" [InputType]="'sigdouble'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="accountingActivated" class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'IsEquipment'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+                                                <td>
+                                                    <CheckBox [IsChecked]="IsEquipment" (Checked)="IsEquipment = $event"></CheckBox>
+                                                </td>
+                                            </tr>
+
+                                            <!-- Branch -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'BranchId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogLov [ObjectFieldName]="'BranchId'"
+                                                            [ObjectTableName]="ObjectTableName"
+                                                            [DataContext]="DataContext"
+                                                            [SelectedValue]="BranchId"
+                                                            [LookUpTableName]="'Branch'">
+                                                    </LogLov>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
                                                 </td>
                                             </tr>
 
@@ -155,6 +187,16 @@
                                                     <LogDatePicker [ObjectFieldName]="'InvoiceDate'" [SelectedDateValue]="InvoiceDate" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogDatePicker>
                                                 </td>
                                             </tr>
+                                            <!-- AccountingDate -->
+                                            <tr *ngIf="accountingActivated" class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="AccountingDate" [InputType]="'date'" [DataContext]="DataContext"></LogDatePicker>
+                                                </td>
+                                            </tr>
 
                                         </table>
                                     </td>
@@ -167,20 +209,15 @@
                                                 </td>
                                             </tr>
                                             <tr class="FormFieldRow">
-                                                <td style="width: 5px;">
-                                                    <div></div>
-                                                </td>
-
                                                 <td [style.text-align]="isRTL ? 'right' : 'left'" style="font-size:10px; color:#1B90CB;">
                                                     {{RelativeRateDate}}
                                                 </td>
-                                            </tr>
-
                                             <tr>
                                                 <td>
                                                     <div></div>
                                                 </td>
                                             </tr>
+
                                         </table>
                                     </td>
 
@@ -191,6 +228,7 @@
                     </tr>
 
                     <tr style="height: 15px;">
+
                         <td>
                             <div></div>
                         </td>
@@ -202,42 +240,45 @@
                             <table>
                                 <tr>
                                     <td style="width: 1px;">
-                                        <button id="{{'AddInvoiceLine' | IdGeneratorPipe}}" [disabled]="!IsScreenEnabled" class="Button" (click)="AddButtonClicked()">{{'APInvoice.B.AddLine' | TextCodeTranslationPipe}}</button>
+                                        <button id="{{'AddInvoiceLine' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled" class="Button" (click)="AddButtonClicked()">{{'APInvoice.B.AddLine' | TextCodeTranslationPipe}}</button>
                                     </td>
 
-                                    <td>
-                                        <div></div>
-                                    </td>
 
-                                    <td [style.float]="isRTL ? 'left' : 'right'" style="width:285px;">
-                                        <table>
-                                            <tr>
-                                                <td style="width: 1px;" class="Label">{{'APInvoice.S.Details.VatType' | TextCodeTranslationPipe}}:</td>
-
-                                                <td style="width: 5px;">
+                                                <td>
                                                     <div></div>
                                                 </td>
 
-                                                <td style="width: 150px">
-                                                    <LogLov [ObjectFieldName]="'VatTypeId'"
-                                                            [SelectedValue]="VatTypeId"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [LookUpTableName]="'VatType'"
-                                                            [HideColumns]="true"  [DependencyFilter2Value]="false">
-                                                    </LogLov>
+                                                <td  *ngIf="AllowVatTypes" [style.float]="isRTL ? 'left' : 'right'" style="width:285px;">
+                                                    <table>
+                                                        <tr>
+                                                            <td style="width: 1px;" class="Label">{{'APInvoice.S.Details.VatType' | TextCodeTranslationPipe}}:</td>
+
+                                                            <td style="width: 5px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 150px">
+                                                                <LogLov [ObjectFieldName]="'VatTypeId'"
+                                                                        [SelectedValue]="VatTypeId"
+                                                                        [ObjectTableName]="ObjectTableName"
+                                                                        [DataContext]="DataContext"
+                                                                        [LookUpTableName]="'VatType'"
+                                                                        [HideColumns]="true" [DependencyFilter2Value]="false">
+                                                                </LogLov>
+                                                            </td>
+
+                                                            <td style="width: 2px;">
+                                                                <div></div>
+                                                            </td>
+
+                                                            <td style="width: 80px;">
+                                                                <button id="{{'VATApplyToAll' | IdGeneratorAsyncPipe | async}}" class="Button" [disabled]="!VatTypeFilterButtonIsEnabled" (click)="RunVatTypeFilterMethod()">{{'APInvoice.B.ApplyToAll' | TextCodeTranslationPipe}}</button>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
                                                 </td>
 
-                                                <td style="width: 2px;">
-                                                    <div></div>
-                                                </td>
 
-                                                <td style="width: 80px;">
-                                                    <button id="{{'VATApplyToAll' | IdGeneratorPipe}}" class="Button" [disabled]="!VatTypeFilterButtonIsEnabled" (click)="RunVatTypeFilterMethod()">{{'APInvoice.B.ApplyToAll' | TextCodeTranslationPipe}}</button>
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
                                 </tr>
                             </table>
                         </td>
@@ -252,7 +293,7 @@
                     <tr>
                         <td>
                             <div class="MediaFill">
-                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource">
+                                <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource" [UseVirtuallization]="IsUsingVirtuallization">
 
                                     <!-- Exists -->
                                     <log-column [width]="'25'">
@@ -286,7 +327,7 @@
                                         <ng-template let-item>
                                             <log-cell-template #logcelltemplate [TabIndex]="-1" [CellColor]="item.CellBackgroundColor">
                                                 <div style="width: 100%;" [ngStyle]="{color: item.CellReadOnlyForeground}">
-                                                    {{accountingActivated? item.Description: item.ChargesTypeName}}
+                                                    {{accountingActivated? (item.LocalDescription||item.Description): item.ChargesTypeName}}
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
@@ -345,7 +386,7 @@
                                                     </table>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!--  Expected Amount -->
@@ -523,7 +564,7 @@
                                                     </table>
                                                 </div>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                     <!-- Tool -->
@@ -559,7 +600,7 @@
                                                     </tr>
                                                 </table>
                                             </log-cell-template>
-                                        </ng-template>                                        
+                                        </ng-template>
                                     </log-column>
 
                                 </logitude-edit-grid>
@@ -614,7 +655,30 @@
                                 </li>
                             </ul>
                         </td>
+                        <td style="width: 20px;" *ngIf="IsFullAccounting">
+                            <div class="VerticalLine"></div>
+                        </td>
 
+                        <td style="width: 250px; min-width: 250px;" *ngIf="IsFullAccounting">
+                            <div class="MediaFill">
+                                <table>
+                                
+                                    <tr style="height: 1px;">
+                                        <td class="TabSummaryTitle">
+                                            {{'APInvoice.F.Notes' | TextCodeTranslationPipe}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="MediaFill">
+                                                <LogTextBox [ObjectFieldName]="'InternalNotes'" [Text]="InternalNotes" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [IsMultiline]="true"></LogTextBox>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
                     </tr>
                 </table>
             </TabSummary>

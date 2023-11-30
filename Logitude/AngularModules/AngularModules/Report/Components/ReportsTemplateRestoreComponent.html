@@ -19,7 +19,7 @@
                             <td style="width: 150px; min-width: 150px;max-width:150px">Last Update</td>
                             <td style="width: 150px; min-width: 150px;max-width:150px">{{'ReportsTemplate.F.UpdatedByUserId' | TextCodeTranslationPipe}}</td>
                             <td style="width: 70px; min-width: 70px;max-width:70px">Restored</td>
-                            <td style="width: 100%; min-width: 100%;"></td>
+                            <td [ngStyle]="ReportsTemplatePM.TemplateType ==='E' && {'width': '240px','min-width': '240px','max-width': '240px'}" style="width: 100%; min-width: 100%;"></td>
 
                         </tr>
 
@@ -65,6 +65,9 @@
                                                     <span *ngIf="item.VisibleRestoredViewButton"><button class="Button" style="width:55px;height:22px;display:inline;" (click)="PreviewButtonClicked(item)">View</button></span>
                                                   
                                                       <span  *ngIf="item.VisibleRestoredViewButton"><button *ngIf="!item.IsCurrentVersion"  class="GreenButton" style="width:90px;height:22px;display:inline;" (click)="RestoreButtonClicked(item)">Restore</button></span>
+                                                     
+                                                      <span  *ngIf="item.VisibleRestoredViewButton"><button *ngIf="ReportsTemplatePM.TemplateType ==='E'" class="Button"  style="width:90px;height:22px;display:inline;" (click)="DownloadButtonClicked(item)">Download</button></span>
+
                                                       <span  *ngIf="item.VisibleRestoredViewButton"><button [disabled]="true"  *ngIf="item.IsCurrentVersion" class="GreenButton" style="width:90px;height:22px;display:inline;" (click)="RestoreButtonClicked(item)">Current Version</button></span>
 
 

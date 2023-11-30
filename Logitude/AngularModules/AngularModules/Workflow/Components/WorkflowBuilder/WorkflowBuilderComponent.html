@@ -1,0 +1,69 @@
+<style>
+    .workflow-builder-wrapper {
+        background: white;
+    }
+
+    .workflow-builder-component-container {
+        width: 100%;
+        height: 100%;
+    }
+
+    .table-row {
+        height: 1px;
+    }
+
+    .table-row-cell {
+        width: 10px;
+    }
+
+    .save-workflow-button-cell {
+        float: right;
+    }
+
+    .save-buttons-container {
+        display: flex;
+        margin-bottom: 5px;
+    }
+
+    .save-button-icon {
+        margin-left: 2px;
+        width: 13px;
+    }
+
+    .button-container {
+        margin: 0px 2px;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        width: 110px;
+        margin-right: 2px;
+    }
+</style>
+
+<div class="MediaFillAbsolute workflow-builder-wrapper">
+    <div class="MarginAbsolute10">
+        <table>
+            <tr class="table-row">
+                <td></td>
+            </tr>
+
+            <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+                <td>
+                    <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="true"></ValidationSummary>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <div class="MediaFill CurvedArea">
+                        <div #workflowBuilderComponentContainer class="workflow-builder-component-container"></div>
+                    </div>
+                </td>
+            </tr>
+
+
+        </table>
+    </div>
+</div>
+
+<BusyIndicator [Text]="BusyIndicatorText" [IsBusy]="ShowBusyIndicator" [Width]="BusyIndicatorWidth"></BusyIndicator>

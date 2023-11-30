@@ -1,49 +1,61 @@
 declare var window: any;
 import { IdGeneratorPipe } from './../../../Controls/Pipes/IdGeneratorPipe';
 import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
-import {Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef}  from '@angular/core';
-import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {Validator} from '../../../Infrastructure/Validators/Validator';
-import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
-import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
-import {EntityListService} from '../../../Infrastructure/Services/EntityListService';
-import {ApiQueryFilters, FilterItem} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ObservableCollection} from '../../../Infrastructure/Utilities/ObservableCollection';
-import {AppTool, DateTool} from '../../../Infrastructure/Tools';
-import {ConfirmWindow} from '../../../Controls/Windows/ConfirmWindow';
-import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
-import {MessageWindow} from '../../../Controls/Windows/MessageWindow';
-import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
-import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
-import {FullAccountingSettingPM} from '../../EntityPMs/FullAccountingSettingPM';
-import {FeatureLocator} from '../../../Infrastructure/Utilities/FeatureLocator';
+import { Component, Output, EventEmitter, OnInit, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { BaseComponent } from '../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { Validator } from '../../../Infrastructure/Validators/Validator';
+import { TenantPM } from '../../../Common/EntityPMs/TenantPM';
+import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
+import { EntityListService } from '../../../Infrastructure/Services/EntityListService';
+import { ApiQueryFilters, FilterItem } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ObservableCollection } from '../../../Infrastructure/Utilities/ObservableCollection';
+import { AppTool, DateTool } from '../../../Infrastructure/Tools';
+import { ConfirmWindow } from '../../../Controls/Windows/ConfirmWindow';
+import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
+import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
+import { FullAccountingSettingPM } from '../../EntityPMs/FullAccountingSettingPM';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
 
 
 //Entities
-import {ExternalReconciliationPM} from '../../EntityPMs/ExternalReconciliationPM';
-import {ExternalReconciliationLinePM} from '../../EntityPMs/ExternalReconciliationLinePM';
-import {ExternalReconciliationList} from '../../EntityLists/ExternalReconciliationList';
-import {LedgerTransactionPM} from '../../EntityPMs/LedgerTransactionPM';
-import {LedgerTransactionList} from '../../EntityLists/LedgerTransactionList';
-import {GLAccountPM} from '../../EntityPMs/GLAccountPM';
-import {BankAccountPM} from '../../EntityPMs/BankAccountPM';
-import {ReconcileExternalPagePM} from '../../EntityPMs/ReconcileExternalPagePM';
-import {ReconcileExternalPageLinePM} from '../../EntityPMs/ReconcileExternalPageLinePM';
+import { ExternalReconciliationPM } from '../../EntityPMs/ExternalReconciliationPM';
+import { ExternalReconciliationLinePM } from '../../EntityPMs/ExternalReconciliationLinePM';
+import { ExternalReconciliationList } from '../../EntityLists/ExternalReconciliationList';
+import { LedgerTransactionPM } from '../../EntityPMs/LedgerTransactionPM';
+import { LedgerTransactionList } from '../../EntityLists/LedgerTransactionList';
+import { GLAccountPM } from '../../EntityPMs/GLAccountPM';
+import { BankAccountPM } from '../../EntityPMs/BankAccountPM';
+import { ReconcileExternalPagePM } from '../../EntityPMs/ReconcileExternalPagePM';
+import { ReconcileExternalPageLinePM } from '../../EntityPMs/ReconcileExternalPageLinePM';
 
 
 //Services
-import {ExternalReconciliationPMService} from '../../Services/StandardPMs/ExternalReconciliationPMService';
-import {ExternalReconciliationExtendedPMService} from '../../Services/ExtendedPMs/ExternalReconciliationExtendedPMService';
-import {LedgerTransactionExtendedListService} from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
-import {ExternalReconciliationExtendedListService, ExternalAutoReconcileServiceArgs} from '../../Services/ExtendedLists/ExternalReconciliationExtendedListService';
+import { ExternalReconciliationPMService } from '../../Services/StandardPMs/ExternalReconciliationPMService';
+import { ExternalReconciliationExtendedPMService } from '../../Services/ExtendedPMs/ExternalReconciliationExtendedPMService';
+import { LedgerTransactionExtendedListService } from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
+import { ExternalReconciliationExtendedListService, ExternalAutoReconcileServiceArgs } from '../../Services/ExtendedLists/ExternalReconciliationExtendedListService';
 import { retry } from 'rxjs/operators';
 import { ExternalReconciliationOpService } from '../../Services/ExtendedPMs/ExternalReconciliationOpService';
+import { BankTransferPaymentArguments } from 'Invoice/DataContracts/BankTransferPaymentArguments';
+import { PageLineModel } from '../NewEntity/AddEditRecoExPageComponent';
+import { LineModel } from './ReconcileComponent';
+import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
+import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
+import { ReconcileExcelDataArgs } from 'Accounting/Services/ExtendedPMs/ReconciliationExtendedPMService';
 
 
 
 
+const BankTransferPaymentMethodCode = "BT";
+const NewARPaymentWindowWidth = 900;
+const NewARPaymentWindowHeight = 570;
+const CrossYearConfirmationDialogWidth = 390;
+const exportToExcelWindowWidth = 500;
+const exportToExcelWindowHeight = 200;
 @Component({
     selector: 'ExternalReconcileComponent',
     moduleId: './Accounting/Components/Others/',
@@ -55,6 +67,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     public DataContext: ExternalReconcileComponent = this;
     public ObjectTableName: string;
     public ExtRecoTable: string = "ExternalReconciliation";
+
+    public NewARPaymentTitle = TextCodeTranslator.Translate("ExternalReconciliation.O.BTCreateARPayment");
+    private BankTransferDifferenceMessage = TextCodeTranslator.Translate("ExternalReconciliation.O.BankTransferDifferenceMsg");
+    private SelectCreditLinesOnlyMessage = TextCodeTranslator.Translate("ExternalReconciliation.O.BTCreditLinesOnly");
+    private OnlyBankPagesMessage = TextCodeTranslator.Translate("ExternalReconciliation.O.BTOnlyBankPages");
 
     public FireCheckBoxChecked: EventEmitter<any> = new EventEmitter();
     public PagePM: ReconcileExternalPagePM;
@@ -74,7 +91,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     private CurrentSession = SessionLocator.SelectedSession;
     ExternalPagesTitle: string;
     CreatedReconciliationsCount: number = 0;
-
+    SessionEvent;
     entityListService: EntityListService = new EntityListService();
     ledgerTransactionExtendedListService: LedgerTransactionExtendedListService = new LedgerTransactionExtendedListService();
     _ExternalReconciliationExtendedListService: ExternalReconciliationExtendedListService = new ExternalReconciliationExtendedListService();
@@ -82,7 +99,10 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     externalReconciliationPMService: ExternalReconciliationPMService = new ExternalReconciliationPMService();
     _ExternalReconciliationOpService: ExternalReconciliationOpService = new ExternalReconciliationOpService();
 
-
+    CreateBankTransferButtonFeatureEnabled = false;
+    showBankTransferAlert = false;
+    createdPaymentNumber;
+    public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent= new LogitudeGridExportToExcelComponent();
     constructor(private CD: ChangeDetectorRef) {
         super();
         this.isRTL = SessionLocator.TenantPM.LayoutDirection === 'rtl';
@@ -99,11 +119,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         this.OperatorsList =
             [{ EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
-                { EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
-                { EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
-                { EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
-                { EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
-                { EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
+            { EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
+            { EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
+            { EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
+            { EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
+            { EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
             ];
         this.DateFilterList =
             [
@@ -127,13 +147,27 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             this.EntityPM = args.EntityPM;
             this.ObjectTableName = args.ObjectTableName;
             this.openAmountCurrency = args.openAmountCurrency;
+            this.CurrentSession.TransferAccountId = this.BankAccountPM?.TransferGLAcccountId;
+
             this.SetTitles();
             this.ResetFilters();
         }
     }
+    OpenLedgerTransactionInternalNote(line: any) {
 
-    SetTitles()
-    {
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 450;
+        logWindow.Height = 350;
+        logWindow.Title = TextCodeTranslator.Translate("LedgerTransaction.F.InternalNote");
+        logWindow.WindowArgs = { ledgerTransaction: line };
+        logWindow.Show('./Accounting/Components/Others/LedgerTransactionInternalNotesComponent');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CD.detectChanges();
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    SetTitles() {
         switch (this.ObjectTableName) {
             case 'GLAccount': {
                 this.ExternalPagesTitle = TextCodeTranslator.Translate('GLAccount.TH.ExternalTransactions');
@@ -159,15 +193,41 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         this.ExtPageBuildColumns();
         this.ReloadScreen();
         this.ExtPageReloadScreen();
-    }
+        this.GetFeatures();
+        this.Listen();
 
+    }
     ngAfterViewInit() {
         var t = setTimeout(() => {
             this.LoadGrids = true;
         }, 100);
     }
+    private GetFeatures() {
+        this.CreateBankTransferButtonFeatureEnabled = !!FeatureLocator.IsFeatureGrantedByCode("ExtRecoCreateBankTransferPY");
+    }
+    Listen() {
+        this.isAllSelected = false;
+        this.isAllSelectedExt = false;
+
+        this.SessionEvent = this.CurrentSession.SessionEvent.subscribe(s => {
+            if (s && s.Name == "BankTransferARPaymentCreated") {
+                this.createdPaymentNumber = s.PaymentNumber;
+                this.showBankTransferAlert = true;
+            }
+        });
+    }
+
+    GetBankTransferAlertMessage() {
+        return TextCodeTranslator.Translate('ExternalReconciliation.O.BTbackgroundCreationMSG').replace('#number', this.createdPaymentNumber);
+    }
 
     //#region Properties
+
+    public get EnableCreateBankTransferPaymentButton(): boolean {
+        return this.CreateBankTransferButtonFeatureEnabled
+            && this.ExtPageSelectedLines.Length > 0
+            && this.ObjectTableName != 'GLAccount';
+    }
 
     //#endregion
 
@@ -240,12 +300,15 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             this.MakeReconciliation();
     }
 
-    private MakeAdjustment()
-    {
-        if (this.ExtPageSelectedLines.Length >= 1 && this.TransactionSelectedLines.Length >= 0) {
-            this.AdjustBankFeeWithNewJournalScreen();
-        }
-        this.CheckAdjustLedgerTransactionsOnly();
+    private MakeAdjustment() {
+        const hasCrossYearLines = this.CheckIfHasCrossYearLines();
+
+        if (hasCrossYearLines)
+            return this.ShowCrossYearConfirmationDialogForAdjust();
+
+
+        this.AdjustReconcile();
+
     }
 
     private CheckAdjustLedgerTransactionsOnly() {
@@ -254,20 +317,121 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         }
     }
 
-    private MakeReconciliation()
-    {
+    private MakeReconciliation() {
         var errors: string[] = this.ValidateReconciliation();
+
+
 
         if (errors.length == 0) {
             var reconciliation = this.CreateReconciliation();
-            this.SubmitChanges(reconciliation);
+
+            const hasCrossYearLines = this.CheckIfHasCrossYearLines();
+
+            if (hasCrossYearLines) {
+                this.ShowCrossYearConfirmationDialog(reconciliation);
+            } else {
+                this.SubmitChanges(reconciliation);
+            }
+
         }
         else
             this.ValidationErrorsList = errors;
     }
 
-    private ValidateReconciliation()
-    {
+    private ShowCrossYearConfirmationDialog(reconciliation: ExternalReconciliationPM) {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = CrossYearConfirmationDialogWidth;
+        confirmWindow.Show(TextCodeTranslator.Translate("ExternalReconciliation.O.CrossYearConfirmMsg"));
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes)
+                this.SubmitChanges(reconciliation);
+        });
+    }
+
+    private ShowCrossYearConfirmationDialogForAdjust() {
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = CrossYearConfirmationDialogWidth;
+        confirmWindow.Show(TextCodeTranslator.Translate("ExternalReconciliation.O.CrossYearConfirmMsg"));
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.AdjustReconcile();
+            }
+        });
+
+    }
+
+    private AdjustReconcile() {
+        if (this.ExtPageSelectedLines.Length >= 1 && this.TransactionSelectedLines.Length >= 0) {
+            this.AdjustBankFeeWithNewJournalScreen();
+        }
+        this.CheckAdjustLedgerTransactionsOnly();
+    }
+
+    private CheckIfHasCrossYearLines() {
+        const ledgerYears = this.GetLedgerTransactionsYearsCount();
+        const pageLinesYears = this.GetExternalPagesLinesYearsCount();
+
+        const bothLinesSelected = this.ExtPageSelectedLines.Length > 0 && this.TransactionSelectedLines.Length > 0;
+        const ledgerHasDifferentYears = ledgerYears > 1;
+        const pageLinesHasDifferentYears = pageLinesYears > 1;
+        const hasSingleDifferentYears = this.CheckIfHasSingleDifferentYears(ledgerYears, pageLinesYears);
+
+        return ledgerHasDifferentYears
+            || (bothLinesSelected && pageLinesHasDifferentYears)
+            || (hasSingleDifferentYears);
+    }
+
+    private CheckIfHasSingleDifferentYears(ledgerYears: number, pageLinesYears: number) {
+        let transactionsGroupedByYears = this.GetTransactionsYears();
+        let pageLinesGroupedByYears = this.GetExternalPageLinesYears();
+
+        const hasSingleDifferentYears =
+            ledgerYears == 1 && pageLinesYears == 1
+            && Object.keys(transactionsGroupedByYears)[0] != Object.keys(pageLinesGroupedByYears)[0];
+
+        return hasSingleDifferentYears;
+    }
+
+    private GetLedgerTransactionsYearsCount() {
+        let linesGroupedByYears = this.GetTransactionsYears();
+
+        return this.countObjectKeys(linesGroupedByYears);
+    }
+
+    private GetTransactionsYears() {
+        return this.TransactionSelectedLines.Collection
+            .filter(e => e.LedgerTransactionPM.AccountId != this.BankAccountPM.TransferGLAcccountId)
+            .reduce((result, current: TransactionLineModel) => {
+
+                const year = new Date(current.LedgerTransactionPM.AccountingDate).getFullYear();
+                result[year] = (result[year] || 0) + 1;
+                return result;
+            }, Object.create(null));
+    }
+
+    private countObjectKeys(object: any) {
+        var groupCount = 0;
+        for (const key in object)
+            groupCount++;
+        return groupCount;
+    }
+
+    private GetExternalPagesLinesYearsCount() {
+        let pageLinesGroupedByYears = this.GetExternalPageLinesYears();
+
+        return this.countObjectKeys(pageLinesGroupedByYears);
+    }
+
+    private GetExternalPageLinesYears() {
+        return this.ExtPageSelectedLines.Collection
+            .reduce((result, current: PageLineModel) => {
+                const year = new Date(current.ReferenceDate).getFullYear();
+                result[year] = (result[year] || 0) + 1;
+                return result;
+            }, Object.create(null));
+    }
+
+    private ValidateReconciliation() {
         var errors: string[] = [];
 
         this.BlockAdjustLedgerTransactionOnly(errors);
@@ -275,17 +439,144 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         return errors;
     }
 
-    private CheckEmptyReconcile(errors: string[])
-    {
+    private CheckEmptyReconcile(errors: string[]) {
         if (this.ExtPageSelectedLines.Length == 0 && this.TransactionSelectedLines.Length == 0)
             errors.push(TextCodeTranslator.Translate("Accounting.O.SelectTwoTransactionAtLeast"));
     }
 
-    private BlockAdjustLedgerTransactionOnly(errors: string[])
-    {
+    private BlockAdjustLedgerTransactionOnly(errors: string[]) {
         if (Math.abs(this.totalDifference) > 0.001 && this.ExtPageSelectedLines.Length == 0 && this.TransactionSelectedLines.Length > 0) {
             errors.push(TextCodeTranslator.Translate("ExternalReconciliation.O.CantAdjustLedgersOnly"));
         }
+    }
+    GetFirstXLedgerForReconciliationByParam() {
+        this.ValidationErrorsList = [];
+        var filters = this.GetAPIFilters();
+
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
+        this.ledgerTransactionExtendedListService.GetFirstXLedgerForReconciliationByParams(this.getGLAccountId(), filters).subscribe((myResult: ServiceResponse) => {
+            var mm: ServiceResponse = myResult;
+            var first100Transactions = mm.Result;
+            if (!mm.HasError) {
+                if (!AppTool.IsNullOrEmpty(first100Transactions)) {
+                    this.FuncTransactionSelectedLine(first100Transactions);
+                    this.CalculateTotals();
+                }
+            }
+            else {
+                this.ValidationErrorsList = mm.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+            this.RefreshButtonClicked()
+            this.CurrentSession.StopBusyIndicator();
+
+        });
+    }
+
+    GetFirstXLedgerForExtPageReconciliationByParam() {
+        this.ValidationErrorsList = [];
+        var filters = this.GetAPIFiltersExt();
+        var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
+
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("Accounting.General.O.PrepareTransactions")); //"Preparing Transactions..."
+        this.ledgerTransactionExtendedListService.GetFirstXLedgerForExtReconciliationByParam("ReconcileExternalPage", objectTable.Id, this.EntityPM.Id, filters).subscribe((myResult: ServiceResponse) => {
+            var mm: ServiceResponse = myResult;
+            var first100Transactions = mm.Result;
+            if (!mm.HasError) {
+                if (!AppTool.IsNullOrEmpty(first100Transactions)) {
+                    this.FuncExtPageSelectedLines(first100Transactions);
+                    this.CalculateExtPageTotals();
+                }
+            }
+            else {
+                this.ValidationErrorsList = mm.ErrorsArray;
+                this.CurrentSession.StopBusyIndicator();
+            }
+            this.RefreshButtonClicked()
+            this.CurrentSession.StopBusyIndicator();
+
+        });
+    }
+    public GetAPIFilters() {
+        var filters = new ApiQueryFilters;
+        var filters = new ApiQueryFilters;
+        if (this.dateFilter) {
+            filters.AdditionalFilters.push(this.dateFilter);
+        }
+        if (this.searchFieldFilter) {
+            filters.AdditionalFilters.push(this.searchFieldFilter);
+        }
+        if (this.openAmountFilter) {
+            filters.AdditionalFilters.push(this.openAmountFilter);
+        }
+
+        filters.PageSize = 2000;
+        filters.PageIndex = 1;
+        filters.GetAll = true;
+        filters.GetCount = true;
+
+
+        filters.addAdditionalFilter("IsExternalReconcile", false, null, null, "Equals", false, false, false, "Boolean");
+        // filters.addAdditionalFilter("DueDate", "#today", null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
+
+        if (this.ObjectTableName == "BankAccount" && this.filterSelectedValue != 'filter_Bank')
+            filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
+
+        if (!this.showInProgessLines) {
+            filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
+            filters.addAdditionalFilter("InProgressExternalReconcile", false, null, null, "Equals", false, false, false, "boolean");
+
+        }
+        filters.SortBy = this.TransactionDataSource.sortingCol;
+        filters.SortDirection = this.TransactionDataSource.sortingDir;
+        return filters;
+    }
+
+
+    public GetAPIFiltersExt() {
+        var filters = new ApiQueryFilters;
+        if (this.dateFilter) {
+            var refDateFilter = new FilterItem("ReferenceDate", new Date(this.FromDate.getFullYear(), this.FromDate.getMonth(), this.FromDate.getDate(), 0, 0, 0), new Date(this.ToDate.setHours(23, 59, 59, 59)), null, "Between", false, false, false, "Date", false);
+            filters.AdditionalFilters.push(refDateFilter);
+        }
+        if (this.searchFieldFilter) {
+            filters.AdditionalFilters.push(this.searchFieldFilter);
+        }
+        if (this.openAmountFilter) {
+            var amountFilter = new FilterItem("Amount2Filter", this.openAmountFilter.FieldValue, this.openAmountFilter.FieldValue2, null, this.openAmountFilter.Operator, true, false, true, "number", false);
+            filters.AdditionalFilters.push(amountFilter);
+        }
+        filters.PageSize = 2000;
+        filters.PageIndex = 1;
+        filters.GetAll = true;
+        filters.GetCount = true;
+        filters.SortBy = this.ExtPageDataSource.sortingCol;
+        filters.SortDirection = this.ExtPageDataSource.sortingDir;
+
+        var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
+
+        if (!this.showInProgessLines) {
+            filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
+            filters.addAdditionalFilter("InProgressExternalReconcile", false, null, null, "Equals", false, false, false, "boolean");
+        }
+        return filters;
+    }
+    public ChangeCheckBoxesState: EventEmitter<any> = new EventEmitter();
+    public ChangeCheckBoxesStateExt: EventEmitter<any> = new EventEmitter();
+
+    public FuncTransactionSelectedLine(result: any) {
+        this.TransactionSelectedLines.Clear();
+        let emittedArray = result.map((res: ReconcileExternalPageLinePM) => ({ rowData: res, IsChecked: true, RowIndex: -1, ById: true })); //result.map(res=>(new LineModel(res,this,-1)));//[];
+        let selectedLines = result.map(res => (new TransactionLineModel(res, this, -1)));
+        this.TransactionSelectedLines.InsertCollection(selectedLines);
+        this.ChangeCheckBoxesState.emit(emittedArray);
+    }
+    public FuncExtPageSelectedLines(result: any) {
+        this.ExtPageSelectedLines.Clear();
+        let emittedArray = result.map((res: ReconcileExternalPageLinePM) => ({ rowData: res, IsChecked: true, RowIndex: -1, ById: true })); //result.map(res=>(new LineModel(res,this,-1)));//[];
+        let selectedLines = result.map(res => (new ExtPageLineModel(res, this, -1)));
+        this.ExtPageSelectedLines.InsertCollection(selectedLines);
+        this.ChangeCheckBoxesStateExt.emit(emittedArray);
     }
 
     SaveAsDraftButton() {
@@ -381,7 +672,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                             "BankAccountPMId": this.BankAccountPM.Id,
                             TotalDifference: this.totalDifference,
                             TotalDifferenceCurrency: this.openAmountCurrency,
-                         };
+                            OrignalDifference: this.orignalDifference
+                        };
 
                         logitudeWindow.Show('./Accounting/Components/Others/ExtReconcileAdjustBankFeeComponent');
                         logitudeWindow.WindowClosed
@@ -414,7 +706,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     currencyFilter: FilterItem;
     searchFieldFilter: FilterItem;
     openAmountFilter: FilterItem;
-
+    public TransactionsQueryColumns: QueryColumnPM[] = [];
     public TransactionsColumns: any[] = null;
     TransactionBuildColumns() {
         this.TransactionsColumns = [];
@@ -422,7 +714,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             FieldName: 'SelectCheckBox',
             DataTypeCode: 'Boolean',
             Display: '',
-            Styles: { width: '30px' },
+            Styles: { width: '60px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
@@ -437,6 +729,19 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //    IsCustomTemplate: true
         //});
         this.TransactionsColumns.push({
+            FieldName: 'AccountingDate',
+            DataTypeCode: 'DateTime',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.AccountingDate"),
+            Styles: { width: '100px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'AccountingDate'
+        });
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("AccountingDate",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.AccountingDate")));
+
+        this.TransactionsColumns.push({
             FieldName: 'DocumentDate',
             DataTypeCode: 'DateTime',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate"),
@@ -447,6 +752,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'DocumentDate'
         });
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("DocumentDate",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate")));
+
         //this.TransactionsColumns.push({
         //    FieldName: 'DocumentDate',
         //    DataTypeCode: 'DateTime',
@@ -477,6 +784,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Source'
         });
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Source",'String',TextCodeTranslator.Translate("LedgerTransaction.F.Source")));
 
         //this.TransactionsColumns.push({ // Check ReconcileMethodCode.GLAccounts:
         //    FieldName: 'OriginalAmount',
@@ -514,6 +822,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'ForeignAmount'
         });
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ForeignAmount", 'Decimal', TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmount") + ' (' + this.openAmountCurrency + ')'));
+
         this.TransactionsColumns.push({
             FieldName: 'Reference1',
             DataTypeCode: 'String',
@@ -524,26 +834,19 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Reference1'
         });
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference1",'String',TextCodeTranslator.Translate("LedgerTransaction.F.Reference1")));
+
         this.TransactionsColumns.push({
             FieldName: 'Reference2',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference2"), // 'Ref. 2',
             Styles: { width: '80px' },
-            IsCustomTemplate: true
-            ,
+            IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'Reference2'
         });
-        this.TransactionsColumns.push({
-            FieldName: 'Reference3',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference3"), // 'Ref. 3',
-            Styles: { width: '80px' },
-            IsCustomTemplate: true
-            ,
-            ServerSideSortable: true,
-            SortByName: 'Reference3'
-        });
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference2",'String',TextCodeTranslator.Translate("LedgerTransaction.F.Reference2")));
+
         //this.TransactionsColumns.push({
         //    FieldName: 'JournalNumber',
         //    DataTypeCode: 'String',
@@ -569,6 +872,21 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Notes'
         });
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes",'String',TextCodeTranslator.Translate("LedgerTransaction.F.Notes")));
+
+        this.TransactionsColumns.push({
+            FieldName: 'InternalNote',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.InternalNote"),
+            Styles: { width: '120px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsInternalNotesTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsInternalNotesTemplate',
+            IsCustomTemplate: true
+            ,
+            ServerSideSortable: true,
+            SortByName: 'InternalNote'
+        });
+        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNote",'String',TextCodeTranslator.Translate("LedgerTransaction.F.InternalNote")));
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
@@ -591,10 +909,46 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             }
         });
     }
+
+    onRowSelected($event) {
+        if ($event) {
+            const row = $event.rowData;
+            const rowId = row.Id;
+            const RowIndex = $event.rowIndex;
+            const index = this.TransactionSelectedLines.Collection.findIndex(c => c.Id == row.Id);           
+            if (index < 0) {
+
+                this.PushLine(row, RowIndex);
+                this.TransactionFireCheckBoxChecked.emit({ rowData: row, IsChecked: true, RowIndex: RowIndex });
+            } else {
+                this.PopLine(rowId);
+                this.TransactionFireCheckBoxChecked.emit({ rowData: row, IsChecked: false, RowIndex: RowIndex, ById: true });
+            }
+        }
+    }
+
+    onExternalPageRowSelected($event) {
+        if ($event) {
+            const row = $event.rowData;
+            const rowId = row.Id;
+            const RowIndex = $event.rowIndex;
+            const index = this.ExtPageSelectedLines.Collection.findIndex(c => c.Id == row.Id);
+            if (index < 0) {
+                this.ExtPagePushLine(row, RowIndex);
+                this.FireCheckBoxChecked.emit({ rowData: row, IsChecked: true, RowIndex: RowIndex });
+            } else {
+                this.ExtPagePopLine(rowId);
+                this.ExtPageFireCheckBoxChecked.emit({ rowData: row, IsChecked: false, RowIndex: RowIndex, ById: true });
+            }
+        }
+    }
+
+
+
     TransactiononDataLoaded() {
 
         //this.TransactionsCheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
-        this.TransactionMarkIsChecked.emit({SelectedLines:this.TransactionSelectedLines});
+        this.TransactionMarkIsChecked.emit({ SelectedLines: this.TransactionSelectedLines });
 
     }
     TransactionDataSource = {
@@ -641,24 +995,23 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
         filters.addAdditionalFilter("DueDate", "#today", null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
 
-        if(this.ObjectTableName == "BankAccount")
+        if (this.ObjectTableName == "BankAccount" && this.filterSelectedValue != 'filter_Bank')
             filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
-        if (!this.showInProgessLines){
-                filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
-                filters.addAdditionalFilter("InProgressExternalReconcile", false, null, null, "Equals", false, false, false, "boolean");
+        if (!this.showInProgessLines) {
+            filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
+            filters.addAdditionalFilter("InProgressExternalReconcile", false, null, null, "Equals", false, false, false, "boolean");
 
         }
         filters.SortBy = sortingCol;
         filters.SortDirection = sortingDir;
 
-        var glaccountId = this.getGLAccountId();
+        const glaccountId = this.filterSelectedValue == 'filter_Transfer' ? null : this.getGLAccountId();
 
         return this.entityListService.getReconciliationsByFilter("LedgerTransaction", glaccountId, filters);
     }
 
-    private getGLAccountId()
-    {
+    private getGLAccountId() {
         var glaccountId;
         if (this.ObjectTableName == "GLAccount")
             glaccountId = this.EntityPM.Id;
@@ -666,8 +1019,15 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             glaccountId = this.BankAccountPM.GLAccountId;
         return glaccountId;
     }
-
-    OnSortInvoked(event){
+    private GetGLAccountCurrency() {
+        var currency;
+        if (this.ObjectTableName == "GLAccount")
+            currency = this.EntityPM.CurrencyId;
+        else if (this.ObjectTableName == "BankAccount")
+            currency = this.BankAccountPM.GLAccountCurrencyId;
+        return currency;
+    }
+    OnSortInvoked(event) {
         // this.TransactionSelectedLines = new ObservableCollection([]);
         // this.ExtPageSelectedLines = new ObservableCollection([]);
     }
@@ -675,14 +1035,14 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     // selectedTransferTransactionsCount: number = 0;
 
 
-    public get selectedTransferTransactionsCount() : number {
+    public get selectedTransferTransactionsCount(): number {
         var count = 0;
-        if(this.TransactionSelectedLines.Length > 0){
+        if (this.TransactionSelectedLines.Length > 0) {
 
             var transferTransactions = this.TransactionSelectedLines.Collection
-            .filter((d:TransactionLineModel)=>d.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId);
+                .filter((d: TransactionLineModel) => d.LedgerTransactionPM.AccountId == this.BankAccountPM.TransferGLAcccountId);
 
-            if(transferTransactions)
+            if (transferTransactions)
                 count = transferTransactions.length;
         }
         return count;
@@ -690,6 +1050,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
 
     PushLine(row, RowIndex) {
+        let countLines:number = 500;
         var index = this.TransactionSelectedLines.Collection.findIndex(c => c.Id == row.Id);
         if (index < 0) { // DNE
 
@@ -719,6 +1080,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                 this.ValidationErrorsList = [];
             }
 
+            if (this.TransactionSelectedLines.Length >= this.TransactionDataSource.rowCount || this.TransactionSelectedLines.Length >= countLines)
+                this._isAllSelected = true;
         }
     }
 
@@ -731,14 +1094,14 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             var oppositLines = this.ExtPageSelectedLines.Collection.filter(d => d.GroupHash == transactionRow.GroupHash) || [];
 
             // 2- popline
-            if(oppositLines.length == 1 && transactionMatchedRows.length == 1)
+            if (oppositLines.length == 1 && transactionMatchedRows.length == 1)
                 if (!specialCase) this.ExtPagePopLine(oppositLines[0].Id, true);
         }
         //
 
         this.TransactionSelectedLines.Remove(this.TransactionSelectedLines.Collection.find(c => c.Id == id));
         this.CalculateTotals();
-
+        this._isAllSelected = false;
 
     }
 
@@ -750,13 +1113,14 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     }
 
     CalculateTotals() {
+
         this.accountTransactionsTotal = 0;
         var total = 0;
         for (let line of this.TransactionSelectedLines.Collection) {
             //total += +line.OpenAmount;
             // total += +line.ForeignAmount;
 
-            if(line.IsCredit)
+            if (line.IsCredit)
                 total -= +line.ForeignAmount;
             else
                 total += +line.ForeignAmount;
@@ -765,16 +1129,17 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         this.accountTransactionsTotal = total;
         var def = (this.extPageTransactionsTotal + this.accountTransactionsTotal)
         this.totalDifference = def < 0 ? def * -1 : def;
+        this.orignalDifference = def;
     }
 
     ReloadScreen() {
         this.TransactiononQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
-       // this.TransactionSelectedLines.Clear();
+        // this.TransactionSelectedLines.Clear();
         this.CalculateTotals();
     }
     ExtPageReloadScreen() {
         this.ExtPageonQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
-       /// this.ExtPageSelectedLines.Clear();
+        /// this.ExtPageSelectedLines.Clear();
         this.CalculateExtPageTotals();
 
     }
@@ -794,6 +1159,48 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     ExtPage_openAmountFilter: FilterItem;
 
     public ExtPageColumns: any[] = null;
+    ExportTransactions() {
+        this.ValidationErrorsList = [];
+        if (this.TransactionSelectedLines.Length == 0)
+            this.ValidationErrorsList = [TextCodeTranslator.Translate("Reconciliation.O.NoLinesSelected")];
+        else {
+            let lines = this.TransactionSelectedLines.Collection.map((d: LineModel) => d.LedgerTransactionPM);
+            this.ShowExportToExcelWindow(this.TransactionsQueryColumns, TextCodeTranslator.Translate('ReconcileExternalPage.O.Transactions'), lines, "DraftReconciliation");
+        }
+    }
+    ExportExternalTransactions() {
+        this.ValidationErrorsList = [];
+        if (this.ExtPageSelectedLines.Length == 0)
+            this.ValidationErrorsList = [TextCodeTranslator.Translate("Reconciliation.O.NoLinesSelected")];
+        else {
+            let lines = this.ExtPageSelectedLines.Collection.map((d: ExtPageLineModel) => d.PageLinePM);
+            this.ShowExportToExcelWindow(this.ExtPageQueryColumns, this.ExternalPagesTitle, lines, "DraftReconciliationExt");
+        }
+    }
+    private ShowExportToExcelWindow(queryColumns, title, lines, queryType) {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = exportToExcelWindowWidth;
+        logitudeWindow.Height = exportToExcelWindowHeight;
+        logitudeWindow.WindowArgs = this.GetExportToExcelWindowArgs(queryColumns, title, lines, queryType);
+        logitudeWindow.Title = TextCodeTranslator.Translate("General.B.ExportingDataToExcel");
+        logitudeWindow.Show('./Infrastructure/Components/Export2ExcelControl/Export2ExcelControl');
+    }
+    private GetExportToExcelWindowArgs(queryColumns, title, lines, queryType) {
+        var args: ReconcileExcelDataArgs = new ReconcileExcelDataArgs();
+        args.QueryColumns = queryColumns;
+        args.Tenant = SessionLocator.Tenant;
+        args.Data = lines;
+        args.Title = title;
+        var windowArgs: any = {};
+        windowArgs.ReconcileExcelDataArgs = args;
+        windowArgs.tenant = SessionLocator.Tenant;
+        windowArgs.ObjectTableName = this.ObjectTableName;
+        windowArgs.QueryName = this.ObjectTableName;
+        windowArgs.QueryType = queryType;
+        return windowArgs;
+    }
+
+    public ExtPageQueryColumns: QueryColumnPM[] = [];
     ExtPageBuildColumns() {
         this.ExtPageColumns = [];
         this.ExtPageColumns.push({
@@ -826,6 +1233,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'ReferenceDate'
         });
+        this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferenceDate",'DateTime',TextCodeTranslator.Translate("ReconcileExternalPageLine.F.ReferenceDate")));
+
         this.ExtPageColumns.push({
             FieldName: 'Amount',
             DataTypeCode: 'String',
@@ -837,6 +1246,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Amount'
         });
+        this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Amount",'Decimal',TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount")));
+
         this.ExtPageColumns.push({
             FieldName: 'Reference',
             DataTypeCode: 'String',
@@ -848,6 +1259,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Reference'
         });
+        this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference",'String',TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Reference")));
 
         this.ExtPageColumns.push({
             FieldName: 'Notes',
@@ -860,6 +1272,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             ServerSideSortable: true,
             SortByName: 'Notes'
         });
+        this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes",'String',TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Notes")));
 
         ReconcileEventManager.ExtPageCheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
@@ -885,7 +1298,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     ExtPageonDataLoaded() {
 
         //this.CheckBoxFilterChanged.emit({ UseFilteredCheckBox: true, FilteredRecordsCheckedFieldName: "Mark", FilteredRecordsCheckedFieldValue: true, IsAutoRecClicked: this.IsAutoRecClicked});
-        this.ExtPageMarkIsChecked.emit({SelectedLines:this.ExtPageSelectedLines});
+        this.ExtPageMarkIsChecked.emit({ SelectedLines: this.ExtPageSelectedLines });
 
     }
     ExtPageDataSource = {
@@ -936,7 +1349,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
 
-        if (!this.showInProgessLines){
+        if (!this.showInProgessLines) {
             filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
             filters.addAdditionalFilter("InProgressExternalReconcile", false, null, null, "Equals", false, false, false, "boolean");
         }
@@ -946,10 +1359,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     ExtPagePushLine(row, RowIndex) {
         var index = this.ExtPageSelectedLines.Collection.findIndex(c => c.Id == row.Id);
+        let countLines:number = 500;
         if (index < 0) { // DNE
-             row.AmountToReconcile = row.CreditAmount!=0?row.CreditAmount:row.DebitAmount;
+            row.AmountToReconcile = row.CreditAmount != 0 ? row.CreditAmount : row.DebitAmount;
 
-                var r = new ExtPageLineModel(row, this, RowIndex);
+            var r = new ExtPageLineModel(row, this, RowIndex);
 
             var sameBankAccountWithTransfer = this.BankAccountPM ? (this.BankAccountPM.GLAccountId == this.BankAccountPM.TransferGLAcccountId) : false;
 
@@ -966,6 +1380,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                 this.ExtPageFireCheckBoxChecked.emit({ rowData: row, IsChecked: true, RowIndex: RowIndex });
                 this.ValidationErrorsList = [];
             }
+            if (this.ExtPageSelectedLines.Length >= this.ExtPageDataSource.rowCount || this.ExtPageSelectedLines.Length >= countLines)
+               this._isAllSelectedExt = true;
 
         }
     }
@@ -981,13 +1397,14 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
 
             // 2- popline
-            if(oppositLines.length == 1 && pageLineMatchedRows.length == 1)
-            if (!specialCase) this.PopLine(oppositLines[0].Id, true);
+            if (oppositLines.length == 1 && pageLineMatchedRows.length == 1)
+                if (!specialCase) this.PopLine(oppositLines[0].Id, true);
         }
         //
 
         this.ExtPageSelectedLines.Remove(this.ExtPageSelectedLines.Collection.find(c => c.Id == id));
         this.CalculateExtPageTotals();
+        this._isAllSelectedExt = false;
     }
 
     ExtPageCheckBoxValueChanged(Row) {
@@ -1002,11 +1419,12 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     accountTransactionsTotal: number = 0;
     extPageTransactionsTotal: number = 0;
     totalDifference: number = 0;
+    orignalDifference: number = 0;
     CalculateExtPageTotals() {
         this.extPageTransactionsTotal = 0;
         var total = 0;
         for (let line of this.ExtPageSelectedLines.Collection) {
-            if(line.IsCredit)
+            if (line.IsCredit)
                 total -= +line.Amount;
             else
                 total += +line.Amount;
@@ -1015,6 +1433,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         this.extPageTransactionsTotal = total;
         var def = (this.extPageTransactionsTotal + this.accountTransactionsTotal)
         this.totalDifference = def < 0 ? def * -1 : def;
+        this.orignalDifference = def;
     }
     //#endregion
 
@@ -1026,21 +1445,59 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     AmountCheckBoxChecked: boolean = false;
     ReferenceCheckBoxChecked: boolean = false;
     ReferenceDateCheckBoxChecked: boolean = false;
+    AccountingDateCheckBoxChecked: boolean = false;
 
 
-    private showInProgessLines : boolean = false;
-    public get ShowInProgessLines() : boolean {
+    private showInProgessLines: boolean = false;
+    public get ShowInProgessLines(): boolean {
         return this.showInProgessLines;
     }
-    public set ShowInProgessLines(v : boolean) {
+    public set ShowInProgessLines(v: boolean) {
         this.showInProgessLines = v;
 
         this.RefreshButtonClicked();
 
     }
 
+    public _isAllSelected: boolean;
+    public get isAllSelected(): boolean {
+        return this._isAllSelected;
+    }
+    public set isAllSelected(v: boolean) {
+        this._isAllSelected = v;
 
+        if (v) {
+
+            this.GetFirstXLedgerForReconciliationByParam();
+        }
+        else {
+
+            this.ReloadScreen();
+            this.TransactionSelectedLines.Clear();
+            this.CalculateTotals();
+        }
+    }
+    public _isAllSelectedExt: boolean;
+    public get isAllSelectedExt(): boolean {
+        return this._isAllSelectedExt;
+    }
+    public set isAllSelectedExt(v: boolean) {
+        this._isAllSelectedExt = v;
+
+        if (v) {
+
+            this.GetFirstXLedgerForExtPageReconciliationByParam();
+        }
+        else {
+
+            this.ExtPageReloadScreen();
+            this.ExtPageSelectedLines.Clear();
+            this.CalculateExtPageTotals();
+        }
+    }
     AutoReco() {
+
+        this.filterSelectedValue = 'filter_All';
 
         this.TransactionSelectedLines.Clear();
         this.ExtPageSelectedLines.Clear();
@@ -1106,12 +1563,12 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             // filters.addAdditionalFilter("SourceTypeCode", "5,9", null, null, "InList", false, false, false, "String");
             filters.addAdditionalFilter("DueDate", "#today", null, null, "LessThan", false, false, false, "Date"); // value will be override in server, to avoid edging problem!
 
-            if(this.ObjectTableName == "BankAccount")
+            if (this.ObjectTableName == "BankAccount")
                 filters.addAdditionalFilter("DUMMY_TransferAccountId", this.BankAccountPM.TransferGLAcccountId, null, null, "Equals", false, false, false, "String");
 
-            if (!this.showInProgessLines){
-                    filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
-                    filters.addAdditionalFilter("InProgressExternalReconcile", false, null, null, "Equals", false, false, false, "boolean");
+            if (!this.showInProgessLines) {
+                filters.addAdditionalFilter("InReconcileProgress", false, null, null, "Equals", false, false, false, "boolean");
+                filters.addAdditionalFilter("InProgressExternalReconcile", false, null, null, "Equals", false, false, false, "boolean");
 
             }
 
@@ -1124,7 +1581,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             var serviceArgs = this.CreateExternalAutoReconcileServiceArgs(filters);
 
             this._ExternalReconciliationExtendedListService.getExternalAutomaticReconcilationsByFilter(serviceArgs)
-                .subscribe((myResult:ServiceResponse) => {
+                .subscribe((myResult: ServiceResponse) => {
 
                     var mm: ServiceResponse = myResult;
                     var result = mm.Result;
@@ -1181,19 +1638,20 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     }
 
-    private CreateExternalAutoReconcileServiceArgs(filters: ApiQueryFilters)
-    {
+    private CreateExternalAutoReconcileServiceArgs(filters: ApiQueryFilters) {
         var objectTable = window.ObjectTables.filter(d => d.Name === this.ObjectTableName)[0];
         var serviceArgs = new ExternalAutoReconcileServiceArgs();
         serviceArgs.amountReconcile = this.AmountCheckBoxChecked;
         serviceArgs.referenceReconcile = this.ReferenceCheckBoxChecked;
         serviceArgs.refDateReconcile = this.ReferenceDateCheckBoxChecked;
+        serviceArgs.accoutingDateReconcile = this.AccountingDateCheckBoxChecked;
+
         serviceArgs.objectTableId = objectTable.Id;
         serviceArgs.entityId = this.EntityPM.Id;
 
-        if(this.ObjectTableName == "BankAccount")
+        if (this.ObjectTableName == "BankAccount")
             serviceArgs.glAccountId = this.EntityPM.GLAccountId;
-        else if(this.ObjectTableName == "GLAccount")
+        else if (this.ObjectTableName == "GLAccount")
             serviceArgs.glAccountId = this.EntityPM.Id;
 
         serviceArgs.filters = filters;
@@ -1296,7 +1754,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     //Back
     AutoRecoBackButtonClicked() {
         this.IsAutoReconcile = false;
-
+        this.ValidationErrorsList = [];
         this.ReloadScreen();
         this.ExtPageReloadScreen();
     }
@@ -1404,8 +1862,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         return newReconciliation;
     }
-    private AddLines(newEntity: ExternalReconciliationPM)
-    {
+    private AddLines(newEntity: ExternalReconciliationPM) {
         newEntity.ExternalReconciliationLines = [];
         var lineNumber = 1;
 
@@ -1425,8 +1882,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         }
     }
 
-    private CreateExternalTransactionLine(i: number, newLine: ExternalReconciliationLinePM, newEntity: ExternalReconciliationPM, lineNumber: number)
-    {
+    private CreateExternalTransactionLine(i: number, newLine: ExternalReconciliationLinePM, newEntity: ExternalReconciliationPM, lineNumber: number) {
         let selectedTransaction = this.ExtPageSelectedLines.Collection[i];
         var newLine: ExternalReconciliationLinePM = new ExternalReconciliationLinePM(newEntity);
 
@@ -1440,8 +1896,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         return newLine;
     }
 
-    private CreateLedgerLine(i: number, newEntity: ExternalReconciliationPM, lineNumber: number)
-    {
+    private CreateLedgerLine(i: number, newEntity: ExternalReconciliationPM, lineNumber: number) {
         let selectedTransaction: TransactionLineModel = this.TransactionSelectedLines.Collection[i];
         var newLine: ExternalReconciliationLinePM = new ExternalReconciliationLinePM(newEntity);
 
@@ -1456,8 +1911,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         return newLine;
     }
 
-    private InitNewReconciliation()
-    {
+    private InitNewReconciliation() {
         var newEntity: ExternalReconciliationPM = new ExternalReconciliationPM();
 
         newEntity.Id = "new";
@@ -1472,11 +1926,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     SubmitChanges(entity) {
 
         this.CurrentSession.StartBusyIndicatorSaving();
-        this._ExternalReconciliationOpService.insert(entity).subscribe((myResult:ServiceResponse) => {
+        this._ExternalReconciliationOpService.insert(entity).subscribe((myResult: ServiceResponse) => {
             this.CurrentSession.StopBusyIndicator();
 
             var mm: ServiceResponse = myResult;
-            var entity = mm.Result.CreatedExternalReconciliation;
+            var entity = mm.Result?.CreatedExternalReconciliation;
             if (!mm.HasError) {
                 this.CreatedReconciliationsCount = mm.Result.CreatedReconciliationsCount;
                 this.ExternalRecoPM = entity;
@@ -1538,8 +1992,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
     showAlert: boolean = false;
     ShowSuccessAlert() {
-        if (this.IsAutoReconcile)
-        {
+        if (this.IsAutoReconcile) {
             this.IsAutoReconcile = false;
             this.showAlert = true;
             this.timerToken = setTimeout(() => {
@@ -1547,8 +2000,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             }, 7000); // 7 sec
             this.AutoRecoBackButtonClicked();
         }
-        else
-        {
+        else {
             this.showAlert = true;
             this.timerToken = setTimeout(() => {
                 this.showAlert = false;
@@ -1603,24 +2055,28 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                             this.AmountCheckBoxChecked = true;
                             this.ReferenceDateCheckBoxChecked = false;
                             this.ReferenceCheckBoxChecked = false;
+                            this.AccountingDateCheckBoxChecked = false;
                             break;
                         }
                         case '2': { // Reference
                             this.AmountCheckBoxChecked = false;
                             this.ReferenceDateCheckBoxChecked = false;
                             this.ReferenceCheckBoxChecked = true;
+                            this.AccountingDateCheckBoxChecked = false;
                             break;
                         }
                         case '3': { // Reference Date + Reference
                             this.AmountCheckBoxChecked = false;
                             this.ReferenceDateCheckBoxChecked = true;
                             this.ReferenceCheckBoxChecked = true;
+                            this.AccountingDateCheckBoxChecked = false;
                             break;
                         }
                         case '4': { // Amount + Reference + Reference Date
                             this.AmountCheckBoxChecked = true;
                             this.ReferenceDateCheckBoxChecked = true;
                             this.ReferenceCheckBoxChecked = true;
+                            this.AccountingDateCheckBoxChecked = false;
                             break;
                         }
 
@@ -1646,24 +2102,28 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
                                     this.AmountCheckBoxChecked = true;
                                     this.ReferenceDateCheckBoxChecked = false;
                                     this.ReferenceCheckBoxChecked = false;
+                                    this.AccountingDateCheckBoxChecked = false;
                                     break;
                                 }
                                 case '2': { // Reference
                                     this.AmountCheckBoxChecked = false;
                                     this.ReferenceDateCheckBoxChecked = false;
                                     this.ReferenceCheckBoxChecked = true;
+                                    this.AccountingDateCheckBoxChecked = false;
                                     break;
                                 }
                                 case '3': { // Reference Date + Reference
                                     this.AmountCheckBoxChecked = false;
                                     this.ReferenceDateCheckBoxChecked = true;
                                     this.ReferenceCheckBoxChecked = true;
+                                    this.AccountingDateCheckBoxChecked = false;
                                     break;
                                 }
                                 case '4': { // Amount + Reference + Reference Date
                                     this.AmountCheckBoxChecked = true;
                                     this.ReferenceDateCheckBoxChecked = true;
                                     this.ReferenceCheckBoxChecked = true;
+                                    this.AccountingDateCheckBoxChecked = false;
                                     break;
                                 }
 
@@ -1699,7 +2159,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     IsGeneratePasswordVisible: boolean = false;
     GenerateTestLines(txt: string) {
         this.CurrentSession.StartBusyIndicator("Generate test lines... " + "(" + this.reapeatCount + "/" + 100 + ")");
-        this._ExternalReconciliationExtendedListService.getGenerateTestRecordsForExternalReco(this.BankAccountPM.Id, this.BankAccountPM.GLAccountId, txt).subscribe((myResult:ServiceResponse) => {
+        this._ExternalReconciliationExtendedListService.getGenerateTestRecordsForExternalReco(this.BankAccountPM.Id, this.BankAccountPM.GLAccountId, txt).subscribe((myResult: ServiceResponse) => {
 
             var mm: ServiceResponse = myResult;
             var result = mm.Result;
@@ -1734,8 +2194,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     labelCount = 0;
     LabelClicked() {
         var feature = FeatureLocator.IsFeatureGrantedByCode("ExtRecoGenerateTestRecords");
-        if (feature)
-        {
+        if (feature) {
             this.labelCount++;
             if (this.labelCount == 5) {
                 this.IsGeneratePasswordVisible = true;
@@ -1747,8 +2206,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if (this.GeneratePWD == "extrecopwd") {
             this.IsGeneratePasswordVisible = false;
             this.IsGenerateButtonVisible = true;
-        } else
-        {
+        } else {
             this.GeneratePWD = "";
         }
     }
@@ -1780,6 +2238,99 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             return document.body.clientWidth;
         }
     }
+
+    CreatePaymentButtonClicked() {
+
+        this.ValidationErrorsList = [];
+
+        this.ValidateSelectedPageLinesTotals();
+        this.ValidateSelectedLines();
+
+        if (this.ValidationErrorsList.length == 0) {
+            this.ShowNewBankTransferARPayment();
+        }
+    }
+
+
+    private ValidateSelectedPageLinesTotals() {
+        var hasDebitLines = this.ExtPageSelectedLines.Collection.find(line => line.PageLinePM.DebitAmount != 0);
+        var hasNegativeCreditLines = this.ExtPageSelectedLines.Collection.find(line => line.PageLinePM.CreditAmount < 0);
+        if (hasDebitLines || hasNegativeCreditLines) {
+            this.ValidationErrorsList.push(this.SelectCreditLinesOnlyMessage);
+        }
+    }
+    private ValidateSelectedLines() {
+        if (this.TransactionSelectedLines.Length > 0) {
+            this.ValidationErrorsList.push(this.OnlyBankPagesMessage);
+        }
+    }
+    ShowNewBankTransferARPayment() {
+        this.showBankTransferAlert = false;
+        var logWindow = new LogitudeWindow();
+        logWindow.Title = this.NewARPaymentTitle;
+        logWindow.Width = NewARPaymentWindowWidth;
+        logWindow.Height = NewARPaymentWindowHeight;
+        this.SetNewBankTransferWindowArguments(logWindow);
+
+        logWindow.Show("./InvoiceModules/ARPayment/Components/NewEntity/NewARPaymentComponent");
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.ReloadScreen();
+            this.ExtPageReloadScreen();
+            this.TransactionSelectedLines = new ObservableCollection([]);
+            this.ExtPageSelectedLines = new ObservableCollection([]);
+
+            setTimeout(() => {
+                this.RefreshButtonClicked();
+            }, 1500);
+        });
+
+    }
+
+    private SetNewBankTransferWindowArguments(logWindow: LogitudeWindow) {
+
+        let bankTransferPaymentArguments = new BankTransferPaymentArguments();
+        bankTransferPaymentArguments.BankAccountId = this.BankAccountPM?.Id;
+        bankTransferPaymentArguments.CurrencyId = this.GetGLAccountCurrency();
+        bankTransferPaymentArguments.PaymentAmount = this.GetSelectedExternalPageLinesCreditTotal();
+        const singleBankPageLineSelected = this.ExtPageSelectedLines.Length == 1;
+        if (singleBankPageLineSelected) {
+            bankTransferPaymentArguments.ValueDate = this.ExtPageSelectedLines.Collection[0].ReferenceDate;
+            bankTransferPaymentArguments.RegisterDate = this.ExtPageSelectedLines.Collection[0].ReferenceDate;
+            bankTransferPaymentArguments.PaymentReference = this.ExtPageSelectedLines.Collection[0].Reference;
+        }
+
+        logWindow.WindowArgs = {
+            AccountingPaymentMethodCode: BankTransferPaymentMethodCode,
+            ExteranlPageLinesIds: this.GetSelectedPageLinesIds(),
+            BankTransferPaymentArguments: bankTransferPaymentArguments
+        };
+    }
+
+    private GetSelectedPageLinesIds() {
+        return this.ExtPageSelectedLines.Collection.map(line => line.Id).join(',');
+    }
+
+    private GetSelectedExternalPageLinesCreditTotal() {
+        var externalPagesTotal = 0;
+        this.ExtPageSelectedLines.Collection.forEach((line: ExtPageLineModel) => {
+            externalPagesTotal += line.Amount;
+        });
+        return externalPagesTotal;
+    }
+
+
+    //#region Filter Methods
+    public filterSelectedValue: string = 'filter_All';
+    FilterItemClicked(itemValue: string) {
+        if (this.filterSelectedValue != itemValue) {
+            this.filterSelectedValue = itemValue;
+            this.FilterChanged();
+        }
+    }
+    FilterChanged() {
+        this.RefreshButtonClicked();
+    }
+    //#endregion
 
 
 }
@@ -1820,7 +2371,7 @@ class TransactionLineModel extends BaseComponent {
     get GroupHash() { return this.LedgerTransactionPM.GroupHash };
 
 
-    get IsCredit(){
+    get IsCredit() {
         return this.ledgerTransaction.ForeignAmountCredit != 0;
     }
 
@@ -1950,7 +2501,7 @@ class ExtPageLineModel extends BaseComponent {
 
     }
 
-    get IsCredit(){
+    get IsCredit() {
         return this.pageLine.CreditAmount != 0;
     }
     get GroupHash() { return this.pageLine.GroupHash };
@@ -1967,3 +2518,4 @@ class ExtPageLineModel extends BaseComponent {
 
 
 }
+

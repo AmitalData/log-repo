@@ -23,6 +23,7 @@ using Logitude.BL.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.BL.Helpers;
 using Logitude.BL.Resolvers;
+using Logitude.Accounting.BL.CloseTables;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -111,7 +112,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //get cheque
             ARPaymentChequeQueryService aRPaymentChequeQuery = new ARPaymentChequeQueryService(tenant);
             ARPaymentChequePM cheque = aRPaymentChequeQuery.GetSingle(arpChequeId, false, false);
-            if(cheque != null)
+            if (cheque != null)
             {
 
                 // Check reedemed cheuqe , Task 44667: Deposits: New validation before out of deposit action
@@ -168,10 +169,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             cashbookLinePM.IsDeposited = false;
             cashbookLinePM.ChangeSetOp = ChangeSetOperation.Update;
 
-            // 7- update totals
-            cashBookPM.TotalAmount += chequePM.ForeignAmount;
-            depositPM.ForeignAmount -= chequePM.ForeignAmount;
-            depositPM.LocalDepositAmount -= chequePM.LocalAmount;
+			// 7- update totals
+			if (cashBookPM.CashBookTypeCode != "1") { 
+              cashBookPM.TotalAmount += chequePM.ForeignAmount;
+            }
+            //// depositPM.ForeignAmount -= chequePM.ForeignAmount;
+            //// depositPM.LocalDepositAmount -= chequePM.LocalAmount;
 
             // 8- update entities
             cashBookPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -195,30 +198,30 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //    Notes = chequePM.ChequeNumber,
 
             //});
-			EventTracer.CreateTraceEvent(new EventTracerArgs()
-			{
-				Tenant = tenant,
-				EventDateTime = DateTime.Now,
-				EntityId = paymentPM.Id,
-				UserId = contact.Id,
-				ObjectTableName = "ARPayment",
-				IsAddedManually = false,
-				EventTypeCode = "R2CB",
-			});
-			//EventTracer.CreateTraceEvent(new EventTracerArgs()
-			//{
-			//    EntityId = bankDepositId,
-			//    Tenant = tenant,
-			//    UserId = contact.Id,
-			//    ObjectTableName = "BankDeposit",
-			//    IsAddedManually = false,
-			//    EventTypeCode = "BDRC",
-			//    Notes = chequePM.ChequeNumber,
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = tenant,
+                EventDateTime = DateTime.Now,
+                EntityId = paymentPM.Id,
+                UserId = contact.Id,
+                ObjectTableName = "ARPayment",
+                IsAddedManually = false,
+                EventTypeCode = "R2CB",
+            });
+            //EventTracer.CreateTraceEvent(new EventTracerArgs()
+            //{
+            //    EntityId = bankDepositId,
+            //    Tenant = tenant,
+            //    UserId = contact.Id,
+            //    ObjectTableName = "BankDeposit",
+            //    IsAddedManually = false,
+            //    EventTypeCode = "BDRC",
+            //    Notes = chequePM.ChequeNumber,
 
-			//});
+            //});
 
-			// 9- create journal
-			JournalPM journalPM = new JournalPM()
+            // 9- create journal
+            JournalPM journalPM = new JournalPM()
             {
                 Tenant = tenant,
                 ChangeSetOp = ChangeSetOperation.Insert,
@@ -263,38 +266,38 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 Notes = notes,
 
                 AccountingDate = depositPM.AccountingDate,
-                DueDate = DateTime.Now,
-                DocumentDate = DateTime.Now,
+                DueDate = depositPM.AccountingDate,
+                DocumentDate = depositPM.AccountingDate,
                 ForeignAmount = chequePM.ForeignAmount,
                 LocalAmount = chequePM.LocalAmount,
                 CurrencyId = chequePM.CurrencyId,
                 ExchangeRate = chequePM.ExchangeRate,
-			 Reference1 = chequePM.ChequeNumber,
+                Reference1 = chequePM.ChequeNumber,
 
-			  //JournalId = journal.Id,
-			  //DebitAccountId = glAccountId,
-			  //DebitControlAccountId = xxxx,
-			  //CreditControlAccountId = xxxx,
-			  //DocumentDate = _referenceDate,
-			  //Reference2 = xxxx,
-			  //Reference3 = xxxx,
-			  //ActionName = xxxx,
-			  //DebitControlAccountName = xxxx,
-			  //CreditAccountName = xxxx,
-			  //DebitAccountName = xxxx,
-			  //CreditControlAccountName = xxxx,
-			  //CreditControlAccountNumber = xxxx,
-			  //DebitControlAccountNumber = xxxx,
-			  ////CreditAccountNumber = xxxx,
-			  //DebitAccountNumber = xxxx,
-			  //CurrencyName = xxxx,
-			  //CurrencyCode = xxxx,
-			  //ActionTypeCode = xxxx,
-			  //ExternalOpenAmount = xxxx,
-			  //IsCreditAccountMulti = false,
-			  //IsDebitAccountMulti = xxxx,
+                //JournalId = journal.Id,
+                //DebitAccountId = glAccountId,
+                //DebitControlAccountId = xxxx,
+                //CreditControlAccountId = xxxx,
+                //DocumentDate = _referenceDate,
+                //Reference2 = xxxx,
+                //Reference3 = xxxx,
+                //ActionName = xxxx,
+                //DebitControlAccountName = xxxx,
+                //CreditAccountName = xxxx,
+                //DebitAccountName = xxxx,
+                //CreditControlAccountName = xxxx,
+                //CreditControlAccountNumber = xxxx,
+                //DebitControlAccountNumber = xxxx,
+                ////CreditAccountNumber = xxxx,
+                //DebitAccountNumber = xxxx,
+                //CurrencyName = xxxx,
+                //CurrencyCode = xxxx,
+                //ActionTypeCode = xxxx,
+                //ExternalOpenAmount = xxxx,
+                //IsCreditAccountMulti = false,
+                //IsDebitAccountMulti = xxxx,
 
-		  };
+            };
             //select account
             if (chequePM.ValueDate < DateTime.Now)
             {
@@ -313,7 +316,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             GLAccountPM glaccountPM = glaQuery.GetSingle(journalLineCredit.CreditAccountId, false, false);
             journalLineCredit.CreditControlAccountId = glaccountPM.ControlAccountId;
 
-          
+
 
 
             // create debit journal line
@@ -326,39 +329,39 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 Notes = notes,
 
                 AccountingDate = depositPM.AccountingDate,
-                DueDate = DateTime.Now,
-                DocumentDate = DateTime.Now,
+                DueDate = depositPM.AccountingDate,
+                DocumentDate = depositPM.AccountingDate,
                 ForeignAmount = chequePM.ForeignAmount,
                 LocalAmount = chequePM.LocalAmount,
                 CurrencyId = chequePM.CurrencyId,
                 ExchangeRate = chequePM.ExchangeRate,
-			  Reference1 = chequePM.ChequeNumber,
+                Reference1 = chequePM.ChequeNumber,
 
 
-			  //JournalId = journal.Id,
-			  //DebitAccountId = glAccountId,
-			  //DebitControlAccountId = xxxx,
-			  //CreditControlAccountId = xxxx,
-			  //DocumentDate = _referenceDate,
-			  //Reference2 = xxxx,
-			  //Reference3 = xxxx,
-			  //ActionName = xxxx,
-			  //DebitControlAccountName = xxxx,
-			  //CreditAccountName = xxxx,
-			  //DebitAccountName = xxxx,
-			  //CreditControlAccountName = xxxx,
-			  //CreditControlAccountNumber = xxxx,
-			  //DebitControlAccountNumber = xxxx,
-			  ////CreditAccountNumber = xxxx,
-			  //DebitAccountNumber = xxxx,
-			  //CurrencyName = xxxx,
-			  //CurrencyCode = xxxx,
-			  //ActionTypeCode = xxxx,
-			  //ExternalOpenAmount = xxxx,
-			  //IsCreditAccountMulti = false,
-			  //IsDebitAccountMulti = xxxx,
+                //JournalId = journal.Id,
+                //DebitAccountId = glAccountId,
+                //DebitControlAccountId = xxxx,
+                //CreditControlAccountId = xxxx,
+                //DocumentDate = _referenceDate,
+                //Reference2 = xxxx,
+                //Reference3 = xxxx,
+                //ActionName = xxxx,
+                //DebitControlAccountName = xxxx,
+                //CreditAccountName = xxxx,
+                //DebitAccountName = xxxx,
+                //CreditControlAccountName = xxxx,
+                //CreditControlAccountNumber = xxxx,
+                //DebitControlAccountNumber = xxxx,
+                ////CreditAccountNumber = xxxx,
+                //DebitAccountNumber = xxxx,
+                //CurrencyName = xxxx,
+                //CurrencyCode = xxxx,
+                //ActionTypeCode = xxxx,
+                //ExternalOpenAmount = xxxx,
+                //IsCreditAccountMulti = false,
+                //IsDebitAccountMulti = xxxx,
 
-		  };
+            };
             //select account
             CashBookQueryService cashbookQuery = new CashBookQueryService(accountingContext);
             CashBookPM cashbookPM = cashbookQuery.GetSingle(depositPM.CashBookId, false, false);
@@ -373,10 +376,78 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             journalPM.JournalLines.Add(journalLineCredit);
             journalPM.JournalLines.Add(journalLineDebit);
 
+            AutoReconcileChequesTransactions(bankDepositId, tenant, chequePM, journalPM);
+
 
             // save journal
             JournalUpdateService journalUpdateService = new JournalUpdateService(accountingContext, new Dictionary<string, IContext>(), tenant);
             journalUpdateService.Update(journalPM, true);
+
+            AddAccountingEntityJournal(journalPM, AccountingEntityJournalActions.BankDepositOutOfDeposit, arpChequeId);
+
+        }
+
+
+        public void AddAccountingEntityJournal(JournalPM journal,string actionName, string childEntityId = null)
+        {
+            IAccountingContext context = AccountingContext.GetContext(journal.Tenant);
+            AccountingEntityJournalUpdateService service = new AccountingEntityJournalUpdateService(context, new Dictionary<string, IContext>(), journal.Tenant);
+            service.AddAccountingEntitieJournal(journal, actionName, childEntityId);
+        }
+
+        private void AutoReconcileChequesTransactions(string bankDepositId, int tenant, ARPaymentChequePM chequePM, JournalPM journalPM)
+        {
+            List<LedgerTransactionPM> chequeTransactions = GetChequeTransactionsByDeposit(bankDepositId, tenant, chequePM);
+
+            bool haveReconciledTransactions = chequeTransactions.Any(transaction => transaction.IsReconciled == true);
+            if (haveReconciledTransactions)
+                return;
+
+            CreateJournalReconcileForTransactions(journalPM, chequeTransactions);
+        }
+
+        private void CreateJournalReconcileForTransactions(JournalPM journalPM, List<LedgerTransactionPM> chequeTransactions)
+        {
+            var count = 1;
+            foreach (var transaction in chequeTransactions)
+            {
+                var journalReconcile = new JournalReconcilePM()
+                {
+                    ChangeSetOp = ChangeSetOperation.Insert,
+                    Tenant = journalPM.Tenant,
+                    JournalId = journalPM.Id,
+                    LedgerTransactionId = transaction.Id,
+                    Line = count++,
+                    CurrencyId = transaction.CurrencyId,
+                    ReconciliationAmount = transaction.ForeignAmountDebit - transaction.ForeignAmountCredit,
+                    IsPartial = false
+                };
+                journalPM.JournalReconciles.Add(journalReconcile);
+            }
+        }
+
+        private List<LedgerTransactionPM> GetChequeTransactionsByDeposit(string bankDepositId, int tenant, ARPaymentChequePM chequePM)
+        {
+            List<LedgerTransactionPM> depositTransactions = GetDepositTransactions(bankDepositId, tenant);
+            BankDepositLineQueryService bankDepositLineQueryService = new BankDepositLineQueryService(tenant);
+            List<int> bankDepositLineNumbers = bankDepositLineQueryService.GetDepositLineNumbersByDepositIdChequeId(bankDepositId, chequePM.Id, tenant);
+            List<LedgerTransactionPM> chequeTransactions;
+            if (bankDepositLineNumbers != null)
+            {
+                chequeTransactions = depositTransactions.Where(transaction => transaction.Reference2 == chequePM.ChequeNumber && bankDepositLineNumbers.Contains(transaction.JournalLineNumber)).ToList();
+            }
+            else
+            {
+                chequeTransactions = depositTransactions.Where(transaction => transaction.Reference2 == chequePM.ChequeNumber).ToList();
+            }
+            return chequeTransactions;
+        }
+
+        private List<LedgerTransactionPM> GetDepositTransactions(string bankDepositId, int tenant)
+        {
+            LedgerTransactionQueryService ledgerTransactionQuery = new LedgerTransactionQueryService(tenant);
+            List<LedgerTransactionPM> depositTransactions = ledgerTransactionQuery.GetTransactionBySourceEntity(bankDepositId, AccountingEntityValues.ChequeDeposit, tenant);
+            return depositTransactions;
         }
 
         private void ReturnChequeToCustomer(string bankDepositId, string arpChequeId, string notes, int tenant)
@@ -426,9 +497,12 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             cashbookLinePM.ChangeSetOp = ChangeSetOperation.Update;
 
             // 7- update totals
-            cashBookPM.TotalAmount += chequePM.ForeignAmount;
-            depositPM.ForeignAmount -= chequePM.ForeignAmount;
-            depositPM.LocalDepositAmount -= chequePM.LocalAmount;
+            if (cashBookPM.CashBookTypeCode != "1")
+            {
+                cashBookPM.TotalAmount += chequePM.ForeignAmount;
+            }
+            //// depositPM.ForeignAmount -= chequePM.ForeignAmount;
+            //// depositPM.LocalDepositAmount -= chequePM.LocalAmount;
 
             // 8- update entities
             cashBookPM.ChangeSetOp = ChangeSetOperation.Update;

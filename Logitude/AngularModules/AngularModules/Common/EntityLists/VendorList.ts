@@ -39,6 +39,8 @@ export class VendorList {
 		PrimaryContactPhone: string;
 		CreatedByPartner: string;
 		StateName: string;
+		RegimenFiscalCode: string;
+		SATReceptorName: string;
 		GLAccountNumber: string;
 	
 }

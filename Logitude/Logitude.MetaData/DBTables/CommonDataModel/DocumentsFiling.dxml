@@ -206,9 +206,23 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="ComputedCustomerDocumentId"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="SecurityId"
     Type="varchar"
     Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+  Name="ComputedCustomerDocumentId"
+  Type="varchar"
+  Size="40">
     <Constraints
       Nullable="true" />
   </Column>
@@ -369,6 +383,33 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="IsTransferdToQBO"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ReceivedByByContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ReceivedByPartner"
+    Type="nvarchar"
+    Size="25">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="BillToId"
+    Type="varchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DocumentId"
     ReferencedTable="Documents"
@@ -434,6 +475,12 @@
     ReferencedTable="Users"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ReceivedByByContactId"
+    ReferencedTable="Contacts"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo"
+    Ignore="true" />
   <Index
     Columns="EntityId" />
   <Index
@@ -454,6 +501,14 @@
     Columns="SearchFields" />
   <Index
     Columns="Tenant,ExternalEntityReference,ExternalEntityName" />
+
 	<Index
   Columns="EntityId,ObjectTableId,EntityReference,DirectionCode" />
+    Columns="Tenant,IsDeleted,IsTransferdToQBO" />
+  <UniqueConstraint
+    Env="logbox"
+    Columns="Tenant,ComputedForwarderDocumentId" />
+  <UniqueConstraint
+    Env="cloud"
+    Columns="Tenant,CustomerTenantNumber,ComputedCustomerDocumentId" />
 </Table>

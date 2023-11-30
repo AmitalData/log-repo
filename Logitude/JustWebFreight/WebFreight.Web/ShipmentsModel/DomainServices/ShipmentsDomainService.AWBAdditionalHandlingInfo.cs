@@ -31,7 +31,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             aWBAdditionalHandlingInfoQuery = new AWBAdditionalHandlingInfoQuery(tenant);
-            return aWBAdditionalHandlingInfoQuery.GetSingleAWBInformationPM(id);
+            return aWBAdditionalHandlingInfoQuery.GetSinglePM(id, tenant);
         }
 
         public AWBAdditionalHandlingInfoList GetSingleAWBAdditionalHandlingInfoList(string id, int tenant)
@@ -39,7 +39,7 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
             SecurityUtility.AuthenticationOnTenant(tenant);
 
             aWBAdditionalHandlingInfoQuery = new AWBAdditionalHandlingInfoQuery(tenant);
-            AWBAdditionalHandlingInfoPM entityPM = aWBAdditionalHandlingInfoQuery.GetSingleAWBInformationPM(id);
+            AWBAdditionalHandlingInfoPM entityPM = aWBAdditionalHandlingInfoQuery.GetSinglePM(id, tenant);
 
             AWBAdditionalHandlingInfoList entityList = new AWBAdditionalHandlingInfoList()
             {
@@ -223,8 +223,8 @@ namespace WebFreight.Web.ShipmentsModel.DomainServices
                 objectContext = ShipmentsContext.GetContext(entityPM.Tenant);
             }
 
-            AWBAdditionalHandlingInfoService service = new AWBAdditionalHandlingInfoService(objectContext, entityPM, ServiceContext.User.Identity.Name);
-            service.Update();
+            AWBAdditionalHandlingInfoService service = new AWBAdditionalHandlingInfoService(objectContext, entityPM.Tenant);
+            service.Update(entityPM);
         }
 
         public void DeleteAWBAdditionalHandlingInfo(AWBAdditionalHandlingInfoPM entityPM)

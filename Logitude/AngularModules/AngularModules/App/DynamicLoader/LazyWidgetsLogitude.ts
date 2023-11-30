@@ -20,10 +20,12 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
   { loadChildren: () => import('../../InfrastructureModules/InfrastructureBusinessProcess/ModuleInfrastructureBusinessProcess').then(m => m.ModuleInfrastructureBusinessProcess), path: 'InfrastructureBusinessProcess' },
   { loadChildren: () => import('../../InfrastructureModules/InfrastructureBIReport/ModuleInfrastructureBIReport').then(m => m.ModuleInfrastructureBIReport), path: 'InfrastructureBIReport' },
   { loadChildren: () => import('../../InfrastructureModules/InfrastructureHelpResource/ModuleInfrastructureHelpResource').then(m => m.ModuleInfrastructureHelpResource), path: 'InfrastructureHelpResource' },
+    { loadChildren: () => import('../../InfrastructureModules/InfrastructureDeploymentPackage/ModuleIInfrastructureDeploymentPackage').then(m => m.ModuleIInfrastructureDeploymentPackage), path: 'InfrastructureDeploymentPackage' },
 
   // Common Modules
   { loadChildren: () => import('../../Common/Module_COMN').then(m => m.LogitudeCommonModule), path: 'Common' },
   { loadChildren: () => import('../../CommonModules/CommonAgent/ModuleCommonAgent').then(m => m.ModuleCommonAgent), path: 'CommonAgent' },
+  { loadChildren: () => import('../../CommonModules/CommonCustomerTeam/ModuleCommonCustomerTeam').then(m => m.ModuleCommonCustomerTeam), path: 'CommonCustomerTeam' },
   { loadChildren: () => import('../../CommonModules/CommonAirline/ModuleCommonAirline').then(m => m.ModuleCommonAirline), path: 'CommonAirline' },
   { loadChildren: () => import('../../CommonModules/CommonCustomer/ModuleCommonCustomer').then(m => m.ModuleCommonCustomer), path: 'CommonCustomer' },
   { loadChildren: () => import('../../CommonModules/CommonFilingInbox/ModuleCommonFilingInbox').then(m => m.ModuleCommonFilingInbox), path: 'CommonFilingInbox' },
@@ -43,7 +45,9 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
   { loadChildren: () => import('../../ShipmentModules/ShipmentLogBox/ModuleShipmentLogBox').then(m => m.ModuleShipmentLogBox), path: 'ShipmentLogBox' },
   { loadChildren: () => import('../../ShipmentModules/ShipmentSharedManifest/ModuleShipmentSharedManifest').then(m => m.ModuleShipmentSharedManifest), path: 'ShipmentSharedManifest' },
   { loadChildren: () => import('../../ShipmentModules/ShipmentAMANAC/ModuleShipmentAMANAC').then(m => m.ModuleShipmentAMANAC), path: 'ShipmentAMANAC' },
+  { loadChildren: () => import('../../ShipmentModules/ShipmentContainers/ModuleShipmentContainers').then(m => m.ModuleShipmentContainers), path: 'ShipmentContainers' },
 
+    
   // Invoice Modules
   { loadChildren: () => import('../../Invoice/Module_INVC').then(m => m.InvoiceModule), path: 'Invoice' },
   { loadChildren: () => import('../../InvoiceModules/APInvoice/ModuleAPInvoice').then(m => m.ModuleAPInvoice), path: 'APInvoice' },
@@ -80,9 +84,14 @@ export const LazyWidgets: { path: string, loadChildren: () => Promise<NgModuleFa
   { loadChildren: () => import('../../TariffModule/Module_Tariff').then(m => m.Tariff_Module), path: 'TariffModule' },
   { loadChildren: () => import('../../TimeManagement/Module_TIME').then(m => m.TimeManagementModule), path: 'TimeManagement' },
   { loadChildren: () => import('../../Warehouse/Module_WARH').then(m => m.WarehouseModule), path: 'Warehouse' },
-
+    { loadChildren: () => import('../../DashboardModule/Module_DAASH').then(m => m.DashboardModule), path: 'DashboardModule' },
 
   { loadChildren: () => import('../../TasksApp/ModuleTasksApp').then(m => m.ModuleTasksApp), path: 'TasksApp' },
+
+  //shipment order
+  { loadChildren: () => import('../../ShipmentOrder/Module_SHIPOR').then(m => m.ShipmentOrderModule), path: 'ShipmentOrder' },
+
+  { loadChildren: () => import('../../Workflow/ModuleWorkflow').then(m => m.ModuleWorkflow), path: 'Workflow' },
 
 ];
 

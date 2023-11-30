@@ -1,24 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
 using Simplog.Data.QuoteModel.EntityPOCOs;
-
-using Logitude.BL.DataContracts;
 using Simplog.Server.Infrastructure.DataContracts;
-using Simplog.Data.InfrastructureModel.Repositories;
-using Simplog.Data.InfrastructureModel.EntityPOCOs;
-using Logitude.Server.Tools.Helpers;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.Helpers;
-using System.Data.Entity.Core.Objects;
 using Simplog.Data.QuoteModel.Repositories;
-using Logitude.BL.Security;
-using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using System.Data.Entity;
 using Simplog.Server.Infrastructure.Helpers;
+using Logitude.BL.Resolvers;
+using Logitude.BL.QuoteModel.CustomFilters;
 
 namespace Logitude.BL.QuoteModel
 {
@@ -46,6 +37,31 @@ namespace Logitude.BL.QuoteModel
             {
                 if (item.IsCustom)
                 {
+                    if (item.FieldName == "From")
+                    {
+                        queryableData = DigitalPortalCustomFilter.ApplyFromToFilter(item, queryableData);
+                    }
+
+                    if (item.FieldName == "To")
+                    {
+                        queryableData = DigitalPortalCustomFilter.ApplyFromToFilter(item, queryableData, true);
+                    }
+
+                    if (item.FieldName == "DigitalPortalQuotesSearchFields")
+                    {
+                        queryableData = DigitalPortalCustomFilter.ApplySearchFilter(item, queryableData);
+                    }
+
+                    if (item.FieldName == "TransportModeFilter")
+                    {
+                        queryableData = DigitalPortalCustomFilter.ApplyTransportModeFilter(item, queryableData, tenant);
+                    }
+
+                    if (item.FieldName == "StatusFilter")
+                    {
+                        queryableData = DigitalPortalCustomFilter.ApplyStatusFilter(item, queryableData);
+                    }
+
                     if (item.FieldName == "IsCancelled")
                     {
                         bool value = Convert.ToBoolean(item.FieldValue);
@@ -115,10 +131,7 @@ namespace Logitude.BL.QuoteModel
 
                     if (item.FieldName == "MyQuotes")
                     {
-                        string loggedUser = AuthenticationUtil.GetAuthenticatedUser();
-                        ContactRepository contactRep = new ContactRepository(tenant);
-                        Contact contact = contactRep.GetSingleContactByEmail(loggedUser, tenant);
-
+                        ContactPM contact = LoggedContactResolver.GetLoggedContact(tenant);
                         queryableData = queryableData.Where(d => d.SalesmanUserId == contact.Id && !d.IsCancelled);
                     }
 
@@ -362,14 +375,24 @@ namespace Logitude.BL.QuoteModel
                         }
                     }
 
-                    //if (item.FieldName == "MyFollowUps")
-                    //{
-                    //    string email = SecurityUtility.GetAuthenticatedUser();
-                    //    ContactQuery contactQuery = new ContactQuery(tenant);
-                    //    ContactPM loggedContact = contactQuery.GetContactByEmailOnly(email, tenant);
+                    if (item.FieldName == "IsShowingExpiredQuotes")
+                    {
+                        bool isShowingExpiredQuotes = false;
 
-                    //    queryableData = queryableData.Where(d => d.FollowUpOwnerId == loggedContact.Id);
-                    //}
+                        if (item.FieldValue != null)
+                        {
+                            isShowingExpiredQuotes = Convert.ToBoolean(item.FieldValue);
+                        }
+
+                        if (!isShowingExpiredQuotes)
+                        {
+                            queryableData = queryableData.Where(d => d.ExpirationDate == null || d.ExpirationDate >= DateTime.Now);
+                        }
+                        else
+                        {
+                            queryableData =  queryableData.Where(d => d.ExpirationDate == null || d.ExpirationDate >= DateTime.Now || d.ExpirationDate < DateTime.Now);
+                        }                         
+                    } 
                 }
             }
 

@@ -1,0 +1,18 @@
+﻿<Script DBType="Main" Module="Tariff">
+  <Sql Version="1">
+    <![CDATA[
+    
+update PriceSteps Set UnitOfMeasurementCode = 'KG'
+
+update TariffSettings Set AirUnitOfMeasurementCode = 'KG',LCLUnitOfMeasurementCode = 'KG'
+
+update Tariffs Set UnitOfMeasurementCode = 'KG' where TypeCode in ('AFC','OLC') 
+
+
+    ]]>
+  </Sql>
+</Script>
+
+
+
+

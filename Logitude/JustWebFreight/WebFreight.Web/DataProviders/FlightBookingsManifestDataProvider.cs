@@ -17,12 +17,14 @@ namespace WebFreight.Web.DataProviders
         public List<ReportGroup> CommodityAgentGroupList { get; set; }
         public List<ReportGroup> MasterCommodityAgentGroupList { get; set; }
         public List<ReportGroup> Reference4GroupList { get; set; }
+        public List<ReportGroupData> NoGroupDataList { get; set; }
 
         public FlightBookingsManifestDataProvider()
         {
             this.CommodityAgentGroupList = new List<ReportGroup>();
             this.MasterCommodityAgentGroupList = new List<ReportGroup>();
             this.Reference4GroupList = new List<ReportGroup>();
+            this.NoGroupDataList = new List<ReportGroupData>();
         }
     }
 
@@ -37,6 +39,7 @@ namespace WebFreight.Web.DataProviders
         public string Reference4 { get; set; }
         public string CustomAgentImportId { get; set; }
         public string CustomAgentImportName { get; set; }
+        public string FlightNumber { get; set; }
         public List<ReportGroupData> ReportGroupDataList { get; set; }
 
         public ReportGroup()
@@ -68,6 +71,7 @@ namespace WebFreight.Web.DataProviders
         public string PackageReference2 { get; set; }
         public string PackageReference3 { get; set; }
         public string PackageReference4 { get; set; }
+        public string PackagesNotes { get; set; }
         public string Dimensions { get; set; }
         public string MasterLong { get; set; }
         public DateTime? ETD { get; set; }
@@ -113,5 +117,62 @@ namespace WebFreight.Web.DataProviders
         public string ShipmentField38 { get; set; }
         public string ShipmentField39 { get; set; }
         public string ShipmentField40 { get; set; }
+        public string ShipmentField41 { get; set; }
+        public string ShipmentField42 { get; set; }
+        public string ShipmentField43 { get; set; }
+        public string ShipmentField44 { get; set; }
+        public string ShipmentField45 { get; set; }
+        public string ShipmentField46 { get; set; }
+        public string ShipmentField47 { get; set; }
+        public string ShipmentField48 { get; set; }
+        public string ShipmentField49 { get; set; }
+        public string ShipmentField50 { get; set; }
+        public string ShipmentField51 { get; set; }
+        public string ShipmentField52 { get; set; }
+        public string ShipmentField53 { get; set; }
+        public string ShipmentField54 { get; set; }
+        public string ShipmentField55 { get; set; }
+        public string ShipmentField56 { get; set; }
+        public string ShipmentField57 { get; set; }
+        public string ShipmentField58 { get; set; }
+        public string ShipmentField59 { get; set; }
+        public string ShipmentField60 { get; set; }
+        public string ShipmentField61 { get; set; }
+        public string ShipmentField62 { get; set; }
+        public string ShipmentField63 { get; set; }
+        public string ShipmentField64 { get; set; }
+        public string ShipmentField65 { get; set; }
+        public string ShipmentField66 { get; set; }
+        public string ShipmentField67 { get; set; }
+        public string ShipmentField68 { get; set; }
+        public string ShipmentField69 { get; set; }
+        public string ShipmentField70 { get; set; }
+        public string FlightNumber { get; set; }
+        public DateTime? CutOffDate { get; set; }
+        public string MainCarriageFromPortName { get; set; }
+        public string MainCarriageToPortName { get; set; }
+        public string Transshipment1ToPortName { get; set; }
+        public string Transshipment2ToPortName { get; set; }
+        public string Transshipment3ToPortName { get; set; }
+        public string Transshipment1FromPortName { get; set; }
+        public string Transshipment2FromPortName { get; set; }
+        public string Transshipment3FromPortName { get; set; }
+        public DateTime? MainCarriageETD { get; set; }
+        public DateTime? MainCarriageETA { get; set; }
+        public DateTime? MainCarriageATD { get; set; }
+        public DateTime? MainCarriageATA { get; set; }
+        public DateTime? Transshipment1ETD { get; set; }
+        public DateTime? Transshipment1ETA { get; set; }
+        public DateTime? Transshipment1ATD { get; set; }
+        public DateTime? Transshipment1ATA { get; set; }
+        public DateTime? Transshipment2ETD { get; set; }
+        public DateTime? Transshipment2ETA { get; set; }
+        public DateTime? Transshipment2ATD { get; set; }
+        public DateTime? Transshipment2ATA { get; set; }
+        public DateTime? Transshipment3ETD { get; set; }
+        public DateTime? Transshipment3ETA { get; set; }
+        public DateTime? Transshipment3ATD { get; set; }
+        public DateTime? Transshipment3ATA { get; set; }
+        public string MainCarriageCarrierName { get; set; }
     }
 }

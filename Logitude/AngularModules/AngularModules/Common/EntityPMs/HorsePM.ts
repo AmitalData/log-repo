@@ -20,7 +20,7 @@ export class HorsePM {
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
 	  constructor() {
-          this.UIProperties = new UIProperties(this); 
+		            this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
  	 
@@ -50,9 +50,9 @@ export class HorsePM {
     public set Color(newValue: string) { if (this.color != newValue) { this.color = newValue; this.MarkAsDirty("Color"); } }
        
 	 
-    private gender: string;
-    public get Gender() { return this.gender; }
-    public set Gender(newValue: string) { if (this.gender != newValue) { this.gender = newValue; this.MarkAsDirty("Gender"); } }
+    private genderName: string;
+    public get GenderName() { return this.genderName; }
+    public set GenderName(newValue: string) { if (this.genderName != newValue) { this.genderName = newValue; this.MarkAsDirty("GenderName"); } }
        
 	 
     private breed: string;
@@ -128,6 +128,11 @@ export class HorsePM {
     private searchFields: string;
     public get SearchFields() { return this.searchFields; }
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
+    private genderCode: string;
+    public get GenderCode() { return this.genderCode; }
+    public set GenderCode(newValue: string) { if (this.genderCode != newValue) { this.genderCode = newValue; this.MarkAsDirty("GenderCode"); } }
        
 	 
 

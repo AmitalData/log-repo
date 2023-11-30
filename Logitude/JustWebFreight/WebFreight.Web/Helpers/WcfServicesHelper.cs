@@ -11,6 +11,7 @@ using Logitude.Server.Tools;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools.Counters;
 using Logitude.BL.Helpers;
+using Logitude.BL.DataContracts;
 
 namespace WebFreight.Web.Helpers
 {
@@ -168,6 +169,7 @@ namespace WebFreight.Web.Helpers
                         LocalName = oldCountry.LocalName,
                         SearchFields = oldCountry.SearchFields,
                         IsNorthAmerica = oldCountry.IsNorthAmerica,
+                        IsGreaterChina = oldCountry.IsGreaterChina,
                         HasCitiesList = oldCountry.HasCitiesList,
                     };
 
@@ -199,11 +201,12 @@ namespace WebFreight.Web.Helpers
                     CountryName = port.CountryName,
                     StateCode = port.StateCode,
                     StateName = port.StateName,
-
+                    PortTimeZoneCode = port.PortTimeZoneCode,
                 };
 
                 portRepository.Add(newPort);
                 portRepository.SubmitChanges();
+                RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
 
                 TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
             }

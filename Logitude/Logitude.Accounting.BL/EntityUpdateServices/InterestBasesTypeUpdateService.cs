@@ -42,7 +42,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 InterestBasesType Period = PeriodRepository.GetSingleByCode(entityPM.Code, entityPM.Tenant);
                 if (Period != null)
                 {
-                    throw new Exception(TextCodesTranslator.TranslateText("Accounting.General.O.Abasetypewiththesamecodeexists", entityPM.Tenant, showLocals));
+                    throw new ApplicationException(TextCodesTranslator.TranslateText("Accounting.General.O.Abasetypewiththesamecodeexists", entityPM.Tenant, showLocals));
                 }
             }
         }

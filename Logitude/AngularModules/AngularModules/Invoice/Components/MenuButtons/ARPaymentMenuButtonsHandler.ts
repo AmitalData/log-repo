@@ -17,6 +17,7 @@ import {GeneralPrintHelper} from '../../../Infrastructure/Helpers/GeneralPrintHe
 import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
+import {ObjectsLocator} from "../../../Infrastructure/Locators/ObjectsLocator";
 
 export class ARPaymentMenuButtonsHandler {
     public EntityPM: ARPaymentPM;
@@ -105,6 +106,9 @@ export class ARPaymentMenuButtonsHandler {
                         case "PrintARPayment": {
                             this.PrintPaymentButtonLoaded();
                             if (this.EntityPM.Id == null && this.EntityPM.StatusCode == "VD") {
+                                button.IsDisabled = true;
+                            }
+                            else if (SessionLocator.TenantPM.AccountingActivated && this.EntityPM.StatusCode == "DR") {
                                 button.IsDisabled = true;
                             }
                             else {
@@ -214,17 +218,9 @@ export class ARPaymentMenuButtonsHandler {
                         }
 
                         case "CheckSATStatus": {
-                            if (this.EntityPM.SATTransferStatusCode == "CS") {
-                                button.IsDisabled = false;
-                            }
-                            else {
-                                button.IsDisabled = true;
-                            }
-                            if (SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE") {
-                                button.IsHidden = true;
-                            }
-
-
+                            let sATCanceledStatusCode = "CS";
+                            button.IsDisabled = this.EntityPM.SATTransferStatusCode != sATCanceledStatusCode;
+                            button.IsHidden = SessionLocator.SATInterfaceSettings.SATInterfaceCode == "NONE" || AppTool.IsNullOrEmpty(this.EntityPM.SATXML);
                             break;
                         }
 
@@ -262,6 +258,15 @@ export class ARPaymentMenuButtonsHandler {
                             }
 
                             button.IsHidden = isHidden;
+                            break;
+                        }
+
+                        case "SolvedManual": {
+                            const sATTransferWithErrorStatusCode: string = "TE";
+                            const sATSolvedManualStatusCode: string = "SM";
+                            button.IsHidden = this.EntityPM.SATTransferStatusCode != sATTransferWithErrorStatusCode && this.EntityPM.SATTransferStatusCode != sATSolvedManualStatusCode;                       
+                            if(!button.IsHidden) button.IsDisabled = this.EntityPM.SATTransferStatusCode == sATSolvedManualStatusCode;
+
                             break;
                         }
                     }
@@ -321,10 +326,19 @@ export class ARPaymentMenuButtonsHandler {
                 this.BlockFromTransferToQBO();
                 break;
             }
+
+            case "SolvedManual": {
+                this.SolvedManual();
+                break;
+            }
         }
     }
 
-
+    SolvedManual() {
+        this.EntityPM.SATTransferStatusCode = "SM";
+        //this.EntityPM.TransmissionError = ""; // or ng if
+        this.entityArgs.EditComponent.SaveChanges("Solved Manual");
+    }
 
     SendToQBO() {
         if (this.EntityPM.TransferStatusCode == "TR" || this.EntityPM.TransferStatusCode == "ET" || this.EntityPM.TransferStatusCode == "IP") {
@@ -380,10 +394,10 @@ export class ARPaymentMenuButtonsHandler {
 
 
     CheckSATStatus() {
-        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-        var invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
-        invoiceDomainService.GetARPaymentSATCancellationStatus(this.EntityPM.Id).subscribe((response:any) => {
-
+        let invoiceDomainService: InvoiceDomainService = new InvoiceDomainService();
+        invoiceDomainService.GetARPaymentSATCancellationStatus(this.EntityPM.Id).subscribe((response: any) => {
+            if (response.HasError) return;
+            this.entityArgs?.EditComponent?.ReloadEntityPM();
         });
     }
 

@@ -1,0 +1,139 @@
+﻿<Script DBType="Main" Module="Invoice"  AOT="true" TargetTableName="ARInvoices">
+  <Sql Version="3">
+    <![CDATA[
+ declare @Id as varchar(15)
+declare @PaymentReferences varchar(1000)
+declare @ARPaymentId as varchar(15)
+declare @ARInvoiceId as varchar(15)
+declare @ChequeOrPaymentRef as varchar(1000)
+
+If (OBJECT_ID('tempdb..#temp_ARInvoices') Is Not Null)
+Begin
+    Drop Table #temp_ARInvoices
+End
+
+If (OBJECT_ID('tempdb..#temp_ARPayments') Is Not Null)
+Begin
+    Drop Table #temp_ARPayments
+End
+
+If (OBJECT_ID('tempdb..#temp_ARInvoicePayments') Is Not Null)
+Begin
+    Drop Table #temp_ARInvoicePayments
+End
+
+
+If (OBJECT_ID('tempdb..#temp_ARInvoicesModification') Is Not Null)
+Begin
+    Drop Table #temp_ARInvoicesModification
+End
+
+CREATE TABLE #temp_ARInvoicesModification
+(
+    Id varchar(15) not null,
+    PaymentReferences varchar(1000)
+)
+
+select Id,tenant,PaymentReferences into #temp_ARInvoices from ARInvoices
+select Id,ChequeOrPaymentRef into #temp_ARPayments from ARPayments
+select ARPaymentId,ARInvoiceId into #temp_ARInvoicePayments from ARInvoicePayments
+
+declare @Count as int
+set @Count = 0;
+
+BEGIN
+
+    DECLARE ARInvoicesCursor CURSOR READ_ONLY FOR
+    SELECT #temp_ARInvoices.Id,
+           #temp_ARInvoices.PaymentReferences
+    FROM #temp_ARInvoices
+
+    declare @CalculatedPaymentReferences varchar(1000)
+
+    OPEN ARInvoicesCursor
+    FETCH NEXT FROM ARInvoicesCursor
+    INTO @Id,
+         @PaymentReferences
+
+    WHILE @@FETCH_STATUS = 0
+    BEGIN
+        set @CalculatedPaymentReferences = null;
+
+        DECLARE ARInvoicePaymentsCURSOR CURSOR READ_ONLY FOR
+        SELECT #temp_ARInvoicePayments.ARPaymentId,
+               #temp_ARInvoicePayments.ARInvoiceId,
+               #temp_ARPayments.ChequeOrPaymentRef
+        FROM #temp_ARInvoicePayments
+            left outer join #temp_ARPayments
+                on #temp_ARInvoicePayments.ARPaymentId = #temp_ARPayments.Id
+        where #temp_ARInvoicePayments.ARInvoiceId = @Id
+
+        OPEN ARInvoicePaymentsCURSOR
+        FETCH NEXT FROM ARInvoicePaymentsCURSOR INTO @ARPaymentId,@ARInvoiceId, @ChequeOrPaymentRef
+
+        WHILE @@FETCH_STATUS = 0
+        BEGIN
+
+            if (@ChequeOrPaymentRef is not null)
+            begin
+                if (@CalculatedPaymentReferences is null)
+                begin
+                    set @CalculatedPaymentReferences = @ChequeOrPaymentRef;
+                end
+                else
+                    set @CalculatedPaymentReferences = @CalculatedPaymentReferences + ',' + @ChequeOrPaymentRef;
+            end
+
+            FETCH NEXT FROM ARInvoicePaymentsCURSOR
+            INTO @ARPaymentId,
+                 @ARInvoiceId,
+                 @ChequeOrPaymentRef
+        END
+
+
+        CLOSE ARInvoicePaymentsCURSOR
+        DEALLOCATE ARInvoicePaymentsCURSOR
+
+        set @PaymentReferences = @CalculatedPaymentReferences; 
+		insert into #temp_ARInvoicesModification (Id, PaymentReferences) values (@Id, @PaymentReferences)
+		 
+        set @Count = @Count + 1;
+        if (@Count = 1000)
+        begin
+            update ARInvoices
+            set PaymentReferences = #temp_ARInvoicesModification.PaymentReferences
+            FROM ARInvoices
+                INNER JOIN #temp_ARInvoicesModification
+                    on ARInvoices.Id = #temp_ARInvoicesModification.Id
+					
+				truncate table #temp_ARInvoicesModification
+				set @Count = 0
+        end
+
+        FETCH NEXT FROM ARInvoicesCursor
+        INTO @Id,
+             @PaymentReferences
+
+    END
+    CLOSE ARInvoicesCursor
+    DEALLOCATE ARInvoicesCursor
+
+END
+
+if (@Count > 0)
+begin
+    update ARInvoices
+    set PaymentReferences = #temp_ARInvoicesModification.PaymentReferences
+    FROM ARInvoices
+        INNER JOIN #temp_ARInvoicesModification
+            on ARInvoices.Id = #temp_ARInvoicesModification.Id
+
+end
+drop table #temp_ARInvoicesModification
+drop table #temp_ARInvoices
+drop table #temp_ARInvoicePayments
+drop table #temp_ARPayments 
+
+    ]]>
+  </Sql>
+</Script>

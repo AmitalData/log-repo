@@ -85,7 +85,7 @@ export class ConnectButtonsListTemplate {
         confirmWindow.Title = "Confirm";
         confirmWindow.YesButtonText = "Connect";
         confirmWindow.NoButtonText = "Cancel";
-        confirmWindow.Show("Importer Shipment " + this.SourceEntity.ShipmentNumber + " (Order " + this.SourceEntity.CustomerReference1 + " )" + " will be connected to forwarder shipment " + this.rowData['ForwarderShipmentNumber']);
+        confirmWindow.Show("Shipment " + this.SourceEntity.ShipmentNumber + " (Order " + this.SourceEntity.CustomerReference1 + " )" + " will be connected to forwarder shipment " + this.rowData['ForwarderShipmentNumber']);
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
                 this.CurrentSession.StartBusyIndicator("Loading ..")

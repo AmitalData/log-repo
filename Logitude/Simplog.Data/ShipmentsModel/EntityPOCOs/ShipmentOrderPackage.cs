@@ -33,7 +33,7 @@ namespace Simplog.Data.ShipmentsModel.EntityPOCOs
         public virtual Shipment Shipment { get; set; }
         [ForeignKey("PackageTypeId")]
         public virtual PackageType PackageType { get; set; }
-
+        public string ContainerNumber { get; set; }
         //public virtual ContainerType ContainerType { get; set; }
     }
 }

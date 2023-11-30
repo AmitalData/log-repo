@@ -80,6 +80,9 @@ namespace Simplog.Server.Infrastructure
                 return (WorkEnvironment ?? "").Equals("customs", StringComparison.InvariantCultureIgnoreCase);
             }
         }
+        public static string AzurePrincipalSecretKey { get; set; }
+        public static string DNSIPAddress { get; set; }
+        public static string DNSZone { get; set; }
 
         public static Func<int, string> GetUserNameInject { get; set; }
         // this project no need but in FilingManager is must 
@@ -154,9 +157,15 @@ namespace Simplog.Server.Infrastructure
 
         public static string WorkerRoleName { get; set; }
         public static bool RunWorkerRoleAutomaticBreakPoint { get; set; }
-    }
+        public static int System2RedirectFraction { get; set; }
 
-    public class LogitudeCustomsSettingsM
+        public static string WorkflowStorageAccountName { get; set; }
+        public static string WorkflowStorageAccountKey { get; set; }
+		public static string WindWardSettings { get; set; }
+
+	}
+
+	public class LogitudeCustomsSettingsM
     {
         public string UnfConnectionString { get; set; }
 
@@ -169,7 +178,8 @@ namespace Simplog.Server.Infrastructure
     { 
         public static DateTime StartDateTime { get; set; }
         public static bool IsRecycled { get; set; }
-        public static DateTime EndDateTime { get; set; } 
+        public static DateTime EndDateTime { get; set; }
+        public  static bool  WarmingIsFinished { get; set; }
 
 
     }

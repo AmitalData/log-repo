@@ -1,0 +1,199 @@
+<style>
+    .table-row {
+        height: 1px;
+    }
+
+    .first-split-table-row {
+        height: 20px;
+    }
+
+    .table-row-cell {
+        padding-bottom: 8px;
+    }
+
+    .split-block {
+        border-bottom: 1px solid #6E6E6E;
+    }
+
+    .functions-header {
+        background: lightgray;
+        padding: 5px 5px 10px;
+        border: 1px solid #AAAAAA;
+        border-bottom: 0px;
+    }
+
+    .functions-label {
+        margin-bottom: 2px;
+    }
+
+    .functions-container {
+        display: flex;
+    }
+
+    .expression-category-dropdown {
+        width: 100px;
+    }
+
+    .expression-tree {
+        width: 350px;
+        margin-left: 3px;
+    }
+
+    .variables-tree {
+        width: 180px;
+        margin-left: 10px;
+    }
+
+    .operators-tree {
+        width: 180px;
+        margin-left: 10px;
+    }
+
+    .expression-editor {
+        height: 200px !important;
+        border-radius: 0px !important;
+        font-size: 13px !important;
+        font-weight: bold !important;
+        padding: 6px !important;
+        border: 1px solid #AAAAAA !important;
+        line-height: 1.5em !important;
+    }
+
+    .item-container {
+        display: flex;
+        flex-direction: column;
+        padding: 2px;
+    }
+
+    .item-title {
+        font-size: 11px;
+        font-weight: 700;
+        color: black;
+        height: 16px;
+    }
+
+    .item-description {
+        font-size: 11px;
+        color: dimgrey;
+    }
+
+    .check-syntax-btn {
+        width: 100px;
+    }
+
+    .mention-item-icon {
+        height: 1.5em;
+        vertical-align: text-bottom;
+    }
+
+    .mention-item-label {
+        padding-left: 0.4em;
+    }
+</style>
+
+<table *ngIf="FlowVariablesTreeItems && ExpressionCategories && ExpressionsTreeItems && OperatorsTreeItems">
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" class="table-row">
+        <td>
+            <ValidationSummary [ItemsSource]="ValidationErrorsList"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr class="first-split-table-row">
+        <td class="table-row-cell">
+            <div class="split-block"></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <div>
+                <div class="functions-header">
+                    <div class="functions-label">Functions</div>
+                    <div class="functions-container">
+                        <div class="expression-category-dropdown">
+                            <ComboBox [ItemsSource]="ExpressionCategories" [Binding]="'Name'"
+                                [SelectedItem]="ExpressionCategory"
+                                (SelectedItemChanged)="updateExpressionCategory($event)" [ListType]="''"
+                                [CyData]="'expression-category'">
+                            </ComboBox>
+                        </div>
+                        <div class="expression-tree">
+                            <TreeSelect *ngIf="ExpressionCategoryChanged" [Items]="ExpressionsTreeItems"
+                                [Width]="'350px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
+                                [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
+                                [Template]="expressionsTreeSelectTemplate" (ValueChanged)="updateExpression($event)"
+                                [ShowItem]="ExpressionCategory.Code | ShowExpressionTreeItemPipe"
+                                [PlaceHolder]="FunctionPlaceHolder">
+                            </TreeSelect>
+                            <TreeSelect *ngIf="!ExpressionCategoryChanged" [Items]="ExpressionsTreeItems"
+                                [Width]="'350px'" [SetSelectedValue]="false" [IsReturnedTreeSelectItem]="true"
+                                [AllowClear]="false" [DisplayTitle]="false" [ShowExpand]="false"
+                                [Template]="expressionsTreeSelectTemplate" (ValueChanged)="updateExpression($event)"
+                                [ShowItem]="ExpressionCategory.Code | ShowExpressionTreeItemPipe"
+                                [PlaceHolder]="FunctionPlaceHolder">
+                            </TreeSelect>
+                            <ng-template #expressionsTreeSelectTemplate let-item>
+                                <div class="item-container" [attr.title]="item.origin.data.Description">
+                                    <div class="item-title">{{ item.title }}</div>
+                                    <div class="item-description">{{ item.origin.data.Description }}</div>
+                                </div>
+                            </ng-template>
+                        </div>
+                        <div *ngIf="FlowVariablesTreeItems" class="variables-tree">
+                            <TreeSelect [Items]="FlowVariablesTreeItems" [Width]="'180px'" [SetSelectedValue]="false"
+                                (ValueChanged)="selectVariable($event)" [AllowClear]="false" [DisplayTitle]="false"
+                                [PlaceHolder]="VariablePlaceHolder">
+                            </TreeSelect>
+                        </div>
+
+                        <div class="operators-tree">
+                            <TreeSelect [Items]="OperatorsTreeItems" [Width]="'180px'" [SetSelectedValue]="false"
+                                (ValueChanged)="selectOperator($event)" [AllowClear]="false" [DisplayTitle]="false"
+                                [IsReturnedTreeSelectItem]="true" [PlaceHolder]="OperatorPlaceHolder">
+                            </TreeSelect>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <textarea class="expression-editor" [ngModel]="ExpressionValue.expression"
+                        (click)="updateCursorPointer($event?.target?.selectionStart, $event?.target?.selectionEnd)"
+                        (input)="updateExpressionValue($event.target.value)"
+                        (keyup)="updateCursorPointerFromEvent($event)" autocorrect="off" autocapitalize="off"
+                        spellcheck="false" [mentionConfig]="IsSuggestionsPanelOpened ? {} : SuggestionsConfig"
+                        [mentionListTemplate]="mentionListTemplate" (closed)="setIsSuggestionsPanelOpenedAsClosed()">
+                    </textarea>
+                    <ng-template #mentionListTemplate let-item="item">
+                        <img *ngIf="item.type === 'variable'" class="mention-item-icon" src="./Images/variable.png">
+                        <img *ngIf="item.type === 'function'" class="mention-item-icon" src="./Images/function.png">
+                        <img *ngIf="item.type === 'operator'" class="mention-item-icon" src="./Images/math.png">
+                        <span class="mention-item-label">{{item.label}}</span>
+                    </ng-template>
+                </div>
+            </div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td class="table-row-cell">
+            <button class="Button check-syntax-btn" (click)="checkExpressionSyntax()" [disabled]="IsSaving">
+                Check Syntax
+            </button>
+        </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div></div>
+        </td>
+    </tr>
+
+    <tr class="table-row">
+        <td>
+            <FooterButtons [SaveButtonLabel]="'Ok'" (SaveButtonClicked)="saveButtonClicked()"
+                (CancelButtonClicked)="cancelButtonClicked()" [IsSaveButtonDisabled]="IsSaving"
+                [IsCancelButtonDisabled]="IsSaving" [SaveButtonDataCy]="'expression-save-button'"
+                [CancelButtonDataCy]="'expression-cancel-button'">
+            </FooterButtons>
+        </td>
+    </tr>
+</table>

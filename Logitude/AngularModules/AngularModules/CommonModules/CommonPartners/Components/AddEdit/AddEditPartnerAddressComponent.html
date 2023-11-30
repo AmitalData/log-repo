@@ -93,17 +93,23 @@
                     </td>
                 </tr>
 
-                <!-- ZipCode -->
+                <!-- CountryId -->
                 <tr class="FormFieldRow">
                     <td>
-                        <LogLabel [ObjectFieldName]="'ZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                        <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
 
-                    <td colspan="2">
+                    <td>
                         <table>
                             <tr>
                                 <td style="width: 200px;">
-                                    <LogTextBox [ObjectFieldName]="'ZipCode'" [Text]="ZipCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                    <LogLov [ObjectFieldName]="'CountryId'"
+                                            [SelectedValue]="CountryId"
+                                            [ObjectTableName]="ObjectTableName"
+                                            [DataContext]="DataContext"
+                                            [LookUpTableName]="'Country'"
+                                            (SelectedItemChanged)="Country = $event">
+                                    </LogLov>
                                 </td>
 
                                 <td>
@@ -120,6 +126,33 @@
                             <tr>
                                 <td>
                                     <table>
+
+                                        <!-- ZipCode -->
+                                        <tr class="FormFieldRow">
+                                            <td style="width: 90px;">
+                                                <LogLabel [ObjectFieldName]="'ZipCode'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                            </td>
+
+                                            <td>
+                                                <table>
+                                                    <tr>
+                                                        <td style="width: 164px;">
+                                                            <LogTextBox [ObjectFieldName]="'ZipCode'" [Text]="ZipCode" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext" [HideColumns]="true"></LogTextBox>
+                                                        </td>
+
+                                                        <td style="width: 5px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td *ngIf="false">
+                                                            <span class="hyperlink" (click)="SelectZipCode()">{{'General.B.Select' | TextCodeTranslationPipe}}</span>
+                                                        </td>
+                                                        <td  *ngIf="true"></td>
+                                                    </tr>
+                                                </table>
+                                            </td>
+                                        </tr>
+
 
                                         <!-- City -->
                                         <tr class="FormFieldRow">
@@ -146,32 +179,7 @@
                                             </td>
                                         </tr>
 
-                                        <!-- CountryId -->
-                                        <tr class="FormFieldRow">
-                                            <td>
-                                                <LogLabel [ObjectFieldName]="'CountryId'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                            </td>
 
-                                            <td>
-                                                <table>
-                                                    <tr>
-                                                        <td style="width: 200px;">
-                                                            <LogLov [ObjectFieldName]="'CountryId'"
-                                                                    [SelectedValue]="CountryId"
-                                                                    [ObjectTableName]="ObjectTableName"
-                                                                    [DataContext]="DataContext"
-                                                                    [LookUpTableName]="'Country'"
-                                                                    (SelectedItemChanged)="Country = $event">
-                                                            </LogLov>
-                                                        </td>
-
-                                                        <td>
-                                                            <div></div>
-                                                        </td>
-                                                    </tr>
-                                                </table>
-                                            </td>
-                                        </tr>
 
                                         <!-- StateId -->
                                         <tr class="FormFieldRow">

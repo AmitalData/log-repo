@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.DataMapping;
+using Logitude.BL.GlobalModel.Tools.EntityService;
 using Logitude.Server.Tools.Counters;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -61,6 +62,14 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.isNewEntity = false;
             this.entityPM = entityPM;
             this.Poco = entityRepository.GetSingleHybridPartner(entityPM.Id);
+            if(this.Poco.IsExternalPartner != this.entityPM.IsExternalPartner)
+            {
+                new TenantHybridPartnerService((int)entityPM.PartnerTenant).UpdateTenantHybridization(entityPM);
+            }
+            if (this.Poco.InActive != this.entityPM.InActive)
+            {
+                new TenantHybridPartnerService((int)entityPM.PartnerTenant).UpdateTenantActivity(entityPM);
+            }
             HybridPartnerMapping.MapEntity(entityPM, Poco);
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();

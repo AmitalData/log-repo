@@ -21,49 +21,49 @@
   <Column
     Name="Field4"
     Type="nvarchar"
-    Size="250">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Field5"
     Type="nvarchar"
-    Size="250">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Field6"
     Type="nvarchar"
-    Size="250">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Field7"
     Type="nvarchar"
-    Size="250">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Field8"
     Type="nvarchar"
-    Size="250">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Field9"
     Type="nvarchar"
-    Size="250">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Field10"
     Type="nvarchar"
-    Size="250">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -115,21 +115,21 @@
   <Column
     Name="Field1"
     Type="nvarchar"
-    Size="250">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Field2"
     Type="nvarchar"
-    Size="250">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="Field3"
     Type="nvarchar"
-    Size="250">
+    Size="2000">
     <Constraints
       Nullable="true" />
   </Column>
@@ -446,6 +446,34 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TeamId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExportLocalCustomerGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ImportLocalCustomerGroupId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EmailForSendingSingArinvoice"
+    Type="varchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Cards"
@@ -539,6 +567,11 @@
   <Relation
     ForeignKeyColumn="ActivationRequestedByUserId"
     ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TeamId"
+    ReferencedTable="CustomerTeams"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index

@@ -68,6 +68,46 @@ namespace Logitude.TariffModule.BL.CLoseTable
                 Code = "OFS", 
                 SearchFields = "OFS,Ocean FCL Surcharges Cost", 
 			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                DirectionCode = "E", 
+                Name = "Export Customs Charges Cost", 
+                Code = "ECC", 
+                SearchFields = "ECC,Export Customs Charges Cost", 
+			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                DirectionCode = "I", 
+                Name = "Import Customs Charges Cost", 
+                Code = "ICC", 
+                SearchFields = "ICC,Import Customs Charges Cost", 
+			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                Name = "Inland FTL Charges Cost", 
+                Code = "IFT", 
+                SearchFields = "IFT,Inland FTL Charges Cost", 
+                TransportModeCode = "I", 
+			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                Code = "ICS", 
+                Name = "Import Local Charges Sale", 
+                SearchFields = "ICS,Import Local Charges Sale", 
+                DirectionCode = "I", 
+			});
+			 
+            all.Add(new TariffTypeDetails()
+            {    
+                Code = "ECS", 
+                Name = "Export Local Charges Sale", 
+                SearchFields = "ECS,Export Local Charges Sale", 
+                DirectionCode = "E", 
+			});
 			
             return all;
        }

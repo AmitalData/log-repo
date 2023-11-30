@@ -99,8 +99,10 @@
                     <td>
                         <table class="FixedTable">
                             <tr>
-                                <td style="width: 70px; position: relative;">
-                                    <img [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" style="width: 70px; height: 70px;" [attr.src]="GetIconPath()" />
+                                <td *ngIf="ShowIcon" style="width: 70px; position: relative;">
+                                    <img  [className]="LayoutDirection == 'rtl' ? 'RightCenter' : 'LeftCenter'" style="width: 70px; height: 70px;" [attr.src]="GetIconPath()" />
+                                </td>
+                                <td *ngIf="!ShowIcon" style="">
                                 </td>
 
                                 <td style="width: 10px;">

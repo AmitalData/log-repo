@@ -104,5 +104,11 @@ namespace Simplog.Data.ShipmentsModel.Repositories
         {
             throw new NotImplementedException();
         }
+
+        public IQueryable<FBLStock> GetExistStocksInRange(int tenant, int startNumber, int endNumber)
+        {
+            return context.FBLStocks.OrderBy(a => a.Number)
+               .Where(a => a.Tenant == tenant && a.Number >= startNumber && a.Number <= endNumber);
+        }
     }
 }

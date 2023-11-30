@@ -298,39 +298,7 @@ namespace WebFreight.Web.WcfApi
 
                     }
 
-
-                    bool clearCustomerSalesmanByProducts = false;
-                    if (entityPM.CustomerSalesmanByProducts.Count() > 1)
-                    {
-                        if (entityPM.SalesmanUserId == null)
-                        {
-
-                            CustomerSalesmanByProductPM salesmanUser = entityPM.CustomerSalesmanByProducts.Where(d => d.SalesmanUserId != null).FirstOrDefault();
-                            string salesManId = salesmanUser.SalesmanUserId;
-                            bool sameUser = true;
-                            foreach (CustomerSalesmanByProductPM salesman in entityPM.CustomerSalesmanByProducts)
-                            {
-                                if (salesman.SalesmanUserId != salesManId)
-                                {
-                                    sameUser = false;
-                                }
-
-                            }
-                            if (sameUser)
-                            {
-                                entityPM.SalesmanUserId = salesManId;//user.Id;
-                                clearCustomerSalesmanByProducts = true;
-
-                            }
-                        }
-
-                        if (clearCustomerSalesmanByProducts)
-                        {
-                            entityPM.CustomerSalesmanByProducts.Clear();
-                        }
-
-                    }
-
+                    FillSalesman(entityPM);
 
                     #endregion
 
@@ -489,6 +457,10 @@ namespace WebFreight.Web.WcfApi
                             entityPM.CreditLimitAmount = entity.CreditLimitAmount;
                         }
 
+                        if (IsPrivateLabelFieldChanged(entityPM, entity, "cloud"))
+                        {
+                            return GetIsPrivateLabelFieldErrorResponse(response);
+                        }
 
                         if (LogitudeSettings.WorkEnvironment == "cloud" && (entity.LogBoxActivated != entityPM.LogBoxActivated))
                         {
@@ -611,6 +583,30 @@ namespace WebFreight.Web.WcfApi
 
 
 
+        }
+
+        private static void FillSalesman(CustomerPM entityPM)
+        {
+            if (entityPM.SalesmanUserId != null) return;
+            if (entityPM.CustomerSalesmanByProducts.Count() == 0) return;
+
+            CustomerSalesmanByProductPM customerSalesmanByProductPM = entityPM.CustomerSalesmanByProducts.Where(d => d.SalesmanUserId != null).FirstOrDefault();
+            if (customerSalesmanByProductPM != null)
+            {
+                entityPM.SalesmanUserId = customerSalesmanByProductPM.SalesmanUserId;
+            }
+        }
+
+        private bool IsPrivateLabelFieldChanged(CustomerPM customerPM, Customer customer, string workEnvironemnt)
+        {
+            return LogitudeSettings.WorkEnvironment == workEnvironemnt && (customer.IsPrivateLabelCustomer != customerPM.IsPrivateLabelCustomer);
+        }
+
+        private Response GetIsPrivateLabelFieldErrorResponse(Response response)
+        {
+            response.HasError = true;
+            response.ErrorMessage = "Sorry you can't update IsPrivateLabelCustomer field";
+            return response;
         }
 
         private void ValidateCustomerByVatNumber(CustomerPM entityPM, CustomerRepository customerRepository, CountryRepository countryRepository, Tenant tenantEntity)
@@ -790,6 +786,7 @@ namespace WebFreight.Web.WcfApi
                                                                  //SharedLogisticsInvitationStatusName = customer.Card.SharedLogisticsInvitationStatus != null ? customer.Card.SharedLogisticsInvitationStatus.Name : null,
                                                                  LastLoginDate = customer.Card.LastLoginDate,
                                                                  InvitationDate = customer.Card.InvitationDate,
+                                                                 CargoTrackingInvitationDate = customer.Card.CargoTrackingInvitationDate,
                                                                  IsAutonomy = customer.Card.IsAutonomy,
                                                              }).FirstOrDefault();
 

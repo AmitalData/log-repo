@@ -41,6 +41,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string SearchFields { get; set; }
         [Column("IsCancelled")]
 	    public bool IsCancelled { get; set; }
+        [Column("CrossYearReconcile")]
+	    public bool CrossYearReconcile { get; set; }
     }
 }
 	 

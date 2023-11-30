@@ -4,6 +4,7 @@ import { ServiceResponse } from '../../Infrastructure/DataContracts/ServiceRespo
 import { HttpClient } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
 import { defer, of } from 'rxjs';
+import { GeneralContainerTrackingArgs } from 'Shipment/DataContract/GeneralContainerTrackingArgs';
 
 @Injectable()
 
@@ -36,19 +37,42 @@ export class ShipmentContainersWebService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    
 
     Simulate(entity: ShipmentContainerSimulator) {
         return defer(() => {
 
             var mappedEntity: ShipmentContainerSimulator = this.MapJsonToShipmentContainerSimulator(entity, false);
 
-            return this._httpClient.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+            return this._httpClient.post(this._apiUrl + '/PostOceanInsightSimulator', JSON.stringify(mappedEntity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
                 var myJsonResult = res;
 
                 var mappedResult: ShipmentContainerSimulator = this.MapJsonToShipmentContainerSimulator(myJsonResult, true, entity);
 
                 var myResponse = new ServiceResponse();
                 myResponse.Result = mappedResult;
+                return myResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    TrackContainer(entity: GeneralContainerTrackingArgs) {
+        return defer(() => {
+            return this._httpClient.post(this._apiUrl+'/PostGeneralContainerStatus', JSON.stringify(entity), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myResponse = new ServiceResponse();
+                myResponse.Result = res;
+                return myResponse;
+
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    ViziionUnsubscribe(args: GeneralContainerTrackingArgs) {
+        return defer(() => {
+            return this._httpClient.post(this._apiUrl+'/PostUnsubscribeFromVizion', JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                var myResponse = new ServiceResponse();
+                myResponse.Result = res;
                 return myResponse;
 
             }), catchError(ServiceHelper.HandleServiceError));

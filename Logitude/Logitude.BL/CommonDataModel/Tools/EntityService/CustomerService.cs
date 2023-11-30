@@ -39,6 +39,8 @@ using Logitude.Accounting.Def.EntityQueryServicesExt;
 using Logitude.Server.Tools.QueueService;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.BL.CommonDataModel.Helpers;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.Server.Tools.CustomFields;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -75,7 +77,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         private CardService cardService;
         ContactService contactService;
         HybridPartnerPM CurrentHybridPartner;
-
+        CustomerTenantAccessCardRepository customerTenantAccessCardRepository;
         public CustomerService(ICommonDataContext objectContext, CustomerPM entityPM)
         {
             this.Initialization(objectContext, entityPM);
@@ -114,6 +116,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.hTSCodeRepository = new HTSCodeRepository(objectContext);
             this.contactService = new ContactService(objectContext, tenant);
             cardService = new CardService(objectContext, tenant);
+            this.customerTenantAccessCardRepository = new CustomerTenantAccessCardRepository(objectContext);
         }
         private void GetLoggedContact()
         {
@@ -177,6 +180,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 Id = entityPM.Id,
                 Tenant = tenant,
                 SharedLogisticsInvitationStatusCode = 1,
+                CargoTrackingInvitationStatusCode = 1,
                 UploadingUniqueKey = entityPM.UploadingUniqueKey,
             };
 
@@ -273,6 +277,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             cardRepository.Add(entityCard);
             entityRepository.Add(entityPOCO);
             entityRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CustomerPM> { entityPM }.Cast<object>().ToList() }).Update();
 
             foreach (ContactPM itemPM in entityPM.Contacts)
             {
@@ -387,7 +392,6 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateCardExternalCodeByCurrencyCollection();
             this.UpdateProductItemsCollection();
 
-            this.UpdateGLAccount(entityPM, entityPOCO);
            
             //var tenantQuery = new TenantQuery(entityPM.Tenant);
             //var tenantPM = tenantQuery.GetSinglePM(entityPM.Tenant);
@@ -469,7 +473,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     }
                 }
             }
-            if ((entityPM.LogBoxActivated != entityPOCO.LogBoxActivated) || (entityPM.IsPrivateLabelCustomer != entityPOCO.IsPrivateLabelCustomer))
+            if (entityPM.AddLogboxCustomerQueue || ((entityPM.LogBoxActivated != entityPOCO.LogBoxActivated) || (entityPM.IsPrivateLabelCustomer != entityPOCO.IsPrivateLabelCustomer)))
             {
                 AddLogboxCustomerToQueue();
             }
@@ -479,6 +483,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(entityPOCO);
             entityRepository.SubmitChanges();
             cardRepository.SubmitChanges();
+            new EntityCustomFieldService(new EntityCustomFieldServiceArgs() { ObjectTableName = "Customer", EntityId = entityPM.Id, Tenant = entityPM.Tenant, Type = "PM", Entities = new List<CustomerPM> { entityPM }.Cast<object>().ToList() }).Update();
             cardService.HandleGLAccountCardData(entityCard.Id, entityCard.GLAccountId, entityPM.Tenant);
             if (!entityPM.IsHybrid)
             {
@@ -588,15 +593,9 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
                     CustomerPM mappedpm = CustomerHybridMapping.MapEntityToHybrid(entityPM);
                     string xmlstring = LogitudeXmlSerializer.SerializeObjectToXmlString(mappedpm);
-                    List<QueueTask> tasks = new List<QueueTask>();
-                    if (entityPM.IsPrivateLabelCustomer == true || entityPOCO.IsPrivateLabelCustomer == true)
-                    {
-                        tasks.Add(new QueueTask() { Action = "Customer.PrivateLabel", Parameters = new List<Parameter>() { new Parameter { Order = 1, Value = entityPM.Code }, new Parameter { Order = 3, Value = entityPM.IsPrivateLabelCustomer.ToString() }, new Parameter { Order = 4, Value = entityPM.CustomerTenant.ToString() } } });
-                    }
-                    else
-                    {
-                        tasks.Add(new QueueTask() { Action = "Customer.LogBoxActivated", Parameters = new List<Parameter>() { new Parameter { Order = 1, Value = entityPM.Code }, new Parameter { Order = 2, Value = entityPM.LogBoxActivated.ToString() } } });
-                    }
+
+                    CustomerStatusQueueService customerStatusLogsService = new CustomerStatusQueueService(customerTenantAccessCardRepository, entityPOCO, entityPM);
+                    List<QueueTask> tasks = customerStatusLogsService.CreateQueueTasks();
 
 
                     logParams.ByteData = LogitudeXmlSerializer.SerializeObject(tasks);
@@ -606,7 +605,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-
+         
         private void InitializeComponent()
         {
             if (isNewEntity)
@@ -1878,12 +1877,18 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
             itemContactPM.CardId = this.entityPM.Id;
             itemContactPM.CompanyName = this.entityPM.EnglishName;
+            itemContactPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
 
             if (itemContactPM.IsCreatedWithPartner)
             {
                 if (!string.IsNullOrEmpty(itemContactPM.Email))
                 {
                     itemContactPM.Id = entityPM.ExistedContactId;
+                }
+
+                if (string.IsNullOrEmpty(itemContactPM.Id) && itemContactPM.IsAPIContact)
+                {
+                    itemContactPM.Id = contactRepository.GetSingleContactByEmail(itemContactPM.Email, tenant, false)?.Id;
                 }
 
                 if (string.IsNullOrEmpty(itemContactPM.Id))
@@ -1966,6 +1971,13 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     #endregion
 
                     #endregion
+                }
+                else
+                {
+                    Contact newContact = contactRepository.GetSingleContact(itemContactPM.Id, itemContactPM.Tenant);
+
+                    ContactMapping.MapEntity(itemContactPM, newContact, isNewEntity);
+                    contactRepository.Update(newContact);
                 }
 
                 if (isNewEntity)

@@ -59,9 +59,34 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AirUnitOfMeasurementCode"
+    OldNames="UnitOfMeasurementCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="LCLUnitOfMeasurementCode"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultCurrencyId"
     ReferencedTable="Currencies"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="AirUnitOfMeasurementCode"
+    ReferencedTable="WeightUnits"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="LCLUnitOfMeasurementCode"
+    ReferencedTable="WeightUnits"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
 </Table>

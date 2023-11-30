@@ -1212,7 +1212,7 @@ namespace Logitude.XSD
             return myXSDElement;
         }
 
-        public CHAMP17.AirWaybillData GetChampFWB17()
+        public CHAMP17.AirWaybillData GetChampFWB17(bool isMultiHS = false)
         {
             CHAMP17.AirWaybillData myXSDElement = new CHAMP17.AirWaybillData();
 
@@ -1767,17 +1767,6 @@ namespace Logitude.XSD
                                 };
                             }
 
-                            //if (!string.IsNullOrEmpty(Context.MainHarmonize))
-                            //{
-                            //    listRateTotalsItem.RateDescriptionFullChoices.RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
-                            //    {
-                            //        Item = new CHAMP17.HarmonisedCommodityCode()
-                            //        {
-                            //            HarmonisedCommodityCodeEntry = Context.MainHarmonize,
-                            //        }
-                            //    };
-                            //}
-
                             if (!string.IsNullOrEmpty(item.DescriptionOfGoods))
                             {
                                 string natureOfGoods = FormatHelper.FormatString(item.DescriptionOfGoods, FormatHelper.PatternType.NatureAndQuantityOfGoods);
@@ -2189,28 +2178,63 @@ namespace Logitude.XSD
                     #region Harmonize
                     if (isHarmonizeExists)
                     {
-                        i += 1;
-
-                        CHAMP17.RateDescriptionFullBody listRateHarmonizeItem = new CHAMP17.RateDescriptionFullBody()
+                        if (isMultiHS)
                         {
-                            ChargeLineCount = new CHAMP17.ChargeLineCount()
+                            Random generator = new Random();
+                            int HSCount = 1;
+                            while (HSCount <= 3)
                             {
-                                AWBRateLineNumber = i,
-                            },
+                                i += 1;
 
-                            RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
-                            {
-                                RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
+                                CHAMP17.RateDescriptionFullBody listRateHarmonizeItem = new CHAMP17.RateDescriptionFullBody()
                                 {
-                                    Item = new CHAMP17.HarmonisedCommodityCode()
+                                    ChargeLineCount = new CHAMP17.ChargeLineCount()
                                     {
-                                        HarmonisedCommodityCodeEntry = Context.MainHarmonize,
+                                        AWBRateLineNumber = i,
                                     },
-                                }
-                            }
-                        };
 
-                        listRateDescription.Add(listRateHarmonizeItem);
+                                    RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
+                                    {
+                                        RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
+                                        {
+                                            Item = new CHAMP17.HarmonisedCommodityCode()
+                                            {
+                                                HarmonisedCommodityCodeEntry = generator.Next(0, 1000000).ToString("D6"),
+                                            },
+                                        }
+                                    }
+                                };
+
+                                listRateDescription.Add(listRateHarmonizeItem);
+                                HSCount++;
+                            }
+                        }
+
+                        else
+                        {
+                            i += 1;
+
+                            CHAMP17.RateDescriptionFullBody listRateHarmonizeItem = new CHAMP17.RateDescriptionFullBody()
+                            {
+                                ChargeLineCount = new CHAMP17.ChargeLineCount()
+                                {
+                                    AWBRateLineNumber = i,
+                                },
+
+                                RateDescriptionFullChoices = new CHAMP17.RateDescriptionFullChoices()
+                                {
+                                    RateDescriptionMainBody = new CHAMP17.RateDescriptionMainBody()
+                                    {
+                                        Item = new CHAMP17.HarmonisedCommodityCode()
+                                        {
+                                            HarmonisedCommodityCodeEntry = Context.MainHarmonize,
+                                        },
+                                    }
+                                }
+                            };
+
+                            listRateDescription.Add(listRateHarmonizeItem);
+                        }
                     }
                     #endregion
 

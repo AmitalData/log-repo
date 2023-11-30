@@ -32,6 +32,8 @@ import {InvoiceTotalsClass} from '../../../../Invoice/Args';
 import {FeatureLocator} from '../../../../Infrastructure/Utilities/FeatureLocator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
+import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
+import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
 declare var window: any;
 
 @Component({
@@ -139,6 +141,8 @@ export class NewAPInvoiceComponent extends BaseComponent {
     }
 
     public AllVatTypes: VatTypeList[] = [];
+    public AllCurrencies: CurrencyList[] = [];
+    public AllPaymentTerms: PaymentTermList[] = [];
     private myCardListService: CardListService;
     private myPaymentTermListService: PaymentTermListService;
     private myCurrencyListService: CurrencyListService;
@@ -158,6 +162,18 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.myVatTypeListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 this.AllVatTypes = myResponse.Result;
+            }
+        });
+
+        this.myCurrencyListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllCurrencies = myResponse.Result;
+            }
+        });
+
+        this.myPaymentTermListService.getAllFromCache().subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                this.AllPaymentTerms = myResponse.Result;
             }
         });
     }
@@ -348,20 +364,23 @@ export class NewAPInvoiceComponent extends BaseComponent {
 
     // Vendor Properties
     get VendorDependencyProperty1() { return InvoiceTool.GetVendorPartnerTypes(); }
-
+    public GLAccountId: string;
+    public BillToId: string;
     get VendorId() { return this.EntityPM.VendorId; }
     set VendorId(value: string) {
         if (this.EntityPM.VendorId != value) {
             this.EntityPM.VendorId = value;
-
+            this.InvoiceCurrencyId = null;
             this.CheckDuplication();
 
             if (AppTool.IsNullOrEmpty(value)) {
                 this.VATNumber = null;
                 this.VendorName = null;
+                this.GLAccountId = null;
+                this.BillToId =null;
                 this.EntityPM.VendorPartnerTypeId = null;
-                this.InvoiceCurrencyId = SessionLocator.AccountingCurrencyId;
-                this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+                this.SetInvoiceCurrencyFromTenant();
+                this.SetPaymentTermFromTenant();
                 this.VatTypeId = null;
             }
 
@@ -371,24 +390,119 @@ export class NewAPInvoiceComponent extends BaseComponent {
                         var list: CardList = myResponse.Result;
                         if (list != null) {
                             this.VATNumber = list.VatNumber;
+                            this.GLAccountId = list.GLAccountId;
+                            this.BillToId = list.BillToId;
                             this.VendorName = list.LocalName || list.EnglishName;
                             this.EntityPM.VendorName = list.LocalName || list.EnglishName;
                             this.EntityPM.VendorLocalName = list.LocalName;
                             this.EntityPM.VendorPartnerTypeId = list.PartnerTypeId;
                             this.VatTypeId = list.VatTypeId;
-
-                            if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
-                                this.InvoiceCurrencyId = list.InvoiceCurrencyId;
+                            
+                            if(this.IsFullAccounting){
+                                
+                                this.GetConnectedGLAccount();
+                                if(AppTool.IsNullOrEmpty(this.InvoiceCurrencyId))
+                                this.SetInvoiceCurrencyFromTenant();
                             }
-
-                            if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
-                                this.PaymentTermId = list.PaymentTermId;
+                        
+                            else {
+                                this.GetConnectedBillTo();
+                                if(AppTool.IsNullOrEmpty(this.InvoiceCurrencyId)){
+                                    this.SetInvoiceCurrencyFromPartner(list.InvoiceCurrencyId);
+                                }
                             }
+                            
+
+
+                            this.SetPaymentTermFromPartner(list.PaymentTermId);
                         }
                     }
                 });
             }
         }
+    }
+
+
+    GetConnectedBillTo() {
+        if (this.BillToId)
+        {
+
+            this.CurrentSession.StartBusyIndicatorLoading();
+            this.myCardListService.getSingle(this.BillToId).subscribe((myResult:any) => {
+                var myResponse: ServiceResponse = myResult;
+                this.CurrentSession.StopBusyIndicator();
+                if (!myResponse.HasError) {
+                    var cardList: CardList = myResponse.Result;
+                    if (!AppTool.IsNullOrEmpty(cardList.InvoiceCurrencyId)) {
+                        this.InvoiceCurrencyId = cardList.InvoiceCurrencyId;
+
+                    }
+
+                }
+            });
+        }
+    }
+    vendorGLAccount: GLAccountList;
+    _GLAccountListService: GLAccountListService = new GLAccountListService();
+    GetConnectedGLAccount() {
+        if (this.GLAccountId)
+        {
+            this.CurrentSession.StartBusyIndicatorLoading();
+            this._GLAccountListService.getSingle(this.GLAccountId).subscribe((myResult:any) => {
+                console.log("[_GLAccountListService.getSingle]", myResult);
+                this.CurrentSession.StopBusyIndicator();
+
+                var myResponse: ServiceResponse = myResult;
+                if (!myResponse.HasError) {
+                    var gla: GLAccountList = myResponse.Result;
+                    this.vendorGLAccount = gla;
+                    this.EntityPM.VendorGLAccountId = gla.Id;
+                    if (!gla.IsMultiCurrency) {
+                        this.InvoiceCurrencyId = gla.CurrencyId;
+                        
+                    }
+                }
+            });
+        }else{
+            this.vendorGLAccount = null;
+              this.EntityPM.VendorGLAccountId = null;
+        }
+    }
+
+    private SetInvoiceCurrencyFromPartner(currencyId: string) {
+        if (!AppTool.IsNullOrEmpty(currencyId)) {
+            var currency: CurrencyList = this.AllCurrencies.filter(f => f.Id == currencyId)[0];
+            if (currency != null && !currency.InActive)
+                this.InvoiceCurrencyId = currencyId;
+            else
+                this.SetInvoiceCurrencyFromTenant();
+        }
+        else {
+            this.SetInvoiceCurrencyFromTenant();
+        }
+    }
+    private SetPaymentTermFromPartner(paymentTermId: string) {
+        if (!AppTool.IsNullOrEmpty(paymentTermId)) {
+            var paymentTerm: PaymentTermList = this.AllPaymentTerms.filter(f => f.Id == paymentTermId)[0];
+            if (paymentTerm != null && !paymentTerm.InActive)
+                this.PaymentTermId = paymentTermId;
+            else
+                this.SetPaymentTermFromTenant();
+        }
+        else {
+            this.SetPaymentTermFromTenant();
+        }
+    }
+
+    private SetInvoiceCurrencyFromTenant() {
+        var currency: CurrencyList = this.AllCurrencies.filter(f => f.Id == SessionLocator.TenantPM.CurrencyId)[0];
+        if (currency != null && !currency.InActive)
+            this.InvoiceCurrencyId = SessionLocator.TenantPM.CurrencyId;
+    }
+    private SetPaymentTermFromTenant() {
+        var paymentTerm: PaymentTermList = this.AllPaymentTerms.filter(f => f.Id == SessionLocator.TenantPM.PaymentTermId)[0];
+        if (paymentTerm != null && !paymentTerm.InActive)
+            this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
     }
 
     get VendorName() { return this.EntityPM.VendorName; }
@@ -700,7 +814,7 @@ export class NewAPInvoiceComponent extends BaseComponent {
             errors.push(msg.replace("%FieldName", TextCodeTranslator.Translate("APInvoice.F.InvoiceDate")));
         }
 
-        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation().valueOf()) {
+        else if (DateTool.GetDateParts(this.InvoiceDate).DateTicks > DateTool.GetCurrentDateAsUtcForAccountingValidation(SessionLocator.TenantPM.TimeZoneOffset).valueOf()) {
             errors.push(TextCodeTranslator.Translate("APInvoice.M.CantReceiveFutureDateInvoice"));
         }
 
@@ -852,19 +966,39 @@ export class NewAPInvoiceComponent extends BaseComponent {
         this.CurrentSession.CloseCurrentWindowEmit("Ok");
     }
 
-    SetInvoiceLineVatType(list: ChargesTypeList, payable: ShipmentPayablePM, invoiceLine: APInvoiceLinePM) {
+    SetInvoiceLineVatType(chargesType: ChargesTypeList, payable: ShipmentPayablePM, invoiceLine: APInvoiceLinePM) {
+        var vatTypeId: string = null;
+        var inactiveVatTypeId: boolean = false;
 
         if (!AppTool.IsNullOrEmpty(this.VatTypeId)) {
-            invoiceLine.VatTypeId = this.VatTypeId;
+            var vendor_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == this.VatTypeId)[0];
+            if (vendor_VAT != null && !vendor_VAT.InActive)
+                vatTypeId = this.VatTypeId;
+            else
+                inactiveVatTypeId = true;
         }
 
-        else if (payable.IsFromQuote && !AppTool.IsNullOrEmpty(payable.VatTypeId)) {
-            invoiceLine.VatTypeId = payable.VatTypeId;
+        if ((AppTool.IsNullOrEmpty(vatTypeId) || inactiveVatTypeId) && payable.IsFromQuote && !AppTool.IsNullOrEmpty(payable.VatTypeId)) {
+            var payable_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == payable.VatTypeId)[0];
+            if (payable_VAT != null && !payable_VAT.InActive) {
+                vatTypeId = payable.VatTypeId;
+                inactiveVatTypeId = false
+            }
+            else
+                inactiveVatTypeId = true;
         }
 
-        else if (list) {
-            invoiceLine.VatTypeId = list.VatTypeId;
+        if ((AppTool.IsNullOrEmpty(vatTypeId) || inactiveVatTypeId) && chargesType != null) {
+            var chargesType_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == chargesType.VatTypeId)[0];
+            if (chargesType_VAT != null && !chargesType_VAT.InActive) {
+                vatTypeId = chargesType.VatTypeId;
+                inactiveVatTypeId = false
+            }
+            else
+                inactiveVatTypeId = true;
         }
+
+        invoiceLine.VatTypeId = vatTypeId;
 
         if (!AppTool.IsNullOrEmpty(invoiceLine.VatTypeId)) {
             var list_VAT: VatTypeList = this.AllVatTypes.filter(f => f.Id == invoiceLine.VatTypeId)[0];

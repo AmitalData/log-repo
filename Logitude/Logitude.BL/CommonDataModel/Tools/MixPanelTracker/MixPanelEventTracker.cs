@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.Server.Tools.Helpers;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -15,17 +18,20 @@ namespace Logitude.BL.CommonDataModel.Tools.MixPanelTracker
     {
         private static readonly HttpClient client = new HttpClient();
         private const string trackEventAPIURI = "https://api.mixpanel.com/track#live-event";
-        string masterUserId;
+        string userEmail;
         string projectToken;
+        private int tenant;
+        private TenantManagementPM tenantManagement;
 
         public MixPanelEventTracker(string projectToken)
         {
             this.projectToken = projectToken;
         }
-        public MixPanelEventTracker(string projectToken,string masterUserId)
+        public MixPanelEventTracker(string projectToken,string email, int tenant)
         {
             this.projectToken = projectToken;
-            this.masterUserId = masterUserId;
+            this.userEmail = email;
+            this.tenant = tenant;
         }
 
         public async void TrackEvent(MixPanelEvent mixPanelEvent)
@@ -40,13 +46,21 @@ namespace Logitude.BL.CommonDataModel.Tools.MixPanelTracker
 
         private void AddPrimaryEventFields(MixPanelEvent mixPanelEvent)
         {
-            if(masterUserId != null)
-                mixPanelEvent.Properties.Add(new TrackingEventProperty("distinct_id", masterUserId));
+            if (userEmail != null)
+                mixPanelEvent.Properties.Add(new TrackingEventProperty("distinct_id", userEmail));
             mixPanelEvent.Properties.Add(new TrackingEventProperty("token", projectToken));
             mixPanelEvent.Properties.Add(new TrackingEventProperty("time", DateTimeOffset.Now.ToUnixTimeSeconds().ToString()));
             mixPanelEvent.Properties.Add(new TrackingEventProperty("browser", GetBrowserName()));
             mixPanelEvent.Properties.Add(new TrackingEventProperty("ip_address", GetIPAddress()));
+            AddTenantProperties(mixPanelEvent);
+        }
 
+        private void AddTenantProperties(MixPanelEvent mixPanelEvent)
+        {
+            GetTenantManagement(tenant);
+            mixPanelEvent.Properties.Add(new TrackingEventProperty("tenant-number", tenant.ToString()));
+            mixPanelEvent.Properties.Add(new TrackingEventProperty("tenant-name", tenantManagement.Name));
+            mixPanelEvent.Properties.Add(new TrackingEventProperty("tenant-url", tenantManagement.CustomerURL));
         }
 
         private static FormUrlEncodedContent BuildHttpRequestParameters(MixPanelEvent mixPanelEvent)
@@ -67,8 +81,13 @@ namespace Logitude.BL.CommonDataModel.Tools.MixPanelTracker
             factory.ConfigureBrowserCapabilities(new NameValueCollection(), userBrowser);
             return userBrowser.Browser;
         }
-        private static string GetIPAddress() => HttpContext.Current?.Request?.UserHostAddress;
-        
+        private static string GetIPAddress() => AuthenticationUtil.GetIP4Address();
+
+        private void GetTenantManagement(int tenant)
+        {
+            TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+            tenantManagement = tenantManagementQuery.GetSinglePM(tenant);
+        }
 
     }
 }

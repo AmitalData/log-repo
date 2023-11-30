@@ -14,6 +14,7 @@ using Logitude.BL.Helpers;
 using Logitude.BL.ShipmentsModel.EntityQueries;
 using Simplog.Data.ShipmentsModel.EntityPOCOs;
 using Simplog.Data.ShipmentsModel.Repositories;
+using WebFreight.Web.Services;
 
 namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 {
@@ -107,13 +108,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         public byte[] GetData()
         {
             this.LoadDataProvider();
-            XmlSerializer xmlSerializer = new XmlSerializer(typeof(ARInvoiceDepositDataProvider));
-            MemoryStream memoryStream = new MemoryStream();
-            xmlSerializer.Serialize(memoryStream, this.aRInvoiceDepositDataProvider);
-            memoryStream.Seek(0, SeekOrigin.Begin);
-            StreamReader streamReader = new StreamReader(memoryStream);
-            byte[] bytearray = memoryStream.ToArray();
-            return bytearray;
+            return new ReportMemoryStreamService().Convert(this.aRInvoiceDepositDataProvider, typeof(ARInvoiceDepositDataProvider), tenant);
         }
         private void LoadDataProvider()
         {
@@ -227,11 +222,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                         if (ariInvoicePayment.ARInvoice != null && ariInvoicePayment.ARPayment != null)
                         {
                             reportAPIPayment.Reference = ariInvoicePayment.ARInvoice.CustomerRef;
-                            reportAPIPayment.BillTo = ariInvoicePayment.ARInvoice.BillTo.LocalName;
+                            reportAPIPayment.BillTo =
+                                !string.IsNullOrEmpty(ariInvoicePayment.ARInvoice.BillTo.LocalName)
+                                    ? ariInvoicePayment.ARInvoice.BillTo.LocalName
+                                    : ariInvoicePayment.ARInvoice.BillTo.EnglishName;
                             reportAPIPayment.InvoiceNumber = ariInvoicePayment.ARInvoice.InvoiceNumber;
                             reportAPIPayment.InvocieDate = ariInvoicePayment.ARInvoice.InvoiceDate;
                             reportAPIPayment.DueDate = ariInvoicePayment.ARInvoice.DueDate;
-                            CustomFieldResolver customFieldResolver = new CustomFieldResolver();
+                            CustomFieldResolver customFieldResolver = new CustomFieldResolver(tenant);
                             customFieldResolver.SetDataProviderCustomFieldsValues("ARInvoice", tenant, ariInvoicePayment.ARInvoice, reportAPIPayment);
                             if (isLocalCurrency)
                             {

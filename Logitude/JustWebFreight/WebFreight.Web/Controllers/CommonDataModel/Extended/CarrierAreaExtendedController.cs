@@ -1,5 +1,6 @@
 ﻿using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools;
 using Logitude.Server.Tools.Counters;
@@ -115,6 +116,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 string token = System.Web.HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(filter.Tenant);
 
                 byte[] fileData = Convert.FromBase64String(filter.FileData);
 
@@ -294,11 +296,12 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 Longtitude = ZeroPort.Longtitude,
                 SearchFields = ZeroPort.SearchFields,
                 Notes = ZeroPort.Notes,
+                PortTimeZoneCode = ZeroPort.PortTimeZoneCode,
             };
 
             portRepository.Add(newPort);
             portRepository.SubmitChanges();
-
+            RunStoredProcedureClass.UpdatePortSearcsFields(newPort.Id, newPort.Tenant);
             TableLastUpdateClass.UpdateTableHistory(tenant, "Port");
 
             return newPort;

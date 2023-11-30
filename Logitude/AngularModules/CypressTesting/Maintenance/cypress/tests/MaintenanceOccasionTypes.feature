@@ -1,4 +1,5 @@
-@dev
+@devrelease 
+#@release
 Feature: Occasion Types Create, Search and Edit from Maintenance
     The user creates a occasion type, searches for and edits it from the Maintenance Module.
 

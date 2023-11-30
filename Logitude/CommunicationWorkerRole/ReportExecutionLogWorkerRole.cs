@@ -1,4 +1,5 @@
-﻿using Logitude.BL.CommonDataModel.EntityAMs;
+﻿using CommunicationWorkerRole.Stimulsoft.fonts;
+using Logitude.BL.CommonDataModel.EntityAMs;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;

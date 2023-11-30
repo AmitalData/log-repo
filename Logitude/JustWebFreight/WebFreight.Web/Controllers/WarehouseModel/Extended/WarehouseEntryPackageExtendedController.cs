@@ -24,7 +24,9 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
                 WarehouseEntryPackageQueryService warehouseEntryPackageQuery = new WarehouseEntryPackageQueryService(MyContext);
                 List<WarehouseEntryPackagePM> warehouseEntryPackagePMLists = warehouseEntryPackageQuery.GetWarehouseEntryPackagePMListsByCustomerIdIdAndWarehouseId(customerId, warehouseId, tenant);
@@ -44,6 +46,9 @@ namespace WebFreight.Web.Controllers.WarehouseModel.Extended
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnTenant(tenant);
+
                 IWarehouseContext MyContext = WarehouseContext.GetContext(authToken.Tenant);
                 WarehouseEntryPackageQueryService warehouseEntryPackageQuery = new WarehouseEntryPackageQueryService(MyContext);
                  List<WarehouseEntryPackagePM> warehouseEntryPackagePMLists = warehouseEntryPackageQuery.GetWarehouseEntryPackagePMListsByShipmentIdAndWarehouseIdAndCustomerId(warehouseId, customerId , shipmentId, tenant);

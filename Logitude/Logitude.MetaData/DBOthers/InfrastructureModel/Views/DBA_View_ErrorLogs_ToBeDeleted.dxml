@@ -1,0 +1,13 @@
+<View DBType="SystemLogs" Name="DBA_View_ErrorLogs_ToBeDeleted" Schema="dbo" Module="Infrastructure">
+  <SqlScript>
+    <![CDATA[
+	create VIEW [dbo].[DBA_View_ErrorLogs_ToBeDeleted] AS
+    SELECT TOP 1000 *
+    FROM [dbo].[ErrorLogs]
+    where  LogDate < Dateadd(month, -1, Getdate())
+    ORDER BY LogDate;
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>

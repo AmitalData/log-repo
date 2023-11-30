@@ -1,4 +1,4 @@
-import {Component, OnInit, ElementRef, ComponentFactoryResolver, ComponentRef, OnDestroy, ViewEncapsulation} from '@angular/core'
+import { Component, OnInit, ComponentFactoryResolver, ComponentRef, ViewChildren, QueryList, AfterViewInit, Output, EventEmitter } from '@angular/core';
 import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
 import {TenantPM} from '../../../Common/EntityPMs/TenantPM';
 import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
@@ -19,17 +19,19 @@ import {BaseComponent} from '../../../Infrastructure/Components/LogitudeComponen
 import {LastFilterClass} from '../../../Infrastructure/Utilities/LastFilterClass';
 import {EntityResourceService} from '../../../Infrastructure/Services/EntityResourceService';
 import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-
+import { LocationDirective } from '../../../Infrastructure/Utilities/LocationDirective';
+import { UserExtendedPMService } from 'Common/Services/ExtendedPMs/UserExtendedPMService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { FeatureLocator } from '../../../Infrastructure/Utilities/FeatureLocator';
+import { MixPanelLocator } from 'Common/MixPanel/MixPanelLocator';
 declare var makeAMLineChart, makeAmBarChart, makePieChart;
 
 @Component({
-    selector: 'DashBoard',
-    
-    templateUrl: './DashBoardComponent.html',
-    encapsulation: ViewEncapsulation.None,
+    selector: 'DashBoard',    
+    templateUrl: './DashBoardComponent.html',    
 })
 
-export class DashboardComponent extends BaseComponent implements OnInit {
+export class DashboardComponent extends BaseComponent implements OnInit, AfterViewInit {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private dashboarddomainservice: DashboardDomainService;
     public TenantPM: TenantPM;
@@ -56,6 +58,10 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     public MoneyInLabel: string = "";
     public dailySpotLightClass: DailySpotlightClass; 
     private CurrentSession = SessionLocator.SelectedSession;
+    @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
+    public IsMenuVisible: boolean = false;
+    public IsCustomDashboardFeatureOn: boolean = false;
+    @Output() BackButtonClickedEvent = new EventEmitter();
     constructor(public componentfactoryResolver: ComponentFactoryResolver) {
         super();
         this.TenantPM = InfraSettings.TenantPM;
@@ -65,10 +71,56 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         this.MoneyInDashboardId = this.ActivityStatusDashboardId + this.CurrentSession.GetChartId();
         this.TopFiveDashboardId = this.TopFiveDashboardId + this.CurrentSession.GetChartId();
         this.TopFiveDashboardLegendId = "TopFiveDashboardLegendId_" + this.CurrentSession.GetNewId("TopFiveDashboardLegendId");
+        this.IsCustomDashboardFeatureOn = FeatureLocator.HasFeaturePermession("General", "CUSTOMDASH");
+
+        this.RunComponent();
+    }
+
+    private isLoaderReady: boolean = false;
+    RunComponent() {
+        this.IsMenuVisible = true;
+        if (this.AllLocations) {
+            if (this.AllLocations.length == 0) {
+                this.RunComponentTimer();
+            }
+
+            else {
+                this.isLoaderReady = true;
+            }
+        }
+
+        else {
+            this.RunComponentTimer();
+        }
+    }
+    private Retries: number = 0;
+    private timerToken: any;
+    private RunComponentTimer() {
+        this.Retries++;
+
+        if (this.timerToken) {
+            clearTimeout(this.timerToken);
+        }
+
+        if (this.Retries < 20) {
+            this.timerToken = setTimeout(() => this.RunComponent(), 1);
+        }
+    }
+
+
+
+    OnMoreDetailsBackButtonClicked(event) {
+        if (!AppTool.IsNullOrEmpty(event)) {
+            this.isNotMoreDetails = true;
+        }
     }
 
     ngOnInit() {
-        this.FillScreen();
+        this.FillScreen();              
+    }
+
+    ngAfterViewInit() {
+        //this.IsMenuVisible = true;
     }
 
     ngOnDestroy() {
@@ -83,8 +135,6 @@ export class DashboardComponent extends BaseComponent implements OnInit {
         this.LoadPieQueries();
     }
 
-
-    
     public Shipments_Today_Status: boolean = true;
     public Shipments_Yesterday_Status: boolean = true;
     public Shipments_LastWeek_Status: boolean = true;
@@ -151,7 +201,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     public pieChartData: number[] = [];
     private CurrentTop10DebtorsChart: any;
     LoadPieQueries() {
-        this.dashboarddomainservice.GetDebrotExposure(this.TenantPM.Id, parseInt(this.SelectedCurrency)).subscribe((myResult:any) => {
+        this.dashboarddomainservice.GetDebrotExposure(parseInt(this.SelectedCurrency)).subscribe((myResult:any) => {
             this.PieData = myResult;
             this.FillPie();
         });
@@ -923,11 +973,11 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
     OpenDashBoard() {
         this.isNotMoreDetails = false;
-        SessionLocator.DynamicLoader.Load("./Dashboard/Components/Workspace/ActivityStatusDetailsComponent", this.CurrentSession.SessionMenuLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.logoff.subscribe(($event) => this.change(cmpRef))
-                        this.ActivityStatusPage = cmpRef;
-                    });
+        //SessionLocator.DynamicLoader.Load("./Dashboard/Components/Workspace/ActivityStatusDetailsComponent", this.CurrentSession.SessionMenuLocation.viewContainerRef)
+        //            .then(cmpRef => {
+        //                cmpRef.instance.logoff.subscribe(($event) => this.change(cmpRef))
+        //                this.ActivityStatusPage = cmpRef;
+        //            });
     }
         
     FillFilters() {

@@ -6,6 +6,7 @@ import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceResponse} from '../../Infrastructure/DataContracts/ServiceResponse';
 import { TariffSettingPM } from '../EntityPMs/TariffSettingPM';
 import { CustomFieldClass } from '../../Infrastructure/DataContracts/CustomFieldClass'
+import { ShipmentPackagePM } from '../../Shipment/EntityPMs/ShipmentPackagePM';
 
 @Injectable()
 
@@ -16,7 +17,31 @@ export class TariffDomainService {
         this._http = ServiceHelper.HttpClient;
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/TariffDomain';
     }
+    GetSaleTariffsCounts() {
 
+        var url = this._apiUrl + '/GetSaleTariffsCounts';
+
+        return defer(() => {
+            return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var myJsonResult = response;
+
+                var myResult = new TariffSummery();
+
+                if (myJsonResult) {
+                    var jsonListKeys = Object.keys(myJsonResult);
+                    for (var key in jsonListKeys) {
+                        var property = jsonListKeys[key];
+                        myResult[property] = myJsonResult[property];
+                    }
+                }
+
+                var serviceResponse = new ServiceResponse();
+                serviceResponse.Result = myResult;
+                return serviceResponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
     GetTariffsCounts() {
 
         var url = this._apiUrl + '/GetTariffsCounts';
@@ -294,6 +319,16 @@ export class TariffDomainService {
         });
     }
 
+    GetRecentSaleTariffs() {
+
+        return defer(() => {
+            return this._http.get(this._apiUrl + '/GetRecentSaleTariffs', ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var allLists = response;
+                return allLists;
+            }));
+        });
+    }
+
     GetTariffLineContainerPrices(tariffId:string, version: number, fromPortId: string, toPortId: string) {
 
         var url = this._apiUrl + "/GetTariffLineContainerPrices?tariffId=" + tariffId + "&version=" + version + "&fromPortId=" + fromPortId + "&toPortId=" + toPortId;
@@ -347,6 +382,31 @@ export class TariffDomainService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+
+    GetAvailableCustomsChargesTariffs(args: CustomsChargesTariffSearchArgs) {
+        return defer(() => {
+            return this._http.post(this._apiUrl + "/PostAvailableCustomsChargesTariffs", JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    GetAvailableSalesLocalChargesTariffs(args: SalesLocalChargesTariffSearchArgs) {
+        return defer(() => {
+            return this._http.post(this._apiUrl + "/PostAvailableSalesLocalChargesTariffs", JSON.stringify(args), ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var result = response;
+                var pmresponse: ServiceResponse;
+                pmresponse = new ServiceResponse();
+                pmresponse.Result = result;
+                return pmresponse;
+            }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
 }
 
 export class TariffSummery {
@@ -356,6 +416,11 @@ export class TariffSummery {
     OceanLCLFreightCount: number;
     OceanFCLFreightCount: number;
     OceanFCLSurchargesCount: number;
+    ImportCustomsChargesCount: number;
+    ExportCustomsChargesCount: number;
+    InlandFTLTariffsCount: number;
+    ImportSaleCount: number;
+    ExportSaleCount: number;
 }
 
 export class TariffFilterParameter {
@@ -516,10 +581,9 @@ export class UpdateSurchargeArgs {
 }
 
 export class TariffSearchArgs {
-
     OriginPortId: string;
     DestinationPortId: string;
-    ViaPortId: string;
+    ViaPortId: string;    
     Date: string;
     Weight : number;
     WeightCode: string;
@@ -540,4 +604,81 @@ export class TariffSearchArgs {
     Quantity4: number;
     Quantity5: number;
     ProductId: string;
+}
+
+export class CustomsChargesTariffSearchArgs {
+    FromCountryId: string;
+    ToCountryId: string;
+    MainCarriageATD: Date;
+    MainCarriageETD: Date;    
+    FriehgtAmount: number;    
+    ForiegnChargesAmount: number;
+    LocalCurrencyId: string;    
+    ShipmentId: string;
+    CustomsChargesPayables: CustomsChargesPayable[] = [];
+}
+
+export class CustomsChargesPayable {
+    ChargeTypeId: string;
+    ChargeTypeCode: string;
+    ChargeTypeName: string;
+    UnitOfMesurmentId: string;
+    UnitOfMesurmentCode: string;
+    TariffId: string;
+    TariffNumber: string;
+    VersionId: number;
+    TariffLineId: string;
+    CurrencyId: string;
+    CurrencyCode: string;
+    ExpectedAmount: number;
+    LocalExpectedAmount: number;
+    ProfitExpectedAmount: number;
+    MinAmount: number;
+    Quantity: number;
+    Price: number;
+    IsDifferentCurrency: boolean;
+    Notes: string;
+    Rate: number;
+    SellerId: string;
+    SellerName: string;
+}
+
+export class SalesLocalChargesTariffSearchArgs {
+    FromCountryId: string;
+    ToCountryId: string;
+    BetweenDate: Date;
+    FriehgtAmount: number;
+    ForiegnChargesAmount: number;
+    LocalCurrencyId: string;
+    QuoteId: string;
+    SalesLocalCharges: SalesLocalCharges[] = [];
+    Error: string;
+    IsFromUpdateSalesMessage: boolean;
+}
+
+export class SalesLocalCharges {
+    ChargeTypeId: string;
+    ChargeTypeCode: string;
+    ChargeTypeName: string;
+    UnitOfMesurmentId: string;
+    UnitOfMesurmentCode: string;
+    TariffId: string;
+    TariffNumber: string;
+    VersionId: number;
+    TariffLineId: string;
+    CurrencyId: string;
+    CurrencyCode: string;
+    SaleTotalAmount: number;
+    LocalExpectedAmount: number;
+    ProfitExpectedAmount: number;
+    MinAmount: number;
+    Quantity: number;
+    Price: number;
+    IsDifferentCurrency: boolean;
+    Notes: string;
+    Rate: number;
+    SellerId: string;
+    SellerName: string;
+    MinPrice: number;
+    ActualMinPrice: number;
 }

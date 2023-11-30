@@ -1,0 +1,9 @@
+﻿<Script DBType="Main"  Module="Common">
+	<Sql Version="1">
+		<![CDATA[ 
+
+ update CustomerTenantAccessCards set IsImportActivated = 1 
+    
+    ]]>
+	</Sql>
+</Script>

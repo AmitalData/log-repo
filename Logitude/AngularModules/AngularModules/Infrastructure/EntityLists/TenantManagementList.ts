@@ -113,6 +113,7 @@ export class TenantManagementList {
 		MobileTotalLastWeek: number;
 		MobileTotalLastMonth: number;
 		EnableBranding: boolean;
+		EnableExportToExcel: boolean;
 		CustomerURL: string;
 		HideSharedlogistics: boolean;
 		ContactEmail: string;
@@ -120,6 +121,7 @@ export class TenantManagementList {
 		RegisteredAirlines: string;
 		PendingAirlines: string;
 		PrivateLabelId: string;
+		PrivateLabelName: string;
 		IsParentTenant: boolean;
 		ParentTenantId: number;
 		AgentSharedLogisticsStatisticsLastDate: Date;
@@ -134,6 +136,7 @@ export class TenantManagementList {
 		TotalPrice: number;
 		MainColor: string;
 		SecondaryColor: string;
+		TertiaryColor: string;
 		Opacity: number;
 		BackgroundId: string;
 		ComapnylogoId: string;
@@ -156,5 +159,25 @@ export class TenantManagementList {
 		LastMonthCreatedTariffs: number;
 		ScheduledTasksLimitPerReport: number;
 		IsHybrid: boolean;
+		WhatsAppMessagingPhoneNumber: string;
+		ActivatedforDeclarationApprove: boolean;
+		DeclarationMessage: string;
+		ActivatePrivateSite: boolean;
+		IsContainerTrackingPrepaid: boolean;
+		DigitalPortalLastDate: Date;
+		DigitalPortalTotalLastWeek: number;
+		DigitalPortalTotalLastMonth: number;
+		DigitalPortalMobileLastDate: Date;
+		DigitalPortalMobTotalLastWeek: number;
+		DigitalPortalMobTotalLastMonth: number;
+		DPArchiveShipmentCreateFilter: number;
+		DPArchiveShipmentArrivalFilter: number;
+		DPArchiveShipmentDepartFilter: number;
+		ShowMoneyOrder: boolean;
+		CargoTrackingPublicShowEvents: boolean;
+		CargoTrackingPrivateShowEvents: boolean;
+		LogoURL: string;
+		ServiceAgreementURL: string;
+		EcommerceSupportEmail: string;
 	
-}
+}

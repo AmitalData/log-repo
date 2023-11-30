@@ -26,6 +26,7 @@ namespace Logitude.BL.ShipmentsModel.Tools.DataMapping
             entityPoco.UpdateDate = entityPM.UpdateDate;
             entityPoco.UpdatedByUserId = entityPM.UpdatedByUserId;
             entityPoco.Inactive = entityPM.Inactive;
+            entityPoco.IsManuallyAdded = entityPM.IsManuallyAdded;
             BuildSearchFields(entityPM, entityPoco);
         }
 

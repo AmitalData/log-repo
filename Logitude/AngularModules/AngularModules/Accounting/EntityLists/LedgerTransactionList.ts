@@ -76,6 +76,15 @@ export class LedgerTransactionList {
 	AccountDisplayNumber: string;
 	PaymentValueDate: Date;
 	PaymentChequeStatus: string;
+	JournalCreatedByUser: string;
+	AccountLocalName: string;
+	UpdateDateTime: Date;
+	UpdatedByUserName: string;
+	InternalNote: string;
+	SecurityLevelFiltering: number;
+	TaxReportId: string;
+	TaxReportNumber: string;
+	AmountInNIS: number;
 	
 }
  

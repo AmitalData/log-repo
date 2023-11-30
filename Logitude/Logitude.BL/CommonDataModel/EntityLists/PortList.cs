@@ -48,5 +48,9 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         public string TransportModeId { get; set; }
         public string StateName { get; set; }
         public string StateCode { get; set; }
+
+        public double Latitude { get; set; }
+
+        public double Longtitude { get; set; }
     }
 }

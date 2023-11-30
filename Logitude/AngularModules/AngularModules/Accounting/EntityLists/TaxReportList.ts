@@ -39,6 +39,10 @@ export class TaxReportList {
 	StatusEnglishName: string;
 	NeedsRebulid: boolean;
 	UpdatedByUserName: string;
+	OutputTaxAmountRound: number;
+	InputsTaxAmountRound: number;
+	ClosingJournalNumber: string;
+	ClosingJournalId: string;
 	
 }
  

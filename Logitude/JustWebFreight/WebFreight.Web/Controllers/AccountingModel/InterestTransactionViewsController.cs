@@ -73,6 +73,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("InterestReport", interestReportPM.Tenant, authToken.Tenant);
                 SecurityUtility.CheckContactFeature("InterestTransaction", "READ", authToken.Tenant);
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
 
@@ -82,6 +83,27 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
 
                 return Request.CreateResponse(HttpStatusCode.OK, interestReportPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage PutInterestTransactionNotes(InterestTransactionPM interestTransactionPM)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                SecurityUtility.AuthenticationOnEntityTenant("InterestTransaction", interestTransactionPM.Tenant, authToken.Tenant);
+                SecurityUtility.CheckContactFeature("InterestTransaction", "UPDATE", authToken.Tenant);
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+                InterestTransactionQueryService interestTransactionQuery = new InterestTransactionQueryService(MyContext);
+                var interestTransaction = interestTransactionQuery.MapInterestTransactionNotes(interestTransactionPM);
+                return Request.CreateResponse(HttpStatusCode.OK, interestTransaction);
             }
             catch (Exception ex)
             {

@@ -1,10 +1,11 @@
-﻿import {Component, ChangeDetectorRef}  from '@angular/core';
+import {Component, ChangeDetectorRef}  from '@angular/core';
 import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
 import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
 import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
 import {ChartOfAccountPM} from '../../../EntityPMs/ChartOfAccountPM';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {AppTool} from '../../../../Infrastructure/Tools';
+import { FullAccountingSettingListService } from 'Accounting/Services/StandardLists/FullAccountingSettingListService';
 
 @Component({
     
@@ -21,10 +22,14 @@ export class ChartOfAccountGeneralTabComponent extends BaseComponent {
     public IsCustomerAccount: boolean = false;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public ParentsFilterItems: ApiQueryFilters;
+    public IsSecurityLevelVisibile: boolean = false;
+    private fullAccountingSettingListService: FullAccountingSettingListService;
 
 
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
         super();
+
+        this.fullAccountingSettingListService = new FullAccountingSettingListService();
 
         // Set Entity
         this.EntityPM = entityArgs.EntityPM;
@@ -34,7 +39,7 @@ export class ChartOfAccountGeneralTabComponent extends BaseComponent {
         this.ParentsFilterItems.addAdditionalFilter("Id", this.EntityPM.Id, null, null, "Exclude", false, false, false, "string");
 
         this.SetUIProperties();
-
+        this.getAccountingSettingSecurityLevelField();
     }
 
     // Properties
@@ -86,12 +91,33 @@ export class ChartOfAccountGeneralTabComponent extends BaseComponent {
         }
     }
 
+    get ChartOfAccountSecurityLevel() { return this.EntityPM.ChartOfAccountSecurityLevel; }
+    set ChartOfAccountSecurityLevel(value: number) {
+        if (this.EntityPM.ChartOfAccountSecurityLevel != value) {
+            this.EntityPM.ChartOfAccountSecurityLevel = value;
+        }
+    }
 
     SetUIProperties() {
         if (!this.EntityPM.TypeCode) {
             this.UIProperties.SetEnabled("ParentId", this.ObjectTableName, false);
         }
 
+    }
+
+    getAccountingSettingSecurityLevelField() {
+        this.fullAccountingSettingListService.getSingle(SessionLocator.Tenant.toString()).subscribe((response: any) => {        
+            if (response != null) {
+                var response = response.Result;
+                console.log(response.IsSecurityLevelActivated);
+                if (response.IsSecurityLevelActivated) {
+                        this.IsSecurityLevelVisibile = true;
+                    }
+                    else {
+                        this.IsSecurityLevelVisibile= false;
+                    }
+                }
+        });
     }
 
     OnLovItemChanged(item: any) {

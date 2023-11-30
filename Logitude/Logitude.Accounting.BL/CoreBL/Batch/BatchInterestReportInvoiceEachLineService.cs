@@ -168,7 +168,9 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
             aRInvoicePM.IsGeneralInvoice = true;
             aRInvoicePM.IsFullAccounting = true;
             aRInvoicePM.SetApproved = true;
-
+            aRInvoicePM.MasterShipmentNumbers = null;
+            aRInvoicePM.MasterNumbers = null;
+            aRInvoicePM.HouseNumbers = null;
             if (!string.IsNullOrEmpty(cardPM.SATPaymentMethodCode))
             {
                 aRInvoicePM.SATPaymentMethodCode = cardPM.SATPaymentMethodCode;
@@ -267,8 +269,8 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 aRInvoiceLinePM.LocalCurrencyAmount = (double?)interestReport.TotalAmount;
             }
             aRInvoiceLinePM.Quantity = 1;         
-            aRInvoiceLinePM.Description = "Interest Between " + interestReport.InterestReportLinesByDates.First().FromDate.ToString("dd/MM/yyyy") + " and "+ interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy");
-            aRInvoiceLinePM.LocalDescription = "ריבית לתאריכים  " + interestReport.InterestReportLinesByDates.First().FromDate.ToString("dd /MM/yyyy") + " עד " + interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy");
+            aRInvoiceLinePM.Description =string.Concat("Interest  For", " ", interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy"));
+            aRInvoiceLinePM.LocalDescription = string.Concat("ריבית ל", " ", interestReport.InterestReportLinesByDates.Last().ToDate.ToString("dd/MM/yyyy"));
             aRInvoiceLinePM.ChargesTypeId = chargesType.Id;
             aRInvoiceLinePM.VatTypeId = chargesType.VatTypeId;
             aRInvoiceLinePM.VatPercentage = vatTypePercentagePM.Percentage;
@@ -383,7 +385,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
                             if (myComparativeDate != null)
                             {
-                                if (myPaymentTerm.CurrentMonth)
+                                if (myPaymentTerm.EndOfMonth)
                                 {
                                     myComparativeDate = myComparativeDate.Value.AddMonths(1);
 

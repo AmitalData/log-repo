@@ -189,7 +189,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             return query.GetEntitiyIdByShipmentNumber(shipmentNumber, tenant);
         }
 
-        public ShipmentPM HouseCustomDataMappingAndValidatin(House MyEntity, int Tenant,string ComputingPartnerCode = "")
+        public ShipmentPM HouseCustomDataMappingAndValidatin(House MyEntity, int Tenant,string ComputingPartnerCode = "", bool IsUpdate = false)
         {
             try
             {
@@ -198,7 +198,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 TenantPM MyTenantPM = tenantQuery.GetSinglePM(Tenant);
                 UserPM MyUserPM = userQuery.GetSingleUserPMByEmail("system@tenant" + Tenant + ".com", Tenant, false);
 
-                ShipmentPM temp = HouseDataMappingAndValidatin(MyEntity, Tenant, ComputingPartnerCode);
+                ShipmentPM temp = HouseDataMappingAndValidatin(MyEntity, Tenant, ComputingPartnerCode, IsUpdate);
                 temp.NewConcurrencyGUID = Guid.NewGuid().ToString();
                 temp.Tenant = Tenant;
                 temp.ShipmentLevelCode = "H";
@@ -510,7 +510,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
             return myResult;
         }
 
-        public List<ConsoleShipmentPM> HouseCustomDataMappingAndValidatin(Master myMaster, List<House> MyEntity, int Tenant, string ComputingPartnerName = "")
+        public List<ConsoleShipmentPM> HouseCustomDataMappingAndValidatin(Master myMaster, List<House> MyEntity, int Tenant, string ComputingPartnerName = "", bool IsUpdate = false)
         {
             try
             {
@@ -522,7 +522,7 @@ namespace Logitude.BL.ShipmentsModel.APIDataContract.ApiV1
                 var MyList = new List<ConsoleShipmentPM>();
                 foreach (var item in MyEntity)
                 {
-                    ShipmentPM temp = HouseCustomDataMappingAndValidatin(item, Tenant, ComputingPartnerName);
+                    ShipmentPM temp = HouseCustomDataMappingAndValidatin(item, Tenant, ComputingPartnerName, IsUpdate);
                     temp.NewConcurrencyGUID = Guid.NewGuid().ToString();
                     temp.Tenant = Tenant;
                     temp.ShipmentLevelCode = "H";

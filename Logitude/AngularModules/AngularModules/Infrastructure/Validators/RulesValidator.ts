@@ -13,6 +13,7 @@ import { CustomFieldClass } from '../DataContracts/CustomFieldClass';
 import { EntityListService } from '../Services/EntityListService';
 import { ApiQueryFilters, FilterItem } from '../DataContracts/ApiQueryFilters';
 import { DateTool } from '../Tools';
+import { SessionLocator } from '../Utilities/SessionLocator';
 
 
 declare var window: any;
@@ -100,8 +101,10 @@ export class RulesValidator {
     }
     public ValidateAllTableRules(entity: any, objectTableId: string, errorsArray: Array<string>) {
 
-        this.ValidateAllRequiredFieldRules(entity, objectTableId, errorsArray);
-        this.ValidateEntityRules(entity, objectTableId, errorsArray);
+        if (SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "TSV")[0] == null) {
+            this.ValidateAllRequiredFieldRules(entity, objectTableId, errorsArray);
+            this.ValidateEntityRules(entity, objectTableId, errorsArray);
+        }
         //this.val
         return errorsArray;
 
@@ -179,7 +182,7 @@ export class RulesValidator {
                     }
                     else {
 
-                        this.SetInsideEntityFieldValue(entity, entity, fieldName, ruleField, table);
+                        this.SetInsideEntityFieldValue(entity, entity, fieldName, ruleField, table, table);
 
                     }
 
@@ -201,7 +204,7 @@ export class RulesValidator {
 
 
 
-    private SetInsideEntityFieldValue(parentEntity: Object, entity: Object, fieldName: string, ruleField: ObjectTableRuleFieldPM, table: ObjectTablePM) {
+    private SetInsideEntityFieldValue(parentEntity: Object, entity: Object, fieldName: string, ruleField: ObjectTableRuleFieldPM, mainTable: ObjectTablePM, insideTable: ObjectTablePM) {
 
         var apiFilters: ApiQueryFilters = new ApiQueryFilters();
 
@@ -211,15 +214,15 @@ export class RulesValidator {
         var i: number = 0;
         var f1: string = fieldsAray[0];//"IncotermId.PerpaidCollect.Id"
         var currentValue: string = currentEntity[fieldsAray[i]];
-        var objectField: ObjectFieldPM = this._tenantObjectFields.filter(x => x.FieldName === fieldsAray[i] && x.ObjectTableId === table.Id)[0];
+        var objectField: ObjectFieldPM = this._tenantObjectFields.filter(x => x.FieldName === fieldsAray[i] && x.ObjectTableId === insideTable.Id)[0];
         if (objectField && objectField.DataTypeCode == "DateTime") {
             if (fieldsAray[i + 1] == "Date") {
                 var datetimevalue: Date = currentEntity[fieldsAray[i]];
                 var datevalue = DateTool.TruncateTime(datetimevalue);
-                this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, datevalue, table.Id);
+                this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, datevalue, mainTable.Id);
             }
             else
-                this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, currentValue, table.Id);
+                this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, currentValue, mainTable.Id);
         }
         if (objectField && currentValue && objectField.DataTypeCode == "LookUp") {
             var insideEntityName: string = objectField.ObjectTable_LookUpTableName;
@@ -240,12 +243,12 @@ export class RulesValidator {
                                     var insideTable2: ObjectTablePM = this._objectTables.filter(t => t.Name == insideEntityName2 && (t.Tenant == SessionInfo.LoggedUserTenant || t.Tenant == 0))[0];
 
                                     var insideFields = fieldName.replace(fieldsAray[i] + ".", "");
-                                    this.SetInsideEntityFieldValue(parentEntity, insideEntity, insideFields, ruleField, insideTable);
+                                    this.SetInsideEntityFieldValue(parentEntity, insideEntity, insideFields, ruleField, mainTable, insideTable);
 
 
                                 }
                                 else {
-                                    this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, insideValue, table.Id);
+                                    this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, insideValue, mainTable.Id);
                                 }
                             }
                             else {
@@ -272,12 +275,12 @@ export class RulesValidator {
                                     var insideTable2: ObjectTablePM = this._objectTables.filter(t => t.Name == insideEntityName2 && (t.Tenant == SessionInfo.LoggedUserTenant || t.Tenant == 0))[0];
 
                                     var insideFields = fieldName.replace(fieldsAray[i] + ".", "");
-                                    this.SetInsideEntityFieldValue(parentEntity, insideEntity, insideFields, ruleField, insideTable);
+                                    this.SetInsideEntityFieldValue(parentEntity, insideEntity, insideFields, ruleField, mainTable, insideTable);
 
 
                                 }
                                 else {
-                                    this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, insideValue, table.Id);
+                                    this.SetEntityFieldValue(parentEntity, ruleField.ObjectFieldName, insideValue, mainTable.Id);
                                 }
                             }
                             else {
@@ -309,9 +312,11 @@ export class RulesValidator {
         if (value != undefined && value != null && (value instanceof CustomFieldClass)) {
             value = value.ResolvedValue;
         }
-        if (field !== null) {
+        if (field) {
             const textValue = value + '';
-            if (value && field.MaxLength < textValue.length) {
+            if (value && field.MaxLength < textValue.length &&
+                (field.DataTypeCode === "Text" || field.DataTypeCode === "nText")
+            ) {
                 value = textValue.substring(0, field.MaxLength);
             }
             if (field.IsCustom) {
@@ -905,18 +910,29 @@ export class RulesValidator {
             fieldCurrentValue = entity[condfield.ObjectFieldName];
 
 
-            if (fieldPM && (fieldPM.DataTypeCode === "Integer" || fieldPM.DataTypeCode === "Double" || fieldPM.DataTypeCode === "Decimal")) {
+            if (fieldPM && (fieldPM.DataTypeCode === "Integer" ||
+                fieldPM.DataTypeCode === "Double" ||
+                fieldPM.DataTypeCode === "Decimal" ||
+                fieldPM.DataTypeCode === "DateTime" || fieldPM.DataTypeCode === "Date"
+            )) {
                 conditionValue = FieldValueResolver.GetFieldDataValue(fieldPM, condfield.Value);
                 fieldCurrentValue = entity[condfield.ObjectFieldName];
+                if (!(fieldCurrentValue instanceof Date) && fieldCurrentValue) {
+                    fieldCurrentValue = new Date(fieldCurrentValue);
+                }
             }
             else {
                 fieldCurrentValue = FieldValueResolver.GetFieldStringValue(fieldPM, fieldCurrentValue);
                 conditionValue = condfield.Value;
-                if (fieldCurrentValue)
-                    fieldCurrentValue = fieldCurrentValue.toLowerCase();
+                if (fieldCurrentValue) {
 
-                if (conditionValue)
+                    if (typeof fieldCurrentValue == "boolean") fieldCurrentValue = fieldCurrentValue.toString();
+                    fieldCurrentValue = fieldCurrentValue.toLowerCase();
+                }
+
+                if (conditionValue) {
                     conditionValue = conditionValue.toLowerCase();
+                }
             }
 
             validcondition = this.IsValidCondition(condfield, validcondition, fieldCurrentValue, conditionValue);

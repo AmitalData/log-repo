@@ -1,0 +1,134 @@
+<style>
+    .Link:hover {
+        cursor: pointer;
+        color: #1C59FC;
+    }
+    .Link {
+        cursor: pointer;
+        font-size: 13px;
+        color: #0094ff;
+        height: 21px;
+        white-space: nowrap;
+    }    
+    .SystemDefaultsBox {
+        width: 100%;
+        height: 100%;
+        border: 1px solid #BABABA;
+    }
+    .CenterMessage {
+        text-align: center;
+        position: absolute;
+        right: 0;
+        left: 0;
+        top: 50%;
+        bottom: 0;
+    }
+</style>
+
+<table *ngIf="IsReady" style="background-color:transparent">
+    <tr style="height:10px"><td></td></tr>
+    <tr style="height:45%;vertical-align:top">
+        <td style="height:45%" class="CellStretch">
+            <div class="SystemDefaultsBox">
+                <logitude-edit-grid  
+                                    GridWidth="100%" GridHeight="100%"
+                                    [HeaderHeight]="25" [ItemSource]="DocOutItemsSource">
+                    <!--File Name-->
+                    <log-column [width]="'600'" [header]="'Docs out Document Types'">
+                        <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <div [style.width]="'600px'" class="TextTrimming">
+                                                {{item.DocumentTypeName}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                    <!--IsRequired-->
+                    <log-column [width]="'90'" [header]="'Choose'">
+                        <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                <div style="width: 100%; height: 100%; position: relative; text-align: center;">
+                                    <div class="CenterCenter" style="padding-left:35px">
+                                        <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked =$event"></CheckBox>
+                                    </div>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                </logitude-edit-grid>
+                <div class="SimpleGridViewBody CenterMessage"  *ngIf="IsNotDocumentOutFound"><span style="font-size:11px;color:gray;margin-top:10px;margin-left:5px">No Docs out Document Types Found</span></div>
+            </div>
+        </td>
+    </tr>
+    <tr style="height:10px"><td></td></tr>
+    <tr style="height:50%;vertical-align:top;background-color:white">
+        <td style="height:50%" class="CellStretch">
+            <div class="SystemDefaultsBox">
+                <logitude-edit-grid  
+                                    GridWidth="100%" GridHeight="100%"
+                                    [HeaderHeight]="25" [ItemSource]="DocInItemsSource">
+                    <!--File Name-->
+                    <log-column [width]="'600'" [header]="'Docs in Document Types'">
+                        <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                <table>
+                                    <tr>
+
+                                        <td>
+                                            <div [style.width]="'600px'" class="TextTrimming">
+                                                {{item.DocumentTypeName}}
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                    <!--IsRequired-->
+                    <log-column [width]="'90'" [header]="'Choose'">
+                        <ng-template let-item>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                <div style="width: 100%; height: 100%; position: relative;">
+                                    <div class="CenterCenter" style="padding-left:35px">
+                                        <CheckBox [IsChecked]="item.IsChecked" (Checked)="item.IsChecked =$event"></CheckBox>
+                                    </div>
+                                </div>
+                            </log-cell-template>
+                        </ng-template>
+                    </log-column>
+                </logitude-edit-grid>
+                <div class="SimpleGridViewBody CenterMessage"  *ngIf="IsNotDocumentInFound">
+                    <span style="font-size:11px;color:gray;margin-top:10px;margin-left:5px">No Docs in Document Types Found</span>
+                </div>
+            </div>
+        </td>
+    </tr>
+    <tr style="height: 32px;">
+        <td style="vertical-align: bottom">
+            <table style="height: 22px;">
+                <tr>
+                    <td>
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <div>
+                            <button class="Button" (click)="CloseButtonClicked()">Cancel</button>
+                        </div>
+                    </td>
+                    <td style="width: 5px;">
+                        <div></div>
+                    </td>
+                    <td style="width: 57px;">
+                        <button class="RedButton" (click)="SaveButtonClicked()">OK</button>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

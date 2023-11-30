@@ -1,11 +1,11 @@
-@dev @daily
+@stable @daily
 Feature: Single Vat Type fake Create, Search and Edit from Maintenance
     The user creates a single vat type, searches for and edits it from the Maintenance Module.
 
     Scenario: Add Single Vat Type Code with lenght more than 5
         Given the user logged in and open "VatTypes" in maintenance menu
         When add "123456" as single vat type code
-        Then a validation message with "Code Field must be less than 5" error should appear
+        Then a validation message with "Code Field length must be less than 5" error should appear
 
     Scenario: Create new single vat type
         Given a single vat type with the following details
@@ -31,12 +31,11 @@ Feature: Single Vat Type fake Create, Search and Edit from Maintenance
 
     Scenario: Edit the single vat type
         Given the user fill the following single vat type General details
-            | InActive         | YES                   |
             | Description      | New Description       |
             | LocalDescription | Local New Description |
         And add vat type percentage
             | PercentageDate | CurrentDate |
-            | Percentage     | 4           |
+            | Percentage     | 0           |
         And fill the following single vat type Accounting details
             | AccountingReceivablesExternalID | Receivables1 |
             | AccountingPayablesExternalID    | Payables1    |

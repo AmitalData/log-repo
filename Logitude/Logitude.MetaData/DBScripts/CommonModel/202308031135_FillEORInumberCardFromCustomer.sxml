@@ -1,0 +1,17 @@
+﻿<Script DBType="Main" Module="Common">
+  <Sql Version="1">
+    <![CDATA[
+  UPDATE
+      cards
+  SET
+      cards.EORInumber = s.EORInumber 
+  FROM 
+      cards c
+      INNER  JOIN Customers s
+          ON c.Id = s.Id
+		  where s.EORInumber  is not null
+    ]]>
+</Sql>
+</Script>
+
+

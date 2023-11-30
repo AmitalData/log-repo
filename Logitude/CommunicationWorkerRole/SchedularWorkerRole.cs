@@ -12,6 +12,7 @@ using Simplog.Data.InfrastructureModel;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Global.Data.GlobalModel;
 using Simplog.Global.Data.GlobalModel.Repositories;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -38,7 +39,7 @@ namespace CommunicationWorkerRole
             ThreadId = Guid.NewGuid().ToString();
             BatchServiceCode = "SchedularWR";
             DoneItemsInRange = new Dictionary<DateTime, int>();
-            CheckandRescheduleMissingTasks();
+            //CheckandRescheduleMissingTasks();
             StartThreadAliveTesterThread();
             ConnectClient();
             return base.OnStart();
@@ -68,22 +69,30 @@ namespace CommunicationWorkerRole
             List<TasksSchedulerPM> InprogressTasks = TasksSchedulerQuery.GetAllInprogressTasksSchedulerPMs();
             foreach (var Task in InprogressTasks)
             {
-                //var x = Process.GetCurrentProcess().Threads;
-                var TaskThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
-                if (TaskThread == null || !TaskThread.IsAlive)
-                {
-                    //TasksSchedulerService service = new TasksSchedulerService(objectContext, Tenant);
-                    Task.Status = null;
-                    Task.Version = Task.Version + 1;
-                    SchedulerHelper SchedulerHelper = new SchedulerHelper();
-                    SchedulerHelper.AddSchedulerQueue(Task);
-                    var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
-                    LogInfoToDB(Msg, Task);
-                    //service.Update(Task);
-                }
-
+                RescheduleTask(Task);
             }
-            //Thread.Sleep(new TimeSpan(0, 1, 0));
+        }
+
+        private void RescheduleTask(TasksSchedulerPM Task)
+        {
+            string taskExecutedByServerName = !string.IsNullOrEmpty(System.Environment.MachineName) ? System.Environment.MachineName + '/' + LogitudeSettings.WorkerRoleName : Task.ExecutedByServerName;
+            if(Task.ExecutedByServerName != taskExecutedByServerName)
+            {
+                return;
+            }
+
+            var TaskThread = TasksThreads.Where(a => a.Name == Task.Name).FirstOrDefault();
+            if (TaskThread != null && TaskThread.IsAlive)
+            {
+                return;
+            }
+
+            Task.Status = null;
+            Task.Version = Task.Version + 1;
+            SchedulerHelper SchedulerHelper = new SchedulerHelper();
+            SchedulerHelper.AddSchedulerQueue(Task);
+            var Msg = "The Task " + Task.Name + " Stopped abnormally and reschedualed to start again on " + Task.NextRunTime;
+            LogInfoToDB(Msg, Task);
         }
 
         public void LogInfoToDB(string Message, TasksSchedulerPM Task)
@@ -217,6 +226,7 @@ namespace CommunicationWorkerRole
                                         object[] ArrArgs = args.ToArray();
                                         var WRItem = System.Activator.CreateInstance(Type.GetType("CommunicationWorkerRole.Tasks." + Task.ProcedureCode), ArrArgs) as TaskManagerBase;
                                         Task.Status = "In progress";
+                                        Task.ExecutedByServerName = !string.IsNullOrEmpty(System.Environment.MachineName) ? System.Environment.MachineName + '/' + LogitudeSettings.WorkerRoleName : Task.ExecutedByServerName;
                                         WRItem.Task = Task;
                                         WRItem.queueservice = queueservice;
                                         WRItem.RetryNumber = message.RetryNumber;

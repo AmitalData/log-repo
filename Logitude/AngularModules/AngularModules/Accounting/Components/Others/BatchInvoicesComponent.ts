@@ -43,6 +43,8 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     public timer: any;
     public timerInterval: number = 1000;
     public ObjectTableName: string = "InterestReport";
+    public CategoryValue: string = null;
+    public CategoryIndex: string = null;
     public CreateInvoiceText: string = TextCodeTranslator.Translate("InterestReport.O.CreateInvoice");
     constructor(private CD: ChangeDetectorRef) {
     super();
@@ -224,6 +226,68 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
   this.MarkIsChecked.emit({ SelectedLines:selectedLines,AllSelected: this.AllSelected , ExcludedLines:this.ExcludedItems });
 
     }
+
+    //#region Category fields
+    IsCategoryDisabled: boolean = false;
+    CategoriesList: string[] = [
+        'Category 1',
+        'Category 2',
+        'Category 3',
+        'Category 4',
+        'Category 5'
+    ];
+
+    SelectedCategory: string;
+  
+    private category1Id: string;
+    public get Category1Id() { return this.category1Id; }
+    public set Category1Id(value: string) {
+        if (this.category1Id != value) {
+            this.category1Id = value;
+            this.ValidateDate(null);
+        }
+    }
+
+
+    private category2Id: string;
+    public get Category2Id() { return this.category2Id; }
+    public set Category2Id(value: string) {
+        if (this.category2Id != value) {
+            this.category2Id = value;
+            this.ValidateDate(null);
+        }
+    }
+
+    private category3Id: string;
+    public get Category3Id() { return this.category3Id; }
+    public set Category3Id(value: string) {
+        if (this.category3Id != value) {
+            this.category3Id = value;
+            this.ValidateDate(null);
+        }
+    }
+
+    private category4Id: string;
+    public get Category4Id() { return this.category4Id; }
+    public set Category4Id(value: string) {
+        if (this.category4Id != value) {
+            this.category4Id = value;
+            this.ValidateDate(null);
+        }
+    }
+
+    //row 4
+    private category5Id: string;
+    public get Category5Id() { return this.category5Id; }
+    public set Category5Id(value: string) {
+        if (this.category5Id != value) {
+            this.category5Id = value;
+            this.ValidateDate(null);
+        }
+    }
+
+    //#endregion
+
      today: Date = new Date();
      lastmonth:any = this.today.setDate(this.today.getDay() - 30);
   
@@ -319,8 +383,20 @@ export class BatchInvoicesComponent extends BaseComponent implements AfterViewIn
     if (this.ShowInProgressReports) {
       filters.addAdditionalFilter("InterestReportStatusCode", "1,9,8", null, null, "InList", false, false, false, "string"); 
     }
-    else filters.addAdditionalFilter("InterestReportStatusCode", "1,9", null, null, "InList", false, false, false, "string"); 
-    
+    else filters.addAdditionalFilter("InterestReportStatusCode", "1,9", null, null, "InList", false, false, false, "string");
+
+
+    this.CategoryIndex = null;
+    this.CategoryValue = null;
+    if (this.SelectedCategory) {
+        this.CategoryIndex = this.SelectedCategory.replace(' ', '') + "Id"; // remove space from selected category
+
+        if (this.CategoryIndex)
+            this.CategoryValue = this.DataContext[this.CategoryIndex]; // select the value from the context
+    }
+
+      filters.addAdditionalFilter(this.CategoryIndex, this.CategoryValue, null, null, "Equals", false, false, false, "string");
+  
     filters.SortBy = sortingCol;
     filters.SortDirection = sortingDir;
 
@@ -586,7 +662,12 @@ else{
     this.selectedItems.Collection.forEach((item) => {
       interestReportArgs.SelectedIds.push(item.Id);
     });
-    interestReportArgs.ExcludedIds = this.ExcludedItems.Collection;
+      interestReportArgs.ExcludedIds = this.ExcludedItems.Collection;
+      interestReportArgs.CategoryIndex = this.CategoryIndex;
+      interestReportArgs.CategoryValue = this.CategoryValue;
+
+      interestReportArgs.ExcludedIds = this.ExcludedItems.Collection;
+
     return interestReportArgs;
   }
     CancelButtonClicked() {

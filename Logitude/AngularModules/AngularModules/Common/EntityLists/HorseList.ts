@@ -12,7 +12,7 @@ export class HorseList {
 		Name: string;
 		YearOfBirth: number;
 		Color: string;
-		Gender: string;
+		GenderName: string;
 		Breed: string;
 		Discipline: string;
 		TravelBehavior: string;
@@ -32,5 +32,6 @@ export class HorseList {
 		UpdatedByUserId: string;
 		UpdatedByUserName: string;
 		SearchFields: string;
+		GenderCode: string;
 	
 }

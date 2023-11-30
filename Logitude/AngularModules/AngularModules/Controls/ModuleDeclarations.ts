@@ -10,6 +10,8 @@ import {TextCodeTranslationPipe} from './Pipes/TextCodeTranslationPipe';
 import {IdGeneratorPipe} from './Pipes/IdGeneratorPipe';
 import { DateToMonthPipe } from './Pipes/DateToMonthPipe';
 import { MinutesToTimePipe } from './Pipes/MinutesToTimePipe';
+import {ObjectFieldTextCodeTranslationPipe} from './Pipes/ObjectFieldTextCodeTranslationPipe';
+import {IdGeneratorAsyncPipe} from './Pipes/IdGeneratorAsyncPipe';
 
 // All
 import {AccessLevelButton} from './All/AccessLevelButton';
@@ -85,9 +87,10 @@ export const Pipes =
         DateTimePipe,
         TextCodeTranslationPipe,
         IdGeneratorPipe,
+        IdGeneratorAsyncPipe,
         DateToMonthPipe,
         MinutesToTimePipe,
-
+        ObjectFieldTextCodeTranslationPipe,
     ];
 
 export const Components =

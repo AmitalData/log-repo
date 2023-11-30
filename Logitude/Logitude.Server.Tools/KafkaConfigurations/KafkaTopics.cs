@@ -10,5 +10,8 @@
         public static string TasksDoneTopic = "tasksdone_topic";
         public static string TasksCreateTopic = "taskscreate_topic";
         public static string LookupsTopic = "lookups_topic";
+        public static string ContainerSetValues = "containersetvalues_topic";
+        public static string ContainerUpdateTopic = "containerupdate_topic";
+        public static string ContainerCreateTopic = "containercreatee_topic";
     }
 }

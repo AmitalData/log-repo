@@ -95,6 +95,11 @@ export class ShipmentSubTypePM {
     public set UpdatedByUserName(newValue: string) { if (this.updatedByUserName != newValue) { this.updatedByUserName = newValue; this.MarkAsDirty("UpdatedByUserName"); } }
        
 	 
+    private isManuallyAdded: boolean;
+    public get IsManuallyAdded() { return this.isManuallyAdded; }
+    public set IsManuallyAdded(newValue: boolean) { if (this.isManuallyAdded != newValue) { this.isManuallyAdded = newValue; this.MarkAsDirty("IsManuallyAdded"); } }
+       
+	 
 
     public OldEntityPM: ShipmentSubTypePM;
 		

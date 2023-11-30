@@ -5,11 +5,13 @@ using Logitude.BL.CommonDataModel.Tools.Validating;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
+using Logitude.Server.Tools.QueueService;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
@@ -55,6 +57,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
             TableLastUpdateClass.UpdateTableHistory(tenant, "PackageType");
+
+            AddPackageTypeKafkaQueueMessage();
         }
 
         public void Update(PackageTypePM entityPM)
@@ -89,6 +93,8 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             entityRepository.Update(Poco);
             entityRepository.SubmitChanges();
             TableLastUpdateClass.UpdateTableHistory(tenant, "PackageType");
+
+            AddPackageTypeKafkaQueueMessage();
         }
 
         private void CheckMeasurement()
@@ -154,6 +160,25 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                     throw new Exception(msg);
                 }
             }
+        }
+        private void AddPackageTypeKafkaQueueMessage()
+        {
+            if (!FeatureToggleHelper.HasFeatureToggle("CTL", entityPM.Tenant))
+            {
+                return;
+            }
+            AddKafkaQueueMessage();
+        }
+
+        private void AddKafkaQueueMessage()
+        {
+            IQueueService queueservice = new DbQueueService();
+            queueservice.InitializeQueue("CToolLookups", 0);
+            var queueMessage = new Dictionary<string, string>() {
+                { "Entity", "PackageType" },
+                { "EntityId", entityPM.Id },
+                { "Tenant", tenant.ToString()}};
+            queueservice.Send(queueMessage, tenant);
         }
     }
 }

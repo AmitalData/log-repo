@@ -59,7 +59,16 @@
     Size="200">
     <Constraints
       Nullable="false" />
+   </Column> 
+
+  <Column
+    Name="SectionNumber"
+    ShortName="SectionNumber"
+    Type="int" >
+  <Constraints
+      Nullable="true" />
   </Column>
+ 
   <Relation
     ForeignKeyColumn="ScreenId"
     ReferencedTable="Screens"

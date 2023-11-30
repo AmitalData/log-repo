@@ -66,7 +66,6 @@ namespace WarehouseData
                     IsBuildDataRunning = true;
 
                     MainDataWarehouseService mainDataWarehouseService = new MainDataWarehouseService();
-
                     string sourceConnectionString = mainDataWarehouseService.BuildConnectionString(sourceConnectionArray[0], sourceConnectionArray[1], sourceConnectionArray[2], sourceConnectionArray[3]);
                     try
                     {
@@ -96,9 +95,10 @@ namespace WarehouseData
 
                         FeatureDataWarehouseService featureDataWarehouseService = new FeatureDataWarehouseService(sourceConnectionString.Replace("Main", "Global"), sourceConnectionString);
 
-                        Parallel.ForEach(dWHSettingsTable.Rows.Cast<DataRow>().ToList(), (row) =>
+                        foreach(DataRow row in  dWHSettingsTable.Rows.Cast<DataRow>().ToList())
                         {
                             int tenant = Int32.Parse(row["Tenant"].ToString());
+                         
                             string catalog = row["Catalog"].ToString();
                             string userName = row["UserName"].ToString();
                             string password = row["Password"].ToString();
@@ -108,6 +108,8 @@ namespace WarehouseData
 
                             if (featureDataWarehouseService.CheckFeature("PrivateDB", tenant))
                             {
+                                var privateMainDataWarehouseService = new MainDataWarehouseService();
+
                                 string message = "Start " + (type == "Build" ? "building" : "updating") + " data on private tenant (" + tenant + ")";
 
                                 if (string.IsNullOrEmpty(allMessage)) allMessage = message + System.Environment.NewLine;
@@ -118,35 +120,32 @@ namespace WarehouseData
                                 Stopwatch stopWatchPrivateDB = new Stopwatch();
                                 stopWatchPrivateDB.Start();
 
-                                string destinationConnectionString = mainDataWarehouseService.BuildConnectionString(catalog, userName, password, server);
-                                List<int> relatedTenants = mainDataWarehouseService.privateTenantDataWarehouse.GetPrivateRelatedTenants(sourceConnectionString, tenant);
+                                string destinationConnectionString = privateMainDataWarehouseService.BuildConnectionString(catalog, userName, password, server);
+                                List<int> relatedTenants = privateMainDataWarehouseService.privateTenantDataWarehouse.GetPrivateRelatedTenants(sourceConnectionString, tenant);
 
                                 if (!relatedTenants.Contains(tenant)) relatedTenants.Add(tenant);
 
-                                string tenants = mainDataWarehouseService.privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
+                                string tenants = privateMainDataWarehouseService.privateTenantDataWarehouse.ConvertIntgerListToString(relatedTenants);
 
                                 if (type == "Build")
                                 {
-                                    mainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                                    privateMainDataWarehouseService.BuildDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
                                     privateDataWarehouseViewService.GeneratePrivateViews(new PrivateViewArgs() { ConnectionString = destinationConnectionString, UserName = privateUserName, Tenant = tenant, Catalog = catalog, ApplyGrantOnViews = !string.IsNullOrEmpty(privateUserName) ? true : false, IsParentTenant = isParentTenant });
-
-
                                 }
-                                else mainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
+                                else privateMainDataWarehouseService.UpdateDataWarehouse(sourceConnectionString, destinationConnectionString, tenant, tenants);
 
                                 stopWatchPrivateDB.Stop();
                                 TimeSpan tsPrivateDB = stopWatchPrivateDB.Elapsed;
                                 string replaceMessage = "Updated Private Tenant (" + tenant + ")" + "    Children Tenants" + tenants.Replace(", " + tenant.ToString(), "").Replace(tenant.ToString() + ",", "") + "   Done in ( " + tsPrivateDB.ToString(@"hh\:mm\:ss") + " )";
                                 if (type == "Build")
                                 {
-                                    //string count = mainDataWarehouseService.GetRecordDataCountByTableName("Fact_Shipments", destinationConnectionString).ToString();
                                     replaceMessage = "Private Tenant (" + tenant + ")" + "    Children Tenants" + tenants.Replace(", " + tenant.ToString(), "").Replace(tenant.ToString() + ",", "") + "  Done in ( " + tsPrivateDB.ToString(@"hh\:mm\:ss") + " )";
                                 }
 
                                 allMessage = allMessage.Replace(message, replaceMessage);
                                 SetControlPropertyValue(PrivateDblabel, "Text", allMessage);
                             }
-                        });
+                        }
                         SetControlPropertyValue(PrivateDblabel, "ForeColor", Color.Green);
                         IsBuildDataRunning = false;
 
@@ -156,12 +155,26 @@ namespace WarehouseData
                         SetControlPropertyValue(label, "Text", "Done in ( " + ts.ToString(@"hh\:mm\:ss") + " )");
                         SetControlPropertyValue(label, "ForeColor", Color.Green);
                     }
-                    catch (Exception ex)
+
+                    catch (AggregateException aggregateException)
                     {
+
+                        foreach (var exception in aggregateException.Flatten().InnerExceptions)
+                        {
+                            MessageBox.Show(GeneralDataWarehouseService.GetFullExceptionMessageFromException(exception));
+                        }
                         IsBuildDataRunning = false;
-                        MessageBox.Show(ex.Message, ex.Message + (ex.InnerException != null ? ex.InnerException.ToString() : ""));
 
                     }
+                    catch (Exception exception)
+                    {
+                        MessageBox.Show(GeneralDataWarehouseService.GetFullExceptionMessageFromException(exception));
+                        IsBuildDataRunning = false;
+
+                    }
+
+
+
                 }
             }
             else MessageBox.Show("Connection Problem");
