@@ -30,7 +30,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
     public   class WebAPISendMessage2MasofService
     {
         //private string _communicationSubject = "שידור מסר  פעולות מיוחדות לממן";
-
+        private bool IsNewAPI=false;
 
         public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string InterfaceName, string PartnerCode, int? tenantPriority = null)///using  by SendWEBAPIMessage2MamanWRWR
         {
@@ -64,6 +64,16 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
             var customsPartnerFtpDetails = new CustomsPartnerFtpDetails();
             var defDefaultJSON = customsPartnerFtpDetails.GetAllInterfaceName().First(r => r.Key == InterfaceName).Value;
             var defDefault = ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defDefaultJSON);
+
+            var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
+            var PartnerFtpList= myCustomsPartnerFtpQueryService.GetListBy(tenant, InterfaceName, PartnerCode, CustomsPartnerFtpDetails.TypeCode_Out);
+            if(PartnerFtpList.Count > 1)
+            {
+               if(PartnerFtpList.Find(x => x.InterfaceName.Contains("New")) != null)
+                {
+                    this.IsNewAPI = true;
+                }
+            }
 
             CustomsPartnerFtpPM pmCustomsPartnerFtp = GetCustomsPartnerFtpPM(tenant, InterfaceName, PartnerCode, defDefault);
             var dtoWebApiDefinition = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(pmCustomsPartnerFtp.CommunicationDetails);
@@ -107,7 +117,8 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
 
                     Tenant = tenant,
                     DeclarationId = declarationId,
-                    LoggedContactId = loggedContactId
+                    LoggedContactId = loggedContactId,
+                    IsNewAPI = this.IsNewAPI,
                 };
                 var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
 
@@ -233,6 +244,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
         public string MessageCode { get;  set; }
         public string LoggedContactId { get;  set; }
         public string RqstCommLogID { get; set; }
+        public bool IsNewAPI { get; set; }
     }
 
     public class MasofException : Exception
