@@ -49,6 +49,14 @@ namespace Logitude.Accounting.Data.Repositories
                      select a);
             return q;
         }
+        public IQueryable<TaxReportLine> GetAllLines(int tenant, string taxReportId)
+        {
+            var q = (from a in context.TaxReportLines
+                     where a.Tenant == tenant
+                     && a.TaxReportId == taxReportId
+                     select a);
+            return q;
+        }
 
     }
 

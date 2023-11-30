@@ -271,7 +271,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
             List<TaxReportLineList> lines = reportLineListQueryService.GetReportLines(taxReportPM.Id, taxReportPM.Tenant).ToList();
 
-            if (taxReportPM.StatusCode != VatReportStatusValues.TransmittedAndClosingJournal &&  taxReportPM.StatusCode != VatReportStatusValues.Cancelled && taxReportPM.StatusCode != VatReportStatusValues.Transmitted && taxReportPM.StatusCode != VatReportStatusValues.CancelationInProgress && taxReportPM.StatusCode != VatReportStatusValues.CancelationFailed)
+            if (taxReportPM.StatusCode != VatReportStatusValues.TransmittedAndClosingJournal &&  taxReportPM.StatusCode != VatReportStatusValues.Cancelled && taxReportPM.StatusCode != VatReportStatusValues.Transmitted && taxReportPM.StatusCode != VatReportStatusValues.CancelationInProgress && taxReportPM.StatusCode != VatReportStatusValues.CancelationFailed && !(taxReportPM.StatusCode == VatReportStatusValues.InProgress && taxReportPM.RecalculateData))
             {
                 bool hasErrors = lines.Any(d => d.StatusCode != "6"); // 6- Ready for transmit
                 if (hasErrors && taxReportPM.StatusCode != VatReportStatusValues.Error)
@@ -384,7 +384,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             entityPM.StatusCode = "P";
             entityPM.RecalculateData = true;
-            TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant, entityPM.RecalculateData);
+            //TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, entityPM.Tenant, entityPM.RecalculateData);
         }
         
        

@@ -413,7 +413,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
                 bool batchIt = true;
                 if (batchIt)
                 {
-                    BatchTaskExecutionPM btePM = TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, tenant);
+                    BatchTaskExecutionPM btePM = TaxReportService.CreateTaxReportFileInBatch(entityPM.Id, tenant,entityPM.RecalculateData);
 
 
                     return Request.CreateResponse(HttpStatusCode.OK, btePM);
@@ -433,6 +433,8 @@ namespace WebFreight.Web.Controllers.AccountingModel
             }
 
         }
+
+
 
         private void DirectRun(TaxReportPM taxReportPM, int tenant)
         {
