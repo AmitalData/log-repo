@@ -167,11 +167,6 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return InterestReport2_Click(tenant, _TextBoxParam);
                     }
                     break;
-                case "JournalApproveReturnToQueue_Click":
-                    {
-                        return ReturnToQueue_Click(tenant, _TextBoxParam);
-                    }
-                    break;
 
                     case "closingVATReport":                   
                         return ClosingVATReport(tenant, _TextBoxParam);                    
@@ -658,38 +653,10 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
-        private GateWayTesterResult ReturnToQueue_Click(int tenant, string textBoxParam)
-
-        {
-            dynamic param = null;
-            var gateWayTesterResult = new GateWayTesterResult();
 
 
-            try
-            {
-                param = LogitudeXmlSerializer.JsonConvertDeserializeObject(textBoxParam);
-                int tenantFrom = param.Tenant;
-                bool allTenants = param.AllTenants;
-                JournalApproveService.ReturnToQueue(tenantFrom, allTenants);
-
-            }
-            catch (Exception eee)
-            {
-                //param = null;
-                //throw;
-                gateWayTesterResult.ExceptionMess = eee.ToString();
-            }
-            finally
-            {
-
-
-                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
-            }
-            return gateWayTesterResult;
-        }
-
-
-
+        
+               
         private GateWayTesterResult ButtonLoadSystem1000_Click(int tenant, string textBoxParam)
         {
             var gateWayTesterResult = new GateWayTesterResult();
