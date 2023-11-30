@@ -162,7 +162,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             //DocumentDate =
                         });
             var notStreamedJournalSlowQueue = qApprovedBetweenJournal
-                .Where(r => r.StatusCode == "6" || r.StatusCode == "3")//approved or Voided
+                .Where(r => r.StatusCode == "2" || r.StatusCode == "3")//approved or Voided
                 .Where(r => r.IsLedgerCreated == false)
                 .Select(g => new JournalLineLedgerDTO()
                 {
