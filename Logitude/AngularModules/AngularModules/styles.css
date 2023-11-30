@@ -26,3 +26,14 @@
 @import "~logitude-workflow/dist/index.css"; 
 @import "~ng-zorro-antd/tree-select/style/index.min.css"; 
 @import url("_Resources/css/pretty-print-json.css");
+
+#enable-toolbar-trigger {
+    display: flex;
+    flex-direction: row-reverse;
+    -ms-transform: translateY(-100%)!important;
+    transform: translateY(-100%)!important;
+    position:relative;
+    top: -12px !important;
+    right: 6px !important;
+    transition: transform 0.3s ease-in-out;
+}
