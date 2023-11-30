@@ -273,7 +273,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
             return documents;
         }
 
+		public List<string> GetDocumentsFilingMetaDataValuesPMsByTenantMetaDataValueDocumentsMetaDataTypeId( int tenant, string  CARFI, string courierhawb, string INTGR_R, string integratorCode)
+		{
+			var documents = (from a in repository.context.DocumentsFilingMetaDataValues.Include("DocumentsMetaDataTypes")
+														where a.Tenant == tenant && ((a.DocumentsMetaDataType.Code == CARFI && a.MetaDataValue == courierhawb)|| (a.DocumentsMetaDataType.Code == INTGR_R && a.MetaDataValue == integratorCode))
+							                            orderby a.DocumentsFilingId
+							                            select a).GroupBy(p => p.DocumentsFilingId).Where(x => x.Count() == 2).Select(y => y.Key).ToList();
+			return documents;
+		}
 
-
-    }
+	}
 }

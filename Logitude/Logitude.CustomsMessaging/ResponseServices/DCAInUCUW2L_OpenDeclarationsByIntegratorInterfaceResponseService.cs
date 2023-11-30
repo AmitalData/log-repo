@@ -82,7 +82,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
 
                     var myConnectDocumentsfilingService = new ConnectDocumentsfilingService();
-                    myConnectDocumentsfilingService.Connect(decId, customFileNo, requestParams);
+                    myConnectDocumentsfilingService.Connect(decId, customFileNo, requestParams, courierMasterID);
 
                 }
 
@@ -134,7 +134,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         private ICommonDataContext _DataContext;
         private DocumentsFilingQuery _documentsFilingQuery;
 
-        public void Connect(string DeclarationId, string customFileNo, GenericRequestParams requestParams)
+        public void Connect(string DeclarationId, string customFileNo, GenericRequestParams requestParams,string courierMasterID)
         {
             if (String.IsNullOrWhiteSpace(DeclarationId) || string.IsNullOrWhiteSpace(customFileNo))
             {
@@ -156,7 +156,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             {
                 LogMessagingUtil.Instance.AppendLine($"ConnectDocumentsfilingService.Connect:GetByexternalentityreference:{customFileNo}.Where(r => r.EntityId == null || r.EntityId.Trim() == string.Empty) not found any !!");
 
-                documentsFilingIds = GetByCourierRef(DeclarationId, requestParams.Tenant);
+                documentsFilingIds = GetByCourierRef(DeclarationId, requestParams.Tenant, courierMasterID);
 
             }
             foreach (string documentsFilingId in documentsFilingIds)
@@ -169,26 +169,30 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         }
 
-        private static List<string> GetByCourierRef(string DeclarationId, int Tenant)
+        private static List<string> GetByCourierRef(string DeclarationId, int Tenant, string CourierMasterID)
         {
             List<string> documentsFilingIds = new List<string>();
             var sw = Stopwatch.StartNew();
             var decRepo = new DeclarationRepository(Tenant);
             string courierhawb = decRepo.GetCourierhawbFromId(DeclarationId, Tenant);
-            if (!string.IsNullOrWhiteSpace(courierhawb))
+			string integratorCode = decRepo.GetIntegratorCodeById(CourierMasterID, Tenant);
+			
+
+			if (!string.IsNullOrWhiteSpace(courierhawb) && !string.IsNullOrWhiteSpace(integratorCode))
             {
-                var gDMREFRepository = new GDMREFRepository(Tenant);
-                //gDMREFRepository
+				ICommonDataContext iContext = CommonDataContext.GetContext(Tenant);
+				DocumentsFilingMetaDataValueQuery DocumentsFilingMetaDataValueQuery = new DocumentsFilingMetaDataValueQuery(iContext);
                 const string CARFI = "CARFI";
-                //courierhawb
-                var q = gDMREFRepository.GetByRef(REFID: CARFI, REFERENCE: courierhawb).Select(r => r.COMID);
-                documentsFilingIds = q.ToList();
-                string remark = $"Took:{sw.ElapsedMilliseconds};gDMREFWhere(REFID == CARFI&REFERENCE == {courierhawb}).count={documentsFilingIds.Count}";
-                LogMessagingUtil.Instance.AppendLine(remark);
+				const string INTGR_R = "INTGR_R";
+
+                var q = DocumentsFilingMetaDataValueQuery.GetDocumentsFilingMetaDataValuesPMsByTenantMetaDataValueDocumentsMetaDataTypeId(Tenant, CARFI, courierhawb,INTGR_R, integratorCode);
+				documentsFilingIds = q.ToList();
+				string remark = $"Took:{sw.ElapsedMilliseconds};DocumentsFilingMetaDataValueWhere ((a.DocumentsMetaDataType.Code == CARFI && a.MetaDataValue == {courierhawb}) || (a.DocumentsMetaDataType.Code == INTGR_R && a.MetaDataValue == {integratorCode})).count={documentsFilingIds.Count}";
+				LogMessagingUtil.Instance.AppendLine(remark);
 
             }
 
-            return documentsFilingIds;
+			return documentsFilingIds;
         }
 
         private void UpdatePaymentDocument(string documentsFilingId, string DeclarationId, int Tenant, string LoggedUserId)
