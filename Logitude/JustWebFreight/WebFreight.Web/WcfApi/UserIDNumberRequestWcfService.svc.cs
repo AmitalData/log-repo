@@ -47,7 +47,7 @@ namespace WebFreight.Web.WcfApi
                 {
                     string ShipmentAdditionalDataId = UpdateShipmentAdditionalDataFromIncomingUserIdNumberRequest(userIdNumberRequestPM, userIdNumberRequestPM.Tenant);
                     response.Result = ShipmentAdditionalDataId;
-                    response.HasError = false;
+                    response.HasError = false;                  
                     //int ImporterTenant = GetImporterTenantByShipmentNumber(declarationApprovalRequestPM.Tenant, declarationApprovalRequestPM.ForwarderShipmentNumber);
                     //AddQueueToSendApprovalRequestToLogBox(ShipmentAdditionalDataId, declarationApprovalRequestPM.Tenant, ImporterTenant);
                 }
@@ -97,6 +97,10 @@ namespace WebFreight.Web.WcfApi
                 IShipmentsContext objectContext = ShipmentsContext.GetContext(shipmentPM.Tenant);
                 ShipmentService shipmentService = new ShipmentService(objectContext, shipmentPM, email);
                 shipmentService.Update();
+            }
+            else
+            {
+                throw new Exception("Shipment is null");
             }
             return shipmentId;
 
