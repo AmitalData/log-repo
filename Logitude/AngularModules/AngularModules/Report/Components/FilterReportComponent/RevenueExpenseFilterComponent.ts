@@ -187,7 +187,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         this.resetCheckBoxTitle();
 
     }
-    
+
     private chartOfAccountsComboBoxValue: string;
     public get ChartOfAccountsComboBoxValue(): string {
         return this.chartOfAccountsComboBoxValue;
@@ -223,11 +223,16 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
 
         this.isRevenueExpenseFilter = true;
         let apiQueryFilters = new ApiQueryFilters(true);
+        
+        this.selectedChartOfAccountsTypes = this.chartOfAccountsTypes.filter(item => item.Checked == true);
+        if (this.selectedChartOfAccountsTypes.length == 0 || this.selectedChartOfAccountsTypes.length == 2) {
+            apiQueryFilters.addAdditionalFilter("isRevenueExpenseFilter", "1", "2", null, "Equals", true, false, false, "string");
+        }
 
         if (!AppTool.IsNullOrEmpty(this.idFilter)) {
             apiQueryFilters.addAdditionalFilter("isRevenueExpenseFilter", this.idFilter, null, null, "Equals", true, false, false, "boolean");
         }
-
+       
         this.chartOfAccountListService.getByFilters(apiQueryFilters)
             .subscribe((arg: any) => {
                 this.chartOfAccounts = arg.Result;
@@ -276,7 +281,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
         let haveSelectedItems = this.selectedChartOfAccountsTypes.length > 0;
         this.DisableChartOfAccountField(haveSelectedItems);
         this.DisableCategoryFields(haveSelectedItems);
-
+        
         this.selectedChartOfAccounts = this.chartOfAccounts.filter(item => item.Checked == true);
         haveSelectedItems = this.selectedChartOfAccounts.length > 0;
         this.DisableChartOfAccountsTypesField(haveSelectedItems);
@@ -369,13 +374,20 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
             this.queryFilterItems.push(new QueryFilterItem("FromDate", this.FromDate, "Date"));
 
 
-            if (this.selectedChartOfAccountsTypes)
+            if (this.selectedChartOfAccountsTypes && this.selectedChartOfAccountsTypes.length > 0){
                 this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList", this.selectedChartOfAccountsTypes.map(item => item.Code).join(','), "String"));
-            if (this.selectedChartOfAccounts)
+            }
+            else {
+                this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsTypeCodeList", this.chartOfAccountsTypes.map(item => item.Code).join(','), "String"));
+            }
+
+            if (this.selectedChartOfAccounts && this.selectedChartOfAccounts.length > 0){
                 this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.selectedChartOfAccounts.map(item => item.Id).join(','), "String"));
-
-
-
+            }
+            else {
+                this.queryFilterItems.push(new QueryFilterItem("ChartOfAccountsIdList", this.chartOfAccounts.map(item => item.Id).join(','), "String"));
+            }
+            
             if (!this.Level) this.Level = "GLAccount";
             this.queryFilterItems.push(new QueryFilterItem("Level", this.Level));
             if (!this.UseBalanceFilter && this.SelectedBalanceOptionFilter.Code == "WITHOUT") {
