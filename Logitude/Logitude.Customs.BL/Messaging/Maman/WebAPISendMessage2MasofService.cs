@@ -66,16 +66,19 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
             var defDefault = ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defDefaultJSON);
 
             var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
-            var PartnerFtpList= myCustomsPartnerFtpQueryService.GetListBy(tenant, InterfaceName, PartnerCode, CustomsPartnerFtpDetails.TypeCode_Out);
-            if(PartnerFtpList.Count > 1)
+            CustomsPartnerFtpPM pmCustomsPartnerFtp = null;
+            var PartnerFtpList = myCustomsPartnerFtpQueryService.GetListBy(tenant, InterfaceName, PartnerCode, CustomsPartnerFtpDetails.TypeCode_Out);
+            pmCustomsPartnerFtp = PartnerFtpList.Find(x => x.InterfaceName.Contains("New"));
+            if (pmCustomsPartnerFtp != null)
             {
-               if(PartnerFtpList.Find(x => x.InterfaceName.Contains("New")) != null)
-                {
-                    this.IsNewAPI = true;
-                }
+                this.IsNewAPI = true;
+            }
+            else
+            {
+                pmCustomsPartnerFtp = GetCustomsPartnerFtpPM(tenant, InterfaceName, PartnerCode, defDefault);
+
             }
 
-            CustomsPartnerFtpPM pmCustomsPartnerFtp = GetCustomsPartnerFtpPM(tenant, InterfaceName, PartnerCode, defDefault);
             var dtoWebApiDefinition = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(pmCustomsPartnerFtp.CommunicationDetails);
             if (string.IsNullOrWhiteSpace(dtoWebApiDefinition.WEBAPIAuthenticationURL))
             {
