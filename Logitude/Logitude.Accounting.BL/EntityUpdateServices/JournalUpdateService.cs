@@ -580,7 +580,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
 
 
-                if (entityPM.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.InProcessing  //== "2") //Pending Approval  
+                if (entityPM.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved  //== "2") //Pending Approval  
                     && string.IsNullOrWhiteSpace(entityPM.QueueId))
                 {
 

@@ -236,16 +236,6 @@ namespace Logitude.Accounting.Data.Repositories
                      select a);
             return q;
         }
-
-        public IQueryable<Journal> GetQueryablePending6ApproveOrdered(int tenant , bool allTenants=false)
-        {
-            var q = (from a in context.Journals
-                     where (allTenants || a.Tenant == tenant)
-                                         &&  (a.StatusCode == "6" || a.StatusCode == "4" || (a.StatusCode == "2" && !a.IsLedgerCreated))
-                     select a);
-            return q;
-        }
-
         public IQueryable<Journal> GetQueryablesApprovedStreamed(int tenant)
         {
             var q = (from a in context.Journals
