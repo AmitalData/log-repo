@@ -549,15 +549,15 @@ export class ARInvoiceMenuButtonsHandler {
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
 
-                    if (this.isPrintRequested) {
-                        var isShowPrintWindow:boolean = this.menuButtonClicked.EventCode == "PrintInvoice";
-                        this.InitializePrinting(true,isShowPrintWindow);
-                    }
-                    else {
+                    if (this.isPrintRequested || this.addDocumentFilling) {
+                        var isShowPrintWindow:Boolean = this.menuButtonClicked.EventCode == "PrintInvoice";
                         if (this.addDocumentFilling)
                             this.InitializePrinting(false,false);
-                    }
+                        else{ 
+                            this.InitializePrinting(isShowPrintWindow);
 
+                        }
+                    }
                     if (this.isRunningBatchTaskExecution) {
 
                         this.isRunningBatchTaskExecution = false;
@@ -932,8 +932,9 @@ export class ARInvoiceMenuButtonsHandler {
 
         else {
             if (this.IsHaveARInvoicePrintToogleFeature()) this.isPrintRequested = true;
-            else { this.addDocumentFilling = true }
+             this.addDocumentFilling = true 
             this.entityArgs.EditComponent.SaveChanges(msg);
+
         }
         // this.InitializePrinting(false);
     }
@@ -1392,6 +1393,7 @@ export class ARInvoiceMenuButtonsHandler {
     }
 
     InitializePrinting(ShowPrintWindow:Boolean = true,showController: boolean = true) {      
+        
         this.addDocumentFilling=false
 
         var myEntityId: string = null;
@@ -1605,6 +1607,7 @@ export class ARInvoiceMenuButtonsHandler {
         var iBatchService: BatchTaskExecutionListService = new BatchTaskExecutionListService();
 
         iBatchService.getSingle(BatchTaskExecutionId).subscribe((myResponse: ServiceResponse) => {
+            
             if (!myResponse.HasError) {
                 var list: BatchTaskExecutionList = myResponse.Result;
 
