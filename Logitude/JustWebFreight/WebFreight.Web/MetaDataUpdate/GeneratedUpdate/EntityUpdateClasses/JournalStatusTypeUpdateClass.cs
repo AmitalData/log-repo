@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalStatusTypeUpdateClass
    {  		
-		public const string HashString = "4573c05fc188cf173b004f6ef3c3d3c2";
+		public const string HashString = "dc9c9087886afbef2ef0afc0e76c4eb9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,9 +100,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
-			      				    SupportSubEntity =  false,
-			      				    ApplyGenericCustomFields =  false,
-			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -132,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סטטוס פקודה",
 			      				    DefaultText =  "Journal Status Type",
-			      				    Code =  "d210",
+			      				    Code =  "79d9",
 			      				    Name =  "JournalStatusType Query Group",
 			      				    CloseTableCode =  "JournalStatusID",
 			      				    CloseTableName =  "EnglishName",
