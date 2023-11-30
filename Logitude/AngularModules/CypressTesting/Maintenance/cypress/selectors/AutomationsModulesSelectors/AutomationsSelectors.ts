@@ -113,3 +113,7 @@ export class AutomationsSelectors extends RegexSelectors {
     public static readonly HelperFollowups="[data-cy='HelperFollowups']"
     public static readonly FollowupsBody="[class='LogitudeHelperFollowupsBody']"
 }
+
+
+
+

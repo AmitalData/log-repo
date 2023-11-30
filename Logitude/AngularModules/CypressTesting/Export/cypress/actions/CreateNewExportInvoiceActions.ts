@@ -41,27 +41,6 @@ export function CreateaAndFillNewExporterInvoice(createNewExportInvoiceDetails: 
    //cy.get(CreateNewExportInvoiceSelectors.ExportModificationCurrency).type(createNewExportInvoiceDetails.ExportModificationCurrency);
 
  }
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
  
 
