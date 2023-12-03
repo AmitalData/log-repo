@@ -18,7 +18,7 @@ namespace Logitude.Customs.BL.CloseTables
     {
         public const string InterfaceName_SubManifest = "SUBMANIFEST";
         public const string InterfaceName_ECMMNTHR_REQUEST = "ECTHR";//EC = E-Commerce
-        public const string InterfaceName_ECMMNTHR_REQUEST_New = "ECTHR+New";//EC = E-Commerce
+        public const string InterfaceName_ECMMNTHR_REQUEST_New = "ECTHR+NEW";//EC = E-Commerce
         public const string InterfaceName_ECMMNTHR_RESPONE = "ECTH+RS";//EC = E-Commerce
         public const string InterfaceName_ECOVSTHR = "ECOVSTHR";//EC = E-Commerce
         public const string InterfaceName_ECOVSTHR_Response = "ECOVSTHR+RS";//EC = E-Commerce
