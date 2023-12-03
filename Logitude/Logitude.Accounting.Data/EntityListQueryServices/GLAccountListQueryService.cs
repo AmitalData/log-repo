@@ -28,16 +28,20 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         public IQueryable<GLAccountList> GetIqueryableList(IQueryable<GLAccount> iQueryable, User loggedUser)
         {
 
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            int tenant = authToken.Tenant;
+            int tenant=-1;
+            if(iQueryable!=null && iQueryable.Count() > 0)
+            {
+                tenant = iQueryable.FirstOrDefault().Tenant;
+            }
+
+
             string multi = TranslateTextsClass.Translate("GLAccounts.Q.Multi", 0);
             string active = TranslateTextsClass.Translate("GLAccounts.Q.Active", 0);
             string inactive = TranslateTextsClass.Translate("GLAccounts.Q.Inactive", 0);
             FullAccountingSetting fullAccountingSettings = context.FullAccountingSettings.Where(a => a.Tenant ==tenant).FirstOrDefault();
             IQueryable<GLAccountList> query;
 
-            if (fullAccountingSettings.IsSecurityLevelActivated)
+            if (fullAccountingSettings!=null &&fullAccountingSettings.IsSecurityLevelActivated)
             {
                 query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                              //  join ledgerTransactions in context.LedgerTransactions on a.Id equals ledgerTransactions.AccountId
@@ -260,10 +264,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                              Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
 
-                             CreditUsed = (decimal)(CardsDatas.CreditLimit ?? 0)
-                            - (MoreDatas.BalanceInLocalCurrency)
-                            -(MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)
-                            -(CardsDatas.TotalOpenShipments ?? 0),
+                             CreditUsed = ((((decimal)((long)((CardsDatas.CreditLimit ?? 0) * 10000))) / 10000))
+                                               - (MoreDatas.BalanceInLocalCurrency)
+                                                - (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)
+                                              - (CardsDatas.TotalOpenShipments ?? 0),
 
                              InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
                              ((CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100),
@@ -472,12 +476,12 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              TotalOpenChequesInLocalCur = MoreDatas.TotalOpenChequesInLocalCur,
                              TotFutureOpenChequesInLocalCur = MoreDatas.TotFutureOpenChequesInLocalCur,
                              Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
-                           
 
-                             CreditUsed =( (((decimal)((int)(CardsDatas.CreditLimit??0 * 10000))) / 10000) )
-                            - (MoreDatas.BalanceInLocalCurrency)
-                            - (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)
-                            - (CardsDatas.TotalOpenShipments ?? 0),
+
+                             CreditUsed = ((((decimal)((long)((CardsDatas.CreditLimit ?? 0) * 10000))) / 10000))
+                                               - (MoreDatas.BalanceInLocalCurrency)
+                                                - (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)
+                                              - (CardsDatas.TotalOpenShipments ?? 0),
 
                              InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
                              ((CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100),

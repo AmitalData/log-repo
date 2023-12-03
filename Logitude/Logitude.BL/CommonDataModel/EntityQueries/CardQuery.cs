@@ -1459,8 +1459,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
         public IQueryable<CardList> GetIQueryableEntityListShort(IQueryable<Card> iQueryable)
         {
-            IQueryable<CardList> myResult = from card in iQueryable
 
+
+
+            IQueryable<CardList> myResult = from card in iQueryable.Where(a=>!string.IsNullOrEmpty(a.GLAccountId))
+                                         
                                             select new CardList()
                                             {
                                                 Code = card.Code,
