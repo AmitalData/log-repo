@@ -41,10 +41,34 @@
         background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%);
         background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%);
     }
+
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0;
+        padding: 2px 10px;
+        margin: 5px;
+        color: gray;
+        font-family: sans-serif;
+    }
 </style>
 
 <div style="margin:10px;" class="MediaFill">
     <table>
+         <!--Disble Alert-->
+         <tr *ngIf="IsDisplayOnly" style="height: 28px;">
+            <td colspan="3">
+                <div style="width: 100%;text-align:center">
+                    <div class="DisbleBox">
+                        {{DisplayOnlyMessage}}
+                        <span style="padding: 0px 16px;">-</span>
+                        <span class="hyperlink" (click)="RefreshEntity()" style="font-size:12px;">רענן</span>
+
+                    </div>
+                </div>
+            </td>
+        </tr>
         <tr class="FormFieldRow">
             <td>
                 <div *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0">
@@ -67,7 +91,7 @@
                             <tr class="FormFieldRow">
                                 <td colspan="3">
                                     <div class="RadioButton">
-                                        <input id="ByAskForAnEarlierDate" type="radio" name="MyRadio" [checked]="AskForAnEarlierDate" (click)="SetByAskForAnEarlierDate()" />
+                                        <input id="ByAskForAnEarlierDate" type="radio" name="MyRadio" [checked]="AskForAnEarlierDate" (click)="SetByAskForAnEarlierDate()" [disabled]="IsDisplayOnly"/>
                                         <label for="ByAskForAnEarlierDate">{{'Customs.PhysicalCheck.O.AskForAnEarlierDate' | TextCodeTranslationPipe}}</label>
                                     </div>
                                 </td>
@@ -76,36 +100,39 @@
                             </tr>
 
                             <!-- <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate && checkEarlierDateFeature()"> -->
-                            <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate">
-                                <td colspan="3">
+                            <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate" >
+                                <td colspan="2">
                                     <div class="Tbl1Col0">
-                                        <!-- <label for="RequestToAdvanceAQueue">{{'Customs.PhysicalCheck.O.RequestToAdvanceAQueue' | TextCodeTranslationPipe}}</label> -->
-                                        
-                                        <label for="RequestToAdvanceAQueue">RequestToAdvanceAQueue:</label>
+                                        <label for="RequestToAdvanceAQueue">{{'Customs.PhysicalCheck.O.RequestToAdvanceAQueue' | TextCodeTranslationPipe}} </label>
                                     </div>
                                 </td>
                                 <td class="Tbl1Col1">
-                                    <input id="RequestToAdvanceAQueue" type="text" />
+                                    <input id="RequestToAdvanceAQueue" type="text" [(ngModel)]="EntityPM.RequestToAdvanceAQueue" [disabled]="IsDisplayOnly"/>
                                 </td>
+
                             </tr>
                             <!-- <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate && checkEarlierDateFeature()"> -->
                             <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate">
-                                <td colspan="3">
+                                <td colspan="2">
                                     <div class="Tbl1Col0">
-                                        <!-- <label for="RequestDetails">{{'Customs.PhysicalCheck.O.RequestDetails' | TextCodeTranslationPipe}}</label> -->
-
-                                        <label for="RequestDetails">Request Details:</label>
+                                        <label for="RequestDetails">{{'Customs.PhysicalCheck.O.RequestDetails' | TextCodeTranslationPipe}}</label>
                                     </div>
                                 </td>
                                 <td class="Tbl1Col1">
-                                    <input id="RequestDetails" type="text" />
+                                    <input id="RequestDetails" type="text" [(ngModel)]="EntityPM.RequestDetails" [disabled]="IsDisplayOnly"/>
+                                    <!-- <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'FollowupNotes'"
+                                                         [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
+                                                          [DataContext]="DataContext"></LogTextBox> -->
                                 </td>
+
                             </tr>
                            
+
+
                             <tr class="FormFieldRow">
                                 <td colspan="3">
                                     <div class="RadioButton">
-                                        <input id="ByAskForAnLaterDate" type="radio" name="MyRadio" [checked]="AskForAnLaterDate" (click)="SetByAskForAnLaterDate()" />
+                                        <input id="ByAskForAnLaterDate" type="radio" name="MyRadio" [checked]="AskForAnLaterDate" (click)="SetByAskForAnLaterDate()" [disabled]="IsDisplayOnly"/>
                                         <label for="ByAskForAnLaterDate">{{'Customs.PhysicalCheck.O.AskForAnLaterDate' | TextCodeTranslationPipe}}</label>
                                     </div>
                                 </td>
@@ -113,9 +140,9 @@
 
                             </tr>
                             <tr class="FormFieldRow">
-                                <td colspan="3">
+                                <td colspan="2">
                                     <div class="RadioButton">
-                                        <input id="ByAvailableTimeChecked" type="radio" name="MyRadio" [checked]="AvailableTimeChecked" (click)="SetByAvailableTimeChecked()" />
+                                        <input id="ByAvailableTimeChecked" type="radio" name="MyRadio" [checked]="AvailableTimeChecked" (click)="SetByAvailableTimeChecked()" [disabled]="IsDisplayOnly"/>
                                         <label for="ByAvailableTimeChecked">{{'Customs.PhysicalCheck.O.GetAvailableTimeList' | TextCodeTranslationPipe}}</label>
                                     </div>
                                 </td>
@@ -163,10 +190,9 @@
                                 <td></td>
                                 <td colspan="2">
                                     <custom-send-options [CustomSendOptionsButtonCanForcePersonalSign]="'false'"
-                                                         (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)">
+                                                         (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)" [IsDisabled]="IsDisplayOnly">
                                     </custom-send-options>
                                 </td>
-
                             </tr>
                             <tr>
                                 <td></td>

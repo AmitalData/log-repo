@@ -616,7 +616,6 @@
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InternationalSiteTenantList.Generated.cs" />
-
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OcrDocumentList.Generated.cs" />
@@ -913,6 +912,7 @@
     <Compile Include="EntityMapping\ReferenceStatusMap.cs" />
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
     <Compile Include="EntityMapping\ReleaseMessageTypeMap.cs" />
+    <Compile Include="EntityMapping\RequestToAdvanceAQueueMap.cs" />
     <Compile Include="EntityMapping\RequestTypeMap.cs" />
     <Compile Include="EntityMapping\SchedulerParamMap.cs" />
     <Compile Include="EntityMapping\SealCompletenesMap.cs" />
@@ -1082,6 +1082,7 @@
     <Compile Include="EntityPOCOs\ReferenceStatus.cs" />
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
     <Compile Include="EntityPOCOs\ReleaseMessageType.cs" />
+    <Compile Include="EntityPOCOs\RequestToAdvanceAQueue.cs" />
     <Compile Include="EntityPOCOs\RequestType.cs" />
     <Compile Include="EntityPOCOs\SchedulerParam.cs" />
     <Compile Include="EntityPOCOs\SealCompletenes.cs" />

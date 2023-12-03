@@ -55,8 +55,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 if (requestParams.BringQueueForwardIndicator)
                 {
                     // todo: יש לשלוח את 2 השדות החדשים CH_NG_191_MSG2_ChangingTimeRequestParams
-                    
-                    // after adding to db:
+
+                    // after adding NUGET to db:
                     //changingTimeRequest.RequestToAdvanceAQueue = requestParams.RequestToAdvanceAQueue;
                     //changingTimeRequest.RequestDetails = requestParams.RequestDetails;
                 }

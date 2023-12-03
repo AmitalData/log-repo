@@ -59,8 +59,8 @@ export class PhysicalCheckMenuButtonsHandler {
                         button.Width = 70;
                     }
 
-                    if (button.EventCode == "ClosePhysicalCheck") {
-                        if (this.EntityPM.IsClosed) {
+                    if (button.EventCode == "ClosePhysicalCheck" ) {
+                        if (this.EntityPM.IsClosed || this.EntityPM.BringQueueForwardIndicatorS == "4") {
                             button.IsDisabled = true;
                         }
                         else {

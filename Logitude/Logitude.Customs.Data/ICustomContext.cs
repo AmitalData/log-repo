@@ -337,6 +337,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<ReleaseMessageType> ReleaseMessageTypes { get; }
 		 IDbSet<RequestStatus> RequestStatuses { get; }
+		 IDbSet<RequestToAdvanceAQueue> RequestToAdvanceAQueues { get; }
 		 IDbSet<RequestType> RequestTypes { get; }
 		 IDbSet<RequiredGuaranteeType> RequiredGuaranteeTypes { get; }
 		 IDbSet<ReturnCondition> ReturnConditions { get; }
