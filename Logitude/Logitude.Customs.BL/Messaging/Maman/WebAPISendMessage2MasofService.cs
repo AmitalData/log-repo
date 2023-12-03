@@ -68,7 +68,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
             var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
             CustomsPartnerFtpPM pmCustomsPartnerFtp = null;
             var PartnerFtpList = myCustomsPartnerFtpQueryService.GetListBy(tenant, InterfaceName, PartnerCode, CustomsPartnerFtpDetails.TypeCode_Out);
-            pmCustomsPartnerFtp = PartnerFtpList.Find(x => x.InterfaceName.Contains("New"));
+            pmCustomsPartnerFtp = PartnerFtpList.Find(x => x.InterfaceName.Contains("NEW"));
             if (pmCustomsPartnerFtp != null)
             {
                 this.IsNewAPI = true;
