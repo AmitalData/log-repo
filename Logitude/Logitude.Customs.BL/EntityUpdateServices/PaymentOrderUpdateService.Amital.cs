@@ -508,7 +508,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             LogitudeSettings.HandleLogMe("start OpenUnifreighTask", false, "UniPaymentOrder", stopLogAt);
             LogitudeSettings.HandleLogMe("parameters : taskType" + taskType + "xmlReq" + xmlReq + "tanant" + tenant, false, "UniPaymentOrder", stopLogAt);
             var sw = Stopwatch.StartNew();
-            var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
+            var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(tenant).IsConnectedToUniFreight;
             TransactionScope scope = null;
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
