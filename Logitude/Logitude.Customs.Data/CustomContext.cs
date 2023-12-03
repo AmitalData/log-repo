@@ -708,6 +708,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new RequestStatusMap());
 	
+            modelBuilder.Configurations.Add(new RequestToAdvanceAQueueMap());
+	
             modelBuilder.Configurations.Add(new RequestTypeMap());
 	
             modelBuilder.Configurations.Add(new RequiredGuaranteeTypeMap());
@@ -3304,6 +3306,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<RequestStatus> RequestStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RequestToAdvanceAQueue> RequestToAdvanceAQueues 
 	 {
 	      get; set;
 	 
