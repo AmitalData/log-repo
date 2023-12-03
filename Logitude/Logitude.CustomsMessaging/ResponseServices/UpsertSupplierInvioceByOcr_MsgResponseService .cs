@@ -68,6 +68,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             this.MyResponseData = new UpsertSupplierInvioceByOcrResponseData();
 
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(context);
+            bool isSubmitDeclaration = declarationQueryService.GetSingle(customResponse.Declarationid, false, false)?.IsSubmitDeclaration ?? false;
+            if (isSubmitDeclaration)
+            {
+                this.MyResponseData.Succeeded = false;
+                this.MyResponseData.HasException = true;
+                this.MyResponseData.UserMessage = "Invoice cannot be updated, the declaration has been submitted";
+
+                CustomsRequestsSheetQueryService customsRequestsSheetQueryService = new CustomsRequestsSheetQueryService(context);
+                CustomsRequestsSheetPM requestsSheetPM = customsRequestsSheetQueryService.GetRequestInProgress(customResponse.tenant, "DCAOCR", ObjectTableRepository.GetObjectTableByName("Customs.Declaration"), customResponse.Declarationid, null, null, null, false, requestParams.CustomsRequestsSheetId).FirstOrDefault();
+                if (requestsSheetPM != null)
+                {
+                    MessagingServiceFactoryHelper.ResolveAndReQueue("DCAOCR", requestParams.Tenant, requestsSheetPM.Id, null, futureSendDateTime: DateTime.Now.AddMinutes(5));
+                }
+                return;
+            }
+
             OcrDocumentQueryService ocrDocumentService = new OcrDocumentQueryService(customResponse.tenant);
 
             var myOcrDocument = ocrDocumentService.GetOcrDocumentByDocumentFilingId(customResponse.DocumentsFilingId, customResponse.tenant);
