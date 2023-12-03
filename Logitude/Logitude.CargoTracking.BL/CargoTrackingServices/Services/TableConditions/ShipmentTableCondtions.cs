@@ -193,7 +193,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableConditio
             }
             else
             {
-                AddTenantAndDateFilter("C", whereConditions);
+                AddTenantAndDateFilter("C", whereConditions, cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value);
             }
 
             var whereScript = " WHERE C.ShipmentLevelCode = 'A' AND " + string.Join(" AND ", whereConditions);
@@ -439,7 +439,7 @@ end)
             }
             else
             {
-                AddTenantAndDateFilter("P", whereConditions);
+                AddTenantAndDateFilter("P", whereConditions, cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value);
 
             }
 
@@ -627,7 +627,7 @@ end)
             }
             else
             {
-                AddTenantAndDateFilter("SHO", whereConditions);
+                AddTenantAndDateFilter("SHO", whereConditions, cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value);
             }
 
             var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
@@ -638,7 +638,7 @@ end)
         }
 
 
-        private static void AddTenantAndDateFilter(string tableName, List<string> whereConditions)
+        private static void AddTenantAndDateFilter(string tableName, List<string> whereConditions,int tenant)
         {
             string condition = "(";
             List<CargoTrackingXMLParameters> tenantsList = new List<CargoTrackingXMLParameters>();
@@ -649,7 +649,7 @@ end)
                 FromDate = DateTime.Now.AddMonths(-6).Date,
             });
 
-            tenantsList.AddRange(new TenantManagementQuery(0).GetWhereHavePermissionBuildMonths().Select(x => new CargoTrackingXMLParameters()
+            tenantsList.AddRange(new TenantManagementQuery(tenant).GetWhereHavePermissionBuildMonths().Select(x => new CargoTrackingXMLParameters()
             {
                 Tenant = x.Id,
                 ToDate = DateTime.Now.Date,

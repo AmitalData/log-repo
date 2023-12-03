@@ -16,14 +16,14 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
     {
         public static long TimeOut = 100000000000000000;
 
-        public static bool GetIsIncrementalRunning(string connectionString)
+        public static bool GetIsIncrementalRunning(string connectionString,int tenant)
         {
             bool result = false;
 
             SqlConnection connection = new SqlConnection(connectionString);
 
             SqlCommand getIsIncrementalBuildRunningcommand = new SqlCommand(
-               "Select  IsIncrementalBuildRunning FROM dbo.Tenants Where Id = 0", connection);
+               "Select  IsIncrementalBuildRunning FROM dbo.Tenants Where Id ="+ tenant, connection);
             try
             {
                 getIsIncrementalBuildRunningcommand.CommandTimeout = (int)TimeOut;
