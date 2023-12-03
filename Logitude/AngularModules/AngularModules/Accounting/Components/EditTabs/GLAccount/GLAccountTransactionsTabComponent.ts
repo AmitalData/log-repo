@@ -107,6 +107,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         //Set Currency LOV editability
         if (this.EntityPM.IsMultiCurrency) {
             this.UIProperties.SetEnabled("CurrencyId", "GLAccount", true);
+            if(this.EntityPM?.GLAccountCurrencies.length > 0)
+                this.splittedByCurrencyCheckBox = true;
         } else {
             this.UIProperties.SetEnabled("CurrencyId", "GLAccount", false);
         }
@@ -131,7 +133,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.GetTransactionsCurrencies();
         this.GetFullAccountingSettings();
         if(this.isFullAccounting)
-        this.SetGLAccountsFromDateInLocalStorage();
+        this.SetGLAccountsFromDateInLocalStorage();            
 
     }
     SetGLAccountsFromDateInLocalStorage(){
