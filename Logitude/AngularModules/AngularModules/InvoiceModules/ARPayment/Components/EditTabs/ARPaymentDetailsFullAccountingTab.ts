@@ -91,6 +91,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     _AccountingPaymentMethodListService = new AccountingPaymentMethodListService();
     public PartnerTypes: PartnerTypeList[] = [];
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     get TextStore()
     {
         return TextStore;
@@ -119,6 +121,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.EntityPM = entityArgs.EntityPM;
         if( this.EntityPM.StatusCode==null)
             this.CreateARPayment();
+            this.InitLOVFilters();
         this.SetAmountCurrencyCode();
         this.ComputeLocalAmount();
         this.SetPaymentAmount();
@@ -184,6 +187,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         // this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
         this.InitializeBillToLov();
         this.getPartnerTypes();
+    }
+
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
     GetFullAccountingSettings() {
         this.CurrentSession.StartBusyIndicatorLoading();

@@ -9,6 +9,7 @@ import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesV
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ColumnsWidths } from 'Infrastructure/Components/LogitudeComponents/LogLovV2Component';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 @Component({
     
     templateUrl: './AddEditAPGeneralInvoiceLineComponent.html',
@@ -23,6 +24,8 @@ export class AddEditAPGeneralInvoiceLineComponent {
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     ColumnsWidths: ColumnsWidths[] = [];
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
 
@@ -33,8 +36,12 @@ export class AddEditAPGeneralInvoiceLineComponent {
         if (SessionLocator.TenantPM.AccountingActivated) {
             this.FillChargesTypesCustomLOVColumnsWidths();
         }
+        this.InitLOVFilters();
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     FillChargesTypesCustomLOVColumnsWidths()
     {
         this.ColumnsWidths = [

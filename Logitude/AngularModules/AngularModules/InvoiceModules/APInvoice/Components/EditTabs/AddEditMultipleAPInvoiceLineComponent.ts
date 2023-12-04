@@ -8,6 +8,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     
@@ -21,10 +22,16 @@ export class AddEditMultipleAPInvoiceLineComponent {
     public ValidationErrorsList: string[] = [];
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() {
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
-    }
+    public GLAccountsFilterItems: ApiQueryFilters;
 
+    constructor() {
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.InitLOVFilters();       
+    }
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     SetDataContext(dataContext: APInvoiceLineShortItem) {
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;

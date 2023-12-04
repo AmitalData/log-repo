@@ -31,6 +31,8 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
     public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
      constructor(public entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -40,10 +42,16 @@ export class InterestReportGeneralTabComponent extends BaseComponent implements 
          this.InterestReportLinesByDateList = new ObservableCollection([]);
          this._entityListService = new EntityListService();
          this.Listen();
-         this.SetUIProperties();
+         this.SetUIProperties()
+         ;
+         this.InitLOVFilters();
     }
     ngOnInit() {
         this.BuildColumns();
+    }
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("IsMultiCurrency", false, null, null, "Equals", false, false, false, "string");
     }
     private FillNoDataTextCodeValue(){
         switch(this.EntityPM.InterestReportStatusCode){

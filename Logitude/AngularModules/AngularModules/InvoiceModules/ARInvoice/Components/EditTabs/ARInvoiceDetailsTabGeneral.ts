@@ -67,6 +67,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public IsUsingVirtuallization: boolean = false;
     public InvoicePartners: InvoicePartnerType[] = [];
     public PartnerTypeComboBoxIsDisabled:boolean = true;
+    public GLAccountsFilterItems: ApiQueryFilters;
 
     constructor(private entityArgs: EntityArgs) {
         super();
@@ -74,6 +75,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
+        this.InitLOVFilters();
         this.BuildPartnersTypes();
         this.IsManifest = this.EntityPM.ARInvoiceTypeCode == "MN" ? true : false;
         this.IsCustomsInvoice = (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") ? true : false;
@@ -93,7 +95,10 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.IsEditExchangeRateVisible = true;
         }
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     BuildPartnersTypes() {
         this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
         this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);

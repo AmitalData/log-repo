@@ -1462,7 +1462,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
 
 
-            IQueryable<CardList> myResult = from card in iQueryable.Where(a=>!string.IsNullOrEmpty(a.GLAccountId))
+            IQueryable<CardList> myResult = from card in iQueryable
                                          
                                             select new CardList()
                                             {

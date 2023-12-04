@@ -59,8 +59,11 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
     public EntityWarningsList: string[] = [];
     public IsUsingVirtuallization: boolean = false;
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService,public entityListService: EntityListService) {
         super();
+        this.InitLOVFilters();
         this.SetIsUsingVirtuallization();
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -107,7 +110,10 @@ export class ARPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     SetIsUsingVirtuallization() {
         var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
         if (hasGridVirtuallizationToggleFeature) {

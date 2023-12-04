@@ -8,6 +8,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     
@@ -22,13 +23,19 @@ export class AddEditAPInvoiceLineComponent {
     public EnableMultiRateAPInvoices: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
         if (SessionLocator.AccountingSettingPM) {
             this.EnableMultiRateAPInvoices = SessionLocator.AccountingSettingPM.EnableMultiRateAPInvoices;
         }
+        this.InitLOVFilters();
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     public TotalVATOnly: boolean = false;
     SetDataContext(dataContext: APInvoiceLineItem) {
         this.EntityPM = dataContext.EntityPM;
