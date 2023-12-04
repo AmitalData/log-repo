@@ -29,6 +29,7 @@ namespace Logitude.Accounting.BL.CoreBL
         }
 
         const string RevaluationAccountingEntityCode = "8";//	שערוך Revaluation
+        const string AdjustmentAccountingEntityCode = "10";//	התאמה Adjustment
 
         public virtual void OnUpdate(JournalLinePM journalLinePM, JournalPM journalPM)
         {
@@ -57,15 +58,15 @@ namespace Logitude.Accounting.BL.CoreBL
             ///if (!journalPM.ConversionJournal)
             {
                 bool haveChange = false;
-                haveChange = FixCredit(journalLinePM, haveChange, 
-                    journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode,
+                haveChange = FixCredit(journalLinePM, haveChange,
+                    journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode || journalPM.AccountingEntityCode == AdjustmentAccountingEntityCode,
                     suppressInactiveCheck
                     );
 
                 FullAccountingSettingPM accountingSettings = getFullAccountingSettings(journalPM.Tenant);
 
                 haveChange = FixDebit(journalLinePM, haveChange, accountingSettings,
-                    journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode,
+                    journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode || journalPM.AccountingEntityCode == AdjustmentAccountingEntityCode,
                     suppressInactiveCheck
                     );
 
@@ -294,7 +295,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
 
         public void Verify(IAccountingContext mainContext, int tenant, string accountId, string accountNumber, string CurrencyId,
-            bool conversionlOrRevaluation_Journal, bool suppressInactiveCheck)
+            bool conversionAdjustmentOrRevaluation_Journal, bool suppressInactiveCheck)
         {
             this._MainContext = mainContext;
             this._tenant = tenant;
@@ -316,7 +317,7 @@ namespace Logitude.Accounting.BL.CoreBL
             {
                 if (myGLAccountPM != null)
                 {
-                    if (!conversionlOrRevaluation_Journal && myGLAccountPM.IsMultiCurrency.GetValueOrDefault())//Task 40640: טיפול בסרביס לפקודת יומן -במקרה של כרטיס מפוצל לרשום על הפיצול
+                    if (!conversionAdjustmentOrRevaluation_Journal && myGLAccountPM.IsMultiCurrency.GetValueOrDefault())//Task 40640: טיפול בסרביס לפקודת יומן -במקרה של כרטיס מפוצל לרשום על הפיצול
                     {
                         //SuppressCheckGLAccountIsMultiCurrencyWI40640
 
