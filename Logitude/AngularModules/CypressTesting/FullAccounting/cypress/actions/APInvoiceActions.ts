@@ -15,12 +15,16 @@ export function NavigatesAPInvoiceWizerd() {
 
 export function FillAPInvoiceDetails(aPInvoiceDetails: APInvoiceDetails) {
     var generatedInvoiceNumber = "AP" + gr.GenerateRandomNumber(10000, 99999);
+    const now = new Date();
     cy.FillLogLov(APInvoiceSelectors.APInvoiceVendor, aPInvoiceDetails.Vendor, false);
     cy.FillLogTextBox(APInvoiceSelectors.APInvoiceInvoiceNumber, generatedInvoiceNumber)
     cy.wait(1000)
     cy.FillLogTextBox(APInvoiceSelectors.APInvoiceAmountInInvoice, aPInvoiceDetails.InvoiceAmount);
-    cy.FillDate(APInvoiceSelectors.APInvoiceInvoiceDate, aPInvoiceDetails.InvoiceDate)
-    cy.FillDate(APInvoiceSelectors.APInvoiceAccountingDate, aPInvoiceDetails.AccountingDate)
+    //cy.FillDate(APInvoiceSelectors.APInvoiceInvoiceDate, aPInvoiceDetails.InvoiceDate)
+    cy.FillDate(APInvoiceSelectors.APInvoiceInvoiceDate,now.toLocaleDateString('fr-FR') )
+    //cy.FillDate(APInvoiceSelectors.APInvoiceAccountingDate, aPInvoiceDetails.AccountingDate)
+    cy.FillDate(APInvoiceSelectors.APInvoiceAccountingDate,now.toLocaleDateString('fr-FR') )
+    
 }
 
 export function CreateAPInvoice() {

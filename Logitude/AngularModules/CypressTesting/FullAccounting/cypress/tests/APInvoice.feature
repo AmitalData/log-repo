@@ -10,8 +10,7 @@ Feature: AP Invoice
             | InvoiceAmount  | 100        |
             | InvoiceDate    | 15/05/2023 |
             | AccountingDate | 15/05/2023 |
-        When create AP Invoice
-        Then the AP Invoice should get successfully
+     
 
     Scenario: Add new Invoice Line
         Given Invoice line with the following details

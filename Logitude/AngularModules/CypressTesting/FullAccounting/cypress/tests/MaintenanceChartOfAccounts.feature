@@ -3,11 +3,11 @@ Feature: Chart of Account Create, Search and Edit from Maintenance
     The user creates a Chart of Account, searches for and edits it from the Maintenance Module.
 
     Scenario: Create new Chart of Account
-        Given the user logged in and open "Chart Of Accounts" in maintenance menu
+        Given the user logged in and open "טבלת קבוצת מאזן" in maintenance menu
         And a Chart of Account with the following details
             | Code        | Random           |
             | EnglishName | Chart of Account |
-            | LocalName   | Chart of Account |
+            | LocalName   | טבלת קבוצת מאזן |
             | Type        | Customer         |
 
         When create Chart of Account
