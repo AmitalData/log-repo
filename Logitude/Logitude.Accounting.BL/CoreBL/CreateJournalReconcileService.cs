@@ -28,7 +28,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private const string CreditActionCode = "1";
         private const string DebitActionCode = "2";
         private const string RegularTypeCode = "0";
-        private const string ApprovedStatusCode = "2";
+        private const string ApprovedStatusCode = "6";
         private const string AdjustmentAccountingEntityName = "Adjustment";
 
         public JournalPM Create(
@@ -156,7 +156,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         CreateDate = @now,
                         AccountingDate = AccountDate,//1.1.(yyyy+1)
                         TypeCode = "0", //== REGULAR  //"1" == TEMPLATE,
-                        StatusCode = "2",
+                        StatusCode = "6",
                         AccountingEntityCode = myAccEntityReconciliation10.Code, //"6",// - Reconciliation
                         AccountingEntityId = null,//Reconciliations.id !!!!!!!!!!!!
                         AccountingEntityReference = null,//Reconciliations.Number !!!!!!!!!!!!

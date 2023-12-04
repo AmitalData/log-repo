@@ -4513,6 +4513,19 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;JAI&quot;"
+      ObjectTableName="&quot;Journal&quot;"
+      EnglishName="&quot;Jouranl In approval process&quot;"
+      LocalName="&quot;פקודה בתהליך אישור&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <MenuButtons

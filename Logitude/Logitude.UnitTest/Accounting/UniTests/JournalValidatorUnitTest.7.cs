@@ -388,7 +388,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 new JournalPM()
                 {
                     AccountingDate = new DateTime(2016, 3, 1), //ClosedMonth = 1, OpenMonth = 9 
-                    StatusCode = "2", //var isApproved=myJournalPM.StatusCode=="2";
+                    StatusCode = "6", //var isApproved=myJournalPM.StatusCode=="2";
                     JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){ 
                     Line=1,
@@ -409,7 +409,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 new JournalPM()
                 {
                     AccountingDate = new DateTime(2016, 3, 1), //ClosedMonth = 1, OpenMonth = 9 
-                    StatusCode = "2",
+                    StatusCode = "6",
                     JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){ 
                     Line=1,
@@ -456,7 +456,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 new JournalPM()
                 {
                     AccountingDate = new DateTime(2016, 3, 1), //ClosedMonth = 1, OpenMonth = 9 
-                    StatusCode = "2", //var isApproved=myJournalPM.StatusCode=="2";
+                    StatusCode = "6", //var isApproved=myJournalPM.StatusCode=="2";
                     JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){ 
                     Line=1,
@@ -479,7 +479,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
                 new JournalPM()
                 {
                     AccountingDate = new DateTime(2016, 3, 1), //ClosedMonth = 1, OpenMonth = 9 
-                    StatusCode = "2",
+                    StatusCode = "6",
                     JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){ 
                     Line=1,

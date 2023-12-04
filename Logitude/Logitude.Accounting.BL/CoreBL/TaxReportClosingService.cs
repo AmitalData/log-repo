@@ -300,7 +300,7 @@ namespace Logitude.Accounting.BL.CoreBL
 
                 AccountingDate = TenantServerConfigration.GetLastOfMonthDate(taxReportPM.TaxReportMonth),
                 TypeCode = JournalTypeValues.Regular,
-                StatusCode = JournalStatusTypeValues.Approved,
+                StatusCode = "6",
                 AccountingEntityCode = AccountingEntityValues.TaxReport,
                 AccountingEntityId = taxReportId,
                 AccountingEntityReference = taxReportPM.TaxReportNumber,

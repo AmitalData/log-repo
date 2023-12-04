@@ -418,7 +418,7 @@ namespace Logitude.Accounting.BL.Utils
             newJournal.CreateDate = DateTime.Now;
             newJournal.AccountingDate = lineList.First().AccountingDate;
             newJournal.TypeCode = "0"; //Manual
-            newJournal.StatusCode = "2"; // Approved
+            newJournal.StatusCode = "6"; // Approved
             newJournal.CreatedByUserId = revaluation.CreatedByUserId;
             newJournal.AccountingEntityCode = "8"; //Revaluation
             newJournal.AccountingEntityId = revaluation.Id;

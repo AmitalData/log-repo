@@ -3966,7 +3966,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     //journal.DocumentDate = theEntityPm.InvoiceDate.Value;
                     //journal.DueDate = theEntityPm.InvoiceDate.Value;
                     journal.TypeCode = "0";
-                    journal.StatusCode = "2";
+                    journal.StatusCode = "6";
                     journal.CreatedByUserId = theEntityPm.CreatedByUserId;
                     journal.AccountingEntityCode = "2";
                     journal.AccountingEntityId = theEntityPm.Id;

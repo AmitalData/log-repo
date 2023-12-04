@@ -1030,7 +1030,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 CreateDate = DateTime.Now,
                 AccountingDate = DateTime.Now,
                 TypeCode = "0", // 0- Manual
-                StatusCode = "2", // 2- Approved
+                StatusCode = "6", // 2- Approved
                 CreatedByUserId = loggedContact.Id,
                 AccountingEntityCode = "1", // 1- Jounral
 
