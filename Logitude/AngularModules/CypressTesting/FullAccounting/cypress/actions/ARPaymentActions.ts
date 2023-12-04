@@ -53,6 +53,7 @@ export function AssertApproveARPayment() {
 
 export function VoidARPayment() {
     cy.DefineRequestWait(RestAPI.PUT, URLs.ARPayments, RequestAliases.ARPayments)
+    cy.wait(2000);
     cy.Click(BaseSelectors.MenuButtons, null)
     cy.Click(ARPaymentSelectors.VoidButton, null)
     cy.FillLogTextBox(ARPaymentSelectors.CancelationNotes, BaseSelectors.ContainsCancel)

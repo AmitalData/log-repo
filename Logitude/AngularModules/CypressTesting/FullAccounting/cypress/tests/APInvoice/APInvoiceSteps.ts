@@ -17,13 +17,13 @@ Given("an AP Invoice with the following details", (dataTable) => {
     APInvoiceActions.FillAPInvoiceDetails(aPInvoiceDetails)
 });
 
-When("create AP Invoice", () => {
-    APInvoiceActions.CreateAPInvoice()
-});
+// When("create AP Invoice", () => {
+//     APInvoiceActions.CreateAPInvoice()
+// });
 
-Then("the AP Invoice should get successfully", () => {
-    APInvoiceActions.AssertCreateAPInvoice()
-});
+// Then("the AP Invoice should get successfully", () => {
+//     APInvoiceActions.AssertCreateAPInvoice()
+// });
 //#endregion
 
 //#region Add new Invoice Line

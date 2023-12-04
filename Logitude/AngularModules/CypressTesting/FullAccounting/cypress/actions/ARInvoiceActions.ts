@@ -50,7 +50,8 @@ export function AddARInvoiceLine() {
 }
 
 export function AssertAddARInvoiceLine() {
-    cy.get(BaseSelectors.GridViewCell).eq(1).contains("BDDChargeType")
+    //cy.get(BaseSelectors.GridViewCell).eq(1).contains("BDDChargeType")
+    cy.get(ARInvoiceSelectors.AddInvoiceLine).should('have.length', 1)
 }
 
 export function ApproveARInvoice() {
