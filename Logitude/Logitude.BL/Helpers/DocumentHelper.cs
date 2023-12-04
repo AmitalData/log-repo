@@ -266,7 +266,7 @@ namespace Logitude.BL.Helpers
                 DocumentRepository documentRepository = new DocumentRepository(commoncontext);
                 DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
                 DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
-                TenantRepository tenantRepository = new TenantRepository();
+                TenantRepository tenantRepository = new TenantRepository(tenant);
 
                 DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(invocie.Id, tenant).FirstOrDefault();
                 Document document = documentRepository.GetSingleDocument(tenant, myDocumentFilings?.DocumentId);
