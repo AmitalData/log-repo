@@ -15204,7 +15204,7 @@
       <ScreenField
         Column="1"
         Row="1"
-        ObjectFieldName="&quot;Empty_Field&quot;"
+        ObjectFieldName="&quot;BalanceInForeignCurrency&quot;"
         ScreenName="Header Screen" />
       <ScreenField
         Column="1"
