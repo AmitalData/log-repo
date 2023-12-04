@@ -24,7 +24,7 @@ namespace Logitude.BL.Helpers
         public CustomFieldResolver(int tenant)
         {
             CustomPickListRepository customPickListRepository = new CustomPickListRepository(tenant);
-            customPickLists = customPickListRepository.GetCustomPickListsCash(tenant);
+            customPickLists = customPickListRepository.GetCustomPickListsCashe(tenant);
             LookUpFieldsDataStorage = new List<LookUpFieldDataStorage>();
         }
         public void SetFieldValue(CustomFieldResolverArgs customFieldResolverArgs)
