@@ -47,6 +47,10 @@ using Microsoft.Practices.Unity;
 using System.Collections;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.CRM.Data.EntityPOCOs;
+
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -992,6 +996,70 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
 
                     OnException(null, null, journalId, SeedTenant, eee);
+                    //LogMessagingUtil.Instance.AppendLine(journalId.ToString() + " " + eee.Message);
+                    //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
+                    Thread.Sleep(500);
+
+                    //throw;
+                }
+
+            }
+
+
+
+
+        }
+        public static void ReturnToQueue(int SeedTenant, bool AllTenants)
+        {
+            var sw = new Stopwatch();
+
+            List<JournalPM> waitingJournal = null;
+            //List<string> Last_journalBufferKeys = null;
+            sw.Restart();
+            using (var scope = TransactionFactory.GetTransaction())
+            // maybe to do GetNewSerializableTransaction Lock ?!?!?!
+            {
+
+                var journalQS = new JournalQueryService(SeedTenant);
+
+                waitingJournal = journalQS.GetJournalByTenant(SeedTenant, AllTenants).ToList();
+
+            }
+            sw.Stop();
+            if (sw.Elapsed > TimeSpan.FromSeconds(2))
+            {
+                Debug.WriteLine("Improve SQL Query Performance !!!");
+            }
+            if (waitingJournal == null)
+            {
+
+                Thread.Sleep(500);
+                return;
+            }
+            if (waitingJournal.Count == 0)
+            {
+
+                Thread.Sleep(500);
+                return;
+            }
+            waitingJournal = new List<JournalPM>(waitingJournal);
+            foreach (var journal in waitingJournal)
+            {
+                try
+                {
+                    if (journal.QueueId != null)
+                    {
+                        QueueMessageRepository QueueMessageRepository = new QueueMessageRepository(SeedTenant);
+                        var status = QueueMessageRepository.GetSingleQueueMessage(Convert.ToInt64(journal.QueueId))?.Status;
+                        if (status != 1)
+                            continue;
+                    }
+                    JournalApproveService.EnqueueDB(journal);
+                }
+                catch (Exception eee)
+                {
+
+                    OnException(null, null, journal?.Id, SeedTenant, eee);
                     //LogMessagingUtil.Instance.AppendLine(journalId.ToString() + " " + eee.Message);
                     //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
                     Thread.Sleep(500);
