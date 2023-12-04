@@ -1629,7 +1629,11 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         newEntity.CreateDate = new Date();
         newEntity.CreatedByUserId = null;
         newEntity.CreatedByUserId = null;
-        newEntity.AccountCurrencyId = this.GLAccountPM.CurrencyId;
+        if (this.IsMultiWithReconcileMethodCodeEqualOne) {
+            newEntity.AccountCurrencyId = this.CurrencyId;
+        } else {
+            newEntity.AccountCurrencyId = this.GLAccountPM.CurrencyId;
+        }
         newEntity.CurrencyCode = this.GLAccountPM.CurrencyCode;
         newEntity.AccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
 
