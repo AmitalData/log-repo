@@ -36,4 +36,5 @@
     top: -12px !important;
     right: 6px !important;
     transition: transform 0.3s ease-in-out;
+    width: 30px;
 }
