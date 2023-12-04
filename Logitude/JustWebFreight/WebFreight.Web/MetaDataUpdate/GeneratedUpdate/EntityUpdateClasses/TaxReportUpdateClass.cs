@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class TaxReportUpdateClass
    {  		
-		public const string HashString = "51200d3e6d7d07ed69e6fdcd89308a34";
+		public const string HashString = "d918fba280fc82c65ff81327016cc70f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3197,7 +3197,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  TaxReportFeature_MB04.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "יצירת פקודת סגירה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  TaxReportFeature_MB04.FeatureUniqeCode,
@@ -3217,7 +3217,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						MenuButtonType = "menuitem",
 						FeatureId=  TaxReportFeature_MB05.Id,
 						Style = null,
-						LocalDefaultText = null,
+						LocalDefaultText = "ביטול פקודת סגירה",
                         HtmlComponentPath=null,
                         Width=0,
 						FeatureUniqeCode=  TaxReportFeature_MB05.FeatureUniqeCode,
