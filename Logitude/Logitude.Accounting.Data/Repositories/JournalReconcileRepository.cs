@@ -39,7 +39,7 @@ namespace Logitude.Accounting.Data.Repositories
 
             return (from jr in context.JournalReconciles
                     join j in context.Journals on jr.JournalId equals j.Id
-                    where j.Tenant == tenant && j.StatusCode == "2" && j.IsLedgerCreated == false &&  ledgerTransactionsIds.Contains(jr.LedgerTransactionId)
+                    where j.Tenant == tenant && (j.StatusCode == "2" || j.StatusCode == "6") && j.IsLedgerCreated == false &&  ledgerTransactionsIds.Contains(jr.LedgerTransactionId)
                     select jr).ToList();
         }
     }

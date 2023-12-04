@@ -193,7 +193,7 @@ namespace Logitude.Accounting.Data.Repositories
             var q = (from a in context.Journals
                      where a.Tenant == tenant
                      where a.IsLedgerCreated== false//index 
-                     where (a.StatusCode == "2" || a.StatusCode == "3")
+                     where (a.StatusCode == "2" || a.StatusCode == "6" || a.StatusCode == "3")
                      //3 voided 
                      //2	Approved	מאושר	2,Approved,מאושר	0
                      //to be continue ... a new field have to create !!!
@@ -216,7 +216,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             string approvedJournalStatus = "2";
             var q = (from a in context.Journals
-                     where (a.IsLedgerCreated == false && a.StatusCode == approvedJournalStatus)
+                     where (a.IsLedgerCreated == false && (a.StatusCode == approvedJournalStatus|| a.StatusCode=="6"))
                      select a);
             return q;
         }
@@ -246,20 +246,20 @@ namespace Logitude.Accounting.Data.Repositories
             return q;
         }
 
-        public IQueryable<Journal> GetQueryablesApprovedStreamed(int tenant)
-        {
-            var q = (from a in context.Journals
-                     where a.Tenant == tenant
-                     where a.QueueId == null
-                     where (a.StatusCode == "2" || a.StatusCode == "3")
+        //public IQueryable<Journal> GetQueryablesApprovedStreamed(int tenant)
+        //{
+        //    var q = (from a in context.Journals
+        //             where a.Tenant == tenant
+        //             where a.QueueId == null
+        //             where (a.StatusCode == "2" || a.StatusCode == "3")
                      
-                     //2	Approved	מאושר	2,Approved,מאושר	0
-                     //to be continue ... a new field have to create !!!
-                     //where !IsNull( a.Transaction)
+        //             //2	Approved	מאושר	2,Approved,מאושר	0
+        //             //to be continue ... a new field have to create !!!
+        //             //where !IsNull( a.Transaction)
 
-                     select a);
-            return q;
-        }
+        //             select a);
+        //    return q;
+        //}
 
         public IQueryable<Journal> GetQueryableBetween(int tenant, DateTime fromTruncateTime, DateTime toTruncateTime)
         {

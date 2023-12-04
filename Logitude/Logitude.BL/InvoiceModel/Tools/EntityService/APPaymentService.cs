@@ -1506,7 +1506,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journal.CreateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
             journal.AccountingDate = paymentPM.RegisterDate.Value;
             journal.TypeCode = "0";
-            journal.StatusCode = "2";
+            journal.StatusCode = "6";
             journal.CreatedByUserId = paymentPM.CreatedByUserId;
             journal.AccountingEntityCode = "5";
             journal.AccountingEntityId = paymentPM.Id;

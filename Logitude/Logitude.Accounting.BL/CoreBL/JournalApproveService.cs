@@ -910,7 +910,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     var jus = //new JournalUpdateService(SeedTenant);
     new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), SeedTenant);
 
-                    pm.StatusCode = "2";
+                    pm.StatusCode = "6";
                     pm.ChangeSetOp = ChangeSetOperation.Update;
                     jus.Update(pm, true);
                     scope.Complete();
