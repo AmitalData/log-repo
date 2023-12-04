@@ -329,7 +329,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
                 Tenant = tenant,
                 AccountingDate = ledgerTransactionPM.AccountingDate,
                 TypeCode = JournalTypeValues.Regular,
-                StatusCode = JournalStatusTypeValues.InProcessing,
+                StatusCode = "6",
                 AccountingEntityCode = ledgerTransactionPM.SourceTypeCode,
                 AccountingEntityId = ledgerTransactionPM.SourceId,
                 AccountingEntityReference = ledgerTransactionPM.SourceNumber,

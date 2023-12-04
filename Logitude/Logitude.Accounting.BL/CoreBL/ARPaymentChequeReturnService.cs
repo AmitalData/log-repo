@@ -116,7 +116,7 @@ namespace Logitude.Accounting.BL.CoreBL
                 UpdatedByUserId = paymentPM.UpdatedByUserId,
                 AccountingDate = DateTime.Now,
                 TypeCode = JournalTypeValues.Regular,
-                StatusCode = JournalStatusTypeValues.InProcessing,
+                StatusCode = "6",
                 AccountingEntityId = paymentPM.Id,
                 AccountingEntityReference = paymentPM.PaymentNo,
                 ExternalNo = null,
