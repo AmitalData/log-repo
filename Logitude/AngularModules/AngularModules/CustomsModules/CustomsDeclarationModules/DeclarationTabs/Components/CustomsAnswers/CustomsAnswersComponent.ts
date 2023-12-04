@@ -40,6 +40,7 @@ import { Guid } from 'Infrastructure/Utilities/Guid';
 })
 
 export class CustomsAnswersComponent extends BaseComponent implements AfterViewInit {
+    public AnswerType= AnswerType; 
     public EntityPM: DeclarationPM;
     public ObjectTableName: string = "Customs.Declaration";
     public DataContext: any = this;
@@ -95,7 +96,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(public entityArgs: EntityArgs, public cd: ChangeDetectorRef, private EntityResourceService: EntityResourceService, public declarationExtendedListService: DeclarationExtendedListService,public _imageLibraryService: ImageLibraryService) {
         super();
-        
+
         this.EntityResourceService.getEntityResourceByTableName("Customs.CustomsCollateralsAnswer").subscribe();
         this.EntityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response:any) => {
             this.EntityResourceService.getEntityResourceByTableName("Customs.DeclarationConstraint").subscribe((response:any) => {
@@ -558,10 +559,8 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
 
     BuildDeclarationErrorsWithConstraintsList(declarationErrors: DeclarationErrorView[]) {
-
         var errorsList = [];
         var warningList = [];
-
         // reset grids
         this.Errorslist.Clear();
         this.Warninglist.Clear();
@@ -622,7 +621,18 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
         }
 
         this.CurrentSession.StopBusyIndicator();
+    
+        var currentError=this.SelectedRowsByType.get(AnswerType.Error);
+        if(currentError){
+            var newMatchedError=(this.Errorslist.Collection as unknown as DeclarationErrorView[]).filter(d => d.Field == currentError.Field && d.LineNumber == currentError.LineNumber)[0];
+            this.SelectedRowsByType.set(AnswerType.Error,newMatchedError);
+        }
 
+        var currentWarning=this.SelectedRowsByType.get(AnswerType.Warning);
+        if(currentWarning){
+            var newMatchedWarning=(this.Warninglist.Collection as unknown as DeclarationErrorView[]).filter(d => d.Field == currentWarning.Field && d.LineNumber == currentWarning.LineNumber)[0];
+            this.SelectedRowsByType.set(AnswerType.Warning,newMatchedWarning);  
+        }
     }
 
     isResourcesLoaded: boolean = false;
@@ -756,10 +766,17 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
 
     //#region XML Errors
+    public SelectedConstraint: DeclarationErrorView;
+    public SelectedRowsByType= new Map<AnswerType, DeclarationErrorView>();
+    EditEntity(error: any,answerType:AnswerType) {
+        let declarationError=error;
 
-    EditEntity(declarationError: DeclarationErrorView) {
-
- 
+        if(answerType==AnswerType.Constraint){
+            declarationError=error.hasNoError? null: error.declarationError;
+            this.SelectedConstraint=error;
+        }else{
+            this.SelectedRowsByType.set(answerType, declarationError);
+        }
         if (AppTool.IsNullOrEmpty(declarationError)) {
             console.warn("[!] There is no declaraion error for the constraint!");
         } else {
@@ -1248,7 +1265,11 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     }
     //#endregion
 }
-
+export enum AnswerType {
+    Error,
+    Constraint,
+    Warning
+};
 export class ConstraintLineModel extends BaseComponent {
 
     private declarationWebService: DeclarationWebService = new DeclarationWebService;

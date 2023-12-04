@@ -1,5 +1,16 @@
 
 <style>
+    .Selected:hover {
+        background: -moz-linear-gradient(50% 119.23% 90deg,rgba(133, 203, 237, 1) 0%,rgba(232, 247, 255, 1) 100%) !important;
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%) !important;
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%) !important;
+    }
+
+    .Selected, .Selected >*{
+        background: -moz-linear-gradient(50% 119.23% 90deg,rgba(133, 203, 237, 1) 0%,rgba(232, 247, 255, 1) 100%) !important;
+        background: -webkit-linear-gradient(90deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%) !important;
+        background: linear-gradient(0deg, rgba(133, 203, 237, 1) 0%, rgba(232, 247, 255, 1) 100%) !important;
+    }
     .subTitle {
         color: #4b90cb;
         font-size: 17px;
@@ -248,7 +259,8 @@
                                                 [ItemSource]="Errorslist"
                                                 [UseVirtuallization]="true"
                                                 [IsDarkHeader]="true"
-                                                (SelectedItemChanged)="EditEntity($event)">
+                                                (SelectedItemChanged)="EditEntity($event,AnswerType.Error)"
+                                                [SelectedRow]="SelectedRowsByType.get(AnswerType.Error)">
 
                                 <!-- Description -->
                                 <log-column [header]="'Customs.Declaration.O.Description' | TextCodeTranslationPipe"
@@ -377,7 +389,8 @@
                             <div>
 
                                 <ul class="ConstraintList">
-                                    <li *ngFor="let constraint of ConstraintsList" >
+                                    
+                                    <li *ngFor="let constraint of ConstraintsList" [class.Selected]="SelectedConstraint?.ConstraintId == constraint.ConstraintId">
                                         <!-- Status-->
                                         <div class="ListItem-right">
                                             <a (click)="constraint.ViewConstraintDetails()" *ngIf="constraint.IsStatusHyperlinkVisibile" style="display: block;" href="#">{{constraint.ConstraintStatus}}</a>
@@ -386,7 +399,7 @@
                                         </div>
 
                                         <!-- Error -->
-                                        <div class="ListItem-middle" (click)="EditEntity(constraint.hasNoError ? null : constraint.declarationError)">
+                                        <div class="ListItem-middle" (click)="EditEntity(constraint,AnswerType.Constraint)">
                                             <div style="display: inline-block;width: 40px; position: absolute; height: 100%;">
                                                 <span style="font-size: 12px;color: #1b90cb;">{{constraint.ConstraintTypeName}}</span>
                                             </div>
@@ -550,7 +563,8 @@
                                                 [ItemSource]="Warninglist"
                                                 [UseVirtuallization]="true"
                                                 [IsDarkHeader]="true"
-                                                (SelectedItemChanged)="EditEntity($event)">
+                                                (SelectedItemChanged)="EditEntity($event,AnswerType.Warning)"
+                                                [SelectedRow]="SelectedRowsByType.get(AnswerType.Warning)">
 
 
                                 <!-- Description -->
