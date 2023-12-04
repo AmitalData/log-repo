@@ -68,8 +68,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 if (entityPM.ChartOfAccountsTypeCode != "3" && entityPM.ChartOfAccountsTypeCode != "4" && entityPM.ChartOfAccountsTypeCode != "6")
                     SetDisplayNumber(entityPM);
 
-            }
-            AddAcitivityLog(entityPM, "N");
+            }            
 
             FillSearchFields(entityPM);
 
@@ -389,7 +388,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
             base.OnCreating(entityPM, entityParentPM);
-
+            AddAcitivityLog(entityPM, "N");
         }
 
         private void SetDisplayNumber(GLAccountPM entityPM)
