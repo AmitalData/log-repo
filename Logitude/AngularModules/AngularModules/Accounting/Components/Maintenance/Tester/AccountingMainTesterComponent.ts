@@ -97,7 +97,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
         let parseobj = JSON.parse(this._TextBoxParam);
         let _http = ServiceHelper.HttpClient;
         let _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
-        _http.post(_apiUrl, JSON.stringify(parseobj), ServiceHelper.GetHttpFullHeaders())
+        _http.post(_apiUrl + "/post", JSON.stringify(parseobj), ServiceHelper.GetHttpFullHeaders())
             //ajax.post(
             //    ServiceHelper.GetLogitudeURL() + 'api/journals',
             //    this._TextBoxParam,

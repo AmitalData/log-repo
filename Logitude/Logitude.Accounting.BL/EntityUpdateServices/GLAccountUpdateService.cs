@@ -82,8 +82,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                 }
 
-            }
-            AddAcitivityLog(entityPM, "N");
+            }            
 
             FillSearchFields(entityPM);
 
@@ -395,7 +394,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
             base.OnCreating(entityPM, entityParentPM);
-
+            AddAcitivityLog(entityPM, "N");
         }
 
         private void SetDisplayNumber(GLAccountPM entityPM)
