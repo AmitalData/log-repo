@@ -39,9 +39,9 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
 
         public override void RunCode()
         {
-            TenantRepository tenantRepository = new TenantRepository(0);
             CargoTrackingArguments = GetCargoTrackingArgs();
-
+            TenantRepository tenantRepository = new TenantRepository(CargoTrackingArguments.Tenant.Value);
+            
             try
             {
                 UpdateIsIncrementalRunning(tenantRepository,true);
@@ -59,7 +59,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
 
         private void UpdateIsIncrementalRunning(TenantRepository tenantRepository,bool IsRunning)
         {
-            Tenant tenant = tenantRepository.GetSingleTenant(0);
+            Tenant tenant = tenantRepository.GetSingleTenant(CargoTrackingArguments.Tenant.Value);
             tenant.IsIncrementalBuildRunning = IsRunning;
             tenantRepository.Update(tenant);
             tenantRepository.SubmitChanges();
@@ -74,7 +74,7 @@ namespace Logitude.CargoTracking.BL.CoreBL.Batch
             CargoTrackingXMLParameters  Args = serializer.Deserialize(stringReader) as CargoTrackingXMLParameters;
 
             List<DateTime> fromDateList = new List<DateTime>() { DateTime.Now.AddMonths(-6).Date };
-            fromDateList.AddRange(new TenantManagementQuery(0).GetWhereHavePermissionBuildMonths().Select(x => x.ActivatePrivateSite ?
+            fromDateList.AddRange(new TenantManagementQuery(Args.Tenant.Value).GetWhereHavePermissionBuildMonths().Select(x => x.ActivatePrivateSite ?
                     DateTime.Now.AddMonths(Convert.ToInt32(x.PermissionBuildMonths.Value) * -1) :
                     DateTime.Now.AddMonths(-6).Date));
             Args.FromDate = fromDateList.Min();
