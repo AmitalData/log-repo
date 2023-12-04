@@ -310,6 +310,12 @@ export class AccountingMainTesterComponent extends BaseComponent {
         };
         this.StrandartOp(opr, obj, () => { });
     }
+
+    JournalApproveReturnToQueue_Click() {
+        let opr = "JournalApproveReturnToQueue_Click";
+        let obj = { Tenant: 1, AllTenants: false };
+        this.StrandartOp(opr, obj, () => { });
+    }
     WorkWithoutQueue_Click() {
         let opr = "WorkWithoutQueue_Click";
         let obj = { Tenant: 1, JournalId: "1-55235" };
@@ -1258,7 +1264,8 @@ Line4
             "VoidedByUserName": null,
             "IsVoided": null,
             "VoidedBy": null,
-            "ExternalSystem": "AMITAL"
+            "ExternalSystem": "AMITAL",
+            "AllTenants": "False"
         };
         this._TextBoxParam = JSON.stringify(journal);
 

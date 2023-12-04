@@ -26,7 +26,7 @@ namespace Logitude.Accounting.Def.EntityPMs
             Voided = 3,
             Failed=4,
             Cancelled = 5,
-
+            InProcessing = 6,
         }
     }
 }

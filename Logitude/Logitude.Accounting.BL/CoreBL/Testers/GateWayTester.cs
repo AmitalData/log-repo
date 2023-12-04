@@ -167,8 +167,12 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return InterestReport2_Click(tenant, _TextBoxParam);
                     }
                     break;
-
-                    case "closingVATReport":                   
+                case "JournalApproveReturnToQueue_Click":
+                    {
+                        return ReturnToQueue_Click(tenant, _TextBoxParam);
+                    }
+                    break;
+                case "closingVATReport":                   
                         return ClosingVATReport(tenant, _TextBoxParam);                    
 
                 default:
@@ -181,7 +185,35 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
         }
 
-       
+        private GateWayTesterResult ReturnToQueue_Click(int tenant, string textBoxParam)
+
+        {
+            dynamic param = null;
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+                param = LogitudeXmlSerializer.JsonConvertDeserializeObject(textBoxParam);
+                int tenantFrom = param.Tenant;
+                bool allTenants = param.AllTenants;
+                JournalApproveService.ReturnToQueue(tenantFrom, allTenants);
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
 
         private GateWayTesterResult RebuildFIXGLAccountAgingData_Click(int tenant, string textBoxParam)
         {
