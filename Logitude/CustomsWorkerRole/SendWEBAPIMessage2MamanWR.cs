@@ -530,6 +530,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     var ADD = "User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
                     client.DefaultRequestHeaders.Add("User-Agent", agent);
                     StringContent content;
+                    LogMessagingUtil.Instance.AppendLine($"IsNewAPI ({_CourierHawbMamanCommunicationLogSettings.IsNewAPI})");
                     if (_CourierHawbMamanCommunicationLogSettings.IsNewAPI)
                     {
                         client.DefaultRequestHeaders.Add("User-Agent", agent);
