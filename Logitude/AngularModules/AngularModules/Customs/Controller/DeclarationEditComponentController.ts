@@ -116,7 +116,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
            if(this._CurrentEntity.Direction != "E")
             this.RaiseCFIFILMLockReturnCFIFILMAlreadyLock(resolve)
            else
-            this.RaiseBFIFILMLockReturnBFIFILMAlreadyLock(resolve)
+            this.RaiseBFIFILELockReturnBFIFILEAlreadyLock(resolve)
         });
     }
     private RaiseCFIFILMLockReturnCFIFILMAlreadyLock(resolve) {
@@ -188,7 +188,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
             );
     }
 
-    private RaiseBFIFILMLockReturnBFIFILMAlreadyLock(resolve) {
+    private RaiseBFIFILELockReturnBFIFILEAlreadyLock(resolve) {
         let sub = AmitalGatewayUtil.Instance.UnifaceRequestArrived
             .subscribe(
 
@@ -215,13 +215,13 @@ export class DeclarationEditComponentController implements IEditComponentControl
                             return;
                         }
                         this._InDisplayModeCFIFILMLockMMessage = "";
-                        let IsAlreadyLock = this.GetBoolean(myUnifreightMessageM, AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseCFIFILMAlreadyLockKey)
+                        let IsAlreadyLock = this.GetBoolean(myUnifreightMessageM, AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseBFIFILEAlreadyLockKey)
                         if (IsAlreadyLock) {
                             this._InDisplayModeCFIFILMLockMMessage = "ההצהרה נעולה";
                             this._UnifaceExclusiveAlreadyLocked = this.InDisplayMode = true;
-                            let responseCFIFILMAlreadyLockMessgae = UnifreightMessageM.GetStringValue(myUnifreightMessageM, AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseCFIFILMAlreadyLockMessgae);
-                            if (!AppTool.IsNullOrEmpty(responseCFIFILMAlreadyLockMessgae)) {
-                                this._InDisplayModeCFIFILMLockMMessage = responseCFIFILMAlreadyLockMessgae;
+                            let ResponseBFIFILEAlreadyLockMessgae = UnifreightMessageM.GetStringValue(myUnifreightMessageM, AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseBFIFILEAlreadyLockMessgae);
+                            if (!AppTool.IsNullOrEmpty(ResponseBFIFILEAlreadyLockMessgae)) {
+                                this._InDisplayModeCFIFILMLockMMessage = ResponseBFIFILEAlreadyLockMessgae;
                             }
 
                             resolve(this._ControllerOn);
@@ -273,7 +273,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
             if(this._CurrentEntity.Direction != "E")
               setTimeout(() => { this.RaiseCFIFILMLockReturnCFIFILMAlreadyLock(resolve); }, 500)
             else
-              setTimeout(() => { this.RaiseBFIFILMLockReturnBFIFILMAlreadyLock(resolve); }, 500)
+              setTimeout(() => { this.RaiseBFIFILELockReturnBFIFILEAlreadyLock(resolve); }, 500)
           
         });
     }
