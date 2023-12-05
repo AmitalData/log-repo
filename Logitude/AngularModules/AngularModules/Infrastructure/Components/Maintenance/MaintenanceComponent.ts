@@ -779,14 +779,14 @@ export class MaintenanceComponent {
             item.CategoryTypeCode = "SHA";
             item.Icon = "List"
             item.Code = "SHAAM_LOGS";
-            item.ObjectTableName = "Logs ";
+            item.ObjectTableName = TextCodeTranslator.Translate('CommunicationLog.O.Logs');
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         
             var item = new MenusTablePM();
             item.CategoryTypeCode = "SHA";
             item.Icon = "Settings"
             item.Code = "SHAAM_TOKEN";
-            item.ObjectTableName = "Token";
+            item.ObjectTableName = "Token Management";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
     }
@@ -817,7 +817,7 @@ export class MaintenanceComponent {
         if (item) {
             switch (item.Code) {
                 case "SHAAM_LOGS": {
-                    var windowTitle = "Logs ";
+                    var windowTitle = TextCodeTranslator.Translate('CommunicationLog.O.Logs');
                     var logWindow = new LogitudeWindow();
                     logWindow.Width = 500;
                     logWindow.Height = 400;
@@ -830,11 +830,11 @@ export class MaintenanceComponent {
                 case "SHAAM_TOKEN": {
                     var windowTitle = "Token Management";
                     var logWindow = new LogitudeWindow();
-                    logWindow.Width = 500;
-                    logWindow.Height = 400;
+                    logWindow.Width = window.outerWidth;
+                    logWindow.Height = window.outerHeight;
                     logWindow.Title = windowTitle;
                     logWindow.IsShowCloseButton = true;
-                    logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokenManagementComponent');
+                    logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
                     break;
                 }
 

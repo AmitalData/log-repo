@@ -55,7 +55,11 @@ export class LogtuideTableDataService {
   }
 
 
-  standartSendAjax(ajax: Observable<any>) {
+  standartSendAjax(ajax: Observable<any>): Observable<ServiceResponse> {
+    return LogtuideTableDataService.standartSendAjax(ajax);
+  }
+
+  static standartSendAjax(ajax: Observable<any>): Observable<ServiceResponse> {
     return defer(() => {
       return ajax.pipe(map(response => {
         const serviceResponse: ServiceResponse = new ServiceResponse();

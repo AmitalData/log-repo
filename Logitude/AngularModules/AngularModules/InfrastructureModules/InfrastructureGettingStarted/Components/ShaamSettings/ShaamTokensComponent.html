@@ -1,0 +1,16 @@
+<button class="Button" style="width: 150px; display: inline-block; margin: 20px 0" (click)="openLinkToCodeForToken()">Get New Token</button>
+
+<button class="Button" style="width: 150px; display: inline-block; margin: 20px 0; margin-right: 20px;" (click)="refreshTable()">Refresh Table</button>
+
+<div class="GeneratedGridContainer" style="padding:5px" *ngIf="finishBuildColumns">
+    <logitude-grid [ObjectTable]="ObjectTableName"
+                   [dataSource]="DataSource"
+                   [columns]="columns"
+                   [IsCustomTemplate]="true"
+                   [autoLoad]="true"
+                   [ChangeColorByPropName]="'UserCode'"
+                   [ChangeColorByPropValue]="loggedUserCode"
+                   [RowBackGroundColor]="'#07060626'"
+                   [QueryChangeEvent]="onQueryChangeEvent">
+    </logitude-grid>
+</div>
