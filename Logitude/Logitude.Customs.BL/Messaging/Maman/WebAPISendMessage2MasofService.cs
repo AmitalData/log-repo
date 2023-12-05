@@ -30,7 +30,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
     public   class WebAPISendMessage2MasofService
     {
         //private string _communicationSubject = "שידור מסר  פעולות מיוחדות לממן";
-
+        private bool IsNewAPI=false;
 
         public void BuildCommunicationLog(byte[] bytearray, int tenant, string declarationId, string InterfaceName, string PartnerCode, int? tenantPriority = null)///using  by SendWEBAPIMessage2MamanWRWR
         {
@@ -65,7 +65,20 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
             var defDefaultJSON = customsPartnerFtpDetails.GetAllInterfaceName().First(r => r.Key == InterfaceName).Value;
             var defDefault = ProxyUtil.JsonConvertDeserializeTyped<InterfaceDetails>(defDefaultJSON);
 
-            CustomsPartnerFtpPM pmCustomsPartnerFtp = GetCustomsPartnerFtpPM(tenant, InterfaceName, PartnerCode, defDefault);
+            var myCustomsPartnerFtpQueryService = new CustomsPartnerFtpQueryService(tenant);
+            CustomsPartnerFtpPM pmCustomsPartnerFtp = null;
+            var PartnerFtpList = myCustomsPartnerFtpQueryService.GetListBy(tenant, InterfaceName, PartnerCode, CustomsPartnerFtpDetails.TypeCode_Out);
+            pmCustomsPartnerFtp = PartnerFtpList.Find(x => x.InterfaceName.Contains("NEW"));
+            if (pmCustomsPartnerFtp != null)
+            {
+                this.IsNewAPI = true;
+            }
+            else
+            {
+                pmCustomsPartnerFtp = GetCustomsPartnerFtpPM(tenant, InterfaceName, PartnerCode, defDefault);
+
+            }
+
             var dtoWebApiDefinition = ProxyUtil.JsonConvertDeserializeTyped<WebApiDefinitionDTO>(pmCustomsPartnerFtp.CommunicationDetails);
             if (string.IsNullOrWhiteSpace(dtoWebApiDefinition.WEBAPIAuthenticationURL))
             {
@@ -107,7 +120,8 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
 
                     Tenant = tenant,
                     DeclarationId = declarationId,
-                    LoggedContactId = loggedContactId
+                    LoggedContactId = loggedContactId,
+                    IsNewAPI = this.IsNewAPI,
                 };
                 var settingsData = Logitude.Server.Tools.Utils.ProxyUtil.JsonConvertSerialize(settings);
 
@@ -233,6 +247,7 @@ namespace Logitude.Customs.BL.Messaging/*.Maman*/
         public string MessageCode { get;  set; }
         public string LoggedContactId { get;  set; }
         public string RqstCommLogID { get; set; }
+        public bool IsNewAPI { get; set; }
     }
 
     public class MasofException : Exception

@@ -18,10 +18,12 @@ namespace Logitude.Customs.BL.CloseTables
     {
         public const string InterfaceName_SubManifest = "SUBMANIFEST";
         public const string InterfaceName_ECMMNTHR_REQUEST = "ECTHR";//EC = E-Commerce
+        public const string InterfaceName_ECMMNTHR_REQUEST_New = "ECTHR+NEW";//EC = E-Commerce
         public const string InterfaceName_ECMMNTHR_RESPONE = "ECTH+RS";//EC = E-Commerce
         public const string InterfaceName_ECOVSTHR = "ECOVSTHR";//EC = E-Commerce
         public const string InterfaceName_ECOVSTHR_Response = "ECOVSTHR+RS";//EC = E-Commerce
         public const string InterfaceName_ECMMNSPCL_REQUEST = "ECSPCL";//EC = E-Commerce
+        public const string InterfaceName_ECMMNSPCL_REQUEST_New = "ECSPCL+NEW";//EC = E-Commerce
         public const string InterfaceName_ECMMNSPCL_Response = "ECSPCL+RS";//EC = E-Commerce
         public const string InterfaceName_ECSWSTHR_REQUEST = "ECSWSTHR";//EC = E-Commerce
         public const string InterfaceName_ECSWSTHR_RESPONE = "ECSWSTHR+RS";//EC = E-Commerce
@@ -104,6 +106,17 @@ namespace Logitude.Customs.BL.CloseTables
             {
                 Code = InterfaceName_ECMMNSPCL_REQUEST,
                 Name = "פעולות מיוחדות לממן",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+                WEBAPICredentialType = CourierWEBAPICredentialType.Bearer,
+                ResponseCode =InterfaceName_ECMMNSPCL_Response,
+                Priority =  PriorityEnum.High
+            }
+            , new InterfaceDetails()
+            {
+                Code = InterfaceName_ECMMNSPCL_REQUEST_New,
+                Name = "פעולות מיוחדות לממן לאתר החדש",
                 TypeCode = TypeCode_Out,
                 Partner = PartnerCode_Mamam,
                 ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
@@ -329,7 +342,16 @@ namespace Logitude.Customs.BL.CloseTables
                 Subject="CourierHawbFeedBack ILSWS",
                 ServerInternalDef= true
             },
-
+             new InterfaceDetails()
+            {
+                Code = InterfaceName_ECMMNTHR_REQUEST_New,
+                Name = "ש.מ.ב לממן לאתר החדש",
+                TypeCode = TypeCode_Out,
+                Partner = PartnerCode_Mamam,
+                ViaMethod = GetViaMethods().First(r => r.Key == "WEBAPI").Key,
+                 WEBAPICredentialType = CourierWEBAPICredentialType.Bearer,
+                ResponseCode = InterfaceName_ECMMNTHR_RESPONE
+            }
             };
             ///
 

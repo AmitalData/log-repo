@@ -529,13 +529,33 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
                     var ADD = "User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
                     client.DefaultRequestHeaders.Add("User-Agent", agent);
+                    StringContent content;
+                    LogMessagingUtil.Instance.AppendLine($"IsNewAPI ({_CourierHawbMamanCommunicationLogSettings.IsNewAPI})");
+                    if (_CourierHawbMamanCommunicationLogSettings.IsNewAPI)
+                    {
+                        client.DefaultRequestHeaders.Add("User-Agent", agent);
+                        client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/x-www-form-urlencoded");
+
+                        var requestBody = new
+                        {
+                            Username = _CourierHawbMamanCommunicationLogSettings.username,
+                            Password = _CourierHawbMamanCommunicationLogSettings.password
+                        };
+                        var jsonBody = JsonConvert.SerializeObject(requestBody);
+
+                        content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+                    }
+                    else
+                    {
+                        string tokenReq = "grant_type=password&username=f_moshe&Password=******";
+                        tokenReq = $"grant_type=password&username={HttpUtility.UrlEncode(_CourierHawbMamanCommunicationLogSettings.username)}&Password={HttpUtility.UrlEncode(_CourierHawbMamanCommunicationLogSettings.password)}";
+                        content = new StringContent(tokenReq, Encoding.UTF8, "application/x-www-form-urlencoded");
+                    }
 
                     //var tokenUri = new Uri(new Uri(host), relativeUriToken);
                     //webApiURI = @"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
-                    string tokenReq = "grant_type=password&username=f_moshe&Password=******";
-                    tokenReq = $"grant_type=password&username={HttpUtility.UrlEncode(_CourierHawbMamanCommunicationLogSettings.username)}&Password={HttpUtility.UrlEncode(_CourierHawbMamanCommunicationLogSettings.password)}";
                     
-                    var content = new StringContent(tokenReq, Encoding.UTF8, "application/x-www-form-urlencoded");
+
                     LogMessagingUtil.Instance.AppendLine($"PostAsync({_CourierHawbMamanCommunicationLogSettings.URIToken}, {content})");
                     var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIToken, content);
                     Wait4Finsh(task, 3);
@@ -543,10 +563,18 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                     //{"access_token":"zkKDt-XnqqM5uoyDwrPxDPHb_vM5hplsUKr7sT5GA2w8Vpsl_HT5eBidUriiyw3Gn-Mne0NIq2LQO7MMT525GdrFutDzIQpRKR6c7oz2GbdSdGdEY3S3nfP0W7svtmShEeUx23SbW8ysLkyAnFP-IdQhvMs2lzxzHIDrnDqm_agwq54x9UiiDa5-9ZkEWBUrN83U4B5qddiYTU0whODGvrxEE9wyrQKoygG3Gi48gwv2_TI4H9yrd2Uys9l_jBivOsRRm1oXtyGsyIq9DwDn7pmcoxUjz-yNwm_hp18Y1qi4aXk1Z8IjeKRQl_8FMUg-","token_type":"bearer","expires_in":35999,"UserName":"F_unitedf","role":"General",".issued":"Mon, 12 Nov 2018 14:48:43 GMT",".expires":"Tue, 13 Nov 2018 00:48:43 GMT"}
                     LogMessagingUtil.Instance.AppendLine($"PostAsyncResult ({myResultString})");
                     dynamic d = JsonConvert.DeserializeObject(myResultString);
-                    access_token = d.access_token;
-                    token_type = d.token_type;
-                    //token_type=bearer
+                    if (_CourierHawbMamanCommunicationLogSettings.IsNewAPI)
+                    {
+                        access_token = d.Token.Value;
+                        token_type = "bearer";
+                    }
+                    else
+                    {
+                        access_token = d.access_token;
+                        token_type = d.token_type;
+                    }
                 }
+
 
                 using (var client = new HttpClient())
                 {
@@ -575,9 +603,9 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
                 return myResultString;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                LogMessagingUtil.Instance.AppendLine($"An error occurred: {ex.Message}");
                 throw;
             }
         }
