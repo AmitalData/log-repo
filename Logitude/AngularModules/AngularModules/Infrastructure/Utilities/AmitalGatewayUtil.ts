@@ -1005,6 +1005,8 @@ export class AmitalGatewayUtil {
         public static get LogitudeEntityDeclaration() { return "Declaration"; }
         public static get ResponseCFIFILMAlreadyLockKey() { return "Response.CFIFILMAlreadyLock"; }
         public static get ResponseCFIFILMAlreadyLockMessgae() { return "Response.CFIFILMAlreadyLockMessgae"; }
+        public static get ResponseBFIFILEAlreadyLockKey() { return "Response.BFIFILEAlreadyLock"; }
+        public static get ResponseBFIFILEAlreadyLockMessgae() { return "Response.BFIFILEAlreadyLockMessgae"; }
         public static get RaiseInstructionReturnCanIContinueMessage() { return "RaiseInstructionReturnCanIContinueMessage"; }
         public static get RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage() { return "RaiseCFIFILMLockReturnCFIFILMAlreadyLockMessage"; }
         public static get RaiseBFIFILELockReturnBFIFILEAlreadyLockMessage() { return "RaiseBFIFILELockReturnBFIFILEAlreadyLockMessage"; }
@@ -1117,7 +1119,7 @@ export class AmitalGatewayUtil {
         var unifreightMessageM = AmitalGatewayUtil.Instance.DeclarationMessaging.GetMessage(UnifreightEntityNumber, LogitudeEntityNumber, ViewModelName
             , UnifreightEntity);
         unifreightMessageM.LogitudeCommandId
-        unifreightMessageM.Requset.push(["ExpectedCallBack", AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseCFIFILMAlreadyLockKey]);
+        unifreightMessageM.Requset.push(["ExpectedCallBack", AmitalGatewayUtil.Instance.DeclarationMessaging.ResponseBFIFILEAlreadyLockKey]);
 
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
             "ScriptableGatewayUtil.RaiseBFIFILELockReturnBFIFILEAlreadyLock",
