@@ -518,4 +518,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="PrivateKey"    
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

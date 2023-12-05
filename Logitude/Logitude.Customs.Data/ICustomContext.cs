@@ -90,6 +90,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CollateralType> CollateralTypes { get; }
 		 IDbSet<CommercialSale> CommercialSales { get; }
 		 IDbSet<CommunicationType> CommunicationTypes { get; }
+		 IDbSet<ConfirmationNumberTokenLog> ConfirmationNumberTokenLogs { get; }
 		 IDbSet<ConfirmationType> ConfirmationTypes { get; }
 		 IDbSet<Consignment> Consignments { get; }
 		 IDbSet<ConsignmentInternalTransition> ConsignmentInternalTransitions { get; }

@@ -1,0 +1,34 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class ConfirmationNumberTokenLogList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public DateTime CreateDate  { get; set; }
+       [DataMember]
+       public string CompanyIdInvoiceProducer  { get; set; }
+       [DataMember]
+       public string CompanyIdInvoiceRecipient  { get; set; }
+       [DataMember]
+       public string InvoiceNumber  { get; set; }
+       [DataMember]
+       public string CallType  { get; set; }
+       [DataMember]
+       public int? CommunicationType  { get; set; }
+   }
+
+}
+	 

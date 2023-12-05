@@ -214,6 +214,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CommunicationTypeMap());
 	
+            modelBuilder.Configurations.Add(new ConfirmationNumberTokenLogMap());
+	
             modelBuilder.Configurations.Add(new ConfirmationTypeMap());
 	
             modelBuilder.Configurations.Add(new ConsignmentMap());
@@ -1822,6 +1824,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CommunicationType> CommunicationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ConfirmationNumberTokenLog> ConfirmationNumberTokenLogs 
 	 {
 	      get; set;
 	 
