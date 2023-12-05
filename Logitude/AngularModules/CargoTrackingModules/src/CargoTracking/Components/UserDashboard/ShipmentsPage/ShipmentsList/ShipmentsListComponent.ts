@@ -32,8 +32,6 @@ import {SharedService} from 'src/CargoTracking/Services/Others/SharedService';
 import {QueryColumnPM} from 'src/CargoTracking/Services/Others/QueryColumnPM';
 import {ApiQueryFilters} from 'src/CargoTracking/Services/Others/ApiQueryFilters';
 import {LogitudeGridExportToExcelService} from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
-import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
-import { TenantManagementPM } from 'src/CargoTracking/Services/Others/TenantManagementPM';
 import { DateTimeFormatPipe } from 'src/Infrastructure/Pipes/DateTimeFormatPipe';
 
 @Component({
@@ -1177,6 +1175,9 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
             || this.ShipmentSearchInput.OpenDateGreaterThan
             || this.ShipmentSearchInput.ClearanceDateGreaterThan
             || this.ShipmentSearchInput.ATADateGreaterThan
+            || this.ShipmentSearchInput.OpenDateLessThan
+            || this.ShipmentSearchInput.ClearanceDateLessThan
+            || this.ShipmentSearchInput.ATADateLessThan
             || this.ShipmentSearchInput.TransportModeCodes.length > 0
             || this.ShipmentSearchInput.EstimatedArrivalOnly
             || this.ShipmentSearchInput.HasException
