@@ -63,7 +63,7 @@ namespace Logitude.Accounting.BL.Validators
             bool exists = CheckDisplayNumber(myGLAccountPM.DisplayNumber, myGLAccountPM.InternalNumber, myGLAccountPM.Tenant);
             if (exists == true)
             {
-                return new ValidationResult(TextCodesTranslator.TranslateText("GLAccounts.O.DisplayNumberAlreadyExists", myGLAccountPM.Tenant, showLocals));
+                return new ValidationResult(String.Format(TextCodesTranslator.TranslateText("GLAccounts.O.DisplayNumberAlreadyExists", myGLAccountPM.Tenant, showLocals), myGLAccountPM.DisplayNumber));
             }
 
             bool internalExists = CheckInternalNumber(myGLAccountPM.InternalNumber, myGLAccountPM.Id, myGLAccountPM.Tenant);

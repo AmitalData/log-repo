@@ -17397,8 +17397,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;GLAccounts.O.DisplayNumberAlreadyExists&quot;"
-      DefaultText="&quot;Existing number - choose another one&quot;"
-      LocalDefaultText="&quot;מספר קיים - יש לבחור במספר אחר&quot;"
+      DefaultText="&quot;The card the system is trying to open ({0}) is already exists. It can be connected by clicking on the &quot;Connect&quot; button.&quot;"
+      LocalDefaultText="&quot;הכרטיס שהמערת מנסה לפתוח ({0}) כבר קיים. ניתן לחבר אותו ע&quot;י לחיצה על כפתור &quot;חיבור כרטיס קיים&quot;.&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
