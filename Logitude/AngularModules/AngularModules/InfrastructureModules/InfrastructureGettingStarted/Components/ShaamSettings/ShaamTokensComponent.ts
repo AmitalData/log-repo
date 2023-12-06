@@ -13,7 +13,7 @@ import { ShaamWebService } from 'Shipment/Services/ShaamWebService';
 }) 
 export class ShaamTokensComponent extends BaseComponent {
     DataContext: ShaamTokensComponent = this;
-    // ObjectTableName: string = "Customs.CustomsRequestsSheet";
+    ObjectTableName: string = "Customs.ConfirmationNumberTokenLog";
     columns: any[] = null;
     finishBuildColumns: boolean = false
     loggedUserCode: string = SessionLocator.LoggedUserPM.Code;
