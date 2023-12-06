@@ -781,7 +781,7 @@ export class MaintenanceComponent {
             item.Code = "SHAAM_LOGS";
             item.ObjectTableName = "ConfirmationNumberTokenLog",
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
-            item.TranslatedName = TextCodeTranslator.Translate('General.MC.Logs');
+            item.TranslatedName = 'Logs', // TextCodeTranslator.Translate('General.MC.Logs');
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         
             var item = new MenusTablePM();
@@ -789,7 +789,7 @@ export class MaintenanceComponent {
             item.Icon = "Settings"
             item.Code = "SHAAM_TOKEN";
             item.ObjectTableName = "Customs.ConfirmationNumberTokenLog";
-            item.TranslatedName = TextCodeTranslator.Translate('General.MC.TokenManagement');
+            item.TranslatedName = 'Token Managment', TextCodeTranslator.Translate('General.MC.TokenManagement');
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
     }

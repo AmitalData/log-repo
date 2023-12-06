@@ -48,73 +48,73 @@ namespace Logitude.Customs.Data.EntityListQueryServices
            
             query2 = filter.GetFilteredQuery<ConfirmationNumberTokenLogList>(listQueryOperation, query2);
 
-            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
-            {
-                PropertyInfo propInfo = typeof(ConfirmationNumberTokenLogList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> ConfirmationNumberTokenLogObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ConfirmationNumberTokenLog",tenant).ToList();
+     //       if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+     //       {
+     //           PropertyInfo propInfo = typeof(ConfirmationNumberTokenLogList).GetProperty(queryOperations.SortByColumnName);
+     //           List<ObjectField> ConfirmationNumberTokenLogObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.ConfirmationNumberTokenLog",tenant).ToList();
 
-                ObjectField objectField = (from a in ConfirmationNumberTokenLogObjectFields
-                                           where a.FieldName == queryOperations.SortByColumnName
-                                           select a).FirstOrDefault();
+     //           ObjectField objectField = (from a in ConfirmationNumberTokenLogObjectFields
+     //                                      where a.FieldName == queryOperations.SortByColumnName
+     //                                      select a).FirstOrDefault();
 
-                if (objectField != null)
-                {
-				 if (objectField.IsCustom)
-                    {
-                        query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, string>(queryOperations, query2);
-                    }
-                    else
-                    {
-                     switch (objectField.DataTypeCode.ToLower())
-                     {
-                         case "ntext":
-                        case "text":
-                            {
-                                query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, string>(queryOperations, query2);
-                                break;
-                            }
-						case "sigdouble":
-						case "double":
-                            {
-                                query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, double>(queryOperations, query2);
-                                break;
-                            }
-						case "date":
-                        case "datetime":
-                            {
-                                query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, DateTime>(queryOperations, query2);
-                                break;
-                            }
-						case "unsinteger":
-                        case "integer":
-                            {
-                                query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, int>(queryOperations, query2);
-                                break;
-                            }
-                        case "boolean":
-                            {
-                                query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, bool>(queryOperations, query2);
-                                break;
-                            }
-						case "unsdecimal":
-						case "decimal":
-                            {
-                                query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, decimal>(queryOperations, query2);
-                                break;
-                            }
-                        default:
-                            {
-                                query2 = query2.OrderByDescending(d => d.CreateDate);
-                                break;
-                            }
-                    }
-				 }
-                }
-            }
-		    else
-            {
+     //           if (objectField != null)
+     //           {
+				 //if (objectField.IsCustom)
+     //               {
+     //                   query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, string>(queryOperations, query2);
+     //               }
+     //               else
+     //               {
+     //                switch (objectField.DataTypeCode.ToLower())
+     //                {
+     //                    case "ntext":
+     //                   case "text":
+     //                       {
+     //                           query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, string>(queryOperations, query2);
+     //                           break;
+     //                       }
+					//	case "sigdouble":
+					//	case "double":
+     //                       {
+     //                           query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, double>(queryOperations, query2);
+     //                           break;
+     //                       }
+					//	case "date":
+     //                   case "datetime":
+     //                       {
+     //                           query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, DateTime>(queryOperations, query2);
+     //                           break;
+     //                       }
+					//	case "unsinteger":
+     //                   case "integer":
+     //                       {
+     //                           query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, int>(queryOperations, query2);
+     //                           break;
+     //                       }
+     //                   case "boolean":
+     //                       {
+     //                           query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, bool>(queryOperations, query2);
+     //                           break;
+     //                       }
+					//	case "unsdecimal":
+					//	case "decimal":
+     //                       {
+     //                           query2 = sortClass.GetSorterQuery<ConfirmationNumberTokenLogList, decimal>(queryOperations, query2);
+     //                           break;
+     //                       }
+     //                   default:
+     //                       {
+     //                           query2 = query2.OrderByDescending(d => d.CreateDate);
+     //                           break;
+     //                       }
+     //               }
+				 //}
+     //           }
+     //       }
+		   // else
+     //       {
                 query2 = query2.OrderByDescending(d => d.CreateDate);
-            }
+            //}
 			if(!queryOperations.GetAll)
 			{
              query2 = query2.Skip(skippedPorts);
