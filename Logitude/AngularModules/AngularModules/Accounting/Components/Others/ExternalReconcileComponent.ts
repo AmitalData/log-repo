@@ -516,11 +516,11 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //throw new Error("Method not implemented.");
         if (this.ExtPageSelectedLines.Length < 1) {
             console.error("(this.ExtPageSelectedLines.Length != 1)")
-            this.ValidationErrorsList.push("to adjust bank fees, select one or more row External page line ");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate('ExternalReconciliation.O.SelectOneOrMore'));
             return;
         }
         if (this.ExtPageSelectedLines.Length > 1 && this.TransactionSelectedLines.Length > 0) {
-            this.ValidationErrorsList.push("to adjust bank fees with Transaction select only one page line  ");
+            this.ValidationErrorsList.push(TextCodeTranslator.Translate('ExternalReconciliation.O.SelectOnePage'));
             return;
         }
         let LedgerTransactionIdList: string[] = [];
