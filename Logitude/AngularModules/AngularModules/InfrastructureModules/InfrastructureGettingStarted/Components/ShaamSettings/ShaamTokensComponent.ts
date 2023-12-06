@@ -20,7 +20,7 @@ export class ShaamTokensComponent extends BaseComponent {
     linkToCodeForToken: string = "";
 
     constructor(
-        // private _entityResourceService: EntityResourceService,
+        private _entityResourceService: EntityResourceService,
         private cd: ChangeDetectorRef,
     ) {
         super();
@@ -29,8 +29,9 @@ export class ShaamTokensComponent extends BaseComponent {
     ngOnInit() {
         this.BuildColumns()
         this.initLinkToCodeForToken();
-        // this.cd.detectChanges()
-        // this._entityResourceService.getEntityResourceByTableName("CommunicationLog", 0).subscribe((response: any) => {});
+        this._entityResourceService.getEntityResourceByTableName("ConfirmationNumberTokenLog", 0).subscribe((response: any) => {
+            this.cd.detectChanges()            
+        });
     }
 
     @Output() MenuHeaderchangeevent = new EventEmitter();

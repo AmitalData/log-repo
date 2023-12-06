@@ -779,14 +779,15 @@ export class MaintenanceComponent {
             item.CategoryTypeCode = "SHA";
             item.Icon = "List"
             item.Code = "SHAAM_LOGS";
-            item.ObjectTableName = TextCodeTranslator.Translate('CommunicationLog.O.Logs');
+            item.ObjectTableName = "ConfirmationNumberTokenLog",
+            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         
             var item = new MenusTablePM();
             item.CategoryTypeCode = "SHA";
             item.Icon = "Settings"
             item.Code = "SHAAM_TOKEN";
-            item.ObjectTableName = "Token Management";
+            item.ObjectTableName = TextCodeTranslator.Translate('Customs.ConfirmationNumberTokenLog.O.TokenManagement');
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
     }
@@ -816,19 +817,19 @@ export class MaintenanceComponent {
 
         if (item) {
             switch (item.Code) {
-                case "SHAAM_LOGS": {
-                    var windowTitle = TextCodeTranslator.Translate('CommunicationLog.O.Logs');
-                    var logWindow = new LogitudeWindow();
-                    logWindow.Width = 500;
-                    logWindow.Height = 400;
-                    logWindow.Title = windowTitle;
-                    logWindow.IsShowCloseButton = true;
-                    logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamApiLogsComponent');
-                    break;
-                }
+                // case "SHAAM_LOGS": {
+                //     var windowTitle = TextCodeTranslator.Translate('CommunicationLog.O.Logs');
+                //     var logWindow = new LogitudeWindow();
+                //     logWindow.Width = 500;
+                //     logWindow.Height = 400;
+                //     logWindow.Title = windowTitle;
+                //     logWindow.IsShowCloseButton = true;
+                //     logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamApiLogsComponent');
+                //     break;
+                // }
 
                 case "SHAAM_TOKEN": {
-                    var windowTitle = "Token Management";
+                    var windowTitle = TextCodeTranslator.Translate('Customs.ConfirmationNumberTokenLog.O.TokenManagement');
                     var logWindow = new LogitudeWindow();
                     logWindow.Width = window.outerWidth;
                     logWindow.Height = window.outerHeight;

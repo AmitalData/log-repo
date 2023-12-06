@@ -1,6 +1,6 @@
-<button class="Button" style="width: 150px; display: inline-block; margin: 20px 0" (click)="openLinkToCodeForToken()">Get New Token</button>
+<button class="Button" style="width: 150px; display: inline-block; margin: 20px 0" (click)="openLinkToCodeForToken()">{{'Customs.ConfirmationNumberTokenLog.O.GetNewToken' | TextCodeTranslationPipe}}</button>
 
-<button class="Button" style="width: 150px; display: inline-block; margin: 20px 0; margin-right: 20px;" (click)="refreshTable()">Refresh Table</button>
+<button class="Button" style="width: 150px; display: inline-block; margin: 20px 0; margin-right: 20px;" (click)="refreshTable()">{{'Customs.ConfirmationNumberTokenLog.O.RefreshTable' | TextCodeTranslationPipe}}</button>
 
 <div class="GeneratedGridContainer" style="padding:5px" *ngIf="finishBuildColumns">
     <logitude-grid [ObjectTable]="ObjectTableName"
