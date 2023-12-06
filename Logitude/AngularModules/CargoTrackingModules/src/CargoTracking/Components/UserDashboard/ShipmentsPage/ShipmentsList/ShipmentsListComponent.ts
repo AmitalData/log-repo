@@ -32,6 +32,8 @@ import {SharedService} from 'src/CargoTracking/Services/Others/SharedService';
 import {QueryColumnPM} from 'src/CargoTracking/Services/Others/QueryColumnPM';
 import {ApiQueryFilters} from 'src/CargoTracking/Services/Others/ApiQueryFilters';
 import {LogitudeGridExportToExcelService} from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
+import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
+import { TenantManagementPM } from 'src/CargoTracking/Services/Others/TenantManagementPM';
 import { DateTimeFormatPipe } from 'src/Infrastructure/Pipes/DateTimeFormatPipe';
 
 @Component({
