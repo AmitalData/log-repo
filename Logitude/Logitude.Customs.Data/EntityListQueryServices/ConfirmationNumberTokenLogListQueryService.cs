@@ -23,9 +23,13 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ConfirmationNumberTokenLogList> query = (from a in iQueryable
                                                                 select new ConfirmationNumberTokenLogList()
                                                                 {
-
                                                                     Id = a.Id,
-
+                                                                    CallType = a.CallType,
+                                                                    CommunicationType   = a.CommunicationType,
+                                                                    CompanyIdInvoiceProducer = a.CompanyIdInvoiceProducer,
+                                                                    CompanyIdInvoiceRecipient = a.CompanyIdInvoiceRecipient,
+                                                                    CreateDate = a.CreateDate,
+                                                                    InvoiceNumber = a.InvoiceNumber
                                                                 });
             return query;
         }
