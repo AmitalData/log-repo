@@ -50,6 +50,8 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
 
+        if (true || SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "General.Features.ShaamApi"))
+            this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement") || 'SHAAM Token Management'));
 
         if (SessionLocator.Tenant == 0) {
             this.PagesMenu.push(new Menu("MNG", TextCodeTranslator.Translate("General.MC.Management.Management")));
@@ -157,6 +159,7 @@ export class MaintenanceComponent {
         this.BuildAccountingMenus();
         this.BuildOtherMenus();
         this.BuildTransmissionsMenus();
+        this.BuildShaamTokenManagementMenu();
         this.PageChanged(this.PagesMenu[0]);
     }
     private BuildSystemSettings() {
@@ -770,6 +773,25 @@ export class MaintenanceComponent {
         }
     }
 
+    private BuildShaamTokenManagementMenu() {
+        if (true || SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "General.Features.ShaamApi")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "SHA";
+            item.Icon = "List"
+            item.Code = "SHAAM_LOGS";
+            item.ObjectTableName = "ConfirmationNumberTokenLog",
+            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "SHA";
+            item.Icon = "Settings"
+            item.Code = "SHAAM_TOKEN";
+            item.ObjectTableName = TextCodeTranslator.Translate('Customs.ConfirmationNumberTokenLog.O.TokenManagement');
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
+    }
+
     // Commands
     PageChanged(item: Menu) {
         this.SelectedMenu = item;
@@ -795,6 +817,39 @@ export class MaintenanceComponent {
 
         if (item) {
             switch (item.Code) {
+                // case "SHAAM_LOGS": {
+                //     var windowTitle = TextCodeTranslator.Translate('CommunicationLog.O.Logs');
+                //     var logWindow = new LogitudeWindow();
+                //     logWindow.Width = 500;
+                //     logWindow.Height = 400;
+                //     logWindow.Title = windowTitle;
+                //     logWindow.IsShowCloseButton = true;
+                //     logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamApiLogsComponent');
+                //     break;
+                // }
+
+                case "SHAAM_TOKEN": {
+                    var windowTitle = TextCodeTranslator.Translate('Customs.ConfirmationNumberTokenLog.O.TokenManagement');
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Width = window.outerWidth;
+                    logWindow.Height = window.outerHeight;
+                    logWindow.Title = windowTitle;
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
+                    break;
+                }
+
+                case "DFES": {
+                    var windowTitle = "Document Filing Email Settings";
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Width = 500;
+                    logWindow.Height = 400;
+                    logWindow.Title = windowTitle;
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.Show('./Common/Components/Maintenance/DocumentFilingEmailSettings/DocumentFilingEmailSettingsComponent');
+                    break;
+                }
+
                 case "DFES": {
                     var windowTitle = "Document Filing Email Settings";
                     var logWindow = new LogitudeWindow();

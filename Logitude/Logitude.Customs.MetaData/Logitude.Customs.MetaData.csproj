@@ -605,6 +605,7 @@
     <None Include="DBTables\VendorStatus.dxml" />
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
+    <None Include="EntityFiles\ConfirmationNumberTokenLog.lxml" />
     <None Include="EntityFiles\AddressCurrency.lxml" />
     <None Include="EntityFiles\ClientItem.lxml" />
     <None Include="EntityFiles\ClientIndication.lxml" />

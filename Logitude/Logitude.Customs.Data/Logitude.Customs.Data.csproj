@@ -134,6 +134,7 @@
     <Compile Include="EntityKeys\ClientIndicationKeys.cs" />
     <Compile Include="EntityKeys\ClientsPoaKeys.cs" />
     <Compile Include="EntityKeys\ClientsTapagKeys.cs" />
+    <Compile Include="EntityKeys\ConfirmationNumberTokenLogKeys.cs" />
     <Compile Include="EntityKeys\ConsignmentPackDangerKeys.cs" />
     <Compile Include="EntityKeys\ContainerizationHataraStatusKeys.cs" />
     <Compile Include="EntityKeys\ContainerizationKeys.cs" />
@@ -303,6 +304,7 @@
     <Compile Include="EntityListQueryServices\ClientIndicationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientsPoaListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientsTapagListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ConfirmationNumberTokenLogListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ConsignmentPackDangerListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerizationHataraStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerizationListQueryService.cs" />
@@ -404,6 +406,7 @@
     <Compile Include="EntityListQueryServices\Generated\ClientIndicationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientsPoaListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientsTapagListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ConfirmationNumberTokenLogListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ConsignmentPackDangerListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerizationHataraStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerizationListQueryService.Generated.cs" />
@@ -609,6 +612,7 @@
     <Compile Include="EntityListQueryServices\VendorCurrencyListQueryService.cs" />
     <Compile Include="EntityLists\Generated\ClientItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientIndicationList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ConfirmationNumberTokenLogList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CountryCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CourierHawbFromExcelList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomDocumentTypeTenantList.Generated.cs" />
@@ -811,6 +815,7 @@
     <Compile Include="EntityMapping\ClientIndicationMap.cs" />
     <Compile Include="EntityMapping\ClientsPoaMap.cs" />
     <Compile Include="EntityMapping\ClientsTapagMap.cs" />
+    <Compile Include="EntityMapping\ConfirmationNumberTokenLogMap.cs" />
     <Compile Include="EntityMapping\ConsignmentPackDangerMap.cs" />
     <Compile Include="EntityMapping\ContainerizationHataraStatusMap.cs" />
     <Compile Include="EntityMapping\ContainerizationMap.cs" />
@@ -980,6 +985,7 @@
     <Compile Include="EntityPOCOs\ClientIndication.cs" />
     <Compile Include="EntityPOCOs\ClientsPoa.cs" />
     <Compile Include="EntityPOCOs\ClientsTapag.cs" />
+    <Compile Include="EntityPOCOs\ConfirmationNumberTokenLog.cs" />
     <Compile Include="EntityPOCOs\ConsignmentPackDanger.cs" />
     <Compile Include="EntityPOCOs\Containerization.cs" />
     <Compile Include="EntityPOCOs\ContainerizationHataraStatus.cs" />
@@ -1150,6 +1156,7 @@
     <Compile Include="Repsitories\ClientIndicationRepository.cs" />
     <Compile Include="Repsitories\ClientsPoaRepository.cs" />
     <Compile Include="Repsitories\ClientsTapagRepository.cs" />
+    <Compile Include="Repsitories\ConfirmationNumberTokenLogRepository.cs" />
     <Compile Include="Repsitories\ConsignmentPackDangerRepository.cs" />
     <Compile Include="Repsitories\ContainerizationHataraStatusRepository.cs" />
     <Compile Include="Repsitories\ContainerizationRepository.cs" />
@@ -1251,6 +1258,7 @@
     <Compile Include="Repsitories\Generated\ClientIndicationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientsPoaRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientsTapagRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ConfirmationNumberTokenLogRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ConsignmentPackDangerRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerizationHataraStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerizationRepository.Generated.cs" />

@@ -18,6 +18,7 @@ import { PaymentGatewayComponent } from './Components/PaymentGateway/PaymentGate
 import { ChangeCurrencyComponent } from './Components/SystemCurrencies/ChangeCurrencyComponent';
 import { SystemDefaultsComponent } from './Components/SystemDefaults/SystemDefaultsComponent';
 import { DefaultRatiosComponent } from './Components/SystemDefaults/DefaultRatiosComponent';
+import { ShaamTokensComponent } from './Components/ShaamSettings/shaamTokensComponent';
 
 export const Components =
     [
@@ -41,6 +42,7 @@ export const Components =
         PaymentGatewayComponent,
         ChangeCurrencyComponent,
         DefaultRatiosComponent,
+        ShaamTokensComponent,
     ];
 
 export class ModuleDeclarations {
@@ -69,7 +71,7 @@ export class ModuleDeclarations {
             case "PaymentGatewayComponent": { myResult = PaymentGatewayComponent; break; }
             case "ChangeCurrencyComponent": { myResult = ChangeCurrencyComponent; break; }
             case "DefaultRatiosComponent": { myResult = DefaultRatiosComponent; break; }  
-
+            case "ShaamTokensComponent": { myResult = ShaamTokensComponent; break; }  
         }
 
         return myResult;
