@@ -1129,8 +1129,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 						item.Tenant = _MyDeclarationPM.Tenant;
 						item.ModificationCounterKey = modificationCounter;
 
-						if (string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FreightCurrency))
+						if (string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FreightCurrency)) { 
 							FieldError.AppendLine("FreightCurrency is null ");
+							return;
+						}
 						item.CurrencyTypeCode = _AmitalCustomsFile.Closing.FreightCurrency;
 
 						
@@ -1138,11 +1140,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 						if (string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FreightAmount))
 						{
 							FieldError.AppendLine("FreightAmount is null  ");
+							return;
 						}
 						else if (!Decimal.TryParse(_AmitalCustomsFile.Closing.FreightAmount, out amount))
 						{
 							item.Amount = amount;
 							FieldError.AppendLine("FreightAmount is not decimal ");
+							return;
 						}
 						else
 						{
