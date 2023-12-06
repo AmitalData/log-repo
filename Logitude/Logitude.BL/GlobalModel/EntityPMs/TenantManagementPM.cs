@@ -412,5 +412,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string LogoURL { get; set; }
         public string ServiceAgreementURL { get; set; }
         public string EcommerceSupportEmail { get; set; }
+        public bool EcommerceTenant { get; set; }
+
     }
 }

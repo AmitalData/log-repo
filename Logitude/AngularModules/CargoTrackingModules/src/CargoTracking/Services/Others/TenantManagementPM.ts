@@ -994,7 +994,10 @@ export class TenantManagementPM {
     private dPArchiveShipmentDepartFilter: number;
     public get DPArchiveShipmentDepartFilter() { return this.dPArchiveShipmentDepartFilter; }
     public set DPArchiveShipmentDepartFilter(newValue: number) { if (this.dPArchiveShipmentDepartFilter != newValue) { this.dPArchiveShipmentDepartFilter = newValue; this.MarkAsDirty("DPArchiveShipmentDepartFilter"); } }
-       
+    
+    private ecommerceTenant: boolean;
+    public get EcommerceTenant() { return this.ecommerceTenant; }
+    public set EcommerceTenant(newValue: boolean) { if (this.ecommerceTenant != newValue) { this.ecommerceTenant = newValue; this.MarkAsDirty("EcommerceTenant"); } }
 	 
 
     public OldEntityPM: TenantManagementPM;

@@ -337,6 +337,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                             tenant.IsTestTenant = ten.IsTestTenant;
                             tenant.IsHybrid = ten.IsHybrid;
                             tenant.EcommerceSupportEmail = ten.EcommerceSupportEmail;
+                            tenant.EcommerceTenant = ten.EcommerceTenant;
                         }
 
                         GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
@@ -563,6 +564,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         tenant1.IsTestTenant = ten.IsTestTenant;
                         tenant1.IsHybrid = ten.IsHybrid;
                         tenant1.EcommerceSupportEmail = ten.EcommerceSupportEmail;
+                        tenant1.EcommerceTenant = ten.EcommerceTenant;
                     }
 
                     GlobalTenantRepository globalTenRep = new GlobalTenantRepository();
