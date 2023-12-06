@@ -3196,7 +3196,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 						ObjectTableId = TaxReportObjectTable.Id,
 						MenuButtonType = "menuitem",
 						FeatureId=  TaxReportFeature_MB04.Id,
-						Style = null,
+						Style = null,  
 						LocalDefaultText = "יצירת פקודת סגירה",
                         HtmlComponentPath=null,
                         Width=0,
