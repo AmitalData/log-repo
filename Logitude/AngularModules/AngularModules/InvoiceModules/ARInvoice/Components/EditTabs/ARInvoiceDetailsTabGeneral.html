@@ -173,7 +173,7 @@
                                                             </td>
 
                                                             <td style="width: 36px;" >
-                                                                <div [style.float]="isRTL ? 'left' : 'right'" style="display: block;" *ngIf="IsEditExchangeRateVisible">
+                                                                <div [style.float]="isRTL ? 'left' : 'right'" style="display: block;" *ngIf="IsEditExchangeRateVisible && CheckIsFullAccounting ? false:true">
                                                                     <IconButton [Name]="'Edit'" [IsSmall]="true" (click)="UpdateCurrencyRateClicked()" [disabled]="!RateIsEnabled"></IconButton>
 
                                                                 </div>
@@ -272,7 +272,7 @@
 
                                     <td>
                                         <table>
-                                            <tr class="FormFieldRow">
+                                            <tr *ngIf="CheckIsFullAccounting ? false:true" class="FormFieldRow">
                                                 <td style="width: 5px;">
                                                     <div></div>
                                                 </td>
