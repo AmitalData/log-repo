@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;1ca9&quot;"
+  Code="&quot;6534&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5087,6 +5087,24 @@
       DefaultText="&quot;Quotes (OP)&quot;"
       LocalDefaultText="&quot; הצעות מחיר (OP)&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ShaamTokenManagement&quot;"
+      DefaultText="&quot;SHAAM Token Management&quot;"
+      LocalDefaultText="&quot;שעמ ניהול טוקנים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.TokenManagement&quot;"
+      DefaultText="&quot;Token Management&quot;"
+      LocalDefaultText="&quot;ניהול טוקנים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Logs&quot;"
+      DefaultText="&quot;Logs&quot;"
+      LocalDefaultText="&quot;לוגים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>

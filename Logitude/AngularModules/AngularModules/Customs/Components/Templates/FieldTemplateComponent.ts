@@ -26,6 +26,8 @@ import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/componen
 import { PendingByKeywordWebService } from 'Customs/Services/ExtendedPMs/PendingByKeywordWebService';
 import { LogisticActionRequestsCloseSharedDataService } from 'Customs/Services/DataChange/LogisticActionRequestCloseSharedDataService';
 import { ServersNameExtendedPMService } from 'Customs/Services/ExtendedPMs/ServersNameExtendedPMService';
+import { CustomsRequestsSheetList } from 'Customs/EntityLists/CustomsRequestsSheetList';
+import { CommunicationLogList } from 'Common/EntityLists/CommunicationLogList';
 @Component({
 
     templateUrl: './FieldTemplateComponent.html',
@@ -933,6 +935,24 @@ export class FieldTemplateComponent {
         return new Promise<boolean>(resolve => 
             myConfirmWindow.WindowClosed.subscribe(e => 
                 resolve(myConfirmWindow.Yes)));
+    }
+
+    async OnShowLogclick(e: Event) {
+        e.stopPropagation()
+        const communicationLog: CommunicationLogList = this.Entity;
+        const winData: CustomsRequestsSheetList = new CustomsRequestsSheetList();
+        winData.RequestComminicationId = communicationLog.Id;
+        winData.Tenant = communicationLog.Tenant;
+
+        // SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+        // SessionLocator.SelectedSession.StopBusyIndicator();
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 1000;
+        logitudeWindow.Height = 700;
+        logitudeWindow.IsShowCloseButton = true;
+        logitudeWindow.Title = TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
+        logitudeWindow.WindowArgs = winData;
+        logitudeWindow.Show('./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationLogMoreDetailsComponent');
     }
 }
 

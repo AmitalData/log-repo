@@ -10,11 +10,14 @@ export class ConfirmationNumberTokenLogList {
    
 	Id: string;
 	CreateDate: Date;
+	Tenant: number;
 	CompanyIdInvoiceProducer: string;
 	CompanyIdInvoiceRecipient: string;
 	InvoiceNumber: string;
 	CallType: string;
 	CommunicationType: number;
+	CommunicationLogId: string;
+	ShowLog: string;
 	
 }
  

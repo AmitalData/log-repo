@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                     CompanyIdInvoiceProducer = a.CompanyIdInvoiceProducer,
                                                                     CompanyIdInvoiceRecipient = a.CompanyIdInvoiceRecipient,
                                                                     CreateDate = a.CreateDate,
-                                                                    InvoiceNumber = a.InvoiceNumber
+                                                                    InvoiceNumber = a.InvoiceNumber,
                                                                 });
             return query;
         }
