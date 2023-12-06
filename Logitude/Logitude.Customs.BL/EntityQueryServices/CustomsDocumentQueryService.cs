@@ -201,9 +201,14 @@ namespace Logitude.Customs.BL.EntityQueryServices
                          );
 
             q2 = q2.Distinct();
-            var customsDocumentListPocos = q2.ToList();
-            var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
-            return customsDocumentListPMs;
+            if( q2 != null)
+            {
+                var customsDocumentListPocos = q2.ToList();
+                var customsDocumentListPMs = customsDocumentListPocos.Select(poko => GetEntityPM(poko)).ToList();
+                return customsDocumentListPMs;
+            }
+            return null;
+            
         }
 
         public List<CustomsDocumentPM> GetCustomsDocumentPMListWithoutRequestedDocAndDeclarationAmendmentDocs(GetTicketsParams parameters, int tenant)
