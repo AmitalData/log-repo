@@ -197,29 +197,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         private void UpdatePaymentDocument(string documentsFilingId, string DeclarationId, int Tenant, string LoggedUserId)
         {
-
-            var documentsFilingService = new UnifreightDocumentsFilingService(_DataContext, Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "" });
-            //var documentTypeQuery = new DocumentTypeQuery(Tenant);
-
-
-            //var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("POR", _PaymentOrderPM.Tenant);
-            DocumentsFilingPM documentsFilingPM = _documentsFilingQuery.GetSinglePM(documentsFilingId, Tenant);
-            if (documentsFilingPM != null && documentsFilingPM.EntityId != DeclarationId)
+            try
             {
-                documentsFilingPM.EntityId = DeclarationId;
-                documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                //documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
-                //documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
-                //documentsFilingPM.ExternalEntityReference = _PaymentOrderPM.AccountingCustomFile;
-                documentsFilingPM.IsHybrid = true;//this is as substituteto hybrid !!!!
-                documentsFilingService.Update(documentsFilingPM, null, LoggedUserId);
-                LogMessagingUtil.Instance.AppendLine("UpdatePaymentDocument:Connect  document " + documentsFilingPM.Code + " to DeclarationId:" + DeclarationId);
-            }
-            else
+
+            
+               var documentsFilingService = new UnifreightDocumentsFilingService(_DataContext, Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "" });
+               //var documentTypeQuery = new DocumentTypeQuery(Tenant);
+               
+               
+               //var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("POR", _PaymentOrderPM.Tenant);
+               DocumentsFilingPM documentsFilingPM = _documentsFilingQuery.GetSinglePM(documentsFilingId, Tenant);
+               if (documentsFilingPM != null && documentsFilingPM.EntityId != DeclarationId)
+               {
+                   documentsFilingPM.EntityId = DeclarationId;
+                   documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                   //documentsFilingPM.ChildEntityId = _PaymentOrderPM.Id;
+                   //documentsFilingPM.ChildObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.PaymentOrder");
+                   //documentsFilingPM.ExternalEntityReference = _PaymentOrderPM.AccountingCustomFile;
+                   documentsFilingPM.IsHybrid = true;//this is as substituteto hybrid !!!!
+                   documentsFilingService.Update(documentsFilingPM, null, LoggedUserId);
+                   LogMessagingUtil.Instance.AppendLine("UpdatePaymentDocument:Connect  document " + documentsFilingPM.Code + " to DeclarationId:" + DeclarationId);
+               }
+               else
+               {
+                   LogMessagingUtil.Instance.AppendLine($"UpdatePaymentDocument:GetSinglePM(documentsFilingId)-bad:{documentsFilingPM?.EntityId}");
+               }
+			}
+            catch (Exception ex)
             {
-                LogMessagingUtil.Instance.AppendLine($"UpdatePaymentDocument:GetSinglePM(documentsFilingId)-bad:{documentsFilingPM?.EntityId}");
-            }
-        }
+				LogMessagingUtil.Instance.AppendLine($"UpdatePaymentDocument:EXCEPTION:{ex.Message.ToString()} {documentsFilingId}");
+
+
+			}
+
+		}
     }
 
 

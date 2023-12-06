@@ -185,27 +185,57 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
             //});
 
             var child1EntityCode: string = "ClaimsRelatedEntity";
-            if (!customParam) { //true-ClaimsRelatedEntity //false=ClaimRelatedEntityCancelOrObjection
+            if (customParam) { //true-ClaimsRelatedEntity //false=ClaimRelatedEntityCancelOrObjection
                 child1EntityCode = "ClaimRelatedEntityCancelOrObjection";
             }
 
-            if (customsDocumentsTicket.CustomsDocumentPointers != null && customsDocumentsTicket.CustomsDocumentPointers[0] != null) {
+            if (customsDocumentsTicket.CustomsDocumentPointers != null && customsDocumentsTicket.CustomsDocumentPointers.length > 0) {
+                customsDocumentsTicket.CustomsDocumentPointers.forEach((pointer) => {
+                            var editedPointer: CustomsDocumentPointerPM = customsDocumentsTicket.CustomsDocumentPointers.filter(d => d.Id == pointer.Id)[0];
+                            if (editedPointer != null) {
+                                customsDocumentsTicket.RemoveCustomsDocumentPointer(editedPointer);
+                            }
+                    
+                    })
+
+                args.SelectedClaimRelatedEntities.Collection.forEach((claim)=>{
+
+                    var newPointer: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(customsDocumentsTicket)
+
+                    newPointer.Tenant = SessionLocator.Tenant;
+                    newPointer.ParentEntityId = claim.claimId;
+                    newPointer.ParentEntityCode = "Claim";
+                    newPointer.Child1EntityCode = child1EntityCode;
+                    newPointer.Child2EntityCode = null;
+                    newPointer.Child3EntityCode = null;
+                    newPointer.Child1EntityId = claim.entityCounterKey + "";
+                    newPointer.Child2EntityId = null;
+                    newPointer.Child3EntityId = null;
+                    customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
+                });
+               
                 //Update pointer details
-                customsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityCode = child1EntityCode;
-                customsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityId = args.ConnectedClaimRelatedEntities + "";
+                // customsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityCode = child1EntityCode;
+                // customsDocumentsTicket.CustomsDocumentPointers[0].Child1EntityId = args.ConnectedClaimRelatedEntities + "";
             }
             else { // Create new pointer
                 var newPointer: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(customsDocumentsTicket)
-                newPointer.Tenant = SessionLocator.Tenant;
-                newPointer.ParentEntityId = this.claimPM.Id;
-                newPointer.ParentEntityCode = "Claim";
-                newPointer.Child1EntityCode = child1EntityCode;
-                newPointer.Child2EntityCode = null;
-                newPointer.Child3EntityCode = null;
-                newPointer.Child1EntityId = args.ConnectedClaimRelatedEntities + "";
-                newPointer.Child2EntityId = null;
-                newPointer.Child3EntityId = null;
-                customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
+                args.SelectedClaimRelatedEntities.Collection.forEach((claim)=>{
+
+                    var newPointer: CustomsDocumentPointerPM = new CustomsDocumentPointerPM(customsDocumentsTicket)
+
+                    newPointer.Tenant = SessionLocator.Tenant;
+                    newPointer.ParentEntityId = claim.claimId;
+                    newPointer.ParentEntityCode = "Claim";
+                    newPointer.Child1EntityCode = child1EntityCode;
+                    newPointer.Child2EntityCode = null;
+                    newPointer.Child3EntityCode = null;
+                    newPointer.Child1EntityId = claim.entityCounterKey + "";
+                    newPointer.Child2EntityId = null;
+                    newPointer.Child3EntityId = null;
+                    customsDocumentsTicket.AddCustomsDocumentPointer(newPointer);
+                });
+               
             }
         }
 
@@ -237,6 +267,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
     public GetCustomsInterfaceSettingsDocumentTypesCompleted: EventEmitter<any> = new EventEmitter();
 
     public SetDefaultConnectedEntityNumber(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any) {
+        debugger
         if (this.claimPM.ClaimsRelatedEntities == null || this.claimPM.ClaimsRelatedEntities.length == 0) {
             return;
         }

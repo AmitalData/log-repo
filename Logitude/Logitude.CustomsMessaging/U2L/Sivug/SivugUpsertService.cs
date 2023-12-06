@@ -687,6 +687,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                             }
                         }
                         this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
+
+                        if(this._INVOICE != null && this._INVOICE.INVOICEITEMS!= null && this._INVOICE.INVOICEITEMS.Count()>0)
                         UpdateClassificationCodeOnly(this._INVOICE);
                         return;
                     }
