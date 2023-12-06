@@ -55,21 +55,14 @@ namespace Logitude.Customs.Data.Repsitories
             var status = (from a in context.CourierPendingReasons
                           where a.Code == code && a.Tenant == tenant
                           select a).FirstOrDefault();
-            if(status.Inactive)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return !(status == null || status.Inactive);
         }
-       /* public List<CourierPendingReason> GetByDecdeclarationId(string declarationId,int tenant)
-        {
-            var status = (from a in context.CourierPendingReasons
-                          where a.dec == code && a.Tenant == tenant
-                          select a).;
-        }*/
+        /* public List<CourierPendingReason> GetByDecdeclarationId(string declarationId,int tenant)
+         {
+             var status = (from a in context.CourierPendingReasons
+                           where a.dec == code && a.Tenant == tenant
+                           select a).;
+         }*/
 
     }
 
