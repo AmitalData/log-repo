@@ -1101,6 +1101,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 		}
 		private void AddModification()
 		{
+			if (string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FreightCurrency) || string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FreightAmount)) return;
 
 			IncotemrsFileValidationQueryService incotemrsFileValidationQueryService = new IncotemrsFileValidationQueryService(ResolvedTenant());
 			var IncotermCode = _MyDeclarationPM.SupplierInvoices.FirstOrDefault()?.IncotermCode;
@@ -1127,28 +1128,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 						item.DeclarationId = _MyDeclarationPM.Id;
 						item.InvoiceCounterKey = _MyDeclarationPM.SupplierInvoices[0].InvoiceCounterKey;
 						item.Tenant = _MyDeclarationPM.Tenant;
-						item.ModificationCounterKey = modificationCounter;
-
-						if (string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FreightCurrency))
-							FieldError.AppendLine("FreightCurrency is null ");
-						item.CurrencyTypeCode = _AmitalCustomsFile.Closing.FreightCurrency;
-
-						
-						decimal amount = 0;
-						if (string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FreightAmount))
-						{
-							FieldError.AppendLine("FreightAmount is null  ");
-						}
-						else if (!Decimal.TryParse(_AmitalCustomsFile.Closing.FreightAmount, out amount))
-						{
-							item.Amount = amount;
-							FieldError.AppendLine("FreightAmount is not decimal ");
-						}
-						else
-						{
-							item.Amount = Convert.ToDecimal(_AmitalCustomsFile.Closing.FreightAmount);
-						}
-
+						item.ModificationCounterKey = modificationCounter;					
+						item.CurrencyTypeCode = _AmitalCustomsFile.Closing.FreightCurrency;					
+						item.Amount = Convert.ToDecimal(_AmitalCustomsFile.Closing.FreightAmount);
 						item.ChangeSetOp = ChangeSetOperation.Insert;
 						_MyDeclarationPM.SupplierInvoices[0].ChangeSetOp = ChangeSetOperation.Update;
 						_MyDeclarationPM.SupplierInvoices[0].SupplierInvoiceModifications.Add(item);
