@@ -22,7 +22,7 @@ export class TicketSelectors extends RegexSelectors
 
 	//#region Contains
 	public static readonly ContainsOk="Ok"
-	public static readonly ContainsYes="Yes"
+	public static readonly ContainsYes="כן"
 	public static readonly ContainsNew="New"
 	public static readonly ContainsCreate = "Create"
 	public static readonly ContainsSendReply = "Send Reply"
