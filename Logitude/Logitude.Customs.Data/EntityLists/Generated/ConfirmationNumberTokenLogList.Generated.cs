@@ -19,6 +19,8 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
        public string CompanyIdInvoiceProducer  { get; set; }
        [DataMember]
        public string CompanyIdInvoiceRecipient  { get; set; }
@@ -28,6 +30,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string CallType  { get; set; }
        [DataMember]
        public int? CommunicationType  { get; set; }
+       [DataMember]
+       public string CommunicationLogId  { get; set; }
+       [DataMember]
+       public string ShowLog  { get; set; }
    }
 
 }

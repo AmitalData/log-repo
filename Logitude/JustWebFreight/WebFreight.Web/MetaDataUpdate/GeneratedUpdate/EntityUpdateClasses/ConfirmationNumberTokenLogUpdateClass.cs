@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ConfirmationNumberTokenLogUpdateClass
    {  		
-		public const string HashString = "7e88361a311038fa4d593c8e672cda72";
+		public const string HashString = "679e2c96feffd8271460d1fd26e1212c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -544,7 +544,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
@@ -590,6 +590,66 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ShowLog",
+					  						ObjectTableName =  "Customs.ConfirmationNumberTokenLog",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  1,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ShowLog",
+					  						ListPropertyPath =  "ShowLog",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.ConfirmationNumberTokenLog",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ShowLog",
+					  						DefaultText =  "ShowLog",
+					  						ListFieldLable =  "ShowLogListLable",
+					  						ListLableDefaultText =  "ShowLog",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  true,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -624,15 +684,17 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			  Query ConfirmationNumberTokenLogQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConfirmationNumberTokenLogTextCode_0.Id, NameTextCodeCode = ConfirmationNumberTokenLogTextCode_0.Code, ObjectTableName = "Customs.ConfirmationNumberTokenLog", Code = "ConfirmationNumberTokenLog",  QueryGroupCode = "2ea0", IndexOrder = 0, Tenant = 0, ObjectTableId = ConfirmationNumberTokenLogObjectTable.Id, QuerySection = "Customs.ConfirmationNumberTokenLog", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ConfirmationNumberTokenLogFeature_0.Id,FeatureUniqeCode= ConfirmationNumberTokenLogFeature_0.FeatureUniqeCode, DefaultSortName = "Id", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn ConfirmationNumberTokenLogQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationNumberTokenLogQuery.Id,QueryCode = ConfirmationNumberTokenLogQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ConfirmationNumberTokenLog.CompanyIdInvoiceProducer" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ConfirmationNumberTokenLogQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationNumberTokenLogQuery.Id,QueryCode = ConfirmationNumberTokenLogQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ConfirmationNumberTokenLog.CompanyIdInvoiceProducer" , ColumnWidth = 140 }, addedQueryColumns);
 
-			 QueryColumn ConfirmationNumberTokenLogQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationNumberTokenLogQuery.Id,QueryCode = ConfirmationNumberTokenLogQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ConfirmationNumberTokenLog.CompanyIdInvoiceRecipient" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ConfirmationNumberTokenLogQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationNumberTokenLogQuery.Id,QueryCode = ConfirmationNumberTokenLogQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ConfirmationNumberTokenLog.CompanyIdInvoiceRecipient" , ColumnWidth = 140 }, addedQueryColumns);
 
 			 QueryColumn ConfirmationNumberTokenLogQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationNumberTokenLogQuery.Id,QueryCode = ConfirmationNumberTokenLogQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ConfirmationNumberTokenLog.CreateDate" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn ConfirmationNumberTokenLogQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationNumberTokenLogQuery.Id,QueryCode = ConfirmationNumberTokenLogQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ConfirmationNumberTokenLog.CallType" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn ConfirmationNumberTokenLogQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationNumberTokenLogQuery.Id,QueryCode = ConfirmationNumberTokenLogQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.ConfirmationNumberTokenLog.InvoiceNumber" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn ConfirmationNumberTokenLogQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ConfirmationNumberTokenLogQuery.Id,QueryCode = ConfirmationNumberTokenLogQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.ConfirmationNumberTokenLog.ShowLog" , ColumnWidth = 120 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -731,9 +793,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ConfirmationNumberTokenLogTextCode_CustomsConfirmationNumberTokenLogOGetNewToken = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConfirmationNumberTokenLog.O.GetNewToken", DefaultText = "Get New Token",LocalDefaultText = @"צור טוקן חדש", ObjectTableId = ConfirmationNumberTokenLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ConfirmationNumberTokenLogTextCode_CustomsConfirmationNumberTokenLogOTokenManagement = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConfirmationNumberTokenLog.O.TokenManagement", DefaultText = "Token Management",LocalDefaultText = @"ניהול טוקן", ObjectTableId = ConfirmationNumberTokenLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
  		   TextCode ConfirmationNumberTokenLogTextCode_CustomsConfirmationNumberTokenLogORefreshTable = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ConfirmationNumberTokenLog.O.RefreshTable", DefaultText = "Refresh Table",LocalDefaultText = @"רענן טבלה", ObjectTableId = ConfirmationNumberTokenLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ConfirmationNumberTokenLogTextCode_ConfirmationNumberTokenLogOLog = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConfirmationNumberTokenLog.O.Log", DefaultText = "Log",LocalDefaultText = @"לוג", ObjectTableId = ConfirmationNumberTokenLogObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
