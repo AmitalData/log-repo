@@ -56,7 +56,7 @@ namespace Logitude.UnitTest.Accounting
                 new JournalActionType() { Tenant=1, Code="1", Id="1", EnglishName ="Credit" },
                 new JournalActionType() { Tenant=1, Code="2", Id="2", EnglishName ="Debit " },
                 new JournalActionType() { Tenant=1, Code="3", Id="3", EnglishName ="Debit And Credit" },
-                new JournalActionType() { Tenant=1, Code="4", Id="4", EnglishName ="Debit, Credit And Vat deduction " },
+         //     new JournalActionType() { Tenant=1, Code="4", Id="4", EnglishName ="Debit, Credit And Vat deduction " },
             };
             A.CallTo(() => fakeIAccountingContext.JournalActionTypes)
                 .Returns(new MockObjectSet<JournalActionType>(JournalActionTypeList));

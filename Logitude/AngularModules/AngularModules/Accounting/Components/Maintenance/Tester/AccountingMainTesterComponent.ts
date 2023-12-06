@@ -332,34 +332,34 @@ export class AccountingMainTesterComponent extends BaseComponent {
 
     _ButtonReverseTrans_Click() {
         let opr = "_ButtonReverseTrans_Click";
-        let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
       
     }
    
     _ButtonReverseTotal_Click() {
         let opr = "_ButtonReverseTotal_Click";
-        let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
     }
 
     _ButtonReverseTotalFIX_Click() {
         let opr = "_ButtonReverseTotalFIX_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -0), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
 
     }
     BatchYearlyFIX_Click() {
         let opr = "BatchYearlyFIX_Click";
         let obj = {
-            MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31),
+            MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0),
             MyFixType: "ReverseEngineerTotalByMonthService", MyFixTypeOption: "ReverseEngineerTotalByMonthService,ReverseEngineerTotalByMonthServiceControl,TODOMORE"
         };
         this.StrandartOp(opr, obj, () => { });
     }
     _ButtonReverseGLBalanceFIX_Click() {
         let opr = "_ButtonReverseGLBalanceFIX_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
 
     }
@@ -373,7 +373,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
     
     _ButtonReverseDueDate_Click() {
         let opr = "_ButtonReverseDueDate_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "1-131321" };
+        let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "" };
         this.StrandartOp(opr, obj, () => { });
 
     }
@@ -388,14 +388,14 @@ Line3
     }
     _ButtonFixDueLocalBalance_Click() {
         let opr = "_ButtonFixDueLocalBalance_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, /*MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321"*/ };
+        let obj = { MyTenant: SessionLocator.Tenant, /*MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: ""*/ };
         this.StrandartOp(opr, obj, () => { });
 
     }
 
     _ButtonReverseTotalFIXControl_Click() {
         let opr = "_ButtonReverseTotalFIXControl_Click";
-        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), -31), ChangeSupplier2Customer : false, };
+        let obj = { MyTenant: SessionLocator.Tenant, MyDate: DateTool.AddDays(new Date(), 0), ChangeSupplier2Customer : false, };
         this.StrandartOp(opr, obj, () => { });
     }
     //type myCallback = () => any;
@@ -561,7 +561,7 @@ Line3
             Immediate: false
         };
         let opr = "YearTransfer_Click";
-        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, paramDefault, () => { });
     }
     YearTransferCancel_Click() {
@@ -572,7 +572,7 @@ Line3
            
         };
         let opr = "YearTransferCancel_Click";
-        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), -31), MyGLAccId: "1-131321" };
+        //let obj = { MyTenant: 1, MyDate: DateTool.AddDays(new Date(), 0), MyGLAccId: "" };
         this.StrandartOp(opr, paramDefault, () => { });
     }
 
