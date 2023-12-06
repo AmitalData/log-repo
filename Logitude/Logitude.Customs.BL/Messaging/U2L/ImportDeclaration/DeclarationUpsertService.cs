@@ -1101,7 +1101,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 		}
 		private void AddModification()
 		{
-			if (string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FreightCurrency)|| string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FreightAmount)) return;
+			if (string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FreightCurrency) || string.IsNullOrEmpty(_AmitalCustomsFile.Closing.FreightAmount)) return;
 
 			IncotemrsFileValidationQueryService incotemrsFileValidationQueryService = new IncotemrsFileValidationQueryService(ResolvedTenant());
 			var IncotermCode = _MyDeclarationPM.SupplierInvoices.FirstOrDefault()?.IncotermCode;
