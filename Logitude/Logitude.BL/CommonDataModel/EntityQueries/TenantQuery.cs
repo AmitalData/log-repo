@@ -349,6 +349,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                  
                         NumberFormatCode = tt.NumberFormatCode,
                         EcommerceSupportEmail = tt.EcommerceSupportEmail,
+                        EcommerceTenant = tt.EcommerceTenant,
                         CAAT = tt.CAAT,
                         CBSA = tt.CBSA,
                         IsTestTenant = tt.IsTestTenant,
@@ -527,6 +528,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     NumberFormatCode = tt.NumberFormatCode,
                     EcommerceSupportEmail = tt.EcommerceSupportEmail,
+                    EcommerceTenant = tt.EcommerceTenant,
+
                     CAAT = tt.CAAT,
                     CBSA = tt.CBSA,
                     IsTestTenant = tt.IsTestTenant,
@@ -697,6 +700,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                                            NumberFormatCode = a.NumberFormatCode,
                                            EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                           EcommerceTenant = a.EcommerceTenant,
+
                                            CAAT = a.CAAT,
                                            CBSA = a.CBSA,
                                            IsTestTenant = a.IsTestTenant,
@@ -858,6 +863,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                                        NumberFormatCode = a.NumberFormatCode,
                                        EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                       EcommerceTenant = a.EcommerceTenant,
+
                                        CAAT = a.CAAT,
                                        CBSA = a.CBSA,
                                        IsTestTenant = a.IsTestTenant,
@@ -1023,6 +1030,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                                                NumberFormatCode = a.NumberFormatCode,
                                                EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                               EcommerceTenant = a.EcommerceTenant,
+
                                                CAAT = a.CAAT,
                                                CBSA = a.CBSA,
                                                IsTestTenant = a.IsTestTenant,
@@ -1197,6 +1206,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                         
                                            NumberFormatCode = a.NumberFormatCode,
                                            EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                           EcommerceTenant = a.EcommerceTenant,
+
                                            CAAT = a.CAAT,
                                            CBSA = a.CBSA,
                                            IsTestTenant = a.IsTestTenant,
@@ -1359,6 +1370,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                     
                                        NumberFormatCode = a.NumberFormatCode,
                                        EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                       EcommerceTenant = a.EcommerceTenant,
+
                                        CAAT = a.CAAT,
                                        CBSA = a.CBSA,
                                        IsTestTenant = a.IsTestTenant,
@@ -1540,6 +1553,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     NumberFormatCode = myPOCO.NumberFormatCode,
                     EcommerceSupportEmail = myPOCO.EcommerceSupportEmail,
+                    EcommerceTenant = myPOCO.EcommerceTenant,
+
                     CAAT = myPOCO.CAAT,
                     CBSA = myPOCO.CBSA,
                     IsTestTenant = myPOCO.IsTestTenant,

@@ -117,6 +117,8 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             poco.SharedLogisMasterMessageLink = entityPM.SharedLogisMasterMessageLink;
             poco.ShowMultiUnitsOfMeasurements = entityPM.ShowMultiUnitsOfMeasurements;
             poco.EcommerceSupportEmail = entityPM.EcommerceSupportEmail;
+            poco.EcommerceTenant = entityPM.EcommerceTenant;
+
             poco.CBSA = entityPM.CBSA;
             poco.CAAT = entityPM.CAAT;
             poco.ApplyVATForAllPartners = entityPM.ApplyVATForAllPartners;

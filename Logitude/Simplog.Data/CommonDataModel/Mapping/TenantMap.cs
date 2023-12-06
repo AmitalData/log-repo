@@ -125,6 +125,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.DefaultSLAId).HasColumnName("DefaultSLAId");
             this.Property(t => t.NumberFormatCode).HasColumnName("NumberFormatCode");
             this.Property(t => t.EcommerceSupportEmail).HasColumnName("EcommerceSupportEmail");
+            this.Property(t => t.EcommerceTenant).HasColumnName("EcommerceTenant");
+
             this.Property(t => t.CBSA).HasColumnName("CBSA");
             this.Property(t => t.CAAT).HasColumnName("CAAT");
             this.Property(t => t.CheckDigitControlAlgorithmCode).HasColumnName("CheckDigitControlAlgorithmCode");

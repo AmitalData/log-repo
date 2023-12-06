@@ -175,6 +175,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
         public virtual NumberFormat NumberFormat { get; set; }
 
         public string EcommerceSupportEmail { get; set; }
+        public bool EcommerceTenant { get; set; }
 
         public string CBSA { get; set; }
         public string CAAT { get; set; }
