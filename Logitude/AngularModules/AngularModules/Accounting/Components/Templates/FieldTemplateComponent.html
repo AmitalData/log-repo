@@ -60,7 +60,7 @@
                         </div>
                     </div>
 
-                    <div *ngIf="FieldName == 'BalanceInForeignCurrency' && !Entity.IsMultiCurrency && !Entity.CurrencyName != 'NIS'">
+                    <div *ngIf="FieldName == 'BalanceInForeignCurrency' && !Entity.IsMultiCurrency && Entity.CurrencyName != 'NIS'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
                              [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
                             {{
@@ -82,7 +82,7 @@
                             }}
                         </div>
                     </div>
-                    <div *ngIf="FieldName == 'BalanceInForeignCurrency' && !Entity.IsMultiCurrency && !Entity.CurrencyName != 'NIS'">
+                    <div *ngIf="FieldName == 'BalanceInForeignCurrency' && !Entity.IsMultiCurrency && Entity.CurrencyName != 'NIS'">
                         <div [style.text-align]="isRTL ? 'right' : 'left'" style="text-align: left; padding-left: 3px;direction: ltr;"
                              [style.color]="FieldValue > 0 ? 'green' : 'red'" [class.black]="FieldValue == 0">
                             {{
