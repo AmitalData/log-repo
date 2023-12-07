@@ -189,8 +189,11 @@ namespace Logitude.Customs.Data.Repsitories
             //Devart.Data.Oracle.Entity.OracleFunctions.Trim()
             //System.Data.Entity.SqlServer.SqlFunctions.IsDate
 
+            if(!string.IsNullOrEmpty(parameters.Child1EntityCode2))
+                q = q.Where(a => (((a.Child1EntityCode ?? "_IsNull") == (parameters.Child1EntityCode ?? "_IsNull")) || ((a.Child1EntityCode ?? "_IsNull") == (parameters.Child1EntityCode2 ?? "_IsNull"))) && ((a.Child1EntityId ?? "_IsNull") == (parameters.Child1EntityId ?? "_IsNull")));
+            else
+                q = q.Where(a => ((a.Child1EntityCode ?? "_IsNull") == (parameters.Child1EntityCode ?? "_IsNull")) && ((a.Child1EntityId ?? "_IsNull") == (parameters.Child1EntityId ?? "_IsNull")));
 
-            q = q.Where(a => ((a.Child1EntityCode ?? "_IsNull") == (parameters.Child1EntityCode ?? "_IsNull")) && ((a.Child1EntityId ?? "_IsNull") == (parameters.Child1EntityId ?? "_IsNull")));
             q = q.Where(a => ((a.Child2EntityCode ?? "_IsNull") == (parameters.Child2EntityCode ?? "_IsNull")) && ((a.Child2EntityId ?? "_IsNull") == (parameters.Child2EntityId ?? "_IsNull")));
             q = q.Where(a => ((a.Child3EntityCode ?? "_IsNull") == (parameters.Child3EntityCode ?? "_IsNull")) && ((a.Child3EntityId ?? "_IsNull") == (parameters.Child3EntityId ?? "_IsNull")));
             q = q.Distinct();

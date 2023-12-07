@@ -154,7 +154,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
         return false;
     }
 
-    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean) {
+    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean, selectedIndex: number) {
         //if customParam: true-ClaimsRelatedEntity false=ClaimRelatedEntityCancelOrObjection
         var windowArgs: any = {};
         windowArgs.ClaimPM = entityPM;
@@ -168,7 +168,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
         logWindow.ComponentLoaded.subscribe(comp => {
             logWindow.WindowClosed.subscribe(s => {
                 if (s) {
-                    this.SelectionClaimRelatedEntitiesCompleted(comp, customsDocumentsTicket, customParam);
+                    this.SelectionClaimRelatedEntitiesCompleted(comp, customsDocumentsTicket, customParam, selectedIndex);
                 }
             });
         });
@@ -176,7 +176,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
         logWindow.Show('./CustomsModules/CustomsClaim/Components/Documents/PointersFromClaimRelatedEntitiesSelectionComponent');
     }
 
-    SelectionClaimRelatedEntitiesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM, customParam: boolean) {
+    SelectionClaimRelatedEntitiesCompleted(args, customsDocumentsTicket: CustomsDocumentsTicketPM, customParam: boolean, selectedIndex: number) {
         if (args.SelectedClaimRelatedEntities != null) {
             customsDocumentsTicket.ConnectedCREsSequences = args.ConnectedClaimRelatedEntities;
             //var pointers: CustomsDocumentPointerPM[] = [];
@@ -185,7 +185,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
             //});
 
             var child1EntityCode: string = "ClaimsRelatedEntity";
-            if (customParam) { //true-ClaimsRelatedEntity //false=ClaimRelatedEntityCancelOrObjection
+            if (selectedIndex == 2) { //true-ClaimsRelatedEntity //false=ClaimRelatedEntityCancelOrObjection
                 child1EntityCode = "ClaimRelatedEntityCancelOrObjection";
             }
 

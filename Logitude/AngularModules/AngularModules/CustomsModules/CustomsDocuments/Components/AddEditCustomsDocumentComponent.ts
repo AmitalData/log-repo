@@ -881,6 +881,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             }
 
             this.connectTo = index;
+            this.SelectedIndex = index;
             this.ShowSelectionComponent(selectInvoicesOnly);
 
         }
@@ -923,12 +924,12 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.iCustomsDocumentsController.SelectionCompleted.subscribe(s => {
                 this.SelectionCompleted(s);
             });
-            this.iCustomsDocumentsController.ShowSelectionComponent(this.CustomsDocumentsTicket, this.EntityPM, selectInvoicesOnly, this.IsEntityDisplayOnly);
+            this.iCustomsDocumentsController.ShowSelectionComponent(this.CustomsDocumentsTicket, this.EntityPM, selectInvoicesOnly, this.IsEntityDisplayOnly, this.SelectedIndex);
 
         }
 
     }
-
+ 
     u
 
     RefereshConnectedInvoices() {

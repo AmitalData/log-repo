@@ -990,7 +990,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
         return true;
     }
 
-    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean) {
+    ShowSelectionComponent(customsDocumentsTicket: CustomsDocumentsTicketPM, entityPM: any, customParam: boolean, isEntityDisplayOnly: boolean, selectedIndex: number) {
         var selectInvoicesOnly = customParam;
         var windowArgs: any = {};
         var certificates: any[] = [];
