@@ -153,7 +153,7 @@
                             <LogToolTip [bottom]="5" [Scrollable]="true" [float]="'left'" *ngIf="Entity.GLAccountCurrencies && Entity.GLAccountCurrencies.length > 0 " [direction]="showLocal?'bottomleft':'bottomright'" [name]="'OpenShipments'"
                                         [mode]="'Info'">
                                 <div *ngFor="let item of Entity.GLAccountCurrencies">
-                                    {{item.CurrencyCode}} <a href="javascript:;" (click)="OpenGLAccount(item.GLAccountId)">{{item.GLAccountNumber}}</a>
+                                    {{item.CurrencyCode}} ({{item.GLAccountOpenTransactionsCount}}) <a href="javascript:;" (click)="OpenGLAccount(item.GLAccountId)">{{item.GLAccountNumber}}</a>
                                 </div>
                             </LogToolTip>
                         </div>
