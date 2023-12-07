@@ -472,7 +472,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.IsDocumentTypeEnabled = false;
                 this.IsSendDocumentEnabled = false;
                 this.ViewDisableMessageVisibility = true;
-                this.DisplayOnlyMessage = " לתצוגה בלבד - מסמך כבר אומת על ידי המכס ";//Document Was already Verified By Customs
+                this.DisplayOnlyMessage = " לתצוגה בלבד - מסמך כבר םומת על ידי המכס ";//Document Was already Verified By Customs
             }
 
             if (this.CustomsDocumentsTicket.VerificationStatusTypeCode == '8') {
@@ -482,7 +482,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 this.IsDocumentTypeEnabled = false;
                 this.IsSendDocumentEnabled = false;
                 this.ViewDisableMessageVisibility = true;
-                this.DisplayOnlyMessage = " לתצוגה בלבד - המסמך בתהליך אימות במכס ";//Document is in verfication prgress
+                this.DisplayOnlyMessage = " לתצוגה בלבד - המסמך בתהליך םימות במכס ";//Document is in verfication prgress
             }
 
             if (this.CustomsDocumentsTicket.VerificationStatusTypeCode == '6') {
@@ -880,6 +880,9 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             if (index == 2) {
                 selectInvoicesOnly = false;
             }
+
+            this.connectTo = index;
+            this.SelectedIndex = index;
             this.ShowSelectionComponent(selectInvoicesOnly);
         }
 
@@ -921,12 +924,12 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.iCustomsDocumentsController.SelectionCompleted.subscribe(s => {
                 this.SelectionCompleted(s);
             });
-            this.iCustomsDocumentsController.ShowSelectionComponent(this.CustomsDocumentsTicket, this.EntityPM, selectInvoicesOnly, this.IsEntityDisplayOnly);
+            this.iCustomsDocumentsController.ShowSelectionComponent(this.CustomsDocumentsTicket, this.EntityPM, selectInvoicesOnly, this.IsEntityDisplayOnly, this.SelectedIndex);
 
         }
 
     }
-
+ 
     u
 
     RefereshConnectedInvoices() {
@@ -1009,7 +1012,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                         this.ValidationErrorsList = docRes.ErrorsArray;
                     }
                     //let jDoit = false;
-                    //if (jDoit && !AppTool.IsNullOrEmpty(docRes.ErrorsArray[0])) {//in customsDocumentPMService.update there is message : לא נמצא כרטיס חתימה חברתי (מסר 2715)
+                    //if (jDoit && !AppTool.IsNullOrEmpty(docRes.ErrorsArray[0])) {//in customsDocumentPMService.update there is message : לם נמצם כרטיס חתימה חברתי (מסר 2715)
                     //    this.CurrentSession.StopBusyIndicator();
                     //    var messageWindow = new MessageWindow();
                     //    messageWindow.Width = 400;

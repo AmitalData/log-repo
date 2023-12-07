@@ -525,7 +525,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             //Get ClaimsRelatedEntity Attachments
 
-            CustomsDocumentPM customsDocumentPM = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = claimsRelatedEntityPM.ClaimId, ParentEntityCode = "Claim", Child1EntityCode = "ClaimsRelatedEntity", Child1EntityId = claimsRelatedEntityPM.EntityCounterKey.ToString() }, this._ClaimPM.Tenant).FirstOrDefault();
+            CustomsDocumentPM customsDocumentPM = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = claimsRelatedEntityPM.ClaimId, ParentEntityCode = "Claim", Child1EntityCode = "ClaimsRelatedEntity",Child1EntityCode2 = "ClaimRelatedEntityCancelOrObjection", Child1EntityId = claimsRelatedEntityPM.EntityCounterKey.ToString() }, this._ClaimPM.Tenant).FirstOrDefault();
                 
             if (!string.IsNullOrWhiteSpace(customsDocumentPM?.CustomsDocId))
             {

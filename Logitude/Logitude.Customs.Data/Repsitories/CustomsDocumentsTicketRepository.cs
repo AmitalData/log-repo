@@ -312,6 +312,7 @@ public class GetTicketsParams
 {
 public string ParentEntityCode { get; set; }
 public string Child1EntityCode { get; set; }
+public string Child1EntityCode2 { get; set; }
 public string Child2EntityCode { get; set; }
 public string Child3EntityCode { get; set; }
 public string ParentEntityId { get; set; }
