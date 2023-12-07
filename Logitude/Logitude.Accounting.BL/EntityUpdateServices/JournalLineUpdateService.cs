@@ -35,7 +35,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 throw new ApplicationException("JournalLineUpdateService must be used only from JournalUpdateService(force check Approved Journal Can Only Change To Voided)");
             }
-            base.OnCreating(entityPM, entityParentPM);
+            if(entityParentPM?.AccountingEntityCode == "12") 
+            { 
+               entityPM.Reference2 = entityParentPM.JournalNumber;
+            }
+
+			base.OnCreating(entityPM, entityParentPM);
         }
 
         protected override void OnUpdating(JournalLinePM entityPM)
