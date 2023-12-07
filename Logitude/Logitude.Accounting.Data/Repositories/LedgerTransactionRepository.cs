@@ -1642,9 +1642,26 @@ on record.JournalId equals j.Id
                        Tenant = tenant
                    }).ToList() ;                    
         }
-    }
 
-    public class GLAccountTotalByMonthsKey
+         public JournalOriginal GetJournalByLedgerTransactionId(string ledgerTransactionId, int tenant)
+         {
+            return (from a in context.LedgerTransactions
+					join journal in context.Journals on a.JournalId equals journal.Id
+					where a.Id == ledgerTransactionId && a.Tenant == tenant
+                    select new JournalOriginal
+                    {
+						OriginalJournalId = a.JournalId,
+						OriginalJournalNumber = journal.JournalNumber
+
+					}).FirstOrDefault();
+		 }
+    }
+    public class JournalOriginal
+    {
+        public string OriginalJournalId { get; set; }
+        public string OriginalJournalNumber { get; internal set; }
+    }
+		public class GLAccountTotalByMonthsKey
     {
         public string AccountId { get; set; }
         public string MainGLAccountId { get; internal set; }

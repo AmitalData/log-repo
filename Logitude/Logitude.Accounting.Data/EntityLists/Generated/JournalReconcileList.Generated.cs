@@ -12,7 +12,11 @@ namespace Logitude.Accounting.Data.EntityLists
    [DataContract]
    public partial class JournalReconcileList
    {
-      }
+          [DataMember]
+       public string JournalNumber  { get; set; }
+       [DataMember]
+       public string OriginalJournalId  { get; set; }
+   }
 
 }
 	 

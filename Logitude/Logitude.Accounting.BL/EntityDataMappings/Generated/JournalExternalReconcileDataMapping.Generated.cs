@@ -39,7 +39,9 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         Tenant, 
 	         LedgerTransactionId, 
 	         ReconcileExternalPageLineId, 
-	         SkipAccountsValidation,
+	         SkipAccountsValidation, 
+	         JournalNumber, 
+	         OriginalJournalId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
