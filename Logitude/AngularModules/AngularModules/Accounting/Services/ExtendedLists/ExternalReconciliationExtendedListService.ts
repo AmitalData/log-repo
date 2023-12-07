@@ -30,6 +30,7 @@ export class ExternalReconciliationExtendedListService {
             '?amountReconcile=' + args.amountReconcile
             + '&referenceReconcile=' + args.referenceReconcile
             + '&refDateReconcile=' + args.refDateReconcile
+            + '&accoutingDateReconcile=' + args.accoutingDateReconcile
             + '&objectTableId=' + args.objectTableId
             + '&entityId=' + args.entityId
             + '&glAccountId=' + args.glAccountId;
@@ -137,6 +138,7 @@ export class ExternalAutoReconcileServiceArgs{
     amountReconcile: boolean;
     referenceReconcile: boolean;
     refDateReconcile: boolean;
+    accoutingDateReconcile: boolean;
     objectTableId: string;
     entityId: string;
     glAccountId: string;
