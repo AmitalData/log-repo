@@ -94,6 +94,7 @@ namespace WebFreight.Web.Controllers.InvoiceModel.Generated.PMControllers
                 
                         IInvoiceContext MyContext = InvoiceContext.GetContext(entityPM.Tenant);
                         APInvoiceService service = new APInvoiceService(MyContext, entityPM.Tenant);
+                        entityPM.CreatedFromAPI = true;
                         service.Create(entityPM);
 				
                         //ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
