@@ -19,6 +19,7 @@ using Simplog.Server.Infrastructure.Helpers;
 using Logitude.Accounting.Data.DataContract;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Accounting.Data.EntityListQueryServices;
+using Simplog.Server.Infrastructure.DataContracts;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -211,6 +212,8 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
             transactionsQuery = FilterBySearchFields(filters, transactionsQuery);
             transactionsQuery = FilterMaxCreatedDate(maxCreateDate, transactionsQuery);
             transactionsQuery = FilterByFromAndToDate(filters.DateTypeCode, filters.From, filters.To, transactionsQuery);
+			transactionsQuery = FilterByAmount(filters.AmountLocalFilter, transactionsQuery);
+			transactionsQuery = FilterByAmount(filters.AmountForeignlFilter, transactionsQuery);
 
 
             if (filters.Date2TypeCode != null && filters.FromDate2 != null && filters.ToDate2 != null)
@@ -463,6 +466,151 @@ WHERE Mark='true' and AccountId='{0}' and tenant={1} ", gLAccountId, tenant)
 
             return q;
         }
+
+		private IQueryable<LedgerTransaction> FilterByAmount(QueryFilterItem item, IQueryable<LedgerTransaction> q)
+		{
+			if (item?.FieldName == "IsLocalAmount")
+			{
+
+
+
+				decimal amount;
+				decimal amount2;
+				decimal.TryParse(item.FieldValue.ToString(), out amount);
+				decimal.TryParse(item.FieldValue2?.ToString(), out amount2);
+
+				switch (item.Operator)
+				{
+					case "LargerThan":
+						{
+							q = q.Where(pageLine =>
+							amount < (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit)
+							);
+							break;
+						}
+
+					case "GreaterThanOrEqual":
+						{
+							q = q.Where(pageLine =>
+							amount <= (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit)
+							);
+							break;
+						}
+
+					case "LessThan":
+						{
+							q = q.Where(pageLine =>
+							(amount > (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit)));
+							break;
+						}
+
+					case "LessThanOrEqual":
+						{
+							q = q.Where(pageLine =>
+							(amount >= (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit)));
+							break;
+						}
+
+					case "NotEqual":
+						{
+							q = q.Where(pageLine =>
+							(amount != (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit))
+							);
+							break;
+						}
+
+					case "Between":
+						{
+							q = q.Where(pageLine =>
+							(amount <= (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit))
+							&&
+							(amount2 >= (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit)));
+							break;
+						}
+					case "Equals":
+					default:
+						{
+							q = q.Where(pageLine =>
+							(amount == (pageLine.LocalAmountCredit != 0 ? pageLine.LocalAmountCredit : pageLine.LocalAmountDebit))
+
+							);
+							break;
+						}
+				}
+
+			}
+			if (item?.FieldName == "IsForeignAmount")
+			{
+
+
+
+				decimal amount;
+				decimal amount2;
+				decimal.TryParse(item.FieldValue.ToString(), out amount);
+				decimal.TryParse(item.FieldValue2?.ToString(), out amount2);
+
+				switch (item.Operator)
+				{
+					case "LargerThan":
+						{
+							q = q.Where(pageLine =>
+							amount < (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit)
+							);
+							break;
+						}
+
+					case "GreaterThanOrEqual":
+						{
+							q = q.Where(pageLine =>
+							amount <= (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit)
+							);
+							break;
+						}
+
+					case "LessThan":
+						{
+							q = q.Where(pageLine =>
+							(amount > (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit)));
+							break;
+						}
+
+					case "LessThanOrEqual":
+						{
+							q = q.Where(pageLine =>
+							(amount >= (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit)));
+							break;
+						}
+
+					case "NotEqual":
+						{
+							q = q.Where(pageLine =>
+							(amount != (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit))
+							);
+							break;
+						}
+
+					case "Between":
+						{
+							q = q.Where(pageLine =>
+							(amount <= (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit))
+							&&
+							(amount2 >= (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit)));
+							break;
+						}
+					case "Equals":
+					default:
+						{
+							q = q.Where(pageLine =>
+							(amount == (pageLine.ForeignAmountCredit != 0 ? pageLine.ForeignAmountCredit : pageLine.ForeignAmountDebit))
+
+							);
+							break;
+						}
+				}
+
+			}
+			return q;
+		}
         public IQueryable<LedgerTransaction> GetQueryOrderAccDateAndIdBy(int tenant, IQueryable<string> listOfAccId, DateTime @from, DateTime to,
             string currencyId, 
             string searchByFilter,

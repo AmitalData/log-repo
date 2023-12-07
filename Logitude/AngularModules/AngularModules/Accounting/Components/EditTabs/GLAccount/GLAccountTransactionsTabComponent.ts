@@ -32,6 +32,7 @@ import { TaxReportExtendedPMService } from '../../../Services/ExtendedPMs/TaxRep
 import { TaxReportPM } from '../../../EntityPMs/TaxReportPM';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { FullAccountingSettingList } from '../../../../Accounting/EntityLists/FullAccountingSettingList';
+import { Operators } from 'Accounting/DataContracts/Operators';
 
 @Component({
 
@@ -82,7 +83,40 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     isFullAccounting: boolean = SessionLocator.TenantPM.AccountingActivated;
     isVatInputOrOutput: boolean = false;
     columnsReady: boolean = false;
+    amountLocalFieldFilter:FilterItem;
+    amountForeignFieldFilter:FilterItem;
 
+    operatorsList =
+    [{Code:Operators.Equals, EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
+        {Code:Operators.NotEqual, EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
+        {Code:Operators.LargerThan, EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
+        {Code:Operators.LessThan, EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
+        {Code:Operators.LessThanOrEqual, EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
+        {Code:Operators.GreaterThanOrEqual, EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
+        {Code:Operators.Between, EnglishName: 'Between', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Between") },
+    ];
+    selectedAmountLocalOperator:{Code:string, EnglishName: string, LocalName: string };
+    selectedAmountForeignOperator:{Code:string, EnglishName: string, LocalName: string };
+
+    amountLocal: number;
+    amountLocalFrom: number;
+    amountLocalTo: number;
+    get AmountLocal() { return this.amountLocal; }
+    set AmountLocal(value: number) {
+        if (this.amountLocal != value) {
+            this.amountLocal = value;
+        }
+    }
+
+    amountForeign: number;
+    amountForeignFrom: number;
+    amountForeignTo: number;
+    get AmountForeign() { return this.amountForeign; }
+    set AmountForeign(value: number) {
+        if (this.amountForeign != value) {
+            this.amountForeign = value;
+        }
+    }
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -688,6 +722,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.filterAgrs.AdditionalFilters.push(this.searchFieldFilter);
 
         }
+        
+        if (this.amountLocalFieldFilter) {
+            this.filterAgrs.AdditionalFilters.push(this.amountLocalFieldFilter);
+        }
+        if (this.amountForeignFieldFilter) {
+            this.filterAgrs.AdditionalFilters.push(this.amountForeignFieldFilter);
+        }
         if (this._dateTypeCode) {
             let dummyFilter =  new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
             this.filterAgrs.AdditionalFilters.push(dummyFilter);
@@ -702,7 +743,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.filterAgrs.AdditionalFilters.push(this.dateFilter2);
             this.filterAgrs.AdditionalFilters.push(dummyFilter);
         }
-
+       
         this.filterAgrs.PageSize = take;
         this.filterAgrs.PageIndex = skip;
         this.filterAgrs.GetAll = false;
@@ -807,6 +848,14 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             let dummyFilter =  new FilterItem("Date2TypeCode", this.date2TypeCode, null, null, "Equals", false, false, false, "string", false);
             filters.AdditionalFilters.push(this.dateFilter2);
             filters.AdditionalFilters.push(dummyFilter);
+        }
+        
+
+        if (this.amountLocalFieldFilter) {
+            filters.AdditionalFilters.push(this.amountLocalFieldFilter);
+        }
+        if (this.amountForeignFieldFilter) {
+            filters.AdditionalFilters.push(this.amountForeignFieldFilter);
         }
         filters.PageSize = 30;
         filters.GetAll = false;
@@ -1394,4 +1443,99 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     }
     //#endregion
 
+//#region IsLocalAmount
+AmountLocalOperatorChanged($event){
+        this.selectedAmountLocalOperator = $event
+        this.AmountLocalTextChanged(this.AmountLocal);
+    }
+    AmountLocalTextChanged(num) {
+        this.amountLocal = num;
+        if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amountLocal)&& this.selectedAmountLocalOperator ) {
+            var amountFieldName = 'IsLocalAmount';
+            this.timerToken = setTimeout(() => {
+                if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amountLocal)) {
+                    this.amountLocalFieldFilter = new FilterItem(amountFieldName, num, null, null, this.selectedAmountLocalOperator.Code, true, false, false, "number", false);
+                    this.RefreshButtonClicked();
+                } else {
+                    this.amountLocalFieldFilter = null;
+                    this.RefreshButtonClicked();
+                }
+            }, 700);
+
+        } 
+    }
+    AmountLocalTextToChanged(num) {
+        this.amountLocalTo = num;
+        this.filterByAmountLocalFromAndTo();
+    }
+    AmountLocalTextFromChanged(num) {
+        this.amountLocalFrom = num;
+        this.filterByAmountLocalFromAndTo();
+    }
+    
+    private filterByAmountLocalFromAndTo() {
+        if (!AppTool.IsNullOrEmpty(this.amountLocalFrom) && !AppTool.IsNullOrEmpty(this.amountLocalTo) && this.selectedAmountLocalOperator ) {
+            var amountFieldName = 'IsLocalAmount';
+            this.timerToken = setTimeout(() => {
+                if (!AppTool.IsNullOrEmpty(this.amountLocalFrom) && !AppTool.IsNullOrEmpty(this.amountLocalTo)) {
+                    this.amountLocalFieldFilter = new FilterItem(amountFieldName,this.amountLocalFrom, this.amountLocalTo, null, this.selectedAmountLocalOperator.Code, true, false, false, "number", false);
+                    this.RefreshButtonClicked();
+                } else {
+                    this.amountLocalFieldFilter = null;
+                    this.RefreshButtonClicked();
+                }
+            }, 700);
+
+        } 
+    }
+    //#endregion
+    
+    //#region IsForeignAmount
+    AmountForeignOperatorChanged($event){
+        this.selectedAmountForeignOperator = $event
+        this.AmountForeignTextChanged(this.AmountForeign);
+    }
+    AmountForeignTextChanged(num) {
+        this.amountForeign = num;
+        if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amountForeign)&& this.selectedAmountForeignOperator ) {
+            var amountFieldName = 'IsForeignAmount';
+            this.timerToken = setTimeout(() => {
+                if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amountForeign)) {
+                    this.amountForeignFieldFilter = new FilterItem(amountFieldName, num, null, null, this.selectedAmountForeignOperator.Code, true, false, false, "number", false);
+
+                    this.RefreshButtonClicked();
+                } else {
+                    this.amountForeignFieldFilter = null;
+                    this.RefreshButtonClicked();
+                }
+            }, 700);
+
+        } 
+    }
+    AmountForeignTextToChanged(num) {
+        this.amountForeignTo = num;
+        this.filterByAmountForeignFromAndTo();
+    }
+    AmountForeignTextFromChanged(num) {
+        this.amountForeignFrom = num;
+        this.filterByAmountForeignFromAndTo();
+    }
+    
+    private filterByAmountForeignFromAndTo() {
+        if (!AppTool.IsNullOrEmpty(this.amountForeignFrom) && !AppTool.IsNullOrEmpty(this.amountForeignTo) && this.selectedAmountForeignOperator ) {
+            var amountFieldName = 'IsForeignAmount';
+            this.timerToken = setTimeout(() => {
+                if (!AppTool.IsNullOrEmpty(this.amountForeignFrom) && !AppTool.IsNullOrEmpty(this.amountForeignTo)) {
+                    this.amountForeignFieldFilter = new FilterItem(amountFieldName,this.amountForeignFrom, this.amountForeignTo, null, this.selectedAmountForeignOperator.Code, true, false, false, "number", false);
+                    this.RefreshButtonClicked();
+                } else {
+                    this.amountForeignFieldFilter = null;
+                    this.RefreshButtonClicked();
+                }
+            }, 700);
+
+        } 
+    }
+    //#endregion
+    
 }
