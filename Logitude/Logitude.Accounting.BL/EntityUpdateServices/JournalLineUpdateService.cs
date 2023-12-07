@@ -46,7 +46,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             // check payment terms and add days to due date if needed.
             ProcessGLAccountPaymentTerms(entityPM, entityParentPM);
 
-            base.OnCreating(entityPM, entityParentPM);
+
+            if(entityParentPM?.AccountingEntityCode == "12") 
+            { 
+               entityPM.Reference2 = entityParentPM.JournalNumber;
+            }
+
+			base.OnCreating(entityPM, entityParentPM);
         }
 
         protected override void OnUpdating(JournalLinePM entityPM)

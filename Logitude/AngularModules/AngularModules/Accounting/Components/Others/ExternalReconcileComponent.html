@@ -581,6 +581,8 @@
                                     {{'Accounting.General.O.AccountingDate' | TextCodeTranslationPipe}}
                                 </li>
 
+
+
                                 
                                 <!-- Auto Reco Button -->
                                 <li float-start style="padding: 0 15px;padding-top: 2px;">
@@ -790,6 +792,7 @@
                                     [ColumnsReady]="TransactionColumnsReady" [MarkIsChecked]="TransactionMarkIsChecked"
                                     (DataLoaded)="TransactiononDataLoaded()" (SortInvoked)="OnSortInvoked($event)"
                                     (rowSelectedEvent)="onRowSelected($event)">
+
                                 </logitude-grid>
                             </div>
                         </td>
@@ -979,12 +982,14 @@
             <td colspan="3">
                 <CheckBox class="selectAllCheckBox" title="Select All" [IsChecked]="isAllSelectedExt"
                     (Checked)="isAllSelectedExt = $event"></CheckBox>
+
                 <div class="SubTitle">
                     {{ExternalPagesTitle}}
                     ({{IsAutoReconcile ? ExtPageSelectedLines.Length : extPageCount}})
                 </div>
                 <IconButton class="exportToExcel" [Name]="'Excel'" (click)="ExportExternalTransactions()" [disabled]="false">
                 </IconButton>
+
             </td>
         </tr>
 
@@ -1003,6 +1008,8 @@
                         [ColumnsReady]="ExtPageColumnsReady" [MarkIsChecked]="ExtPageMarkIsChecked"
                         (DataLoaded)="ExtPageonDataLoaded()" (SortInvoked)="OnSortInvoked($event)"
                         (rowSelectedEvent)="onExternalPageRowSelected($event)">
+
+
                     </logitude-grid>
                 </div>
             </td>
