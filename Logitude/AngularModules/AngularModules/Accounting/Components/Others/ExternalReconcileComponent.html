@@ -840,6 +840,18 @@
                                         </ng-template>
                                     </log-column>
 
+
+                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'DocumentDate'"
+                                                 [header]="'LedgerTransaction.F.DocumentDate' | TextCodeTranslationPipe"
+                                                 [width]="'100'" [binding]="'DocumentDate'">
+                                        <ng-template let-item>
+                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
+                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                    <span>{{item.DocumentDate | DateTimeToDatePipe }}</span>
+                                                </div>
+                                            </log-cell-template>
+                                        </ng-template>
+                                    </log-column>
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'SourceNumber'"
                                         [header]="'LedgerTransaction.F.Source' | TextCodeTranslationPipe"
                                         [width]="'100'" [binding]="'Source'">
@@ -892,18 +904,8 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
+                       
 
-                                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Reference3'"
-                                        [header]="'LedgerTransaction.F.Reference3' | TextCodeTranslationPipe"
-                                        [width]="'80'" [binding]="'Reference4'">
-                                        <ng-template let-item>
-                                            <log-cell-template #logcelltemplate [IgnoreMods]="true">
-                                                <div class="TextTrimming" [style.text-align]="isRTL ? 'right' : 'left'">
-                                                    <span>{{item.Reference3}}</span>
-                                                </div>
-                                            </log-cell-template>
-                                        </ng-template>
-                                    </log-column>
 
                                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [SortFieldName]="'Notes'"
                                         [header]="'LedgerTransaction.F.Notes' | TextCodeTranslationPipe" [width]="'120'"
