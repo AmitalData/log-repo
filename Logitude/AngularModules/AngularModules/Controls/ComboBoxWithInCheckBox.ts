@@ -37,6 +37,7 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
     public IsMouseOverInput: boolean = false;
     public TotalPickedItems: string ;
     public CheckBoxOnly: boolean = false;
+    @Output() SetStyle: EventEmitter<string> = new EventEmitter();
     @Output() SelectedItemChanged: EventEmitter<any> = new EventEmitter();
     @Output() EditedItemSource: EventEmitter<any> = new EventEmitter();
     public CheckSource: Array<boolean>;
@@ -108,6 +109,8 @@ export class ComboBoxWithInCheckBox implements OnInit,AfterViewInit {
         if (item != null) {
             this.SetControlPosition();
             document.getElementById(this.DropdownId).style.width = item.offsetWidth + "px";
+            this.SetStyle.emit(this.DropdownId);
+            
             if (this.ItemsSource.length == 0 || this.ItemsSource==null) {
                 document.getElementById(this.DropdownId).style.height = this.MinHeight + "px";
             }
