@@ -213,17 +213,30 @@ namespace Logitude.Customs.BL.EntityDataMappings
                         declaration = declarations.FirstOrDefault(x => new string[] { "2", "4", }.Contains(x.AmendmentStatus));
                         if (declaration != null)
                         {
-                            if (declaration.AmedmentType == "2")
+                            bool isShowTheMessage = true;
+                            if(entityPM.DeclarationNumber != null && declaration.AmendmentStatus == "4"
+                                && ((entityPM.Direction != "E" && entityPM.PaymentDate == null) || (entityPM.Direction == "E" && entityPM.IsSubmitDeclaration == false)))
                             {
-                                //closeDeclaration
-                                entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsClosingAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
+                                isShowTheMessage = false;
                             }
-                            else
+
+                            if (isShowTheMessage)
                             {
-                                entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName; ;
-                            }
-                            entityPM.IsAmendmentDisplayOnly = true;
-                        }
+                                if (declaration.AmedmentType == "2")
+                                {
+                                    //closeDeclaration
+                                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsClosingAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName;
+                                }
+                                else
+                                {
+                                    entityPM.AmendmentMessage = TranslateTextsClass.Translate("Customs.Declaration.O.ExistsAmendments", entityPOCO.Tenant, true) + ' ' + declaration.AmendmentStatusName; ;
+                                }
+
+                                entityPM.IsAmendmentDisplayOnly = true;
+                            }    
+                            
+                        }   
+                        
                     }
                     //else
                     //{
