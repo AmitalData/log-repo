@@ -16,110 +16,125 @@ using Logitude.Accounting.Data.EntityLists;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System.Web;
+using System.Runtime.InteropServices;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
-{ 
+{
 
     public partial class BankAccountListQueryService
     {
-	    private IQueryable<BankAccountList> GetIqueryableList(IQueryable<BankAccount> iQueryable)
+        private List<BankAccountList> GetIqueryableList(IQueryable<BankAccount> iQueryable)
         {
-            IQueryable<BankAccountList> query = (from a in iQueryable.Include("GLAccount").Include("DeferredGLAccount").Include("TransferGLAcccount")
+            var resPartOne = (from a in iQueryable.Include("GLAccount").Include("DeferredGLAccount").Include("TransferGLAcccount")
                                                  .Include("BankCode")
                                                  .Include("Currency")
-                                                 join qBTotalOpenTransInBankViews in context.TotalOpenTransInBankViews
-                                                 on
-                                                 new { BankID = a.Id, Tenant = a.Tenant } equals
-                                                 new { BankID = qBTotalOpenTransInBankViews.Id, Tenant = qBTotalOpenTransInBankViews.Tenant }
-                                               //  a.Id equals qBTotalOpenTransInBankViews.Id
-                                                  into qBTotalOpenTransInBankViewsJoin
-                                                 from MyJoinpenTransInBankViews in qBTotalOpenTransInBankViewsJoin.DefaultIfEmpty()
-                                                     //.DefaultIfEmpty()
-                                                 select new BankAccountList()
-                                                 {
+                                                              select new BankAccountList()
+                                                              {
 
-                                                     Id = a.Id,
+                                                                  Id = a.Id,
 
-                                                     Tenant = a.Tenant,
+                                                                  Tenant = a.Tenant,
 
-                                                     EnglishName = a.EnglishName,
+                                                                  EnglishName = a.EnglishName,
 
-                                                     LocalName = a.LocalName,
+                                                                  LocalName = a.LocalName,
 
-                                                     CreateDate = a.CreateDate,
+                                                                  CreateDate = a.CreateDate,
 
-                                                     CreatedByUserId = a.CreatedByUserId,
+                                                                  CreatedByUserId = a.CreatedByUserId,
 
-                                                     UpdateDate = a.UpdateDate,
+                                                                  UpdateDate = a.UpdateDate,
 
-                                                     UpdatedByUserId = a.UpdatedByUserId,
+                                                                  UpdatedByUserId = a.UpdatedByUserId,
 
-                                                     SearchFields = a.SearchFields,
+                                                                  SearchFields = a.SearchFields,
 
-                                                     AccountNumber = a.AccountNumber,
+                                                                  AccountNumber = a.AccountNumber,
 
-                                                     BranchAddress = a.BranchAddress,
+                                                                  BranchAddress = a.BranchAddress,
 
-                                                     BranchNumber = a.BranchNumber,
+                                                                  BranchNumber = a.BranchNumber,
 
-                                                     DeferredGLAccountId = a.DeferredGLAccountId,
+                                                                  DeferredGLAccountId = a.DeferredGLAccountId,
 
-                                                     GLAccountId = a.GLAccountId,
+                                                                  GLAccountId = a.GLAccountId,
 
-                                                     IBAN = a.IBAN,
+                                                                  IBAN = a.IBAN,
 
-                                                     Inactive = a.Inactive,
+                                                                  Inactive = a.Inactive,
 
-                                                     SwiftCode = a.SwiftCode,
+                                                                  SwiftCode = a.SwiftCode,
 
-                                                     BankCode = a.BankCode.Code,
+                                                                  BankCode = a.BankCode.Code,
 
-                                                     GLAccountNumber = a.GLAccount.DisplayNumber,
+                                                                  GLAccountNumber = a.GLAccount.DisplayNumber,
 
-                                                     DeferedGLAccountNumber = a.DeferredGLAccount == null ? null : a.DeferredGLAccount.DisplayNumber,
-                                                     DeferedGLAccountEnglishName = a.DeferredGLAccount == null ? null : a.DeferredGLAccount.EnglishName,
-                                                     DeferedGLAccountLocalName = a.DeferredGLAccount == null ? null : a.DeferredGLAccount.LocalName,
+                                                                  DeferedGLAccountNumber = a.DeferredGLAccount == null ? null : a.DeferredGLAccount.DisplayNumber,
+                                                                  DeferedGLAccountEnglishName = a.DeferredGLAccount == null ? null : a.DeferredGLAccount.EnglishName,
+                                                                  DeferedGLAccountLocalName = a.DeferredGLAccount == null ? null : a.DeferredGLAccount.LocalName,
 
-                                                     GLAccountCurrencyId = a.GLAccount == null ? null : a.GLAccount.CurrencyId,
+                                                                  GLAccountCurrencyId = a.GLAccount == null ? null : a.GLAccount.CurrencyId,
 
-                                                     ChequeCounter = a.ChequeCounter,
-                                                     TransferGLAcccountId = a.TransferGLAcccountId,
-                                                     TransferGLAcccountNumber = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.DisplayNumber,
-                                                     TransferGLAcccountEnglishName = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.EnglishName,
-                                                     TransferGLAcccountLocalName = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.LocalName,
+                                                                  ChequeCounter = a.ChequeCounter,
+                                                                  TransferGLAcccountId = a.TransferGLAcccountId,
+                                                                  TransferGLAcccountNumber = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.DisplayNumber,
+                                                                  TransferGLAcccountEnglishName = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.EnglishName,
+                                                                  TransferGLAcccountLocalName = a.TransferGLAcccount == null ? null : a.TransferGLAcccount.LocalName,
 
-                                                     CurrencyCode = a.Currency == null ? null : a.Currency.Code,
-                                                     CurrencySign = a.Currency == null ? null : a.Currency.Sign,
-                                                     CurrencyId = a.CurrencyId,
-                                                     TotalOpenExternalTransactions= MyJoinpenTransInBankViews.TotalLedgerTransactionsCount.ToString(),
-                                                     TotalOpenPagesLines= MyJoinpenTransInBankViews.TotalReconcileExternalPageLinesCount.ToString(),
+                                                                  CurrencyCode = a.Currency == null ? null : a.Currency.Code,
+                                                                  CurrencySign = a.Currency == null ? null : a.Currency.Sign,
+                                                                  CurrencyId = a.CurrencyId
 
-                                                 });
-            return query;
-		}
 
-        private IQueryable<BankAccount> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<BankAccount> iQueryable, int tenant)
+                                                              }).ToList();
+
+            if (resPartOne != null && resPartOne.Count > 0)
+            {
+                var idsPartOne = resPartOne.Select(v => v.Id).ToList();
+                var tenantPartOne = resPartOne.First().Tenant;
+
+                var resPartTwo = (from a in context.TotalOpenTransInBankViews
+                                  where a.Tenant == tenantPartOne && idsPartOne.Contains(a.Id)
+                                  select a).ToList();
+                foreach (var r in resPartOne)
+                {
+
+
+                    var match = resPartTwo.FirstOrDefault(x => x.Id == r.Id);
+                    if (match != null)
+                    {
+                        r.TotalOpenExternalTransactions = match.TotalLedgerTransactionsCount.ToString();
+                        r.TotalOpenPagesLines = match.TotalReconcileExternalPageLinesCount.ToString();
+                    }
+                }
+            }
+            return resPartOne;
+        }
+
+        private IQueryable<BankAccount> ApplyCustomFilters(QueryOperations queryOperations, IQueryable<BankAccount> iQueryable, int tenant)
         {
             return iQueryable;
-		}
-		private IQueryable<BankAccount> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<BankAccount> iQueryable, int tenant)
+        }
+        private IQueryable<BankAccount> ApplyBusinessUnitFilters(QueryOperations queryOperations, IQueryable<BankAccount> iQueryable, int tenant)
         {
-			return iQueryable;
-		}
+            return iQueryable;
+        }
 
 
         public BankAccountList GetUniqueAccount(string accountNumber, string branchNumber, string bankId, string currencyId, int tenant)
         {
             IQueryable<BankAccount> accountQuery = (from a in context.BankAccounts
-                                                    where a.Tenant == tenant 
-                                                    && a.AccountNumber == accountNumber 
+                                                    where a.Tenant == tenant
+                                                    && a.AccountNumber == accountNumber
                                                     && a.BranchNumber == branchNumber
                                                     && a.BankId == bankId
                                                     && a.CurrencyId == currencyId
                                                     select a);
 
-            IQueryable<BankAccountList> accountListQuery = this.GetIqueryableList(accountQuery);
-            List<BankAccountList> accountList = accountListQuery.ToList();
+            List<BankAccountList> accountList = this.GetIqueryableList(accountQuery);
             BankAccountList rvList = accountList.FirstOrDefault();
             return rvList;
         }
@@ -130,8 +145,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                     where a.GLAccountId == accountNumber
                                                     select a);
 
-            IQueryable<BankAccountList> accountListQuery = this.GetIqueryableList(accountQuery);
-            List<BankAccountList> accountList = accountListQuery.ToList();
+            List<BankAccountList> accountList =  this.GetIqueryableList(accountQuery);
             BankAccountList rvList = accountList.FirstOrDefault();
             return rvList;
         }
@@ -142,8 +156,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                     where a.DeferredGLAccountId == accountNumber
                                                     select a);
 
-            IQueryable<BankAccountList> accountListQuery = this.GetIqueryableList(accountQuery);
-            List<BankAccountList> accountList = accountListQuery.ToList();
+            List<BankAccountList> accountList = this.GetIqueryableList(accountQuery);
             BankAccountList rvList = accountList.FirstOrDefault();
             return rvList;
         }
@@ -168,4 +181,3 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
 }
-	
