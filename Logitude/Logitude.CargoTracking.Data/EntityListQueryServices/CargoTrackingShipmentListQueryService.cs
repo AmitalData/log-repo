@@ -984,7 +984,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateGreaterThan) &&
                 DateTime.TryParseExact(shipmentSearchInput.OpenDateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime openDateGreaterThan))
             {
-                shipments = shipments.Where(d => d.CreateDate > openDateGreaterThan);
+                shipments = shipments.Where(d => d.CreateDate >= openDateGreaterThan);
             }
             return shipments;
         }
@@ -993,7 +993,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(shipmentSearchInput.ClearanceDateGreaterThan) &&
                 DateTime.TryParseExact(shipmentSearchInput.ClearanceDateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime clearanceDateGreaterThan))
             {
-                shipments = shipments.Where(d => d.ClearanceDate > clearanceDateGreaterThan);
+                shipments = shipments.Where(d => d.ClearanceDate >= clearanceDateGreaterThan);
             }
             return shipments;
         }
@@ -1002,7 +1002,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(shipmentSearchInput.ATADateGreaterThan) &&
                 DateTime.TryParseExact(shipmentSearchInput.ATADateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime ATADateGreaterThan))
             {
-                shipments = shipments.Where(d => d.ArrivalDate > ATADateGreaterThan);
+                shipments = shipments.Where(d => d.ArrivalDate >= ATADateGreaterThan);
             }
             return shipments;
         }
@@ -1012,7 +1012,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateLessThan) &&
                 DateTime.TryParseExact(shipmentSearchInput.OpenDateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime openDateLessThan))
             {
-                shipments = shipments.Where(d => d.CreateDate < openDateLessThan);
+                shipments = shipments.Where(d => d.CreateDate <= openDateLessThan);
             }
             return shipments;
         }
@@ -1021,7 +1021,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(shipmentSearchInput.ClearanceDateLessThan) &&
                 DateTime.TryParseExact(shipmentSearchInput.ClearanceDateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime clearanceDateLessThan))
             {
-                shipments = shipments.Where(d => d.ClearanceDate < clearanceDateLessThan);
+                shipments = shipments.Where(d => d.ClearanceDate <= clearanceDateLessThan);
             }
             return shipments;
         }
@@ -1030,7 +1030,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             if (!string.IsNullOrEmpty(shipmentSearchInput.ATADateLessThan) &&
                 DateTime.TryParseExact(shipmentSearchInput.ATADateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime ATADateLessThan))
             {
-                shipments = shipments.Where(d => d.ArrivalDate < ATADateLessThan);
+                shipments = shipments.Where(d => d.ArrivalDate <= ATADateLessThan);
             }
             return shipments;
         }
