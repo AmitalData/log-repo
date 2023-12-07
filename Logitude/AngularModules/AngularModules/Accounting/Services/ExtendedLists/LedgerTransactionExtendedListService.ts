@@ -361,7 +361,39 @@ export class LedgerTransactionExtendedListService {
             catchError(ServiceHelper.HandleServiceError));
 
     }
+    GetFirstXLedgerForReconciliationByParams(accountId: string, filters: ApiQueryFilters) {
+      
 
+        var url = this._reconciliationUrl + "/GetReconciliationsByFilter";
+
+        var callUrl = this.ParseFiltersIntoURL(accountId, filters, url);
+
+        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
+
+    GetFirstXLedgerForExtReconciliationByParam(objectTableName: string, objectTableId: string, entityId: string, filters: ApiQueryFilters) {
+      
+        
+        var url = ServiceHelper.GetLogitudeURL()+'api/ReconcileExternalPagesExtended/getExternalReoncilioationsByFilter?objectTableId='+
+         objectTableId+'&entityId='+entityId;
+        var callUrl = this.parseFiltersToURL(filters,url);
+
+        return this.httpClient.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(
+            map((response: ServiceResponse) => {
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse = response;
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError));
+
+    }
 
     private ParseFiltersIntoURL(accountId: string, filters: ApiQueryFilters, url: string)
     {
