@@ -17,6 +17,8 @@ using System.Data.Common;
 using Simplog.Server.Infrastructure;
 using System.Configuration;
 using System.Runtime.Remoting.Contexts;
+using Logitude.CargoTracking.Data.Model;
+using System.Globalization;
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
 {
@@ -891,6 +893,12 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         {
             shipments = FilterByCustomers(shipmentSearchInput, shipments);
             shipments = FilterByMileStones(shipmentSearchInput, shipments);
+            shipments = FilterByOpenDateGreaterThan(shipmentSearchInput, shipments);
+            shipments = FilterByClearanceDateGreaterThan(shipmentSearchInput, shipments);
+            shipments = FilterByATADateGreaterThan(shipmentSearchInput, shipments);
+            shipments = FilterByOpenDateLessThan(shipmentSearchInput, shipments);
+            shipments = FilterByClearanceDateLessThan(shipmentSearchInput, shipments);
+            shipments = FilterByATADateLessThan(shipmentSearchInput, shipments);
             shipments = FilterTransportMode(shipmentSearchInput, shipments);
             shipments = FilterDirections(shipmentSearchInput, shipments);
             shipments = FilterShipmentsWhichMoreFilter(shipmentSearchInput, shipments);
@@ -966,6 +974,63 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 shipments = shipments.Where(d =>
                             shipmentSearchInput.MilestonesCodes.Contains(d.CurrentMilestoneCode)
                         );
+            return shipments;
+        }
+
+        //Greater Than
+        private static IQueryable<CargoTrackingShipmentList> FilterByOpenDateGreaterThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateGreaterThan) &&
+                DateTime.TryParseExact(shipmentSearchInput.OpenDateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime openDateGreaterThan))
+            {
+                shipments = shipments.Where(d => d.CreateDate >= openDateGreaterThan);
+            }
+            return shipments;
+        }
+        private static IQueryable<CargoTrackingShipmentList> FilterByClearanceDateGreaterThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            if (!string.IsNullOrEmpty(shipmentSearchInput.ClearanceDateGreaterThan) &&
+                DateTime.TryParseExact(shipmentSearchInput.ClearanceDateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime clearanceDateGreaterThan))
+            {
+                shipments = shipments.Where(d => d.ClearanceDate >= clearanceDateGreaterThan);
+            }
+            return shipments;
+        }
+        private static IQueryable<CargoTrackingShipmentList> FilterByATADateGreaterThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            if (!string.IsNullOrEmpty(shipmentSearchInput.ATADateGreaterThan) &&
+                DateTime.TryParseExact(shipmentSearchInput.ATADateGreaterThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime ATADateGreaterThan))
+            {
+                shipments = shipments.Where(d => d.ArrivalDate >= ATADateGreaterThan);
+            }
+            return shipments;
+        }
+        // Less Than
+        private static IQueryable<CargoTrackingShipmentList> FilterByOpenDateLessThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            if (!string.IsNullOrEmpty(shipmentSearchInput.OpenDateLessThan) &&
+                DateTime.TryParseExact(shipmentSearchInput.OpenDateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime openDateLessThan))
+            {
+                shipments = shipments.Where(d => d.CreateDate <= openDateLessThan);
+            }
+            return shipments;
+        }
+        private static IQueryable<CargoTrackingShipmentList> FilterByClearanceDateLessThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            if (!string.IsNullOrEmpty(shipmentSearchInput.ClearanceDateLessThan) &&
+                DateTime.TryParseExact(shipmentSearchInput.ClearanceDateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime clearanceDateLessThan))
+            {
+                shipments = shipments.Where(d => d.ClearanceDate <= clearanceDateLessThan);
+            }
+            return shipments;
+        }
+        private static IQueryable<CargoTrackingShipmentList> FilterByATADateLessThan(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
+        {
+            if (!string.IsNullOrEmpty(shipmentSearchInput.ATADateLessThan) &&
+                DateTime.TryParseExact(shipmentSearchInput.ATADateLessThan, "d/M/yyyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out DateTime ATADateLessThan))
+            {
+                shipments = shipments.Where(d => d.ArrivalDate <= ATADateLessThan);
+            }
             return shipments;
         }
 
