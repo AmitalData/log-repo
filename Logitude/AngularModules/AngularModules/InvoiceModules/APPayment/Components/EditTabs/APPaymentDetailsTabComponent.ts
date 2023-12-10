@@ -254,27 +254,33 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private LoadTaxPercentage() {
         if (this.IsFullAccounting)
         {
-            const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
-            if(nonIsraeliVendor) {
-                this.TaxDeductionPercentage = 0;
-            } else {
-
+           
+debugger
                 this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || this.IsTaxUpdated) {
                             this.IsNoVendorTax = myResponse.Result.IsDefault;
-                            this.TaxDeductionPercentage = myResponse.Result.Percentage;
+                            const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
+
+                            if(!myResponse.Result.IsDefault || !nonIsraeliVendor){
+                               this.TaxDeductionPercentage = myResponse.Result.Percentage;
+                            }
+                            else{
+                                 this.TaxDeductionPercentage = 0;
+                                }
                         }
                         else {
-                            this.IsNoVendorTax = myResponse.Result.IsDefault;
+                             this.IsNoVendorTax = myResponse.Result.IsDefault;
+
+                           
                         }
                     }
                     else {
                         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
                     }
                 });
-            }
+            
 
         }
     }
@@ -1290,11 +1296,12 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         return this.EntityPM.TaxDeductionPercentage;
     }
     set TaxDeductionPercentage(value: number) {
+        debugger
         if (this.EntityPM != null) {
             if (this.EntityPM.TaxDeductionPercentage != value) {
 
             const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
-            if(nonIsraeliVendor)
+            if(nonIsraeliVendor && this.IsNoVendorTax)
                 value = 0;
             this.EntityPM.TaxDeductionPercentage = value;
             this.CalculateTaxDeductionLocalAmount();
