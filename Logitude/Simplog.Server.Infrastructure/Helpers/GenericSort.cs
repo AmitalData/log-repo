@@ -23,17 +23,17 @@ namespace Simplog.Server.Infrastructure.Helpers
 
         }
 
-        public IQueryable<QueryType> GetSorterQuery<QueryType, FirstSortType>(QueryOperations queryOperations, IQueryable<QueryType> querableData)
+        public IQueryable<T> GetSorterQuery<T, N>(QueryOperations queryOperations, IQueryable<T> querableData)
         {
-            string keyName = null;     
+            string keyName = null;
             if (!string.IsNullOrEmpty(queryOperations.ObjectTableName))
             {
-                keyName = GetObjectTableKeyName(queryOperations , tenant);
+                keyName = GetObjectTableKeyName(queryOperations);
             }
             SortParams<T, N> sortParams = new SortParams<T, N>();
             sortParams.QuerableData = querableData;
             sortParams.SortDirection = queryOperations.SortDirectin;
-            sortParams.FirstSortExpression= GetSortExpression<T, N>(queryOperations.SortByColumnName);
+            sortParams.FirstSortExpression = GetSortExpression<T, N>(queryOperations.SortByColumnName);
             if (!String.IsNullOrWhiteSpace(keyName) && //LogitudeSettings.DatabaseManagementSystem == "oracle" &&
                 typeof(T).GetProperty(keyName).PropertyType == typeof(Guid)
                 && LogitudeSettings.IsCostomsDeploy // crush on sql server on branch amital - fast respone 
@@ -51,7 +51,7 @@ namespace Simplog.Server.Infrastructure.Helpers
             {
                 return GetSortedQuery<T, N>(sortParams);
             }
-           
+
         }
         private IQueryable<T> GetSortedQuery<T, N>(SortParams<T, N> sortParams)
         {
