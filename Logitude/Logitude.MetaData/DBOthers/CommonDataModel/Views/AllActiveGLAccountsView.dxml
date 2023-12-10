@@ -1,0 +1,16 @@
+<View DBType="Main" Name="CustomersDataView" Schema="dbo" Module="Common">
+  <SqlScript>
+    <![CDATA[
+
+
+CREATE OR ALTER view [dbo].[AllActiveGLAccountsView]
+AS
+select Tenant,Id from glaccounts where Inactive=0
+                    
+
+
+    ]]>
+  </SqlScript>
+  <OracleScript>
+  </OracleScript>
+</View>
