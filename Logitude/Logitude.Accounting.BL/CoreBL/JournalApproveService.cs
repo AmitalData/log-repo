@@ -339,7 +339,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private void CalculateTotalFutureOpenChequesForCreditGlAccount(List<LedgerTransactionPM> ledgerTrasnctions)
         {
 
-            if (_JournalPM.AccountingEntityCode == "3" || _JournalPM.AccountingEntityCode == "1")
+            if ((_JournalPM.AccountingEntityCode == "3" || _JournalPM.AccountingEntityCode == "1") && _JournalPM.ExternalSystem.ToUpper() !="AMITAL")
             {
                 //ARPaymentQuery arPaymentQuery = new ARPaymentQuery(_Tenant);
                 //var arPayment = arPaymentQuery.GetSingleARPayment(_JournalPM.AccountingEntityId, _Tenant);
