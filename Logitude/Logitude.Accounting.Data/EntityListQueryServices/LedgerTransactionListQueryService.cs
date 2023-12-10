@@ -15,6 +15,8 @@ using Logitude.Accounting.Data.Enums;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Devart.Data.Linq;
+using Logitude.Server.Tools;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -652,8 +654,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         }
 
                     }
-                    
-                }
+				
+				}
                 return queryableData;
             }
 
@@ -1922,7 +1924,9 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
         public bool ClacOpenReconciledAmount_OnlyWithout_IncludeRelatedCurrenciesAccount_IncludeChildAccounts { get; set; }
-    }
+		public QueryFilterItem AmountLocalFilter { get; set; }
+		public QueryFilterItem AmountForeignlFilter { get; set; }
+	}
     public class LedgerTransactionBalanceResponse : LedgerTransactionBalanceFilterCallBack
     {
         public List<string> YearTransferLedgerTransactionIds;

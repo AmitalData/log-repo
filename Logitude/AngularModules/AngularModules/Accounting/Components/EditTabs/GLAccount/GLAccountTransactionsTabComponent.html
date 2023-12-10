@@ -355,6 +355,9 @@
     .toggle-button:hover {
         opacity: 0.92;
     }
+    .TableHolder{
+        padding: 3px !important;
+    }
 </style>
 
 <!-- Alert -->
@@ -384,64 +387,9 @@
                                                 <td>
                                                     <table style="table-layout: fixed;">
                                                         <td style="width:10px"></td>
-                                                        <td style="width:300px;padding-top:12px;"
-                                                            [style.text-align]="isRTL ? 'right' : 'left'">
+                                                      
 
-                                                            <span float-start
-                                                                style="height: 100%;padding-top: 10px; ">{{'Accounting.General.O.OpenAmount'
-                                                                | TextCodeTranslationPipe}}</span>
-
-                                                            <span float-start
-                                                                style="width:20px;height: 100%;">&nbsp;</span>
-
-                                                            <!-- open balance -->
-                                                            <span float-start
-                                                                style="height: 100%; padding: 7px 10px;direction: ltr;font-size: 16px;font-weight: bold;
-                                                                              color: #60956e;font-family: sans-serif; padding-right: 5px;direction: ltr;"
-                                                                [class.red]="GetOpenBalanceAmount()<0"
-                                                                *ngIf="LTBSummery.StartBalanceLocal != undefined">
-                                                                {{GetOpenBalanceAmount() | NumbersPipe:'N2'}}
-                                                                {{GetOpenBalanceCurrencySign()}}
-                                                            </span>
-
-                                                            <LogToolTip float-start
-                                                                [direction]="isRTL?'bottomleft':'bottomright'"
-                                                                [title]="'Accounting.General.O.OpenBalanceByCurrency' | TextCodeTranslationPipe"
-                                                                [name]="'toto'" *ngIf="EntityPM.IsMultiCurrency">
-                                                                <span style="font-size: bold;">
-                                                                    <div>
-                                                                        <ul style="list-style: none;">
-                                                                            <li
-                                                                                *ngFor="let currency of LTBSummery.StartBalanceForeignList; let i=index;">
-                                                                                <div>
-                                                                                    <span
-                                                                                        style="font-size: 13px; color:#707070; padding-right: 20px; float: left;">{{currency.CurrencyCode}}</span>
-                                                                                    <span
-                                                                                        style="font-size: 13px; color:#21a373;text-align: right;float: right;"
-                                                                                        [class.red]="currency.BalanceForeign<=0">
-                                                                                        {{
-                                                                                        currency.BalanceForeign
-                                                                                        | NumbersPipe:'N2'
-                                                                                        }}
-                                                                                        {{currency.CurrencySign}}
-                                                                                    </span>
-                                                                                    <div style="clear: both;"></div>
-
-                                                                                </div>
-                                                                            </li>
-                                                                        </ul>
-                                                                    </div>
-                                                                </span>
-                                                            </LogToolTip>
-
-
-
-                                                        </td>
-                                                        <td style="width:15px;">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width:45px">
+                                                        <td style="width:45px" [style.text-align]="isRTL ? 'right' : 'left'">
                                                             <LogLabel [ObjectFieldName]="'CurrencyId'"
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [NoObjectField]="true" [DataContext]="DataContext">
@@ -457,7 +405,7 @@
                                                                 [LookUpTableName]="'Currency'" [HideColumns]="true">
                                                             </LogLov>
                                                         </td>
-                                                        <td style="width:15px;">
+                                                        <td style="width:100px;">
                                                             <div></div>
                                                         </td>
 
@@ -468,17 +416,7 @@
                                                         </td>
 
                                                         <td [style.width.px]="DateFilterWidth">
-                                                            <button class="toggle-button"
-                                                                [disabled]="this.filterSelectedValue == 'filter_Tax'"
-                                                                style="width: 44px;margin: 0 3px"
-                                                                (click)="ShowSecondDateFilter=!ShowSecondDateFilter"
-                                                                float-start>
-                                                                <img
-                                                                    [attr.src]="FromDate2 && ToDate2 ? './Images/FilterGrayTransUsed.png' : './Images/FilterGrayTrans.png'">
-                                                                <img [class.FlipImgVert]="ShowSecondDateFilter"
-                                                                    src="./Images/FiltersOpen.png"
-                                                                    style="margin-top: 2px;margin-left: 4px;">
-                                                            </button>
+                                                          
                                                             <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL"
                                                                 float-start>
                                                                 <li float-start id="filter_accounting"
@@ -562,6 +500,68 @@
                                                                 [NoObjectField]="true" [ForceSubscribe]="true"
                                                                 [DataContext]="DataContext" [HideColumns]="true"
                                                                 [SelectedDateValue]="ToDate"></LogDatePicker>
+                                                        </td>
+                                                        <td style="width:15px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 50px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'LedgerTransaction.O.LocalAmount' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width:5px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 90px;">
+                                           
+                                                                <ComboBox [ItemsSource]="operatorsList" [Binding]="'LocalName'"
+                                                                          [SelectedItem]="selectedAmountLocalOperator"
+                                                                          (SelectedItemChanged)="AmountLocalOperatorChanged($event)"></ComboBox>
+                                                            
+                                                                
+                                                        </td>
+                                                        <td style="width: 15px;"><div></div></td>
+                                                       
+        
+                                                        <td *ngIf="selectedAmountLocalOperator?.Code != 'Between'" style="width: 90px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            <LogTextBox [InputType]="'decimal'" [NoObjectField]="true"
+                                                            [ObjectFieldName]="'AmountLocal'" [Text]="AmountLocal" [HideColumns]="true"
+                                                            (ValueChanged)="AmountLocalTextChanged($event)" [DebounceTime]="400"
+                                                            [ObjectTableName]="'Reconciliation'" [DataContext]="this"></LogTextBox>
+                                                        </td>
+        
+                                                        <td
+                                                            *ngIf="selectedAmountLocalOperator?.Code == 'Between'"
+                                                            style="width: 90px"
+                                                            [style.text-align]="isRTL ? 'right' : 'left'"
+                                                        >
+                                                        <LogTextBox
+                                                            [NoObjectField]="true"
+                                                            [HideColumns]="true"
+                                                            [InputType]="'decimal'"
+                                                            [DataContext]="DataContext"
+                                                            [DebounceTime]="400"
+                                                            [ObjectFieldName]="'From'"
+                                                            (ValueChanged)="AmountLocalTextFromChanged($event)"
+                                                        ></LogTextBox>
+                                                        </td>
+                                                        <td style="width: 15px"><div></div></td>
+                                                        <td *ngIf="selectedAmountLocalOperator?.Code != 'Between'" style="width: 90px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                           
+                                                        </td>
+                                                        <td
+                                                        *ngIf="selectedAmountLocalOperator?.Code == 'Between'"
+                                                        style="width: 90px"
+                                                        [style.text-align]="isRTL ? 'right' : 'left'"
+                                                        >
+                                                        <LogTextBox
+                                                            [NoObjectField]="true"
+                                                            [HideColumns]="true"
+                                                            [InputType]="'decimal'"
+                                                            [DataContext]="DataContext"
+                                                            [DebounceTime]="400"
+                                                            [ObjectFieldName]="'To'"
+                                                            (ValueChanged)="AmountLocalTextToChanged($event)"
+                                                        ></LogTextBox>
+                                                        </td>
+                                                        <td style="width:15px;">
+                                                            <div></div>
                                                         </td>
                                                         <td style="width:180px" rowspan="2">
                                                             <table>
@@ -670,20 +670,79 @@
                                                 </td>
 
                                             </tr>
-
-
-                                            <!-- Date 2 -->
-                                            <tr *ngIf="ShowSecondDateFilter" class="FormFieldRow">
+                                                                               
+                                        </table>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <table>
+                                            <!-- Date -->
+                                            <tr class="FormFieldRow">
                                                 <td>
                                                     <table style="table-layout: fixed;">
-                                                        <td style="width:528px;padding-top:12px;"
+                                                        <td style="width:10px"></td>
+                                                        <td style="width:250px;"
                                                             [style.text-align]="isRTL ? 'right' : 'left'">
 
+                                                            <span float-start
+                                                                style="height: 100%;padding-top: 10px; ">{{'Accounting.General.O.OpenAmount'
+                                                                | TextCodeTranslationPipe}}</span>
+
+                                                            <span float-start
+                                                                style="width:20px;height: 100%;">&nbsp;</span>
+
+                                                            <!-- open balance -->
+                                                            <span float-start
+                                                                style="height: 100%; padding: 7px 10px;direction: ltr;font-size: 16px;font-weight: bold;
+                                                                              color: #60956e;font-family: sans-serif; padding-right: 5px;direction: ltr;"
+                                                                [class.red]="GetOpenBalanceAmount()<0"
+                                                                *ngIf="LTBSummery.StartBalanceLocal != undefined">
+                                                                {{GetOpenBalanceAmount() | NumbersPipe:'N2'}}
+                                                                {{GetOpenBalanceCurrencySign()}}
+                                                            </span>
+
+                                                            <LogToolTip float-start
+                                                                [direction]="isRTL?'bottomleft':'bottomright'"
+                                                                [title]="'Accounting.General.O.OpenBalanceByCurrency' | TextCodeTranslationPipe"
+                                                                [name]="'toto'" *ngIf="EntityPM.IsMultiCurrency">
+                                                                <span style="font-size: bold;">
+                                                                    <div>
+                                                                        <ul style="list-style: none;">
+                                                                            <li
+                                                                                *ngFor="let currency of LTBSummery.StartBalanceForeignList; let i=index;">
+                                                                                <div>
+                                                                                    <span
+                                                                                        style="font-size: 13px; color:#707070; padding-right: 20px; float: left;">{{currency.CurrencyCode}}</span>
+                                                                                    <span
+                                                                                        style="font-size: 13px; color:#21a373;text-align: right;float: right;"
+                                                                                        [class.red]="currency.BalanceForeign<=0">
+                                                                                        {{
+                                                                                        currency.BalanceForeign
+                                                                                        | NumbersPipe:'N2'
+                                                                                        }}
+                                                                                        {{currency.CurrencySign}}
+                                                                                    </span>
+                                                                                    <div style="clear: both;"></div>
+
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </span>
+                                                            </LogToolTip>
+
+
+
                                                         </td>
-                                                        <td style="width:30px;">
+                                                      
+                                                        <td style="width:15px;">
                                                             <div></div>
                                                         </td>
 
+                                                        <td style="width: 50px;"
+                                                            [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            <div></div>
+                                                        </td>
                                                         <td [style.width.px]="DateFilterWidth">
                                                             <div style=" width: 50px; height: 5px;" float-start></div>
                                                             <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL"
@@ -746,38 +805,78 @@
                                                                 [DataContext]="DataContext" [HideColumns]="true"
                                                                 [SelectedDateValue]="ToDate"></LogDatePicker>
                                                         </td>
-                                                        <td style="width:300px" rowspan="2">
-                                                            <div style="margin: 0 10px;" *ngIf="FromDate2&&ToDate2">
-                                                                <IconButton [Name]="'Delete'"
-                                                                    (click)="ResetAdditionalDateFilter()"></IconButton>
-                                                            </div>
+                                                      
+                                                        <td style="width:15px;">
+                                                            <div></div>
                                                         </td>
-
-                                                        <td style="width:150px">
-                                                            <div [style.float]="isRTL ? 'left' : 'right'"
-                                                                style="width: 200px;padding: 0 5px;">
-
-                                                            </div>
-
-
-                                                            <div [style.float]="isRTL ? 'left' : 'right'">
-
-                                                            </div>
-
-
-                                                            <div [style.float]="isRTL ? 'left' : 'right'">
-
-                                                            </div>
-
+                                                        <td style="width: 50px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'LedgerTransaction.O.ForeignAmount' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width:5px;">
+                                                            <div></div>
                                                         </td>
+                                                        <td style="width: 90px;">
+                                           
+                                                                <ComboBox [ItemsSource]="operatorsList" [Binding]="'LocalName'"
+                                                                          [SelectedItem]="selectedAmountForeignOperator"
+                                                                          (SelectedItemChanged)="AmountForeignOperatorChanged($event)"></ComboBox>
+                                                            
+                                                                
+                                                        </td>
+                                                        <td style="width: 15px;"><div></div></td>
+                                                       
+        
+                                                        <td *ngIf="selectedAmountForeignOperator?.Code != 'Between'" style="width: 90px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            <LogTextBox [InputType]="'decimal'" [NoObjectField]="true"
+                                                            [ObjectFieldName]="'Amount'" [Text]="AmountForeign" [HideColumns]="true"
+                                                            (ValueChanged)="AmountForeignTextChanged($event)" [DebounceTime]="400"
+                                                            [ObjectTableName]="'Reconciliation'" [DataContext]="this"></LogTextBox>
+                                                        </td>
+        
+                                                        <td
+                                                            *ngIf="selectedAmountForeignOperator?.Code == 'Between'"
+                                                            style="width: 90px"
+                                                            [style.text-align]="isRTL ? 'right' : 'left'"
+                                                        >
+                                                        <LogTextBox
+                                                            [NoObjectField]="true"
+                                                            [HideColumns]="true"
+                                                            [InputType]="'decimal'"
+                                                            [DataContext]="DataContext"
+                                                            [DebounceTime]="400"
+                                                            [ObjectFieldName]="'From'"
+                                                            (ValueChanged)="AmountForeignTextFromChanged($event)"
+                                                        ></LogTextBox>
+                                                        </td>
+                                                        <td style="width: 15px"><div></div></td>
+                                                        <td *ngIf="selectedAmountForeignOperator?.Code != 'Between'" style="width: 90px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                           
+                                                        </td>
+                                                        <td
+                                                        *ngIf="selectedAmountForeignOperator?.Code == 'Between'"
+                                                        style="width: 90px"
+                                                        [style.text-align]="isRTL ? 'right' : 'left'"
+                                                        >
+                                                        <LogTextBox
+                                                            [NoObjectField]="true"
+                                                            [HideColumns]="true"
+                                                            [InputType]="'decimal'"
+                                                            [DataContext]="DataContext"
+                                                            [DebounceTime]="400"
+                                                            [ObjectFieldName]="'To'"
+                                                            (ValueChanged)="AmountForeignTextToChanged($event)"
+                                                        ></LogTextBox>
+                                                        </td>
+                                                        
+                                                        <td style="width:460px;">
+                                                            <div></div>
+                                                        </td>
+                                                      
                                                     </table>
                                                 </td>
 
-                                            </tr>
+                                            </tr>                                                                               
 
                                         </table>
                                 </tr>
-
 
                             </table>
                         </td>
@@ -858,7 +957,7 @@
     </div>
 
     <!-- Footer -->
-    <div>
+    <div *ngIf="amountForeignFieldFilter == null && amountLocalFieldFilter == null">
         <div class="tab-footer">
             <span style="padding-left: 84px">
                 <span>
