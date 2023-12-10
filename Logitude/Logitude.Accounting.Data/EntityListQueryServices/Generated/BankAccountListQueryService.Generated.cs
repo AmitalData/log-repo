@@ -49,7 +49,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<BankAccountList> query2 = GetIqueryableList(iQueryable).AsQueryable();
+            IQueryable<BankAccountList> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<BankAccountList>(listQueryOperation, query2);
 		    query2 = InjectionUtil.Instance.ApplyTreeFilter<BankAccountList>(query2, treeFilterQueryArgs);
@@ -143,7 +143,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                        select a);
 
              
-            BankAccountList BankAccountList = GetIqueryableList( BankAccountQuery).FirstOrDefault();
+            IQueryable<BankAccountList> BankAccountListQuery = GetIqueryableList( BankAccountQuery);
+            BankAccountList BankAccountList = BankAccountListQuery.FirstOrDefault();
             return BankAccountList;
            
         }
@@ -175,7 +176,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
 
 
-            IQueryable<BankAccountList> query2 = GetIqueryableList(iQueryable).AsQueryable();
+            IQueryable<BankAccountList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<BankAccountList>(listQueryOperation, query2);
 		    query2 = InjectionUtil.Instance.ApplyTreeFilter<BankAccountList>(query2, treeFilterQueryArgs);
