@@ -429,7 +429,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             Response.HaveAccountingQueued=(startAccountBalanceService.HaveAccountingQueued || endAccountBalanceService.HaveAccountingQueued);
 
-            bool isAdditionalDateFilterSelected = _Param.Date2TypeCode != null && _Param.FromDate2 != null && _Param.ToDate2 != null;
+            bool isAdditionalDateFilterSelected = (_Param.Date2TypeCode != null && _Param.FromDate2 != null && _Param.ToDate2 != null)|| (_Param.AmountLocalFilter!=null) || (_Param.AmountForeignlFilter != null);
             if (!isAdditionalDateFilterSelected)
                 CheckSumLocalEqualDiffEndStart(startAccountBalanceService, endAccountBalanceService, periodSumLocalAmount, periodSumForeignAmount);
 
