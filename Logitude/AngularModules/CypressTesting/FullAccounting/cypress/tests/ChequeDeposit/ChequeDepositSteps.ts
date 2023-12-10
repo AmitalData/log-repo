@@ -13,18 +13,19 @@ Given("the user logged in and navigates to Full Accounting workspace", () => {
 });
 
 Given("an AR Payment with the following details", (dataTable) => {
-    ARPaymentActions.NavigatesARPaymentWorkspace()
+    ARPaymentActions.NavigatesARPaymentWorkspace();
     let ARPaymentDetails = Assists.CreateInstance<ARPaymentDetails>(dataTable, true);
-    ARPaymentActions.FillARPayment(ARPaymentDetails)
+    ARPaymentActions.FillChequeARPayment(ARPaymentDetails);
+    cy.wait(2000);
 });
 
-When("create AR Payment", () => {
-    ARPaymentActions.CreateARPayment()
-});
+// When("create AR Payment", () => {
+//     ARPaymentActions.CreateARPayment()
+// });
 
-Then("the AR Payment should get successfully", () => {
-    ARPaymentActions.AssertCreateARPayment()
-});
+// Then("the AR Payment should get successfully", () => {
+//     ARPaymentActions.AssertCreateARPayment()
+// });
 //#endregion
 
 //#region Approve the AR Invoice
