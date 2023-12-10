@@ -8,6 +8,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     
@@ -29,6 +30,13 @@ export class AddEditAPInvoiceLineComponent {
         }
     }
 
+    public ChargeTypesQueryFilters: ApiQueryFilters;
+    private BuildQueryFilters() {
+        this.ChargeTypesQueryFilters = new ApiQueryFilters();
+        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "Boolean");
+    }
+    
     public TotalVATOnly: boolean = false;
     SetDataContext(dataContext: APInvoiceLineItem) {
         this.EntityPM = dataContext.EntityPM;

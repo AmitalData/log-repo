@@ -8,6 +8,7 @@ import {TextCodeTranslator} from '../../../../Infrastructure/Utilities/TextCodeT
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesValidator';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     
@@ -25,6 +26,13 @@ export class AddEditMultipleAPInvoiceLineComponent {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
     }
 
+    public ChargeTypesQueryFilters: ApiQueryFilters;
+    private BuildQueryFilters() {
+        this.ChargeTypesQueryFilters = new ApiQueryFilters();
+        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "Boolean");
+    }
+    
     SetDataContext(dataContext: APInvoiceLineShortItem) {
         this.EntityPM = dataContext.EntityPM;
         this.DataContext = dataContext;
