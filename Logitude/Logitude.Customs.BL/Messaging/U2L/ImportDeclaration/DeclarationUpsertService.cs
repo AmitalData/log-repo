@@ -298,14 +298,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				}
 
 
-				if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages == null)
-				{
-					this._MyDeclarationPM.Consignments[0].ConsignmentPackages = new List<Def.EntityPMs.ConsignmentPackagePM>();
-				}
-				if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Count == 0)
-				{
-					this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(new Def.EntityPMs.ConsignmentPackagePM() { ChangeSetOp = ChangeSetOperation.Insert, Tenant = ResolvedTenant() }); // moran 20.8.15 Task 15049 - add handle to initiate Tenant
-				}
+				//if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages == null)
+				//{
+				//	this._MyDeclarationPM.Consignments[0].ConsignmentPackages = new List<Def.EntityPMs.ConsignmentPackagePM>();
+				//}
+				//if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Count == 0)
+				//{
+				//	this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(new Def.EntityPMs.ConsignmentPackagePM() { ChangeSetOp = ChangeSetOperation.Insert, Tenant = ResolvedTenant() }); // moran 20.8.15 Task 15049 - add handle to initiate Tenant
+				//}
 
 
 
