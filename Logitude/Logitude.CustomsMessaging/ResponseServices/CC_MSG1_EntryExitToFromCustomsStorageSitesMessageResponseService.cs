@@ -85,8 +85,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var comments = commentsStorageSite + commentsContainerNumber + commentsExpectedArrivalSiteNumber + commentsDriverName + commentsDriverIdentityNumber + commentsVehicleNumber;
                     DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(declaration.Tenant);
                     string defaultLex =defaultValueQueryService.GetDefault("ISRAEL", "CGG_EXITSTS_PCK", "NON", "NON", declaration.Tenant);
-                    // TODO: CHANGE "somename" To real default name from unifreight (#195397- feature number)
-                    string defaultLex2 = defaultValueQueryService.GetDefault("ISRAEL", "somename", "NON", "NON", declaration.Tenant);
+                    string defaultLex2 = defaultValueQueryService.GetDefault("ISRAEL", "CGG_STS_LEX", "NON", "NON", declaration.Tenant);
 
                     Boolean raiseEvent = true;
                     if(defaultLex != null)
