@@ -108,6 +108,7 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <None Include="DBOthers\CommonDataModel\Views\AllActiveGLAccountsView.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldBIReportsExecutionLogs.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldReportExecutionLogs.dxml" />
     <None Include="DBOthers\InfrastructureModel\Procedures\DeleteOldDocumentsExecutionLogs.dxml" />
