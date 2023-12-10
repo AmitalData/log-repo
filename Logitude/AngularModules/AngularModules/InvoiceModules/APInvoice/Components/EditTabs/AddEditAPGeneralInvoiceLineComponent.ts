@@ -62,6 +62,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.invoiceLinePM;
         this.Clone();
+        this.BuildQueryFilters();
     }
 
     CancelButtonClicked() {
