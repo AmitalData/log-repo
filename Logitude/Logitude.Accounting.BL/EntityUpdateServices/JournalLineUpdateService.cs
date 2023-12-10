@@ -67,7 +67,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 throw new ApplicationException("JournalLineUpdateService must be used only from JournalUpdateService(force check Approved Journal Can Only Change To Voided)");
                 //throw new ApplicationException("BLException :Approved Journal Can Only Change To Voided");
             }
-
+   
             base.OnUpdating(entityPM);
         }
 
@@ -113,10 +113,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private void UpdateDueDate( GLAccountPM glAccount, JournalLinePM journalLine)
         {
 
-            if (glAccount?.PaymentTerms != null)
+            PaymentTermRepository paymentTermQueryService = new PaymentTermRepository(journalLine.Tenant);
+                
+            string paymentTermsId = glAccount.PaymentTerms != null ? glAccount.PaymentTerms : glAccount.PaymentTermId != null ? glAccount.PaymentTermId : null;
+            if (paymentTermsId != null)
             {
-                PaymentTermRepository paymentTermQueryService = new PaymentTermRepository(journalLine.Tenant);
-                int paymentTermDays = paymentTermQueryService.GetSinglePaymentTerm(glAccount.PaymentTerms).Days;
+                int paymentTermDays = paymentTermQueryService.GetSinglePaymentTerm(paymentTermsId).Days;
                 if (paymentTermDays != 0)
                 {
                     journalLine.DueDate = journalLine.DocumentDate.AddDays(paymentTermDays);
