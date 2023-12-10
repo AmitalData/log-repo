@@ -147,6 +147,7 @@ export class DeclarationPendingsGeneralComponent extends BaseComponent {
             item.DeclarationID = this.DeclarationCourierStatus.DeclarationId;
             item.Tenant = this.DeclarationCourierStatus.Tenant;
             item.IsDirty = true;
+            item.WasApproved=false;
             item.Status = "A";
             this.DeclarationCourierStatus.AddDeclarationPending(item);
             //if (!this.DeclarationPendingsList.includes(item)) {
