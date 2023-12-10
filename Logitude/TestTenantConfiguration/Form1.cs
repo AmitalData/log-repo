@@ -119,6 +119,8 @@ namespace TestTenantConfiguration
             LogitudeSettings.OceanInsightsToken = setting.OceanInsightsToken;
             LogitudeSettings.CPUIntensiveWebServicesURL = setting.CPUIntensiveWebServicesURL;
 			LogitudeSettings.WindWardSettings = setting.WindWardSettings;
+			LogitudeSettings.LogitudeIISURL = setting.LogitudeIISURL;
+
 
 		}
 
