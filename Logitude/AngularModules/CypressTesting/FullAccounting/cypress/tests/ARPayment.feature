@@ -6,7 +6,7 @@ Feature: AR Payment
         Given the user logged in and navigates to Full Accounting workspace
         And an AR Payment with the following details
             | Partner         | HadiNewCustomer2023 |
-            | RegisterDate    | 15/05/2023  |
+            | RegisterDate    | 15/11/2023  |
             | PaymentCurrency | NIS         |
             | PaymentMethod   | Cash        |
             | PaymentAmount   | 1000        |
