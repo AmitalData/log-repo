@@ -568,6 +568,7 @@ namespace WebFreight.Web
             LogitudeSettings.WorkflowStorageAccountKey = setting.WorkflowStorageAccountKey;
             LogitudeSettings.System2RedirectFraction = setting.System2RedirectFraction;
 			LogitudeSettings.WindWardSettings = setting.WindWardSettings;
+			LogitudeSettings.LogitudeIISURL = setting.LogitudeIISURL;
 
 		}
 
