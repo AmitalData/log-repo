@@ -11,5 +11,8 @@ export interface ARPaymentDetails {
     ChequeRef: string,
     ChequeBank: string,
     ChequeBankBranch: string,
-    ChequeAccount: string
+    ChequeAccount: string,
+
+    ChequeAmount: string,
+    
 }

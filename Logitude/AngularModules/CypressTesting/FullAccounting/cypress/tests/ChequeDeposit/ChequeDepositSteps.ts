@@ -17,11 +17,14 @@ Given("an AR Payment with the following details", (dataTable) => {
     ChequeDepositActions.NavigatesChequeDepositWizerd()
     let ARPaymentDetails = Assists.CreateInstance<ChequeDepositDetails>(dataTable, true);
     ChequeDepositActions.FillChequeDepositDetails(ARPaymentDetails)
+
 });
+
 
 When("create AR Payment", () => {
     ChequeDepositActions.CreateChequeDeposit();
 });
+
 
 Given("a cheque with the following details", (dataTable) => {
     let ARPaymentDetails = Assists.CreateInstance<ChequeDepositDetails>(dataTable, true);
