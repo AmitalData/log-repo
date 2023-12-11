@@ -264,6 +264,16 @@ export class DeclarationReferantDataPM {
     public set IsCloseOrOpenFromUser(newValue: boolean) { if (this.isCloseOrOpenFromUser != newValue) { this.isCloseOrOpenFromUser = newValue; this.MarkAsDirty("IsCloseOrOpenFromUser"); } }
        
 	 
+    private occuredStatus: string;
+    public get OccuredStatus() { return this.occuredStatus; }
+    public set OccuredStatus(newValue: string) { if (this.occuredStatus != newValue) { this.occuredStatus = newValue; this.MarkAsDirty("OccuredStatus"); } }
+       
+	 
+    private notOccuredStatus: string;
+    public get NotOccuredStatus() { return this.notOccuredStatus; }
+    public set NotOccuredStatus(newValue: string) { if (this.notOccuredStatus != newValue) { this.notOccuredStatus = newValue; this.MarkAsDirty("NotOccuredStatus"); } }
+       
+	 
 
     public OldEntityPM: DeclarationReferantDataPM;
 		

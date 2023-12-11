@@ -33,6 +33,8 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentChecked {
     public PlaceHolder: string = "Multi Select ....";
     @Input()
     LayoutDirection: string = 'rtl'//'ltr';
+    @Input()
+    MaxItemsAddedToList: number = 9999;
 
     @Output()
     ChosenListItemsChanged = new EventEmitter();
@@ -137,7 +139,7 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentChecked {
     }
 
     ngAfterContentChecked() {
-      //  this.FormatList();
+        //  this.FormatList();
         this._CD.detectChanges();
     }
 
@@ -280,6 +282,7 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentChecked {
     }
     AddToList() {
         //console.log("AddToList");
+
         if (this.MyLogLovV2Component.SelectedItem == null) {
             return;
         }
@@ -290,10 +293,14 @@ export class MultiSelectLOVComponent implements OnInit, AfterContentChecked {
         if (list.filter(r => r[this.MyLogLovV2Component.SelectedValuePath] == this.MyLogLovV2Component.SelectedItem[this.MyLogLovV2Component.SelectedValuePath]).length > 0) {
             return;
         }
-        list.push(this.MyLogLovV2Component.SelectedItem);
-        this.FormatList();
-        this.MyLogLovV2Component.OnDeleteValue();
+        var listLength = list.length;
+        if (this.MaxItemsAddedToList > listLength) {
+            list.push(this.MyLogLovV2Component.SelectedItem);
+            this.FormatList();
+            this.MyLogLovV2Component.OnDeleteValue();
+        }
         //this.MyLogLovV2Component.SelectedItem = null;
+
     }
 
     FormatList(): any {
