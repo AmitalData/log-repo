@@ -9,6 +9,7 @@ import { PerformanceLogger } from 'Infrastructure/Utilities/PerformanceLogger';
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { RatesTablePM } from 'Infrastructure/EntityPMs/RatesTablePM';
 import { ServiceHelper } from 'Infrastructure/Utilities/ServiceHelper';
+import { StringIterator } from 'cypress/types/lodash';
 @Injectable()
 
 export class RatesTableExtendedService {
@@ -60,6 +61,18 @@ export class RatesTableExtendedService {
 				return of(serviceResponse);
 			}
 		});
+	}
+
+	GetLastUpdateByCurrencyCode(foreignCurrency:string,tenantCurrencyId:string){
+		var url = this._apiUrl + '/GetLastUpdateByCurrencyCode?' + 'foreignCurrency=' + foreignCurrency + '&tenantCurrencyId=' + tenantCurrencyId;
+	
+		return this._http.get(url, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+			var serviceResponse: ServiceResponse;
+			serviceResponse = new ServiceResponse();
+			serviceResponse.Result = response;
+
+			return serviceResponse;
+		}), catchError(ServiceHelper.HandleServiceError));
 	}
 
 }
