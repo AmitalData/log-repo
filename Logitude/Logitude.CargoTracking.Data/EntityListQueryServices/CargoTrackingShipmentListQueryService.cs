@@ -965,7 +965,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                        )
                     .Select(x => x.shipment);
 
-            return shipments;
+            return shipments.Distinct();
         }
 
         private static IQueryable<CargoTrackingShipmentList> FilterByMileStones(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
