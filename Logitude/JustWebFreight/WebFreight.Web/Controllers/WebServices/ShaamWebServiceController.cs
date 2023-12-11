@@ -4,6 +4,7 @@ using Logitude.BL.CommonDataModel.Tools.EntityService;
 using Logitude.BL.GlobalModel.EntityQueries;
 using Logitude.XSD.CW_API.ABM;
 using Newtonsoft.Json;
+using NPOI.SS.Formula.Functions;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
@@ -13,6 +14,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Transactions;
 using System.Web;
 using System.Web.Http;
@@ -28,7 +30,7 @@ namespace WebFreight.Web.Controllers.WebServices
 
         [HttpGet]
         [Route("linkToCodeForToken")]
-        public HttpResponseMessage LinkToCodeForToken()
+        public HttpResponseMessage LinkToCodeForToken(string user)
         {
             try
             {
@@ -83,6 +85,31 @@ namespace WebFreight.Web.Controllers.WebServices
             }
         }
 
+        [HttpPost]
+        [Route("newRefreshToken")]
+        public HttpResponseMessage NewRefreshToken([FromBody] NewRefreshTokenBody body)
+        {
+            try
+            {
+                HttpClient client = GetShaamApiHttpClient(body.tenant);
+                string url = baseUrl + $"newRefreshToken?tenant={body.tenant}&user={body.user}&code={body.code}";
+                StringContent stringContent = new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json");
+                 
+                HttpResponseMessage res = client.PostAsync(url, stringContent).Result;
+                string content = res.Content.ReadAsStringAsync().Result;
+                client.Dispose();
+
+                if (res.StatusCode != HttpStatusCode.OK)
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception(content)));
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         private HttpClient GetShaamApiHttpClient(int tenant)
         {
             string jwt = new SettingQuery().GetJwtToken(tenant);
@@ -103,6 +130,13 @@ namespace WebFreight.Web.Controllers.WebServices
         class ShaamApiRes
         {
             public int Tenant { get; set; }
+        }
+
+        public class NewRefreshTokenBody
+        {
+            public int tenant { get; set; }
+            public string user { get; set; }
+            public string code { get; set; }
         }
     }
 }
