@@ -22,6 +22,9 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Server.Infrastructure;
+using System.Text;
+using Newtonsoft.Json;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -87,7 +90,37 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 else
                 {
-                    string urlImage = reportHelper.GetSpecificPageFromStimulReportAsBase64(reportFliter);
+
+					bool isAppService = !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL) && LogitudeSettings.LogitudeURL != LogitudeSettings.LogitudeIISURL;
+                    string urlImage = string.Empty;
+
+					if (isAppService)
+                    {
+                        string URI = LogitudeSettings.LogitudeIISURL.TrimEnd('/') + "/api/Report/" + "GetSpecificPageFromStimulReportAsBase64";
+
+                        using (var client = new HttpClient())
+                        {
+                            string serializedObject = JsonConvert.SerializeObject(reportFliter);
+                            StringContent content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                            var result1 = client.PostAsync(URI, content);
+
+                            result1.Wait();
+                            if (result1.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                
+								  var jsonData = result1.Result.Content.ReadAsStringAsync().Result;
+								var urlResponse = JsonConvert.DeserializeObject<UrlResponse>(jsonData.ToString());
+								urlImage = urlResponse.url;
+								reportFliter.PageCount = urlResponse.pageCount;
+							}
+
+                        }
+                    }
+                    else
+                    {
+						urlImage = reportHelper.GetSpecificPageFromStimulReportAsBase64(reportFliter);
+					}
+						 
                     if (string.IsNullOrEmpty(urlImage)) throw new Exception("Can't find file (" + reportFliter.ReportKey + "@" + reportFliter.ReportName + ")");
                     return Request.CreateResponse(HttpStatusCode.OK, GetBuildStimulReportResult(reportFliter, urlImage));
                 }
@@ -300,7 +333,45 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
             }
         }
-    }
+
+        [HttpPost]
+		public HttpResponseMessage GetSpecificPageFromStimulReportAsBase64(ReportFliter reportFliter)
+		{
+			try
+			{
+				
+				ReportHelper reportHelper = new ReportHelper();
+				UrlResponse urlResponse =new UrlResponse();
+				string url = "";
+				string extension = "tiff"; //IsUsingFileStreamAndTiffImage(reportFliter.tenant) ? "tiff" : "mdc";
+				IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+				BlobFileInfo fileInfo = reportHelper.GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName + extension), extension, reportFliter.tenant);
+				byte[] result = storageservice.Read(fileInfo);
+				if (result != null)
+				{
+					urlResponse.url = reportHelper.GetSpecificPageFromTiffImageAsBase64(reportFliter, ref result);
+					urlResponse.pageCount = reportFliter.PageCount;
+
+				}
+
+				storageservice.Dispose();
+
+
+				return Request.CreateResponse(HttpStatusCode.OK, urlResponse);
+
+			}
+
+			catch (Exception ex)
+			{
+
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+		}
+
+
+		
+
+	}
 
     public class ReportBuildResult
     {
@@ -308,4 +379,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
         public bool HasError { get; set; }
         public string StatusCode { get; set; }
     }
+	public class UrlResponse
+	{
+		public string url { get; set; }
+		public int pageCount { get; set; }
+		
+	}
 }
