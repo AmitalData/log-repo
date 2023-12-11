@@ -1,4 +1,4 @@
-<View DBType="Main" Name="CustomersDataView" Schema="dbo" Module="Common">
+<View DBType="Main" Name="AllActiveGLAccountsView" Schema="dbo" Module="Common">
   <SqlScript>
     <![CDATA[
 
