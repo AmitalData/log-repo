@@ -85,7 +85,7 @@
         <td *ngIf="StatusesFeature && !CurrentScreenIsWorkSpace" style="width:250px; vertical-align:middle;">
             <LogLov [ObjectFieldName]="'NotOccuredStatuses'" [ObjectTableName]="ObjectTableName"
                     [DataContext]="DataContext" [HideColumns]="true" [LookUpTableName]="'Customs.StatusCode'"
-                    [PlaceHolder]="'לם התרחש סטטוס'" [DisplayMemberPath]="'StatusNameEng'"
+                    [PlaceHolder]="'לא התרחש סטטוס'" [DisplayMemberPath]="'StatusNameEng'"
                     (SelectedItemChanged)="SelectedValueChangedEmitNotOccuredStatuses()"
                     [DisplayFieldsFromList]="'Status_Code,StatusNameEng'" (selectedValue)="NotOccuredStatuses">
             </LogLov>
