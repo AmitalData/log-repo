@@ -26,6 +26,9 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
 "2",//AgingReportParam.Aging4AccountTypeCodeEnum.Customer2.ToString(),
 "3"//AgingReportParam.Aging4AccountTypeCodeEnum.Vendor3.ToString(),
             };
+
+            var accountIdList = myLedgerTransactionsWithCounters.Select(a => a.AccountId).ToList();
+
             var gLAccountRepository = new GLAccountRepository(this._AccountingContext as IAccountingContext);
             var onlyCustomer2Vendor3Ledgers =
                 (
@@ -34,11 +37,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
 
                 gLAccountRepository
                 .GetAll(tenant)
-                .Where(a => supplier_CustomerOnly.Contains(a.AccountTypeCode))
+                .Where(a => supplier_CustomerOnly.Contains(a.AccountTypeCode) && accountIdList.Any(x=>x==a.Id))
                 on l.AccountId equals a.Id
 
                 select l
-                ).ToList();
+                );//.ToList();
 
             var accountCustomer2Vendor3Ids = onlyCustomer2Vendor3Ledgers.Select(a => a.AccountId).ToList();
 
