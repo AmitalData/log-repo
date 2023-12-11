@@ -31,6 +31,9 @@ using Logitude.Server.Tools;
 using Microsoft.Practices.Unity;
 using Stimulsoft.Report.Export;
 using WebFreight.Web.Helpers;
+using System.Net.Http;
+using System.Configuration;
+using Newtonsoft.Json;
 
 namespace WebFreight.Web.WebPages
 {
@@ -85,34 +88,79 @@ namespace WebFreight.Web.WebPages
 
                 if (result != null)
                 {
-                    stiReport.LoadDocument(result);
-                    MemoryStream memoryStream = new MemoryStream();
-                    string documentName = "";
-                    string ShowType = "attachment";
-                    string contentType = "";
-                    if (type == "PrintToPDF")
-                    {
+					MemoryStream memoryStream = new MemoryStream();
+					string documentName = "";
+					string ShowType = "attachment";
+					string contentType = "";
+					bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
 
-                        stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
-                        contentType = "application/" + "pdf";
-                        documentName = fileName + ".pdf";
-                        ShowType = "inline";
+					if (isAppService && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
+					{
+						string URI = LogitudeSettings.LogitudeIISURL.TrimEnd('/') + "/api/Report/" + "GetMemoryStreamForPrintExcelOrPdf";
+
+						using (var client = new HttpClient())
+						{
+							var memoryStreamForExcelOrPdfRequest = new { Result = result, Type = type, UseOnePageHeaderAndFooter = useOnePageHeaderAndFooter , ExportDataOnly = exportDataOnly , ExportObjectFormatting = exportObjectFormatting };
+
+							string serializedObject = JsonConvert.SerializeObject(memoryStreamForExcelOrPdfRequest);
+							StringContent content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+							var result1 = client.PostAsync(URI, content);
+
+							result1.Wait();
+							if (result1.Result.StatusCode == System.Net.HttpStatusCode.OK)
+							{
+
+								var memoryStream1 = result1.Result.Content.ReadAsAsync(typeof(MemoryStream)).Result;
+								memoryStream = (MemoryStream)memoryStream1;
+
+							}
+
+						}
+
+                        if (type == "PrintToPDF")
+                        {
+							contentType = "application/" + "pdf";
+							documentName = fileName + ".pdf";
+							ShowType = "inline";
 
 
-                    }
-                    else if (type == "MicrosoftExce" || type == "MicrosoftExceAdvanced")
-                    {
+						}
+                        else if (type == "MicrosoftExce" || type == "MicrosoftExceAdvanced")
+                        {
+							contentType = "application/" + "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+							documentName = fileName + ".xlsx";
 
-                        StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
-                        setting.UseOnePageHeaderAndFooter = useOnePageHeaderAndFooter;
-                        setting.ExportDataOnly = exportDataOnly;
-                        setting.ExportObjectFormatting = exportObjectFormatting;
-                        StiExcel2007ExportService service = new StiExcel2007ExportService();
-                        service.ExportExcel(stiReport, memoryStream, setting);
-                        contentType = "application/" + "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
-                        documentName = fileName + ".xlsx";
+						}
 
-                    }
+					}
+					else
+					{
+						stiReport.LoadDocument(result);
+					
+						if (type == "PrintToPDF")
+						{
+
+							stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+							contentType = "application/" + "pdf";
+							documentName = fileName + ".pdf";
+							ShowType = "inline";
+
+
+						}
+						else if (type == "MicrosoftExce" || type == "MicrosoftExceAdvanced")
+						{
+
+							StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
+							setting.UseOnePageHeaderAndFooter = useOnePageHeaderAndFooter;
+							setting.ExportDataOnly = exportDataOnly;
+							setting.ExportObjectFormatting = exportObjectFormatting;
+							StiExcel2007ExportService service = new StiExcel2007ExportService();
+							service.ExportExcel(stiReport, memoryStream, setting);
+							contentType = "application/" + "vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+							documentName = fileName + ".xlsx";
+
+						}
+					}
 
 
                     if (memoryStream != null)
