@@ -105,8 +105,6 @@ export class DeclarationReferantDataFiltersMenuComponent
             this.CurrentScreenIsWorkSpace = true;
             this.LOVListUsers = [];
             this.LOVListDepartment = [];
-            this.LOVListOccuredStatuses = [];
-            this.LOVListNotOccuredStatuses = [];
             this.TransportFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "TransportModeId");
             this.UserFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "ReferentUserId");
             this.DepartmentFilters.AdditionalFilters = args.Filters.filter(a => a.FieldName == "DepartmentId");
@@ -369,19 +367,19 @@ export class DeclarationReferantDataFiltersMenuComponent
         }
     }
 
-    _LOVListOccuredStatuses: any[] = [];
-    get LOVListOccuredStatuses() { return this._LOVListOccuredStatuses; }
-    set LOVListOccuredStatuses(value) {
-        if (this._LOVListOccuredStatuses != value) {
-            this._LOVListOccuredStatuses = value;
+
+    private notOccuredStatuses:string;
+    public get NotOccuredStatuses(){return this.notOccuredStatuses;}
+    public set NotOccuredStatuses(value:string){
+        if(this.notOccuredStatuses != value){
+            this.notOccuredStatuses=value;
         }
     }
-
-    _LOVListNotOccuredStatuses: any[] = [];
-    get LOVListNotOccuredStatuses() { return this._LOVListNotOccuredStatuses; }
-    set LOVListNotOccuredStatuses(value) {
-        if (this._LOVListNotOccuredStatuses != value) {
-            this._LOVListNotOccuredStatuses = value;
+    private occuredStatuses:string;
+    public get OccuredStatuses(){return this.occuredStatuses;}
+    public set OccuredStatuses(value:string){
+        if(this.occuredStatuses != value){
+            this.occuredStatuses=value;
         }
     }
 
@@ -580,13 +578,7 @@ export class DeclarationReferantDataFiltersMenuComponent
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
             this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "OccuredStatuses");
         }
-        this.OccuredStatusListString = "";
-
-        if (this.LOVListOccuredStatuses.length > 0) {
-            this.LOVListOccuredStatuses.forEach(item => {  this.OccuredStatusListString += item["Status_Code"] + ","; });//Id: "1-3697"
-            this.OccuredStatusListString = this.OccuredStatusListString.slice(0, -1); // trim last comma
-        } 
-        this.apiQueryFilters.addAdditionalFilter("OccuredStatuses", this.OccuredStatusListString, null, null, "InList", true, false, false, "string",this.LOVListOccuredStatuses.length == 0 );
+        this.apiQueryFilters.addAdditionalFilter("OccuredStatuses", this.OccuredStatuses, null, null, "Equal", true, false, false, "string",AppTool.IsNullOrEmpty(this.OccuredStatuses) );
         this.FilterChangeSubject.next();
 
     }
@@ -595,13 +587,7 @@ export class DeclarationReferantDataFiltersMenuComponent
         if (this.apiQueryFilters.AdditionalFilters.length > 0) {
             this.apiQueryFilters.AdditionalFilters = this.apiQueryFilters.AdditionalFilters.filter(a => a.FieldName != "NotOccuredStatuses");
         }
-        this.NotOccuredStatusListString = "";
-
-        if (this.LOVListNotOccuredStatuses.length > 0) {
-            this.LOVListNotOccuredStatuses.forEach(item => {  this.NotOccuredStatusListString += item["Status_Code"] + ","; });//Id: "1-3697"
-            this.NotOccuredStatusListString = this.NotOccuredStatusListString.slice(0, -1); // trim last comma
-        } 
-        this.apiQueryFilters.addAdditionalFilter("NotOccuredStatuses", this.NotOccuredStatusListString, null, null, "InList", true, false, false, "string",this.LOVListNotOccuredStatuses.length == 0 );
+        this.apiQueryFilters.addAdditionalFilter("NotOccuredStatuses", this.NotOccuredStatuses, null, null, "Equal", true, false, false, "string",AppTool.IsNullOrEmpty(this.NotOccuredStatuses));
         this.FilterChangeSubject.next();
 
     }
