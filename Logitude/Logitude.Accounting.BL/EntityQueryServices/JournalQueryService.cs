@@ -79,7 +79,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             List<string> ExcludeJournalKeys,int top=15)
         {
 
-            var ledgerTransactionRepository = new LedgerTransactionRepository(this.MainContext as IAccountingContext);
+             var ledgerTransactionRepository = new LedgerTransactionRepository(this.MainContext as IAccountingContext);
             var qPendingApprovedOrderedQueryable = repository.GetQueryablePending2ApproveOrdered(tenant);
             if (ExcludeJournalKeys != null && ExcludeJournalKeys.Count > 0)
             //exclude last executed buffer//
