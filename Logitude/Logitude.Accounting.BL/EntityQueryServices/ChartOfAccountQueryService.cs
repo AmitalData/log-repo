@@ -29,13 +29,17 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 .SelectMany(y => GetChartOfAccountChildRecursive(y.Id, tenant, all)));
         }
 
-        public IQueryable<ChartOfAccount5LevelM> GetQChartOfAccount5LevelM(int tenant, List<string> chartOfAccountsTypes, bool topMostOnly = false)
+        public IQueryable<ChartOfAccount5LevelM> GetQChartOfAccount5LevelM(int tenant, List<string> chartOfAccountsTypes, List<string>  chartOfAccounts, bool topMostOnly = false)
         {
             var qBase = this.repository.GetAll(tenant);
             if (chartOfAccountsTypes != null)
             {
                 qBase = qBase.Where(coa => chartOfAccountsTypes.Contains(coa.TypeCode));
             }
+            // filter by id from table chartofaccounts #192454 (#195781)
+            // chartOfAccounts ids list are selected from filter in UI.
+            qBase = qBase.Where(i => chartOfAccounts.Any(item => item == i.Id));
+
             var qL1 = qBase
             .Where(chartOA => chartOA.ParentId == null)
                 .Select(chartL1 => new ChartOfAccount5LevelM()

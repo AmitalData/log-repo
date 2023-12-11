@@ -86,7 +86,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
 
 
-               var accountingContext = AccountingContext.GetContext(_RevenueExpenseReportParam.Tenant);
+                var accountingContext = AccountingContext.GetContext(_RevenueExpenseReportParam.Tenant);
                 //_DbLogger = (_AccountingContext as DbContextBase).CreateLogger();
 
                 _FullAccountingSetting = //Hope From Cache
@@ -103,7 +103,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 QAllRevenueExpenseCardsCOAM = (
                     from a in myQAllRevenueExpenseCards
                     select new AccountCOAM //Made 4 Short(Projoction) +Algant+Fast SQL
-                {
+                    {
                         Id = a.Id,
                         Tenant = a.Tenant,
                         AccountTypeCode = a.AccountTypeCode,
@@ -118,16 +118,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                 var qsChartOfAccount = new ChartOfAccountQueryService(accountingContext);
                 _QAllChartOfAccountFlattenBy5LevelofHierarchy = //Flatten ChartOfAccount By 5 Level hierarchy
-                    qsChartOfAccount
-                    .GetQChartOfAccount5LevelM(_RevenueExpenseReportParam.Tenant,
-                    new List<string>()
-                    {
-                    //Code	EnglishName	LocalName
-"1",//	Revenues	הכנסות
-"2",//	Expenses	הוצאות
-                    }
+                    qsChartOfAccount.GetQChartOfAccount5LevelM(_RevenueExpenseReportParam.Tenant, _RevenueExpenseReportParam.ChartOfAccountsTypes, _RevenueExpenseReportParam.ChartOfAccounts); // send the filtered ids are selected, from ChartOfAccountsTypes and ChartOfAccounts tables from UI #192454
 
-                    );
                 QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy =
                 JoinEachAccountWithisChartOfAccount5hierarchy(QAllRevenueExpenseCardsCOAM);
 
@@ -147,8 +139,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                      group r by new
                      {
                          AccountId = r.AccountId_COAType,
-                     //r.CurrencyId
-                 } into g
+                         //r.CurrencyId
+                     } into g
                      select new RevenueExpenseReportM()
                      {
 
@@ -211,8 +203,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             group r by new
             {
                 AccountId = r.AccountId_COAType,
-            //r.CurrencyId
-        } into g
+                //r.CurrencyId
+            } into g
             select new RevenueExpenseReportM()
             {
 
@@ -412,16 +404,16 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  new
                                                  {
                                                      row.ChartOfAcountType,
-                                                 //row.ChartOfAcount1,
-                                                 //row.ChartOfAcount2,
-                                                 //row.ChartOfAcount3,
-                                                 //row.ChartOfAcount4,
-                                                 //row.ChartOfAcount5,
-                                                 //row.GLAccountName,
-                                                 //row.GLAccountId
-                                                 //row.CurrencyId,
+                                                     //row.ChartOfAcount1,
+                                                     //row.ChartOfAcount2,
+                                                     //row.ChartOfAcount3,
+                                                     //row.ChartOfAcount4,
+                                                     //row.ChartOfAcount5,
+                                                     //row.GLAccountName,
+                                                     //row.GLAccountId
+                                                     //row.CurrencyId,
 
-                                             }
+                                                 }
                                                      into groupTrailOnlyCOAType
                                                  select new RevenueExpenseReportM()
                                                  {
@@ -481,11 +473,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                      row.ChartOfAcountCode5,
 
 
-                                                 //row.GLAccountName,
-                                                 //row.GLAccountId
-                                                 //row.CurrencyId,
+                                                     //row.GLAccountName,
+                                                     //row.GLAccountId
+                                                     //row.CurrencyId,
 
-                                             }
+                                                 }
                                                      into groupTrailOnlyCOAType
                                                  select new RevenueExpenseReportM()
                                                  {
@@ -906,6 +898,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
         //filter the GLAccount (if COATypeLevel) + Group by 
         public ReportLevel MyRevenueExpenseReportLevel { get; set; }
+        public List<string> ChartOfAccountsTypes { get; set; }
+        public List<string> ChartOfAccounts{ get; set; }
 
 
 

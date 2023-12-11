@@ -289,7 +289,7 @@ export class RevenueExpenseFilterComponent extends BaseComponent {
     }
     private DisableChartOfAccountsTypesField(haveSelectedItems: boolean) {
         this.isChartOfAccountsTypesDisabled = haveSelectedItems;
-        this.selectedChartOfAccountsTypes = null;
+        // this.ChartOfAccountsTypeComboboxValue = null;
     }
     private DisableCategoryFields(haveSelectedItems: boolean) {
         this.IsCategoryDisabled = haveSelectedItems;

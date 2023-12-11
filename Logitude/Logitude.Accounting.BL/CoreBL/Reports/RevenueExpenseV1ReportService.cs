@@ -189,15 +189,8 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             var qsChartOfAccount = new ChartOfAccountQueryService(_AccountingContext);
             _QAllChartOfAccountFlattenBy5LevelofHierarchy = //Flatten ChartOfAccount By 5 Level hierarchy
                 qsChartOfAccount
-                .GetQChartOfAccount5LevelM(_RevenueExpenseReportParam.Tenant,
-                new List<string>()
-                {
-                    //Code	EnglishName	LocalName
-"1",//	Revenues	הכנסות
-"2",//	Expenses	הוצאות
-                }
+                .GetQChartOfAccount5LevelM(_RevenueExpenseReportParam.Tenant, _RevenueExpenseReportParam.ChartOfAccountsTypes, _RevenueExpenseReportParam.ChartOfAccounts); // send the filtered ids are selected, from ChartOfAccountsTypes and ChartOfAccounts tables from UI #192454
 
-                );
             QBaseAllCardsAndDetialsAccTypeBy5LevelHierarchy =
             JoinEachAccountWithisChartOfAccount5hierarchy(QAllRevenueExpenseCardsCOAM);
 
