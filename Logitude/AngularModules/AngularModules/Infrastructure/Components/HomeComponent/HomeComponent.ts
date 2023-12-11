@@ -28,6 +28,7 @@ import { timeInterval } from 'rxjs/operators';
 import { ServiceHelper } from '../../Utilities/ServiceHelper';
 import { GlobalDomainService } from '../../../Common/Services/GlobalDomainService';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
+import { RatesTableExtendedService } from 'Infrastructure/Services/ExtendedPMs/RatesTableExtendedService';
 
 @Component({
     templateUrl: './HomeComponent.html',
@@ -53,6 +54,7 @@ export class HomeComponent implements OnDestroy{
     public EAWBStockBuyingLable = "";
     private IsINTTRAPackage = false;
     public PaymentChanelCode: string;
+    public AccountingActivated=false;
     constructor() {
         this.Tenant = SessionLocator.Tenant;
         SessionLocator.Index = 0;
@@ -64,6 +66,7 @@ export class HomeComponent implements OnDestroy{
             this.HeaderColor = 'linear-gradient(180deg, rgba(235, 235, 235, 0.5) 0%, ' + ObjectsLocator.TenantManagementJS.HeaderColor + ' 100%)';
         }
         this.PaymentChanelCode = SessionLocator.TenantManagementJS.PaymentChannelCode;
+        this.AccountingActivated=SessionLocator.TenantPM.AccountingActivated;
 
         this.Tabs = [];
         this.Tabs.push(new SessionTabItem());
@@ -113,6 +116,7 @@ export class HomeComponent implements OnDestroy{
         if (AppTool.IsNullOrEmpty(SessionLocator.TenantPM.CurrencyId) || AppTool.IsNullOrEmpty(SessionLocator.TenantPM.ProfitCurrencyId) || AppTool.IsNullOrEmpty(SessionLocator.TenantPM.AddressId) || AppTool.IsNullOrEmpty(SessionLocator.TenantPM.AgentId)) {
             isNewSignupTenant = true;
         }
+        this.GetCurrencyRateLastUpdate();
 
         this.IsNewSignupTenant = SessionLocator.IsNewSignupTenant = isNewSignupTenant;
 
@@ -142,6 +146,41 @@ export class HomeComponent implements OnDestroy{
         this.IsChargifyAccount = SessionLocator.TenantManagementJS.PaymentChannelCode == "CY";
     }
 
+    USDLastUpdate=null;
+    GetCurrencyRateLastUpdate(){
+        var myService: RatesTableExtendedService = new RatesTableExtendedService();
+        myService.GetLastUpdateByCurrencyCode('USD',SessionLocator.TenantPM.CurrencyId).subscribe((myResponse: ServiceResponse) => {
+            if (myResponse != null) {
+                if (!myResponse.HasError) {
+                    this.USDLastUpdate=myResponse.Result?.LogDateTime;
+                    if(myResponse.Result?.LogDateTime != null){
+                        this.USDLastUpdate = this.CustomDateFormatPipe(myResponse.Result?.LogDateTime);
+
+                    }
+                }
+
+                else {
+                   
+                }
+            }
+        });
+    }
+    CustomDateFormatPipe (value:Date){
+        if (!(value instanceof Date)) {
+            value = new Date(value);
+            
+            if (isNaN(value.getTime())) {
+              return null; 
+            }
+          }
+      
+          const day = String(value.getDate()).padStart(2, '0');
+          const month = String(value.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+          const year = String(value.getFullYear());
+      
+          return `${day}.${month}.${year}`;
+    }
+    
     SetBuyEAWBStockLable() {
         this.EAWBStockBuyingLable = "Buy e-AWB Stock";
 
