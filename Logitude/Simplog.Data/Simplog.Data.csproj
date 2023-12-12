@@ -202,6 +202,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\TotalOpenTransInBankView.cs" />
     <Compile Include="CommonDataModel\Mapping\CarrierServiceLineMap.cs" />
     <Compile Include="CommonDataModel\Mapping\AllActiveGLAccountsViewMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\ChargesExternalAccountsByProductMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTeamMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DigitalContactLastSettingMap.cs" />
