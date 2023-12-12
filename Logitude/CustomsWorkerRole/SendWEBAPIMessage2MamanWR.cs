@@ -321,6 +321,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 _WaitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
 
                 var s = $" Retries:{_WaitingCommLog.Retries}  ProccessReceivedMessage()Exception:" + exc.Message;
+                var s+= exc.StackTrace.ToString();
                 _WaitingCommLog.ExceptionMessage = s.Substring(0, Math.Min(7999, s.Length));
                 _CommunicationLogRep.Update(_WaitingCommLog);
                 _CommunicationLogRep.SubmitChanges();
@@ -524,79 +525,96 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
                 using (var client = new HttpClient())
                 {
-                    client.Timeout = TimeSpan.FromMinutes(MyWebClient.TimeOutFromMinutes);//The default value is 100,000 milliseconds (100 seconds).
-                    //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
-
-                    var ADD = "User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
-                    client.DefaultRequestHeaders.Add("User-Agent", agent);
-                    StringContent content;
-                    LogMessagingUtil.Instance.AppendLine($"IsNewAPI ({_CourierHawbMamanCommunicationLogSettings.IsNewAPI})");
-                    if (_CourierHawbMamanCommunicationLogSettings.IsNewAPI)
+                    try
                     {
+                        client.Timeout = TimeSpan.FromMinutes(MyWebClient.TimeOutFromMinutes);//The default value is 100,000 milliseconds (100 seconds).
+                                                                                              //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
+
+                        var ADD = "User-Agent: Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
                         client.DefaultRequestHeaders.Add("User-Agent", agent);
-                        client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/x-www-form-urlencoded");
-
-                        var requestBody = new
+                        StringContent content;
+                        LogMessagingUtil.Instance.AppendLine($"IsNewAPI ({_CourierHawbMamanCommunicationLogSettings.IsNewAPI})");
+                        if (_CourierHawbMamanCommunicationLogSettings.IsNewAPI)
                         {
-                            Username = _CourierHawbMamanCommunicationLogSettings.username,
-                            Password = _CourierHawbMamanCommunicationLogSettings.password
-                        };
-                        var jsonBody = JsonConvert.SerializeObject(requestBody);
+                            client.DefaultRequestHeaders.Add("User-Agent", agent);
+                            client.DefaultRequestHeaders.TryAddWithoutValidation("Content-Type", "application/x-www-form-urlencoded");
 
-                        content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
-                    }
-                    else
-                    {
-                        string tokenReq = "grant_type=password&username=f_moshe&Password=******";
-                        tokenReq = $"grant_type=password&username={HttpUtility.UrlEncode(_CourierHawbMamanCommunicationLogSettings.username)}&Password={HttpUtility.UrlEncode(_CourierHawbMamanCommunicationLogSettings.password)}";
-                        content = new StringContent(tokenReq, Encoding.UTF8, "application/x-www-form-urlencoded");
-                    }
+                            var requestBody = new
+                            {
+                                Username = _CourierHawbMamanCommunicationLogSettings.username,
+                                Password = _CourierHawbMamanCommunicationLogSettings.password
+                            };
+                            var jsonBody = JsonConvert.SerializeObject(requestBody);
 
-                    //var tokenUri = new Uri(new Uri(host), relativeUriToken);
-                    //webApiURI = @"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
-                    
+                            content = new StringContent(jsonBody, Encoding.UTF8, "application/json");
+                        }
+                        else
+                        {
+                            string tokenReq = "grant_type=password&username=f_moshe&Password=******";
+                            tokenReq = $"grant_type=password&username={HttpUtility.UrlEncode(_CourierHawbMamanCommunicationLogSettings.username)}&Password={HttpUtility.UrlEncode(_CourierHawbMamanCommunicationLogSettings.password)}";
+                            content = new StringContent(tokenReq, Encoding.UTF8, "application/x-www-form-urlencoded");
+                        }
 
-                    LogMessagingUtil.Instance.AppendLine($"PostAsync({_CourierHawbMamanCommunicationLogSettings.URIToken}, {content})");
-                    var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIToken, content);
-                    Wait4Finsh(task, 3);
-                    myResultString = task.Result.Content.ReadAsStringAsync().Result;
-                    //{"access_token":"zkKDt-XnqqM5uoyDwrPxDPHb_vM5hplsUKr7sT5GA2w8Vpsl_HT5eBidUriiyw3Gn-Mne0NIq2LQO7MMT525GdrFutDzIQpRKR6c7oz2GbdSdGdEY3S3nfP0W7svtmShEeUx23SbW8ysLkyAnFP-IdQhvMs2lzxzHIDrnDqm_agwq54x9UiiDa5-9ZkEWBUrN83U4B5qddiYTU0whODGvrxEE9wyrQKoygG3Gi48gwv2_TI4H9yrd2Uys9l_jBivOsRRm1oXtyGsyIq9DwDn7pmcoxUjz-yNwm_hp18Y1qi4aXk1Z8IjeKRQl_8FMUg-","token_type":"bearer","expires_in":35999,"UserName":"F_unitedf","role":"General",".issued":"Mon, 12 Nov 2018 14:48:43 GMT",".expires":"Tue, 13 Nov 2018 00:48:43 GMT"}
-                    LogMessagingUtil.Instance.AppendLine($"PostAsyncResult ({myResultString})");
-                    dynamic d = JsonConvert.DeserializeObject(myResultString);
-                    if (_CourierHawbMamanCommunicationLogSettings.IsNewAPI)
-                    {
-                        access_token = d.Token.Value;
-                        token_type = "bearer";
+                        //var tokenUri = new Uri(new Uri(host), relativeUriToken);
+                        //webApiURI = @"https://maman.wsfreeze.co.il/WebAPIExt/Token"; //HTTP/1.1;
+
+
+                        LogMessagingUtil.Instance.AppendLine($"PostAsync({_CourierHawbMamanCommunicationLogSettings.URIToken}, {content})");
+                        var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIToken, content);
+                        Wait4Finsh(task, 3);
+                        myResultString = task.Result.Content.ReadAsStringAsync().Result;
+                        //{"access_token":"zkKDt-XnqqM5uoyDwrPxDPHb_vM5hplsUKr7sT5GA2w8Vpsl_HT5eBidUriiyw3Gn-Mne0NIq2LQO7MMT525GdrFutDzIQpRKR6c7oz2GbdSdGdEY3S3nfP0W7svtmShEeUx23SbW8ysLkyAnFP-IdQhvMs2lzxzHIDrnDqm_agwq54x9UiiDa5-9ZkEWBUrN83U4B5qddiYTU0whODGvrxEE9wyrQKoygG3Gi48gwv2_TI4H9yrd2Uys9l_jBivOsRRm1oXtyGsyIq9DwDn7pmcoxUjz-yNwm_hp18Y1qi4aXk1Z8IjeKRQl_8FMUg-","token_type":"bearer","expires_in":35999,"UserName":"F_unitedf","role":"General",".issued":"Mon, 12 Nov 2018 14:48:43 GMT",".expires":"Tue, 13 Nov 2018 00:48:43 GMT"}
+                        LogMessagingUtil.Instance.AppendLine($"PostAsyncResult ({myResultString})");
+                        dynamic d = JsonConvert.DeserializeObject(myResultString);
+                        if (_CourierHawbMamanCommunicationLogSettings.IsNewAPI)
+                        {
+                            access_token = d.Token.Value;
+                            token_type = "bearer";
+                        }
+                        else
+                        {
+                            access_token = d.access_token;
+                            token_type = d.token_type;
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        access_token = d.access_token;
-                        token_type = d.token_type;
+                        // Handle specific exception for the second POST request
+                        LogMessagingUtil.Instance.AppendLine($"An error occurred in the authenticate HTTP request: {ex.Message}");
+                        throw; // Rethrow the exception if needed
                     }
                 }
 
 
                 using (var client = new HttpClient())
                 {
-                    client.Timeout = TimeSpan.FromMinutes(MyWebClient.TimeOutFromMinutes);//The default value is 100,000 milliseconds (100 seconds).
-                    //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
+                    try
+                    {
+                        client.Timeout = TimeSpan.FromMinutes(MyWebClient.TimeOutFromMinutes);//The default value is 100,000 milliseconds (100 seconds).
+                                                                                              //var GetURI = URI + "ImporterShipmentDocuments/GetIfNew?id=" + DocumentFilingPM.CustomerDocumentId + "&tenant=" + importerTenant;// +"&importertenant=" + importerTenant;
 
-                    //string webApiURI = host;//URI + "APIAuthentication";
-                    //webApiURI = "https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae";
-                    client.DefaultRequestHeaders.Add("User-Agent", agent);
-                    var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
-                    //Authorization: <type> <credentials>
+                        //string webApiURI = host;//URI + "APIAuthentication";
+                        //webApiURI = "https://maman.wsfreeze.co.il/WebAPIExt/api/baldar/CreateECTHRMessgae";
+                        client.DefaultRequestHeaders.Add("User-Agent", agent);
+                        var content = new StringContent(dataJson, Encoding.UTF8, "application/json");
+                        //Authorization: <type> <credentials>
 
-                    string credentials = "";
-                    //Authorization: Bearer O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY
-                    //credentials = "O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY";
-                    client.DefaultRequestHeaders.Add("Authorization", $"{token_type} {access_token}");
-                    LogMessagingUtil.Instance.AppendLine($"URIBaldarCreateECTHRMessgae.PostAsync....");
-                    var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIMethod, content);
-                    Wait4Finsh(task, 3);
-                    myResultString = task.Result.Content.ReadAsStringAsync().Result;
-                    LogMessagingUtil.Instance.AppendLine($"PostAsyncResult={myResultString }");
-
+                        string credentials = "";
+                        //Authorization: Bearer O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY
+                        //credentials = "O5GRnBFMruLRIdRJAI_CQNLzXanWBQ0FO4zQGR6gkluiYOWTaop-p_UkEfq0NaoIuFC_kLfJjABjJdN5HW0_aC-kTMS63nHKUb9yiCxOOiv5UmrCvd1XLgFbBxCLwdDcCnwiCgdM_CTkhM_cFX5KWsNyWAD9i85wyk06lV-iROw2itvXo3Vir-19fMiTZnFbe_OffXJWfl2lF89zXT_MYzlOJdCqDRYELSwAPjBcPzLva5-EN4Pi2Jyu-nZs7DxW5NcEDM6JJUDk66C7VXxqz5s3Q4D4Knr14lmYMmetdAY";
+                        client.DefaultRequestHeaders.Add("Authorization", $"{token_type} {access_token}");
+                        LogMessagingUtil.Instance.AppendLine($"URIBaldarCreateECTHRMessgae.PostAsync....");
+                        var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIMethod, content);
+                        Wait4Finsh(task, 3);
+                        myResultString = task.Result.Content.ReadAsStringAsync().Result;
+                        LogMessagingUtil.Instance.AppendLine($"PostAsyncResult={myResultString}");
+                    }
+                    catch (Exception ex)
+                    {
+                        // Handle specific exception for the second POST request
+                        LogMessagingUtil.Instance.AppendLine($"An error occurred in the second HTTP request: {ex.Message}");
+                        throw; // Rethrow the exception if needed
+                    }
                 }
 
 
