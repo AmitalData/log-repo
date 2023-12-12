@@ -625,6 +625,7 @@ namespace Logitude.Customs.BL.BL
 			if (paymentPM.DeclarationPaymentMethods.Count() > 1)
 				throw new Exception("ישנו יותר מאמצעי תשלום אחד לא  ניתן לבצע תשלום אוטומטי");
 
+			paymentPM.PaymentDate = DateTime.Now;
 			paymentPM.DeclarationPaymentMethods[0].Amount = _MyDeclarationPM.TotalTax;
 			paymentPM.DeclarationPaymentMethods[0].ChangeSetOp = ChangeSetOperation.Update;
 
@@ -825,7 +826,7 @@ namespace Logitude.Customs.BL.BL
 
 			CustomFileCreditResponseData customFileCreditResponseData = this.CustomFileCredit(searchParams);
 
-			DateTime newDate = DateTime.Now.ToUniversalTime();// DateTool.GetCurrentDateTimeAsUtc();
+			DateTime newDate = DateTime.Now;
 			DateTime currentDate = new DateTime(newDate.Year, newDate.Month, newDate.Day, newDate.Hour, newDate.Minute, 0); // last of today
 			var paymentDate = this.paymentPM.PaymentDate;
 
@@ -1209,7 +1210,7 @@ namespace Logitude.Customs.BL.BL
 		}
 		private void initDates()
 		{
-			paymentPM.PaymentDate = paymentPM.PaymentDate != null && paymentPM.PaymentDate > DateTime.UtcNow ? paymentPM.PaymentDate : DateTime.UtcNow;
+			paymentPM.PaymentDate = paymentPM.PaymentDate != null && paymentPM.PaymentDate > DateTime.Now ? paymentPM.PaymentDate : DateTime.Now;
 		}
 		#endregion
 
