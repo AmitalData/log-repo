@@ -79,8 +79,22 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                 {
                     notes = "External ID removed";
                 }
+				if (entityPM.EmailForSendingSingArinvoice != entityPOCO.EmailForSendingSingArinvoice)
+				{
+					var note =  TranslateTextsClass.Translate("Customer.F.EmailForSendingSingArinvoice", entityPM.Tenant) + ":\n" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + entityPOCO.EmailForSendingSingArinvoice.ToString()   + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + entityPM.EmailForSendingSingArinvoice.ToString() ;
+					if (string.IsNullOrEmpty(notes))
+					{
+						notes = note;
 
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    }
+                    else
+                    {
+                        notes += "\n" + note;
+
+					}
+				}
+			
+				EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = myTenant,
                     EventTypeCode = "UPCU",
@@ -224,7 +238,20 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                 });
             }
         }
+        private string BuildNotesEventForUpdateCustomer()
+        {
+   //         string notes = string.Empty;
+			//if (entityPM.AccountManagerUserId != entityPOCO.AccountManagerUserId)
+			//{
+			//	notes += TranslateTextsClass.Translate("Customer.F.AccountManagerUserId", entityPM.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + entityPOCO.AccountManagerUserId.ToString() + " " + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + entityPM.AccountManagerUserId.ToString() + "\n";
+			//}
+			
 
+
+
+
+			return"";
+        }
         private void TraceCreditLimitFields()
         {
             if (!this.isNewEntity)
