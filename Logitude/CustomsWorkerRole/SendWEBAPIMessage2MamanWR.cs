@@ -321,7 +321,7 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
                 _WaitingCommLog.LastStatusDateUTC = DateTime.UtcNow;
 
                 var s = $" Retries:{_WaitingCommLog.Retries}  ProccessReceivedMessage()Exception:" + exc.Message;
-                var s+= exc.StackTrace.ToString();
+                s+= exc.StackTrace.ToString();
                 _WaitingCommLog.ExceptionMessage = s.Substring(0, Math.Min(7999, s.Length));
                 _CommunicationLogRep.Update(_WaitingCommLog);
                 _CommunicationLogRep.SubmitChanges();
