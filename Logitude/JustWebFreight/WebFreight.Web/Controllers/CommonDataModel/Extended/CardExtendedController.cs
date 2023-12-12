@@ -329,7 +329,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
 
 
         public HttpResponseMessage GetByCompactFiltersShort([FromUri] ApiQueryFilters filters)
-        {
+   {
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
@@ -453,7 +453,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
                 CardCustomFilter customfilters = new CardCustomFilter(tenant);
-                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos);
+                entityPocos = customfilters.GetFilteredQuery(queryOperations, entityPocos, true, MyContext);
 
                 entityPocos = genericFilter.GetFilteredQuery<Card>(nonListQueryOperation, entityPocos);
                 int skippedEntities = queryOperations.PageIndex;
