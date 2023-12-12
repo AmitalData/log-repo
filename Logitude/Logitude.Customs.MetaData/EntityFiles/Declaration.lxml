@@ -21598,6 +21598,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;DeclarationPayments&quot;"
     ListPropertyPath="&quot;DeclarationPayments&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -21674,6 +21675,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EffectiveFlight&quot;"
     ListPropertyPath="&quot;EffectiveFlight&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -21708,6 +21710,7 @@
     AutomationEmailRecipient="false"
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
+    DisplayInRequiredFields="false"
     HasTemplate="false"
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
@@ -25383,6 +25386,13 @@
         IndexOrder="20"
         LocalDefaultText="&quot;ביטול הגשה&quot;"
         IsPackagable="true" />
+      <MenuItem
+        EventCode="&quot;CancelPointersOnCustomsItems&quot;"
+        DefaultText="&quot;Cancellation of pointers on customs items&quot;"
+        MenuButtonType="&quot;menuitem&quot;"
+        IndexOrder="21"
+        LocalDefaultText="&quot;ביטול הצבעות בפרטי מכס&quot;"
+        IsPackagable="true" />
     </MenuButton>
     <MenuButton
       EventCode="&quot;DocumentsPanel&quot;"
@@ -27770,7 +27780,6 @@
       LocalDefaultText="&quot;סינון מתקדם&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
-
     <TextCode
       Code="&quot;Customs.Declaration.O.CancelPayment&quot;"
       DefaultText="&quot;Please confirm sending a cancellation message&quot;"
@@ -28164,12 +28173,20 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-   
     <Feature
       Code="&quot;CancelPaymentFeature&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.CancelPaymentFeature&quot;"
       FeatureDefaultText="&quot;Cancel Payment Feature&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;CancelPointersOnCustomsItemsFeature&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.CancelPointersOnCustomsItemsFeature&quot;"
+      FeatureDefaultText="&quot;Cancel Pointers On Customs Items Feature&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"

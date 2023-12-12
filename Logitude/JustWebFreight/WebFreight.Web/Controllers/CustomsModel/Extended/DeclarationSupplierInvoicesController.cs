@@ -1098,7 +1098,41 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
 
+        public HttpResponseMessage DeletedSupplierInvoiceItemsConDeclars(string declarationId)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    using (TransactionScope scope = TransactionFactory.GetTransaction())
+                    {
+                        string token = HttpContext.Current.Request.Headers["Token"];
+                        AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                        int tenant = authToken.Tenant;
+                        SecurityUtility.AuthenticationOnTenant(tenant);
 
+
+
+                        ICustomContext MyContext = CustomContext.GetContext(tenant);
+
+                        var mySupplierInvoiceItemsConDeclarUpdateService = new SupplierInvoiceItemsConDeclarUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                        mySupplierInvoiceItemsConDeclarUpdateService.FastDeleteComposition(new DeclarationKeys() { Id = declarationId });
+
+                        scope.Complete();
+                        return Request.CreateResponse(HttpStatusCode.OK);
+                    }
+                }
+
+                catch (Exception ex)
+                {
+                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                }
+            }
+            else
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
+            }
+        }
         public class PutMultiUpdateOCRRequest
         {
             public SupplierInvioceItemCertificatPM[] SupplierInvioceItemCertificats { get; set; }
