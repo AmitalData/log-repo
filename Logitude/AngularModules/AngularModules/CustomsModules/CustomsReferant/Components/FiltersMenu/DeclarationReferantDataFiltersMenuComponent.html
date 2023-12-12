@@ -69,6 +69,7 @@
         <td *ngIf="StatusesFeature && !CurrentScreenIsWorkSpace"
             style="width:20px; vertical-align:middle; font-size:11px; color : #6E7172;">
         </td>
+      
         <td *ngIf="StatusesFeature && !CurrentScreenIsWorkSpace" style="width:250px; vertical-align:middle;">
             <LogLov [ObjectFieldName]="'OccuredStatuses'" [ObjectTableName]="ObjectTableName"
                     [DataContext]="DataContext" [HideColumns]="true" [LookUpTableName]="'Customs.StatusCode'"
@@ -80,10 +81,11 @@
         <td *ngIf="StatusesFeature && !CurrentScreenIsWorkSpace"
             style="width:20px; vertical-align:middle; font-size:11px; color : #6E7172;">
         </td>
+
         <td *ngIf="StatusesFeature && !CurrentScreenIsWorkSpace" style="width:250px; vertical-align:middle;">
             <LogLov [ObjectFieldName]="'NotOccuredStatuses'" [ObjectTableName]="ObjectTableName"
                     [DataContext]="DataContext" [HideColumns]="true" [LookUpTableName]="'Customs.StatusCode'"
-                    [PlaceHolder]="'לא התרחש סטטוס'" [DisplayMemberPath]="'StatusNameEng'"
+                    [PlaceHolder]="'לם התרחש סטטוס'" [DisplayMemberPath]="'StatusNameEng'"
                     (SelectedItemChanged)="SelectedValueChangedEmitNotOccuredStatuses()"
                     [DisplayFieldsFromList]="'Status_Code,StatusNameEng'" (selectedValue)="NotOccuredStatuses">
             </LogLov>
@@ -146,7 +148,7 @@
                     </li>
 
                     <li (click)="MyDropdownMenuFilterComponent.DropdownDisplayClose(); ShowOCRQuery();">
-                        <span> שאילתא ל-OCR </span>
+                        <span> שםילתם ל-OCR </span>
                     </li>
 
                 </ul>
