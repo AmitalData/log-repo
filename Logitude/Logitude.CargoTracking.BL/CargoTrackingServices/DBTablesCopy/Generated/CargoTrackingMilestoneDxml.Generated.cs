@@ -27,6 +27,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.DBTablesCopy.Generated
 "  <Column Name='Weight' OldNames='Weights' Type='int'>"+
 "    <Constraints Nullable='true' />"+
 "  </Column>"+
+"  <Column Name='ExportWeight' Type='int'>"+
+"    <Constraints Nullable='true' />"+
+"  </Column>"+
 "</Table>";
 		
 		   return dxmlFile;
