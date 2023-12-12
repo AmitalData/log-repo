@@ -26,8 +26,13 @@ namespace Logitude.Update
             {
                 JenkinsCustomUpdate();
                 return;
-            } 
-            
+            }
+            if (System.Environment.CommandLine.EndsWith("/UpdateRatesByExternalXmlForAllTenantWithSchedular", StringComparison.OrdinalIgnoreCase))
+            {
+                Form1.UpdateRatesByExternalXmlForAllTenantWithSchedular();
+                return;
+            }
+
             if (System.Environment.CommandLine.EndsWith("/JenkinsAccountingUpdate", StringComparison.OrdinalIgnoreCase))
             {
                 new Form1().UpdateModule(0, "accounting", new Label());
