@@ -4498,7 +4498,7 @@
     IsForeignKey="true"
     ForeignEntity="RequestToAdvanceAQueue"
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="RequestToAdvanceAQueue"
+    NavigationPropertyName="RequestToAdvanceQueue"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
