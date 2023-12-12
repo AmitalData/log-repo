@@ -2850,7 +2850,17 @@ namespace Simplog.Data.CommonDataModel.Mocks
         public IDbSet<PortGroup> PortGroups { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-
+        public IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+            set
+            {
+                throw new NotImplementedException();
+            }
+        }
 
 
         //public IDbSet<CardContactAdditionalService> CardContactAdditionalServices { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
