@@ -95,7 +95,20 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     CaclulateInvoiceAmount(invoice, transaction, entityPM);
                     CaclulateInvoiceStatus(invoice, entityPM.AccountReconcileMethodCode, transaction);
+                    if (FeatureToggleHelper.HasFeatureToggle("ILO", invoice.Tenant) && invoice.IsMultiCurrency)
+                    {
+                        LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
+                        var arinvoiceTransactions = transQuery.GetByJournalIdAndForeignAmountDebitNotEqualZero(invoice.JournalId, invoice.Tenant).ToList();
 
+                        if (arinvoiceTransactions.All(x => x.OpenAmount == 0))
+                        {
+                            invoice.StatusCode = ARInvoiceStatusValues.Paid;
+                        }
+                        else if (arinvoiceTransactions.Any(x => x.ForeignAmountDebit != 0 && x.OpenAmount != x.ForeignAmountDebit))
+                        {
+                            invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
+                        }
+                    }
                     invoiceService.Update(invoice);
                 }
 
