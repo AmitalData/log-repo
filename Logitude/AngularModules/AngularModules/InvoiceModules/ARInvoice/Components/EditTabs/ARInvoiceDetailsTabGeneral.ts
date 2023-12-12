@@ -95,6 +95,10 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
     }
 
+    get CheckIsFullAccounting() {
+        return SessionLocator.TenantPM.AccountingActivated;
+    }
+
     BuildPartnersTypes() {
         this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
         this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);

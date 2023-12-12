@@ -1112,6 +1112,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.InvoiceCurrencyId = value;
             this.InvoiceCurrencyExchangeRate = this.GetCurrencyRate(value);
             this.ExchangeRateDate = this.GetCurrencyRateDate(value);
+            this.SetUIProperties_ExchangeRate();
 
             if (AppTool.IsNullOrEmpty(value)) {
                 this.InvoiceCurrencyCode = null;
