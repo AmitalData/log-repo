@@ -91,7 +91,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CheckAnwserStatus).HasColumnName("CheckAnwserStatus");
 
-            this.Property(t => t.RequestToAdvanceAQueue).HasColumnName("RequestToAdvanceAQueue").HasMaxLength(6).IsUnicode(true);
+            this.Property(t => t.RequestToAdvanceAQueue).HasColumnName("RequestToAdvanceAQueue").HasMaxLength(6).IsUnicode(false);
 
             this.Property(t => t.RequestDetails).HasColumnName("RequestDetails").HasMaxLength(100).IsUnicode(true);
 
