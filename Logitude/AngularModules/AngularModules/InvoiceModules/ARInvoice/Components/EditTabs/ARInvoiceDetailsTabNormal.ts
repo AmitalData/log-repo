@@ -36,6 +36,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { ARInvoiceStockLinePM } from '../../../../Invoice/EntityPMs/ARInvoiceStockLinePM';
 import { AccountingSettingListService } from '../../../../Common/Services/StandardLists/AccountingSettingListService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     
@@ -60,6 +61,8 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     public InvoiceNumberFilterList: CodeNameClass[] = [];
     public NumbersPipe: NumbersPipe;
     public IsUsingVirtuallization: boolean = false;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs) {
         super();
         this.NumbersPipe = new NumbersPipe();
@@ -70,6 +73,7 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.ObservableItems = new ObservableCollection([]); 
         this.LocalCurrencyId = SessionLocator.LocalCurrencyId;
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
+        this.InitLOVFilters();
         this.InitializeServices();
         this.InitializeComponent();        
         this.SetUIProperties();        
@@ -95,7 +99,10 @@ export class ARInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.BuildInvoiceNumberFilters();
         this.SetRegionalTaxVisibility();
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     private SetRegionalTaxValuesForLines() {
         this.ItemsSource.filter(f=>f.VatIsMultiPercentage == false).forEach(item => {
             this.myChargesTypeListService.getSingle(item.ChargesTypeId).subscribe((myResponse: ServiceResponse) => {
@@ -1865,6 +1872,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     public DataContext = this;
     public LocalCurrencyId: string;
     private CurrentSession = SessionLocator.SelectedSession;
+
     constructor(entityPM: ARInvoiceLinePM, public fatherComponent: ARInvoiceDetailsTabNormal) {
         super();
         this.EntityPM = entityPM;
@@ -1879,6 +1887,7 @@ export class ARInvoiceLineItem extends BaseComponent {
     public IsEditingEnabled: boolean = false;
     public IsRateEnabled: boolean = false;
     public IsEditExchangeRateVisible: boolean = false;
+    
     SetUIProperties() {
         if (FeatureLocator.HasFeaturePermession("ARInvoice", "ARInvoiceEditExchangeRate")) {
             this.IsEditExchangeRateVisible = true;

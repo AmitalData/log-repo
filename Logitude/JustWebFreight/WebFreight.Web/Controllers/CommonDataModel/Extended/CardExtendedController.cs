@@ -437,7 +437,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                     ParentEntity = filters.ParentEntity
                 };
 
-                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField").FirstOrDefault();
+                QueryFilterItem item = queryOperations.QueryFilterItems.Where(f => f.FieldName == "CompactSearchField" || f.FieldName == "CardSearchField").FirstOrDefault();
                 queryOperations.QueryFilterItems.Remove(item);
                 object compactSeachvalue = item != null ? item.FieldValue : null;
 

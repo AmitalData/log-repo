@@ -22,8 +22,15 @@ export class AddEditMultipleAPInvoiceLineComponent {
     public ValidationErrorsList: string[] = [];
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor() {
-        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
+        this.InitLOVFilters();       
+    }
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
 
     public ChargeTypesQueryFilters: ApiQueryFilters;

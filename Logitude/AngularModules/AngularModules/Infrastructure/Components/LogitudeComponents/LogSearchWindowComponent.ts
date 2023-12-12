@@ -26,6 +26,7 @@ import { NewEntityArgs} from '../../Args';
 import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImportComponent';
 import {CachedDataManager} from '../../Utilities/CachedDataManager';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { CardExtendedPMService } from 'Common/Services/ExtendedPMs/CardExtendedPMService';
 
 const localLanguageCode = 'L';
 const englishLanguageCode = 'E';
@@ -448,6 +449,11 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         //}
         //else {
         filters = this.FillTreeFilterDetails(filters);
+        if (rowsObjectTable == "Card"){
+                    
+            return this.cardExtendedPMService.getByCompactFilters(rowsObjectTable, filters);
+
+        }
         return this._entityListService.getByFilters(rowsObjectTable, filters);
         //}
     }
@@ -531,6 +537,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
             return tempo;
         },
     };
+    private cardExtendedPMService:CardExtendedPMService=new CardExtendedPMService()
 
     //tenent 0
     getRows2(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
@@ -557,7 +564,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         }
         var parentName = this.GetObjectTableName(this.ObjectTableName);
         var parenttable = window.ObjectTables.filter(d => d.Name === parentName)[0];
-        var inactiveField = window.ObjectFields.filter(d => d.FieldName.toLowerCase() === "inactive" &&( d.ObjectTableId === parenttable.Id || d.ObjectTableId === this.ObjectTable.Id))[0];
+        var inactiveField = window.ObjectFields.filter(d => d.FieldName?.toLowerCase() === "inactive" &&( d.ObjectTableId === parenttable.Id || d.ObjectTableId === this.ObjectTable.Id))[0];
 
         if (inactiveField && !this.ShowInActive) {
             filters.addAdditionalFilter(inactiveField.FieldName, false, null, null, "Equals", false, false, false, null);
@@ -575,6 +582,11 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
        // }
         //else {
             filters = this.FillTreeFilterDetails(filters);
+            if (rowsObjectTable == "Card"){
+                    
+                return this.cardExtendedPMService.getByCompactFilters(rowsObjectTable, filters);
+    
+            }
             return this._entityListService.getByFilters(rowsObjectTable, filters);
       //  }
     }

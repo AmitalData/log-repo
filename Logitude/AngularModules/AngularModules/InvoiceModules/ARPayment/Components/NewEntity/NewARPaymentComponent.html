@@ -76,7 +76,8 @@
                                                 [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
                                                 [CustomizedWidth]="BillToLovSizeForFullAccounting"
                                                 [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5">
+                                            [StartSearchFromNumber]="5"
+                                            [QueryFilterItems]="GLAccountsFilterItems">
                                         </LogLov>
 
                                         <LogLov *ngIf="!isPartnerTypesFilterEnabled"
@@ -91,7 +92,8 @@
                                                 [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
                                                 [CustomizedWidth]="BillToLovSizeForFullAccounting"
                                                 [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5">
+                                            [StartSearchFromNumber]="5"
+                                            [QueryFilterItems]="GLAccountsFilterItems">
                                         </LogLov>
                                     </td>
 
@@ -116,7 +118,8 @@
                                                 [SelectedValue]="BillToId"
                                                 [LookUpTableName]="'Card'"
                                                 [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5">
+                                            [StartSearchFromNumber]="5"
+                                            [QueryFilterItems]="GLAccountsFilterItems">
                                         </LogLov>
                                     </td>
 

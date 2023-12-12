@@ -92,6 +92,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public PartnerTypes: PartnerTypeList[] = [];
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     public BillToFilter:ApiQueryFilters;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     get TextStore()
     {
         return TextStore;
@@ -120,6 +122,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.EntityPM = entityArgs.EntityPM;
         if( this.EntityPM.StatusCode==null)
             this.CreateARPayment();
+            this.InitLOVFilters();
         this.SetAmountCurrencyCode();
 
         this.ComputeLocalAmount();
@@ -191,6 +194,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     InitLOVBillToFilters() {
         this.BillToFilter = new ApiQueryFilters();
         this.BillToFilter.addAdditionalFilter("ActiveGLAccount", true, null, null, "Equals", true, false, false, "Boolean");
+    }
+
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
     GetFullAccountingSettings() {
         this.CurrentSession.StartBusyIndicatorLoading();

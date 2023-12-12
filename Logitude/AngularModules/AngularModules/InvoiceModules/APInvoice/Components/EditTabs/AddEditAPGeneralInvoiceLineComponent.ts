@@ -24,6 +24,8 @@ export class AddEditAPGeneralInvoiceLineComponent {
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     ColumnsWidths: ColumnsWidths[] = [];
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor() {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");       
 
@@ -34,6 +36,11 @@ export class AddEditAPGeneralInvoiceLineComponent {
         if (SessionLocator.TenantPM.AccountingActivated) {
             this.FillChargesTypesCustomLOVColumnsWidths();
         }
+        this.InitLOVFilters();
+    }
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
     
     public ChargeTypesQueryFilters: ApiQueryFilters;
