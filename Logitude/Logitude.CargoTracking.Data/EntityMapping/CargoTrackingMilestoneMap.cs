@@ -34,6 +34,8 @@ namespace Logitude.CargoTracking.Data.EntityMapping
             this.Property(t => t.Inactive).HasColumnName("Inactive");
 
             this.Property(t => t.Weight).HasColumnName("Weight");
+
+            this.Property(t => t.ExportWeight).HasColumnName("ExportWeight");
         }
     }
 }
