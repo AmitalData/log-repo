@@ -49,6 +49,21 @@ export class PhysicalCheckGeneralTabComponent
     public AvailableTimeChecked: boolean = false;
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
 
+
+    
+    private _RequestToAdvanceAQueue: string;
+    get RequestToAdvanceAQueue() { return this._RequestToAdvanceAQueue; }
+    set RequestToAdvanceAQueue(value: string) {
+        this._RequestToAdvanceAQueue = value;
+        this.EntityPM.RequestToAdvanceAQueue = value;
+    }
+    
+    private _RequestDetails: string;
+    get RequestDetails() { return this._RequestDetails; }
+    set RequestDetails(value: string) {
+        this._RequestDetails = value;
+        this.EntityPM.RequestDetails = value;
+    }
     private _FromDate: Date;
     get FromDate() { return this._FromDate; }
     set FromDate(value: Date) {

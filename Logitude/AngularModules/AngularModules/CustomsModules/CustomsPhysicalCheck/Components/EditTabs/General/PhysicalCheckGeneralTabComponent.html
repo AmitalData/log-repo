@@ -107,14 +107,15 @@
                                     </div>
                                 </td>
                                 <td class="Tbl1Col1">
-                                    <input id="RequestToAdvanceAQueue" type="text" [(ngModel)]="EntityPM.RequestToAdvanceAQueue" [disabled]="IsDisplayOnly"/>
-                                    <!-- <LogLov [ObjectFieldName]="'EntityPM.RequestToAdvanceAQueue'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext"
-                                    [SelectedValue]="EntityPM.RequestToAdvanceAQueue"
+                                    <!-- <input id="RequestToAdvanceAQueue" type="text" [(ngModel)]="EntityPM.RequestToAdvanceAQueue" [disabled]="IsDisplayOnly"/> -->
+                                    
+                                    <LogLov [ObjectFieldName]="'RequestToAdvanceAQueue'"
+                                    [ObjectTableName]="'Customs.PhysicalCheck'"
+                                    [DataContext]="DataContext" 
                                     [HideColumns]="true"
+                                    [SelectedValue] = "RequestToAdvanceAQueue"
                                     [LookUpTableName]="'Customs.RequestToAdvanceAQueue'">
-                                    </LogLov> -->
+                                </LogLov>
                                 </td>
 
                             </tr>
@@ -126,10 +127,10 @@
                                     </div>
                                 </td>
                                 <td class="Tbl1Col1">
-                                    <input id="RequestDetails" type="text" [(ngModel)]="EntityPM.RequestDetails" [disabled]="IsDisplayOnly"/>
-                                    <!-- <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'FollowupNotes'"
+                                    <!-- <input id="RequestDetails" type="text" [(ngModel)]="EntityPM.RequestDetails" [disabled]="IsDisplayOnly"/> -->
+                                    <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'RequestDetails'"
                                                          [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
-                                                          [DataContext]="DataContext"></LogTextBox> -->
+                                                          [DataContext]="DataContext"></LogTextBox>
                                 </td>
 
                             </tr>
