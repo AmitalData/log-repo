@@ -239,7 +239,7 @@
   </Column>
   <Column
     Name="RequestToAdvanceAQueue"
-    Type="nvarchar"
+    Type="varchar"
     Size="6">
     <Constraints
       Nullable="true" />
@@ -322,6 +322,11 @@
   <Relation
     ForeignKeyColumn="CheckAuthorityAttenderTypeID"
     ReferencedTable="Authorities"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="RequestToAdvanceAQueue"
+    ReferencedTable="RequestToAdvanceAQueues"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
