@@ -210,7 +210,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
 
     ApplyCheckMenuButtonsState(menuButtons: MenuButtonPM[]) {
         let parentButton: MenuButtonPM;
-        
+
         if (this.EntityPM != null) {
             if (this.CurrentSession.CurrentEditComponent != null) {
 
@@ -250,7 +250,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         button.Width = 100;
                         button.DisplayText = "המכלה";
                         if (this.EntityPM.Direction == "E" && this.EntityPM.ProcedureCurrentCode && this.EntityPM.ProcedureCurrentName &&
-                         (this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה"))|| this.EntityPM.ProcedureCurrentName.includes(TextCodeTranslator.Translate("Customs.Declaration.O.Asmbli"))) {
+                            (this.EntityPM.ProcedureCurrentName.includes("המכלה לפני התרה")) || this.EntityPM.ProcedureCurrentName.includes(TextCodeTranslator.Translate("Customs.Declaration.O.Asmbli"))) {
                             button.IsHidden = false;
                             this.EntityPM?.Consignments.forEach(c => {
                                 this.containerizationIdList += (!AppTool.IsNullOrEmpty(c.ExportContainerizationID) ? (c.ExportContainerizationID + ",") : "")
@@ -444,11 +444,19 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     if (button.EventCode == "CancelPayment") {
                         if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "CancelPaymentFeature") && (this.EntityPM.Direction != "E")) {
                             button.IsHidden = false;
-                            if(AppTool.IsNullOrEmpty(this.EntityPM.PaymentDate)){
+                            if (AppTool.IsNullOrEmpty(this.EntityPM.PaymentDate)) {
                                 button.IsDisabled = true;
                             }
                         }
                         else {
+                            button.IsHidden = true;
+                        }
+                    }
+                    if (button.EventCode == "CancelPointersOnCustomsItems") {
+                        if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "CancelPointersOnCustomsItemsFeature") && (this.EntityPM.Direction != "E")) {
+                            button.IsHidden = false;
+
+                        } else {
                             button.IsHidden = true;
                         }
                     }
@@ -756,6 +764,11 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                         this.CourierPendingReasonMethod();
                         break;
                     }
+                case "CancelPointersOnCustomsItems":
+                        {
+                            this.CancelPointersOnCustomsItemsMethod();
+                            break;
+                        }
                 case "CourierPendingReasonDel":
                     {
                         this.CourierPendingReasonDeleteMethod();
@@ -1041,7 +1054,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         }
     }
 
-    
+
     CancelPaymentMethod() {
         const confirm = new ConfirmWindow();
         confirm.WindowClosed.subscribe((event) => {
@@ -1050,9 +1063,9 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 var params = new CustomFileCreditRequestParams();
                 var ObjectTable = window.ObjectTables.filter(x => x.Name === "Customs.Declaration")[0];
 
-                
+
                 params.Tenant = SessionLocator.Tenant;
-                params.AppicationId =  this.EntityPM.Id;
+                params.AppicationId = this.EntityPM.Id;
                 params.LoggingEnabled = true;
                 params.LoggingEntityId = this.EntityPM.Id;
                 params.LoggingObjectTableId = ObjectTable.Id;
@@ -1065,39 +1078,39 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 messageWindow.Width = 400;
                 messageWindow.Height = 150;
                 messageWindow.Title = "ביטול הגשה";
-                
+
 
                 let myShowProgressBarParams = new ShowProgressBarParams();
                 myShowProgressBarParams.OnCloseCustomMessageProgressComponentMethod =
                     (response: any) => {
                         let myPaymentResponseData: CustomFileCreditResponseData = response;
-                      
+
                     };
                 CustomMessageProgressComponent.ShowProgressBar(this.CurrentSession, params.PBId, "ביטול הגשה", false, myShowProgressBarParams).then(res => {
                     var ResponseData = res; // this solution to fix the paid declaration not showing a yellow message.
                     if (ResponseData && ResponseData.ContinueProcessInBackground) {
                         SessionLocator.SelectedSession.CurrentEditComponent.EditComponentController.IsInBatchRequest = true;
                     }
-                    
+
                     SessionLocator.SelectedSession.StopBusyIndicator();
                     let myPaymentResponseData: CustomFileCreditResponseData = res;
                     this.RefreshDeclaration();
                     SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM();
                     SessionLocator.SelectedSession.CloseCurrentWindow();
-                    
+
                 })
-                .catch(err => {
-                    err = err || "PostSendPaymentOnly return Error)";
-                    let messWindow = new MessageWindow();
-                    messWindow.Show(err);
-                    messWindow.WindowClosed.subscribe(() => {
-                        SessionLocator.SelectedSession.CloseCurrentWindow();
+                    .catch(err => {
+                        err = err || "PostSendPaymentOnly return Error)";
+                        let messWindow = new MessageWindow();
+                        messWindow.Show(err);
+                        messWindow.WindowClosed.subscribe(() => {
+                            SessionLocator.SelectedSession.CloseCurrentWindow();
+                        });
                     });
-                });
 
                 this.declarationMessagesService.PostSendPaymentOnly(params)
-                    .subscribe( res => {
-                        if(!res.Result.HasException){
+                    .subscribe(res => {
+                        if (!res.Result.HasException) {
                             let messWindow = new MessageWindow();
                             messWindow.Show("ביטול הגשה הסתיים בהצלחה");
                             messWindow.WindowClosed.subscribe(() => {
@@ -1105,10 +1118,10 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             });
                         }
                     }
-                );
+                    );
             }
         });
-        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CancelPayment")); 
+        confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CancelPayment"));
     }
 
     RefreshDeclaration() {
@@ -2068,6 +2081,29 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         logWindow.Title = "בקשות מכס";
         logWindow.Show('./CustomsModules/CustomsRequests/Components/CustomsRequestsComponent');
         this.CurrentSession.StopBusyIndicator();
+    }
+
+
+    CancelPointersOnCustomsItemsMethod() {
+
+        var confirmWindow = new ConfirmWindow();
+        confirmWindow.Width = 300;
+        confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CancelPointers"));//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                this.declarationWebService.DeclarationClosureMethod(this.EntityPM.Id, this.EntityPM.Tenant)
+                    .subscribe((response: ServiceResponse) => {
+                        console.log("[response] DeclarationClosureMethod: ", response);
+                        if (!response.HasError) {
+                            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                            let messageWindow = new MessageWindow();
+                            messageWindow.Width = 300;
+                            messageWindow.Height = 180;
+                            messageWindow.Show("ההצהרה נסגרה בהצלחה");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.ClosePhysicalCheck"));
+                        }
+                    });
+            }
+        });
     }
 }
 
