@@ -37,9 +37,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<RequestToAdvanceAQueue> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<RequestToAdvanceAQueue> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-			}
+			return iQueryable;
+        }
+	}
 
 
 }
