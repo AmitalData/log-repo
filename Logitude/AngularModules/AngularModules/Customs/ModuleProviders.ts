@@ -159,6 +159,7 @@ import { ProductNameTypeListService } from './Services/StandardLists/ProductName
 import { RansomViolationTypeListService } from './Services/StandardLists/RansomViolationTypeListService';
 import { RegisteredWarehouseSiteTypeListService } from './Services/StandardLists/RegisteredWarehouseSiteTypeListService';
 import { RequestStatusListService } from './Services/StandardLists/RequestStatusListService';
+import { RequestToAdvanceAQueueListService } from './Services/StandardLists/RequestToAdvanceAQueueListService';
 import { ReturnConditionListService } from './Services/StandardLists/ReturnConditionListService';
 import { SalesTaxExemptionTypeListService } from './Services/StandardLists/SalesTaxExemptionTypeListService';
 import { SignatureTypeListService } from './Services/StandardLists/SignatureTypeListService';
@@ -623,6 +624,7 @@ export class ModuleProviders {
             case "RansomViolationTypeListService": { myResult = new RansomViolationTypeListService(); break; }
             case "RegisteredWarehouseSiteTypeListService": { myResult = new RegisteredWarehouseSiteTypeListService(); break; }
             case "RequestStatusListService": { myResult = new RequestStatusListService(); break; }
+            case "RequestToAdvanceAQueueListService": { myResult = new RequestToAdvanceAQueueListService(); break; }
             case "ReturnConditionListService": { myResult = new ReturnConditionListService(); break; }
             case "SalesTaxExemptionTypeListService": { myResult = new SalesTaxExemptionTypeListService(); break; }
             case "SignatureTypeListService": { myResult = new SignatureTypeListService(); break; }
