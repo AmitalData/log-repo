@@ -4705,10 +4705,29 @@ User/Pass",
 
         private void button6_Click_1(object sender, EventArgs e)
         {
-            LoggedContactResolver.RegisterLoggedContactUtil();
-            ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(Convert.ToInt16(textBox2.Text));
-            ratesUpdateService.UpdateRatesByExternalXml();
+            if (textBox2.Text == "0")
+            {
+                UpdateRatesByExternalXmlForAllTenantWithSchedular();
+            }
+            else
+            {
+                LoggedContactResolver.RegisterLoggedContactUtil();
+                ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(Convert.ToInt16(textBox2.Text));
+                ratesUpdateService.UpdateRatesByExternalXml();
+            }
 
+        }
+
+        public static void UpdateRatesByExternalXmlForAllTenantWithSchedular()
+        {
+            var objectContext = WebFreightContext.GetContext(0);
+            TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
+            var list = TasksSchedulerRepository.GetTenantListThatHasTaskScheduler("ExchangeRateUpdateTask");
+            foreach(var task in list)
+            {
+                ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(task);
+                ratesUpdateService.UpdateRatesByExternalXml();
+            }
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)

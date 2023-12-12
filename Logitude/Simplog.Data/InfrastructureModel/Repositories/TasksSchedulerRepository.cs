@@ -84,5 +84,10 @@ namespace Simplog.Data.InfrastructureModel.Repositories
             && !a.InActive  && a.ProcedureCode == "ReportSchedulerTask").Count();
         }
 
+        public List<int> GetTenantListThatHasTaskScheduler(string procedureCode)
+        {
+            return webFreightContext.TasksSchedulers.Where(a=>a.ProcedureCode == procedureCode && !a.InActive).Select(r=>r.Tenant).ToList();
+        }
+
     }
 }
