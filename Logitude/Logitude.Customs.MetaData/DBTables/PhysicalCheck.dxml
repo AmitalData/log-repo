@@ -240,7 +240,7 @@
   <Column
     Name="RequestToAdvanceAQueue"
     Type="varchar"
-    Size="6">
+    Size="8">
     <Constraints
       Nullable="true" />
   </Column>
