@@ -10,6 +10,8 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.CommonDataModel.Repositories;
+
 namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
 {
     public class CustomerTracing
@@ -81,7 +83,11 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                 }
 				if (entityPM.EmailForSendingSingArinvoice != entityPOCO.EmailForSendingSingArinvoice)
 				{
-					var note =  TranslateTextsClass.Translate("Customer.F.EmailForSendingSingArinvoice", entityPM.Tenant) + ":\n" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + entityPOCO.EmailForSendingSingArinvoice.ToString()   + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + entityPM.EmailForSendingSingArinvoice.ToString() ;
+                    ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                    string emailContactPm = contactRepository.GetSingleContactForUpdate(entityPM.EmailForSendingSingArinvoice, entityPM.Tenant)?.Email;
+					string emailContactPoco = contactRepository.GetSingleContactForUpdate(entityPOCO.EmailForSendingSingArinvoice, entityPM.Tenant)?.Email;
+
+					var note =  TranslateTextsClass.Translate("Contact.F.Email", entityPM.Tenant) + ":\n" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + emailContactPoco?.ToString()   + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + emailContactPm?.ToString() ;
 					if (string.IsNullOrEmpty(notes))
 					{
 						notes = note;
