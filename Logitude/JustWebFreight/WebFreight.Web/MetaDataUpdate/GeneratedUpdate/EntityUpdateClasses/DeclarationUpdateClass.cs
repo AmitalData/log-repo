@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "b339acdd144a113193e36f39857f1eaf";
+		public const string HashString = "227958410aa23857011070fc5a33878f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -21859,6 +21859,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOMultiClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.MultiClassificationCode", DefaultText = "This screen allows to multi update Classification Code",LocalDefaultText = @"מסך זה מאפשר לעדכן את פרט המכס באופן גורף לכל שורות פרטי המכס או לחלקן . אנא בחר בקוד התהליך ובפעולה הרצויה.", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationOItemsWithNoClassificationCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.ItemsWithNoClassificationCode", DefaultText = "Update Items with no Classification Code",LocalDefaultText = @"עדכן פריטים ללא פרט מכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOCancelPointers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelPointers", DefaultText = "Approve Cancellation of pointers on customs items",LocalDefaultText = @"נא אשר ביטול ההצבעות בכל שורות פרט המכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

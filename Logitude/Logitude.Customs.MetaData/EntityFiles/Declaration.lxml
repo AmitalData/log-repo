@@ -27810,6 +27810,12 @@
       LocalDefaultText="&quot;עדכן פריטים ללא פרט מכס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.CancelPointers&quot;"
+      DefaultText="&quot;Approve Cancellation of pointers on customs items&quot;"
+      LocalDefaultText="&quot;נא אשר ביטול ההצבעות בכל שורות פרט המכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
