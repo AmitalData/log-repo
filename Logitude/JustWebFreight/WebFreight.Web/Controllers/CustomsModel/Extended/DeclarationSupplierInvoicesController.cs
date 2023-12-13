@@ -45,6 +45,7 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using WebFreight.Web.CustomWebServices.BL.XLSImport;
+using Logitude.Customs.Data.EntityKeys;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {

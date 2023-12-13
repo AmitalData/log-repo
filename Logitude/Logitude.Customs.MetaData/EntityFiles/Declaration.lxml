@@ -28189,7 +28189,7 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;CancelPointersOnCustomsItemsFeature&quot;"
+      Code="&quot;CancelPointersOnCustomsItems&quot;"
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.CancelPointersOnCustomsItemsFeature&quot;"
       FeatureDefaultText="&quot;Cancel Pointers On Customs Items Feature&quot;"

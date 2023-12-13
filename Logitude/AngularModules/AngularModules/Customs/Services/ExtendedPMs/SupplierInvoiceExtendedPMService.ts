@@ -2625,4 +2625,41 @@ export class SupplierInvoiceExtendedPMService {
 
         return entity;
     }
+
+
+    deletedSupplierInvoiceItemsConDeclars(declarationId: string) {
+
+
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            var mappedEntity: SupplierInvoicePM;
+            // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+
+            return this._http.delete(this._apiUrl + '/DeletedSupplierInvoiceItemsConDeclars/?' + 'declarationId=' + declarationId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+                var pm = response;
+                if (pm) {
+                    debugger;
+                    //   mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                    serviceResponse.Result;
+                }
+
+
+                return serviceResponse;
+
+            }),catchError(ServiceHelper.HandleServiceError));
+
+        }
+
+        );
+
+    }
 }
