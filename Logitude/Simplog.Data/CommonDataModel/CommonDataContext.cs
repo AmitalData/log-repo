@@ -20,6 +20,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.Linq;
 using System.Configuration;
 using Simplog.Global.Data.GlobalModel.Mapping;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Simplog.Data.CommonDataModel
 {
@@ -412,6 +413,8 @@ namespace Simplog.Data.CommonDataModel
             modelBuilder.Configurations.Add(new ComputingPartnerTableMap());
             modelBuilder.Configurations.Add(new ComputingPartnerTranslationMap());
             modelBuilder.Configurations.Add(new CustomersDataViewMap());
+            modelBuilder.Configurations.Add(new AllActiveGLAccountsViewMap());
+
             modelBuilder.Configurations.Add(new DocumentFolderMap());
             modelBuilder.Configurations.Add(new DocumentsDataProviderMap());
             modelBuilder.Configurations.Add(new DocumentTypeCategoryMap());
@@ -1083,6 +1086,7 @@ namespace Simplog.Data.CommonDataModel
 
         public IDbSet<CustomFieldsMainObject> CustomFieldsMainObjects { get; set; }
 
+        public IDbSet<AllActiveGLAccountsView> AllActiveGLAccountsViews { get; set; }
 
 
 

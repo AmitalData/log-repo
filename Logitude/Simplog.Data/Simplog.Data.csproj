@@ -155,6 +155,7 @@
   <ItemGroup>
     <Compile Include="Azure\IErrorLogsRepository.cs" />
     <Compile Include="Azure\Repositories\CommunicationLogsRepository.cs" />
+    <Compile Include="CommonDataModel\EntityPOCOs\AllActiveGLAccountsView.cs" />
     <Compile Include="CommonDataModel\CommonDataContext.cs" />
     <Content Include="InfrastructureModel\DeleteQBOTranslations.sql" />
     <Content Include="InfrastructureModel\DeleteBusinessRecords.sql" />
@@ -200,6 +201,7 @@
     <Compile Include="CommonDataModel\EntityPOCOs\AllARPaymentChequesView.cs" />
     <Compile Include="CommonDataModel\EntityPOCOs\TotalOpenTransInBankView.cs" />
     <Compile Include="CommonDataModel\Mapping\CarrierServiceLineMap.cs" />
+    <Compile Include="CommonDataModel\Mapping\AllActiveGLAccountsViewMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerGroupMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CustomerTeamMap.cs" />
     <Compile Include="CommonDataModel\Mapping\DigitalContactLastSettingMap.cs" />
@@ -431,7 +433,6 @@
     <Compile Include="CommonDataModel\Mapping\CardContactAdditionalServiceMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CardContactProduct.cs" />
     <Compile Include="CommonDataModel\Mapping\CardExternalAccountsByProductMap.cs" />
-    <Compile Include="CommonDataModel\Mapping\ChargesExternalAccountsByProductMap.cs" />
     <Compile Include="CommonDataModel\Mapping\CheckDigitControlAlgorithmMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ColorIndexMap.cs" />
     <Compile Include="CommonDataModel\Mapping\ComputingPartnerCodeMap.cs" />
