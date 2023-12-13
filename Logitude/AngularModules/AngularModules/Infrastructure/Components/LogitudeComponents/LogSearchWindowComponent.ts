@@ -26,6 +26,7 @@ import { NewEntityArgs} from '../../Args';
 import {ImportEntityArgs} from '../../../Common/Components/Maintenance/TenantImportComponent';
 import {CachedDataManager} from '../../Utilities/CachedDataManager';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
+import { CardExtendedPMService } from 'Common/Services/ExtendedPMs/CardExtendedPMService';
 
 const localLanguageCode = 'L';
 const englishLanguageCode = 'E';
@@ -369,6 +370,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
     }
     //#region My Data
+    private cardExtendedPMService:CardExtendedPMService=new CardExtendedPMService()
 
     public rowCount: number;
     DataSource = {
@@ -448,6 +450,11 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         //}
         //else {
         filters = this.FillTreeFilterDetails(filters);
+        if (rowsObjectTable == "Card"){
+                    
+            return this.cardExtendedPMService.getByCompactFilters(rowsObjectTable, filters);
+
+        }
         return this._entityListService.getByFilters(rowsObjectTable, filters);
         //}
     }
@@ -573,8 +580,11 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
           //  filters.addAdditionalFilter("CompactSearchField", searchfields, null, null, "Contains", false, false, false, null);
           //  return this._entityListService.getByCompactFilters(rowsObjectTable, filters);
        // }
-        //else {
-            filters = this.FillTreeFilterDetails(filters);
+         if (rowsObjectTable == "Card"){
+                    
+            return this.cardExtendedPMService.getByCompactFilters(rowsObjectTable, filters);
+
+           }
             return this._entityListService.getByFilters(rowsObjectTable, filters);
       //  }
     }
