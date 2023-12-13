@@ -1170,7 +1170,7 @@ namespace WebFreight.Web.Helpers
 
         private static string GetValidFileName(string fileName)
         {
-            // remove any invalid character from the filename.
+            // remove any invalid character from the filename.  
             String ret = Regex.Replace(fileName.Trim(), "[^א-תA-Za-z0-9_. ]+", "");
             return ret.Replace(" ", String.Empty);
         }
