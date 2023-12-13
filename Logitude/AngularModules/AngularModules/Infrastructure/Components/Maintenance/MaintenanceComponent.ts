@@ -820,8 +820,8 @@ export class MaintenanceComponent {
         if (item) {
             switch (item.Code) {
                 case "SHAAM_TOKEN": {
-                    var windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
-                    var logWindow = new LogitudeWindow();
+                    const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
+                    const logWindow = new LogitudeWindow();
                     logWindow.Width = window.outerWidth;
                     logWindow.Height = window.outerHeight;
                     logWindow.Title = windowTitle;

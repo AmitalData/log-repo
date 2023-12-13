@@ -535,6 +535,39 @@ export class AmitalGatewayUtil {
                 break;
             }
                  
+            case "CreateNewShaamToken": {
+                const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
+                const logWindow = new LogitudeWindow();
+                logWindow.Width = window.outerWidth;
+                logWindow.Height = window.outerHeight;
+                logWindow.Title = windowTitle;
+                logWindow.IsShowCloseButton = true;
+                logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
+
+                break;
+            }
+            case "ConfirmationNumberTokenLog": {
+                const objectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
+                const allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === objectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+                const selectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0))[0];
+                const objectTablePM = window.ObjectTables.filter(d => d.Id == objectTableId)[0];
+                
+                const listArgs: any = {};
+                listArgs.QueryCode = selectedQuery.Code;
+                listArgs.ObjectTableName = objectTablePM.Name;
+                listArgs.BackButtonTitle = "Back";
+
+                new EntityResourceService().getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+                    listArgs.DisplayTitle = TextCodeTranslator.Translate(selectedQuery.NameTextCodeCode);
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionMenuLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run(listArgs);
+                        });
+                });
+                break;
+            }
+                 
             default: {
                 //throw new Error("UnifaceRequest get bad  unifreightMessage (LogitudeCommandId is unknown ) " + unifreightMessage.LogitudeCommandId);
                 this.UnifaceRequestArrived.emit(myParam)
