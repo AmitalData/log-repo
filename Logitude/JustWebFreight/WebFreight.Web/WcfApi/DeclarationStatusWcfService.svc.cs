@@ -24,7 +24,7 @@ using WebFreight.Web.Security;
 namespace WebFreight.Web.WcfApi
 {
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
-    public class DeclarationStatusWcfService : ApiController
+    public class DeclarationStatusWcfService : IDeclarationStatusWcfService
     {
 
         public Response Upsert(List<DeclarationStatusPM> entityPM, bool batch)

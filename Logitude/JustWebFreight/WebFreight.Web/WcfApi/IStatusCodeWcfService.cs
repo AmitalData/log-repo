@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 
 namespace WebFreight.Web.WcfApi
 {
+    [ServiceContract]
     public interface IStatusCodeWcfService
     {
         // GET api/<controller>
