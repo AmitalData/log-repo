@@ -1,4 +1,7 @@
-﻿using Simplog.Server.Infrastructure;
+﻿using Logitude.Accounting.BL.CoreBL;
+using Logitude.BL.Resolvers;
+using Simplog.Data.InfrastructureModel;
+using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -29,7 +32,7 @@ namespace Logitude.Update
             }
             if (System.Environment.CommandLine.EndsWith("/UpdateRatesByExternalXmlForAllTenantWithSchedular", StringComparison.OrdinalIgnoreCase))
             {
-                Form1.UpdateRatesByExternalXmlForAllTenantWithSchedular();
+                UpdateAllRates();
                 return;
             }
 
@@ -43,7 +46,30 @@ namespace Logitude.Update
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
         }
+        private static void UpdateAllRates()
+        {
+            try
+            {
+                Console.WriteLine("UpdateAllRates" + DateTime.Now.ToString());
+                Console.WriteLine(System.Environment.CommandLine);
+                Console.WriteLine("Form1.LoadLogitudeSettings()" + DateTime.Now.ToString());
+                Form1.LoadLogitudeSettings();
+                var listofTenants = Form1.GetTenantListThatHasTaskScheduler();
+                foreach (var tenant in listofTenants)
+                {
+                    Console.WriteLine("update tenant:" + tenant);
+                    Form1.UpdateRatesByExternalXmlForAllTenantWithSchedular(tenant);
+                }
+                Console.WriteLine("End:" + DateTime.Now.ToString());
+            }
+            catch (Exception e)
+            {
 
+                Console.WriteLine(e.ToString());
+                //throw e;
+                Environment.Exit(-1);
+            }
+        }
         private static void JenkinsCustomUpdate()
         {
             try
