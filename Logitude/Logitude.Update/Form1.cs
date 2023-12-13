@@ -4707,7 +4707,11 @@ User/Pass",
         {
             if (textBox2.Text == "0")
             {
-                UpdateRatesByExternalXmlForAllTenantWithSchedular();
+                var listofTenants = GetTenantListThatHasTaskScheduler();
+                foreach (var tenant in listofTenants)
+                {
+                    UpdateRatesByExternalXmlForAllTenantWithSchedular(tenant);
+                }
             }
             else
             {
@@ -4718,16 +4722,20 @@ User/Pass",
 
         }
 
-        public static void UpdateRatesByExternalXmlForAllTenantWithSchedular()
+        public static void UpdateRatesByExternalXmlForAllTenantWithSchedular(int tenant)
+        {
+
+            LoggedContactResolver.RegisterLoggedContactUtil();
+            ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(tenant);
+            ratesUpdateService.UpdateRatesByExternalXml();
+
+        }
+        public static List<int> GetTenantListThatHasTaskScheduler()
         {
             var objectContext = WebFreightContext.GetContext(0);
             TasksSchedulerRepository TasksSchedulerRepository = new TasksSchedulerRepository(objectContext);
             var list = TasksSchedulerRepository.GetTenantListThatHasTaskScheduler("ExchangeRateUpdateTask");
-            foreach(var task in list)
-            {
-                ExchangeRatesFromExternalLinkUpdateService ratesUpdateService = new ExchangeRatesFromExternalLinkUpdateService(task);
-                ratesUpdateService.UpdateRatesByExternalXml();
-            }
+            return list;
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
