@@ -28188,14 +28188,5 @@
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
-    <Feature
-      Code="&quot;CancelPointersOnCustomsItems&quot;"
-      FeatureTypeCode="&quot;ACT&quot;"
-      FeatureTextCodeCode="&quot;Customs.Declaration.Features.CancelPointersOnCustomsItemsFeature&quot;"
-      FeatureDefaultText="&quot;Cancel Pointers On Customs Items Feature&quot;"
-      IsPackagable="true"
-      IsOld="false"
-      IsCoreFeature="false"
-      IsBusinessUnitEnabled="false" />
   </AdditionalFeatures>
 </entity>
