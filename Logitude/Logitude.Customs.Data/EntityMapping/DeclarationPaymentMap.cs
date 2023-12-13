@@ -42,6 +42,7 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.FuturePaymentDateTime).HasColumnName("FuturePaymentDateTime");
 
             this.Property(t => t.AutomaticPayment).HasColumnName("AutomaticPayment");
+
         }
     }
 }
