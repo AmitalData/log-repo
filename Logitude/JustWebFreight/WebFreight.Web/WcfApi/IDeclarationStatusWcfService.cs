@@ -12,6 +12,7 @@ using Logitude.BL.InfrastructureModel.EntityPMs;
 
 namespace WebFreight.Web.WcfApi
 {
+    [ServiceContract]
     public interface IDeclarationStatusWcfService
     {
         // GET api/<controller>
