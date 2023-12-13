@@ -786,7 +786,7 @@
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [NoObjectField]="true" [ForceSubscribe]="true"
                                                                 [DataContext]="DataContext" [HideColumns]="true"
-                                                                [SelectedDateValue]="FromDate"></LogDatePicker>
+                                                                [SelectedDateValue]="FromDate2"></LogDatePicker>
                                                         </td>
 
                                                         <td style="width:15px;">
@@ -803,7 +803,7 @@
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [NoObjectField]="true" [ForceSubscribe]="true"
                                                                 [DataContext]="DataContext" [HideColumns]="true"
-                                                                [SelectedDateValue]="ToDate"></LogDatePicker>
+                                                                [SelectedDateValue]="ToDate2"></LogDatePicker>
                                                         </td>
                                                       
                                                         <td style="width:15px;">
@@ -865,8 +865,13 @@
                                                             (ValueChanged)="AmountForeignTextToChanged($event)"
                                                         ></LogTextBox>
                                                         </td>
-                                                        
-                                                        <td style="width:460px;">
+                                                        <td style="width:55px" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            <div style="margin: 0 10px;" *ngIf="FromDate2&&ToDate2">
+                                                                <IconButton [Name]="'Delete'"
+                                                                    (click)="ResetAdditionalDateFilter()"></IconButton>
+                                                            </div>
+                                                        </td>
+                                                        <td style="width: 405px;">
                                                             <div></div>
                                                         </td>
                                                       
