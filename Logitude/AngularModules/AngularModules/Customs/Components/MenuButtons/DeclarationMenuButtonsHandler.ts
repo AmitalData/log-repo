@@ -46,6 +46,7 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { ListComponentArgs } from 'Infrastructure/Args';
 import { MainMenuItem } from 'Infrastructure/Components/MainMenuComponent/MainMenuComponent';
 import { List } from 'Infrastructure/DataContracts/Dashboard/List';
+import { SupplierInvoiceExtendedPMService } from 'Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 
 
 export class DeclarationMenuButtonsHandler implements OnDestroy {
@@ -223,6 +224,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                 }
 
                 for (var i = 0; i < menuButtons.length; i++) {
+                    
                     var button = menuButtons[i];
                     if (button.EventCode == "More") {
                         button.IsDisabled = true;
@@ -452,13 +454,14 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             button.IsHidden = true;
                         }
                     }
+                    
                     if (button.EventCode == "CancelPointersOnCustomsItems") {
-                        if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "CancelPointersOnCustomsItemsFeature") && (this.EntityPM.Direction != "E")) {
+                      if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "CancelPointersOnCustomsItemsFeature") && (this.EntityPM.Direction != "E")) {
                             button.IsHidden = false;
 
-                        } else {
-                            button.IsHidden = true;
-                        }
+                      } else {
+                           button.IsHidden = true;
+                       }
                     }
                     if (button.EventCode == "CourierPendingReason") {
                         if (!this.EntityPM.IsCourierDeclaration) {
@@ -2083,23 +2086,25 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
         this.CurrentSession.StopBusyIndicator();
     }
 
-
+    supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService;
+    
     CancelPointersOnCustomsItemsMethod() {
+        this.supplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();;
 
         var confirmWindow = new ConfirmWindow();
         confirmWindow.Width = 300;
         confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.CancelPointers"));//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.IsClosePhysicalCheck"));
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.declarationWebService.DeclarationClosureMethod(this.EntityPM.Id, this.EntityPM.Tenant)
+                this.supplierInvoiceExtendedPMService.deletedSupplierInvoiceItemsConDeclars(this.EntityPM.Id)
                     .subscribe((response: ServiceResponse) => {
-                        console.log("[response] DeclarationClosureMethod: ", response);
+                        console.log("[response] CancelPointers: ", response);
                         if (!response.HasError) {
                             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                             let messageWindow = new MessageWindow();
                             messageWindow.Width = 300;
                             messageWindow.Height = 180;
-                            messageWindow.Show("ההצהרה נסגרה בהצלחה");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.ClosePhysicalCheck"));
+                            messageWindow.Show("deleted!");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.ClosePhysicalCheck"));
                         }
                     });
             }
