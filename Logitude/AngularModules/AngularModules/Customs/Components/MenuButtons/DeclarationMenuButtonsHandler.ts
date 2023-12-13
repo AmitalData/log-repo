@@ -2082,7 +2082,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                             let messageWindow = new MessageWindow();
                             messageWindow.Width = 300;
                             messageWindow.Height = 180;
-                            messageWindow.Show("ההצהרה נסגרה בהצלחה");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.ClosePhysicalCheck"));
+                            messageWindow.Show("deleted!");//TextCodeTranslator.Translate("Customs.PhysicalCheck.O.ClosePhysicalCheck"));
                         }
                     });
             }
