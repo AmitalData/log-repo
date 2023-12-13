@@ -536,6 +536,8 @@ export class AmitalGatewayUtil {
             }
                  
             case "CreateNewShaamToken": {
+                this.SelectCustomsRequestMenu(MaintenanceMenu);
+
                 const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
                 const logWindow = new LogitudeWindow();
                 logWindow.Width = window.outerWidth;
@@ -543,15 +545,19 @@ export class AmitalGatewayUtil {
                 logWindow.Title = windowTitle;
                 logWindow.IsShowCloseButton = true;
                 logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
+                logWindow.WindowClosed.subscribe(() => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
 
                 break;
             }
+
             case "ConfirmationNumberTokenLog": {
+                this.SelectCustomsRequestMenu();                
+                change2EditTab();
                 const objectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
                 const allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === objectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
                 const selectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0))[0];
                 const objectTablePM = window.ObjectTables.filter(d => d.Id == objectTableId)[0];
-                
+
                 const listArgs: any = {};
                 listArgs.QueryCode = selectedQuery.Code;
                 listArgs.ObjectTableName = objectTablePM.Name;
@@ -559,10 +565,11 @@ export class AmitalGatewayUtil {
 
                 new EntityResourceService().getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
                     listArgs.DisplayTitle = TextCodeTranslator.Translate(selectedQuery.NameTextCodeCode);
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionMenuLocation.viewContainerRef)
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
                         .then(cmpRef => {
                             cmpRef.instance.ComponentRef = cmpRef;
                             cmpRef.instance.Run(listArgs);
+                            cmpRef.instance.BackCompleted.subscribe(bk => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
                         });
                 });
                 break;

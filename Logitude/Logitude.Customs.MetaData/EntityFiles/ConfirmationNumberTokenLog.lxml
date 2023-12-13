@@ -825,7 +825,8 @@
     EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;ConfirmationNumberTokenLog&quot;"
-    TextCode="&quot;ConfirmationNumberTokenLogQuery&quot;"
+    TextCode="&quot;Confirmation Number Token Log&quot;"
+    LocalTextCode="&quot;לוג מסר הקצאה&quot;"
     QueryGroupCode="&quot;2ea0&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Customs.ConfirmationNumberTokenLog&quot;"
