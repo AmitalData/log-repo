@@ -456,7 +456,7 @@ export class DeclarationMenuButtonsHandler implements OnDestroy {
                     }
                     
                     if (button.EventCode == "CancelPointersOnCustomsItems") {
-                      if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "CancelPointersOnCustomsItemsFeature") && (this.EntityPM.Direction != "E")) {
+                      if (this.EntityPM.Direction != "E") {
                             button.IsHidden = false;
 
                       } else {
