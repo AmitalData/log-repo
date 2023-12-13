@@ -57,7 +57,6 @@ export class NewGLAccountComponent extends BaseComponent {
         this.SetUIProperties();
         this.SelectDefaultValues();
         this.isEnableMultiCurrencyWithReconcileMethodCodeEqualOne = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "MC1")[0] ? true : false;
-        debugger;
 
     }
 
