@@ -5,7 +5,7 @@
 
 CREATE OR ALTER view [dbo].[AllActiveGLAccountsView]
 AS
-select Tenant,Id from glaccounts where Inactive=0
+select Tenant,Id from glaccounts where Inactive=1
                     
 
 
