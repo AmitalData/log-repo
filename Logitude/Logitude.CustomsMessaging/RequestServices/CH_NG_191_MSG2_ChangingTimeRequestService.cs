@@ -55,6 +55,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 if (requestParams.BringQueueForwardIndicator)
                 {
                     changingTimeRequest.RequestToAdvanceAQueue = requestParams.RequestToAdvanceAQueue;
+                    changingTimeRequest.RequestToAdvanceAQueueSpecified = true;
                     changingTimeRequest.RequestDetails = requestParams.RequestDetails;
                 }
             }
