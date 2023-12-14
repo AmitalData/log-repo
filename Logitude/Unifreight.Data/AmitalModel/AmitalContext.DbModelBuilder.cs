@@ -37,7 +37,10 @@ namespace Unifreight.Data.AmitalModel
             = new ConcurrentDictionary<Tuple<int, string>, string>();
         public static AmitalContext Create(int tenantSeed, DbConnection connection)
         {
-            string ConnSchemaUserId =
+            string ConnSchemaUserId="";
+            if (LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenantSeed).IsConnectedToUniFreight)
+            {
+                 ConnSchemaUserId =
             _ModelName.GetOrAdd(
                 Tuple.Create(tenantSeed, connection.ConnectionString),
                 t =>
@@ -45,7 +48,11 @@ namespace Unifreight.Data.AmitalModel
                     string ConnSchemaUserId1 = DbContextBaseUtil.GetSchemaAMITAL_DB(tenantSeed);
                     return ConnSchemaUserId1;
                 });
-            
+            }
+            else
+            {     
+                ConnSchemaUserId=   new Devart.Data.Oracle.OracleConnectionStringBuilder(connection.ConnectionString)?.UserId?.ToUpper();
+            }
             var compiledModel = _ModelCache.GetOrAdd(
                 Tuple.Create(tenantSeed, connection.ConnectionString),
                 t =>
