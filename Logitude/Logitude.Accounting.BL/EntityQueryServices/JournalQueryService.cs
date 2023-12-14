@@ -585,7 +585,8 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                                                  Id = a.Id,
                                                  LineCreditAccountTypeCode = groupJoinData.CreditAccount != null ? groupJoinData.CreditAccount.AccountTypeCode : null,
                                                  LineCreditAccountId = groupJoinData.CreditAccount != null ? groupJoinData.CreditAccount.Id : null,
-                                                LineCounter = groupJoin.Count()
+                                                LineCounter = groupJoin.Count(),
+                                                 ConfirmationNumber = groupJoinData.ConfirmationNumber,
                                              };
             journalPMs = journals.ToList();
             //foreach (JournalPM journal in journalPMs)
