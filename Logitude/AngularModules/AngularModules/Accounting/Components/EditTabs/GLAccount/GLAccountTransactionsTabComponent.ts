@@ -1463,6 +1463,13 @@ AmountLocalOperatorChanged($event){
             }, 700);
 
         } 
+        else{
+            this.timerToken = setTimeout(() => { 
+                this.amountLocalFieldFilter = null;
+                    this.RefreshButtonClicked();
+            }, 700);
+
+        } 
     }
     AmountLocalTextToChanged(num) {
         this.amountLocalTo = num;
@@ -1484,6 +1491,13 @@ AmountLocalOperatorChanged($event){
                     this.amountLocalFieldFilter = null;
                     this.RefreshButtonClicked();
                 }
+            }, 700);
+
+        }
+        else{
+            this.timerToken = setTimeout(() => { 
+                this.amountLocalFieldFilter = null;
+                    this.RefreshButtonClicked();
             }, 700);
 
         } 
@@ -1511,6 +1525,13 @@ AmountLocalOperatorChanged($event){
             }, 700);
 
         } 
+        else{
+            this.timerToken = setTimeout(() => { 
+                this.amountForeignFieldFilter = null;
+                    this.RefreshButtonClicked();
+            }, 700);
+
+        } 
     }
     AmountForeignTextToChanged(num) {
         this.amountForeignTo = num;
@@ -1532,6 +1553,13 @@ AmountLocalOperatorChanged($event){
                     this.amountForeignFieldFilter = null;
                     this.RefreshButtonClicked();
                 }
+            }, 700);
+
+        } 
+        else{
+            this.timerToken = setTimeout(() => { 
+                this.amountForeignFieldFilter = null;
+                    this.RefreshButtonClicked();
             }, 700);
 
         } 
