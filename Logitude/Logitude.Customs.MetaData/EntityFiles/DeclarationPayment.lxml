@@ -37,7 +37,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="Declaration"
   DefaultText="&quot;Declaration Payment&quot;"
-  Code="&quot;a05b&quot;"
+  Code="&quot;95b4&quot;"
   Name="&quot;Customs.DeclarationPayment Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -1239,7 +1239,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <Screen
     Name="&quot;Customs.DeclarationPaymentHeaderScreen&quot;"
     ObjectTableName="&quot;Customs.DeclarationPayment&quot;"

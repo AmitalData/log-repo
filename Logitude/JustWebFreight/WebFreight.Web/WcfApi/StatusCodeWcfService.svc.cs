@@ -19,6 +19,7 @@ using WebFreight.Web.Security;
 
 namespace WebFreight.Web.WcfApi
 {
+    [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class StatusCodeWcfService : IStatusCodeWcfService
     {
         public Response Upsert(StatusCodePM entityPM, bool batch)
