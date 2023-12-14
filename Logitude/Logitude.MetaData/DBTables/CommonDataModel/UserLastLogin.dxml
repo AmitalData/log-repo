@@ -49,7 +49,7 @@
   <Column
 	Name="ComputerUserName"
 	Type="varchar"
-	Size="15">
+	Size="30">
 	<Constraints
 	  Nullable="true" />
   </Column>
