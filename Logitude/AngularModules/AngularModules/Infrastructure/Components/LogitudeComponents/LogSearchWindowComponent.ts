@@ -370,7 +370,6 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
     }
     //#region My Data
-    private cardExtendedPMService:CardExtendedPMService=new CardExtendedPMService()
 
     public rowCount: number;
     DataSource = {
