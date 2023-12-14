@@ -309,6 +309,11 @@ export class JournalPM {
     public set SecurityLevel(newValue: number) { if (this.securityLevel != newValue) { this.securityLevel = newValue; this.MarkAsDirty("SecurityLevel"); } }
        
 	 
+    private confirmationNumber: string;
+    public get ConfirmationNumber() { return this.confirmationNumber; }
+    public set ConfirmationNumber(newValue: string) { if (this.confirmationNumber != newValue) { this.confirmationNumber = newValue; this.MarkAsDirty("ConfirmationNumber"); } }
+       
+	 
 
     public OldEntityPM: JournalPM;
 		
