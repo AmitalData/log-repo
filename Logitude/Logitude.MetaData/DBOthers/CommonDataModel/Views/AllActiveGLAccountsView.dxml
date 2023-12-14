@@ -3,7 +3,7 @@
     <![CDATA[
 
 
-CREATE OR ALTER view [dbo].[AllActiveGLAccountsView]
+CREATE OR ALTER view [dbo].[AllActiveGLAccountsViews]
 AS
 select Tenant,Id from glaccounts where Inactive=1
                     
