@@ -154,7 +154,7 @@ export class HomeComponent implements OnDestroy{
                 if (!myResponse.HasError) {
                     this.USDLastUpdate=myResponse.Result?.LogDateTime;
                     if(myResponse.Result?.LogDateTime != null){
-                        this.USDLastUpdate = this.CustomDateFormatPipe(myResponse.Result?.LogDateTime);
+                        this.USDLastUpdate = this.CustomDateFormatPipe(myResponse.Result?.ValueDate);
 
                     }
                 }
