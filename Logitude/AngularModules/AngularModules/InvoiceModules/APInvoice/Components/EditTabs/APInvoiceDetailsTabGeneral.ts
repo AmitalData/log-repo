@@ -882,7 +882,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         return this.EntityPM.VendorId;
     }
     set VendorId(value: string) {
-        debugger
         if (this.EntityPM != null) {
             if (this.EntityPM.VendorId != value) {
                 this.EntityPM.VendorId = value;
