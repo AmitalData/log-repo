@@ -78,6 +78,7 @@ namespace Logitude.Accounting.BL.Utils
                 IInvoiceContext invContext = InvoiceContext.GetContext(tenant);
                 string accountingDateStr = banksCCExternalRecoArg.ToAccountingDate.ToString("yyyy-MM-dd HH:mm:ss.fff"); // '2018 - 09 - 04 05:37:31.370'
               //  string lastCheckedId = "";
+
                 _retry = true;
                 while (_retry)
                 {

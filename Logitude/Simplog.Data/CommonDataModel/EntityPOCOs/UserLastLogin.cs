@@ -16,6 +16,7 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public virtual User User { get; set; }
         public string IP { get; set; }
+        public string ComputerUserName { get; set; }
 
     }
 }

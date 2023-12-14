@@ -323,7 +323,7 @@ namespace Logitude.Accounting.BL.Validators
                 }
                 else
                 {
-                    IsJournalValidThin(myJournalPM, accountingValidationContextServiceProvider);
+                    return IsJournalValidThin(myJournalPM, accountingValidationContextServiceProvider);
                 }
     
             }
