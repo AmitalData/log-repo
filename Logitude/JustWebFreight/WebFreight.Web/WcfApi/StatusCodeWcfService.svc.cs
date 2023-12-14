@@ -25,7 +25,6 @@ namespace WebFreight.Web.WcfApi
         public Response Upsert(StatusCodePM entityPM, bool batch)
         {
             Response response = new Response();
-            return response;
             try
             {
                 ClassLevelValidator validationClass = new ClassLevelValidator("StatusCode", entityPM.Tenant);
