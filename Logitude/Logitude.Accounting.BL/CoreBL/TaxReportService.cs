@@ -324,7 +324,10 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         inputReportLine.LineTypeCode = "T";
                     }
-
+                if (inputReportLine.ConfirmationNumber == null && journal.ConfirmationNumber != null)
+                {
+                    inputReportLine.ConfirmationNumber = journal.ConfirmationNumber;
+                }
                     reportLinesList.Add(inputReportLine);
                     //     UpdateJournalAdditionalDataRecord(inputReportLine, transaction);
 

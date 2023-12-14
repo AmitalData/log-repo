@@ -118,12 +118,31 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             string paymentTermsId = glAccount.PaymentTerms != null ? glAccount.PaymentTerms : glAccount.PaymentTermId != null ? glAccount.PaymentTermId : null;
             if (paymentTermsId != null)
             {
-                int paymentTermDays = paymentTermQueryService.GetSinglePaymentTerm(paymentTermsId).Days;
+                PaymentTerm paymentTerm = paymentTermQueryService.GetSinglePaymentTerm(paymentTermsId);
+                int paymentTermDays = paymentTerm.Days;
                 if (paymentTermDays != 0)
                 {
-                    journalLine.DueDate = journalLine.DocumentDate.AddDays(paymentTermDays);
+                    DateTime updatedDocumentDate = journalLine.DocumentDate;
+                    if (paymentTerm.EndOfMonth) 
+                    {
+                        updatedDocumentDate = updatedDocumentDate.AddMonths(paymentTerm.NumberOfMonths);
+
+                        updatedDocumentDate = GetLastDayOfMonth(updatedDocumentDate);
+                    }
+
+                    journalLine.DueDate = updatedDocumentDate.AddDays(paymentTermDays);
                 }
             }
+        }
+
+        private DateTime GetLastDayOfMonth(DateTime currentDate)
+        {
+            // Use DaysInMonth to get the last day of the month
+            int lastDay = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
+            
+            // Create a new DateTime object with the same year and month, but the last day
+            DateTime lastDayOfMonth = new DateTime(currentDate.Year, currentDate.Month, lastDay);
+            return lastDayOfMonth;
         }
 
     }
