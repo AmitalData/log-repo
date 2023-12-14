@@ -129,6 +129,12 @@ export class PhysicalCheckGeneralTabComponent
     Init() {
         if (this.entityArgs == null || (this.entityArgs != null && this.entityArgs.EntityPM == null)) return;
         this.EntityPM = this.entityArgs.EntityPM;
+
+        if (this.EntityPM.RequestToAdvanceAQueue)
+            this.RequestToAdvanceAQueue = this.EntityPM.RequestToAdvanceAQueue;
+        if (this.EntityPM.RequestDetails)
+            this.RequestDetails = this.EntityPM.RequestDetails;
+
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.Listen();
     }
@@ -360,7 +366,9 @@ export class PhysicalCheckGeneralTabComponent
         checkParams.CheckTypeCode = this.EntityPM.CheckTypeCode;
 
 
-
+        checkParams.RequestToAdvanceAQueue = this.EntityPM.RequestToAdvanceAQueue;
+        checkParams.RequestDetails = this.EntityPM.RequestDetails;
+        
         //if (sendOption == null) {
         checkParams.RequestVIA = SendRequestVIA.Default;
         //}
