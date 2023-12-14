@@ -882,6 +882,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         return this.EntityPM.VendorId;
     }
     set VendorId(value: string) {
+        debugger
         if (this.EntityPM != null) {
             if (this.EntityPM.VendorId != value) {
                 this.EntityPM.VendorId = value;
@@ -931,23 +932,25 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = list.InvoiceCurrencyId;
                     }
-                    if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
+                    if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
+                        this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                this.glaccount = myResponse.Result;
+                                this.PaymentTermId = this.glaccount.PaymentTerms;
+                                
+                                this.EntityPM.VendorGLAccountId = this.glaccount.Id;
+                                this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
+                            }
+                        });
+                    }
+                    else if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
                         this.PaymentTermId = list.PaymentTermId;
                     }
 
                     if (!AppTool.IsNullOrEmpty(list.VatTypeId)) {
 
                     }
-
-                    if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
-                        this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
-                            if (!myResponse.HasError) {
-                                this.glaccount = myResponse.Result;
-                                this.EntityPM.VendorGLAccountId = this.glaccount.Id;
-                                this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
-                            }
-                        });
-                    }
+                   
                 }
                 if(this.IsFullAccounting)
                 this.GetConnectedGLAccount();
@@ -1045,7 +1048,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.PaymentTermName = null;
             }
-
             else {
                 this.myPaymentTermListService.getSingleFromCache(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {
