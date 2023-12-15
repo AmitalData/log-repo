@@ -44,7 +44,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             SetTablesStructureHelper(cargoTrackingDataBaseArgs);
             SetBuildProcessData(cargoTrackingDataBaseArgs);
             RecordUpdated = new RecordUpdated();
-            RecordUpdated.IsFromBuild = ServiceHelper.GetIsIncrementalRunning(cargoTrackingDataBaseArgs.BuildCargoArgs.SourceConnectionString, cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value);
+            RecordUpdated.IsFromBuild = ServiceHelper.GetIsIncrementalRunning(cargoTrackingDataBaseArgs.BuildCargoArgs.SourceConnectionString,1062);
             RecordUpdated = UpdateCargoTracking(cargoTrackingDataBaseArgs, RecordUpdated);
             return RecordUpdated;
         }
