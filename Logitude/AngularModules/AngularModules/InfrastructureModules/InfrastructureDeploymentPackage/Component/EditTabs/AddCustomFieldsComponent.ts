@@ -158,7 +158,7 @@ export class AddCustomFieldsComponent extends BaseComponent {
 
     SetCustomPickLists() {
         var customPickListListService = new CustomPickListListService();
-        customPickListListService.getAll().subscribe((response: ServiceResponse) => {
+        customPickListListService.getAllFromCache().subscribe((response: ServiceResponse) => {
             if (response.HasError) return;
             this.MapCustomPickListsDetails(response.Result);
             this.customFieldsTabComponent.CustomPickLists = this.customPickListItems;

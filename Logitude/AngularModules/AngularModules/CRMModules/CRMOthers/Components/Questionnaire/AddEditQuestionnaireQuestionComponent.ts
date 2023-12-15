@@ -134,7 +134,7 @@ export class AddEditQuestionnaireQuestionComponent {
             filters.SortBy = 'Value';
             filters.GetAll = true;
             filters.addAdditionalFilter("IsMultipleChoice", true, null, null, "Equals", false, false, false, null, false, true);
-            this._customPickListListService.getByFilters(filters).subscribe((response:any) => {
+            this._customPickListListService.getAllFromCache(filters).subscribe((response:any) => {
                 this.TenantCustomPickLists = response.Result;
                 this.CurrentSession.StopBusyIndicator();
                 if (this.TenantCustomPickLists != null) {
