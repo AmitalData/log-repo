@@ -560,9 +560,9 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
 
 
                         LogMessagingUtil.Instance.AppendLine($"PostAsync({_CourierHawbMamanCommunicationLogSettings.URIToken}, {content})");
-                        var task = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIToken, content);
-                        Wait4Finsh(task, 3);
-                        myResultString = task.Result.Content.ReadAsStringAsync().Result;
+                        var authoTask = client.PostAsync(_CourierHawbMamanCommunicationLogSettings.URIToken, content);
+                        Wait4Finsh(authoTask, 3);
+                        myResultString = authoTask.Result.Content.ReadAsStringAsync().Result;
                         //{"access_token":"zkKDt-XnqqM5uoyDwrPxDPHb_vM5hplsUKr7sT5GA2w8Vpsl_HT5eBidUriiyw3Gn-Mne0NIq2LQO7MMT525GdrFutDzIQpRKR6c7oz2GbdSdGdEY3S3nfP0W7svtmShEeUx23SbW8ysLkyAnFP-IdQhvMs2lzxzHIDrnDqm_agwq54x9UiiDa5-9ZkEWBUrN83U4B5qddiYTU0whODGvrxEE9wyrQKoygG3Gi48gwv2_TI4H9yrd2Uys9l_jBivOsRRm1oXtyGsyIq9DwDn7pmcoxUjz-yNwm_hp18Y1qi4aXk1Z8IjeKRQl_8FMUg-","token_type":"bearer","expires_in":35999,"UserName":"F_unitedf","role":"General",".issued":"Mon, 12 Nov 2018 14:48:43 GMT",".expires":"Tue, 13 Nov 2018 00:48:43 GMT"}
                         LogMessagingUtil.Instance.AppendLine($"PostAsyncResult ({myResultString})");
                         dynamic d = JsonConvert.DeserializeObject(myResultString);
@@ -630,28 +630,35 @@ Insert into BATCHSERVICESDEFINITIONMODS (CODE,INACTIVE,NUMBEROFTHREADS) values (
         private static void Wait4Finsh(Task
           task, int TimeOutInMin)
         {
-            var ts = Stopwatch.StartNew();
-            //task.Start();
-            while (ts.Elapsed < TimeSpan.FromMinutes(TimeOutInMin))
+            try
             {
-                task.Wait(TimeSpan.FromSeconds(1));
-                if (task.IsCompleted)
+                var ts = Stopwatch.StartNew();
+                //task.Start();
+                while (ts.Elapsed < TimeSpan.FromMinutes(TimeOutInMin))
                 {
-                    break;
+                    task.Wait(TimeSpan.FromSeconds(1));
+                    if (task.IsCompleted)
+                    {
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
-                else
+                if (!task.IsCompleted)
                 {
-                    continue;
+                    task.Dispose();
+                    throw new Exception($"Timeout SendWEBAPIMessage2MamanWR {TimeOutInMin} Min ");
+
                 }
             }
-            if (!task.IsCompleted)
+            catch (AggregateException ae)
             {
-                task.Dispose();
-                throw new Exception($"Timeout SendWEBAPIMessage2MamanWR {TimeOutInMin} Min ");
-
+                throw new Exception($"Exception(s) occurred during task execution: {string.Join(", ", ae.InnerExceptions.Select(inner => inner.Message))}");
+                throw;
             }
         }
-
     }
 
 
