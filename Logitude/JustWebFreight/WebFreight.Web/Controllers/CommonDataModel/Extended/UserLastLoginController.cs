@@ -110,7 +110,10 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK,  System.Security.Principal.WindowsIdentity.GetCurrent().Name);
+                var ipadd = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                IPAddress myIP = IPAddress.Parse(ipadd);
+                IPHostEntry GetIPHost = Dns.GetHostEntry(myIP);
+                return Request.CreateResponse(HttpStatusCode.OK, GetIPHost.HostName);
             }
 
             catch (Exception ex)
