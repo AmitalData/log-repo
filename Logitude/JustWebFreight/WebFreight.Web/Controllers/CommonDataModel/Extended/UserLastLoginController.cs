@@ -110,7 +110,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
         {
             try
             {
-                return Request.CreateResponse(HttpStatusCode.OK, Environment.MachineName);
+                return Request.CreateResponse(HttpStatusCode.OK,  System.Security.Principal.WindowsIdentity.GetCurrent().Name);
             }
 
             catch (Exception ex)
