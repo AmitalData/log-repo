@@ -44,6 +44,24 @@ export class UserLastLoginPMService {
                 }), catchError(ServiceHelper.HandleServiceError));
     }
 
+    GetComputerUserName() {
+        var url = this._apiUrl + '/GetComputerUserName';
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+
+        return this._http.get(url, ServiceHelper.GetHttpFullHeaders())
+            .pipe(
+                map((response: HttpResponse<any>) => {
+
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response.body;
+                    return serviceResponse;
+
+
+                }), catchError(ServiceHelper.HandleServiceError));
+    }
+
     update(entityPM: UserLastLoginPM) {
 
 

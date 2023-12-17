@@ -105,6 +105,19 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
+
+        public HttpResponseMessage GetComputerUserName()
+        {
+            try
+            {
+                return Request.CreateResponse(HttpStatusCode.OK, Environment.UserName);
+            }
+
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
     }
 
 }
