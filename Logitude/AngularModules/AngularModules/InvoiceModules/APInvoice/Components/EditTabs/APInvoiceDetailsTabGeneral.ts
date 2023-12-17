@@ -945,7 +945,11 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                         this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
                             if (!myResponse.HasError) {
                                 this.glaccount = myResponse.Result;
-                                this.PaymentTermId = this.glaccount.PaymentTerms;
+                                
+                                if(this.glaccount.PaymentTerms)
+                                    this.PaymentTermId = this.glaccount.PaymentTerms;
+                                else
+                                    this.PaymentTermId = this.glaccount.PaymentTermId;
                                 
                                 this.EntityPM.VendorGLAccountId = this.glaccount.Id;
                                 this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
