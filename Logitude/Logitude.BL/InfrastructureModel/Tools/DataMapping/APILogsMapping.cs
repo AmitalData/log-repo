@@ -17,7 +17,7 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             {
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
-                entityPOCO.CreateDate = entityPM.CreateDate;
+                entityPOCO.CreateDate = entityPM.CreateDateUTC.ToLocalTime();
                 entityPOCO.CreateDateUTC = entityPM.CreateDateUTC;
             }
 

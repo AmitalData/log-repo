@@ -22,6 +22,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.Accounting.Data", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.CargoTracking.BL", "..\..\Logitude\Logitude.CargoTracking.BL\Logitude.CargoTracking.BL.csproj", "{6B7FB227-28D2-45B8-B079-2E2F4251510D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logitude.BL", "..\..\Logitude\Logitude.BL\Logitude.BL.csproj", "{A663E7EF-B858-4BB6-BC33-E473F51B8E56}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		All Projects|Any CPU = All Projects|Any CPU
@@ -178,6 +180,30 @@ Global
 		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Release|x86.ActiveCfg = Release|Any CPU
 		{6B7FB227-28D2-45B8-B079-2E2F4251510D}.Release|x86.Build.0 = Release|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.All Projects|Any CPU.ActiveCfg = All Projects|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.All Projects|Any CPU.Build.0 = All Projects|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.All Projects|Mixed Platforms.ActiveCfg = All Projects|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.All Projects|Mixed Platforms.Build.0 = All Projects|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.All Projects|x86.ActiveCfg = All Projects|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.All Projects|x86.Build.0 = All Projects|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.Debug|x86.Build.0 = Debug|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.None|Any CPU.ActiveCfg = None|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.None|Any CPU.Build.0 = None|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.None|Mixed Platforms.ActiveCfg = None|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.None|Mixed Platforms.Build.0 = None|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.None|x86.ActiveCfg = None|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.None|x86.Build.0 = None|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.Release|x86.ActiveCfg = Release|Any CPU
+		{A663E7EF-B858-4BB6-BC33-E473F51B8E56}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
