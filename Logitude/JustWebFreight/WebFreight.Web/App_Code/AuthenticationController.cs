@@ -2289,7 +2289,7 @@ namespace WebFreight.Web
                                         ComputerId = computerId,
                                         WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment(),
                                         IP = AuthenticationUtil.GetIP4Address(),
-                                        ComputerUserName = Environment.MachineName,
+                                        ComputerUserName =  System.Security.Principal.WindowsIdentity.GetCurrent().Name,
                                     };
 
                                     commonDataContext.UserLastLogins.Add(lastLogin);
