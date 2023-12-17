@@ -41,7 +41,6 @@ using System.Web;
 using Logitude.Customs.BL.Messaging.Customs.PerformanceLogger;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.BL.EntityQueryServices;
-using Unifreight.Data.AmitalModel.EntityPOCOs;
 
 namespace CustomsWorkerRole
 {
