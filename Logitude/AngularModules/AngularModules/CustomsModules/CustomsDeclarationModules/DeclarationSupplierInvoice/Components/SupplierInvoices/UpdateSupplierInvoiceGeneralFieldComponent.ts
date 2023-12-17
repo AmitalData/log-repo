@@ -18,8 +18,14 @@ export class UpdateSupplierInvoiceGeneralFieldComponent extends BaseComponent {
     DataContext: any = this;
     public ItemsSource: ObservableCollection;
     SupplierInvoicePM: SupplierInvoicePM;
-    ValidateClassificationCode: any;
+    Validate: any;
     UpdateField: string;
+    FinalValue:any;
+    LookUpTableName: string;
+    ObjectTableName: string;
+    Title: string;
+    IsItemsWithNoValue: boolean;
+    ItemsWithNoValueTitle: string;
     public ValidationErrorsList: string[] = [];
     IsDisplayOnly: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -34,7 +40,12 @@ export class UpdateSupplierInvoiceGeneralFieldComponent extends BaseComponent {
         if (!AppTool.IsNullOrEmpty(args)) {
             this.SupplierInvoicePM = args.SupplierInvoicePM;
             this.UpdateField = args.UpdateField;
-            this.ValidateClassificationCode = args.ValidateClassificationCode;
+            this.LookUpTableName=args.LookUpTableName;
+            this.ObjectTableName=args.ObjectTableName;
+            this.Validate = args.Validate;
+            this.Title = args.Title;
+            this.ItemsWithNoValueTitle = args.ItemsWithNoValueTitle;
+            this.IsItemsWithNoValue = args.IsItemsWithNoValue;
         }
         this.UpdateItemsWithNoValue = true;
     }
@@ -46,7 +57,7 @@ export class UpdateSupplierInvoiceGeneralFieldComponent extends BaseComponent {
     }
 
     async validateClassificationNumber(classificationTextBox: any) {
-        var res = this.ValidateClassificationCode(this.ClassificationCode);
+        var res = this.Validate(this.ClassificationCode);
         if (res.valid) {
             this.UIProperties.SetValidity("ClassificationCode", "Customs.SupplierInvoiceItem", true, "");
         }

@@ -21,8 +21,7 @@
 
     <tr style="height:32px">
         <td colspan="3" style="color:#6E7172;right:10px">
-            <span *ngIf="UpdateField==='ClassificationCode'"> {{'Customs.Declaration.O.MultiClassificationCode' |TextCodeTranslationPipe }}</span>
-            <span *ngIf="UpdateField==='OriginCountryCode'"> {{'Customs.Declaration.O.MultiCountryOfOrigin' |TextCodeTranslationPipe }}</span>
+            <span> {{Title}}</span>
         </td>
     </tr>
     <tr style="height:32px" *ngIf="UpdateField==='ClassificationCode'">
@@ -30,15 +29,15 @@
             <table>
                 <tr>
                     <td style="width:100px">
-                        <LogLabel [ObjectFieldName]="'ClassificationCode'"
-                            [ObjectTableName]="'Customs.SupplierInvoiceItem'" [DataContext]="DataContext"></LogLabel>
+                        <LogLabel [ObjectFieldName]="UpdateField"
+                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:160px">
                         <LogTextBoxV2 #ClassificationTextBox [ObjectFieldName]="UpdateField"
                             (LostFocus)="validateClassificationNumber(ClassificationTextBox)"
                             (KeyUp)="classificationKeyUp($event,ClassificationTextBox)" [DataContext]="DataContext"
                             [FocusOnMe]="true" [InputType]="'integertext'"
-                            [ObjectTableName]="'Customs.SupplierInvoiceItem'" [HideColumns]="true" [DebounceTime]="1">
+                            [ObjectTableName]="ObjectTableName" [HideColumns]="true" [DebounceTime]="1">
                         </LogTextBoxV2>
                     </td>
                     <td>
@@ -49,18 +48,19 @@
         </td>
 
     </tr>
-    <tr style="height:32px" *ngIf="UpdateField==='OriginCountryCode'">
+    <tr style="height:32px" *ngIf="UpdateField!=='ClassificationCode'">
         <td>
             <table>
                 <tr>
                     <td style="width:100px">
-                        <LogLabel [ObjectFieldName]="'OriginCountryCode'"
-                            [ObjectTableName]="'Customs.SupplierInvoiceItem'" [DataContext]="DataContext"></LogLabel>
+                        <LogLabel [ObjectFieldName]="UpdateField"
+                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                     </td>
                     <td style="width:160px">
                         <LogLov tabindex="1" [ObjectFieldName]="UpdateField"
-                            [ObjectTableName]="'Customs.SupplierInvoiceItem'" [DataContext]="DataContext"
-                            [LookUpTableName]="'Customs.CustomsCountry'" [HideColumns]="true">
+                            [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                            [LookUpTableName]="LookUpTableName" [HideColumns]="true"
+                            (SelectedItemChanged)="FinalValue = $event">
                         </LogLov>
                     </td>
                     <td>
@@ -71,7 +71,7 @@
         </td>
 
     </tr>
-    <tr style="height:32px">
+    <tr style="height:32px" *ngIf="IsItemsWithNoValue">
         <td>
             <table>
                 <tr>
@@ -81,8 +81,7 @@
                     </td>
 
                     <td style="width:60px; color:#6E7172">
-                        <span *ngIf="UpdateField==='ClassificationCode'">{{'Customs.Declaration.O.ItemsWithNoClassificationCode' |TextCodeTranslationPipe }}</span>
-                        <span *ngIf="UpdateField==='OriginCountryCode'">{{'Customs.Declaration.O.ItemsWithNoCountrOfOrigin' |TextCodeTranslationPipe }}</span>
+                        <span>{{ItemsWithNoValueTitle}}</span>
                     </td>
                     <td>
                         <div></div>
