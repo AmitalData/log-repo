@@ -17,7 +17,11 @@ namespace Logitude.BL.InfrastructureModel.Tools.DataMapping
             {
                 entityPOCO.Id = entityPM.Id;
                 entityPOCO.Tenant = entityPM.Tenant;
-                entityPOCO.CreateDate = entityPM.CreateDateUTC.ToLocalTime();
+                // Get the Israel Standard Time zone
+                TimeZoneInfo israelTimeZone = TimeZoneInfo.FindSystemTimeZoneById("Israel Standard Time");
+                // Convert UTC to Israel time
+                DateTime israelDateTime = TimeZoneInfo.ConvertTimeFromUtc(entityPM.CreateDateUTC, israelTimeZone);
+                entityPOCO.CreateDate = israelDateTime;
                 entityPOCO.CreateDateUTC = entityPM.CreateDateUTC;
             }
 
