@@ -2,8 +2,7 @@
 <Table
   Name="HybridTenantThresholds"
   Schema="dbo"
-  DBType="Main"
-  Module="Common">
+  DBType="Main">
   <Column
     Name="Tenant"
     Type="int">
@@ -19,6 +18,12 @@
   </Column>
   <Column
     Name="WaitingThresold"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Type"
     Type="int">
     <Constraints
       Nullable="false" />
