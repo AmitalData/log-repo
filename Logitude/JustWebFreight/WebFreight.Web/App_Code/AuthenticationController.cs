@@ -2282,6 +2282,10 @@ namespace WebFreight.Web
                                                            select a).FirstOrDefault();
                                 if (lastLogin == null)
                                 {
+                                    var ipadd = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
+                                    IPAddress myIP = IPAddress.Parse(ipadd);
+                                    IPHostEntry GetIPHost = Dns.GetHostEntry(myIP);
+
                                     lastLogin = new UserLastLogin()
                                     {
                                         Id = user.Id,
@@ -2289,7 +2293,7 @@ namespace WebFreight.Web
                                         ComputerId = computerId,
                                         WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment(),
                                         IP = AuthenticationUtil.GetIP4Address(),
-                                        ComputerUserName =  System.Security.Principal.WindowsIdentity.GetCurrent().Name,
+                                        ComputerUserName = GetIPHost.HostName,
                                     };
 
                                     commonDataContext.UserLastLogins.Add(lastLogin);
