@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class HybridTenantThresholdUpdateClass
    {  		
-		public const string HashString = "2a85bb48bf86322ec2c91a5de23c6a74";
+		public const string HashString = "c2a405e19713ae87006323f4edb0b440";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -95,11 +95,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	             				    ObjectTableName =  "HybridTenantThreshold",
 			      				    IsNew =  false,
 			      				    DBTableName =  "HybridTenantThresholds",
-			      				    OldDBTableName =  "HybridTenantThresholds",
 			      				    ObjectTableSingular =  "Hybrid Tenant Threshold",
 			      				    ObjectTablePlural =  "Hybrid Tenant Threshold ",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
+			      				    AvailableInCustomization =  false,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -125,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Hybrid Tenant Threshold",
-			      				    Code =  "3c3f",
+			      				    Code =  "0979",
 			      				    Name =  "HybridTenantThreshold",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -135,6 +138,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    DisableSearchBox =  false,
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
+			      				    IsTabsHidden =  false,
 			      				    SearchFields =  "HybridTenantThreshold,HybridTenantThresholds,,Id,",
 			      				    HashString =  HybridTenantThresholdUpdateClass.HashString,
 			                    
@@ -148,7 +152,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Tenant",
-					  						OldFieldName =  "Tenant",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -163,6 +166,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -199,6 +203,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -210,7 +215,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "FailedThresold",
-					  						OldFieldName =  "FailedThresold",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -225,6 +229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -261,6 +266,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -272,7 +278,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "WaitingThresold",
-					  						OldFieldName =  "WaitingThresold",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -287,6 +292,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -323,6 +329,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
@@ -334,7 +341,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Description",
-					  						OldFieldName =  "Description",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -349,6 +355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
@@ -387,6 +394,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Description",
@@ -399,7 +407,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "Language",
-					  						OldFieldName =  "Language",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -414,6 +421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
@@ -452,6 +460,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "Language",
@@ -464,7 +473,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "InternalRemarks",
-					  						OldFieldName =  "InternalRemarks",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
@@ -479,6 +487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
@@ -517,6 +526,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "InternalRemarks",
@@ -529,7 +539,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "CountryCode",
-					  						OldFieldName =  "CountryCode",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -544,6 +553,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
@@ -582,6 +592,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "CountryCode",
@@ -594,7 +605,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsEnabledForCustomers",
-					  						OldFieldName =  "IsEnabledForCustomers",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -609,6 +619,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
@@ -647,6 +658,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsEnabledForCustomers",
@@ -659,7 +671,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   {
 					 
 					 						FieldName =  "IsCopiedAtSignup",
-					  						OldFieldName =  "IsCopiedAtSignup",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
@@ -674,6 +685,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  true,
 					  						IsTimeFrameFilter =  false,
@@ -712,9 +724,73 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
 					  						HelpTextCode =  "IsCopiedAtSignup",
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Type",
+					  						ObjectTableName =  "HybridTenantThreshold",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Type",
+					  						ListPropertyPath =  "Type",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "HybridTenantThreshold",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Type",
+					  						DefaultText =  "Type",
+					  						FullLocalDefaultText =  "Type",
+					  						ListFieldLable =  "TypeListLable",
+					  						ListLableDefaultText =  "Type",
+					  						ListLocalDefaultText =  "Type",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
@@ -726,7 +802,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable HybridTenantThresholdObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "HybridTenantThreshold" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> HybridTenantThresholdObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "HybridTenantThreshold").ToList();
+		       
+	      
+
+	         Screen HybridTenantThresholdHybridTenantThresholdHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "HybridTenantThreshold.HeaderScreen", Name = "HybridTenantThresholdHeaderScreen", ObjectTableId = HybridTenantThresholdObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    HybridTenantThresholdObjectTable.HeaderScreenId = HybridTenantThresholdHybridTenantThresholdHeaderScreenScreen0.Id;
+		    HybridTenantThresholdObjectTable.HeaderScreenCode = HybridTenantThresholdHybridTenantThresholdHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
