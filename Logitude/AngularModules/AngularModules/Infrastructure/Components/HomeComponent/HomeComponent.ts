@@ -891,17 +891,24 @@ export class HomeComponent implements OnDestroy{
     }
 
 
-
+    private isCurrenciesRatesClicked = false;
     CurrenciesRatesClicked() {
+        if (this.isCurrenciesRatesClicked) {
+            return;
+        }
+        this.isCurrenciesRatesClicked = true;
         var windowTitle = "Edit exchange rates";
         var logWindow = new LogitudeWindow();
         logWindow.Title = windowTitle;
+        logWindow.WindowClosed.subscribe(($event: any) => this.OnWindowClosed($event));
         this._entityResourceService.getEntityResourceByTableName("RatesTable").subscribe((response: any) => {
             logWindow.Show('./Common/Components/Maintenance/RatesMainTabComponent');
         });
     }
 
-
+    OnWindowClosed(arg: any) {
+        this.isCurrenciesRatesClicked = false;
+    }
 
 
     CreateSession(tabItem: SessionTabItem) {
