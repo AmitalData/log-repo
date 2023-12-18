@@ -44,7 +44,6 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                           ComputerId = a.ComputerId,
                                           WorkEnvironment = a.WorkEnvironment,
                                           IP = a.IP,
-                                          ComputerUserName = a.ComputerUserName,
                                       }).FirstOrDefault();
             return entity;
         }

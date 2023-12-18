@@ -26,9 +26,7 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(40)
                 .IsUnicode(false);
 
-            this.Property(t => t.ComputerUserName)
-                .HasMaxLength(30)
-                .IsUnicode(false);
+
 
             // Table & Column Mappings
             this.ToTable("UserLastLogins");
@@ -37,7 +35,6 @@ namespace Simplog.Data.CommonDataModel.Mapping
             this.Property(t => t.Tenant).HasColumnName("Tenant");
             this.Property(t => t.Id).HasColumnName("Id");
             this.Property(t => t.WorkEnvironment).HasColumnName("WorkEnvironment");
-            this.Property(t => t.ComputerUserName).HasColumnName("ComputerUserName");
 
             // Relationships
             this.HasRequired(t => t.User)
