@@ -1018,15 +1018,7 @@ namespace WebFreight.Web.Helpers
             TextCodeRepository textCodeRepoitory = new TextCodeRepository(tenant);
             TenantRepository tenantRepoitory = new TenantRepository(tenant);
             var CurTenant = tenantRepoitory.GetSingleByTenant(tenant);
-            string queryName = !string.IsNullOrEmpty(query.DisplayText) ? query.DisplayText : TranslateTextsClass.Translate(query.NameTextCodeCode, tenant).Replace(" ", "_") + "_" + query.ObjectTableName + "s";
-
-            queryName = ExportToExcelHelper.GetValidFileName(queryName);//queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
-            queryName = queryName.Replace(":", "").Replace("/", "").Replace("\"", "").Replace("?", "").Replace("*", "").Replace("[", "").Replace("]", "").Replace("(", "").Replace(")", "").Replace("'", "");
-
-            //if (queryName.Length > 31)
-            //    queryName = queryName.Substring(0, 31);
-
-            System.Xml.Linq.XElement entities = new System.Xml.Linq.XElement(queryName);
+            System.Xml.Linq.XElement entities = new System.Xml.Linq.XElement(query.ObjectTableName+ "s");
             try
             {
                 int datacount = 0;
