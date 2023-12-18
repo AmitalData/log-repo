@@ -689,7 +689,8 @@ export class PaymentMethodModel extends BaseComponent {
                                             this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {
                                                 if (response) {
                                                     if (!response.HasError) {
-                                                        this.BanksList = response.Result.filter(d => !d.InActive); 
+                                                        var agentBank = response.Result.filter(d => !d.InActive && d.PayerTypeCode == "3");
+                                                        this.BanksList = this.BanksList.concat(agentBank);
                                                         if (this.InternalBankId != null) {
                                                             var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
                                                             this.SelectedBank = bank;
@@ -702,7 +703,8 @@ export class PaymentMethodModel extends BaseComponent {
                                             this.customBankListService.getAllFromCache().subscribe((response: ServiceResponse) => {
                                                 if (response) {
                                                     if (!response.HasError) {
-                                                        this.BanksList = response.Result.filter(d => !d.InActive);
+                                                        var agentBank = response.Result.filter(d => !d.InActive && d.PayerTypeCode == "3");
+                                                        this.BanksList = this.BanksList.concat(agentBank);
                                                         if (this.InternalBankId != null) {
                                                             var bank: CustomBankList = this.BanksList.filter(d => d.Id == this.InternalBankId)[0];
                                                             this.SelectedBank = bank;
