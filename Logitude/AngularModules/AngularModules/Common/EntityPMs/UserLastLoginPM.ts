@@ -4,6 +4,5 @@ export class UserLastLoginPM {
     public LoginDateTime: Date;
     public Tenant: number;
     public WorkEnvironment: string;
-    public ComputerUserName: string;
 
 }

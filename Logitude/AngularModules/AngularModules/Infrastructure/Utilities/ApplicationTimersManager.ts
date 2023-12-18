@@ -179,16 +179,10 @@ export class ApplicationTimersManager {
         if(SessionLocator.LoggedUserPM.Tenant == 0) return;
         if (AppTool.IsNullOrEmpty(computerId)) return;
         if (ObjectsLocator.GlobalSetting.SameUserLoginEnabled) return;
-        //this.userLastLoginPMService.GetComputerUserName().subscribe((response: any) => {
-            //if (!response.HasError && response.Result) {
-                //let computerUserName = response.Result
-                if (lastloginPM.ComputerId == computerId) return;
-                
-                let workEnvironment: string = this.GetWorkEnvironment();
-                if (this.IsSameUserLoginEnabledWithDifferentEnvironmentToggle() && lastloginPM.ComputerId != computerId && lastloginPM.WorkEnvironment?.toLowerCase() != workEnvironment?.toLowerCase()) return;
-                this.HandleUserUnlocked();
-            //} 
-        //});
+        if (lastloginPM.ComputerId == computerId) return;
+        let workEnvironment: string = this.GetWorkEnvironment();
+        if (this.IsSameUserLoginEnabledWithDifferentEnvironmentToggle() && lastloginPM.ComputerId != computerId && lastloginPM.WorkEnvironment?.toLowerCase() != workEnvironment?.toLowerCase()) return;
+        this.HandleUserUnlocked();
        
     }
 

@@ -2294,14 +2294,10 @@ namespace WebFreight.Web
                                         ComputerId = computerId,
                                         WorkEnvironment = LogitudeSettingConfigration.GetWorkEnvironment(),
                                         IP = AuthenticationUtil.GetIP4Address(),
-                                        ComputerUserName = GetIPHost.HostName,
                                     };
 
                                     commonDataContext.UserLastLogins.Add(lastLogin);
                                 }
-                                //string[] computer_name = System.Net.Dns.GetHostEntry(Request.ServerVariables["remote_addr"]).HostName
-                                    //.Split(new Char[] { '.' });
-                               // HiddenField1.Value = computer_name[0].ToString();
 
                                 user.LastLoginDateTime = lastLogin.LoginDateTime;
                                 lastLogin.IP = AuthenticationUtil.GetIP4Address();
