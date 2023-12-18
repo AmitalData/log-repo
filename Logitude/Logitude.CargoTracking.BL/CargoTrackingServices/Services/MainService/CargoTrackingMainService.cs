@@ -933,12 +933,13 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             var cargoTrackingShipmentsService = new CargoTrackingShipmentsService();
             updateCargoTrackingRecords.Milestones = cargoTrackingShipmentsService.GetMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
+            //check tenant
             if (updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.Tenant == 0)
             {
                 updateCargoTrackingRecords.AllTenantIds = ServiceHelper.GetAllTenants(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString); ;
             }
             else
-            {
+            {  
                 updateCargoTrackingRecords.AllTenantIds = new List<int> { updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.Tenant.Value };
             }
                 updateCargoTrackingRecords.MilestonesNotPermitted = cargoTrackingShipmentsService.GetAllNotPermittedMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString);
