@@ -12,7 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
- 
+
 
 namespace CargoTrackingWinService.Helper
 {
@@ -77,14 +77,14 @@ namespace CargoTrackingWinService.Helper
         {
             //if (ApplicationInfo.UpdateCounter == 10)
             //{
-                ApplicationInfo.UpdateCounter = 0;
-                ApplicationInfo.EndDate = TenantServerConfigration.GetCurrentDateTime(0);
-                if (!isFromBuild)
-                {
-                    CargoTrackingServiceHelper.AddRecordToCargoTrackingIncrementalStats(destinationConnectionString);
+            ApplicationInfo.UpdateCounter = 0;
+            ApplicationInfo.EndDate = TenantServerConfigration.GetCurrentDateTime(0);
+            if (!isFromBuild)
+            {
+                CargoTrackingServiceHelper.AddRecordToCargoTrackingIncrementalStats(destinationConnectionString);
 
-                }
-           // }
+            }
+            // }
         }
 
         private RecordUpdated UpdateCargoDataBase(CargoTrackingTable table)
@@ -94,7 +94,7 @@ namespace CargoTrackingWinService.Helper
                 BuildCargoArgs = new CargoTrackingArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },
                 NumberOfBulkPerTime = 1000,
                 IsUpdateFromBuild = false,
-                CargoTrackingArguments = null,
+                CargoTrackingArguments = new CargoTrackingArguments { Tenant = 0 },
                 IsUpdateAfterFinished = null,
             };
             RecordUpdated recordUpdatedNumber = cargoTrackingMainService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs);
@@ -112,7 +112,7 @@ namespace CargoTrackingWinService.Helper
                     recordUpdated = UpdateCargoDataBase(table);
                     ApplicationInfo.ErrorLogs += recordUpdated.ErrorLogs;
                 }
-                catch(Exception exception)
+                catch (Exception exception)
                 {
                     SetIncrementalErrorLog(exception, table);
                 }
@@ -127,8 +127,8 @@ namespace CargoTrackingWinService.Helper
         private void SetIncrementalErrorLog(Exception exception, CargoTrackingTable table)
         {
             string ErrorsLog = "Table Name: " + table.Main_CargoTracking_TableName + Environment.NewLine +
-                                "Erros: " + exception.Message + Environment.NewLine + 
-                                "Stack Trace: " + exception.StackTrace + Environment.NewLine ;
+                                "Erros: " + exception.Message + Environment.NewLine +
+                                "Stack Trace: " + exception.StackTrace + Environment.NewLine;
 
             if (ApplicationInfo.ErrorLogs == null)
                 ApplicationInfo.ErrorLogs = ErrorsLog;
@@ -151,14 +151,14 @@ namespace CargoTrackingWinService.Helper
         {
             if (ApplicationInfo.CargoTrackingRecordsUpdatedDictionary.ContainsKey(tableName))
             {
-                ApplicationInfo.CargoTrackingRecordsUpdatedDictionary[tableName] = 
+                ApplicationInfo.CargoTrackingRecordsUpdatedDictionary[tableName] =
                               ApplicationInfo.CargoTrackingRecordsUpdatedDictionary[tableName] + recordUpdatedNumber;
             }
             else
             {
                 ApplicationInfo.CargoTrackingRecordsUpdatedDictionary.Add(tableName, recordUpdatedNumber);
             }
-  
+
         }
 
         private void BuildConnectionString()
