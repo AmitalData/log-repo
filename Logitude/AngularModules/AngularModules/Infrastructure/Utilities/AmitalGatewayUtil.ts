@@ -61,6 +61,7 @@ export class AmitalGatewayUtil {
         }*/
     }
     NoteUnifreightIamReady() {
+        window.parent.postMessage("site ready", '*');
 
         let myRequestWrapper = new RequestWrapperM();
         myRequestWrapper.MessageID = "NoteUnifreightIamReady";
@@ -280,7 +281,6 @@ export class AmitalGatewayUtil {
     }
 
     SendRequestJSONToUnifreightAsync(myRequestWrapper: RequestWrapperM) {
-
         if (AppTool.IsNullOrEmpty(window.parent._JavascriptGateway)) {
             alert("_JavascriptGateway not exist !!!");
             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -293,6 +293,8 @@ export class AmitalGatewayUtil {
     }
     public IsAmitalBackButtonDisable: boolean = false;
     AmitalBackButtonClicked() {
+        window.parent.postMessage("amitalBackButtonClicked", '*');
+
         let RequestWrapper = new RequestWrapperM()
         let myUnifreightMessageM = new UnifreightMessageM();
         //myUnifreightMessageM.LogitudeCommandId = "LogitudeCommandId";
@@ -317,7 +319,7 @@ export class AmitalGatewayUtil {
         //}
         this._LastUnifreightMessageM = unifreightMessage
         this._LastUnifreightMessageM.Requset = this._LastUnifreightMessageM.Requset || [];
-        this._LastUnifreightMessageM.Response = this._LastUnifreightMessageM.Response || [];
+        this._LastUnifreightMessageM.Response = this._LastUnifreightMessageM.Response || [];        
         switch (unifreightMessage.LogitudeCommandId) {
             
             case "SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM()": 
