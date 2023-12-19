@@ -193,7 +193,12 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableConditio
             }
             else
             {
-                AddTenantAndDateFilter("C", whereConditions, cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value);
+                int tenant = 0;
+                if(cargoTrackingDataBaseArgs.CargoTrackingArguments!=null && cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.HasValue)
+                {
+                    tenant = cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value;
+                }
+                AddTenantAndDateFilter("C", whereConditions, tenant);
             }
 
             var whereScript = " WHERE C.ShipmentLevelCode = 'A' AND " + string.Join(" AND ", whereConditions);

@@ -757,8 +757,8 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cache Log";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-
-        if (FeatureLocator.HasFeaturePermession(null, "CARGOTRACKING")) {
+        
+        if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "OTH";
             item.Icon = "Settings"

@@ -109,6 +109,7 @@ namespace CargoTrackingWinService.Helper
             {
                 try
                 {
+                    ApplicationInfo.ErrorLogs += "liron start ";
                     recordUpdated = UpdateCargoDataBase(table);
                     ApplicationInfo.ErrorLogs += recordUpdated.ErrorLogs;
                 }
