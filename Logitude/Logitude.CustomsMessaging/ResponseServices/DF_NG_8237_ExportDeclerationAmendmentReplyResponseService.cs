@@ -75,8 +75,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 DeclarationCorrectionsPointerService myDeclarationCorrectionsPointerService = new DeclarationCorrectionsPointerService();
                 string error = "";
                 DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService = new DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService();
-                FeatureQuery featureQuery = new FeatureQuery();
-                bool fromMehes = false;
+				ICommonDataContext myContextCommon = CommonDataContext.GetContext(requestParams.Tenant);
+				FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
+				FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
+				bool fromMehes = false;
 
                 if (customResponse.ResponseContentHeader != null && customResponse.ResponseContentHeader.Exception != null && customResponse.ResponseContentHeader.Exception.Count() > 0)
                 {
@@ -817,11 +819,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                     }
 
-                    this.MyResponseData.ApplicationID = requestParams.AppicationId;
-
                 }
+		
+				var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(requestParams.Tenant), requestParams.Tenant);
+				var featureClosingAutoExpDec = features.Features.FirstOrDefault(x => x.Code == "ClosingAutoExpDec");
 
-                this.MyResponseData.ApplicationID = requestParams.AppicationId;
+				
+				if (this._MyDeclarationPM?.Direction == "E" && featureClosingAutoExpDec != null)
+                {
+					if (customResponse.Response.Error != null && customResponse.Response.Error.Any(y => y.ValidationCode.listVersionID == "1"))
+					{
+						var comments = "";
+						customResponse.Response.Error.Where(y => y.ValidationCode.listVersionID == "1").ForEach(x => comments += (x.ValidationCode.name+"\n"));
+						RaiseEvent(this._MyDeclarationPM, null, "CF2", comments);
+					}
+				}
+
+				this.MyResponseData.ApplicationID = requestParams.AppicationId;
                 this.MyResponseData.Succeeded = true;
                 this.MyResponseData.HasException = false;
 
