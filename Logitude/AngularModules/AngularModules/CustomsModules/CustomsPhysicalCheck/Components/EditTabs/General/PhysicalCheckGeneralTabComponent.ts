@@ -253,7 +253,6 @@ export class PhysicalCheckGeneralTabComponent
     }
 
     checkEarlierDateFeature() {
-        debugger;
         return FeatureLocator.HasFeaturePermession("PhysicalCheck", "EarlierDateFeature");
     }
 
