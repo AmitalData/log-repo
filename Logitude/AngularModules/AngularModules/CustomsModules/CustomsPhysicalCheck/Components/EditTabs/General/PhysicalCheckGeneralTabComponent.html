@@ -52,6 +52,9 @@
         color: gray;
         font-family: sans-serif;
     }
+    :host ::ng-deep .InputDiv {
+        height: 55px !important;
+    }
 </style>
 
 <div style="margin:10px;" class="MediaFill">
@@ -80,7 +83,7 @@
         <tr>
             <td>
                 <div class="MediaFill">
-                    <div style="float:right;">
+                    <div style="float:right; width: 300px;" >
                         <table style="width: 250px;height: 350px;padding-top: 10px;float:right;">
 
                             <tr style="height:25px">
@@ -99,16 +102,15 @@
 
                             </tr>
 
-                            <!-- <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate && checkEarlierDateFeature()"> -->
-                            <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate" >
-                                <td colspan="2">
-                                    <div class="Tbl1Col0">
+                            <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate && checkEarlierDateFeature()"
+                                style="display: flex; width: 400px; align-items: flex-start;">
+
+                                <td colspan="1" style="margin-left: 10px;">
+                                    <div class="Tbl1Col0" style="display: flex; justify-content: flex-start;">
                                         <label for="RequestToAdvanceAQueue">{{'Customs.PhysicalCheck.O.RequestToAdvanceAQueue' | TextCodeTranslationPipe}} </label>
                                     </div>
                                 </td>
-                                <td class="Tbl1Col1">
-                                    <!-- <input id="RequestToAdvanceAQueue" type="text" [(ngModel)]="EntityPM.RequestToAdvanceAQueue" [disabled]="IsDisplayOnly"/> -->
-                                    
+                                <td class="Tbl1Col1" style="width: 170px; margin-bottom: 10px;">                                    
                                     <LogLov [ObjectFieldName]="'RequestToAdvanceAQueue'"
                                     [ObjectTableName]="'Customs.PhysicalCheck'"
                                     [DataContext]="DataContext" 
@@ -119,15 +121,14 @@
                                 </td>
 
                             </tr>
-                            <!-- <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate && checkEarlierDateFeature()"> -->
-                            <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate">
-                                <td colspan="2">
-                                    <div class="Tbl1Col0">
+                            <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate && checkEarlierDateFeature()"
+                                style=" display: flex; flex-direction: row; align-items: flex-start; width: 400px;">
+                                <td colspan="1" style="margin-left: 10px;">
+                                    <div class="Tbl1Col0" style="display: flex; justify-content: flex-start;">
                                         <label for="RequestDetails">{{'Customs.PhysicalCheck.O.RequestDetails' | TextCodeTranslationPipe}}</label>
                                     </div>
                                 </td>
-                                <td class="Tbl1Col1">
-                                    <!-- <input id="RequestDetails" type="text" [(ngModel)]="EntityPM.RequestDetails" [disabled]="IsDisplayOnly"/> -->
+                                <td class="Tbl1Col1" style="width: 170px;">
                                     <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'RequestDetails'"
                                                          [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
                                                           [DataContext]="DataContext"></LogTextBox>
@@ -158,7 +159,8 @@
 
                             </tr>
 
-                            <tr class="FormFieldRow">
+                            <tr class="FormFieldRow"
+                                style=" display: flex; flex-direction: row; align-items: center; width: 400px;">
                                 <td class="Tbl1Col0">
                                     <LogLabel [NoObjectField]="true" [ObjectFieldName]="'FromDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                               [TextCode]="'Customs.PhysicalCheck.O.FromDate'"></LogLabel>
@@ -176,7 +178,8 @@
                                 <td><div></div></td>
                             </tr>
 
-                            <tr class="FormFieldRow">
+                            <tr class="FormFieldRow"
+                                style=" display: flex; flex-direction: row; align-items: center; width: 400px;">
                                 <td class="Tbl1Col0">
                                     <LogLabel [NoObjectField]="true" [ObjectFieldName]="'ToDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
                                               [TextCode]="'Customs.PhysicalCheck.O.ToDate'"></LogLabel>
@@ -194,7 +197,11 @@
                                 </td>
                                 <td><div></div></td>
                             </tr>
-                            <tr>
+                            <tr style="display: flex;
+                                align-items: flex-end;
+                                justify-content: center;
+                                margin: 10px;
+                                width: 300px;">
                                 <td></td>
                                 <td colspan="2">
                                     <custom-send-options [CustomSendOptionsButtonCanForcePersonalSign]="'false'"
