@@ -18,6 +18,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 using Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableConditions;
+using System.Web.Hosting;
 
 namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 {
@@ -40,13 +41,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         public RecordUpdated UpdateCargoTrackingDataBase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
         {
+            RecordUpdated.ErrorLogs += " liron UpdateCargoTrackingDataBase: ";
             int tenant = 0;
             SetTablesStructureHelper(cargoTrackingDataBaseArgs);
             SetBuildProcessData(cargoTrackingDataBaseArgs);
             RecordUpdated = new RecordUpdated();
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments != null && cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.HasValue)
-            {
+            {                
                 tenant = cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value;
+                RecordUpdated.ErrorLogs += " liron tenant: "+ tenant;
             }
             RecordUpdated.IsFromBuild = ServiceHelper.GetIsIncrementalRunning(cargoTrackingDataBaseArgs.BuildCargoArgs.SourceConnectionString, tenant);
             RecordUpdated = UpdateCargoTracking(cargoTrackingDataBaseArgs, RecordUpdated);
@@ -897,6 +900,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         {
             if (!_recordUpdated.IsFromBuild || cargoTrackingDataBaseArgs.CargoTrackingArguments != null)
             {
+                _recordUpdated.ErrorLogs += " liron UpdateCargoTracking1: ";
+
                 UpdateCargoTrackingRecords updateCargoTrackingRecords = new UpdateCargoTrackingRecords()
                 {
                     IsUpadteWaterMark = true,
@@ -905,13 +910,16 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
                     RecordUpdated = _recordUpdated,
                     CargoTrackingUpdateDataBaseArgs = cargoTrackingDataBaseArgs,
                 };
+                _recordUpdated.ErrorLogs += " liron UpdateCargoTracking2: ";
                 if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.ConditionsNumber == CargoTrackingTable_SingleCondition)
                 {
+                    _recordUpdated.ErrorLogs += " liron UpdateCargoTracking3: ";
                     UpdateCargoTrackingCondition(updateCargoTrackingRecords, GeneralTable_WithoutCustomCondition, true);
 
                 }
                 if (cargoTrackingDataBaseArgs.BuildCargoArgs.Table.ConditionsNumber == CargoTrackingTable_MultiConditions)
                 {
+                    _recordUpdated.ErrorLogs += " liron UpdateCargoTracking4: ";
                     BuildShipments(updateCargoTrackingRecords);
                 }
                 _recordUpdated.NumberOfRecordUpdated = updateCargoTrackingRecords.NumberRecordUpdated;
@@ -935,16 +943,25 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
         }
         private void BuildShipments(UpdateCargoTrackingRecords updateCargoTrackingRecords)
         {
+            int tenant = 0;
             var cargoTrackingShipmentsService = new CargoTrackingShipmentsService();
             updateCargoTrackingRecords.Milestones = cargoTrackingShipmentsService.GetMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.DestinationConnectionString);
             //check tenant
-            if (updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.Tenant == 0)
+            updateCargoTrackingRecords.RecordUpdated.ErrorLogs += " liron BuildShipments 1";
+            if (updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments != null && updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.Tenant.HasValue)
             {
+                updateCargoTrackingRecords.RecordUpdated.ErrorLogs += " liron BuildShipments 2 "+tenant;
+                tenant = updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.Tenant.Value;
+            }
+            if (tenant == 0)
+            {
+                updateCargoTrackingRecords.RecordUpdated.ErrorLogs += " liron BuildShipments 3";
                 updateCargoTrackingRecords.AllTenantIds = ServiceHelper.GetAllTenants(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString); ;
             }
             else
-            {  
-                updateCargoTrackingRecords.AllTenantIds = new List<int> { updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.Tenant.Value };
+            {
+                updateCargoTrackingRecords.RecordUpdated.ErrorLogs += " liron BuildShipments 4";
+                updateCargoTrackingRecords.AllTenantIds = new List<int> { tenant };
             }
                 updateCargoTrackingRecords.MilestonesNotPermitted = cargoTrackingShipmentsService.GetAllNotPermittedMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString);
 
@@ -1003,6 +1020,8 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             updateCargoTrackingRecords.RecordUpdated = UpdateCargoTrackingDatabase(updateCargoTrackingRecords, updateCargoTrackingRecords.IsUpadteWaterMark);
             updateCargoTrackingRecords.NumberRecordUpdated += updateCargoTrackingRecords.RecordUpdated.NumberOfRecordUpdated;
             updateCargoTrackingRecords.NumberRecordUpdated2 += updateCargoTrackingRecords.RecordUpdated.NumberOfRecordUpdated2;
+            updateCargoTrackingRecords.RecordUpdated.ErrorLogs += " liron UpdateCargoTrackingCondition ";
+
         }
     }
 }
