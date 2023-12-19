@@ -40,11 +40,15 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
         public RecordUpdated UpdateCargoTrackingDataBase(CargoTrackingUpdateDataBaseArgs cargoTrackingDataBaseArgs)
         {
-
+            int tenant = 0;
             SetTablesStructureHelper(cargoTrackingDataBaseArgs);
             SetBuildProcessData(cargoTrackingDataBaseArgs);
             RecordUpdated = new RecordUpdated();
-            RecordUpdated.IsFromBuild = ServiceHelper.GetIsIncrementalRunning(cargoTrackingDataBaseArgs.BuildCargoArgs.SourceConnectionString, cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value);
+            if (cargoTrackingDataBaseArgs.CargoTrackingArguments != null && cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.HasValue)
+            {
+                tenant = cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value;
+            }
+            RecordUpdated.IsFromBuild = ServiceHelper.GetIsIncrementalRunning(cargoTrackingDataBaseArgs.BuildCargoArgs.SourceConnectionString, tenant);
             RecordUpdated = UpdateCargoTracking(cargoTrackingDataBaseArgs, RecordUpdated);
             return RecordUpdated;
         }
