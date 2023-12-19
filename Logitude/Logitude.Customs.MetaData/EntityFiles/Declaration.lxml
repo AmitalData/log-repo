@@ -27816,6 +27816,12 @@
       LocalDefaultText="&quot;נא אשר ביטול ההצבעות בכל שורות פרט המכס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DeletePointer&quot;"
+      DefaultText="&quot;Pointers successfully deleted&quot;"
+      LocalDefaultText="&quot;נתוני ההצבעה נמחקו בהצלחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
