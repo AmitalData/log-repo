@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ChargesTypeUpdateClass
    {  		
-		public const string HashString = "0076a67469e34646d852c4bf7e69abb8";
+		public const string HashString = "d15e036ad5ba3d8c89eb5acb4f062c55";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3485,6 +3485,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChargesGroupId",
 					  						DefaultText =  "Group Code",
+					  						FullLocalDefaultText =  "קוד קבוצה",
+					  						ListFieldLable =  "ChargesGroupIdListLable",
+					  						ListLableDefaultText =  "Group Code",
+					  						ListLocalDefaultText =  "קוד קבוצה",
 					  						HelpTextCode =  "ChargesGroupId",
 					  						HelpTextDefaultText =  "Select the group to which this charge type belongs. Mandatory field. For example, if it belongs to the FRT-Freight group, then when adding this charge in a shipment Logitude will refer to the system currency defined for the freight group in setup.",
 					  						IsForeignKey =  true,
