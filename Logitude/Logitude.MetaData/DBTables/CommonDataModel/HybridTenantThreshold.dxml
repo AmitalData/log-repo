@@ -28,6 +28,6 @@
     OldNames="Type"
     Type="int">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
 </Table>
