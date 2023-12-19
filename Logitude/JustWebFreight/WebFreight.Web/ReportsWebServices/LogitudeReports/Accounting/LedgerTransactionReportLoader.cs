@@ -339,7 +339,9 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
         private void FillPrintingInformation()
         {
             string loggedContactName = GetLoggedContactName();           
+            string loggedContactEnglishName = GetLoggedContactEnglishName();           
             transactionsDataProvider.PrintedByUser = loggedContactName;
+            transactionsDataProvider.UserEnglishName = loggedContactEnglishName;
             transactionsDataProvider.PrintDate = TenantServerConfigration.GetCurrentDateTime(tenant);
         }
 
@@ -366,6 +368,20 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 loggedContact = GetLoggedContact();
                return GetContactName(loggedContact);
+            }
+        }
+        private string GetLoggedContactEnglishName()
+        {
+            ContactPM loggedContactEnglishName;
+            if (AuthenticationUtil.AuthenticatedUserEmail != null)
+            {
+                loggedContactEnglishName = GetContactByEmail(AuthenticationUtil.AuthenticatedUserEmail);
+                return loggedContactEnglishName.EnglishName;
+            }
+            else
+            {
+                loggedContactEnglishName = GetLoggedContact();
+                return loggedContactEnglishName.EnglishName;
             }
         }
         private ContactPM GetContactByEmail(string email)
