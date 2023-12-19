@@ -20,6 +20,7 @@ namespace WebFreight.Web.DataProviders
 
         // Others
         public string PrintedByUser { get; set; }
+        public string UserEnglishName { get; set; }
         public DateTime PrintDate { get; set; }
         public string TenantCurrencyCode { get; set; }
         public string TenantCurrencySign { get; set; }
