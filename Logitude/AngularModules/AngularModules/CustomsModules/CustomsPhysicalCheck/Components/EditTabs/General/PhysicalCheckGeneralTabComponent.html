@@ -52,6 +52,9 @@
         color: gray;
         font-family: sans-serif;
     }
+    :host ::ng-deep .InputDiv {
+        height: 55px !important;
+    }
 </style>
 
 <div style="margin:10px;" class="MediaFill">
@@ -80,7 +83,7 @@
         <tr>
             <td>
                 <div class="MediaFill">
-                    <div style="float:right; width: 450px;" >
+                    <div style="float:right; width: 300px;" >
                         <table style="width: 250px;height: 350px;padding-top: 10px;float:right;">
 
                             <tr style="height:25px">
@@ -100,14 +103,14 @@
                             </tr>
 
                             <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate && checkEarlierDateFeature()"
-                                style=" display: flex; flex-direction: row; align-items: center; width: 400px;">
+                                style="display: flex; width: 400px; align-items: flex-start;">
 
                                 <td colspan="1" style="margin-left: 10px;">
-                                    <div class="Tbl1Col0">
+                                    <div class="Tbl1Col0" style="display: flex; justify-content: flex-start;">
                                         <label for="RequestToAdvanceAQueue">{{'Customs.PhysicalCheck.O.RequestToAdvanceAQueue' | TextCodeTranslationPipe}} </label>
                                     </div>
                                 </td>
-                                <td class="Tbl1Col1" style="width: 280px;">                                    
+                                <td class="Tbl1Col1" style="width: 170px; margin-bottom: 10px;">                                    
                                     <LogLov [ObjectFieldName]="'RequestToAdvanceAQueue'"
                                     [ObjectTableName]="'Customs.PhysicalCheck'"
                                     [DataContext]="DataContext" 
@@ -119,14 +122,13 @@
 
                             </tr>
                             <tr class="FormFieldRow" *ngIf="AskForAnEarlierDate && checkEarlierDateFeature()"
-                                style=" display: flex; flex-direction: row; align-items: center; width: 400px;">
-
+                                style=" display: flex; flex-direction: row; align-items: flex-start; width: 400px;">
                                 <td colspan="1" style="margin-left: 10px;">
-                                    <div class="Tbl1Col0">
+                                    <div class="Tbl1Col0" style="display: flex; justify-content: flex-start;">
                                         <label for="RequestDetails">{{'Customs.PhysicalCheck.O.RequestDetails' | TextCodeTranslationPipe}}</label>
                                     </div>
                                 </td>
-                                <td class="Tbl1Col1" style="width: 280px;">
+                                <td class="Tbl1Col1" style="width: 170px;">
                                     <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'RequestDetails'"
                                                          [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
                                                           [DataContext]="DataContext"></LogTextBox>
@@ -196,9 +198,10 @@
                                 <td><div></div></td>
                             </tr>
                             <tr style="display: flex;
-                            align-items: flex-end;
-                            justify-content: center;
-                            margin: 10px;">
+                                align-items: flex-end;
+                                justify-content: center;
+                                margin: 10px;
+                                width: 300px;">
                                 <td></td>
                                 <td colspan="2">
                                     <custom-send-options [CustomSendOptionsButtonCanForcePersonalSign]="'false'"
