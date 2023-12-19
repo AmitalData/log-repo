@@ -23,7 +23,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Type"
+    Name="TypeCode"
+    OldNames="Type"
     Type="int">
     <Constraints
       Nullable="false" />

@@ -39,6 +39,11 @@ export class HybridTenantThresholdPM {
     public get WaitingThresold() { return this.waitingThresold; }
     public set WaitingThresold(newValue: number) { if (this.waitingThresold != newValue) { this.waitingThresold = newValue; this.MarkAsDirty("WaitingThresold"); } }
        
+
+    private type: number;
+    public get Type() { return this.type; }
+    public set Type(newValue: number) { if (this.type != newValue) { this.type = newValue; this.MarkAsDirty("type"); } }
+       
 	 
 
     public OldEntityPM: HybridTenantThresholdPM;
@@ -67,4 +72,4 @@ export class HybridTenantThresholdPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

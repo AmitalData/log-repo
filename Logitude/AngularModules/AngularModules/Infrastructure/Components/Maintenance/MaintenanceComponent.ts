@@ -20,6 +20,7 @@ import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
+import { ThresholdTypes } from 'InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent';
 
 @Component({
     
@@ -1483,6 +1484,7 @@ export class MaintenanceComponent {
                     logitudeWindow.Height = 250;
                     logitudeWindow.Width = 300;
                     logitudeWindow.ShowCloseButton = false;
+                    logitudeWindow.DataContext=ThresholdTypes.Hybrid
                     logitudeWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent');
                     break;
                 }
