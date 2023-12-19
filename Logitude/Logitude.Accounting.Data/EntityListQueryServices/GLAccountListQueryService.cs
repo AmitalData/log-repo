@@ -27,8 +27,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
     {
         public IQueryable<GLAccountList> GetIqueryableList(IQueryable<GLAccount> iQueryable, User loggedUser)
         {
-
-            int tenant=-1;
+            int tenant=0;
             if(iQueryable!=null && iQueryable.Count() > 0)
             {
                 tenant = iQueryable.FirstOrDefault().Tenant;
@@ -281,7 +280,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                 query = (from a in iQueryable//.Include("ChartOfAccount").Include("ChartOfAccountsType")
                                              //  join ledgerTransactions in context.LedgerTransactions on a.Id equals ledgerTransactions.AccountId
 
-                         where a.Tenant == tenant
+                        
                          join chartOfAccount in context.ChartOfAccounts on a.ChartOfAccountsId equals chartOfAccount.Id
                          join chartOfAccountsType in context.ChartOfAccountsTypes on a.ChartOfAccountsTypeCode equals chartOfAccountsType.Code
 
