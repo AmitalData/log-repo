@@ -2,7 +2,8 @@
 <Table
   Name="HybridTenantThresholds"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Tenant"
     Type="int">
