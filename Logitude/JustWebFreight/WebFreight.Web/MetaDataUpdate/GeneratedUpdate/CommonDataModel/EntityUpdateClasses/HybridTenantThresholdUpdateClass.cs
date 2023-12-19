@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class HybridTenantThresholdUpdateClass
    {  		
-		public const string HashString = "c2a405e19713ae87006323f4edb0b440";
+		public const string HashString = "9d16fe5acbebaa3d28780cb92bc865ec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Hybrid Tenant Threshold",
-			      				    Code =  "0979",
+			      				    Code =  "642c",
 			      				    Name =  "HybridTenantThreshold",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -736,7 +736,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Type",
+					 						FieldName =  "TypeCode",
 					  						ObjectTableName =  "HybridTenantThreshold",
 					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
@@ -755,8 +755,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Type",
-					  						ListPropertyPath =  "Type",
+					  						PMPropertyPath =  "TypeCode",
+					  						ListPropertyPath =  "TypeCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -773,12 +774,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Type",
-					  						DefaultText =  "Type",
-					  						FullLocalDefaultText =  "Type",
-					  						ListFieldLable =  "TypeListLable",
-					  						ListLableDefaultText =  "Type",
-					  						ListLocalDefaultText =  "Type",
+					  						FullFieldLable =  "TypeCode",
+					  						DefaultText =  "Type Code",
+					  						FullLocalDefaultText =  "Type Code",
+					  						ListFieldLable =  "TypeCodeListLable",
+					  						ListLableDefaultText =  "TypeCode",
+					  						ListLocalDefaultText =  "TypeCode",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  true,
