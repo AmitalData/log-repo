@@ -486,6 +486,12 @@
                                                 <tr>
                                                     <td>
                                                         <table>
+                                                            <tr *ngIf="relatedDoc.documentsFilingPM.OcrStatusCode == '3';">
+                                                                <td>
+                                                                    <div style="font-size:13px; color:orange;text-align: center;font-weight: bolder;height: 1px;margin-right: 50%;">
+                                                                        {{'Customs.OcrDocument.O.InTyping' | TextCodeTranslationPipe}}                                                                    </div>
+                                                                </td>
+                                                            </tr>
                                                             <tr>
                                                                 <td>
                                                                     <div

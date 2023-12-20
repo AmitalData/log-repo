@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OcrDocumentUpdateClass
    {  		
-		public const string HashString = "520a3120adae52ac9da6a6b2d0a09bec";
+		public const string HashString = "886b9517f3c07bd301808d7871896bb2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Ocr Document",
-			      				    Code =  "9e8e",
+			      				    Code =  "995e",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1007,6 +1007,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode OcrDocumentTextCode_CustomsOcrDocumentODCAOCRInPrograss = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.DCAOCRInPrograss", DefaultText = "Open Supplierinvoice - OCR in prograss, cannot be linked",LocalDefaultText = @"פתיחת חשבון יצואן - OCR בתהליך , לא ניתן לקשר מסמכים", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOConnectToDec = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.ConnectToDec", DefaultText = "Document Connect To Another Ticket",LocalDefaultText = @"המסמך מקושר להצהרה אחרת", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode OcrDocumentTextCode_CustomsOcrDocumentOInTyping = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.OcrDocument.O.InTyping", DefaultText = "In Typing",LocalDefaultText = @"בטיפול קלדן", ObjectTableId = OcrDocumentObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
