@@ -94,7 +94,7 @@ namespace CargoTrackingWinService.Helper
                 BuildCargoArgs = new CargoTrackingArgs() { Table = table, SourceConnectionString = sourceConnectionString, DestinationConnectionString = destinationConnectionString },
                 NumberOfBulkPerTime = 1000,
                 IsUpdateFromBuild = false,
-                CargoTrackingArguments = new CargoTrackingArguments { Tenant = 0 },
+                CargoTrackingArguments = null,
                 IsUpdateAfterFinished = null,
             };
             RecordUpdated recordUpdatedNumber = cargoTrackingMainService.UpdateCargoTrackingDataBase(cargoTrackingDataBaseArgs);
@@ -109,7 +109,6 @@ namespace CargoTrackingWinService.Helper
             {
                 try
                 {
-                    ApplicationInfo.ErrorLogs += "liron start ";
                     recordUpdated = UpdateCargoDataBase(table);
                     ApplicationInfo.ErrorLogs += recordUpdated.ErrorLogs;
                 }
