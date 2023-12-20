@@ -378,6 +378,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         _DateTime = DateTime.Parse(customResponse.Response.Status[0].EffectiveDateTime);
                         switch (customResponse.Response.Status[0].NameCode.Value)
                         {
+                            case "36":
+                                {
+                                    RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "CLS", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
+                                }
+                                break;
                             case "12":
                                 {
                                     RaiseEvent(this._MyDeclarationPM, user?.Id, status_id: "FAI", versionId: customResponse.Response.Declaration.DMExtensions.ExternalDeclarationID.Value, status_DateTime: _DateTime);
