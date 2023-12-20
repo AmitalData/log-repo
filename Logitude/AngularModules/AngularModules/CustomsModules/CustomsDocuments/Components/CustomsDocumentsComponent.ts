@@ -119,6 +119,7 @@ export class CustomsDocumentsComponent
         this._ImageLibraryService = new ImageLibraryService();
         this.LoadLogo();
         this.bulkUploadDocumentsPermission = FeatureLocator.HasFeaturePermession("Customs.Declaration", "BULKUPLOADDOCUMENTS");
+        this.EntityResourceService.getEntityResourceByTableName("Customs.OcrDocument").subscribe((response: any) => {});
     }
     ngOnDestroy() {
         
