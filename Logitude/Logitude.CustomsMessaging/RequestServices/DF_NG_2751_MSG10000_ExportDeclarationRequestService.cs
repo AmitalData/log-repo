@@ -900,7 +900,11 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
 
             //}
-            DMExtensions.DeclarationClosingDetails = GetDeclarationDMExtensionsDeclarationClosingDetails(declarationPM);
+            if (declarationPM.IsSubmitDeclaration == true)
+            {
+                DMExtensions.DeclarationClosingDetails = GetDeclarationDMExtensionsDeclarationClosingDetails(declarationPM);
+            }
+
             //DMExtensions. = GetDeclarationDMExtensionsAdditionalDocument(declarationPM);
             return DMExtensions;
         }
@@ -922,7 +926,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     FirstCargoID = new TransportContractDocumentIdentificationIDType { Value = entityClosingDeclaration.FinalManifestNumber },
                     TypeCode = new TransportContractDocumentTypeCodeType { Value = entityClosingDeclaration.FinalCargoTypeCode },
-                    SecondCargoID =  new SecondCargoIDType { Value = entityClosingDeclaration.FinalSecondCargoId },
+                    SecondCargoID = new SecondCargoIDType { Value = entityClosingDeclaration.FinalSecondCargoId },
                     ThirdCargoID = new ThirdCargoIDType { Value = entityClosingDeclaration.FinalThirdCargoId }
 
                 };
@@ -930,7 +934,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             return null;
         }
-
         private DeclarationAdditionalDocument[] GetDeclarationAdditionalDocuments(DeclarationPM declarationPM)
         {
             var declarationDMExtensionsAdditionalDocumentList = new List<DeclarationAdditionalDocument>();
