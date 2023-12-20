@@ -603,6 +603,12 @@ ID List :
                                                         int.TryParse(dr["CustomsBookTypeID"]?.ToString(), out int val);
                                                         newExt.MyTradeAgreement.CustomsBookTypeID = val;
                                                     }
+                                                    if (dr["CountryGroupID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        int.TryParse(dr["CountryGroupID"]?.ToString(), out int val);
+                                                        newExt.MyTradeAgreement.CountryGroupID = val;
+                                                    }
 
                                                     extList.Add(newExt);
                                                 });

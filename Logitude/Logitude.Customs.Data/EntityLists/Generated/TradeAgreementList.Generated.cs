@@ -26,6 +26,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool Inactive  { get; set; }
        [DataMember]
        public int? CustomsBookTypeID  { get; set; }
+       [DataMember]
+       public int? CountryGroupID  { get; set; }
    }
 
 }

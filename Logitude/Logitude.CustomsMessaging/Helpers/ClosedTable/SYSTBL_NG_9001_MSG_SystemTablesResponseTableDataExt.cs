@@ -113,6 +113,8 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     public class TradeAgreement
     {
         public int CustomsBookTypeID { get; set; }
+        public int CountryGroupID { get; set; }
+
     }
 
 

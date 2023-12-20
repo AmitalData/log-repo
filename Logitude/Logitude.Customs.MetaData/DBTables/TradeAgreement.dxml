@@ -45,4 +45,10 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CountryGroupID"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

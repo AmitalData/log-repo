@@ -34,6 +34,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.Inactive).HasColumnName("Inactive");
 
             this.Property(t => t.CustomsBookTypeID).HasColumnName("CustomsBookTypeID");
+
+            this.Property(t => t.CountryGroupID).HasColumnName("CountryGroupID");
         }
     }
 }

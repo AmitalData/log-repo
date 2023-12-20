@@ -39,6 +39,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
             base.SetOtherFields(mehesTableRow, curDbPM);
             var gov = mehesTableRow.MyTradeAgreement ?? new TradeAgreement();
             curDbPM.CustomsBookTypeID = gov.CustomsBookTypeID;
+            curDbPM.CountryGroupID = gov.CountryGroupID;
         }
     }
 }
