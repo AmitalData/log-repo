@@ -886,8 +886,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
             shipments = FilterShipments(shipmentSearchInput, shipments);
             shipments = AddShipmentSearch(shipmentSearchInput, shipments);
-
-            return shipments.Count();
+            var shipmentsCount = shipments.Select(x => 1);
+            return shipmentsCount.Count();
         }
 
         private IQueryable<CargoTrackingShipmentList> FilterShipments(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
@@ -959,9 +959,9 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                     shipment => shipment.EntityId,
                     search => search.ShipmentId,
                     (shipment, search) =>
-                        new { shipment = shipment, shipmentDate = search.ShipmentDate })
-                    .Where(x => 
-                       (shipmentSearchInput.FromDate.HasValue && x.shipmentDate >= shipmentSearchInput.FromDate) ||
+                        new { shipment = shipment, shipmentDate = search.ShipmentDate, tenant = search.Tenant, })
+                    .Where(x => x.tenant == shipmentSearchInput.Tenant &&
+					   (shipmentSearchInput.FromDate.HasValue && x.shipmentDate >= shipmentSearchInput.FromDate) ||
                        (shipmentSearchInput.ToDate.HasValue && x.shipmentDate <= shipmentSearchInput.ToDate)
                        )
                     .Select(x => x.shipment);
