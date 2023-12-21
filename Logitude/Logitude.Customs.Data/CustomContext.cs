@@ -612,6 +612,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new OrganizationUnitTypeMap());
 	
+            modelBuilder.Configurations.Add(new OriginCriterionMap());
+	
             modelBuilder.Configurations.Add(new PackageMeasureQualifierMap());
 	
             modelBuilder.Configurations.Add(new PackingTypeMap());
@@ -3016,6 +3018,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<OrganizationUnitType> OrganizationUnitTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<OriginCriterion> OriginCriterions 
 	 {
 	      get; set;
 	 

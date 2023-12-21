@@ -225,6 +225,7 @@
     <Compile Include="EntityKeys\NDMessageActionCodeKeys.cs" />
     <Compile Include="EntityKeys\OcrDocumentKeys.cs" />
     <Compile Include="EntityKeys\OcrStatusKeys.cs" />
+    <Compile Include="EntityKeys\OriginCriterionKeys.cs" />
     <Compile Include="EntityKeys\PartyRelationshipTypeKeys.cs" />
     <Compile Include="EntityKeys\PendingByKeywordKeys.cs" />
     <Compile Include="EntityKeys\PendingErrorPlaceKeys.cs" />
@@ -493,6 +494,7 @@
     <Compile Include="EntityListQueryServices\Generated\NDMessageActionCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OcrDocumentListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\OcrStatusListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\OriginCriterionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PartyRelationshipTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingByKeywordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingErrorPlaceListQueryService.Generated.cs" />
@@ -559,6 +561,7 @@
     <Compile Include="EntityListQueryServices\NDMessageActionCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OcrDocumentListQueryService.cs" />
     <Compile Include="EntityListQueryServices\OcrStatusListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\OriginCriterionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PartyRelationshipTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingByKeywordListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingErrorPlaceListQueryService.cs" />
@@ -616,7 +619,7 @@
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InternationalSiteTenantList.Generated.cs" />
-
+    <Compile Include="EntityLists\Generated\OriginCriterionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OcrDocumentList.Generated.cs" />
@@ -899,6 +902,7 @@
     <Compile Include="EntityMapping\NDMessageActionCodeMap.cs" />
     <Compile Include="EntityMapping\OcrDocumentMap.cs" />
     <Compile Include="EntityMapping\OcrStatusMap.cs" />
+    <Compile Include="EntityMapping\OriginCriterionMap.cs" />
     <Compile Include="EntityMapping\PartyRelationshipTypeMap.cs" />
     <Compile Include="EntityMapping\PendingByKeywordMap.cs" />
     <Compile Include="EntityMapping\PendingErrorPlaceMap.cs" />
@@ -1067,6 +1071,7 @@
     <Compile Include="EntityPOCOs\NDMessageActionCode.cs" />
     <Compile Include="EntityPOCOs\OcrDocument.cs" />
     <Compile Include="EntityPOCOs\OcrStatus.cs" />
+    <Compile Include="EntityPOCOs\OriginCriterion.cs" />
     <Compile Include="EntityPOCOs\PartyRelationshipType.cs" />
     <Compile Include="EntityPOCOs\PendingByKeyword.cs" />
     <Compile Include="EntityPOCOs\PendingErrorPlace.cs" />
@@ -1336,6 +1341,7 @@
     <Compile Include="Repsitories\Generated\NDMessageActionCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OcrDocumentRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\OcrStatusRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\OriginCriterionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PartyRelationshipTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingByKeywordRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingErrorPlaceRepository.Generated.cs" />
@@ -1402,6 +1408,7 @@
     <Compile Include="Repsitories\NDMessageActionCodeRepository.cs" />
     <Compile Include="Repsitories\OcrDocumentRepository.cs" />
     <Compile Include="Repsitories\OcrStatusRepository.cs" />
+    <Compile Include="Repsitories\OriginCriterionRepository.cs" />
     <Compile Include="Repsitories\PartyRelationshipTypeRepository.cs" />
     <Compile Include="Repsitories\PendingByKeywordRepository.cs" />
     <Compile Include="Repsitories\PendingErrorPlaceRepository.cs" />

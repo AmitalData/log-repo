@@ -192,6 +192,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\LogisticActionResponseReqSDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\NDMessageActionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\OcrStatusDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\OriginCriterionDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PhysicalCheckCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PoaAuthorizationTypeLookupDetails.Generated.cs" />
@@ -829,6 +830,7 @@
     <Compile Include="EntityDataMappings\Generated\OcrDocumentDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OcrStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\OrganizationUnitTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\OriginCriterionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PackageMeasureQualifierDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PackingTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ParagraphTypeDataMapping.Generated.cs" />
@@ -1018,6 +1020,7 @@
     <Compile Include="EntityDataMappings\OcrDocumentDataMapping.cs" />
     <Compile Include="EntityDataMappings\OcrStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\OrganizationUnitTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\OriginCriterionDataMapping.cs" />
     <Compile Include="EntityDataMappings\PackageMeasureQualifierDataMapping.cs" />
     <Compile Include="EntityDataMappings\PackingTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ParagraphTypeDataMapping.cs" />
@@ -1168,6 +1171,7 @@
     <Compile Include="EntityQueryServices\Generated\CustomsHouseTypeTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\DefaultValueQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationCounterQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\OriginCriterionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\GovernmentProcedureTypeTenantQueryService.cs" />
     <Compile Include="EntityQueryServices\LoadingSiteTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvioceExportDefaultQueryService.cs" />
@@ -1709,6 +1713,7 @@
     <Compile Include="EntityQueryServices\VendorCurrencyQueryService.cs" />
     <Compile Include="EntityUpdateServices\ClientItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\OriginCriterionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\OcrDocumentUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CountryCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />
