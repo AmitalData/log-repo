@@ -40,9 +40,9 @@ export class HybridTenantThresholdPM {
     public set WaitingThresold(newValue: number) { if (this.waitingThresold != newValue) { this.waitingThresold = newValue; this.MarkAsDirty("WaitingThresold"); } }
        
 
-    private type: number;
-    public get Type() { return this.type; }
-    public set Type(newValue: number) { if (this.type != newValue) { this.type = newValue; this.MarkAsDirty("type"); } }
+    private typeCode: number;
+    public get TypeCode() { return this.typeCode; }
+    public set TypeCode(newValue: number) { if (this.typeCode != newValue) { this.typeCode = newValue; this.MarkAsDirty("typeCode"); } }
        
 	 
 
