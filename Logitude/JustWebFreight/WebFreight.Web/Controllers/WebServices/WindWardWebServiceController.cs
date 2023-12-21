@@ -17,6 +17,7 @@ using System.Web.Mvc;
 using System.Globalization;
 using System.Configuration;
 using System.Linq;
+using Intuit.Ipp.Data;
 
 namespace WebFreight.Web.Controllers.WebServices
 {
@@ -31,8 +32,14 @@ namespace WebFreight.Web.Controllers.WebServices
 				WriteLogMe("shipmentUpdate ENTER POST: ", webhook, "shipmentUpdate");
 				
 				var webhookService = new TrackedShipmentsAPI.Services.WebhookService();
+				dynamic webhookObject = null;
+				using (JsonReader reader = new JsonTextReader(new StringReader(webhook.ToString())))
+				{
+					reader.DateParseHandling = DateParseHandling.None;
+					 webhookObject = JObject.Load(reader);
+				}
+			
 
-				dynamic webhookObject = webhook  ; //= JObject.Parse(webhook.GetRawText());
 
 				string sentAt = webhookObject?.data?.metadata?.sentAt;
 
