@@ -32,12 +32,12 @@ export class HybridTenantThresholdPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/hybridtenantthresholds';      
     }
 
-	get(tenant: number) {       
+	get(tenant: number, typecode: number) {       
 
 		var callTime = new Date();		
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle?' + 'tenant=' + tenant, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle?' + 'tenant=' + tenant+'&'+'typecode=' + typecode, ServiceHelper.GetHttpFullHeaders())
 				.pipe(
 					map((response: HttpResponse<any>) => {
 						var pm = response.body;
@@ -51,7 +51,7 @@ export class HybridTenantThresholdPMService {
 						serviceResponse.Result = entity;
               
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "HybridTenantThreshold", "GetSinglePM", 'tenant=' + tenant);
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "HybridTenantThreshold", "GetSinglePM", 'tenant=' + tenant+'&'+'typecode=' + typecode);
 				 
 						return serviceResponse;
 
