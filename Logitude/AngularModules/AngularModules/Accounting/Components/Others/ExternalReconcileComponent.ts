@@ -105,7 +105,8 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent= new LogitudeGridExportToExcelComponent();
     constructor(private CD: ChangeDetectorRef) {
         super();
-        this.isRTL = SessionLocator.TenantPM.LayoutDirection === 'rtl';
+        if (ObjectsLocator.GlobalSetting)
+        this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
 
         this.ExternalRecoPM = new ExternalReconciliationPM();
         this.ExternalRecoPM.Tenant = SessionLocator.Tenant;
@@ -707,6 +708,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     searchFieldFilter: FilterItem;
     openAmountFilter: FilterItem;
     public TransactionsQueryColumns: QueryColumnPM[] = [];
+    TransactionForeignAmount='';
     public TransactionsColumns: any[] = null;
     TransactionBuildColumns() {
         this.TransactionsColumns = [];
@@ -808,6 +810,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         //     ServerSideSortable: true,
         //     SortByName: 'Source'
         // });
+        this.TransactionForeignAmount= TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmount") + ' (' + this.openAmountCurrency + ')';
         this.TransactionsColumns.push({
             FieldName: 'ForeignAmount',
             DataTypeCode: 'String',
@@ -878,8 +881,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             Styles: { width: '120px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
-            IsCustomTemplate: true
-            ,
+            IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'Notes'
         });
@@ -1168,7 +1170,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
     ExtPage_currencyFilter: FilterItem;
     ExtPage_searchFieldFilter: FilterItem;
     ExtPage_openAmountFilter: FilterItem;
-
+    ReconcileExternalPageLineAmount='';
     public ExtPageColumns: any[] = null;
     ExportTransactions() {
         this.ValidationErrorsList = [];
@@ -1245,7 +1247,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             SortByName: 'ReferenceDate'
         });
         this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("ReferenceDate",'DateTime',TextCodeTranslator.Translate("ReconcileExternalPageLine.F.ReferenceDate")));
-
+        this.ReconcileExternalPageLineAmount= TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Amount") + ' (' + this.openAmountCurrency + ')';
         this.ExtPageColumns.push({
             FieldName: 'Amount',
             DataTypeCode: 'String',
