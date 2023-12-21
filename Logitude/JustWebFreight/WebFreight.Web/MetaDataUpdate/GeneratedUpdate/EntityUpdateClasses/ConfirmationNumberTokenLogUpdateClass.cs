@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ConfirmationNumberTokenLogUpdateClass
    {  		
-		public const string HashString = "06d132df5ca6afd7cfaa98988da73eee";
+		public const string HashString = "57c4978b4d101790a2e5b3152f0c37da";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -632,7 +632,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ShowLog",
-					  						DefaultText =  "ShowLog",
 					  						ListFieldLable =  "ShowLogListLable",
 					  						ListLableDefaultText =  "ShowLog",
 					  						IsMaxLength =  false,

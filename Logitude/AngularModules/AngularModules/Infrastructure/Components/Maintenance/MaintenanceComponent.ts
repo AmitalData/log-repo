@@ -820,13 +820,15 @@ export class MaintenanceComponent {
         if (item) {
             switch (item.Code) {
                 case "SHAAM_TOKEN": {
-                    const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
-                    const logWindow = new LogitudeWindow();
-                    logWindow.Width = window.outerWidth;
-                    logWindow.Height = window.outerHeight;
-                    logWindow.Title = windowTitle;
-                    logWindow.IsShowCloseButton = true;
-                    logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
+                    this._entityResourceService.getEntityResourceByTableName("Customs.ConfirmationNumberTokenLog", 0).subscribe((response: any) => {
+                        const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
+                        const logWindow = new LogitudeWindow();
+                        logWindow.Width = window.outerWidth;
+                        logWindow.Height = window.outerHeight;
+                        logWindow.Title = windowTitle;
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
+                    });
                     break;
                 }
 

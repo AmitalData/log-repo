@@ -795,7 +795,7 @@
     InActive="false"
     DisplayLongName="false"
     FullFieldLable="&quot;ShowLog&quot;"
-    DefaultText="&quot;ShowLog&quot;"
+    DefaultText="&quot;&quot;"
     ListFieldLable="&quot;ShowLogListLable&quot;"
     ListLableDefaultText="&quot;ShowLog&quot;"
     IsNullable="false"
