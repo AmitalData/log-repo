@@ -153,6 +153,7 @@ LEFT OUTER JOIN AMINETNXT_MAIN.Contacts Extent10 ON Extent10.Id = Extent1.Contro
                                                                  Mawb=a.Mawb,
                                                                  ImporterApproval  = a.ImporterApproval,
                                                                  CustomerId=d.CustomerId,
+                                                                 VendorId=a.VendorId,
                                                                  //OccuredStatuses = qjoinDeclarationStatuses.DefaultIfEmpty().Select(r=>r.StatusCode.Status_Code),
                                                              });
             return query;
