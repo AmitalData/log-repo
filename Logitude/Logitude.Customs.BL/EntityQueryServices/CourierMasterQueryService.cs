@@ -256,7 +256,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
                  MNFR = g.Count(r => (r.CourierManifestStatusCode == "R")),
                  MNFR_RV = g.Count(r => (r.CourierManifestStatusCode == "R" || r.CourierManifestStatusCode == "V") && r.CourierPaymentStatusCode != "P"),
                  DECR = g.Count(r => (r.CourierDeclarationStatusCode == "R")),
-                 DECR_RV = g.Count(r => (r.CourierDeclarationStatusCode == "R" || r.CourierDeclarationStatusCode == "V")),
+                 DECR_RV = g.Count(r =>
+                     (r.CourierDeclarationStatusCode == "R" || r.CourierDeclarationStatusCode == "V") &&
+                     (r.CourierPaymentStatusCode == "R" || r.CourierPaymentStatusCode == null)),       
                  //HOLD = g.Count(r => (r.CourierPendingReasonCode != null)),
                  HOLD = g.Count(r => (r.CourierPendingReasonList != null)),
                  ACC = g.Count(r => (r.StorageSiteStatusCode == "2" || r.SpecialActionStatus == "X")),
