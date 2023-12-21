@@ -28,6 +28,7 @@
     OldNames="Type"
     Type="int">
     <Constraints
-      Nullable="true" />
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
 </Table>
