@@ -8,6 +8,9 @@ using UnifreightIIG.Common.Extensions;
 
 namespace WebFreight.Web
 {
+    /// <summary>
+    /// CFILOGIAPI G_HybridSqlReq
+    /// </summary>
     public class CFILOGIAPITask
     {
 
@@ -85,6 +88,35 @@ namespace WebFreight.Web
 <DAT name=""PARAMETERS"">DeclarationId=True&uSEP;InvoiceCounterKey=True&uSEP;LineNumber=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select * from CUSTOMS.SUPPLIERINVIOCEITEMCERTIFICATS where TENANT='1' and  DECLARATIONID='1-111' and INVOICECOUNTERKEY='1' and LINENUMBER='1'</DAT>
 <DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select * from CUSTOMS.SUPPLIERINVIOCEITEMCERTIFICATS where TENANT=@Tenant and  DECLARATIONID=@DECLARATIONID and INVOICECOUNTERKEY=@INVOICECOUNTERKEY and LINENUMBER=@LINENUMBER</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
+<DAT name=""CODE"">A71</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select top 1  * from customs.CustomsDocumentsTickets</DAT>
+<DAT name=""REFERENCE"">CENFMAIN.Lp_UpdateCars</DAT>
+<DAT name=""PARAMETERS"">DOCUMENTSFILINGID=True&uSEP;ID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select top 1  * from customs.CustomsDocumentsTickets t inner join customs.CustomsDocumentPointers p on t.ID= p.CUSTOMSDOCUMENTSTICKETID inner join 
+customs.Declarations d on p.PARENTENTITYID = d.id where t.DOCUMENTSFILINGID='DOC_ID' and d.ID ='LOGIDUTE_FILE_ID' and d.Tenant = 6</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select top 1  * from customs.CustomsDocumentsTickets t inner join customs.CustomsDocumentPointers p on t.ID= p.CUSTOMSDOCUMENTSTICKETID inner join 
+customs.Declarations d on p.PARENTENTITYID = d.id where t.DOCUMENTSFILINGID=@DOCUMENTSFILINGID and d.ID =@ID and d.Tenant = @Tenant</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
+<DAT name=""CODE"">A72</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select STORAGESITENAME from CUSTOMS.DECLARATIONS</DAT>
+<DAT name=""REFERENCE"">CENFMAIN.Lp_Get_StorageSite</DAT>
+<DAT name=""PARAMETERS"">Id=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select STORAGESITENAME from CUSTOMS.DECLARATIONS where TENANT='6' and ID='11'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select STORAGESITENAME from CUSTOMS.DECLARATIONS where TENANT=@Tenant and ID=@ID</DAT>
+<DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<OCC>
+<DAT name=""CODE"">A73</DAT>
+<DAT name=""NAME_ENG"" xml:space='preserve'>select CONSIGNMENTNUMBER, STORAGESITECODE from CUSTOMS.CONSIGNMENTS</DAT>
+<DAT name=""REFERENCE"">CENFMAIN.Lp_Get_StorageSite</DAT>
+<DAT name=""PARAMETERS"">DECLARATIONID=True</DAT>
+<DAT name=""EXAMPLE_SQL"" xml:space='preserve'>select CONSIGNMENTNUMBER, STORAGESITECODE from CUSTOMS.CONSIGNMENTS where TENANT='6' and DECLARATIONID='11'</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>select CONSIGNMENTNUMBER, STORAGESITECODE from CUSTOMS.CONSIGNMENTS where TENANT=@Tenant and DECLARATIONID=@DECLARATIONID</DAT>
 <DAT name=""EXAMPLE_RESULT"" xml:space='preserve'></DAT>
 <DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
 <OCC>
