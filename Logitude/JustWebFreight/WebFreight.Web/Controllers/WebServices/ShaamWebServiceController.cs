@@ -15,7 +15,7 @@ namespace WebFreight.Web.Controllers.WebServices
 {
     public class ShaamWebServiceController : ApiController
     {
-        string AmitalTaxesUrl = "https://amitaltaxes.azurewebsites.net/api/"; //new SettingQuery().GetSinglePMFromCahche().AmitalTaxesUrl;
+        string AmitalTaxesUrl = new SettingQuery().GetSinglePMFromCahche().AmitalTaxesUrl;
 
         [HttpGet]
         [Route("linkToCodeForToken")]
