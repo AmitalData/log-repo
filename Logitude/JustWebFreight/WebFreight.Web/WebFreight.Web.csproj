@@ -1235,6 +1235,7 @@
     <Compile Include="Controllers\Test\TestController.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuoteOPDomainController.cs" />
+    <Compile Include="Controllers\WebServices\Services\ShaamService.cs" />
     <Compile Include="Controllers\WebServices\ShaamWebServiceController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.LoadingSiteType.cs" />
@@ -5208,6 +5209,7 @@
     <Content Include="WcfApi\CustomerAdditionalServiceDWWcfService.svc" />
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
+    <Content Include="WcfApi\ShaamWcfService.svc" />
     <Content Include="WcfApi\OceanInsightsTestWcfService.svc" />
     <Content Include="WcfApi\StatusCodeWcfService.svc" />
     <Content Include="WcfApi\OcrDocumentWcfService.svc" />
@@ -6806,11 +6808,15 @@
     <Compile Include="WcfApi\IDeclarationStatusWcfService.cs" />
     <Compile Include="WcfApi\IDefaultValueWcfService.cs" />
     <Compile Include="WcfApi\IDefaultTypeWcfService.cs" />
+    <Compile Include="WcfApi\IShaamWcfService.cs" />
     <Compile Include="WcfApi\IOcrDocumentWcfService.cs" />
     <Compile Include="WcfApi\IExternalTasksQueueExportSignWcfService.cs" />
     <Compile Include="WcfApi\IPaymentTermWcfService.cs" />
     <Compile Include="WcfApi\IStatusCodeWcfService.cs" />
     <Compile Include="WcfApi\IWarehouseWcfService.cs" />
+    <Compile Include="WcfApi\ShaamWcfService.svc.cs">
+      <DependentUpon>ShaamWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\OceanInsightsTestWcfService.svc.cs">
       <DependentUpon>OceanInsightsTestWcfService.svc</DependentUpon>
     </Compile>
