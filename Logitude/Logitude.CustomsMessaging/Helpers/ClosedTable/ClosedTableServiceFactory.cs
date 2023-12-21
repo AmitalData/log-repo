@@ -410,6 +410,25 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                         );
                     }
                     break;
+                case "1977":
+                case "OriginCriterion":
+                    {
+                        closedTableService = new Update1977OriginCriterionTypeView(customContext, entitySystemTables,
+                          (mycustomContext) =>
+                          {
+                              return new
+                                  OriginCriterionUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                          },
+                        (mycustomContext) =>
+                        {
+                            var qs = new OriginCriterionQueryService(mycustomContext);
+                            return qs as ICanGetAllClosedTable<OriginCriterionPM>;
+                        }
+                        , tenant
+                        , false
+                        );
+                    }
+                    break;
                 case "1422":
                 case "ItemGovernmentProcedureType":
                     {

@@ -240,6 +240,7 @@
     <Compile Include="Helpers\ClosedTable\Update1366ContainerType.cs" />
     <Compile Include="Helpers\ClosedTable\Update1604ConfirmationType.cs" />
     <Compile Include="Helpers\ClosedTable\Update1422ItemGovernmentProcedureType.cs" />
+    <Compile Include="Helpers\ClosedTable\Update1977OriginCriterionTypeView.cs" />
     <Compile Include="Helpers\ClosedTable\Update2009TradeAgreementTypeView.cs" />
     <Compile Include="Helpers\ClosedTable\Update23928IncotemrsFileValidation.cs" />
     <Compile Include="Helpers\ClosedTable\Update1423CertificateExemptionType.cs" />

@@ -290,6 +290,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<OcrDocument> OcrDocuments { get; }
 		 IDbSet<OcrStatus> OcrStatuses { get; }
 		 IDbSet<OrganizationUnitType> OrganizationUnitTypes { get; }
+		 IDbSet<OriginCriterion> OriginCriterions { get; }
 		 IDbSet<PackageMeasureQualifier> PackageMeasureQualifiers { get; }
 		 IDbSet<PackingType> PackingTypes { get; }
 		 IDbSet<ParagraphType> ParagraphTypes { get; }

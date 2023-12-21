@@ -247,6 +247,10 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable requestToAdvanceAQueueTableObjectTable = objectTableRepository.GetObjectTableByName("Customs.RequestToAdvanceAQueue", 0, false);
             InsertClosedTableRecord(requestToAdvanceAQueueTable, requestToAdvanceAQueueTableObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(requestToAdvanceAQueueTable);
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData originCriterionTable = closedSystemTables.Where(d => d.id == "1977").FirstOrDefault();
+            ObjectTable originCriterionObjectTable = objectTableRepository.GetObjectTableByName("Customs.OriginCriterion", 0, false);
+            InsertClosedTableRecord(originCriterionTable, originCriterionObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(originCriterionTable);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData deliverySiteTypeTable = closedSystemTables.Where(d => d.id == "2012").FirstOrDefault();
             ObjectTable deliverySiteTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.DeliverySiteType", 0, false);
