@@ -8,6 +8,7 @@ using WWApi.Models;
 using System;
 using System.Linq;
 using System.Globalization;
+using System.IO;
 
 namespace TrackedShipmentsAPI.Services
 {
@@ -48,25 +49,33 @@ namespace TrackedShipmentsAPI.Services
 
         public void MergeToMainJson(JObject mainJson, JObject jsonToMerge)
         {
-            JObject parsedJson = JObject.Parse($@"
+			dynamic parsedJson = JsonConvert.DeserializeObject<JObject>($@"
             {{
                 ""Root"": {{
                     ""container"": {{
                         ""shipment"": {jsonToMerge.ToString()}
                     }}
                 }}
-            }}");
+             }}", new JsonSerializerSettings
+			{
+				DateParseHandling = DateParseHandling.None
+			});
 
-            mainJson.Merge(parsedJson);
+			mainJson.Merge(parsedJson);
         }
 
-        // Converts json object to XML
-        public XmlDocument JsonToXML(string jsonData)
-        {
-            XmlDocument doc = JsonConvert.DeserializeXmlNode(jsonData);
 
-            return doc;
-        }
+		public XmlDocument JsonToXML(string jsonData)
+		{
+			var settings = new JsonSerializerSettings
+			{
+				Converters = { new Newtonsoft.Json.Converters.XmlNodeConverter() },
+				DateParseHandling = DateParseHandling.None,
+			};
+
+			return  JsonConvert.DeserializeObject<XmlDocument>(jsonData, settings);
+			
+		}
 
         public Dictionary<string, T> CreateDictionaryFromJson<T>(dynamic arrayElement, string keyName)
         {
@@ -183,10 +192,10 @@ namespace TrackedShipmentsAPI.Services
             bool isActual = timestamps?.code == ACTUAL_CODE;
 
             if (actualField) {
-                return isActual ? (datetime != null ? DateTime.ParseExact(datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : datetime) : "";
+                return isActual ? (datetime != null ? DateTime.ParseExact(datetime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : datetime) : "";
             }
 
-            return isActual ? "" : (datetime != null ? DateTime.ParseExact(datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : datetime);
+            return isActual ? "" : (datetime != null ? DateTime.ParseExact(datetime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : datetime);
 			;
 		}
 
@@ -297,7 +306,7 @@ namespace TrackedShipmentsAPI.Services
                             ""code"": """",
                             ""severity"": """",
                             ""walltime"": """",
-                            ""created"": ""{DateTime.ParseExact(sentAt, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}""
+                            ""created"": ""{DateTime.ParseExact(sentAt, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}""
                         }},
                         ""shipment"": {{
                             ""id"": ""{shipmentId ?? ""}"",
@@ -344,14 +353,14 @@ namespace TrackedShipmentsAPI.Services
                             ""weight"": """",
                             ""status"": """",
                             ""lifecycle_status"": """",
-                            ""id_date"": ""{(carrierLatestStatus?.timestamps?.datetime != null ? DateTime.ParseExact(carrierLatestStatus?.timestamps?.datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
+                            ""id_date"": ""{(carrierLatestStatus?.timestamps?.datetime != null ? DateTime.ParseExact(carrierLatestStatus?.timestamps?.datetime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
                             ""origin_planned_initial"": """",
                             ""origin_actual"": """",
                             ""origin_planned_last"": """",
                             ""pol_vsldeparture_planned_initial"": ""{data?.shipment?.initialCarrierETD?.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}"",
                             ""pol_vsldeparture_planned_last"": ""{GetEventData(events, ARRIVAL_AT_POL, false)}"",
-                            ""pol_vsldeparture_actual"": ""{(polLocMilestone?.departure?.timestamps?.carrier?.datetime != null ? DateTime.ParseExact(polLocMilestone?.departure?.timestamps?.carrier?.datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
-                            ""pol_vsldeparture_detected"": ""{(polLocMilestone?.departure?.timestamps?.predicted?.datetime != null ? DateTime.ParseExact(polLocMilestone?.departure?.timestamps?.predicted?.datetime, "MM/dd/yyyy HH:mm:ss", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
+                            ""pol_vsldeparture_actual"": ""{(polLocMilestone?.departure?.timestamps?.carrier?.datetime != null ? DateTime.ParseExact(polLocMilestone?.departure?.timestamps?.carrier?.datetime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
+                            ""pol_vsldeparture_detected"": ""{(polLocMilestone?.departure?.timestamps?.predicted?.datetime != null ? DateTime.ParseExact(polLocMilestone?.departure?.timestamps?.predicted?.datetime, "yyyy-MM-ddTHH:mm:sszzz", CultureInfo.InvariantCulture).ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss") : "")}"",
                             ""pod_vslarrival_planned_initial"": ""{data?.shipment?.initialCarrierETA?.ToString("yyyy'-'MM'-'dd'T'HH':'mm':'ss")}"",
                             ""pod_vslarrival_planned_last"": ""{podVesselArrivalPlannedLast}"",
                             ""pod_vslarrival_actual"": ""{podVesselArrivalActual}"",
@@ -396,7 +405,6 @@ namespace TrackedShipmentsAPI.Services
             // Convert the updated JSON structure back to a string
             string updatedJson = json.ToString();
 
-            // return updatedJson;
             return updatedJson;
         }
     }
