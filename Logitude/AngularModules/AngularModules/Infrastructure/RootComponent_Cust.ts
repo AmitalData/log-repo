@@ -150,7 +150,8 @@ export class RootComponent_Cust implements AfterViewInit {
             });
           });
       }
-    }
+    } else if(SessionLocator?.ExternalParams?.Menu?.startsWith("IdentityShaamLandingPage"))
+      SessionLocator.DynamicLoader.Load("./Infrastructure/Components/IdentityShaamLandingPageComponent/IdentityShaamLandingPageComponent", this.Child.Location).then()
     else {
       SessionLocator.DynamicLoader.Load("./Infrastructure/Components/LoginComponent/LoginComponent", this.Child.Location)
         .then(cmpRef => {

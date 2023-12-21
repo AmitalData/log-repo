@@ -26,7 +26,19 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
             //throw new NotImplementedException();
         }
-   }
+
+        public void PMToOldPM(ConfirmationNumberTokenLogPM entityPM, ConfirmationNumberTokenLogPM oldEntityPM)
+        {
+        }
+
+        public void PMToPOCO(ConfirmationNumberTokenLogPM entityPM, ConfirmationNumberTokenLog entityPOCO)
+        {
+        }
+
+        public void POCOToPM(ConfirmationNumberTokenLogPM entityPM, ConfirmationNumberTokenLog entityPOCO)
+        {
+        }
+    }
 
 
 }

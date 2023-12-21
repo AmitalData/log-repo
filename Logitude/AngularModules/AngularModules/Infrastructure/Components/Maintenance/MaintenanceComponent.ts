@@ -781,7 +781,7 @@ export class MaintenanceComponent {
             item.Code = "SHAAM_LOGS";
             item.ObjectTableName = "ConfirmationNumberTokenLog",
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
-            item.TranslatedName = TextCodeTranslator.Translate('General.MC.Logs');
+            item.TranslatedName = 'Logs', // TextCodeTranslator.Translate('General.MC.Logs');
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         
             var item = new MenusTablePM();
@@ -789,7 +789,7 @@ export class MaintenanceComponent {
             item.Icon = "Settings"
             item.Code = "SHAAM_TOKEN";
             item.ObjectTableName = "Customs.ConfirmationNumberTokenLog";
-            item.TranslatedName = TextCodeTranslator.Translate('General.MC.TokenManagement');
+            item.TranslatedName = 'Token Managment', TextCodeTranslator.Translate('General.MC.TokenManagement');
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
     }
@@ -820,13 +820,15 @@ export class MaintenanceComponent {
         if (item) {
             switch (item.Code) {
                 case "SHAAM_TOKEN": {
-                    var windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
-                    var logWindow = new LogitudeWindow();
-                    logWindow.Width = window.outerWidth;
-                    logWindow.Height = window.outerHeight;
-                    logWindow.Title = windowTitle;
-                    logWindow.IsShowCloseButton = true;
-                    logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
+                    this._entityResourceService.getEntityResourceByTableName("Customs.ConfirmationNumberTokenLog", 0).subscribe((response: any) => {
+                        const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
+                        const logWindow = new LogitudeWindow();
+                        logWindow.Width = window.outerWidth;
+                        logWindow.Height = window.outerHeight;
+                        logWindow.Title = windowTitle;
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
+                    });
                     break;
                 }
 

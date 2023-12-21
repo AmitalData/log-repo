@@ -24,12 +24,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                                 select new ConfirmationNumberTokenLogList()
                                                                 {
                                                                     Id = a.Id,
+                                                                    Tenant = a.Tenant,
                                                                     CallType = a.CallType,
                                                                     CommunicationType   = a.CommunicationType,
                                                                     CompanyIdInvoiceProducer = a.CompanyIdInvoiceProducer,
                                                                     CompanyIdInvoiceRecipient = a.CompanyIdInvoiceRecipient,
                                                                     CreateDate = a.CreateDate,
                                                                     InvoiceNumber = a.InvoiceNumber,
+                                                                    CommunicationLogId = a.CommunicationLogId,
                                                                 });
             return query;
         }

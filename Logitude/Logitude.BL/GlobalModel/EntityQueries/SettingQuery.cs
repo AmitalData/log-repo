@@ -8,6 +8,7 @@ using System.Text;
 using System.Security.Claims;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.BL.GlobalModel.EntityQueries
 {
@@ -153,8 +154,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             return Settings;
         }
 
+        public SettingPM GetSinglePMFromCahche() => CacheHelper.GetFromCache("SettingPM", GetSinglePM);        
+
         public string GetJwtToken(int tenant)
-        {
+        {            
             string cacheKey = "jwt" + tenant;
             int expireDays = 1;
 
@@ -166,7 +169,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             }
 
             var claims = new[] { new Claim("tenant", tenant.ToString()) };
-            string privateKey = "huosssssssssfioghsoahfroaguohgauiohfdfugioghsdahusfauiosfdayuiosgayuiosgayuiosgayuiosrgayuiosrgayuioyuiosrgahuiosgahuiotceapnu92567954678546"; // GetSinglePM().PrivateKey;
+            string privateKey = "Y32Pqsd8z3pBPOvGL6pFEFMcLuZCFHG-dYsNKSg5A5CeTUMiMJraC3c4opU7tMC62wBRhUvskbnnDQJd9AY5GIwamAUljNnTft8O324vDYOCcCFjggKBlpVO-_1eSJ3BhD6TGR_HXZfOVQSfLuNxrGIXFQRTab5Jjfq9m1g6BNPY7e4isl5cv_nm98b31IsIHAkd5D6yCLGEck7enPuUn_NdCpkaqHuPpCdxuEeeekDxr5IpBMjFfF88QQYarESJvJiX5B-Z1UdoabHR5rzzkVDSDwbB_GEf1Ua92-bH6MdT4zBUBFzhB7akeesUdYAdA3InncJFmzohNZxbolOXjA"; // GetSinglePMFromCahche().PrivateKey;
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(privateKey));
             var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             JwtSecurityToken token = new JwtSecurityToken(null, null, claims, null, DateTime.Now.AddDays(expireDays), creds);

@@ -525,4 +525,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="AmitalTaxesUrl"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>
