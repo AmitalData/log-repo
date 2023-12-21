@@ -69,6 +69,7 @@
     <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
     <Compile Include="EntityPMs\Generated\RequestToAdvanceAQueuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConfirmationNumberTokenLogPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\OriginCriterionPM.Generated.cs" />
     <Compile Include="EntityPMs\InternalBorderSiteTypePM.cs" />
     <Compile Include="EntityPMs\Generated\AmedmentTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendCancellRequestInitiatorPM.Generated.cs" />
@@ -534,6 +535,7 @@
     <Compile Include="EntityPMs\SupplierInvoicePM.cs" />
     <Compile Include="EntityPMs\TapagConnectionTablePM.cs" />
     <Compile Include="EntityPMs\ItemGovernmentProcedureTypePM.cs" />
+    <Compile Include="EntityPMs\OriginCriterionPM.cs" />
     <Compile Include="EntityPMs\TradeAgreementPM.cs" />
     <Compile Include="EntityPMs\UIMessagePM.cs" />
     <Compile Include="EntityPMs\ValidCustomsItemPM.cs" />

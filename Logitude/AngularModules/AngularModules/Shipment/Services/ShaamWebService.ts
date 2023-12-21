@@ -32,10 +32,19 @@ export class ShaamWebService {
         });
     }
 
-    getLinkToCodeForToken(): Observable<string> {
+    getLinkToCodeForToken(user: string): Observable<string> {
         return this.http.get(
             this.apiUrl + '/linkToCodeForToken',
-            { headers: this.headers }
+            {
+                params: { user },
+                headers: this.headers
+            }
+        ) as Observable<string>;
+    }
+
+    postNewRefreshToken(tenant: number, user: string, code: string): Observable<string> {
+        return this.http.post(
+            this.apiUrl + '/newRefreshToken', { tenant, user, code }
         ) as Observable<string>;
     }
 }

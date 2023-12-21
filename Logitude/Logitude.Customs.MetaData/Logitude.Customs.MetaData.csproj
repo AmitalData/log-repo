@@ -478,6 +478,7 @@
     <None Include="DBTables\OcrDocument.dxml" />
     <None Include="DBTables\OcrStatus.dxml" />
     <None Include="DBTables\OrganizationUnitType.dxml" />
+    <None Include="DBTables\OriginCriterion.dxml" />
     <None Include="DBTables\PackageMeasureQualifier.dxml" />
     <None Include="DBTables\PackingType.dxml" />
     <None Include="DBTables\ParagraphType.dxml" />
@@ -620,6 +621,7 @@
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
     <None Include="EntityFiles\DefaultType.lxml" />
     <None Include="EntityFiles\DefaultValue.lxml" />
+    <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />
     <None Include="EntityFiles\InternationalSiteTenant.lxml" />
     <None Include="EntityFiles\OcrDocument.lxml" />

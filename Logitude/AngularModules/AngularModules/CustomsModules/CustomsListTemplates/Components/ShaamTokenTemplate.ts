@@ -2,7 +2,7 @@ import { Component } from "@angular/core";
 
 @Component({
     template: `
-    <div class="TextTrimming" *ngIf="fieldName == 'IsActive' && rowData.IsActive" style="text-align: center;  ">
+    <div class="TextTrimming" *ngIf="fieldName == 'isActive' && rowData.isActive" style="text-align: center;  ">
         <img src="./Images/Icons/GreenV.png" style="height:20px;width:15px;vertical-align:central;padding-bottom:5px" />
     </div>
 
@@ -18,6 +18,6 @@ import { Component } from "@angular/core";
     setVariables(rowData: any, fieldName: string) {
         this.rowData = rowData;
         this.fieldName = fieldName;
-        this.isDateTimeField = ['AccessExpireDate', 'RefreshExpierDate', 'CreateDate'].includes(fieldName);
+        this.isDateTimeField = ['accessExpireDate', 'refreshExpierDate', 'createDate'].includes(fieldName);
     }
 }

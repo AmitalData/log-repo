@@ -134,18 +134,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (AdditionalInformation != null)
                         status = AdditionalInformation.FirstOrDefault(x => x.Content != null && x.StatementTypeCode.Value == "32").Content.Value;
                     bool isAmendApprove = (status == "2" || status == "1");
+                    bool isDCA = requestParams.RequestVIA == SendRequestVIA.DCABatch;
 
-                    if (declaration != null)
+					if (declaration != null)
                     {
                         if (customResponse.Response.Declaration != null && (status == "2" || status == "1"))
-                            _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true, isAmendApprove: isAmendApprove);
+                            _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true, isAmendApprove: isAmendApprove,isDCA: isDCA);
                     }
                     else
                     {
                         if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99")
                         {
                             _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
-                            _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true);
+                            _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true, isDCA: isDCA);
                         }
                         else if (customResponse.Response.Declaration != null)
                         {
@@ -153,12 +154,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             if (_MyDeclarationPM != null)
                             {
-                                _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true, isAmendApprove: isAmendApprove);
+                                _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true, isAmendApprove: isAmendApprove, isDCA: isDCA);
                             }
                             else
                             {
                                 string id = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
-                                _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false, isAmendApprove: isAmendApprove);
+                                _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false, isAmendApprove: isAmendApprove, isDCA: isDCA);
                             }
                             fromMehes = true;
 

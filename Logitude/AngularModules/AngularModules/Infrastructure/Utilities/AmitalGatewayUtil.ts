@@ -61,6 +61,7 @@ export class AmitalGatewayUtil {
         }*/
     }
     NoteUnifreightIamReady() {
+        window.parent.postMessage("site ready", '*');
 
         let myRequestWrapper = new RequestWrapperM();
         myRequestWrapper.MessageID = "NoteUnifreightIamReady";
@@ -280,7 +281,6 @@ export class AmitalGatewayUtil {
     }
 
     SendRequestJSONToUnifreightAsync(myRequestWrapper: RequestWrapperM) {
-
         if (AppTool.IsNullOrEmpty(window.parent._JavascriptGateway)) {
             alert("_JavascriptGateway not exist !!!");
             SessionLocator.SelectedSession.StopBusyIndicator();
@@ -293,6 +293,8 @@ export class AmitalGatewayUtil {
     }
     public IsAmitalBackButtonDisable: boolean = false;
     AmitalBackButtonClicked() {
+        window.parent.postMessage("amitalBackButtonClicked", '*');
+
         let RequestWrapper = new RequestWrapperM()
         let myUnifreightMessageM = new UnifreightMessageM();
         //myUnifreightMessageM.LogitudeCommandId = "LogitudeCommandId";
@@ -317,7 +319,7 @@ export class AmitalGatewayUtil {
         //}
         this._LastUnifreightMessageM = unifreightMessage
         this._LastUnifreightMessageM.Requset = this._LastUnifreightMessageM.Requset || [];
-        this._LastUnifreightMessageM.Response = this._LastUnifreightMessageM.Response || [];
+        this._LastUnifreightMessageM.Response = this._LastUnifreightMessageM.Response || [];        
         switch (unifreightMessage.LogitudeCommandId) {
             
             case "SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM()": 
@@ -532,6 +534,46 @@ export class AmitalGatewayUtil {
             case "ShowCourierMasterByIdReturnCloseSave": {
                 this.ShowCourierMasterByIdReturnCloseSaveMethod(
                     myParam, myEditTab, change2EditTab, change2CA23Tab);
+                break;
+            }
+                 
+            case "CreateNewShaamToken": {
+                this.SelectCustomsRequestMenu(MaintenanceMenu);
+
+                const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
+                const logWindow = new LogitudeWindow();
+                logWindow.Width = window.outerWidth;
+                logWindow.Height = window.outerHeight;
+                logWindow.Title = windowTitle;
+                logWindow.IsShowCloseButton = true;
+                logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
+                logWindow.WindowClosed.subscribe(() => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
+
+                break;
+            }
+
+            case "ConfirmationNumberTokenLog": {
+                this.SelectCustomsRequestMenu();                
+                change2EditTab();
+                const objectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
+                const allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === objectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+                const selectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0))[0];
+                const objectTablePM = window.ObjectTables.filter(d => d.Id == objectTableId)[0];
+
+                const listArgs: any = {};
+                listArgs.QueryCode = selectedQuery.Code;
+                listArgs.ObjectTableName = objectTablePM.Name;
+                listArgs.BackButtonTitle = "Back";
+
+                new EntityResourceService().getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+                    listArgs.DisplayTitle = TextCodeTranslator.Translate(selectedQuery.NameTextCodeCode);
+                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                        .then(cmpRef => {
+                            cmpRef.instance.ComponentRef = cmpRef;
+                            cmpRef.instance.Run(listArgs);
+                            cmpRef.instance.BackCompleted.subscribe(bk => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
+                        });
+                });
                 break;
             }
                  

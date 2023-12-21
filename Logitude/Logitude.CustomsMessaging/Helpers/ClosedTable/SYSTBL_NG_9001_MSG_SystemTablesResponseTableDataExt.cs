@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Logitude.Customs.Data.EntityPOCOs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public IncotemrsFileValidation MyIncotemrsFileValidation { get; set; }
         public CargoIdentifireType MyCargoIdentifireType { get; set; }
         public TradeAgreement MyTradeAgreement { get; set; }
+        public OriginCriterion MyOriginCriterion { get; set; }
         public ConfirmationType MyConfirmationType { get; set; }
         public ItemGovernmentProcedureType MyItemGovernmentProcedureType { get; set; }
 
@@ -114,6 +116,12 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     {
         public int CustomsBookTypeID { get; set; }
         public int CountryGroupID { get; set; }
+
+    }
+    public class OriginCriterion
+    {
+        public int CertificateOfOriginTypeCodeID { get; set; }
+        public string OriginCriterionCode { get; set; }
 
     }
 

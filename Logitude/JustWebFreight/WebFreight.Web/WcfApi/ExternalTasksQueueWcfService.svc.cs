@@ -303,7 +303,7 @@ namespace WebFreight.Web.WcfApi
             var response = new Response();
             try
             {
-                tenant = 6;//temppppp
+                //tenant = 6;//temppppp
 
                 //SecurityUtility.AuthenticationOnTenant(tenant);
                 //SecurityUtility.CheckContactFeature("Quote", "UPDATE", tenant);//UPDATE//READ

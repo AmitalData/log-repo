@@ -622,6 +622,13 @@ export class HomeComponent implements OnDestroy{
         }
         AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
     }
+
+    @HostListener('window:message', ['$event'])
+    onMessage(event) {
+        if(event.data.isFromIframe)
+            this.UnifaceRequest(event.data);
+    }
+
     @HostListener('window:UnifaceRequestEvent', ['$event'])
     UnifaceRequest(event) {
         let myParam = event.detail;

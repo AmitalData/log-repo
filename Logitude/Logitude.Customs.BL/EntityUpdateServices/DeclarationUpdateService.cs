@@ -498,7 +498,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 var nFromDoubleQuote = nSubStrined.IndexOf("\"");
                                 NewValue = nSubStrined.Substring(0, nFromDoubleQuote);
                             }
-                            if (OldValue != NewValue && !change.Contains("CreatedByUserId") && !change.Contains("IsChanged"))
+                            if (OldValue != NewValue && !change.Contains("CreatedByUserId") && !change.Contains("IsChanged") &&  (!AreEqualIgnoringSpaces(OldValue, NewValue)))
                             {
                                 LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating: " + " CustomFileno : " + this.EntityPM.CustomFileNo + " = EntityChangeFieldXml " + this.EntityChangeFieldXml, false, "CreateUD2LTService", stopLogAt);
                                 LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating: " + " Old : " + OldValue + " = New " + NewValue, false, "CreateUD2LTService", stopLogAt);
@@ -3862,6 +3862,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 return null;
             }
             return clientId;
+        }
+        private bool AreEqualIgnoringSpaces(string str1, string str2)
+        {
+            string cleanStr1 = str1.Replace(" ", "");
+            string cleanStr2 = str2.Replace(" ", "");
+
+            return cleanStr1.Equals(cleanStr2);
         }
         public static string UpdateSupplierInvoiceItemsWhoHasError12195(string declarationId, int tenant)
         {
