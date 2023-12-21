@@ -57,13 +57,13 @@ export class ShaamTokensComponent extends BaseComponent {
 
     BuildColumns() {
         const columnsList: GridColumn[] = [
-            { FieldName: 'UserCode', Display: 'User Code', Styles: { width: '100px' } },
-            { FieldName: 'CreateDate', Display: 'Create Date', Styles: { width: '140px' }, isTemplate: true },
-            { FieldName: 'RefreshExpierDate', Display: 'Refresh Expier Date', Styles: { width: '140px' }, isTemplate: true },
-            { FieldName: 'RefreshToken', Display: 'Refresh Token', Styles: { width: '800px' } },
-            { FieldName: 'AccessExpireDate', Display: 'Access Expire Date', Styles: { width: '140px' }, isTemplate: true },
-            { FieldName: 'AccessToken', Display: 'Access Token', Styles: { width: '460px' } },
-            { FieldName: 'IsActive', Display: 'IsActive', Styles: { width: '60px' }, isTemplate: true },
+            { FieldName: 'userCode', Display: 'User Code', Styles: { width: '100px' } },
+            { FieldName: 'createDate', Display: 'Create Date', Styles: { width: '140px' }, isTemplate: true },
+            { FieldName: 'refreshExpierDate', Display: 'Refresh Expier Date', Styles: { width: '140px' }, isTemplate: true },
+            { FieldName: 'refreshToken', Display: 'Refresh Token', Styles: { width: '800px' } },
+            { FieldName: 'accessExpireDate', Display: 'Access Expire Date', Styles: { width: '140px' }, isTemplate: true },
+            { FieldName: 'accessToken', Display: 'Access Token', Styles: { width: '460px' } },
+            { FieldName: 'isActive', Display: 'IsActive', Styles: { width: '60px' }, isTemplate: true },
         ]
 
         this.columns = [];

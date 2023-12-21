@@ -18,7 +18,7 @@ import { ShaamWebService } from "Shipment/Services/ShaamWebService";
 
 })
 export class IdentityShaamLandingPageComponent {
-    loadingNotfinish: boolean = false;
+    loadingNotfinish: boolean = true;
     error: boolean = false;
     msg: string = '';
 
