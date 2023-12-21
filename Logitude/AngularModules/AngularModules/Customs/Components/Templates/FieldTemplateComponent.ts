@@ -951,7 +951,9 @@ export class FieldTemplateComponent {
         logitudeWindow.IsShowCloseButton = true;
         logitudeWindow.Title = TextCodeTranslator.Translate("CommunicationLog.O.MoreDetails");;
         logitudeWindow.WindowArgs = winData;
-        logitudeWindow.Show('./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationLogMoreDetailsComponent');
+
+        this.entityResourceService.getEntityResourceByTableName("CommunicationLog").subscribe((response: any) => 
+            logitudeWindow.Show('./InfrastructureModules/InfrastructureCommunications/Components/Communications/CommunicationLogMoreDetailsComponent'));
     }
 }
 
