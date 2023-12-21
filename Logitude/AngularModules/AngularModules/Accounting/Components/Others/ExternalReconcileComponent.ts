@@ -849,18 +849,6 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
 
         this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference2",'String',TextCodeTranslator.Translate("LedgerTransaction.F.Reference2")));
 
-        this.TransactionsColumns.push({
-            FieldName: 'Reference3',
-            DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("LedgerTransaction.F.Reference3"), // 'Ref. 3',
-            Styles: { width: '80px' },
-            IsCustomTemplate: true
-            ,
-            ServerSideSortable: true,
-            SortByName: 'Reference3'
-        });
-        this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference3",'String',TextCodeTranslator.Translate("LedgerTransaction.F.Reference3")));
-
         //this.TransactionsColumns.push({
         //    FieldName: 'JournalNumber',
         //    DataTypeCode: 'String',
