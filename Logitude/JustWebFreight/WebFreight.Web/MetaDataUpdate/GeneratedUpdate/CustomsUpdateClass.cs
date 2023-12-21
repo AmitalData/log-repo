@@ -348,7 +348,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate
 		OcrDocumentUpdateClass  OcrDocumentUpdateClass = new OcrDocumentUpdateClass();
 		OcrStatusUpdateClass  OcrStatusUpdateClass = new OcrStatusUpdateClass();
 		OrganizationUnitTypeUpdateClass  OrganizationUnitTypeUpdateClass = new OrganizationUnitTypeUpdateClass();
-		OriginCriterionUpdateClass  OriginCriterionUpdateClass = new OriginCriterionUpdateClass();
+        OriginCriterionUpdateClass OriginCriterionUpdateClass = new OriginCriterionUpdateClass();
 		PackageMeasureQualifierUpdateClass  PackageMeasureQualifierUpdateClass = new PackageMeasureQualifierUpdateClass();
 		PackingTypeUpdateClass  PackingTypeUpdateClass = new PackingTypeUpdateClass();
 		ParagraphTypeUpdateClass  ParagraphTypeUpdateClass = new ParagraphTypeUpdateClass();
