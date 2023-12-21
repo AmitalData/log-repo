@@ -109,7 +109,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         #endregion
 
-        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept = false, bool isCopy = false)
+        public DeclarationPM MapResponseToDeclaration(UnifreightIIG.Common.ImportDeclarationServiceReference.Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept = false, bool isCopy = false, bool? isDCA = false)
         {
             error = "";
             try
@@ -325,7 +325,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     //    declarationPM = myQueryService.GetSingle(idOrg, true, false);
                     //}
 
-                    var declarationId2 = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant).Id;
+                    var declarationId2 = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant,false, isDCA).Id;
 
                     invoicePMs = GetSupplierInvoices(declaration, tenant, context, declarationId2, declarationOrg);
                     DeleteSomeObjects(declarationPM, tenant, context);
@@ -520,7 +520,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 string declarationId;
                 if (declarationOrg != null)
-                    declarationId = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant).Id;
+                    declarationId = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant,false, isDCA).Id;
                 else
                     declarationId = declarationPM.Id;
 
