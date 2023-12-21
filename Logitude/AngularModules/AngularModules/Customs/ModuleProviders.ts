@@ -174,6 +174,7 @@ import { TapagListService } from './Services/StandardLists/TapagListService';
 import { TapagTypeListService } from './Services/StandardLists/TapagTypeListService';
 import { TermsOfSaleTypeListService } from './Services/StandardLists/TermsOfSaleTypeListService';
 import { TradeAgreementListService } from './Services/StandardLists/TradeAgreementListService';
+import { OriginCriterionListService } from './Services/StandardLists/OriginCriterionListService';
 import { TradeLevyExamptTypeListService } from './Services/StandardLists/TradeLevyExamptTypeListService';
 import { UnloadingSiteTypeListService } from './Services/StandardLists/UnloadingSiteTypeListService';
 import { ValidCustomsItemListService } from './Services/StandardLists/ValidCustomsItemListService';
@@ -638,6 +639,7 @@ export class ModuleProviders {
             case "TapagTypeListService": { myResult = new TapagTypeListService(); break; }
             case "TermsOfSaleTypeListService": { myResult = new TermsOfSaleTypeListService(); break; }
             case "TradeAgreementListService": { myResult = new TradeAgreementListService(); break; }
+            case "OriginCriterionListService": { myResult = new OriginCriterionListService(); break; }
             case "TradeLevyExamptTypeListService": { myResult = new TradeLevyExamptTypeListService(); break; }
             case "UnloadingSiteTypeListService": { myResult = new UnloadingSiteTypeListService(); break; }
             case "ValidCustomsItemListService": { myResult = new ValidCustomsItemListService(); break; }

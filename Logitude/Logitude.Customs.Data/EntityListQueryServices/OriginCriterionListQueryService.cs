@@ -34,6 +34,10 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          EnglishName = a.EnglishName,
 					
 					                          Inactive = a.Inactive,
+											  
+											  CertificateOfOriginTypeCodeID = a.CertificateOfOriginTypeCodeID,
+
+											  OriginCriterionCode = a.OriginCriterionCode,
 					
 		                    	            });
             return query;
@@ -41,9 +45,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<OriginCriterion> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<OriginCriterion> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-			}
+            return iQueryable;
+        }
+    }
 
 
 }
