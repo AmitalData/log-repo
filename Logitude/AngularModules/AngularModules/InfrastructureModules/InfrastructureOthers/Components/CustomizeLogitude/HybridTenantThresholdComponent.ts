@@ -21,7 +21,7 @@ import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 export class HybridTenantThresholdComponent extends BaseComponent {
     public DataContext: HybridTenantThresholdComponent = this;
     private CurrentSession = SessionLocator.SelectedSession;
-    constructor() { super(); this.LoadHybridTenantThreshold(); }
+    constructor() { super();  }
 
     public EntityPM: HybridTenantThresholdPM;
     public Isupdate: boolean = false;
@@ -29,19 +29,17 @@ export class HybridTenantThresholdComponent extends BaseComponent {
     private listService: HybridTenantThresholdListService = new HybridTenantThresholdListService();
     private service: HybridTenantThresholdPMService = new HybridTenantThresholdPMService();
 
-     type:number=1;
+     type:number=0;
+     
 
     SetDataContext(type: number) {
       this.type=type
-    
+      this.LoadHybridTenantThreshold();
     }
     LoadHybridTenantThreshold() {
         this.CurrentSession.StartBusyIndicatorLoading();
-        var filters = new ApiQueryFilters();
-        filters.addAdditionalFilter("Tenant", SessionLocator.Tenant, null, null, "Equals", false, false, false, "Number");
-        filters.addAdditionalFilter("Type", this.type, null, null, "Equals", false, false, false, "Number");
-
-        this.listService.getByFilters(filters).subscribe((res:any) => {
+        
+        this.service.get(SessionLocator.Tenant,this.type).subscribe((res:any) => {
             if (!res.HasError) {
                 this.EntityPM = res.Result;
                 if (this.EntityPM == null) {
@@ -50,7 +48,7 @@ export class HybridTenantThresholdComponent extends BaseComponent {
                     this.EntityPM.WaitingThresold = 10;
                     this.EntityPM.FailedThresold = 10;
                     this.Isupdate = false;
-                    this.EntityPM.Type=this.type;
+                    this.EntityPM.TypeCode=this.type;
                 
                 }
                 else {
@@ -99,7 +97,7 @@ export class HybridTenantThresholdComponent extends BaseComponent {
 
     CloseButtonClicked() { this.CurrentSession.CloseCurrentWindow(); }
     SaveButtonClicked() {
-         
+         debugger
         if (!this.Isupdate) {
             this.service.insert(this.EntityPM).subscribe((res:any) => {
                 this.CurrentSession.CloseCurrentWindow();

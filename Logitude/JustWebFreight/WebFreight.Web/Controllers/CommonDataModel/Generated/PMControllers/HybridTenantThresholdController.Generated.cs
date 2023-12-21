@@ -49,7 +49,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
     {
 	  
        
-        public HttpResponseMessage GetSingle(int tenant)
+        public HttpResponseMessage GetSingle(int tenant, int typecode)
         {
 		  try
             {
@@ -60,7 +60,7 @@ namespace WebFreight.Web.Controllers.CommonDataModel.Generated.PMControllers
 
                 SecurityUtility.CheckContactFeature("HybridTenantThreshold", "READ", authToken.Tenant);
                 HybridTenantThresholdQuery hybridTenantThresholdQuery = new HybridTenantThresholdQuery(authToken.Tenant);
-                HybridTenantThresholdPM hybridTenantThresholdPM = hybridTenantThresholdQuery.GetSinglePM(tenant, authToken.Tenant);
+                HybridTenantThresholdPM hybridTenantThresholdPM = hybridTenantThresholdQuery.GetSinglePM(tenant, typecode);
                 
 				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 
