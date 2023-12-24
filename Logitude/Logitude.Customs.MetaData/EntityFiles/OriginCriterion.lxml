@@ -472,6 +472,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CertificateOfOriginTypeCodeID&quot;"
     ListPropertyPath="&quot;CertificateOfOriginTypeCodeID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -548,6 +549,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;OriginCriterionCode&quot;"
     ListPropertyPath="&quot;OriginCriterionCode&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -623,16 +625,26 @@
       <QueryColumn
         QueryCode="&quot;OriginCriterion&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;LocalName&quot;"
+        ObjectFieldName="&quot;CertificateOfOriginTypeCodeID&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OriginCriterion&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;EnglishName&quot;"
+        ObjectFieldName="&quot;OriginCriterionCode&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;OriginCriterion&quot;"
         IndexOrder="3"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OriginCriterion&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;OriginCriterion&quot;"
+        IndexOrder="5"
         ObjectFieldName="&quot;Inactive&quot;"
         ColumnWidth="50" />
     </QueryColumns>
