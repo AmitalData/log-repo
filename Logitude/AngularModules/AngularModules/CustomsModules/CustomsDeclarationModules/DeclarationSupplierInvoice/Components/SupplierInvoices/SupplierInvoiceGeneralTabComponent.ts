@@ -1555,6 +1555,65 @@ export class SupplierInvoiceGeneralTabComponent extends BaseComponent implements
 
     }
 
+
+    CopyNowClicked(direction: string) {
+        if (direction == 'E') {
+            this.UpdateClicked(UpdateOptions.QuantityType);
+        }
+        else
+        {
+            var confirm = new ConfirmWindow();
+
+            confirm.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.UpdateAndOverride");
+            confirm.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Update");
+            confirm.ShowNoButton = true;
+            confirm.Show(TextCodeTranslator.Translate("Customs.Declaration.O.UpdateOrOverride"));
+            confirm.WindowClosed.subscribe((event: any) => {
+
+                if (confirm.Yes) {
+                    confirm.Close();
+                    for (let item of this.ItemsSource.Collection) {
+
+                        if (item.QunatityTypeCode != null) {
+                            var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
+                            item.InvoiceQuantityType = s;
+                        }
+                    }
+
+                }
+                else {
+                    confirm.Close();
+                    for (let item of this.ItemsSource.Collection) {
+                        if (item.InvoiceQuantityType == null) {
+
+                            if (item.QunatityTypeCode != null) {
+                                var s = item.QunatityTypeCode.slice(1, item.QunatityTypeCode.length - 1);
+                                //var s = item.QunatityTypeCode.split('(');
+                                //var st = s[1].split(')');
+
+                                item.InvoiceQuantityType = s;
+                            }
+
+                        }
+                    }
+
+
+                }
+
+            });
+
+            if (this.ItemsSource.Collection.length == 500) {
+
+                var msg = new MessageWindow();
+
+                msg.Show(" עודכנו רק 500 הפריטים המוצגים");
+
+            }
+        }
+    
+    }
+
+
     UpdateClicked(type:UpdateOptions){
         let selectedOptionsSettings=this.updateOptionsMap[type];
         let title = selectedOptionsSettings.Title;
@@ -3490,7 +3549,7 @@ class UpdateGeneralParams {
     public Arguments: UpdateGeneralArgsParams;
 }
 
-enum UpdateOptions {
+ enum UpdateOptions {
     QuantityType,
     ProcessCode,
     CountryOfOrigin,
