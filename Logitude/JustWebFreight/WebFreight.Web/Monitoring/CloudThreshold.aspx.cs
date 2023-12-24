@@ -21,6 +21,7 @@ using Logitude.Infrastructure.Data.EntityPOCOs;
 using Stimulsoft.Base.Json.Linq;
 using Newtonsoft.Json;
 using static Dropbox.Api.Sharing.SharePathError;
+using Simplog.Data.ShipmentsModel;
 
 namespace WebFreight.Web.Monitoring
 {
@@ -65,7 +66,7 @@ namespace WebFreight.Web.Monitoring
         private bool AnyFailedStatus(int tenant)
         {
 
-            bool IsFaildWaiting = true;
+            bool IsFaildWaiting = false;
 
             //int? WaitingThresold = null;
             //int? FailedThresold = null;
@@ -96,34 +97,27 @@ namespace WebFreight.Web.Monitoring
             {
 
                 CommonDataContext CommonContext = CommonDataContext.GetContextByDBId(db.Id);
-                IWebFreightContext Context = WebFreightContext.GetContext(tenant);
-
+                IShipmentsContext objectContext = ShipmentsContext.GetContext(tenant);
                 CargoTrackingWatermarkQueryService cargoTrackingWatermarkQueryService = new CargoTrackingWatermarkQueryService(tenant);
                 List<CargoTrackingWatermark> cargoTrackingWatermarks = cargoTrackingWatermarkQueryService.GetAllWaterMarks();
-                var IncrementalLastRun = cargoTrackingWatermarks == null ? null : cargoTrackingWatermarks.OrderByDescending(s => s.LastRun).FirstOrDefault().LastRun;
-                //    DateTime TenMinutesBefore = DateTime.Now.AddMinutes(-10);
+                var IncrementalLastRun = cargoTrackingWatermarks == null ? null : cargoTrackingWatermarks.Where(s => s.TableName == "CargoTrackingShipments").FirstOrDefault().LastUpdateDate;
                 try
                 {
                     var hybridTenantThreshold = (from a in CommonContext.HybridTenantThresholds
-                                                 where a.Tenant == 16
+                                                 where a.Tenant == tenant  &&  a.TypeCode==1
                                                  select new
                                                  {
                                                      a.Tenant,
                                                      a.WaitingThresold,
                                                      a.FailedThresold,
+                                                     a.TypeCode
                                                  }).FirstOrDefault();
-                    if (hybridTenantThreshold != null)
+                    if (hybridTenantThreshold != null && IncrementalLastRun < DateTime.Now.AddMinutes(-10))
                     {
-                        //  List<String> taskList = (from task in infrastructureContext.BatchTaskExecutions
-                        //                           where task.Subject == BatchTaskNames.BuildCargoTrackingShipments
-                        //                           select task.Id).ToList();
-
-                        //List<QueueMessage> queueList = (from queue in webFreightContext.QueueMessages where queue.Status == 0 && queue.QueueDefinitionCode == "batchtaskexecutionqueue" && taskList.Contains(queue.MessageBody["BatchTaskExecutionId"].ToString()) select queue).ToList();
-                        //  if (queueList?.Count() > hybridTenantThreshold?.FailedThresold && IncrementalLastRun > TenMinutesBefore)
-                        //      IsFailed = true;
-                        IsFaildWaiting = (from a in Context.QueueMessages
-                                          where (a.QueueDefinitionCode.Contains("ImportersShipmentQueue") || a.QueueDefinitionCode.Contains("ImportersShipmentsBatchQueue")) && a.Status == 0
-                                          select a).Count() > hybridTenantThreshold.WaitingThresold && IncrementalLastRun < DateTime.Now.AddMinutes(-10);
+                     
+                        IsFaildWaiting = (from a in objectContext.Shipments
+                                          where  a.AutomaticLastUpdateDate > IncrementalLastRun  &&  a.Tenant == tenant
+                                          select a).Count() > hybridTenantThreshold.WaitingThresold ;
 
                     }
                 }
@@ -131,6 +125,7 @@ namespace WebFreight.Web.Monitoring
 
                 catch (Exception errorInfo)
                 {
+                    IsFaildWaiting = true;
                     ExceptionHandler.HandleException(errorInfo, DateTime.Now, 0, "", "CloudThreshold", "Bug in AnyWaitingStatus Method : IsFaildWaiting = (from a in Context.HybridTenantThresholds ...", null);
                 }
 

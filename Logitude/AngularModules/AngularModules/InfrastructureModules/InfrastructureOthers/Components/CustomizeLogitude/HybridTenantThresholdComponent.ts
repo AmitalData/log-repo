@@ -77,7 +77,19 @@ export class HybridTenantThresholdComponent extends BaseComponent {
         }
     }
 
+    public get TypeCode() {
+        var typeCode: number = 0;
+        if (this.EntityPM != null) {
+            typeCode = this.EntityPM.TypeCode;
+        }
+        return typeCode; 
+    }
 
+    public set TypeCode(value: number) {
+        if (value != this.EntityPM.TypeCode) {
+            this.EntityPM.TypeCode = value;
+        }
+    }
 
     public get FailedThresold() {
         var failedThresold: number = 0;

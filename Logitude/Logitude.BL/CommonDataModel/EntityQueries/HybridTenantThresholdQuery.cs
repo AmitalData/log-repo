@@ -42,6 +42,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
+                             TypeCode = a.TypeCode,
                          }).FirstOrDefault();
 
             return query;
@@ -59,6 +60,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
+                             TypeCode = a.TypeCode,
                          }).FirstOrDefault();
 
             return query;
@@ -78,6 +80,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
+                             TypeCode = a.TypeCode,
                          }).FirstOrDefault();
 
             return query;
@@ -95,6 +98,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                              Tenant = a.Tenant,
                              FailedThresold = a.FailedThresold,
                              WaitingThresold = a.WaitingThresold,
+                             TypeCode = a.TypeCode,
                          }).FirstOrDefault();
 
             return query;
