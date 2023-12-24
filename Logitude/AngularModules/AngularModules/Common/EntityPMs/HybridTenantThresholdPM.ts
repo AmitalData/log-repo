@@ -42,13 +42,10 @@ export class HybridTenantThresholdPM {
 
     private typeCode: number;
     public get TypeCode() { return this.typeCode; }
-    public set TypeCode(newValue: number) { if (this.typeCode != newValue) { this.typeCode = newValue; this.MarkAsDirty("typeCode"); } }
+    public set TypeCode(newValue: number) { if (this.typeCode != newValue) { this.typeCode = newValue; this.MarkAsDirty("TypeCode"); } }
        
-	 
-
     public OldEntityPM: HybridTenantThresholdPM;
-		
-    public IsDirty: boolean;
+	public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
