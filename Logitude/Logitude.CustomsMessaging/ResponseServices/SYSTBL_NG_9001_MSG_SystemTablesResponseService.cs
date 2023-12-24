@@ -613,6 +613,39 @@ ID List :
                         return extList;
 
                     }
+                case "1977":
+                case "OriginCriterion":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyOriginCriterion = new Helpers.ClosedTable.OriginCriterion();
+
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                    if (dr["CertificateOfOriginTypeCodeID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        int.TryParse(dr["CertificateOfOriginTypeCodeID"]?.ToString(), out int val);
+                                                        newExt.MyOriginCriterion.CertificateOfOriginTypeCodeID = val;
+                                                    }
+                                                    if (dr["OriginCriterionCode"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyOriginCriterion.OriginCriterionCode = dr["OriginCriterionCode"]?.ToString();
+                                                    }
+
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+
+                    }
                 case "1423":
                 case "CertificateExemptionType":
                     {
