@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OriginCriterionUpdateClass
    {  		
-		public const string HashString = "c7da2c6045a4c335bca59d8a86055039";
+		public const string HashString = "c28bbd8a88959fd6a32cd0abf9d37d89";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -487,6 +487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CertificateOfOriginTypeCodeID",
 					  						ListPropertyPath =  "CertificateOfOriginTypeCodeID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -550,6 +551,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "OriginCriterionCode",
 					  						ListPropertyPath =  "OriginCriterionCode",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -623,11 +625,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn OriginCriterionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OriginCriterionQuery.Id,QueryCode = OriginCriterionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.OriginCriterion.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn OriginCriterionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OriginCriterionQuery.Id,QueryCode = OriginCriterionQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.OriginCriterion.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OriginCriterionQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OriginCriterionQuery.Id,QueryCode = OriginCriterionQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.OriginCriterion.CertificateOfOriginTypeCodeID" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OriginCriterionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OriginCriterionQuery.Id,QueryCode = OriginCriterionQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.OriginCriterion.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn OriginCriterionQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OriginCriterionQuery.Id,QueryCode = OriginCriterionQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.OriginCriterion.OriginCriterionCode" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn OriginCriterionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OriginCriterionQuery.Id,QueryCode = OriginCriterionQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.OriginCriterion.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn OriginCriterionQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OriginCriterionQuery.Id,QueryCode = OriginCriterionQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.OriginCriterion.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OriginCriterionQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OriginCriterionQuery.Id,QueryCode = OriginCriterionQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.OriginCriterion.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn OriginCriterionQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OriginCriterionQuery.Id,QueryCode = OriginCriterionQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.OriginCriterion.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
