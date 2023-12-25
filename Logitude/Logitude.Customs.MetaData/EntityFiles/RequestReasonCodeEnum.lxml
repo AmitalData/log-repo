@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;קוד סיבת בקשה לתעודת מקור&quot;"
-  DefaultText="&quot;Update Code&quot;"
+  DefaultText="&quot;Request Reason Code Enum&quot;"
   Code="&quot;c8e3&quot;"
   Name="&quot; Query Group&quot;"
   CloseTableCode="&quot;Code&quot;"
@@ -446,7 +446,7 @@
     EnableFullscreenTextBox="false" />
   <Query
     Code="&quot;RequestReasonCodeEnum&quot;"
-    TextCode="&quot;Export Logistic Permit Action&quot;"
+    TextCode="&quot;Request Reason Code Enum&quot;"
     LocalTextCode="&quot;קוד סיבת בקשה לתעודת מקור&quot;"
     QueryGroupCode="&quot;c8e3&quot;"
     IndexOrder="0"

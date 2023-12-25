@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RequestReasonCodeEnumUpdateClass
    {  		
-		public const string HashString = "54243b126e3f8d731a1a0dbf8f100456";
+		public const string HashString = "5763d30399d8303c4c04b87245a9e6ea";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "קוד סיבת בקשה לתעודת מקור",
-			      				    DefaultText =  "Update Code",
+			      				    DefaultText =  "Request Reason Code Enum",
 			      				    Code =  "c8e3",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
@@ -487,7 +487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode RequestReasonCodeEnumTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RequestReasonCodeEnum.Q.RequestReasonCodeEnum", DefaultText = @"Export Logistic Permit Action",LocalDefaultText = "קוד סיבת בקשה לתעודת מקור", ObjectTableId = RequestReasonCodeEnumObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode RequestReasonCodeEnumTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RequestReasonCodeEnum.Q.RequestReasonCodeEnum", DefaultText = @"Request Reason Code Enum",LocalDefaultText = "קוד סיבת בקשה לתעודת מקור", ObjectTableId = RequestReasonCodeEnumObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature RequestReasonCodeEnumFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RequestReasonCodeEnum.Q.RequestReasonCodeEnum", ObjectTableId = RequestReasonCodeEnumObjectTable.Id, Tenant = 0, NameTextCodeCode = "RequestReasonCodeEnum.Features.RequestReasonCodeEnum", NameTextCodeDefaultText = "RequestReasonCodeEnum", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,RequestReasonCodeEnumObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
