@@ -472,6 +472,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsCustomApprovalRequired&quot;"
     ListPropertyPath="&quot;IsCustomApprovalRequired&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -547,6 +548,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsCriterionMandatory&quot;"
     ListPropertyPath="&quot;IsCriterionMandatory&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -595,7 +597,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
-    Code="&quot;CertificateOfOriginTypeCodeEnum&quot;"
+    Code="&quot;CertificateOfOriginTypeEnum&quot;"
     TextCode="&quot;Certificate Of Origin Type Code Enum&quot;"
     LocalTextCode="&quot;קוד סוג תעודת מקור &quot;"
     QueryGroupCode="&quot;c8e3&quot;"
@@ -615,23 +617,33 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;CertificateOfOriginTypeCodeEnum&quot;"
+        QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Code&quot;"
         ColumnWidth="50" />
       <QueryColumn
-        QueryCode="&quot;CertificateOfOriginTypeCodeEnum&quot;"
+        QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;IsCustomApprovalRequired&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;IsCriterionMandatory&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
+        IndexOrder="3"
         ObjectFieldName="&quot;LocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;CertificateOfOriginTypeCodeEnum&quot;"
-        IndexOrder="2"
+        QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
+        IndexOrder="4"
         ObjectFieldName="&quot;EnglishName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;CertificateOfOriginTypeCodeEnum&quot;"
-        IndexOrder="3"
+        QueryCode="&quot;CertificateOfOriginTypeEnum&quot;"
+        IndexOrder="5"
         ObjectFieldName="&quot;Inactive&quot;"
         ColumnWidth="50" />
     </QueryColumns>
