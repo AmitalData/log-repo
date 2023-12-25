@@ -385,7 +385,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
 
             DocumentsFilingQuery documentsFilingQuery = new DocumentsFilingQuery(cargoShipmentPM.Tenant);
             List<DocumentsFilingPM> documentsFilingPM = documentsFilingQuery.GetInputDocumentsFilingPMsByEntityId(cargoShipmentPM.EntityId, cargoShipmentPM.Tenant);
-            documentsFilingPM = documentsFilingPM.Where(document =>
+            documentsFilingPM = documentsFilingPM.Where(document =>string.IsNullOrEmpty( document.BillToId) ||
            (allowedDocumentTypes.Contains(document.DocumentTypeCode.ToUpper()) && document.BillToId == cargoShipmentPM.CustomerId)
            || !allowedDocumentTypes.Contains(document.DocumentTypeCode.ToUpper())).ToList();
 
