@@ -34,7 +34,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
 
     ValidationBeforeSave(customsDocumentsTicket: CustomsDocumentsTicketPM, param1: string) {
         if ((param1 == "2" || param1 == "3") && AppTool.IsNullOrEmpty(customsDocumentsTicket.ConnectedCREsSequences)) {
-            return "חובה לבחור ישות תביעה";
+            return TextCodeTranslator.Translate("Customs.Claim.O.MustChooseClaim");
         }
 
         
@@ -129,7 +129,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
 
         var connectedItem2 = new ConnectedToItem();
         connectedItem2.Id = 1;
-        connectedItem2.Name = TextCodeTranslator.Translate("Customs.ClaimsRelatedEntity");
+        connectedItem2.Name = TextCodeTranslator.Translate("Customs.Claim.O.Claim");
         connectedItems.push(connectedItem2);
 
         var connectedItem3 = new ConnectedToItem();
@@ -139,7 +139,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
 
         var connectedItem4 = new ConnectedToItem();
         connectedItem4.Id = 3;
-        connectedItem4.Name = TextCodeTranslator.Translate("Customs.Declaration");
+        connectedItem4.Name = TextCodeTranslator.Translate("Customs.Claim.O.RelatedEntites");
         connectedItems.push(connectedItem4);
 
 
@@ -204,7 +204,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
                 child1EntityCode = "ClaimRelatedEntityCancelOrObjection";
             }
             if(selectedIndex == 3){
-                child1EntityCode = "ClaimRelatedDeclaration";
+                child1EntityCode = "ClaimRelatedEntity";
             }
 
             if (customsDocumentsTicket.CustomsDocumentPointers != null && customsDocumentsTicket.CustomsDocumentPointers.length > 0) {
@@ -337,7 +337,7 @@ export class ClaimCustomsDocumentsController implements ICustomsDocumentsControl
                 }
                 break;
 
-            case "ClaimRelatedDeclaration":
+            case "ClaimRelatedEntity":
                 connectedDocumentPointer={
                     "SelectedIndex": 3,
                     "DisplayConnectedEntityNumber": customsDocumentPointerPM.Child1EntityId,

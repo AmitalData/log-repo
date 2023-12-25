@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimUpdateClass
    {  		
-		public const string HashString = "e882e7bbe14bb70a6f5c8a44b2d2f8af";
+		public const string HashString = "94a75693603f23e29c72467e35bd15e2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4368,6 +4368,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ClaimTextCode_CustomsClaimOEnterClaimReason = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.EnterClaimReason", DefaultText = "You must enter a reason for the claim",LocalDefaultText = @"חובה להזין סיבת תביעה", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClaimTextCode_CustomsClaimOImporterAffidavitRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ImporterAffidavitRequired", DefaultText = "If field improve declar 3 is not empty text field must contain value",LocalDefaultText = @"אם שדה תצהיר יבואן 3 מכיל ערך, חובה להוסיף טקסט", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClaimTextCode_CustomsClaimOClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.Claim", DefaultText = "Claim",LocalDefaultText = @"תביעה", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClaimTextCode_CustomsClaimOMustChooseClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.MustChooseClaim", DefaultText = "Must choose claim",LocalDefaultText = @"חובה לבחור ישות תביעה", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
