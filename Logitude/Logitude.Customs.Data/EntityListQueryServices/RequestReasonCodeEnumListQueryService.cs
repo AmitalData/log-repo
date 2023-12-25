@@ -41,9 +41,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<RequestReasonCodeEnum> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<RequestReasonCodeEnum> iQueryable)
         {
-			throw new NotImplementedException();
-		}
-			}
+            return iQueryable;
+        }
+    }
 
 
 }
