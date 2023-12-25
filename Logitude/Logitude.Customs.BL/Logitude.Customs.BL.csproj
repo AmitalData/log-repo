@@ -1182,6 +1182,7 @@
     <Compile Include="EntityQueryServices\Generated\RequestReasonCodeEnumQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\GovernmentProcedureTypeTenantQueryService.cs" />
     <Compile Include="EntityQueryServices\LoadingSiteTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\CertificateOfOriginTypeCodeEnumQueryService.cs" />
     <Compile Include="EntityQueryServices\SupplierInvioceExportDefaultQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientIndicationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CountryCurrencyQueryService.Generated.cs" />
@@ -1744,6 +1745,7 @@
     <Compile Include="EntityUpdateServices\CustomDocumentTypeUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\OcrDocumentUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\OcrStatusUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\CertificateOfOriginTypeCodeEnumUpdateService.cs" />
     <Compile Include="EntityUpdateServices\PropertiesDetailsHistoryUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientsTapagUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ConfirmationTypeUpdateService.cs" />

@@ -251,6 +251,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable requestReasonCodeEnumObjectTable = objectTableRepository.GetObjectTableByName("Customs.RequestReasonCodeEnum", 0, false);
             InsertClosedTableRecord(requestReasonCodeEnumTable, requestReasonCodeEnumObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(requestReasonCodeEnumTable);
+                                                              
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData certificateOfOriginTypeCodeEnumTable = closedSystemTables.Where(d => d.id == "1958").FirstOrDefault();
+            ObjectTable certificateOfOriginTypeCodeEnumObjectTable = objectTableRepository.GetObjectTableByName("Customs.CertificateOfOriginTypeCodeEnum", 0, false);
+            InsertClosedTableRecord(certificateOfOriginTypeCodeEnumTable, certificateOfOriginTypeCodeEnumObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(certificateOfOriginTypeCodeEnumTable);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData deliverySiteTypeTable = closedSystemTables.Where(d => d.id == "2012").FirstOrDefault();
             ObjectTable deliverySiteTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.DeliverySiteType", 0, false);
