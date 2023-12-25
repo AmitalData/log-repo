@@ -83,20 +83,20 @@ using Amital.QuoteOPM.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class RequestReasonCodeEnumUpdateClass
+   public class CertificateOfOriginTypeCodeEnumUpdateClass
    {  		
-		public const string HashString = "5763d30399d8303c4c04b87245a9e6ea";
+		public const string HashString = "39d7cb4791e96128156e07d985286e6f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.RequestReasonCodeEnum",
+	             				    ObjectTableName =  "Customs.CertificateOfOriginTypeCodeEnum",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Customs.RequestReasonCodeEnums",
-			      				    ObjectTableSingular =  "RequestReasonCodeEnum",
-			      				    ObjectTablePlural =  "RequestReasonCodeEnums",
+			      				    DBTableName =  "Customs.CertificateOfOriginTypeCodeEnums",
+			      				    ObjectTableSingular =  "CertificateOfOriginTypeCodeEnum",
+			      				    ObjectTablePlural =  "CertificateOfOriginTypeCodeEnums",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -126,8 +126,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "קוד סיבת בקשה לתעודת מקור",
-			      				    DefaultText =  "Request Reason Code Enum",
+			      				    LocalDefaultText =  "קוד סוג תעודת מקור ",
+			      				    DefaultText =  "Certificate Of Origin Type Code Enum",
 			      				    Code =  "c8e3",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
@@ -143,7 +143,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  RequestReasonCodeEnumUpdateClass.HashString,
+			      				    HashString =  CertificateOfOriginTypeCodeEnumUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -155,7 +155,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Code",
-					  						ObjectTableName =  "Customs.RequestReasonCodeEnum",
+					  						ObjectTableName =  "Customs.CertificateOfOriginTypeCodeEnum",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  2,
@@ -183,7 +183,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.RequestReasonCodeEnum",
+					  						ValidForQuerySection1 =  "Customs.CertificateOfOriginTypeCodeEnum",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -218,7 +218,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "LocalName",
-					  						ObjectTableName =  "Customs.RequestReasonCodeEnum",
+					  						ObjectTableName =  "Customs.CertificateOfOriginTypeCodeEnum",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  40,
@@ -246,7 +246,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.RequestReasonCodeEnum",
+					  						ValidForQuerySection1 =  "Customs.CertificateOfOriginTypeCodeEnum",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -281,7 +281,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "Customs.RequestReasonCodeEnum",
+					  						ObjectTableName =  "Customs.CertificateOfOriginTypeCodeEnum",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
@@ -308,7 +308,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.RequestReasonCodeEnum",
+					  						ValidForQuerySection1 =  "Customs.CertificateOfOriginTypeCodeEnum",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -341,7 +341,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "EnglishName",
-					  						ObjectTableName =  "Customs.RequestReasonCodeEnum",
+					  						ObjectTableName =  "Customs.CertificateOfOriginTypeCodeEnum",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
 					  						MaxLength =  40,
@@ -369,7 +369,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.RequestReasonCodeEnum",
+					  						ValidForQuerySection1 =  "Customs.CertificateOfOriginTypeCodeEnum",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -404,7 +404,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   {
 					 
 					 						FieldName =  "Inactive",
-					  						ObjectTableName =  "Customs.RequestReasonCodeEnum",
+					  						ObjectTableName =  "Customs.CertificateOfOriginTypeCodeEnum",
 					  						FieldsDataType =  "Boolean",
 					  						MinLength =  0,
 					  						MaxLength =  0,
@@ -432,7 +432,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.RequestReasonCodeEnum",
+					  						ValidForQuerySection1 =  "Customs.CertificateOfOriginTypeCodeEnum",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -462,21 +462,145 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsCustomApprovalRequired",
+					  						ObjectTableName =  "Customs.CertificateOfOriginTypeCodeEnum",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsCustomApprovalRequired",
+					  						ListPropertyPath =  "IsCustomApprovalRequired",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CertificateOfOriginTypeCodeEnum",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsCustomApprovalRequired",
+					  						DefaultText =  "Is Custom Approval Required",
+					  						FullLocalDefaultText =  "האם נדרש אישור מכס",
+					  						ListFieldLable =  "IsCustomApprovalRequiredListLable",
+					  						ListLableDefaultText =  "Is Custom Approval Required",
+					  						ListLocalDefaultText =  "האם נדרש אישור מכס",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "IsCriterionMandatory",
+					  						ObjectTableName =  "Customs.CertificateOfOriginTypeCodeEnum",
+					  						FieldsDataType =  "Boolean",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "Equals",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "IsCriterionMandatory",
+					  						ListPropertyPath =  "IsCriterionMandatory",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CertificateOfOriginTypeCodeEnum",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "IsCriterionMandatory",
+					  						DefaultText =  "Is Criterion Mandatory",
+					  						FullLocalDefaultText =  "האם קריטריון העדפה חובה",
+					  						ListFieldLable =  "IsCriterionMandatoryListLable",
+					  						ListLableDefaultText =  "Is Criterion Mandatory",
+					  						ListLocalDefaultText =  "האם קריטריון העדפה חובה",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
 	    {  
 	        //FeatureRepository featureRepository = new FeatureRepository(0); 
             //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup RequestReasonCodeEnumQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c8e3", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
-						QueryGroup RequestReasonCodeEnumQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3e16", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+	        QueryGroup CertificateOfOriginTypeCodeEnumQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c8e3", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup CertificateOfOriginTypeCodeEnumQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3e16", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
 				        queryGroupRepository.SubmitChanges();
-	        ObjectTable RequestReasonCodeEnumObjectTable = objectTables.ContainsKey("Customs.RequestReasonCodeEnum") ? objectTables["Customs.RequestReasonCodeEnum"] : null;
-            if (RequestReasonCodeEnumObjectTable == null)
+	        ObjectTable CertificateOfOriginTypeCodeEnumObjectTable = objectTables.ContainsKey("Customs.CertificateOfOriginTypeCodeEnum") ? objectTables["Customs.CertificateOfOriginTypeCodeEnum"] : null;
+            if (CertificateOfOriginTypeCodeEnumObjectTable == null)
             {
                 IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
 
-                RequestReasonCodeEnumObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.RequestReasonCodeEnum" && d.Tenant == 0).FirstOrDefault();
+                CertificateOfOriginTypeCodeEnumObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.CertificateOfOriginTypeCodeEnum" && d.Tenant == 0).FirstOrDefault();
             }
 
 	         
@@ -487,22 +611,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode RequestReasonCodeEnumTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "RequestReasonCodeEnum.Q.RequestReasonCodeEnum", DefaultText = @"Request Reason Code Enum",LocalDefaultText = "קוד סיבת בקשה לתעודת מקור", ObjectTableId = RequestReasonCodeEnumObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature RequestReasonCodeEnumFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "RequestReasonCodeEnum.Q.RequestReasonCodeEnum", ObjectTableId = RequestReasonCodeEnumObjectTable.Id, Tenant = 0, NameTextCodeCode = "RequestReasonCodeEnum.Features.RequestReasonCodeEnum", NameTextCodeDefaultText = "RequestReasonCodeEnum", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,RequestReasonCodeEnumObjectTable, addedFeatures, addedTextCodes);
+			   TextCode CertificateOfOriginTypeCodeEnumTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CertificateOfOriginTypeCodeEnum.Q.CertificateOfOriginTypeCodeEnum", DefaultText = @"Certificate Of Origin Type Code Enum",LocalDefaultText = "קוד סוג תעודת מקור ", ObjectTableId = CertificateOfOriginTypeCodeEnumObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature CertificateOfOriginTypeCodeEnumFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CertificateOfOriginTypeCodeEnum.Q.CertificateOfOriginTypeCodeEnum", ObjectTableId = CertificateOfOriginTypeCodeEnumObjectTable.Id, Tenant = 0, NameTextCodeCode = "CertificateOfOriginTypeCodeEnum.Features.CertificateOfOriginTypeCodeEnum", NameTextCodeDefaultText = "CertificateOfOriginTypeCodeEnum", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,CertificateOfOriginTypeCodeEnumObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query RequestReasonCodeEnumQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RequestReasonCodeEnumTextCode_0.Id, NameTextCodeCode = RequestReasonCodeEnumTextCode_0.Code, ObjectTableName = "Customs.RequestReasonCodeEnum", Code = "RequestReasonCodeEnum",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = RequestReasonCodeEnumObjectTable.Id, QuerySection = "Customs.RequestReasonCodeEnum", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RequestReasonCodeEnumFeature_0.Id,FeatureUniqeCode= RequestReasonCodeEnumFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query CertificateOfOriginTypeCodeEnumQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CertificateOfOriginTypeCodeEnumTextCode_0.Id, NameTextCodeCode = CertificateOfOriginTypeCodeEnumTextCode_0.Code, ObjectTableName = "Customs.CertificateOfOriginTypeCodeEnum", Code = "CertificateOfOriginTypeCodeEnum",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = CertificateOfOriginTypeCodeEnumObjectTable.Id, QuerySection = "Customs.CertificateOfOriginTypeCodeEnum", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CertificateOfOriginTypeCodeEnumFeature_0.Id,FeatureUniqeCode= CertificateOfOriginTypeCodeEnumFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn RequestReasonCodeEnumQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestReasonCodeEnumQuery.Id,QueryCode = RequestReasonCodeEnumQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.RequestReasonCodeEnum.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginTypeCodeEnumQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeCodeEnumQuery.Id,QueryCode = CertificateOfOriginTypeCodeEnumQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn RequestReasonCodeEnumQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestReasonCodeEnumQuery.Id,QueryCode = RequestReasonCodeEnumQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.RequestReasonCodeEnum.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginTypeCodeEnumQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeCodeEnumQuery.Id,QueryCode = CertificateOfOriginTypeCodeEnumQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RequestReasonCodeEnumQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestReasonCodeEnumQuery.Id,QueryCode = RequestReasonCodeEnumQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.RequestReasonCodeEnum.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginTypeCodeEnumQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeCodeEnumQuery.Id,QueryCode = CertificateOfOriginTypeCodeEnumQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn RequestReasonCodeEnumQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestReasonCodeEnumQuery.Id,QueryCode = RequestReasonCodeEnumQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.RequestReasonCodeEnum.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginTypeCodeEnumQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginTypeCodeEnumQuery.Id,QueryCode = CertificateOfOriginTypeCodeEnumQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CertificateOfOriginTypeCodeEnum.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -514,15 +638,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable RequestReasonCodeEnumObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.RequestReasonCodeEnum" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> RequestReasonCodeEnumObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.RequestReasonCodeEnum").ToList();
+		   ObjectTable CertificateOfOriginTypeCodeEnumObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CertificateOfOriginTypeCodeEnum" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CertificateOfOriginTypeCodeEnumObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CertificateOfOriginTypeCodeEnum").ToList();
 		       
 	      
 
-	         Screen RequestReasonCodeEnumCustomsRequestReasonCodeEnumHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "RequestReasonCodeEnum.HeaderScreen", Name = "Customs.RequestReasonCodeEnumHeaderScreen", ObjectTableId = RequestReasonCodeEnumObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CertificateOfOriginTypeCodeEnumCustomsCertificateOfOriginTypeCodeEnumHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CertificateOfOriginTypeCodeEnum.HeaderScreen", Name = "Customs.CertificateOfOriginTypeCodeEnumHeaderScreen", ObjectTableId = CertificateOfOriginTypeCodeEnumObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    RequestReasonCodeEnumObjectTable.HeaderScreenId = RequestReasonCodeEnumCustomsRequestReasonCodeEnumHeaderScreenScreen0.Id;
-		    RequestReasonCodeEnumObjectTable.HeaderScreenCode = RequestReasonCodeEnumCustomsRequestReasonCodeEnumHeaderScreenScreen0.Code;
+		    CertificateOfOriginTypeCodeEnumObjectTable.HeaderScreenId = CertificateOfOriginTypeCodeEnumCustomsCertificateOfOriginTypeCodeEnumHeaderScreenScreen0.Id;
+		    CertificateOfOriginTypeCodeEnumObjectTable.HeaderScreenCode = CertificateOfOriginTypeCodeEnumCustomsCertificateOfOriginTypeCodeEnumHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -539,7 +663,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable RequestReasonCodeEnumObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.RequestReasonCodeEnum" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable CertificateOfOriginTypeCodeEnumObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CertificateOfOriginTypeCodeEnum" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -554,7 +678,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = RequestReasonCodeEnumObjectTable.Id,
+                ObjectTableId = CertificateOfOriginTypeCodeEnumObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -573,7 +697,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = RequestReasonCodeEnumObjectTable.Id,
+                ObjectTableId = CertificateOfOriginTypeCodeEnumObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 

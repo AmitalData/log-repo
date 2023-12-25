@@ -20,6 +20,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public CargoIdentifireType MyCargoIdentifireType { get; set; }
         public TradeAgreement MyTradeAgreement { get; set; }
         public OriginCriterion MyOriginCriterion { get; set; }
+        public CertificateOfOriginTypeCodeEnum MyCertificateOfOriginTypeCodeEnum { get; set; }
         public ConfirmationType MyConfirmationType { get; set; }
         public ItemGovernmentProcedureType MyItemGovernmentProcedureType { get; set; }
 
@@ -122,6 +123,13 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     {
         public int CertificateOfOriginTypeCodeID { get; set; }
         public string OriginCriterionCode { get; set; }
+
+    }
+
+    public class CertificateOfOriginTypeCodeEnum
+    {
+        public bool IsCustomApprovalRequired { get; set; }
+        public bool IsCriterionMandatory { get; set; }
 
     }
 

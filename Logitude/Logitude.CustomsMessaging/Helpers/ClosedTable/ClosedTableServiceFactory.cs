@@ -429,6 +429,25 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                         );
                     }
                     break;
+                case "1958":
+                case "CertificateOfOriginTypeCodeEnum":
+                    {
+                        closedTableService = new Update1958CertificateOfOriginTypeCodeEnumTypeView(customContext, entitySystemTables,
+                          (mycustomContext) =>
+                          {
+                              return new
+                                  CertificateOfOriginTypeCodeEnumUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                          },
+                        (mycustomContext) =>
+                        {
+                            var qs = new CertificateOfOriginTypeCodeEnumQueryService(mycustomContext);
+                            return qs as ICanGetAllClosedTable<CertificateOfOriginTypeCodeEnumPM>;
+                        }
+                        , tenant
+                        , false
+                        );
+                    }
+                    break;
                 case "1422":
                 case "ItemGovernmentProcedureType":
                     {

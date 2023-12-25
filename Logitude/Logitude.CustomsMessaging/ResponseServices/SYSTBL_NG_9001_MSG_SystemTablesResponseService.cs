@@ -648,6 +648,38 @@ ID List :
                         return extList;
 
                     }
+                case "1958":
+                case "CertificateOfOriginTypeCodeEnum":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyCertificateOfOriginTypeCodeEnum = new Helpers.ClosedTable.CertificateOfOriginTypeCodeEnum();
+
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                    if (dr["IsCustomApprovalRequired"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsCustomApprovalRequired = (bool)dr["IsCustomApprovalRequired"];
+                                                    }
+                                                    if (dr["IsCriterionMandatory"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsCriterionMandatory = (bool)dr["IsCriterionMandatory"];
+                                                    }
+
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+
+                    }
                 case "1423":
                 case "CertificateExemptionType":
                     {
