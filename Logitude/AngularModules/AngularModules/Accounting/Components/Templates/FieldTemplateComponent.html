@@ -223,6 +223,12 @@
                             Entity.StatusLocalName : Entity.StatusName
                             }}
                         </div>
+                        <div *ngIf="FieldValue == 'Failed'" style="color: rgb(4, 159, 152);">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
+                        </div>
                     </div>
                  
                     <div *ngIf="FieldName == 'AccountingEntityReference'">
