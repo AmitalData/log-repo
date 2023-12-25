@@ -67,6 +67,7 @@
     <Compile Include="Contracts\UnifreightGenericService.cs" />
     <Compile Include="EntityPMs\CargoIdentifireTypePM.cs" />
     <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateOfOriginTypeCodeEnumPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\OriginCriterionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestReasonCodeEnumPM.Generated.cs" />
     <Compile Include="EntityPMs\InternalBorderSiteTypePM.cs" />
