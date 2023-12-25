@@ -523,6 +523,7 @@
     <None Include="DBTables\RefundCustomerActivityType.dxml" />
     <None Include="DBTables\RegisteredWarehouseSiteType.dxml" />
     <None Include="DBTables\ReleaseMessageType.dxml" />
+    <None Include="DBTables\RequestReasonCodeEnum.dxml" />
     <None Include="DBTables\RequestStatus.dxml" />
     <None Include="DBTables\RequestType.dxml" />
     <None Include="DBTables\RequiredGuaranteeType.dxml" />
@@ -617,6 +618,7 @@
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
     <None Include="EntityFiles\DefaultType.lxml" />
     <None Include="EntityFiles\DefaultValue.lxml" />
+    <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />
     <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />
     <None Include="EntityFiles\InternationalSiteTenant.lxml" />
