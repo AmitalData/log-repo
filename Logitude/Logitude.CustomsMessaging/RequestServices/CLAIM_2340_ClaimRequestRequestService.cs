@@ -494,23 +494,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
             }
 
-            //Get ClaimsRelatedEntity Attachments
-            foreach (ClaimsRelatedEntityPM claimsRelatedEntityPM in _ClaimPM.ClaimsRelatedEntities)
-            {
-                var relatedEntityCustomsDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = claimsRelatedEntityPM.ClaimId, ParentEntityCode = "Claim", Child1EntityCode = "ClaimRelatedEntity", Child1EntityId = claimsRelatedEntityPM.EntityCounterKey.ToString() }, this._ClaimPM.Tenant);
-                foreach (CustomsDocumentPM customsDocumentPM in relatedEntityCustomsDocumentPMList)
-                {
-                    if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId))
-                    {
-                        var claimAttachment = new Attachment();
-                        claimAttachment.documentType = customsDocumentPM.DocumentTypeCode;
-                        claimAttachment.fileName = customsDocumentPM.Name;
-                        claimAttachment.externalAttachmentID = customsDocumentPM.ExternalAttachmentId;
-                        claimAttachment.IsAttachment = false.ToString();
-                        claimAttachmentList.Add(claimAttachment);
-                    }
-                }
-            }
+           
 
             return claimAttachmentList.ToArray();
         }
