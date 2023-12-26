@@ -662,15 +662,16 @@ ID List :
                                                     {
                                                         writeHighlight = true;
                                                     }
-                                                    if (dr["IsCustomApprovalRequired"].ToString() != null)
+                                                    if (dr["IsCustomApprovalRequired"] != DBNull.Value && dr["IsCustomApprovalRequired"] != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsCustomApprovalRequired = (bool)dr["IsCustomApprovalRequired"];
+                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsCustomApprovalRequired = Convert.ToBoolean(dr["IsCustomApprovalRequired"]);
                                                     }
-                                                    if (dr["IsCriterionMandatory"].ToString() != null)
+
+                                                    if (dr["IsCriterionMandatory"] != DBNull.Value && dr["IsCriterionMandatory"] != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsCriterionMandatory = (bool)dr["IsCriterionMandatory"];
+                                                        newExt.MyCertificateOfOriginTypeCodeEnum.IsCriterionMandatory = Convert.ToBoolean(dr["IsCriterionMandatory"]);
                                                     }
 
                                                     extList.Add(newExt);
