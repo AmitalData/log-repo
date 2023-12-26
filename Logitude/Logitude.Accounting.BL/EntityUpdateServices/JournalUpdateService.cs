@@ -644,7 +644,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void CreateJournalAdditionalDataWhenApprovingJournal(JournalPM journal)
         {
-            if (journal.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.InProcessing && journal.ChangeSetOp == ChangeSetOperation.Insert)
+            if (journal.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved )//&& journal.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 CreateJournalAdditionalDataForEachDebitInputLine(journal);
                 CreateJournalAdditionalDataForARInvoiceJournal(journal);
