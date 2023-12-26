@@ -2757,9 +2757,35 @@
       AllowedInAutomation="false"
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
+    <EventType
+      Code="&quot;UPDT&quot;"
+      ObjectTableName="&quot;Customs.CustomsSetting&quot;"
+      EnglishName="&quot;Updated&quot;"
+      LocalName="&quot;עודכן&quot;"
+      IsManualEntry="false"
+      ShortView="false"
+      IsAgentView="false"
+      IsCustomerView="false"
+      IsSharedLogisticsEnabled="false"
+      AllowedInAutomation="false"
+      ManualActivatedFollowUp="false"
+      IsFollowUp="false" />
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;CustomsSetting.O.NewValue&quot;"
+      DefaultText="&quot;New Value&quot;"
+      LocalDefaultText="&quot;ערך חדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CustomsSetting.O.OldValue&quot;"
+      DefaultText="&quot;Old Value&quot;"
+      LocalDefaultText="&quot;ערך קודם&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

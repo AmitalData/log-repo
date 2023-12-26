@@ -29,6 +29,7 @@ import { CustomsSettingExtendedListService } from '../../../Customs/Services/Ext
 import { IIGGeneralMessagesService } from 'Customs/Services/WebServices/IIGGeneralMessagesService';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
 import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
 
 
 @Component({
@@ -336,10 +337,23 @@ export class CustomsSettingsComponent
         logitudeWindow.WindowArgs = { Log: script , UseTextarea:true };
         logitudeWindow.Show('./InfrastructureModules/InfrastructureCommunications/Components/Communications/LogFieldComponent');
     }
-
+    
 
     CancelButtonClicked() {
         SessionLocator.SelectedSession.CloseCurrentWindow();
+    }
+
+    EventsButtonClicked(){
+        var windowArgs: EntityArgs = new EntityArgs();
+        windowArgs.ObjectTableName =this.ObjectTableName;
+        windowArgs.EntityPM = this.entityPM;
+      
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 950;
+        logWindow.Height = 600;
+        logWindow.Title = TextCodeTranslator.Translate("General.O.Events");
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Show('./CustomsModules/CustomsMaintenance/Components/CustomsSettingsEventsComponent');
     }
     
     OkButtonClicked() {

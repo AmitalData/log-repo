@@ -2,6 +2,7 @@ import { AddEditRequiredFieldsComponent } from './Components/RequiredFields/AddE
 import { CustomsClosedTablesComponent } from './Components/CustomsClosedTablesComponent';
 import { ClosedTableNotExistedComponent } from './Components/ClosedTableNotExistedComponent';
 import { CustomsSettingsComponent } from './Components/CustomsSettingsComponent';
+import { CustomsSettingsEventsComponent } from './Components/CustomsSettingsEventsComponent';
 import { RequiredFieldsComponent } from './Components/RequiredFields/RequiredFieldsComponent';
 import { InterfaceManagementComponent } from './Components/InterfaceManagementComponent';
 import { AddEditInterfaceManagementComponent } from './Components/AddEditInterfaceManagementComponent';
@@ -30,6 +31,7 @@ export const Components =
         CustomsClosedTablesComponent,
         ClosedTableNotExistedComponent,
         CustomsSettingsComponent,
+        CustomsSettingsEventsComponent,
         RequiredFieldsComponent,
         ExportRequiredFieldsComponent,
         InterfaceManagementComponent,
@@ -59,6 +61,7 @@ export class ModuleDeclarations {
             case "CustomsClosedTablesComponent": { myResult = CustomsClosedTablesComponent; break; }
             case "ClosedTableNotExistedComponent": { myResult = ClosedTableNotExistedComponent; break; }
             case "CustomsSettingsComponent": { myResult = CustomsSettingsComponent; break; }
+            case "CustomsSettingsEventsComponent": { myResult = CustomsSettingsEventsComponent; break; }
             case "RequiredFieldsComponent": { myResult = RequiredFieldsComponent; break; }
             case "ExportRequiredFieldsComponent": { myResult = ExportRequiredFieldsComponent; break; }
             case "InterfaceManagementComponent": { myResult = InterfaceManagementComponent; break; }
