@@ -242,6 +242,7 @@
     <None Include="DBTables\CargoStatus.dxml" />
     <None Include="DBTables\CargoType.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
+    <None Include="DBTables\CertificateOfOriginStatusCodeEnum.dxml" />
     <None Include="DBTables\CertificateOfOriginTypeCodeEnum.dxml" />
     <None Include="DBTables\CertificatesStatus.dxml" />
     <None Include="DBTables\CheckEntityType.dxml" />
@@ -620,6 +621,7 @@
     <None Include="EntityFiles\DefaultType.lxml" />
     <None Include="EntityFiles\DefaultValue.lxml" />
     <None Include="EntityFiles\CertificateOfOriginTypeCodeEnum.lxml" />
+    <None Include="EntityFiles\CertificateOfOriginStatusCodeEnum.lxml" />
     <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />
     <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />

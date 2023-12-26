@@ -134,6 +134,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
 	
+            modelBuilder.Configurations.Add(new CertificateOfOriginStatusCodeEnumMap());
+	
             modelBuilder.Configurations.Add(new CertificateOfOriginTypeCodeEnumMap());
 	
             modelBuilder.Configurations.Add(new CertificatesStatusMap());
@@ -1588,6 +1590,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CertificateExemptionType> CertificateExemptionTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CertificateOfOriginStatusCodeEnum> CertificateOfOriginStatusCodeEnums 
 	 {
 	      get; set;
 	 

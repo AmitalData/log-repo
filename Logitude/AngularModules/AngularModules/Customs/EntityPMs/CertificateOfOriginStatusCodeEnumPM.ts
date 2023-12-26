@@ -14,7 +14,7 @@ import {Output, EventEmitter}  from '@angular/core';
 import {PropertyChangedArgs} from '../../Infrastructure/EventEmitterArgs/PropertyChangedArgs';
 import {CustomFieldClass} from '../../Infrastructure/DataContracts/CustomFieldClass';
 
-export class CertificateOfOriginTypeCodeEnumPM {
+export class CertificateOfOriginStatusCodeEnumPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
@@ -49,18 +49,13 @@ export class CertificateOfOriginTypeCodeEnumPM {
     public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
        
 	 
-    private isCustomApprovalRequired: boolean;
-    public get IsCustomApprovalRequired() { return this.isCustomApprovalRequired; }
-    public set IsCustomApprovalRequired(newValue: boolean) { if (this.isCustomApprovalRequired != newValue) { this.isCustomApprovalRequired = newValue; this.MarkAsDirty("IsCustomApprovalRequired"); } }
-       
-	 
-    private isCriterionMandatory: boolean;
-    public get IsCriterionMandatory() { return this.isCriterionMandatory; }
-    public set IsCriterionMandatory(newValue: boolean) { if (this.isCriterionMandatory != newValue) { this.isCriterionMandatory = newValue; this.MarkAsDirty("IsCriterionMandatory"); } }
+    private recordEditable: boolean;
+    public get RecordEditable() { return this.recordEditable; }
+    public set RecordEditable(newValue: boolean) { if (this.recordEditable != newValue) { this.recordEditable = newValue; this.MarkAsDirty("RecordEditable"); } }
        
 	 
 
-    public OldEntityPM: CertificateOfOriginTypeCodeEnumPM;
+    public OldEntityPM: CertificateOfOriginStatusCodeEnumPM;
 		
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
@@ -71,13 +66,13 @@ export class CertificateOfOriginTypeCodeEnumPM {
 		  	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
-            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CertificateOfOriginTypeCodeEnum");
+            ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CertificateOfOriginStatusCodeEnum");
            
         }
        }
     }
 
-    private MyClone: CertificateOfOriginTypeCodeEnumPM;
+    private MyClone: CertificateOfOriginStatusCodeEnumPM;
 
     public CloneMe() {
         ServiceHelper.CloneEntityPM(this);
