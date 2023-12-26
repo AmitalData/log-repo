@@ -1169,6 +1169,7 @@
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\CertificateOfOriginStatusCodeEnumQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientItemQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
@@ -1725,6 +1726,7 @@
     <Compile Include="EntityQueryServices\VehicleQueryService.cs" />
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
     <Compile Include="EntityQueryServices\VendorCurrencyQueryService.cs" />
+    <Compile Include="EntityUpdateServices\CertificateOfOriginStatusCodeEnumUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginStatusCodeEnumUpdateService.Generated.cs" />

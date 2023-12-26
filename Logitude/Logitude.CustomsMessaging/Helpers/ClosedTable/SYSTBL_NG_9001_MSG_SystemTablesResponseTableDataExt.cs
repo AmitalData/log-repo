@@ -21,6 +21,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public TradeAgreement MyTradeAgreement { get; set; }
         public OriginCriterion MyOriginCriterion { get; set; }
         public CertificateOfOriginTypeCodeEnum MyCertificateOfOriginTypeCodeEnum { get; set; }
+        public CertificateOfOriginStatusCodeEnum MyCertificateOfOriginStatusCodeEnum { get; set; }
         public ConfirmationType MyConfirmationType { get; set; }
         public ItemGovernmentProcedureType MyItemGovernmentProcedureType { get; set; }
 
@@ -133,6 +134,10 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
 
     }
 
+    public class CertificateOfOriginStatusCodeEnum
+    {
+        public bool RecordEditable { get; set; }
+    }
 
     public class ConfirmationType
     {

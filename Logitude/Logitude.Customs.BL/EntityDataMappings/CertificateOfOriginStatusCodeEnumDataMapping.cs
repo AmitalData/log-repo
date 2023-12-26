@@ -19,7 +19,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(CertificateOfOriginStatusCodeEnumPM entityPM, CertificateOfOriginStatusCodeEnum entityPOCO)
         {
-            //throw new NotImplementedException();
+            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
+            {
+                entityPOCO.Code = entityPM.Code;
+            }
         }
 
         public void CustomPOCOToPM(CertificateOfOriginStatusCodeEnumPM entityPM, CertificateOfOriginStatusCodeEnum entityPOCO)

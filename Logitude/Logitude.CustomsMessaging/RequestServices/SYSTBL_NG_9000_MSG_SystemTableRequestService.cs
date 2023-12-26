@@ -46,7 +46,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             req.tableName = requestParams.TableId;
 
             req.SelectOptions = new SYSTBL_NG_9000_MSG_SystemTableRequestSelectOptions();
-            var lAsTableData = new List<string>() { "1892", "1091", "1144", "1354", "1416","1998", "1366", "23928", "1423","1259", "2009","1977","1958", "1604", "1422","2653"/*, "1344" */};
+            var lAsTableData = new List<string>() { "1892", "1091", "1144", "1354", "1416","1998", "1366", "23928", "1423","1259", "2009","1977","1958", "1957", "1604", "1422","2653"/*, "1344" */};
             if (//table.Id == "1892" 
                 //lAsTableData.Contains(table.Id)
                 lAsTableData.Contains(requestParams.TableId)
