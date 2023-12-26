@@ -12,6 +12,7 @@ using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.Helpers;
 using Logitude.CustomsMessaging.Helpers.ClosedTable;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure;
@@ -676,6 +677,40 @@ ID List :
                                                         newExt.MyCertificateOfOriginTypeCodeEnum.IsCriterionMandatory = Convert.ToBoolean(dr["IsCriterionMandatory"]);
                                                     }
 
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+
+                    } 
+                case "1957":
+                case "CertificateOfOriginStatusCodeEnum":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyCertificateOfOriginStatusCodeEnum = new Helpers.ClosedTable.CertificateOfOriginStatusCodeEnum();
+
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                    if(dr["RecordEditable"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+
+                                                        // Task #96160 add close custom table 
+                                                        
+                                                        int.TryParse(dr["ID"]?.ToString(), out int statusId);
+
+                                                        if (statusId == 4 || statusId == 5 || statusId == 6 || statusId == 8) 
+                                                            newExt.MyCertificateOfOriginStatusCodeEnum.RecordEditable = true;
+                                                        else
+                                                            newExt.MyCertificateOfOriginStatusCodeEnum.RecordEditable = false;
+                                                    }
                                                     extList.Add(newExt);
                                                 });
                         return extList;

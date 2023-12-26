@@ -66,9 +66,11 @@
     <Compile Include="Contracts\SendDeclarationChecksResult.cs" />
     <Compile Include="Contracts\UnifreightGenericService.cs" />
     <Compile Include="EntityPMs\CargoIdentifireTypePM.cs" />
+    <Compile Include="EntityPMs\CertificateOfOriginStatusCodeEnumPM.cs" />
     <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
     <Compile Include="EntityPMs\Generated\RequestToAdvanceAQueuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConfirmationNumberTokenLogPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateOfOriginStatusCodeEnumPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CertificateOfOriginTypeCodeEnumPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\OriginCriterionPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestReasonCodeEnumPM.Generated.cs" />

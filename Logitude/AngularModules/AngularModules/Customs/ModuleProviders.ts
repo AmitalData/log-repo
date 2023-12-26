@@ -178,6 +178,7 @@ import { TradeAgreementListService } from './Services/StandardLists/TradeAgreeme
 import { RequestReasonCodeEnumListService } from './Services/StandardLists/RequestReasonCodeEnumListService';
 import { OriginCriterionListService } from './Services/StandardLists/OriginCriterionListService';
 import { CertificateOfOriginTypeCodeEnumListService   } from './Services/StandardLists/CertificateOfOriginTypeCodeEnumListService';
+import { CertificateOfOriginStatusCodeEnumListService  } from './Services/StandardLists/CertificateOfOriginStatusCodeEnumListService';
 import { TradeLevyExamptTypeListService } from './Services/StandardLists/TradeLevyExamptTypeListService';
 import { UnloadingSiteTypeListService } from './Services/StandardLists/UnloadingSiteTypeListService';
 import { ValidCustomsItemListService } from './Services/StandardLists/ValidCustomsItemListService';
@@ -648,6 +649,7 @@ export class ModuleProviders {
             case "RequestReasonCodeEnumListService": { myResult = new RequestReasonCodeEnumListService(); break; }
             case "OriginCriterionListService": { myResult = new OriginCriterionListService(); break; }
             case "CertificateOfOriginTypeCodeEnumListService": { myResult = new CertificateOfOriginTypeCodeEnumListService(); break; }
+            case "CertificateOfOriginStatusCodeEnumListService": { myResult = new CertificateOfOriginStatusCodeEnumListService(); break; }
             case "TradeLevyExamptTypeListService": { myResult = new TradeLevyExamptTypeListService(); break; }
             case "UnloadingSiteTypeListService": { myResult = new UnloadingSiteTypeListService(); break; }
             case "ValidCustomsItemListService": { myResult = new ValidCustomsItemListService(); break; }
