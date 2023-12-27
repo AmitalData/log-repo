@@ -1037,7 +1037,7 @@
                             <label style="float:right; left:45px">{{'Customs.Declaration.B.Actions' | TextCodeTranslationPipe}}</label>
                             <img src="./Images/ToggleIcon.png" style="right:65px" />
                             <div class="ToggleButtonMenu" style="width: 140px;top:21px;text-align:right">
-                                <button id="CopyNow" *ngIf="(hasOcr && declarationPM.Direction == 'E') || declarationPM.Direction != 'E'" (click)="UpdateClicked(UpdateOptions.QuantityType)" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.CopyNow' |TextCodeTranslationPipe }}</button>
+                                <button id="CopyNow" *ngIf="(hasOcr && declarationPM.Direction == 'E') || declarationPM.Direction != 'E'" (click)="CopyNowClicked(declarationPM.Direction)" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.CopyNow' |TextCodeTranslationPipe }}</button>
                                 <button id="Update" (click)="UpdateClicked(UpdateOptions.ProcessCode)" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.UpdateProcessCode' |TextCodeTranslationPipe }}</button>
                                 <button id="ikea" *ngIf="ikeaFeature" (click)="UpdateCertificatesButtonClicked()" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.UpdateCertificates' |TextCodeTranslationPipe }}</button>
                                 <button id="UpdateCountryOfOrigin" (click)="UpdateClicked(UpdateOptions.CountryOfOrigin)" [disabled]="!IsActionButtonsEnabled" style="text-align:right">{{'Customs.Declaration.O.UpdateCountryOfOrigin' |TextCodeTranslationPipe }}</button>
