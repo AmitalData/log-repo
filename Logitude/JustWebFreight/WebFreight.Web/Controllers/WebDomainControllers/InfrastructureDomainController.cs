@@ -2070,7 +2070,7 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                     FeatureToggleRepository repository = new FeatureToggleRepository(context);
                     FeatureToggleListQueryService listQueryService = new FeatureToggleListQueryService(context);
 
-                    IQueryable<FeatureToggle> featureToggles = repository.GetAll(tenant);
+                    IQueryable<FeatureToggle> featureToggles = repository.GetAll(0);
                     IQueryable<FeatureToggleList> myResult = listQueryService.GetIqueryableList(featureToggles);
                     myResult = myResult.Where(d => d.Inactive == false);
                     scope.Complete();

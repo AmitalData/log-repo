@@ -118,11 +118,13 @@ namespace WebFreight.Web.Helpers
             {
                 FileName = fileName,//ObjectTableName + DateTime.Now.ToShortDateString(),//fileparams[0],
                 FolderName = "others",
-                Extension = "xls",//fileparams[1],
+                Extension = "xls",
                 Tenant = tenant,
                 FileSize = data.Length,
 
             };
+            if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
+                fileInfo.Extension = "xlsx";
             //string filePath = "tenant" + tenant.ToString() + "/" + StorageAcountDetails.GetBlobNameByLocation(fileNameAndExtension.ToLower(), fileLocation);
             IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
             storageservice.Write(data, fileInfo);
