@@ -390,6 +390,8 @@ ID List :
                 case "1354":
                 case "GovernmentProcedureType":
                     {
+                        customResponse.TableData = RemoveNotActive(customResponse.TableData);
+
                         var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
                         Logitude.CustomsMessaging.Helpers.ClosedTable.
                                                     ManipulateCustomResponse.
@@ -993,6 +995,13 @@ ID List :
         {
             var list = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData>(sYSTBL_NG_9001_MSG_SystemTablesResponseTableData);
             var delAffect = list.RemoveAll(rec => rec.id.Length > lengthMoreThen);
+            return list.ToArray();
+        }
+
+        private SYSTBL_NG_9001_MSG_SystemTablesResponseTableData[] RemoveNotActive(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData[] sYSTBL_NG_9001_MSG_SystemTablesResponseTableData)
+        {
+            var list = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData>(sYSTBL_NG_9001_MSG_SystemTablesResponseTableData);
+            var delAffect = list.RemoveAll(rec => rec.state == 0);
             return list.ToArray();
         }
 
