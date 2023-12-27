@@ -1111,13 +1111,6 @@ ID List :
             return list.ToArray();
         }
 
-        private SYSTBL_NG_9001_MSG_SystemTablesResponseTableData[] RemoveNotActive(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData[] sYSTBL_NG_9001_MSG_SystemTablesResponseTableData)
-        {
-            var list = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData>(sYSTBL_NG_9001_MSG_SystemTablesResponseTableData);
-            var delAffect = list.RemoveAll(rec => rec.state == 0);
-            return list.ToArray();
-        }
-
         private void Update1892(SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse, SystemTableRequestParams requestParams)
         {
             throw new NotImplementedException();
