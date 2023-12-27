@@ -390,7 +390,8 @@ ID List :
                 case "1354":
                 case "GovernmentProcedureType":
                     {
-                        customResponse.TableData = RemoveNotActive(customResponse.TableData);
+                        // Task #96550 
+                        customResponse.TableAsDataSetTableData = RemoveNotActive(customResponse.TableAsDataSetTableData);
 
                         var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
                         Logitude.CustomsMessaging.Helpers.ClosedTable.
@@ -998,13 +999,39 @@ ID List :
             return list.ToArray();
         }
 
-        private SYSTBL_NG_9001_MSG_SystemTablesResponseTableData[] RemoveNotActive(SYSTBL_NG_9001_MSG_SystemTablesResponseTableData[] sYSTBL_NG_9001_MSG_SystemTablesResponseTableData)
+        private string RemoveNotActive(string TableAsDataSetTableData)
         {
-            var list = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableData>(sYSTBL_NG_9001_MSG_SystemTablesResponseTableData);
-            var delAffect = list.RemoveAll(rec => rec.state == 0);
-            return list.ToArray();
-        }
+            if (!String.IsNullOrWhiteSpace(TableAsDataSetTableData))
+            {
+                var ds = SystemTables.DataSetReadXML(TableAsDataSetTableData);
+               
+                var dt = ds.Tables[0];
+                
+                // Use Select method to filter rows based on the condition
+                DataRow[] rowsToDelete = dt.Select("State = 0");
 
+                // Delete the rows that meet the condition
+                foreach (DataRow row in rowsToDelete)
+                {
+                    dt.Rows.Remove(row);
+                }
+                
+                
+                TableAsDataSetTableData = DataTableToXML(dt);
+            }
+            return TableAsDataSetTableData;
+        }
+        // Add this method to convert DataTable to XML
+        private string DataTableToXML(DataTable dataTable)
+        {
+            using (StringWriter writer = new StringWriter())
+            {
+                // Use WriteXml method to write the DataTable to the StringWriter
+                dataTable.WriteXml(writer);
+                return writer.ToString();
+            }
+        }
+     
         private void Update1892(SYSTBL_NG_9001_MSG_SystemTablesResponse customResponse, SystemTableRequestParams requestParams)
         {
             throw new NotImplementedException();
