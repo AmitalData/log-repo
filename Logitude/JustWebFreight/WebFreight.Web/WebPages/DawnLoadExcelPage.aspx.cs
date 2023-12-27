@@ -160,7 +160,10 @@ namespace WebFreight.Web.WebPages
                         {
                             fileName = fileName.Split(new string[] { "!BIReportName=" }, StringSplitOptions.None)[1];
                         }
-                        documentName = fileName + ".xlsx";
+                        if(QName != null)
+                            documentName = QName + ".xlsx";
+                        else
+                            documentName = fileName + ".xlsx";
                     }
                     else
                     {
@@ -177,8 +180,6 @@ namespace WebFreight.Web.WebPages
                     //            documentName = FileName + ".pdf";
                     //            ShowType = "inline";
                     //            break;
-                    //        }
-                    //}
 
                     if (browser != null && browser.Browser.Equals("ie", StringComparison.OrdinalIgnoreCase))
                     {
