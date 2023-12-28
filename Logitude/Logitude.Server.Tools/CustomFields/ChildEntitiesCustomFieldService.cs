@@ -51,21 +51,21 @@ namespace Logitude.Server.Tools.CustomFields
 
         public void Set(ChildEntitiesCustomFieldArgs childEntitiesCustomFieldArgs)
         {
-            Initialize(childEntitiesCustomFieldArgs);
+            //Initialize(childEntitiesCustomFieldArgs);
 
-            if (childEntities == null || childEntities.Count() == 0 || customObjectFields.Count() == 0) return;
+            //if (childEntities == null || childEntities.Count() == 0 || customObjectFields.Count() == 0) return;
 
-            foreach (ObjectField customObjectField in customObjectFields)
-            {
-                SetCustomFieldValues(customObjectField);
-            }
+            //foreach (ObjectField customObjectField in customObjectFields)
+            //{
+            //    SetCustomFieldValues(customObjectField);
+            //}
         }
         public void Update(ChildEntitiesCustomFieldArgs childEntitiesCustomFieldArgs)
         {
-            Initialize(childEntitiesCustomFieldArgs);
-            RemoveUnusedChildEntitiesCustomFields();
-            UpdateModificationChildEntitiesCustomField();
-            childEntitiesCustomFieldRepository.SubmitChanges();
+            //Initialize(childEntitiesCustomFieldArgs);
+            //RemoveUnusedChildEntitiesCustomFields();
+            //UpdateModificationChildEntitiesCustomField();
+            //childEntitiesCustomFieldRepository.SubmitChanges();
         }
 
 
