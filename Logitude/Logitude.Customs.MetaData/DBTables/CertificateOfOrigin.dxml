@@ -88,6 +88,405 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExporterAddress"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExporterCountry"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TradeAgreementCountry1"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TradeAgreementCountry2"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TradeAgreementGroupOfCountries"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsigneeName"
+    Type="nvarchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsigneeAddress"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsigneeCountry"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConsigneeRemarks"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsConsigneeForPrint"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="OriginCountry"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OriginGroupOfCountry"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DestinationCountry"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DestinationGroupOfCountries"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Transport"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PortOfShipment"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCumulation"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CumulationCountry"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CumulationGroupOfCountries"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PlaceOfManufacture"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ZipCodeOfManufacture"
+    Type="nvarchar"
+    Size="7">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Observations"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsExportDecForPrint"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsUnitedInvoices"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CustomsHouse"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IssuingCountry"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CityOfDeclaration"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CountryOfDeclaration"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DateOfDeclaration"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsDeclaredByManufacture"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsDeclaredByExporter"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="IsAttachedList"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InsufficentWorkingInd"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="InsufficentWorkingText"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonExportDate"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonExportCountry"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonImportBillOfLadingNum"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonExportPort"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonImportDate"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonExportBillOfLadingNum"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonTransirCountry"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonPortOfEntrance"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonExpectedExitDate"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonExitPort"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonGoodsDescription"
+    Type="nvarchar"
+    Size="8000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonDeclaringCompany"
+    Type="nvarchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonDeclaringPerson"
+    Type="nvarchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonDeclaringPosition"
+    Type="nvarchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="NonManifestNum"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ErrXml"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CooStatusCode"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="FeedbackRemark"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RejectCancelReason"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IssueDateIfReleased"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QueryUrl"
+    Type="nvarchar"
+    Size="512">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CooPdf"
+    Type="nvarchar"
+    Size="125">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CoodPdf1"
+    Type="nvarchar"
+    Size="125">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OpenByUser"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsSubmitted"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CooTypeCode"
     ReferencedTable="CertificateOfOriginTypeCodeEnums"
@@ -96,6 +495,41 @@
   <Relation
     ForeignKeyColumn="RequestReasonCode"
     ReferencedTable="RequestReasonCodeEnums"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ExporterCountry,TradeAgreementCountry1,TradeAgreementCountry2,ConsigneeCountry,OriginCountry,DestinationCountry,CumulationCountry,IssuingCountry,CountryOfDeclaration,NonExportCountry,NonTransirCountry"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TradeAgreementGroupOfCountries,OriginGroupOfCountry,DestinationGroupOfCountries,CumulationGroupOfCountries"
+    ReferencedTable="CountryGroups"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="PortOfShipment"
+    ReferencedTable="SiteLookups"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="PlaceOfManufacture,CityOfDeclaration"
+    ReferencedTable="Cities"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CustomsHouse"
+    ReferencedTable="CustomsHouseTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="NonExportPort,NonPortOfEntrance,NonExitPort"
+    ReferencedTable="InternationalSites"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CooStatusCode"
+    ReferencedTable="CertificateOfOriginStatusCodeEnums"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>
