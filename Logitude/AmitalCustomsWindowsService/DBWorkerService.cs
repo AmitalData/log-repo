@@ -41,7 +41,7 @@ namespace AmitalCustomsWindowsService
 
                 var myDB = GlobalContext.GetContext((int)TimeSpan.FromMinutes(2).TotalSeconds, true) as DbContextBase;
                 var myDualRepository = new DualRepository(myDB);
-                var dt = myDualRepository.GetServerDateTime(true);
+                var dt = DateTime.Now;
                 return true;
             }
             catch (System.Exception e)

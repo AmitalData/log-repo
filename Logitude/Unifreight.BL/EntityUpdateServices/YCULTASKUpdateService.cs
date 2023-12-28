@@ -34,7 +34,7 @@ namespace Unifreight.BL.EntityUpdateServices
         protected override void OnCreating(YCULTASKPM entityPM, EntityPM entityParentPM)
         {
             //entityPM.LOGTIME = DateTime.Now;
-            entityPM.LOGTIME  = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now;
+            entityPM.LOGTIME  = DateTime.Now;
             //if (string.IsNullOrWhiteSpace(entityPM.TASKID))
             {
                 entityPM.TASKID = CommCounterUtil.GetUnique30(entityPM.LOGTIME);

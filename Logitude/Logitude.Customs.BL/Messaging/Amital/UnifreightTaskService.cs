@@ -170,7 +170,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                         ORIGINQUE = "LGT", //LugitudeRequest
                         STATUS = "1",
                         EXPTASKTIME = 5,
-                        EXECDATE = (new DualQueryService(myAmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
+                        EXECDATE = DateTime.Now,
                         TRY = 9,
                         PRIORITY = 8,
                         ENTNAME = "CFIFILEM",
@@ -322,7 +322,7 @@ namespace Logitude.Customs.BL.Messaging.Amital
                         ORIGINQUE = "LGT", //LugitudeRequest
                         STATUS = "1",
                         EXPTASKTIME = 5,
-                        EXECDATE = (new DualQueryService(myAmitalContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now.AddMinutes(-20), //-20 because of time differences between the server where the code runs in and the DB server
+                        EXECDATE = DateTime.Now,
                         TRY = 9,
                         PRIORITY = 8,
                         ENTNAME = entname,

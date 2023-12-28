@@ -16,7 +16,7 @@ namespace Logitude.CustomsMessaging.Testers
 
 
             var dualRepository = new DualRepository(3);
-            var res1=dualRepository.GetServerDateTime(true);
+            var res1= DateTime.Now;
             //$"update  {UserId}.CFIFILEM set  LOGITUDE_FILE ='{myLOGITUDE_FILE}' where FILE_NO={fileNo}"
             var cFIFILEMRepository = new CFIFILEMRepository(3);
             var res = cFIFILEMRepository.UpdateLOGITUDE_FILE(3, 800000012, "tst-1");
