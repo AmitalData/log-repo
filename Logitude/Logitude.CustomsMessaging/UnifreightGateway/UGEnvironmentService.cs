@@ -111,10 +111,7 @@ namespace Logitude.CustomsMessaging.UnifreightGateway
 
                 using (var amitalContext = Unifreight.Data.AmitalModel.AmitalContext.GetContext(208))
                 {
-                    
-                    var dualQueryService = new DualQueryService(amitalContext);
-                    dualQueryService.GetServerDateTime();
-                    dualQueryService.GetServerDateTime();
+                                        
                     var myGGGQUpdateService = new GGGQUpdateService(amitalContext);
                     var newQpm = new GGGQPM()
                     {

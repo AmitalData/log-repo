@@ -43,7 +43,7 @@ namespace Unifreight.BL.EntityUpdateServices
                 return;
             }
 
-            entityPM.CREATEDATE = (new DualQueryService(MainContext as AmitalContext)).GetServerDateTime() ?? DateTime.Now;
+            entityPM.CREATEDATE = DateTime.Now;
             entityPM.QUEID = CommCounterUtil.GetUnique30(entityPM.CREATEDATE);
             
             ///entityPM.COMPUTERID = Environment.MachineName;            

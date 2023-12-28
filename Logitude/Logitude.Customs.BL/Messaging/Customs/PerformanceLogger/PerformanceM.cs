@@ -80,7 +80,7 @@ namespace Logitude.Customs.BL.Messaging.Customs.PerformanceLogger
                     var sw = Stopwatch.StartNew();
                     var myDB = GlobalContext.GetContext((int)TimeSpan.FromMinutes(2).TotalSeconds, true) as DbContextBase;
                     var myDualRepository = new DualRepository(myDB);
-                    var dt = myDualRepository.GetServerDateTime(true);
+                    var dt = DateTime.Now;
                     _Instance.DBResponseTime = sw.ElapsedMilliseconds.ToString();
                 }
             }
