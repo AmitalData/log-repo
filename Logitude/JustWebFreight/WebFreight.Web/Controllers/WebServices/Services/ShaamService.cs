@@ -78,6 +78,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
         public virtual int status { get; set; }
         public virtual ErrorCodeApiToShaamRes? errorCode { get; set; }
         public string message { get; set; }
+        public string confirmationNumber { get; set; }
     }
 
     public enum ErrorCodeApiToShaamRes { GENERAL = 1, REFRESH_TOKEN_NOT_VALID, INVOICE_SCHEMA, SOME_REFRESH_TOKEN_NOT_VLID }
