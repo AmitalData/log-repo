@@ -281,15 +281,17 @@ export class AmitalGatewayUtil {
     }
 
     SendRequestJSONToUnifreightAsync(myRequestWrapper: RequestWrapperM) {
-        if (AppTool.IsNullOrEmpty(window.parent._JavascriptGateway)) {
-            alert("_JavascriptGateway not exist !!!");
-            SessionLocator.SelectedSession.StopBusyIndicator();
-            return;
-
-        } else {
-            var myRequestWrapperJSON = JSON.stringify(myRequestWrapper);
-            window.parent._JavascriptGateway.SendRequestJSONToUnifreightAsync(myRequestWrapperJSON);
-        }
+        try {            
+            if (AppTool.IsNullOrEmpty(window.parent._JavascriptGateway)) {
+                alert("_JavascriptGateway not exist !!!");
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                return;
+                
+            } else {
+                var myRequestWrapperJSON = JSON.stringify(myRequestWrapper);
+                window.parent._JavascriptGateway.SendRequestJSONToUnifreightAsync(myRequestWrapperJSON);
+            }
+        } catch (error) {}
     }
     public IsAmitalBackButtonDisable: boolean = false;
     AmitalBackButtonClicked() {
@@ -538,42 +540,12 @@ export class AmitalGatewayUtil {
             }
                  
             case "CreateNewShaamToken": {
-                this.SelectCustomsRequestMenu(MaintenanceMenu);
-
-                const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
-                const logWindow = new LogitudeWindow();
-                logWindow.Width = window.outerWidth;
-                logWindow.Height = window.outerHeight;
-                logWindow.Title = windowTitle;
-                logWindow.IsShowCloseButton = true;
-                logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
-                logWindow.WindowClosed.subscribe(() => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
-
+                this.openCreateNewShaamToken(MaintenanceMenu);      
                 break;
             }
 
             case "ConfirmationNumberTokenLog": {
-                this.SelectCustomsRequestMenu();                
-                change2EditTab();
-                const objectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
-                const allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === objectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
-                const selectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0))[0];
-                const objectTablePM = window.ObjectTables.filter(d => d.Id == objectTableId)[0];
-
-                const listArgs: any = {};
-                listArgs.QueryCode = selectedQuery.Code;
-                listArgs.ObjectTableName = objectTablePM.Name;
-                listArgs.BackButtonTitle = "Back";
-
-                new EntityResourceService().getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
-                    listArgs.DisplayTitle = TextCodeTranslator.Translate(selectedQuery.NameTextCodeCode);
-                    SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
-                        .then(cmpRef => {
-                            cmpRef.instance.ComponentRef = cmpRef;
-                            cmpRef.instance.Run(listArgs);
-                            cmpRef.instance.BackCompleted.subscribe(bk => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
-                        });
-                });
+                this.openConfirmationNumberTokenLog(change2EditTab, MaintenanceMenu);
                 break;
             }
                  
@@ -588,6 +560,51 @@ export class AmitalGatewayUtil {
         }
 
     }
+
+    async openCreateNewShaamToken(MaintenanceMenu: string) {
+        while (!SessionLocator.SelectedSession?.MainMenuComponent)
+            await new Promise(res => setTimeout(() => res(null), 100));
+
+        this.SelectCustomsRequestMenu(MaintenanceMenu);
+
+        const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
+        const logWindow = new LogitudeWindow();
+        logWindow.Width = window.outerWidth;
+        logWindow.Height = window.outerHeight;
+        logWindow.Title = windowTitle;
+        logWindow.IsShowCloseButton = true;
+        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
+        logWindow.WindowClosed.subscribe(() => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
+
+    }
+    async openConfirmationNumberTokenLog(change2EditTab: () => void, MaintenanceMenu: string) {
+        while (!SessionLocator.SelectedSession?.MainMenuComponent)
+            await new Promise(res => setTimeout(() => res(null), 100));
+
+        this.SelectCustomsRequestMenu(MaintenanceMenu);                
+        change2EditTab();
+
+        const objectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
+        const allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === objectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+        const selectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0))[0];
+        const objectTablePM = window.ObjectTables.filter(d => d.Id == objectTableId)[0];
+
+        const listArgs: any = {};
+        listArgs.QueryCode = selectedQuery.Code;
+        listArgs.ObjectTableName = objectTablePM.Name;
+        listArgs.BackButtonTitle = "Back";
+
+        new EntityResourceService().getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            listArgs.DisplayTitle = TextCodeTranslator.Translate(selectedQuery.NameTextCodeCode);
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    cmpRef.instance.BackCompleted.subscribe(bk => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
+                });
+        });
+    }
+
     SelectCustomsRequestMenu(menuCode: string = "General.MH.Customs") {
          
         var mySelectedItem = SessionLocator.SelectedSession.MainMenuComponent.MainMenuItems
