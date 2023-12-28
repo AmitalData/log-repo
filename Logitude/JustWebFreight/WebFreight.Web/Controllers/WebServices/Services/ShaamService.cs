@@ -13,7 +13,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
 
         public HttpClienResponse LinkToCodeForToken(int tenant, string user)
         {
-            string url = $"{AmitalTaxesUrl}taxes/linkToCodeForNewToken?user={user}";
+            string url = $"taxes/linkToCodeForNewToken?user={user}";
             HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Get);
             return res;
         }

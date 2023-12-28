@@ -61,7 +61,12 @@ export class AmitalGatewayUtil {
         }*/
     }
     NoteUnifreightIamReady() {
-        window.parent.postMessage("site ready", '*');
+        if(window.parent) {
+            window.parent.postMessage("site ready", '*');
+            
+            if(window.parent.parent)
+                window.parent.parent.postMessage("site ready", '*');
+        }
 
         let myRequestWrapper = new RequestWrapperM();
         myRequestWrapper.MessageID = "NoteUnifreightIamReady";
