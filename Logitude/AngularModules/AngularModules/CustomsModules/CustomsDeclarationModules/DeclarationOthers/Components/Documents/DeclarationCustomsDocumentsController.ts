@@ -194,7 +194,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                             this.originalCustomsDocumentTicketViewModel.forEach((ticketViewmodel) => {
                                 var ptrExists_380 = ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers.filter(p => p.Child1EntityId === (supplierInvoice.InvoiceCounterKey + ""))[0];
                                 if (!exists_380) {
-                                    exists_380 = (ptrExists_380 != null) && (ticketViewmodel.DocumentTypeCode == '380');
+                                    exists_380 = (ptrExists_380 != null) && ((ticketViewmodel.DocumentTypeCode == '380') || (ticketViewmodel.DocumentTypeCode == '325'));
                                 }
                             });
                             if (!exists_380) {
@@ -204,8 +204,8 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                     entityParams.ParentEntityId = this.declarationPM.Id;
                                     entityParams.ChildEntity1Code = "SupplierInvoice";
                                     entityParams.ChildEntity1Id = supplierInvoice.SequenceNumeric + "";
-
-                                    var invoiceTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, "380");
+                                    var documentType = supplierInvoice.AccountTypeCode == '325'? "325" : "380";
+                                    var invoiceTicket: CustomsDocumentsTicketPM = this.GetGeneratedCustomTicketAndPointer(entityParams, documentType);
                                     var metaData: { [Code: string]: any; } = {};
                                     var issueDate: string = null;
                                     if (supplierInvoice.IssueDate != null) {
@@ -220,7 +220,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                     metaData["39"] = supplierInvoice.InvoiceNumber;
                                     metaData["3"] = supplierInvoice.IssueCountryCode;
                                     var _380ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicket, null, true,
-                                        this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
+                                        this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this, null, true);
                                     _380ViewModel.SetCustomDocumentMetaData(metaData);
                                     this.GeneratedCustomsDocumentTicketViewModel.push(_380ViewModel);
                                     this.originalCustomsDocumentTicketViewModel.push(_380ViewModel);
@@ -248,7 +248,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                             _380ViewModel.IsOcrRelatedDocument = true;
                                             _380ViewModel._SInvoiceNumber = relatedDocument.documentsFilingPM.OcrReference;
                                             _380ViewModel.SetCustomDocumentMetaData(metaData);
-                                            this.GeneratedCustomsDocumentTicketViewModel.push(_380ViewModel);
+                                            this.GeneratedCustomsDocumentTicketViewModel.push(_380ViewModel); 
                                             this.originalCustomsDocumentTicketViewModel.push(_380ViewModel);
                                         }
                                        
@@ -636,7 +636,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
     }
 
     CreateTicketsToEachSupplierInvoice() {///39629  //CALL#309883 לא נפתח טיקט לכל ח-ן ספק +CALL#309868;310765, 311721
-
+debugger
         this.loadedSupplierInvoices.forEach((supplierInvoice) => {
             if (!AppTool.IsNullOrEmpty(supplierInvoice.AccountTypeCode) && supplierInvoice.AccountTypeCode != '325') {
                 let vm = this.FindCustomsDocumentTicketViewModel(supplierInvoice.InvoiceCounterKey + "");// this.originalCustomsDocumentTicketViewModel.filter(ticketViewmodel => ticketViewmodel.customsDocumentsTicketPM.CustomsDocumentPointers[0].Child1EntityId === supplierInvoice.InvoiceCounterKey + "")[0];

@@ -147,8 +147,8 @@ export class CustomsDocumentTicketViewModel {
         public EntityPM: any, 
         private objectTableName: string, 
         private iCustomsDocumentsController: ICustomsDocumentsController, 
-        public documentsFilingId: string = null 
-
+        public documentsFilingId: string = null,
+        public AutoDocType325: boolean = false
         ) {
         this.EntityResourceService = new EntityResourceService();
         if (customsDocumentMetaDataValuePMs != null) {
@@ -168,7 +168,7 @@ export class CustomsDocumentTicketViewModel {
         if (!this.isNew) {
             this.SetCustomDocumentMetaData();
         }
-        if (customsDocumentsTicketPM.DocumentTypeCode == "380") {
+        if (customsDocumentsTicketPM.DocumentTypeCode == "380" || (customsDocumentsTicketPM.DocumentTypeCode == "325" && AutoDocType325)) {
 
             var dec: DeclarationPM = EntityPM as DeclarationPM;
             if (dec) {
@@ -821,6 +821,7 @@ export class CustomsDocumentTicketViewModel {
     }
 
     GeneratecustomsDocumentMetaDataValues() {
+        debugger
         if (this.customsDocumentsTicketPM.DocumentTypeCode == "IL_140") {
             var GenerateMetaData18 = true;
             for (var document of this.customsDocumentMetaDataValuePMs) {
