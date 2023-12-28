@@ -242,6 +242,7 @@
     <None Include="DBTables\CargoStatus.dxml" />
     <None Include="DBTables\CargoType.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
+    <None Include="DBTables\CertificateOfOrigin.dxml" />
     <None Include="DBTables\CertificateOfOriginInvoice.dxml" />
     <None Include="DBTables\CertificateOfOriginItem.dxml" />
     <None Include="DBTables\CertificateOfOriginStatusCodeEnum.dxml" />

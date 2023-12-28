@@ -25,4 +25,77 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Counter"
+    Type="nvarchar"
+    Size="10">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CooTypeCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RequestReasonCode"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="COONumber"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="COONumberToCancel"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ReplacementReason"
+    Type="nvarchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DeclarationNumber"
+    Type="nvarchar"
+    Size="17">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExporterVat"
+    Type="nvarchar"
+    Size="9">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExporterName"
+    Type="nvarchar"
+    Size="128">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="CooTypeCode"
+    ReferencedTable="CertificateOfOriginTypeCodeEnums"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="RequestReasonCode"
+    ReferencedTable="RequestReasonCodeEnums"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>
