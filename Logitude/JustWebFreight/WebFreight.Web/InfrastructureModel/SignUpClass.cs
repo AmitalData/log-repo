@@ -214,6 +214,7 @@ namespace WebFreight.Web.InfrastructureModel
             get { return customsRequiredFieldRepository; }
             set { customsRequiredFieldRepository = value; }
         }
+        static TenantIdleStatusRepository tenantIdleStatusRepository;
 
         static FullAccountingSettingRepository fullAccountingSettingsRepository;
         static BankCodeRepository bankCodeRepository;
@@ -323,9 +324,9 @@ namespace WebFreight.Web.InfrastructureModel
             closingReasonQuery = new OpportunityClosingReasonQueryService(closingReasonRepository);
             quoteClosingReasonQuery = new QuoteClosingReasonQuery(quoteClosingReasonRepository);
             shipmentSubTypeQuery = new ShipmentSubTypeQuery(shipmentSubTypeRepository);
-
-            fullAccountingSettingsRepository = new FullAccountingSettingRepository(theTenant);
-            bankCodeRepository = new BankCodeRepository(theTenant);
+             fullAccountingSettingsRepository = new FullAccountingSettingRepository(theTenant);
+            tenantIdleStatusRepository = new TenantIdleStatusRepository(theTenant);
+             bankCodeRepository = new BankCodeRepository(theTenant);
             taxWithholdingAssessOfficeRepository = new TaxWithholdingAssessOfficeRepository(theTenant);
             customerGroupRepository = new CustomerGroupRepository(theTenant);
             #endregion
@@ -558,8 +559,12 @@ namespace WebFreight.Web.InfrastructureModel
                     PhoneNumber = "99999999"
                 };
                 string systemPassword = AddUser(systemUserShortDetails, userRepository, branchRepository, departmentRepository, roleRepository);
-                 
-                if (setting.WorkEnvironment != "customs")  AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
+
+                if (setting.WorkEnvironment != "customs") { 
+                    AddDefaultFullAccountingSettings(tenant, fullAccountingSettingsRepository);
+                    AddDefaultTenantIdleStatuses(tenant, tenantIdleStatusRepository);
+
+                }
 
                 AddReportFromTenantZero(tenant);
 
@@ -3118,6 +3123,22 @@ namespace WebFreight.Web.InfrastructureModel
 
             theFullAccountingSettingsRepository.Add(settings);
             theFullAccountingSettingsRepository.SubmitChanges();
+        }
+
+        private static void AddDefaultTenantIdleStatuses(int theTenant, TenantIdleStatusRepository tenantIdleStatusRepository)
+        {
+            TenantIdleStatus TenantIdleStatus = new TenantIdleStatus()
+            {
+                Id = theTenant.ToString(),
+                Tenant = theTenant,
+                CreateDate = DateTime.Now,
+                UpdateDate = DateTime.Now,
+                SearchFields=null,
+                Idle=false
+            };
+
+            tenantIdleStatusRepository.Add(TenantIdleStatus);
+            tenantIdleStatusRepository.SubmitChanges();
         }
 
         public static void AddWithholdingTaxDeductionTypes(int theTenant, WithholdingTaxDeductionTypeRepository withholdingTaxDeductionTypeRepository, List<WithholdingTaxDeductionType> tenantZeroTypes)
