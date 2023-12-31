@@ -50,7 +50,7 @@
     Name="OriginCriterionCode"
     OldNames="OriginCriterion"
     Type="varchar"
-    Size="5">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -71,7 +71,7 @@
   <Column
     Name="PackageType"
     Type="varchar"
-    Size="5">
+    Size="4">
     <Constraints
       Nullable="true" />
   </Column>
@@ -92,7 +92,7 @@
   <Column
     Name="MeasureType"
     Type="varchar"
-    Size="5">
+    Size="3">
     <Constraints
       Nullable="true" />
   </Column>
