@@ -207,17 +207,15 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
 
     BuildColumns() {
         this.columns = [];
-        if (this.CancelSelectedRecoFeature) {
-            this.columns.push({
-                FieldName: 'SelectCheckBox',
-                DataTypeCode: 'Boolean',
-                Display: '',
-                Styles: { width: '30px' },
-                HtmlListComponentName: 'ManageReconciliationListTemplate',
-                HtmlListComponentUrl: './Accounting/Components/ListTemplates/ManageReconciliationListTemplate',
-                IsCustomTemplate: true
-            });
-        }
+        this.columns.push({
+            FieldName: 'SelectCheckBox',
+            DataTypeCode: 'Boolean',
+            Display: '',
+            Styles: { width: '30px' },
+            HtmlListComponentName: 'ManageReconciliationListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/ManageReconciliationListTemplate',
+            IsCustomTemplate: true
+        });
         this.columns.push({
             FieldName: 'Number',
             DataTypeCode: 'String',
