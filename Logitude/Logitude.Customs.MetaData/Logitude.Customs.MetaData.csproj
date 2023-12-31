@@ -244,6 +244,9 @@
     <None Include="DBTables\CargoStatus.dxml" />
     <None Include="DBTables\CargoType.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
+    <None Include="DBTables\CertificateOfOrigin.dxml" />
+    <None Include="DBTables\CertificateOfOriginInvoice.dxml" />
+    <None Include="DBTables\CertificateOfOriginItem.dxml" />
     <None Include="DBTables\CertificateOfOriginStatusCodeEnum.dxml" />
     <None Include="DBTables\CertificateOfOriginTypeCodeEnum.dxml" />
     <None Include="DBTables\CertificatesStatus.dxml" />
@@ -611,6 +614,9 @@
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\ConfirmationNumberTokenLog.lxml" />
     <None Include="EntityFiles\AddressCurrency.lxml" />
+    <None Include="EntityFiles\CertificateOfOrigin.lxml" />
+    <None Include="EntityFiles\CertificateOfOriginInvoice.lxml" />
+    <None Include="EntityFiles\CertificateOfOriginItem.lxml" />
     <None Include="EntityFiles\ClientItem.lxml" />
     <None Include="EntityFiles\ClientIndication.lxml" />
     <None Include="EntityFiles\CountryCurrency.lxml" />

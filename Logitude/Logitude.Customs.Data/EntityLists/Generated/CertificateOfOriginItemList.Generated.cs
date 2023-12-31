@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization; 
+
+namespace Logitude.Customs.Data.EntityLists
+{
+   [DataContract]
+   public partial class CertificateOfOriginItemList
+   {
+   
+       [Key]
+       [DataMember]
+       public string Id  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
+       [DataMember]
+       public string CertificateOfOriginInvoiceId  { get; set; }
+       [DataMember]
+       public string ItemSerial  { get; set; }
+       [DataMember]
+       public string ItemId  { get; set; }
+       [DataMember]
+       public string OriginCriterionCode  { get; set; }
+       [DataMember]
+       public string MarksAndNumbers  { get; set; }
+       [DataMember]
+       public string PackageQuantity  { get; set; }
+       [DataMember]
+       public string PackageType  { get; set; }
+       [DataMember]
+       public string ItemDescription  { get; set; }
+       [DataMember]
+       public string Weight  { get; set; }
+       [DataMember]
+       public string MeasureType  { get; set; }
+       [DataMember]
+       public string InvoiceConnect  { get; set; }
+       [DataMember]
+       public string ContainerIsoCode  { get; set; }
+   }
+
+}
+	 

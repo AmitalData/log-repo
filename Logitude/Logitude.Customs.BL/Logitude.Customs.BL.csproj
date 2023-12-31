@@ -369,6 +369,9 @@
     <Compile Include="EntityDataMappings\CargoStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CertificateExemptionTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CertificateOfOriginDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CertificateOfOriginInvoiceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CertificateOfOriginItemDataMapping.cs" />
     <Compile Include="EntityDataMappings\CertificateOfOriginStatusCodeEnumDataMapping.cs" />
     <Compile Include="EntityDataMappings\CertificateOfOriginTypeCodeEnumDataMapping.cs" />
     <Compile Include="EntityDataMappings\CertificatesStatusDataMapping.cs" />
@@ -595,6 +598,9 @@
     <Compile Include="EntityDataMappings\Generated\CargoStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificateExemptionTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CertificateOfOriginDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CertificateOfOriginInvoiceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CertificateOfOriginItemDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificateOfOriginStatusCodeEnumDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificateOfOriginTypeCodeEnumDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificatesStatusDataMapping.Generated.cs" />
@@ -1179,6 +1185,9 @@
     <Compile Include="EntityQueryServices\CustomCountryTenantQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomDocumentTypeTenantQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationStatusQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\CertificateOfOriginInvoiceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CertificateOfOriginItemQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CertificateOfOriginQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CertificateOfOriginStatusCodeEnumQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CertificateOfOriginTypeCodeEnumQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\ClientItemQueryService.Generated.cs" />
@@ -1735,8 +1744,11 @@
     <Compile Include="EntityUpdateServices\ClientItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestToAdvanceAQueueUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginInvoiceUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginItemUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginStatusCodeEnumUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginTypeCodeEnumUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\OriginCriterionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestReasonCodeEnumUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\OcrDocumentUpdateService.cs" />

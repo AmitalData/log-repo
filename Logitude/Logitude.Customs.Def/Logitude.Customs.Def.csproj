@@ -70,6 +70,9 @@
     <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
     <Compile Include="EntityPMs\Generated\RequestToAdvanceAQueuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConfirmationNumberTokenLogPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateOfOriginInvoicePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateOfOriginItemPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CertificateOfOriginPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CertificateOfOriginStatusCodeEnumPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CertificateOfOriginTypeCodeEnumPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\OriginCriterionPM.Generated.cs" />
