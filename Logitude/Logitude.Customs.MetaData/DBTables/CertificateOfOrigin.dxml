@@ -35,14 +35,14 @@
   <Column
     Name="CooTypeCode"
     Type="varchar"
-    Size="5">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="RequestReasonCode"
     Type="varchar"
-    Size="5">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -98,28 +98,28 @@
   <Column
     Name="ExporterCountry"
     Type="varchar"
-    Size="3">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="TradeAgreementCountry1"
     Type="varchar"
-    Size="3">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="TradeAgreementCountry2"
     Type="varchar"
-    Size="3">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="TradeAgreementGroupOfCountries"
     Type="varchar"
-    Size="3">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -140,7 +140,7 @@
   <Column
     Name="ConsigneeCountry"
     Type="varchar"
-    Size="3">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -160,28 +160,28 @@
   <Column
     Name="OriginCountry"
     Type="varchar"
-    Size="3">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="OriginGroupOfCountry"
     Type="varchar"
-    Size="3">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="DestinationCountry"
     Type="varchar"
-    Size="3">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="DestinationGroupOfCountries"
     Type="varchar"
-    Size="3">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -195,7 +195,7 @@
   <Column
     Name="PortOfShipment"
     Type="varchar"
-    Size="5">
+    Size="17">
     <Constraints
       Nullable="true" />
   </Column>
@@ -208,14 +208,14 @@
   <Column
     Name="CumulationCountry"
     Type="varchar"
-    Size="3">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CumulationGroupOfCountries"
     Type="varchar"
-    Size="3">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -255,14 +255,14 @@
   <Column
     Name="CustomsHouse"
     Type="varchar"
-    Size="5">
+    Size="17">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="IssuingCountry"
     Type="varchar"
-    Size="3">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -276,7 +276,7 @@
   <Column
     Name="CountryOfDeclaration"
     Type="varchar"
-    Size="3">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -326,7 +326,7 @@
   <Column
     Name="NonExportCountry"
     Type="varchar"
-    Size="3">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -340,7 +340,7 @@
   <Column
     Name="NonExportPort"
     Type="varchar"
-    Size="5">
+    Size="17">
     <Constraints
       Nullable="true" />
   </Column>
@@ -360,14 +360,14 @@
   <Column
     Name="NonTransirCountry"
     Type="varchar"
-    Size="3">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="NonPortOfEntrance"
     Type="varchar"
-    Size="5">
+    Size="17">
     <Constraints
       Nullable="true" />
   </Column>
@@ -380,7 +380,7 @@
   <Column
     Name="NonExitPort"
     Type="varchar"
-    Size="5">
+    Size="17">
     <Constraints
       Nullable="true" />
   </Column>

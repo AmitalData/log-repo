@@ -35,13 +35,13 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ItemId).HasColumnName("ItemId").HasMaxLength(6).IsUnicode(true);
 
-            this.Property(t => t.OriginCriterionCode).HasColumnName("OriginCriterionCode").HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.OriginCriterionCode).HasColumnName("OriginCriterionCode").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.MarksAndNumbers).HasColumnName("MarksAndNumbers").HasMaxLength(35).IsUnicode(true);
 
             this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity").HasMaxLength(5).IsUnicode(true);
 
-            this.Property(t => t.PackageType).HasColumnName("PackageType").HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.PackageType).HasColumnName("PackageType").HasMaxLength(4).IsUnicode(false);
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")
@@ -58,7 +58,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Weight).HasColumnName("Weight").HasMaxLength(35).IsUnicode(true);
 
-            this.Property(t => t.MeasureType).HasColumnName("MeasureType").HasMaxLength(5).IsUnicode(false);
+            this.Property(t => t.MeasureType).HasColumnName("MeasureType").HasMaxLength(3).IsUnicode(false);
 
             this.Property(t => t.InvoiceConnect).HasColumnName("InvoiceConnect").HasMaxLength(35).IsUnicode(true);
 
