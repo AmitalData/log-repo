@@ -55,11 +55,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
                 if (filters.GetCount)
                 {
-                    //todo:debug if needed
-                    response.Count = LTBFilter.DateTypeCode == "4" ? LTBFilter.TaxReportTotalCount : ledgerTransactionBalanceService.Response.TotalRowCount.Value;
+                    response.Count = ledgerTransactionBalanceService.Response.TotalRowCount.Value;
                 }
                 response.Result = ledgerTransactionBalanceService.Response.MyLedgerTransactionList;
-                response.TookMS = ledgerTransactionBalanceService.Response.TookMS ;
+                response.TookMS = ledgerTransactionBalanceService.Response.TookMS;
                 PerformanceLogger.AddServerExecutionTimeHeader(logKey);
                 HttpResponseMessage reponseMessage = Request.CreateResponse(HttpStatusCode.OK, response);
 

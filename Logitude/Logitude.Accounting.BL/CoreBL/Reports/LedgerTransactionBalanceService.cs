@@ -100,13 +100,6 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                 if (_Param.CallBack == null)
                 {
-                    //if (_Param.DateTypeCode == TaxReportFilterDateTypeCode)
-                    //{
-                    //    list=GetLedgerTransactinByTaxReportFilter().ToList();
-                    //todo: check if need
-                    //    Response.TotalRowCount = _Param.TaxReportTotalCount;
-                    //}
-
                     bool includeAccoutingDateLTransaction = false;
                     var startAccountBalanceService = GetStartAccountBalance(//includeChildAccounts, 
     includeAccoutingDateLTransaction);
