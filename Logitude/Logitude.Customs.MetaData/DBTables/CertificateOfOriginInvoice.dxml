@@ -25,4 +25,67 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="CertificateOfOriginId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InvoicesIdUry"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InvoiceNumber"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InvoiceDate"
+    Type="date">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InvoiceSum"
+    Type="nvarchar"
+    Size="35">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CurrencyType"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="DescriptionOfInvoice"
+    Type="nvarchar"
+    Size="256">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsInvoicesForPrint"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="CertificateOfOriginId"
+    ReferencedTable="CertificateOfOrigins"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CurrencyType"
+    ReferencedTable="CurrencyTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
 </Table>

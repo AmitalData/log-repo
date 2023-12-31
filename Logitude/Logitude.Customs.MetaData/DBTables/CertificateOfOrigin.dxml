@@ -498,12 +498,47 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="ExporterCountry,TradeAgreementCountry1,TradeAgreementCountry2,ConsigneeCountry,OriginCountry,DestinationCountry,CumulationCountry,IssuingCountry,CountryOfDeclaration,NonExportCountry,NonTransirCountry"
+    ForeignKeyColumn="ExporterCountry"
     ReferencedTable="Countries"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
-    ForeignKeyColumn="TradeAgreementGroupOfCountries,OriginGroupOfCountry,DestinationGroupOfCountries,CumulationGroupOfCountries"
+    ForeignKeyColumn="TradeAgreementCountry1"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TradeAgreementCountry2"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="TradeAgreementGroupOfCountries"
+    ReferencedTable="CountryGroups"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="ConsigneeCountry"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OriginCountry"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="OriginGroupOfCountry"
+    ReferencedTable="CountryGroups"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DestinationCountry"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="DestinationGroupOfCountries"
     ReferencedTable="CountryGroups"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
@@ -513,7 +548,17 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="PlaceOfManufacture,CityOfDeclaration"
+    ForeignKeyColumn="CumulationCountry"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CumulationGroupOfCountries"
+    ReferencedTable="CountryGroups"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="PlaceOfManufacture"
     ReferencedTable="Cities"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
@@ -523,7 +568,42 @@
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="NonExportPort,NonPortOfEntrance,NonExitPort"
+    ForeignKeyColumn="IssuingCountry"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="CityOfDeclaration"
+    ReferencedTable="Cities"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CountryOfDeclaration"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="NonExportCountry"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="NonExportPort"
+    ReferencedTable="InternationalSites"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="NonTransirCountry"
+    ReferencedTable="Countries"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="NonPortOfEntrance"
+    ReferencedTable="InternationalSites"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="NonExitPort"
     ReferencedTable="InternationalSites"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
