@@ -130,8 +130,41 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     }
 
     ngOnInit() {
-        this.Initialize();
-        this.BuildAdditionalFields();
+        var entity = new ARPaymentPM();
+        entity.IsFullAccounting = true;
+        entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
+
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: "", EntityPM: entity, ObjectTableName: 'ARPayment' });
+                let isEditComponentSaved = false;
+
+                cmpRef.instance.BackCompleted.subscribe(bk => {
+                    if (isEditComponentSaved) {
+                        this.CurrentSession.FireEvent("NewARPaymentInvoiceTabCreated");
+                        if (this.EntityPM.ForceUsingBankTransferMethod) {
+                            const paymentNo = cmpRef.instance.EntityPM.PaymentNo;
+                            this.CurrentSession.FireEvent({ Name: "BankTransferARPaymentCreated", PaymentNumber: paymentNo });
+                        }
+                    }
+                });
+
+                cmpRef.instance.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+
+                cmpRef.instance.SaveAndCloseCompleted.subscribe((isSaveSuccess: boolean) => {
+                    if (isSaveSuccess) {
+                        isEditComponentSaved = true;
+                    }
+                });
+            });
+
+
+        this.CurrentSession.CloseCurrentWindow();
     }
 
     // Additional Fields
