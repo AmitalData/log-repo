@@ -35,14 +35,12 @@ export function CreateaAndFillNewExporterInvoice(createNewExportInvoiceDetails: 
    cy.FillLogTextBox(CreateNewExportInvoiceSelectors.InvoiceNumber,createNewExportInvoiceDetails.InvoiceNumber,true);
    cy.get(CreateNewExportInvoiceSelectors.InvoiceAmount).type(createNewExportInvoiceDetails.InvoiceAmount);
    cy.FillLogTextBox(CreateNewExportInvoiceSelectors.IsPreferencer,createNewExportInvoiceDetails.CheckBox,true);
-   cy.get('td:nth-child(5) .CheckBox > label').click();
-   //cy.get('#Customs\\.SupplierInvoice_IsPreference').click();
+   //cy.get('td:nth-child(5) .CheckBox > label').click();
+   cy.get(CreateNewExportInvoiceSelectors.CheckBox).click({force:true});
    cy.FillLogLov(CreateNewExportInvoiceSelectors.DutyRegimeProtocolCode,createNewExportInvoiceDetails.DutyRegimeProtocolCode,true);
-   //cy.get(CreateNewExportInvoiceSelectors.ExportModificationCurrency).type(createNewExportInvoiceDetails.ExportModificationCurrency);
 
  }
-
- 
+    
 
  export function Matching(createNewExportInvoiceDetails: CreateNewExportInvoiceDetails)
  {
@@ -96,5 +94,3 @@ export function DeleteRow(){
        BaseAssertion.AssertElementNotExist(CreateNewExportInvoiceSelectors.SupplierInvoiceFirstRow);
        
    }
-
-
