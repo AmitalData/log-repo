@@ -124,6 +124,9 @@
     <Compile Include="EntityKeys\CargoSplitRequestStatusKeys.cs" />
     <Compile Include="EntityKeys\CargoStatusKeys.cs" />
     <Compile Include="EntityKeys\CargoTypeKeys.cs" />
+    <Compile Include="EntityKeys\CertificateOfOriginInvoiceKeys.cs" />
+    <Compile Include="EntityKeys\CertificateOfOriginItemKeys.cs" />
+    <Compile Include="EntityKeys\CertificateOfOriginKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginStatusCodeEnumKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginTypeCodeEnumKeys.cs" />
     <Compile Include="EntityKeys\ClaimReasonTypeKeys.cs" />
@@ -296,6 +299,9 @@
     <Compile Include="EntityListQueryServices\CargoSplitRequestStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CertificateOfOriginInvoiceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CertificateOfOriginItemListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CertificateOfOriginListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginStatusCodeEnumListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginTypeCodeEnumListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimReasonTypeListQueryService.cs" />
@@ -399,6 +405,9 @@
     <Compile Include="EntityListQueryServices\Generated\CargoSplitRequestStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginInvoiceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginItemListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginStatusCodeEnumListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginTypeCodeEnumListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimReasonTypeListQueryService.Generated.cs" />
@@ -616,6 +625,9 @@
     <Compile Include="EntityListQueryServices\UIMessageTenantListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UpdateCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\VendorCurrencyListQueryService.cs" />
+    <Compile Include="EntityLists\Generated\CertificateOfOriginInvoiceList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CertificateOfOriginItemList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CertificateOfOriginList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginStatusCodeEnumList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginTypeCodeEnumList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientItemList.Generated.cs" />
@@ -813,6 +825,9 @@
     <Compile Include="EntityMapping\CargoSplitRequestStatusMap.cs" />
     <Compile Include="EntityMapping\CargoStatusMap.cs" />
     <Compile Include="EntityMapping\CargoTypeMap.cs" />
+    <Compile Include="EntityMapping\CertificateOfOriginInvoiceMap.cs" />
+    <Compile Include="EntityMapping\CertificateOfOriginItemMap.cs" />
+    <Compile Include="EntityMapping\CertificateOfOriginMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginStatusCodeEnumMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginTypeCodeEnumMap.cs" />
     <Compile Include="EntityMapping\ClaimReasonTypeMap.cs" />
@@ -985,6 +1000,9 @@
     <Compile Include="EntityPOCOs\CargoSplitRequestStatus.cs" />
     <Compile Include="EntityPOCOs\CargoStatus.cs" />
     <Compile Include="EntityPOCOs\CargoType.cs" />
+    <Compile Include="EntityPOCOs\CertificateOfOrigin.cs" />
+    <Compile Include="EntityPOCOs\CertificateOfOriginInvoice.cs" />
+    <Compile Include="EntityPOCOs\CertificateOfOriginItem.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginStatusCodeEnum.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginTypeCodeEnum.cs" />
     <Compile Include="EntityPOCOs\ClaimReasonType.cs" />
@@ -1158,6 +1176,9 @@
     <Compile Include="Repsitories\CargoSplitRequestStatusRepository.cs" />
     <Compile Include="Repsitories\CargoStatusRepository.cs" />
     <Compile Include="Repsitories\CargoTypeRepository.cs" />
+    <Compile Include="Repsitories\CertificateOfOriginInvoiceRepository.cs" />
+    <Compile Include="Repsitories\CertificateOfOriginItemRepository.cs" />
+    <Compile Include="Repsitories\CertificateOfOriginRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginStatusCodeEnumRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginTypeCodeEnumRepository.cs" />
     <Compile Include="Repsitories\ClaimReasonTypeRepository.cs" />
@@ -1261,6 +1282,9 @@
     <Compile Include="Repsitories\Generated\CargoSplitRequestStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CertificateOfOriginInvoiceRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CertificateOfOriginItemRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CertificateOfOriginRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginStatusCodeEnumRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginTypeCodeEnumRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimReasonTypeRepository.Generated.cs" />

@@ -50,6 +50,9 @@ namespace Logitude.Customs.Data
 		 IDbSet<CargoStatus> CargoStatuses { get; }
 		 IDbSet<CargoType> CargoTypes { get; }
 		 IDbSet<CertificateExemptionType> CertificateExemptionTypes { get; }
+		 IDbSet<CertificateOfOrigin> CertificateOfOrigins { get; }
+		 IDbSet<CertificateOfOriginInvoice> CertificateOfOriginInvoices { get; }
+		 IDbSet<CertificateOfOriginItem> CertificateOfOriginItems { get; }
 		 IDbSet<CertificateOfOriginStatusCodeEnum> CertificateOfOriginStatusCodeEnums { get; }
 		 IDbSet<CertificateOfOriginTypeCodeEnum> CertificateOfOriginTypeCodeEnums { get; }
 		 IDbSet<CertificatesStatus> CertificatesStatuses { get; }

@@ -47,7 +47,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="OriginCriterion"
+    Name="OriginCriterionCode"
+    OldNames="OriginCriterion"
     Type="varchar"
     Size="5">
     <Constraints
@@ -115,7 +116,7 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
   <Relation
-    ForeignKeyColumn="OriginCriterion"
+    ForeignKeyColumn="OriginCriterionCode"
     ReferencedTable="OriginCriterions"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
