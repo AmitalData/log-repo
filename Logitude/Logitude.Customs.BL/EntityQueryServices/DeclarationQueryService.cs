@@ -305,12 +305,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
         }
-        public DeclarationPM GetSingleByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant)
+        public DeclarationPM GetSingleByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant,string ExternalEntityName)
         {
             if (String.IsNullOrWhiteSpace(ExternalEntityReference)) return null;
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
-            var declaration = repository.GetDeclarationByCustomFileNoOrExportFile(ExternalEntityReference, tenant);
+            var declaration = repository.GetDeclarationByCustomFileNoOrExportFile(ExternalEntityReference, tenant, ExternalEntityName);
 
             if (declaration == null) return null;
 
