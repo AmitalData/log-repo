@@ -1,5 +1,6 @@
 import { CustomsRequestsSheetsListTemplate } from './Components/CustomsRequestsSheetsListTemplate';
 import { DeclarationSupplierInvoiceListTemplate } from './Components/DeclarationSupplierInvoiceListTemplate';
+import { DigitalCertificateOfOriginListTemplate } from './Components/DigitalCertificateOfOriginListTemplate';
 import { CustomsClosedTablesListTemplate } from './Components/CustomsClosedTablesListTemplate';
 import { CertificateCheckBoxComponent } from './Components/CertificateCheckBoxComponent';
 import { CertificateTextBoxComponent } from './Components/CertificateTextBoxComponent';
@@ -35,6 +36,7 @@ export const Components =
     CourierConnectedDeclarationListTemplate,
     CourierWorksheetListTemplate,
     DeclarationSupplierInvoiceListTemplate,
+    DigitalCertificateOfOriginListTemplate,
     DeclarationQueryListTemplate,
     NotificationListTemplate,
     SupplierInvoiceItemsTaxListTemplate,
@@ -59,6 +61,7 @@ export class ModuleDeclarations {
       switch (name) {
           case "CustomsRequestsSheetsListTemplate": { myResult = CustomsRequestsSheetsListTemplate; break; }
           case "DeclarationSupplierInvoiceListTemplate": { myResult = DeclarationSupplierInvoiceListTemplate; break; }
+          case "DigitalCertificateOfOriginListTemplate": { myResult = DigitalCertificateOfOriginListTemplate; break; }
           case "CustomsClosedTablesListTemplate": { myResult = CustomsClosedTablesListTemplate; break; }
           case "CertificateCheckBoxComponent": { myResult = CertificateCheckBoxComponent; break; }
           case "CertificateTextBoxComponent": { myResult = CertificateTextBoxComponent; break; }
