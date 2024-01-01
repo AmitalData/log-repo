@@ -5437,6 +5437,18 @@
       LocalDefaultText="&quot;אם שדה תצהיר יבואן 3 מכיל ערך, חובה להוסיף טקסט&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Claim.O.Claim&quot;"
+      DefaultText="&quot;Claim&quot;"
+      LocalDefaultText="&quot;תביעה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Claim.O.MustChooseClaim&quot;"
+      DefaultText="&quot;Must choose claim&quot;"
+      LocalDefaultText="&quot;חובה לבחור ישות תביעה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
