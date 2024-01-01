@@ -575,15 +575,16 @@ export class AmitalGatewayUtil {
             await new Promise(res => setTimeout(() => res(null), 100));
 
         this.SelectCustomsRequestMenu(MaintenanceMenu);
-
-        const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
-        const logWindow = new LogitudeWindow();
-        logWindow.Width = window.outerWidth;
-        logWindow.Height = window.outerHeight;
-        logWindow.Title = windowTitle;
-        logWindow.IsShowCloseButton = true;
-        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
-        logWindow.WindowClosed.subscribe(() => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
+        new EntityResourceService().getEntityResourceByTableName("Customs.ConfirmationNumberTokenLog", 0).subscribe((response: any) => {
+            const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
+            const logWindow = new LogitudeWindow();
+            logWindow.Width = window.outerWidth;
+            logWindow.Height = window.outerHeight;
+            logWindow.Title = windowTitle;
+            logWindow.IsShowCloseButton = true;
+            logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
+            logWindow.WindowClosed.subscribe(() => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
+        });
 
     }
     async openConfirmationNumberTokenLog(change2EditTab: () => void, MaintenanceMenu: string) {
