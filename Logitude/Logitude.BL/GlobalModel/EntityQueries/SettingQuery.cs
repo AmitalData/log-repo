@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.BL.GlobalModel.EntityQueries
 {
@@ -65,6 +66,8 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             return entity;
         }
 
+        public SettingPM GetSinglePMFromCahche() => CacheHelper.GetFromCache("SettingPM", GetSinglePM);
+
         public SettingPM GetSinglePM()
         {
             SettingPM entity;
@@ -102,6 +105,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                           DocumentFilingEmailDomain = a.DocumentFilingEmailDomain,
                           System2RedirectFraction = a.System2RedirectFraction,
                           ReportsRunUsingWR = a.ReportsRunUsingWR,
+                          ExportUrl = a.ExportUrl,
                       }).FirstOrDefault();
 
             return entity;

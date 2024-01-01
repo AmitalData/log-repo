@@ -235,6 +235,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public int? DPArchiveShipmentDepartFilter { get; set; }
         public string LogoURL { get; set; }
         public string ServiceAgreementURL { get; set; }
+        public string ExportLoginCredintial { get; set; }
+        public string ExportTenant { get; set; }
 
     }
 }

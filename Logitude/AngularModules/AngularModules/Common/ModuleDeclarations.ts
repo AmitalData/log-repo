@@ -58,6 +58,7 @@ import { GLAccountSelectComponent } from './Components/AccountingTab/GLAccountSe
 import { NewHorseComponent } from './Components/Maintenance/Horse/NewHorseComponent';
 import { HorseGeneralTabComponent } from './Components/Maintenance/Horse/HorseGeneralTabComponent';
 import { TariffsTabComponent } from './Components/TariffsTab/TariffsTabComponent';
+import { HostScreenComponent } from './Components/HostScreen/HostScreenComponent';
 
 export const Components =
     [
@@ -121,6 +122,7 @@ export const Components =
         NewHorseComponent,
         HorseGeneralTabComponent,
         TariffsTabComponent,
+        HostScreenComponent,
     ];
 
 export class ModuleDeclarations {
@@ -191,6 +193,7 @@ export class ModuleDeclarations {
             case "NewHorseComponent": { myResult = NewHorseComponent; break; }
             case "HorseGeneralTabComponent": { myResult = HorseGeneralTabComponent; break; }
             case "TariffsTabComponent": { myResult = TariffsTabComponent; break; }
+            case "HostScreenComponent": { myResult = HostScreenComponent; break; }
         }
 
         return myResult;

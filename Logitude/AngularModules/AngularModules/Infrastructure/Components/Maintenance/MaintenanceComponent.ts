@@ -73,7 +73,9 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
          
-
+        if (FeatureLocator.HasFeaturePermession("General", "SHAAMTOKEN"))
+            this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
+        
         if (SessionLocator.Tenant == 0) {
             this.PagesMenu.push(new Menu("MNG", TextCodeTranslator.Translate("General.MC.Management.Management")));
         }
@@ -208,6 +210,7 @@ export class MaintenanceComponent {
         this.BuildTransmissionsMenus();
         this.BuildCustomizationMenus();
         this.BuildCustomObjectsMenus();
+        this.BuildShaamTokenManagementMenu();
         this.PageChanged(this.PagesMenu[0]);
     }
     CheckDeploymentPackageFeatures() {
@@ -826,7 +829,6 @@ export class MaintenanceComponent {
         }
     }
 
-
     IsCustomizationMaintenanceMenuVisible(): boolean {
 
         if (SessionLocator.Tenant == 261) {
@@ -905,6 +907,25 @@ export class MaintenanceComponent {
         maintenanceMenuItem.DescriptionText = objectTable.Description != null ? objectTable.Description : TextCodeTranslator.Translate(objectTable.DescriptionTextCodeCode);
         this.AllMaintenanceMenu.push(maintenanceMenuItem);
     }
+     
+    private BuildShaamTokenManagementMenu() {
+        if (SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "SHAAMTOKEN")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "SHA";
+            item.Icon = "List"
+            item.Code = "SHAAM_LOGS";
+            item.ObjectTableName = TextCodeTranslator.Translate('General.MC.Logs'),
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "SHA";
+            item.Icon = "Settings"
+            item.Code = "SHAAM_TOKEN";
+            item.ObjectTableName = TextCodeTranslator.Translate('General.MC.TokenManagement');
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
+    }
+
     // Commands
     PageChanged(item: Menu) {
         this.SelectedMenu = item;
@@ -929,6 +950,28 @@ export class MaintenanceComponent {
     ItemClicked(item: MaintenanceMenuItem) {
         if (item) {
             switch (item.Code) {
+                case "SHAAM_LOGS": {
+                        const logWindow = new LogitudeWindow();
+                        logWindow.WindowArgs = { logitudeCommandId: 'ConfirmationNumberTokenLog', windowInstance: logWindow };
+                        logWindow.Width = window.outerWidth;
+                        logWindow.Height = window.outerHeight;
+                        logWindow.Title = TextCodeTranslator.Translate('General.MC.Logs');
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.Show('./Common/Components/HostScreen/HostScreenComponent');
+                        break;
+                    }
+                    
+                    case "SHAAM_TOKEN": {                        
+                        const logWindow = new LogitudeWindow();
+                        logWindow.WindowArgs = { logitudeCommandId: 'CreateNewShaamToken', windowInstance: logWindow };
+                        logWindow.Width = window.outerWidth;
+                        logWindow.Height = window.outerHeight;
+                        logWindow.Title = TextCodeTranslator.Translate('General.MC.TokenManagement');
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.Show('./Common/Components/HostScreen/HostScreenComponent');
+                    break;
+                }
+
                 case "DFES": {
                     var windowTitle = "Document Filing Email Settings";
                     var logWindow = new LogitudeWindow();
