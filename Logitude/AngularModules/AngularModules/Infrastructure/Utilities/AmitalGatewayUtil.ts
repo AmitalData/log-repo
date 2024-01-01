@@ -300,7 +300,11 @@ export class AmitalGatewayUtil {
     }
     public IsAmitalBackButtonDisable: boolean = false;
     AmitalBackButtonClicked() {
-        window.parent.postMessage("amitalBackButtonClicked", '*');
+        if(window.parent) {
+            window.parent.postMessage("amitalBackButtonClicked", '*');
+            if(window.parent.parent)
+                window.parent.parent.postMessage("amitalBackButtonClicked", '*');
+        }
 
         let RequestWrapper = new RequestWrapperM()
         let myUnifreightMessageM = new UnifreightMessageM();
