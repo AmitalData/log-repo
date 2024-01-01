@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationUpdateClass
    {  		
-		public const string HashString = "98d85387567b731106ef9b49c3fcf07f";
+		public const string HashString = "676298afb3f997a43647cea67d0414be";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18685,6 +18685,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                  
 			   TextCode DeclarationCloseExportDeclarationTextCode_TH24 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CloseExportDeclaration", DefaultText = "Close Export Declaration",LocalDefaultText = "סגירת הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationCloseExportDeclarationFeature_TH24 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Tab.CloseExportDeclaration", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.CloD", NameTextCodeDefaultText = "Close Export Declaration", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
+ 
+                 
+			   TextCode DeclarationDigitalCertificateOfOriginTextCode_TH26 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DigitalCertificateOfOrigin", DefaultText = "Digital Certificate Of Origin",LocalDefaultText = "תעודת מקור דיגיטלית", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature DeclarationDigitalCertificateOfOriginFeature_TH26 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Tab.DigitalCertificateOfOrigin", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.DCOO", NameTextCodeDefaultText = "Digital Certificate Of Origin", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
@@ -18741,6 +18745,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CloD",HtmlComponentName = "ExportDeclarationClosureComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Closure/ExportDeclarationClosureComponent", FeatureId = DeclarationCloseExportDeclarationFeature_TH24.Id,FeatureUniqeCode = DeclarationCloseExportDeclarationFeature_TH24.FeatureUniqeCode, ControlPath = "", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCloseExportDeclarationTextCode_TH24.Id, TabNameTextCodeCode = DeclarationCloseExportDeclarationTextCode_TH24.Code, Tenant = 0, IndexOrder = 22 }, objectTableTabsRepository, TenantObjectTableTabs);
    
             AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCCO",HtmlComponentName = "DeclarationCorrectionsComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/Corrections/DeclarationCorrectionsComponent", FeatureId = DeclarationCorrectionsFeature_TH0.Id,FeatureUniqeCode = DeclarationCorrectionsFeature_TH0.FeatureUniqeCode, ControlPath = " ", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationCorrectionsTextCode_TH0.Id, TabNameTextCodeCode = DeclarationCorrectionsTextCode_TH0.Code, Tenant = 0, IndexOrder = 23 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "DCOO",HtmlComponentName = "DigitalCertificateOfOriginTabComponent",HtmlComponentUrl = "./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DigitalCertificateOfOriginTabComponent", FeatureId = DeclarationDigitalCertificateOfOriginFeature_TH26.Id,FeatureUniqeCode = DeclarationDigitalCertificateOfOriginFeature_TH26.FeatureUniqeCode, ControlPath = "Logitude.Customs.Views.Tabs.DigitalCertificateOfOriginTabControl", ObjectTableId = DeclarationObjectTable.Id, TabNameTextCodeId = DeclarationDigitalCertificateOfOriginTextCode_TH26.Id, TabNameTextCodeCode = DeclarationDigitalCertificateOfOriginTextCode_TH26.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
    
 	    } 
 	
@@ -21875,6 +21881,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationOCancelPointers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.CancelPointers", DefaultText = "Approve Cancellation of pointers on customs items",LocalDefaultText = @"נא אשר ביטול ההצבעות בכל שורות פרט המכס", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationODeletePointer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeletePointer", DefaultText = "Pointers successfully deleted",LocalDefaultText = @"נתוני ההצבעה נמחקו בהצלחה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationTHDigitalCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DigitalCertificateOfOrigin", DefaultText = "Digital Certificate Of Origin",LocalDefaultText = @"ת. מקור דיגיטלית", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

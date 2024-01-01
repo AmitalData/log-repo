@@ -21501,7 +21501,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;ffc43462-cc5e-4583-9219-e5d6dd05427d&quot;"
     FieldName="&quot;DeclarationPayments&quot;"
@@ -23934,6 +23933,19 @@
     FeatureCode="&quot;CORRECTIONS&quot;"
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Correction&quot;"
     FeatureDefaultText="&quot;Correction&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
+    TabName="&quot;Digital Certificate Of Origin&quot;"
+    TabLocalName="&quot;תעודת מקור דיגיטלית&quot;"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    Code="&quot;DCOO&quot;"
+    ControlPath="&quot;Logitude.Customs.Views.Tabs.DigitalCertificateOfOriginTabControl&quot;"
+    TextCode="&quot;Customs.Declaration.TH.DigitalCertificateOfOrigin&quot;"
+    IsPackagable="false"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DigitalCertificateOfOriginTabComponent&quot;"
+    HtmlComponentName="&quot;DigitalCertificateOfOriginTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>
@@ -27800,6 +27812,12 @@
       DefaultText="&quot;Pointers successfully deleted&quot;"
       LocalDefaultText="&quot;נתוני ההצבעה נמחקו בהצלחה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.TH.DigitalCertificateOfOrigin&quot;"
+      DefaultText="&quot;Digital Certificate Of Origin&quot;"
+      LocalDefaultText="&quot;ת. מקור דיגיטלית&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
