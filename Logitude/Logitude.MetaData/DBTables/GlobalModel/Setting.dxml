@@ -583,6 +583,13 @@
    Size="1000">
     <Constraints
       Nullable="true" />
+  </Column>  
+  <Column
+   Name="ExportUrl"
+   Type="varchar"
+   Size="50">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Column
    Name="LogitudeIISURL"

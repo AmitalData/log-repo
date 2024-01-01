@@ -96,6 +96,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string WorkflowStorageAccountKey { get; set; }
 		public string WindWardSettings { get; set; }
 		public string LogitudeIISURL { get; set; }
+		public string ExportUrl { get; set; }
 
 	}
 }

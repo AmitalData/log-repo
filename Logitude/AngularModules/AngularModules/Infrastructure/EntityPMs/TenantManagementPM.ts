@@ -1058,7 +1058,7 @@ export class TenantManagementPM {
     public get EcommerceTenant() { return this.ecommerceTenant; }
     public set EcommerceTenant(newValue: boolean) { if (this.ecommerceTenant != newValue) { this.ecommerceTenant = newValue; this.MarkAsDirty("EcommerceTenant"); } }
        
-
+	 
     public OldEntityPM: TenantManagementPM;
 		
     public IsDirty: boolean;

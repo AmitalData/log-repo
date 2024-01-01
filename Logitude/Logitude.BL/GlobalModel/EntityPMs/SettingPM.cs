@@ -47,6 +47,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public int QBOOAuthDefault { get; set; }
         public string QBOClientID { get; set; }
         public string QBOClientSecret { get; set; }
+        public string ExportUrl { get; set; }
 
     }
 }

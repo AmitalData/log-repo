@@ -413,6 +413,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public string ServiceAgreementURL { get; set; }
         public string EcommerceSupportEmail { get; set; }
         public bool EcommerceTenant { get; set; }
-
+        public string ExportLoginCredintial { get; set; }
+        public string ExportTenant { get; set; }
     }
 }

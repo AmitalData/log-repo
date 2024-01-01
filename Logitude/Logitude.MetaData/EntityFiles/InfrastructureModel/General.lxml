@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;a44b&quot;"
+  Code="&quot;f336&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5884,6 +5884,24 @@
       LocalDefaultText="&quot;המחאות דחויות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.TokenManagement&quot;"
+      DefaultText="&quot;Token Management&quot;"
+      LocalDefaultText="&quot;ניהול טוקנים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Logs&quot;"
+      DefaultText="&quot;Logs&quot;"
+      LocalDefaultText="&quot;לוגים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ShaamTokenManagement&quot;"
+      DefaultText="&quot;SHAAM Token Management&quot;"
+      LocalDefaultText="&quot;שעם ניהול טוקנים&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -8259,6 +8277,15 @@
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.SHLOGANDMOBILE&quot;"
       FeatureDefaultText="&quot;Shared Logistics and Mobile&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;SHAAMTOKEN&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SHAAMTOKEN&quot;"
+      FeatureDefaultText="&quot;SHAAM Token &quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
