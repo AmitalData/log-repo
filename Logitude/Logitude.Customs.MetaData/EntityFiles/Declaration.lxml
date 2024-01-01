@@ -23579,6 +23579,19 @@
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <Tab
+    TabName="&quot;Digital Certificate Of Origin&quot;"
+    TabLocalName="&quot;תעודת מקור דיגיטלית&quot;"
+    ObjectTableName="&quot;Customs.Declaration&quot;"
+    Code="&quot;DCOO&quot;"
+    ControlPath="&quot;Logitude.Customs.Views.Tabs.DigitalCertificateOfOriginTabControl&quot;"
+    TextCode="&quot;Customs.Declaration.TH.DigitalCertificateOfOrigin&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DigitalCertificateOfOriginTabComponent&quot;"
+    HtmlComponentName="&quot;DigitalCertificateOfOriginTabComponent&quot;"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
+  <Tab
     TabName="&quot;Supplier Invoices&quot;"
     TabLocalName="&quot;חשבונות ספק&quot;"
     ObjectTableName="&quot;Customs.Declaration&quot;"
@@ -23933,19 +23946,6 @@
     FeatureCode="&quot;CORRECTIONS&quot;"
     FeatureTextCodeCode="&quot;Customs.Declaration.Features.Correction&quot;"
     FeatureDefaultText="&quot;Correction&quot;"
-    IsSpellChecked="false"
-    HasGeneralFeature="false" />
-  <Tab
-    TabName="&quot;Digital Certificate Of Origin&quot;"
-    TabLocalName="&quot;תעודת מקור דיגיטלית&quot;"
-    ObjectTableName="&quot;Customs.Declaration&quot;"
-    Code="&quot;DCOO&quot;"
-    ControlPath="&quot;Logitude.Customs.Views.Tabs.DigitalCertificateOfOriginTabControl&quot;"
-    TextCode="&quot;Customs.Declaration.TH.DigitalCertificateOfOrigin&quot;"
-    IsPackagable="false"
-    IndexOrder="0"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DigitalCertificateOfOriginTabComponent&quot;"
-    HtmlComponentName="&quot;DigitalCertificateOfOriginTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
   <EventTypes>
