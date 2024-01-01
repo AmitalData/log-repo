@@ -1057,6 +1057,15 @@ export class TenantManagementPM {
     private ecommerceTenant: boolean;
     public get EcommerceTenant() { return this.ecommerceTenant; }
     public set EcommerceTenant(newValue: boolean) { if (this.ecommerceTenant != newValue) { this.ecommerceTenant = newValue; this.MarkAsDirty("EcommerceTenant"); } }
+	 
+    private exportLoginCredintial: string;
+    public get ExportLoginCredintial() { return this.exportLoginCredintial; }
+    public set ExportLoginCredintial(newValue: string) { if (this.exportLoginCredintial != newValue) { this.exportLoginCredintial = newValue; this.MarkAsDirty("ExportLoginCredintial"); } }
+       
+	 
+    private exportTenant: string;
+    public get ExportTenant() { return this.exportTenant; }
+    public set ExportTenant(newValue: string) { if (this.exportTenant != newValue) { this.exportTenant = newValue; this.MarkAsDirty("ExportTenant"); } }
        
 	 
     public OldEntityPM: TenantManagementPM;
