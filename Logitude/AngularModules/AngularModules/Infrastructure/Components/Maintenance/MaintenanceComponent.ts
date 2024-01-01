@@ -49,25 +49,25 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("OTH", TextCodeTranslator.Translate("General.MC.Others.Others")));
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
-
-        if (true || SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "General.Features.ShaamApi"))
-            this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement") || 'SHAAM Token Management'));
-
+        
         if (SessionLocator.Tenant == 0) {
             this.PagesMenu.push(new Menu("MNG", TextCodeTranslator.Translate("General.MC.Management.Management")));
         }
-
+        
         if (FeatureLocator.HasFeaturePermession("General", "LEADSOURCES") ||
-            FeatureLocator.HasFeaturePermession("General", "STAGES") ||
-            FeatureLocator.HasFeaturePermession("General", "ADDITIONALSERVICES") ||
-            FeatureLocator.HasFeaturePermession("General", "CLOSINGREASONS") ||
-            FeatureLocator.HasFeaturePermession("General", "COMPETITORS") ||
-            FeatureLocator.HasFeaturePermession("General", "OPPORTUNITYTYPES") ||
-            FeatureLocator.HasFeaturePermession("General", "INDUSTRIES") ||
-            FeatureLocator.HasFeaturePermession("General", "PRODUCTTYPES") ||
-            FeatureLocator.HasFeaturePermession("General", "EMAILALERTSETTINGS")) {
+        FeatureLocator.HasFeaturePermession("General", "STAGES") ||
+        FeatureLocator.HasFeaturePermession("General", "ADDITIONALSERVICES") ||
+        FeatureLocator.HasFeaturePermession("General", "CLOSINGREASONS") ||
+        FeatureLocator.HasFeaturePermession("General", "COMPETITORS") ||
+        FeatureLocator.HasFeaturePermession("General", "OPPORTUNITYTYPES") ||
+        FeatureLocator.HasFeaturePermession("General", "INDUSTRIES") ||
+        FeatureLocator.HasFeaturePermession("General", "PRODUCTTYPES") ||
+        FeatureLocator.HasFeaturePermession("General", "EMAILALERTSETTINGS")) {
             this.PagesMenu.push(new Menu("CRM", TextCodeTranslator.Translate("General.MC.CRM.CRM")));
         }
+        
+        if (FeatureLocator.HasFeaturePermession("General", "SHAAMTOKEN"))
+            this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
 
         if (FeatureLocator.HasFeaturePermession("General", "TICKET")) {
             this.PagesMenu.push(new Menu("TKT", "Tickets"));
@@ -774,24 +774,24 @@ export class MaintenanceComponent {
     }
 
     private BuildShaamTokenManagementMenu() {
-        if (true || SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "General.Features.ShaamApi")) {
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "SHA";
-            item.Icon = "List"
-            item.Code = "SHAAM_LOGS";
-            item.ObjectTableName = "ConfirmationNumberTokenLog",
-            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
-            item.TranslatedName = 'Logs', // TextCodeTranslator.Translate('General.MC.Logs');
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "SHA";
-            item.Icon = "Settings"
-            item.Code = "SHAAM_TOKEN";
-            item.ObjectTableName = "Customs.ConfirmationNumberTokenLog";
-            item.TranslatedName = 'Token Managment', TextCodeTranslator.Translate('General.MC.TokenManagement');
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        }
+        if (!FeatureLocator.HasFeaturePermession("General", "SHAAMTOKEN")) return;
+
+        var item = new MenusTablePM();
+        item.CategoryTypeCode = "SHA";
+        item.Icon = "List"
+        item.Code = "SHAAM_LOGS";
+        item.ObjectTableName = "ConfirmationNumberTokenLog",
+        item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
+        item.TranslatedName = 'Logs', // TextCodeTranslator.Translate('General.MC.Logs');
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+    
+        var item = new MenusTablePM();
+        item.CategoryTypeCode = "SHA";
+        item.Icon = "Settings"
+        item.Code = "SHAAM_TOKEN";
+        item.ObjectTableName = "Customs.ConfirmationNumberTokenLog";
+        item.TranslatedName = 'Token Managment', TextCodeTranslator.Translate('General.MC.TokenManagement');
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
     }
 
     // Commands
