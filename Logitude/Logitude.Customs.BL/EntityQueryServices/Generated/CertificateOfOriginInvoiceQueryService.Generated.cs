@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class CertificateOfOriginInvoiceQueryService: EntityQueryService<CertificateOfOriginInvoice,CertificateOfOriginInvoiceKeys,CertificateOfOriginInvoicePM,object,CertificateOfOriginInvoiceKeys>
+   public partial class CertificateOfOriginInvoiceQueryService: EntityQueryService<CertificateOfOriginInvoice,CertificateOfOriginInvoiceKeys,CertificateOfOriginInvoicePM,CertificateOfOriginPM,CertificateOfOriginKeys>
    {
    
         CertificateOfOriginInvoiceRepository repository;
