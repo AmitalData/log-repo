@@ -19,6 +19,7 @@ import { ExporterInvoiceComponent } from './Components/SupplierInvoices/Exporter
 import { ExporterInvoiceItemComponent } from './Components/SupplierInvoices/SupplierInvoiceItem/ExporterInvoiceItemComponent';
 import { MultiUpdateComponent } from './Components/SupplierInvoices/MultiUpdateComponent';
 import { PartnersItemsDescreptionSelectionComponent } from './Components/SupplierInvoices/PartnersItemsDescreptionSelectionComponent';
+import { DigitalCertificateOfOriginTabComponent } from './Components/SupplierInvoices/DigitalCertificateOfOriginTabComponent';
 
 
 
@@ -28,6 +29,7 @@ export const Components =
     [
 
         EditSupplierInvoiceItem,
+        DigitalCertificateOfOriginTabComponent,
         DeclarationSupplierInvoiceTabComponent,
         SupplierInvoiceItemCertificatesComponent,
         VendorExtendedSearchComponent,
@@ -53,6 +55,7 @@ export class ModuleDeclarations {
         var myResult: any = null;
 
         switch (name) {
+            case "DigitalCertificateOfOriginTabComponent": { myResult = DigitalCertificateOfOriginTabComponent; break; }
             case "DeclarationSupplierInvoiceTabComponent": { myResult = DeclarationSupplierInvoiceTabComponent; break; }
             case "EditSupplierInvoiceItem": { myResult = EditSupplierInvoiceItem; break; }
             case "SupplierInvoiceItemCertificatesComponent": { myResult = SupplierInvoiceItemCertificatesComponent; break; }

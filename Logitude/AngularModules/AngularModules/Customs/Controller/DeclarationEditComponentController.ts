@@ -63,8 +63,10 @@ export class DeclarationEditComponentController implements IEditComponentControl
             if (indexOfTab > -1) {
                 allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.ExporterInvoices";
             }
-
-
+            var indexOfTab = allTabs.findIndex(t => t.Code == "DCOO");
+            if (indexOfTab > -1) {
+                allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.DigitalCertificateOfOrigin";
+            }
         }
         else {
             var indexOfTab = allTabs.findIndex(t => t.Code == "DEIN");
