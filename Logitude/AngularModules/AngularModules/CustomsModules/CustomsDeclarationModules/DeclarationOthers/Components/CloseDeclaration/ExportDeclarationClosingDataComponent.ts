@@ -1035,9 +1035,9 @@ export class ExportDeclarationClosingDataComponent extends BaseComponent {
                             }
                         }                        
                         if (!AppTool.IsNullOrEmpty(FlightDate)) {
-                            this.FlightDate = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 4, 4, 4);
+                            this.FlightDate = new Date(Date.UTC(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8))));
                             if (this.IsNew) {
-                                this.LoadingDateTime = new Date(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8)), 4, 4, 4);
+                                this.LoadingDateTime = new Date(Date.UTC(Number(FlightDate.substring(0, 4)), Number(FlightDate.substring(4, 6)) - 1, Number(FlightDate.substring(6, 8))));
                             }
                         }
                         SessionLocator.SelectedSession.CurrentListComponent.DoRefresh();
