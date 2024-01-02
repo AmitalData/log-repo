@@ -13,7 +13,9 @@ namespace WebFreight.Web.Helpers.ExportServer
 
         public static string GetLinkToLogin(int tenant, string email)
         {
-            int exportTenant = tenantManagementQuery.GetTenantManagementPM(tenant).ExportTenant;
+            int exportTenant = tenantManagementQuery.GetTenantManagementPM(tenant).ExportTenant.Value;
+            if(exportTenant == null) 
+                throw new Exception("not config in table tenant managment field  export tenant for tenant " + tenant);
 
             string token = GetToken(exportTenant, email);
             string link = $"{exportUrl}/AmitalSSOAngular.html?token={token}&tenant={exportTenant}&AmitalSSOAngular=1";
