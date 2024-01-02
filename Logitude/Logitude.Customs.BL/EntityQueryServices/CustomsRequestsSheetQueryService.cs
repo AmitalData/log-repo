@@ -198,7 +198,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "2791",// אחסנה
 "8235", // תיקון הצהרה ברקע
 
-"DCAOCR"//פתיחת חשבון יצואן - OCR
+"DCAOCR",//פתיחת חשבון יצואן - OCR
+"2280",//תעודת מקור
+"2281",//משוב תעודת מקור
+
 
             };
 
@@ -368,7 +371,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8250",// סטטוס הצהרה
 "DCAOCR",//פתיחת חשבון יצואן - OCR
 "8235", // תיקון הצהרה ברקע
-
+"2280",//תעודת מקור
+"2281",//משוב תעודת מקור
             };
 
             //var settingPm = CustomsSettingQueryService.GetSettingByTenant(requestInProgressParams.Tenant);
@@ -531,6 +535,8 @@ namespace Logitude.Customs.BL.EntityQueryServices
 "8235", // תיקון הצהרה ברקע
 "UCBCTML", // שידור הגשה בלדר
 "UCB2715", // שידור מסמכים שגויים ראשי - מפצל
+"2280",//תעודת מקור
+"2281",//משוב תעודת מקור
 };
 
 

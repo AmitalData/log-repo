@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginTypeCodeEnumUpdateClass
    {  		
-		public const string HashString = "238acb1390159613a0799a12f99ffa7c";
+		public const string HashString = "69b1ad7d55b529a1b29a001c4e106759";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             

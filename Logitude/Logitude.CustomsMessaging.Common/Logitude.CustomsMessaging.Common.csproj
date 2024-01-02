@@ -64,6 +64,7 @@
     <Compile Include="RequestParams\CargoSealsRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CargoSplitRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CD_NG_8314_Web01_CustomsItemDetailsRequestParams.Shared.cs" />
+    <Compile Include="RequestParams\CertificateOfOriginRequest.Shared.cs" />
     <Compile Include="RequestParams\CLAIM_2340_ClaimRequestRequestParams.Shared.cs" />
     <Compile Include="RequestParams\ContinuousRequestOnClaimFileRequestParams.Shared.cs" />
     <Compile Include="RequestParams\CourierBOLQueryRequestParams.Shared.cs" />
