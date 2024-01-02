@@ -59,8 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.CertificateOfOriginItem", "READ", authToken.Tenant);
-	                
+                
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CertificateOfOriginItemQueryService certificateOfOriginItemQuery = new CertificateOfOriginItemQueryService(MyContext);
 				certificateOfOriginItemQuery.InitializeSettings();
@@ -92,9 +91,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Customs.CertificateOfOriginItem", "NEW", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("CertificateOfOriginItem", entityPM.Tenant, authToken.Tenant);
-	                    
+                    
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CertificateOfOriginItemUpdateService service = new CertificateOfOriginItemUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -140,9 +137,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Customs.CertificateOfOriginItem", "UPDATE", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("CertificateOfOriginItem", entityPM.Tenant, authToken.Tenant);
-	
+
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CertificateOfOriginItemUpdateService service = new CertificateOfOriginItemUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
