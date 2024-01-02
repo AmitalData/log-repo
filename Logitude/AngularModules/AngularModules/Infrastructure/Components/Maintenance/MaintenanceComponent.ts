@@ -898,7 +898,7 @@ export class MaintenanceComponent {
     }
      
     private BuildShaamTokenManagementMenu() {
-        if (SessionInfo.LoggedUserPM.IsCustomerCare && FeatureLocator.HasFeaturePermession("General", "SHAAMTOKEN")) {
+        if (FeatureLocator.HasFeaturePermession("General", "SHAAMTOKEN")) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "SHA";
             item.Icon = "List"

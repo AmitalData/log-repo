@@ -1,7 +1,10 @@
 import { Component, ElementRef, HostListener, ViewChild } from "@angular/core";
 import { DomSanitizer, SafeResourceUrl } from "@angular/platform-browser";
 import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
+import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { TaxesWebService } from "Customs/Services/WebServices/TaxesWebService";
+import { EntityResourceService } from "Infrastructure/Services/EntityResourceService";
+import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 
 @Component({
     selector: 'app-host-screen',
@@ -15,7 +18,9 @@ export class HostScreenComponent {
     logitudeCommandId: string = '';
     windowInstance: LogitudeWindow = null;
 
-    constructor(private domSanitizer: DomSanitizer) { }
+    constructor(private domSanitizer: DomSanitizer) { 
+        new EntityResourceService().getEntityResourceByTableName("CommunicationLog", 0).subscribe((resp: any) => {})
+    }
 
     SetWindowArgs(args: { logitudeCommandId: string, windowInstance: LogitudeWindow }) {
         this.logitudeCommandId = args.logitudeCommandId;
@@ -36,8 +41,14 @@ export class HostScreenComponent {
     }
 
     async initUrlLoignToExport() {
-        const link: string = await new TaxesWebService().getTokens(); //'http://iigtest/customssql/?token=yLBzbt3vU4Mbdln8votnlJXCWffS1lqa/IU=&tenant=6&AmitalSSOAngular=1&xxxx=133469323926013458'
-        this.urlLoignToExport = this.domSanitizer.bypassSecurityTrustResourceUrl(link);
+        try {
+            const link: string = await new TaxesWebService().getTokens();
+            this.urlLoignToExport = this.domSanitizer.bypassSecurityTrustResourceUrl(link);
+        } catch (error) {
+            console.log('******* error throw when try get login link to export', error);
+            await this.showErrorMessage();
+            this.closeWindow();
+        }
     }
 
     sendLogitudeCommand(currentTarget: Window) {
@@ -48,5 +59,13 @@ export class HostScreenComponent {
 
     closeWindow() {
         this.windowInstance.Close('');
+    }
+
+    showErrorMessage(): Promise<void> {
+        const msgWin: MessageWindow = new MessageWindow();
+        msgWin.ShowErrorIcon = true;
+        msgWin.Show(TextCodeTranslator.Translate('CommunicationLog.O.Error'));
+
+        return new Promise<void>(res => msgWin.WindowClosed.subscribe(() => res()));
     }
 }
