@@ -3367,8 +3367,36 @@ namespace Logitude.Customs.Def.ClosedTable
                 SendAsDual = false,
                 ResponseInterfaceCode = null,
             });
-            //C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
-            var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
+			all.Add(new InterfaceManagementDetails()
+			{
+				Code = "2280",
+				InOut = InOutEnum.O.ToString(),
+				Description = "מסר תעודת מקור",
+				DefaultSendOptionsCode = InterfaceSendOptionsDetails.InterfaceSendOptionEnum.WI.ToString(),
+				DefaultPriority = CONST_DefaultPriority,
+				DcaPrefixName = "",
+				AllowRestore = true,
+				Active = true,
+				SendAsDual = false,
+				ResponseInterfaceCode = "2281",
+			});
+
+			all.Add(new InterfaceManagementDetails()
+			{
+				Code = "2281",
+				InOut = InOutEnum.I.ToString(),
+				Description = "מסר תשובה תעודת מקור",
+				DefaultSendOptionsCode = null,
+				DefaultPriority = CONST_DefaultPriority,
+				DcaPrefixName = "SendPC_NG_2281_MSG02_CertificateOfOriginRequestDecision_Out.",
+				DcaPrefixName2 = "SendPC_NG_2281_MSG02_CertificateOfOriginRequestDecision_EX_Out.",
+				AllowRestore = true,
+				Active = true,
+				SendAsDual = false,
+				ResponseInterfaceCode = null,
+			});
+			//C:\LogitudeWorld\Amital\Logitude.Customs.BL\EntityPMs\InterfaceManagementPM.cs
+			var pm = new Logitude.Customs.Def.EntityPMs.InterfaceManagementPM();
             var myRequestCode = pm.ResponseInterfaceCode;
             if (LogitudeSettings.IsCostomsDeploy)
             {
