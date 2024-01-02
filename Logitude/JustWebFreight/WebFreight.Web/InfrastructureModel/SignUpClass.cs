@@ -1101,7 +1101,7 @@ namespace WebFreight.Web.InfrastructureModel
                 EnglishName = "Debit+Credit+VAT Extract",
                 LocalName = "חובה+זכות+חילוץ מע\"מ",
                 SearchFields = "4חובה+זכות+חילוץ מע\"מDebit+Credit+VAT Extract",
-                Inactive = false,
+                Inactive = true,
             };
             repository.Add(type4);
 
