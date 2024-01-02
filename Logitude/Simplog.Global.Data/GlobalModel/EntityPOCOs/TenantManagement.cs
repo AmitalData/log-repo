@@ -236,7 +236,7 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string LogoURL { get; set; }
         public string ServiceAgreementURL { get; set; }
         public string ExportLoginCredintial { get; set; }
-        public int ExportTenant { get; set; }
+        public int? ExportTenant { get; set; }
 
     }
 }
