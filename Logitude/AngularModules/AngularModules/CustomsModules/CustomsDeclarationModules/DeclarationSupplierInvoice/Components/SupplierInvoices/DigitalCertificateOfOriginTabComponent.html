@@ -47,7 +47,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td style="height: 21px;padding: 0px;padding-bottom: 0px;width: 120px;">
+                        <td style="height: 21px;padding: 0px;padding-bottom: 0px;width: 100px;">
                             <div>
                                 <button [disabled]="false" class="Button"  (click)="Add()" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
                                     {{'Customs.Declaration.TH.NewCertificateOfOrigin'| TextCodeTranslationPipe}}           
@@ -198,6 +198,11 @@
                                                     <IconButton [Name]="'Delete'" [IsSmall]="true"
                                                         (click)="DeleteButtonClicked(item)"
                                                         [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                                </div>
+                                                <div
+                                                    style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
+                                                    <img class="PDFIcon" src="./Images/SimplogIcons/File-pdf-48.png"/>
+
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
