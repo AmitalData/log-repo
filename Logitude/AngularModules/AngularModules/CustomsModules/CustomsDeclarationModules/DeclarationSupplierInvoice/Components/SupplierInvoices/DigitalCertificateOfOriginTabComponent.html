@@ -18,6 +18,17 @@
     #DigitalCertificateOfOriginHeader {
         height: 0px !important;
     }
+
+  
+
+    #buttonNewCertificateOfOrigin{
+        height: 21px;
+        width: 95px !important;
+        height: 21px!important;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+    }
 </style>
 <table *ngIf="EntityPM != null &&  EntityPM.Direction=='E'">
     <tr>
@@ -49,7 +60,7 @@
                     <tr>
                         <td style="height: 21px;padding: 0px;padding-bottom: 0px;width: 100px;">
                             <div>
-                                <button [disabled]="false" class="Button"  (click)="Add()" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
+                                <button [disabled]="false" class="Button" id="buttonNewCertificateOfOrigin" (click)="Add()">         
                                     {{'Customs.Declaration.TH.NewCertificateOfOrigin'| TextCodeTranslationPipe}}           
                                 </button>
                             </div>
@@ -62,7 +73,7 @@
                                     (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
                                     <log-column
                                         [header]="'Customs.SupplierInvoice.F.SequenceNumeric' | TextCodeTranslationPipe"
-                                        [binding]="'SequenceNumeric'" [width]="'30'" [Alignment]="'left'">
+                                        [binding]="'SequenceNumeric'" [width]="'35'" [Alignment]="'left'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
@@ -74,7 +85,7 @@
                                     </log-column>
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.Counter' | TextCodeTranslationPipe"
-                                        [binding]="'Counter'" [width]="'80'" [Alignment]="'right'">
+                                        [binding]="'Counter'" [width]="'90'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
@@ -86,7 +97,7 @@
                                     </log-column>
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.CooTypeCode' | TextCodeTranslationPipe"
-                                        [binding]="'CooTypeCode'" [width]="'80'" [Alignment]="'right'">
+                                        [binding]="'CooTypeCode'" [width]="'140'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
@@ -98,7 +109,7 @@
                                     </log-column>
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.RequestReasonCode' | TextCodeTranslationPipe"
-                                        [binding]="'RequestReasonCode'" [width]="'80'" [Alignment]="'right'">
+                                        [binding]="'RequestReasonCode'" [width]="'140'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
@@ -110,7 +121,7 @@
                                     </log-column>
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.OpenByUser' | TextCodeTranslationPipe"
-                                        [binding]="'OpenByUser'" [width]="'80'" [Alignment]="'right'">
+                                        [binding]="'OpenByUser'" [width]="'100'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
@@ -122,7 +133,7 @@
                                     </log-column>
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.CooNumber' | TextCodeTranslationPipe"
-                                        [binding]="'CooNumber'" [width]="'80'" [Alignment]="'right'">
+                                        [binding]="'CooNumber'" [width]="'135'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
@@ -133,7 +144,7 @@
                                     </log-column>
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.CooStatusCode' | TextCodeTranslationPipe"
-                                        [binding]="'CooStatusCode'" [width]="'80'" [Alignment]="'right'">
+                                        [binding]="'CooStatusCode'" [width]="'140'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
@@ -143,7 +154,7 @@
                                         </ng-template>
                                     </log-column>
                                     
-                                    <log-column [width]="'33'" [Editable]="true" [Alignment]="'right'"
+                                    <log-column [width]="'35'" [Editable]="true" [Alignment]="'right'"
                                         [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
@@ -157,7 +168,7 @@
                                         </ng-template>
                                     </log-column>
 
-                                    <log-column [width]="'100'" [Editable]="true" [Alignment]="'right'"
+                                    <log-column [width]="'120'" [Editable]="true" [Alignment]="'right'"
                                         [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
@@ -172,7 +183,7 @@
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
-                                    <log-column [width]="'100'" [Editable]="true" [Alignment]="'right'"
+                                    <log-column [width]="'120'" [Editable]="true" [Alignment]="'right'"
                                         [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
@@ -187,7 +198,7 @@
                                         </ng-template>
                                     </log-column>
                                  
-                                    <log-column [width]="'33'" [Editable]="true" [Alignment]="'right'"
+                                    <log-column [width]="'110'" [Editable]="true" [Alignment]="'right'"
                                         [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
