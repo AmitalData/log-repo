@@ -182,10 +182,10 @@
       <HintPath>..\Unifreight.Data\obj\Debug\Unifreight.Data.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.Common, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.64\lib\Net40\UnifreightIIG.Common.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.66\lib\Net40\UnifreightIIG.Common.dll</HintPath>
     </Reference>
     <Reference Include="UnifreightIIG.DCA, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\UnifreightIIG.3.1803.64\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
+      <HintPath>..\packages\UnifreightIIG.3.1803.66\lib\Net40\UnifreightIIG.DCA.dll</HintPath>
     </Reference>
     <Reference Include="WindowsAzureEventSource, Version=2.7.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.WindowsAzure.SDK.2.9.0\lib\WindowsAzureEventSource.dll</HintPath>
@@ -250,6 +250,7 @@
     <Compile Include="Helpers\ClosedTable\Update1308CustomsShip.cs" />
     <Compile Include="Helpers\ClosedTable\Update1416ModificationAndDiscountType.cs" />
     <Compile Include="MessagingServices\DCAInCB_MSG_8314_8888_CustomItemDetailsHeaderMessagingService.cs" />
+    <Compile Include="MessagingServices\DCAInGetPC_MSG2280_2281_CertificateOfOriginRequestMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBCreateExportSupplierInvoicesFromFile_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCAInUCBUpsertSupplierInvioceByOcr_MsgMessagingService.cs" />
     <Compile Include="MessagingServices\DCI_CourierMastersConnectedMessagingService.cs" />
@@ -414,6 +415,7 @@
     <Compile Include="RequestServices\DF_MSG8235_ExportDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\DF_MSG8235_TransshipmentDeclarationAmendmentRequestService.cs" />
     <Compile Include="RequestServices\Get_CB_MSG_8314_8888_CustomItemDetailsHeaderRequestService.cs" />
+    <Compile Include="RequestServices\PC_NG_2280_MSG01_CertificateOfOriginRequestRequestService.cs" />
     <Compile Include="RequestServices\SaveDF_MSG2751_2757_TransshipmentDeclarationRequestRequestService.cs" />
     <Compile Include="RequestServices\DF_NG_2751_MSG10000_ExportDeclarationRequestService.cs" />
     <Compile Include="RequestServices\DF_MSG2892_ImportDeclarationAmendmentRequestService.cs" />
@@ -467,6 +469,7 @@
     <Compile Include="ResponseServices\DCAInUCUDO_UpdateOpenDeclarationsResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_8237_TransshipmentDeclerationAmendmentReplyResponseService.cs" />
     <Compile Include="ResponseServices\Get_CB_MSG_8314_8888_CustomItemDetailsHeaderResponseService.cs" />
+    <Compile Include="ResponseServices\PC_NG_2280_MSG01_CertificateOfOriginRequestResponseService.cs" />
     <Compile Include="ResponseServices\SaveDF_MSG2751_2757_TransshipmentDeclarationRequestResponseService .cs" />
     <Compile Include="ResponseServices\SaveDF_MSG2755_2757_SubmitTransshipmenDeclarationRequesResponseService.cs" />
     <Compile Include="ResponseServices\DF_NG_2757_MSG10004_RetrieveExportDeclarationResponseService.cs" />
