@@ -182,6 +182,13 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         this.OnRowSelected(this.SelectedRow);
     }
 
+    SendMsgCooStatusCode() {
+     
+    }
+    CopyOfCertificate() {
+     
+    }
+
     getCertificateOfOrigins() {
       
 

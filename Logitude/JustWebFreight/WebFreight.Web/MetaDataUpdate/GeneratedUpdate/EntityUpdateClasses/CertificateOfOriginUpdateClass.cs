@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginUpdateClass
    {  		
-		public const string HashString = "54018b89e5cf7d9ac4bc5b4988db2ce3";
+		public const string HashString = "b17872d05f693fe835139e22b14e309d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "תעודות מקור",
 			      				    DefaultText =  "Certificate Of Origin",
-			      				    Code =  "1933",
+			      				    Code =  "b7c2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -4693,6 +4693,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOCounter = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.Counter", DefaultText = "Counter",LocalDefaultText = @"מס' בקשה", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOCooStatusCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.CooStatusCode", DefaultText = "Coo Status Code",LocalDefaultText = @"סטטוס תעודה", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOCopyOfCertificate = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.CopyOfCertificate", DefaultText = "Copy of certificate",LocalDefaultText = @"העתקת תעודה", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
