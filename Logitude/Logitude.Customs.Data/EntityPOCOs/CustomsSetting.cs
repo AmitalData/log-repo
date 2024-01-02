@@ -89,6 +89,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool StandAlone { get; set; }
         [Column("OcrToken")]
 	    public string OcrToken { get; set; }
+        [Column("MaxItemsSendInteractive")]
+	    public int? MaxItemsSendInteractive { get; set; }
+        [Column("MaxSISendInteractive")]
+	    public int? MaxSISendInteractive { get; set; }
     }
 }
 	 

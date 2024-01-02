@@ -53,7 +53,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HSMCompanyId, 
 	         HSMToken, 
 	         StandAlone, 
-	         OcrToken,
+	         OcrToken, 
+	         MaxItemsSendInteractive, 
+	         MaxSISendInteractive,
 	      }
 
 
@@ -94,7 +96,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         HSMCompanyId, 
 	         HSMToken, 
 	         StandAlone, 
-	         OcrToken,
+	         OcrToken, 
+	         MaxItemsSendInteractive, 
+	         MaxSISendInteractive,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -256,6 +260,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrToken))
             {
 				entityPOCO.OcrToken = entityPM.OcrToken;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxItemsSendInteractive))
+            {
+				entityPOCO.MaxItemsSendInteractive = entityPM.MaxItemsSendInteractive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxSISendInteractive))
+            {
+				entityPOCO.MaxSISendInteractive = entityPM.MaxSISendInteractive;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -424,6 +438,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.OcrToken = entityPOCO.OcrToken;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MaxItemsSendInteractive))
+            {
+					entityPM.MaxItemsSendInteractive = entityPOCO.MaxItemsSendInteractive;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MaxSISendInteractive))
+            {
+					entityPM.MaxSISendInteractive = entityPOCO.MaxSISendInteractive;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -583,6 +607,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OcrToken))
             {
                 oldEntityPM.OcrToken = entityPM.OcrToken;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxItemsSendInteractive))
+            {
+                oldEntityPM.MaxItemsSendInteractive = entityPM.MaxItemsSendInteractive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxSISendInteractive))
+            {
+                oldEntityPM.MaxSISendInteractive = entityPM.MaxSISendInteractive;
             }
 			
 		}

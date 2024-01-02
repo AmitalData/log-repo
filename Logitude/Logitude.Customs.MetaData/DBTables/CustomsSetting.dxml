@@ -217,6 +217,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MaxItemsSendInteractive"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="MaxSISendInteractive"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="DefaultNotificationAssignee"
     ReferencedTable="Users"

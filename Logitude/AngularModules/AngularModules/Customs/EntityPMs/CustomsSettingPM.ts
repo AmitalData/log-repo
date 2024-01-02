@@ -199,6 +199,16 @@ export class CustomsSettingPM {
     public set OcrToken(newValue: string) { if (this.ocrToken != newValue) { this.ocrToken = newValue; this.MarkAsDirty("OcrToken"); } }
        
 	 
+    private maxItemsSendInteractive: number;
+    public get MaxItemsSendInteractive() { return this.maxItemsSendInteractive; }
+    public set MaxItemsSendInteractive(newValue: number) { if (this.maxItemsSendInteractive != newValue) { this.maxItemsSendInteractive = newValue; this.MarkAsDirty("MaxItemsSendInteractive"); } }
+       
+	 
+    private maxSISendInteractive: number;
+    public get MaxSISendInteractive() { return this.maxSISendInteractive; }
+    public set MaxSISendInteractive(newValue: number) { if (this.maxSISendInteractive != newValue) { this.maxSISendInteractive = newValue; this.MarkAsDirty("MaxSISendInteractive"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		

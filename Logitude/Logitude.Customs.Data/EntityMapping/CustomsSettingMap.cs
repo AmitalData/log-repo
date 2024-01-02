@@ -86,6 +86,10 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.StandAlone).HasColumnName("StandAlone");
 
             this.Property(t => t.OcrToken).HasColumnName("OcrToken").HasMaxLength(1024).IsUnicode(false);
+
+            this.Property(t => t.MaxItemsSendInteractive).HasColumnName("MaxItemsSendInteractive");
+
+            this.Property(t => t.MaxSISendInteractive).HasColumnName("MaxSISendInteractive");
         }
     }
 }
