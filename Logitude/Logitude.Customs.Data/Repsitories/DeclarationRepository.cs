@@ -975,18 +975,32 @@ namespace Logitude.Customs.Data.Repsitories
                   )
                   .FirstOrDefault();
         }
-        public Declaration GetDeclarationByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant)
+        public Declaration GetDeclarationByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant,string ExternalEntityName)
         {
             if (String.IsNullOrWhiteSpace(ExternalEntityReference)) return null;
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
-            return
-                  (
-                  from rec in context.Declarations
-                  where (rec.CustomFileNo == ExternalEntityReference && rec.Tenant == tenant && rec.Direction == "I") || (rec.ExportFile == ExternalEntityReference && rec.Tenant == tenant && rec.Direction == "E")
-                  select rec
-                  )
-                  .FirstOrDefault();
+            if(ExternalEntityName == "CFIFILEM")
+            {
+                return
+                 (
+                 from rec in context.Declarations
+                 where rec.CustomFileNo == ExternalEntityReference && rec.Tenant == tenant && rec.Direction == "I"
+                 select rec
+                 )
+                 .FirstOrDefault();
+            }
+            else
+            {
+                return
+                                (
+                                from rec in context.Declarations
+                                where rec.ExportFile == ExternalEntityReference && rec.Tenant == tenant && rec.Direction == "E"
+                                select rec
+                                )
+                                .FirstOrDefault();
+            }
+           
            
         }
         public Declaration GetLastDeclarationByDeclarationId(string id, int tenant, bool isExport = false, bool? IsDCA = false)

@@ -410,7 +410,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 }
                 else
                 {
-                    declarationPM = decQS.GetSingleByCustomFileNoOrExportFile(this._DocumentsFilingPM.ExternalEntityReference, _DocumentsFilingPM.Tenant);
+                    declarationPM = decQS.GetSingleByCustomFileNoOrExportFile(this._DocumentsFilingPM.ExternalEntityReference, _DocumentsFilingPM.Tenant, this._DocumentsFilingPM.ExternalEntityName);
 
                 }
 
