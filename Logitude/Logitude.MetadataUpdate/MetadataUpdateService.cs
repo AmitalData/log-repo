@@ -36,7 +36,10 @@ namespace Logitude.MetadataUpdate
             {
                 Console.WriteLine("Error: " + e.Message);
                 Console.WriteLine(e.InnerException?.Message);
+                Console.WriteLine("Inner Exception Stack Trace:");
+                Console.WriteLine(e.InnerException.StackTrace);
                 Environment.Exit(1);
+
             }
         }
 
