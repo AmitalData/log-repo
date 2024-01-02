@@ -29,7 +29,7 @@
   IsAutoComplete="false"
   EnableEditFromLOV="false"
   SortingByObjectField="&quot;Code&quot;"
-  SortingByDirection="&quot;Ascending&quot;"
+  SortingByDirection="&quot;Descending&quot;"
   InActive="false"
   IsSaveButtonVisible="false"
   IsComposition="false"
