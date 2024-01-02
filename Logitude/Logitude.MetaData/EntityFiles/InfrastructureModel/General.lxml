@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;1731&quot;"
+  Code="&quot;4a02&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -7145,7 +7145,7 @@
       IsBusinessUnitEnabled="false" />
     <Feature
       Code="&quot;SHAAMTOKEN&quot;"
-      FeatureTypeCode="&quot;שעם טוקן&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.SHAAMTOKEN&quot;"
       FeatureDefaultText="&quot;SHAAM Token&quot;"
       IsPackagable="true"
