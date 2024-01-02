@@ -86,7 +86,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    public class DeclarationUpdateClass
    {  		
 
-		public const string HashString = "175988982297cbcc9324fca4158d6c26";
+		public const string HashString = "403830d169a1402f91dded8535d85935";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18627,7 +18627,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature DeclarationDocsInFeature_TH23 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DOCSIN", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.DocsIn", NameTextCodeDefaultText = "DocsIn", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
-			   TextCode DeclarationDigitalCertificateOfOriginTextCode_TH24 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DigitalCertificateOfOrigin", DefaultText = "Digital Certificate Of Origin",LocalDefaultText = "ת. מקור דיגיטלית", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode DeclarationDigitalCertificateOfOriginTextCode_TH24 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.DigitalCertificateOfOrigin", DefaultText = "Digital Certificate Of Origin",LocalDefaultText = "ת.מקור דיגיטלית", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature DeclarationDigitalCertificateOfOriginFeature_TH24 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Declaration.Tab.DigitalCertificateOfOrigin", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "DeclarationFeatures.DCOO", NameTextCodeDefaultText = "Digital Certificate Of Origin", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,DeclarationObjectTable);
  
                  
