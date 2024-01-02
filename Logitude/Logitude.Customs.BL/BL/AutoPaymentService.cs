@@ -563,7 +563,9 @@ namespace Logitude.Customs.BL.BL
 
 			if (!IsFromClient)
 			{
-				if (PaymentMethodsList?.Count() > 0 && PaymentMethodsList[0]?.BanksList?.Count() > 1 && PaymentMethodsList[0]?.BanksList?.FindAll(x => !x.InActive && x.PayerTypeCode == PaymentMethodsList[0].PayerActivityTypeCode).Count() > 1 && !(ListMethodType.Contains( PaymentMethodsList[0].MethodTypeCode)))
+				if (PaymentMethodsList?.Count() > 0 && PaymentMethodsList[0]?.BanksList?.Count() > 1 && PaymentMethodsList[0]?.BanksList?.FindAll(x => !x.InActive && x.PayerTypeCode == PaymentMethodsList[0].PayerActivityTypeCode).Count() > 1 &&
+					 PaymentMethodsList[0]?.BanksList?.Any(x => !x.InActive && (x.Id == PaymentMethodsList[0].InternalBankId)) == false &&
+					!(ListMethodType.Contains( PaymentMethodsList[0].MethodTypeCode)))
 				{
 					throw new Exception("ישנם ריבוי בנקים");
 
