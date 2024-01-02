@@ -1,4 +1,5 @@
-﻿using Logitude.BL.GlobalModel.EntityQueries;
+﻿using Logitude.BL.GlobalModel.EntityPMs;
+using Logitude.BL.GlobalModel.EntityQueries;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
@@ -13,28 +14,28 @@ namespace WebFreight.Web.Helpers.ExportServer
 
         public static string GetLinkToLogin(int tenant, string email)
         {
-            int exportTenant = tenantManagementQuery.GetTenantManagementPM(tenant).ExportTenant.Value;
-            if(exportTenant == null) 
-                throw new Exception("not config in table tenant managment field  export tenant for tenant " + tenant);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
+            int? exportTenant = tenantManagementPM.ExportTenant;
+            if(exportTenant == null || string.IsNullOrEmpty(tenantManagementPM.ExportLoginCredintial))
+                throw new Exception("not config in table tenant managment field Export Login Credintial or field export tenant for tenant " + tenant);
 
-            string token = GetToken(exportTenant, email);
-            string link = $"{exportUrl}/AmitalSSOAngular.html?token={token}&tenant={exportTenant}&AmitalSSOAngular=1";
+            string token = GetToken(exportTenant.Value, email, tenantManagementPM.ExportLoginCredintial);
+            string link = $"{exportUrl}/AmitalSSOAngular.html?token={token}&tenant={exportTenant.Value}&AmitalSSOAngular=1";
             return link;
         }
 
-        private static string GetToken(int tenant, string email)
+        private static string GetToken(int tenant, string email, string exportLoginCredintial)
         {
             string tokenKey = GetTokenKey(tenant, email);
             if (!tokens.ContainsKey(tokenKey))
-                initToken(tenant, email);
+                initToken(tenant, email, exportLoginCredintial);
 
             return tokens[tokenKey];
         }
 
-        private static void initToken(int tenant, string email)
-        {
-            string primaryKey = tenantManagementQuery.GetTenantManagementPM(tenant).ExportLoginCredintial;
-            APICredentialsParameters aPICredentialsParameters = new APICredentialsParameters() { PrimaryKey = primaryKey, Tenant = tenant };
+        private static void initToken(int tenant, string email, string exportLoginCredintial)
+        {            
+            APICredentialsParameters aPICredentialsParameters = new APICredentialsParameters() { PrimaryKey = exportLoginCredintial, Tenant = tenant };
             BasicHttpBinding binding = new BasicHttpBinding();
             EndpointAddress address = new EndpointAddress(exportUrl + "/WcfApi/LoginWcfService.svc");
             ChannelFactory<ILoginWcfService> factory = new ChannelFactory<ILoginWcfService>(binding, address);
