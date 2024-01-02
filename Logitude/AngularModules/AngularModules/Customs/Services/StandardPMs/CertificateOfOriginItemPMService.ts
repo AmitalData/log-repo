@@ -21,7 +21,6 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {CertificateOfOriginItemPM} from '../../EntityPMs/CertificateOfOriginItemPM';
 
-import {CertificateOfOriginItemValidator} from '../../Validators/CertificateOfOriginItemValidator';
 
 @Injectable()
 
@@ -72,12 +71,6 @@ export class CertificateOfOriginItemPMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();                
 			var errorsArray = validator.Validate("Customs.CertificateOfOriginItem", entityPM);
 
-			var customValidator :CertificateOfOriginItemValidator = new CertificateOfOriginItemValidator();
-			var validationErrorsArr = customValidator.Validate(entityPM);
-			if(validationErrorsArr)
-			{
-				errorsArray = errorsArray.concat(validationErrorsArr);
-			}
 
 			if (errorsArray.length == 0) {
 
@@ -120,12 +113,6 @@ export class CertificateOfOriginItemPMService {
 			var validator: ClassLevelValidator = new ClassLevelValidator();               
 			var errorsArray = validator.Validate("Customs.CertificateOfOriginItem", entityPM);
 
-			var customValidator :CertificateOfOriginItemValidator = new CertificateOfOriginItemValidator();
-			var validationErrorsArr = customValidator.Validate(entityPM);
-			if(validationErrorsArr)
-			{
-				errorsArray = errorsArray.concat(validationErrorsArr);
-			}
 
 			if (errorsArray.length == 0) {
 

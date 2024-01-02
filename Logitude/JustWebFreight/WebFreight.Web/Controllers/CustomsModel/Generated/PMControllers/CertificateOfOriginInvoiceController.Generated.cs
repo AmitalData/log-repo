@@ -59,8 +59,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 			    string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                SecurityUtility.CheckContactFeature("Customs.CertificateOfOriginInvoice", "READ", authToken.Tenant);
-	                
+                
                 ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
                 CertificateOfOriginInvoiceQueryService certificateOfOriginInvoiceQuery = new CertificateOfOriginInvoiceQueryService(MyContext);
 				certificateOfOriginInvoiceQuery.InitializeSettings();
@@ -92,9 +91,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Customs.CertificateOfOriginInvoice", "NEW", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("CertificateOfOriginInvoice", entityPM.Tenant, authToken.Tenant);
-	                    
+                    
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CertificateOfOriginInvoiceUpdateService service = new CertificateOfOriginInvoiceUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -140,9 +137,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                         string token = HttpContext.Current.Request.Headers["Token"];
                         AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
                         SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                        SecurityUtility.CheckContactFeature("Customs.CertificateOfOriginInvoice", "UPDATE", authToken.Tenant);
-	                        SecurityUtility.AuthenticationOnEntityTenant("CertificateOfOriginInvoice", entityPM.Tenant, authToken.Tenant);
-	
+
                         ICustomContext MyContext = CustomContext.GetContext(entityPM.Tenant);
                         CertificateOfOriginInvoiceUpdateService service = new CertificateOfOriginInvoiceUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
 						service.InitializeEntityPM(entityPM);
