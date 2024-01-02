@@ -23908,7 +23908,7 @@
     HasGeneralFeature="false" />
   <Tab
     TabName="&quot;Digital Certificate Of Origin&quot;"
-    TabLocalName="&quot;ת. מקור דיגיטלית&quot;"
+    TabLocalName="&quot;ת.מקור דיגיטלית&quot;"
     ObjectTableName="&quot;Customs.Declaration&quot;"
     Code="&quot;DCOO&quot;"
     ControlPath="&quot;Logitude.Customs.Views.Tabs.DigitalCertificateOfOriginTabControl&quot;"

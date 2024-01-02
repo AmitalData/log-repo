@@ -191,40 +191,45 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
 
     getCertificateOfOrigins() {
       
+        const filters = new ApiQueryFilters();    
+      
+        filters.GetAll = false;
+        filters.GetCount = true;
+        filters.SortBy = "SequenceNumeric";
+        filters.SortDirection = "Ascending";
+        filters.addAdditionalFilter("DeclarationNumber", this.EntityPM.DeclarationNumber, null, null, "Equals", false, false, false, "string");
+   
+        this._entityListService.getByFilters("Customs.CertificateOfOrigin", filters).then((myResult:any) => {
+            console.log("Response: ", myResult);
+            if (myResult == null) {
+                this.CertificateOfOrigins =  [];
+            }
 
-
-        // this.certificateOfOriginPMService.getByFilters(filters).subscribe((myResult:any) => {
-        //     console.log("Response: ", myResult);
-        //     if (myResult == null) {
-        //         this.CertificateOfOrigins =  [];
-        //     }
-
-        //     else {
-        //         var myResponse: ServiceResponse = myResult;
-        //         if (!myResponse.HasError) {
-        //             this.ItemsSource = myResponse.Result;
-        //             this.CertificateOfOrigins =  myResponse.Result;
-                                        
-                        //this.ItemsSource.InsertCollection(this.CertificateOfOrigins, true);
-        //         }
-        //     }
-        // });
+            else {
+                var myResponse: ServiceResponse = myResult;
+                if (!myResponse.HasError && myResponse.Result) {
+                    this.ItemsSource = myResponse.Result;
+                    this.CertificateOfOrigins =  myResponse.Result;        
+                    this.ItemsSource.InsertCollection(this.CertificateOfOrigins, true);
+                }
+            }
+        });
 
 
         //Select last selected row, or first
-        // if (this.SelectedRowB4Refresh) {
+        if (this.SelectedRowB4Refresh) {
 
-        //     if (this.SelectedRowB4Refresh == this.lastDeletedItem) { //deleted item
-        //         this.OnRowSelected(this.CertificateOfOrigins[0]);
-        //     } else {
-        //         var selectedInvoiceKey = this.SelectedRowB4Refresh.;
-        //         var selectedInvoice = this.CertificateOfOrigins.filter(d => d.InvoiceCounterKey == selectedInvoiceKey)[0];
-        //         this.OnRowSelected(selectedInvoice);
-        //     }
+            // if (this.SelectedRowB4Refresh == this.lastDeletedItem) { //deleted item
+            //     this.OnRowSelected(this.CertificateOfOrigins[0]);
+            // } else {
+            //     var selectedInvoiceKey = this.SelectedRowB4Refresh.;
+            //     var selectedInvoice = this.CertificateOfOrigins.filter(d => d.InvoiceCounterKey == selectedInvoiceKey)[0];
+            //     this.OnRowSelected(selectedInvoice);
+            // }
 
-        // }
-        // else
-        //     this.OnRowSelected(this.CertificateOfOrigins[0]);
+        }
+        else
+            this.OnRowSelected(this.CertificateOfOrigins[0]);
     }
 
     public SelectedRow: CertificateOfOriginPM = null;
