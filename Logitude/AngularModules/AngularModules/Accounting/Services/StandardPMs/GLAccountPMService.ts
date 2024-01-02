@@ -86,7 +86,7 @@ export class GLAccountPMService {
 
 				var mappedEntity: GLAccountPM = this.MapJsonToEntityPM(entityPM, false);
 				
-				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+				return this._http.post(this._apiUrl + "/post", JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
 
