@@ -194,6 +194,16 @@ export class CustomsSettingPM {
     public set StandAlone(newValue: boolean) { if (this.standAlone != newValue) { this.standAlone = newValue; this.MarkAsDirty("StandAlone"); } }
        
 	 
+    private maxItemsSendInteractive: number;
+    public get MaxItemsSendInteractive() { return this.maxItemsSendInteractive; }
+    public set MaxItemsSendInteractive(newValue: number) { if (this.maxItemsSendInteractive != newValue) { this.maxItemsSendInteractive = newValue; this.MarkAsDirty("MaxItemsSendInteractive"); } }
+       
+	 
+    private maxSISendInteractive: number;
+    public get MaxSISendInteractive() { return this.maxSISendInteractive; }
+    public set MaxSISendInteractive(newValue: number) { if (this.maxSISendInteractive != newValue) { this.maxSISendInteractive = newValue; this.MarkAsDirty("MaxSISendInteractive"); } }
+       
+	 
 
     public OldEntityPM: CustomsSettingPM;
 		

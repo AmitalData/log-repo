@@ -87,6 +87,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string HSMToken { get; set; }
         [Column("StandAlone")]
 	    public bool StandAlone { get; set; }
+        [Column("MaxItemsSendInteractive")]
+	    public int? MaxItemsSendInteractive { get; set; }
+        [Column("MaxSISendInteractive")]
+	    public int? MaxSISendInteractive { get; set; }
     }
 }
 	 
