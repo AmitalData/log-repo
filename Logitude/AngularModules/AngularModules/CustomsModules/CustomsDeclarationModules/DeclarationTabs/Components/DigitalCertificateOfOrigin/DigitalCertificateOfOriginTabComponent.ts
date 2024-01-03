@@ -191,7 +191,11 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
         // logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/CertificateOfOrigin');
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOrigin/CertificateOfOrigin');
+        // logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOrigin/CertificateOfOrigin');
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent');
+
+        // logWindow.Show('./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent');
+
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
