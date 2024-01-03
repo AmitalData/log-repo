@@ -1,0 +1,129 @@
+<style>
+    .FlipImgHoriz {
+        transform: rotate(180deg);
+    }
+
+    .DeleteIconButton {
+        display: none;
+    }
+
+    .TapagNumberListItem:hover:not(:first-child) .DeleteIconButton {
+        display: block !important;
+    }
+</style>
+
+
+<table>
+    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
+        <td colspan="4">
+            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="4">
+            <div class="FillParent CurvedArea">
+                <table>
+                    <tr>
+                        <td style="width: 100px">
+                            <div class="FillParent AppLeftMenuBackgroundRTL">
+                                <table>
+                                    <tr style="height:5px;">
+                                        <td>
+                                            <div></div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td style="vertical-align: top;">
+                                            <ul>
+                                                <li class="DefaultMenuItem" *ngFor="let item of TabsItemsSource"
+                                                    (click)="SelectedTabCode = item.code"
+                                                    [class.SelectedMenuItem]="item.code === SelectedTabCode"
+                                                    [style.text-align]='right'>
+                                                    <!--<img *ngIf="item != SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '10px;'} : {'left': '10px;'}" />
+                                <img *ngIf="item == SelectedMenu" style="position:absolute; top:0; bottom:0; margin:auto;" [attr.src]="item.IconSelectedSource" [ngStyle]="LayoutDirection == 'rtl' ? {'right': '11px;'} : {'left': '11px;'}" />-->
+                                                    <div
+                                                        style="position:absolute; top:0; bottom:0; margin:auto; height: 22px; line-height: 22px; right: 5px; padding-left: 5px;">
+                                                        {{item.textCode | TextCodeTranslationPipe}}</div>
+                                                    <img *ngIf="SelectedTabCode == item.code"
+                                                        class="LeftCenter FlipImgHoriz"
+                                                        src="./Images/SelectedMenuArrow.png"
+                                                        style="margin-right: -1px;" />
+
+                                                    <!--<img class="RightCenter" *ngIf="SelectedTabCode == item.code" src="./Images/SelectedMenuArrow.png" style="margin-right: -1px" />
+
+                                <div>{{item.textCode | TextCodeTranslationPipe}}</div>-->
+
+
+                                                </li>
+
+                                            </ul>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="FillParent">
+                                <div class="ScrollViewer">
+                                    <div class="ScrollContent">
+                                        <div class="FillParent" style="padding:7px;">
+
+                                            <!-- GENERAL -->
+                                            <div class="MediaStretch" [hidden]="SelectedTabCode != 'GENERAL'">
+                                                <div LocationDirective Code="GENERAL"></div>
+                                            </div>
+                                            
+                                            <!-- REQUESTSHEET -->
+                                            <!-- <div class="MediaStretch" [hidden]="SelectedTabCode != 'REQUESTSHEET'">
+                                                <div LocationDirective Code="REQUESTSHEET"></div>
+                                            </div> -->
+
+                                  
+                                            <!-- ITEMS -->
+                                            <!-- <div class="MediaStretch" [hidden]="SelectedTabCode != 'ITEMS'">
+                                                <div LocationDirective Code="ITEMS"></div>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </td>
+    </tr>
+
+    <tr style="height: 40px;">
+        <td>
+            <div></div>
+        </td>
+
+        <td style="width: 57px;vertical-align: bottom;">
+            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel'
+                |TextCodeTranslationPipe}}</button>
+        </td>
+
+        <td style="width: 10px;vertical-align: bottom;">
+            <div></div>
+        </td>
+
+        <td style="width: 57px;vertical-align: bottom;" *ngIf="!isNewClient">
+            <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Save' |
+                TextCodeTranslationPipe}}</button>
+        </td>
+
+        <td style="width:110px;  vertical-align: bottom;" *ngIf="isNewClient">
+            <custom-send-options #MyCustomSendOptionsComponent
+                [CustomSendOptionsButtonCanForcePersonalSign]="CustomSendOptionsButtonCanForcePersonalSign"
+                (SendButtonClicked)="OnCustomSendOptionsButtonClick($event)"></custom-send-options>
+            <!--   <button class="RedButton" [disabled]="IsDisplayOnly" (click)="OkButtonClicked()">{{'General.B.Save' | TextCodeTranslationPipe}}</button>-->
+        </td>
+    </tr>
+
+</table>

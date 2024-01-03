@@ -27,6 +27,7 @@ import { SInvoiceClassificationTabComponent } from './Components/Classification/
 import { CasualSupplierDetailsComponent } from './Components/Classification/CasualSupplierDetailsComponent';
 import { DeclarationAmendmentComponent } from './Components/DeclarationAmendment/DeclarationAmendmentComponent';
 import { DigitalCertificateOfOriginTabComponent } from './Components/DigitalCertificateOfOrigin/DigitalCertificateOfOriginTabComponent';
+import { CertificateOfOriginComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent';
 import { CertificateOfOrigin } from './Components/DigitalCertificateOfOrigin/CertificateOfOrigin/CertificateOfOrigin';
 import { DeclarationCargoSealTabComponent } from './Components/CargoSeal/DeclarationCargoSealTabComponent';
 import { ExportDeclarationComponent } from './Components/General/ExportDeclarationComponent';
@@ -68,6 +69,7 @@ export const Components =
         CasualSupplierDetailsComponent,
         DeclarationAmendmentComponent,
         DigitalCertificateOfOriginTabComponent,
+        CertificateOfOriginComponent,
         CertificateOfOrigin,
         CertificateOfOrigin,
         DeclarationCargoSealTabComponent,
@@ -118,6 +120,7 @@ export class ModuleDeclarations {
             case "ConsigmentPackagesDangerComponent": { myResult = ConsigmentPackagesDangerComponent; break; }
             case "DeclarationAmendmentComponent": { myResult = DeclarationAmendmentComponent; break; }
             case "DigitalCertificateOfOriginTabComponent": { myResult = DigitalCertificateOfOriginTabComponent; break; }
+            case "CertificateOfOriginComponent": { myResult = CertificateOfOriginComponent; break; }
             case "CertificateOfOrigin": { myResult = CertificateOfOrigin; break; }
             case "DeclarationCargoSealTabComponent": { myResult = DeclarationCargoSealTabComponent; break; }
             case "ExportDeclarationComponent": { myResult = ExportDeclarationComponent; break; }
