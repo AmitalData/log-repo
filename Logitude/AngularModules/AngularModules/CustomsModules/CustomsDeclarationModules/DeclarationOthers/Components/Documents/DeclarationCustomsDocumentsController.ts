@@ -220,7 +220,7 @@ export class DeclarationCustomsDocumentsController implements ICustomsDocumentsC
                                     metaData["39"] = supplierInvoice.InvoiceNumber;
                                     metaData["3"] = supplierInvoice.IssueCountryCode;
                                     var _380ViewModel: CustomsDocumentTicketViewModel = new CustomsDocumentTicketViewModel(invoiceTicket, null, true,
-                                        this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this, null, true);
+                                        this.IsDisplayOnly, this.declarationPM, "Customs.Declaration", this);
                                     _380ViewModel.SetCustomDocumentMetaData(metaData);
                                     this.GeneratedCustomsDocumentTicketViewModel.push(_380ViewModel);
                                     this.originalCustomsDocumentTicketViewModel.push(_380ViewModel);
