@@ -23915,7 +23915,7 @@
     TextCode="&quot;Customs.Declaration.TH.DigitalCertificateOfOrigin&quot;"
     IsPackagable="true"
     IndexOrder="21"
-    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/DigitalCertificateOfOriginTabComponent&quot;"
+    HtmlComponentURL="&quot;./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/DigitalCertificateOfOriginTabComponent&quot;"
     HtmlComponentName="&quot;DigitalCertificateOfOriginTabComponent&quot;"
     IsSpellChecked="false"
     HasGeneralFeature="false" />

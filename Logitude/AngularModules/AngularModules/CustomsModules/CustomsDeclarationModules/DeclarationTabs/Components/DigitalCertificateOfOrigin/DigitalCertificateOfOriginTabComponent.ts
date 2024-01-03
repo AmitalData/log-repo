@@ -190,7 +190,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/CertificateOfOrigin');
+        // logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/CertificateOfOrigin');
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOrigin/CertificateOfOrigin');
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
@@ -318,33 +319,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
 
     private _entityResourceService: EntityResourceService = new EntityResourceService();
 
-    OpenOcrDefult() {
-        this.DataSource;
-        this._entityResourceService.getEntityResourceByTableName("Customs.SupplierInvioceExportDefault", 0).subscribe((response: any) => {
-            var windowTitle = TextCodeTranslator.Translate("Customs.Consignment.O.ComprehensiveUpdate");
-            var logWindow = new LogitudeWindow();
-            var args: any = {
-                EntityPM: this.EntityPM,
-                IsFromSupplierInvoice: true,
-                SupplierInvoiceComprehensiveUpdate: this.CertificateOfOriginComprehensiveUpdate
-            };
-            logWindow.WindowArgs = args;
-            logWindow.Width = 800;
-            logWindow.Height = 500;
-            logWindow.Title = windowTitle;
-            logWindow.IsShowCloseButton = true;
-            logWindow.WindowArgs = args;
-            logWindow.Show('./Common/Components/Maintenance/OcrDefaultsSettingsComponent');
-            logWindow.WindowClosed.subscribe((event: any) => {
-                if (event == "update") {
-                    this.RefreshEntity();
-                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                    this.CertificateOfOriginComprehensiveUpdate = [];
-                }
-                this.CD.reattach();
-            });
-        });
-    }
+    
 
 
     EditButtonClicked(item: CertificateOfOriginPM) {
@@ -394,48 +369,48 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     EditCertificateOfOrigin(item: CertificateOfOriginPM) {   
         this.CurrentSession.StartBusyIndicator("");
 
-        this.certificateOfOriginPMService.get(this.EntityPM.Id).subscribe((response: any) => {
-            var windowArgs: any = {};
-            windowArgs.EntityPM = response.Result;
-            windowArgs.declarationPM = this.EntityPM;
-            windowArgs.NumberOfLoadedItems = this.NumberOfLoadedItems;
-            var windowTitle = "Certificate Of Origin";
+        // this.certificateOfOriginPMService.get(this.EntityPM.Id).subscribe((response: any) => {
+        //     var windowArgs: any = {};
+        //     windowArgs.EntityPM = response.Result;
+        //     windowArgs.declarationPM = this.EntityPM;
+        //     windowArgs.NumberOfLoadedItems = this.NumberOfLoadedItems;
+        //     var windowTitle = "Certificate Of Origin";
 
-            var logWindow = new LogitudeWindow();
-            logWindow.Width = 1017;// this changed By Rabaia for Task No. 54930; Dont change it back before calling me. //995; // don't change this width!
-            logWindow.Height = 600;
-            var textCodeTitle = "Customs.Declaration.O.EditCertificateOfOrigin";
+        //     var logWindow = new LogitudeWindow();
+        //     logWindow.Width = 1017;// this changed By Rabaia for Task No. 54930; Dont change it back before calling me. //995; // don't change this width!
+        //     logWindow.Height = 600;
+        //     var textCodeTitle = "Customs.Declaration.O.EditCertificateOfOrigin";
 
 
-            if (this.EntityPM.Direction == "E") {
-                textCodeTitle = "Customs.Declaration.O.ExporterEditCertificateOfOrigin";
-            }
+        //     if (this.EntityPM.Direction == "E") {
+        //         textCodeTitle = "Customs.Declaration.O.ExporterEditCertificateOfOrigin";
+        //     }
 
             
-            windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-            logWindow.ShowCloseButton = false;
-            logWindow.WindowArgs = windowArgs;
-            this.CD.detach();
-            logWindow.WindowClosed.subscribe((event: any) => {
-                if (event != 'cancel') {
-                    this.CertificateOfOriginComprehensiveUpdate = [];
+        //     windowArgs.IsDisplayOnly = this.IsDisplayOnly;
+        //     logWindow.ShowCloseButton = false;
+        //     logWindow.WindowArgs = windowArgs;
+        //     this.CD.detach();
+        //     logWindow.WindowClosed.subscribe((event: any) => {
+        //         if (event != 'cancel') {
+        //             this.CertificateOfOriginComprehensiveUpdate = [];
 
-                    this.RefreshEntity();
-                    this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-                }
-                else {
-                    this.ReloadMyScreen();
-                }
-                this.CD.reattach();
+        //             this.RefreshEntity();
+        //             this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
+        //         }
+        //         else {
+        //             this.ReloadMyScreen();
+        //         }
+        //         this.CD.reattach();
 
-            });
-            logWindow.IsHideHeader = true;
+        //     });
+        //     logWindow.IsHideHeader = true;
 
-            // TODO: #101459 -change to other new component
-            logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditCertificateOfOriginComponent');
+        //     // TODO: #101459 -change to other new component
+        //     logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditCertificateOfOriginComponent');
 
-            this.CurrentSession.StopBusyIndicator();
-        });
+        //     this.CurrentSession.StopBusyIndicator();
+        // });
 
     }
 
