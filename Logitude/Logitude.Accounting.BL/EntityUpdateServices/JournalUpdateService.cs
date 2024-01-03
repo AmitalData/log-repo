@@ -613,7 +613,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void CreateJournalAdditionalDataWhenApprovingJournal(JournalPM journal)
         {
-            if (journal.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved && journal.ChangeSetOp == ChangeSetOperation.Insert)
+            if (journal.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved)
             {
                 CreateJournalAdditionalDataForEachDebitInputLine(journal);
                 CreateJournalAdditionalDataForARInvoiceJournal(journal);
@@ -625,8 +625,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (journal.AccountingEntityCode == JournalAccountingEntities.ARInvoice)
             {
                 JournalAdditionalDataPM journalAdditionalDataPM = MapJournalAdditionalDataFields(null, journal);
-                SaveJournalAdditionalData(journalAdditionalDataPM);
+                if (!this.CheckIfExistInDb(journalAdditionalDataPM.JournalId, journalAdditionalDataPM.JournalLineNumber, journalAdditionalDataPM.Tenant))
+                {
+                    SaveJournalAdditionalData(journalAdditionalDataPM);
+                }
             }
+        }
+        private Boolean CheckIfExistInDb(string journalId, int JournalLineNumber, int tenant)
+        {
+            JournalAdditionalDataQueryService journalAdditionalDataQueryService = new JournalAdditionalDataQueryService(tenant);
+            return journalAdditionalDataQueryService.CheckIfJournalAdditionalDataExist(journalId, JournalLineNumber, tenant);
         }
         private void CreateJournalAdditionalDataForEachDebitInputLine(JournalPM journal)
         {
@@ -636,8 +644,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 foreach (JournalLinePM journalLine in jourlDebitInputLines)
                 {
                     JournalAdditionalDataPM journalAdditionalDataPM = MapJournalAdditionalDataFields(journalLine, journal);
-                    SaveJournalAdditionalData(journalAdditionalDataPM);
-
+                    if (!this.CheckIfExistInDb(journalAdditionalDataPM.JournalId, journalAdditionalDataPM.JournalLineNumber, journalAdditionalDataPM.Tenant))
+                    {
+                        SaveJournalAdditionalData(journalAdditionalDataPM);
+                    }
                 }
             }
         }

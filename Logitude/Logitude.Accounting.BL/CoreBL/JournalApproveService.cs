@@ -339,10 +339,10 @@ namespace Logitude.Accounting.BL.CoreBL
         private void CalculateTotalFutureOpenChequesForCreditGlAccount(List<LedgerTransactionPM> ledgerTrasnctions)
         {
 
-            if ((_JournalPM.AccountingEntityCode == "3" || _JournalPM.AccountingEntityCode == "1") && _JournalPM.ExternalSystem.ToUpper() !="AMITAL")
+            if ((_JournalPM.AccountingEntityCode == "3" || _JournalPM.AccountingEntityCode == "1") && _JournalPM.ExternalSystem?.ToUpper() != "AMITAL")
             {
-               
-                if(ledgerTrasnctions.Count > 0)
+
+                if (ledgerTrasnctions.Count > 0)
                 {
                     GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(_Tenant);
                     GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_Tenant);
@@ -1416,12 +1416,83 @@ namespace Logitude.Accounting.BL.CoreBL
                     LogMessagingUtil.Instance.AppendLine("Not streamed !!");
                     LogMessagingUtil.Instance.AppendLine(stringBuilder.ToString());
                 }
-
+                else
+                {
+                   
+                    this.CreateJournalAdditionalDataWhenApprovingJournal(this._JournalPM);
+                    
+                }
 
             }
 
         }
+        private void CreateJournalAdditionalDataWhenApprovingJournal(JournalPM journal)
+        {
+                CreateJournalAdditionalDataForEachDebitInputLine(journal);
+                CreateJournalAdditionalDataForARInvoiceJournal(journal);
+        }
+        private void CreateJournalAdditionalDataForEachDebitInputLine(JournalPM journal)
+        {
+            if (journal.AccountingEntityCode != JournalAccountingEntities.ARInvoice && (String.IsNullOrEmpty(journal.ExternalSystem) || journal.ExternalSystem != "AMITAL"))
+            {
+                List<JournalLinePM> jourlDebitInputLines = SelectJournalDebitLinesFromJournalLines(journal);
+                foreach (JournalLinePM journalLine in jourlDebitInputLines)
+                {
+                    JournalAdditionalDataPM journalAdditionalDataPM = MapJournalAdditionalDataFields(journalLine, journal);
+                    if (!this.CheckIfExistInDb(journalAdditionalDataPM.JournalId, journalAdditionalDataPM.JournalLineNumber, journalAdditionalDataPM.Tenant))
+                    {
+                        SaveJournalAdditionalData(journalAdditionalDataPM);
+                    }
 
+                }
+            }
+        }
+        private Boolean CheckIfExistInDb(string journalId, int JournalLineNumber,int tenant)
+        {
+            JournalAdditionalDataQueryService journalAdditionalDataQueryService = new JournalAdditionalDataQueryService(tenant);
+            return journalAdditionalDataQueryService.CheckIfJournalAdditionalDataExist(journalId, JournalLineNumber, tenant);
+        }
+        private void CreateJournalAdditionalDataForARInvoiceJournal(JournalPM journal)
+        {
+            if (journal.AccountingEntityCode == JournalAccountingEntities.ARInvoice && (String.IsNullOrEmpty(journal.ExternalSystem) || journal.ExternalSystem != "AMITAL"))
+            {
+                JournalAdditionalDataPM journalAdditionalDataPM = MapJournalAdditionalDataFields(null, journal);
+                if (!this.CheckIfExistInDb(journalAdditionalDataPM.JournalId, journalAdditionalDataPM.JournalLineNumber, journalAdditionalDataPM.Tenant))
+                {
+                    SaveJournalAdditionalData(journalAdditionalDataPM);
+                }
+            }
+        }
+        private void SaveJournalAdditionalData(JournalAdditionalDataPM journalAdditionalDataPM)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(journalAdditionalDataPM.Tenant);
+            JournalAdditionalDataUpdateService additionalDataUpdateService = new JournalAdditionalDataUpdateService((IAccountingContext)MyContext, new Dictionary<string, IContext>(), journalAdditionalDataPM.Tenant);
+            additionalDataUpdateService.Update(journalAdditionalDataPM, true);
+        }
+        private List<JournalLinePM> SelectJournalDebitLinesFromJournalLines(JournalPM journal)
+        {
+            FullAccountingSettingPM setting = GetFullAccountingSetting(journal.Tenant);
+
+            return journal.JournalLines.Where(d => d.ActionTypeCode == JournalActionTypes.Debit && d.DebitAccountId == setting.VATInputsGLAccountId).ToList();
+        }
+
+        private JournalAdditionalDataPM MapJournalAdditionalDataFields(JournalLinePM journalLine, JournalPM journal)
+        {
+            return new JournalAdditionalDataPM()
+            {
+                JournalId = journal.Id,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                TaxReportId = null,
+                TaxReportTransmitStatusCode = null,
+                Tenant = journal.Tenant,
+                JournalLineNumber = journalLine != null ? journalLine.Line : 1,
+            };
+        }
+        private FullAccountingSettingPM GetFullAccountingSetting(int tenant)
+        {
+            FullAccountingSettingQueryService settingQueryService = new FullAccountingSettingQueryService(tenant);
+            return settingQueryService.GetSingleFullAccountingSetting(tenant);
+        }
         private static SqlParameter GettGLAccountAgingDataType(List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
             var listDBTypeGLAccountAgingData =
