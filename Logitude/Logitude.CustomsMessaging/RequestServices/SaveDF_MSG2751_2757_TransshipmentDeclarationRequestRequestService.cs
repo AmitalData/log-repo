@@ -42,8 +42,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 return;
             }
             var settings = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
-            var maxItemsSendInteractive = settings.MaxItemsSendInteractive;
-            var maxSISendInteractive = settings.MaxSISendInteractive;
+            var maxItemsSendInteractive = settings.MaxItemsSendInteractive ?? 100;
+            var maxSISendInteractive = settings.MaxSISendInteractive ?? 15;
             int countItems = 0;
             int countSI = 0;
             int backgroundcountItems = 0;

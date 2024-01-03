@@ -68,9 +68,8 @@ namespace Logitude.CustomsMessaging.RequestServices
         public override void ManipulateRequestParams(GenericRequestParams requestParams)
         {
             var settings = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
-
-            var maxItemsSendInteractive = settings.MaxItemsSendInteractive;
-            var maxSISendInteractive = settings.MaxSISendInteractive;
+            var maxItemsSendInteractive = settings.MaxItemsSendInteractive ?? 100;
+            var maxSISendInteractive = settings.MaxSISendInteractive ?? 15;
 
             if (requestParams.RequestVIA == SendRequestVIA.DCABatch)
             {
