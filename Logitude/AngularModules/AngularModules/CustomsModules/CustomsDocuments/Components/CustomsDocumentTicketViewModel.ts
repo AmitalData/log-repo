@@ -167,7 +167,6 @@ export class CustomsDocumentTicketViewModel {
         if (!this.isNew) {
             this.SetCustomDocumentMetaData();
         }
-        debugger
         if (customsDocumentsTicketPM.DocumentTypeCode == "380" || (customsDocumentsTicketPM.DocumentTypeCode == "325" && EntityPM?.Direction =="E")) {
 
             var dec: DeclarationPM = EntityPM as DeclarationPM;
