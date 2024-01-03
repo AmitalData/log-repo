@@ -26,6 +26,8 @@ import { DeclarationClassificationComponent } from './Components/Classification/
 import { SInvoiceClassificationTabComponent } from './Components/Classification/SInvoiceClassificationTabComponent';
 import { CasualSupplierDetailsComponent } from './Components/Classification/CasualSupplierDetailsComponent';
 import { DeclarationAmendmentComponent } from './Components/DeclarationAmendment/DeclarationAmendmentComponent';
+import { DigitalCertificateOfOriginTabComponent } from './Components/DigitalCertificateOfOrigin/DigitalCertificateOfOriginTabComponent';
+import { CertificateOfOrigin } from './Components/DigitalCertificateOfOrigin/CertificateOfOrigin/CertificateOfOrigin';
 import { DeclarationCargoSealTabComponent } from './Components/CargoSeal/DeclarationCargoSealTabComponent';
 import { ExportDeclarationComponent } from './Components/General/ExportDeclarationComponent';
 import { ExportConsigmentContentComponent } from './Components/General/ConsigmentTabContent/ExportConsigmentContentComponent';
@@ -65,6 +67,9 @@ export const Components =
         SInvoiceClassificationTabComponent,
         CasualSupplierDetailsComponent,
         DeclarationAmendmentComponent,
+        DigitalCertificateOfOriginTabComponent,
+        CertificateOfOrigin,
+        CertificateOfOrigin,
         DeclarationCargoSealTabComponent,
         ExportDeclarationComponent,
         ExportDeclarationClosureComponent,
@@ -112,6 +117,8 @@ export class ModuleDeclarations {
             case "CasualSupplierDetailsComponent": { myResult = CasualSupplierDetailsComponent; break; }
             case "ConsigmentPackagesDangerComponent": { myResult = ConsigmentPackagesDangerComponent; break; }
             case "DeclarationAmendmentComponent": { myResult = DeclarationAmendmentComponent; break; }
+            case "DigitalCertificateOfOriginTabComponent": { myResult = DigitalCertificateOfOriginTabComponent; break; }
+            case "CertificateOfOrigin": { myResult = CertificateOfOrigin; break; }
             case "DeclarationCargoSealTabComponent": { myResult = DeclarationCargoSealTabComponent; break; }
             case "ExportDeclarationComponent": { myResult = ExportDeclarationComponent; break; }
             case "ExportDeclarationClosureComponent": { myResult = ExportDeclarationClosureComponent; break; }
