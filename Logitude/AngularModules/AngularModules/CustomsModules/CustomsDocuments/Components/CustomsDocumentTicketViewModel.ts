@@ -148,7 +148,6 @@ export class CustomsDocumentTicketViewModel {
         private objectTableName: string, 
         private iCustomsDocumentsController: ICustomsDocumentsController, 
         public documentsFilingId: string = null,
-        public AutoDocType325: boolean = false
         ) {
         this.EntityResourceService = new EntityResourceService();
         if (customsDocumentMetaDataValuePMs != null) {
@@ -168,7 +167,8 @@ export class CustomsDocumentTicketViewModel {
         if (!this.isNew) {
             this.SetCustomDocumentMetaData();
         }
-        if (customsDocumentsTicketPM.DocumentTypeCode == "380" || (customsDocumentsTicketPM.DocumentTypeCode == "325" && AutoDocType325)) {
+        debugger
+        if (customsDocumentsTicketPM.DocumentTypeCode == "380" || (customsDocumentsTicketPM.DocumentTypeCode == "325" && EntityPM?.Direction =="E")) {
 
             var dec: DeclarationPM = EntityPM as DeclarationPM;
             if (dec) {
@@ -184,7 +184,7 @@ export class CustomsDocumentTicketViewModel {
                     }
                 }
                 
-                    if (!AppTool.IsNullOrEmpty(customsDocumentsTicketPM.DocumentsFilingId) || !AppTool.IsNullOrEmpty(this.documentsFilingId)) {
+                    if ((!AppTool.IsNullOrEmpty(customsDocumentsTicketPM.DocumentsFilingId) || !AppTool.IsNullOrEmpty(this.documentsFilingId)) && customsDocumentsTicketPM.DocumentTypeCode == "380") {
                         var custDocRelatedDocsWebService: CustDocRelatedDocsWebService = new CustDocRelatedDocsWebService();
                         var checkOcr = dec.Direction == 'E' ? true : false
                         var docFilingId = !AppTool.IsNullOrEmpty(customsDocumentsTicketPM.DocumentsFilingId) ? customsDocumentsTicketPM.DocumentsFilingId : this.documentsFilingId
