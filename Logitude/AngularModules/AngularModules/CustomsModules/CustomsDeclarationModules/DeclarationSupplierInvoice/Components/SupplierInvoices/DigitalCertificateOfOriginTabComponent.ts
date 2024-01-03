@@ -176,7 +176,29 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         this.DisplayOnlyCheck();
     }
 
+    AddNewCertificateOfOrigin() {
+        debugger
+        
+        //TODO: add new CertificateOfOrigin
+        var args: any = {
+            Declaration: this.EntityPM,
+        };
+        var logWindow = new LogitudeWindow();
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        // logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DigitalCertificateOfOrigin");
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
+        logWindow.WindowArgs = args;
+        logWindow.ShowCloseButton = true;
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/CertificateOfOrigin');
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        });
 
+        
+       
+    }
+    
     ViewInitCompleted($event) {
         this.SelectedRow = this.ItemsSource.Collection[0];
         this.OnRowSelected(this.SelectedRow);
@@ -369,7 +391,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
 
     }
 
-    EditCertificateOfOrigin(item: CertificateOfOriginPM) {
+    EditCertificateOfOrigin(item: CertificateOfOriginPM) {   
         this.CurrentSession.StartBusyIndicator("");
 
         this.certificateOfOriginPMService.get(this.EntityPM.Id).subscribe((response: any) => {
@@ -460,12 +482,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         messageWindow.Show(message);
     }
 
-    Add() {
-        debugger
-        
-        //TODO: add new CertificateOfOrigin
-    }
-  
+ 
     RefreshEntity() {
         this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();

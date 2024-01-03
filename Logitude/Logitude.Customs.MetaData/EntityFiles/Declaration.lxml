@@ -27845,6 +27845,12 @@
       LocalDefaultText="&quot;תעודה חדשה&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.TH.CertificateOfOrigin&quot;"
+      DefaultText="&quot;Certificate Of Origin&quot;"
+      LocalDefaultText="&quot;תעודת מקור&quot;"
+      TextCodeTypeCode="&quot;TH&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
