@@ -67,6 +67,11 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
         public override void ManipulateRequestParams(GenericRequestParams requestParams)
         {
+            var settings = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+
+            var maxItemsSendInteractive = settings.MaxItemsSendInteractive;
+            var maxSISendInteractive = settings.MaxSISendInteractive;
+
             if (requestParams.RequestVIA == SendRequestVIA.DCABatch)
             {
                 return;
@@ -100,7 +105,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                 backgroundcountItems = countItems;
                 existSupplierInvoiceItemsWithParent = ssiqs.ExistSupplierInvoiceItemsWithParent(requestParams.Tenant, requestParams.AppicationId);
-                if ((countItems > 100 || SItoAccumulate > 0) && existSupplierInvoiceItemsWithParent > 0)
+                if ((countItems > maxItemsSendInteractive || SItoAccumulate > 0) && existSupplierInvoiceItemsWithParent > 0)
                 {
                     //existSupplierInvoiceItemsWithoutHash = qs.ExistSupplierInvoiceItemsWithoutHash(requestParams.Tenant, requestParams.AppicationId
                     if (countItems < 999 && SItoAccumulate > 0) onlyAlwaysAccumulate = true;
@@ -111,7 +116,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                         {
                             countItems = existSupplierInvoiceItemsWithParent;
                         }
-                        if (backgroundcountItems > 100)
+                        if (backgroundcountItems > maxItemsSendInteractive)
                         {
                             backgroundcountItems = existSupplierInvoiceItemsWithParent;
                         }
@@ -148,31 +153,31 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
                 else
                 {
-                    if (backgroundcountItems >= 100)
+                    if (backgroundcountItems >= maxItemsSendInteractive)
                     {
                         if (requestParams.RequestVIA == SendRequestVIA.DCABatch)
                         {
                             LogMessagingUtil.Instance.AppendLine("***User**** Send this request VIA DCABatch-- no need to change !!!");
-                            LogMessagingUtil.Instance.AppendLine("הצהרה זו מכילה מעל 100 פרטי מכס ולכן תשודר ברקע");
+                            LogMessagingUtil.Instance.AppendLine(string.Format("הצהרה זו מכילה מעל {0} פרטי מכס ולכן תשודר ברקע", maxItemsSendInteractive));
                         }
                         else
                         {
                             requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
                             LogMessagingUtil.Instance.AppendLine("ManipulateRequestParams:requestParams.RequestVIA = SendRequestVIA.WebServiceBatch");
-                            LogMessagingUtil.Instance.AppendLine("הצהרה זו מכילה מעל 100 פרטי מכס ולכן תשודר ברקע");
-                            requestParams.RequestVIAChangeDue = ("הצהרה זו מכילה מעל 100 פרטי מכס ולכן תשודר ברקע");
+                            LogMessagingUtil.Instance.AppendLine(string.Format("הצהרה זו מכילה מעל {0} פרטי מכס ולכן תשודר ברקע", maxItemsSendInteractive));
+                            requestParams.RequestVIAChangeDue = (string.Format("הצהרה זו מכילה מעל {0} פרטי מכס ולכן תשודר ברקע", maxItemsSendInteractive));
                         }
 
                     }
                     if (
                         (requestParams.RequestVIA == SendRequestVIA.WebServiceInteractive
                         || requestParams.RequestVIA == SendRequestVIA.Default)
-                        && countSI > 15)
+                        && countSI > maxSISendInteractive)
                     {
                         requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
                         LogMessagingUtil.Instance.AppendLine("ManipulateRequestParams:requestParams.RequestVIA = SendRequestVIA.WebServiceBatch");
-                        LogMessagingUtil.Instance.AppendLine("הצהרה זו מכילה מעל 15 חן ספק ולכן תשודר ברקע");
-                        requestParams.RequestVIAChangeDue = ("הצהרה זו מכילה מעל 15 חן ספק ולכן תשודר ברקע");
+                        LogMessagingUtil.Instance.AppendLine(string.Format("הצהרה זו מכילה מעל {0} חן ספק ולכן תשודר ברקע", maxSISendInteractive));
+                        requestParams.RequestVIAChangeDue = string.Format("הצהרה זו מכילה מעל {0} חן ספק ולכן תשודר ברקע", maxSISendInteractive);
 
 
                     }
@@ -255,14 +260,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             try
             {
-                    var requestData = "";
-                    var addStatus = ""; // moran 17.9.15 - Task 15458
-                    var comment = ""; // moran 20.9.15 - Task 15458
-                    var addComment = ""; // moran 20.9.15 - Task 15458
+                var requestData = "";
+                var addStatus = ""; // moran 17.9.15 - Task 15458
+                var comment = ""; // moran 20.9.15 - Task 15458
+                var addComment = ""; // moran 20.9.15 - Task 15458
 
                 if (isConnectedToUnifreight)
                 {
-                     _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
+                    _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
                     var myCCUQUELOCKQueryService = new Unifreight.BL.EntityQueryServices.CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new Unifreight.BL.EntityUpdateServices.CCUQUELOCKUpdateService(_AmitalContext);
                     myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
@@ -299,60 +304,60 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
                 //var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
                 string unifreightUser = null;
-                    if (RequestSheetContext.Current != null)
+                if (RequestSheetContext.Current != null)
+                {
+                    var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
+                    if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
                     {
-                        var loggingUserIdFromRS = RequestSheetContext.Current.GetContextOrDefault().GetUserFromRequestParam();
-                        if (!string.IsNullOrWhiteSpace(loggingUserIdFromRS))
+                        UserRepository userRep = new UserRepository(dirtyDeclarationPM.Tenant);
+                        User user = userRep.GetSingleUser(loggingUserIdFromRS, dirtyDeclarationPM.Tenant, true);
+                        if (user != null)
                         {
-                            UserRepository userRep = new UserRepository(dirtyDeclarationPM.Tenant);
-                            User user = userRep.GetSingleUser(loggingUserIdFromRS, dirtyDeclarationPM.Tenant, true);
-                            if (user != null)
+                            if (!String.IsNullOrWhiteSpace(user.Code))
                             {
-                                if (!String.IsNullOrWhiteSpace(user.Code))
-                                {
-                                    unifreightUser = user.Code;
-                                }
+                                unifreightUser = user.Code;
                             }
                         }
                     }
-                    if (String.IsNullOrWhiteSpace(unifreightUser))
-                    {
-                        unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
-                    }
+                }
+                if (String.IsNullOrWhiteSpace(unifreightUser))
+                {
+                    unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(dirtyDeclarationPM.Tenant);
+                }
 
-                    if (raiseStatus == true)
+                if (raiseStatus == true)
+                {
+                    string loggingUserId = null;
                     {
-                        string loggingUserId = null;
+                        ICommonDataContext dbContext = CommonDataContext.GetContext(dirtyDeclarationPM.Tenant);
+                        UserRepository userRepository = new UserRepository(dbContext);
+                        var user = userRepository.GetSingleUserByCode("MEHES", dirtyDeclarationPM.Tenant, true);
+                        if (user != null)
                         {
-                            ICommonDataContext dbContext = CommonDataContext.GetContext(dirtyDeclarationPM.Tenant);
-                            UserRepository userRepository = new UserRepository(dbContext);
-                            var user = userRepository.GetSingleUserByCode("MEHES", dirtyDeclarationPM.Tenant, true);
-                            if (user != null)
-                            {
-                                loggingUserId = user.Id;
-                            }
-                        }
-                        var myDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, null, loggingUserId);
-                        requestData = myDeclarationUpdateService.GetMyFUStatusXML(status, status, comment, xmlStatus, DateTime.Now, true);
-                        if (!String.IsNullOrWhiteSpace(addStatus))
-                        {
-                            var requestData2 = myDeclarationUpdateService.GetMyFUStatusXML(addStatus, addStatus, addComment, xmlStatus, DateTime.Now, true);
-                            requestData = string.Concat(requestData, requestData2);
+                            loggingUserId = user.Id;
                         }
                     }
-
-                    var myYCULTASKPM = new Unifreight.BL.EntityPMs.YCULTASKPM()
+                    var myDeclarationUpdateService = new UnifrightDeclarationUpdateService(dirtyDeclarationPM, null, loggingUserId);
+                    requestData = myDeclarationUpdateService.GetMyFUStatusXML(status, status, comment, xmlStatus, DateTime.Now, true);
+                    if (!String.IsNullOrWhiteSpace(addStatus))
                     {
-                        ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
-                        STATUS = "W",
-                        REQUESTDATA = requestData,
-                        ENTNAME = "CFIFILEM",
-                        PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
-                        PRIORITY = Unifreight.BL.EntityPMs.YCULTASKPM.calcPriority(taskType),
-                        TYPE = taskType,
-                        USRCODE = unifreightUser,
-                        ARCHIVE = "F"
-                    };
+                        var requestData2 = myDeclarationUpdateService.GetMyFUStatusXML(addStatus, addStatus, addComment, xmlStatus, DateTime.Now, true);
+                        requestData = string.Concat(requestData, requestData2);
+                    }
+                }
+
+                var myYCULTASKPM = new Unifreight.BL.EntityPMs.YCULTASKPM()
+                {
+                    ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert,
+                    STATUS = "W",
+                    REQUESTDATA = requestData,
+                    ENTNAME = "CFIFILEM",
+                    PRIMARYNUM = dirtyDeclarationPM.CustomFileNo,
+                    PRIORITY = Unifreight.BL.EntityPMs.YCULTASKPM.calcPriority(taskType),
+                    TYPE = taskType,
+                    USRCODE = unifreightUser,
+                    ARCHIVE = "F"
+                };
                 if (isConnectedToUnifreight)
                 {
                     AmitalContext _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
@@ -377,17 +382,17 @@ namespace Logitude.CustomsMessaging.RequestServices
                         CommunicationSubject = "IIG_TASK",
 
                     };
-                    var amitalInsertToQueueService = new AmitalInsertToQueueService< Unifreight.BL.EntityPMs.YCULTASKPM> (myYCULTASKPM);
+                    var amitalInsertToQueueService = new AmitalInsertToQueueService<Unifreight.BL.EntityPMs.YCULTASKPM>(myYCULTASKPM);
                     amitalInsertToQueueService.InsertToQueue(myAmitalEventTracerModel, "IIG_TASK");
                 }
-            
-                  
 
-                    if (scope != null)
-                    {
-                        scope.Complete();
-                    }
-                
+
+
+                if (scope != null)
+                {
+                    scope.Complete();
+                }
+
             }
             finally
             {
@@ -402,7 +407,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         public override DF_NG_2751_MSG10000_ExportDeclaration GetRequest(GenericRequestParams requestParams)
         {
-            
+
 
 
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
@@ -1079,16 +1084,16 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                 // declarationGoodsShipment.SequenceNumericSpecified = true;
                 declarationGoodsShipment.Invoice = GetDeclarationGoodsShipmentInvoice(supplierInvoicePM, declarationPM.Direction);
-                 string vendorNumber = GetVendorNumber(supplierInvoicePM.VendorId);
- 
+                string vendorNumber = GetVendorNumber(supplierInvoicePM.VendorId);
+
                 if (!string.IsNullOrEmpty(supplierInvoicePM.IncotermCode))
-                { 
-                    declarationGoodsShipment.TradeTerms = new DeclarationGoodsShipmentTradeTerms() // MUST 
                 {
-                     ConditionCode = SetCodeTypeValue<TradeTermsConditionCodeType>(supplierInvoicePM.IncotermCode),
-                 };
+                    declarationGoodsShipment.TradeTerms = new DeclarationGoodsShipmentTradeTerms() // MUST 
+                    {
+                        ConditionCode = SetCodeTypeValue<TradeTermsConditionCodeType>(supplierInvoicePM.IncotermCode),
+                    };
                 }
- 
+
                 var declarationConsignmentList = new List<DeclarationGoodsShipmentExportConsignment>();
                 var declarationImportConsignmentList = new List<DeclarationGoodsShipmentImportConsignment>();
                 for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
@@ -1296,11 +1301,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                 var declarationGoodsShipmentGovernmentAgencyGoodsItem = new DeclarationGoodsShipmentGovernmentAgencyGoodsItem();
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.SequenceNumeric = supplierInvoiceItemPM.SequenceNumeric.Value; // moran 23.8.16 - changed from goodsItemSeq + 1;
 
-                if (!string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode)) {// declarationGoodsShipmentGovernmentAgencyGoodsItem.SequenceNumericSpecified = true;
-                declarationGoodsShipmentGovernmentAgencyGoodsItem.Origin = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemOrigin()
-                {
-                    CountryCode = new OriginCountryCodeType() { Value = supplierInvoiceItemPM.OriginCountryCode }
-                };
+                if (!string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode))
+                {// declarationGoodsShipmentGovernmentAgencyGoodsItem.SequenceNumericSpecified = true;
+                    declarationGoodsShipmentGovernmentAgencyGoodsItem.Origin = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemOrigin()
+                    {
+                        CountryCode = new OriginCountryCodeType() { Value = supplierInvoiceItemPM.OriginCountryCode }
+                    };
                 }
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.GovernmentProcedure = GetGoodsItemGovernmentProcedure(supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes);
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.Commodity = GetGoodsItemCommodity(supplierInvoiceItemPM);
@@ -1929,7 +1935,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                         vehicleDetails.ID.Value = supplierInvoiceItemVehicleItem.IdentifierID;
                         vehicleDetails.IDTypeCode.Value = supplierInvoiceItemVehicleItem.VehicleTypeCode; // "ZZZ"; // moran 28.1.16 - Bug 19966 - change to take from DB instead of constant
                     }
-                   
+
 
                     mySupplierInvoiceItemVehiclesList.Add(vehicleDetails);
                 }
@@ -1958,7 +1964,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             // };
             return declarationGoodsItemAmount;
         }
-        private List<DeclarationGoodsShipmentImportConsignment> GetDeclarationImportConsignment(ConsignmentPM consignmentPM,string ProcedureCurrentCode)
+        private List<DeclarationGoodsShipmentImportConsignment> GetDeclarationImportConsignment(ConsignmentPM consignmentPM, string ProcedureCurrentCode)
         {
             var declarationConsignmentList = new List<DeclarationGoodsShipmentImportConsignment>();
             var declarationConsignment = new DeclarationGoodsShipmentImportConsignment()
@@ -2000,8 +2006,8 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
         private DeclarationGoodsShipmentImportConsignmentDMExtensions GetImportConsignmentDMExtensions(ConsignmentPM consignmentPM, string ProcedureCurrentCode)
         {
-            var arrProcedureCurrentCode = new string[] {  "8070005", "8070010", "8070505", "8070510" };
-                              
+            var arrProcedureCurrentCode = new string[] { "8070005", "8070010", "8070505", "8070510" };
+
 
             var dmExtensions = new DeclarationGoodsShipmentImportConsignmentDMExtensions
             {
@@ -2017,7 +2023,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (consignmentPM.IsLastReleaseFromWarehous == "T")
             {
                 dmExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType();
-           
+
                 dmExtensions.LastReleaseFromWarehousInd.Value = true;
             }
             else
@@ -2080,8 +2086,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                 DMExtensions = new DeclarationGoodsShipmentExportConsignmentTransportContractDocumentDMExtensions()
                 {
 
-                    SecondCargoID =  !string.IsNullOrEmpty(consignmentPM.SecondCargoID) ? SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID): new SecondCargoIDType() { Value=""}, // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
-                    ThirdCargoID =    SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID)  // new ThirdCargoIDType() { Value = consignmentPM.ThirdCargoID }
+                    SecondCargoID = !string.IsNullOrEmpty(consignmentPM.SecondCargoID) ? SetIDTypeValue<SecondCargoIDType>(consignmentPM.SecondCargoID) : new SecondCargoIDType() { Value = "" }, // new SecondCargoIDType() { Value = consignmentPM.SecondCargoID },
+                    ThirdCargoID = SetIDTypeValue<ThirdCargoIDType>(consignmentPM.ThirdCargoID)  // new ThirdCargoIDType() { Value = consignmentPM.ThirdCargoID }
                 }
             };
             if (consignmentPM.CargoTypeCode == "17" && !string.IsNullOrWhiteSpace(consignmentPM.ThirdCargoID))
