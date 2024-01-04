@@ -4382,7 +4382,7 @@ namespace Logitude.OracleDatabaseMigration.LogitudeModel
 
             modelBuilder.Entity<DeficitConnFileParagraphType>().Property(x => x.Amount).HasPrecision(16, 2);
 
-            modelBuilder.Entity<PaymentOrderProtestReason>().Property(x => x.GoodsItemLineNumber).HasPrecision(5, 0);
+          //  modelBuilder.Entity<PaymentOrderProtestReason>().Property(x => x.GoodsItemLineNumber).HasPrecision(5, 0);
 
             modelBuilder.Entity<PaymentOrderProtestReason>().Property(x => x.AmountInDispute).HasPrecision(16, 2);
 
