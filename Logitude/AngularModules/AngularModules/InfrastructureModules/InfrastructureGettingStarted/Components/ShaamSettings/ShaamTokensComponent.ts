@@ -10,6 +10,24 @@ import { ShaamWebService } from 'Shipment/Services/ShaamWebService';
 @Component({
     selector: 'ShaamTokensComponent',
     templateUrl: './ShaamTokensComponent.html',
+    styles: [`
+        :host() { 
+            height: 100%; 
+            display: flex;
+            flex-flow: column;
+            align-items: stretch;
+        }
+
+        .buttons {
+            flex: 0 1 auto;
+        }
+        
+        .grid-container {
+            flex: 1 1 auto;
+            position: relative;
+            padding:5px;
+        }
+    `]
 }) 
 export class ShaamTokensComponent extends BaseComponent {
     DataContext: ShaamTokensComponent = this;
