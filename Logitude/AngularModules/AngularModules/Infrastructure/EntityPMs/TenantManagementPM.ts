@@ -1054,9 +1054,6 @@ export class TenantManagementPM {
     public get EcommerceSupportEmail() { return this.ecommerceSupportEmail; }
     public set EcommerceSupportEmail(newValue: string) { if (this.ecommerceSupportEmail != newValue) { this.ecommerceSupportEmail = newValue; this.MarkAsDirty("EcommerceSupportEmail"); } }
        
-    private ecommerceTenant: boolean;
-    public get EcommerceTenant() { return this.ecommerceTenant; }
-    public set EcommerceTenant(newValue: boolean) { if (this.ecommerceTenant != newValue) { this.ecommerceTenant = newValue; this.MarkAsDirty("EcommerceTenant"); } }
 	 
     private ecommerceTenant: boolean;
     public get EcommerceTenant() { return this.ecommerceTenant; }
@@ -1073,6 +1070,7 @@ export class TenantManagementPM {
     public set ExportTenant(newValue: number) { if (this.exportTenant != newValue) { this.exportTenant = newValue; this.MarkAsDirty("ExportTenant"); } }
        
 	 
+
     public OldEntityPM: TenantManagementPM;
 		
     public IsDirty: boolean;
@@ -1099,4 +1097,4 @@ export class TenantManagementPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

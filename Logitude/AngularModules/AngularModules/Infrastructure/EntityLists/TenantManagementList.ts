@@ -181,4 +181,4 @@ export class TenantManagementList {
 		EcommerceSupportEmail: string;
 		EcommerceTenant: boolean;
 	
-}
+}
