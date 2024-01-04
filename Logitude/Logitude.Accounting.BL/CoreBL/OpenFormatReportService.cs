@@ -710,7 +710,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                             else
                             {
-                                if (mainaddress.City != null)
+                                if (mainaddress?.City != null)
                                 {
                                     if (mainaddress.City.Length > 30) { mainaddress.City = mainaddress.City.Substring(0, 30); }
                                     myStringBuilder.Append( a + mainaddress.City.PadLeft(30, ' '));
@@ -728,7 +728,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                             else
                             {
-                                if (mainaddress.ZipCode != null)
+                                if (mainaddress?.ZipCode != null)
                                 {
                                     if (mainaddress.ZipCode.Length > 8) { mainaddress.ZipCode = mainaddress.ZipCode.Substring(0, 8); }
                                     myStringBuilder.Append(a + mainaddress.ZipCode.PadLeft(8, ' '));
@@ -746,7 +746,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                             else
                             {
-                                if (mainaddress.CountryName != null)
+                                if (mainaddress?.CountryName != null)
                                 {
                                     if (mainaddress.CountryName.Length > 30) { mainaddress.CountryName = mainaddress.CountryName.Substring(0, 30); }
                                     myStringBuilder.Append( a + mainaddress.CountryName.PadLeft(30, ' '));
@@ -776,7 +776,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             }
                             else
                             {
-                                if (mainaddress.CountryCode != null)
+                                if (mainaddress?.CountryCode != null)
                                 {
                                     if (computingPartnerTranslations != null)
                                     {
