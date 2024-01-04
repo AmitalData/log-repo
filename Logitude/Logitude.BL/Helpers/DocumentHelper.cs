@@ -42,6 +42,8 @@ using User = Simplog.Data.CommonDataModel.EntityPOCOs.User;
 using WebFreight.Web;
 using Logitude.XSD.CW_API.ABM;
 using Logitude.BL.InvoiceModel.Tools;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.BL.Helpers
 {
@@ -50,6 +52,7 @@ namespace Logitude.BL.Helpers
 
         private readonly bool IsAutomation;
         private int Tenant;
+        public bool isInterestReport = false;
 
         public DocumentHelper(bool isAutomation = false )
         {
@@ -418,7 +421,14 @@ namespace Logitude.BL.Helpers
                 userId = loggedUser.Id;
             }
             try {
-                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, "חשבונית חתומה", null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id, null, null, null);
+                InterestReport interestReport = new InterestReport();
+                if (this.isInterestReport && arinvocie.ARInvoiceTypeCode=="IT")
+                {
+                   
+                    InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
+                    interestReport = interestReportRepository.GetSingleByARInvoiceId(arinvocie.Id, tenant);
+                }
+                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, "חשבונית חתומה", null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id+","+ interestReport?.Id , null, null, null);
                 if (!string.IsNullOrEmpty(documentId))
                 {
                     arinvocie.IsSigned = "3";

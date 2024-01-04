@@ -476,10 +476,9 @@
   </Column>
   <Column
     Name="SendingInterestReport"
-    Type="varchar"
-    Size="40">
+    Type="float">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"

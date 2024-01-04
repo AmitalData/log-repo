@@ -229,6 +229,8 @@ export class ContactItemClass {
         this.CheckPrimary();
         if(fatherComponent != null) {
             this.CheckEmailForSending(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'])
+            this.CheckSendingInterestReport(this.fatherComponent.EntityPM['SendingInterestReport'])
+
         }
       
     }
@@ -258,7 +260,7 @@ export class ContactItemClass {
     
     public IsPrimary: boolean = false;
     public EmailForSending : boolean = false;
-
+    public SendingInterestReport : boolean = false;
     CheckPrimary() {
 
         var isPrimary = false;
@@ -293,6 +295,14 @@ export class ContactItemClass {
         });
     }
 
+    SetSendingInterestReport() {
+        this.fatherComponent.EntityPM['SendingInterestReport'] = this.Id;
+        var myCardContactId = this.Id;
+        this.fatherComponent.ItemsSource.forEach(item => {
+            item.CheckSendingInterestReport(myCardContactId);
+        });
+    }
+
     CheckEmailForSending(myCardContactId: string=null) {
         var emailForSending = false; 
         if (this.fatherComponent && this.fatherComponent.EntityPM) {
@@ -304,6 +314,18 @@ export class ContactItemClass {
         }
      
         this.EmailForSending = emailForSending;
+    }
+    CheckSendingInterestReport(myCardContactId: string=null) {
+        var sendingInterestReport = false; 
+        if (this.fatherComponent && this.fatherComponent.EntityPM) {
+            if (!AppTool.IsNullOrEmpty(myCardContactId)) {
+                if (myCardContactId == this.Id) {
+                    sendingInterestReport = true;
+                }
+            }
+        }
+     
+        this.SendingInterestReport = sendingInterestReport;
     }
 }
 

@@ -49,6 +49,8 @@ using Logitude.Accounting.Def.EntityPMs;
 using System.Linq.Dynamic.Core;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityPOCOs;
+using Customer = Simplog.Data.CommonDataModel.EntityPOCOs.Customer;
+using Microsoft.TeamFoundation.Common;
 
 namespace WebFreight.Web.App_Code.AngularJS_App_Code
 {
@@ -316,9 +318,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        DocumentHelper documentHelper = new DocumentHelper();
         public void CheckDetailsToHSM(string documentOutId,int tenant, FullAccountingSettingPM accountingSettings)
         {
-            DocumentHelper documentHelper = new DocumentHelper();
+           
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
             ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
 
@@ -359,16 +362,20 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code
             ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
 
             if (string.IsNullOrEmpty(Billto)) return "";
-            var EmailForSendingSingArinvoice = (from customer in objectContext.Customers
+            Customer myCustomer = (from customer in objectContext.Customers
                                                 where customer.Id == Billto
                                                 // join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
-                                                select customer.EmailForSendingSingArinvoice).FirstOrDefault();
+                                                select customer).FirstOrDefault();
             string email = "";
-            if (!string.IsNullOrEmpty(EmailForSendingSingArinvoice))
+            if (myCustomer!=null && !string.IsNullOrEmpty(myCustomer.EmailForSendingSingArinvoice))
             {
-                  email = objectContext.Contacts.Where(contact => contact.Id == EmailForSendingSingArinvoice ).FirstOrDefault().Email;
-                if(!string.IsNullOrEmpty(email))
-                   return email;
+                  email = objectContext.Contacts.Where(contact => contact.Id == myCustomer.EmailForSendingSingArinvoice).FirstOrDefault().Email;
+                if (!string.IsNullOrEmpty(email))
+                {
+                    documentHelper.isInterestReport = myCustomer.SendingInterestReport!=null ? true:false;
+                    return email;
+                }
+                
             }
             return email;
         }
