@@ -1175,11 +1175,13 @@
     <Compile Include="EntityDataMappings\VendorTypeDataMapping.cs" />
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
+    <Compile Include="EntityQueryServices\CertificateOfOriginInvoiceQueryService.cs" />
     <Compile Include="EntityQueryServices\CertificateOfOriginStatusCodeEnumQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientItemQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CurrencyTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CustomDocumentTypeTenantQueryService.cs" />
+    <Compile Include="EntityQueryServices\CertificateOfOriginQueryService.cs" />
     <Compile Include="EntityQueryServices\DeclarationStatusQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CertificateOfOriginInvoiceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CertificateOfOriginItemQueryService.Generated.cs" />
@@ -1736,8 +1738,10 @@
     <Compile Include="EntityQueryServices\VendorCommissionQueryService.cs" />
     <Compile Include="EntityQueryServices\VendorCurrencyQueryService.cs" />
     <Compile Include="EntityUpdateServices\CertificateOfOriginStatusCodeEnumUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CertificateOfOriginInvoiceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\CertificateOfOriginUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginInvoiceUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginItemUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginStatusCodeEnumUpdateService.Generated.cs" />

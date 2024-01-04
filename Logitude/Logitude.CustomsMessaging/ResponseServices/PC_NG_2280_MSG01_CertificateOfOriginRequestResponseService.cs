@@ -25,6 +25,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback customResponse, CertificateOfOriginRequestRequestParams requestParams)
         {
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
+			CertificateOfOriginUpdateService certificateOfOriginUpdateService = new CertificateOfOriginUpdateService(requestParams.Tenant);
 
 			CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(requestParams.Tenant);
 			var certificateOfOriginPM = certificateOfOriginQueryService.GetSingle(requestParams.CertificateOfOriginId, true, false);
@@ -80,8 +81,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 			}
 
+			certificateOfOriginUpdateService.Update(certificateOfOriginPM,true);
 
-            this.MyResponseData = new INF_MSG_GenericResponseData();
+			this.MyResponseData = new INF_MSG_GenericResponseData();
             this.MyResponseData.Succeeded = true;
             this.MyResponseData.HasException = false;
             this.MyResponseData.ApplicationID = requestParams.CertificateOfOriginId; 
