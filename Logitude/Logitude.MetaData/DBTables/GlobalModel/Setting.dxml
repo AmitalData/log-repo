@@ -532,4 +532,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="TaxesRediractUrl"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

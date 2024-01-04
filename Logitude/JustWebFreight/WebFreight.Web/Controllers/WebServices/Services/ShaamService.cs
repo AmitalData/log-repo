@@ -10,10 +10,11 @@ namespace WebFreight.Web.Controllers.WebServices.Services
     public class ShaamService
     {
         string AmitalTaxesUrl = new SettingQuery().GetSinglePMFromCahche().AmitalTaxesUrl;
+        string TaxesRediractUrl = new SettingQuery().GetSinglePMFromCahche().TaxesRediractUrl;
 
         public HttpClienResponse LinkToCodeForToken(int tenant, string user)
         {
-            string url = $"taxes/linkToCodeForNewToken?user={user}";
+            string url = $"taxes/linkToCodeForNewToken?user={user.Trim()}&rediractUrl={TaxesRediractUrl}";
             HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Get);
             return res;
         }
@@ -27,7 +28,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
 
         public HttpClienResponse NewRefreshToken(int tenant, string user, string code)
         {
-            string url = $"taxes/createNewRefreshToken?user={user}&code={code}";
+            string url = $"taxes/createNewRefreshToken?user={user}&code={code}&rediractUrl={TaxesRediractUrl}";
             HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Post);
             return res;
         }
