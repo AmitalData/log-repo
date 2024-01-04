@@ -980,7 +980,7 @@ namespace Logitude.Customs.Data.Repsitories
            
            
         }
-        public Declaration GetLastDeclarationByDeclarationId(string id, int tenant, bool isExport = false)
+        public Declaration GetLastDeclarationByDeclarationId(string id, int tenant, bool isExport = false, bool? IsDCA = false)
         {
             if (String.IsNullOrWhiteSpace(id)) return null;
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
@@ -989,7 +989,7 @@ namespace Logitude.Customs.Data.Repsitories
                 return
                  (
                  from rec in context.Declarations
-                 where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && (rec.AmendmentStatus == null || rec.AmendmentStatus == "6")
+                 where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && rec.AmendmentStatus == "6")||(IsDCA == false && rec.AmendmentStatus == null))
                  select rec
                  ).OrderByDescending(x => x.CreateDateTime)
                  .FirstOrDefault();
@@ -997,8 +997,8 @@ namespace Logitude.Customs.Data.Repsitories
             return
                   (
                   from rec in context.Declarations
-                  where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant
-                  select rec
+                  where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && rec.AmendmentStatus == "1") || (IsDCA == false))
+				  select rec
                   ).OrderByDescending(x => x.CreateDateTime)
                   .FirstOrDefault();
         }
