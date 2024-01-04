@@ -190,11 +190,9 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
-        // logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/CertificateOfOrigin');
         // logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOrigin/CertificateOfOrigin');
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent');
 
-        // logWindow.Show('./CustomsModules/CustomsClient/Components/EditTabs/ClientEditComponent');
 
         logWindow.WindowClosed.subscribe(($event: any) => {
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
@@ -255,8 +253,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
             // }
 
         }
-        else
-            this.OnRowSelected(this.CertificateOfOrigins[0]);
+        // else
+        //     this.OnRowSelected(this.CertificateOfOrigins[0]);
     }
 
     public SelectedRow: CertificateOfOriginPM = null;
