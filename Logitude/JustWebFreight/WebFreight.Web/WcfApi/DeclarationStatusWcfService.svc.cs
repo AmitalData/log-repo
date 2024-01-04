@@ -54,7 +54,7 @@ namespace WebFreight.Web.WcfApi
                     StatusCodeRepository StatusCodeRepository = new StatusCodeRepository(objectContext);
 
 
-                    Declaration entityPoco = declarationRepository.GetByCustomFileNo(customFileNo, tenant);
+                    Declaration entityPoco = declarationRepository.GetOriginalDeclarationByCustomFileNo(customFileNo, tenant);
                     if (entityPoco != null)
                     {
                         //var oldDeclarationStatusesIds = declarationStatusRepository.GetIdsByDeclarationIdAndTenant(tenant, entityPoco.Id);
