@@ -1392,6 +1392,7 @@
     <Compile Include="Controllers\Test\TestController.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuoteOPDomainController.cs" />
+    <Compile Include="Controllers\WebServices\Services\AllocateInvoiceService.cs" />
     <Compile Include="Controllers\WebServices\Services\ShaamService.cs" />
     <Compile Include="Controllers\WebServices\ShaamWebServiceController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
