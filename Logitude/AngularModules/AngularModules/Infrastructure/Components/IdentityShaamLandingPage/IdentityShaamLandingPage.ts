@@ -1,4 +1,5 @@
 import { Component } from "@angular/core";
+import { AmitalGatewayUtil } from "Infrastructure/Utilities/AmitalGatewayUtil";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { ShaamWebService } from "Shipment/Services/ShaamWebService";
@@ -42,5 +43,12 @@ export class IdentityShaamLandingPageComponent {
         } finally {
             this.loadingNotfinish = false;
         }
+
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "", "",
+            'createNewRefreshTokenFinish',
+            AmitalGatewayUtil.Instance.GetDefaultUnifreightMessageM(),
+            JSON.stringify({success: !this.error}),
+            false);
     }
 }

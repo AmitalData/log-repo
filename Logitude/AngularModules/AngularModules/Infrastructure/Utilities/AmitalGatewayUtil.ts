@@ -61,12 +61,7 @@ export class AmitalGatewayUtil {
         }*/
     }
     NoteUnifreightIamReady() {
-        if(window.parent) {
-            window.parent.postMessage("site ready", '*');
-            
-            if(window.parent.parent)
-                window.parent.parent.postMessage("site ready", '*');
-        }
+        this.sendPostMessage("amitalBackButtonClicked");
 
         let myRequestWrapper = new RequestWrapperM();
         myRequestWrapper.MessageID = "NoteUnifreightIamReady";
@@ -272,7 +267,7 @@ export class AmitalGatewayUtil {
     }
     public SendRequestToUnifreightAsync(
         SenderID: string, ReceiverID: string, MessageID: string,
-        unifreightMessageM: UnifreightMessageM, MoreParams: string) {
+        unifreightMessageM: UnifreightMessageM, MoreParams: string, showAlert: boolean = true) {
 
 
         let requestWrapper = new RequestWrapperM()
@@ -281,13 +276,14 @@ export class AmitalGatewayUtil {
         requestWrapper.MessageID = MessageID;
         requestWrapper.UnifreightMessage = unifreightMessageM;
         requestWrapper.MoreParams = MoreParams;
-
-        this.SendRequestJSONToUnifreightAsync(requestWrapper);
+    
+        this.sendPostMessage(MoreParams);
+        this.SendRequestJSONToUnifreightAsync(requestWrapper, showAlert);
     }
 
-    SendRequestJSONToUnifreightAsync(myRequestWrapper: RequestWrapperM) {
+    SendRequestJSONToUnifreightAsync(myRequestWrapper: RequestWrapperM, showAlert: boolean = true) {
         try {            
-            if (AppTool.IsNullOrEmpty(window.parent._JavascriptGateway)) {
+            if (AppTool.IsNullOrEmpty(window.parent._JavascriptGateway) && showAlert) {
                 alert("_JavascriptGateway not exist !!!");
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 return;
@@ -300,11 +296,7 @@ export class AmitalGatewayUtil {
     }
     public IsAmitalBackButtonDisable: boolean = false;
     AmitalBackButtonClicked() {
-        if(window.parent) {
-            window.parent.postMessage("amitalBackButtonClicked", '*');
-            if(window.parent.parent)
-                window.parent.parent.postMessage("amitalBackButtonClicked", '*');
-        }
+        this.sendPostMessage("amitalBackButtonClicked");
 
         let RequestWrapper = new RequestWrapperM()
         let myUnifreightMessageM = new UnifreightMessageM();
@@ -322,6 +314,16 @@ export class AmitalGatewayUtil {
     public IsTabCA23: boolean = true;//the 1st tab ==> the default tab !!
     public _LastUnifreightMessageM: UnifreightMessageM;
     
+    private sendPostMessage(messageID: string, moreParams?: string): void {
+        if (!window.parent) return;
+        
+        const msg = { messageID: messageID, moreParams: moreParams };
+        window.parent.postMessage(msg, '*');
+            
+        if (window.parent.parent)
+            window.parent.parent.postMessage(msg, '*');
+    }
+
     UnifaceRequest(myParam, myEditTab, change2EditTab: () => void, change2CA23Tab: () => void) {
         const MaintenanceMenu: string = "General.MH.Maintenance";
         let unifreightMessage: UnifreightMessageM = myParam;
