@@ -11,6 +11,7 @@ namespace WebFreight.Web.WcfApi
     public class ShaamWcfService : IShaamWcfService
     {
         ShaamService shaamService = new ShaamService();
+        AllocateInvoiceService allocateInvoiceService = new AllocateInvoiceService();
 
         public ApiToShaamRes CreateConfirmationNumber(string invoiceJson, int tenant)
         {
@@ -18,7 +19,7 @@ namespace WebFreight.Web.WcfApi
             try
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                HttpClienResponse apiToShaamRes = shaamService.CreateConfirmationNumber(invoiceJson, tenant);
+                HttpClienResponse apiToShaamRes = allocateInvoiceService.CreateConfirmationNumber(invoiceJson, tenant);
 
                 if (apiToShaamRes.Res.StatusCode != HttpStatusCode.OK)
                 {

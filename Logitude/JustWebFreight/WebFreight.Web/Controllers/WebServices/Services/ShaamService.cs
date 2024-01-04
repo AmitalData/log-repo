@@ -33,9 +33,9 @@ namespace WebFreight.Web.Controllers.WebServices.Services
             return res;
         }
 
-        public HttpClienResponse CreateConfirmationNumber(string invoiceJson, int tenant, int? confirmationTokenLogId = null)
+        public HttpClienResponse CreateConfirmationNumber(string invoiceJson, int tenant, string confirmationTokenLogId, string communicationLogId)
         {
-            string url = $"taxes/createConfirmationNumber?confirmationTokenLogId={confirmationTokenLogId}";
+            string url = $"taxes/createConfirmationNumber?confirmationTokenLogId={confirmationTokenLogId}&communicationLogId={communicationLogId}";
             HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Post, invoiceJson);
             return res;
         }

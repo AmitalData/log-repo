@@ -14,6 +14,7 @@ namespace WebFreight.Web.Controllers.WebServices
     public class ShaamWebServiceController : ApiController
     {
         ShaamService shaamService = new ShaamService();
+        AllocateInvoiceService allocateInvoiceService = new AllocateInvoiceService();
 
         [HttpGet]
         [Route("linkToCodeForToken")]
@@ -63,12 +64,12 @@ namespace WebFreight.Web.Controllers.WebServices
 
         [HttpPost]
         [Route("createConfirmationNumber")]
-        public HttpResponseMessage CreateConfirmationNumber([FromBody] dynamic body, int? confirmationTokenLogId = null)
+        public HttpResponseMessage CreateConfirmationNumber([FromBody] dynamic body)
         {
             return TryCatchWrapper((tenant) =>
             {
                 string invoiceJson = Convert.ToString(body);
-                HttpClienResponse apiToShaamRes = shaamService.CreateConfirmationNumber(invoiceJson, tenant.Value, confirmationTokenLogId);
+                HttpClienResponse apiToShaamRes = allocateInvoiceService.CreateConfirmationNumber(invoiceJson, tenant.Value);
                 return apiToShaamRes;
             });
         }
