@@ -21,6 +21,7 @@ import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 import { ThresholdTypes } from 'InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent';
+import { HostScreenService } from 'Common/Components/HostScreen/HostScreenService';
 
 @Component({
     
@@ -940,24 +941,12 @@ export class MaintenanceComponent {
         if (item) {
             switch (item.Code) {
                 case "SHAAM_LOGS": {
-                        const logWindow = new LogitudeWindow();
-                        logWindow.WindowArgs = { logitudeCommandId: 'ConfirmationNumberTokenLog', windowInstance: logWindow };
-                        logWindow.Width = window.outerWidth;
-                        logWindow.Height = window.outerHeight;
-                        logWindow.Title = TextCodeTranslator.Translate('General.MC.Logs');
-                        logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/HostScreen/HostScreenComponent');
-                        break;
-                    }
-                    
-                    case "SHAAM_TOKEN": {                        
-                        const logWindow = new LogitudeWindow();
-                        logWindow.WindowArgs = { logitudeCommandId: 'CreateNewShaamToken', windowInstance: logWindow };
-                        logWindow.Width = window.outerWidth;
-                        logWindow.Height = window.outerHeight;
-                        logWindow.Title = TextCodeTranslator.Translate('General.MC.TokenManagement');
-                        logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/HostScreen/HostScreenComponent');
+                    HostScreenService.open(TextCodeTranslator.Translate('General.MC.Logs'),'ConfirmationNumberTokenLog');
+                    break;
+                }
+                
+                case "SHAAM_TOKEN": {                        
+                    HostScreenService.open(TextCodeTranslator.Translate('General.MC.TokenManagement'),'CreateNewShaamToken');                        
                     break;
                 }
 
@@ -1579,7 +1568,7 @@ export class MaintenanceComponent {
                 }
                 case "MRCF": {
                     var logitudeWindow = new LogitudeWindow();
-                    logitudeWindow.Title = "קליטת קובץ אישורים מאיקאה להצהרה";
+                    logitudeWindow.Title = "קליטת קובץ םישורים מםיקםה להצהרה";
                     logitudeWindow.ShowCloseButton = true;
                     logitudeWindow.Height = 600;
                     logitudeWindow.Width = 700;
@@ -1623,7 +1612,7 @@ export class MaintenanceComponent {
                         confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
                         confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.General.B.Cancel");
                         confirmWindow.ShowNoButton
-                        confirmWindow.Show("לעדכן נתוני יבואנים במערכת?");
+                        confirmWindow.Show("לעדכן נתוני יבוםנים במערכת?");
                         confirmWindow.WindowClosed.subscribe((event: any) => {
                             if (confirmWindow.Yes) {
 
@@ -1896,8 +1885,8 @@ export class MaintenanceComponent {
                     //LogitudeEntityNumber = 1 - 211622·;
                     //LogitudeViewModel = UnifreightMassageHandler·;
                     //LogitudeCommandId = CreateInvoiceCommand·;
-                    //formtitle = הצהרת יבוא"
-                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבוא"}';
+                    //formtitle = הצהרת יבום"
+                    var json = '{"UnifreightEntity"  :  "CFIFILEM" , "UnifreightEntityNumber"  :  "93320020" , "LogitudeEntity"  :  "Customs.Declaration" , "LogitudeEntityNumber"  :  "1-5415" , "LogitudeViewModel"  :  "UnifreightMassageHandler" , "LogitudeCommandId"  :  "CreateInvoiceCommand" , "formtitle"  :  "הצהרת יבום"}';
                     
                     var objParams = JSON.parse(json);
                     objParams.Requset = new Array();

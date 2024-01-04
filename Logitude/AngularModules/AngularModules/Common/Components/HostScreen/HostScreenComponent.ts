@@ -12,7 +12,7 @@ import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator"
     styles: []
 })
 export class HostScreenComponent {
-    @ViewChild('iframe') iframe!: ElementRef<HTMLIFrameElement>;
+    // @ViewChild('iframe') iframe!: ElementRef<HTMLIFrameElement>;
     urlLoignToExport: SafeResourceUrl = '';
     confirmationNumberTokenLogIsOpen: boolean = false;
     logitudeCommandId: string = '';
@@ -33,10 +33,12 @@ export class HostScreenComponent {
 
     @HostListener('window:message', ['$event'])
     onMessage(message: MessageEvent) {
-        if (message.data === 'amitalBackButtonClicked')
+        const data: PostMessageData = message.data;
+
+        if (data?.messageID === 'amitalBackButtonClicked')
             this.closeWindow();
 
-        if (message.data === 'site ready')
+        if (data?.messageID === 'site ready')
             this.sendLogitudeCommand(message.source as Window);
     }
 
@@ -68,4 +70,9 @@ export class HostScreenComponent {
 
         return new Promise<void>(res => msgWin.WindowClosed.subscribe(() => res()));
     }
+}
+
+export type PostMessageData = {
+    messageID?: string, 
+    moreParams?: string
 }
