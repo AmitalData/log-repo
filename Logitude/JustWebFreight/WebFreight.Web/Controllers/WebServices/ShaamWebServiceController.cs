@@ -21,7 +21,7 @@ namespace WebFreight.Web.Controllers.WebServices
         {
             return TryCatchWrapper((tenant) =>
             {
-                HttpClienResponse apiToShaamRes = shaamService.LinkToCodeForToken(tenant, user);
+                HttpClienResponse apiToShaamRes = shaamService.LinkToCodeForToken(tenant.Value, user);
                 return apiToShaamRes;
             }, true);
         }
@@ -32,9 +32,11 @@ namespace WebFreight.Web.Controllers.WebServices
         {
             try
             {
-                int tenant = GetTenantFromToken();
+                int? tenant = GetTenantFromToken();
+                if (tenant == null)
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized);
 
-                HttpClienResponse apiToShaamRes = shaamService.Tokens(tenant, pageSize, page);
+                HttpClienResponse apiToShaamRes = shaamService.Tokens(tenant.Value, pageSize, page);
 
                 if (apiToShaamRes.Res.StatusCode != HttpStatusCode.OK)
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception(apiToShaamRes.Content)));
@@ -54,9 +56,9 @@ namespace WebFreight.Web.Controllers.WebServices
         {
             return TryCatchWrapper((tenant) =>
             {
-                HttpClienResponse apiToShaamRes = shaamService.NewRefreshToken(tenant, body.user, body.code);
+                HttpClienResponse apiToShaamRes = shaamService.NewRefreshToken(body.tenant, body.user, body.code);
                 return apiToShaamRes;
-            });           
+            }, false, false);
         }
 
         [HttpPost]
@@ -66,16 +68,18 @@ namespace WebFreight.Web.Controllers.WebServices
             return TryCatchWrapper((tenant) =>
             {
                 string invoiceJson = Convert.ToString(body);
-                HttpClienResponse apiToShaamRes = shaamService.CreateConfirmationNumber(invoiceJson, tenant, confirmationTokenLogId);
+                HttpClienResponse apiToShaamRes = shaamService.CreateConfirmationNumber(invoiceJson, tenant.Value, confirmationTokenLogId);
                 return apiToShaamRes;
             });
         }
 
-        private HttpResponseMessage TryCatchWrapper(Func<int, HttpClienResponse> func, bool returnContent = false)
+        private HttpResponseMessage TryCatchWrapper(Func<int?, HttpClienResponse> func, bool returnContent = false, bool authorize = true)
         {
             try
             {
-                int tenant = GetTenantFromToken();
+                int? tenant = GetTenantFromToken();
+                if (tenant == null && authorize)
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized);
 
                 HttpClienResponse apiToShaamRes = func(tenant);
 
@@ -90,17 +94,25 @@ namespace WebFreight.Web.Controllers.WebServices
             }
         }
 
-        private int GetTenantFromToken()
+        private int? GetTenantFromToken()
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-            return authToken.Tenant;
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                return authToken.Tenant;
+            }
+            catch (Exception)
+            {
+                return null;
+            }
         }
 
         public class NewRefreshTokenBody
         {
             public string user { get; set; }
             public string code { get; set; }
+            public int tenant { get; set; }
         }
     }
 }

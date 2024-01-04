@@ -111,6 +111,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                           ReportsRunUsingWR = a.ReportsRunUsingWR,
                           AmitalTaxesUrl = a.AmitalTaxesUrl,
                           PrivateKey = a.PrivateKey,
+                          TaxesRediractUrl = a.TaxesRediractUrl,
                       }).FirstOrDefault();
 
             return entity;
