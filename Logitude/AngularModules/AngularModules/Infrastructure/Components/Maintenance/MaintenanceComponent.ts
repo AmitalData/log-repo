@@ -20,6 +20,7 @@ import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
+import { HostScreenService } from 'Common/Components/HostScreen/HostScreenService';
 
 @Component({
     
@@ -951,24 +952,12 @@ export class MaintenanceComponent {
         if (item) {
             switch (item.Code) {
                 case "SHAAM_LOGS": {
-                        const logWindow = new LogitudeWindow();
-                        logWindow.WindowArgs = { logitudeCommandId: 'ConfirmationNumberTokenLog', windowInstance: logWindow };
-                        logWindow.Width = window.outerWidth;
-                        logWindow.Height = window.outerHeight;
-                        logWindow.Title = TextCodeTranslator.Translate('General.MC.Logs');
-                        logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/HostScreen/HostScreenComponent');
-                        break;
-                    }
-                    
-                    case "SHAAM_TOKEN": {                        
-                        const logWindow = new LogitudeWindow();
-                        logWindow.WindowArgs = { logitudeCommandId: 'CreateNewShaamToken', windowInstance: logWindow };
-                        logWindow.Width = window.outerWidth;
-                        logWindow.Height = window.outerHeight;
-                        logWindow.Title = TextCodeTranslator.Translate('General.MC.TokenManagement');
-                        logWindow.IsShowCloseButton = true;
-                        logWindow.Show('./Common/Components/HostScreen/HostScreenComponent');
+                    HostScreenService.open(TextCodeTranslator.Translate('General.MC.Logs'),'ConfirmationNumberTokenLog');
+                    break;
+                }
+                
+                case "SHAAM_TOKEN": {                        
+                    HostScreenService.open(TextCodeTranslator.Translate('General.MC.TokenManagement'),'CreateNewShaamToken');                        
                     break;
                 }
 
