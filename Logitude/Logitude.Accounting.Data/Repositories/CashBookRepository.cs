@@ -237,6 +237,13 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.AccountId == accountId && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
+        public bool CheckIfGlAccountExistsInCashBook(string accountId, int tenant)
+        {
+
+            return (from a in context.CashBooks
+                    where a.AccountId == accountId  && a.Tenant == tenant
+                    select a).Any();
+        }
     }
 
 }
