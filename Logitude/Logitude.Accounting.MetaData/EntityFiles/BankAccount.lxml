@@ -3665,6 +3665,12 @@
       LocalDefaultText="&quot;לא ניתן לשנות את מטבע הכרטיס מכיוון שהוא כבר מחובר לחשבון בנק&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;BankAccounts.O.PreventChangingToIsMultiCurrency&quot;"
+      DefaultText="&quot;The GLAccount is connected to a Bank Account or CashBook , you can't change the currency to is multi&quot;"
+      LocalDefaultText="&quot;לא ניתן לשנות כרטיס זה לכרטיס רב מטבעי מכיוון שהוא מחובר לחשבון בנק/קופה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
