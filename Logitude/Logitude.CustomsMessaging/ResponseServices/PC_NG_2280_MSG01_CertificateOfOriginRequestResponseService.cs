@@ -7,6 +7,13 @@ using Logitude.Customs.BL.EntityUpdateServices;
 using Simplog.Server.Infrastructure;
 using System.Collections.Generic;
 using UnifreightIIG.Common.CertificateOfOriginRequestServiceReference;
+using Logitude.Customs.BL.BL;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Server.Tools.Helpers;
+using System.Diagnostics;
+using System.Linq;
+using Logitude.AmitalMessaging.Utils;
+using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -18,13 +25,69 @@ namespace Logitude.CustomsMessaging.ResponseServices
         public override void Update(PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback customResponse, CertificateOfOriginRequestRequestParams requestParams)
         {
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
-            bool hasException = customResponse.ResponseContentHeader.Exception != null;
+			CertificateOfOriginUpdateService certificateOfOriginUpdateService = new CertificateOfOriginUpdateService(requestParams.Tenant);
 
-            this.MyResponseData = new INF_MSG_GenericResponseData();
+			CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(requestParams.Tenant);
+			var certificateOfOriginPM = certificateOfOriginQueryService.GetSingle(requestParams.CertificateOfOriginId, true, false);
+
+			if (certificateOfOriginPM == null)
+			{
+				LogMessagingUtil.Instance.AppendLine("Can not find certificateOfOrigin" + requestParams.CertificateOfOriginId);
+				this.MyResponseData.ApplicationID = requestParams.CertificateOfOriginId;
+				this.MyResponseData.Succeeded = true;
+				this.MyResponseData.UserMessage = "Can not find certificateOfOrigin" + requestParams.CertificateOfOriginId;
+				return;
+			}
+
+			if (customResponse.ResponseContentHeader.Exception != null)
+			{
+					string userMessage = "";
+
+				foreach (UnifreightIIG.Common.CertificateOfOriginRequestServiceReference.Exception exception in customResponse.ResponseContentHeader.Exception)
+				{
+					if (!string.IsNullOrWhiteSpace(userMessage))
+					{
+						userMessage = userMessage + @"";
+					}
+					userMessage = userMessage + exception.ExeptionDescription;
+					var ErrorXml = XmlGenericUtil<UnifreightIIG.Common.CertificateOfOriginRequestServiceReference.Exception>.SerializeObject(exception);
+
+					if (string.IsNullOrEmpty(certificateOfOriginPM.ErrXml))
+					{
+						certificateOfOriginPM.ErrXml = ErrorXml;
+					}
+					else
+					{
+						certificateOfOriginPM.ErrXml = string.Concat(certificateOfOriginPM.ErrXml, ErrorXml);
+					}
+				}
+				this.MyResponseData.ApplicationID = requestParams.CertificateOfOriginId;
+				this.MyResponseData.Succeeded = true;
+				this.MyResponseData.UserMessage = userMessage;
+				this.MyResponseData.HasException = true;
+
+					return;
+			}
+				
+			certificateOfOriginPM.COONumber = customResponse.CertificateOfOriginRequestFeedback.certificateID;
+			certificateOfOriginPM.CooStatusCode = customResponse.CertificateOfOriginRequestFeedback.certificateOfOriginStatusCode.ToString();
+			certificateOfOriginPM.FeedbackRemark = customResponse.CertificateOfOriginRequestFeedback.FeedbackRemark;
+			certificateOfOriginPM.RejectCancelReason = customResponse.CertificateOfOriginRequestFeedback.rejectCancelReason;
+			certificateOfOriginPM.QueryUrl = customResponse.CertificateOfOriginRequestFeedback.QueryURL;
+			certificateOfOriginPM.IssueDateIfReleased = customResponse.CertificateOfOriginRequestFeedback.IssueDateIfReleased;
+
+			if (customResponse.Attachment != null)
+			{
+
+			}
+
+			certificateOfOriginUpdateService.Update(certificateOfOriginPM,true);
+
+			this.MyResponseData = new INF_MSG_GenericResponseData();
             this.MyResponseData.Succeeded = true;
-            this.MyResponseData.HasException = hasException;
+            this.MyResponseData.HasException = false;
             this.MyResponseData.ApplicationID = requestParams.CertificateOfOriginId; 
-            this.MyResponseData.UserMessage = hasException ? customResponse.ResponseContentHeader.Exception[0].ExeptionDescription : "המסר התקבל בהצלחה במכס";
+            this.MyResponseData.UserMessage =  "המסר התקבל בהצלחה במכס";
         }
     }
 }

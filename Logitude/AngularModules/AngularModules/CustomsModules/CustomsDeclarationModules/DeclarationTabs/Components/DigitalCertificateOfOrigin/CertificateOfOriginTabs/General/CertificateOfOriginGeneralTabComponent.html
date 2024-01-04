@@ -7,143 +7,32 @@
 <table>
     <tr style="height:300px">
         <td  style="vertical-align:top">
-            <div style="vertical-align:top; margin:5px" *ngIf="Citizen_Visibility">
+            <div style="vertical-align:top; margin:5px">
                 <table style="width:300px" >
                     <tr class="FieldRow">
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
+                            <LogLabel [ObjectFieldName]="'CooTypeCode'" [ObjectTableName]="ObjectTableName"
                                       [DataContext]="DataContext"></LogLabel>
 
 
                         </td>
 
                         <td >
-                            <LogTextBox [ObjectFieldName]="'Code'" [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true" [DataContext]="DataContext" [Text]="Code"></LogTextBox>
-
+                            <LogLov [ObjectFieldName]="'CooTypeCode'"
+                                    [ObjectTableName]="ObjectTableName"
+                                    [DataContext]="DataContext"
+                                    [LookUpTableName]="'Customs.CertificateOfOriginTypeCodeEnum'"
+                                    [SelectedValue]="CooTypeCodes"
+                                    [HideColumns]="true"></LogLov>
                         </td>
                     </tr>
 
-                    <tr class="FieldRow">
-                        <td >
-                            <LogLabel [ObjectFieldName]="'LocalFirstName'" [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"></LogLabel>
+                   
 
-
-                        </td>
-
-                        <td >
-                            <LogTextBox [ObjectFieldName]="'LocalFirstName'" [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true" [DataContext]="DataContext" [Text]="LocalFirstName"></LogTextBox>
-
-                        </td>
-                    </tr>
-
-                    <tr class="FieldRow">
-                        <td >
-                            <LogLabel [ObjectFieldName]="'LocalLastName'" [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"></LogLabel>
-
-
-                        </td>
-
-                        <td >
-                            <LogTextBox [ObjectFieldName]="'LocalLastName'" [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true" [DataContext]="DataContext" [Text]="LocalLastName"></LogTextBox>
-
-                        </td>
-                    </tr>
-
-                    <tr class="FieldRow">
-                        <td >
-                            <LogLabel [ObjectFieldName]="'EnglishFirstName'" [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"></LogLabel>
-
-
-                        </td>
-
-                        <td >
-                            <LogTextBox [ObjectFieldName]="'EnglishFirstName'" [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true" [DataContext]="DataContext" [Text]="EnglishFirstName"></LogTextBox>
-
-                        </td>
-                    </tr>
-
-                    <tr class="FieldRow">
-                        <td >
-                            <LogLabel [ObjectFieldName]="'EnglishLastName'" [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"></LogLabel>
-
-
-                        </td>
-
-                        <td >
-                            <LogTextBox [ObjectFieldName]="'EnglishLastName'" [ObjectTableName]="ObjectTableName"
-                                        [HideColumns]="true" [DataContext]="DataContext" [Text]="EnglishLastName"></LogTextBox>
-
-                        </td>
-                    </tr>
-
-                    <tr class="FieldRow">
-                        <td >
-                            <LogLabel [ObjectFieldName]="'BirthDate'" [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"></LogLabel>
-
-
-                        </td>
-
-                        <td >
-                            <LogDatePicker [ObjectFieldName]="'BirthDate'" [ObjectTableName]="ObjectTableName"
-                                           [DataContext]="DataContext" [HideColumns]="true" [SelectedDateValue]="BirthDate"></LogDatePicker>
-
-                        </td>
-                    </tr>
-
-                    <tr class="FieldRow">
-                        <td >
-                            <LogLabel [ObjectFieldName]="'IsImporter'" [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"></LogLabel>
-
-
-                        </td>
-
-                        <td>
-                            <LogCheckBox [Checked]="IsImporter" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'IsImporter'" [DataContext]="DataContext"></LogCheckBox>
-
-                        </td>
-                    </tr>
-
-                    <tr class="FieldRow">
-                        <td >
-                            <LogLabel [ObjectFieldName]="'IsExporter'" [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"></LogLabel>
-
-
-                        </td>
-
-                        <td>
-                            <LogCheckBox [Checked]="IsExporter" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'IsExporter'" [DataContext]="DataContext"></LogCheckBox>
-
-                        </td>
-                    </tr>
-
-                    <tr class="FieldRow">
-                        <td >
-                            <LogLabel [ObjectFieldName]="'IsActive'" [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"></LogLabel>
-
-
-                        </td>
-
-                        <td>
-                            <LogCheckBox [Checked]="IsActive" [ObjectTableName]="ObjectTableName" [ObjectFieldName]="'IsActive'" [DataContext]="DataContext"></LogCheckBox>
-
-                        </td>
-                    </tr>
                 </table>
             </div>
 
-            <div style="vertical-align:top; margin:5px" *ngIf="Corporation_Visibility" >
+            <!-- <div style="vertical-align:top; margin:5px" *ngIf="Corporation_Visibility" >
                 <table style="width:300px">
                     <tr class="FieldRow">
                         <td style="width:130px">
@@ -269,9 +158,9 @@
                         </td>
                     </tr>
                 </table>
-            </div>
+            </div> -->
 
-            <div style="vertical-align:top; margin:5px" *ngIf="Passport_Visibility">
+            <!-- <div style="vertical-align:top; margin:5px" *ngIf="Passport_Visibility">
                 <table style="width:400px">
                     <tr class="FieldRow">
                         <td style="width:250px">
@@ -491,7 +380,7 @@
                     </tr>
 
                 </table>
-            </div>
+            </div> -->
         </td>
         <td></td>
     </tr>
