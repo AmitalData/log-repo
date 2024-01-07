@@ -169,9 +169,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
 
         public static string BuildConnectionString(ConnectionStringArguments connectionStringArguments)
         {
-            string result = "Data Source=" + connectionStringArguments.Server + 
-                ";Initial Catalog="+connectionStringArguments.Catalog + 
-                ";Integrated Security=False;Persist Security Info=True;User ID=" + connectionStringArguments.UserName + 
+            string result = "Data Source=" + connectionStringArguments.Server +
+                ";Initial Catalog="+connectionStringArguments.Catalog +
+                ";Integrated Security=False;Persist Security Info=True;User ID=" + connectionStringArguments.UserName +
                 ";Password= " + connectionStringArguments.Password + ";MultipleActiveResultSets=True;Connect Timeout=60";
             return result;
         }
@@ -284,10 +284,10 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
                     if (buildCargoArgs.Table.CurrentCondition == ShipmentTable_GetShipmentOrders)
                     {
                         lastUpdateDate = automaticLastUpdateDate.Value.ToString("MM/dd/yyyy hh:mm:ss.fff tt");
-                    } 
+                    }
                     UpdateWaterMarksTable(table, lastUpdateDate, buildCargoArgs.DestinationConnectionString);
-                } 
- 
+                }
+
                 table.IsUpdated = true;
 
             }
@@ -329,6 +329,25 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
                 {
                     sourceConnection.Close();
 
+                }
+            }
+        }
+
+        public static void CopyFromOldTable(CargoTrackingArgs buildCargoArgs, int tenant)
+        {
+            string copyCommand = "";
+            if (buildCargoArgs.MainTableStructureHelper.TableCoulmnsNameWithoutIDentity.Contains("Tenant"))
+            {
+                copyCommand = "INSERT INTO " + buildCargoArgs.Table.Pre_TableName + " (" + buildCargoArgs.Table.CargoTracking_FieldsDBName + ") SELECT " + buildCargoArgs.Table.CargoTracking_FieldsDBName
+                    + " FROM " + buildCargoArgs.Table.Main_CargoTracking_TableName + " where Tenant!= " + tenant;
+                ExecuteSql(copyCommand, buildCargoArgs.DestinationConnectionString);
+            }
+            if (!string.IsNullOrEmpty(buildCargoArgs.Table.Pre_InnerTableName))
+            {
+                if (buildCargoArgs.InnerTableStructureHelper.TableCoulmnsNameWithoutIDentity.Contains("Tenant"))
+                {
+                    copyCommand = "INSERT INTO " + buildCargoArgs.Table.Pre_InnerTableName + " (" + buildCargoArgs.Table.InnerCargoTracking_FieldsDBName + ") SELECT " + buildCargoArgs.Table.InnerCargoTracking_FieldsDBName+" FROM " + buildCargoArgs.Table.Main_CargoTracking_InnerTableName + " where Tenant!= " + tenant;
+                    ExecuteSql(copyCommand, buildCargoArgs.DestinationConnectionString);
                 }
             }
         }

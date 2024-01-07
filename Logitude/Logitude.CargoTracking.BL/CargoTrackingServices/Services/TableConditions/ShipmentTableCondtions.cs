@@ -444,7 +444,12 @@ end)
             }
             else
             {
-                AddTenantAndDateFilter("P", whereConditions, cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value);
+                int tenant = 0;
+                if (cargoTrackingDataBaseArgs.CargoTrackingArguments != null && cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.HasValue)
+                {
+                    tenant = cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value;
+                }
+                AddTenantAndDateFilter("P", whereConditions, tenant);
 
             }
 
@@ -632,7 +637,12 @@ end)
             }
             else
             {
-                AddTenantAndDateFilter("SHO", whereConditions, cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value);
+                int tenant = 0;
+                if (cargoTrackingDataBaseArgs.CargoTrackingArguments != null && cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.HasValue)
+                {
+                    tenant = cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value;
+                }
+                AddTenantAndDateFilter("SHO", whereConditions, tenant);
             }
 
             var whereScript = " WHERE " + string.Join(" AND ", whereConditions);
@@ -647,13 +657,15 @@ end)
         {
             string condition = "(";
             List<CargoTrackingXMLParameters> tenantsList = new List<CargoTrackingXMLParameters>();
-            
-            tenantsList.Add(new CargoTrackingXMLParameters()
-            {
-                ToDate = DateTime.Now.Date,
-                FromDate = DateTime.Now.AddMonths(-6).Date,
-            });
 
+            if (tenant == 0)
+            {
+                tenantsList.Add(new CargoTrackingXMLParameters()
+                {
+                    ToDate = DateTime.Now.Date,
+                    FromDate = DateTime.Now.AddMonths(-6).Date,
+                });
+            }
             tenantsList.AddRange(new TenantManagementQuery(tenant).GetWhereHavePermissionBuildMonths().Select(x => new CargoTrackingXMLParameters()
             {
                 Tenant = x.Id,
@@ -664,9 +676,9 @@ end)
             }));
 
             tenantsList.ForEach(t =>
-            {                
+            {
                 if (t.Tenant != null)
-                    condition += $" OR ( {tableName}.Tenant = {t.Tenant} AND ";
+                    condition += (tenant==0?" OR":"")+ $" ( {tableName}.Tenant = {t.Tenant} AND ";
 
                 string columnCreateDateName = tableName == "SHO" ? "CreateDate" : "CreateDateTime";
                 string createDateWithoutTime = $"DATEADD(dd, DATEDIFF(dd, 0, {tableName}.{columnCreateDateName} ), 0)";
@@ -676,7 +688,7 @@ end)
                 if (t.Tenant != null)
                     condition += ")";
             });
-            
+
             condition += ")";
             whereConditions.Add(condition);
         }
