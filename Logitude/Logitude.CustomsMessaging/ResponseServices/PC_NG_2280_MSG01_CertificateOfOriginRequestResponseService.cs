@@ -14,6 +14,8 @@ using System.Diagnostics;
 using System.Linq;
 using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Logitude.Customs.Data.EntityPOCOs;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -38,6 +40,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				this.MyResponseData.UserMessage = "Can not find certificateOfOrigin" + requestParams.CertificateOfOriginId;
 				return;
 			}
+
+			if (this.MyRequestSheetParam == null)
+			{
+				this.MyRequestSheetParam = new RequestSheetParam();
+			}
+
+			this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+			this.MyRequestSheetParam.EntityId1 = requestParams.DeclarationId;
+			this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CertificateOfOrigin");
+			this.MyRequestSheetParam.EntityId2 = requestParams.CertificateOfOriginId;
+			this.MyRequestSheetParam.CustomFileNo = requestParams.CustomFileNo;
+			this.MyRequestSheetParam.RequestDescription = "משוב לתעודת מקור : " + certificateOfOriginPM.COONumber;
 
 			if (customResponse.ResponseContentHeader.Exception != null)
 			{
@@ -88,6 +102,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyResponseData.HasException = false;
             this.MyResponseData.ApplicationID = requestParams.CertificateOfOriginId; 
             this.MyResponseData.UserMessage =  "המסר התקבל בהצלחה במכס";
-        }
+
+		}
     }
 }
