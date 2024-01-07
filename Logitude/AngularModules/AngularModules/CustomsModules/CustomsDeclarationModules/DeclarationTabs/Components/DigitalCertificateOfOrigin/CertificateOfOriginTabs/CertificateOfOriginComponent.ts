@@ -93,7 +93,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
         this.BuildTabs();
         this.RunComponent();
         this.entityArgs.EntityPM = this.CurrentEntity;
-        this.entityArgs.ObjectTableName = "Customs.Client";
+        this.entityArgs.ObjectTableName = "Customs.CertificateOfOrigin";
 
     }
 
@@ -191,12 +191,22 @@ export class CertificateOfOriginComponent extends BaseComponent {
                         // Add logic for MOREDATA case here
                         break;
                     }
-            
                     case "REQUESTSHEET": {
-                        // Add logic for REQUESTSHEET case here
+                        if (this.REQUESTSHEET == null) {
+                            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+                                SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", myLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        this.REQUESTSHEET = cmpRef.instance;
+                                        this.REQUESTSHEET.IsTitleHidden = false;
+                                        this.REQUESTSHEET.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                                        this.REQUESTSHEET.MyRequestOnly = false;
+                                        this.REQUESTSHEET.SetEntityArgs(this.entityArgs);
+                                    });
+
+                            });
+                        }
                         break;
                     }
-            
                     case "ANSWERTOCERTIFICATE": {
                         // Add logic for ANSWERTOCERTIFICATE case here
                         break;
