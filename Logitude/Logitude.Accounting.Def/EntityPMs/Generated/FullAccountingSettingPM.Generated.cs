@@ -1354,6 +1354,30 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+
+	  private int? amountForConfirmationNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? AmountForConfirmationNumber  
+	   {
+	    
+	     get
+		{
+		   return amountForConfirmationNumber;
+		 }
+		 set
+		 {
+		   if(amountForConfirmationNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AmountForConfirmationNumber",OldValue=amountForConfirmationNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   amountForConfirmationNumber=value;
+		   }
+			
+		 }
+	   }
 	  private bool numberingByChartOfAccount ;
 	  	  
        
@@ -1373,6 +1397,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="NumberingByChartOfAccount",OldValue=numberingByChartOfAccount,NewValue=value,PropertyType="bool"};
 		    NotifyPropertyChanged(values);
 		   numberingByChartOfAccount=value;
+		   }
+			
+		 }
+	   }
+	  private bool oppositeAccountNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool OppositeAccountNumber  
+	   {
+	    
+	     get
+		{
+		   return oppositeAccountNumber;
+		 }
+		 set
+		 {
+		   if(oppositeAccountNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OppositeAccountNumber",OldValue=oppositeAccountNumber,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   oppositeAccountNumber=value;
 		   }
 			
 		 }

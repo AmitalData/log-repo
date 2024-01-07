@@ -63,7 +63,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         HSMtoken, 
 	         HSMaddress, 
 	         AllowEditingExchangeRate, 
-	         NumberingByChartOfAccount,
+
+	         AmountForConfirmationNumber, 
+	         NumberingByChartOfAccount, 
+	         OppositeAccountNumber,
 	      }
 
 
@@ -128,7 +131,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         HSMtoken, 
 	         HSMaddress, 
 	         AllowEditingExchangeRate, 
-	         NumberingByChartOfAccount,
+
+	         AmountForConfirmationNumber, 
+	         NumberingByChartOfAccount, 
+	         OppositeAccountNumber,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -337,9 +343,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.AllowEditingExchangeRate = entityPM.AllowEditingExchangeRate;
 			}
 			
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountForConfirmationNumber))
+            {
+				entityPOCO.AmountForConfirmationNumber = entityPM.AmountForConfirmationNumber;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberingByChartOfAccount))
             {
 				entityPOCO.NumberingByChartOfAccount = entityPM.NumberingByChartOfAccount;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountNumber))
+            {
+				entityPOCO.OppositeAccountNumber = entityPM.OppositeAccountNumber;
 			}
 			}
 
@@ -551,9 +568,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.AllowEditingExchangeRate = entityPOCO.AllowEditingExchangeRate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.AmountForConfirmationNumber))
+            {
+					entityPM.AmountForConfirmationNumber = entityPOCO.AmountForConfirmationNumber;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.NumberingByChartOfAccount))
             {
 					entityPM.NumberingByChartOfAccount = entityPOCO.NumberingByChartOfAccount;
+
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.OppositeAccountNumber))
+            {
+					entityPM.OppositeAccountNumber = entityPOCO.OppositeAccountNumber;
             }
 
 		}
@@ -762,9 +790,20 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 oldEntityPM.AllowEditingExchangeRate = entityPM.AllowEditingExchangeRate;
             }
 			
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountForConfirmationNumber))
+            {
+                oldEntityPM.AmountForConfirmationNumber = entityPM.AmountForConfirmationNumber;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.NumberingByChartOfAccount))
             {
                 oldEntityPM.NumberingByChartOfAccount = entityPM.NumberingByChartOfAccount;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountNumber))
+            {
+                oldEntityPM.OppositeAccountNumber = entityPM.OppositeAccountNumber;
             }
 			
 		}

@@ -97,7 +97,9 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.TaxInstitutionGLAccountId).HasColumnName("TaxInstitutionGLAccountId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.HSM).HasColumnName("HSM").IsMaxLength().IsUnicode(false);
+
+
+            this.Property(t => t.HSM).HasColumnName("HSM");
 
             this.Property(t => t.HSMtoken).HasColumnName("HSMtoken").HasMaxLength(100).IsUnicode(false);
 
@@ -105,7 +107,12 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.AllowEditingExchangeRate).HasColumnName("AllowEditingExchangeRate");
 
+
+            this.Property(t => t.AmountForConfirmationNumber).HasColumnName("AmountForConfirmationNumber");
+
             this.Property(t => t.NumberingByChartOfAccount).HasColumnName("NumberingByChartOfAccount");
+
+            this.Property(t => t.OppositeAccountNumber).HasColumnName("OppositeAccountNumber");
         }
     }
 }

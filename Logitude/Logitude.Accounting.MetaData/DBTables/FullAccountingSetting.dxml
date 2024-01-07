@@ -289,7 +289,19 @@
       Nullable="false" />
   </Column>
   <Column
+    Name="AmountForConfirmationNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="NumberingByChartOfAccount"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="OppositeAccountNumber"
     Type="bit">
     <Constraints
       Nullable="false" />

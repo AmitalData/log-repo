@@ -32,6 +32,7 @@ import { TaxReportExtendedPMService } from '../../../Services/ExtendedPMs/TaxRep
 import { TaxReportPM } from '../../../EntityPMs/TaxReportPM';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { FullAccountingSettingList } from '../../../../Accounting/EntityLists/FullAccountingSettingList';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 @Component({
 
@@ -586,9 +587,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             IsCustomTemplate: true
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference3",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Reference3")));
-
+        
         this.columns.push({
-            FieldName: 'OppositeAccountLocalName',
+            FieldName: this.CheckOppositeAccountIsActive(),
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.OppositeAccountLocalName"),
             Styles: { width: '120px' },
@@ -910,6 +911,11 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             }
 
         });
+    }
+
+ 
+    CheckOppositeAccountIsActive(): string {        
+        return this.fullAccountingSetting.OppositeAccountNumber ? 'OppositeAccountDisplayNumber':'OppositeAccountLocalName';
     }
 
     GetOpenBalanceCurrencySign() {
