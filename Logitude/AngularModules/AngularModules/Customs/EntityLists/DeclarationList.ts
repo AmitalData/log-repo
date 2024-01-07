@@ -238,7 +238,7 @@ export class DeclarationList {
 	SecurityFee: number;
 	ComputerFee: number;
 	EffectiveFlight: boolean;
-	test1: string;
+	Testcustom12: string;
 	
 }
  

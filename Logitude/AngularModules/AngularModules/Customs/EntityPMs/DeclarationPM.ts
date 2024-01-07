@@ -1569,9 +1569,9 @@ export class DeclarationPM {
     public set EffectiveFlight(newValue: boolean) { if (this.effectiveFlight != newValue) { this.effectiveFlight = newValue; this.MarkAsDirty("EffectiveFlight"); } }
        
 	 
-    private test1: string;
-    public get test1() { return this.test1; }
-    public set test1(newValue: string) { if (this.test1 != newValue) { this.test1 = newValue; this.MarkAsDirty("test1"); } }
+    private testcustom12: string;
+    public get Testcustom12() { return this.testcustom12; }
+    public set Testcustom12(newValue: string) { if (this.testcustom12 != newValue) { this.testcustom12 = newValue; this.MarkAsDirty("Testcustom12"); } }
        
 	 
 

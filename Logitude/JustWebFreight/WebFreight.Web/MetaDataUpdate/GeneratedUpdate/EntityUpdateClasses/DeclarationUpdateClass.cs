@@ -87,7 +87,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    {  		
 
 
-		public const string HashString = "14e2135edc018a36c5f91ac98bd4f737";
+		public const string HashString = "69c9999507c610b5034f3e049f813424";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17758,7 +17758,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "test1",
+					 						FieldName =  "Testcustom12",
 					  						ObjectTableName =  "Customs.Declaration",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  15,
@@ -17777,8 +17777,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "test1",
-					  						ListPropertyPath =  "test1",
+					  						PMPropertyPath =  "Testcustom12",
+					  						ListPropertyPath =  "Testcustom12",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -17796,9 +17796,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "test1",
+					  						FullFieldLable =  "Testcustom12",
 					  						DefaultText =  "test 1",
-					  						ListFieldLable =  "test1ListLable",
+					  						ListFieldLable =  "Testcustom12ListLable",
 					  						ListLableDefaultText =  "test 1",
 					  						ListLocalDefaultText =  "טסט",
 					  						IsMaxLength =  false,

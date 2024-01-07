@@ -1104,7 +1104,7 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="test1"
+    Name="Testcustom12"
     Type="nvarchar"
     Size="15">
     <Constraints
