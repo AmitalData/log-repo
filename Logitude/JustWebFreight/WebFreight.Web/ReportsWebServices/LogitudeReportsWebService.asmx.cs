@@ -10424,6 +10424,30 @@ namespace WebFreight.Web.ReportsWebServices
             QueryFilterItem filterItem_level = queryOperations.QueryFilterItems.Where(d => d.FieldName == "Level").FirstOrDefault();
             QueryFilterItem filterItem_card = queryOperations.QueryFilterItems.Where(d => d.FieldName == "CardFilter").FirstOrDefault();
             QueryFilterItem filterItem_fromDate = queryOperations.QueryFilterItems.Where(d => d.FieldName == "FromDate").FirstOrDefault();
+            QueryFilterItem filterItem_ChartOfAccountsIdList = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsIdList").FirstOrDefault();
+            QueryFilterItem filterItem_ChartOfAccountsTypeCodeList = queryOperations.QueryFilterItems.Where(d => d.FieldName == "ChartOfAccountsTypeCodeList").FirstOrDefault();
+
+            //ChartOfAccountsIdList
+            List<string> chartOfAccountsIdList = null;
+            if (filterItem_ChartOfAccountsIdList != null)
+            {
+                if (filterItem_ChartOfAccountsIdList.FieldValue != null)
+                {
+                    var chartOfAccountsCodeListString = (string)filterItem_ChartOfAccountsIdList.FieldValue;
+                    chartOfAccountsIdList = chartOfAccountsCodeListString.Split(',').ToList();
+                }
+            }
+
+            //ChartOfAccountsTypeCodeList
+            List<string> chartOfAccountsTypeCodeList = null;
+            if (filterItem_ChartOfAccountsTypeCodeList != null)
+            {
+                if (filterItem_ChartOfAccountsTypeCodeList.FieldValue != null)
+                {
+                    var chartOfAccountsTypeCodeListString = (string)filterItem_ChartOfAccountsTypeCodeList.FieldValue;
+                    chartOfAccountsTypeCodeList = chartOfAccountsTypeCodeListString.Split(',').ToList();
+                }
+            }
 
             //ToDate
             DateTime? toDate = null;
@@ -10519,13 +10543,18 @@ namespace WebFreight.Web.ReportsWebServices
             totalData.FromDate = fromDate;
             List<RevenueExpenseReportM> result = null;
             List<string> GLAccountParents = new List<string>();
-
+            
             totalData.ResultList = new List<ResultList>();
+            if (chartOfAccountsTypeCodeList != null)
+                revenueExpenseReportParam.ChartOfAccountsTypes = chartOfAccountsTypeCodeList;
+            if(chartOfAccountsIdList != null)
+                revenueExpenseReportParam.ChartOfAccounts = chartOfAccountsIdList;
+
             if (level == "GLAccount")
             {
                 RevenueExpenseReportService servce = new RevenueExpenseReportService(revenueExpenseReportParam, 5);
                 revenueExpenseReportParam.MyRevenueExpenseReportLevel = ReportLevel.GLAccount;
-
+               
 
                 try
                 {
