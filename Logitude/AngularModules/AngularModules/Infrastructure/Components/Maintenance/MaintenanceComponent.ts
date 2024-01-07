@@ -66,7 +66,7 @@ export class MaintenanceComponent {
             this.PagesMenu.push(new Menu("CRM", TextCodeTranslator.Translate("General.MC.CRM.CRM")));
         }
         
-        if (FeatureLocator.HasFeaturePermession("General", "InvoiceConfirmationNumber"))
+        if (FeatureLocator.HasFeaturePermession("General", "SHAAMTOKEN"))
             this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
 
         if (FeatureLocator.HasFeaturePermession("General", "TICKET")) {
@@ -774,7 +774,7 @@ export class MaintenanceComponent {
     }
 
     private BuildShaamTokenManagementMenu() {
-        if (!FeatureLocator.HasFeaturePermession("General", "InvoiceConfirmationNumber")) return;
+        if (!FeatureLocator.HasFeaturePermession("General", "SHAAMTOKEN")) return;
 
         var item = new MenusTablePM();
         item.CategoryTypeCode = "SHA";

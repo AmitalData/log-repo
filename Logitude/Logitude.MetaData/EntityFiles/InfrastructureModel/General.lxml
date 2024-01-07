@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;c309&quot;"
+  Code="&quot;011d&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5091,19 +5091,19 @@
     <TextCode
       Code="&quot;General.MC.ShaamTokenManagement&quot;"
       DefaultText="&quot;SHAAM Token Management&quot;"
-      LocalDefaultText="&quot;&quot;"
+      LocalDefaultText="&quot;שעמ ניהול טוקנים&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.MC.TokenManagement&quot;"
       DefaultText="&quot;Token Management&quot;"
-      LocalDefaultText="&quot;&quot;"
+      LocalDefaultText="&quot;ניהול טוקנים&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.MC.Logs&quot;"
       DefaultText="&quot;Logs&quot;"
-      LocalDefaultText="&quot;&quot;"
+      LocalDefaultText="&quot;לוגים&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
@@ -7144,7 +7144,7 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;InvoiceConfirmationNumber&quot;"
+      Code="&quot;SHAAMTOKEN&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.SHAAMTOKEN&quot;"
       FeatureDefaultText="&quot;שעם טוקן&quot;"
