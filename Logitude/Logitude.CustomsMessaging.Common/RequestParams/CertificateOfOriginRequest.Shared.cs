@@ -12,7 +12,8 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
     public class CertificateOfOriginRequestRequestParams : RequestParamsBase
     {
         public string CertificateOfOriginId { get; set; }
-        public string CustomFileNo { get; set; }
+		public string DeclarationId { get; set; }
+		public string CustomFileNo { get; set; }
         
 
 	}

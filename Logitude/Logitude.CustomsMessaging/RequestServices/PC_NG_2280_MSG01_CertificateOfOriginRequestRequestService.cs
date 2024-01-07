@@ -64,10 +64,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			};
 
 			this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.CertificateOfOrigin");
-            this.MyRequestSheetParam.EntityId1 = requestParams.CertificateOfOriginId;
-            this.MyRequestSheetParam.CustomFileNo = requestParams.CustomFileNo;
-            this.MyRequestSheetParam.RequestDescription = "בקשת תעודת מקור : ";
+			this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+			this.MyRequestSheetParam.EntityId1 = requestParams.DeclarationId;
+			this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CertificateOfOrigin");
+			this.MyRequestSheetParam.EntityId2 = requestParams.CertificateOfOriginId;
+			this.MyRequestSheetParam.CustomFileNo = requestParams.CustomFileNo;
+            this.MyRequestSheetParam.RequestDescription = "בקשת תעודת מקור : " + certificateOfOrigin.COONumber;
 			return myMsg;
 		}
         public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin GetCertificateOfOrigin(CertificateOfOriginPM certificateOfOrigin)
