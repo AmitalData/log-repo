@@ -21685,6 +21685,7 @@
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
     ValidForQuerySection1="&quot;Customs.Declaration&quot;"
+    ValidForQuerySection2="&quot;Customs.ExportDeclaration&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
@@ -22999,7 +23000,7 @@
       <QueryColumn
         QueryCode="&quot;ExportDecWithoutRelease&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;test&quot;"
+        ObjectFieldName="&quot;Testcustom12&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;ExportDecWithoutRelease&quot;"
