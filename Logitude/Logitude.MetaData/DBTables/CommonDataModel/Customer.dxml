@@ -476,7 +476,7 @@
   </Column>
   <Column
     Name="SendingInterestReport"
-    Type="float">
+    Type="bit">
     <Constraints
       Nullable="true" />
   </Column>
