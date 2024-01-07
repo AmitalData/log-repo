@@ -1,7 +1,6 @@
 import { Component } from "@angular/core";
 import { AmitalGatewayUtil } from "Infrastructure/Utilities/AmitalGatewayUtil";
 import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
-import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
 import { ShaamWebService } from "Shipment/Services/ShaamWebService";
 
 @Component({
@@ -35,9 +34,13 @@ export class IdentityShaamLandingPageComponent {
         const code: string = SessionLocator.ExternalParams['code'];
 
         try {
+            if (!user || !code || tenant == null || tenant == undefined)
+                throw `parameter not found - user: ${user}, code: ${code}, tenant: ${tenant}`;
+
             await new ShaamWebService().postNewRefreshToken(tenant, user, code).toPromise();
             this.msg = 'Activate shaam token success, please close this session and connect again';
         } catch (error) {
+            console.log(error)
             this.error = true;
             this.msg = 'Activate shaam token failed, please connact to amital';
         } finally {
@@ -48,7 +51,7 @@ export class IdentityShaamLandingPageComponent {
             "", "",
             'createNewRefreshTokenFinish',
             AmitalGatewayUtil.Instance.GetDefaultUnifreightMessageM(),
-            JSON.stringify({success: !this.error}),
+            JSON.stringify({ success: !this.error }),
             false);
     }
 }
