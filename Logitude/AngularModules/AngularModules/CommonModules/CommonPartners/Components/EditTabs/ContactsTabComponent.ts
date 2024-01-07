@@ -228,8 +228,10 @@ export class ContactItemClass {
         this.IsNewEntity = isNewEntity; 
         this.CheckPrimary();
         if(fatherComponent != null) {
-            this.CheckEmailForSending(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'])
-            this.CheckSendingInterestReport(this.fatherComponent.EntityPM['SendingInterestReport'])
+            
+             this.CheckEmailForSending(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'])
+             if(this.fatherComponent.EntityPM['SendingInterestReport'])
+               this.CheckSendingInterestReport(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice']);
 
         }
       
@@ -288,6 +290,7 @@ export class ContactItemClass {
 
 
     SetEmailForSendingSingArinvoices() {
+        this.fatherComponent.EntityPM['SendingInterestReport'] = false;
         this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'] = this.Id;
         var myCardContactId = this.Id;
         this.fatherComponent.ItemsSource.forEach(item => {
@@ -296,10 +299,11 @@ export class ContactItemClass {
     }
 
     SetSendingInterestReport() {
-        this.fatherComponent.EntityPM['SendingInterestReport'] = this.Id;
+        
+        this.fatherComponent.EntityPM['SendingInterestReport'] = true;
         var myCardContactId = this.Id;
         this.fatherComponent.ItemsSource.forEach(item => {
-            item.CheckSendingInterestReport(myCardContactId);
+           item.CheckSendingInterestReport(myCardContactId);
         });
     }
 
@@ -312,19 +316,19 @@ export class ContactItemClass {
                 }
             }
         }
-     
+         
         this.EmailForSending = emailForSending;
     }
     CheckSendingInterestReport(myCardContactId: string=null) {
         var sendingInterestReport = false; 
         if (this.fatherComponent && this.fatherComponent.EntityPM) {
             if (!AppTool.IsNullOrEmpty(myCardContactId)) {
-                if (myCardContactId == this.Id) {
+                if (myCardContactId == this.Id  ) {
                     sendingInterestReport = true;
                 }
             }
         }
-     
+        
         this.SendingInterestReport = sendingInterestReport;
     }
 }
