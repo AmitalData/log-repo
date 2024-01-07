@@ -176,12 +176,15 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         this.DisplayOnlyCheck();
     }
 
+    selectedCertificateOfOrigin= new CertificateOfOriginPM();
     AddNewCertificateOfOrigin() {
         debugger
         
         //TODO: add new CertificateOfOrigin
+        // on click item get one CertificateOfOrigin
         var args: any = {
-            Declaration: this.EntityPM,
+            Decalaration: this.EntityPM,
+            CertificateOfOrigin: !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin) ? this.selectedCertificateOfOrigin : new CertificateOfOriginPM()
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1000;
@@ -224,6 +227,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         filters.SortDirection = "Ascending";
         filters.addAdditionalFilter("DeclarationNumber", this.EntityPM.DeclarationNumber, null, null, "Equals", false, false, false, "string");
    
+
+        // TODO add tenent.
         this._entityListService.getByFilters("Customs.CertificateOfOrigin", filters).then((myResult:any) => {
             console.log("Response: ", myResult);
             if (myResult == null) {

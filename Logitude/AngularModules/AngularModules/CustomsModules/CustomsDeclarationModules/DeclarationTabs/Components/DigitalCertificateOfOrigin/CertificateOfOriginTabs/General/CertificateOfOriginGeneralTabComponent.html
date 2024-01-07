@@ -1,33 +1,120 @@
-
 <style>
-    .FieldRow{
+    .FieldRow {
         height: 22px;
     }
 </style>
 <table>
     <tr style="height:300px">
-        <td  style="vertical-align:top">
+        <td style="vertical-align:top">
             <div style="vertical-align:top; margin:5px">
-                <table style="width:300px" >
+                <table style="width:800px">
                     <tr class="FieldRow">
                         <td style="width:130px">
                             <LogLabel [ObjectFieldName]="'CooTypeCode'" [ObjectTableName]="ObjectTableName"
-                                      [DataContext]="DataContext"></LogLabel>
-
-
+                                [DataContext]="DataContext"></LogLabel>
                         </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'CooTypeCode'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CertificateOfOriginTypeCodeEnum'"
+                                [SelectedValue]="CooTypeCode" [HideColumns]="true"></LogLov>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'RequestReasonCode'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'RequestReasonCode'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [LookUpTableName]="'Customs.RequestReasonCodeEnum'"
+                                [SelectedValue]="RequestReasonCode" [HideColumns]="true"></LogLov>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'DateOfDeclaration'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
 
-                        <td >
-                            <LogLov [ObjectFieldName]="'CooTypeCode'"
-                                    [ObjectTableName]="ObjectTableName"
-                                    [DataContext]="DataContext"
-                                    [LookUpTableName]="'Customs.CertificateOfOriginTypeCodeEnum'"
-                                    [SelectedValue]="CooTypeCodes"
-                                    [HideColumns]="true"></LogLov>
+                            <LogDatePicker [ObjectFieldName]="'DateOfDeclaration'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext" [HideColumns]="true"></LogDatePicker>
                         </td>
                     </tr>
 
-                   
+                    <tr class="FieldRow"></tr>
+
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'ExporterName'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'ExporterName'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'ConsigneeName'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'ConsigneeName'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+
+                            <LogLov [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="OriginCountry" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomsCountry'">
+                            </LogLov>
+                        </td>
+                    </tr>
+
+                    <tr class="FieldRow"></tr>
+
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'ExporterAddress'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'ExporterAddress'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <!-- <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'ExporterAddress'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogTextBox [ObjectFieldName]="'ExporterAddress'" [DataContext]="DataContext"
+                                [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
+                        </td>
+                        <td></td>
+                        <td></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+
+                            <LogLov [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="OriginCountry" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomsCountry'">
+                            </LogLov>
+                        </td> -->
+                    </tr>
+
 
                 </table>
             </div>
