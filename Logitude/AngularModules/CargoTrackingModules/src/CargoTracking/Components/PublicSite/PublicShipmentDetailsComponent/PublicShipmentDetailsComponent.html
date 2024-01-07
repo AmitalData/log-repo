@@ -63,15 +63,18 @@
             </div>
         </div>
 
-        <div class="field">
+        <div class="field" *ngIf="!TenantMangment?.EcommerceTenant">
             <div class="label"> {{ isShipmentOrder ? 'SHO ID' : 'Shipment ID'}} </div>
             <div class="per-line">{{ Shipment.ShipmentNumber }}</div>
             <div class="per-line">{{ Shipment.ConnectedShipmentsNumbers }}</div>
         </div>
 
         <div class="field">
-            <div class="label">
+            <div class="label" *ngIf="!TenantMangment?.EcommerceTenant">
                 Shipment References
+            </div>
+            <div class="label" *ngIf="TenantMangment?.EcommerceTenant">
+                Shipment Number
             </div>
             <div class="value">
                 <ul *ngIf=" ShipmentReferences">
@@ -468,7 +471,7 @@
                 <h2 class="hide-mobile hide-tablet" *ngIf="!isShipmentOrder">Shipment Details</h2>
                 <h2 class="hide-mobile hide-tablet" *ngIf="isShipmentOrder">SHO Details</h2>
 
-                <div class="field">
+                <div class="field" *ngIf="!TenantMangment?.EcommerceTenant">
                     <div class="label">{{ShipmentLabel}}</div>
                     <div class="value">{{ ShipmentReference}}</div>
                 </div>

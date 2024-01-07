@@ -126,6 +126,8 @@
         public bool AutoArchiveOnInvoice { get; set; }
         public bool AutoArchiveOnPODExport { get; set; }
         public object EcommerceSupportEmail { get; set; }
+        public bool EcommerceTenant { get; set; }
+
         public object CBSA { get; set; }
         public object CAAT { get; set; }
         public bool IsTestTenant { get; set; }

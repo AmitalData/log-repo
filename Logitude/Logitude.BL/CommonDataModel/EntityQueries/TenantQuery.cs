@@ -349,6 +349,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                  
                         NumberFormatCode = tt.NumberFormatCode,
                         EcommerceSupportEmail = tt.EcommerceSupportEmail,
+                        EcommerceTenant = tt.EcommerceTenant,
                         CAAT = tt.CAAT,
                         CBSA = tt.CBSA,
                         IsTestTenant = tt.IsTestTenant,
@@ -524,9 +525,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                
                     TemperatureUnitCode = tt.TemperatureUnitCode,
                     DefaultSLAId = tt.DefaultSLAId,
-                  
+
                     NumberFormatCode = tt.NumberFormatCode,
                     EcommerceSupportEmail = tt.EcommerceSupportEmail,
+                    EcommerceTenant = tt.EcommerceTenant,
+
                     CAAT = tt.CAAT,
                     CBSA = tt.CBSA,
                     IsTestTenant = tt.IsTestTenant,
@@ -694,9 +697,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            TenantVATManagement = a.TenantVATManagement,
                                            TemperatureUnitCode = a.TemperatureUnitCode,
                                            DefaultSLAId = a.DefaultSLAId,
-                                         
+
                                            NumberFormatCode = a.NumberFormatCode,
                                            EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                           EcommerceTenant = a.EcommerceTenant,
+
                                            CAAT = a.CAAT,
                                            CBSA = a.CBSA,
                                            IsTestTenant = a.IsTestTenant,
@@ -855,9 +860,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                      
                                        TemperatureUnitCode = a.TemperatureUnitCode,
                                        DefaultSLAId = a.DefaultSLAId,
-                                   
+
                                        NumberFormatCode = a.NumberFormatCode,
                                        EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                       EcommerceTenant = a.EcommerceTenant,
+
                                        CAAT = a.CAAT,
                                        CBSA = a.CBSA,
                                        IsTestTenant = a.IsTestTenant,
@@ -1020,9 +1027,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                          
                                                TemperatureUnitCode = a.TemperatureUnitCode,
                                                DefaultSLAId = a.DefaultSLAId,
-                                        
+
                                                NumberFormatCode = a.NumberFormatCode,
                                                EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                               EcommerceTenant = a.EcommerceTenant,
+
                                                CAAT = a.CAAT,
                                                CBSA = a.CBSA,
                                                IsTestTenant = a.IsTestTenant,
@@ -1190,13 +1199,15 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                            //DropBoxAccessToken = a.DropBoxAccessToken
                                            FMCNumber = a.FMCNumber,
                                            TenantVATManagement = a.TenantVATManagement,
-                                  
+
                                            TemperatureUnitCode = a.TemperatureUnitCode,
                                            DefaultSLAId = a.DefaultSLAId,
                                         
                                         
                                            NumberFormatCode = a.NumberFormatCode,
                                            EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                           EcommerceTenant = a.EcommerceTenant,
+
                                            CAAT = a.CAAT,
                                            CBSA = a.CBSA,
                                            IsTestTenant = a.IsTestTenant,
@@ -1353,12 +1364,14 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                        //DropBoxAccessToken = a.DropBoxAccessToken
                                        FMCNumber = a.FMCNumber,
                                        TenantVATManagement = a.TenantVATManagement,
-                                    
+
                                        TemperatureUnitCode = a.TemperatureUnitCode,
                                        DefaultSLAId = a.DefaultSLAId,
                                     
                                        NumberFormatCode = a.NumberFormatCode,
                                        EcommerceSupportEmail = a.EcommerceSupportEmail,
+                                       EcommerceTenant = a.EcommerceTenant,
+
                                        CAAT = a.CAAT,
                                        CBSA = a.CBSA,
                                        IsTestTenant = a.IsTestTenant,
@@ -1540,6 +1553,8 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
 
                     NumberFormatCode = myPOCO.NumberFormatCode,
                     EcommerceSupportEmail = myPOCO.EcommerceSupportEmail,
+                    EcommerceTenant = myPOCO.EcommerceTenant,
+
                     CAAT = myPOCO.CAAT,
                     CBSA = myPOCO.CBSA,
                     IsTestTenant = myPOCO.IsTestTenant,
