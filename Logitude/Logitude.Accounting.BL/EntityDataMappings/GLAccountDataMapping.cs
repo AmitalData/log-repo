@@ -90,6 +90,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.BalanceInLocalCurrency = 0;
             }
 
+            if (entityPM.BalanceInForeignCurrency == null)
+            {
+                AddPOCOPropertyName(POCOPropertyNames.BalanceInForeignCurrency);
+                entityPOCO.BalanceInForeignCurrency = 0;
+            }
 
 #endif
 
@@ -441,6 +446,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                     entityPM.NextDueDate = poco.NextDueDate;
                     entityPM.LocalBalanceInDue = poco.LocalBalanceInDue;
                     entityPM.BalanceInLocalCurrency = poco.BalanceInLocalCurrency;
+                    entityPM.BalanceInForeignCurrency = poco.BalanceInForeignCurrency;
                 }
                 //if (entityPOCO.Category3Id != null)
                 if (!String.IsNullOrWhiteSpace(entityPOCO.Category3Id))

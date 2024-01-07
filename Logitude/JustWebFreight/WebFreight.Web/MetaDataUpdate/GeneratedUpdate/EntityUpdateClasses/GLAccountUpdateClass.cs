@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "9d0092e418da4a5f8846b1198c31995f";
+ 		public const string HashString = "9d0092e418da4a5f8846b1198c31995f";
+ 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -12378,7 +12379,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	          
              ScreenField GLAccountGLAccountHeaderScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.NextDueDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-              
+             ScreenField GLAccountGLAccountHeaderScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 1, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.BalanceInForeignCurrency", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
              ScreenField GLAccountGLAccountHeaderScreenScreenField5 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 1, Row = 2, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.LocalBalanceInDue", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
              ScreenField GLAccountGLAccountHeaderScreenScreenField6 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 2, Row = 0, ScreenId = GLAccountHeaderScreenScreen0.Id,ScreenCode = GLAccountHeaderScreenScreen0.Code, ObjectFieldCode = "GLAccount.CurrencyCode", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
