@@ -10,6 +10,8 @@ using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Logitude.BL.Helpers;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.CommonDataModel.Repositories;
+
 namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
 {
     public class CustomerTracing
@@ -79,8 +81,26 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                 {
                     notes = "External ID removed";
                 }
+				if (entityPM.EmailForSendingSingArinvoice != entityPOCO.EmailForSendingSingArinvoice)
+				{
+                    ContactRepository contactRepository = new ContactRepository(entityPM.Tenant);
+                    string emailContactPm = contactRepository.GetSingleContactForUpdate(entityPM.EmailForSendingSingArinvoice, entityPM.Tenant)?.Email;
+					string emailContactPoco = contactRepository.GetSingleContactForUpdate(entityPOCO.EmailForSendingSingArinvoice, entityPM.Tenant)?.Email;
 
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
+					var note =  TranslateTextsClass.Translate("Contact.F.Email", entityPM.Tenant) + ":\n" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + emailContactPoco?.ToString()   + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + emailContactPm?.ToString() ;
+					if (string.IsNullOrEmpty(notes))
+					{
+						notes = note;
+
+                    }
+                    else
+                    {
+                        notes += "\n" + note;
+
+					}
+				}
+			
+				EventTracer.CreateTraceEvent(new EventTracerArgs()
                 {
                     Tenant = myTenant,
                     EventTypeCode = "UPCU",
@@ -224,7 +244,20 @@ namespace Logitude.BL.CommonDataModel.Tools.TraceEvents
                 });
             }
         }
+        private string BuildNotesEventForUpdateCustomer()
+        {
+   //         string notes = string.Empty;
+			//if (entityPM.AccountManagerUserId != entityPOCO.AccountManagerUserId)
+			//{
+			//	notes += TranslateTextsClass.Translate("Customer.F.AccountManagerUserId", entityPM.Tenant) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + entityPOCO.AccountManagerUserId.ToString() + " " + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + entityPM.AccountManagerUserId.ToString() + "\n";
+			//}
+			
 
+
+
+
+			return"";
+        }
         private void TraceCreditLimitFields()
         {
             if (!this.isNewEntity)
