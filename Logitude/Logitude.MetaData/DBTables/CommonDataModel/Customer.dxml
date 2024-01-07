@@ -478,7 +478,7 @@
     Name="SendingInterestReport"
     Type="float">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="Id"

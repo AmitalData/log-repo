@@ -18342,7 +18342,7 @@
     DefaultText="&quot;Sending Interest Report&quot;"
     ListFieldLable="&quot;SendingInterestReportListLable&quot;"
     ListLableDefaultText="&quot;Sending Interest Report&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
