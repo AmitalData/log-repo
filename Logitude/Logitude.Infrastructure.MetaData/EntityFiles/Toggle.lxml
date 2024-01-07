@@ -1001,6 +1001,11 @@
       Name="&quot;Invoice Status According To Ledger Open Amount&quot;"
       SearchFields="&quot;ILO,Invoice Status According To Ledger Open Amount&quot;"
       Description="&quot;Invoice Status According To Ledger Open Amount&quot;" />
+    <Record
+      Code="&quot;MC1&quot;"
+      Name="&quot;IsMulti With ReconcileMethodCode Equal One&quot;"
+      SearchFields="&quot;MC1&quot;"
+      Description="&quot;לאפשר הגדרת כרטיס מולטי ככרטיס שמותאם במטז&quot;" />
   </Records>
   <DataContracts />
   <AdditionalTextCodes />

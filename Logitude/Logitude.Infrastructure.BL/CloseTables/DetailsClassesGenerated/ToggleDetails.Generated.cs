@@ -979,6 +979,13 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "ILO,Invoice Status According To Ledger Open Amount", 
                 Description = "Invoice Status According To Ledger Open Amount", 
 			});
+            all.Add(new ToggleDetails()
+            {    
+                Code = "MC1", 
+                Name = "IsMulti With ReconcileMethodCode Equal One", 
+                SearchFields = "MC1", 
+                Description = "לםפשר הגדרת כרטיס מולטי ככרטיס שמותםם במטז", 
+			});
 			
             return all;
        }

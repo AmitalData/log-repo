@@ -97,5 +97,25 @@ namespace Logitude.Accounting.Data.Utilities
             return 0;
 
         }
+        public decimal CalculateAmountInNIS(LedgerTransactionList LedgerTransaction)
+        {
+            if (!string.IsNullOrEmpty(LedgerTransaction.ReconcileMethodCode))
+            {
+                if (LedgerTransaction.ReconcileMethodCode == "1")
+                {
+                    if (LedgerTransaction.LocalAmountCredit == 0)
+                    {
+                        return LedgerTransaction.LocalAmountDebit;
+                    }
+                    else
+                    {
+                        return LedgerTransaction.LocalAmountCredit;
+                    }
+                }
+            }
+            return 0;
+
+        }
+
     }
 }

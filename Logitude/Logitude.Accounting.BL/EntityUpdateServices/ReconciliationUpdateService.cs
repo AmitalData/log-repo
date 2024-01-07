@@ -566,7 +566,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             GLAccountQueryService query = new GLAccountQueryService(entityPM.Tenant);
             GLAccountPM account = query.GetSingle(entityPM.AccountId, false, false);
-            if (account != null)
+            if (account != null && !(account.IsMultiCurrency == true && account.ReconcileMethodCode == "1"))
             {
                 entityPM.AccountName = account.LocalName;
                 entityPM.AccountNumber = account.DisplayNumber;

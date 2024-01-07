@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconciliationUpdateClass
    {  		
-		public const string HashString = "ac3b75705b7b3c575fa86c62e5d92106";
+		public const string HashString = "150316c7d5a5d74b22bd6052b00ef474";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,6 +100,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  true,
 			      				    HasFiltersMenu =  false,
@@ -129,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "התאמה",
 			      				    DefaultText =  "Reconciliation",
-			      				    Code =  "f801",
+			      				    Code =  "c403",
 			      				    Name =  "Reconciliation Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -1306,6 +1309,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ReconciliationTextCode_ReconciliationBAdjustInSplitJournal = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.B.AdjustInSplitJournal", DefaultText = "Adjust in split journal",LocalDefaultText = @"פקודת יומן מפוצלת כמספר השורות המסומנות", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ReconciliationTextCode_ReconciliationMLedgerTransactionAlreadyReconciled = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.M.LedgerTransactionAlreadyReconciled", DefaultText = " ledgerTransaction already Reconciled  ?? ? TransactionId=",LocalDefaultText = @" התנועות שהינך מנסה להתאים כבר מסומנות בבסיס הנתונים כתנועות מותאמות, מזהה תנועה=", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationsOErrorsInMultiWithRecOne = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliations.O.ErrorsInMultiWithRecOne", DefaultText = "With a multi-currency card that the adjustments are managed by MTZ, it is not possible to make an adjustment with the difference",LocalDefaultText = "בכרטיס רב מטבעי שההתאמות מנוהלות במט''ז לא ניתן לבצע התאמה עם הפרש", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ReconciliationTextCode_ReconciliationOWarningMultiRecoOne = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Reconciliation.O.WarningMultiRecoOne", DefaultText = "The adjustment method for this card is adjustment in MTZ, you must first select the type of currency you want to adjust",LocalDefaultText = "שיטת ההתאמה עבור כרטיס זה היא התאמה במט''ז יש לבחור תחילה את סוג המטבע שברצונך להתאים", ObjectTableId = ReconciliationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
