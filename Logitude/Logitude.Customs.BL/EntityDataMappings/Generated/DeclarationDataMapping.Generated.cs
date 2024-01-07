@@ -182,7 +182,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ForwarderFiles, 
 	         ShortProcedure, 
 	         ExportFlightDate, 
-	         UNFCourier,
+	         UNFCourier, 
+	         test1,
 	      }
 
 
@@ -439,7 +440,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ShortProcedure, 
 	         ExportFlightDate, 
 	         UNFCourier, 
-	         EffectiveFlight,
+	         EffectiveFlight, 
+	         test1,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1246,6 +1248,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UNFCourier))
             {
 				entityPOCO.UNFCourier = entityPM.UNFCourier;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.test1))
+            {
+				entityPOCO.test1 = entityPM.test1;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -2059,6 +2066,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.UNFCourier = entityPOCO.UNFCourier;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.test1))
+            {
+					entityPM.test1 = entityPOCO.test1;
+            }
+
 		}
 
 		public void PMToOldPM(DeclarationPM entityPM, DeclarationPM oldEntityPM)
@@ -2865,6 +2877,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.UNFCourier = entityPM.UNFCourier;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.test1))
+            {
+                oldEntityPM.test1 = entityPM.test1;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(DeclarationPM entityPM)
@@ -2989,6 +3006,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ClosingXml)) //T4 find type == nText 
             {
                 entityPM.ClosingXml = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ClosingXml));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.test1)) //T4 find type == nText 
+            {
+                entityPM.test1 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.test1));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

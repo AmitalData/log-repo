@@ -474,6 +474,8 @@ namespace Logitude.Customs.Data.EntityLists
        public decimal? ComputerFee  { get; set; }
        [DataMember]
        public bool EffectiveFlight  { get; set; }
+       [DataMember]
+       public string test1  { get; set; }
    }
 
 }
