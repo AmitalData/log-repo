@@ -79,7 +79,7 @@ export class NewGLAccountComponent extends BaseComponent {
             this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", excludedTypes, null, null, "Exclude", false, false, false, "string", false, true);
         }
         else if (!isCustomer && !isVendor) {
-            var excludedTypes = [ChartOfAccountTypes.Customer, ChartOfAccountTypes.Vendor].join(',');
+            var excludedTypes = [ChartOfAccountTypes.Customer, ChartOfAccountTypes.Vendor, ChartOfAccountTypes.Works].join(',');
             this.ChartOfAccountTypeFilterItems.addAdditionalFilter("CodeFilter", excludedTypes, null, null, "Exclude", false, false, false, "string", false, true);
         }
     }
