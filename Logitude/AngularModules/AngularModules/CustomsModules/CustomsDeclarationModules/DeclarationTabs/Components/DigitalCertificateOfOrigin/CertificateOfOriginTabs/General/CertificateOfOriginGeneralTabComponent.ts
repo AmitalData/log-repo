@@ -195,11 +195,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         // this.entityPM.ExporterAddress = newValue;
     }
 
+    _ExporterCountry:string;
     public get ExporterCountry(): string {
-        return this.entityPM.ExporterCountry;
+        return  this._ExporterCountry;
+        // return this.entityPM.ExporterCountry;
     }
     public set ExporterCountry(newValue: string) {
-        this.entityPM.ExporterCountry = newValue;
+        // this.entityPM.ExporterCountry = newValue;
+        this._ExporterCountry = newValue;
     }
 
     public get TradeAgreementCountry1(): string {
@@ -232,19 +235,25 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         // this.entityPM.ConsigneeName = newValue;
         this._ConsigneeName = newValue;
     }
-
+    
+    _ConsigneeAddress:string;
     public get ConsigneeAddress(): string {
-        return this.entityPM.ConsigneeAddress;
+        // return this.entityPM.ConsigneeAddress;
+        return this._ConsigneeAddress;
     }
     public set ConsigneeAddress(newValue: string) {
-        this.entityPM.ConsigneeAddress = newValue;
+        // this.entityPM.ConsigneeAddress = newValue;
+        this._ConsigneeAddress = newValue;
     }
 
+    _ConsigneeCountry:string;
     public get ConsigneeCountry(): string {
-        return this.entityPM.ConsigneeCountry;
+        return this._ConsigneeCountry;
+        // return this.entityPM.ConsigneeCountry;
     }
     public set ConsigneeCountry(newValue: string) {
-        this.entityPM.ConsigneeCountry = newValue;
+        // this.entityPM.ConsigneeCountry = newValue;
+        this._ConsigneeCountry = newValue;
     }
 
     public get ConsigneeRemarks(): string {
@@ -271,18 +280,26 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this._OriginCountry = newValue;
     }
 
+    _OriginGroupOfCountry:string;
     public get OriginGroupOfCountry(): string {
-        return this.entityPM.OriginGroupOfCountry;
+        // return this.entityPM.OriginGroupOfCountry;
+        return this._OriginGroupOfCountry;
     }
     public set OriginGroupOfCountry(newValue: string) {
-        this.entityPM.OriginGroupOfCountry = newValue;
+        // this.entityPM.OriginGroupOfCountry = newValue;
+        this._OriginGroupOfCountry = newValue;
+
     }
 
+
+    _DestinationCountry:string;
     public get DestinationCountry(): string {
-        return this.entityPM.DestinationCountry;
+        // return this.entityPM.DestinationCountry;
+        return this._DestinationCountry;
     }
     public set DestinationCountry(newValue: string) {
-        this.entityPM.DestinationCountry = newValue;
+        // this.entityPM.DestinationCountry = newValue;
+        this._DestinationCountry = newValue;
     }
 
     public get DestinationGroupOfCountries(): string {

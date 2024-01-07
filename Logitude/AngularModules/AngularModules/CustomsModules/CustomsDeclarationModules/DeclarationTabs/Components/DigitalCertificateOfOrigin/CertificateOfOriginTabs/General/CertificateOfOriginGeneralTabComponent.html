@@ -92,29 +92,90 @@
                         </td>
                         <td></td>
                         <td></td>
-                        <!-- <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'ExporterAddress'" [ObjectTableName]="ObjectTableName"
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'ConsigneeAddress'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
-                            <LogTextBox [ObjectFieldName]="'ExporterAddress'" [DataContext]="DataContext"
+                            <LogTextBox [ObjectFieldName]="'ConsigneeAddress'" [DataContext]="DataContext"
                                 [ObjectTableName]="ObjectTableName" [HideColumns]="true"></LogTextBox>
                         </td>
                         <td></td>
                         <td></td>
                         <td style="width:130px">
-                            <LogLabel [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
+                            <LogLabel [ObjectFieldName]="'OriginGroupOfCountry'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
                         <td style="width:180px">
 
-                            <LogLov [ObjectFieldName]="'OriginCountry'" [ObjectTableName]="ObjectTableName"
-                                [SelectedValue]="OriginCountry" [DataContext]="DataContext"
+                            <LogLov [ObjectFieldName]="'OriginGroupOfCountry'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="OriginGroupOfCountry" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CountryGroup'">
+                            </LogLov>
+                        </td>
+                    </tr>
+                    <tr class="FieldRow"></tr>
+
+                    <tr class="FieldRow">
+                        <td style="width:130px"></td>
+                        <td style="width:180px"></td>
+                        <td></td>
+                        <td></td>
+                        <td style="width:130px"></td>
+                        <td style="width:180px"></td>
+                        <td></td>
+                        <td></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'DestinationCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+
+                            <LogLov [ObjectFieldName]="'DestinationCountry'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="DestinationCountry" [DataContext]="DataContext"
                                 [LookUpTableName]="'Customs.CustomsCountry'">
                             </LogLov>
-                        </td> -->
+                        </td>
                     </tr>
 
+                    <tr class="FieldRow"></tr>
+
+                    <tr class="FieldRow">
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'ExporterCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'ExporterCountry'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="ExporterCountry" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomsCountry'">
+                            </LogLov>                        </td>
+                        <td></td>
+                        <td></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'ConsigneeCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+                            <LogLov [ObjectFieldName]="'ConsigneeCountry'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="ConsigneeCountry" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CustomsCountry'">
+                            </LogLov>                        </td>
+                        <td></td>
+                        <td></td>
+                        <td style="width:130px">
+                            <LogLabel [ObjectFieldName]="'OriginGroupOfCountry'" [ObjectTableName]="ObjectTableName"
+                                [DataContext]="DataContext"></LogLabel>
+                        </td>
+                        <td style="width:180px">
+
+                            <!-- <LogLov [ObjectFieldName]="'OriginGroupOfCountry'" [ObjectTableName]="ObjectTableName"
+                                [SelectedValue]="OriginGroupOfCountry" [DataContext]="DataContext"
+                                [LookUpTableName]="'Customs.CountryGroup'">
+                            </LogLov> -->
+                        </td>
+                    </tr>
+                    <tr class="FieldRow"></tr>
 
                 </table>
             </div>
