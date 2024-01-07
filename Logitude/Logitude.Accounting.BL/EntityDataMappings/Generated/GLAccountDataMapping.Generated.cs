@@ -83,6 +83,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         CardsDataId, 
 	         PostponedChequesCommission,
              DateFormat,
+			 PaymentTerms
+			
         }
 
 
@@ -222,6 +224,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         LastReconcileDate, 
 	         CreditLimit, 
 	         PaymentTerm, 
+	         PaymentTerms, 
 	         TotalOpenShipments, 
 	         Phone, 
 	         Salesman, 
@@ -293,6 +296,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CurrencyId))
             {
 				entityPOCO.CurrencyId = entityPM.CurrencyId;
+			}
+
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.PaymentTerms))
+            {
+				entityPOCO.PaymentTerms = entityPM.PaymentTerms;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.RevenueExpenseType))
@@ -669,7 +677,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 					entityPM.PreviousNumber = entityPOCO.PreviousNumber;
             }
-
+		
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.PreviousNumberChangeDate))
             {
 					entityPM.PreviousNumberChangeDate = entityPOCO.PreviousNumberChangeDate;
@@ -858,7 +866,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
                 entityPM.DateFormat = entityPOCO.DateFormat;
             }
-
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.PaymentTerms))
+            {
+                entityPM.PaymentTerms = entityPOCO.PaymentTerms;
+            }
         }
 
 		public void PMToOldPM(GLAccountPM entityPM, GLAccountPM oldEntityPM)

@@ -102,6 +102,33 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 select a.Id);
             return q;
         }
+        
+        public GLAccountPM GetGlaAccountByJouranlIdAndJournalLineNumber(int tenant, string JournalId, int JournalLineNumber)
+        {
+            var glAccountPM = (
+                from a in this.repository.GetGlaAccountByJouranlIdAndJournalLineNumber(tenant, JournalId, JournalLineNumber)
+                select new GLAccountPM()
+                {
+                    Id = a.Id,
+                    CurrencyId = a.CurrencyId,
+                    DisplayNumber = a.DisplayNumber,
+                    Inactive = a.Inactive,
+                    CurrencyCode = a.Currency != null ? a.Currency.Code : null,
+                    ChartOfAccountsId = a.ChartOfAccountsId,
+                    ChartOfAccountsTypeCode = a.ChartOfAccountsTypeCode,
+                    LocalName = a.LocalName,
+                    ReconcileMethodCode = a.ReconcileMethodCode,
+                    RevenueExpenseType = a.RevenueExpenseType,
+                    Tenant = tenant,
+                    AccountTypeCode = a.AccountTypeCode,
+                    AutomaticReconcileId = a.AutomaticReconcileId,
+                    ControlAccountId = a.ControlAccountId,
+                    CustomerGLAccountId = a.CustomerGLAccountId,
+                    InternalNumber = a.InternalNumber
+
+                }).FirstOrDefault();
+            return glAccountPM;
+        }
         public IQueryable<string> GetQGLAccIdBySalesmanId(int tenant, string SalesmanId, string AccountTypeCode)
         {
             var q = (

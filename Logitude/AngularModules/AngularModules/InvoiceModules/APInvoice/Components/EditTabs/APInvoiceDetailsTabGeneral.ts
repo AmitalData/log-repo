@@ -931,23 +931,29 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                     if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = list.InvoiceCurrencyId;
                     }
-                    if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
+                    if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
+                        this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
+                            if (!myResponse.HasError) {
+                                this.glaccount = myResponse.Result;
+                                
+                                if(this.glaccount.PaymentTerms)
+                                    this.PaymentTermId = this.glaccount.PaymentTerms;
+                                else
+                                    this.PaymentTermId = this.glaccount.PaymentTermId;
+                                
+                                this.EntityPM.VendorGLAccountId = this.glaccount.Id;
+                                this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
+                            }
+                        });
+                    }
+                    else if (!AppTool.IsNullOrEmpty(list.PaymentTermId)) {
                         this.PaymentTermId = list.PaymentTermId;
                     }
 
                     if (!AppTool.IsNullOrEmpty(list.VatTypeId)) {
 
                     }
-
-                    if (!AppTool.IsNullOrEmpty(list.GLAccountId)) {
-                        this.myGLAccountPMService.get(list.GLAccountId).subscribe((myResponse: ServiceResponse) => {
-                            if (!myResponse.HasError) {
-                                this.glaccount = myResponse.Result;
-                                this.EntityPM.VendorGLAccountId = this.glaccount.Id;
-                                this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
-                            }
-                        });
-                    }
+                   
                 }
                 if(this.IsFullAccounting)
                 this.GetConnectedGLAccount();
@@ -1045,7 +1051,6 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             if (AppTool.IsNullOrEmpty(newValue)) {
                 this.PaymentTermName = null;
             }
-
             else {
                 this.myPaymentTermListService.getSingleFromCache(newValue).subscribe((myResponse: ServiceResponse) => {
                     if (!myResponse.HasError) {

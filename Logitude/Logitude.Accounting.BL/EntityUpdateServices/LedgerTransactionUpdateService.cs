@@ -19,6 +19,7 @@ using Simplog.Server.Infrastructure;
 using System.Data.SqlClient;
 using Simplog.Data.Helpers;
 using System.Data;
+using Simplog.Data.CommonDataModel;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -40,8 +41,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 entityPM.IsReconciled = false;
             }
-            var journalQueryService = new JournalQueryService((MainContext as IAccountingContext));
-            var journal = journalQueryService.GetSingle(entityPM.JournalId, false, false);
+            JournalQueryService journalQueryService = new JournalQueryService((MainContext as IAccountingContext));
+            JournalPM journal = journalQueryService.GetSingle(entityPM.JournalId, false, false);
             if (journal != null)
             {
                 if (journal.AccountingEntityCode == "12")
@@ -53,8 +54,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
                 entityPM.Mark = false;
             }
-
         }
+
 
         public bool _CancelledAction;
         protected override void OnUpdating(LedgerTransactionPM entityPM, LedgerTransaction entityPOCO)
@@ -345,5 +346,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
             
         }
+
     }
 }

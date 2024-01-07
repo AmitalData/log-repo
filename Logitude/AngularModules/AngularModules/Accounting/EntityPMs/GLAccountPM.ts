@@ -76,6 +76,10 @@ export class GLAccountPM {
     public get CurrencyId() { return this.currencyId; }
     public set CurrencyId(newValue: string) { if (this.currencyId != newValue) { this.currencyId = newValue; this.MarkAsDirty("CurrencyId"); } }
        
+    private paymentTerms: string;
+    public get PaymentTerms() { return this.paymentTerms; }
+    public set PaymentTerms(newValue: string) { if (this.paymentTerms != newValue) { this.paymentTerms = newValue; this.MarkAsDirty("PaymentTerms"); } }
+       
 	 
     private revenueExpenseType: string;
     public get RevenueExpenseType() { return this.revenueExpenseType; }
