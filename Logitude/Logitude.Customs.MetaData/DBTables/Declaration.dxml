@@ -1103,6 +1103,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="test1"
+    Type="nvarchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"
