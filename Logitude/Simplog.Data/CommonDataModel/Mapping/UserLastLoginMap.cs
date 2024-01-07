@@ -26,6 +26,8 @@ namespace Simplog.Data.CommonDataModel.Mapping
                 .HasMaxLength(40)
                 .IsUnicode(false);
 
+
+
             // Table & Column Mappings
             this.ToTable("UserLastLogins");
             this.Property(t => t.ComputerId).HasColumnName("ComputerId");

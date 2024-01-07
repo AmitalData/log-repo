@@ -55,6 +55,7 @@ using Logitude.BL.CommonDataModel.Tools.MixPanelTracker;
 using WebFreight.Web.Helpers.MixPanel;
 using System.Data;
 using WebFreight.Web.CustomersHTML;
+using System.Web.UI.WebControls;
 
 namespace WebFreight.Web
 {
@@ -2137,7 +2138,9 @@ namespace WebFreight.Web
 
                         if ((!contactPassword.IsLocked  || clientType == "Web") && (!contactPassword.MustChangePassword || this.OneTimePassword))
                         {
-                            member = globalObjectContext.GlobalContacts.Where(m => m.Email == name && m.GlobalTenantId == 0).FirstOrDefault();
+                            member = globalObjectContext.GlobalContacts.Where(m => m.Email == name && m.GlobalTenantId == tenant && m.InActive == false).FirstOrDefault();
+                            if(member == null)
+                                member = globalObjectContext.GlobalContacts.Where(m => m.Email == name && m.GlobalTenantId == 0).FirstOrDefault();
                             if (member == null)
                             {
                                 List<GlobalContact> globalcontacts = globalObjectContext.GlobalContacts.Where(m => m.Email == name && m.InActive == false && (m.IsUser == true || m.InternetAccess == true) && m.GlobalTenantId == tenant).ToList();//|| m.InternetAccess == true
@@ -2280,6 +2283,7 @@ namespace WebFreight.Web
                                                            select a).FirstOrDefault();
                                 if (lastLogin == null)
                                 {
+
                                     lastLogin = new UserLastLogin()
                                     {
                                         Id = user.Id,
