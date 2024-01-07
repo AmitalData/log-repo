@@ -2402,7 +2402,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 && (entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency && entityPM.IsMultiCurrency == true)) 
             {
                 bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
-                throw new ApplicationException(TranslateTextsClass.Translate("BankAccounts.O.PreventChangingCurrency", 0, useLocal));
+                throw new ApplicationException(TranslateTextsClass.Translate("BankAccounts.O.PreventChangingToIsMultiCurrency", 0, useLocal));
             }
         }
 
