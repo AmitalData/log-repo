@@ -2283,9 +2283,6 @@ namespace WebFreight.Web
                                                            select a).FirstOrDefault();
                                 if (lastLogin == null)
                                 {
-                                    var ipadd = HttpContext.Current.Request.ServerVariables["REMOTE_ADDR"];
-                                    IPAddress myIP = IPAddress.Parse(ipadd);
-                                    IPHostEntry GetIPHost = Dns.GetHostEntry(myIP);
 
                                     lastLogin = new UserLastLogin()
                                     {
