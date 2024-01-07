@@ -27,7 +27,7 @@ namespace WebFreight.Web
                     { 
                         string RedirectUrl = "Angular" + MySettings.HtmlVersion + "/index.html";//?Menu=PREQ&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
                         Response.Redirect("~/" + RedirectUrl);
-                    }                   
+                    }                  
                     else 
                     {
                         Response.Redirect("~/");

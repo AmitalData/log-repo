@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "2769e7602a1deda5d0c0bf54b5028b67";
+		public const string HashString = "dd7d00303e0c37f8d88b4918fbe2ea1e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -124,7 +124,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "c309",
+			      				    Code =  "280b",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -635,7 +635,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
 		   Feature GeneralFeature_General_Features_OceanInsightsSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.OceanInsightsSettings", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.OceanInsightsSettings", NameTextCodeDefaultText = @"Ocean Insights Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
-		   Feature GeneralFeature_InvoiceConfirmationNumber = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceConfirmationNumber", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SHAAMTOKEN", NameTextCodeDefaultText = @"שעם טוקן" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
+		   Feature GeneralFeature_InvoiceConfirmationNumber = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "InvoiceConfirmationNumber", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SHAAMTOKEN", NameTextCodeDefaultText = @"Invoice Confirmation Number" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
    
 	    

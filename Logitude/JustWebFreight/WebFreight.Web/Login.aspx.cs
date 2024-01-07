@@ -67,13 +67,11 @@ namespace WebFreight.Web
                 SettingRepository MySettingRepository = new SettingRepository(objectContext);
                 SettingQuery MySettingQuery = new SettingQuery(MySettingRepository);
                 var MySettings = MySettingQuery.GetSinglePM();
-
                 string RedirectUrl = Request.IsLocal ? "http://localhost:4200" : "~/Angular" + MySettings.HtmlVersion;
                 RedirectUrl += Request.RawUrl;// "/index.html";//?Menu=PREQ&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
                 if (Request.IsLocal)
                     RedirectUrl = RedirectUrl.Replace("/Login.aspx", "");
-
-                Response.Redirect(RedirectUrl);                
+                Response.Redirect(RedirectUrl);
             }
 
             //string currentIP = HttpContext.Current.Request.Headers["X-Real-IP"];
