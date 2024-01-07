@@ -27,13 +27,7 @@ namespace WebFreight.Web
                     { 
                         string RedirectUrl = "Angular" + MySettings.HtmlVersion + "/index.html";//?Menu=PREQ&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
                         Response.Redirect("~/" + RedirectUrl);
-                    }
-                    else if (Request.RawUrl.Contains("?Menu=IdentityShaamLandingPage;"))
-                    {
-                        string RedirectUrl = Request.IsLocal ? "http://localhost:4200" : "~/Angular" + MySettings.HtmlVersion;
-                        RedirectUrl += Request.RawUrl;// "/index.html";//?Menu=PREQ&SecurityKey=" + SecurityKey + "&Tenant=" + Tenant;
-                        Response.Redirect(RedirectUrl);
-                    }
+                    }                  
                     else 
                     {
                         Response.Redirect("~/");
