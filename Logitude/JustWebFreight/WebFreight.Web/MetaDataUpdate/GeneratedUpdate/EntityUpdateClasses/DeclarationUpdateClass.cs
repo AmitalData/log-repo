@@ -87,7 +87,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    {  		
 
 
-		public const string HashString = "69c9999507c610b5034f3e049f813424";
+		public const string HashString = "4fb826d282b4937783f5650e0819bdb4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -17788,6 +17788,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "Customs.Declaration",
+					  						ValidForQuerySection2 =  "Customs.ExportDeclaration",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -18393,7 +18394,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn ExportDecWithoutReleaseQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.Declaration.CreateDateForExport" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn ExportDecWithoutReleaseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.test" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn ExportDecWithoutReleaseQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.Declaration.Testcustom12" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn ExportDecWithoutReleaseQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ExportDecWithoutReleaseQuery.Id,QueryCode = ExportDecWithoutReleaseQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.Declaration.ExportFile" , ColumnWidth = 100 }, addedQueryColumns);
 

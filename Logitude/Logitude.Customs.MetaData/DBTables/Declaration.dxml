@@ -1105,6 +1105,7 @@
   </Column>
   <Column
     Name="Testcustom12"
+    OldNames="test2,test1,test"
     Type="nvarchar"
     Size="15">
     <Constraints
