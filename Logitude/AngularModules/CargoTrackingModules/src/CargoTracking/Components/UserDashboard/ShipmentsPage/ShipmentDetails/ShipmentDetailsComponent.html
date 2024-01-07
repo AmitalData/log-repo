@@ -341,7 +341,7 @@
                     </button>
 
                     <!-- CustomsDataPanel -->
-                    <button *ngIf="!IsOrderShipment" [class.active]="selectedNavButton=='CustomsDataPanel'"
+                    <button *ngIf="!IsOrderShipment && !IsExport" [class.active]="selectedNavButton=='CustomsDataPanel'"
                         (click)="PanelsNavigatorClicked('CustomsDataPanel')">
                         Customs
                     </button>
@@ -518,17 +518,17 @@
                                 <span *ngIf="!cargoTrackingShipmentPM.GrossWeightUnitCode"> KG</span>
                             </div>
                         </div>
-                        <div *ngIf="!IsOrderShipment">
+                        <div *ngIf="!IsOrderShipment && !IsExport">
                             <div class="title">total value nis</div>
                             <div class="description" *ngIf="this.cargoTrackingShipmentPM.CustomsData">
                                 {{this.cargoTrackingShipmentPM?.CustomsData.TotalValueInNIS||0 | number}} ₪</div>
                         </div>
-                        <div *ngIf="!IsOrderShipment">
+                        <div *ngIf="!IsOrderShipment && !IsExport">
                             <div class="title">total taxes nis</div>
                             <div class="description" *ngIf="this.cargoTrackingShipmentPM.CustomsData">
                                 {{cargoTrackingShipmentPM?.CustomsData.TotalTax||0 | number}} ₪</div>
                         </div>
-                        <div *ngIf="!IsOrderShipment">
+                        <div *ngIf="!IsOrderShipment && !IsExport">
                             <div class="title">declaration status</div>
                             <div class="description" *ngIf="cargoTrackingShipmentPM.CustomsData?.DeclarationStatus">
                                 <span>
@@ -722,7 +722,7 @@
             </panel>
 
             <!-- Customs Data -->
-            <panel *ngIf="!IsOrderShipment" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'"
+            <panel *ngIf="!IsOrderShipment && !IsExport" style="order: 5;" [Title]="'Customs Data'" [Name]="'CustomsDataPanel'"
                 [HaveDetailsSection]="true" [AlwaysExpanded]="true" [ShowWhitePanelOnMobile]="true"
                 [DetailsTitle]="'Tax Details'">
 
