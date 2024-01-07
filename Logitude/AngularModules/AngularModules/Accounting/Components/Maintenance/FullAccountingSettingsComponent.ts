@@ -307,6 +307,15 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+    get NumberingByChartOfAccount() { return this.EntityPM.NumberingByChartOfAccount; }
+    set NumberingByChartOfAccount(value: boolean) {
+        if (this.EntityPM.NumberingByChartOfAccount != value) {
+            this.EntityPM.NumberingByChartOfAccount = value;
+
+            this.SetUIProperties();
+        }
+    }
+
     get DeductionFileNumber() { return this.EntityPM.DeductionFileNumber; }
     set DeductionFileNumber(value: string) {
         if (this.EntityPM.DeductionFileNumber != value) {
