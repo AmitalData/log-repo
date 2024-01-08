@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginItemUpdateClass
    {  		
-		public const string HashString = "d0bbf59712dfa17b7b6e4ee0935e9a7e";
+		public const string HashString = "250c836cfc6d8fdf58b08c18faa4faca";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "פריטי תעודת מקור",
 			      				    DefaultText =  "Certificate Of Origin Item",
-			      				    Code =  "8a5b",
+			      				    Code =  "744c",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1053,7 +1053,33 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable CertificateOfOriginItemObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CertificateOfOriginItem" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginOMarksAndNumbers = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.MarksAndNumbers", DefaultText = "Marks And Numbers",LocalDefaultText = @"סימנים ומספרים", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginOItemDescription = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.ItemDescription", DefaultText = "Item Description",LocalDefaultText = @"תיאור טובין", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginOPackageQuantity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.PackageQuantity", DefaultText = "Package Quantity",LocalDefaultText = @"כמות", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginOPackageType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.PackageType", DefaultText = "Package Type",LocalDefaultText = @"סוג אריזה", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginOWeight = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.Weight", DefaultText = "Weight",LocalDefaultText = @"משקל", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginOMeasureType = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.MeasureType", DefaultText = "Measure Type",LocalDefaultText = @"יחידת מידה", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginOContainerIsoCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.ContainerIsoCode", DefaultText = "Container Iso Code",LocalDefaultText = @"סוג מכולה", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginOItemId = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.ItemId", DefaultText = "Item Id",LocalDefaultText = @"פרט מכס", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginOOriginCriterionCode = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.OriginCriterionCode", DefaultText = "Origin CriterionCode",LocalDefaultText = @"העדפה", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginItemTextCode_CustomsCertificateOfOriginOInvoiceConnect = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.InvoiceConnect", DefaultText = "Invoice Connect",LocalDefaultText = @"חשבון", ObjectTableId = CertificateOfOriginItemObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 
