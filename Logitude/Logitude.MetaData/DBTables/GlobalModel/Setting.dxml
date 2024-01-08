@@ -521,7 +521,7 @@
   <Column
     Name="PrivateKey"    
     Type="nvarchar"
-    Size="250">
+    Size="500">
     <Constraints
       Nullable="true" />
   </Column>
