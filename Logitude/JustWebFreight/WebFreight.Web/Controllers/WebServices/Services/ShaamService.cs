@@ -82,5 +82,5 @@ namespace WebFreight.Web.Controllers.WebServices.Services
         public string confirmationNumber { get; set; }
     }
 
-    public enum ErrorCodeApiToShaamRes { GENERAL = 1, REFRESH_TOKEN_NOT_VALID, INVOICE_SCHEMA, SOME_REFRESH_TOKEN_NOT_VLID, BUSINESS_LOGIC }
+    public enum ErrorCodeApiToShaamRes { GENERAL = 1, REFRESH_TOKEN_NOT_VALID, INVOICE_SCHEMA, BUSINESS_LOGIC }
 }

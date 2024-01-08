@@ -30,10 +30,11 @@ namespace WebFreight.Web.Controllers.WebServices.Services
                 InvoiceNumber = invoice.Invoice_ID,
                 CallType = "confirmation",
                 CommunicationType = 1,
-                CompanyIdInvoiceProducer = tenantManagement.Name,
+                CompanyIdInvoiceProducer = tenantManagement.Name.Substring(0,10),
                 CompanyIdInvoiceRecipient = invoice.Customer_Name,
                 CommunicationLogId = communicationLogId,
             });
+            confirmationNumberTokenLogRepository.SubmitChanges();
 
             HttpClienResponse apiToShaamRes = shaamService.CreateConfirmationNumber(invoiceJson, tenant, confirmationTokenLogId, communicationLogId);
 
