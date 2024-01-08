@@ -28,7 +28,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public CertificateOriginItemItems : ObservableCollection // type <CertificateOfOriginItemPM[]>;
     isNew: boolean;
     controlEnabled: boolean;
-    isDispalyOnlyStatusList:number[] = [4,8];
     constructor() {
         super();
     }
@@ -62,36 +61,61 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             // this.isCorporation = this.entityPM.Code.startsWith("5");
             // this.isCitizen = (!this.entityPM.Code.startsWith("5")) && (this.entityPM.Code != "");
         }
-       
-    }
-    
-    SetPropertiesEnabled() {
-        var enabled = !this.IsDispalyOnly;
-        this.UIProperties.SetEnabled("CooTypeCode", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("RequestReasonCode", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("DateOfDeclaration", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("ExporterName", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("ConsigneeName", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("OriginCountry", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("ExporterAddress", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("ConsigneeAddress", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("OriginGroupOfCountry", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("DestinationCountry", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("ExporterCountry", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("ConsigneeCountry", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("DestinationGroupOfCountries", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("PlaceOfManufacture", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("ZipCodeOfManufacture", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("TradeAgreementCountry1", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("TradeAgreementCountry2", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("IsUnitedInvoices", this.ObjectTableName, enabled);
-        this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, enabled);
+
+        this.SetWarning();
+
     }
 
-    public get IsDispalyOnly() { 
-       return this.isDispalyOnlyStatusList.includes(Number(this.entityPM.CooStatusCode))
+    SetPropertiesEnabled() {
+        this.UIProperties.SetEnabled("Code", this.ObjectTableName, this.controlEnabled);
+        this.UIProperties.SetEnabled("LocalCorporationName", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("EnglishCorporationName", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("DunsNumber", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("ClientTypeSpecificCode", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("IsActive", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("IsExporter", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("IsImporter", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("LocalFirstName", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("LocalLastName", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("EnglishFirstName", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("EnglishLastName", this.ObjectTableName, this.controlEnabled);
+        this.UIProperties.SetEnabled("BirthDate", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("PassportTypeCode", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("PassportNumber", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("PassportCountryCode", this.ObjectTableName, this.controlEnabled);
+        this.UIProperties.SetEnabled("PassportFirstName", this.ObjectTableName, this.controlEnabled);
+        this.UIProperties.SetEnabled("PassportLastName", this.ObjectTableName, this.controlEnabled);
+        this.UIProperties.SetEnabled("NationalIdentificationNumber", this.ObjectTableName, this.controlEnabled);
+
+        this.UIProperties.SetEnabled("EnglishFatherName", this.ObjectTableName, this.controlEnabled);
+        this.UIProperties.SetEnabled("EnglishBirthPlace", this.ObjectTableName, this.controlEnabled);
+        this.UIProperties.SetEnabled("PassportIssueDate", this.ObjectTableName, this.controlEnabled);
+        this.UIProperties.SetEnabled("PassportExpirationDate", this.ObjectTableName, this.controlEnabled);
+
+
+
+
     }
-   
+
+    SetWarning() {
+        this.UIProperties.SetWarning("CooTypeCode", this.ObjectTableName, true);
+        this.UIProperties.SetWarning("RequestReasonCode", this.ObjectTableName, true);
+    }
+
+
     //#region properties
 
     public get Id(): string {
