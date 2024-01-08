@@ -1683,7 +1683,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                  (entity.SubTotalInLocalCurrency ?? 0)
                                  - (double)(entity.TotalAmountForTaxReport ?? 0),
                              IsSigned= entity.IsSigned,
-                             IsSignedName=entity.ARInvoicesSignedStatus.LocalName,
+                             IsSignedName= entity.ARInvoicesSignedStatus == null ? null: entity.ARInvoicesSignedStatus.LocalName,
                          };
 
             return result;
