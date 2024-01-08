@@ -199,7 +199,19 @@ export class CertificateOfOriginComponent extends BaseComponent {
                     }
             
                     case "REQUESTSHEET": {
-                        // Add logic for REQUESTSHEET case here
+                        if (this.REQUESTSHEET == null) {
+                            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+                                SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", myLocation.viewContainerRef)
+                                    .then(cmpRef => {
+                                        this.REQUESTSHEET = cmpRef.instance;
+                                        this.REQUESTSHEET.IsTitleHidden = false;
+                                        this.REQUESTSHEET.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                                        this.REQUESTSHEET.MyRequestOnly = false;
+                                        this.REQUESTSHEET.SetEntityArgs(this.entityArgs);
+                                    });
+ 
+                            });
+                        }
                         break;
                     }
             
