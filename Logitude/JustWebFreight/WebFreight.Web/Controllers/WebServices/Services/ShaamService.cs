@@ -77,7 +77,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
     {
         public virtual bool approved { get; set; }
         public virtual int status { get; set; }
-        public virtual ErrorCodeApiToShaamRes? errorCode { get; set; }
+        public virtual int? errorCode { get; set; }
         public string message { get; set; }
         public string confirmationNumber { get; set; }
     }
