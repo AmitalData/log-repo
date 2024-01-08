@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class RequestReasonCodeEnumUpdateClass
    {  		
-		public const string HashString = "5763d30399d8303c4c04b87245a9e6ea";
+		public const string HashString = "365e7ea9db1eff1cbdb5d3fd238539ec";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -494,7 +494,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query RequestReasonCodeEnumQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RequestReasonCodeEnumTextCode_0.Id, NameTextCodeCode = RequestReasonCodeEnumTextCode_0.Code, ObjectTableName = "Customs.RequestReasonCodeEnum", Code = "RequestReasonCodeEnum",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = RequestReasonCodeEnumObjectTable.Id, QuerySection = "Customs.RequestReasonCodeEnum", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RequestReasonCodeEnumFeature_0.Id,FeatureUniqeCode= RequestReasonCodeEnumFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query RequestReasonCodeEnumQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = RequestReasonCodeEnumTextCode_0.Id, NameTextCodeCode = RequestReasonCodeEnumTextCode_0.Code, ObjectTableName = "Customs.RequestReasonCodeEnum", Code = "RequestReasonCodeEnum",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = RequestReasonCodeEnumObjectTable.Id, QuerySection = "Customs.RequestReasonCodeEnum", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = RequestReasonCodeEnumFeature_0.Id,FeatureUniqeCode= RequestReasonCodeEnumFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
 			 QueryColumn RequestReasonCodeEnumQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = RequestReasonCodeEnumQuery.Id,QueryCode = RequestReasonCodeEnumQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.RequestReasonCodeEnum.Code" , ColumnWidth = 50 }, addedQueryColumns);
 

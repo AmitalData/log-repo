@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class OriginCriterionUpdateClass
    {  		
-		public const string HashString = "c28bbd8a88959fd6a32cd0abf9d37d89";
+		public const string HashString = "67cd316f4d9f96f318955228de446384";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -621,7 +621,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query OriginCriterionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OriginCriterionTextCode_0.Id, NameTextCodeCode = OriginCriterionTextCode_0.Code, ObjectTableName = "Customs.OriginCriterion", Code = "OriginCriterion",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = OriginCriterionObjectTable.Id, QuerySection = "Customs.OriginCriterion", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = OriginCriterionFeature_0.Id,FeatureUniqeCode= OriginCriterionFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query OriginCriterionQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = OriginCriterionTextCode_0.Id, NameTextCodeCode = OriginCriterionTextCode_0.Code, ObjectTableName = "Customs.OriginCriterion", Code = "OriginCriterion",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = OriginCriterionObjectTable.Id, QuerySection = "Customs.OriginCriterion", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = OriginCriterionFeature_0.Id,FeatureUniqeCode= OriginCriterionFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
 			 QueryColumn OriginCriterionQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OriginCriterionQuery.Id,QueryCode = OriginCriterionQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.OriginCriterion.Code" , ColumnWidth = 50 }, addedQueryColumns);
 

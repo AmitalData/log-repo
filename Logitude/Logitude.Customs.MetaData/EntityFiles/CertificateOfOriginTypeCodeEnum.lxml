@@ -608,7 +608,7 @@
     IsAddNewEntity="false"
     IsPackagable="true"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
     QueryGroupName="&quot; Query Group&quot;"
     TextCodeCode="&quot;CertificateOfOriginTypeCodeEnum.Q.CertificateOfOriginTypeCodeEnum&quot;"
     FeatureCode="&quot;CertificateOfOriginTypeCodeEnum.Q.CertificateOfOriginTypeCodeEnum&quot;"

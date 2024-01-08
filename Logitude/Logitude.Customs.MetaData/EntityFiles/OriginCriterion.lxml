@@ -609,7 +609,7 @@
     IsAddNewEntity="false"
     IsPackagable="true"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
     QueryGroupName="&quot; Query Group&quot;"
     TextCodeCode="&quot;OriginCriterion.Q.OriginCriterion&quot;"
     FeatureCode="&quot;OriginCriterion.Q.OriginCriterion&quot;"
