@@ -29,9 +29,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.CompanyIdInvoiceProducer).HasColumnName("CompanyIdInvoiceProducer").HasMaxLength(10).IsUnicode(false);
+            this.Property(t => t.CompanyIdInvoiceProducer).HasColumnName("CompanyIdInvoiceProducer").HasMaxLength(50).IsUnicode(false);
 
-            this.Property(t => t.CompanyIdInvoiceRecipient).HasColumnName("CompanyIdInvoiceRecipient").HasMaxLength(10).IsUnicode(false);
+            this.Property(t => t.CompanyIdInvoiceRecipient).HasColumnName("CompanyIdInvoiceRecipient").HasMaxLength(50).IsUnicode(false);
 
             this.Property(t => t.InvoiceNumber).HasColumnName("InvoiceNumber").HasMaxLength(30).IsUnicode(false);
 

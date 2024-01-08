@@ -35,11 +35,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CallType { get; set; }
         [Column("CommunicationType")]
 	    public int? CommunicationType { get; set; }
-        [ForeignKey("CommunicationLog")]
         [Column("CommunicationLogId")]
 	    public string CommunicationLogId { get; set; }
-	      
-        public virtual CommunicationLog CommunicationLog { get; set; }
     }
 }
 	 

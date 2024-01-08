@@ -27,14 +27,14 @@
   <Column
     Name="CompanyIdInvoiceProducer"
     Type="varchar"
-    Size="10">
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CompanyIdInvoiceRecipient"
     Type="varchar"
-    Size="10">
+    Size="50">
     <Constraints
       Nullable="true" />
   </Column>
@@ -65,9 +65,4 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="CommunicationLogId"
-    ReferencedTable="CommunicationLogs"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
 </Table>
