@@ -25,7 +25,7 @@ namespace WebFreight.Web.WcfApi
                     res = new ApiToShaamRes()
                     {
                         approved = false,
-                        errorCode = (int)ErrorCodeApiToShaamRes.GENERAL,
+                        errorCode = ErrorCodeApiToShaamRes.GENERAL,
                         message = apiToShaamRes.Content,
                         status = 400
                     };
@@ -38,7 +38,7 @@ namespace WebFreight.Web.WcfApi
                 res = new ApiToShaamRes()
                 {
                     approved = false,
-                    errorCode = (int)ErrorCodeApiToShaamRes.GENERAL,
+                    errorCode = ErrorCodeApiToShaamRes.GENERAL,
                     message = ex.Message,
                     status = 400
                 };
