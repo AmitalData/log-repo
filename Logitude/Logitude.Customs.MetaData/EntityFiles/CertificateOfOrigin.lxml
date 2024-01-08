@@ -41,7 +41,7 @@
   NewWizardControlName="&quot;&quot;"
   LocalDefaultText="&quot;תעודות מקור&quot;"
   DefaultText="&quot;Certificate Of Origin&quot;"
-  Code="&quot;a4fc&quot;"
+  Code="&quot;c13e&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -5712,6 +5712,12 @@
       Code="&quot;Customs.CertificateOfOrigin.O.AnswerToCertificate&quot;"
       DefaultText="&quot;Answer To Certificate&quot;"
       LocalDefaultText="&quot;תשובה לתעודה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.ConsolidateAccounts&quot;"
+      DefaultText="&quot;Whether to consolidate accounts in the certificate&quot;"
+      LocalDefaultText="&quot;האם לאחד חשבונות בתעודה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

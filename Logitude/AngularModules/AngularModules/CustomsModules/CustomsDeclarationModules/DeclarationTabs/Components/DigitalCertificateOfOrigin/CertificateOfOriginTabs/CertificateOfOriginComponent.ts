@@ -23,6 +23,7 @@ import { AppTool } from 'Infrastructure/Tools';
 import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 import { CertificateOfOriginPM } from 'Customs/EntityPMs/CertificateOfOriginPM';
 import { CertificateOfOriginPMService } from 'Customs/Services/StandardPMs/CertificateOfOriginPMService';
+import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 
 
 @Component({
@@ -85,15 +86,20 @@ export class CertificateOfOriginComponent extends BaseComponent {
         });
     }
 
+
+    DecalarationData:DeclarationPM;
     SetWindowArgs(args: any) {
 
-        this.CurrentEntity = args.CurrentEntity;
-        this.isNewClient = args.isNewClient;
-        this.isExternalId = args.IsExternalId;
+        this.CurrentEntity = args.CertificateOfOrigin;
+        this.DecalarationData = args.Decalaration;
+
+       
+        
         this.BuildTabs();
         this.RunComponent();
         this.entityArgs.EntityPM = this.CurrentEntity;
         this.entityArgs.ObjectTableName = "Customs.CertificateOfOrigin";
+
 
     }
 
@@ -181,7 +187,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.GENERAL = cmpRef.instance;
-                                    this.GENERAL.InitTab(this.CurrentEntity, false);
+                                    this.GENERAL.InitTab(this.CurrentEntity,this.DecalarationData, false);
                                 });
                         }
                         break;
@@ -191,22 +197,12 @@ export class CertificateOfOriginComponent extends BaseComponent {
                         // Add logic for MOREDATA case here
                         break;
                     }
+            
                     case "REQUESTSHEET": {
-                        if (this.REQUESTSHEET == null) {
-                            this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
-                                SessionLocator.DynamicLoader.Load("./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent", myLocation.viewContainerRef)
-                                    .then(cmpRef => {
-                                        this.REQUESTSHEET = cmpRef.instance;
-                                        this.REQUESTSHEET.IsTitleHidden = false;
-                                        this.REQUESTSHEET.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
-                                        this.REQUESTSHEET.MyRequestOnly = false;
-                                        this.REQUESTSHEET.SetEntityArgs(this.entityArgs);
-                                    });
-
-                            });
-                        }
+                        // Add logic for REQUESTSHEET case here
                         break;
                     }
+            
                     case "ANSWERTOCERTIFICATE": {
                         // Add logic for ANSWERTOCERTIFICATE case here
                         break;
