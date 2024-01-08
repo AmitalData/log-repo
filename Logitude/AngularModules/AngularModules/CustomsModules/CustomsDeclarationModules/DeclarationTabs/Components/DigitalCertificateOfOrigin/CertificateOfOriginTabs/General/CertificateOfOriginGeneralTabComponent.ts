@@ -6,6 +6,7 @@ import { AppTool, DateTool } from 'Infrastructure/Tools';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { CertificateOfOriginInvoicePM } from 'Customs/EntityPMs/CertificateOfOriginInvoicePM';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
+import { CertificateOfOriginItemPM } from 'Customs/EntityPMs/CertificateOfOriginItemPM';
 
 
 
@@ -24,6 +25,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public currentDeclaration:DeclarationPM;
     // public CertificateOriginInvoiceItems : CertificateOfOriginInvoicePM[];
     public CertificateOriginInvoiceItems : ObservableCollection // type <CertificateOfOriginInvoicePM[]>;
+    public CertificateOriginItemItems : ObservableCollection // type <CertificateOfOriginItemPM[]>;
     isNew: boolean;
     controlEnabled: boolean;
     isDispalyOnlyStatusList:number[] = [4,8];
@@ -35,10 +37,17 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         
         this.entityPM = EntityPM;
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
+        this.CertificateOriginItemItems = new ObservableCollection([]);
+
+        // update lists:
         EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
             this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoicePM(item));
+
+            item.CertificateOriginItemItems.forEach((item) => {
+                this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemPM(item));
+            });
         });
-        // this.CertificateOriginInvoiceItems = this.entityPM.CertificateOriginInvoiceItems;
+
         this.currentDeclaration = currentDeclaration;
         
 
