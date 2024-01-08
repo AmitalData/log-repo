@@ -310,17 +310,18 @@ export class BankDepositDetailsTabComponent extends BaseComponent {
 
             //
             if (this.EntityPM.IsCashDeposit && value != null) {
-                if (value > this.CashBookPM.TotalAmount) {
-                    this.UIProperties.SetValidity("ForeignAmount", this.ObjectTableName, false, "Amount must be less than Cashbook total");
+                // canceled validation
+                // if (value > this.CashBookPM.TotalAmount) {
+                    // this.UIProperties.SetValidity("ForeignAmount", this.ObjectTableName, false, "Amount must be less than Cashbook total");
                     //this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
                     //this.CurrentSession.CurrentEditComponent.ValidationErrorsList.push("Deposit Amount must be less than Cashbook total");
                     //this.CurrentSession.CurrentEditComponent.IsEditValid = false;
-                } else {
+                // } else {
                     this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
                     this.UIProperties.SetValidity("ForeignAmount", this.ObjectTableName, true, "");
                     //this.CurrentSession.CurrentEditComponent.IsEditValid = true;
                     this.CalculateLocal(value);
-                }
+                // }
             }
             if (this.IsLinesSelection && value != null) {
                 this.UIProperties.SetRequired("ForeignAmount", this.ObjectTableName, false);
