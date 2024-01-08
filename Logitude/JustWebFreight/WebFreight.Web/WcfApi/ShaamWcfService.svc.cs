@@ -10,7 +10,6 @@ namespace WebFreight.Web.WcfApi
     [AspNetCompatibilityRequirements(RequirementsMode = AspNetCompatibilityRequirementsMode.Allowed)]
     public class ShaamWcfService : IShaamWcfService
     {
-        ShaamService shaamService = new ShaamService();
         AllocateInvoiceService allocateInvoiceService = new AllocateInvoiceService();
 
         public ApiToShaamRes CreateConfirmationNumber(string invoiceJson, int tenant)
@@ -26,7 +25,7 @@ namespace WebFreight.Web.WcfApi
                     res = new ApiToShaamRes()
                     {
                         approved = false,
-                        errorCode = ErrorCodeApiToShaamRes.GENERAL,
+                        errorCode = (int)ErrorCodeApiToShaamRes.GENERAL,
                         message = apiToShaamRes.Content,
                         status = 400
                     };
@@ -39,7 +38,7 @@ namespace WebFreight.Web.WcfApi
                 res = new ApiToShaamRes()
                 {
                     approved = false,
-                    errorCode = ErrorCodeApiToShaamRes.GENERAL,
+                    errorCode = (int)ErrorCodeApiToShaamRes.GENERAL,
                     message = ex.Message,
                     status = 400
                 };
