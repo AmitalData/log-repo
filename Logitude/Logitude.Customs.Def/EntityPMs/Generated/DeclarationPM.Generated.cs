@@ -6137,29 +6137,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string testcustom12 ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Testcustom12  
-	   {
-	    
-	     get
-		{
-		   return testcustom12;
-		 }
-		 set
-		 {
-		   if(testcustom12 != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Testcustom12",OldValue=testcustom12,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   testcustom12=value;
-		   }
-			
-		 }
-	   }
    }
    
 }
