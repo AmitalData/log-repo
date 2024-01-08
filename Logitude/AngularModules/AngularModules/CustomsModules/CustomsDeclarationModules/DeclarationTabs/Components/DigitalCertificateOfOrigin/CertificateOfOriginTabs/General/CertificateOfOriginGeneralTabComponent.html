@@ -2,8 +2,29 @@
     .FieldRow {
         height: 22px;
     }
+    .DisbleBox {
+        display: inline-block;
+        border: 1px solid #ffd800;
+        border-radius: 5px;
+        background: #faf5c0; /*fbebbc*/
+        padding: 4px 10px;
+        color: gray;
+        font-family: sans-serif;
+        max-width: 660px;
+        white-space: normal;
+    }
 </style>
 <table>
+    <tr>
+        <td>
+            <div style="width:90%;text-align:center" *ngIf="IsDispalyOnly">
+                <div class="DisbleBox">
+                    {{'Customs.CertificateOfOrigin.O.DisplayOnly'| TextCodeTranslationPipe}}
+                </div>
+            </div> 
+        </td>
+
+    </tr>
     <tr style="height:300px">
         <td style="vertical-align:top">
             <div style="vertical-align:top; margin:5px">

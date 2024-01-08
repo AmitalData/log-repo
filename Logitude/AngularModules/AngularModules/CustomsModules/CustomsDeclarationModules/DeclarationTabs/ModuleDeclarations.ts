@@ -36,6 +36,7 @@ import { ComprehensiveUpdateConsignment } from './Components/General/ConsigmentT
 import { DigitalCertificateOfOriginTabComponent } from './Components/DigitalCertificateOfOrigin/DigitalCertificateOfOriginTabComponent';
 import { CertificateOfOriginComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent';
 import { CertificateOfOriginGeneralTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent';
+import { CertificateOfOriginMoreDetailsTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginMoreDetailsTabComponent';
 
 
 export const Components =
@@ -77,7 +78,9 @@ export const Components =
         
         DigitalCertificateOfOriginTabComponent,
         CertificateOfOriginComponent,
-        CertificateOfOriginGeneralTabComponent
+        CertificateOfOriginGeneralTabComponent,
+        CertificateOfOriginMoreDetailsTabComponent
+
     ];
 
 export class ModuleDeclarations {
@@ -125,6 +128,8 @@ export class ModuleDeclarations {
             case "DigitalCertificateOfOriginTabComponent": { myResult = DigitalCertificateOfOriginTabComponent; break; }
             case "CertificateOfOriginComponent": { myResult = CertificateOfOriginComponent; break; }
             case "CertificateOfOriginGeneralTabComponent": { myResult = CertificateOfOriginGeneralTabComponent; break; }
+            case "CertificateOfOriginMoreDetailsTabComponent": { myResult = CertificateOfOriginMoreDetailsTabComponent; break; }
+
         }
 
         return myResult;

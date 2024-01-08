@@ -14,7 +14,7 @@ namespace Logitude.CustomsMessaging.Common.RequestParams
         public string CertificateOfOriginId { get; set; }
 		public string DeclarationId { get; set; }
 		public string CustomFileNo { get; set; }
-        
+        public int RequestReasonCode { get; set; }
 
 	}
 }
