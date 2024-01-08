@@ -28,7 +28,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public CertificateOriginItemItems : ObservableCollection // type <CertificateOfOriginItemPM[]>;
     isNew: boolean;
     controlEnabled: boolean;
-    isDispalyOnlyStatusList:number[] = [4,8];
+
     constructor() {
         super();
     }
@@ -62,11 +62,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             // this.isCorporation = this.entityPM.Code.startsWith("5");
             // this.isCitizen = (!this.entityPM.Code.startsWith("5")) && (this.entityPM.Code != "");
         }
-       
+
+        this.SetWarning();
+
     }
-    
+
     SetPropertiesEnabled() {
-        var enabled = !this.IsDispalyOnly;
+        var enabled = false;
         this.UIProperties.SetEnabled("CooTypeCode", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("RequestReasonCode", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("DateOfDeclaration", this.ObjectTableName, enabled);
@@ -88,10 +90,15 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, enabled);
     }
 
-    public get IsDispalyOnly() { 
-       return this.isDispalyOnlyStatusList.includes(Number(this.entityPM.CooStatusCode))
-    }
+
    
+    
+    SetWarning() {
+        this.UIProperties.SetWarning("CooTypeCode", this.ObjectTableName, true);
+        this.UIProperties.SetWarning("RequestReasonCode", this.ObjectTableName, true);
+    }
+
+
     //#region properties
 
     public get Id(): string {

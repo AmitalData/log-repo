@@ -187,10 +187,10 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
             CertificateOfOrigin: !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin) ? this.selectedCertificateOfOrigin : new CertificateOfOriginPM()
         };
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
-        logWindow.Height = 700;
-        // logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DigitalCertificateOfOrigin");
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
+        logWindow.Width = 1200;
+        logWindow.Height = 750;
+        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.DigitalCertificateOfOrigin");
+        // logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin") + args.CertificateOfOrigin ?? " :" + args.CertificateOfOrigin.Id;
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
         // logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOrigin/CertificateOfOrigin');
