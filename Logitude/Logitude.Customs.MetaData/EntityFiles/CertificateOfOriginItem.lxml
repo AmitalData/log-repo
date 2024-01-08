@@ -42,7 +42,7 @@
   NewWizardControlName="&quot;&quot;"
   LocalDefaultText="&quot;פריטי תעודת מקור&quot;"
   DefaultText="&quot;Certificate Of Origin Item&quot;"
-  Code="&quot;8a5b&quot;"
+  Code="&quot;744c&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -756,7 +756,7 @@
   <field
     Id="&quot;71e6907f-5029-4ab0-896e-3075df94e03e&quot;"
     FieldName="&quot;PackageType&quot;"
-    OldNames="PackageType"
+    OldNames="PackageType,PACKAGETYPE"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
@@ -1253,6 +1253,67 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.MarksAndNumbers&quot;"
+      DefaultText="&quot;Marks And Numbers&quot;"
+      LocalDefaultText="&quot;סימנים ומספרים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.ItemDescription&quot;"
+      DefaultText="&quot;Item Description&quot;"
+      LocalDefaultText="&quot;תיאור טובין&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.PackageQuantity&quot;"
+      DefaultText="&quot;Package Quantity&quot;"
+      LocalDefaultText="&quot;כמות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.PackageType&quot;"
+      DefaultText="&quot;Package Type&quot;"
+      LocalDefaultText="&quot;סוג אריזה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.Weight&quot;"
+      DefaultText="&quot;Weight&quot;"
+      LocalDefaultText="&quot;משקל&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.MeasureType&quot;"
+      DefaultText="&quot;Measure Type&quot;"
+      LocalDefaultText="&quot;יחידת מידה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.ContainerIsoCode&quot;"
+      DefaultText="&quot;Container Iso Code&quot;"
+      LocalDefaultText="&quot;סוג מכולה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.ItemId&quot;"
+      DefaultText="&quot;Item Id&quot;"
+      LocalDefaultText="&quot;פרט מכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.OriginCriterionCode&quot;"
+      DefaultText="&quot;Origin CriterionCode&quot;"
+      LocalDefaultText="&quot;העדפה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.InvoiceConnect&quot;"
+      DefaultText="&quot;Invoice Connect&quot;"
+      LocalDefaultText="&quot;חשבון&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
