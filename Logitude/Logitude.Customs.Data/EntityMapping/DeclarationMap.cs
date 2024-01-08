@@ -344,8 +344,6 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.ExportFlightDate).HasColumnName("ExportFlightDate");
 
             this.Property(t => t.UNFCourier).HasColumnName("UNFCourier");
-
-            this.Property(t => t.Testcustom12).HasColumnName("Testcustom12").HasMaxLength(15).IsUnicode(true);
         }
     }
 }
