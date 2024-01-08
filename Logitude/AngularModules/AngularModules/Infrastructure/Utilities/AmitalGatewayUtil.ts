@@ -61,7 +61,7 @@ export class AmitalGatewayUtil {
         }*/
     }
     NoteUnifreightIamReady() {
-        this.sendPostMessage("amitalBackButtonClicked");
+        this.sendPostMessage("site ready");
 
         let myRequestWrapper = new RequestWrapperM();
         myRequestWrapper.MessageID = "NoteUnifreightIamReady";
