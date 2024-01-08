@@ -4,6 +4,8 @@ import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { AppTool, DateTool } from 'Infrastructure/Tools';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
+import { CertificateOfOriginInvoicePM } from 'Customs/EntityPMs/CertificateOfOriginInvoicePM';
+import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 
 
 
@@ -19,6 +21,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public isCitizen: boolean;
     public isPassport: boolean;
     public entityPM: CertificateOfOriginPM;
+    public currentDeclaration:DeclarationPM;
+    // public CertificateOriginInvoiceItems : CertificateOfOriginInvoicePM[];
+    public CertificateOriginInvoiceItems : ObservableCollection // type <CertificateOfOriginInvoicePM[]>;
     isNew: boolean;
     controlEnabled: boolean;
     constructor() {
@@ -27,7 +32,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM ,IsNew: boolean) {
         
-        // this.entityPM = EntityPM;
+        this.entityPM = EntityPM;
+        this.CertificateOriginInvoiceItems = new ObservableCollection([]);
+        EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
+            this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoicePM(item));
+        });
+        // this.CertificateOriginInvoiceItems = this.entityPM.CertificateOriginInvoiceItems;
+        this.currentDeclaration = currentDeclaration;
+        
 
         this.isNew = IsNew;
         this.controlEnabled = IsNew;
@@ -205,25 +217,35 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this._ExporterCountry = newValue;
     }
 
+    _TradeAgreementCountry1:string;
     public get TradeAgreementCountry1(): string {
-        return this.entityPM.TradeAgreementCountry1;
+        // return this.entityPM.TradeAgreementCountry1;
+        return this._TradeAgreementCountry1;
     }
     public set TradeAgreementCountry1(newValue: string) {
-        this.entityPM.TradeAgreementCountry1 = newValue;
+        this._TradeAgreementCountry1 = newValue;
+        // this.entityPM.TradeAgreementCountry1 = newValue;
     }
 
+    _TradeAgreementCountry2:string;
     public get TradeAgreementCountry2(): string {
-        return this.entityPM.TradeAgreementCountry2;
+        // return this.entityPM.TradeAgreementCountry2;
+        return this._TradeAgreementCountry2;
     }
     public set TradeAgreementCountry2(newValue: string) {
-        this.entityPM.TradeAgreementCountry2 = newValue;
+        // this.entityPM.TradeAgreementCountry2 = newValue;
+        this._TradeAgreementCountry2 = newValue;
     }
 
+    _TradeAgreementGroupOfCountries:string;
     public get TradeAgreementGroupOfCountries(): string {
-        return this.entityPM.TradeAgreementGroupOfCountries;
+        //return this.entityPM.TradeAgreementGroupOfCountries;
+        return this._TradeAgreementGroupOfCountries;
     }
+
     public set TradeAgreementGroupOfCountries(newValue: string) {
-        this.entityPM.TradeAgreementGroupOfCountries = newValue;
+        // this.entityPM.TradeAgreementGroupOfCountries = newValue;
+        this._TradeAgreementGroupOfCountries = newValue;
     }
 
     _ConsigneeName:string;
@@ -302,11 +324,16 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this._DestinationCountry = newValue;
     }
 
+    _DestinationGroupOfCountries:string;
     public get DestinationGroupOfCountries(): string {
-        return this.entityPM.DestinationGroupOfCountries;
+        // return this.entityPM.DestinationGroupOfCountries;
+        return this._DestinationGroupOfCountries;
+
     }
     public set DestinationGroupOfCountries(newValue: string) {
-        this.entityPM.DestinationGroupOfCountries = newValue;
+        // this.entityPM.DestinationGroupOfCountries = newValue;
+        this._DestinationGroupOfCountries = newValue;
+
     }
 
     public get Transport(): string {
@@ -344,18 +371,24 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.entityPM.CumulationGroupOfCountries = newValue;
     }
 
+    _PlaceOfManufacture:string;
     public get PlaceOfManufacture(): string {
-        return this.entityPM.PlaceOfManufacture;
+        return this._PlaceOfManufacture;
+        // return this.entityPM.PlaceOfManufacture;
     }
     public set PlaceOfManufacture(newValue: string) {
-        this.entityPM.PlaceOfManufacture = newValue;
+        // this.entityPM.PlaceOfManufacture = newValue;
+        this._PlaceOfManufacture = newValue;
     }
 
+    _ZipCodeOfManufacture:string;
     public get ZipCodeOfManufacture(): string {
-        return this.entityPM.ZipCodeOfManufacture;
+        return this._ZipCodeOfManufacture;
+        // return this.entityPM.ZipCodeOfManufacture;
     }
     public set ZipCodeOfManufacture(newValue: string) {
-        this.entityPM.ZipCodeOfManufacture = newValue;
+        // this.entityPM.ZipCodeOfManufacture = newValue;
+        this._ZipCodeOfManufacture = newValue;
     }
 
     public get Observations(): string {
@@ -372,11 +405,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.entityPM.IsExportDecForPrint = newValue;
     }
 
+    _IsUnitedInvoices:boolean;
     public get IsUnitedInvoices(): boolean {
-        return this.entityPM.IsUnitedInvoices;
+        // return this.entityPM.IsUnitedInvoices;
+        return this._IsUnitedInvoices;
     }
     public set IsUnitedInvoices(newValue: boolean) {
-        this.entityPM.IsUnitedInvoices = newValue;
+        // this.entityPM.IsUnitedInvoices = newValue;
+        this._IsUnitedInvoices = newValue;
     }
 
     public get CustomsHouse(): string {
