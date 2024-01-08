@@ -248,7 +248,6 @@ export class DecCargoSplitConComponent extends BaseComponent {
             this.DisplayOnlyMessageVisibility = false;
         }
          if (this.DeclarationDirection == "E" || this.DeclarationDirection == "I") {
-             this.UIProperties.SetEnabled("ConditionCode", this.ObjectTableName, false);
             if(this.EntityPM.EntityParentPM.responseStatusCode == "1" || this.EntityPM.EntityParentPM.responseStatusCode == "3" || this.EntityPM.EntityParentPM.responseStatusCode == "6"){
 
                 this.IsDisplayOnly = true
@@ -256,6 +255,10 @@ export class DecCargoSplitConComponent extends BaseComponent {
             }
 
 
+        }
+        if(this.DeclarationDirection == "E")
+        {
+            this.UIProperties.SetEnabled("ConditionCode", this.ObjectTableName, false);
         }
         this.IsImporerCodeEnabled = !this.IsDisplayOnly;
     } 
