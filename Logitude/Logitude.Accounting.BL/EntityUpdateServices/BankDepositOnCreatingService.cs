@@ -82,6 +82,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private static void CheckCashbookAmount(BankDepositPM entityPM, int tenant, CashBookPM cashBook)
         {
+            /* canceled validation
             if (entityPM.ForeignAmount > cashBook.TotalAmount)
             {
                 //showlocal
@@ -91,7 +92,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     showLocal = !user.DontShowLocal;
 
                 throw new ApplicationException(TextCodesTranslator.TranslateText("BankDeposit.O.DepositAmountmustbelessthanCashbook", 0, showLocal));
-            }
+            }*/
         }
         public virtual CashBookPM GetCashbookById(int tenant, string id)
         {
