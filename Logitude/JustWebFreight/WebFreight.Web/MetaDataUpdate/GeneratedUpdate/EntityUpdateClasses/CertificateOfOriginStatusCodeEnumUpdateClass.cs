@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginStatusCodeEnumUpdateClass
    {  		
-		public const string HashString = "99bc2e04b01835668cd79c68ad7bd00f";
+		public const string HashString = "e968d7ad038addd938bacb1a1f704b73";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -557,7 +557,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CertificateOfOriginStatusEnumQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CertificateOfOriginStatusCodeEnumTextCode_0.Id, NameTextCodeCode = CertificateOfOriginStatusCodeEnumTextCode_0.Code, ObjectTableName = "Customs.CertificateOfOriginStatusCodeEnum", Code = "CertificateOfOriginStatusEnum",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = CertificateOfOriginStatusCodeEnumObjectTable.Id, QuerySection = "Customs.CertificateOfOriginStatusCodeEnum", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CertificateOfOriginStatusCodeEnumFeature_0.Id,FeatureUniqeCode= CertificateOfOriginStatusCodeEnumFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query CertificateOfOriginStatusEnumQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CertificateOfOriginStatusCodeEnumTextCode_0.Id, NameTextCodeCode = CertificateOfOriginStatusCodeEnumTextCode_0.Code, ObjectTableName = "Customs.CertificateOfOriginStatusCodeEnum", Code = "CertificateOfOriginStatusEnum",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = CertificateOfOriginStatusCodeEnumObjectTable.Id, QuerySection = "Customs.CertificateOfOriginStatusCodeEnum", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CertificateOfOriginStatusCodeEnumFeature_0.Id,FeatureUniqeCode= CertificateOfOriginStatusCodeEnumFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
 			 QueryColumn CertificateOfOriginStatusEnumQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginStatusEnumQuery.Id,QueryCode = CertificateOfOriginStatusEnumQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CertificateOfOriginStatusCodeEnum.Code" , ColumnWidth = 50 }, addedQueryColumns);
 

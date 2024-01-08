@@ -606,6 +606,8 @@
     SystemLevel="true"
     IsAddNewEntity="false"
     IsPackagable="true"
+    DefaultSortName="&quot;Code&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
     QueryGroupName="&quot;Customs.TradeAgreement&quot;"
     TextCodeCode="&quot;Customs.TradeAgreement.Q.TradeAgreementQuery&quot;"
     FeatureCode="&quot;TRADEAGREEMENT&quot;"
