@@ -90,6 +90,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			certificateOfOriginPM.QueryUrl = customResponse.CertificateOfOriginRequestFeedback.QueryURL;
 			certificateOfOriginPM.IssueDateIfReleased = customResponse.CertificateOfOriginRequestFeedback.IssueDateIfReleased;
 
+			if(requestParams.RequestReasonCode == 1)
+			  certificateOfOriginPM.IsSubmitted = true;
 			if (customResponse.Attachment != null)
 			{
 

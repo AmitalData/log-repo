@@ -27,6 +27,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			CertificateOfOriginQueryService certificateOfOriginQueryService =  new CertificateOfOriginQueryService(requestParams.Tenant);
            var certificateOfOrigin =  certificateOfOriginQueryService.GetSingle(requestParams.CertificateOfOriginId,true,false);
 
+			requestParams.RequestReasonCode = Convert.ToInt32(certificateOfOrigin.RequestReasonCode);
 
 			myMsg.AgentRequest = new PC_NG_2280_MSG01_CertificateOfOriginRequestAgentRequest()
             {

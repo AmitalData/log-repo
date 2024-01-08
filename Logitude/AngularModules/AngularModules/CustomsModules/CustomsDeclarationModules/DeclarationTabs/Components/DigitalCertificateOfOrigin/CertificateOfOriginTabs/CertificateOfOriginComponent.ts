@@ -194,7 +194,13 @@ export class CertificateOfOriginComponent extends BaseComponent {
                     }
             
                     case "MOREDATA": {
-                        // Add logic for MOREDATA case here
+                        if (this.MOREDATA == null) {
+                            SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginMoreDetailsTabComponent', myLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.MOREDATA = cmpRef.instance;
+                                    this.MOREDATA.InitTab(this.CurrentEntity,this.DecalarationData, false);
+                                });
+                        }
                         break;
                     }
             
