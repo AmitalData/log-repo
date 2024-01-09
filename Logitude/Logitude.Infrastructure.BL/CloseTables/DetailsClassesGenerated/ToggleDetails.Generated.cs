@@ -996,7 +996,6 @@ namespace Logitude.Infrastructure.BL
                 SearchFields = "ILO,Invoice Status According To Ledger Open Amount", 
                 Description = "Invoice Status According To Ledger Open Amount", 
 			});
-
 			
             return all;
        }

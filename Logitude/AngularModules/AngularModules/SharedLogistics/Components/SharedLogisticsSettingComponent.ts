@@ -259,8 +259,6 @@ export class SharedLogisticsSettingComponent implements OnInit {
     ngOnInit(
 
     ) {
-
-        debugger
         if (this.TenantPM) {
             this.Run();
         }

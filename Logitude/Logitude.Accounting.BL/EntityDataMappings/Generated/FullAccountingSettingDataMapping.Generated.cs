@@ -63,6 +63,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         HSMtoken, 
 	         HSMaddress, 
 	         AllowEditingExchangeRate, 
+
 	         AmountForConfirmationNumber, 
 	         NumberingByChartOfAccount, 
 	         OppositeAccountNumber,
@@ -130,6 +131,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 	         HSMtoken, 
 	         HSMaddress, 
 	         AllowEditingExchangeRate, 
+
 	         AmountForConfirmationNumber, 
 	         NumberingByChartOfAccount, 
 	         OppositeAccountNumber,
@@ -341,6 +343,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 				entityPOCO.AllowEditingExchangeRate = entityPM.AllowEditingExchangeRate;
 			}
 			
+
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.AmountForConfirmationNumber))
             {
 				entityPOCO.AmountForConfirmationNumber = entityPM.AmountForConfirmationNumber;
@@ -799,8 +802,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountNumber))
             {
                 oldEntityPM.OppositeAccountNumber = entityPM.OppositeAccountNumber;
-            }
-			
+            }	
 		}
 
 	    public void EncodeBase64NVARCHARFields(FullAccountingSettingPM entityPM)
