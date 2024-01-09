@@ -101,9 +101,12 @@
                         //alert("Angular" + version + "/index.html");
                         //myIframe.src = "Angular" + version + "/index.html?AmitalMode=true"; // "index.html";//"http://localhost:3000/";
                         //myIframe.src = "Angular" + version + "/indexAmital.html"; // "index.html";//"http://localhost:3000/";
-                        
+
                         //myIframe.src = "Angular" + version + "/index.html"; // "index.html";//"http://localhost:3000/";
-                        myIframe.src = "Angular" + version + "/index.html" + window.location.search;
+                        //if (window.location.href.includes("localhost:9996"))
+                        //    myIframe.src = "http://localhost:4200" + window.location.search;
+                        //else
+                            myIframe.src = "Angular" + version + "/index.html" + window.location.search;
                         
 
                     }
