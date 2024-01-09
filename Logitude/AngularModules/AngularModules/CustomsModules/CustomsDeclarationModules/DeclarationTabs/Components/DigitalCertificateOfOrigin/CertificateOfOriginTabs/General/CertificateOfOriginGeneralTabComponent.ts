@@ -172,7 +172,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public get DeclarationId(): string {
         return this.entityPM.DeclarationId;
     }
-    public set DeclarationNumber(newValue: string) {
+    public set DeclarationId(newValue: string) {
         this.entityPM.DeclarationId = newValue;
     }
 
