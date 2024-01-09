@@ -21,7 +21,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string SearchFields  { get; set; }
        [DataMember]
-       public string CertificateOfOriginInvoiceId  { get; set; }
+       public string CertificateOfOriginId  { get; set; }
        [DataMember]
        public string ItemSerial  { get; set; }
        [DataMember]

@@ -25,7 +25,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         SearchFields, 
-	         CertificateOfOriginInvoiceId, 
+	         CertificateOfOriginId, 
 	         ItemSerial, 
 	         ItemId, 
 	         OriginCriterionCode, 
@@ -46,7 +46,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Id, 
 	         Tenant, 
 	         SearchFields, 
-	         CertificateOfOriginInvoiceId, 
+	         CertificateOfOriginId, 
 	         ItemSerial, 
 	         ItemId, 
 	         OriginCriterionCode, 
@@ -76,9 +76,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.SearchFields = entityPM.SearchFields;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CertificateOfOriginInvoiceId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CertificateOfOriginId))
             {
-				entityPOCO.CertificateOfOriginInvoiceId = entityPM.CertificateOfOriginInvoiceId;
+				entityPOCO.CertificateOfOriginId = entityPM.CertificateOfOriginId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemSerial))
@@ -157,9 +157,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.SearchFields = entityPOCO.SearchFields;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CertificateOfOriginInvoiceId))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CertificateOfOriginId))
             {
-					entityPM.CertificateOfOriginInvoiceId = entityPOCO.CertificateOfOriginInvoiceId;
+					entityPM.CertificateOfOriginId = entityPOCO.CertificateOfOriginId;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ItemSerial))
@@ -233,9 +233,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.SearchFields = entityPM.SearchFields;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CertificateOfOriginInvoiceId))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CertificateOfOriginId))
             {
-                oldEntityPM.CertificateOfOriginInvoiceId = entityPM.CertificateOfOriginInvoiceId;
+                oldEntityPM.CertificateOfOriginId = entityPM.CertificateOfOriginId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ItemSerial))

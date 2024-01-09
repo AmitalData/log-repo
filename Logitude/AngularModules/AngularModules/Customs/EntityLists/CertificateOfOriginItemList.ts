@@ -11,7 +11,7 @@ export class CertificateOfOriginItemList {
 	Id: string;
 	Tenant: number;
 	SearchFields: string;
-	CertificateOfOriginInvoiceId: string;
+	CertificateOfOriginId: string;
 	ItemSerial: string;
 	ItemId: string;
 	OriginCriterionCode: string;

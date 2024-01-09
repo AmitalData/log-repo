@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginItemUpdateClass
    {  		
-		public const string HashString = "250c836cfc6d8fdf58b08c18faa4faca";
+		public const string HashString = "c3c20cef359e711d2c34ea63882c1706";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "פריטי תעודת מקור",
 			      				    DefaultText =  "Certificate Of Origin Item",
-			      				    Code =  "744c",
+			      				    Code =  "128d",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -214,10 +214,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "CertificateOfOriginInvoiceId",
+					 						FieldName =  "CertificateOfOriginId",
 					  						ObjectTableName =  "Customs.CertificateOfOriginItem",
 					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "Customs.CertificateOfOriginInvoice",
+					  						LookUpTableName =  "Customs.CertificateOfOrigin",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -234,8 +234,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "CertificateOfOriginInvoiceId",
-					  						ListPropertyPath =  "CertificateOfOriginInvoiceId",
+					  						PMPropertyPath =  "CertificateOfOriginId",
+					  						ListPropertyPath =  "CertificateOfOriginId",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -253,12 +253,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "CertificateOfOriginInvoiceId",
-					  						DefaultText =  "Certificate Of Origin Invoice Id",
-					  						FullLocalDefaultText =  "מזהה חשבונית תעודת מקור",
-					  						ListFieldLable =  "CertificateOfOriginInvoiceIdListLable",
-					  						ListLableDefaultText =  "Certificate Of Origin Invoice Id",
-					  						ListLocalDefaultText =  "מזהה חשבונית תעודת מקור",
+					  						FullFieldLable =  "CertificateOfOriginId",
+					  						DefaultText =  "Certificate Of Origin Id",
+					  						FullLocalDefaultText =  "מזהה תעודת מקור",
+					  						ListFieldLable =  "CertificateOfOriginIdListLable",
+					  						ListLableDefaultText =  "Certificate Of Origin Id",
+					  						ListLocalDefaultText =  "מזהה תעודת מקור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

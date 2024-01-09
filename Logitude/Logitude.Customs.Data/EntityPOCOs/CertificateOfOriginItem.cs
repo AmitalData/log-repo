@@ -25,11 +25,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int Tenant { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
-        [ForeignKey("CertificateOfOriginInvoice")]
-        [Column("CertificateOfOriginInvoiceId")]
-	    public string CertificateOfOriginInvoiceId { get; set; }
+        [ForeignKey("CertificateOfOrigin")]
+        [Column("CertificateOfOriginId")]
+	    public string CertificateOfOriginId { get; set; }
 	      
-        public virtual CertificateOfOriginInvoice CertificateOfOriginInvoice { get; set; }
+        public virtual CertificateOfOrigin CertificateOfOrigin { get; set; }
         [Column("ItemSerial")]
 	    public string ItemSerial { get; set; }
         [Column("ItemId")]

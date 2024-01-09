@@ -42,9 +42,9 @@ export class CertificateOfOriginItemPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
-    private certificateOfOriginInvoiceId: string;
-    public get CertificateOfOriginInvoiceId() { return this.certificateOfOriginInvoiceId; }
-    public set CertificateOfOriginInvoiceId(newValue: string) { if (this.certificateOfOriginInvoiceId != newValue) { this.certificateOfOriginInvoiceId = newValue; this.MarkAsDirty("CertificateOfOriginInvoiceId"); } }
+    private certificateOfOriginId: string;
+    public get CertificateOfOriginId() { return this.certificateOfOriginId; }
+    public set CertificateOfOriginId(newValue: string) { if (this.certificateOfOriginId != newValue) { this.certificateOfOriginId = newValue; this.MarkAsDirty("CertificateOfOriginId"); } }
        
 	 
     private itemSerial: string;

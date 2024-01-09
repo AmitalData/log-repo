@@ -273,42 +273,7 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-
-	   private List<CertificateOfOriginItemPM> certificateOriginItemItems;
-	    
-       [Composition]
- 
-		     
-	   [Include]
-	   [Association("CertificateOfOriginItemItems", "Id","CertificateOfOriginInvoiceId")]
-	   [DataMember]
-	   public virtual List<CertificateOfOriginItemPM> CertificateOriginItemItems  
-	   {
-	        get
-             {
-                 if (certificateOriginItemItems == null)
-                 {
-                     certificateOriginItemItems = new List<CertificateOfOriginItemPM>();
-                 }
-                 return certificateOriginItemItems;
-              }
-             set { certificateOriginItemItems = value; }
-	    }
-		   
-	   private List<CertificateOfOriginItemPM>  deletedCertificateOriginItemItems;
-	   public virtual List<CertificateOfOriginItemPM> DeletedCertificateOriginItemItems  
-	   {
-	        get
-             {
-                 if ( deletedCertificateOriginItemItems == null)
-                 {
-                      deletedCertificateOriginItemItems = new List<CertificateOfOriginItemPM>();
-                 }
-                 return  deletedCertificateOriginItemItems;
-              }
-             set {  deletedCertificateOriginItemItems = value; }
-	    }
-	     }
+   }
    
 }
 	 

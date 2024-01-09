@@ -26,7 +26,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="CertificateOfOriginInvoiceId"
+    Name="CertificateOfOriginId"
+    OldNames="CertificateOfOriginInvoiceId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -111,8 +112,8 @@
       Nullable="true" />
   </Column>
   <Relation
-    ForeignKeyColumn="CertificateOfOriginInvoiceId"
-    ReferencedTable="CertificateOfOriginInvoices"
+    ForeignKeyColumn="CertificateOfOriginId"
+    ReferencedTable="CertificateOfOrigins"
     ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
   <Relation
