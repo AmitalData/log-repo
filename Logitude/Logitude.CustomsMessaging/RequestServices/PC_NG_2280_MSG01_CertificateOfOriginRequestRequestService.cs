@@ -43,7 +43,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 			myMsg.CertificateOfOrigin = GetCertificateOfOrigin(certificateOfOrigin);
-			myMsg.CertificateOfOrigin.CertificateOfOriginRequestInvoiceDetail = GetCertificateOfOriginRequestInvoiceDetail(certificateOfOrigin.CertificateOriginInvoiceItems);
+			myMsg.CertificateOfOrigin.CertificateOfOriginRequestInvoiceDetail = GetCertificateOfOriginRequestInvoiceDetail(certificateOfOrigin.CertificateOriginInvoiceItems,certificateOfOrigin.CertificateOriginItemItems);
 			myMsg.NonManipulationCertificate = new PC_NG_2280_MSG01_CertificateOfOriginRequestNonManipulationCertificate()
 			{
 				ExportDate = Convert.ToDateTime(certificateOfOrigin.NonExportDate),
@@ -119,9 +119,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             
             return PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin;
 		}
-		public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail[] GetCertificateOfOriginRequestInvoiceDetail(List<CertificateOfOriginInvoicePM> CertificateOfOriginInvoices)
+		public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail[] GetCertificateOfOriginRequestInvoiceDetail(List<CertificateOfOriginInvoicePM> CertificateOfOriginInvoices, List<CertificateOfOriginItemPM> CertificateOfOriginItems)
         {
             var CertificateOfOriginInvoicesDetails = new List<PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail>();
+			CertificateOfOriginInvoices = CertificateOfOriginInvoices.FindAll(x => x.IsInvoicesForPrint == true);
 			foreach (var item in CertificateOfOriginInvoices)
 			{
 				var CertificateOfOriginInvoiceDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail()
@@ -133,24 +134,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					DescriptionOfInvoice = item.DescriptionOfInvoice,
 					IsInvoicesForPrint = item.IsInvoicesForPrint,
 				};
-                foreach (var item1 in item.CertificateOriginItemItems)
+                foreach (var item1 in CertificateOfOriginItems)
                 {
-					var CertificateOfOriginRequestItemDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetailCertificateOfOriginRequestItemDetail()
-					{
-						ItemSerial = Convert.ToInt32(item1.ItemSerial),
-						ItemId = item1.ItemId,
-						OriginCriterion = item1.OriginCriterionCode,
-						MarksAndNumbers = item1.MarksAndNumbers,
-						PackageQuantity = Convert.ToInt32(item1.PackageQuantity),
-						PackageType = item1.PackageType,
-						ContainerISOCode = item1.ContainerIsoCode,
-						ItemDescription = item1.ItemDescription,
-						Weight = Convert.ToDecimal(item1.Weight),
-						MeasureType = item1.MeasureType,
-
-					};
-
-                    CertificateOfOriginInvoiceDetail.CertificateOfOriginRequestItemDetail.Append(CertificateOfOriginRequestItemDetail);
+					
+					if (CertificateOfOriginItems.Count() == 1 || string.IsNullOrEmpty(item1.InvoiceConnect) || item1.InvoiceConnect.Split(',').Contains(item.InvoicesIdUry.ToString())) { 
+					    var CertificateOfOriginRequestItemDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetailCertificateOfOriginRequestItemDetail()
+					    {
+					    	ItemSerial = Convert.ToInt32(item1.ItemSerial),
+					    	ItemId = item1.ItemId,
+					    	OriginCriterion = item1.OriginCriterionCode,
+					    	MarksAndNumbers = item1.MarksAndNumbers,
+					    	PackageQuantity = Convert.ToInt32(item1.PackageQuantity),
+					    	PackageType = item1.PackageType,
+					    	ContainerISOCode = item1.ContainerIsoCode,
+					    	ItemDescription = item1.ItemDescription,
+					    	Weight = Convert.ToDecimal(item1.Weight),
+					    	MeasureType = item1.MeasureType,
+					    
+					    };
+					    
+                        CertificateOfOriginInvoiceDetail.CertificateOfOriginRequestItemDetail.Append(CertificateOfOriginRequestItemDetail);
+					}
 				}
 				CertificateOfOriginInvoicesDetails.Add(CertificateOfOriginInvoiceDetail);
 

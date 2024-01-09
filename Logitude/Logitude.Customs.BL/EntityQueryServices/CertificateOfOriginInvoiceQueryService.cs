@@ -15,15 +15,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 {
 	public partial class CertificateOfOriginInvoiceQueryService : EntityQueryService<CertificateOfOriginInvoice, CertificateOfOriginInvoiceKeys, CertificateOfOriginInvoicePM, CertificateOfOriginPM, CertificateOfOriginKeys>
 	{
-		public override void GetComposition(EntityKeyFields entityKeys, CertificateOfOriginInvoicePM entityPM)
-		{
-			ICustomContext context = MainContext as CustomContext;
-			CertificateOfOriginInvoiceKeys CertificateOfOriginInvoiceKeys = entityKeys as CertificateOfOriginInvoiceKeys;
-
-			CertificateOfOriginItemQueryService certificateOfOriginItemQueryService = new CertificateOfOriginItemQueryService(context);
-			entityPM.CertificateOriginItemItems = certificateOfOriginItemQueryService.GetMulti(CertificateOfOriginInvoiceKeys, false);
-
-		}
+		
 
 	}
 }

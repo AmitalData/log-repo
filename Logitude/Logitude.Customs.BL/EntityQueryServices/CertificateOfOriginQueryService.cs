@@ -23,7 +23,10 @@ namespace Logitude.Customs.BL.EntityQueryServices
 			CertificateOfOriginInvoiceQueryService certificateOfOriginInvoiceQueryService = new CertificateOfOriginInvoiceQueryService(context);
 			entityPM.CertificateOriginInvoiceItems = certificateOfOriginInvoiceQueryService.GetMulti(CertificateOfOriginKeys, false);
 
-		}    
-        
-    }
+			CertificateOfOriginItemQueryService certificateOfOriginItemQueryService = new CertificateOfOriginItemQueryService(context);
+			entityPM.CertificateOriginItemItems = certificateOfOriginItemQueryService.GetMulti(CertificateOfOriginKeys, false);
+
+		}
+
+	}
 }
