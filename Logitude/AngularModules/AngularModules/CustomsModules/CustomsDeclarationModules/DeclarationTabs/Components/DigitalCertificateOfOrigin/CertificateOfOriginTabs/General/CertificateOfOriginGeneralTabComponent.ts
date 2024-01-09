@@ -39,13 +39,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
 
-        // update lists:
+        // update CertificateOriginInvoice list:
         EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
             this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoicePM(item));
-
-            item.CertificateOriginItemItems.forEach((item) => {
-                this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemPM(item));
-            });
+        });
+        
+        // update CertificateOriginItemItems list:
+        EntityPM.CertificateOriginItemItems.forEach((item) => {
+            this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemPM(item));
         });
 
         this.currentDeclaration = currentDeclaration;
