@@ -5837,6 +5837,18 @@
       LocalDefaultText="&quot; תעודת מעבר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.OneNotUnited&quot;"
+      DefaultText="&quot;Consolidation is not possible only one invoice&quot;"
+      LocalDefaultText="&quot;לא ניתן לבצע איחוד כאשר יש רק חשבון אחד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.DifferentNotUnited&quot;"
+      DefaultText="&quot;not possible to united different currency types&quot;"
+      LocalDefaultText="&quot;לא ניתן לאחד חשבונות מסוגי מטבע שונים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>
