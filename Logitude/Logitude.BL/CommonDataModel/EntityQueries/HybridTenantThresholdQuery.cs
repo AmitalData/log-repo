@@ -49,11 +49,11 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
         }
 
 
-        public HybridTenantThresholdPM GetSinglePM(int tenant2, int tenant)
+        public HybridTenantThresholdPM GetSinglePM(int tenant, int typoecode)
         {
 
             var query = (from a in repository.context.HybridTenantThresholds
-                         where a.Tenant == tenant
+                         where a.Tenant == tenant && a.TypeCode== typoecode
                          select new HybridTenantThresholdPM()
                          {
 
