@@ -43,8 +43,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string COONumberToCancel { get; set; }
         [Column("ReplacementReason")]
 	    public string ReplacementReason { get; set; }
-        [Column("DeclarationNumber")]
-	    public string DeclarationNumber { get; set; }
+        [ForeignKey("Declaration")]
+        [Column("DeclarationId")]
+	    public string DeclarationId { get; set; }
+	      
+        public virtual Declaration Declaration { get; set; }
         [Column("ExporterVat")]
 	    public string ExporterVat { get; set; }
         [Column("ExporterName")]

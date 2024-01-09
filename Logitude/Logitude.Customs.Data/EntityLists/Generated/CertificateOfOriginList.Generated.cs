@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ReplacementReason  { get; set; }
        [DataMember]
-       public string DeclarationNumber  { get; set; }
+       public string DeclarationId  { get; set; }
        [DataMember]
        public string ExporterVat  { get; set; }
        [DataMember]
