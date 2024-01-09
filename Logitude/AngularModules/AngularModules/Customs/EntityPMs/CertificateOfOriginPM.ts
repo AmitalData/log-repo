@@ -71,9 +71,9 @@ export class CertificateOfOriginPM {
     public set ReplacementReason(newValue: string) { if (this.replacementReason != newValue) { this.replacementReason = newValue; this.MarkAsDirty("ReplacementReason"); } }
        
 	 
-    private declarationNumber: string;
-    public get DeclarationNumber() { return this.declarationNumber; }
-    public set DeclarationNumber(newValue: string) { if (this.declarationNumber != newValue) { this.declarationNumber = newValue; this.MarkAsDirty("DeclarationNumber"); } }
+    private declarationId: string;
+    public get DeclarationId() { return this.declarationId; }
+    public set DeclarationId(newValue: string) { if (this.declarationId != newValue) { this.declarationId = newValue; this.MarkAsDirty("DeclarationId"); } }
        
 	 
     private exporterVat: string;

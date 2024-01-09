@@ -227,25 +227,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string declarationNumber ;
+	  private string declarationId ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string DeclarationNumber  
+       public string DeclarationId  
 	   {
 	    
 	     get
 		{
-		   return declarationNumber;
+		   return declarationId;
 		 }
 		 set
 		 {
-		   if(declarationNumber != value)
+		   if(declarationId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationNumber",OldValue=declarationNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   declarationNumber=value;
+		   declarationId=value;
 		   }
 			
 		 }

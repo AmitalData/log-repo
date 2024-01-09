@@ -31,7 +31,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         COONumber, 
 	         COONumberToCancel, 
 	         ReplacementReason, 
-	         DeclarationNumber, 
+	         DeclarationId, 
 	         ExporterVat, 
 	         ExporterName, 
 	         ExporterAddress, 
@@ -108,7 +108,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         COONumber, 
 	         COONumberToCancel, 
 	         ReplacementReason, 
-	         DeclarationNumber, 
+	         DeclarationId, 
 	         ExporterVat, 
 	         ExporterName, 
 	         ExporterAddress, 
@@ -218,9 +218,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.ReplacementReason = entityPM.ReplacementReason;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationNumber))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationId))
             {
-				entityPOCO.DeclarationNumber = entityPM.DeclarationNumber;
+				entityPOCO.DeclarationId = entityPM.DeclarationId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExporterVat))
@@ -579,9 +579,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ReplacementReason = entityPOCO.ReplacementReason;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationNumber))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.DeclarationId))
             {
-					entityPM.DeclarationNumber = entityPOCO.DeclarationNumber;
+					entityPM.DeclarationId = entityPOCO.DeclarationId;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExporterVat))
@@ -935,9 +935,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ReplacementReason = entityPM.ReplacementReason;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationNumber))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.DeclarationId))
             {
-                oldEntityPM.DeclarationNumber = entityPM.DeclarationNumber;
+                oldEntityPM.DeclarationId = entityPM.DeclarationId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExporterVat))
@@ -1273,10 +1273,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.ReplacementReason)) //T4 find type == nText 
             {
                 entityPM.ReplacementReason = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ReplacementReason));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.DeclarationNumber)) //T4 find type == nText 
-            {
-                entityPM.DeclarationNumber = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.DeclarationNumber));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.ExporterVat)) //T4 find type == nText 
             {

@@ -17,7 +17,7 @@ export class CertificateOfOriginList {
 	COONumber: string;
 	COONumberToCancel: string;
 	ReplacementReason: string;
-	DeclarationNumber: string;
+	DeclarationId: string;
 	ExporterVat: string;
 	ExporterName: string;
 	ExporterAddress: string;
