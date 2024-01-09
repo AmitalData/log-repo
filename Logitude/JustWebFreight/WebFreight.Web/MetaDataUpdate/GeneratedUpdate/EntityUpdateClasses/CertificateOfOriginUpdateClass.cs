@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginUpdateClass
    {  		
-		public const string HashString = "465e238cd1994a885d51b6e736139130";
+		public const string HashString = "1a92b32e9b048afc9032f559a6cb5f41";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "תעודות מקור",
 			      				    DefaultText =  "Certificate Of Origin",
-			      				    Code =  "dfe5",
+			      				    Code =  "3001",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2234,9 +2234,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IsExportDecForPrintListLable",
 					  						ListLableDefaultText =  "Is Export Dec For Print",
 					  						ListLocalDefaultText =  "האם להדפיס מס' הצהרה",
-					  						HelpTextCode =  "IsExportDecForPrint",
-					  						HelpTextDefaultText =  "האם להדפיס מס' הצהרה , ברירת מחדל של מכס היא False",
-					  						HelpLocalDefaultText =  "האם להדפיס מס' הצהרה , ברירת מחדל של מכס היא False",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2248,6 +2245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInRequiredFields =  false,
 					  						HasTemplate =  false,
 					  						IsCustom =  false,
+					  						HelpTextCode =  "IsExportDecForPrint",
 					  						EnableFullscreenTextBox =  false,
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
