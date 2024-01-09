@@ -27815,7 +27815,7 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;Customs.Declaration.TH.DigitalCertificateOfOrigin&quot;"
-      DefaultText="&quot;Digital Certificate Of Origin&quot;"
+      DefaultText="&quot;Digital Certificates Of Origin&quot;"
       LocalDefaultText="&quot;תעודות מקור דיגיטליות&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
