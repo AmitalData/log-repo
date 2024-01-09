@@ -43,7 +43,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					
 					                          ReplacementReason = a.ReplacementReason,
 					
-					                          DeclarationNumber = a.DeclarationNumber,
+					                          DeclarationId = a.DeclarationId,
 					
 					                          ExporterVat = a.ExporterVat,
 					
