@@ -37,7 +37,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				certificateID = certificateOfOrigin.COONumber,
 				certificateIdToCancel = certificateOfOrigin.COONumberToCancel,
 				replacementReason = certificateOfOrigin.ReplacementReason,
-				exportDeclarationNum = certificateOfOrigin.DeclarationNumber,
+				exportDeclarationNum = certificateOfOrigin.DeclarationId,
 
 			};
 
