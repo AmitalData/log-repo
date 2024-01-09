@@ -169,11 +169,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.entityPM.ReplacementReason = newValue;
     }
 
-    public get DeclarationNumber(): string {
-        return this.entityPM.DeclarationNumber;
+    public get DeclarationId(): string {
+        return this.entityPM.DeclarationId;
     }
     public set DeclarationNumber(newValue: string) {
-        this.entityPM.DeclarationNumber = newValue;
+        this.entityPM.DeclarationId = newValue;
     }
 
     public get ExporterVat(): string {

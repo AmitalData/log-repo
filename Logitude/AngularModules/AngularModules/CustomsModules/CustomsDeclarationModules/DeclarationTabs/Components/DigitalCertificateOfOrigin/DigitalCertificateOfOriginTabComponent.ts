@@ -219,7 +219,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         filters.GetCount = true;
         filters.SortBy = "SequenceNumeric";
         filters.SortDirection = "Ascending";
-        filters.addAdditionalFilter("DeclarationNumber", this.EntityPM.DeclarationNumber, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("DeclarationNumber", this.EntityPM.Id , null, null, "Equals", false, false, false, "string");
    
 
         // TODO add tenent.
