@@ -41,7 +41,7 @@
   NewWizardControlName="&quot;&quot;"
   LocalDefaultText="&quot;תעודות מקור&quot;"
   DefaultText="&quot;Certificate Of Origin&quot;"
-  Code="&quot;3001&quot;"
+  Code="&quot;83d8&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -5752,6 +5752,12 @@
       Code="&quot;Customs.CertificateOfOrigin.O.DisplayOnly&quot;"
       DefaultText="&quot;Display Only&quot;"
       LocalDefaultText="&quot;לתצוגה בלבד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.TransitCertificate&quot;"
+      DefaultText="&quot;Transit Certificate&quot;"
+      LocalDefaultText="&quot; תעודת מעבר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
