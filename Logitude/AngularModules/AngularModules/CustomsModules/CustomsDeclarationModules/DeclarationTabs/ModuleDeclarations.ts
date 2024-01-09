@@ -36,7 +36,7 @@ import { ComprehensiveUpdateConsignment } from './Components/General/ConsigmentT
 import { DigitalCertificateOfOriginTabComponent } from './Components/DigitalCertificateOfOrigin/DigitalCertificateOfOriginTabComponent';
 import { CertificateOfOriginComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent';
 import { CertificateOfOriginGeneralTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent';
-import { CertificateOfOriginMoreDetailsTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginMoreDetailsTabComponent';
+import { CertificateOfOriginMoreDetailsTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent';
 
 
 export const Components =
