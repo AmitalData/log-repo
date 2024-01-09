@@ -47,9 +47,6 @@ export class ShaamTokensComponent extends BaseComponent {
     ngOnInit() {
         this.BuildColumns()
         this.initLinkToCodeForToken();
-        this._entityResourceService.getEntityResourceByTableName("ConfirmationNumberTokenLog", 0).subscribe((response: any) => {
-            this.cd.detectChanges()            
-        });
     }
 
     @Output() MenuHeaderchangeevent = new EventEmitter();

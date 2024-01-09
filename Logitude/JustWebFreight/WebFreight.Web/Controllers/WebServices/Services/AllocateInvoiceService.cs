@@ -12,12 +12,10 @@ namespace WebFreight.Web.Controllers.WebServices.Services
     public class AllocateInvoiceService
     {
         ShaamService shaamService = new ShaamService();
-        TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
 
         public HttpClienResponse CreateConfirmationNumber(string invoiceJson, int tenant)
         {
             ConfirmationNumberTokenLogRepository confirmationNumberTokenLogRepository = new ConfirmationNumberTokenLogRepository(tenant);
-            TenantManagementPM tenantManagement = tenantManagementQuery.GetSinglePM(tenant);
             InvoiceRequest invoice = JsonConvert.DeserializeObject<InvoiceRequest>(invoiceJson);
             string confirmationTokenLogId = IdCounter.GetNumber("Customs.ConfirmationNumberTokenLog", tenant);
             string communicationLogId = IdCounter.GetNumber("CommunicationLog", tenant);
@@ -30,8 +28,8 @@ namespace WebFreight.Web.Controllers.WebServices.Services
                 InvoiceNumber = invoice.Invoice_ID,
                 CallType = "confirmation",
                 CommunicationType = 1,
-                CompanyIdInvoiceProducer = tenantManagement.Name.Substring(0,10),
-                CompanyIdInvoiceRecipient = invoice.Customer_Name,
+                CompanyIdInvoiceProducer = invoice.Vat_Number.ToString(),
+                CompanyIdInvoiceRecipient = invoice.Customer_VAT_Number.ToString(),
                 CommunicationLogId = communicationLogId,
             });
             confirmationNumberTokenLogRepository.SubmitChanges();
