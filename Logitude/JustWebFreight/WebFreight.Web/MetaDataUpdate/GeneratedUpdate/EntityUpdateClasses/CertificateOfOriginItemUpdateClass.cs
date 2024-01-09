@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginItemUpdateClass
    {  		
-		public const string HashString = "c3c20cef359e711d2c34ea63882c1706";
+		public const string HashString = "fd56a8d713b321f979087b7208b63bfd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "פריטי תעודת מקור",
 			      				    DefaultText =  "Certificate Of Origin Item",
-			      				    Code =  "128d",
+			      				    Code =  "8f4c",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
