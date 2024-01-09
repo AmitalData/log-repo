@@ -68,9 +68,10 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="DeclarationNumber"
-    Type="nvarchar"
-    Size="17">
+    Name="DeclarationId"
+    OldNames="DeclarationNumber"
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -496,6 +497,11 @@
     ForeignKeyColumn="RequestReasonCode"
     ReferencedTable="RequestReasonCodeEnums"
     ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="DeclarationId"
+    ReferencedTable="Declarations"
+    ReferencedColumn="Id"
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="ExporterCountry"

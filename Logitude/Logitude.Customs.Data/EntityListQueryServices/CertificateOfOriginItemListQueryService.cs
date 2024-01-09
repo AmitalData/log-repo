@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					
 					                          SearchFields = a.SearchFields,
 					
-					                          CertificateOfOriginInvoiceId = a.CertificateOfOriginInvoiceId,
+					                          CertificateOfOriginId = a.CertificateOfOriginId,
 					
 					                          ItemSerial = a.ItemSerial,
 					

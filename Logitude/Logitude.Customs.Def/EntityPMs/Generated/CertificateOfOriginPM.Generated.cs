@@ -227,25 +227,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string declarationNumber ;
+	  private string declarationId ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string DeclarationNumber  
+       public string DeclarationId  
 	   {
 	    
 	     get
 		{
-		   return declarationNumber;
+		   return declarationId;
 		 }
 		 set
 		 {
-		   if(declarationNumber != value)
+		   if(declarationId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationNumber",OldValue=declarationNumber,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="DeclarationId",OldValue=declarationId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   declarationNumber=value;
+		   declarationId=value;
 		   }
 			
 		 }
@@ -1687,6 +1687,41 @@ namespace Logitude.Customs.Def.EntityPMs
                  return  deletedCertificateOriginInvoiceItems;
               }
              set {  deletedCertificateOriginInvoiceItems = value; }
+	    }
+	  
+	   private List<CertificateOfOriginItemPM> certificateOriginItemItems;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("CertificateOriginItemItems", "Id","CertificateOfOriginId")]
+	   [DataMember]
+	   public virtual List<CertificateOfOriginItemPM> CertificateOriginItemItems  
+	   {
+	        get
+             {
+                 if (certificateOriginItemItems == null)
+                 {
+                     certificateOriginItemItems = new List<CertificateOfOriginItemPM>();
+                 }
+                 return certificateOriginItemItems;
+              }
+             set { certificateOriginItemItems = value; }
+	    }
+		   
+	   private List<CertificateOfOriginItemPM>  deletedCertificateOriginItemItems;
+	   public virtual List<CertificateOfOriginItemPM> DeletedCertificateOriginItemItems  
+	   {
+	        get
+             {
+                 if ( deletedCertificateOriginItemItems == null)
+                 {
+                      deletedCertificateOriginItemItems = new List<CertificateOfOriginItemPM>();
+                 }
+                 return  deletedCertificateOriginItemItems;
+              }
+             set {  deletedCertificateOriginItemItems = value; }
 	    }
 	     }
    

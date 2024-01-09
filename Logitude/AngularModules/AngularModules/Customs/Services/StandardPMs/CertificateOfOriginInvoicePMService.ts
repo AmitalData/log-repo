@@ -21,7 +21,6 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 
 import {CertificateOfOriginInvoicePM} from '../../EntityPMs/CertificateOfOriginInvoicePM';
 
-import {CertificateOfOriginItemPM} from '../../EntityPMs/CertificateOfOriginItemPM';
 
 @Injectable()
 
@@ -183,22 +182,12 @@ export class CertificateOfOriginInvoicePMService {
                  
             }
 			
-               this.MapCertificateOriginItemItems(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
 		if (mapParent) {
                 entityPM.OldEntityPM = this.clone(entityPM);
-			   			   
-            entityPM.OldEntityPM.CertificateOriginItemItems = [];
-            for (var item in entityPM.CertificateOriginItemItems) {
-            var myCertificateOfOriginItemPM = entityPM.CertificateOriginItemItems[item];
-            var newCertificateOfOriginItemPM: CertificateOfOriginItemPM = this.clone(myCertificateOfOriginItemPM);
-						
-							 
-            entityPM.OldEntityPM.CertificateOriginItemItems.push(newCertificateOfOriginItemPM);
-            }
-			   
+
 		}
         else {
 

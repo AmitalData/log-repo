@@ -8,6 +8,7 @@
 //------------------------------------------------------------------------------
 
 import {CertificateOfOriginInvoicePM} from './CertificateOfOriginInvoicePM';
+import {CertificateOfOriginItemPM} from './CertificateOfOriginItemPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -70,9 +71,9 @@ export class CertificateOfOriginPM {
     public set ReplacementReason(newValue: string) { if (this.replacementReason != newValue) { this.replacementReason = newValue; this.MarkAsDirty("ReplacementReason"); } }
        
 	 
-    private declarationNumber: string;
-    public get DeclarationNumber() { return this.declarationNumber; }
-    public set DeclarationNumber(newValue: string) { if (this.declarationNumber != newValue) { this.declarationNumber = newValue; this.MarkAsDirty("DeclarationNumber"); } }
+    private declarationId: string;
+    public get DeclarationId() { return this.declarationId; }
+    public set DeclarationId(newValue: string) { if (this.declarationId != newValue) { this.declarationId = newValue; this.MarkAsDirty("DeclarationId"); } }
        
 	 
     private exporterVat: string;
@@ -414,6 +415,40 @@ export class CertificateOfOriginPM {
         }
     }
     //public CertificateOriginInvoiceItems: Array<CertificateOfOriginInvoicePM>= [];
+      
+	private certificateOriginItemItems: CertificateOfOriginItemPM[];
+    get  CertificateOriginItemItems() {
+        if (this.certificateOriginItemItems == null) {
+            this.certificateOriginItemItems = [];
+        }
+
+        return this.certificateOriginItemItems;
+    }
+    set  CertificateOriginItemItems(newValue: CertificateOfOriginItemPM[]) {
+        if (this.certificateOriginItemItems != newValue) {
+            this.certificateOriginItemItems = newValue;
+        }
+    }
+    public AddCertificateOfOriginItem(item: CertificateOfOriginItemPM) {
+        if (item != null) {
+            var index = this. CertificateOriginItemItems.indexOf(item);
+            if (index == -1) {
+                item.EntityParentPM = this;
+                this. CertificateOriginItemItems.push(item);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    public RemoveCertificateOfOriginItem(item: CertificateOfOriginItemPM) {
+        if (item != null) {
+            var index = this. CertificateOriginItemItems.indexOf(item);
+            if (index > -1) {
+                this. CertificateOriginItemItems.splice(index, 1);
+                this.MarkAsDirty();
+            }
+        }
+    }
+    //public CertificateOriginItemItems: Array<CertificateOfOriginItemPM>= [];
  
     public OldEntityPM: CertificateOfOriginPM;
 		

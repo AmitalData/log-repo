@@ -22,7 +22,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class CertificateOfOriginItemUpdateService:EntityUpdateService<CertificateOfOriginItem,CertificateOfOriginItemPM,CertificateOfOriginInvoicePM>
+   public partial class CertificateOfOriginItemUpdateService:EntityUpdateService<CertificateOfOriginItem,CertificateOfOriginItemPM,CertificateOfOriginPM>
    {
    
         CertificateOfOriginItemRepository entityRepository;

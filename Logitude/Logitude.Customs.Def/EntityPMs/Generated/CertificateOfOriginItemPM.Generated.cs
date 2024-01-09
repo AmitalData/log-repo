@@ -89,25 +89,25 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string certificateOfOriginInvoiceId ;
+	  private string certificateOfOriginId ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string CertificateOfOriginInvoiceId  
+       public string CertificateOfOriginId  
 	   {
 	    
 	     get
 		{
-		   return certificateOfOriginInvoiceId;
+		   return certificateOfOriginId;
 		 }
 		 set
 		 {
-		   if(certificateOfOriginInvoiceId != value)
+		   if(certificateOfOriginId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CertificateOfOriginInvoiceId",OldValue=certificateOfOriginInvoiceId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CertificateOfOriginId",OldValue=certificateOfOriginId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   certificateOfOriginInvoiceId=value;
+		   certificateOfOriginId=value;
 		   }
 			
 		 }

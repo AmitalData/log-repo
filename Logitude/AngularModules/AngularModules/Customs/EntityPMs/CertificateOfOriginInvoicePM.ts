@@ -8,7 +8,6 @@
 //------------------------------------------------------------------------------
 
 import {CertificateOfOriginPM} from './CertificateOfOriginPM';
-import {CertificateOfOriginItemPM} from './CertificateOfOriginItemPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -83,41 +82,7 @@ export class CertificateOfOriginInvoicePM {
     public set IsInvoicesForPrint(newValue: boolean) { if (this.isInvoicesForPrint != newValue) { this.isInvoicesForPrint = newValue; this.MarkAsDirty("IsInvoicesForPrint"); } }
        
 	 
-     
-	private certificateOriginItemItems: CertificateOfOriginItemPM[];
-    get  CertificateOriginItemItems() {
-        if (this.certificateOriginItemItems == null) {
-            this.certificateOriginItemItems = [];
-        }
 
-        return this.certificateOriginItemItems;
-    }
-    set  CertificateOriginItemItems(newValue: CertificateOfOriginItemPM[]) {
-        if (this.certificateOriginItemItems != newValue) {
-            this.certificateOriginItemItems = newValue;
-        }
-    }
-    public AddCertificateOfOriginItem(item: CertificateOfOriginItemPM) {
-        if (item != null) {
-            var index = this. CertificateOriginItemItems.indexOf(item);
-            if (index == -1) {
-                item.EntityParentPM = this;
-                this. CertificateOriginItemItems.push(item);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    public RemoveCertificateOfOriginItem(item: CertificateOfOriginItemPM) {
-        if (item != null) {
-            var index = this. CertificateOriginItemItems.indexOf(item);
-            if (index > -1) {
-                this. CertificateOriginItemItems.splice(index, 1);
-                this.MarkAsDirty();
-            }
-        }
-    }
-    //public CertificateOriginItemItems: Array<CertificateOfOriginItemPM>= [];
- 
     public OldEntityPM: CertificateOfOriginInvoicePM;
 	
     private entityParentPM: any;

@@ -300,8 +300,7 @@
                     <tr class="FieldRow" style="width: 600px ; height : 120px">
                         <div class="GeneratedGridContainer" style="width: 100% ; height : 100%;">
                             <logitude-edit-grid style="min-width: 500px;" GridWidth="500px" GridHeight="100%"
-                                [ItemSource]="CertificateOriginInvoiceItems"
-                                (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
+                                [ItemSource]="CertificateOriginInvoiceItems">
                                 <log-column [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
                                     [binding]="'InvoicesIdUry'" [width]="'35'" [Alignment]="'left'">
                                     <ng-template let-item>
@@ -374,7 +373,7 @@
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <LogCheckBox [ObjectFieldName]="'IsInvoicesForPrint'"
-                                                    [Checked]="IsInvoicesForPrint" [ObjectTableName]="ObjectTableName"
+                                                    [Checked]="item.IsInvoicesForPrint" [ObjectTableName]="ObjectTableName"
                                                     [DataContext]="DataContext"></LogCheckBox>
                                             </div>
 
@@ -394,8 +393,7 @@
                     <tr class="FieldRow" style="width: 600px ; height : 120px">
                         <div class="GeneratedGridContainer" style="width: 100% ; height : 100%;">
                             <logitude-edit-grid style="min-width: 500px;" GridWidth="500px" GridHeight="100%"
-                                [ItemSource]="CertificateOriginItemItems" (SelectedItemChanged)="OnRowSelected($event)"
-                                [SelectedRow]="SelectedRow">
+                                [ItemSource]="CertificateOriginItemItems" >
                                 <log-column [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
                                     [binding]="'InvoicesIdUry'" [width]="'35'" [Alignment]="'left'">
                                     <ng-template let-item>

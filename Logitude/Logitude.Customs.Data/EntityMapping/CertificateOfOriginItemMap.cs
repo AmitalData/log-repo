@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").IsMaxLength().IsUnicode(true);
 
-            this.Property(t => t.CertificateOfOriginInvoiceId).HasColumnName("CertificateOfOriginInvoiceId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CertificateOfOriginId).HasColumnName("CertificateOfOriginId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ItemSerial).HasColumnName("ItemSerial").HasMaxLength(5).IsUnicode(true);
 

@@ -219,7 +219,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         filters.GetCount = true;
         filters.SortBy = "SequenceNumeric";
         filters.SortDirection = "Ascending";
-        filters.addAdditionalFilter("DeclarationNumber", this.EntityPM.DeclarationNumber, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("DeclarationId", this.EntityPM.Id , null, null, "Equals", false, false, false, "string");
    
 
         // TODO add tenent.
@@ -301,7 +301,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
             // filters.addAdditionalFilter("CounterKey", this.SelectedRow.InvoiceCounterKey, null, null, "Equals", false, false, false, "number");
         }
         else {
-            filters.addAdditionalFilter("DeclarationNumber", this.EntityPM.DeclarationNumber, null, null, "Equals", false, false, false, "string");
+            filters.addAdditionalFilter("DeclarationId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         }
         return this._entityListService.getByFilters("Customs.CertificateOfOrigin", filters);
     }

@@ -15,15 +15,5 @@ namespace Logitude.Customs.BL.EntityUpdateServices
     public partial class CertificateOfOriginInvoiceUpdateService
 	{
 
-	
-
-
-		protected override void UpdateComposition(CertificateOfOriginInvoicePM entityPM)
-        {
-			CertificateOfOriginItemUpdateService certificateOfOriginItemUpdateService = new CertificateOfOriginItemUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-			certificateOfOriginItemUpdateService.UpdateMulti(entityPM.CertificateOriginItemItems, entityPM.DeletedCertificateOriginItemItems, entityPM, false);
-            base.UpdateComposition(entityPM);
-        }
-
     }
 }

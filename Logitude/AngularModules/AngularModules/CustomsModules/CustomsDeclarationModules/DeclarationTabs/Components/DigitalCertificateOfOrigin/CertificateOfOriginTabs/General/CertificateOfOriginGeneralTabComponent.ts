@@ -39,13 +39,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
 
-        // update lists:
+        // update CertificateOriginInvoice list:
         EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
             this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoicePM(item));
-
-            item.CertificateOriginItemItems.forEach((item) => {
-                this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemPM(item));
-            });
+        });
+        
+        // update CertificateOriginItemItems list:
+        EntityPM.CertificateOriginItemItems.forEach((item) => {
+            this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemPM(item));
         });
 
         this.currentDeclaration = currentDeclaration;
@@ -168,11 +169,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.entityPM.ReplacementReason = newValue;
     }
 
-    public get DeclarationNumber(): string {
-        return this.entityPM.DeclarationNumber;
+    public get DeclarationId(): string {
+        return this.entityPM.DeclarationId;
     }
-    public set DeclarationNumber(newValue: string) {
-        this.entityPM.DeclarationNumber = newValue;
+    public set DeclarationId(newValue: string) {
+        this.entityPM.DeclarationId = newValue;
     }
 
     public get ExporterVat(): string {

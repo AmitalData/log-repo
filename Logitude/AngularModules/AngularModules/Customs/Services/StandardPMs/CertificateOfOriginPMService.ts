@@ -22,7 +22,6 @@ import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLo
 import {CertificateOfOriginPM} from '../../EntityPMs/CertificateOfOriginPM';
 
 import {CertificateOfOriginInvoicePM} from '../../EntityPMs/CertificateOfOriginInvoicePM';
-
 import {CertificateOfOriginItemPM} from '../../EntityPMs/CertificateOfOriginItemPM';
 
 @Injectable()
@@ -186,6 +185,7 @@ export class CertificateOfOriginPMService {
             }
 			
                this.MapCertificateOriginInvoiceItems(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapCertificateOriginItemItems(entityPM, jsonPM, mapParent); // Call composition tables map methods
 			 
             
 
@@ -197,15 +197,17 @@ export class CertificateOfOriginPMService {
             var myCertificateOfOriginInvoicePM = entityPM.CertificateOriginInvoiceItems[item];
             var newCertificateOfOriginInvoicePM: CertificateOfOriginInvoicePM = this.clone(myCertificateOfOriginInvoicePM);
 						
-                newCertificateOfOriginInvoicePM.CertificateOriginItemItems = [];
-                for (var k in myCertificateOfOriginInvoicePM.CertificateOriginItemItems) {
-				    var myCertificateOfOriginItemPM =myCertificateOfOriginInvoicePM.CertificateOriginItemItems[k];
-				    var newCertificateOfOriginItemPM=this.clone(myCertificateOfOriginInvoicePM.CertificateOriginItemItems[k]);
-                    newCertificateOfOriginInvoicePM.CertificateOriginItemItems.push(newCertificateOfOriginItemPM);
-
-					                 }
 							 
             entityPM.OldEntityPM.CertificateOriginInvoiceItems.push(newCertificateOfOriginInvoicePM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.CertificateOriginItemItems = [];
+            for (var item in entityPM.CertificateOriginItemItems) {
+            var myCertificateOfOriginItemPM = entityPM.CertificateOriginItemItems[item];
+            var newCertificateOfOriginItemPM: CertificateOfOriginItemPM = this.clone(myCertificateOfOriginItemPM);
+						
+							 
+            entityPM.OldEntityPM.CertificateOriginItemItems.push(newCertificateOfOriginItemPM);
             }
 			   
 		}
@@ -258,14 +260,6 @@ export class CertificateOfOriginPMService {
                 newCertificateOfOriginInvoicePM.ChangeSetOp = "None";
                 jItem.ChangeSetOp = "None";
                 newCertificateOfOriginInvoicePM.OldEntityPM = this.clone(newCertificateOfOriginInvoicePM);
- 
-
-                this.MapCertificateOriginItemItems(newCertificateOfOriginInvoicePM, jItem, mapParent);
-                newCertificateOfOriginInvoicePM.OldEntityPM.CertificateOriginItemItems = [];
-                for (var k in newCertificateOfOriginInvoicePM.CertificateOriginItemItems) {
-                    //var clonedInside = this.clone(newCertificateOfOriginInvoicePM.CertificateOriginItemItems[k]);
-                    newCertificateOfOriginInvoicePM.OldEntityPM.CertificateOriginItemItems.push(newCertificateOfOriginInvoicePM.CertificateOriginItemItems[k].OldEntityPM); // clone old CertificateOriginItemItems//
-                }
 
 				
             }
@@ -278,9 +272,6 @@ export class CertificateOfOriginPMService {
                 else {
                         newCertificateOfOriginInvoicePM.ChangeSetOp = "Insert";
                 }
- 
-
-                this.MapCertificateOriginItemItems(newCertificateOfOriginInvoicePM, jItem, mapParent);
  
                 newCertificateOfOriginInvoicePM.OldEntityPM = null;
                 newCertificateOfOriginInvoicePM.EntityParentPM = null;
@@ -315,9 +306,6 @@ export class CertificateOfOriginPMService {
                         deletedPM.IsDirty = false;
                         deletedPM.ChangeSetOp = "Delete";
                         
- 
-
-                        this.MapCertificateOriginItemItems(deletedPM, oldItemJson, mapParent);
                         deletedPM.OldEntityPM = null;
                         entityPM.CertificateOriginInvoiceItems.push(deletedPM);
                     }
@@ -325,7 +313,7 @@ export class CertificateOfOriginPMService {
             }
         }
     }
-    MapCertificateOriginItemItems(entityPM: CertificateOfOriginInvoicePM, jsonPM: any, mapParent: boolean = true) {
+    MapCertificateOriginItemItems(entityPM: CertificateOfOriginPM, jsonPM: any, mapParent: boolean = true) {
 
         var oldCertificateOriginItemItems: CertificateOfOriginItemPM[] = [];
         if (entityPM.OldEntityPM && !mapParent) {
@@ -368,18 +356,13 @@ export class CertificateOfOriginPMService {
 				
             }
             else {
-                if (entityPM.ChangeSetOp === "Delete") {
-                    newCertificateOfOriginItemPM.ChangeSetOp = "Delete";
-                }
-                else {
-                    if (newCertificateOfOriginItemPM.UniqueKey) {
+                if (newCertificateOfOriginItemPM.UniqueKey) {
 
                     if (jItem.IsDirty)
                         newCertificateOfOriginItemPM.ChangeSetOp = "Update";
-                    }
+                }
                 else {
                         newCertificateOfOriginItemPM.ChangeSetOp = "Insert";
-                    }
                 }
  
                 newCertificateOfOriginItemPM.OldEntityPM = null;
@@ -422,7 +405,6 @@ export class CertificateOfOriginPMService {
             }
         }
     }
- 
 
 	  public clone(jsonPM: any) {
         var entityPM: any;

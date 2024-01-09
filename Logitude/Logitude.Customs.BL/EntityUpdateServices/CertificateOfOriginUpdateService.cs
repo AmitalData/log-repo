@@ -62,7 +62,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
 			CertificateOfOriginInvoiceUpdateService consignmentUpdateService = new CertificateOfOriginInvoiceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             consignmentUpdateService.UpdateMulti(entityPM.CertificateOriginInvoiceItems, entityPM.DeletedCertificateOriginInvoiceItems, entityPM, false);
-            base.UpdateComposition(entityPM);
+
+			CertificateOfOriginItemUpdateService certificateOfOriginItemUpdateService = new CertificateOfOriginItemUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+			certificateOfOriginItemUpdateService.UpdateMulti(entityPM.CertificateOriginItemItems, entityPM.DeletedCertificateOriginItemItems, entityPM, false);
+			base.UpdateComposition(entityPM);
         }
 
     }
