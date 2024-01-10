@@ -469,6 +469,7 @@ import { CustomsEntityStatusListService } from './Services/StandardLists/Customs
 import { ConditionalExemptionTypeListService } from './Services/StandardLists/ConditionalExemptionTypeListService';
 import { CarEngineVolumeListService } from './Services/StandardLists/CarEngineVolumeListService';
 import { CarWeightListService } from './Services/StandardLists/CarWeightListService';
+import { ComputationMethodListService } from './Services/StandardLists/ComputationMethodListService';
 
 
 export class ModuleProviders {
@@ -739,6 +740,7 @@ export class ModuleProviders {
             case "ConditionalExemptionTypeListService": { myResult = new ConditionalExemptionTypeListService(); break; }
             case "CarEngineVolumeListService": { myResult = new CarEngineVolumeListService(); break; }
             case "CarWeightListService": { myResult = new CarWeightListService(); break; }
+            case "ComputationMethodListService": { myResult = new ComputationMethodListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }

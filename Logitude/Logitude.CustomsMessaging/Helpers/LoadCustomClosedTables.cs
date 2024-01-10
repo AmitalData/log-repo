@@ -1251,6 +1251,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable CarWeightObjectTable = objectTableRepository.GetObjectTableByName("Customs.CarWeight", 0, false);
             InsertClosedTableRecord(CarWeightTable, CarWeightObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(CarWeightTable);
+            
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ComputationMethodTable = closedSystemTables.Where(d => d.id == "1060").FirstOrDefault();
+            ObjectTable ComputationMethodObjectTable = objectTableRepository.GetObjectTableByName("Customs.ComputationMethod", 0, false);
+            InsertClosedTableRecord(ComputationMethodTable, ComputationMethodObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(ComputationMethodTable);
 
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();

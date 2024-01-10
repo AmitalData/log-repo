@@ -644,6 +644,7 @@
     <None Include="EntityFiles\ConditionalExemptionType.lxml" />
     <None Include="EntityFiles\CarEngineVolume.lxml" />
     <None Include="EntityFiles\CarWeight.lxml" />
+    <None Include="EntityFiles\ComputationMethod.lxml" />
     <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />
     <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />
