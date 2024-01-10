@@ -26,7 +26,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myMsg = new PC_NG_2280_MSG01_CertificateOfOriginRequest();
 			CertificateOfOriginQueryService certificateOfOriginQueryService =  new CertificateOfOriginQueryService(requestParams.Tenant);
            var certificateOfOrigin =  certificateOfOriginQueryService.GetSingle(requestParams.CertificateOfOriginId,true,false);
-
+			DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
+			var declarationPM = declarationQueryService.GetSingle(certificateOfOrigin.DeclarationId, true, false);
 			requestParams.RequestReasonCode = Convert.ToInt32(certificateOfOrigin.RequestReasonCode);
 
 			myMsg.AgentRequest = new PC_NG_2280_MSG01_CertificateOfOriginRequestAgentRequest()
@@ -37,7 +38,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				certificateID = certificateOfOrigin.COONumber,
 				certificateIdToCancel = certificateOfOrigin.COONumberToCancel,
 				replacementReason = certificateOfOrigin.ReplacementReason,
-				exportDeclarationNum = certificateOfOrigin.DeclarationId,
+				exportDeclarationNum = declarationPM?.DeclarationNumber,
 
 			};
 
