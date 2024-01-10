@@ -776,12 +776,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
                     this.openAmountFilter = new FilterItem("OpenAmount", searchtext, -1 * searchtext, null, OpenAmountFilterOperator, false, false, false, "number", false);
                 }
                 else if (OpenAmountFilterOperator == "LessThan") {
-                    searchtext = Math.abs(searchtext);
-                    this.openAmountFilter = new FilterItem("OpenAmount", -1 * --searchtext, +searchtext, null, "Between", false, false, false, "number", false);
+                    this.openAmountFilter = new FilterItem("OpenAmount", searchtext, null, null, "LessThan", false, false, false, "number", false);
                 }
                 else if (OpenAmountFilterOperator == "LessThanOrEqual") {
-                    searchtext = Math.abs(searchtext);
-                    this.openAmountFilter = new FilterItem("OpenAmount", -1 * searchtext, +searchtext, null, "Between", false, false, false, "number", false);
+                    this.openAmountFilter = new FilterItem("OpenAmount", searchtext, null, null, "LessThanOrEqual", false, false, false, "number", false);
                 }
                 else {
                     this.openAmountFilter = new FilterItem("OpenAmount", searchtext, null, null, OpenAmountFilterOperator, false, false, false, "number", false);
@@ -1524,10 +1522,10 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         this.TotalDebit = 0;
         for (let line of this.SelectedLines.Collection) {
 
-            if (line.AmountToReconcile < 0)
-                this.TotalCredit += +line.AmountToReconcile * -1; //cast number
+            if (line.OpenAmount < 0)
+                this.TotalCredit += +line.OpenAmount * -1; //cast number
             else
-                this.TotalDebit += +line.AmountToReconcile;
+                this.TotalDebit += +line.OpenAmount;
 
             // due this.TotalCredit + amountToReconcile;  == 335.78999999999996 <>335.79
             this.TotalDebit = AppTool.Round(this.TotalDebit, 2);
