@@ -132,6 +132,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CargoTypeMap());
 	
+            modelBuilder.Configurations.Add(new CB_CustomsItemMap());
+	
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
 	
             modelBuilder.Configurations.Add(new CertificateOfOriginMap());
@@ -1602,6 +1604,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CargoType> CargoTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_CustomsItem> CB_CustomsItems 
 	 {
 	      get; set;
 	 
