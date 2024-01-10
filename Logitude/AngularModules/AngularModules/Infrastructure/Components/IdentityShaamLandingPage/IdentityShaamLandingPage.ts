@@ -7,7 +7,10 @@ import { ShaamWebService } from "Shipment/Services/ShaamWebService";
     template: `
             <img *ngIf="loadingNotfinish else loadingFinish" class="CenterCenter" src="./_Resources/Images/Gif/Bluespin.gif" />
             <ng-template #loadingFinish>
-                <div class='CenterCenter msg' [ngClass]='{"error-msg": error}'>{{msg}}</div>
+                <div class='CenterCenter msg' [ngClass]='{"error-msg": error}'>
+                    <h1>{{msg}}</h1>
+                    <h3 *ngIf='shaamTokenRedirect'>You rediract with a few seconds...</h3>
+                </div>
             </ng-template>
         `,
     styles: [
@@ -21,6 +24,7 @@ export class IdentityShaamLandingPageComponent {
     loadingNotfinish: boolean = true;
     error: boolean = false;
     msg: string = '';
+    shaamTokenRedirect: string = '';
 
     ngOnInit() {
         this.createNewRefreshToken();
@@ -47,11 +51,20 @@ export class IdentityShaamLandingPageComponent {
             this.loadingNotfinish = false;
         }
 
+        // this.redirect();
+
         AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
             "", "",
             'createNewRefreshTokenFinish',
             AmitalGatewayUtil.Instance.GetDefaultUnifreightMessageM(),
             JSON.stringify({ success: !this.error }),
             false);
+    }
+
+    private redirect() {
+        const shaamTokenRedirect: string = localStorage.getItem('shaamTokenRedirect');
+
+        if (shaamTokenRedirect)
+            setTimeout(() => location.href = shaamTokenRedirect + "&logitudeCommandId=CreateNewShaamToken", 5000);
     }
 }
