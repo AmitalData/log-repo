@@ -98,9 +98,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetWarning("CooTypeCode", this.ObjectTableName, true);
         this.UIProperties.SetWarning("RequestReasonCode", this.ObjectTableName, true);
     }
+    
     public get IsDispalyOnly() { 
         return this.isDispalyOnlyStatusList.includes(Number(this.entityPM.CooStatusCode))
-     }
+    }
+
+    EditButtonClicked(Item) {
+       
+    }
 
     //#region properties
 
@@ -131,8 +136,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public set Counter(newValue: string) {
         this.entityPM.Counter = newValue;
     }
-    
-    
     
     public get CooTypeCode(): string {
         return this.entityPM.CooTypeCode;

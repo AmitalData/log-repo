@@ -369,50 +369,6 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
 
     EditCertificateOfOrigin(item: CertificateOfOriginPM) {   
         this.CurrentSession.StartBusyIndicator("");
-
-        // this.certificateOfOriginPMService.get(this.EntityPM.Id).subscribe((response: any) => {
-        //     var windowArgs: any = {};
-        //     windowArgs.EntityPM = response.Result;
-        //     windowArgs.declarationPM = this.EntityPM;
-        //     windowArgs.NumberOfLoadedItems = this.NumberOfLoadedItems;
-        //     var windowTitle = "Certificate Of Origin";
-
-        //     var logWindow = new LogitudeWindow();
-        //     logWindow.Width = 1017;// this changed By Rabaia for Task No. 54930; Dont change it back before calling me. //995; // don't change this width!
-        //     logWindow.Height = 600;
-        //     var textCodeTitle = "Customs.Declaration.O.EditCertificateOfOrigin";
-
-
-        //     if (this.EntityPM.Direction == "E") {
-        //         textCodeTitle = "Customs.Declaration.O.ExporterEditCertificateOfOrigin";
-        //     }
-
-            
-        //     windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-        //     logWindow.ShowCloseButton = false;
-        //     logWindow.WindowArgs = windowArgs;
-        //     this.CD.detach();
-        //     logWindow.WindowClosed.subscribe((event: any) => {
-        //         if (event != 'cancel') {
-        //             this.CertificateOfOriginComprehensiveUpdate = [];
-
-        //             this.RefreshEntity();
-        //             this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-        //         }
-        //         else {
-        //             this.ReloadMyScreen();
-        //         }
-        //         this.CD.reattach();
-
-        //     });
-        //     logWindow.IsHideHeader = true;
-
-        //     // TODO: #101459 -change to other new component
-        //     logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditCertificateOfOriginComponent');
-
-        //     this.CurrentSession.StopBusyIndicator();
-        // });
-
     }
 
     DeleteButtonClicked(item: CertificateOfOriginPM) {
@@ -420,15 +376,15 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         confirmWindow.Width = 300;
         confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
 
-        confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteInvoice"));
-        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
+        // confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteInvoice"));
+        // confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+        // confirmWindow.WindowClosed.subscribe((event: any) => {
+        //     if (confirmWindow.Yes) {
                 
-            } else if (confirmWindow.No) {
+        //     } else if (confirmWindow.No) {
 
-            }
-        });
+        //     }
+        // });
     }
 
 
@@ -466,7 +422,6 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     }
 
     DisplayOnlyCheck() {
-        // TODO: can look on example function from file- DeclarationSupplierInvoiceTabComponent.ts
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
             {
@@ -480,7 +435,6 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         else if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             // SetEnabled
-            
             return;
         }
         else if (this.EntityPM.StorageStatusCode) {
