@@ -38,7 +38,7 @@
         <td style="vertical-align:top">
             <div style="vertical-align:top; margin:5px">
                 <!-- Part 1: -->
-                <table style="width:900px">
+                <table style="width:850px">
                     <!-- First Row -->
                     <tr class="FieldRow">
                         <td style="width:130px;">
@@ -206,7 +206,7 @@
                 </table>
                 
                 <!-- Part 2: -->
-                <table style="width:620px">
+                <table style="width:580px">
                     <tr class="FieldRow" style="width: 600px ; height : 120px">
                         <div class="GeneratedGridContainer" style="width: 100% ; height : 100%;">
                             <logitude-edit-grid style="min-width: 500px;" GridWidth="500px" GridHeight="100%"
@@ -251,7 +251,7 @@
 
                                 <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.InvoiceSum' | TextCodeTranslationPipe"
-                                    [binding]="'InvoiceSum'" [width]="'150'" [Alignment]="'right'">
+                                    [binding]="'InvoiceSum'" [width]="'120'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="text-align:right">
@@ -266,7 +266,7 @@
 
                                 <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.ItemDescription' | TextCodeTranslationPipe"
-                                    [binding]="'DescriptionOfInvoice'" [width]="'160'" [Alignment]="'right'">
+                                    [binding]="'DescriptionOfInvoice'" [width]="'170'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="text-align:right">
@@ -278,7 +278,7 @@
 
                                 <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.IsInvoicesForPrint' | TextCodeTranslationPipe"
-                                    [binding]="'IsInvoicesForPrint'" [width]="'50'" [Alignment]="'right'">
+                                    [binding]="'IsInvoicesForPrint'" [width]="'40'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="text-align:right">
@@ -296,10 +296,9 @@
                 </table>
 
                 <!-- Part 3: -->
-                <table style="width:900px">
-                    <tr class="FieldRow">
-                        <td class="TabTitleRow">{{'Customs.Declaration.O.ConsignmentPackages' |
-                            TextCodeTranslationPipe}} </td>
+                <table style="width:850px">
+                    <tr>
+                        <td class="TabTitleRow">{{'Customs.Declaration.O.ConsignmentPackages' | TextCodeTranslationPipe}} </td>
                     </tr>
                     <tr class="FieldRow" style="width: 600px ; height : 120px">
                         <div class="GeneratedGridContainer" style="width: 100% ; height : 100%;">

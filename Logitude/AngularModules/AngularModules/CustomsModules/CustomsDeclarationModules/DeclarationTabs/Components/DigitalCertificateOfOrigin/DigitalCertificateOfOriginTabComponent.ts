@@ -88,19 +88,11 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
                         if (multiUpdateFeature) {
                             this.MultiUpdate = true;
                         }
-                        var isOcrFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
-                        if (isOcrFeature) {
-                            this.IsOcr = true;
-                        }
-
-
-
+                    
                         this.IsVisible = true;
 
-
-
                         this.certificateOfOriginPMService = new CertificateOfOriginPMService();
-                        this.certificateOfOriginPMService = new CertificateOfOriginPMService();
+                        
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
 
 
@@ -187,9 +179,11 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
             CertificateOfOrigin: !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin) ? this.selectedCertificateOfOrigin : new CertificateOfOriginPM()
         };
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1100;
-        logWindow.Height = 750;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin"); // add id of CertificateOfOrigin
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        logWindow.Title =  !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.CooTypeCode) ? TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin") + ": " + this.selectedCertificateOfOrigin.CooTypeCode : TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
+        // TODO: ADD to left side title
+        // logWindow.TitleStatus =  !AppTool.IsNullOrEmpty( this.selectedCertificateOfOrigin.CooStatusCode) ? TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode") + ": " + this.selectedCertificateOfOrigin.CooStatusCode : TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode");
         
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
@@ -220,9 +214,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         filters.SortBy = "SequenceNumeric";
         filters.SortDirection = "Ascending";
         filters.addAdditionalFilter("DeclarationId", this.EntityPM.Id , null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("Tenant", this.EntityPM.Tenant , null, null, "Equals", false, false, false, "string");
    
-
-        // TODO add tenent.
         this._entityListService.getByFilters("Customs.CertificateOfOrigin", filters).then((myResult:any) => {
             console.log("Response: ", myResult);
             if (myResult == null) {
@@ -436,12 +429,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             // SetEnabled
             return;
-        }
-        else if (this.EntityPM.StorageStatusCode) {
-            this.ShowStorageStatusMessage = true;
-            //this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
-        }
-        
+        }       
     }
 
  
