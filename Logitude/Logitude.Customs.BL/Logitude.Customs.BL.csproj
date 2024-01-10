@@ -178,6 +178,8 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerIndicationTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomerRoleTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsDocumentUploadDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsItemCategoryDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\CustomsItemHierarchicLocationDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CustomsShipDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\DeliveryTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\DocumentRejectTypeDetails.Generated.cs" />
@@ -486,8 +488,10 @@
     <Compile Include="EntityDataMappings\CustomsHouseTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsHouseTypeTenantDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsInsuranceCompanyDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsItemCategoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsItemDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsItemDetailsHistoryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CustomsItemHierarchicLocationDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsPartnerFtpDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsPartnersItemDataMapping.cs" />
     <Compile Include="EntityDataMappings\CustomsPaymentTermsDataMapping.cs" />
@@ -715,8 +719,10 @@
     <Compile Include="EntityDataMappings\Generated\CustomsHouseTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsHouseTypeTenantDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsInsuranceCompanyDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsItemCategoryDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsItemDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsItemDetailsHistoryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\CustomsItemHierarchicLocationDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsPartnerFtpDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsPartnersItemDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CustomsPaymentTermsDataMapping.Generated.cs" />
@@ -1197,6 +1203,8 @@
     <Compile Include="EntityQueryServices\Generated\CustomsCountryTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsHouseTypeTenantQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\DefaultValueQueryService.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsItemCategoryQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CustomsItemHierarchicLocationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationCounterQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestToAdvanceAQueueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OriginCriterionQueryService.Generated.cs" />
@@ -1746,6 +1754,8 @@
     <Compile Include="EntityUpdateServices\CertificateOfOriginInvoiceUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientItemUpdateService.cs" />
     <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsItemCategoryUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\CustomsItemHierarchicLocationUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestToAdvanceAQueueUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\CertificateOfOriginUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginInvoiceUpdateService.Generated.cs" />

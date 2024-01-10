@@ -361,7 +361,9 @@
     <None Include="DBTables\CustomsHouseTypeAdditional.dxml" />
     <None Include="DBTables\CustomsInsuranceCompany.dxml" />
     <None Include="DBTables\CustomsItem.dxml" />
+    <None Include="DBTables\CustomsItemCategory.dxml" />
     <None Include="DBTables\CustomsItemDetailsHistory.dxml" />
+    <None Include="DBTables\CustomsItemHierarchicLocation.dxml" />
     <None Include="DBTables\CustomsPartnerFtp.dxml" />
     <None Include="DBTables\CustomsPartnersItem.dxml" />
     <None Include="DBTables\CustomsPaymentTerm.dxml" />
@@ -632,6 +634,8 @@
     <None Include="EntityFiles\DefaultValue.lxml" />
     <None Include="EntityFiles\CertificateOfOriginTypeCodeEnum.lxml" />
     <None Include="EntityFiles\CertificateOfOriginStatusCodeEnum.lxml" />
+    <None Include="EntityFiles\CustomsItemCategory.lxml" />
+    <None Include="EntityFiles\CustomsItemHierarchicLocation.lxml" />
     <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />
     <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />

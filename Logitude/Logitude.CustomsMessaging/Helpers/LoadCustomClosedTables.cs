@@ -1222,6 +1222,16 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(ExportLogisticPermitActionTable, ExportLogisticPermitActionObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(ExportLogisticPermitActionTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomsItemCategoryTable = closedSystemTables.Where(d => d.id == "2073").FirstOrDefault();
+            ObjectTable CustomsItemCategoryObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomsItemCategory", 0, false);
+            InsertClosedTableRecord(CustomsItemCategoryTable, CustomsItemCategoryObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CustomsItemCategoryTable);
+            
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomsItemHierarchicLocationTable = closedSystemTables.Where(d => d.id == "2015").FirstOrDefault();
+            ObjectTable CustomsItemHierarchicLocationObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomsItemHierarchicLocation", 0, false);
+            InsertClosedTableRecord(CustomsItemHierarchicLocationTable, CustomsItemHierarchicLocationObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CustomsItemHierarchicLocationTable);
+
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);

@@ -463,6 +463,8 @@ import { ManifestCargoStatusListService } from './Services/StandardLists/Manifes
 import { ServersNamePMService } from './Services/StandardPMs/ServersNamePMService';
 import { ConfirmationNumberTokenLogListService } from './Services/StandardLists/ConfirmationNumberTokenLogListService';
 import { ConfirmationNumberTokenLogPMService } from './Services/StandardPMs/ConfirmationNumberTokenLogPMService';
+import { CustomsItemCategoryListService } from './Services/StandardLists/CustomsItemCategoryListService';
+import { CustomsItemHierarchicLocationListService } from './Services/StandardLists/CustomsItemHierarchicLocationListService';
 
 
 export class ModuleProviders {
@@ -727,6 +729,8 @@ export class ModuleProviders {
             case "LogisticActionResponseReqSListService": { myResult = new LogisticActionResponseReqSListService(); break; }
             case "CustomsDocumentUploadListService": { myResult = new CustomsDocumentUploadListService(); break; }
             case "ExportLogisticPermitActionListService": { myResult = new ExportLogisticPermitActionListService(); break; }
+            case "CustomsItemCategoryListService": { myResult = new CustomsItemCategoryListService(); break; }
+            case "CustomsItemHierarchicLocationListService": { myResult = new CustomsItemHierarchicLocationListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
