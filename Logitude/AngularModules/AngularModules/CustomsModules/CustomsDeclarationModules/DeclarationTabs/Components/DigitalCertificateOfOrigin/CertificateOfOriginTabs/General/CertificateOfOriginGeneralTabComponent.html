@@ -269,25 +269,22 @@
                             <!-- PART 2- headline -->
                             {{'Customs.Declaration.TH.ExporterInvoices'| TextCodeTranslationPipe}}
                         </td>
-                        <td style="width:180px"></td>
-                        <td></td>
-                        <td style="width:180px">
+                        <td style="width:200px"></td>
+
+                        <!-- PART 2- -->
+                        <td style="width:400px">
+                            <LogLabel [ObjectFieldName]="'IsUnitedInvoices'"
+                                [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td></td>
-                        <td></td>
-                        <td class="subTitle">{{'Customs.CertificateOfOrigin.O.ConsolidateAccounts' |
-                            TextCodeTranslationPipe}}
-                        </td>
-                        <td style="width:130px">
-                            <!-- PART 2- -->
+                        <td style="width:50px">
                             <LogCheckBox [ObjectFieldName]="'IsUnitedInvoices'" [Checked]="IsUnitedInvoices"
                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
                         </td>
-                        <td style="width:130px">
+                        <td style="width:250px">
                             <LogLabel [ObjectFieldName]="'TradeAgreementGroupOfCountries'"
                                 [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px">
+                        <td style="width:200px">
                             <LogLov [ObjectFieldName]="'TradeAgreementGroupOfCountries'"
                                 [ObjectTableName]="ObjectTableName" [SelectedValue]="TradeAgreementGroupOfCountries"
                                 [DataContext]="DataContext" [LookUpTableName]="'Customs.CountryGroup'">
@@ -408,7 +405,7 @@
 
                                 <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.MarksAndNumbers' | TextCodeTranslationPipe"
-                                    [binding]="'MarksAndNumbers'" [width]="'140'" [Alignment]="'right'">
+                                    [binding]="'MarksAndNumbers'" [width]="'125'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="text-align:right">
@@ -420,7 +417,7 @@
                                 </log-column>
                                 <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.ItemDescription' | TextCodeTranslationPipe"
-                                    [binding]="'ItemDescription'" [width]="'140'" [Alignment]="'right'">
+                                    [binding]="'ItemDescription'" [width]="'125'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="text-align:right">
@@ -444,7 +441,7 @@
                                 </log-column>
                                 <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.PackageType' | TextCodeTranslationPipe"
-                                    [binding]="'PackageType'" [width]="'90'" [Alignment]="'right'">
+                                    [binding]="'PackageType'" [width]="'70'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="text-align:right">
@@ -455,7 +452,7 @@
                                     </ng-template>
                                 </log-column>
                                 <log-column [header]="'Customs.CertificateOfOrigin.O.Weight' | TextCodeTranslationPipe"
-                                    [binding]="'Weight'" [width]="'100'" [Alignment]="'right'">
+                                    [binding]="'Weight'" [width]="'80'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="text-align:right">
@@ -468,7 +465,7 @@
 
                                 <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.MeasureType' | TextCodeTranslationPipe"
-                                    [binding]="'MeasureType'" [width]="'100'" [Alignment]="'right'">
+                                    [binding]="'MeasureType'" [width]="'80'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="text-align:right">
@@ -481,7 +478,7 @@
 
                                 <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.ContainerIsoCode' | TextCodeTranslationPipe"
-                                    [binding]="'ContainerIsoCode'" [width]="'100'" [Alignment]="'right'">
+                                    [binding]="'ContainerIsoCode'" [width]="'80'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="text-align:right">
@@ -494,7 +491,7 @@
 
 
                                 <log-column [header]="'Customs.CertificateOfOrigin.O.ItemId' | TextCodeTranslationPipe"
-                                    [binding]="'ItemId'" [width]="'110'" [Alignment]="'right'">
+                                    [binding]="'ItemId'" [width]="'80'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="text-align:right">
@@ -506,7 +503,7 @@
 
                                 <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.OriginCriterionCode' | TextCodeTranslationPipe"
-                                    [binding]="'OriginCriterionCode'" [width]="'90'" [Alignment]="'right'">
+                                    [binding]="'OriginCriterionCode'" [width]="'70'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                             <div style="text-align:right">
@@ -517,7 +514,7 @@
                                 </log-column>
 
 
-                                <log-column [width]="'90'" [Editable]="true" [Alignment]="'right'"
+                                <log-column [width]="'70'" [Editable]="true" [Alignment]="'right'"
                                     [visibility]="'visibile'"
                                     [header]="'Customs.CertificateOfOrigin.O.InvoiceConnect' | TextCodeTranslationPipe">
                                     <ng-template let-item>
