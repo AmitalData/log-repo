@@ -208,6 +208,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\PoaAuthorizationTypeLookupDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PhysicalCheckSearchResultTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PoaStatusTypeLookUpDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\QuotaComputationBasisDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ReleaseMessageTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RequestToAdvanceAQueueDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\RequestReasonCodeEnumDetails.Generated.cs" />
@@ -908,6 +909,7 @@
     <Compile Include="EntityDataMappings\Generated\ProductIdentificationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ProductNameTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PropertiesDetailsHistoryDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\QuotaComputationBasisDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\RansomViolationTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ReferantExceptionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\ReferantTeamDataMapping.Generated.cs" />
@@ -1101,6 +1103,7 @@
     <Compile Include="EntityDataMappings\ProductIdentificationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ProductNameTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PropertiesDetailsHistoryDataMapping.cs" />
+    <Compile Include="EntityDataMappings\QuotaComputationBasisDataMapping.cs" />
     <Compile Include="EntityDataMappings\RansomViolationTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\ReferantExceptionDataMapping.cs" />
     <Compile Include="EntityDataMappings\ReferantTeamDataMapping.cs" />
@@ -1231,6 +1234,7 @@
     <Compile Include="EntityQueryServices\Generated\CustomsItemCategoryQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsItemHierarchicLocationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationCounterQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\QuotaComputationBasisQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestToAdvanceAQueueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OriginCriterionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestReasonCodeEnumQueryService.Generated.cs" />
@@ -1787,6 +1791,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsEntityStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsItemCategoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsItemHierarchicLocationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\QuotaComputationBasisUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestToAdvanceAQueueUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\CertificateOfOriginUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginInvoiceUpdateService.Generated.cs" />

@@ -471,6 +471,7 @@ import { CarEngineVolumeListService } from './Services/StandardLists/CarEngineVo
 import { CarWeightListService } from './Services/StandardLists/CarWeightListService';
 import { ComputationMethodListService } from './Services/StandardLists/ComputationMethodListService';
 import { TarifRelatedToQuotaListService } from './Services/StandardLists/TarifRelatedToQuotaListService';
+import { QuotaComputationBasisListService } from './Services/StandardLists/QuotaComputationBasisListService';
 
 
 export class ModuleProviders {
@@ -743,6 +744,7 @@ export class ModuleProviders {
             case "CarWeightListService": { myResult = new CarWeightListService(); break; }
             case "ComputationMethodListService": { myResult = new ComputationMethodListService(); break; }
             case "TarifRelatedToQuotaListService": { myResult = new TarifRelatedToQuotaListService(); break; }
+            case "QuotaComputationBasisListService": { myResult = new QuotaComputationBasisListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }

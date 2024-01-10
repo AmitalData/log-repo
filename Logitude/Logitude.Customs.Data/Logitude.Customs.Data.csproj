@@ -247,6 +247,7 @@
     <Compile Include="EntityKeys\PhysicalCheckSearchResultTypeKeys.cs" />
     <Compile Include="EntityKeys\PoaStatusTypeLookUpKeys.cs" />
     <Compile Include="EntityKeys\PointerLevelKeys.cs" />
+    <Compile Include="EntityKeys\QuotaComputationBasisKeys.cs" />
     <Compile Include="EntityKeys\ReferantExceptionKeys.cs" />
     <Compile Include="EntityKeys\ReferantTeamKeys.cs" />
     <Compile Include="EntityKeys\ReferenceInputTypeKeys.cs" />
@@ -545,6 +546,7 @@
     <Compile Include="EntityListQueryServices\Generated\PhysicalCheckSearchResultTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PoaStatusTypeLookUpListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PointerLevelListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\QuotaComputationBasisListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferantExceptionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferantTeamListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReferenceInputTypeListQueryService.Generated.cs" />
@@ -615,6 +617,7 @@
     <Compile Include="EntityListQueryServices\PhysicalCheckSearchResultTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PoaStatusTypeLookUpListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PointerLevelListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\QuotaComputationBasisListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReferantExceptionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReferantTeamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReferenceInputTypeListQueryService.cs" />
@@ -680,6 +683,7 @@
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InternationalSiteTenantList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\QuotaComputationBasisList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestToAdvanceAQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OriginCriterionList.Generated.cs" />
@@ -988,6 +992,7 @@
     <Compile Include="EntityMapping\PhysicalCheckSearchResultTypeMap.cs" />
     <Compile Include="EntityMapping\PoaStatusTypeLookUpMap.cs" />
     <Compile Include="EntityMapping\PointerLevelMap.cs" />
+    <Compile Include="EntityMapping\QuotaComputationBasisMap.cs" />
     <Compile Include="EntityMapping\ReferantExceptionMap.cs" />
     <Compile Include="EntityMapping\ReferantTeamMap.cs" />
     <Compile Include="EntityMapping\ReferenceInputTypeMap.cs" />
@@ -1174,6 +1179,7 @@
     <Compile Include="EntityPOCOs\PoaStatusTypeLookUp.cs" />
     <Compile Include="EntityPOCOs\PointerLevel.cs" />
     <Compile Include="EntityPOCOs\ProceduralFault.cs" />
+    <Compile Include="EntityPOCOs\QuotaComputationBasis.cs" />
     <Compile Include="EntityPOCOs\ReferantException.cs" />
     <Compile Include="EntityPOCOs\ReferantTeam.cs" />
     <Compile Include="EntityPOCOs\ReferenceInputType.cs" />
@@ -1472,6 +1478,7 @@
     <Compile Include="Repsitories\Generated\PhysicalCheckSearchResultTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PoaStatusTypeLookUpRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PointerLevelRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\QuotaComputationBasisRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferantExceptionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferantTeamRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReferenceInputTypeRepository.Generated.cs" />
@@ -1542,6 +1549,7 @@
     <Compile Include="Repsitories\PhysicalCheckSearchResultTypeRepository.cs" />
     <Compile Include="Repsitories\PoaStatusTypeLookUpRepository.cs" />
     <Compile Include="Repsitories\PointerLevelRepository.cs" />
+    <Compile Include="Repsitories\QuotaComputationBasisRepository.cs" />
     <Compile Include="Repsitories\ReferantExceptionRepository.cs" />
     <Compile Include="Repsitories\ReferantTeamRepository.cs" />
     <Compile Include="Repsitories\ReferenceInputTypeRepository.cs" />

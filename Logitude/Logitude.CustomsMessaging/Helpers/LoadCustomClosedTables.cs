@@ -1261,6 +1261,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable TarifRelatedToQuotaObjectTable = objectTableRepository.GetObjectTableByName("Customs.TarifRelatedToQuota", 0, false);
             InsertClosedTableRecord(TarifRelatedToQuotaTable, TarifRelatedToQuotaObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(TarifRelatedToQuotaTable);
+            
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData QuotaComputationBasisTable = closedSystemTables.Where(d => d.id == "1061").FirstOrDefault();
+            ObjectTable QuotaComputationBasisObjectTable = objectTableRepository.GetObjectTableByName("Customs.QuotaComputationBasis", 0, false);
+            InsertClosedTableRecord(QuotaComputationBasisTable, QuotaComputationBasisObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(QuotaComputationBasisTable);
 
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
