@@ -1170,6 +1170,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string requestToAdvanceAQueue ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RequestToAdvanceAQueue  
+	   {
+	    
+	     get
+		{
+		   return requestToAdvanceAQueue;
+		 }
+		 set
+		 {
+		   if(requestToAdvanceAQueue != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestToAdvanceAQueue",OldValue=requestToAdvanceAQueue,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   requestToAdvanceAQueue=value;
+		   }
+			
+		 }
+	   }
+	  private string requestDetails ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string RequestDetails  
+	   {
+	    
+	     get
+		{
+		   return requestDetails;
+		 }
+		 set
+		 {
+		   if(requestDetails != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RequestDetails",OldValue=requestDetails,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   requestDetails=value;
+		   }
+			
+		 }
+	   }
+	  private string bringQueueForwardIndicatorS ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BringQueueForwardIndicatorS  
+	   {
+	    
+	     get
+		{
+		   return bringQueueForwardIndicatorS;
+		 }
+		 set
+		 {
+		   if(bringQueueForwardIndicatorS != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BringQueueForwardIndicatorS",OldValue=bringQueueForwardIndicatorS,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bringQueueForwardIndicatorS=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

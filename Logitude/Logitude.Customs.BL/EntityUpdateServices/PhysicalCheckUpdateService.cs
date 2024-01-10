@@ -84,6 +84,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     case EventContextTagModel.ProccessEnum.CH_NG_190_MSG1_NoticeToClientResponseServiceDelete:
                         notificationDefinitionCode = "190C";
                         break;
+                    case EventContextTagModel.ProccessEnum.CH_NG_192_MSG1_QueueAdvanceDeniedResponseService:
+                        notificationDefinitionCode = "192F";
+                        break;
                     default:
                         break;
                 }
@@ -209,6 +212,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         desc = "בוטלה בדיקה פיזית ל " + DeclarationConvertionText + "\n" + "מספר בדיקה - " + dirtyEntityPM.CheckId + "\n" + "תאריך הבדיקה -" + convertedDate;
                     }
                     //Yuval Chalup 19.11.2015 TASK-17450 --->
+                break;
+            case "192F":
+                    if (string.IsNullOrWhiteSpace(DeclarationConvertionText))
+                    {
+                        desc = "הקדמת תור נדחתה " + connectedDeclarationPM.CustomFileNo + "\n" + "מספר בדיקה - " + dirtyEntityPM.CheckId;
+                    }
+                    else
+                    {
+                        desc = "הקדמת תור נדחתה " + DeclarationConvertionText + "\n" + "מספר בדיקה - " + dirtyEntityPM.CheckId + "\n" + "תאריך הבדיקה -" + DateTime.Now.ToString("O").Substring(0, 19);
+                    }
                 break;
             }
             

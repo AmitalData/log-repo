@@ -239,6 +239,7 @@
     <Compile Include="EntityKeys\ReferenceStatusKeys.cs" />
     <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
     <Compile Include="EntityKeys\ReleaseMessageTypeKeys.cs" />
+    <Compile Include="EntityKeys\RequestToAdvanceAQueueKeys.cs" />
     <Compile Include="EntityKeys\RequestTypeKeys.cs" />
     <Compile Include="EntityKeys\SchedulerParamKeys.cs" />
     <Compile Include="EntityKeys\SealCompletenesKeys.cs" />
@@ -507,6 +508,7 @@
     <Compile Include="EntityListQueryServices\Generated\ReferenceStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReleaseMessageTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\RequestToAdvanceAQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SchedulerParamListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SealCompletenesListQueryService.Generated.cs" />
@@ -573,6 +575,7 @@
     <Compile Include="EntityListQueryServices\ReferenceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReleaseMessageTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\RequestToAdvanceAQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SchedulerParamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SealCompletenesListQueryService.cs" />
@@ -616,7 +619,7 @@
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InternationalSiteTenantList.Generated.cs" />
-
+    <Compile Include="EntityLists\Generated\RequestToAdvanceAQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OcrDocumentList.Generated.cs" />
@@ -913,6 +916,7 @@
     <Compile Include="EntityMapping\ReferenceStatusMap.cs" />
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
     <Compile Include="EntityMapping\ReleaseMessageTypeMap.cs" />
+    <Compile Include="EntityMapping\RequestToAdvanceAQueueMap.cs" />
     <Compile Include="EntityMapping\RequestTypeMap.cs" />
     <Compile Include="EntityMapping\SchedulerParamMap.cs" />
     <Compile Include="EntityMapping\SealCompletenesMap.cs" />
@@ -1082,6 +1086,7 @@
     <Compile Include="EntityPOCOs\ReferenceStatus.cs" />
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
     <Compile Include="EntityPOCOs\ReleaseMessageType.cs" />
+    <Compile Include="EntityPOCOs\RequestToAdvanceAQueue.cs" />
     <Compile Include="EntityPOCOs\RequestType.cs" />
     <Compile Include="EntityPOCOs\SchedulerParam.cs" />
     <Compile Include="EntityPOCOs\SealCompletenes.cs" />
@@ -1350,6 +1355,7 @@
     <Compile Include="Repsitories\Generated\ReferenceStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReleaseMessageTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\RequestToAdvanceAQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SchedulerParamRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SealCompletenesRepository.Generated.cs" />
@@ -1416,6 +1422,7 @@
     <Compile Include="Repsitories\ReferenceStatusRepository.cs" />
     <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
     <Compile Include="Repsitories\ReleaseMessageTypeRepository.cs" />
+    <Compile Include="Repsitories\RequestToAdvanceAQueueRepository.cs" />
     <Compile Include="Repsitories\RequestTypeRepository.cs" />
     <Compile Include="Repsitories\SchedulerParamRepository.cs" />
     <Compile Include="Repsitories\SealCompletenesRepository.cs" />

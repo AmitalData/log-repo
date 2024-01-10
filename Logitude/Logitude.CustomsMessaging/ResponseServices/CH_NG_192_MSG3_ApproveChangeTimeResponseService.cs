@@ -19,6 +19,9 @@ using System.Threading.Tasks;
 using UnifreightIIG.Common.ChangingTimeServiceReference;
 using UnifreightIIG.Common.MessageLib.Unifreight.FuStatus;
 using UnifreightIIG.Common.MessageLib.Unifreight.Transmission;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Server.Tools.Helpers;
+using UnifreightIIG.Common.TheGateway;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -129,7 +132,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         var declarationPM = declarationQueryService.GetSingle(phsicalCheckPM.DeclarationId, false, false); // Get declaration number for raising event
                         phsicalCheckPM.ChangeSetOp = ChangeSetOperation.Update;
                         phsicalCheckPM.LimitDate = approveChangeTimeRequest.newDate.Value; // Update date of the phsical Check
-                        
+
                         var myUpdateEventContextTagModel = new EventContextTagModel() // Raise event PUI
                         {
                             CallProccessID = EventContextTagModel.ProccessEnum.CH_NG_190_MSG1_NoticeToClientResponseServiceUpdate,
@@ -142,10 +145,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         physicalCheckUpdateService.Update(phsicalCheckPM, true);
                     }
                     break;
+                case 4:
+                    phsicalCheckPM.BringQueueForwardIndicatorS = "4";
+                    break;
+                case 5:
+                    phsicalCheckPM.BringQueueForwardIndicatorS = "5";
+                    var myDeleteEventContextTagModel = new EventContextTagModel()
+                    {
+                        CallProccessID = EventContextTagModel.ProccessEnum.CH_NG_192_MSG1_QueueAdvanceDeniedResponseService,
+                        EventCode = "PCB",
+                        EventRemarks = "Queue advance denied",
+                        FUStatusRemarks = "הקדמת תור נדחתה"
+                    };
+                    phsicalCheckPM.CurrentContextTag = myDeleteEventContextTagModel;
+                    phsicalCheckPM.ChangeSetOp = ChangeSetOperation.Update;
+                    physicalCheckUpdateService.Update(phsicalCheckPM, true);
+                    break;
             }
         }
 
        
+      
     }
-  
+
 }

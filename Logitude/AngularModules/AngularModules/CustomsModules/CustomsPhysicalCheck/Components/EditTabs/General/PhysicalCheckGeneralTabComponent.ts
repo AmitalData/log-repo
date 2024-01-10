@@ -23,6 +23,7 @@ import { CH_NG_192_MSG3_ApproveChangeTimeResponseData } from '../../../../../Cus
 import { IIGGeneralMessagesService } from '../../../../../Customs/Services/WebServices/IIGGeneralMessagesService';
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
+import { DeclarationEventManager } from 'Customs/Utilities/DeclarationEventManager';
 
 @Component({
     selector:'PhysicalCheckAvailableTimes',
@@ -48,6 +49,21 @@ export class PhysicalCheckGeneralTabComponent
     public AvailableTimeChecked: boolean = false;
     _IIGGeneralMessagesService: IIGGeneralMessagesService = new IIGGeneralMessagesService();
 
+
+    
+    private _RequestToAdvanceAQueue: string;
+    get RequestToAdvanceAQueue() { return this._RequestToAdvanceAQueue; }
+    set RequestToAdvanceAQueue(value: string) {
+        this._RequestToAdvanceAQueue = value;
+        this.EntityPM.RequestToAdvanceAQueue = value;
+    }
+    
+    private _RequestDetails: string;
+    get RequestDetails() { return this._RequestDetails; }
+    set RequestDetails(value: string) {
+        this._RequestDetails = value;
+        this.EntityPM.RequestDetails = value;
+    }
     private _FromDate: Date;
     get FromDate() { return this._FromDate; }
     set FromDate(value: Date) {
@@ -106,12 +122,19 @@ export class PhysicalCheckGeneralTabComponent
                                
             });
         });
+       
 
     }
 
     Init() {
         if (this.entityArgs == null || (this.entityArgs != null && this.entityArgs.EntityPM == null)) return;
         this.EntityPM = this.entityArgs.EntityPM;
+
+        if (this.EntityPM.RequestToAdvanceAQueue)
+            this.RequestToAdvanceAQueue = this.EntityPM.RequestToAdvanceAQueue;
+        if (this.EntityPM.RequestDetails)
+            this.RequestDetails = this.EntityPM.RequestDetails;
+
         this.ObjectTableName = this.entityArgs.ObjectTableName;
         this.Listen();
     }
@@ -158,8 +181,34 @@ export class PhysicalCheckGeneralTabComponent
                     }
                 })
             );
+
+            // todo: BringQueueForwardIndicatorStatus=004  יש להציג הודעה “הקדמת תור הועברה לבחינה של עובד מכס”
+            this.ShowAlertBringQueueForwardIndicatorStatus();
         }
     }
+
+    public IsDisplayOnly: boolean = false;
+    public DisplayOnlyMessage: string = "";
+    public ShowStorageStatusMessage: boolean = false;
+
+    ShowAlertBringQueueForwardIndicatorStatus() {
+        if(this.EntityPM.BringQueueForwardIndicatorS == "4"){
+            this.IsDisplayOnly =true;
+            this.ShowStorageStatusMessage = true;
+            this.DisplayOnlyMessage = TextCodeTranslator.Translate("Customs.Declaration.O.DisplayOnly") + "הקדמת תור הועברה לבחינה של עובד מכס";
+            DeclarationEventManager.DisplayModeChanged.emit(this.IsDisplayOnly);
+            if (this.CurrentSession.CurrentEditComponent) {
+                this.CurrentSession.CurrentEditComponent.IsSaveBtnDisable = true;
+            }
+        }
+    }
+
+    
+    RefreshEntity() {
+        this.CurrentSession.CurrentEditComponent.EditComponentController.ResetMustRefresh();
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+    }
+
 
     // log tab
     selectedTab: LogTab;
@@ -202,6 +251,23 @@ export class PhysicalCheckGeneralTabComponent
         this.SetDateEnable(false);
         
     }
+
+    checkEarlierDateFeature() {
+        return FeatureLocator.HasFeaturePermession("PhysicalCheck", "EarlierDateFeature");
+    }
+
+    SetEarlierDateFieldsEnable(enable: boolean) {
+        this.UIProperties.SetEnabled("RequestToAdvanceAQueue", this.ObjectTableName, enable);
+        this.UIProperties.SetEnabled("RequestDetails", this.ObjectTableName, enable);
+
+        this.UIProperties.SetEnabled("ByAskForAnEarlierDate", this.ObjectTableName, enable);
+        this.UIProperties.SetEnabled("ByAskForAnLaterDate", this.ObjectTableName, enable);
+        this.UIProperties.SetEnabled("ByAvailableTimeChecked", this.ObjectTableName, enable);
+
+        this.SetDateEnable(enable);
+        debugger;
+    }
+    
     SetDateEnable(enable: boolean) {
         this.UIProperties.SetEnabled("FromDate", this.ObjectTableName, enable);
         this.UIProperties.SetEnabled("ToDate", this.ObjectTableName, enable);
@@ -268,6 +334,14 @@ export class PhysicalCheckGeneralTabComponent
                 //case 3: // In Case of automatic update
             }
         }
+        
+        if(this.AskForAnEarlierDate){
+            debugger
+        
+            //todo: after update iig:    
+            // checkParams.RequestToAdvanceAQueue = this.EntityPM.RequestToAdvanceAQueue;
+            // checkParams.RequestDetails = this.EntityPM.RequestDetails;
+        }
         let objecttable: ObjectTablePM = window.ObjectTables.filter(d => d.Name == "Customs.PhysicalCheck")[0];
 
 
@@ -291,7 +365,9 @@ export class PhysicalCheckGeneralTabComponent
         checkParams.CheckTypeCode = this.EntityPM.CheckTypeCode;
 
 
-
+        checkParams.RequestToAdvanceAQueue = this.EntityPM.RequestToAdvanceAQueue;
+        checkParams.RequestDetails = this.EntityPM.RequestDetails;
+        
         //if (sendOption == null) {
         checkParams.RequestVIA = SendRequestVIA.Default;
         //}
@@ -318,9 +394,12 @@ export class PhysicalCheckGeneralTabComponent
 
             });
 
+        debugger
         this._IIGGeneralMessagesService.PostChangingTimeRequestParams(checkParams)
-            .subscribe(() => { }
-            );
+            .subscribe(() => {
+                debugger
+            }
+        );
 
 
         //customServiceReference.SendCheckRequestCompleted += customServiceReference_SendCheckRequestCompleted;

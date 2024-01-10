@@ -120,6 +120,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string IntegratorName  { get; set; }
        [DataMember]
        public string SearchResultName  { get; set; }
+       [DataMember]
+       public string RequestToAdvanceAQueue  { get; set; }
+       [DataMember]
+       public string RequestDetails  { get; set; }
+       [DataMember]
+       public string BringQueueForwardIndicatorS  { get; set; }
    }
 
 }

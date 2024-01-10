@@ -61,6 +61,9 @@ export class PhysicalCheckList {
 	AvailabilityDate: Date;
 	IntegratorName: string;
 	SearchResultName: string;
+	RequestToAdvanceAQueue: string;
+	RequestDetails: string;
+	BringQueueForwardIndicatorS: string;
 	
 }
  

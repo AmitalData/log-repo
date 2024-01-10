@@ -523,6 +523,7 @@
     <None Include="DBTables\RegisteredWarehouseSiteType.dxml" />
     <None Include="DBTables\ReleaseMessageType.dxml" />
     <None Include="DBTables\RequestStatus.dxml" />
+    <None Include="DBTables\RequestToAdvanceAQueue.dxml" />
     <None Include="DBTables\RequestType.dxml" />
     <None Include="DBTables\RequiredGuaranteeType.dxml" />
     <None Include="DBTables\ReturnCondition.dxml" />
@@ -621,6 +622,7 @@
     <None Include="EntityFiles\OcrDocument.lxml" />
     <None Include="EntityFiles\OcrStatus.lxml" />
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />
+    <None Include="EntityFiles\RequestToAdvanceAQueue.lxml" />
     <None Include="EntityFiles\SignStation.lxml" />
     <None Include="EntityFiles\PhysicalCheckCode.lxml" />
     <None Include="EntityFiles\StatusCode.lxml" />
