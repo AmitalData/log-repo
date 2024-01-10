@@ -69,6 +69,7 @@
     <Compile Include="EntityPMs\CertificateOfOriginStatusCodeEnumPM.cs" />
     <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
     <Compile Include="EntityPMs\Generated\CarEngineVolumePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CarWeightPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConditionalExemptionTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsEntityStatusPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsItemCategoryPM.Generated.cs" />

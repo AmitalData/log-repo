@@ -134,6 +134,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CargoTypeMap());
 	
+            modelBuilder.Configurations.Add(new CarWeightMap());
+	
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
 	
             modelBuilder.Configurations.Add(new CertificateOfOriginMap());
@@ -1610,6 +1612,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CargoType> CargoTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CarWeight> CarWeights 
 	 {
 	      get; set;
 	 

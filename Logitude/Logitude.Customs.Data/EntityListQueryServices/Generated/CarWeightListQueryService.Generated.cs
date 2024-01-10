@@ -1,0 +1,171 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityLists;
+
+namespace Logitude.Customs.Data.EntityListQueryServices
+{ 
+
+    public partial class CarWeightListQueryService
+    {
+         private ICustomContext context;
+        public CarWeightListQueryService(ICustomContext context)
+        {
+            this.context = context;
+        }
+
+        public List<CarWeightList> GetList(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<CarWeight> iQueryable = (from a in context.CarWeights
+                                               select a);
+            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<CarWeight>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<CarWeightList> query2 = GetIqueryableList(iQueryable);
+           
+            query2 = filter.GetFilteredQuery<CarWeightList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(CarWeightList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> CarWeightObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CarWeight",tenant).ToList();
+
+                ObjectField objectField = (from a in CarWeightObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+				 if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<CarWeightList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<CarWeightList, string>(queryOperations, query2);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<CarWeightList, double>(queryOperations, query2);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<CarWeightList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<CarWeightList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<CarWeightList, bool>(queryOperations, query2);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                query2 = sortClass.GetSorterQuery<CarWeightList, decimal>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderBy(d => d.Code);
+                                break;
+                            }
+                    }
+				 }
+                }
+            }
+		    else
+            {
+                query2 = query2.OrderBy(d => d.Code);
+            }
+			if(!queryOperations.GetAll)
+			{
+             query2 = query2.Skip(skippedPorts);
+             query2 = query2.Take(queryOperations.PageSize);
+			}
+            return query2.ToList();
+
+    
+        }
+
+         public List<CarWeightList> GetList(int tenant)
+         {
+             return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
+         }
+
+        public CarWeightList GetSingle(string code)
+        {
+            IQueryable<CarWeight> CarWeightQuery = (from a in context.CarWeights
+                                                       where a.Code == code
+                                                       select a);
+
+             
+            IQueryable<CarWeightList> CarWeightListQuery = GetIqueryableList( CarWeightQuery);
+            CarWeightList CarWeightList = CarWeightListQuery.FirstOrDefault();
+            return CarWeightList;
+           
+        }
+
+        public int GetListCount(QueryOperations queryOperations)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<CarWeight> iQueryable = (from a in context.CarWeights  select a);
+
+			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            
+			iQueryable = filter.GetFilteredQuery<CarWeight>(nonListQueryOperation, iQueryable);
+
+            IQueryable<CarWeightList> query2 = GetIqueryableList(iQueryable);
+
+            query2 = filter.GetFilteredQuery<CarWeightList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+      
+    }
+}
+	 

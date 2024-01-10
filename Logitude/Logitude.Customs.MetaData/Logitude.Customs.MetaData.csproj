@@ -244,6 +244,7 @@
     <None Include="DBTables\CargoSplitRequestStatus.dxml" />
     <None Include="DBTables\CargoStatus.dxml" />
     <None Include="DBTables\CargoType.dxml" />
+    <None Include="DBTables\CarWeight.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
     <None Include="DBTables\CertificateOfOrigin.dxml" />
     <None Include="DBTables\CertificateOfOriginInvoice.dxml" />
@@ -642,6 +643,7 @@
     <None Include="EntityFiles\CustomsEntityStatus.lxml" />
     <None Include="EntityFiles\ConditionalExemptionType.lxml" />
     <None Include="EntityFiles\CarEngineVolume.lxml" />
+    <None Include="EntityFiles\CarWeight.lxml" />
     <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />
     <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />
