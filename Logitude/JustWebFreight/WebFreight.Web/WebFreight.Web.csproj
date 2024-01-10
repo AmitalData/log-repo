@@ -1204,6 +1204,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\SupplierInvioceExportDefaultExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientIndicationViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ConditionalExemptionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ConfirmationNumberTokenLogViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CountryCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CourierHawbFromExcelViewsController.Generated.cs" />
@@ -3390,6 +3391,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientIndicationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientsPoaUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientsTapagUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConditionalExemptionTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConfirmationNumberTokenLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConsignmentPackDangerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationHataraStatusUpdateClass.cs" />

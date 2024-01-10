@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class ConditionalExemptionTypeQueryService: EntityQueryService<ConditionalExemptionType,ConditionalExemptionTypeKeys,ConditionalExemptionTypePM,object,ConditionalExemptionTypeKeys>
+   {
+   
+        ConditionalExemptionTypeRepository repository;
+		ICustomContext  context;
+        public ConditionalExemptionTypeQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new ConditionalExemptionTypeRepository(context);
+            Repository = repository;
+            mapping = new ConditionalExemptionTypeDataMapping();
+        }
+
+        public ConditionalExemptionTypeQueryService(ConditionalExemptionTypeRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new ConditionalExemptionTypeDataMapping();
+        }
+
+        public ConditionalExemptionTypeQueryService(ICustomContext context)
+        {
+            this.repository = new ConditionalExemptionTypeRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new ConditionalExemptionTypeDataMapping();
+        }
+		 
+		public  ConditionalExemptionTypePM GetSingle(string code,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new ConditionalExemptionTypeKeys(){ Code = code };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(ConditionalExemptionType entityPOCO)
+        {
+            ConditionalExemptionTypeKeys entityKeys = new ConditionalExemptionTypeKeys() { Code = entityPOCO.Code,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

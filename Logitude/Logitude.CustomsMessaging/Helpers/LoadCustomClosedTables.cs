@@ -1237,6 +1237,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(CustomsEntityStatusTable, CustomsEntityStatusObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(CustomsEntityStatusTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ConditionalExemptionTypeTable = closedSystemTables.Where(d => d.id == "1315").FirstOrDefault();
+            ObjectTable ConditionalExemptionTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ConditionalExemptionType", 0, false);
+            InsertClosedTableRecord(ConditionalExemptionTypeTable, ConditionalExemptionTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(ConditionalExemptionTypeTable);
+
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);

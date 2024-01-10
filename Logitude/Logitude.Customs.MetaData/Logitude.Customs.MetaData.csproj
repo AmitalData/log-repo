@@ -289,6 +289,7 @@
     <None Include="DBTables\CollateralType.dxml" />
     <None Include="DBTables\CommercialSale.dxml" />
     <None Include="DBTables\CommunicationType.dxml" />
+    <None Include="DBTables\ConditionalExemptionType.dxml" />
     <None Include="DBTables\ConfirmationType.dxml" />
     <None Include="DBTables\Consignment.dxml" />
     <None Include="DBTables\ConsignmentInternalTransition.dxml" />
@@ -638,6 +639,7 @@
     <None Include="EntityFiles\CustomsItemCategory.lxml" />
     <None Include="EntityFiles\CustomsItemHierarchicLocation.lxml" />
     <None Include="EntityFiles\CustomsEntityStatus.lxml" />
+    <None Include="EntityFiles\ConditionalExemptionType.lxml" />
     <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />
     <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />

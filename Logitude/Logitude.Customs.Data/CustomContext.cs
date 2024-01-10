@@ -224,6 +224,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CommunicationTypeMap());
 	
+            modelBuilder.Configurations.Add(new ConditionalExemptionTypeMap());
+	
             modelBuilder.Configurations.Add(new ConfirmationNumberTokenLogMap());
 	
             modelBuilder.Configurations.Add(new ConfirmationTypeMap());
@@ -1876,6 +1878,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CommunicationType> CommunicationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ConditionalExemptionType> ConditionalExemptionTypes 
 	 {
 	      get; set;
 	 
