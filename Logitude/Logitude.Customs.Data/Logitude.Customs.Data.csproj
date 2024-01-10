@@ -862,7 +862,6 @@
     <Compile Include="Repsitories\UIMessageAdditionalRepository.cs" />
     <Compile Include="Repsitories\UIMessageRepository.cs" />
     <Compile Include="Repsitories\UpdateCodeRepository.cs" />
-    <Compile Include="Utils\CacheHelper.cs" />
     <Compile Include="Utils\FreelancerCustomersUtil.cs" />
     <None Include="CustomContext.Views.cs" />
     <Compile Include="CustomFilters\DeclarationCustomFilters.cs" />

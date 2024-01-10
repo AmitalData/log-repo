@@ -4,7 +4,7 @@ using System.Linq;
 using System.Web;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.GlobalModel.EntityPMs;
-using Logitude.Customs.BL.BL;
+using Logitude.BL.Helpers;
 
 namespace Logitude.BL.GlobalModel.EntityQueries
 {
