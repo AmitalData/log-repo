@@ -353,6 +353,7 @@
     <None Include="DBTables\CustomsDocumentStatusType.dxml" />
     <None Include="DBTables\CustomsDocumentsTicket.dxml" />
     <None Include="DBTables\CustomsDocumentUpload.dxml" />
+    <None Include="DBTables\CustomsEntityStatus.dxml" />
     <None Include="DBTables\CustomsEnvironmentSetting.dxml" />
     <None Include="DBTables\CustomsEnvoirmentType.dxml" />
     <None Include="DBTables\CustomsExchangeRate.dxml" />
@@ -636,6 +637,7 @@
     <None Include="EntityFiles\CertificateOfOriginStatusCodeEnum.lxml" />
     <None Include="EntityFiles\CustomsItemCategory.lxml" />
     <None Include="EntityFiles\CustomsItemHierarchicLocation.lxml" />
+    <None Include="EntityFiles\CustomsEntityStatus.lxml" />
     <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />
     <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />

@@ -1230,7 +1230,12 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomsItemHierarchicLocationTable = closedSystemTables.Where(d => d.id == "2015").FirstOrDefault();
             ObjectTable CustomsItemHierarchicLocationObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomsItemHierarchicLocation", 0, false);
             InsertClosedTableRecord(CustomsItemHierarchicLocationTable, CustomsItemHierarchicLocationObjectTable, customsClosedTables, customsClosedTableRepository);
-            addedClosedTables.Add(CustomsItemHierarchicLocationTable);
+            addedClosedTables.Add(CustomsItemHierarchicLocationTable); 
+            
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CustomsEntityStatusTable = closedSystemTables.Where(d => d.id == "1103").FirstOrDefault();
+            ObjectTable CustomsEntityStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CustomsEntityStatus", 0, false);
+            InsertClosedTableRecord(CustomsEntityStatusTable, CustomsEntityStatusObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CustomsEntityStatusTable);
 
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();

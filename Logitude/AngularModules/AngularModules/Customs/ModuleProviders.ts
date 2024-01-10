@@ -465,7 +465,7 @@ import { ConfirmationNumberTokenLogListService } from './Services/StandardLists/
 import { ConfirmationNumberTokenLogPMService } from './Services/StandardPMs/ConfirmationNumberTokenLogPMService';
 import { CustomsItemCategoryListService } from './Services/StandardLists/CustomsItemCategoryListService';
 import { CustomsItemHierarchicLocationListService } from './Services/StandardLists/CustomsItemHierarchicLocationListService';
-
+import { CustomsEntityStatusListService } from './Services/StandardLists/CustomsEntityStatusListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -731,6 +731,7 @@ export class ModuleProviders {
             case "ExportLogisticPermitActionListService": { myResult = new ExportLogisticPermitActionListService(); break; }
             case "CustomsItemCategoryListService": { myResult = new CustomsItemCategoryListService(); break; }
             case "CustomsItemHierarchicLocationListService": { myResult = new CustomsItemHierarchicLocationListService(); break; }
+            case "CustomsEntityStatusListService": { myResult = new CustomsEntityStatusListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }

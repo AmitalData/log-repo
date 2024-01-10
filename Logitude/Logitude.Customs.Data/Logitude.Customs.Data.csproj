@@ -167,6 +167,7 @@
     <Compile Include="EntityKeys\CustomsCountryTenantKeys.cs" />
     <Compile Include="EntityKeys\CustomsDocumentsDefinitionKeys.cs" />
     <Compile Include="EntityKeys\CustomsDocumentUploadKeys.cs" />
+    <Compile Include="EntityKeys\CustomsEntityStatusKeys.cs" />
     <Compile Include="EntityKeys\CustomsEnvironmentSettingKeys.cs" />
     <Compile Include="EntityKeys\CustomsGeneralKeys.cs" />
     <Compile Include="EntityKeys\CustomsHouseTypeTenantKeys.cs" />
@@ -346,6 +347,7 @@
     <Compile Include="EntityListQueryServices\CustomsCountryTenantListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsDocumentsDefinitionListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsDocumentUploadListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomsEntityStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsEnvironmentSettingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsGeneralListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsHouseTypeTenantListQueryService.cs" />
@@ -455,6 +457,7 @@
     <Compile Include="EntityListQueryServices\Generated\CustomsCountryTenantListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsDocumentsDefinitionListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsDocumentUploadListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomsEntityStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsEnvironmentSettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsGeneralListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsHouseTypeTenantListQueryService.Generated.cs" />
@@ -649,6 +652,7 @@
     <Compile Include="EntityLists\Generated\CourierHawbFromExcelList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomDocumentTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsCountryTenantList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsEntityStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsHouseTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsItemCategoryList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsItemHierarchicLocationList.Generated.cs" />
@@ -884,6 +888,7 @@
     <Compile Include="EntityMapping\CustomsCountryTenantMap.cs" />
     <Compile Include="EntityMapping\CustomsDocumentsDefinitionMap.cs" />
     <Compile Include="EntityMapping\CustomsDocumentUploadMap.cs" />
+    <Compile Include="EntityMapping\CustomsEntityStatusMap.cs" />
     <Compile Include="EntityMapping\CustomsEnvironmentSettingMap.cs" />
     <Compile Include="EntityMapping\CustomsGeneralMap.cs" />
     <Compile Include="EntityMapping\CustomsHouseTypeTenantMap.cs" />
@@ -1063,6 +1068,7 @@
     <Compile Include="EntityPOCOs\CustomsCountryTenant.cs" />
     <Compile Include="EntityPOCOs\CustomsDocumentsDefinition.cs" />
     <Compile Include="EntityPOCOs\CustomsDocumentUpload.cs" />
+    <Compile Include="EntityPOCOs\CustomsEntityStatus.cs" />
     <Compile Include="EntityPOCOs\CustomsEnvironmentSetting.cs" />
     <Compile Include="EntityPOCOs\CustomsGeneral.cs" />
     <Compile Include="EntityPOCOs\CustomsHouseTypeTenant.cs" />
@@ -1243,6 +1249,7 @@
     <Compile Include="Repsitories\CustomsCountryTenantRepository.cs" />
     <Compile Include="Repsitories\CustomsDocumentsDefinitionRepository.cs" />
     <Compile Include="Repsitories\CustomsDocumentUploadRepository.cs" />
+    <Compile Include="Repsitories\CustomsEntityStatusRepository.cs" />
     <Compile Include="Repsitories\CustomsEnvironmentSettingRepository.cs" />
     <Compile Include="Repsitories\CustomsGeneralRepository.cs" />
     <Compile Include="Repsitories\CustomsHouseTypeTenantRepository.cs" />
@@ -1352,6 +1359,7 @@
     <Compile Include="Repsitories\Generated\CustomsCountryTenantRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsDocumentsDefinitionRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsDocumentUploadRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CustomsEntityStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsEnvironmentSettingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsGeneralRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsHouseTypeTenantRepository.Generated.cs" />
