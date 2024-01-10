@@ -68,6 +68,8 @@
     <Compile Include="EntityPMs\CargoIdentifireTypePM.cs" />
     <Compile Include="EntityPMs\CertificateOfOriginStatusCodeEnumPM.cs" />
     <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsItemCategoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CustomsItemHierarchicLocationPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestToAdvanceAQueuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConfirmationNumberTokenLogPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CertificateOfOriginInvoicePM.Generated.cs" />

@@ -170,6 +170,8 @@
     <Compile Include="EntityKeys\CustomsEnvironmentSettingKeys.cs" />
     <Compile Include="EntityKeys\CustomsGeneralKeys.cs" />
     <Compile Include="EntityKeys\CustomsHouseTypeTenantKeys.cs" />
+    <Compile Include="EntityKeys\CustomsItemCategoryKeys.cs" />
+    <Compile Include="EntityKeys\CustomsItemHierarchicLocationKeys.cs" />
     <Compile Include="EntityKeys\CustomsPartnerFtpKeys.cs" />
     <Compile Include="EntityKeys\CustomsShipKeys.cs" />
     <Compile Include="EntityKeys\DBMigrationKeys.cs" />
@@ -347,6 +349,8 @@
     <Compile Include="EntityListQueryServices\CustomsEnvironmentSettingListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsGeneralListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsHouseTypeTenantListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomsItemCategoryListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CustomsItemHierarchicLocationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsPartnerFtpListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CustomsShipListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DBMigrationLineListQueryService.cs" />
@@ -454,6 +458,8 @@
     <Compile Include="EntityListQueryServices\Generated\CustomsEnvironmentSettingListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsGeneralListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsHouseTypeTenantListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomsItemCategoryListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CustomsItemHierarchicLocationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsPartnerFtpListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CustomsShipListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DBMigrationLineListQueryService.Generated.cs" />
@@ -644,6 +650,8 @@
     <Compile Include="EntityLists\Generated\CustomDocumentTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsCountryTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomsHouseTypeTenantList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsItemCategoryList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CustomsItemHierarchicLocationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DeclarationCounterList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
@@ -879,6 +887,8 @@
     <Compile Include="EntityMapping\CustomsEnvironmentSettingMap.cs" />
     <Compile Include="EntityMapping\CustomsGeneralMap.cs" />
     <Compile Include="EntityMapping\CustomsHouseTypeTenantMap.cs" />
+    <Compile Include="EntityMapping\CustomsItemCategoryMap.cs" />
+    <Compile Include="EntityMapping\CustomsItemHierarchicLocationMap.cs" />
     <Compile Include="EntityMapping\CustomsPartnerFtpMap.cs" />
     <Compile Include="EntityMapping\CustomsShipMap.cs" />
     <Compile Include="EntityMapping\DBMigrationLineMap.cs" />
@@ -1056,6 +1066,8 @@
     <Compile Include="EntityPOCOs\CustomsEnvironmentSetting.cs" />
     <Compile Include="EntityPOCOs\CustomsGeneral.cs" />
     <Compile Include="EntityPOCOs\CustomsHouseTypeTenant.cs" />
+    <Compile Include="EntityPOCOs\CustomsItemCategory.cs" />
+    <Compile Include="EntityPOCOs\CustomsItemHierarchicLocation.cs" />
     <Compile Include="EntityPOCOs\CustomsPartnerFtp.cs" />
     <Compile Include="EntityPOCOs\CustomsShip.cs" />
     <Compile Include="EntityPOCOs\DBMigration.cs" />
@@ -1234,6 +1246,8 @@
     <Compile Include="Repsitories\CustomsEnvironmentSettingRepository.cs" />
     <Compile Include="Repsitories\CustomsGeneralRepository.cs" />
     <Compile Include="Repsitories\CustomsHouseTypeTenantRepository.cs" />
+    <Compile Include="Repsitories\CustomsItemCategoryRepository.cs" />
+    <Compile Include="Repsitories\CustomsItemHierarchicLocationRepository.cs" />
     <Compile Include="Repsitories\CustomsPartnerFtpRepository.cs" />
     <Compile Include="Repsitories\CustomsShipRepository.cs" />
     <Compile Include="Repsitories\DBMigrationLineRepository.cs" />
@@ -1341,6 +1355,8 @@
     <Compile Include="Repsitories\Generated\CustomsEnvironmentSettingRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsGeneralRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsHouseTypeTenantRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CustomsItemCategoryRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CustomsItemHierarchicLocationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsPartnerFtpRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CustomsShipRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DBMigrationLineRepository.Generated.cs" />
