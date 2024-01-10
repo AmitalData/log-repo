@@ -7,6 +7,8 @@ import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { CertificateOfOriginInvoicePM } from 'Customs/EntityPMs/CertificateOfOriginInvoicePM';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { CertificateOfOriginItemPM } from 'Customs/EntityPMs/CertificateOfOriginItemPM';
+import { CardListService } from 'Common/Services/StandardLists/CardListService';
+import { CardPM } from 'Common/EntityPMs/CardPM';
 
 
 
@@ -23,6 +25,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public isPassport: boolean;
     public entityPM: CertificateOfOriginPM;
     public currentDeclaration:DeclarationPM;
+    public currentCard:CardPM;
     // public CertificateOriginInvoiceItems : CertificateOfOriginInvoicePM[];
     public CertificateOriginInvoiceItems : ObservableCollection // type <CertificateOfOriginInvoicePM[]>;
     public CertificateOriginItemItems : ObservableCollection // type <CertificateOfOriginItemPM[]>;
@@ -50,11 +53,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         });
 
         this.currentDeclaration = currentDeclaration;
-        
+        if(currentDeclaration){ 
+            this.initializeRelatedDeclarationData()
+        }
 
         this.isNew = IsNew;
         this.controlEnabled = IsNew;
         this.SetPropertiesEnabled();
+
 
         // this.isPassport = (AppTool.IsNullOrEmpty(this.entityPM.Id)) && (!AppTool.IsNullOrEmpty(this.entityPM.PassportNumber));
 
@@ -89,7 +95,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("TradeAgreementCountry2", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("IsUnitedInvoices", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, enabled);
-    }
+    }   
 
 
    
@@ -99,12 +105,46 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetWarning("RequestReasonCode", this.ObjectTableName, true);
     }
     
-    public get IsDispalyOnly() { 
-        return this.isDispalyOnlyStatusList.includes(Number(this.entityPM.CooStatusCode))
+   
+
+    private getCardById(id:string) {
+        var cardListService = new CardListService();
+        cardListService.getSingleFromCache(id).subscribe((myResponse: any) => {
+            if (!myResponse.HasError) {
+                this.currentCard = myResponse.Result;
+                this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
+                return this.entityPM.ExporterName;
+            }
+        });
+    }
+   
+    initializeRelatedDeclarationData(){
+        this.getCardById(this.currentDeclaration.CustomerId);
+
+        if(this.currentDeclaration.DeclarationExportRecipients.length > 0 ){
+            var fieldVal = this.currentDeclaration.DeclarationExportRecipients[0]?.RecipientName; // first from list
+            if(fieldVal){
+                this.entityPM.ConsigneeName = fieldVal; // first from list
+            }
+        }
+
+        if(this.currentDeclaration.SupplierInvoices.length > 0 ){
+            if(this.currentDeclaration.SupplierInvoices.length > 0 ){
+                var fieldVal = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.OriginCountryCode;
+                if(fieldVal){
+                    this.entityPM.OriginCountry = fieldVal; // first from list
+                }
+            }
+        }
+
     }
 
     EditButtonClicked(Item) {
        
+    }
+
+    public get IsDispalyOnly() { 
+        return this.isDispalyOnlyStatusList.includes(Number(this.entityPM.CooStatusCode))
     }
 
     //#region properties
@@ -186,11 +226,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.entityPM.ExporterVat = newValue;
     }
 
+    
     public get ExporterName(): string {
         return this.entityPM.ExporterName;
+        
     }
     public set ExporterName(newValue: string) {
         this.entityPM.ExporterName = newValue;
+
     }
 
     public get ExporterAddress(): string {
