@@ -118,6 +118,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CancelRequestRejectReasonTypeMap());
 	
+            modelBuilder.Configurations.Add(new CarEngineVolumeMap());
+	
             modelBuilder.Configurations.Add(new CargoIdentifireTypeMap());
 	
             modelBuilder.Configurations.Add(new CargoIdentityQualifierMap());
@@ -1560,6 +1562,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CancelRequestRejectReasonType> CancelRequestRejectReasonTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CarEngineVolume> CarEngineVolumes 
 	 {
 	      get; set;
 	 

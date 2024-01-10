@@ -1196,6 +1196,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\DecCargoSplitConExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\PendingByKeywordsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ClientItemExtendedController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CarEngineVolumeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginInvoiceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginStatusCodeEnumViewsController.Generated.cs" />
@@ -3351,6 +3352,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancellationReasonRequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancellationRequestStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancelRequestRejectReasonTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CarEngineVolumeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSealIdentifierUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSealUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSplitRequestStatusUpdateClass.cs" />

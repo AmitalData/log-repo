@@ -1241,6 +1241,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable ConditionalExemptionTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ConditionalExemptionType", 0, false);
             InsertClosedTableRecord(ConditionalExemptionTypeTable, ConditionalExemptionTypeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(ConditionalExemptionTypeTable);
+            
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData CarEngineVolumeTable = closedSystemTables.Where(d => d.id == "1620").FirstOrDefault();
+            ObjectTable CarEngineVolumeObjectTable = objectTableRepository.GetObjectTableByName("Customs.CarEngineVolume", 0, false);
+            InsertClosedTableRecord(CarEngineVolumeTable, CarEngineVolumeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(CarEngineVolumeTable);
 
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();

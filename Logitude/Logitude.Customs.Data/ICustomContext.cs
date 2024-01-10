@@ -42,6 +42,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CancellationReasonRequestType> CancellationReasonRequestTypes { get; }
 		 IDbSet<CancellationRequestStatus> CancellationRequestStatuses { get; }
 		 IDbSet<CancelRequestRejectReasonType> CancelRequestRejectReasonTypes { get; }
+		 IDbSet<CarEngineVolume> CarEngineVolumes { get; }
 		 IDbSet<CargoIdentifireType> CargoIdentifireTypes { get; }
 		 IDbSet<CargoIdentityQualifier> CargoIdentityQualifiers { get; }
 		 IDbSet<CargoSeal> CargoSeals { get; }

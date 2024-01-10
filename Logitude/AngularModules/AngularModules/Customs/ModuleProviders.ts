@@ -467,7 +467,7 @@ import { CustomsItemCategoryListService } from './Services/StandardLists/Customs
 import { CustomsItemHierarchicLocationListService } from './Services/StandardLists/CustomsItemHierarchicLocationListService';
 import { CustomsEntityStatusListService } from './Services/StandardLists/CustomsEntityStatusListService';
 import { ConditionalExemptionTypeListService } from './Services/StandardLists/ConditionalExemptionTypeListService';
-
+import { CarEngineVolumeListService } from './Services/StandardLists/CarEngineVolumeListService';
 
 
 export class ModuleProviders {
@@ -736,6 +736,7 @@ export class ModuleProviders {
             case "CustomsItemHierarchicLocationListService": { myResult = new CustomsItemHierarchicLocationListService(); break; }
             case "CustomsEntityStatusListService": { myResult = new CustomsEntityStatusListService(); break; }
             case "ConditionalExemptionTypeListService": { myResult = new ConditionalExemptionTypeListService(); break; }
+            case "CarEngineVolumeListService": { myResult = new CarEngineVolumeListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }

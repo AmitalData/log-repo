@@ -238,6 +238,7 @@
     <None Include="DBTables\CancellationReasonRequestType.dxml" />
     <None Include="DBTables\CancellationRequestStatus.dxml" />
     <None Include="DBTables\CancelRequestRejectReasonType.dxml" />
+    <None Include="DBTables\CarEngineVolume.dxml" />
     <None Include="DBTables\CargoIdentifireType.dxml" />
     <None Include="DBTables\CargoIdentityQualifier.dxml" />
     <None Include="DBTables\CargoSplitRequestStatus.dxml" />
@@ -640,6 +641,7 @@
     <None Include="EntityFiles\CustomsItemHierarchicLocation.lxml" />
     <None Include="EntityFiles\CustomsEntityStatus.lxml" />
     <None Include="EntityFiles\ConditionalExemptionType.lxml" />
+    <None Include="EntityFiles\CarEngineVolume.lxml" />
     <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />
     <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />
