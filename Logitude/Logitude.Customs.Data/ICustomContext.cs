@@ -405,6 +405,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<Tapag> Tapags { get; }
 		 IDbSet<TapagConnectionTable> TapagConnectionTables { get; }
 		 IDbSet<TapagType> TapagTypes { get; }
+		 IDbSet<TarifRelatedToQuota> TarifRelatedToQuotas { get; }
 		 IDbSet<TermsOfSaleType> TermsOfSaleTypes { get; }
 		 IDbSet<TPGFileType> TPGFileTypes { get; }
 		 IDbSet<TradeAgreement> TradeAgreements { get; }

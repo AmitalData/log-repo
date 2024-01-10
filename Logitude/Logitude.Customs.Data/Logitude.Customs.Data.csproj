@@ -276,6 +276,7 @@
     <Compile Include="EntityKeys\SupplierInvoicePaymentKeys.cs" />
     <Compile Include="EntityKeys\SupplierInvoiceUCRKeys.cs" />
     <Compile Include="EntityKeys\SupplierPartyTypeKeys.cs" />
+    <Compile Include="EntityKeys\TarifRelatedToQuotaKeys.cs" />
     <Compile Include="EntityKeys\TPGFileTypeKeys.cs" />
     <Compile Include="EntityKeys\TradeAgreementProtocolKeys.cs" />
     <Compile Include="EntityKeys\TransactionNatureTypeKeys.cs" />
@@ -572,6 +573,7 @@
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoicePaymentListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierInvoiceUCRListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SupplierPartyTypeListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\TarifRelatedToQuotaListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TPGFileTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TradeAgreementProtocolListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\TransactionNatureTypeListQueryService.Generated.cs" />
@@ -641,6 +643,7 @@
     <Compile Include="EntityListQueryServices\SupplierInvoicePaymentListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierInvoiceUCRListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SupplierPartyTypeListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\TarifRelatedToQuotaListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TPGFileTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TradeAgreementProtocolListQueryService.cs" />
     <Compile Include="EntityListQueryServices\TransactionNatureTypeListQueryService.cs" />
@@ -681,6 +684,7 @@
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OriginCriterionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestReasonCodeEnumList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\TarifRelatedToQuotaList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OcrDocumentList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OcrStatusList.Generated.cs" />
@@ -1013,6 +1017,7 @@
     <Compile Include="EntityMapping\SupplierInvoicePaymentMap.cs" />
     <Compile Include="EntityMapping\SupplierInvoiceUCRMap.cs" />
     <Compile Include="EntityMapping\SupplierPartyTypeMap.cs" />
+    <Compile Include="EntityMapping\TarifRelatedToQuotaMap.cs" />
     <Compile Include="EntityMapping\TPGFileTypeMap.cs" />
     <Compile Include="EntityMapping\TradeAgreementProtocolMap.cs" />
     <Compile Include="EntityMapping\TransactionNatureTypeMap.cs" />
@@ -1198,6 +1203,7 @@
     <Compile Include="EntityPOCOs\SupplierInvoicePayment.cs" />
     <Compile Include="EntityPOCOs\SupplierInvoiceUCR.cs" />
     <Compile Include="EntityPOCOs\SupplierPartyType.cs" />
+    <Compile Include="EntityPOCOs\TarifRelatedToQuota.cs" />
     <Compile Include="EntityPOCOs\TPGFileType.cs" />
     <Compile Include="EntityPOCOs\TradeAgreementProtocol.cs" />
     <Compile Include="EntityPOCOs\TransactionNatureType.cs" />
@@ -1495,6 +1501,7 @@
     <Compile Include="Repsitories\Generated\SupplierInvoicePaymentRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierInvoiceUCRRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SupplierPartyTypeRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\TarifRelatedToQuotaRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TPGFileTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TradeAgreementProtocolRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\TransactionNatureTypeRepository.Generated.cs" />
@@ -1564,6 +1571,7 @@
     <Compile Include="Repsitories\SupplierInvoicePaymentRepository.cs" />
     <Compile Include="Repsitories\SupplierInvoiceUCRRepository.cs" />
     <Compile Include="Repsitories\SupplierPartyTypeRepository.cs" />
+    <Compile Include="Repsitories\TarifRelatedToQuotaRepository.cs" />
     <Compile Include="Repsitories\TPGFileTypeRepository.cs" />
     <Compile Include="Repsitories\TradeAgreementProtocolRepository.cs" />
     <Compile Include="Repsitories\TransactionNatureTypeRepository.cs" />

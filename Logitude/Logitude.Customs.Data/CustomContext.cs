@@ -844,6 +844,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new TapagTypeMap());
 	
+            modelBuilder.Configurations.Add(new TarifRelatedToQuotaMap());
+	
             modelBuilder.Configurations.Add(new TermsOfSaleTypeMap());
 	
             modelBuilder.Configurations.Add(new TPGFileTypeMap());
@@ -3744,6 +3746,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<TapagType> TapagTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TarifRelatedToQuota> TarifRelatedToQuotas 
 	 {
 	      get; set;
 	 

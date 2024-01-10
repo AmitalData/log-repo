@@ -291,6 +291,7 @@
     <None Include="DBTables\CollateralType.dxml" />
     <None Include="DBTables\CommercialSale.dxml" />
     <None Include="DBTables\CommunicationType.dxml" />
+    <None Include="DBTables\ComputationMethod.dxml" />
     <None Include="DBTables\ConditionalExemptionType.dxml" />
     <None Include="DBTables\ConfirmationType.dxml" />
     <None Include="DBTables\Consignment.dxml" />
@@ -586,6 +587,7 @@
     <None Include="DBTables\Tapag.dxml" />
     <None Include="DBTables\TapagConnectionTable.dxml" />
     <None Include="DBTables\TapagType.dxml" />
+    <None Include="DBTables\TarifRelatedToQuota.dxml" />
     <None Include="DBTables\TermsOfSaleType.dxml" />
     <None Include="DBTables\TPGFileType.dxml" />
     <None Include="DBTables\TradeAgreement.dxml" />
@@ -645,6 +647,7 @@
     <None Include="EntityFiles\CarEngineVolume.lxml" />
     <None Include="EntityFiles\CarWeight.lxml" />
     <None Include="EntityFiles\ComputationMethod.lxml" />
+    <None Include="EntityFiles\TarifRelatedToQuota.lxml" />
     <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />
     <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />
