@@ -265,6 +265,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ImporterDesposition> ImporterDespositions { get; }
 		 IDbSet<ImporterPeriodicDeclarStatus> ImporterPeriodicDeclarStatuses { get; }
 		 IDbSet<ImporterTypeForClaim> ImporterTypeForClaims { get; }
+		 IDbSet<InceptionCode> InceptionCodes { get; }
 		 IDbSet<IncotemrsFileValidation> IncotemrsFileValidations { get; }
 		 IDbSet<InterfaceManagement> InterfaceManagements { get; }
 		 IDbSet<InterfaceSendOption> InterfaceSendOptions { get; }
@@ -353,6 +354,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ReferenceStatus> ReferenceStatuses { get; }
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
+		 IDbSet<RegularityPublication> RegularityPublications { get; }
 		 IDbSet<ReleaseMessageType> ReleaseMessageTypes { get; }
 		 IDbSet<RenewalMethod> RenewalMethods { get; }
 		 IDbSet<RequestReasonCodeEnum> RequestReasonCodeEnums { get; }
@@ -416,6 +418,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<TradeAgreement> TradeAgreements { get; }
 		 IDbSet<TradeAgreementProtocol> TradeAgreementProtocols { get; }
 		 IDbSet<TradeLevyExamptType> TradeLevyExamptTypes { get; }
+		 IDbSet<TradeLevyStatus> TradeLevystatuses { get; }
 		 IDbSet<TransactionNatureType> TransactionNatureTypes { get; }
 		 IDbSet<TransferCargoMethodType> TransferCargoMethodTypes { get; }
 		 IDbSet<TransportMeansType> TransportMeansTypes { get; }

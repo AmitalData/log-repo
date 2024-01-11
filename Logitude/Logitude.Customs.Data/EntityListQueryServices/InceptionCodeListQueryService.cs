@@ -17,12 +17,12 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class LevyTrustListQueryService
+    public partial class InceptionCodeListQueryService
     {
-	    private IQueryable<LevyTrustList> GetIqueryableList(IQueryable<LevyTrust> iQueryable)
+	    private IQueryable<InceptionCodeList> GetIqueryableList(IQueryable<InceptionCode> iQueryable)
         {
-		IQueryable<LevyTrustList> query = (from a in iQueryable
-                                            select new LevyTrustList()
+		IQueryable<InceptionCodeList> query = (from a in iQueryable
+                                            select new InceptionCodeList()
 											{
                      
 					                          Code = a.Code,
@@ -39,7 +39,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<LevyTrust> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<LevyTrust> iQueryable)
+		private IQueryable<InceptionCode> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<InceptionCode> iQueryable)
         {
             return iQueryable;
         }

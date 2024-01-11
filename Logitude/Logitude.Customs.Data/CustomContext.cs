@@ -564,6 +564,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ImporterTypeForClaimMap());
 	
+            modelBuilder.Configurations.Add(new InceptionCodeMap());
+	
             modelBuilder.Configurations.Add(new IncotemrsFileValidationMap());
 	
             modelBuilder.Configurations.Add(new InterfaceManagementMap());
@@ -740,6 +742,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
 	
+            modelBuilder.Configurations.Add(new RegularityPublicationMap());
+	
             modelBuilder.Configurations.Add(new ReleaseMessageTypeMap());
 	
             modelBuilder.Configurations.Add(new RenewalMethodMap());
@@ -865,6 +869,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new TradeAgreementProtocolMap());
 	
             modelBuilder.Configurations.Add(new TradeLevyExamptTypeMap());
+	
+            modelBuilder.Configurations.Add(new TradeLevyStatusMap());
 	
             modelBuilder.Configurations.Add(new TransactionNatureTypeMap());
 	
@@ -2921,6 +2927,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<InceptionCode> InceptionCodes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<IncotemrsFileValidation> IncotemrsFileValidations 
 	 {
 	      get; set;
@@ -3449,6 +3461,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<RegularityPublication> RegularityPublications 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ReleaseMessageType> ReleaseMessageTypes 
 	 {
 	      get; set;
@@ -3822,6 +3840,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<TradeLevyExamptType> TradeLevyExamptTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TradeLevyStatus> TradeLevystatuses 
 	 {
 	      get; set;
 	 
