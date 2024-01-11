@@ -1301,7 +1301,21 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable TradeLevyStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.TradeLevyStatus", 0, false);
             InsertClosedTableRecord(TradeLevyStatusTable, TradeLevyStatusObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(TradeLevyStatusTable);
+            
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData RegularitySourceTable = closedSystemTables.Where(d => d.id == "1123").FirstOrDefault();
+            ObjectTable RegularitySourceObjectTable = objectTableRepository.GetObjectTableByName("Customs.RegularitySource", 0, false);
+            InsertClosedTableRecord(RegularitySourceTable, RegularitySourceObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(RegularitySourceTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData ChangeTypeTable = closedSystemTables.Where(d => d.id == "1233").FirstOrDefault();
+            ObjectTable ChangeTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.ChangeType", 0, false);
+            InsertClosedTableRecord(ChangeTypeTable, ChangeTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(ChangeTypeTable);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData EntryExitTypeTable = closedSystemTables.Where(d => d.id == "1270").FirstOrDefault();
+            ObjectTable EntryExitTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.EntryExitType", 0, false);
+            InsertClosedTableRecord(EntryExitTypeTable, EntryExitTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(EntryExitTypeTable);
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);

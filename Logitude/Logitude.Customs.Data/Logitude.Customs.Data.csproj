@@ -131,6 +131,7 @@
     <Compile Include="EntityKeys\CertificateOfOriginKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginStatusCodeEnumKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginTypeCodeEnumKeys.cs" />
+    <Compile Include="EntityKeys\ChangeTypeKeys.cs" />
     <Compile Include="EntityKeys\ClaimReasonTypeKeys.cs" />
     <Compile Include="EntityKeys\ClaimsRelatedEntitiesRefundKeys.cs" />
     <Compile Include="EntityKeys\ClaimsRelatedEntitiesSeizureKeys.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="EntityKeys\DeliveryTypeKeys.cs" />
     <Compile Include="EntityKeys\DocumentRejectTypeKeys.cs" />
     <Compile Include="EntityKeys\DocumentTypeCustomsDataKeys.cs" />
+    <Compile Include="EntityKeys\EntryExitTypeKeys.cs" />
     <Compile Include="EntityKeys\ExceptionReasonKeys.cs" />
     <Compile Include="EntityKeys\ExportDeclarationClosingDataKeys.cs" />
     <Compile Include="EntityKeys\ExportDeliveryDocumentMessageKeys.cs" />
@@ -258,6 +260,7 @@
     <Compile Include="EntityKeys\ReferenceStatusKeys.cs" />
     <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
     <Compile Include="EntityKeys\RegularityPublicationKeys.cs" />
+    <Compile Include="EntityKeys\RegularitySourceKeys.cs" />
     <Compile Include="EntityKeys\ReleaseMessageTypeKeys.cs" />
     <Compile Include="EntityKeys\RenewalMethodKeys.cs" />
     <Compile Include="EntityKeys\RequestToAdvanceAQueueKeys.cs" />
@@ -324,6 +327,7 @@
     <Compile Include="EntityListQueryServices\CertificateOfOriginListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginStatusCodeEnumListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginTypeCodeEnumListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ChangeTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimReasonTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesRefundListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesSeizureListQueryService.cs" />
@@ -397,6 +401,7 @@
     <Compile Include="EntityListQueryServices\DeliveryTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentRejectTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentTypeCustomsDataListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\EntryExitTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExceptionReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExportDeclarationClosingDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExportDeliveryDocumentMessageListQueryService.cs" />
@@ -438,6 +443,7 @@
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginStatusCodeEnumListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginTypeCodeEnumListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ChangeTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimReasonTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesRefundListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesSeizureListQueryService.Generated.cs" />
@@ -511,6 +517,7 @@
     <Compile Include="EntityListQueryServices\Generated\DeliveryTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentRejectTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentTypeCustomsDataListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\EntryExitTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExceptionReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExportDeclarationClosingDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExportDeliveryDocumentMessageListQueryService.Generated.cs" />
@@ -564,6 +571,7 @@
     <Compile Include="EntityListQueryServices\Generated\ReferenceStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RegularityPublicationListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\RegularitySourceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReleaseMessageTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RenewalMethodListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestToAdvanceAQueueListQueryService.Generated.cs" />
@@ -642,6 +650,7 @@
     <Compile Include="EntityListQueryServices\ReferenceStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RegularityPublicationListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\RegularitySourceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReleaseMessageTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RenewalMethodListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestToAdvanceAQueueListQueryService.cs" />
@@ -686,6 +695,7 @@
     <Compile Include="EntityLists\Generated\CertificateOfOriginList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginStatusCodeEnumList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginTypeCodeEnumList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ChangeTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientIndicationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ComputationMethodList.Generated.cs" />
@@ -702,6 +712,7 @@
     <Compile Include="EntityLists\Generated\DeclarationCounterList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\EntryExitTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InceptionCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InternationalSiteTenantList.Generated.cs" />
@@ -709,6 +720,7 @@
     <Compile Include="EntityLists\Generated\QuotaComputationBasisList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuotaIncrementList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RegularityPublicationList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\RegularitySourceList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RenewalMethodList.Generated.cs" />
     <Compile Include="EntityLists\Generated\LevyTrustList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestToAdvanceAQueueList.Generated.cs" />
@@ -904,6 +916,7 @@
     <Compile Include="EntityMapping\CertificateOfOriginMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginStatusCodeEnumMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginTypeCodeEnumMap.cs" />
+    <Compile Include="EntityMapping\ChangeTypeMap.cs" />
     <Compile Include="EntityMapping\ClaimReasonTypeMap.cs" />
     <Compile Include="EntityMapping\ClaimsRelatedEntitiesRefundMap.cs" />
     <Compile Include="EntityMapping\ClaimsRelatedEntitiesSeizureMap.cs" />
@@ -977,6 +990,7 @@
     <Compile Include="EntityMapping\DeliveryTypeMap.cs" />
     <Compile Include="EntityMapping\DocumentRejectTypeMap.cs" />
     <Compile Include="EntityMapping\DocumentTypeCustomsDataMap.cs" />
+    <Compile Include="EntityMapping\EntryExitTypeMap.cs" />
     <Compile Include="EntityMapping\ExceptionReasonMap.cs" />
     <Compile Include="EntityMapping\ExportDeclarationClosingDataMap.cs" />
     <Compile Include="EntityMapping\ExportDeliveryDocumentMessageMap.cs" />
@@ -1031,6 +1045,7 @@
     <Compile Include="EntityMapping\ReferenceStatusMap.cs" />
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
     <Compile Include="EntityMapping\RegularityPublicationMap.cs" />
+    <Compile Include="EntityMapping\RegularitySourceMap.cs" />
     <Compile Include="EntityMapping\ReleaseMessageTypeMap.cs" />
     <Compile Include="EntityMapping\RenewalMethodMap.cs" />
     <Compile Include="EntityMapping\RequestToAdvanceAQueueMap.cs" />
@@ -1097,6 +1112,7 @@
     <Compile Include="EntityPOCOs\CertificateOfOriginItem.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginStatusCodeEnum.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginTypeCodeEnum.cs" />
+    <Compile Include="EntityPOCOs\ChangeType.cs" />
     <Compile Include="EntityPOCOs\ClaimReasonType.cs" />
     <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesRefund.cs" />
     <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesSeizure.cs" />
@@ -1170,6 +1186,7 @@
     <Compile Include="EntityPOCOs\DeliveryType.cs" />
     <Compile Include="EntityPOCOs\DocumentRejectType.cs" />
     <Compile Include="EntityPOCOs\DocumentTypeCustomsData.cs" />
+    <Compile Include="EntityPOCOs\EntryExitType.cs" />
     <Compile Include="EntityPOCOs\ExceptionReason.cs" />
     <Compile Include="EntityPOCOs\ExportDeclarationClosingData.cs" />
     <Compile Include="EntityPOCOs\ExportDeliveryDocumentMessage.cs" />
@@ -1225,6 +1242,7 @@
     <Compile Include="EntityPOCOs\ReferenceStatus.cs" />
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
     <Compile Include="EntityPOCOs\RegularityPublication.cs" />
+    <Compile Include="EntityPOCOs\RegularitySource.cs" />
     <Compile Include="EntityPOCOs\ReleaseMessageType.cs" />
     <Compile Include="EntityPOCOs\RenewalMethod.cs" />
     <Compile Include="EntityPOCOs\RequestToAdvanceAQueue.cs" />
@@ -1291,6 +1309,7 @@
     <Compile Include="Repsitories\CertificateOfOriginRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginStatusCodeEnumRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginTypeCodeEnumRepository.cs" />
+    <Compile Include="Repsitories\ChangeTypeRepository.cs" />
     <Compile Include="Repsitories\ClaimReasonTypeRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesRefundRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesSeizureRepository.cs" />
@@ -1364,6 +1383,7 @@
     <Compile Include="Repsitories\DeliveryTypeRepository.cs" />
     <Compile Include="Repsitories\DocumentRejectTypeRepository.cs" />
     <Compile Include="Repsitories\DocumentTypeCustomsDataRepository.cs" />
+    <Compile Include="Repsitories\EntryExitTypeRepository.cs" />
     <Compile Include="Repsitories\ExceptionReasonRepository.cs" />
     <Compile Include="Repsitories\ExportDeclarationClosingDataRepository.cs" />
     <Compile Include="Repsitories\ExportDeliveryDocumentMessageRepository.cs" />
@@ -1405,6 +1425,7 @@
     <Compile Include="Repsitories\Generated\CertificateOfOriginRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginStatusCodeEnumRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginTypeCodeEnumRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ChangeTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimReasonTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesRefundRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesSeizureRepository.Generated.cs" />
@@ -1478,6 +1499,7 @@
     <Compile Include="Repsitories\Generated\DeliveryTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentRejectTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentTypeCustomsDataRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\EntryExitTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExceptionReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExportDeclarationClosingDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExportDeliveryDocumentMessageRepository.Generated.cs" />
@@ -1531,6 +1553,7 @@
     <Compile Include="Repsitories\Generated\ReferenceStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RegularityPublicationRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\RegularitySourceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReleaseMessageTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RenewalMethodRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestToAdvanceAQueueRepository.Generated.cs" />
@@ -1609,6 +1632,7 @@
     <Compile Include="Repsitories\ReferenceStatusRepository.cs" />
     <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
     <Compile Include="Repsitories\RegularityPublicationRepository.cs" />
+    <Compile Include="Repsitories\RegularitySourceRepository.cs" />
     <Compile Include="Repsitories\ReleaseMessageTypeRepository.cs" />
     <Compile Include="Repsitories\RenewalMethodRepository.cs" />
     <Compile Include="Repsitories\RequestToAdvanceAQueueRepository.cs" />

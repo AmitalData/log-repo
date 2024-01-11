@@ -58,6 +58,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CertificateOfOriginStatusCodeEnum> CertificateOfOriginStatusCodeEnums { get; }
 		 IDbSet<CertificateOfOriginTypeCodeEnum> CertificateOfOriginTypeCodeEnums { get; }
 		 IDbSet<CertificatesStatus> CertificatesStatuses { get; }
+		 IDbSet<ChangeType> ChangeTypes { get; }
 		 IDbSet<CheckEntityType> CheckEntityTypes { get; }
 		 IDbSet<CheckEssenceLookup> CheckEssenceLookups { get; }
 		 IDbSet<CheckQueueType> CheckQueueTypes { get; }
@@ -236,6 +237,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<DocumentTypeCustomsData> DocumentTypeCustomsData { get; }
 		 IDbSet<EntitlementType> EntitlementTypes { get; }
 		 IDbSet<EntityTypeLookup> EntityTypeLookups { get; }
+		 IDbSet<EntryExitType> EntryExitTypes { get; }
 		 IDbSet<ExceptionReason> ExceptionReasons { get; }
 		 IDbSet<ExportDeclarationClosingData> ExportDeclarationClosingDatas { get; }
 		 IDbSet<ExportDeliveryDocumentMessage> ExportDeliveryDocumentMessages { get; }
@@ -355,6 +357,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<RegularityPublication> RegularityPublications { get; }
+		 IDbSet<RegularitySource> RegularitySources { get; }
 		 IDbSet<ReleaseMessageType> ReleaseMessageTypes { get; }
 		 IDbSet<RenewalMethod> RenewalMethods { get; }
 		 IDbSet<RequestReasonCodeEnum> RequestReasonCodeEnums { get; }

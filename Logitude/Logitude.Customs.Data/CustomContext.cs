@@ -150,6 +150,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CertificatesStatusMap());
 	
+            modelBuilder.Configurations.Add(new ChangeTypeMap());
+	
             modelBuilder.Configurations.Add(new CheckEntityTypeMap());
 	
             modelBuilder.Configurations.Add(new CheckEssenceLookupMap());
@@ -506,6 +508,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new EntityTypeLookupMap());
 	
+            modelBuilder.Configurations.Add(new EntryExitTypeMap());
+	
             modelBuilder.Configurations.Add(new ExceptionReasonMap());
 	
             modelBuilder.Configurations.Add(new ExportDeclarationClosingDataMap());
@@ -743,6 +747,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
 	
             modelBuilder.Configurations.Add(new RegularityPublicationMap());
+	
+            modelBuilder.Configurations.Add(new RegularitySourceMap());
 	
             modelBuilder.Configurations.Add(new ReleaseMessageTypeMap());
 	
@@ -1680,6 +1686,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CertificatesStatus> CertificatesStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ChangeType> ChangeTypes 
 	 {
 	      get; set;
 	 
@@ -2753,6 +2765,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<EntryExitType> EntryExitTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ExceptionReason> ExceptionReasons 
 	 {
 	      get; set;
@@ -3462,6 +3480,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<RegularityPublication> RegularityPublications 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RegularitySource> RegularitySources 
 	 {
 	      get; set;
 	 

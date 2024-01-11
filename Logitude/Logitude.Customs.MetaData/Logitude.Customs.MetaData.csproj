@@ -252,6 +252,7 @@
     <None Include="DBTables\CertificateOfOriginStatusCodeEnum.dxml" />
     <None Include="DBTables\CertificateOfOriginTypeCodeEnum.dxml" />
     <None Include="DBTables\CertificatesStatus.dxml" />
+    <None Include="DBTables\ChangeType.dxml" />
     <None Include="DBTables\CheckEntityType.dxml" />
     <None Include="DBTables\CheckEssenceLookup.dxml" />
     <None Include="DBTables\CheckQueueType.dxml" />
@@ -425,6 +426,7 @@
     <None Include="DBTables\DocumentTypeCustomsData.dxml" />
     <None Include="DBTables\EntitlementType.dxml" />
     <None Include="DBTables\EntityTypeLookup.dxml" />
+    <None Include="DBTables\EntryExitType.dxml" />
     <None Include="DBTables\ExceptionReason.dxml" />
     <None Include="DBTables\ExportDeclarationClosingData.dxml" />
     <None Include="DBTables\ExportDeliveryDocumentMessage.dxml" />
@@ -541,6 +543,7 @@
     <None Include="DBTables\RefundCustomerActivityType.dxml" />
     <None Include="DBTables\RegisteredWarehouseSiteType.dxml" />
     <None Include="DBTables\RegularityPublication.dxml" />
+    <None Include="DBTables\RegularitySource.dxml" />
     <None Include="DBTables\ReleaseMessageType.dxml" />
     <None Include="DBTables\RenewalMethod.dxml" />
     <None Include="DBTables\RequestReasonCodeEnum.dxml" />
@@ -641,6 +644,9 @@
     <None Include="EntityFiles\CustomDocumentTypeTenant.lxml" />
     <None Include="EntityFiles\CustomsCountryTenant.lxml" />
     <None Include="EntityFiles\CustomsHouseTypeTenant.lxml" />
+    <None Include="EntityFiles\RegularitySource.lxml" />
+    <None Include="EntityFiles\ChangeType.lxml" />
+    <None Include="EntityFiles\EntryExitType.lxml" />
     <None Include="EntityFiles\TradeLevyStatus.lxml" />
     <None Include="EntityFiles\RegularityPublication.lxml" />
     <None Include="EntityFiles\LevyTrust.lxml" />

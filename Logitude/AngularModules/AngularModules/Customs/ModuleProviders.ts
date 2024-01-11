@@ -480,6 +480,9 @@ import { PerYearFrequencyListService } from './Services/StandardLists/PerYearFre
 import { InceptionCodeListService } from './Services/StandardLists/InceptionCodeListService';
 import { TradeLevyStatusListService } from './Services/StandardLists/TradeLevyStatusListService';
 import { RegularityPublicationListService } from './Services/StandardLists/RegularityPublicationListService';
+import { ChangeTypeListService } from './Services/StandardLists/ChangeTypeListService';
+import { RegularitySourceListService } from './Services/StandardLists/RegularitySourceListService';
+import { EntryExitTypeListService } from './Services/StandardLists/EntryExitTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -759,6 +762,9 @@ export class ModuleProviders {
             case "LevyTrustListService": { myResult = new LevyTrustListService(); break; }
             case "TradeLevyStatusListService": { myResult = new TradeLevyStatusListService(); break; }
             case "RegularityPublicationListService": { myResult = new RegularityPublicationListService(); break; }
+            case "ChangeTypeListService": { myResult = new ChangeTypeListService(); break; }
+            case "RegularitySourceListService": { myResult = new RegularitySourceListService(); break; }
+            case "EntryExitTypeListService": { myResult = new EntryExitTypeListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
