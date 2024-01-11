@@ -742,6 +742,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
 	
+            modelBuilder.Configurations.Add(new RegularityPublicationMap());
+	
             modelBuilder.Configurations.Add(new ReleaseMessageTypeMap());
 	
             modelBuilder.Configurations.Add(new RenewalMethodMap());
@@ -3452,6 +3454,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RegularityPublication> RegularityPublications 
 	 {
 	      get; set;
 	 

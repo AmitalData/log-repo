@@ -1291,6 +1291,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable InceptionCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.InceptionCode", 0, false);
             InsertClosedTableRecord(InceptionCodeTable, InceptionCodeObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(InceptionCodeTable);
+            
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData RegularityPublicationTable = closedSystemTables.Where(d => d.id == "1135").FirstOrDefault();
+            ObjectTable RegularityPublicationObjectTable = objectTableRepository.GetObjectTableByName("Customs.RegularityPublication", 0, false);
+            InsertClosedTableRecord(RegularityPublicationTable, RegularityPublicationObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(RegularityPublicationTable);
 
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
