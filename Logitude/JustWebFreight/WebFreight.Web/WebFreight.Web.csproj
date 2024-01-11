@@ -1231,6 +1231,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\QuotaComputationBasisViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\QuotaIncrementViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RegularityPublicationViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RegularitySourceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RenewalMethodViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LevyTrustViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RequestToAdvanceAQueueViewsController.Generated.cs" />

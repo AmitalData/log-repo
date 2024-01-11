@@ -41,7 +41,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 		private IQueryable<TarifRelatedToQuota> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<TarifRelatedToQuota> iQueryable)
         {
-			throw new NotImplementedException();
+			return iQueryable;
 		}
 			}
 

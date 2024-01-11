@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ComputationMethodUpdateClass
    {  		
-		public const string HashString = "582a5ab592b081a6b4fedb68ac59118b";
+		public const string HashString = "c997e2f11a2e1a34819b43c48de028a9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -221,7 +221,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "Customs.ComputationMethod",
 					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  60,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  true,
@@ -229,7 +229,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  40,
+					  						SystemMaxLength =  60,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
@@ -344,7 +344,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ObjectTableName =  "Customs.ComputationMethod",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  40,
+					  						MaxLength =  80,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -352,7 +352,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  40,
+					  						SystemMaxLength =  80,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",

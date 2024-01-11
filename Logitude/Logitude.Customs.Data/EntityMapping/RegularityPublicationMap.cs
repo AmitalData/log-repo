@@ -25,11 +25,11 @@ namespace Logitude.Customs.Data.EntityMapping
 	 
             this.Property(t => t.Code).HasColumnName("Code").IsRequired().HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(40).IsUnicode(true);
+            this.Property(t => t.LocalName).HasColumnName("LocalName").HasMaxLength(60).IsUnicode(true);
 
             this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(1000).IsUnicode(true);
 
-            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(40).IsUnicode(false);
+            this.Property(t => t.EnglishName).HasColumnName("EnglishName").HasMaxLength(80).IsUnicode(false);
 
             this.Property(t => t.Inactive).HasColumnName("Inactive");
         }
