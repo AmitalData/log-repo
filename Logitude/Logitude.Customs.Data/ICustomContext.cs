@@ -265,6 +265,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ImporterDesposition> ImporterDespositions { get; }
 		 IDbSet<ImporterPeriodicDeclarStatus> ImporterPeriodicDeclarStatuses { get; }
 		 IDbSet<ImporterTypeForClaim> ImporterTypeForClaims { get; }
+		 IDbSet<InceptionCode> InceptionCodes { get; }
 		 IDbSet<IncotemrsFileValidation> IncotemrsFileValidations { get; }
 		 IDbSet<InterfaceManagement> InterfaceManagements { get; }
 		 IDbSet<InterfaceSendOption> InterfaceSendOptions { get; }
