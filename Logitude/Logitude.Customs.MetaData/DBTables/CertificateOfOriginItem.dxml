@@ -35,8 +35,7 @@
   </Column>
   <Column
     Name="ItemSerial"
-    Type="nvarchar"
-    Size="5">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
@@ -64,8 +63,7 @@
   </Column>
   <Column
     Name="PackageQuantity"
-    Type="nvarchar"
-    Size="5">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
@@ -85,8 +83,7 @@
   </Column>
   <Column
     Name="Weight"
-    Type="nvarchar"
-    Size="35">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>

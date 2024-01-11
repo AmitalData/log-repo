@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginUpdateClass
    {  		
-		public const string HashString = "bd144e575f11f7fac47a7e83ff0bca25";
+		public const string HashString = "962ae02fdeffc0279ac83e20dd25668d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "תעודות מקור",
 			      				    DefaultText =  "Certificate Of Origin",
-			      				    Code =  "9e99",
+			      				    Code =  "7282",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -323,10 +323,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CooTypeCode",
 					  						DefaultText =  "Coo Type Code",
-					  						FullLocalDefaultText =  "קוד סוג תעודת מקור",
+					  						FullLocalDefaultText =  "סוג תעודת מקור",
 					  						ListFieldLable =  "CooTypeCodeListLable",
 					  						ListLableDefaultText =  "Coo Type Code",
-					  						ListLocalDefaultText =  "קוד סוג תעודת מקור",
+					  						ListLocalDefaultText =  "סוג תעודת מקור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -387,10 +387,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RequestReasonCode",
 					  						DefaultText =  "Request Reason Code",
-					  						FullLocalDefaultText =  "קוד סיבת בקשה לתעודת מקור",
+					  						FullLocalDefaultText =  "סיבת בקשה",
 					  						ListFieldLable =  "RequestReasonCodeListLable",
 					  						ListLableDefaultText =  "Request Reason Code",
-					  						ListLocalDefaultText =  "קוד סיבת בקשה לתעודת מקור",
+					  						ListLocalDefaultText =  "סיבת בקשה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2105,10 +2105,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ZipCodeOfManufacture",
 					  						DefaultText =  "Zip Code Of Manufacture",
-					  						FullLocalDefaultText =  "מיקוד של מקום הייצור",
+					  						FullLocalDefaultText =  "מיקוד מקום הייצור",
 					  						ListFieldLable =  "ZipCodeOfManufactureListLable",
 					  						ListLableDefaultText =  "Zip Code Of Manufacture",
-					  						ListLocalDefaultText =  "מיקוד של מקום הייצור",
+					  						ListLocalDefaultText =  "מיקוד מקום הייצור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2613,10 +2613,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DateOfDeclaration",
 					  						DefaultText =  "Date Of Declaration",
-					  						FullLocalDefaultText =  "תאריך הצהרת יצואן",
+					  						FullLocalDefaultText =  "תאריך הצהרת היצואן",
 					  						ListFieldLable =  "DateOfDeclarationListLable",
 					  						ListLableDefaultText =  "Date Of Declaration",
-					  						ListLocalDefaultText =  "תאריך הצהרת יצואן",
+					  						ListLocalDefaultText =  "תאריך הצהרת היצואן",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,

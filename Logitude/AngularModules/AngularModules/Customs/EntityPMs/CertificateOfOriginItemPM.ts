@@ -47,9 +47,9 @@ export class CertificateOfOriginItemPM {
     public set CertificateOfOriginId(newValue: string) { if (this.certificateOfOriginId != newValue) { this.certificateOfOriginId = newValue; this.MarkAsDirty("CertificateOfOriginId"); } }
        
 	 
-    private itemSerial: string;
+    private itemSerial: number;
     public get ItemSerial() { return this.itemSerial; }
-    public set ItemSerial(newValue: string) { if (this.itemSerial != newValue) { this.itemSerial = newValue; this.MarkAsDirty("ItemSerial"); } }
+    public set ItemSerial(newValue: number) { if (this.itemSerial != newValue) { this.itemSerial = newValue; this.MarkAsDirty("ItemSerial"); } }
        
 	 
     private itemId: string;
@@ -67,9 +67,9 @@ export class CertificateOfOriginItemPM {
     public set MarksAndNumbers(newValue: string) { if (this.marksAndNumbers != newValue) { this.marksAndNumbers = newValue; this.MarkAsDirty("MarksAndNumbers"); } }
        
 	 
-    private packageQuantity: string;
+    private packageQuantity: number;
     public get PackageQuantity() { return this.packageQuantity; }
-    public set PackageQuantity(newValue: string) { if (this.packageQuantity != newValue) { this.packageQuantity = newValue; this.MarkAsDirty("PackageQuantity"); } }
+    public set PackageQuantity(newValue: number) { if (this.packageQuantity != newValue) { this.packageQuantity = newValue; this.MarkAsDirty("PackageQuantity"); } }
        
 	 
     private packageType: string;
@@ -82,9 +82,9 @@ export class CertificateOfOriginItemPM {
     public set ItemDescription(newValue: string) { if (this.itemDescription != newValue) { this.itemDescription = newValue; this.MarkAsDirty("ItemDescription"); } }
        
 	 
-    private weight: string;
+    private weight: number;
     public get Weight() { return this.weight; }
-    public set Weight(newValue: string) { if (this.weight != newValue) { this.weight = newValue; this.MarkAsDirty("Weight"); } }
+    public set Weight(newValue: number) { if (this.weight != newValue) { this.weight = newValue; this.MarkAsDirty("Weight"); } }
        
 	 
     private measureType: string;

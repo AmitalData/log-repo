@@ -11,6 +11,7 @@ import { CardListService } from 'Common/Services/StandardLists/CardListService';
 import { CardPM } from 'Common/EntityPMs/CardPM';
 import { StatusCertificateOfOrigin } from '../../DigitalCertificateOfOriginTabComponent';
 import { SupplierInvoicePM } from 'Customs/EntityPMs/SupplierInvoicePM';
+import { ExportStorageListService } from 'Customs/Services/StandardLists/ExportStorageListService';
 
 
 
@@ -80,8 +81,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     
     InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM: CertificateOfOriginPM) {
-
-        // SupplierInvoices
+        // SupplierInvoices for CertificateOriginInvoiceItems
         this.currentDeclaration.SupplierInvoices.forEach((supplierInvoice) => {
             const mappedInvoice = new CertificateOfOriginInvoicePM(EntityPM);
             mappedInvoice.InvoicesIdUry = supplierInvoice.SequenceNumeric;
@@ -91,19 +91,47 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedInvoice.CurrencyTypeCode = supplierInvoice.InvoiceCurrencyTypeCode;
             mappedInvoice.DescriptionOfInvoice = null;
             mappedInvoice.IsInvoicesForPrint = false;
+
             // add to collection
             this.CertificateOriginInvoiceItems.Insert(mappedInvoice);
+            this.entityPM.CertificateOriginInvoiceItems.push(mappedInvoice); 
+
         });
 
-
-        // Consignments
-        this.currentDeclaration.Consignments.forEach((supplierInvoice) => {
+        
+        
+        
+        // Consignments for CertificateOriginItemItems
+        this.currentDeclaration.Consignments.forEach((consignment) => {
             const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
             
+            mappedConsignments.ItemSerial = consignment.SequenceNumeric; 
+            const consignmentPackage = consignment.ConsignmentPackages[0];
+            if(consignmentPackage) {
+
+                mappedConsignments.MarksAndNumbers = consignmentPackage.MarksNumbers;
+                mappedConsignments.PackageQuantity = consignmentPackage.PackageQuantity; 
+                mappedConsignments.Weight = consignmentPackage.GrossMassMeasure; 
+                mappedConsignments.MeasureType = consignmentPackage.GrossMassMeasureTypeCode; 
+            }
+            mappedConsignments.ItemDescription = consignment.CargoDescription; 
+            mappedConsignments.PackageType = consignmentPackage.PackageTypeCode;
+            
+            mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
+
+            
+            // mappedConsignments.ContainerIsoCode = // get from exoorterstoeage; 
+
+            
+            // field mappedConsignments.ContainerIsoCode: get from exportStorage by 
+            // var exportStorageListService = new ExportStorageListService();
+            // exportStorageListService.getByFilters() 
+        
             // add to collection    
             this.CertificateOriginItemItems.Insert(mappedConsignments);
+            this.entityPM.CertificateOriginItemItems.push(mappedConsignments); 
+
         });
-        
         // return mappedSupplierInvoices;
         // Assign the mappedSupplierInvoices to the CertificateOfOriginPM instance
         // EntityPM.CertificateOriginInvoiceItems = mappedSupplierInvoices;
@@ -114,11 +142,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         // update CertificateOriginInvoice list:
         EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
             this.CertificateOriginInvoiceItems.Insert(item);
+            this.entityPM.CertificateOriginInvoiceItems.push(item); 
         });
         
         // update CertificateOriginItemItems list:
         EntityPM.CertificateOriginItemItems.forEach((item) => {
             this.CertificateOriginItemItems.Insert(item);
+            this.entityPM.CertificateOriginItemItems.push(item); 
         });
     }
     SetPropertiesEnabled() {
@@ -168,7 +198,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
    
     InitializeRelatedDeclarationData(){
-        debugger
         this.getCardById(this.currentDeclaration.CustomerId);
 
         if(this.currentDeclaration.DeclarationExportRecipients.length > 0 ){
@@ -179,7 +208,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         }
 
         this.entityPM.DestinationCountry = !AppTool.IsNullOrEmpty(this.currentDeclaration.DestinationCountryCode) ? this.currentDeclaration.DestinationCountryCode : "";
-        
 
         if(this.currentDeclaration.SupplierInvoices.length > 0 ){
             let supplierInvoices = this.currentDeclaration.SupplierInvoices[0];
@@ -190,7 +218,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 var fieldVal = supplierInvoices?.SupplierInvoiceItems[0]?.OriginCountryCode; // the first invoice from list
                 if(fieldVal){
                     this.entityPM.OriginCountry = fieldVal; // the first invoice item from list
-
                 }
             }
         }

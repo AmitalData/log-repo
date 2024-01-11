@@ -306,10 +306,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.ItemSerial)) //T4 find type == nText 
-            {
-                entityPM.ItemSerial = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ItemSerial));
-            }
             if (!String.IsNullOrWhiteSpace(entityPM.ItemId)) //T4 find type == nText 
             {
                 entityPM.ItemId = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ItemId));
@@ -318,17 +314,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.MarksAndNumbers = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.MarksAndNumbers));
             }
-            if (!String.IsNullOrWhiteSpace(entityPM.PackageQuantity)) //T4 find type == nText 
-            {
-                entityPM.PackageQuantity = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.PackageQuantity));
-            }
             if (!String.IsNullOrWhiteSpace(entityPM.ItemDescription)) //T4 find type == nText 
             {
                 entityPM.ItemDescription = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.ItemDescription));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.Weight)) //T4 find type == nText 
-            {
-                entityPM.Weight = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Weight));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.InvoiceConnect)) //T4 find type == nText 
             {
