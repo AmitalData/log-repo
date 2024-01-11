@@ -12,14 +12,14 @@ export class CertificateOfOriginItemList {
 	Tenant: number;
 	SearchFields: string;
 	CertificateOfOriginId: string;
-	ItemSerial: string;
+	ItemSerial: number;
 	ItemId: string;
 	OriginCriterionCode: string;
 	MarksAndNumbers: string;
-	PackageQuantity: string;
+	PackageQuantity: number;
 	PackageType: string;
 	ItemDescription: string;
-	Weight: string;
+	Weight: number;
 	MeasureType: string;
 	InvoiceConnect: string;
 	ContainerIsoCode: string;

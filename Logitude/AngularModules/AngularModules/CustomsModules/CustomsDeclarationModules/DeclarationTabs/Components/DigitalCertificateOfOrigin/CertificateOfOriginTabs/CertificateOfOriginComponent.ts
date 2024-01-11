@@ -24,6 +24,7 @@ import { LocationDirective } from 'Infrastructure/Utilities/LocationDirective';
 import { CertificateOfOriginPM } from 'Customs/EntityPMs/CertificateOfOriginPM';
 import { CertificateOfOriginPMService } from 'Customs/Services/StandardPMs/CertificateOfOriginPMService';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
+import { StatusCertificateOfOrigin } from '../DigitalCertificateOfOriginTabComponent';
 
 
 @Component({
@@ -88,11 +89,12 @@ export class CertificateOfOriginComponent extends BaseComponent {
 
 
     DecalarationData:DeclarationPM;
+    IsNewOrEdit:StatusCertificateOfOrigin;
     SetWindowArgs(args: any) {
 
         this.CurrentEntity = args.CertificateOfOrigin;
         this.DecalarationData = args.Decalaration;
-
+        this.IsNewOrEdit = args.IsNewOrEdit;
        
         
         this.BuildTabs();
@@ -187,7 +189,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.GENERAL = cmpRef.instance;
-                                    this.GENERAL.InitTab(this.CurrentEntity,this.DecalarationData, false);
+                                    this.GENERAL.InitTab(this.CurrentEntity,this.DecalarationData, this.IsNewOrEdit);
                                 });
                         }
                         break;
@@ -198,7 +200,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.MOREDATA = cmpRef.instance;
-                                    this.MOREDATA.InitTab(this.CurrentEntity,this.DecalarationData, false);
+                                    this.MOREDATA.InitTab(this.CurrentEntity,this.DecalarationData, this.IsNewOrEdit); 
                                 });
                         }
                         break;
@@ -357,8 +359,14 @@ export class CertificateOfOriginComponent extends BaseComponent {
             this.responseData = new INF_MSG_GenericResponseData();
         }
     }
+    IsSendDocumentEnabled:boolean = true;
+    SaveButtonClicked(){
+        debugger
 
-
+    }
+    SendButtonClicked(){
+        debugger
+    }
     CancelButtonClicked() {
         this.CurrentEntity.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();

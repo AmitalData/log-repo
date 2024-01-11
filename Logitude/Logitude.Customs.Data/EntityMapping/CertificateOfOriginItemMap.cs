@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CertificateOfOriginId).HasColumnName("CertificateOfOriginId").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.ItemSerial).HasColumnName("ItemSerial").HasMaxLength(5).IsUnicode(true);
+            this.Property(t => t.ItemSerial).HasColumnName("ItemSerial");
 
             this.Property(t => t.ItemId).HasColumnName("ItemId").HasMaxLength(6).IsUnicode(true);
 
@@ -39,7 +39,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.MarksAndNumbers).HasColumnName("MarksAndNumbers").HasMaxLength(35).IsUnicode(true);
 
-            this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity").HasMaxLength(5).IsUnicode(true);
+            this.Property(t => t.PackageQuantity).HasColumnName("PackageQuantity");
 
             this.Property(t => t.PackageType).HasColumnName("PackageType").HasMaxLength(4).IsUnicode(false);
 
@@ -56,7 +56,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ItemDescription).HasColumnName("ItemDescription").IsUnicode(true);
 
-            this.Property(t => t.Weight).HasColumnName("Weight").HasMaxLength(35).IsUnicode(true);
+            this.Property(t => t.Weight).HasColumnName("Weight");
 
             this.Property(t => t.MeasureType).HasColumnName("MeasureType").HasMaxLength(3).IsUnicode(false);
 

@@ -112,12 +112,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string itemSerial ;
+	  private int? itemSerial ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ItemSerial  
+       public int? ItemSerial  
 	   {
 	    
 	     get
@@ -128,7 +128,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(itemSerial != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemSerial",OldValue=itemSerial,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ItemSerial",OldValue=itemSerial,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   itemSerial=value;
 		   }
@@ -204,12 +204,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string packageQuantity ;
+	  private int? packageQuantity ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string PackageQuantity  
+       public int? PackageQuantity  
 	   {
 	    
 	     get
@@ -220,7 +220,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(packageQuantity != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageQuantity",OldValue=packageQuantity,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackageQuantity",OldValue=packageQuantity,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   packageQuantity=value;
 		   }
@@ -273,12 +273,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string weight ;
+	  private int? weight ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Weight  
+       public int? Weight  
 	   {
 	    
 	     get
@@ -289,7 +289,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(weight != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Weight",OldValue=weight,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Weight",OldValue=weight,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   weight=value;
 		   }

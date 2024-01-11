@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	      
         public virtual CertificateOfOrigin CertificateOfOrigin { get; set; }
         [Column("ItemSerial")]
-	    public string ItemSerial { get; set; }
+	    public int? ItemSerial { get; set; }
         [Column("ItemId")]
 	    public string ItemId { get; set; }
         [ForeignKey("OriginCriterion")]
@@ -42,7 +42,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("MarksAndNumbers")]
 	    public string MarksAndNumbers { get; set; }
         [Column("PackageQuantity")]
-	    public string PackageQuantity { get; set; }
+	    public int? PackageQuantity { get; set; }
         [ForeignKey("PackingType")]
         [Column("PackageType")]
 	    public string PackageType { get; set; }
@@ -51,7 +51,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("ItemDescription")]
 	    public string ItemDescription { get; set; }
         [Column("Weight")]
-	    public string Weight { get; set; }
+	    public int? Weight { get; set; }
         [ForeignKey("MeasurmentUnit")]
         [Column("MeasureType")]
 	    public string MeasureType { get; set; }

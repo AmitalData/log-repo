@@ -9,6 +9,9 @@ import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollect
 import { CertificateOfOriginItemPM } from 'Customs/EntityPMs/CertificateOfOriginItemPM';
 import { CardListService } from 'Common/Services/StandardLists/CardListService';
 import { CardPM } from 'Common/EntityPMs/CardPM';
+import { StatusCertificateOfOrigin } from '../../DigitalCertificateOfOriginTabComponent';
+import { SupplierInvoicePM } from 'Customs/EntityPMs/SupplierInvoicePM';
+import { ExportStorageListService } from 'Customs/Services/StandardLists/ExportStorageListService';
 
 
 
@@ -29,36 +32,39 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     // public CertificateOriginInvoiceItems : CertificateOfOriginInvoicePM[];
     public CertificateOriginInvoiceItems : ObservableCollection // type <CertificateOfOriginInvoicePM[]>;
     public CertificateOriginItemItems : ObservableCollection // type <CertificateOfOriginItemPM[]>;
-    isNew: boolean;
+    IsNewOrEdit: StatusCertificateOfOrigin;
     controlEnabled: boolean;
     isDispalyOnlyStatusList:number[] = [4,8];
     constructor() {
         super();
     }
 
-    InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM ,IsNew: boolean) {
+   
+    InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM ,IsNewOrEdit: StatusCertificateOfOrigin) {
         
         this.entityPM = EntityPM;
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
 
-        // update CertificateOriginInvoice list:
-        EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
-            this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoicePM(item));
-        });
-        
-        // update CertificateOriginItemItems list:
-        EntityPM.CertificateOriginItemItems.forEach((item) => {
-            this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemPM(item));
-        });
-
         this.currentDeclaration = currentDeclaration;
-        if(currentDeclaration){ 
-            this.initializeRelatedDeclarationData()
+        if(currentDeclaration){
+            this.InitializeRelatedDeclarationData();
+
+            if(IsNewOrEdit === StatusCertificateOfOrigin.IsNew){
+                // build map of the list to initialize
+                this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
+                
+            }
+            else if(IsNewOrEdit === StatusCertificateOfOrigin.IsEdit){
+                this.InitilizeListsFromCertificateOfOrigin(EntityPM);
+            }
         }
 
-        this.isNew = IsNew;
-        this.controlEnabled = IsNew;
+
+
+
+        this.IsNewOrEdit = IsNewOrEdit;
+        this.controlEnabled = StatusCertificateOfOrigin.IsNew ?true:false;
         this.SetPropertiesEnabled();
 
 
@@ -73,7 +79,78 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.SetWarning();
 
     }
+    
+    InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM: CertificateOfOriginPM) {
+        // SupplierInvoices for CertificateOriginInvoiceItems
+        this.currentDeclaration.SupplierInvoices.forEach((supplierInvoice) => {
+            const mappedInvoice = new CertificateOfOriginInvoicePM(EntityPM);
+            mappedInvoice.InvoicesIdUry = supplierInvoice.SequenceNumeric;
+            mappedInvoice.InvoiceNumber = supplierInvoice.InvoiceNumber;
+            mappedInvoice.InvoiceDate = supplierInvoice.IssueDate;
+            mappedInvoice.InvoiceSum = supplierInvoice.InvoiceAmount?.toString();
+            mappedInvoice.CurrencyTypeCode = supplierInvoice.InvoiceCurrencyTypeCode;
+            mappedInvoice.DescriptionOfInvoice = null;
+            mappedInvoice.IsInvoicesForPrint = false;
 
+            // add to collection
+            this.CertificateOriginInvoiceItems.Insert(mappedInvoice);
+            this.entityPM.CertificateOriginInvoiceItems.push(mappedInvoice); 
+
+        });
+
+        
+        
+        
+        // Consignments for CertificateOriginItemItems
+        this.currentDeclaration.Consignments.forEach((consignment) => {
+            const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
+            
+            mappedConsignments.ItemSerial = consignment.SequenceNumeric; 
+            const consignmentPackage = consignment.ConsignmentPackages[0];
+            if(consignmentPackage) {
+
+                mappedConsignments.MarksAndNumbers = consignmentPackage.MarksNumbers;
+                mappedConsignments.PackageQuantity = consignmentPackage.PackageQuantity; 
+                mappedConsignments.Weight = consignmentPackage.GrossMassMeasure; 
+                mappedConsignments.MeasureType = consignmentPackage.GrossMassMeasureTypeCode; 
+            }
+            mappedConsignments.ItemDescription = consignment.CargoDescription; 
+            mappedConsignments.PackageType = consignmentPackage.PackageTypeCode;
+            
+            mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
+
+            
+            // mappedConsignments.ContainerIsoCode = // get from exoorterstoeage; 
+
+            
+            // field mappedConsignments.ContainerIsoCode: get from exportStorage by 
+            // var exportStorageListService = new ExportStorageListService();
+            // exportStorageListService.getByFilters() 
+        
+            // add to collection    
+            this.CertificateOriginItemItems.Insert(mappedConsignments);
+            this.entityPM.CertificateOriginItemItems.push(mappedConsignments); 
+
+        });
+        // return mappedSupplierInvoices;
+        // Assign the mappedSupplierInvoices to the CertificateOfOriginPM instance
+        // EntityPM.CertificateOriginInvoiceItems = mappedSupplierInvoices;
+    }
+  
+
+    InitilizeListsFromCertificateOfOrigin(EntityPM:CertificateOfOriginPM){
+        // update CertificateOriginInvoice list:
+        EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
+            this.CertificateOriginInvoiceItems.Insert(item);
+            this.entityPM.CertificateOriginInvoiceItems.push(item); 
+        });
+        
+        // update CertificateOriginItemItems list:
+        EntityPM.CertificateOriginItemItems.forEach((item) => {
+            this.CertificateOriginItemItems.Insert(item);
+            this.entityPM.CertificateOriginItemItems.push(item); 
+        });
+    }
     SetPropertiesEnabled() {
         var enabled = !this.IsDispalyOnly;
         this.UIProperties.SetEnabled("CooTypeCode", this.ObjectTableName, enabled);
@@ -113,26 +190,34 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             if (!myResponse.HasError) {
                 this.currentCard = myResponse.Result;
                 this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
-                return this.entityPM.ExporterName;
+
+                this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : "" }${this.currentCard.Address2 ? this.currentCard.Address2 : "" }`; 
+
             }
         });
     }
    
-    initializeRelatedDeclarationData(){
+    InitializeRelatedDeclarationData(){
         this.getCardById(this.currentDeclaration.CustomerId);
 
         if(this.currentDeclaration.DeclarationExportRecipients.length > 0 ){
             var fieldVal = this.currentDeclaration.DeclarationExportRecipients[0]?.RecipientName; // first from list
             if(fieldVal){
-                this.entityPM.ConsigneeName = fieldVal; // first from list
+                this.entityPM.ConsigneeName = fieldVal; 
             }
         }
 
+        this.entityPM.DestinationCountry = !AppTool.IsNullOrEmpty(this.currentDeclaration.DestinationCountryCode) ? this.currentDeclaration.DestinationCountryCode : "";
+
         if(this.currentDeclaration.SupplierInvoices.length > 0 ){
-            if(this.currentDeclaration.SupplierInvoices.length > 0 ){
-                var fieldVal = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.OriginCountryCode;
+            let supplierInvoices = this.currentDeclaration.SupplierInvoices[0];
+            this.entityPM.ConsigneeAddress = !AppTool.IsNullOrEmpty(supplierInvoices.BuyerAddress) ? supplierInvoices.BuyerAddress : ""; 
+            this.entityPM.ConsigneeCountry = !AppTool.IsNullOrEmpty(supplierInvoices.BuyerCountryCode) ? supplierInvoices.BuyerCountryCode : ""; 
+            
+            if(supplierInvoices.SupplierInvoiceItems.length > 0 ){
+                var fieldVal = supplierInvoices?.SupplierInvoiceItems[0]?.OriginCountryCode; // the first invoice from list
                 if(fieldVal){
-                    this.entityPM.OriginCountry = fieldVal; // first from list
+                    this.entityPM.OriginCountry = fieldVal; // the first invoice item from list
                 }
             }
         }
@@ -147,8 +232,16 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         return this.isDispalyOnlyStatusList.includes(Number(this.entityPM.CooStatusCode))
     }
 
-    //#region properties
+    //#region  CertificateOfOriginInvoice properties
+    public get InvoiceNumber(): string {
+        return this.entityPM.Id;
+    }
+    public set InvoiceNumber(newValue: string) {
+        this.entityPM.Id = newValue;
+    }
+    //#endregion CertificateOfOriginInvoice properties
 
+    //#region  CertificateOfOrigin properties
     public get Id(): string {
         return this.entityPM.Id;
     }
@@ -237,13 +330,18 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     public get ExporterAddress(): string {
-        return this.entityPM.ExporterAddress ? this.entityPM.ExporterAddress: ""; 
+        return this.entityPM.ExporterAddress; 
     }
     public set ExporterAddress(newValue: string) {
         this.entityPM.ExporterAddress = newValue;
     }
 
     public get ExporterCountry(): string {
+        if(!this.entityPM.ExporterCountry){
+            const countryCode = "IL";
+            this.entityPM.ExporterCountry = countryCode;
+            return this.entityPM.ExporterCountry;
+        }
         return this.entityPM.ExporterCountry;
     }
     public set ExporterCountry(newValue: string) {
@@ -655,6 +753,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public set IsSubmitted(newValue: boolean) {
         this.entityPM.IsSubmitted = newValue;
     }
-    //#endregio
+    //#endregion CertificateOfOrigin properties
 
 }

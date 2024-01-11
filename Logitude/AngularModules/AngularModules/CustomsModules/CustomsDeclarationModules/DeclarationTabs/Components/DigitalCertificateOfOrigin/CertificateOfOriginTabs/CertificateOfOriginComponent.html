@@ -96,14 +96,23 @@
         <td>
             <div></div>
         </td>
-
-        <td style="width: 57px;vertical-align: bottom;">
-            <button class="Button" (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel'
-                |TextCodeTranslationPipe}}</button>
+        <td style="width: 230px;">
+            <div style="display: flex; align-items: flex-end; justify-content: space-around;">                
+                <div style="width: 57px;vertical-align: bottom;">
+                    <button class="Button"
+                    (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel'  |TextCodeTranslationPipe}}</button>
+                </div>
+                <div style="width: 57px;vertical-align: bottom;">
+                    <button class="RedButton" (click)="SaveButtonClicked()"  [disabled]="!IsSendDocumentEnabled">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                </div>
+                
+                <div style="width: 110px;vertical-align: bottom;">
+                    <custom-send-options [IsDisabled]="!IsSendDocumentEnabled" [AvoidDoubleClick]="true" #MyCustomSendOptionsComponent (SendButtonClicked)="SendButtonClicked($event)">
+                    </custom-send-options>
+                </div>
+                
+            </div>
         </td>
 
-        <td style="width: 10px;vertical-align: bottom;">
-            <div></div>
-        </td>
     </tr>
 </table>

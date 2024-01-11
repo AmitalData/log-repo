@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CertificateOfOriginId  { get; set; }
        [DataMember]
-       public string ItemSerial  { get; set; }
+       public int? ItemSerial  { get; set; }
        [DataMember]
        public string ItemId  { get; set; }
        [DataMember]
@@ -31,13 +31,13 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string MarksAndNumbers  { get; set; }
        [DataMember]
-       public string PackageQuantity  { get; set; }
+       public int? PackageQuantity  { get; set; }
        [DataMember]
        public string PackageType  { get; set; }
        [DataMember]
        public string ItemDescription  { get; set; }
        [DataMember]
-       public string Weight  { get; set; }
+       public int? Weight  { get; set; }
        [DataMember]
        public string MeasureType  { get; set; }
        [DataMember]
