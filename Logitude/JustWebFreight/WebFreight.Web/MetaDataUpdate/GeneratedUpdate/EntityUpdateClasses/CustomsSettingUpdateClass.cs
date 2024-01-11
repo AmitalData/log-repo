@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsSettingUpdateClass
    {  		
-		public const string HashString = "f3848cf46236fbae84130e7aa9fba6b4";
+		public const string HashString = "6784e47876b5578eb4023cdd87aac7b6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2115,6 +2115,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "MaxItemsSendInteractive",
 					  						ListPropertyPath =  "MaxItemsSendInteractive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2132,7 +2133,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MaxItemsSendInteractive",
 					  						DefaultText =  "Maximum amount of items to send interactive",
-					  						FullLocalDefaultText =  "כמות מקסימלית של פריטים לשליחה אינטרקטיבית",
+					  						FullLocalDefaultText =  "שליחה ברקע כמות פריטים",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -2172,6 +2173,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "MaxSISendInteractive",
 					  						ListPropertyPath =  "MaxSISendInteractive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -2189,7 +2191,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "MaxSISendInteractive",
 					  						DefaultText =  "Maximum amount of supplier invoices to send interactive ",
-					  						FullLocalDefaultText =  "כמות מקסימלית של חשבונות לשליחה אינטרקטיבית",
+					  						FullLocalDefaultText =  "שליחה ברקע כמות חשבונות",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
