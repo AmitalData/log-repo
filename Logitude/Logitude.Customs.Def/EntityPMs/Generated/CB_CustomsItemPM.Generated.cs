@@ -18,27 +18,27 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_CustomsItemPM : EntityPM
    {
-   	  private string id ;
+   	  private string iD ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Id  
+       public string ID  
 	   {
 	    
 	     get
 		{
-		   return id;
+		   return iD;
 		 }
 		 set
 		 {
-		   if(id != value)
+		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   id=value;
+		   iD=value;
 		   }
 			
 		 }

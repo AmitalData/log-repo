@@ -12,67 +12,67 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.Data.Repsitories
 {
-   public partial class CB_CustomsItemRepository:IRepository<CB_CustomsItem>
+   public partial class CB_PropertiesDetailsHistoryRepository:IRepository<CB_PropertiesDetailsHistory>
    {
    
         private ICustomContext currentContext;
-        public CB_CustomsItemRepository(int tenant)
+        public CB_PropertiesDetailsHistoryRepository(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public CB_CustomsItemRepository(ICustomContext context)
+        public CB_PropertiesDetailsHistoryRepository(ICustomContext context)
         {
             currentContext = context;
         }
 
 		 
 		
-		public  CB_CustomsItem GetSingle(string id)
+		public  CB_PropertiesDetailsHistory GetSingle(string id)
         {
-            return (from a in context.CB_CustomsItems
+            return (from a in context.CB_PropertiesDetailsHistorys
                     where a.ID == id 
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<CB_CustomsItem> GetAll()
+        public IQueryable<CB_PropertiesDetailsHistory> GetAll()
         {
-            return from a in context.CB_CustomsItems  
+            return from a in context.CB_PropertiesDetailsHistorys  
                    select a;
         }
 				 
-        public CB_CustomsItem GetSingle(EntityKeyFields entityKeys)
+        public CB_PropertiesDetailsHistory GetSingle(EntityKeyFields entityKeys)
         {
-            CB_CustomsItemKeys keys = entityKeys as CB_CustomsItemKeys;
-            return (from a in context.CB_CustomsItems
+            CB_PropertiesDetailsHistoryKeys keys = entityKeys as CB_PropertiesDetailsHistoryKeys;
+            return (from a in context.CB_PropertiesDetailsHistorys
                     where a.ID == keys.ID
                     select a).FirstOrDefault();
         }
 		         
         partial void onAdd();//Partial Methods Definition in Generated
-        public void Add(CB_CustomsItem entity)
+        public void Add(CB_PropertiesDetailsHistory entity)
         {
             onAdd();
-            context.CB_CustomsItems.Add(entity);
+            context.CB_PropertiesDetailsHistorys.Add(entity);
         }
 
-        public void Remove(CB_CustomsItem entity)
+        public void Remove(CB_PropertiesDetailsHistory entity)
         {
-            context.CB_CustomsItems.Attach(entity);
-            context.CB_CustomsItems.Remove(entity);
+            context.CB_PropertiesDetailsHistorys.Attach(entity);
+            context.CB_PropertiesDetailsHistorys.Remove(entity);
         }
 
         partial void onUpdate();//Partial Methods Definition in Generated
-        public void Update(CB_CustomsItem entity)
+        public void Update(CB_PropertiesDetailsHistory entity)
         {
             onUpdate();
-            context.CB_CustomsItems.Attach(entity);
+            context.CB_PropertiesDetailsHistorys.Attach(entity);
             context.SetAsModified(entity);
         }
 
-        public List<CB_CustomsItem> All()
+        public List<CB_PropertiesDetailsHistory> All()
         {
-            return context.CB_CustomsItems.ToList();
+            return context.CB_PropertiesDetailsHistorys.ToList();
         }
 
         private ICustomContext context

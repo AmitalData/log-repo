@@ -22,7 +22,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
           public enum POCOPropertyNames
           { 
 		     None,  
-	         Id, 
+	         ID, 
 	         CreateDate, 
 	         UpdateDate, 
 	         FullClassification, 
@@ -37,7 +37,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	      public enum PMPropertyNames
           { 
 		     None,  
-	         Id, 
+	         ID, 
 	         CreateDate, 
 	         UpdateDate, 
 	         FullClassification, 
@@ -98,9 +98,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		public void POCOToPM(CB_CustomsItemPM entityPM, CB_CustomsItem entityPOCO)
         {
 			 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ID))
             {
-					entityPM.Id = entityPOCO.Id;
+					entityPM.ID = entityPOCO.ID;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDate))

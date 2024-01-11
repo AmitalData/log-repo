@@ -17,20 +17,20 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class CB_CustomsItemListQueryService
+    public partial class CB_PropertiesDetailsHistoryListQueryService
     {
          private ICustomContext context;
-        public CB_CustomsItemListQueryService(ICustomContext context)
+        public CB_PropertiesDetailsHistoryListQueryService(ICustomContext context)
         {
             this.context = context;
         }
 
-        public List<CB_CustomsItemList> GetList(QueryOperations queryOperations, int tenant)
+        public List<CB_PropertiesDetailsHistoryList> GetList(QueryOperations queryOperations, int tenant)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CB_CustomsItem> iQueryable = (from a in context.CB_CustomsItems
+            IQueryable<CB_PropertiesDetailsHistory> iQueryable = (from a in context.CB_PropertiesDetailsHistorys
                                                select a);
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -39,20 +39,20 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
 
-            iQueryable = filter.GetFilteredQuery<CB_CustomsItem>(nonListQueryOperation, iQueryable);
+            iQueryable = filter.GetFilteredQuery<CB_PropertiesDetailsHistory>(nonListQueryOperation, iQueryable);
 
             int skippedPorts = queryOperations.PageIndex;
 
-            IQueryable<CB_CustomsItemList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<CB_PropertiesDetailsHistoryList> query2 = GetIqueryableList(iQueryable);
            
-            query2 = filter.GetFilteredQuery<CB_CustomsItemList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<CB_PropertiesDetailsHistoryList>(listQueryOperation, query2);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
-                PropertyInfo propInfo = typeof(CB_CustomsItemList).GetProperty(queryOperations.SortByColumnName);
-                List<ObjectField> CB_CustomsItemObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CB_CustomsItem",tenant).ToList();
+                PropertyInfo propInfo = typeof(CB_PropertiesDetailsHistoryList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> CB_PropertiesDetailsHistoryObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CB_PropertiesDetailsHistory",tenant).ToList();
 
-                ObjectField objectField = (from a in CB_CustomsItemObjectFields
+                ObjectField objectField = (from a in CB_PropertiesDetailsHistoryObjectFields
                                            where a.FieldName == queryOperations.SortByColumnName
                                            select a).FirstOrDefault();
 
@@ -60,7 +60,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                 {
 				 if (objectField.IsCustom)
                     {
-                        query2 = sortClass.GetSorterQuery<CB_CustomsItemList, string>(queryOperations, query2);
+                        query2 = sortClass.GetSorterQuery<CB_PropertiesDetailsHistoryList, string>(queryOperations, query2);
                     }
                     else
                     {
@@ -69,36 +69,36 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                          case "ntext":
                         case "text":
                             {
-                                query2 = sortClass.GetSorterQuery<CB_CustomsItemList, string>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CB_PropertiesDetailsHistoryList, string>(queryOperations, query2);
                                 break;
                             }
 						case "sigdouble":
 						case "double":
                             {
-                                query2 = sortClass.GetSorterQuery<CB_CustomsItemList, double>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CB_PropertiesDetailsHistoryList, double>(queryOperations, query2);
                                 break;
                             }
 						case "date":
                         case "datetime":
                             {
-                                query2 = sortClass.GetSorterQuery<CB_CustomsItemList, DateTime>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CB_PropertiesDetailsHistoryList, DateTime>(queryOperations, query2);
                                 break;
                             }
 						case "unsinteger":
                         case "integer":
                             {
-                                query2 = sortClass.GetSorterQuery<CB_CustomsItemList, int>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CB_PropertiesDetailsHistoryList, int>(queryOperations, query2);
                                 break;
                             }
                         case "boolean":
                             {
-                                query2 = sortClass.GetSorterQuery<CB_CustomsItemList, bool>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CB_PropertiesDetailsHistoryList, bool>(queryOperations, query2);
                                 break;
                             }
 						case "unsdecimal":
 						case "decimal":
                             {
-                                query2 = sortClass.GetSorterQuery<CB_CustomsItemList, decimal>(queryOperations, query2);
+                                query2 = sortClass.GetSorterQuery<CB_PropertiesDetailsHistoryList, decimal>(queryOperations, query2);
                                 break;
                             }
                         default:
@@ -124,21 +124,21 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     
         }
 
-         public List<CB_CustomsItemList> GetList(int tenant)
+         public List<CB_PropertiesDetailsHistoryList> GetList(int tenant)
          {
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public CB_CustomsItemList GetSingle(string id)
+        public CB_PropertiesDetailsHistoryList GetSingle(string id)
         {
-            IQueryable<CB_CustomsItem> CB_CustomsItemQuery = (from a in context.CB_CustomsItems
+            IQueryable<CB_PropertiesDetailsHistory> CB_PropertiesDetailsHistoryQuery = (from a in context.CB_PropertiesDetailsHistorys
                                                        where a.ID == id
                                                        select a);
 
              
-            IQueryable<CB_CustomsItemList> CB_CustomsItemListQuery = GetIqueryableList( CB_CustomsItemQuery);
-            CB_CustomsItemList CB_CustomsItemList = CB_CustomsItemListQuery.FirstOrDefault();
-            return CB_CustomsItemList;
+            IQueryable<CB_PropertiesDetailsHistoryList> CB_PropertiesDetailsHistoryListQuery = GetIqueryableList( CB_PropertiesDetailsHistoryQuery);
+            CB_PropertiesDetailsHistoryList CB_PropertiesDetailsHistoryList = CB_PropertiesDetailsHistoryListQuery.FirstOrDefault();
+            return CB_PropertiesDetailsHistoryList;
            
         }
 
@@ -147,7 +147,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<CB_CustomsItem> iQueryable = (from a in context.CB_CustomsItems  select a);
+            IQueryable<CB_PropertiesDetailsHistory> iQueryable = (from a in context.CB_PropertiesDetailsHistorys  select a);
 
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
@@ -156,11 +156,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             QueryOperations listQueryOperation = new QueryOperations();
             listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
             
-			iQueryable = filter.GetFilteredQuery<CB_CustomsItem>(nonListQueryOperation, iQueryable);
+			iQueryable = filter.GetFilteredQuery<CB_PropertiesDetailsHistory>(nonListQueryOperation, iQueryable);
 
-            IQueryable<CB_CustomsItemList> query2 = GetIqueryableList(iQueryable);
+            IQueryable<CB_PropertiesDetailsHistoryList> query2 = GetIqueryableList(iQueryable);
 
-            query2 = filter.GetFilteredQuery<CB_CustomsItemList>(listQueryOperation, query2);
+            query2 = filter.GetFilteredQuery<CB_PropertiesDetailsHistoryList>(listQueryOperation, query2);
             int count = query2.Count();
             return count;
         }

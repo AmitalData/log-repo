@@ -22,46 +22,46 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class CB_CustomsItemUpdateService:EntityUpdateService<CB_CustomsItem,CB_CustomsItemPM,EntityPM>
+   public partial class CB_PropertiesDetailsHistoryUpdateService:EntityUpdateService<CB_PropertiesDetailsHistory,CB_PropertiesDetailsHistoryPM,CB_CustomsItemPM>
    {
    
-        CB_CustomsItemRepository entityRepository;
-        public CB_CustomsItemUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+        CB_PropertiesDetailsHistoryRepository entityRepository;
+        public CB_PropertiesDetailsHistoryUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
             : base(mainContext,additionalContexts, tenant)
         {
             ICustomContext  context = mainContext as CustomContext;
             context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
-            Mapping = new CB_CustomsItemDataMapping();
-            Repository = new CB_CustomsItemRepository(context);
+            Mapping = new CB_PropertiesDetailsHistoryDataMapping();
+            Repository = new CB_PropertiesDetailsHistoryRepository(context);
         }
 
        
         private ICustomContext currentContext;
-        public CB_CustomsItemUpdateService(int tenant)
+        public CB_PropertiesDetailsHistoryUpdateService(int tenant)
         {
             currentContext = CustomContext.GetContext(tenant);
         }
 
-        public CB_CustomsItemUpdateService(ICustomContext context)
+        public CB_PropertiesDetailsHistoryUpdateService(ICustomContext context)
         {
             currentContext = context;
         }
 
 		
-		protected override EntityKeyFields GetKeys(CB_CustomsItemPM entityPM)
+		protected override EntityKeyFields GetKeys(CB_PropertiesDetailsHistoryPM entityPM)
         {
-            CB_CustomsItemKeys entityKeys = new CB_CustomsItemKeys() { ID = entityPM.ID };
+            CB_PropertiesDetailsHistoryKeys entityKeys = new CB_PropertiesDetailsHistoryKeys() { ID = entityPM.ID };
             return entityKeys;
         }
 
 		
-		protected override void FillDefaultValuesOnCreate(CB_CustomsItemPM entityPM)
+		protected override void FillDefaultValuesOnCreate(CB_PropertiesDetailsHistoryPM entityPM)
         {     
   
 		
 	    }
         
-		protected override void FillDefaultValuesOnUpdate(CB_CustomsItemPM entityPM)
+		protected override void FillDefaultValuesOnUpdate(CB_PropertiesDetailsHistoryPM entityPM)
         {       
            
         }

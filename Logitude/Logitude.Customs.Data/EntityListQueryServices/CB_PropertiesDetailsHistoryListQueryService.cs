@@ -17,12 +17,12 @@ using Logitude.Customs.Data.EntityLists;
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
 
-    public partial class CB_CustomsItemListQueryService
+    public partial class CB_PropertiesDetailsHistoryListQueryService
     {
-	    private IQueryable<CB_CustomsItemList> GetIqueryableList(IQueryable<CB_CustomsItem> iQueryable)
+	    private IQueryable<CB_PropertiesDetailsHistoryList> GetIqueryableList(IQueryable<CB_PropertiesDetailsHistory> iQueryable)
         {
-		IQueryable<CB_CustomsItemList> query = (from a in iQueryable
-                                            select new CB_CustomsItemList()
+		IQueryable<CB_PropertiesDetailsHistoryList> query = (from a in iQueryable
+                                            select new CB_PropertiesDetailsHistoryList()
 											{
                      
 					                          ID = a.ID,
@@ -35,7 +35,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<CB_CustomsItem> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CB_CustomsItem> iQueryable)
+		private IQueryable<CB_PropertiesDetailsHistory> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CB_PropertiesDetailsHistory> iQueryable)
         {
 			throw new NotImplementedException();
 		}

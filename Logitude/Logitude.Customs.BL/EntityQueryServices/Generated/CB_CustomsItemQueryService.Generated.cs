@@ -50,7 +50,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 		 
 		public  CB_CustomsItemPM GetSingle(string id,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new CB_CustomsItemKeys(){ Id = id };
+             EntityKeys = new CB_CustomsItemKeys(){ ID = id };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(CB_CustomsItem entityPOCO)
         {
-            CB_CustomsItemKeys entityKeys = new CB_CustomsItemKeys() { Id = entityPOCO.Id,  };
+            CB_CustomsItemKeys entityKeys = new CB_CustomsItemKeys() { ID = entityPOCO.ID,  };
             return entityKeys;
         }
      

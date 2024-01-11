@@ -391,6 +391,8 @@
     <Compile Include="EntityDataMappings\CargoSplitRequestStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\CargoTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CB_CustomsItemDataMapping.cs" />
+    <Compile Include="EntityDataMappings\CB_PropertiesDetailsHistoryDataMapping.cs" />
     <Compile Include="EntityDataMappings\CarWeightDataMapping.cs" />
     <Compile Include="EntityDataMappings\CertificateExemptionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\CertificateOfOriginDataMapping.cs" />
@@ -630,7 +632,9 @@
     <Compile Include="EntityDataMappings\Generated\CargoStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CargoTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CarWeightDataMapping.Generated.cs" />
-    <Compile Include="EntityDataMappings\Generated\CertificateExemptionTypeDataMapping.Generated.cs" />
+	<Compile Include="EntityDataMappings\Generated\CB_CustomsItemDataMapping.Generated.cs" />
+	<Compile Include="EntityDataMappings\Generated\CB_PropertiesDetailsHistoryDataMapping.Generated.cs" />
+	  <Compile Include="EntityDataMappings\Generated\CertificateExemptionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificateOfOriginDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificateOfOriginInvoiceDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\CertificateOfOriginItemDataMapping.Generated.cs" />
@@ -1251,7 +1255,9 @@
     <Compile Include="EntityQueryServices\DeclarationStatusQueryService.cs" />
     <Compile Include="EntityQueryServices\Generated\CarEngineVolumeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CarWeightQueryService.Generated.cs" />
-    <Compile Include="EntityQueryServices\Generated\CertificateOfOriginInvoiceQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\CB_CustomsItemQueryService.Generated.cs" />
+	<Compile Include="EntityQueryServices\Generated\CB_PropertiesDetailsHistoryQueryService.Generated.cs" />
+	<Compile Include="EntityQueryServices\Generated\CertificateOfOriginInvoiceQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CertificateOfOriginItemQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CertificateOfOriginQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CertificateOfOriginStatusCodeEnumQueryService.Generated.cs" />
@@ -1830,7 +1836,9 @@
     <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CarEngineVolumeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CarWeightUpdateService.Generated.cs" />
-    <Compile Include="EntityUpdateServices\Generated\ChangeTypeUpdateService.Generated.cs" />
+	<Compile Include="EntityUpdateServices\Generated\CB_CustomsItemUpdateService.Generated.cs" />
+	<Compile Include="EntityUpdateServices\Generated\CB_PropertiesDetailsHistoryUpdateService.Generated.cs" />
+	<Compile Include="EntityUpdateServices\Generated\ChangeTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ComputationMethodUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\ConditionalExemptionTypeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsEntityStatusUpdateService.Generated.cs" />

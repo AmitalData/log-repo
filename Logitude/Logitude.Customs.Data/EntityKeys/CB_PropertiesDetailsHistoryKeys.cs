@@ -10,7 +10,7 @@ using Simplog.Server.Infrastructure;
   
 namespace Logitude.Customs.Data.EntityKeys
 {
-   public partial class CB_CustomsItemKeys : EntityKeyFields
+   public partial class CB_PropertiesDetailsHistoryKeys : EntityKeyFields
    {
    	  public string ID  { get; set; }
 	  
@@ -26,7 +26,7 @@ namespace Logitude.Customs.Data.EntityKeys
 
       public override string GetEntityPMName()
       {
-          return "CB_CustomsItemPM";
+          return "CB_PropertiesDetailsHistoryPM";
       }
 	 
    }

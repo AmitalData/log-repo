@@ -8,7 +8,7 @@
 
 export class CB_CustomsItemList {
    
-	Id: string;
+	ID: string;
 	CreateDate: Date;
 	UpdateDate: Date;
 	FullClassification: string;
