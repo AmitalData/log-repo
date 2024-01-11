@@ -41,6 +41,13 @@ using Newtonsoft.Json;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.SystemLogs;
 using ICSharpCode.SharpZipLib.Checksum;
+using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using System.Linq;
+using System.Transactions;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Data.SqlClient;
+using System.Data;
+using System.Data.Common;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -697,5 +704,76 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
            
         }
 
+        public HttpResponseMessage PutReleaseSetting(ReleaseArgs releaseArgs)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                SecurityUtility.AuthenticationOnTenant(tenant);
+               
+                if(releaseArgs.IsDeleteRelease)
+                {
+                    this.DeleteUsersReleaseNotes(tenant);
+                }
+
+                this.UpdateReleaseSettings(releaseArgs);
+
+                return Request.CreateResponse(HttpStatusCode.OK, releaseArgs);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+            
+        }
+        private void DeleteUsersReleaseNotes(int tenant)
+        {
+            string strConnString = GetConnection(tenant);
+            using (SqlConnection cn = new SqlConnection(strConnString))
+            {
+                SqlCommand cmd = new SqlCommand("delete from UsersReleaseNotesDisplays", cn);
+                cmd.CommandType = CommandType.Text;
+                cmd.CommandTimeout = 30;
+                cn.Open();
+                var output = cmd.ExecuteNonQuery();
+                cn.Close();
+            }
+        }
+        private string GetConnection(int tenant)
+        {
+            GlobalDB currentDb;
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                currentDb = GlobalDBRepository.GetGlobalDBByTenant(tenant);
+                scope.Complete();
+            }
+
+            string dbConnectionInfo = currentDb.DBConnection;
+            string dbSeconderyConnectionInfo = currentDb.SecondaryAzureDBConnection;
+
+            DbConnection connection = DatabaseInitializer.GetConnection(dbConnectionInfo, dbSeconderyConnectionInfo);
+            WebFreightContext context = new WebFreightContext(connection);
+
+            return context.Database.Connection.ConnectionString;
+        }
+        private void UpdateReleaseSettings(ReleaseArgs releaseArgs)
+        {
+            using (TransactionScope scope = TransactionFactory.GetNewTransaction())
+            {
+                SettingRepository settingRepository = new SettingRepository();
+                Setting setting = settingRepository.GetSingleSetting("1");
+
+                if (setting == null) return;
+
+                setting.ReleaseDateString = releaseArgs.ReleaseDateString;                
+                setting.ReleaseNotesURL = releaseArgs.ReleaseCode;
+                settingRepository.Update(setting);
+                settingRepository.SubmitChanges();
+                scope.Complete();
+            }
+        }
     }
 }
