@@ -720,6 +720,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new QuotaComputationBasisMap());
 	
+            modelBuilder.Configurations.Add(new QuotaIncrementMap());
+	
             modelBuilder.Configurations.Add(new RansomViolationTypeMap());
 	
             modelBuilder.Configurations.Add(new ReferantExceptionMap());
@@ -3376,6 +3378,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<QuotaComputationBasis> QuotaComputationBasises 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<QuotaIncrement> QuotaIncrements 
 	 {
 	      get; set;
 	 

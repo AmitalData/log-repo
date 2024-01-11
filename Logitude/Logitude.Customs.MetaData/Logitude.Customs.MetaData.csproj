@@ -647,6 +647,7 @@
     <None Include="EntityFiles\CarEngineVolume.lxml" />
     <None Include="EntityFiles\CarWeight.lxml" />
     <None Include="EntityFiles\ComputationMethod.lxml" />
+    <None Include="EntityFiles\QuotaIncrement.lxml" />
     <None Include="EntityFiles\QuotaComputationBasis.lxml" />
     <None Include="EntityFiles\TarifRelatedToQuota.lxml" />
     <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />

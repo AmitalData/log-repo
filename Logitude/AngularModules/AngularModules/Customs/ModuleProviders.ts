@@ -472,7 +472,7 @@ import { CarWeightListService } from './Services/StandardLists/CarWeightListServ
 import { ComputationMethodListService } from './Services/StandardLists/ComputationMethodListService';
 import { TarifRelatedToQuotaListService } from './Services/StandardLists/TarifRelatedToQuotaListService';
 import { QuotaComputationBasisListService } from './Services/StandardLists/QuotaComputationBasisListService';
-
+import { QuotaIncrementListService } from './Services/StandardLists/QuotaIncrementListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -745,6 +745,7 @@ export class ModuleProviders {
             case "ComputationMethodListService": { myResult = new ComputationMethodListService(); break; }
             case "TarifRelatedToQuotaListService": { myResult = new TarifRelatedToQuotaListService(); break; }
             case "QuotaComputationBasisListService": { myResult = new QuotaComputationBasisListService(); break; }
+            case "QuotaIncrementListService": { myResult = new QuotaIncrementListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }

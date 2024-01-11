@@ -1267,6 +1267,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(QuotaComputationBasisTable, QuotaComputationBasisObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(QuotaComputationBasisTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData QuotaIncrementTable = closedSystemTables.Where(d => d.id == "1062").FirstOrDefault();
+            ObjectTable QuotaIncrementObjectTable = objectTableRepository.GetObjectTableByName("Customs.QuotaIncrement", 0, false);
+            InsertClosedTableRecord(QuotaIncrementTable, QuotaIncrementObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(QuotaIncrementTable);
+
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);

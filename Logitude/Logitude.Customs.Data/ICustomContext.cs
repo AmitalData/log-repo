@@ -343,6 +343,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ProductNameType> ProductNameTypes { get; }
 		 IDbSet<PropertiesDetailsHistory> PropertiesDetailsHistorys { get; }
 		 IDbSet<QuotaComputationBasis> QuotaComputationBasises { get; }
+		 IDbSet<QuotaIncrement> QuotaIncrements { get; }
 		 IDbSet<RansomViolationType> RansomViolationTypes { get; }
 		 IDbSet<ReferantException> ReferantExceptions { get; }
 		 IDbSet<ReferantTeam> ReferantTeams { get; }

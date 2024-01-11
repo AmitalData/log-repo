@@ -1224,6 +1224,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\GovernmentProcTypeTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\InternationalSiteTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\QuotaComputationBasisViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\QuotaIncrementViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RequestToAdvanceAQueueViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\OriginCriterionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RequestReasonCodeEnumViewsController.Generated.cs" />
@@ -3556,6 +3557,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PriceStepUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ProceduralFaultUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuotaComputationBasisUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuotaIncrementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPClosingReasonUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPComputedFieldUpdateClass.cs" />
