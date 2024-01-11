@@ -590,6 +590,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new LeadDocumentTypeMap());
 	
+            modelBuilder.Configurations.Add(new LevyTrustMap());
+	
             modelBuilder.Configurations.Add(new LoadingSiteTypeMap());
 	
             modelBuilder.Configurations.Add(new LogisticActionRequestMap());
@@ -2994,6 +2996,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<LeadDocumentType> LeadDocumentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<LevyTrust> LevyTrusts 
 	 {
 	      get; set;
 	 

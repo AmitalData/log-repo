@@ -465,6 +465,8 @@ import { ConfirmationNumberTokenLogListService } from './Services/StandardLists/
 import { ConfirmationNumberTokenLogPMService } from './Services/StandardPMs/ConfirmationNumberTokenLogPMService';
 import { CustomsItemCategoryListService } from './Services/StandardLists/CustomsItemCategoryListService';
 import { CustomsItemHierarchicLocationListService } from './Services/StandardLists/CustomsItemHierarchicLocationListService';
+import { LevyTrustListService } from './Services/StandardLists/LevyTrustListService';
+
 import { CustomsEntityStatusListService } from './Services/StandardLists/CustomsEntityStatusListService';
 import { ConditionalExemptionTypeListService } from './Services/StandardLists/ConditionalExemptionTypeListService';
 import { CarEngineVolumeListService } from './Services/StandardLists/CarEngineVolumeListService';

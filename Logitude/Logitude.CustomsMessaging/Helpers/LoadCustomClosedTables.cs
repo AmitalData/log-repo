@@ -1282,6 +1282,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(PerYearFrequencyTable, PerYearFrequencyObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(PerYearFrequencyTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData LevyTrustTable = closedSystemTables.Where(d => d.id == "1361").FirstOrDefault();
+            ObjectTable LevyTrustObjectTable = objectTableRepository.GetObjectTableByName("Customs.LevyTrust", 0, false);
+            InsertClosedTableRecord(LevyTrustTable, CustomsItemHierarchicLocationObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(LevyTrustTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData InceptionCodeTable = closedSystemTables.Where(d => d.id == "1066").FirstOrDefault();
             ObjectTable InceptionCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.InceptionCode", 0, false);
             InsertClosedTableRecord(InceptionCodeTable, InceptionCodeObjectTable, customsClosedTables, customsClosedTableRepository);
