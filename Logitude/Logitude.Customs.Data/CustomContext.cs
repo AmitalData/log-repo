@@ -118,6 +118,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CancelRequestRejectReasonTypeMap());
 	
+            modelBuilder.Configurations.Add(new CarEngineVolumeMap());
+	
             modelBuilder.Configurations.Add(new CargoIdentifireTypeMap());
 	
             modelBuilder.Configurations.Add(new CargoIdentityQualifierMap());
@@ -131,9 +133,11 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CargoStatusMap());
 	
             modelBuilder.Configurations.Add(new CargoTypeMap());
-	
+
+            modelBuilder.Configurations.Add(new CarWeightMap());
+
             modelBuilder.Configurations.Add(new CB_CustomsItemMap());
-	
+
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
 	
             modelBuilder.Configurations.Add(new CertificateOfOriginMap());
@@ -147,6 +151,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CertificateOfOriginTypeCodeEnumMap());
 	
             modelBuilder.Configurations.Add(new CertificatesStatusMap());
+	
+            modelBuilder.Configurations.Add(new ChangeTypeMap());
 	
             modelBuilder.Configurations.Add(new CheckEntityTypeMap());
 	
@@ -225,6 +231,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CommercialSaleMap());
 	
             modelBuilder.Configurations.Add(new CommunicationTypeMap());
+	
+            modelBuilder.Configurations.Add(new ComputationMethodMap());
 	
             modelBuilder.Configurations.Add(new ConditionalExemptionTypeMap());
 	
@@ -502,6 +510,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new EntityTypeLookupMap());
 	
+            modelBuilder.Configurations.Add(new EntryExitTypeMap());
+	
             modelBuilder.Configurations.Add(new ExceptionReasonMap());
 	
             modelBuilder.Configurations.Add(new ExportDeclarationClosingDataMap());
@@ -560,7 +570,11 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ImporterTypeForClaimMap());
 	
+            modelBuilder.Configurations.Add(new InceptionCodeMap());
+	
             modelBuilder.Configurations.Add(new IncotemrsFileValidationMap());
+	
+            modelBuilder.Configurations.Add(new InterConditionsRelationshipMap());
 	
             modelBuilder.Configurations.Add(new InterfaceManagementMap());
 	
@@ -583,6 +597,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new LeadDocumentExceptionTypeMap());
 	
             modelBuilder.Configurations.Add(new LeadDocumentTypeMap());
+	
+            modelBuilder.Configurations.Add(new LevyTrustMap());
 	
             modelBuilder.Configurations.Add(new LoadingSiteTypeMap());
 	
@@ -678,6 +694,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
 	
+            modelBuilder.Configurations.Add(new PerYearFrequencyMap());
+	
             modelBuilder.Configurations.Add(new PhysicalCheckMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckCodeMap());
@@ -714,6 +732,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new PropertiesDetailsHistoryMap());
 	
+            modelBuilder.Configurations.Add(new QuotaComputationBasisMap());
+	
+            modelBuilder.Configurations.Add(new QuotaIncrementMap());
+	
             modelBuilder.Configurations.Add(new RansomViolationTypeMap());
 	
             modelBuilder.Configurations.Add(new ReferantExceptionMap());
@@ -728,7 +750,13 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
 	
+            modelBuilder.Configurations.Add(new RegularityPublicationMap());
+	
+            modelBuilder.Configurations.Add(new RegularitySourceMap());
+	
             modelBuilder.Configurations.Add(new ReleaseMessageTypeMap());
+	
+            modelBuilder.Configurations.Add(new RenewalMethodMap());
 	
             modelBuilder.Configurations.Add(new RequestReasonCodeEnumMap());
 	
@@ -840,6 +868,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new TapagTypeMap());
 	
+            modelBuilder.Configurations.Add(new TarifRelatedToQuotaMap());
+	
             modelBuilder.Configurations.Add(new TermsOfSaleTypeMap());
 	
             modelBuilder.Configurations.Add(new TPGFileTypeMap());
@@ -849,6 +879,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new TradeAgreementProtocolMap());
 	
             modelBuilder.Configurations.Add(new TradeLevyExamptTypeMap());
+	
+            modelBuilder.Configurations.Add(new TradeLevyStatusMap());
 	
             modelBuilder.Configurations.Add(new TransactionNatureTypeMap());
 	
@@ -1567,6 +1599,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CarEngineVolume> CarEngineVolumes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CargoIdentifireType> CargoIdentifireTypes 
 	 {
 	      get; set;
@@ -1608,14 +1646,18 @@ namespace Logitude.Customs.Data
 	      get; set;
 	 
 	 }
-	
-	 public IDbSet<CB_CustomsItem> CB_CustomsItems 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<CertificateExemptionType> CertificateExemptionTypes 
+
+     public IDbSet<CarWeight> CarWeights
+     {
+        get; set;
+     }
+
+     public IDbSet<CB_CustomsItem> CB_CustomsItems
+     {
+        get; set;
+     }
+
+        public IDbSet<CertificateExemptionType> CertificateExemptionTypes 
 	 {
 	      get; set;
 	 
@@ -1652,6 +1694,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CertificatesStatus> CertificatesStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ChangeType> ChangeTypes 
 	 {
 	      get; set;
 	 
@@ -1886,6 +1934,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CommunicationType> CommunicationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ComputationMethod> ComputationMethods 
 	 {
 	      get; set;
 	 
@@ -2719,6 +2773,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<EntryExitType> EntryExitTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ExceptionReason> ExceptionReasons 
 	 {
 	      get; set;
@@ -2893,7 +2953,19 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<InceptionCode> InceptionCodes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<IncotemrsFileValidation> IncotemrsFileValidations 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterConditionsRelationship> InterConditionsRelationships 
 	 {
 	      get; set;
 	 
@@ -2960,6 +3032,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<LeadDocumentType> LeadDocumentTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<LevyTrust> LevyTrusts 
 	 {
 	      get; set;
 	 
@@ -3247,6 +3325,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<PerYearFrequency> PerYearFrequencies 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<PhysicalCheck> PhysicalChecks 
 	 {
 	      get; set;
@@ -3355,6 +3439,18 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<QuotaComputationBasis> QuotaComputationBasises 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<QuotaIncrement> QuotaIncrements 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<RansomViolationType> RansomViolationTypes 
 	 {
 	      get; set;
@@ -3397,7 +3493,25 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<RegularityPublication> RegularityPublications 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RegularitySource> RegularitySources 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<ReleaseMessageType> ReleaseMessageTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RenewalMethod> RenewalMethods 
 	 {
 	      get; set;
 	 
@@ -3733,6 +3847,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<TarifRelatedToQuota> TarifRelatedToQuotas 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<TermsOfSaleType> TermsOfSaleTypes 
 	 {
 	      get; set;
@@ -3758,6 +3878,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<TradeLevyExamptType> TradeLevyExamptTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TradeLevyStatus> TradeLevystatuses 
 	 {
 	      get; set;
 	 
