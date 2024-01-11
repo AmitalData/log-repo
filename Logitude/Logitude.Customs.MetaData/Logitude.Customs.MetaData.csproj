@@ -643,6 +643,7 @@
     <None Include="EntityFiles\CustomDocumentTypeTenant.lxml" />
     <None Include="EntityFiles\CustomsCountryTenant.lxml" />
     <None Include="EntityFiles\CustomsHouseTypeTenant.lxml" />
+    <None Include="EntityFiles\InterConditionsRelationship.lxml" />
     <None Include="EntityFiles\RegularitySource.lxml" />
     <None Include="EntityFiles\ChangeType.lxml" />
     <None Include="EntityFiles\TradeLevyStatus.lxml" />

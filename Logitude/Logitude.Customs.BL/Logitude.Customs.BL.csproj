@@ -199,6 +199,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\HandingCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\InceptionCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\IncotemrsFileValidationDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\InterConditionsRelationshipDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LevyTrustDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LoadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LogisticActionRequestTypeDetails.Generated.cs" />
@@ -843,6 +844,7 @@
     <Compile Include="EntityDataMappings\Generated\ImporterTypeForClaimDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InceptionCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\IncotemrsFileValidationDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\InterConditionsRelationshipDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterfaceManagementDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterfaceSendOptionDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\InterfaceTenantDefinitionDataMapping.Generated.cs" />
@@ -1045,6 +1047,7 @@
     <Compile Include="EntityDataMappings\ImporterTypeForClaimDataMapping.cs" />
     <Compile Include="EntityDataMappings\InceptionCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\IncotemrsFileValidationDataMapping.cs" />
+    <Compile Include="EntityDataMappings\InterConditionsRelationshipDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterfaceManagementDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterfaceSendOptionDataMapping.cs" />
     <Compile Include="EntityDataMappings\InterfaceTenantDefinitionDataMapping.cs" />
@@ -1262,6 +1265,7 @@
     <Compile Include="EntityQueryServices\Generated\CustomsItemCategoryQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsItemHierarchicLocationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationCounterQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\InterConditionsRelationshipQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\LevyTrustQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\InceptionCodeQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\PerYearFrequencyQueryService.Generated.cs" />
@@ -1828,6 +1832,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsEntityStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsItemCategoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsItemHierarchicLocationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\InterConditionsRelationshipUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\LevyTrustUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\InceptionCodeUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\PerYearFrequencyUpdateService.Generated.cs" />
