@@ -6079,29 +6079,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private bool effectiveFlight ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public bool EffectiveFlight  
-	   {
-	    
-	     get
-		{
-		   return effectiveFlight;
-		 }
-		 set
-		 {
-		   if(effectiveFlight != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EffectiveFlight",OldValue=effectiveFlight,NewValue=value,PropertyType="bool"};
-		    NotifyPropertyChanged(values);
-		   effectiveFlight=value;
-		   }
-			
-		 }
-	   }
 
 	   private List<DeclarationPaymentPM> declarationPayments;
 	    
@@ -6137,7 +6114,30 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedDeclarationPayments = value; }
 	    }
-	     }
+	  	  private bool effectiveFlight ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool EffectiveFlight  
+	   {
+	    
+	     get
+		{
+		   return effectiveFlight;
+		 }
+		 set
+		 {
+		   if(effectiveFlight != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EffectiveFlight",OldValue=effectiveFlight,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   effectiveFlight=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

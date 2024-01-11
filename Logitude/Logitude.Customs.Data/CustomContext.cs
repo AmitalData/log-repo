@@ -564,6 +564,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ImporterTypeForClaimMap());
 	
+            modelBuilder.Configurations.Add(new InceptionCodeMap());
+	
             modelBuilder.Configurations.Add(new IncotemrsFileValidationMap());
 	
             modelBuilder.Configurations.Add(new InterfaceManagementMap());
@@ -2918,6 +2920,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ImporterTypeForClaim> ImporterTypeForClaims 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InceptionCode> InceptionCodes 
 	 {
 	      get; set;
 	 

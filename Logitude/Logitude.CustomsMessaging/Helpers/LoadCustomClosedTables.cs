@@ -1287,6 +1287,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(LevyTrustTable, LevyTrustObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(LevyTrustTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData InceptionCodeTable = closedSystemTables.Where(d => d.id == "1066").FirstOrDefault();
+            ObjectTable InceptionCodeObjectTable = objectTableRepository.GetObjectTableByName("Customs.InceptionCode", 0, false);
+            InsertClosedTableRecord(InceptionCodeTable, InceptionCodeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(InceptionCodeTable);
+
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData TradeLevyStatusTable = closedSystemTables.Where(d => d.id == "1068").FirstOrDefault();
             ObjectTable TradeLevyStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.TradeLevyStatus", 0, false);
             InsertClosedTableRecord(TradeLevyStatusTable, TradeLevyStatusObjectTable, customsClosedTables, customsClosedTableRepository);
