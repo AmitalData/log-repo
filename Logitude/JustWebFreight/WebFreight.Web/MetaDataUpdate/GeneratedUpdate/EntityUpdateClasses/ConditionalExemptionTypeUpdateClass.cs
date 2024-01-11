@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ConditionalExemptionTypeUpdateClass
    {  		
-		public const string HashString = "92a58c4b9e17006915bf7b335cfa462f";
+		public const string HashString = "d1093eb05bdda66584c8743686b79e73";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "סוג פט"מ",
+			      				    LocalDefaultText =  "סוג פטמ",
 			      				    DefaultText =  "Conditional Exemption Type",
 			      				    Code =  "c8e3",
 			      				    Name =  " Query Group",
@@ -487,7 +487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ConditionalExemptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConditionalExemptionType.Q.ConditionalExemptionType", DefaultText = @"Conditional Exemption Type",LocalDefaultText = "סוג פט"מ", ObjectTableId = ConditionalExemptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   TextCode ConditionalExemptionTypeTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConditionalExemptionType.Q.ConditionalExemptionType", DefaultText = @"Conditional Exemption Type",LocalDefaultText = "סוג פטמ", ObjectTableId = ConditionalExemptionTypeObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature ConditionalExemptionTypeFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConditionalExemptionType.Q.ConditionalExemptionType", ObjectTableId = ConditionalExemptionTypeObjectTable.Id, Tenant = 0, NameTextCodeCode = "ConditionalExemptionType.Features.ConditionalExemptionType", NameTextCodeDefaultText = "ConditionalExemptionType", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ConditionalExemptionTypeObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
