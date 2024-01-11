@@ -136,6 +136,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CarWeightMap());
 	
+            modelBuilder.Configurations.Add(new CB_CustomsItemMap());
+	
+            modelBuilder.Configurations.Add(new CB_PropertiesDetailsHistoryMap());
+	
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
 	
             modelBuilder.Configurations.Add(new CertificateOfOriginMap());
@@ -937,6 +941,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new VendorTypeMap());
 	
 				
+			modelBuilder.Entity<CB_PropertiesDetailsHistory>().Property(x => x.VatDiscountRate).HasPrecision(2, 2);
+				
 			modelBuilder.Entity<ClaimImporterDeclarsPage3B>().Property(x => x.SaleAmountAfter).HasPrecision(16, 2);
 				
 			modelBuilder.Entity<ClaimImporterDeclarsPage3B>().Property(x => x.SaleAmountClaim).HasPrecision(16, 2);
@@ -1646,6 +1652,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CarWeight> CarWeights 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_CustomsItem> CB_CustomsItems 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_PropertiesDetailsHistory> CB_PropertiesDetailsHistorys 
 	 {
 	      get; set;
 	 

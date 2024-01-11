@@ -1,0 +1,233 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class CB_CustomsItemPM : EntityPM
+   {
+   	  private string iD ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ID  
+	   {
+	    
+	     get
+		{
+		   return iD;
+		 }
+		 set
+		 {
+		   if(iD != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   iD=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime createDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime CreateDate  
+	   {
+	    
+	     get
+		{
+		   return createDate;
+		 }
+		 set
+		 {
+		   if(createDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=createDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   createDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime updateDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime UpdateDate  
+	   {
+	    
+	     get
+		{
+		   return updateDate;
+		 }
+		 set
+		 {
+		   if(updateDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDate",OldValue=updateDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   updateDate=value;
+		   }
+			
+		 }
+	   }
+	  private string fullClassification ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string FullClassification  
+	   {
+	    
+	     get
+		{
+		   return fullClassification;
+		 }
+		 set
+		 {
+		   if(fullClassification != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="FullClassification",OldValue=fullClassification,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   fullClassification=value;
+		   }
+			
+		 }
+	   }
+	  private string parent_CustomsItemID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Parent_CustomsItemID  
+	   {
+	    
+	     get
+		{
+		   return parent_CustomsItemID;
+		 }
+		 set
+		 {
+		   if(parent_CustomsItemID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Parent_CustomsItemID",OldValue=parent_CustomsItemID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   parent_CustomsItemID=value;
+		   }
+			
+		 }
+	   }
+	  private string computedCheckDigit ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ComputedCheckDigit  
+	   {
+	    
+	     get
+		{
+		   return computedCheckDigit;
+		 }
+		 set
+		 {
+		   if(computedCheckDigit != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputedCheckDigit",OldValue=computedCheckDigit,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   computedCheckDigit=value;
+		   }
+			
+		 }
+	   }
+	  private string customsBookTypeID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsBookTypeID  
+	   {
+	    
+	     get
+		{
+		   return customsBookTypeID;
+		 }
+		 set
+		 {
+		   if(customsBookTypeID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsBookTypeID",OldValue=customsBookTypeID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsBookTypeID=value;
+		   }
+			
+		 }
+	   }
+	  private string customsItemCategoryID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsItemCategoryID  
+	   {
+	    
+	     get
+		{
+		   return customsItemCategoryID;
+		 }
+		 set
+		 {
+		   if(customsItemCategoryID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemCategoryID",OldValue=customsItemCategoryID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsItemCategoryID=value;
+		   }
+			
+		 }
+	   }
+	  private string customsItemHierarchicLocationID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsItemHierarchicLocationID  
+	   {
+	    
+	     get
+		{
+		   return customsItemHierarchicLocationID;
+		 }
+		 set
+		 {
+		   if(customsItemHierarchicLocationID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemHierarchicLocationID",OldValue=customsItemHierarchicLocationID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsItemHierarchicLocationID=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

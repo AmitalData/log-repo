@@ -83,20 +83,20 @@ using Amital.QuoteOPM.BL;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
-   public class ComputationMethodUpdateClass
+   public class CB_CustomsItemUpdateClass
    {  		
-		public const string HashString = "c997e2f11a2e1a34819b43c48de028a9";
+		public const string HashString = "f829158200e0369bfebf94a59e1fa185";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
             {
 			
-	             				    ObjectTableName =  "Customs.ComputationMethod",
+	             				    ObjectTableName =  "Customs.CB_CustomsItem",
 			      				    IsNew =  true,
-			      				    DBTableName =  "Customs.ComputationMethods",
-			      				    ObjectTableSingular =  "ComputationMethod",
-			      				    ObjectTablePlural =  "ComputationMethods",
+			      				    DBTableName =  "Customs.CB_CustomsItems",
+			      				    ObjectTableSingular =  "Customs.CB_CustomsItem",
+			      				    ObjectTablePlural =  "Customs.CB_CustomsItems",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    HasHelper =  false,
@@ -104,20 +104,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
-			      				    LookUp1 =  "Code",
-			      				    LookUp2 =  "LocalName",
-			      				    KeyPropertyPath =  "Code",
+			      				    LookUp1 =  "ID",
+			      				    KeyPropertyPath =  "ID",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  true,
+			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
-			      				    HasCounter =  false,
+			      				    HasCounter =  true,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
+			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
-			      				    SortingByObjectField =  "Code",
+			      				    SortingByObjectField =  "ID",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
@@ -126,13 +125,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
-			      				    LocalDefaultText =  "שיטת חישוב",
-			      				    DefaultText =  "Computation Method",
-			      				    Code =  "c8e3",
+			      				    LocalDefaultText =  "פרט מכס",
+			      				    DefaultText =  "CustomsItem",
+			      				    Code =  "7707",
 			      				    Name =  " Query Group",
-			      				    CloseTableCode =  "Code",
-			      				    CloseTableName =  "LocalName",
-			      				    GenerateDomainService =  false,
+			      				    GenerateDomainService =  true,
 			      				    ClientModuleName =  "Customs",
 			      				    ServerModuleName =  "Customs",
 			      				    NoTS =  false,
@@ -143,7 +140,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasDocuments =  false,
 			      				    IsLookUp =  false,
 			      				    IsTabsHidden =  false,
-			      				    HashString =  ComputationMethodUpdateClass.HashString,
+			      				    HashString =  CB_CustomsItemUpdateClass.HashString,
 			                    
             }, ObjectTableRepository, TextCodeRepository, objectTables, textCodes);
 		}
@@ -154,27 +151,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Code",
-					  						ObjectTableName =  "Customs.ComputationMethod",
+					 						FieldName =  "ID",
+					  						ObjectTableName =  "Customs.CB_CustomsItem",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  15,
 					  						IsRequired =  true,
 					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
+					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  2,
+					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
-					  						PMPropertyPath =  "Code",
-					  						ListPropertyPath =  "Code",
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ID",
+					  						ListPropertyPath =  "ID",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -183,7 +179,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ComputationMethod",
+					  						ValidForQuerySection1 =  "Customs.CB_CustomsItem",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -192,15 +188,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Code",
-					  						DefaultText =  "Code",
-					  						FullLocalDefaultText =  "קוד",
-					  						ListFieldLable =  "CodeListLable",
-					  						ListLableDefaultText =  "Code",
-					  						ListLocalDefaultText =  "קוד",
+					  						FullFieldLable =  "ID",
+					  						DefaultText =  "ID",
+					  						ListFieldLable =  "IDListLable",
+					  						ListLableDefaultText =  "ID",
+					  						ListLocalDefaultText =  "מזהה פנימי",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
+					  						EnableAutoFill =  true,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
@@ -217,74 +212,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "LocalName",
-					  						ObjectTableName =  "Customs.ComputationMethod",
-					  						FieldsDataType =  "nText",
+					 						FieldName =  "UpdateDate",
+					  						ObjectTableName =  "Customs.CB_CustomsItem",
+					  						FieldsDataType =  "DateTime",
 					  						MinLength =  0,
-					  						MaxLength =  60,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  true,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  60,
-					  						DisplayInList =  true,
-					  						IsCustomFilter =  false,
-					  						Operator =  "StartsWith",
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  true,
-					  						PMPropertyPath =  "LocalName",
-					  						ListPropertyPath =  "LocalName",
-					  						DisplayInLookUpIndex =  1,
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  1,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ComputationMethod",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "LocalName",
-					  						DefaultText =  "Local Name",
-					  						FullLocalDefaultText =  "שם מקומי",
-					  						ListFieldLable =  "LocalNameListLable",
-					  						ListLableDefaultText =  "Local Name",
-					  						ListLocalDefaultText =  "שם מקומי",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "SearchFields",
-					  						ObjectTableName =  "Customs.ComputationMethod",
-					  						FieldsDataType =  "nText",
-					  						MinLength =  0,
-					  						MaxLength =  1000,
+					  						MaxLength =  0,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -292,14 +224,14 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  1000,
-					  						DisplayInList =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "SearchFields",
-					  						ListPropertyPath =  "SearchFields",
+					  						PMPropertyPath =  "UpdateDate",
+					  						ListPropertyPath =  "UpdateDate",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -308,7 +240,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ComputationMethod",
+					  						ValidForQuerySection1 =  "Customs.CB_CustomsItem",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -317,10 +249,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "SearchFields",
-					  						DefaultText =  "Search Fields",
-					  						ListFieldLable =  "SearchFieldsListLable",
-					  						ListLableDefaultText =  "Search Fields",
+					  						FullFieldLable =  "UpdateDate",
+					  						DefaultText =  "Update Date",
+					  						ListFieldLable =  "UpdateDateListLable",
+					  						ListLableDefaultText =  "Update Date",
+					  						ListLocalDefaultText =  "תאריך עדכון אחרון",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -340,11 +273,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "EnglishName",
-					  						ObjectTableName =  "Customs.ComputationMethod",
+					 						FieldName =  "FullClassification",
+					  						ObjectTableName =  "Customs.CB_CustomsItem",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  80,
+					  						MaxLength =  13,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -352,15 +285,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  80,
+					  						SystemMaxLength =  13,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "EnglishName",
-					  						ListPropertyPath =  "EnglishName",
+					  						PMPropertyPath =  "FullClassification",
+					  						ListPropertyPath =  "FullClassification",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -369,7 +302,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ComputationMethod",
+					  						ValidForQuerySection1 =  "Customs.CB_CustomsItem",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -378,12 +311,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "EnglishName",
-					  						DefaultText =  "English Name",
-					  						FullLocalDefaultText =  "שם אנגלית",
-					  						ListFieldLable =  "EnglishNameListLable",
-					  						ListLableDefaultText =  "English Name",
-					  						ListLocalDefaultText =  "שם אנגלית",
+					  						FullFieldLable =  "FullClassification",
+					  						DefaultText =  "Full Classification",
+					  						ListFieldLable =  "FullClassificationListLable",
+					  						ListLableDefaultText =  "Full Classification",
+					  						ListLocalDefaultText =  "סיווג מלא",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -403,27 +335,26 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "Inactive",
-					  						ObjectTableName =  "Customs.ComputationMethod",
-					  						FieldsDataType =  "Boolean",
+					 						FieldName =  "Parent_CustomsItemID",
+					  						ObjectTableName =  "Customs.CB_CustomsItem",
+					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
-					  						MaxLength =  0,
+					  						MaxLength =  15,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  true,
+					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  0,
+					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
-					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "Inactive",
-					  						ListPropertyPath =  "Inactive",
+					  						PMPropertyPath =  "Parent_CustomsItemID",
+					  						ListPropertyPath =  "Parent_CustomsItemID",
 					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
@@ -432,7 +363,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DependencyFilter1IsList =  false,
 					  						DependencyFilter2IsList =  false,
 					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.ComputationMethod",
+					  						ValidForQuerySection1 =  "Customs.CB_CustomsItem",
 					  						IsRestrictable =  false,
 					  						DisplayInEntityVariables =  false,
 					  						AllowedInCustomerFieldsSettings =  false,
@@ -441,12 +372,259 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "Inactive",
-					  						DefaultText =  "Inactive",
-					  						FullLocalDefaultText =  "לא פּעיל",
-					  						ListFieldLable =  "InactiveListLable",
-					  						ListLableDefaultText =  "Inactive",
-					  						ListLocalDefaultText =  "לא פּעיל",
+					  						FullFieldLable =  "Parent_CustomsItemID",
+					  						DefaultText =  "Parent Customs Item ID",
+					  						ListFieldLable =  "Parent_CustomsItemIDListLable",
+					  						ListLableDefaultText =  "Parent Customs Item ID",
+					  						ListLocalDefaultText =  "מזהה של פרט אב",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ComputedCheckDigit",
+					  						ObjectTableName =  "Customs.CB_CustomsItem",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  1,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  true,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  1,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						Operator =  "StartsWith",
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ComputedCheckDigit",
+					  						ListPropertyPath =  "ComputedCheckDigit",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CB_CustomsItem",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ComputedCheckDigit",
+					  						DefaultText =  "Computed Check Digit",
+					  						ListFieldLable =  "ComputedCheckDigitListLable",
+					  						ListLableDefaultText =  "Computed Check Digit",
+					  						ListLocalDefaultText =  "ספרת ביקורת",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomsBookTypeID",
+					  						ObjectTableName =  "Customs.CB_CustomsItem",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.CustomsBookType",
+					  						MinLength =  0,
+					  						MaxLength =  4,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  4,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomsBookTypeID",
+					  						ListPropertyPath =  "CustomsBookTypeID",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CB_CustomsItem",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomsBookTypeID",
+					  						DefaultText =  "Customs Book Type ID",
+					  						ListFieldLable =  "CustomsBookTypeIDListLable",
+					  						ListLableDefaultText =  "Customs Book Type ID",
+					  						ListLocalDefaultText =  "קוד סוג ספר מכס",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomsItemCategoryID",
+					  						ObjectTableName =  "Customs.CB_CustomsItem",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.CustomsItemCategory",
+					  						MinLength =  0,
+					  						MaxLength =  4,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  4,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomsItemCategoryID",
+					  						ListPropertyPath =  "CustomsItemCategoryID",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CB_CustomsItem",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomsItemCategoryID",
+					  						DefaultText =  "Customs Item Category ID",
+					  						ListFieldLable =  "CustomsItemCategoryIDListLable",
+					  						ListLableDefaultText =  "CustomsItemCategory",
+					  						ListLocalDefaultText =  "סוג של פרט מכס",
+					  						IsMaxLength =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "CustomsItemHierarchicLocationID",
+					  						ObjectTableName =  "Customs.CB_CustomsItem",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "Customs.CustomsItemHierarchicLocation",
+					  						MinLength =  0,
+					  						MaxLength =  2,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  2,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "CustomsItemHierarchicLocationID",
+					  						ListPropertyPath =  "CustomsItemHierarchicLocationID",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.CB_CustomsItem",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "CustomsItemHierarchicLocationID",
+					  						DefaultText =  "Customs Item Hierarchic Location ID",
+					  						ListFieldLable =  "CustomsItemHierarchicLocationIDListLable",
+					  						ListLableDefaultText =  "Customs Item Hierarchic Location ID",
+					  						ListLocalDefaultText =  "קוד היררכיה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
@@ -465,64 +643,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {  
-	        //FeatureRepository featureRepository = new FeatureRepository(0); 
-            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
-	        QueryGroup ComputationMethodQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "c8e3", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
-						QueryGroup ComputationMethodQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "3e16", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
-				        queryGroupRepository.SubmitChanges();
-	        ObjectTable ComputationMethodObjectTable = objectTables.ContainsKey("Customs.ComputationMethod") ? objectTables["Customs.ComputationMethod"] : null;
-            if (ComputationMethodObjectTable == null)
-            {
-                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
-
-                ComputationMethodObjectTable = objectContext.ObjectTables.Where(d => d.Name == "Customs.ComputationMethod" && d.Tenant == 0).FirstOrDefault();
-            }
-
-	         
-			List<Feature> addedFeatures = new List<Feature>();
-			List<TextCode> addedTextCodes = new List<TextCode>();
-			List<Query> addedQueries = new List<Query>();
-			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
-			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
-   
-
-			   TextCode ComputationMethodTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ComputationMethod.Q.ComputationMethod", DefaultText = @"Computation Method",LocalDefaultText = "שיטת חישוב", ObjectTableId = ComputationMethodObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ComputationMethodFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ComputationMethod.Q.ComputationMethod", ObjectTableId = ComputationMethodObjectTable.Id, Tenant = 0, NameTextCodeCode = "ComputationMethod.Features.ComputationMethod", NameTextCodeDefaultText = "ComputationMethod", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ComputationMethodObjectTable, addedFeatures, addedTextCodes);
-
-	        //TextCodeRepository.SubmitChanges();
-	        //FeaturesRepository.SubmitChanges();    
-	      
-
-			  Query ComputationMethodQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ComputationMethodTextCode_0.Id, NameTextCodeCode = ComputationMethodTextCode_0.Code, ObjectTableName = "Customs.ComputationMethod", Code = "ComputationMethod",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = ComputationMethodObjectTable.Id, QuerySection = "Customs.ComputationMethod", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ComputationMethodFeature_0.Id,FeatureUniqeCode= ComputationMethodFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
-	
-			 QueryColumn ComputationMethodQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ComputationMethodQuery.Id,QueryCode = ComputationMethodQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.ComputationMethod.Code" , ColumnWidth = 50 }, addedQueryColumns);
-
-			 QueryColumn ComputationMethodQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ComputationMethodQuery.Id,QueryCode = ComputationMethodQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.ComputationMethod.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn ComputationMethodQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ComputationMethodQuery.Id,QueryCode = ComputationMethodQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.ComputationMethod.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
-
-			 QueryColumn ComputationMethodQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = ComputationMethodQuery.Id,QueryCode = ComputationMethodQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.ComputationMethod.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
-			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
-			SqlBulkInsert.BulkInsert("Features", addedFeatures);
-			SqlBulkInsert.BulkInsert("Queries", addedQueries);
-			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
-			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
-  
+	    {    
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
 	    {   
 
-		   ObjectTable ComputationMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ComputationMethod" && d.Tenant == 0).FirstOrDefault();
-		   //List<ObjectField> ComputationMethodObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.ComputationMethod").ToList();
+		   ObjectTable CB_CustomsItemObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CB_CustomsItem" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CB_CustomsItemObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CB_CustomsItem").ToList();
 		       
 	      
 
-	         Screen ComputationMethodCustomsComputationMethodHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ComputationMethod.HeaderScreen", Name = "Customs.ComputationMethodHeaderScreen", ObjectTableId = ComputationMethodObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CB_CustomsItemCB_CustomsItemHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CB_CustomsItem.HeaderScreen", Name = "CB_CustomsItemHeaderScreen", ObjectTableId = CB_CustomsItemObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
       	
-		    ComputationMethodObjectTable.HeaderScreenId = ComputationMethodCustomsComputationMethodHeaderScreenScreen0.Id;
-		    ComputationMethodObjectTable.HeaderScreenCode = ComputationMethodCustomsComputationMethodHeaderScreenScreen0.Code;
+		    CB_CustomsItemObjectTable.HeaderScreenId = CB_CustomsItemCB_CustomsItemHeaderScreenScreen0.Id;
+		    CB_CustomsItemObjectTable.HeaderScreenCode = CB_CustomsItemCB_CustomsItemHeaderScreenScreen0.Code;
 
 	   		  
 
@@ -533,13 +668,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable CB_CustomsItemObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CB_CustomsItem" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature CB_CustomsItemFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CB_CustomsItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CB_CustomsItem.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CB_CustomsItemObjectTable);
+		   Feature CB_CustomsItemFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CB_CustomsItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CB_CustomsItem.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CB_CustomsItemObjectTable);
+		   Feature CB_CustomsItemFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CB_CustomsItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CB_CustomsItem.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CB_CustomsItemObjectTable);
+		   Feature CB_CustomsItemFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CB_CustomsItemObjectTable.Id, Tenant = 0, NameTextCodeCode = "CB_CustomsItem.Features.PackageFeature", NameTextCodeDefaultText = "CB_CustomsItem Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CB_CustomsItemObjectTable);    
 	    
 		}
 
 	    public void AddTableEventTypes(Dictionary<string, EventType> tenantEventTypes,EventTypeRepository EventTypeRepository,IWebFreightContext ObjectContext,List<EntityStatus> AllEntityStatuses)
 	    {   
-			ObjectTable ComputationMethodObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.ComputationMethod" && d.Tenant == 0).FirstOrDefault(); 
+			ObjectTable CB_CustomsItemObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CB_CustomsItem" && d.Tenant == 0).FirstOrDefault(); 
             AddEventTypes.AddEventType(new EventTypeDetails()
             {
                 Code =  "CREV",
@@ -547,14 +688,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 LocalName =  "Created",
                 IsManualEntry =  false,
                 ShortView =  true,
-                EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = ComputationMethodObjectTable.Id,
+                ObjectTableId = CB_CustomsItemObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
@@ -566,14 +706,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
                 LocalName =  "Updated",
                 IsManualEntry =  false,
                 ShortView =  false,
-                EventTypeCategoryCode =  "OPE",
                 IsAgentView =  false,
                 IsCustomerView =  false,
                 IsSharedLogisticsEnabled =  false,
                 AllowedInAutomation =  false,
                 ManualActivatedFollowUp =  false,
                 IsFollowUp =  false,
-                ObjectTableId = ComputationMethodObjectTable.Id,
+                ObjectTableId = CB_CustomsItemObjectTable.Id,
 				 
             }, EventTypeRepository, tenantEventTypes);
 
