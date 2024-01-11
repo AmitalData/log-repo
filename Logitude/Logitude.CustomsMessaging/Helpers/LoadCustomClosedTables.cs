@@ -1317,6 +1317,10 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(InterConditionsRelationshipTable, InterConditionsRelationshipObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(InterConditionsRelationshipTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData EntryExitTypeTable = closedSystemTables.Where(d => d.id == "1270").FirstOrDefault();
+            ObjectTable EntryExitTypeObjectTable = objectTableRepository.GetObjectTableByName("Customs.EntryExitType", 0, false);
+            InsertClosedTableRecord(EntryExitTypeTable, EntryExitTypeObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(EntryExitTypeTable);
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);

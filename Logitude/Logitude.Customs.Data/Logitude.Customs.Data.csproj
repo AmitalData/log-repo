@@ -205,6 +205,7 @@
     <Compile Include="EntityKeys\DeliveryTypeKeys.cs" />
     <Compile Include="EntityKeys\DocumentRejectTypeKeys.cs" />
     <Compile Include="EntityKeys\DocumentTypeCustomsDataKeys.cs" />
+    <Compile Include="EntityKeys\EntryExitTypeKeys.cs" />
     <Compile Include="EntityKeys\ExceptionReasonKeys.cs" />
     <Compile Include="EntityKeys\ExportDeclarationClosingDataKeys.cs" />
     <Compile Include="EntityKeys\ExportDeliveryDocumentMessageKeys.cs" />
@@ -401,6 +402,7 @@
     <Compile Include="EntityListQueryServices\DeliveryTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentRejectTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\DocumentTypeCustomsDataListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\EntryExitTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExceptionReasonListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExportDeclarationClosingDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExportDeliveryDocumentMessageListQueryService.cs" />
@@ -516,6 +518,7 @@
     <Compile Include="EntityListQueryServices\Generated\DeliveryTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentRejectTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\DocumentTypeCustomsDataListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\EntryExitTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExceptionReasonListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExportDeclarationClosingDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExportDeliveryDocumentMessageListQueryService.Generated.cs" />
@@ -712,6 +715,7 @@
     <Compile Include="EntityLists\Generated\DeclarationCounterList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\EntryExitTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InceptionCodeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InterConditionsRelationshipList.Generated.cs" />
@@ -990,6 +994,7 @@
     <Compile Include="EntityMapping\DeliveryTypeMap.cs" />
     <Compile Include="EntityMapping\DocumentRejectTypeMap.cs" />
     <Compile Include="EntityMapping\DocumentTypeCustomsDataMap.cs" />
+    <Compile Include="EntityMapping\EntryExitTypeMap.cs" />
     <Compile Include="EntityMapping\ExceptionReasonMap.cs" />
     <Compile Include="EntityMapping\ExportDeclarationClosingDataMap.cs" />
     <Compile Include="EntityMapping\ExportDeliveryDocumentMessageMap.cs" />
@@ -1186,6 +1191,7 @@
     <Compile Include="EntityPOCOs\DeliveryType.cs" />
     <Compile Include="EntityPOCOs\DocumentRejectType.cs" />
     <Compile Include="EntityPOCOs\DocumentTypeCustomsData.cs" />
+    <Compile Include="EntityPOCOs\EntryExitType.cs" />
     <Compile Include="EntityPOCOs\ExceptionReason.cs" />
     <Compile Include="EntityPOCOs\ExportDeclarationClosingData.cs" />
     <Compile Include="EntityPOCOs\ExportDeliveryDocumentMessage.cs" />
@@ -1383,6 +1389,7 @@
     <Compile Include="Repsitories\DeliveryTypeRepository.cs" />
     <Compile Include="Repsitories\DocumentRejectTypeRepository.cs" />
     <Compile Include="Repsitories\DocumentTypeCustomsDataRepository.cs" />
+    <Compile Include="Repsitories\EntryExitTypeRepository.cs" />
     <Compile Include="Repsitories\ExceptionReasonRepository.cs" />
     <Compile Include="Repsitories\ExportDeclarationClosingDataRepository.cs" />
     <Compile Include="Repsitories\ExportDeliveryDocumentMessageRepository.cs" />
@@ -1498,6 +1505,7 @@
     <Compile Include="Repsitories\Generated\DeliveryTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentRejectTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\DocumentTypeCustomsDataRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\EntryExitTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExceptionReasonRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExportDeclarationClosingDataRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ExportDeliveryDocumentMessageRepository.Generated.cs" />

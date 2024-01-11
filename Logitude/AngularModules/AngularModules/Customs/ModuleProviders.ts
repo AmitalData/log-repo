@@ -483,6 +483,7 @@ import { RegularityPublicationListService } from './Services/StandardLists/Regul
 import { ChangeTypeListService } from './Services/StandardLists/ChangeTypeListService';
 import { RegularitySourceListService } from './Services/StandardLists/RegularitySourceListService';
 import { InterConditionsRelationshipListService } from './Services/StandardLists/InterConditionsRelationshipListService';
+import { EntryExitTypeListService } from './Services/StandardLists/EntryExitTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -764,6 +765,7 @@ export class ModuleProviders {
             case "RegularityPublicationListService": { myResult = new RegularityPublicationListService(); break; }
             case "ChangeTypeListService": { myResult = new ChangeTypeListService(); break; }
             case "RegularitySourceListService": { myResult = new RegularitySourceListService(); break; }
+            case "EntryExitTypeListService": { myResult = new EntryExitTypeListService(); break; }
             case "InterConditionsRelationshipListService": { myResult = new InterConditionsRelationshipListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }

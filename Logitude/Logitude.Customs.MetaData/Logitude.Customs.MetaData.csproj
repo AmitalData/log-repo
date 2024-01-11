@@ -426,6 +426,7 @@
     <None Include="DBTables\DocumentTypeCustomsData.dxml" />
     <None Include="DBTables\EntitlementType.dxml" />
     <None Include="DBTables\EntityTypeLookup.dxml" />
+    <None Include="DBTables\EntryExitType.dxml" />
     <None Include="DBTables\ExceptionReason.dxml" />
     <None Include="DBTables\ExportDeclarationClosingData.dxml" />
     <None Include="DBTables\ExportDeliveryDocumentMessage.dxml" />
@@ -647,6 +648,7 @@
     <None Include="EntityFiles\InterConditionsRelationship.lxml" />
     <None Include="EntityFiles\RegularitySource.lxml" />
     <None Include="EntityFiles\ChangeType.lxml" />
+    <None Include="EntityFiles\EntryExitType.lxml" />
     <None Include="EntityFiles\TradeLevyStatus.lxml" />
     <None Include="EntityFiles\RegularityPublication.lxml" />
     <None Include="EntityFiles\LevyTrust.lxml" />
