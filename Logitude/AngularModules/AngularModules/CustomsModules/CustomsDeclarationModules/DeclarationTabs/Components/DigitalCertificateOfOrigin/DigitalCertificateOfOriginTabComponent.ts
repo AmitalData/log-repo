@@ -88,19 +88,11 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
                         if (multiUpdateFeature) {
                             this.MultiUpdate = true;
                         }
-                        var isOcrFeature = FeatureLocator.HasFeaturePermession("Customs.Declaration", "OCR");
-                        if (isOcrFeature) {
-                            this.IsOcr = true;
-                        }
-
-
-
+                    
                         this.IsVisible = true;
 
-
-
                         this.certificateOfOriginPMService = new CertificateOfOriginPMService();
-                        this.certificateOfOriginPMService = new CertificateOfOriginPMService();
+                        
                         this.ObjectTableName = this.entityArgs.ObjectTableName;
 
 
@@ -187,9 +179,11 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
             CertificateOfOrigin: !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin) ? this.selectedCertificateOfOrigin : new CertificateOfOriginPM()
         };
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1100;
-        logWindow.Height = 750;
-        logWindow.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin"); // add id of CertificateOfOrigin
+        logWindow.Width = 1000;
+        logWindow.Height = 700;
+        logWindow.Title =  !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.CooTypeCode) ? TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin") + ": " + this.selectedCertificateOfOrigin.CooTypeCode : TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
+        // TODO: ADD to left side title
+        // logWindow.TitleStatus =  !AppTool.IsNullOrEmpty( this.selectedCertificateOfOrigin.CooStatusCode) ? TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode") + ": " + this.selectedCertificateOfOrigin.CooStatusCode : TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode");
         
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
@@ -220,9 +214,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         filters.SortBy = "SequenceNumeric";
         filters.SortDirection = "Ascending";
         filters.addAdditionalFilter("DeclarationId", this.EntityPM.Id , null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("Tenant", this.EntityPM.Tenant , null, null, "Equals", false, false, false, "string");
    
-
-        // TODO add tenent.
         this._entityListService.getByFilters("Customs.CertificateOfOrigin", filters).then((myResult:any) => {
             console.log("Response: ", myResult);
             if (myResult == null) {
@@ -369,50 +362,6 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
 
     EditCertificateOfOrigin(item: CertificateOfOriginPM) {   
         this.CurrentSession.StartBusyIndicator("");
-
-        // this.certificateOfOriginPMService.get(this.EntityPM.Id).subscribe((response: any) => {
-        //     var windowArgs: any = {};
-        //     windowArgs.EntityPM = response.Result;
-        //     windowArgs.declarationPM = this.EntityPM;
-        //     windowArgs.NumberOfLoadedItems = this.NumberOfLoadedItems;
-        //     var windowTitle = "Certificate Of Origin";
-
-        //     var logWindow = new LogitudeWindow();
-        //     logWindow.Width = 1017;// this changed By Rabaia for Task No. 54930; Dont change it back before calling me. //995; // don't change this width!
-        //     logWindow.Height = 600;
-        //     var textCodeTitle = "Customs.Declaration.O.EditCertificateOfOrigin";
-
-
-        //     if (this.EntityPM.Direction == "E") {
-        //         textCodeTitle = "Customs.Declaration.O.ExporterEditCertificateOfOrigin";
-        //     }
-
-            
-        //     windowArgs.IsDisplayOnly = this.IsDisplayOnly;
-        //     logWindow.ShowCloseButton = false;
-        //     logWindow.WindowArgs = windowArgs;
-        //     this.CD.detach();
-        //     logWindow.WindowClosed.subscribe((event: any) => {
-        //         if (event != 'cancel') {
-        //             this.CertificateOfOriginComprehensiveUpdate = [];
-
-        //             this.RefreshEntity();
-        //             this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
-        //         }
-        //         else {
-        //             this.ReloadMyScreen();
-        //         }
-        //         this.CD.reattach();
-
-        //     });
-        //     logWindow.IsHideHeader = true;
-
-        //     // TODO: #101459 -change to other new component
-        //     logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationSupplierInvoice/Components/SupplierInvoices/AddEditCertificateOfOriginComponent');
-
-        //     this.CurrentSession.StopBusyIndicator();
-        // });
-
     }
 
     DeleteButtonClicked(item: CertificateOfOriginPM) {
@@ -420,15 +369,15 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         confirmWindow.Width = 300;
         confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
 
-        confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteInvoice"));
-        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
+        // confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteInvoice"));
+        // confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+        // confirmWindow.WindowClosed.subscribe((event: any) => {
+        //     if (confirmWindow.Yes) {
                 
-            } else if (confirmWindow.No) {
+        //     } else if (confirmWindow.No) {
 
-            }
-        });
+        //     }
+        // });
     }
 
 
@@ -466,7 +415,6 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     }
 
     DisplayOnlyCheck() {
-        // TODO: can look on example function from file- DeclarationSupplierInvoiceTabComponent.ts
         this.IsDisplayOnly = this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayMode;
         if (this.EntityPM.AmendmentMessage != null && this.EntityPM.AmendmentMessage != "") {
             {
@@ -480,14 +428,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         else if (this.IsDisplayOnly) {
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             // SetEnabled
-            
             return;
-        }
-        else if (this.EntityPM.StorageStatusCode) {
-            this.ShowStorageStatusMessage = true;
-            //this.DisplayOnlyMessage = "בקשת אחסנה הועברה למחסן - סטטוס הבקשה" + " " + this.EntityPM.StorageStatusName;
-        }
-        
+        }       
     }
 
  
