@@ -246,6 +246,7 @@
     <None Include="DBTables\CargoType.dxml" />
     <None Include="DBTables\CarWeight.dxml" />
     <None Include="DBTables\CB_CustomsItem.dxml" />
+    <None Include="DBTables\CB_CustomsItemDetailsHistory.dxml" />
     <None Include="DBTables\CB_PropertiesDetailsHistory.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
     <None Include="DBTables\CertificateOfOrigin.dxml" />
@@ -633,6 +634,7 @@
     <None Include="DBTables\VendorStatus.dxml" />
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
+    <None Include="EntityFiles\CB_CustomsItemDetailsHistory.lxml" />
     <None Include="EntityFiles\CB_PropertiesDetailsHistory.lxml" />
     <None Include="EntityFiles\ConfirmationNumberTokenLog.lxml" />
     <None Include="EntityFiles\AddressCurrency.lxml" />

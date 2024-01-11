@@ -138,6 +138,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CB_CustomsItemMap());
 	
+            modelBuilder.Configurations.Add(new CB_CustomsItemDetailsHistoryMap());
+	
             modelBuilder.Configurations.Add(new CB_PropertiesDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
@@ -1658,6 +1660,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CB_CustomsItem> CB_CustomsItems 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_CustomsItemDetailsHistory> CB_CustomsItemDetailsHistorys 
 	 {
 	      get; set;
 	 

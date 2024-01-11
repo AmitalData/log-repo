@@ -126,6 +126,7 @@
     <Compile Include="EntityKeys\CargoStatusKeys.cs" />
     <Compile Include="EntityKeys\CargoTypeKeys.cs" />
     <Compile Include="EntityKeys\CarWeightKeys.cs" />
+    <Compile Include="EntityKeys\CB_CustomsItemDetailsHistoryKeys.cs" />
     <Compile Include="EntityKeys\CB_CustomsItemKeys.cs" />
     <Compile Include="EntityKeys\CB_PropertiesDetailsHistoryKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginInvoiceKeys.cs" />
@@ -325,6 +326,7 @@
     <Compile Include="EntityListQueryServices\CargoStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CargoTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CarWeightListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\CB_CustomsItemDetailsHistoryListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_CustomsItemListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CB_PropertiesDetailsHistoryListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginInvoiceListQueryService.cs" />
@@ -443,6 +445,7 @@
     <Compile Include="EntityListQueryServices\Generated\CargoStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CargoTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CarWeightListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\CB_CustomsItemDetailsHistoryListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_CustomsItemListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CB_PropertiesDetailsHistoryListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginInvoiceListQueryService.Generated.cs" />
@@ -699,6 +702,7 @@
     <Compile Include="EntityListQueryServices\VendorCurrencyListQueryService.cs" />
     <Compile Include="EntityLists\Generated\CarEngineVolumeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CarWeightList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\CB_CustomsItemDetailsHistoryList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_CustomsItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CB_PropertiesDetailsHistoryList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginInvoiceList.Generated.cs" />
@@ -923,6 +927,7 @@
     <Compile Include="EntityMapping\CargoStatusMap.cs" />
     <Compile Include="EntityMapping\CargoTypeMap.cs" />
     <Compile Include="EntityMapping\CarWeightMap.cs" />
+    <Compile Include="EntityMapping\CB_CustomsItemDetailsHistoryMap.cs" />
     <Compile Include="EntityMapping\CB_CustomsItemMap.cs" />
     <Compile Include="EntityMapping\CB_PropertiesDetailsHistoryMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginInvoiceMap.cs" />
@@ -1123,6 +1128,7 @@
     <Compile Include="EntityPOCOs\CargoType.cs" />
     <Compile Include="EntityPOCOs\CarWeight.cs" />
     <Compile Include="EntityPOCOs\CB_CustomsItem.cs" />
+    <Compile Include="EntityPOCOs\CB_CustomsItemDetailsHistory.cs" />
     <Compile Include="EntityPOCOs\CB_PropertiesDetailsHistory.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOrigin.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginInvoice.cs" />
@@ -1322,6 +1328,7 @@
     <Compile Include="Repsitories\CargoStatusRepository.cs" />
     <Compile Include="Repsitories\CargoTypeRepository.cs" />
     <Compile Include="Repsitories\CarWeightRepository.cs" />
+    <Compile Include="Repsitories\CB_CustomsItemDetailsHistoryRepository.cs" />
     <Compile Include="Repsitories\CB_CustomsItemRepository.cs" />
     <Compile Include="Repsitories\CB_PropertiesDetailsHistoryRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginInvoiceRepository.cs" />
@@ -1440,6 +1447,7 @@
     <Compile Include="Repsitories\Generated\CargoStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CargoTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CarWeightRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\CB_CustomsItemDetailsHistoryRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_CustomsItemRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CB_PropertiesDetailsHistoryRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginInvoiceRepository.Generated.cs" />

@@ -39,7 +39,7 @@
   ParentTableName="CB_CustomsItem"
   LocalDefaultText="&quot;היסטוריה של מאפיינים של פרט מכס&quot;"
   DefaultText="&quot;Properties Details History&quot;"
-  Code="&quot;1e6a&quot;"
+  Code="&quot;66fa&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
