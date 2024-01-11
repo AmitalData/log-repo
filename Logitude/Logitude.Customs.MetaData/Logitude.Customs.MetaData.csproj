@@ -456,6 +456,7 @@
     <None Include="DBTables\ImporterTypeForClaim.dxml" />
     <None Include="DBTables\InceptionCode.dxml" />
     <None Include="DBTables\IncotemrsFileValidation.dxml" />
+    <None Include="DBTables\InterConditionsRelationship.dxml" />
     <None Include="DBTables\InterfaceManagement.dxml" />
     <None Include="DBTables\InterfaceSendOption.dxml" />
     <None Include="DBTables\InterfaceTenantDefinition.dxml" />
