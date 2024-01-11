@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net;
 using System.Text;
 using Newtonsoft.Json;
+using static WebFreight.Web.Controllers.WebServices.ShaamWebServiceController;
 
 namespace WebFreight.Web.Controllers.WebServices.Services
 {
@@ -11,6 +12,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
     {
         string AmitalTaxesUrl = new SettingQuery().GetSinglePMFromCahche().AmitalTaxesUrl;
         string TaxesRediractUrl = new SettingQuery().GetSinglePMFromCahche().TaxesRediractUrl;
+        TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
 
         public HttpClienResponse LinkToCodeForToken(int tenant, string user)
         {
@@ -40,6 +42,21 @@ namespace WebFreight.Web.Controllers.WebServices.Services
             return res;
         }
 
+        public HttpClienResponse UpdateSettings(UpdateSettingsData body, int tenant)
+        {
+            string url = $"taxes/company";
+            body.companyName = tenantManagementQuery.GetSinglePM(tenant).Name;
+            HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Put, body);
+            return res;
+        }
+
+        public HttpClienResponse GetSettings(int tenant)
+        {
+            string url = $"taxes/company";
+            HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Get);
+            return res;
+        }
+
         private HttpClienResponse SendShaamApiHttpRequest(int tenant, string url, HttpMethod httpMethod, object body = null)
         {
             HttpResponseMessage res;
@@ -51,12 +68,12 @@ namespace WebFreight.Web.Controllers.WebServices.Services
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", jwt);
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             url = AmitalTaxesUrl + url;
+            StringContent stringContent = body != null ? new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json") : null;
             
             if (httpMethod == HttpMethod.Post)
-            {
-                StringContent stringContent = body != null ? new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json") : null;
                 res = client.PostAsync(url, stringContent).Result;
-            }
+            else if (httpMethod == HttpMethod.Put)
+                res = client.PutAsync(url, stringContent).Result;
             else
                 res = client.GetAsync(url).Result;
 

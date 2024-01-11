@@ -47,6 +47,17 @@ export class ShaamWebService {
             this.apiUrl + '/newRefreshToken', { tenant, user, code }
         ) as Observable<string>;
     }
+
+    getShaamSettings(): Promise<any> {
+        return this.http.get(this.apiUrl + '/settings', { headers: this.headers }).toPromise();
+    }
+
+    postShaamSettings(key, secret): Promise<any> {
+        return this.http.post(
+            this.apiUrl + '/UpdateSettings',
+            { clientId: key, secret },
+            { headers: this.headers }).toPromise();
+    }
 }
 
 
