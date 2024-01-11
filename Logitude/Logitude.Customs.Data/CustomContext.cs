@@ -150,6 +150,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CertificatesStatusMap());
 	
+            modelBuilder.Configurations.Add(new ChangeTypeMap());
+	
             modelBuilder.Configurations.Add(new CheckEntityTypeMap());
 	
             modelBuilder.Configurations.Add(new CheckEssenceLookupMap());
@@ -1678,6 +1680,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CertificatesStatus> CertificatesStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ChangeType> ChangeTypes 
 	 {
 	      get; set;
 	 

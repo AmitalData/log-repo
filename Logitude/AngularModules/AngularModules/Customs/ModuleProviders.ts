@@ -479,6 +479,7 @@ import { RenewalMethodListService } from './Services/StandardLists/RenewalMethod
 import { PerYearFrequencyListService } from './Services/StandardLists/PerYearFrequencyListService';
 import { InceptionCodeListService } from './Services/StandardLists/InceptionCodeListService';
 import { TradeLevyStatusListService } from './Services/StandardLists/TradeLevyStatusListService';
+import { ChangeTypeListService } from './Services/StandardLists/ChangeTypeListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -757,6 +758,7 @@ export class ModuleProviders {
             case "InceptionCodeListService": { myResult = new InceptionCodeListService(); break; }
             case "LevyTrustListService": { myResult = new LevyTrustListService(); break; }
             case "TradeLevyStatusListService": { myResult = new TradeLevyStatusListService(); break; }
+            case "ChangeTypeListService": { myResult = new ChangeTypeListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }

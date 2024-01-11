@@ -252,6 +252,7 @@
     <None Include="DBTables\CertificateOfOriginStatusCodeEnum.dxml" />
     <None Include="DBTables\CertificateOfOriginTypeCodeEnum.dxml" />
     <None Include="DBTables\CertificatesStatus.dxml" />
+    <None Include="DBTables\ChangeType.dxml" />
     <None Include="DBTables\CheckEntityType.dxml" />
     <None Include="DBTables\CheckEssenceLookup.dxml" />
     <None Include="DBTables\CheckQueueType.dxml" />
@@ -640,6 +641,7 @@
     <None Include="EntityFiles\CustomDocumentTypeTenant.lxml" />
     <None Include="EntityFiles\CustomsCountryTenant.lxml" />
     <None Include="EntityFiles\CustomsHouseTypeTenant.lxml" />
+    <None Include="EntityFiles\ChangeType.lxml" />
     <None Include="EntityFiles\TradeLevyStatus.lxml" />
     <None Include="EntityFiles\LevyTrust.lxml" />
     <None Include="EntityFiles\InceptionCode.lxml" />
