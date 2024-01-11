@@ -572,6 +572,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new IncotemrsFileValidationMap());
 	
+            modelBuilder.Configurations.Add(new InterConditionsRelationshipMap());
+	
             modelBuilder.Configurations.Add(new InterfaceManagementMap());
 	
             modelBuilder.Configurations.Add(new InterfaceSendOptionMap());
@@ -2952,6 +2954,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<IncotemrsFileValidation> IncotemrsFileValidations 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<InterConditionsRelationship> InterConditionsRelationships 
 	 {
 	      get; set;
 	 

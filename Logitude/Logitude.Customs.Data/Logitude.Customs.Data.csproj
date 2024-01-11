@@ -225,6 +225,7 @@
     <Compile Include="EntityKeys\HazardousSubstanceKeys.cs" />
     <Compile Include="EntityKeys\InceptionCodeKeys.cs" />
     <Compile Include="EntityKeys\IncotemrsFileValidationKeys.cs" />
+    <Compile Include="EntityKeys\InterConditionsRelationshipKeys.cs" />
     <Compile Include="EntityKeys\InternationalSiteTenantKeys.cs" />
     <Compile Include="EntityKeys\LevyTrustKeys.cs" />
     <Compile Include="EntityKeys\LoadingSiteTypeKeys.cs" />
@@ -536,6 +537,7 @@
     <Compile Include="EntityListQueryServices\Generated\HazardousSubstanceListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\InceptionCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\IncotemrsFileValidationListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\InterConditionsRelationshipListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\InternationalSiteTenantListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LevyTrustListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\LoadingSiteTypeListQueryService.Generated.cs" />
@@ -615,6 +617,7 @@
     <Compile Include="EntityListQueryServices\HazardousSubstanceListQueryService.cs" />
     <Compile Include="EntityListQueryServices\InceptionCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\IncotemrsFileValidationListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\InterConditionsRelationshipListQueryService.cs" />
     <Compile Include="EntityListQueryServices\InternationalSiteTenantListQueryService.cs" />
     <Compile Include="EntityListQueryServices\LevyTrustListQueryService.cs" />
     <Compile Include="EntityListQueryServices\LoadingSiteTypeListQueryService.cs" />
@@ -715,6 +718,7 @@
     <Compile Include="EntityLists\Generated\EntryExitTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InceptionCodeList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\InterConditionsRelationshipList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InternationalSiteTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\PerYearFrequencyList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuotaComputationBasisList.Generated.cs" />
@@ -1010,6 +1014,7 @@
     <Compile Include="EntityMapping\HazardousSubstanceMap.cs" />
     <Compile Include="EntityMapping\InceptionCodeMap.cs" />
     <Compile Include="EntityMapping\IncotemrsFileValidationMap.cs" />
+    <Compile Include="EntityMapping\InterConditionsRelationshipMap.cs" />
     <Compile Include="EntityMapping\InternationalSiteTenantMap.cs" />
     <Compile Include="EntityMapping\LevyTrustMap.cs" />
     <Compile Include="EntityMapping\LoadingSiteTypeMap.cs" />
@@ -1206,6 +1211,7 @@
     <Compile Include="EntityPOCOs\HazardousSubstance.cs" />
     <Compile Include="EntityPOCOs\InceptionCode.cs" />
     <Compile Include="EntityPOCOs\IncotemrsFileValidation.cs" />
+    <Compile Include="EntityPOCOs\InterConditionsRelationship.cs" />
     <Compile Include="EntityPOCOs\InternationalSiteTenant.cs" />
     <Compile Include="EntityPOCOs\LevyTrust.cs" />
     <Compile Include="EntityPOCOs\LoadingSiteType.cs" />
@@ -1518,6 +1524,7 @@
     <Compile Include="Repsitories\Generated\HazardousSubstanceRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\InceptionCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\IncotemrsFileValidationRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\InterConditionsRelationshipRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\InternationalSiteTenantRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LevyTrustRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\LoadingSiteTypeRepository.Generated.cs" />
@@ -1597,6 +1604,7 @@
     <Compile Include="Repsitories\HazardousSubstanceRepository.cs" />
     <Compile Include="Repsitories\InceptionCodeRepository.cs" />
     <Compile Include="Repsitories\IncotemrsFileValidationRepository.cs" />
+    <Compile Include="Repsitories\InterConditionsRelationshipRepository.cs" />
     <Compile Include="Repsitories\InternationalSiteTenantRepository.cs" />
     <Compile Include="Repsitories\LevyTrustRepository.cs" />
     <Compile Include="Repsitories\LoadingSiteTypeRepository.cs" />
