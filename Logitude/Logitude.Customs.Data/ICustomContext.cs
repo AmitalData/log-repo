@@ -42,6 +42,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CancellationReasonRequestType> CancellationReasonRequestTypes { get; }
 		 IDbSet<CancellationRequestStatus> CancellationRequestStatuses { get; }
 		 IDbSet<CancelRequestRejectReasonType> CancelRequestRejectReasonTypes { get; }
+		 IDbSet<CarEngineVolume> CarEngineVolumes { get; }
 		 IDbSet<CargoIdentifireType> CargoIdentifireTypes { get; }
 		 IDbSet<CargoIdentityQualifier> CargoIdentityQualifiers { get; }
 		 IDbSet<CargoSeal> CargoSeals { get; }
@@ -49,6 +50,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CargoSplitRequestStatus> CargoSplitRequestStatuses { get; }
 		 IDbSet<CargoStatus> CargoStatuses { get; }
 		 IDbSet<CargoType> CargoTypes { get; }
+		 IDbSet<CarWeight> CarWeights { get; }
 		 IDbSet<CertificateExemptionType> CertificateExemptionTypes { get; }
 		 IDbSet<CertificateOfOrigin> CertificateOfOrigins { get; }
 		 IDbSet<CertificateOfOriginInvoice> CertificateOfOriginInvoices { get; }
@@ -95,6 +97,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<CollateralType> CollateralTypes { get; }
 		 IDbSet<CommercialSale> CommercialSales { get; }
 		 IDbSet<CommunicationType> CommunicationTypes { get; }
+		 IDbSet<ComputationMethod> ComputationMethods { get; }
+		 IDbSet<ConditionalExemptionType> ConditionalExemptionTypes { get; }
 		 IDbSet<ConfirmationNumberTokenLog> ConfirmationNumberTokenLogs { get; }
 		 IDbSet<ConfirmationType> ConfirmationTypes { get; }
 		 IDbSet<Consignment> Consignments { get; }
@@ -161,6 +165,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CustomsDocumentStatusType> CustomsDocumentStatusTypes { get; }
 		 IDbSet<CustomsDocumentsTicket> CustomsDocumentsTickets { get; }
 		 IDbSet<CustomsDocumentUpload> CustomsDocumentUploads { get; }
+		 IDbSet<CustomsEntityStatus> CustomsEntityStatuses { get; }
 		 IDbSet<CustomsEnvironmentSetting> CustomsEnvironmentSettings { get; }
 		 IDbSet<CustomsEnvoirmentType> CustomsEnvoirmentTypes { get; }
 		 IDbSet<CustomsExchangeRate> CustomsExchangeRates { get; }
@@ -320,6 +325,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<PaymentType> PaymentTypes { get; }
 		 IDbSet<PendingByKeyword> PendingByKeywords { get; }
 		 IDbSet<PendingErrorPlace> PendingErrorPlaces { get; }
+		 IDbSet<PerYearFrequency> PerYearFrequencies { get; }
 		 IDbSet<PhysicalCheck> PhysicalChecks { get; }
 		 IDbSet<PhysicalCheckCode> PhysicalCheckCodes { get; }
 		 IDbSet<PhysicalCheckOperation> PhysicalCheckOperations { get; }
@@ -338,6 +344,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<ProductIdentificationType> ProductIdentificationTypes { get; }
 		 IDbSet<ProductNameType> ProductNameTypes { get; }
 		 IDbSet<PropertiesDetailsHistory> PropertiesDetailsHistorys { get; }
+		 IDbSet<QuotaComputationBasis> QuotaComputationBasises { get; }
+		 IDbSet<QuotaIncrement> QuotaIncrements { get; }
 		 IDbSet<RansomViolationType> RansomViolationTypes { get; }
 		 IDbSet<ReferantException> ReferantExceptions { get; }
 		 IDbSet<ReferantTeam> ReferantTeams { get; }
@@ -346,6 +354,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<ReleaseMessageType> ReleaseMessageTypes { get; }
+		 IDbSet<RenewalMethod> RenewalMethods { get; }
 		 IDbSet<RequestReasonCodeEnum> RequestReasonCodeEnums { get; }
 		 IDbSet<RequestStatus> RequestStatuses { get; }
 		 IDbSet<RequestToAdvanceAQueue> RequestToAdvanceAQueues { get; }
@@ -401,6 +410,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<Tapag> Tapags { get; }
 		 IDbSet<TapagConnectionTable> TapagConnectionTables { get; }
 		 IDbSet<TapagType> TapagTypes { get; }
+		 IDbSet<TarifRelatedToQuota> TarifRelatedToQuotas { get; }
 		 IDbSet<TermsOfSaleType> TermsOfSaleTypes { get; }
 		 IDbSet<TPGFileType> TPGFileTypes { get; }
 		 IDbSet<TradeAgreement> TradeAgreements { get; }

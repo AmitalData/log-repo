@@ -467,6 +467,16 @@ import { CustomsItemCategoryListService } from './Services/StandardLists/Customs
 import { CustomsItemHierarchicLocationListService } from './Services/StandardLists/CustomsItemHierarchicLocationListService';
 import { LevyTrustListService } from './Services/StandardLists/LevyTrustListService';
 
+import { CustomsEntityStatusListService } from './Services/StandardLists/CustomsEntityStatusListService';
+import { ConditionalExemptionTypeListService } from './Services/StandardLists/ConditionalExemptionTypeListService';
+import { CarEngineVolumeListService } from './Services/StandardLists/CarEngineVolumeListService';
+import { CarWeightListService } from './Services/StandardLists/CarWeightListService';
+import { ComputationMethodListService } from './Services/StandardLists/ComputationMethodListService';
+import { TarifRelatedToQuotaListService } from './Services/StandardLists/TarifRelatedToQuotaListService';
+import { QuotaComputationBasisListService } from './Services/StandardLists/QuotaComputationBasisListService';
+import { QuotaIncrementListService } from './Services/StandardLists/QuotaIncrementListService';
+import { RenewalMethodListService } from './Services/StandardLists/RenewalMethodListService';
+import { PerYearFrequencyListService } from './Services/StandardLists/PerYearFrequencyListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -732,7 +742,16 @@ export class ModuleProviders {
             case "ExportLogisticPermitActionListService": { myResult = new ExportLogisticPermitActionListService(); break; }
             case "CustomsItemCategoryListService": { myResult = new CustomsItemCategoryListService(); break; }
             case "CustomsItemHierarchicLocationListService": { myResult = new CustomsItemHierarchicLocationListService(); break; }
-            case "LevyTrustListService": { myResult = new LevyTrustListService(); break; }
+            case "CustomsEntityStatusListService": { myResult = new CustomsEntityStatusListService(); break; }
+            case "ConditionalExemptionTypeListService": { myResult = new ConditionalExemptionTypeListService(); break; }
+            case "CarEngineVolumeListService": { myResult = new CarEngineVolumeListService(); break; }
+            case "CarWeightListService": { myResult = new CarWeightListService(); break; }
+            case "ComputationMethodListService": { myResult = new ComputationMethodListService(); break; }
+            case "TarifRelatedToQuotaListService": { myResult = new TarifRelatedToQuotaListService(); break; }
+            case "QuotaComputationBasisListService": { myResult = new QuotaComputationBasisListService(); break; }
+            case "QuotaIncrementListService": { myResult = new QuotaIncrementListService(); break; }
+            case "RenewalMethodListService": { myResult = new RenewalMethodListService(); break; }
+            case "PerYearFrequencyListService": { myResult = new PerYearFrequencyListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }

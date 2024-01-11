@@ -118,6 +118,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CancelRequestRejectReasonTypeMap());
 	
+            modelBuilder.Configurations.Add(new CarEngineVolumeMap());
+	
             modelBuilder.Configurations.Add(new CargoIdentifireTypeMap());
 	
             modelBuilder.Configurations.Add(new CargoIdentityQualifierMap());
@@ -131,6 +133,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CargoStatusMap());
 	
             modelBuilder.Configurations.Add(new CargoTypeMap());
+	
+            modelBuilder.Configurations.Add(new CarWeightMap());
 	
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
 	
@@ -223,6 +227,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CommercialSaleMap());
 	
             modelBuilder.Configurations.Add(new CommunicationTypeMap());
+	
+            modelBuilder.Configurations.Add(new ComputationMethodMap());
+	
+            modelBuilder.Configurations.Add(new ConditionalExemptionTypeMap());
 	
             modelBuilder.Configurations.Add(new ConfirmationNumberTokenLogMap());
 	
@@ -355,6 +363,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CustomsDocumentsTicketMap());
 	
             modelBuilder.Configurations.Add(new CustomsDocumentUploadMap());
+	
+            modelBuilder.Configurations.Add(new CustomsEntityStatusMap());
 	
             modelBuilder.Configurations.Add(new CustomsEnvironmentSettingMap());
 	
@@ -674,6 +684,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
 	
+            modelBuilder.Configurations.Add(new PerYearFrequencyMap());
+	
             modelBuilder.Configurations.Add(new PhysicalCheckMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckCodeMap());
@@ -710,6 +722,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new PropertiesDetailsHistoryMap());
 	
+            modelBuilder.Configurations.Add(new QuotaComputationBasisMap());
+	
+            modelBuilder.Configurations.Add(new QuotaIncrementMap());
+	
             modelBuilder.Configurations.Add(new RansomViolationTypeMap());
 	
             modelBuilder.Configurations.Add(new ReferantExceptionMap());
@@ -725,6 +741,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new RegisteredWarehouseSiteTypeMap());
 	
             modelBuilder.Configurations.Add(new ReleaseMessageTypeMap());
+	
+            modelBuilder.Configurations.Add(new RenewalMethodMap());
 	
             modelBuilder.Configurations.Add(new RequestReasonCodeEnumMap());
 	
@@ -835,6 +853,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new TapagConnectionTableMap());
 	
             modelBuilder.Configurations.Add(new TapagTypeMap());
+	
+            modelBuilder.Configurations.Add(new TarifRelatedToQuotaMap());
 	
             modelBuilder.Configurations.Add(new TermsOfSaleTypeMap());
 	
@@ -1563,6 +1583,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CarEngineVolume> CarEngineVolumes 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CargoIdentifireType> CargoIdentifireTypes 
 	 {
 	      get; set;
@@ -1600,6 +1626,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CargoType> CargoTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CarWeight> CarWeights 
 	 {
 	      get; set;
 	 
@@ -1876,6 +1908,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CommunicationType> CommunicationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ComputationMethod> ComputationMethods 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ConditionalExemptionType> ConditionalExemptionTypes 
 	 {
 	      get; set;
 	 
@@ -2272,6 +2316,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CustomsDocumentUpload> CustomsDocumentUploads 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CustomsEntityStatus> CustomsEntityStatuses 
 	 {
 	      get; set;
 	 
@@ -3231,6 +3281,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<PerYearFrequency> PerYearFrequencies 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<PhysicalCheck> PhysicalChecks 
 	 {
 	      get; set;
@@ -3339,6 +3395,18 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<QuotaComputationBasis> QuotaComputationBasises 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<QuotaIncrement> QuotaIncrements 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<RansomViolationType> RansomViolationTypes 
 	 {
 	      get; set;
@@ -3382,6 +3450,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ReleaseMessageType> ReleaseMessageTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RenewalMethod> RenewalMethods 
 	 {
 	      get; set;
 	 
@@ -3712,6 +3786,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<TapagType> TapagTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TarifRelatedToQuota> TarifRelatedToQuotas 
 	 {
 	      get; set;
 	 
