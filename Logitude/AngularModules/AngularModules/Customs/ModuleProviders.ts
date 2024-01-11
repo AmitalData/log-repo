@@ -474,6 +474,7 @@ import { TarifRelatedToQuotaListService } from './Services/StandardLists/TarifRe
 import { QuotaComputationBasisListService } from './Services/StandardLists/QuotaComputationBasisListService';
 import { QuotaIncrementListService } from './Services/StandardLists/QuotaIncrementListService';
 import { RenewalMethodListService } from './Services/StandardLists/RenewalMethodListService';
+import { PerYearFrequencyListService } from './Services/StandardLists/PerYearFrequencyListService';
 
 export class ModuleProviders {
     public static GetInstance(name: string) {
@@ -748,6 +749,7 @@ export class ModuleProviders {
             case "QuotaComputationBasisListService": { myResult = new QuotaComputationBasisListService(); break; }
             case "QuotaIncrementListService": { myResult = new QuotaIncrementListService(); break; }
             case "RenewalMethodListService": { myResult = new RenewalMethodListService(); break; }
+            case "PerYearFrequencyListService": { myResult = new PerYearFrequencyListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }

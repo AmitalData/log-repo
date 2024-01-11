@@ -1223,6 +1223,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DefaultValueViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\GovernmentProcTypeTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\InternationalSiteTenantViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PerYearFrequencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\QuotaComputationBasisViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\QuotaIncrementViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RenewalMethodViewsController.Generated.cs" />
@@ -3547,6 +3548,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PendingErrorPlaceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PerYearFrequencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PhysicalCheckCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PoaAuthorizationTypeLookupUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PhysicalCheckSearchResultTypeUpdateClass.cs" />

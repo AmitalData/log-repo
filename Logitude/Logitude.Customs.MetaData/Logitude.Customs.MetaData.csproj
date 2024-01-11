@@ -512,6 +512,7 @@
     <None Include="DBTables\PaymentType.dxml" />
     <None Include="DBTables\PendingByKeyword.dxml" />
     <None Include="DBTables\PendingErrorPlace.dxml" />
+    <None Include="DBTables\PerYearFrequency.dxml" />
     <None Include="DBTables\PhysicalCheck.dxml" />
     <None Include="DBTables\PhysicalCheckCode.dxml" />
     <None Include="DBTables\PhysicalCheckOperation.dxml" />
@@ -649,6 +650,7 @@
     <None Include="EntityFiles\CarEngineVolume.lxml" />
     <None Include="EntityFiles\CarWeight.lxml" />
     <None Include="EntityFiles\ComputationMethod.lxml" />
+    <None Include="EntityFiles\PerYearFrequency.lxml" />
     <None Include="EntityFiles\RenewalMethod.lxml" />
     <None Include="EntityFiles\QuotaIncrement.lxml" />
     <None Include="EntityFiles\QuotaComputationBasis.lxml" />

@@ -324,6 +324,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<PaymentType> PaymentTypes { get; }
 		 IDbSet<PendingByKeyword> PendingByKeywords { get; }
 		 IDbSet<PendingErrorPlace> PendingErrorPlaces { get; }
+		 IDbSet<PerYearFrequency> PerYearFrequencies { get; }
 		 IDbSet<PhysicalCheck> PhysicalChecks { get; }
 		 IDbSet<PhysicalCheckCode> PhysicalCheckCodes { get; }
 		 IDbSet<PhysicalCheckOperation> PhysicalCheckOperations { get; }

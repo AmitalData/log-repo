@@ -682,6 +682,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new PendingErrorPlaceMap());
 	
+            modelBuilder.Configurations.Add(new PerYearFrequencyMap());
+	
             modelBuilder.Configurations.Add(new PhysicalCheckMap());
 	
             modelBuilder.Configurations.Add(new PhysicalCheckCodeMap());
@@ -3266,6 +3268,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<PendingErrorPlace> PendingErrorPlaces 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<PerYearFrequency> PerYearFrequencies 
 	 {
 	      get; set;
 	 

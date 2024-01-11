@@ -242,6 +242,7 @@
     <Compile Include="EntityKeys\PartyRelationshipTypeKeys.cs" />
     <Compile Include="EntityKeys\PendingByKeywordKeys.cs" />
     <Compile Include="EntityKeys\PendingErrorPlaceKeys.cs" />
+    <Compile Include="EntityKeys\PerYearFrequencyKeys.cs" />
     <Compile Include="EntityKeys\PhysicalCheckCodeKeys.cs" />
     <Compile Include="EntityKeys\PoaAuthorizationTypeLookupKeys.cs" />
     <Compile Include="EntityKeys\PhysicalCheckSearchResultTypeKeys.cs" />
@@ -543,6 +544,7 @@
     <Compile Include="EntityListQueryServices\Generated\PartyRelationshipTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingByKeywordListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PendingErrorPlaceListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\PerYearFrequencyListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PhysicalCheckCodeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PoaAuthorizationTypeLookupListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\PhysicalCheckSearchResultTypeListQueryService.Generated.cs" />
@@ -616,6 +618,7 @@
     <Compile Include="EntityListQueryServices\PartyRelationshipTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingByKeywordListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PendingErrorPlaceListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\PerYearFrequencyListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PhysicalCheckCodeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PoaAuthorizationTypeLookupListQueryService.cs" />
     <Compile Include="EntityListQueryServices\PhysicalCheckSearchResultTypeListQueryService.cs" />
@@ -689,6 +692,7 @@
     <Compile Include="EntityLists\Generated\DefaultValueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GovernmentProcTypeTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\InternationalSiteTenantList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\PerYearFrequencyList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuotaComputationBasisList.Generated.cs" />
     <Compile Include="EntityLists\Generated\QuotaIncrementList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RenewalMethodList.Generated.cs" />
@@ -995,6 +999,7 @@
     <Compile Include="EntityMapping\PartyRelationshipTypeMap.cs" />
     <Compile Include="EntityMapping\PendingByKeywordMap.cs" />
     <Compile Include="EntityMapping\PendingErrorPlaceMap.cs" />
+    <Compile Include="EntityMapping\PerYearFrequencyMap.cs" />
     <Compile Include="EntityMapping\PhysicalCheckCodeMap.cs" />
     <Compile Include="EntityMapping\PoaAuthorizationTypeLookupMap.cs" />
     <Compile Include="EntityMapping\PhysicalCheckSearchResultTypeMap.cs" />
@@ -1183,6 +1188,7 @@
     <Compile Include="EntityPOCOs\PartyRelationshipType.cs" />
     <Compile Include="EntityPOCOs\PendingByKeyword.cs" />
     <Compile Include="EntityPOCOs\PendingErrorPlace.cs" />
+    <Compile Include="EntityPOCOs\PerYearFrequency.cs" />
     <Compile Include="EntityPOCOs\PhysicalCheckCode.cs" />
     <Compile Include="EntityPOCOs\PoaAuthorizationTypeLookup.cs" />
     <Compile Include="EntityPOCOs\PhysicalCheckSearchResultType.cs" />
@@ -1485,6 +1491,7 @@
     <Compile Include="Repsitories\Generated\PartyRelationshipTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingByKeywordRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PendingErrorPlaceRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\PerYearFrequencyRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PhysicalCheckCodeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PoaAuthorizationTypeLookupRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\PhysicalCheckSearchResultTypeRepository.Generated.cs" />
@@ -1558,6 +1565,7 @@
     <Compile Include="Repsitories\PartyRelationshipTypeRepository.cs" />
     <Compile Include="Repsitories\PendingByKeywordRepository.cs" />
     <Compile Include="Repsitories\PendingErrorPlaceRepository.cs" />
+    <Compile Include="Repsitories\PerYearFrequencyRepository.cs" />
     <Compile Include="Repsitories\PhysicalCheckCodeRepository.cs" />
     <Compile Include="Repsitories\PoaAuthorizationTypeLookupRepository.cs" />
     <Compile Include="Repsitories\PhysicalCheckSearchResultTypeRepository.cs" />

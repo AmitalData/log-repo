@@ -1276,6 +1276,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable RenewalMethodObjectTable = objectTableRepository.GetObjectTableByName("Customs.RenewalMethod", 0, false);
             InsertClosedTableRecord(RenewalMethodTable, RenewalMethodObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(RenewalMethodTable);
+             
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData PerYearFrequencyTable = closedSystemTables.Where(d => d.id == "1337").FirstOrDefault();
+            ObjectTable PerYearFrequencyObjectTable = objectTableRepository.GetObjectTableByName("Customs.PerYearFrequency", 0, false);
+            InsertClosedTableRecord(PerYearFrequencyTable, PerYearFrequencyObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(PerYearFrequencyTable);
 
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();

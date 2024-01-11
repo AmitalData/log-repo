@@ -204,6 +204,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\OcrStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\OriginCriterionDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PartyRelationshipTypeDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\PerYearFrequencyDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PhysicalCheckCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PoaAuthorizationTypeLookupDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\PhysicalCheckSearchResultTypeDetails.Generated.cs" />
@@ -893,6 +894,7 @@
     <Compile Include="EntityDataMappings\Generated\PaymentTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PendingByKeywordDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PendingErrorPlaceDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\PerYearFrequencyDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckCodeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\PhysicalCheckOperationDataMapping.Generated.cs" />
@@ -1089,6 +1091,7 @@
     <Compile Include="EntityDataMappings\PaymentTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PendingByKeywordDataMapping.cs" />
     <Compile Include="EntityDataMappings\PendingErrorPlaceDataMapping.cs" />
+    <Compile Include="EntityDataMappings\PerYearFrequencyDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckCodeDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckDataMapping.cs" />
     <Compile Include="EntityDataMappings\PhysicalCheckOperationDataMapping.cs" />
@@ -1240,6 +1243,7 @@
     <Compile Include="EntityQueryServices\Generated\CustomsItemCategoryQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsItemHierarchicLocationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationCounterQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\PerYearFrequencyQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuotaComputationBasisQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\QuotaIncrementQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RenewalMethodQueryService.Generated.cs" />
@@ -1799,6 +1803,7 @@
     <Compile Include="EntityUpdateServices\Generated\CustomsEntityStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsItemCategoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsItemHierarchicLocationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\PerYearFrequencyUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuotaComputationBasisUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\QuotaIncrementUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RenewalMethodUpdateService.Generated.cs" />
