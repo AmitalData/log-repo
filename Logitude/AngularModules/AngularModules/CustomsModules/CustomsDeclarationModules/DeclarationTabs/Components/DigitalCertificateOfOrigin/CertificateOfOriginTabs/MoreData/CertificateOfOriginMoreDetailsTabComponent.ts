@@ -6,6 +6,7 @@ import { AppTool, DateTool } from 'Infrastructure/Tools';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { CertificateOfOriginInvoicePM } from 'Customs/EntityPMs/CertificateOfOriginInvoicePM';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
+import { StatusCertificateOfOrigin } from '../../DigitalCertificateOfOriginTabComponent';
 
 
 
@@ -19,19 +20,20 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     public DataContext = this;
     public entityPM: CertificateOfOriginPM;
     public currentDeclaration: DeclarationPM;
-    isNew: boolean;
+    IsNewOrEdit: StatusCertificateOfOrigin;
     controlEnabled: boolean;
     isDispalyOnlyStatusList: number[] = [4, 8];
     constructor() {
         super();
     }
 
-    InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNew: boolean) {
+    InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin) {
 
         this.entityPM = EntityPM;
         this.currentDeclaration = currentDeclaration;
-        this.isNew = IsNew;
-        this.controlEnabled = IsNew;
+
+        this.IsNewOrEdit = IsNewOrEdit;
+        this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true:false;
         this.SetPropertiesEnabled();
 
 

@@ -169,14 +169,15 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     }
 
     selectedCertificateOfOrigin= new CertificateOfOriginPM();
-    AddNewCertificateOfOrigin() {
+    AddNewCertificateOfOrigin(isNewOrEditCertificateOfOrigin:StatusCertificateOfOrigin) {
         debugger
-        
+
         //TODO: add new CertificateOfOrigin
         // on click item get one CertificateOfOrigin
         var args: any = {
             Decalaration: this.EntityPM,
-            CertificateOfOrigin: !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin) ? this.selectedCertificateOfOrigin : new CertificateOfOriginPM()
+            CertificateOfOrigin: !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin) ? this.selectedCertificateOfOrigin : new CertificateOfOriginPM(),
+            IsNewOrEdit : isNewOrEditCertificateOfOrigin
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1000;
@@ -435,3 +436,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
  
 }
 
+
+export enum StatusCertificateOfOrigin {
+    IsNew = 'IsNew',
+    IsEdit = 'IsEdit',
+}
