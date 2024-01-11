@@ -65,9 +65,9 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.MaxSupervisionPeriod).HasColumnName("MaxSupervisionPeriod");
 
-            this.Property(t => t.MeasurementUnitID).HasColumnName("MeasurementUnitID").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.MeasurementUnitID).HasColumnName("MeasurementUnitID").HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.ConditionalExemptionTypeID).HasColumnName("ConditionalExemptionTypeID").HasMaxLength(0).IsUnicode(false);
+            this.Property(t => t.ConditionalExemptionTypeID).HasColumnName("ConditionalExemptionTypeID").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.FuelTypeID).HasColumnName("FuelTypeID").HasMaxLength(2).IsUnicode(false);
 
