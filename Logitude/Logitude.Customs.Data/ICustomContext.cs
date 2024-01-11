@@ -58,6 +58,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CertificateOfOriginStatusCodeEnum> CertificateOfOriginStatusCodeEnums { get; }
 		 IDbSet<CertificateOfOriginTypeCodeEnum> CertificateOfOriginTypeCodeEnums { get; }
 		 IDbSet<CertificatesStatus> CertificatesStatuses { get; }
+		 IDbSet<ChangeType> ChangeTypes { get; }
 		 IDbSet<CheckEntityType> CheckEntityTypes { get; }
 		 IDbSet<CheckEssenceLookup> CheckEssenceLookups { get; }
 		 IDbSet<CheckQueueType> CheckQueueTypes { get; }

@@ -131,6 +131,7 @@
     <Compile Include="EntityKeys\CertificateOfOriginKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginStatusCodeEnumKeys.cs" />
     <Compile Include="EntityKeys\CertificateOfOriginTypeCodeEnumKeys.cs" />
+    <Compile Include="EntityKeys\ChangeTypeKeys.cs" />
     <Compile Include="EntityKeys\ClaimReasonTypeKeys.cs" />
     <Compile Include="EntityKeys\ClaimsRelatedEntitiesRefundKeys.cs" />
     <Compile Include="EntityKeys\ClaimsRelatedEntitiesSeizureKeys.cs" />
@@ -325,6 +326,7 @@
     <Compile Include="EntityListQueryServices\CertificateOfOriginListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginStatusCodeEnumListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CertificateOfOriginTypeCodeEnumListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ChangeTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimReasonTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesRefundListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClaimsRelatedEntitiesSeizureListQueryService.cs" />
@@ -439,6 +441,7 @@
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginStatusCodeEnumListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CertificateOfOriginTypeCodeEnumListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ChangeTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimReasonTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesRefundListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClaimsRelatedEntitiesSeizureListQueryService.Generated.cs" />
@@ -689,6 +692,7 @@
     <Compile Include="EntityLists\Generated\CertificateOfOriginList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginStatusCodeEnumList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CertificateOfOriginTypeCodeEnumList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ChangeTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientIndicationList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ComputationMethodList.Generated.cs" />
@@ -908,6 +912,7 @@
     <Compile Include="EntityMapping\CertificateOfOriginMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginStatusCodeEnumMap.cs" />
     <Compile Include="EntityMapping\CertificateOfOriginTypeCodeEnumMap.cs" />
+    <Compile Include="EntityMapping\ChangeTypeMap.cs" />
     <Compile Include="EntityMapping\ClaimReasonTypeMap.cs" />
     <Compile Include="EntityMapping\ClaimsRelatedEntitiesRefundMap.cs" />
     <Compile Include="EntityMapping\ClaimsRelatedEntitiesSeizureMap.cs" />
@@ -1102,6 +1107,7 @@
     <Compile Include="EntityPOCOs\CertificateOfOriginItem.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginStatusCodeEnum.cs" />
     <Compile Include="EntityPOCOs\CertificateOfOriginTypeCodeEnum.cs" />
+    <Compile Include="EntityPOCOs\ChangeType.cs" />
     <Compile Include="EntityPOCOs\ClaimReasonType.cs" />
     <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesRefund.cs" />
     <Compile Include="EntityPOCOs\ClaimsRelatedEntitiesSeizure.cs" />
@@ -1297,6 +1303,7 @@
     <Compile Include="Repsitories\CertificateOfOriginRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginStatusCodeEnumRepository.cs" />
     <Compile Include="Repsitories\CertificateOfOriginTypeCodeEnumRepository.cs" />
+    <Compile Include="Repsitories\ChangeTypeRepository.cs" />
     <Compile Include="Repsitories\ClaimReasonTypeRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesRefundRepository.cs" />
     <Compile Include="Repsitories\ClaimsRelatedEntitiesSeizureRepository.cs" />
@@ -1411,6 +1418,7 @@
     <Compile Include="Repsitories\Generated\CertificateOfOriginRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginStatusCodeEnumRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\CertificateOfOriginTypeCodeEnumRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ChangeTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimReasonTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesRefundRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClaimsRelatedEntitiesSeizureRepository.Generated.cs" />
