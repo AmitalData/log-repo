@@ -1284,7 +1284,7 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData LevyTrustTable = closedSystemTables.Where(d => d.id == "1361").FirstOrDefault();
             ObjectTable LevyTrustObjectTable = objectTableRepository.GetObjectTableByName("Customs.LevyTrust", 0, false);
-            InsertClosedTableRecord(LevyTrustTable, CustomsItemHierarchicLocationObjectTable, customsClosedTables, customsClosedTableRepository);
+            InsertClosedTableRecord(LevyTrustTable, LevyTrustObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(LevyTrustTable);
 
             SYSTBL_NG_9001_MSG_SystemTablesResponseTableData InceptionCodeTable = closedSystemTables.Where(d => d.id == "1066").FirstOrDefault();
@@ -1296,6 +1296,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             ObjectTable RegularityPublicationObjectTable = objectTableRepository.GetObjectTableByName("Customs.RegularityPublication", 0, false);
             InsertClosedTableRecord(RegularityPublicationTable, RegularityPublicationObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(RegularityPublicationTable);
+
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData TradeLevyStatusTable = closedSystemTables.Where(d => d.id == "1068").FirstOrDefault();
+            ObjectTable TradeLevyStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.TradeLevyStatus", 0, false);
+            InsertClosedTableRecord(TradeLevyStatusTable, TradeLevyStatusObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(TradeLevyStatusTable);
 
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();

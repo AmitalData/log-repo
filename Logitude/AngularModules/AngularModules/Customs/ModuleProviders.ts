@@ -478,6 +478,7 @@ import { QuotaIncrementListService } from './Services/StandardLists/QuotaIncreme
 import { RenewalMethodListService } from './Services/StandardLists/RenewalMethodListService';
 import { PerYearFrequencyListService } from './Services/StandardLists/PerYearFrequencyListService';
 import { InceptionCodeListService } from './Services/StandardLists/InceptionCodeListService';
+import { TradeLevyStatusListService } from './Services/StandardLists/TradeLevyStatusListService';
 import { RegularityPublicationListService } from './Services/StandardLists/RegularityPublicationListService';
 
 export class ModuleProviders {
@@ -756,6 +757,7 @@ export class ModuleProviders {
             case "PerYearFrequencyListService": { myResult = new PerYearFrequencyListService(); break; }
             case "InceptionCodeListService": { myResult = new InceptionCodeListService(); break; }
             case "LevyTrustListService": { myResult = new LevyTrustListService(); break; }
+            case "TradeLevyStatusListService": { myResult = new TradeLevyStatusListService(); break; }
             case "RegularityPublicationListService": { myResult = new RegularityPublicationListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }

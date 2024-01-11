@@ -870,6 +870,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new TradeLevyExamptTypeMap());
 	
+            modelBuilder.Configurations.Add(new TradeLevyStatusMap());
+	
             modelBuilder.Configurations.Add(new TransactionNatureTypeMap());
 	
             modelBuilder.Configurations.Add(new TransferCargoMethodTypeMap());
@@ -3838,6 +3840,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<TradeLevyExamptType> TradeLevyExamptTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<TradeLevyStatus> TradeLevystatuses 
 	 {
 	      get; set;
 	 
