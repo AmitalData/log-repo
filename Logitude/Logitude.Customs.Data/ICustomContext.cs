@@ -357,6 +357,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<RegularityPublication> RegularityPublications { get; }
+		 IDbSet<RegularitySource> RegularitySources { get; }
 		 IDbSet<ReleaseMessageType> ReleaseMessageTypes { get; }
 		 IDbSet<RenewalMethod> RenewalMethods { get; }
 		 IDbSet<RequestReasonCodeEnum> RequestReasonCodeEnums { get; }

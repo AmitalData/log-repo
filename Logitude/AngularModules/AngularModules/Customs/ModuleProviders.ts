@@ -481,6 +481,7 @@ import { InceptionCodeListService } from './Services/StandardLists/InceptionCode
 import { TradeLevyStatusListService } from './Services/StandardLists/TradeLevyStatusListService';
 import { RegularityPublicationListService } from './Services/StandardLists/RegularityPublicationListService';
 import { ChangeTypeListService } from './Services/StandardLists/ChangeTypeListService';
+import { RegularitySourceListService } from './Services/StandardLists/RegularitySourceListService';
 import { EntryExitTypeListService } from './Services/StandardLists/EntryExitTypeListService';
 
 export class ModuleProviders {
@@ -762,6 +763,7 @@ export class ModuleProviders {
             case "TradeLevyStatusListService": { myResult = new TradeLevyStatusListService(); break; }
             case "RegularityPublicationListService": { myResult = new RegularityPublicationListService(); break; }
             case "ChangeTypeListService": { myResult = new ChangeTypeListService(); break; }
+            case "RegularitySourceListService": { myResult = new RegularitySourceListService(); break; }
             case "EntryExitTypeListService": { myResult = new EntryExitTypeListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }

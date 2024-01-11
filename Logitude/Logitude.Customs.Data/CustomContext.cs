@@ -748,6 +748,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new RegularityPublicationMap());
 	
+            modelBuilder.Configurations.Add(new RegularitySourceMap());
+	
             modelBuilder.Configurations.Add(new ReleaseMessageTypeMap());
 	
             modelBuilder.Configurations.Add(new RenewalMethodMap());
@@ -3478,6 +3480,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<RegularityPublication> RegularityPublications 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RegularitySource> RegularitySources 
 	 {
 	      get; set;
 	 

@@ -543,6 +543,7 @@
     <None Include="DBTables\RefundCustomerActivityType.dxml" />
     <None Include="DBTables\RegisteredWarehouseSiteType.dxml" />
     <None Include="DBTables\RegularityPublication.dxml" />
+    <None Include="DBTables\RegularitySource.dxml" />
     <None Include="DBTables\ReleaseMessageType.dxml" />
     <None Include="DBTables\RenewalMethod.dxml" />
     <None Include="DBTables\RequestReasonCodeEnum.dxml" />
@@ -643,6 +644,7 @@
     <None Include="EntityFiles\CustomDocumentTypeTenant.lxml" />
     <None Include="EntityFiles\CustomsCountryTenant.lxml" />
     <None Include="EntityFiles\CustomsHouseTypeTenant.lxml" />
+    <None Include="EntityFiles\RegularitySource.lxml" />
     <None Include="EntityFiles\ChangeType.lxml" />
     <None Include="EntityFiles\EntryExitType.lxml" />
     <None Include="EntityFiles\TradeLevyStatus.lxml" />
