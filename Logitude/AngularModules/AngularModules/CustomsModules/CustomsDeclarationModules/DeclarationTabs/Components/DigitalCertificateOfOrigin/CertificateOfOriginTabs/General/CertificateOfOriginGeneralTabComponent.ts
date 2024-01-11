@@ -399,10 +399,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     public get IsConsigneeForPrint(): boolean {
-        debugger
-        if(!this.entityPM.IsConsigneeForPrint){
-            this.entityPM.IsConsigneeForPrint = true;
-        }
         return this.entityPM.IsConsigneeForPrint;
     }
     public set IsConsigneeForPrint(newValue: boolean) {
@@ -495,10 +491,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     public get IsExportDecForPrint(): boolean {
-        debugger
-        if(!this.entityPM.IsExportDecForPrint){
-            this.entityPM.IsExportDecForPrint = true;
-        }
         return this.entityPM.IsExportDecForPrint;
     }
     public set IsExportDecForPrint(newValue: boolean) {
@@ -554,10 +546,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     public get IsDeclaredByManufacture(): boolean {
-        debugger
-        if(!this.entityPM.IsDeclaredByManufacture){
-            this.entityPM.IsDeclaredByManufacture = false;
-        }
         return this.entityPM.IsDeclaredByManufacture;
     }
     public set IsDeclaredByManufacture(newValue: boolean) {
@@ -565,10 +553,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     public get IsDeclaredByExporter(): boolean {
-        debugger
-        if(!this.entityPM.IsDeclaredByExporter){
-            this.entityPM.IsDeclaredByExporter = true;
-        }
         return this.entityPM.IsDeclaredByExporter;
     }
     public set IsDeclaredByExporter(newValue: boolean) {

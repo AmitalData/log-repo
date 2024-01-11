@@ -28,16 +28,12 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin) {
-
         this.entityPM = EntityPM;
         this.currentDeclaration = currentDeclaration;
-
+        
         this.IsNewOrEdit = IsNewOrEdit;
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true:false;
         this.SetPropertiesEnabled();
-
-
-
     }
 
     SetPropertiesEnabled() {
@@ -121,6 +117,9 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     public get IsDeclaredByExporter(): boolean {
+        if(!this.entityPM.IsDeclaredByExporter){
+            this.entityPM.IsDeclaredByExporter = true;
+        }
         return this.entityPM.IsDeclaredByExporter;
     }
     public set IsDeclaredByExporter(newValue: boolean) {
@@ -128,6 +127,9 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     public get IsDeclaredByManufacture(): boolean {
+        if(!this.entityPM.IsDeclaredByManufacture){
+            this.entityPM.IsDeclaredByManufacture = false;
+        }
         return this.entityPM.IsDeclaredByManufacture;
     }
     public set IsDeclaredByManufacture(newValue: boolean) {
@@ -135,6 +137,9 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     public get IsExportDecForPrint(): boolean {
+        if(!this.entityPM.IsExportDecForPrint){
+            this.entityPM.IsExportDecForPrint = false;
+        }
         return this.entityPM.IsExportDecForPrint;
     }
     public set IsExportDecForPrint(newValue: boolean) {
@@ -149,6 +154,9 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     public get IsConsigneeForPrint(): boolean {
+        if(!this.entityPM.IsConsigneeForPrint){
+            this.entityPM.IsConsigneeForPrint = true;
+        }
         return this.entityPM.IsConsigneeForPrint;
     }
     public set IsConsigneeForPrint(newValue: boolean) {
