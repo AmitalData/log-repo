@@ -1196,6 +1196,8 @@
     <Compile Include="Controllers\CustomsModel\Extended\DecCargoSplitConExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\PendingByKeywordsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ClientItemExtendedController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CarEngineVolumeViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CarWeightViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginInvoiceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginStatusCodeEnumViewsController.Generated.cs" />
@@ -1204,11 +1206,14 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\SupplierInvioceExportDefaultExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientIndicationViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ComputationMethodViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ConditionalExemptionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ConfirmationNumberTokenLogViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CountryCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CourierHawbFromExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomDocumentTypeTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsCountryTenantViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsEntityStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsHouseTypeTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsItemCategoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomsItemHierarchicLocationViewsController.Generated.cs" />
@@ -1218,10 +1223,16 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DefaultValueViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\GovernmentProcTypeTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\InternationalSiteTenantViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\PerYearFrequencyViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\QuotaComputationBasisViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\QuotaIncrementViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RenewalMethodViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\LevyTrustViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RequestToAdvanceAQueueViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\OriginCriterionViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\RequestReasonCodeEnumViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\SupplierInvioceExportDefaultViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\TarifRelatedToQuotaViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\UIMessageTenantViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\OcrDocumentViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\OcrStatusViewsController.Generated.cs" />
@@ -3349,6 +3360,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancellationReasonRequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancellationRequestStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CancelRequestRejectReasonTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CarEngineVolumeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSealIdentifierUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSealUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoSplitRequestStatusUpdateClass.cs" />
@@ -3366,6 +3378,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingTransportModeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTrackingWatermarkUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CargoTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CarWeightUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CashBookLineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CashBookTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CashBookUpdateClass.cs" />
@@ -3389,6 +3402,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientIndicationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientsPoaUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientsTapagUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ComputationMethodUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConditionalExemptionTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConfirmationNumberTokenLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConsignmentPackDangerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationHataraStatusUpdateClass.cs" />
@@ -3417,6 +3432,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsAutonomyKeywordUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsCountryTenantUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsDocumentsDefinitionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsEntityStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsEnvironmentSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsDocumentUploadUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CustomsGeneralUpdateClass.cs" />
@@ -3505,6 +3521,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LastRunDetailUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LBPTeamMemberUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LedgerTransactionUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LevyTrustUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LoadingSiteTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LogisticActionRequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\LogisticActionRequestUpdateClass.cs" />
@@ -3533,6 +3550,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PendingErrorPlaceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\OpenFormatReportUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PerYearFrequencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PhysicalCheckCodeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PoaAuthorizationTypeLookupUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PhysicalCheckSearchResultTypeUpdateClass.cs" />
@@ -3543,6 +3561,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PaymentChequeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\PriceStepUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ProceduralFaultUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuotaComputationBasisUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuotaIncrementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPClosingReasonUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\QuoteOPComputedFieldUpdateClass.cs" />
@@ -3577,6 +3597,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReferenceStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RefundCustomerActivityTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ReleaseMessageTypeUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RenewalMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RequestToAdvanceAQueueUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RequestReasonCodeEnumUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\RequestTypeUpdateClass.cs" />
@@ -3617,6 +3638,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionAllInChargeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TariffVersionUploadedExcelUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TarifRelatedToQuotaUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxDeductionReportStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxDeductionReportUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\TaxReportLineStatusUpdateClass.cs" />

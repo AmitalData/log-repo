@@ -238,11 +238,13 @@
     <None Include="DBTables\CancellationReasonRequestType.dxml" />
     <None Include="DBTables\CancellationRequestStatus.dxml" />
     <None Include="DBTables\CancelRequestRejectReasonType.dxml" />
+    <None Include="DBTables\CarEngineVolume.dxml" />
     <None Include="DBTables\CargoIdentifireType.dxml" />
     <None Include="DBTables\CargoIdentityQualifier.dxml" />
     <None Include="DBTables\CargoSplitRequestStatus.dxml" />
     <None Include="DBTables\CargoStatus.dxml" />
     <None Include="DBTables\CargoType.dxml" />
+    <None Include="DBTables\CarWeight.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
     <None Include="DBTables\CertificateOfOrigin.dxml" />
     <None Include="DBTables\CertificateOfOriginInvoice.dxml" />
@@ -289,6 +291,8 @@
     <None Include="DBTables\CollateralType.dxml" />
     <None Include="DBTables\CommercialSale.dxml" />
     <None Include="DBTables\CommunicationType.dxml" />
+    <None Include="DBTables\ComputationMethod.dxml" />
+    <None Include="DBTables\ConditionalExemptionType.dxml" />
     <None Include="DBTables\ConfirmationType.dxml" />
     <None Include="DBTables\Consignment.dxml" />
     <None Include="DBTables\ConsignmentInternalTransition.dxml" />
@@ -353,6 +357,7 @@
     <None Include="DBTables\CustomsDocumentStatusType.dxml" />
     <None Include="DBTables\CustomsDocumentsTicket.dxml" />
     <None Include="DBTables\CustomsDocumentUpload.dxml" />
+    <None Include="DBTables\CustomsEntityStatus.dxml" />
     <None Include="DBTables\CustomsEnvironmentSetting.dxml" />
     <None Include="DBTables\CustomsEnvoirmentType.dxml" />
     <None Include="DBTables\CustomsExchangeRate.dxml" />
@@ -460,6 +465,7 @@
     <None Include="DBTables\LastReleaseFromWarehouse.dxml" />
     <None Include="DBTables\LeadDocumentExceptionType.dxml" />
     <None Include="DBTables\LeadDocumentType.dxml" />
+    <None Include="DBTables\LevyTrust.dxml" />
     <None Include="DBTables\LoadingSiteType.dxml" />
     <None Include="DBTables\LogisticActionRequest.dxml" />
     <None Include="DBTables\LogisticActionRequestType.dxml" />
@@ -507,6 +513,7 @@
     <None Include="DBTables\PaymentType.dxml" />
     <None Include="DBTables\PendingByKeyword.dxml" />
     <None Include="DBTables\PendingErrorPlace.dxml" />
+    <None Include="DBTables\PerYearFrequency.dxml" />
     <None Include="DBTables\PhysicalCheck.dxml" />
     <None Include="DBTables\PhysicalCheckCode.dxml" />
     <None Include="DBTables\PhysicalCheckOperation.dxml" />
@@ -525,6 +532,7 @@
     <None Include="DBTables\ProductIdentificationType.dxml" />
     <None Include="DBTables\ProductNameType.dxml" />
     <None Include="DBTables\PropertiesDetailsHistory.dxml" />
+    <None Include="DBTables\QuotaIncrement.dxml" />
     <None Include="DBTables\RansomViolationType.dxml" />
     <None Include="DBTables\ReferantTeam.dxml" />
     <None Include="DBTables\ReferenceInputType.dxml" />
@@ -532,6 +540,7 @@
     <None Include="DBTables\RefundCustomerActivityType.dxml" />
     <None Include="DBTables\RegisteredWarehouseSiteType.dxml" />
     <None Include="DBTables\ReleaseMessageType.dxml" />
+    <None Include="DBTables\RenewalMethod.dxml" />
     <None Include="DBTables\RequestReasonCodeEnum.dxml" />
     <None Include="DBTables\RequestStatus.dxml" />
     <None Include="DBTables\RequestToAdvanceAQueue.dxml" />
@@ -582,6 +591,7 @@
     <None Include="DBTables\Tapag.dxml" />
     <None Include="DBTables\TapagConnectionTable.dxml" />
     <None Include="DBTables\TapagType.dxml" />
+    <None Include="DBTables\TarifRelatedToQuota.dxml" />
     <None Include="DBTables\TermsOfSaleType.dxml" />
     <None Include="DBTables\TPGFileType.dxml" />
     <None Include="DBTables\TradeAgreement.dxml" />
@@ -628,6 +638,7 @@
     <None Include="EntityFiles\CustomDocumentTypeTenant.lxml" />
     <None Include="EntityFiles\CustomsCountryTenant.lxml" />
     <None Include="EntityFiles\CustomsHouseTypeTenant.lxml" />
+    <None Include="EntityFiles\LevyTrust.lxml" />
     <None Include="EntityFiles\DeclarationCounter.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
     <None Include="EntityFiles\DefaultType.lxml" />
@@ -636,6 +647,16 @@
     <None Include="EntityFiles\CertificateOfOriginStatusCodeEnum.lxml" />
     <None Include="EntityFiles\CustomsItemCategory.lxml" />
     <None Include="EntityFiles\CustomsItemHierarchicLocation.lxml" />
+    <None Include="EntityFiles\CustomsEntityStatus.lxml" />
+    <None Include="EntityFiles\ConditionalExemptionType.lxml" />
+    <None Include="EntityFiles\CarEngineVolume.lxml" />
+    <None Include="EntityFiles\CarWeight.lxml" />
+    <None Include="EntityFiles\ComputationMethod.lxml" />
+    <None Include="EntityFiles\PerYearFrequency.lxml" />
+    <None Include="EntityFiles\RenewalMethod.lxml" />
+    <None Include="EntityFiles\QuotaIncrement.lxml" />
+    <None Include="EntityFiles\QuotaComputationBasis.lxml" />
+    <None Include="EntityFiles\TarifRelatedToQuota.lxml" />
     <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />
     <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />
