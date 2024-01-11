@@ -1232,6 +1232,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(CustomsItemHierarchicLocationTable, CustomsItemHierarchicLocationObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(CustomsItemHierarchicLocationTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData LevyTrustTable = closedSystemTables.Where(d => d.id == "1361").FirstOrDefault();
+            ObjectTable LevyTrustObjectTable = objectTableRepository.GetObjectTableByName("Customs.LevyTrust", 0, false);
+            InsertClosedTableRecord(LevyTrustTable, CustomsItemHierarchicLocationObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(LevyTrustTable);
+
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);

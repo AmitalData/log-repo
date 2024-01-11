@@ -70,6 +70,7 @@
     <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
     <Compile Include="EntityPMs\Generated\CustomsItemCategoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CustomsItemHierarchicLocationPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\LevyTrustPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\RequestToAdvanceAQueuePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConfirmationNumberTokenLogPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CertificateOfOriginInvoicePM.Generated.cs" />

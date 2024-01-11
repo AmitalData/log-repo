@@ -460,6 +460,7 @@
     <None Include="DBTables\LastReleaseFromWarehouse.dxml" />
     <None Include="DBTables\LeadDocumentExceptionType.dxml" />
     <None Include="DBTables\LeadDocumentType.dxml" />
+    <None Include="DBTables\LevyTrust.dxml" />
     <None Include="DBTables\LoadingSiteType.dxml" />
     <None Include="DBTables\LogisticActionRequest.dxml" />
     <None Include="DBTables\LogisticActionRequestType.dxml" />
@@ -628,6 +629,7 @@
     <None Include="EntityFiles\CustomDocumentTypeTenant.lxml" />
     <None Include="EntityFiles\CustomsCountryTenant.lxml" />
     <None Include="EntityFiles\CustomsHouseTypeTenant.lxml" />
+    <None Include="EntityFiles\LevyTrust.lxml" />
     <None Include="EntityFiles\DeclarationCounter.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />
     <None Include="EntityFiles\DefaultType.lxml" />

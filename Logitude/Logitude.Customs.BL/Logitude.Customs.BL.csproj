@@ -191,6 +191,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\GTBFUSTATUDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\HandingCodeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\IncotemrsFileValidationDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\LevyTrustDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LoadingSiteTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LogisticActionRequestTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\LogisticActionResponseReqSDetails.Generated.cs" />
@@ -823,6 +824,7 @@
     <Compile Include="EntityDataMappings\Generated\LastReleaseFromWarehouseDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LeadDocumentExceptionTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LeadDocumentTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\LevyTrustDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LoadingSiteTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LogisticActionRequestDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\LogisticActionRequestTypeDataMapping.Generated.cs" />
@@ -1015,6 +1017,7 @@
     <Compile Include="EntityDataMappings\LastReleaseFromWarehouseDataMapping.cs" />
     <Compile Include="EntityDataMappings\LeadDocumentExceptionTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\LeadDocumentTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\LevyTrustDataMapping.cs" />
     <Compile Include="EntityDataMappings\LoadingSiteTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\LogisticActionRequestDataMapping.cs" />
     <Compile Include="EntityDataMappings\LogisticActionRequestTypeDataMapping.cs" />
@@ -1206,6 +1209,7 @@
     <Compile Include="EntityQueryServices\Generated\CustomsItemCategoryQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\CustomsItemHierarchicLocationQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\DeclarationCounterQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\LevyTrustQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestToAdvanceAQueueQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\OriginCriterionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestReasonCodeEnumQueryService.Generated.cs" />
@@ -1756,6 +1760,7 @@
     <Compile Include="EntityUpdateServices\ClientIndicationUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsItemCategoryUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\CustomsItemHierarchicLocationUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\LevyTrustUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestToAdvanceAQueueUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\CertificateOfOriginUpdateService.cs" />
     <Compile Include="EntityUpdateServices\Generated\CertificateOfOriginInvoiceUpdateService.Generated.cs" />

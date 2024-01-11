@@ -272,6 +272,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<LastReleaseFromWarehouse> LastReleaseFromWarehouses { get; }
 		 IDbSet<LeadDocumentExceptionType> LeadDocumentExceptionTypes { get; }
 		 IDbSet<LeadDocumentType> LeadDocumentTypes { get; }
+		 IDbSet<LevyTrust> LevyTrusts { get; }
 		 IDbSet<LoadingSiteType> LoadingSiteTypes { get; }
 		 IDbSet<LogisticActionRequest> LogisticActionRequests { get; }
 		 IDbSet<LogisticActionRequestType> LogisticActionRequestTypes { get; }
