@@ -722,7 +722,7 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedDeficitDecisions = value; }
 	    }
-	     }
+	  	    }
    
 }
 	 

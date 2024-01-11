@@ -459,7 +459,6 @@
     <Reference Include="Newtonsoft.Json, Version=13.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
-
     <Reference Include="NPOI, Version=2.5.6.0, Culture=neutral, PublicKeyToken=0df73ec7942b34e1, processorArchitecture=MSIL">
       <HintPath>..\..\packages\NPOI.2.5.6\lib\net45\NPOI.dll</HintPath>
     </Reference>
@@ -538,7 +537,6 @@
     <Reference Include="Syncfusion.XlsIO.Web, Version=10.104.0.44, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Syncfusion.1.0.0\lib\Net40\Syncfusion.XlsIO.Web.dll</HintPath>
     </Reference>
-
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
     </Reference>
@@ -602,7 +600,6 @@
     <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
     </Reference>
-
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.5.0.0\lib\net45\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
@@ -1444,7 +1441,7 @@
     <Compile Include="Controllers\CTool\SendEmailController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmendCancellRequestInitiatorViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmendmentFieldStatusTypeViewsController.Generated.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmendmentRequestRejectReasonTypeViewsController.Generated.cs" />
+    <!--<Compile Include="Controllers\CustomsModel\Generated\ListControllers\AmendmentRequestRejectReasonTypeViewsController.Generated.cs" />-->
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\AutonomyRegionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\DocumentRejectTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ExporterRoleTypeViewsController.Generated.cs" />
@@ -1516,14 +1513,6 @@
     <Compile Include="Controllers\QuoteModel\Generated\ListControllers\ValidByTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\QuoteModel\Generated\PMControllers\QuoteClosingReasonController.Generated.cs" />
     <Compile Include="Controllers\CargoTrackingModel\CargoTrackingBrandingController.cs" />
-    <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\OPSpecialServicesTypeViewsController.Generated.cs" />
-    <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPPropertiesViewsController.Generated.cs" />
-    <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPStageViewsController.Generated.cs" />
-    <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPTypeViewsController.Generated.cs" />
-    <Compile Include="Controllers\QuoteOPMModel\Generated\ListControllers\QuoteOPViewsController.Generated.cs" />
-    <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\OPSpecialServicesTypeController.Generated.cs" />
-    <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\QuoteOPController.Generated.cs" />
-    <Compile Include="Controllers\QuoteOPMModel\Generated\PMControllers\QuoteOPPropertiesController.Generated.cs" />
     <Compile Include="Controllers\ShardLogistics\SharedLogisticReportController.cs" />
     <Compile Include="Controllers\ShipmentOrderModel\Generated\ListControllers\ShipmentOrderViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentOrderModel\Generated\PMControllers\ShipmentOrderController.Generated.cs" />
@@ -1574,7 +1563,6 @@
     <Compile Include="CustomWebServices\Testers\IzikTester.aspx.designer.cs">
       <DependentUpon>IzikTester.aspx</DependentUpon>
     </Compile>
-    <Compile Include="DataContracts\AccountingPartnerApiFilters.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowAPInvoiceController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowARInvoiceController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowContainerController.cs" />
@@ -3288,7 +3276,6 @@
     <Compile Include="Helpers\PODMobileDocumentsFilingService.cs" />
     <Compile Include="Helpers\PrivateLabelsBrandingDataService.cs" />
     <Compile Include="Helpers\QuotesRequestService.cs" />
-    <Compile Include="Helpers\SharedLogisticReportService.cs" />
     <Compile Include="Helpers\QuoteTemplateChargeGroupService.cs" />
     <Compile Include="Helpers\QuoteTemplate\QuoteTemplateSettingDataUpdater.cs" />
     <Compile Include="Helpers\QuoteTemplate\QuoteTemplateVatAmountsService.cs" />
@@ -3738,7 +3725,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CoolingReportingMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CountryCurrencyUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerSettingUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContinuousRequestTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CopyFromTenant0UpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierCustomStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CourierDeclarationStatusUpdateClass.cs" />
@@ -3947,7 +3933,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SharedLogisticsSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SignStationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ServiceProviderSubscriptionUpdateClass.cs" />
-    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SharedLogisticsSettingUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ShipmentOrderUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SLALineUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\SplitOrMergeReasonUpdateClass.cs" />
@@ -8183,7 +8168,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="BookingModel\DomainServices\Generated\" />
-    <Folder Include="CargoTrackingModel\" />
     <Folder Include="CargoTrackingModel\DomainServices\" />
     <Folder Include="Controllers\ShipmentOrderModel\Extended\" />
     <Folder Include="CRMModel\Controllers\Generated\" />

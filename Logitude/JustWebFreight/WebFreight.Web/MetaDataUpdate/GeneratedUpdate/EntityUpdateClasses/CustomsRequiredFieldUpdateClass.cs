@@ -74,6 +74,12 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
 
 //using Amital.QuoteOPM.BL.CLoseTable;
 using Amital.QuoteOPM.Data.Repsitories;
@@ -191,7 +197,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Id",
 					  						ListFieldLable =  "IdListLable",
 					  						ListLableDefaultText =  "Id",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -250,7 +258,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Tenant",
 					  						ListFieldLable =  "TenantListLable",
 					  						ListLableDefaultText =  "Tenant",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -309,7 +319,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "ObjectTableId",
 					  						ListFieldLable =  "ObjectTableIdListLable",
 					  						ListLableDefaultText =  "ObjectTableId",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "ObjectTable",
+					  						NavigationPropertyName =  "ObjectTable",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -368,7 +382,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "ObjectfieldId",
 					  						ListFieldLable =  "ObjectfieldIdListLable",
 					  						ListLableDefaultText =  "ObjectfieldId",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "ObjectField",
+					  						NavigationPropertyName =  "ObjectField",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -427,7 +445,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "ObjectFieldName",
 					  						ListFieldLable =  "ObjectFieldNameListLable",
 					  						ListLableDefaultText =  "ObjectFieldName",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -483,7 +503,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ObjectfieldCode",
 					  						DefaultText =  "Objectfield Code",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -544,7 +566,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IsImportListLable",
 					  						ListLableDefaultText =  "חובה ליבוא",
 					  						ListLocalDefaultText =  "Is Import",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -605,7 +629,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IsExportListLable",
 					  						ListLableDefaultText =  "Is Export",
 					  						ListLocalDefaultText =  "חובה ליצוא",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -666,7 +692,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "WarningExportListLable",
 					  						ListLableDefaultText =  "Warning Export",
 					  						ListLocalDefaultText =  "התראה ביצוא",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,

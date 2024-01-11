@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.CustomsAgentId == keys.CustomsAgentId && a.PersonId == keys.PersonId
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(SignStation entity)
         {

@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DeficitId == keys.DeficitId && a.DeclarationId == keys.DeclarationId && a.ParagraphTypeCode == keys.ParagraphTypeCode
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(DeficitConnFileParagraphType entity)
         {

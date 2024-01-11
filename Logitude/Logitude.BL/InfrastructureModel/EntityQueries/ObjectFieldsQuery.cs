@@ -3299,7 +3299,7 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             public string tableName { get; set; }
             public string propName { get; set; }
         }
-    }
+    
  
 
 
@@ -3598,4 +3598,6 @@ namespace Logitude.BL.InfrastructureModel.EntityQueries
             return JsonSerializer.Serialize<QueryFilterItem>(defaultAdditionalFilters);
         }
      }
+
 }
+ 

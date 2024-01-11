@@ -250,7 +250,7 @@ export class CustomsItemPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newCustomsItemDetailsHistoryPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -342,7 +342,7 @@ export class CustomsItemPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newPropertiesDetailsHistoryPM[pmProperty] = jItem[pmProperty];
             }
            

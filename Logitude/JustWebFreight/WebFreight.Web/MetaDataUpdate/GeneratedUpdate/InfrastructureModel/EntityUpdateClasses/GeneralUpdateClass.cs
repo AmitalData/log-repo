@@ -900,8 +900,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  
  		   TextCode GeneralTextCode_GeneralMMinMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.MinMax", DefaultText = "%FieldName Field length must be less than %Maxlength and more than %Minlength",LocalDefaultText = @"%FieldName אורך השדה חייב להיות קטן מ- %Maxlength וגדול מ- %Minlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-            TextCode GeneralTextCode_GeneralMMinMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.MinMax", DefaultText = "%FieldName Field must be less than %Maxlength and more than %Minlength",LocalDefaultText = @"%FieldName השדה חייב להיות קטן מ- %Maxlength וגדול מ- %Minlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
+ 
  		   TextCode GeneralTextCode_GeneralMSubmitFaild = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.SubmitFaild", DefaultText = "Submit failed",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = true }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMEntityAlreadyExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.EntityAlreadyExists", DefaultText = "This %Entity already exists",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);

@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.NotificationId == keys.NotificationId && a.Line == keys.Line
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(NotificationReply entity)
         {

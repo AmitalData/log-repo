@@ -156,7 +156,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 70, 
                 Mandatory = false, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_124, 
+                DocumentTypeCode = "IL_124", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -166,7 +166,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 72, 
                 Mandatory = false, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_124, 
+                DocumentTypeCode = "IL_124", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -176,7 +176,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 69, 
                 Mandatory = true, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_126, 
+                DocumentTypeCode = "IL_126", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -186,7 +186,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 70, 
                 Mandatory = false, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_126, 
+                DocumentTypeCode = "IL_126", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -196,7 +196,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 87, 
                 Mandatory = true, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_126, 
+                DocumentTypeCode = "IL_126", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -206,7 +206,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 87, 
                 Mandatory = false, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_133, 
+                DocumentTypeCode = "IL_133", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -216,7 +216,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 69, 
                 Mandatory = true, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_184, 
+                DocumentTypeCode = "IL_184", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -226,7 +226,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 70, 
                 Mandatory = false, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_184, 
+                DocumentTypeCode = "IL_184", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -236,7 +236,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 87, 
                 Mandatory = true, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_184, 
+                DocumentTypeCode = "IL_184", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -246,7 +246,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 69, 
                 Mandatory = true, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_185, 
+                DocumentTypeCode = "IL_185", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -256,7 +256,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 70, 
                 Mandatory = false, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_185, 
+                DocumentTypeCode = "IL_185", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -266,7 +266,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 87, 
                 Mandatory = true, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_185, 
+                DocumentTypeCode = "IL_185", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -276,7 +276,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 77, 
                 Mandatory = true, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_261, 
+                DocumentTypeCode = "IL_261", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -286,7 +286,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 77, 
                 Mandatory = true, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_262, 
+                DocumentTypeCode = "IL_262", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -296,7 +296,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 106, 
                 Mandatory = true, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_345, 
+                DocumentTypeCode = "IL_345", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -306,7 +306,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 107, 
                 Mandatory = true, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_345, 
+                DocumentTypeCode = "IL_345", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -316,7 +316,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 69, 
                 Mandatory = false, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_70, 
+                DocumentTypeCode = "IL_70", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -326,7 +326,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 87, 
                 Mandatory = true, 
                 Format = "Boolean", 
-                DocumentTypeCode = IL_70, 
+                DocumentTypeCode = "IL_70", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -336,7 +336,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_83, 
+                DocumentTypeCode = "IL_83", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -346,7 +346,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_83, 
+                DocumentTypeCode = "IL_83", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -356,7 +356,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 7, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_83, 
+                DocumentTypeCode = "IL_83", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -366,7 +366,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_60, 
+                DocumentTypeCode = "IL_60", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -376,7 +376,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_61, 
+                DocumentTypeCode = "IL_61", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -386,7 +386,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 105, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_345, 
+                DocumentTypeCode = "IL_345", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -396,7 +396,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_40, 
+                DocumentTypeCode = "IL_40", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -406,7 +406,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_339, 
+                DocumentTypeCode = "IL_339", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -416,7 +416,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 86, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_285, 
+                DocumentTypeCode = "IL_285", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -426,7 +426,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_29, 
+                DocumentTypeCode = "IL_29", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -436,7 +436,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_30, 
+                DocumentTypeCode = "IL_30", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -446,7 +446,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 92, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_304, 
+                DocumentTypeCode = "IL_304", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -456,7 +456,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = false, 
                 Format = "Date", 
-                DocumentTypeCode = IL_306, 
+                DocumentTypeCode = "IL_306", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -466,7 +466,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 91, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_303, 
+                DocumentTypeCode = "IL_303", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -476,7 +476,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = false, 
                 Format = "Date", 
-                DocumentTypeCode = IL_27, 
+                DocumentTypeCode = "IL_27", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -486,7 +486,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 58, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_185, 
+                DocumentTypeCode = "IL_185", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -496,7 +496,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = false, 
                 Format = "Date", 
-                DocumentTypeCode = IL_26, 
+                DocumentTypeCode = "IL_26", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -506,7 +506,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = false, 
                 Format = "Date", 
-                DocumentTypeCode = IL_26, 
+                DocumentTypeCode = "IL_26", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -516,7 +516,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_28, 
+                DocumentTypeCode = "IL_28", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -526,7 +526,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 82, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_284, 
+                DocumentTypeCode = "IL_284", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -536,7 +536,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = false, 
                 Format = "Date", 
-                DocumentTypeCode = IL_17, 
+                DocumentTypeCode = "IL_17", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -546,7 +546,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = false, 
                 Format = "Date", 
-                DocumentTypeCode = IL_180, 
+                DocumentTypeCode = "IL_180", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -556,7 +556,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = false, 
                 Format = "Date", 
-                DocumentTypeCode = IL_183, 
+                DocumentTypeCode = "IL_183", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -566,7 +566,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = false, 
                 Format = "Date", 
-                DocumentTypeCode = IL_182, 
+                DocumentTypeCode = "IL_182", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -576,7 +576,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 58, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_126, 
+                DocumentTypeCode = "IL_126", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -586,7 +586,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 58, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_184, 
+                DocumentTypeCode = "IL_184", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -596,7 +596,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_204, 
+                DocumentTypeCode = "IL_204", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -606,7 +606,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_21, 
+                DocumentTypeCode = "IL_21", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -616,7 +616,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_22, 
+                DocumentTypeCode = "IL_22", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -626,7 +626,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_132, 
+                DocumentTypeCode = "IL_132", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -636,7 +636,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_132, 
+                DocumentTypeCode = "IL_132", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -646,7 +646,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_133, 
+                DocumentTypeCode = "IL_133", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -656,7 +656,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_133, 
+                DocumentTypeCode = "IL_133", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -666,7 +666,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_135, 
+                DocumentTypeCode = "IL_135", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -676,7 +676,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_135, 
+                DocumentTypeCode = "IL_135", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -686,7 +686,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_14, 
+                DocumentTypeCode = "IL_14", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -696,7 +696,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_141, 
+                DocumentTypeCode = "IL_141", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -706,7 +706,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_141, 
+                DocumentTypeCode = "IL_141", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -716,7 +716,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_143, 
+                DocumentTypeCode = "IL_143", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -726,7 +726,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_143, 
+                DocumentTypeCode = "IL_143", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -736,7 +736,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_145, 
+                DocumentTypeCode = "IL_145", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -746,7 +746,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_128, 
+                DocumentTypeCode = "IL_128", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -756,7 +756,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_129, 
+                DocumentTypeCode = "IL_129", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -766,7 +766,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_125, 
+                DocumentTypeCode = "IL_125", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -776,7 +776,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_119, 
+                DocumentTypeCode = "IL_119", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -786,7 +786,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = false, 
                 Format = "Date", 
-                DocumentTypeCode = IL_119, 
+                DocumentTypeCode = "IL_119", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -796,7 +796,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_123, 
+                DocumentTypeCode = "IL_123", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -816,7 +816,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 57, 
                 Mandatory = true, 
                 Format = "Date", 
-                DocumentTypeCode = IL_124, 
+                DocumentTypeCode = "IL_124", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -826,7 +826,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 60, 
                 Mandatory = false, 
                 Format = "Date", 
-                DocumentTypeCode = IL_100, 
+                DocumentTypeCode = "IL_100", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1186,7 +1186,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 43, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_124, 
+                DocumentTypeCode = "IL_124", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1196,7 +1196,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 47, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_100, 
+                DocumentTypeCode = "IL_100", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1206,7 +1206,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 50, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_100, 
+                DocumentTypeCode = "IL_100", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1216,7 +1216,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 43, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_11, 
+                DocumentTypeCode = "IL_11", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1226,7 +1226,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 43, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_13, 
+                DocumentTypeCode = "IL_13", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1236,7 +1236,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 27, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_14, 
+                DocumentTypeCode = "IL_14", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1246,7 +1246,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 49, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_133, 
+                DocumentTypeCode = "IL_133", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1256,7 +1256,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 53, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_133, 
+                DocumentTypeCode = "IL_133", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1266,7 +1266,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 49, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_132, 
+                DocumentTypeCode = "IL_132", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1276,7 +1276,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 53, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_132, 
+                DocumentTypeCode = "IL_132", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1286,7 +1286,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 49, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_134, 
+                DocumentTypeCode = "IL_134", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1296,7 +1296,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 52, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_134, 
+                DocumentTypeCode = "IL_134", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1306,7 +1306,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 53, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_134, 
+                DocumentTypeCode = "IL_134", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1316,7 +1316,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 37, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_136, 
+                DocumentTypeCode = "IL_136", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1326,7 +1326,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 24, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_22, 
+                DocumentTypeCode = "IL_22", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1336,7 +1336,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 26, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_22, 
+                DocumentTypeCode = "IL_22", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1346,7 +1346,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 93, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_234, 
+                DocumentTypeCode = "IL_234", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1356,7 +1356,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 24, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_21, 
+                DocumentTypeCode = "IL_21", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1366,7 +1366,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 26, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_21, 
+                DocumentTypeCode = "IL_21", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1376,7 +1376,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_235, 
+                DocumentTypeCode = "IL_235", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1386,7 +1386,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_236, 
+                DocumentTypeCode = "IL_236", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1396,7 +1396,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_237, 
+                DocumentTypeCode = "IL_237", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1406,7 +1406,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_238, 
+                DocumentTypeCode = "IL_238", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1416,7 +1416,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_239, 
+                DocumentTypeCode = "IL_239", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1426,7 +1426,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_240, 
+                DocumentTypeCode = "IL_240", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1436,7 +1436,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_241, 
+                DocumentTypeCode = "IL_241", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1446,7 +1446,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 47, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_183, 
+                DocumentTypeCode = "IL_183", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1456,7 +1456,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 50, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_183, 
+                DocumentTypeCode = "IL_183", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1466,7 +1466,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 24, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_182, 
+                DocumentTypeCode = "IL_182", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1476,7 +1476,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 26, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_182, 
+                DocumentTypeCode = "IL_182", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1486,7 +1486,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 24, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_180, 
+                DocumentTypeCode = "IL_180", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1496,7 +1496,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 26, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_180, 
+                DocumentTypeCode = "IL_180", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1506,7 +1506,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 32, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_147, 
+                DocumentTypeCode = "IL_147", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1516,7 +1516,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 88, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_15, 
+                DocumentTypeCode = "IL_15", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1526,7 +1526,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 24, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_17, 
+                DocumentTypeCode = "IL_17", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1536,7 +1536,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 26, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_17, 
+                DocumentTypeCode = "IL_17", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1546,7 +1546,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 43, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_202, 
+                DocumentTypeCode = "IL_202", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1556,7 +1556,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 30, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_207, 
+                DocumentTypeCode = "IL_207", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1566,7 +1566,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 30, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_208, 
+                DocumentTypeCode = "IL_208", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1576,7 +1576,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 85, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_284, 
+                DocumentTypeCode = "IL_284", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1586,7 +1586,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 81, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_282, 
+                DocumentTypeCode = "IL_282", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1596,7 +1596,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 43, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_262, 
+                DocumentTypeCode = "IL_262", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1606,7 +1606,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 81, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_283, 
+                DocumentTypeCode = "IL_283", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1616,7 +1616,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 81, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_281, 
+                DocumentTypeCode = "IL_281", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1626,7 +1626,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 81, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_273, 
+                DocumentTypeCode = "IL_273", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1636,7 +1636,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 81, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_278, 
+                DocumentTypeCode = "IL_278", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1646,7 +1646,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 43, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_261, 
+                DocumentTypeCode = "IL_261", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1656,7 +1656,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 81, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_272, 
+                DocumentTypeCode = "IL_272", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1666,7 +1666,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_242, 
+                DocumentTypeCode = "IL_242", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1676,7 +1676,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_243, 
+                DocumentTypeCode = "IL_243", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1686,7 +1686,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_244, 
+                DocumentTypeCode = "IL_244", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1696,7 +1696,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_245, 
+                DocumentTypeCode = "IL_245", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1706,7 +1706,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_246, 
+                DocumentTypeCode = "IL_246", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1716,7 +1716,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_247, 
+                DocumentTypeCode = "IL_247", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1726,7 +1726,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_249, 
+                DocumentTypeCode = "IL_249", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1736,7 +1736,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 23, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_25, 
+                DocumentTypeCode = "IL_25", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1746,7 +1746,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_248, 
+                DocumentTypeCode = "IL_248", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1756,7 +1756,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_252, 
+                DocumentTypeCode = "IL_252", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1766,7 +1766,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = Il_253, 
+                DocumentTypeCode = "Il_253", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1776,7 +1776,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_254, 
+                DocumentTypeCode = "IL_254", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1786,7 +1786,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_255, 
+                DocumentTypeCode = "IL_255", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1796,7 +1796,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_256, 
+                DocumentTypeCode = "IL_256", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1806,7 +1806,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_257, 
+                DocumentTypeCode = "IL_257", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1816,7 +1816,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_258, 
+                DocumentTypeCode = "IL_258", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1826,7 +1826,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 99, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_303, 
+                DocumentTypeCode = "IL_303", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1836,7 +1836,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 95, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_310, 
+                DocumentTypeCode = "IL_310", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1846,7 +1846,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 30, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_325, 
+                DocumentTypeCode = "IL_325", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1856,7 +1856,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 95, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_311, 
+                DocumentTypeCode = "IL_311", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1866,7 +1866,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 47, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_336, 
+                DocumentTypeCode = "IL_336", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1876,7 +1876,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 24, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_304, 
+                DocumentTypeCode = "IL_304", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1886,7 +1886,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 26, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_304, 
+                DocumentTypeCode = "IL_304", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1896,7 +1896,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 90, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_300, 
+                DocumentTypeCode = "IL_300", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1906,7 +1906,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 27, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = Il_286, 
+                DocumentTypeCode = "Il_286", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1916,7 +1916,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 37, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = Il_286, 
+                DocumentTypeCode = "Il_286", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1926,7 +1926,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 28, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_34, 
+                DocumentTypeCode = "IL_34", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1936,7 +1936,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 97, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_336, 
+                DocumentTypeCode = "IL_336", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1946,7 +1946,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 27, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_338, 
+                DocumentTypeCode = "IL_338", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1956,7 +1956,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 108, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_346, 
+                DocumentTypeCode = "IL_346", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1966,7 +1966,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 109, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_346, 
+                DocumentTypeCode = "IL_346", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1976,7 +1976,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 108, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_347, 
+                DocumentTypeCode = "IL_347", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1986,7 +1986,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 109, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_347, 
+                DocumentTypeCode = "IL_347", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -1996,7 +1996,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 110, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_348, 
+                DocumentTypeCode = "IL_348", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2006,7 +2006,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 108, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_349, 
+                DocumentTypeCode = "IL_349", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2016,7 +2016,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 109, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_349, 
+                DocumentTypeCode = "IL_349", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2026,7 +2026,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 43, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_40, 
+                DocumentTypeCode = "IL_40", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2036,7 +2036,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 27, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_340, 
+                DocumentTypeCode = "IL_340", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2046,7 +2046,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 108, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_355, 
+                DocumentTypeCode = "IL_355", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2056,7 +2056,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 109, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_355, 
+                DocumentTypeCode = "IL_355", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2066,7 +2066,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 110, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_356, 
+                DocumentTypeCode = "IL_356", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2076,7 +2076,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 29, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_56, 
+                DocumentTypeCode = "IL_56", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2086,7 +2086,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 32, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_57, 
+                DocumentTypeCode = "IL_57", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2096,7 +2096,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 28, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_44, 
+                DocumentTypeCode = "IL_44", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2106,7 +2106,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 81, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_81, 
+                DocumentTypeCode = "IL_81", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2116,7 +2116,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 81, 
                 Mandatory = false, 
                 Format = "Int", 
-                DocumentTypeCode = IL_85, 
+                DocumentTypeCode = "IL_85", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2126,7 +2126,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 22, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_83, 
+                DocumentTypeCode = "IL_83", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2136,7 +2136,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 75, 
                 Mandatory = true, 
                 Format = "Int", 
-                DocumentTypeCode = IL_97, 
+                DocumentTypeCode = "IL_97", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2146,7 +2146,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_9, 
+                DocumentTypeCode = "IL_9", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2156,7 +2156,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_97, 
+                DocumentTypeCode = "IL_97", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2166,7 +2166,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 18, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_83, 
+                DocumentTypeCode = "IL_83", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2176,7 +2176,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 80, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_81, 
+                DocumentTypeCode = "IL_81", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2186,7 +2186,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 80, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_85, 
+                DocumentTypeCode = "IL_85", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2196,7 +2196,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_44, 
+                DocumentTypeCode = "IL_44", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2206,7 +2206,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_45, 
+                DocumentTypeCode = "IL_45", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2216,7 +2216,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_45, 
+                DocumentTypeCode = "IL_45", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2226,7 +2226,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_48, 
+                DocumentTypeCode = "IL_48", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2236,7 +2236,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 61, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_48, 
+                DocumentTypeCode = "IL_48", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2246,7 +2246,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_49, 
+                DocumentTypeCode = "IL_49", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2256,7 +2256,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_50, 
+                DocumentTypeCode = "IL_50", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2266,7 +2266,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 20, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_50, 
+                DocumentTypeCode = "IL_50", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2276,7 +2276,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 8, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_50, 
+                DocumentTypeCode = "IL_50", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2286,7 +2286,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 13, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_52, 
+                DocumentTypeCode = "IL_52", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2296,7 +2296,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 61, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_52, 
+                DocumentTypeCode = "IL_52", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2306,7 +2306,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_53, 
+                DocumentTypeCode = "IL_53", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2316,7 +2316,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 20, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_53, 
+                DocumentTypeCode = "IL_53", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2326,7 +2326,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 8, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_53, 
+                DocumentTypeCode = "IL_53", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2336,7 +2336,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_54, 
+                DocumentTypeCode = "IL_54", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2346,7 +2346,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 20, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_54, 
+                DocumentTypeCode = "IL_54", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2356,7 +2356,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 8, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_54, 
+                DocumentTypeCode = "IL_54", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2366,7 +2366,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 16, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_55, 
+                DocumentTypeCode = "IL_55", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2376,7 +2376,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_56, 
+                DocumentTypeCode = "IL_56", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2386,7 +2386,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_58, 
+                DocumentTypeCode = "IL_58", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2396,7 +2396,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_58, 
+                DocumentTypeCode = "IL_58", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2406,7 +2406,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_60, 
+                DocumentTypeCode = "IL_60", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2416,7 +2416,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_57, 
+                DocumentTypeCode = "IL_57", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2426,7 +2426,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_61, 
+                DocumentTypeCode = "IL_61", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2436,7 +2436,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 13, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_63, 
+                DocumentTypeCode = "IL_63", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2446,7 +2446,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 13, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_64, 
+                DocumentTypeCode = "IL_64", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2456,7 +2456,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_67, 
+                DocumentTypeCode = "IL_67", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2466,7 +2466,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 20, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_67, 
+                DocumentTypeCode = "IL_67", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2476,7 +2476,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 8, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_67, 
+                DocumentTypeCode = "IL_67", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2486,7 +2486,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_68, 
+                DocumentTypeCode = "IL_68", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2496,7 +2496,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 20, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_68, 
+                DocumentTypeCode = "IL_68", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2506,7 +2506,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 8, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_68, 
+                DocumentTypeCode = "IL_68", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2516,7 +2516,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_69, 
+                DocumentTypeCode = "IL_69", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2526,7 +2526,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 20, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_69, 
+                DocumentTypeCode = "IL_69", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2536,7 +2536,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 8, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_69, 
+                DocumentTypeCode = "IL_69", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2546,7 +2546,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_70, 
+                DocumentTypeCode = "IL_70", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2556,7 +2556,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_37, 
+                DocumentTypeCode = "IL_37", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2566,7 +2566,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_38, 
+                DocumentTypeCode = "IL_38", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2576,7 +2576,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_4, 
+                DocumentTypeCode = "IL_4", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2586,7 +2586,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_40, 
+                DocumentTypeCode = "IL_40", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2596,7 +2596,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 103, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_341, 
+                DocumentTypeCode = "IL_341", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2606,7 +2606,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 104, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_341, 
+                DocumentTypeCode = "IL_341", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2616,7 +2616,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_342, 
+                DocumentTypeCode = "IL_342", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2626,7 +2626,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_345, 
+                DocumentTypeCode = "IL_345", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2636,7 +2636,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_41, 
+                DocumentTypeCode = "IL_41", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2646,7 +2646,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 54, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_41, 
+                DocumentTypeCode = "IL_41", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2656,7 +2656,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 13, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_42, 
+                DocumentTypeCode = "IL_42", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2666,7 +2666,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_42, 
+                DocumentTypeCode = "IL_42", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2676,7 +2676,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_43, 
+                DocumentTypeCode = "IL_43", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2686,7 +2686,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_43, 
+                DocumentTypeCode = "IL_43", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2696,7 +2696,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_35, 
+                DocumentTypeCode = "IL_35", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2706,7 +2706,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_350, 
+                DocumentTypeCode = "IL_350", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2716,7 +2716,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_351, 
+                DocumentTypeCode = "IL_351", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2726,7 +2726,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_352, 
+                DocumentTypeCode = "IL_352", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2736,7 +2736,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_353, 
+                DocumentTypeCode = "IL_353", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2746,7 +2746,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_354, 
+                DocumentTypeCode = "IL_354", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2756,7 +2756,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 103, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_339, 
+                DocumentTypeCode = "IL_339", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2766,7 +2766,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 98, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_336, 
+                DocumentTypeCode = "IL_336", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2776,7 +2776,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 103, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_338, 
+                DocumentTypeCode = "IL_338", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2786,7 +2786,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_34, 
+                DocumentTypeCode = "IL_34", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2796,7 +2796,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 103, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_340, 
+                DocumentTypeCode = "IL_340", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2806,7 +2806,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 16, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_289, 
+                DocumentTypeCode = "IL_289", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2816,7 +2816,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_29, 
+                DocumentTypeCode = "IL_29", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2826,7 +2826,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_290, 
+                DocumentTypeCode = "IL_290", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2836,7 +2836,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_3, 
+                DocumentTypeCode = "IL_3", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2846,7 +2846,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_30, 
+                DocumentTypeCode = "IL_30", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2856,7 +2856,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 100, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_303, 
+                DocumentTypeCode = "IL_303", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2866,7 +2866,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 101, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_303, 
+                DocumentTypeCode = "IL_303", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2876,7 +2876,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 102, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_303, 
+                DocumentTypeCode = "IL_303", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2886,7 +2886,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 19, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_303, 
+                DocumentTypeCode = "IL_303", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2896,7 +2896,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 62, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_303, 
+                DocumentTypeCode = "IL_303", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2906,7 +2906,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_306, 
+                DocumentTypeCode = "IL_306", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2916,7 +2916,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 36, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_306, 
+                DocumentTypeCode = "IL_306", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2926,7 +2926,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 61, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_336, 
+                DocumentTypeCode = "IL_336", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2936,7 +2936,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_32, 
+                DocumentTypeCode = "IL_32", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2946,7 +2946,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_327, 
+                DocumentTypeCode = "IL_327", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2956,7 +2956,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_33, 
+                DocumentTypeCode = "IL_33", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2966,7 +2966,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_331, 
+                DocumentTypeCode = "IL_331", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2976,7 +2976,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_333, 
+                DocumentTypeCode = "IL_333", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2986,7 +2986,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_334, 
+                DocumentTypeCode = "IL_334", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -2996,7 +2996,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 61, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_311, 
+                DocumentTypeCode = "IL_311", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3006,7 +3006,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 89, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_304, 
+                DocumentTypeCode = "IL_304", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3016,7 +3016,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 79, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_306, 
+                DocumentTypeCode = "IL_306", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3026,7 +3026,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 89, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_306, 
+                DocumentTypeCode = "IL_306", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3036,7 +3036,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 94, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_309, 
+                DocumentTypeCode = "IL_309", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3046,7 +3046,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_31, 
+                DocumentTypeCode = "IL_31", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3056,7 +3056,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 54, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_31, 
+                DocumentTypeCode = "IL_31", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3066,7 +3066,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_26, 
+                DocumentTypeCode = "IL_26", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3076,7 +3076,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_258, 
+                DocumentTypeCode = "IL_258", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3086,7 +3086,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_257, 
+                DocumentTypeCode = "IL_257", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3096,7 +3096,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_256, 
+                DocumentTypeCode = "IL_256", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3106,7 +3106,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_255, 
+                DocumentTypeCode = "IL_255", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3116,7 +3116,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_254, 
+                DocumentTypeCode = "IL_254", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3126,7 +3126,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = Il_253, 
+                DocumentTypeCode = "Il_253", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3136,7 +3136,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_249, 
+                DocumentTypeCode = "IL_249", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3146,7 +3146,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 40, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_25, 
+                DocumentTypeCode = "IL_25", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3156,7 +3156,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_252, 
+                DocumentTypeCode = "IL_252", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3166,7 +3166,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_248, 
+                DocumentTypeCode = "IL_248", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3176,7 +3176,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_247, 
+                DocumentTypeCode = "IL_247", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3186,7 +3186,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_246, 
+                DocumentTypeCode = "IL_246", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3196,7 +3196,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_245, 
+                DocumentTypeCode = "IL_245", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3206,7 +3206,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_244, 
+                DocumentTypeCode = "IL_244", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3216,7 +3216,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_243, 
+                DocumentTypeCode = "IL_243", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3226,7 +3226,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 80, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_272, 
+                DocumentTypeCode = "IL_272", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3236,7 +3236,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 80, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_273, 
+                DocumentTypeCode = "IL_273", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3246,7 +3246,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_271, 
+                DocumentTypeCode = "IL_271", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3256,7 +3256,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 39, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_271, 
+                DocumentTypeCode = "IL_271", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3266,7 +3266,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 79, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_265, 
+                DocumentTypeCode = "IL_265", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3276,7 +3276,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_27, 
+                DocumentTypeCode = "IL_27", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3286,7 +3286,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 54, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_27, 
+                DocumentTypeCode = "IL_27", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3296,7 +3296,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 78, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_261, 
+                DocumentTypeCode = "IL_261", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3306,7 +3306,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 2, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_262, 
+                DocumentTypeCode = "IL_262", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3316,7 +3316,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 2, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_261, 
+                DocumentTypeCode = "IL_261", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3326,7 +3326,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 54, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_26, 
+                DocumentTypeCode = "IL_26", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3336,7 +3336,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 80, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_278, 
+                DocumentTypeCode = "IL_278", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3346,7 +3346,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_28, 
+                DocumentTypeCode = "IL_28", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3356,7 +3356,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 80, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_282, 
+                DocumentTypeCode = "IL_282", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3366,7 +3366,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 80, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_281, 
+                DocumentTypeCode = "IL_281", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3376,7 +3376,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 80, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_283, 
+                DocumentTypeCode = "IL_283", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3386,7 +3386,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 103, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_285, 
+                DocumentTypeCode = "IL_285", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3396,7 +3396,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_285, 
+                DocumentTypeCode = "IL_285", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3406,7 +3406,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 83, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_284, 
+                DocumentTypeCode = "IL_284", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3416,7 +3416,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 84, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_284, 
+                DocumentTypeCode = "IL_284", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3426,7 +3426,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_209, 
+                DocumentTypeCode = "IL_209", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3436,7 +3436,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_209, 
+                DocumentTypeCode = "IL_209", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3446,7 +3446,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_202, 
+                DocumentTypeCode = "IL_202", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3456,7 +3456,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_203, 
+                DocumentTypeCode = "IL_203", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3466,7 +3466,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_203, 
+                DocumentTypeCode = "IL_203", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3476,7 +3476,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 103, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_204, 
+                DocumentTypeCode = "IL_204", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3486,7 +3486,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_199, 
+                DocumentTypeCode = "IL_199", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3496,7 +3496,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 39, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_199, 
+                DocumentTypeCode = "IL_199", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3506,7 +3506,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 41, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_202, 
+                DocumentTypeCode = "IL_202", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3516,7 +3516,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 12, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_185, 
+                DocumentTypeCode = "IL_185", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3526,7 +3526,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 19, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_185, 
+                DocumentTypeCode = "IL_185", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3536,7 +3536,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 35, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_185, 
+                DocumentTypeCode = "IL_185", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3546,7 +3546,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_148, 
+                DocumentTypeCode = "IL_148", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3556,7 +3556,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_149, 
+                DocumentTypeCode = "IL_149", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3566,7 +3566,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 12, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_184, 
+                DocumentTypeCode = "IL_184", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3576,7 +3576,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 19, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_184, 
+                DocumentTypeCode = "IL_184", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3586,7 +3586,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 35, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_184, 
+                DocumentTypeCode = "IL_184", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3596,7 +3596,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_242, 
+                DocumentTypeCode = "IL_242", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3606,7 +3606,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_241, 
+                DocumentTypeCode = "IL_241", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3616,7 +3616,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_24, 
+                DocumentTypeCode = "IL_24", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3626,7 +3626,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_24, 
+                DocumentTypeCode = "IL_24", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3636,7 +3636,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_240, 
+                DocumentTypeCode = "IL_240", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3646,7 +3646,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_239, 
+                DocumentTypeCode = "IL_239", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3656,7 +3656,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_238, 
+                DocumentTypeCode = "IL_238", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3666,7 +3666,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_237, 
+                DocumentTypeCode = "IL_237", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3676,7 +3676,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_236, 
+                DocumentTypeCode = "IL_236", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3686,7 +3686,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_205, 
+                DocumentTypeCode = "IL_205", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3696,7 +3696,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_206, 
+                DocumentTypeCode = "IL_206", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3706,7 +3706,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_210, 
+                DocumentTypeCode = "IL_210", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3716,7 +3716,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_210, 
+                DocumentTypeCode = "IL_210", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3726,7 +3726,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_211, 
+                DocumentTypeCode = "IL_211", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3736,7 +3736,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_211, 
+                DocumentTypeCode = "IL_211", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3746,7 +3746,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_212, 
+                DocumentTypeCode = "IL_212", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3756,7 +3756,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_235, 
+                DocumentTypeCode = "IL_235", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3766,7 +3766,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_23, 
+                DocumentTypeCode = "IL_23", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3776,7 +3776,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_23, 
+                DocumentTypeCode = "IL_23", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3786,7 +3786,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_234, 
+                DocumentTypeCode = "IL_234", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3796,7 +3796,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_138, 
+                DocumentTypeCode = "IL_138", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3806,7 +3806,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_139, 
+                DocumentTypeCode = "IL_139", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3816,7 +3816,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 1, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_14, 
+                DocumentTypeCode = "IL_14", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3826,7 +3826,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_14, 
+                DocumentTypeCode = "IL_14", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3836,7 +3836,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 15, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_14, 
+                DocumentTypeCode = "IL_14", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3846,7 +3846,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 10, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_135, 
+                DocumentTypeCode = "IL_135", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3856,7 +3856,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 44, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_135, 
+                DocumentTypeCode = "IL_135", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3866,7 +3866,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 45, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_133, 
+                DocumentTypeCode = "IL_133", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3876,7 +3876,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 18, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_140, 
+                DocumentTypeCode = "IL_140", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3886,7 +3886,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_141, 
+                DocumentTypeCode = "IL_141", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3896,7 +3896,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_147, 
+                DocumentTypeCode = "IL_147", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3906,7 +3906,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_144, 
+                DocumentTypeCode = "IL_144", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3916,7 +3916,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_145, 
+                DocumentTypeCode = "IL_145", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3926,7 +3926,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 18, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_142, 
+                DocumentTypeCode = "IL_142", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3936,7 +3936,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 18, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_143, 
+                DocumentTypeCode = "IL_143", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3946,7 +3946,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 2, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_14, 
+                DocumentTypeCode = "IL_14", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3956,7 +3956,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 20, 
                 Mandatory = false, 
                 Format = "String", 
-                DocumentTypeCode = IL_14, 
+                DocumentTypeCode = "IL_14", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3966,7 +3966,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 10, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_136, 
+                DocumentTypeCode = "IL_136", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3976,7 +3976,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 45, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_132, 
+                DocumentTypeCode = "IL_132", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3986,7 +3986,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 16, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_13, 
+                DocumentTypeCode = "IL_13", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -3996,7 +3996,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 6, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_128, 
+                DocumentTypeCode = "IL_128", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4006,7 +4006,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_129, 
+                DocumentTypeCode = "IL_129", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4016,7 +4016,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 12, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_126, 
+                DocumentTypeCode = "IL_126", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4026,7 +4026,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 19, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_126, 
+                DocumentTypeCode = "IL_126", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4036,7 +4036,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 35, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_126, 
+                DocumentTypeCode = "IL_126", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4046,7 +4046,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 11, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_125, 
+                DocumentTypeCode = "IL_125", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4056,7 +4056,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 18, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_125, 
+                DocumentTypeCode = "IL_125", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4066,7 +4066,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_119, 
+                DocumentTypeCode = "IL_119", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4076,7 +4076,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 54, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_119, 
+                DocumentTypeCode = "IL_119", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4086,7 +4086,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 15, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_123, 
+                DocumentTypeCode = "IL_123", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4096,7 +4096,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 17, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_123, 
+                DocumentTypeCode = "IL_123", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4106,7 +4106,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 46, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_124, 
+                DocumentTypeCode = "IL_124", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4116,7 +4116,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 5, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_124, 
+                DocumentTypeCode = "IL_124", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4126,7 +4126,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 1, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_124, 
+                DocumentTypeCode = "IL_124", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4136,7 +4136,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 14, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_124, 
+                DocumentTypeCode = "IL_124", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4146,7 +4146,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 2, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_124, 
+                DocumentTypeCode = "IL_124", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4206,7 +4206,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 21, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_1, 
+                DocumentTypeCode = "IL_1", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4216,7 +4216,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 39, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_1, 
+                DocumentTypeCode = "IL_1", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4236,7 +4236,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 9, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_103, 
+                DocumentTypeCode = "IL_103", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4246,7 +4246,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 9, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_104, 
+                DocumentTypeCode = "IL_104", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4256,7 +4256,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 9, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_105, 
+                DocumentTypeCode = "IL_105", 
                 IsLeading = false, 
                 Inactive = false, 
 			});
@@ -4266,7 +4266,7 @@ namespace Logitude.Customs.BL
                 MetaDataTypeCode = 16, 
                 Mandatory = true, 
                 Format = "String", 
-                DocumentTypeCode = IL_11, 
+                DocumentTypeCode = "IL_11", 
                 IsLeading = false, 
                 Inactive = false, 
 			});

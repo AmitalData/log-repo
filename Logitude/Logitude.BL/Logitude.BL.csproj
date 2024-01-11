@@ -436,7 +436,6 @@
     <Compile Include="CommonDataModel\EntityLists\CustomerGroupList.cs" />
     <Compile Include="CommonDataModel\EntityLists\CustomerTeamList.cs" />
     <Compile Include="CommonDataModel\EntityLists\HorseGenderList.cs" />
-    <Compile Include="CommonDataModel\EntityLists\HTSCodeList.cs" />
     <Compile Include="CommonDataModel\EntityLists\MentionList.cs" />
     <Compile Include="CommonDataModel\EntityLists\PortGroupList.cs" />
     <Compile Include="CommonDataModel\EntityLists\PortTimeZoneList.cs" />
@@ -472,7 +471,6 @@
     <Compile Include="CommonDataModel\EntityQueries\CustomerGroupQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\CustomerTeamQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\HorseGenderQuery.cs" />
-    <Compile Include="CommonDataModel\EntityQueries\HTSCodeQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\MentionQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PortGroupQuery.cs" />
     <Compile Include="CommonDataModel\EntityQueries\PortTimeZoneQuery.cs" />

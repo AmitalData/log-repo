@@ -74,6 +74,12 @@ using Logitude.TariffModule.BL.CLoseTable;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.BL;
 using Logitude.CargoTracking.Data.EntityPOCOs;
+using Logitude.Workflow.Data.Repositories;
+using Logitude.Workflow.Data.EntityPOCOs;
+using Logitude.Workflow.BL.CLoseTable;
+using Logitude.DashboardModule.Data.Repositories;
+using Logitude.DashboardModule.Data.EntityPOCOs;
+using Logitude.DashboardModule.BL;
 
 //using Amital.QuoteOPM.BL.CLoseTable;
 using Amital.QuoteOPM.Data.Repsitories;
@@ -85,9 +91,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimUpdateClass
    {  		
-
-		public const string HashString = "01013ca355a4641c0c736244c88eb23f";
-
+		public const string HashString = "7933be3c92a1841029e3d4f4d16828b5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -101,6 +105,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTablePlural =  "Claims",
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
+			      				    AvailableInCustomization =  true,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -156,6 +161,136 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
+					 						FieldName =  "Id",
+					  						ObjectTableName =  "Customs.Claim",
+					  						FieldsDataType =  "Text",
+					  						MinLength =  0,
+					  						MaxLength =  15,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  15,
+					  						DisplayInList =  false,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Id",
+					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Claim",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Id",
+					  						DefaultText =  "Id",
+					  						FullLocalDefaultText =  "Id",
+					  						ListFieldLable =  "IdListLable",
+					  						ListLableDefaultText =  "Id",
+					  						ListLocalDefaultText =  "Id",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "Tenant",
+					  						ObjectTableName =  "Customs.Claim",
+					  						FieldsDataType =  "Integer",
+					  						MinLength =  0,
+					  						MaxLength =  0,
+					  						IsRequired =  true,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  0,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "Tenant",
+					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "Customs.Claim",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  false,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "Tenant",
+					  						DefaultText =  "Tenant",
+					  						FullLocalDefaultText =  "Tenant",
+					  						ListFieldLable =  "TenantListLable",
+					  						ListLableDefaultText =  "Tenant",
+					  						ListLocalDefaultText =  "Tenant",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  true,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  true,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						DisplayInRequiredFields =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
 					 						FieldName =  "ImporterClaimTypeCode",
 					  						ObjectTableName =  "Customs.Claim",
 					  						FieldsDataType =  "LookUp",
@@ -172,6 +307,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -201,7 +337,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ImporterClaimTypeCodeListLable",
 					  						ListLableDefaultText =  "Importer Claim Type",
 					  						ListLocalDefaultText =  "סוג התובע",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "ImporterTypeForClaim",
+					  						NavigationPropertyName =  "ImporterClaimType",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
 					  						IncludeInSearchField =  false,
@@ -235,6 +375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -264,7 +405,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ImporterClaimTypeNameListLable",
 					  						ListLableDefaultText =  "Importer Claim Type Name",
 					  						ListLocalDefaultText =  "סוג התובע",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -298,6 +441,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  9,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -322,11 +466,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SoldierPersonalNumber",
 					  						DefaultText =  "Soldier Personal Number",
-					  						FullLocalDefaultText =  "מספר םישי",
+					  						FullLocalDefaultText =  "מספר אישי",
 					  						ListFieldLable =  "SoldierPersonalNumberListLable",
 					  						ListLableDefaultText =  "Soldier Personal Number",
-					  						ListLocalDefaultText =  "מספר םישי",
+					  						ListLocalDefaultText =  "מספר אישי",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
 					  						IncludeInSearchField =  false,
@@ -361,6 +507,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInList =  true,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -386,11 +533,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SubmitDate",
 					  						DefaultText =  "Submit Date",
-					  						FullLocalDefaultText =  "תםריך הגשת תביעה",
+					  						FullLocalDefaultText =  "תאריך הגשת תביעה",
 					  						ListFieldLable =  "SubmitDateListLable",
 					  						ListLableDefaultText =  "Submit Date",
-					  						ListLocalDefaultText =  "תםריך הגשת תביעה",
+					  						ListLocalDefaultText =  "תאריך הגשת תביעה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
 					  						IncludeInSearchField =  false,
@@ -425,6 +574,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -454,7 +604,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ClientIdListLable",
 					  						ListLableDefaultText =  "Client",
 					  						ListLocalDefaultText =  "לקוח",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Client",
+					  						NavigationPropertyName =  "Client",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  true,
 					  						IncludeInSearchField =  false,
@@ -489,6 +643,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -518,7 +673,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PassportCountryTypeCodeListLable",
 					  						ListLableDefaultText =  "Passport Country Type",
 					  						ListLocalDefaultText =  "קוד מדינת דרכון",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "CustomsCountry",
+					  						NavigationPropertyName =  "PassportCountryType",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -552,6 +711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -581,7 +741,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PassportCountryTypeNameListLable",
 					  						ListLableDefaultText =  "Passport Country Type Name",
 					  						ListLocalDefaultText =  "מדינת דרכון",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -615,6 +777,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -643,7 +806,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PassportNumberListLable",
 					  						ListLableDefaultText =  "Passport Number",
 					  						ListLocalDefaultText =  "מספר דרכון",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -678,6 +843,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -707,7 +873,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PassportTypeCodeListLable",
 					  						ListLableDefaultText =  "Passport Type",
 					  						ListLocalDefaultText =  "קוד סוג תעודה",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "PassportType",
+					  						NavigationPropertyName =  "PassportType",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -741,6 +911,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -770,7 +941,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "PassportTypeNameListLable",
 					  						ListLableDefaultText =  "Passport Type Name",
 					  						ListLocalDefaultText =  "סוג תעודה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -804,6 +977,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  9,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -833,7 +1007,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CustomsAddressCodeListLable",
 					  						ListLableDefaultText =  "Customs Address",
 					  						ListLocalDefaultText =  "כתובת לקוח",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -867,6 +1043,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  9,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -892,11 +1069,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ContactPhoneAddressCode",
 					  						DefaultText =  "Contact Phone Address",
-					  						FullLocalDefaultText =  "כתובת םיש קשר",
+					  						FullLocalDefaultText =  "כתובת איש קשר",
 					  						ListFieldLable =  "ContactPhoneAddressCodeListLable",
 					  						ListLableDefaultText =  "Contact Phone Address",
-					  						ListLocalDefaultText =  "כתובת םיש קשר",
+					  						ListLocalDefaultText =  "כתובת איש קשר",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -930,6 +1109,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  9,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -959,7 +1139,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ClaimSubmiterNumberListLable",
 					  						ListLableDefaultText =  "Claim Submiter Number",
 					  						ListLocalDefaultText =  "מספר סוכן",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -994,6 +1176,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1023,7 +1206,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ClaimSubmiterTypeCodeListLable",
 					  						ListLableDefaultText =  "Claim Submiter Type",
 					  						ListLocalDefaultText =  "קוד סוג פעילות",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "CustomerActivityType",
+					  						NavigationPropertyName =  "ClaimSubmiterType",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1057,6 +1244,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1086,7 +1274,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ClaimSubmiterTypeNameListLable",
 					  						ListLableDefaultText =  "Claim Submiter Name",
 					  						ListLocalDefaultText =  "סוג פעילות",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1120,6 +1310,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  55,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -1144,11 +1335,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "HebrewCorporationName",
 					  						DefaultText =  "Hebrew Corporation Name",
-					  						FullLocalDefaultText =  "שם תםגיד מגיש התביעה",
+					  						FullLocalDefaultText =  "שם תאגיד מגיש התביעה",
 					  						ListFieldLable =  "HebrewCorporationNameListLable",
 					  						ListLableDefaultText =  "Hebrew Corporation Name",
-					  						ListLocalDefaultText =  "שם תםגיד מגיש התביעה",
+					  						ListLocalDefaultText =  "שם תאגיד מגיש התביעה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1182,6 +1375,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  9,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1211,7 +1405,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AddressCodeListLable",
 					  						ListLableDefaultText =  "Address Code",
 					  						ListLocalDefaultText =  "כתובת מגיש תביעה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1245,6 +1441,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  9,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1274,7 +1471,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "BeneficiaryExternalIDListLable",
 					  						ListLableDefaultText =  "Beneficiary External ID",
 					  						ListLocalDefaultText =  "מזהה מוטב להחזר",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1309,6 +1508,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1338,7 +1538,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "BeneficiaryActivityTypeCodeListLable",
 					  						ListLableDefaultText =  "Beneficiary Activity Type",
 					  						ListLocalDefaultText =  "קוד סוג מוטב",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "CustomerActivityType",
+					  						NavigationPropertyName =  "BeneficiaryActivityType",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1372,6 +1576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1401,7 +1606,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "BeneficiaryActivityTypeNameListLable",
 					  						ListLableDefaultText =  "Beneficiary Activity Type Name",
 					  						ListLocalDefaultText =  "סוג מוטב",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1436,6 +1643,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1465,7 +1673,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AccountCountryCodeListLable",
 					  						ListLableDefaultText =  "Account Country",
 					  						ListLocalDefaultText =  "מדינה בה מנוהל חשבון",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "CustomsCountry",
+					  						NavigationPropertyName =  "AccountCountry",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1499,6 +1711,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1528,7 +1741,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AccountCountryNameListLable",
 					  						ListLableDefaultText =  "Account Country Name",
 					  						ListLocalDefaultText =  "מדינה בה מנוהל חשבון",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1563,6 +1778,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1592,7 +1808,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "BankTypeCodeListLable",
 					  						ListLableDefaultText =  "Bank Code",
 					  						ListLocalDefaultText =  "קוד בנק",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Bank",
+					  						NavigationPropertyName =  "BankCode",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1627,6 +1847,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  6,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1656,7 +1877,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AccountBranchCodeListLable",
 					  						ListLableDefaultText =  "Account Branch",
 					  						ListLocalDefaultText =  "קוד סניף",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "CustomsBranch",
+					  						NavigationPropertyName =  "AccountBranch",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1690,6 +1915,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1719,7 +1945,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AccountBranchNameListLable",
 					  						ListLableDefaultText =  "Account Branch Name",
 					  						ListLocalDefaultText =  "סניף",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1753,6 +1981,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1782,7 +2011,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AccountNumberListLable",
 					  						ListLableDefaultText =  "Account Number",
 					  						ListLocalDefaultText =  "מספר חשבון",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1817,6 +2048,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  3,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1846,7 +2078,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AccountCurrencyTypeCodeListLable",
 					  						ListLableDefaultText =  "Account Currency Type",
 					  						ListLocalDefaultText =  "קוד מטבע חשבון זר",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "CurrencyType",
+					  						NavigationPropertyName =  "AccountCurrencyType",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1880,6 +2116,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  40,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1909,7 +2146,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "AccountCurrencyTypeNameListLable",
 					  						ListLableDefaultText =  "Account Currency Type Name",
 					  						ListLocalDefaultText =  "מטבע חשבון זר",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -1943,6 +2182,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  9,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -1972,7 +2212,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ForeignBankListLable",
 					  						ListLableDefaultText =  "Foreign Bank",
 					  						ListLocalDefaultText =  "מספר בנק זר",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2006,6 +2248,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  9,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2035,7 +2278,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ForeignBranchListLable",
 					  						ListLableDefaultText =  "Foreign Branch",
 					  						ListLocalDefaultText =  "מספר סניף זר",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2069,6 +2314,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  11,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2098,7 +2344,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ForeignAccountNumberListLable",
 					  						ListLableDefaultText =  "Foreign Account Number",
 					  						ListLocalDefaultText =  "מספר חשבון זר",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2132,6 +2380,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  500,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2160,7 +2409,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ImporterAffidavitListLable",
 					  						ListLableDefaultText =  "Importer Affidavit",
 					  						ListLocalDefaultText =  "נוסח ההצהרה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2194,6 +2445,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  500,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2218,11 +2470,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "RawMaterialsDescription",
 					  						DefaultText =  "Raw Materials Description",
-					  						FullLocalDefaultText =  "תיםור חומרי הגלם",
+					  						FullLocalDefaultText =  "תיאור חומרי הגלם",
 					  						ListFieldLable =  "RawMaterialsDescriptionListLable",
 					  						ListLableDefaultText =  "Raw Materials Description",
-					  						ListLocalDefaultText =  "תיםור חומרי הגלם",
+					  						ListLocalDefaultText =  "תיאור חומרי הגלם",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2256,6 +2510,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  30,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2285,7 +2540,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CustomsFilesListLable",
 					  						ListLableDefaultText =  "Customs Files",
 					  						ListLocalDefaultText =  "תיקי עמילות",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2319,6 +2576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1000,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Contains",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2347,7 +2605,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						FullLocalDefaultText =  "תיק תפ''ג/מספר תביעה/מספר ישות/תיק עמילות",
 					  						ListFieldLable =  "SearchFieldsListLable",
 					  						ListLableDefaultText =  "Search Field",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2381,6 +2641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2406,7 +2667,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClaimImporterDeclarsPage3",
 					  						DefaultText =  "Claim Importer Declarations Page 3",
+					  						IsForeignKey =  false,
+					  						ThisKey =  "Id",
+					  						OtherKey =  "ClaimId",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2440,6 +2705,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2467,7 +2733,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DefaultText =  "Claim Related Entities",
 					  						ListFieldLable =  "ClaimsRelatedEntitiesListLable",
 					  						ListLableDefaultText =  "Claim Related Entities",
+					  						IsForeignKey =  false,
+					  						ThisKey =  "Id",
+					  						OtherKey =  "ClaimId",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2501,6 +2771,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2526,7 +2797,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClaimImporterDeclarsPage3A",
 					  						DefaultText =  "Claim Importer Declarations Page 3A",
+					  						IsForeignKey =  false,
+					  						ThisKey =  "Id",
+					  						OtherKey =  "ClaimId",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2560,6 +2835,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2585,7 +2861,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ClaimImporterDeclarsPage3B",
 					  						DefaultText =  "Claim Importer Declarations Page 3B",
+					  						IsForeignKey =  false,
+					  						ThisKey =  "Id",
+					  						OtherKey =  "ClaimId",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2619,6 +2899,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  12,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2647,7 +2928,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "TapagNumberListLable",
 					  						ListLableDefaultText =  "Tapag Number",
 					  						ListLocalDefaultText =  "תיק תפ”ג",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2681,6 +2964,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  9,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2709,7 +2993,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "LeadingFileNumberListLable",
 					  						ListLableDefaultText =  "Leading File Number",
 					  						ListLocalDefaultText =  "מספר תיק מוביל",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2743,6 +3029,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  1,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2771,7 +3058,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "TapagTypeCodeListLable",
 					  						ListLableDefaultText =  "Tapag Type",
 					  						ListLocalDefaultText =  "קוד סוג תיק תפ”ג",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2805,6 +3094,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -2834,7 +3124,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "TapagTypeNameListLable",
 					  						ListLableDefaultText =  "Tapag Type Name",
 					  						ListLocalDefaultText =  "סוג תיק תפ”ג",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2868,6 +3160,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2896,7 +3189,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CustomerIdListLable",
 					  						ListLableDefaultText =  "Customer Id",
 					  						ListLocalDefaultText =  "קוד לקוח",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2930,6 +3225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -2958,7 +3254,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CustomerNameListLable",
 					  						ListLableDefaultText =  "Customer",
 					  						ListLocalDefaultText =  "לקוח",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -2992,6 +3290,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3016,11 +3315,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterId",
 					  						DefaultText =  "Importer",
-					  						FullLocalDefaultText =  "יבוםן",
+					  						FullLocalDefaultText =  "יבואן",
 					  						ListFieldLable =  "ImporterIdListLable",
 					  						ListLableDefaultText =  "Importer",
-					  						ListLocalDefaultText =  "יבוםן",
+					  						ListLocalDefaultText =  "יבואן",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3054,6 +3355,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3078,11 +3380,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ImporterName",
 					  						DefaultText =  "Importer",
-					  						FullLocalDefaultText =  "יבוםן",
+					  						FullLocalDefaultText =  "יבואן",
 					  						ListFieldLable =  "ImporterNameListLable",
 					  						ListLableDefaultText =  "Importer",
-					  						ListLocalDefaultText =  "יבוםן",
+					  						ListLocalDefaultText =  "יבואן",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3117,6 +3421,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInList =  true,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToRoutingString",
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3142,11 +3447,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreateDate",
 					  						DefaultText =  "Create Date",
-					  						FullLocalDefaultText =  "תםריך פתיחה",
+					  						FullLocalDefaultText =  "תאריך פתיחה",
 					  						ListFieldLable =  "CreateDateListLable",
 					  						ListLableDefaultText =  "Create Date",
-					  						ListLocalDefaultText =  "תםריך פתיחה",
+					  						ListLocalDefaultText =  "תאריך פתיחה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3181,6 +3488,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInList =  true,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3206,11 +3514,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "FollowDate",
 					  						DefaultText =  "Follow Date",
-					  						FullLocalDefaultText =  "תםריך למעקב",
+					  						FullLocalDefaultText =  "תאריך למעקב",
 					  						ListFieldLable =  "FollowDateListLable",
 					  						ListLableDefaultText =  "Follow Date",
-					  						ListLocalDefaultText =  "תםריך למעקב",
+					  						ListLocalDefaultText =  "תאריך למעקב",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3245,6 +3555,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInList =  true,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3274,7 +3585,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ValidityDateListLable",
 					  						ListLableDefaultText =  "Validity Date",
 					  						ListLocalDefaultText =  "תוקף תיק תפ”ג",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3310,6 +3623,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.BooleanToStringConverter",
 					  						DataTemplateName =  "IsClosedDataTemplate",
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3338,7 +3652,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IsClosedListLable",
 					  						ListLableDefaultText =  "Is Closed",
 					  						ListLocalDefaultText =  "תיק סגור",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3373,6 +3689,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
@@ -3402,7 +3719,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "TapagIdListLable",
 					  						ListLableDefaultText =  "Tapag ID",
 					  						ListLocalDefaultText =  "מזהה תפ''ג",
+					  						IsForeignKey =  true,
+					  						ForeignEntity =  "Tapag",
+					  						NavigationPropertyName =  "Tapag",
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3437,6 +3758,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  17,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3465,7 +3787,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CustomsBranchCodeListLable",
 					  						ListLableDefaultText =  "Customs Branch",
 					  						ListLocalDefaultText =  "קוד בית מכס",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3499,6 +3823,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  false,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3527,7 +3852,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ReferantIdListLable",
 					  						ListLableDefaultText =  "Referant Id",
 					  						ListLocalDefaultText =  "קוד רפרנט",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3561,6 +3888,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3589,7 +3917,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ReferantNameListLable",
 					  						ListLableDefaultText =  "Referant",
 					  						ListLocalDefaultText =  "רפרנט",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3623,6 +3953,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  0,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3651,7 +3982,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "IsSendClaimsRelatedEntityListLable",
 					  						ListLableDefaultText =  "IsSendClaimsRelatedEntity",
 					  						ListLocalDefaultText =  "שלח",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3685,6 +4018,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						SystemMaxLength =  100,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
@@ -3713,7 +4047,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "CustomsBranchNameListLable",
 					  						ListLableDefaultText =  "Customs Branch",
 					  						ListLocalDefaultText =  "בית מכס",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3777,7 +4113,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ClaimAmountListLable",
 					  						ListLableDefaultText =  "Claim Amount",
 					  						ListLocalDefaultText =  "סכום תביעה",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
@@ -3848,7 +4186,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn OpenClaimFilesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Claim.ClaimAmount" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter OpenClaimFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Claim.IsClosed", PredefinedValue = "0",PredefinedValue2 = null, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
+             AdvancedQueryFilter OpenClaimFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Claim.IsClosed", PredefinedValue = "0",PredefinedValue2 = null, CustomPredefined = false, QueryId = OpenClaimFilesQuery.Id,QueryCode = OpenClaimFilesQuery.UniqueCode, Tenant = 0}, addedQueryFilters);
 
   
 	      
@@ -3887,7 +4225,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 			 QueryColumn CloseClaimFilesQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.Claim.ClaimAmount" , ColumnWidth = 100 }, addedQueryColumns);
 
-             AdvancedQueryFilter CloseClaimFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Claim.IsClosed", PredefinedValue = "true",PredefinedValue2 = null, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
+             AdvancedQueryFilter CloseClaimFilesQueryFilter_0 = AddQueries.AddAdvancedQueryFilter(new AdvancedFilterDetails() { IsPredefined = true, ObjectFieldCode = "Customs.Claim.IsClosed", PredefinedValue = "true",PredefinedValue2 = null, CustomPredefined = false, QueryId = CloseClaimFilesQuery.Id,QueryCode = CloseClaimFilesQuery.UniqueCode, Tenant = 0,Operator = "Equal"}, addedQueryFilters);
 
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
@@ -3937,11 +4275,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature ClaimRefundDetailsFeature_TH1 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Claim.Tab.RefundDetails", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Claim.Features.RefundDetails", NameTextCodeDefaultText = "RefundDetails", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ClaimObjectTable);
  
                  
-			   TextCode ClaimImporterDeclarationATextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.TH.ImporterDeclarationA", DefaultText = "Importer Declaration A",LocalDefaultText = "הצהרת יבוםן ם", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode ClaimImporterDeclarationATextCode_TH2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.TH.ImporterDeclarationA", DefaultText = "Importer Declaration A",LocalDefaultText = "הצהרת יבואן א", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ClaimImporterDeclarationAFeature_TH2 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Claim.Tab.ImporterDeclarationA", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Claim.Features.ImporterDeclarationA", NameTextCodeDefaultText = "Importer Declaration A", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ClaimObjectTable);
  
                  
-			   TextCode ClaimImporterDeclarationBCTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.TH.ImporterDeclarationBC", DefaultText = "Importer Declaration BC",LocalDefaultText = "הצהרת יבוםן ב+ג", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode ClaimImporterDeclarationBCTextCode_TH3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.TH.ImporterDeclarationBC", DefaultText = "Importer Declaration BC",LocalDefaultText = "הצהרת יבואן ב+ג", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ClaimImporterDeclarationBCFeature_TH3 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Claim.Tab.ImporterDeclarationBC", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Claim.Features.ImporterDeclarationBC", NameTextCodeDefaultText = "Importer Declaration BC", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ClaimObjectTable);
  
                  
@@ -3949,7 +4287,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   Feature ClaimCustomDocumentsFeature_TH4 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Claim.Tab.CustomDocuments", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Claim.Features.CustomDocuments", NameTextCodeDefaultText = "CustomDocuments", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ClaimObjectTable);
  
                  
-			   TextCode ClaimEventsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.TH.Events", DefaultText = "Events",LocalDefaultText = "םירועים", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   TextCode ClaimEventsTextCode_TH5 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.TH.Events", DefaultText = "Events",LocalDefaultText = "אירועים", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
 			   Feature ClaimEventsFeature_TH5 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Claim.Tab.Events", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Claim.Features.Events", NameTextCodeDefaultText = "Events", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ClaimObjectTable);
  
                  
@@ -4301,49 +4639,49 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ClaimTextCode_CustomsClaimOClaimsRelatedEntityAdditional = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ClaimsRelatedEntityAdditional", DefaultText = "Additional Data",LocalDefaultText = @"נתונים נוספים", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimOClaimsRelatedEntityExpDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ClaimsRelatedEntityExpDeclaration", DefaultText = "Export Declarations",LocalDefaultText = @"הצהרות יצום", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimOClaimsRelatedEntityExpDeclaration = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ClaimsRelatedEntityExpDeclaration", DefaultText = "Export Declarations",LocalDefaultText = @"הצהרות יצוא", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGDeleteClaimRelatedEntity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.DeleteClaimRelatedEntity", DefaultText = "Delete Claim Related Entity?",LocalDefaultText = @"הםם למחוק םת ישות התביעה וכל פרטיה?", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGDeleteClaimRelatedEntity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.DeleteClaimRelatedEntity", DefaultText = "Delete Claim Related Entity?",LocalDefaultText = @"האם למחוק את ישות התביעה וכל פרטיה?", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGDeleteClaimRelatedEntityError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.DeleteClaimRelatedEntityError", DefaultText = "Sorry, you can't delete claim file",LocalDefaultText = @"לם ניתן למחוק ישות תביעה המקושרת לתיק תפג", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGDeleteClaimRelatedEntityError = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.DeleteClaimRelatedEntityError", DefaultText = "Sorry, you can't delete claim file",LocalDefaultText = @"לא ניתן למחוק ישות תביעה המקושרת לתיק תפג", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClaimTextCode_CustomsClaimgCreateDecList2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.g.CreateDecList2", DefaultText = "Declaration List to",LocalDefaultText = @" רשימת הצהרות ל", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGImDeclarationMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.ImDeclarationMissing", DefaultText = "Importer Declaration is missing",LocalDefaultText = @"חסר תצהיר יבוםן ", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGImDeclarationMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.ImDeclarationMissing", DefaultText = "Importer Declaration is missing",LocalDefaultText = @"חסר תצהיר יבואן ", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGClaimExplanationTypeMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.ClaimExplanationTypeMissing", DefaultText = "Claim Explanation Type is missing",LocalDefaultText = @"לם ניתן להוסיף הסבר ללם קוד", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGClaimExplanationTypeMissing = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.ClaimExplanationTypeMissing", DefaultText = "Claim Explanation Type is missing",LocalDefaultText = @"לא ניתן להוסיף הסבר ללא קוד", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGEnterCommercialSale = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.EnterCommercialSale", DefaultText = "Please enter a commercial Sale",LocalDefaultText = @"םנם הזן מישור מסחרי ", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGEnterCommercialSale = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.EnterCommercialSale", DefaultText = "Please enter a commercial Sale",LocalDefaultText = @"אנא הזן מישור מסחרי ", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "G", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClaimTextCode_CustomsClaimsRelatedEntityOTapagNumberAndNumeral = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.ClaimsRelatedEntity.O.TapagNumberAndNumeral", DefaultText = "Claim File Number",LocalDefaultText = @"מספר תיק תביעה במכס", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimsOCorporationNameNotExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claims.O.CorporationNameNotExists", DefaultText = "Retrieve Agent Data From Customs",LocalDefaultText = @"יש לשלוף םת נתוני הסוכן מהמכס", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimsOCorporationNameNotExists = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claims.O.CorporationNameNotExists", DefaultText = "Retrieve Agent Data From Customs",LocalDefaultText = @"יש לשלוף את נתוני הסוכן מהמכס", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimsOClaimImporterDeclarsPage3A = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claims.O.ClaimImporterDeclarsPage3A", DefaultText = "ClaimImporterDeclarsPage3A",LocalDefaultText = @"סעיף 3ם - פרטי המישור המסחרי", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimsOClaimImporterDeclarsPage3A = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claims.O.ClaimImporterDeclarsPage3A", DefaultText = "ClaimImporterDeclarsPage3A",LocalDefaultText = @"סעיף 3א - פרטי המישור המסחרי", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClaimTextCode_CustomsClaimGRelatedEntitiesCheck = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.RelatedEntitiesCheck", DefaultText = "Check Related Entities",LocalDefaultText = @"בדיקת ישויות תביעה", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGNoRelatedEntityForClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoRelatedEntityForClaim", DefaultText = "Need at least one Related Entity",LocalDefaultText = @"יש להזין לפחות ישות תביעה םחת", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGNoRelatedEntityForClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoRelatedEntityForClaim", DefaultText = "Need at least one Related Entity",LocalDefaultText = @"יש להזין לפחות ישות תביעה אחת", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGNoImporterDeclarsPage3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoImporterDeclarsPage3", DefaultText = "Need at least one Importer Declaration (Page3)",LocalDefaultText = @"חובה להזין לפחות תצהיר יבוםן (סעיף 3) םחד", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGNoImporterDeclarsPage3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoImporterDeclarsPage3", DefaultText = "Need at least one Importer Declaration (Page3)",LocalDefaultText = @"חובה להזין לפחות תצהיר יבואן (סעיף 3) אחד", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGNoImporterDeclarsPage3Affidavit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoImporterDeclarsPage3Affidavit", DefaultText = "Need at least one Importer Declaration (Page3)",LocalDefaultText = @"במידה והוזן הצהרת יבוםן, חובה להזין לפחות תצהיר יבוםן (סעיף 3) םחד", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGNoImporterDeclarsPage3Affidavit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoImporterDeclarsPage3Affidavit", DefaultText = "Need at least one Importer Declaration (Page3)",LocalDefaultText = @"במידה והוזן הצהרת יבואן, חובה להזין לפחות תצהיר יבואן (סעיף 3) אחד", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGNoDeclarationForPage3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoDeclarationForPage3", DefaultText = "Need at least one Declaration",LocalDefaultText = @"חובה להזין לפחות הצהרה םחת לכל תצהיר יבוםן", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGNoDeclarationForPage3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoDeclarationForPage3", DefaultText = "Need at least one Declaration",LocalDefaultText = @"חובה להזין לפחות הצהרה אחת לכל תצהיר יבואן", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGNoClaimsRelatedEntityReasons = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoClaimsRelatedEntityReasons", DefaultText = "Need at least one reason",LocalDefaultText = @"חובה להזין לפחות סיבת תביעה םחת - הסיבה חייבת לכלול גם הסבר", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGNoClaimsRelatedEntityReasons = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoClaimsRelatedEntityReasons", DefaultText = "Need at least one reason",LocalDefaultText = @"חובה להזין לפחות סיבת תביעה אחת - הסיבה חייבת לכלול גם הסבר", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClaimTextCode_CustomsClaimGNoClaimsRelatedEntityReasonExps = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoClaimsRelatedEntityReasonExps", DefaultText = "Need at least one reason Explanation",LocalDefaultText = @"חובה להזין לכל סיבת תביעה גם הסבר", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGNoImporterDeclarsPage3A = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoImporterDeclarsPage3A", DefaultText = "Need at least one Commercial Sale (Page3A)",LocalDefaultText = @"חובה להזין לפחות פרטי מישור מסחרי (סעיף 3ם) םחד", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGNoImporterDeclarsPage3A = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoImporterDeclarsPage3A", DefaultText = "Need at least one Commercial Sale (Page3A)",LocalDefaultText = @"חובה להזין לפחות פרטי מישור מסחרי (סעיף 3א) אחד", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGNoImporterDeclarsPage3AAffidavit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoImporterDeclarsPage3AAffidavit", DefaultText = "Need at least one Commercial Sale (Page3A)",LocalDefaultText = @"במידה והוזן הצהרת יבוםן, חובה להזין לפחות פרטי מישור מסחרי (סעיף 3ם) םחד", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGNoImporterDeclarsPage3AAffidavit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.NoImporterDeclarsPage3AAffidavit", DefaultText = "Need at least one Commercial Sale (Page3A)",LocalDefaultText = @"במידה והוזן הצהרת יבואן, חובה להזין לפחות פרטי מישור מסחרי (סעיף 3א) אחד", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimGMustAllImporterDeclarsPage3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.MustAllImporterDeclarsPage3", DefaultText = "You must fill all the fields on the screen",LocalDefaultText = @"במידה והוזן ערך במסך הצהרת יבוםן ם יש למלם םת כל שםר השדות במסך", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimGMustAllImporterDeclarsPage3 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.G.MustAllImporterDeclarsPage3", DefaultText = "You must fill all the fields on the screen",LocalDefaultText = @"במידה והוזן ערך במסך הצהרת יבואן א יש למלא את כל שאר השדות במסך", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimOIsCloseClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.IsCloseClaim", DefaultText = "Are you sure you want to close claim?",LocalDefaultText = @"הםם ברצונך לסגור םת התביעה ?", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimOIsCloseClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.IsCloseClaim", DefaultText = "Are you sure you want to close claim?",LocalDefaultText = @"האם ברצונך לסגור את התביעה ?", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimOIsCancelCloseClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.IsCancelCloseClaim", DefaultText = "Are you sure you want to open claim?",LocalDefaultText = @"הםם ברצונך לפתוח םת התביעה מחדש ?", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimOIsCancelCloseClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.IsCancelCloseClaim", DefaultText = "Are you sure you want to open claim?",LocalDefaultText = @"האם ברצונך לפתוח את התביעה מחדש ?", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClaimTextCode_CustomsClaimOCloseClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.CloseClaim", DefaultText = "Claim Closed Successfully",LocalDefaultText = @"תביעה נסגרה בהצלחה", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -4351,13 +4689,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ClaimTextCode_CustomsClaimOSeizure = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.Seizure", DefaultText = "Seizure",LocalDefaultText = @"פירוט עיקולים", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimOClaimsRelatedEntitiesRefund = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ClaimsRelatedEntitiesRefund", DefaultText = "Refund",LocalDefaultText = @"כמות שםושרה לסחורה", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimOClaimsRelatedEntitiesRefund = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ClaimsRelatedEntitiesRefund", DefaultText = "Refund",LocalDefaultText = @"כמות שאושרה לסחורה", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsPhysicalCheckOIsClosePhysicalCheck = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.IsClosePhysicalCheck", DefaultText = "Are you sure you want to close physical check?",LocalDefaultText = @"הםם ברצונך לסגור םת הבדיקה ?", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsPhysicalCheckOIsClosePhysicalCheck = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.IsClosePhysicalCheck", DefaultText = "Are you sure you want to close physical check?",LocalDefaultText = @"האם ברצונך לסגור את הבדיקה ?", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClaimTextCode_CustomsPhysicalCheckOClosePhysicalCheck = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.PhysicalCheck.O.ClosePhysicalCheck", DefaultText = "Physical Check Closed Successfully",LocalDefaultText = @"הבדיקה נסגרה בהצלחה", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimOImpDeclInUse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ImpDeclInUse", DefaultText = "Importer's declaration '{0}' is already in use",LocalDefaultText = @"הצהרת היבוםן '{0}' כבר בשימוש ", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimOImpDeclInUse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ImpDeclInUse", DefaultText = "Importer's declaration '{0}' is already in use",LocalDefaultText = @"הצהרת היבואן '{0}' כבר בשימוש ", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClaimTextCode_CustomsClaimOValInUse = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ValInUse", DefaultText = "The value '{0}' is already in use",LocalDefaultText = @"הערך '{0}' כבר בשימוש", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -4365,11 +4703,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ClaimTextCode_CustomsClaimTHCustomAnswer = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.TH.CustomAnswer", DefaultText = "Customs Answer",LocalDefaultText = @"תשובת המכס", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimOJustSixLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.JustSixLines", DefaultText = "You cannot add more than 6 lines",LocalDefaultText = @"לם ניתן להוסיף יותר מ 6 שורות", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimOJustSixLines = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.JustSixLines", DefaultText = "You cannot add more than 6 lines",LocalDefaultText = @"לא ניתן להוסיף יותר מ 6 שורות", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClaimTextCode_CustomsClaimOEnterClaimReason = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.EnterClaimReason", DefaultText = "You must enter a reason for the claim",LocalDefaultText = @"חובה להזין סיבת תביעה", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimOImporterAffidavitRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ImporterAffidavitRequired", DefaultText = "If field improve declar 3 is not empty text field must contain value",LocalDefaultText = @"םם שדה תצהיר יבוםן 3 מכיל ערך, חובה להוסיף טקסט", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimOImporterAffidavitRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.ImporterAffidavitRequired", DefaultText = "If field improve declar 3 is not empty text field must contain value",LocalDefaultText = @"אם שדה תצהיר יבואן 3 מכיל ערך, חובה להוסיף טקסט", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

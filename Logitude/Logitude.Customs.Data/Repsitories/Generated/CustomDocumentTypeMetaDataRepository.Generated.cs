@@ -48,7 +48,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.MetaDataTypeCode == keys.MetaDataTypeCode && a.DocumentTypeCode == keys.DocumentTypeCode
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(CustomDocumentTypeMetaData entity)
         {

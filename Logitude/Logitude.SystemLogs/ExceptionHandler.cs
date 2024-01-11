@@ -8,8 +8,11 @@ namespace Logitude.SystemLogs
 {
     public class ExceptionHandler
     {
+
         public static void HandleException(Exception exception, DateTime clientDate, int tenant, string userId, string userName, string ExtraMessage, string ip)
         {
+            string ErrorMessage = "";
+
             try
             {
 
@@ -31,16 +34,15 @@ namespace Logitude.SystemLogs
 
                 Debug.WriteLine(exception.ToString());
                 AmitalDebuggerUtil.Break(AmitalDebuggerLevel.Error);
-                string ErrorMessage = "";
 
 
-            if (!string.IsNullOrEmpty(ip) && ip.StartsWith("150.70"))
+                if (!string.IsNullOrEmpty(ip) && ip.StartsWith("150.70"))
                 {
 
-                        return;
+                    return;
 
                 }
-           
+
 
 
                 if (exception != null)
@@ -78,38 +80,39 @@ namespace Logitude.SystemLogs
                     {
 
                         ErrorMessage = ExtraMessage + Environment.NewLine;
-                ErrorMessage = ExtraMessage + Environment.NewLine;
+                        ErrorMessage = ExtraMessage + Environment.NewLine;
                     }
-
-                ErrorMessage += exception.Message;
 
                     ErrorMessage += exception.Message;
 
-                if (exception.InnerException != null)
-                {
-                    ErrorMessage += Environment.NewLine + exception.InnerException.Message;
+                    ErrorMessage += exception.Message;
 
-                    if (exception.InnerException.InnerException != null)
+                    if (exception.InnerException != null)
                     {
-                        ErrorMessage += Environment.NewLine + exception.InnerException.InnerException.Message;
+                        ErrorMessage += Environment.NewLine + exception.InnerException.Message;
 
-                        if (exception.InnerException.InnerException.InnerException != null)
+                        if (exception.InnerException.InnerException != null)
                         {
-                            ErrorMessage += Environment.NewLine + exception.InnerException.InnerException.InnerException.Message;
+                            ErrorMessage += Environment.NewLine + exception.InnerException.InnerException.Message;
+
+                            if (exception.InnerException.InnerException.InnerException != null)
+                            {
+                                ErrorMessage += Environment.NewLine + exception.InnerException.InnerException.InnerException.Message;
+                            }
                         }
                     }
-                }                
 
                     if (clientDate == null)
                         clientDate = DateTime.Now;
-              
-                string stacktrace = "";
-                if(exception.StackTrace != null)
-                    stacktrace = exception.StackTrace;   
+
+                    string stacktrace = "";
+                    if (exception.StackTrace != null)
+                        stacktrace = exception.StackTrace;
                     Debug.WriteLine("***HandleException** " + ErrorMessage);//May cause slowness ,But worth - If u Decides to delete ,Please inform itzik !!!!!
                     AzureLog.SaveLogsInStorage(ErrorMessage, "E", clientDate, exception.Message, exception.StackTrace, tenant, userId, userName, ip, exception);
 
                 }
+           
             }
             catch (Exception eee)
             {
@@ -129,8 +132,7 @@ namespace Logitude.SystemLogs
             {
                 Debug.WriteLine("Unable to write to File (OnExceptionOnDbLogInFile)");
                 //throw;
-                AzureLog.SaveLogsInStorage(ErrorMessage, "E", clientDate, exception.Message, stacktrace, tenant, userId, userName, ip,exception);
-            }
+             }
         }
 
         public static void HandleDbException(Exception exception, string TypeOrUser, string ExtraMessage)

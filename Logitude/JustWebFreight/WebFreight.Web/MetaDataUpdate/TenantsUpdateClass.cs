@@ -327,11 +327,7 @@ namespace WebFreight.Web.MetaDataUpdate
                             UpdateQuoteModule(context, true);
                             break;
                         }
-                    case "quoteopm":
-                        {
-                            UpdateQuoteOPMModule(context, true);
-                            break;
-                        }
+            
                     case "invoice":
                         {
                             UpdateInvoiceModule(context, true);
@@ -1076,22 +1072,7 @@ namespace WebFreight.Web.MetaDataUpdate
 
             performanceTimerLogger.LogMessage("Generated" + ",QuoteModelUpdateClass");
         }
-        private static void UpdateQuoteOPMModule(IWebFreightContext context, bool runPostDeleteProcedure)
-        {
-            var modelUpdateClass = new QuoteOPMUpdateClass();
-            if (runOldUpdateCode)
-                modelUpdateClass.LoadObjectsTenantZero(context);
-            else
-                modelUpdateClass.LoadObjectTablesMetadata(context, runPostDeleteProcedure);
-
-
-            var quoteOPMUpdate = new QuoteOPMUpdate();
-            quoteOPMUpdate.LoadObjectsTenantZero(context);
-            context.SaveChanges();
-
-            performanceTimerLogger.LogMessage("Generated" + ",QuoteOPMModelUpdateClass");
-        }
-        private static void UpdateShipmentAndMasterModules(IWebFreightContext context, bool runPostDeleteProcedure)
+         private static void UpdateShipmentAndMasterModules(IWebFreightContext context, bool runPostDeleteProcedure)
         {
             MetaDataUpdateClass updateClass = new MetaDataUpdateClass();
             updateClass.LoadObjectTablesToTenantZero(context);

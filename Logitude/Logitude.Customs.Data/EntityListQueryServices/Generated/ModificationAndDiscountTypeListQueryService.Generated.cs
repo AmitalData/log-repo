@@ -25,7 +25,11 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             this.context = context;
         }
 
-        public List<ModificationAndDiscountTypeList> GetList(QueryOperations queryOperations, int tenant)
+        public List<ModificationAndDiscountTypeList> GetList(QueryOperations queryOperations, int tenant ){
+		     return GetList(queryOperations,tenant, new TreeFilterQueryArgs());
+		 }
+
+        public List<ModificationAndDiscountTypeList> GetList(QueryOperations queryOperations, int tenant , TreeFilterQueryArgs treeFilterQueryArgs)
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -35,9 +39,9 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
 
             iQueryable = filter.GetFilteredQuery<ModificationAndDiscountType>(nonListQueryOperation, iQueryable);
 
@@ -46,6 +50,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             IQueryable<ModificationAndDiscountTypeList> query2 = GetIqueryableList(iQueryable);
            
             query2 = filter.GetFilteredQuery<ModificationAndDiscountTypeList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<ModificationAndDiscountTypeList>(query2, treeFilterQueryArgs);
 
             if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
             {
@@ -142,7 +147,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
            
         }
 
-        public int GetListCount(QueryOperations queryOperations)
+
+		
+        public int GetListCount(QueryOperations queryOperations ){
+		 		  return GetListCount(queryOperations, new TreeFilterQueryArgs());
+
+		 }
+
+        public int GetListCount(QueryOperations queryOperations  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
@@ -152,20 +164,24 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
-            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
             QueryOperations listQueryOperation = new QueryOperations();
-            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true || d.IsListFilter).ToList();
             
 			iQueryable = filter.GetFilteredQuery<ModificationAndDiscountType>(nonListQueryOperation, iQueryable);
+
+
 
             IQueryable<ModificationAndDiscountTypeList> query2 = GetIqueryableList(iQueryable);
 
             query2 = filter.GetFilteredQuery<ModificationAndDiscountTypeList>(listQueryOperation, query2);
+		    query2 = InjectionUtil.Instance.ApplyTreeFilter<ModificationAndDiscountTypeList>(query2, treeFilterQueryArgs);
+
             int count = query2.Count();
             return count;
         }
 
-      
+
     }
 }
 	 

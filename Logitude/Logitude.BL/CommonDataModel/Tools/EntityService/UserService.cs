@@ -428,35 +428,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
-        private void ChangeContactToCurrentUserRemoveOldGlobalContact(GlobalContactRepository globalContactRepository, GlobalContact globalContact)
-        {
-            if (LogitudeSettings.IsCostomsDeploy && globalContact.Email != entityPm.Email)
-            {
-                if (!string.IsNullOrWhiteSpace(entityPm.Email) && LogitudeSettings.IsCostomsDeploy)
-                {
-                    var qoldContact = globalContactRepository
-                        .GetContactByEmail(entityPm.Email)
-                        .Where(r => r.IsUser == false)
-                        .Where(r => r.Id != entityPm.Id);
-                    var oldContact = qoldContact.FirstOrDefault();
-
-
-                    if (oldContact != null)
-                    {
-                        this._DisableOldContactId = oldContact.Id;
-
-                        oldContact.Email = entityPm.Id + entityPm.Email;
-                        oldContact.Email = oldContact.Email ?? "";
-                        oldContact.Email = oldContact.Email.Substring(0, Math.Min(70, oldContact.Email.Length));
-                        globalContactRepository.Update(oldContact);//globalContactRepository.Remove(oldContact);
-                        globalContactRepository.SubmitChanges();
-                    }
-
-
-                }
-            }
-        }
-
+ 
         private void MapUserToContact(UserPM user, Contact contact)
         {
             contact.Anniversary = user.Anniversary;

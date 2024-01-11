@@ -6137,7 +6137,7 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedDeclarationPayments = value; }
 	    }
-	     }
+	  	    }
    
 }
 	 

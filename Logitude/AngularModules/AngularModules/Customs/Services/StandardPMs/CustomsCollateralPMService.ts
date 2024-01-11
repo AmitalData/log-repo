@@ -259,7 +259,7 @@ export class CustomsCollateralPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newCustomsCollateralsConditionPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -351,7 +351,7 @@ export class CustomsCollateralPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newCustomsCollateralsAnswerPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -457,7 +457,7 @@ export class CustomsCollateralPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newCollateralsRequestFileCondPM[pmProperty] = jItem[pmProperty];
             }
            

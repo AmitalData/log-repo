@@ -247,7 +247,7 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedPropertiesDetailsHistory = value; }
 	    }
-	     }
+	  	    }
    
 }
 	 

@@ -1010,7 +1010,7 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedRequiredGuaranteeTypes = value; }
 	    }
-	     }
+	  	    }
    
 }
 	 

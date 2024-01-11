@@ -1046,7 +1046,7 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedClientIndications = value; }
 	    }
-	     }
+	  	    }
    
 }
 	 

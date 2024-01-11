@@ -860,7 +860,7 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedDepositConditions = value; }
 	    }
-	     }
+	  	    }
    
 }
 	 

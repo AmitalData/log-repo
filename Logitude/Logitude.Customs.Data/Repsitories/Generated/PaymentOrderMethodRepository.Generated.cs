@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.PaymentOrderId == keys.PaymentOrderId && a.Line == keys.Line
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(PaymentOrderMethod entity)
         {

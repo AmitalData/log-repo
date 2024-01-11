@@ -285,7 +285,7 @@ export class PaymentOrderPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newPaymentOrderLinePM[pmProperty] = jItem[pmProperty];
             }
            
@@ -377,7 +377,7 @@ export class PaymentOrderPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newPaymentOrderMethodPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -469,7 +469,7 @@ export class PaymentOrderPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newPaymentOrderProtestReasonPM[pmProperty] = jItem[pmProperty];
             }
            
@@ -561,7 +561,7 @@ export class PaymentOrderPMService {
                 if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
                     continue;
                 }
-                var pmProperty = pmKeysArray[pmKey];
+				                  var pmProperty = pmKeysArray[pmKey];
                 newPaymentOrderConnectionTablePM[pmProperty] = jItem[pmProperty];
             }
            

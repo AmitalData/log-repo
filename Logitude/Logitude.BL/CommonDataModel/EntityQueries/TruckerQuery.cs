@@ -305,7 +305,7 @@ namespace Logitude.BL.CommonDataModel.EntityQueries
                                                   PrimaryContactPhone = a.PrimaryContactPhone,
                                                   StateName = a.Card.StateName,
                                                    GLAccountNumber = a.Card.GLAccountDisplayNumber,
-                                                  TransmitToPort=a.TransmitToPort
+                                                  TransmitToPort=a.TransmitToPort,
                                                    RegimenFiscalCode = a.Card.RegimenFiscalCode,
                                                   SATReceptorName = a.Card.SATCustomerName,
                                                   Field1 = customFieldsMainObject != null ? customFieldsMainObject.Field1 : null,

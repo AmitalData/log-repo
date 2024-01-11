@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.Repsitories
                     where a.DepositId == keys.DepositId && a.DepositConditionCode == keys.DepositConditionCode
                     select a).FirstOrDefault();
         }
-		         
+		 		                 
         partial void onAdd();//Partial Methods Definition in Generated
         public void Add(DepositCondition entity)
         {
