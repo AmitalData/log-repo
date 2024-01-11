@@ -754,6 +754,7 @@ export class ModuleProviders {
             case "RenewalMethodListService": { myResult = new RenewalMethodListService(); break; }
             case "PerYearFrequencyListService": { myResult = new PerYearFrequencyListService(); break; }
             case "InceptionCodeListService": { myResult = new InceptionCodeListService(); break; }
+            case "LevyTrustListService": { myResult = new LevyTrustListService(); break; }
 
             case "CustomsShipListService": { myResult = new CustomsShipListService(); break; }
             case "NbcDeclarationTypeListService": { myResult = new NbcDeclarationTypeListService(); break; }
