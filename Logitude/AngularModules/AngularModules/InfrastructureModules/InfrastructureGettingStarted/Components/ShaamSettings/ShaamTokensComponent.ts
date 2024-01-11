@@ -114,6 +114,8 @@ export class ShaamTokensComponent extends BaseComponent {
         if(!this.linkToCodeForToken)
             throw TextCodeTranslator.Translate('General.B.Erroroccured')
 
+        localStorage.setItem('shaamTokenRedirect',location.href);
+
         open(this.linkToCodeForToken, "_self")
     }
 

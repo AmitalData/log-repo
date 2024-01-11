@@ -21,6 +21,7 @@ import { InterfaceTenantPriorityComponent } from './Components/InterfaceTenantPr
 import { ExportRequiredFieldsComponent } from './Components/RequiredFields/ExportRequiredFieldsComponent';
 import { AddEditExportRequiredFieldsComponent } from './Components/RequiredFields/AddEditExportRequiredFieldsComponent';
 import { OcrDefaultsSettingsComponent } from 'Common/Components/Maintenance/OcrDefaultsSettingsComponent';
+import { ShaamSettingsComponent } from './Components/ShaamSettings/ShaamSettingsComponent';
 //import { CustomsPartnerFtpEditComponent } from './Components/CustomsPartnerFtpEditComponent';
  
 
@@ -47,7 +48,7 @@ export const Components =
         CustomsPartnerFtpListComponent,
         //CustomsPartnerFtpEditComponent,
         DeclarationRemarksComponent,
-        
+        ShaamSettingsComponent,
     ];
 
 export class ModuleDeclarations {
@@ -80,6 +81,7 @@ export class ModuleDeclarations {
             case "DeclarationRemarksComponent": { myResult = DeclarationRemarksComponent; break; }
             //case "CustomsPartnerFtpEditComponent": { myResult = CustomsPartnerFtpEditComponent; break; }
             case "DeclarationRemarksComponent": { myResult = DeclarationRemarksComponent; break; }
+            case "ShaamSettingsComponent": { myResult = ShaamSettingsComponent; break; }
           
 
 

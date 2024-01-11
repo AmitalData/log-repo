@@ -74,6 +74,28 @@ namespace WebFreight.Web.Controllers.WebServices
             });
         }
 
+        [HttpPut]
+        [Route("UpdateSettings")]
+        public HttpResponseMessage UpdateSettings([FromBody] UpdateSettingsData body)
+        {
+            return TryCatchWrapper((tenant) =>
+            {                
+                HttpClienResponse apiToShaamRes = shaamService.UpdateSettings(body, tenant.Value);
+                return apiToShaamRes;
+            });
+        }
+
+        [HttpGet]
+        [Route("settings")]
+        public HttpResponseMessage Settings()
+        {
+            return TryCatchWrapper((tenant) =>
+            {                
+                HttpClienResponse apiToShaamRes = shaamService.GetSettings(tenant.Value);
+                return apiToShaamRes;
+            });
+        }
+
         private HttpResponseMessage TryCatchWrapper(Func<int?, HttpClienResponse> func, bool returnContent = false, bool authorize = true)
         {
             try
@@ -114,6 +136,13 @@ namespace WebFreight.Web.Controllers.WebServices
             public string user { get; set; }
             public string code { get; set; }
             public int tenant { get; set; }
+        }
+
+        public class UpdateSettingsData
+        {
+            public string clientId { get; set; }
+            public string secret { get; set; }
+            public string companyName { get; set; }
         }
     }
 }

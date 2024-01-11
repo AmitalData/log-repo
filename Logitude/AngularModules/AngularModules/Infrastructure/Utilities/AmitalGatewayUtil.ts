@@ -28,6 +28,7 @@ import { EntityPMService } from '../Services/EntityPMService';
 import { CourierMasterPMService } from '../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ServiceResponse } from '../DataContracts/ServiceResponse';
 import { DeclarationWebService } from '../../Customs/Services/WebServices/DeclarationWebService';
+import { MaintenanceComponent } from 'Infrastructure/Components/Maintenance/MaintenanceComponent';
 
 
 export class AmitalGatewayUtil {
@@ -560,21 +561,34 @@ export class AmitalGatewayUtil {
                 break;
             }
                  
+            case "showShaamTokenManagment": {
+                this.openCreateNewShaamToken2(MaintenanceMenu);
+            }
+            
             default: {
                 //throw new Error("UnifaceRequest get bad  unifreightMessage (LogitudeCommandId is unknown ) " + unifreightMessage.LogitudeCommandId);
                 this.UnifaceRequestArrived.emit(myParam)
                 //break;
                 //SessionLocator.SelectedSession
                 //SessionLocator.AllSessions[0].
-            }
-
+            }            
+        }        
+    }
+    
+    async openCreateNewShaamToken2(maintenanceMenu: string) {        
+        this.SelectCustomsRequestMenu(maintenanceMenu);
+        let maintenanceComponent: MaintenanceComponent | null = SessionLocator.SelectedSession.menuReference.find(com => com.instance instanceof MaintenanceComponent)?.instance;
+        
+         while (!maintenanceComponent?.PagesMenu) {
+            await new Promise(res => setTimeout(() => res(null), 100));
+            maintenanceComponent = SessionLocator.SelectedSession.menuReference.find(com => com.instance instanceof MaintenanceComponent)?.instance;
         }
 
+        const mainItem = maintenanceComponent.PagesMenu.find(x => x.Code === 'SHA');
+        maintenanceComponent.PageChanged(mainItem);
     }
 
     async openCreateNewShaamToken(MaintenanceMenu: string) {
-        while (!SessionLocator.SelectedSession?.MainMenuComponent)
-            await new Promise(res => setTimeout(() => res(null), 100));
 
         this.SelectCustomsRequestMenu(MaintenanceMenu);
         new EntityResourceService().getEntityResourceByTableName("Customs.ConfirmationNumberTokenLog", 0).subscribe((response: any) => {

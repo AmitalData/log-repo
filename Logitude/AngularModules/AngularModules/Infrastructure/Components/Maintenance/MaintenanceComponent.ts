@@ -16,6 +16,7 @@ import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/
 import { DeclarationRemarks } from '../../../Customs/EntityPMs/Extended/DeclarationRemarks';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
+import { ShaamSettingsArgs } from 'CustomsModules/CustomsMaintenance/Components/ShaamSettings/ShaamSettingsComponent';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 
 @Component({
@@ -29,6 +30,8 @@ export class MaintenanceComponent {
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+    private readonly invoiceConfirmationNumber = "InvoiceConfirmationNumber";
+
     constructor() {
         this.ItemsSource = [];
         this.BuildPagesMenu();
@@ -66,7 +69,7 @@ export class MaintenanceComponent {
             this.PagesMenu.push(new Menu("CRM", TextCodeTranslator.Translate("General.MC.CRM.CRM")));
         }
         
-        if (FeatureLocator.HasFeaturePermession("General", "InvoiceConfirmationNumber"))
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber))
             this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
 
         if (FeatureLocator.HasFeaturePermession("General", "TICKET")) {
@@ -486,7 +489,15 @@ export class MaintenanceComponent {
         }
     }
 
-    private BuildCustomsMenus() {
+    private BuildCustomsMenus() {        
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "CSM";
+            item.Icon = "Settings"
+            item.Code = "CSSS";
+            item.ObjectTableName = TextCodeTranslator.Translate("General.MC.Customs.ShaamSettings") || 'Shaam Settings';
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
 
         if (window.ObjectTables.filter(d => d.Name == "Customs.Client")[0] != null) {
 
@@ -582,7 +593,6 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
         }
-
     }
     private BuildAccountingMenus() {
 
@@ -774,7 +784,7 @@ export class MaintenanceComponent {
     }
 
     private BuildShaamTokenManagementMenu() {
-        if (!FeatureLocator.HasFeaturePermession("General", "InvoiceConfirmationNumber")) return;
+        if (!FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) return;
 
         var item = new MenusTablePM();
         item.CategoryTypeCode = "SHA";
@@ -795,7 +805,7 @@ export class MaintenanceComponent {
     }
 
     // Commands
-    PageChanged(item: Menu) {
+    public PageChanged(item: Menu) {
         this.SelectedMenu = item;
 
         var itemsSource: MaintenanceMenuItem[] = [];
@@ -819,13 +829,23 @@ export class MaintenanceComponent {
 
         if (item) {
             switch (item.Code) {
+                case "CSSS": {
+                    const logWindow = new LogitudeWindow();
+                    logWindow.Title = TextCodeTranslator.Translate('General.MC.TokenManagement');
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.WindowArgs = <ShaamSettingsArgs>{ windowInstance: logWindow };
+                    logWindow.Width = 500;
+                    logWindow.Height = 300;
+                    logWindow.Show('./CustomsModules/CustomsMaintenance/Components/ShaamSettings/ShaamSettingsComponent');
+                    break;
+                }
+
                 case "SHAAM_TOKEN": {
-                    this._entityResourceService.getEntityResourceByTableName("Customs.ConfirmationNumberTokenLog", 0).subscribe((response: any) => {
-                        const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
+                    this._entityResourceService.getEntityResourceByTableName("Customs.ConfirmationNumberTokenLog", 0).subscribe((response: any) => {                        
                         const logWindow = new LogitudeWindow();
                         logWindow.Width = window.outerWidth;
                         logWindow.Height = window.outerHeight;
-                        logWindow.Title = windowTitle;
+                        logWindow.Title = TextCodeTranslator.Translate('General.MC.TokenManagement');
                         logWindow.IsShowCloseButton = true;
                         logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
                     });
