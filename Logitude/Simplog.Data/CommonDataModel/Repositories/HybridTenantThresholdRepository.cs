@@ -38,12 +38,12 @@ namespace Simplog.Data.CommonDataModel.Repositories
         }
 
 
-              public HybridTenantThreshold GetSingleHybridTenantThreshold(int tenant,int tenant2)
+              public HybridTenantThreshold GetSingleHybridTenantThreshold(int tenant,int typecode)
         {
-            return (from record in context.HybridTenantThresholds where record.Tenant == tenant select record).FirstOrDefault();
+            return (from record in context.HybridTenantThresholds where record.Tenant == tenant  && record.TypeCode== typecode  select record).FirstOrDefault();
         }
 
-        public HybridTenantThreshold GetSingleHybridTenantThreshold(int tenant)
+        public HybridTenantThreshold GetSingleHybridTenantThreshold(int tenant )
         {
             return (from record in context.HybridTenantThresholds where record.Tenant == tenant select record).FirstOrDefault();
         }
