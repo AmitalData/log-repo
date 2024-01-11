@@ -530,6 +530,7 @@
     <None Include="DBTables\ProductIdentificationType.dxml" />
     <None Include="DBTables\ProductNameType.dxml" />
     <None Include="DBTables\PropertiesDetailsHistory.dxml" />
+    <None Include="DBTables\QuotaIncrement.dxml" />
     <None Include="DBTables\RansomViolationType.dxml" />
     <None Include="DBTables\ReferantTeam.dxml" />
     <None Include="DBTables\ReferenceInputType.dxml" />
@@ -537,6 +538,7 @@
     <None Include="DBTables\RefundCustomerActivityType.dxml" />
     <None Include="DBTables\RegisteredWarehouseSiteType.dxml" />
     <None Include="DBTables\ReleaseMessageType.dxml" />
+    <None Include="DBTables\RenewalMethod.dxml" />
     <None Include="DBTables\RequestReasonCodeEnum.dxml" />
     <None Include="DBTables\RequestStatus.dxml" />
     <None Include="DBTables\RequestToAdvanceAQueue.dxml" />
@@ -647,6 +649,7 @@
     <None Include="EntityFiles\CarEngineVolume.lxml" />
     <None Include="EntityFiles\CarWeight.lxml" />
     <None Include="EntityFiles\ComputationMethod.lxml" />
+    <None Include="EntityFiles\RenewalMethod.lxml" />
     <None Include="EntityFiles\QuotaIncrement.lxml" />
     <None Include="EntityFiles\QuotaComputationBasis.lxml" />
     <None Include="EntityFiles\TarifRelatedToQuota.lxml" />

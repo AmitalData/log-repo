@@ -1272,6 +1272,11 @@ INSERT INTO   CustomsDocumentStatusTypes (     CODE, ENGLISHNAME, LOCALNAME,SEAR
             InsertClosedTableRecord(QuotaIncrementTable, QuotaIncrementObjectTable, customsClosedTables, customsClosedTableRepository);
             addedClosedTables.Add(QuotaIncrementTable);
 
+            SYSTBL_NG_9001_MSG_SystemTablesResponseTableData RenewalMethodTable = closedSystemTables.Where(d => d.id == "1064").FirstOrDefault();
+            ObjectTable RenewalMethodObjectTable = objectTableRepository.GetObjectTableByName("Customs.RenewalMethod", 0, false);
+            InsertClosedTableRecord(RenewalMethodTable, RenewalMethodObjectTable, customsClosedTables, customsClosedTableRepository);
+            addedClosedTables.Add(RenewalMethodTable);
+
 
             //SYSTBL_NG_9001_MSG_SystemTablesResponseTableData collateralAnswerStatusTable = closedSystemTables.Where(d => d.id == "1553").FirstOrDefault();
             //ObjectTable collateralAnswerStatusObjectTable = objectTableRepository.GetObjectTableByName("Customs.CollateralAnswerStatus", 0, false);

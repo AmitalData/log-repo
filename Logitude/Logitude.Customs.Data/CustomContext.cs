@@ -738,6 +738,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new ReleaseMessageTypeMap());
 	
+            modelBuilder.Configurations.Add(new RenewalMethodMap());
+	
             modelBuilder.Configurations.Add(new RequestReasonCodeEnumMap());
 	
             modelBuilder.Configurations.Add(new RequestStatusMap());
@@ -3432,6 +3434,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<ReleaseMessageType> ReleaseMessageTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RenewalMethod> RenewalMethods 
 	 {
 	      get; set;
 	 
