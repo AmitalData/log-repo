@@ -508,6 +508,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new EntityTypeLookupMap());
 	
+            modelBuilder.Configurations.Add(new EntryExitTypeMap());
+	
             modelBuilder.Configurations.Add(new ExceptionReasonMap());
 	
             modelBuilder.Configurations.Add(new ExportDeclarationClosingDataMap());
@@ -2756,6 +2758,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<EntityTypeLookup> EntityTypeLookups 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<EntryExitType> EntryExitTypes 
 	 {
 	      get; set;
 	 
