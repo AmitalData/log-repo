@@ -223,6 +223,7 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\SupplierPartyTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TarifRelatedToQuotaDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TradeAgreementProtocolDetails.Generated.cs" />
+    <Compile Include="CloseTables\DetailsClassesGenerated\TradeLevyStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransactionNatureTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DeclaraionDetails.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\TransportMeansTypeDetails.Generated.cs" />
@@ -991,6 +992,7 @@
     <Compile Include="EntityDataMappings\Generated\TradeAgreementDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TradeAgreementProtocolDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TradeLevyExamptTypeDataMapping.Generated.cs" />
+    <Compile Include="EntityDataMappings\Generated\TradeLevyStatusDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TransactionNatureTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TransferCargoMethodTypeDataMapping.Generated.cs" />
     <Compile Include="EntityDataMappings\Generated\TransportMeansTypeDataMapping.Generated.cs" />
@@ -1189,6 +1191,7 @@
     <Compile Include="EntityDataMappings\TradeAgreementDataMapping.cs" />
     <Compile Include="EntityDataMappings\TradeAgreementProtocolDataMapping.cs" />
     <Compile Include="EntityDataMappings\TradeLevyExamptTypeDataMapping.cs" />
+    <Compile Include="EntityDataMappings\TradeLevyStatusDataMapping.cs" />
     <Compile Include="EntityDataMappings\TransactionNatureTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TransferCargoMethodTypeDataMapping.cs" />
     <Compile Include="EntityDataMappings\TransportMeansTypeDataMapping.cs" />
@@ -1255,6 +1258,7 @@
     <Compile Include="EntityQueryServices\Generated\OriginCriterionQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\RequestReasonCodeEnumQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\Generated\TarifRelatedToQuotaQueryService.Generated.cs" />
+    <Compile Include="EntityQueryServices\Generated\TradeLevyStatusQueryService.Generated.cs" />
     <Compile Include="EntityQueryServices\GovernmentProcedureTypeTenantQueryService.cs" />
     <Compile Include="EntityQueryServices\LoadingSiteTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CertificateOfOriginTypeCodeEnumQueryService.cs" />
@@ -1822,6 +1826,7 @@
     <Compile Include="EntityUpdateServices\Generated\OriginCriterionUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\RequestReasonCodeEnumUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\Generated\TarifRelatedToQuotaUpdateService.Generated.cs" />
+    <Compile Include="EntityUpdateServices\Generated\TradeLevyStatusUpdateService.Generated.cs" />
     <Compile Include="EntityUpdateServices\OcrDocumentUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CountryCurrencyUpdateService.cs" />
     <Compile Include="EntityUpdateServices\CargoSealIdentifierUpdateService.cs" />

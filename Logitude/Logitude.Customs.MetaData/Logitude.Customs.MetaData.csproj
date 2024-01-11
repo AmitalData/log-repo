@@ -597,6 +597,7 @@
     <None Include="DBTables\TradeAgreement.dxml" />
     <None Include="DBTables\TradeAgreementProtocol.dxml" />
     <None Include="DBTables\TradeLevyExamptType.dxml" />
+    <None Include="DBTables\TradeLevyStatus.dxml" />
     <None Include="DBTables\TransactionNatureType.dxml" />
     <None Include="DBTables\TransferCargoMethodType.dxml" />
     <None Include="DBTables\TransportMeansType.dxml" />
@@ -638,6 +639,7 @@
     <None Include="EntityFiles\CustomDocumentTypeTenant.lxml" />
     <None Include="EntityFiles\CustomsCountryTenant.lxml" />
     <None Include="EntityFiles\CustomsHouseTypeTenant.lxml" />
+    <None Include="EntityFiles\TradeLevyStatus.lxml" />
     <None Include="EntityFiles\LevyTrust.lxml" />
     <None Include="EntityFiles\DeclarationCounter.lxml" />
     <None Include="EntityFiles\DeclarationFollowUp.lxml" />

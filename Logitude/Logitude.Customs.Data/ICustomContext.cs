@@ -416,6 +416,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<TradeAgreement> TradeAgreements { get; }
 		 IDbSet<TradeAgreementProtocol> TradeAgreementProtocols { get; }
 		 IDbSet<TradeLevyExamptType> TradeLevyExamptTypes { get; }
+		 IDbSet<TradeLevyStatus> TradeLevystatuses { get; }
 		 IDbSet<TransactionNatureType> TransactionNatureTypes { get; }
 		 IDbSet<TransferCargoMethodType> TransferCargoMethodTypes { get; }
 		 IDbSet<TransportMeansType> TransportMeansTypes { get; }
