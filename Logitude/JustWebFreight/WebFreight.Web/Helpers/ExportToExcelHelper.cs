@@ -1416,10 +1416,25 @@ namespace WebFreight.Web.Helpers
                                 value = value.ToString();
 
                             if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Numeric)
-                                cell.SetCellValue((double)value);
+                            {
+                                if (value is double || value is int || value is float)
+                                {
+                                    cell.SetCellValue(Convert.ToDouble(value));
+                                }
+                                else if (value is decimal)
+                                {
+                                    // Handle Decimal type
+                                    cell.SetCellValue(Convert.ToDouble((decimal)value));
+                                }
+                                else
+                                {
+                                    cell.SetCellValue(0); // Set a default value or handle accordingly
+                                }
+                            }
                             else if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Boolean)
                                 cell.SetCellValue(bool.Parse(value));
                             else
+                                
                                 cell.SetCellValue(value.ToString());
                             i++;
                         }
