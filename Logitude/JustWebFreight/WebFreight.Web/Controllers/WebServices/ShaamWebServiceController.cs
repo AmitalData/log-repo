@@ -24,31 +24,18 @@ namespace WebFreight.Web.Controllers.WebServices
             {
                 HttpClienResponse apiToShaamRes = shaamService.LinkToCodeForToken(tenant.Value, user);
                 return apiToShaamRes;
-            }, true);
+            }, ReturnContent.VALUE);
         }
 
         [HttpGet]
         [Route("tokens")]
         public HttpResponseMessage Tokens(int pageSize, int page)
         {
-            try
+            return TryCatchWrapper((tenant) =>
             {
-                int? tenant = GetTenantFromToken();
-                if (tenant == null)
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized);
-
                 HttpClienResponse apiToShaamRes = shaamService.Tokens(tenant.Value, pageSize, page);
-
-                if (apiToShaamRes.Res.StatusCode != HttpStatusCode.OK)
-                    return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception(apiToShaamRes.Content)));
-
-                var json = JsonConvert.DeserializeObject<object>(apiToShaamRes.Content);
-                return Request.CreateResponse(HttpStatusCode.OK, json);
-            }
-            catch (Exception ex)
-            {
-                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-            }
+                return apiToShaamRes;
+            }, ReturnContent.JSON);
         }
 
         [HttpPost]
@@ -59,7 +46,7 @@ namespace WebFreight.Web.Controllers.WebServices
             {
                 HttpClienResponse apiToShaamRes = shaamService.NewRefreshToken(body.tenant, body.user, body.code);
                 return apiToShaamRes;
-            }, false, false);
+            }, ReturnContent.NONE, false);
         }
 
         [HttpPost]
@@ -93,11 +80,12 @@ namespace WebFreight.Web.Controllers.WebServices
             {                
                 HttpClienResponse apiToShaamRes = shaamService.GetSettings(tenant.Value);
                 return apiToShaamRes;
-            });
+            }, ReturnContent.JSON);
         }
 
-        private HttpResponseMessage TryCatchWrapper(Func<int?, HttpClienResponse> func, bool returnContent = false, bool authorize = true)
+        private HttpResponseMessage TryCatchWrapper(Func<int?, HttpClienResponse> func, ReturnContent returnContent = ReturnContent.NONE, bool authorize = true)
         {
+            object responseData = null;
             try
             {
                 int? tenant = GetTenantFromToken();
@@ -109,7 +97,12 @@ namespace WebFreight.Web.Controllers.WebServices
                 if (apiToShaamRes.Res.StatusCode != HttpStatusCode.OK)
                     return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(new Exception(apiToShaamRes.Content)));
 
-                return Request.CreateResponse(HttpStatusCode.OK, returnContent ? apiToShaamRes.Content : null);
+                if (returnContent == ReturnContent.VALUE)
+                    responseData = apiToShaamRes.Content;
+                else if (returnContent == ReturnContent.JSON)
+                    responseData = JsonConvert.DeserializeObject<object>(apiToShaamRes.Content);
+                
+                return Request.CreateResponse(HttpStatusCode.OK, responseData);
             }
             catch (Exception ex)
             {
@@ -144,5 +137,7 @@ namespace WebFreight.Web.Controllers.WebServices
             public string secret { get; set; }
             public string companyName { get; set; }
         }
+
+        enum ReturnContent { NONE, VALUE, JSON }
     }
 }

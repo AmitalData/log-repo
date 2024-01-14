@@ -117,7 +117,7 @@ export class ShaamTokensComponent extends BaseComponent {
 
         localStorage.setItem('shaamTokenRedirect', location.href);
 
-        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse)
+        if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse)
             location.href = this.linkToCodeForToken;
         else {
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
