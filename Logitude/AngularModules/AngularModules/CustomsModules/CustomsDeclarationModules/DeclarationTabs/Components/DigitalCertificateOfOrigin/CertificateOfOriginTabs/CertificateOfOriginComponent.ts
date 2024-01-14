@@ -34,7 +34,6 @@ import { StatusCertificateOfOrigin } from '../DigitalCertificateOfOriginTabCompo
 })
 
 export class CertificateOfOriginComponent extends BaseComponent {
-    public IsDisplayOnly: boolean = false;
     public right: any;
     public CustomSendOptionsButtonCanForcePersonalSign: any;
 
@@ -54,6 +53,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     public isEntityChange: boolean = false;
+    isDispalyOnlyStatusList: number[] = [4, 8];
 
     // ClientsTapagList: ClientsTapag[] = [];
     tapagNumberName = '';
@@ -121,7 +121,9 @@ export class CertificateOfOriginComponent extends BaseComponent {
     public set AddTapagEnabled(newValue: boolean) {
         this.addTapagEnabled = newValue;
     }
-
+    public get IsDisplayOnly() {
+        return this.isDispalyOnlyStatusList.includes(Number(this.CurrentEntity?.CooStatusCode))
+    }
     BuildTabs() {
         this.TabsItemsSource = [];
 
@@ -189,7 +191,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.GENERAL = cmpRef.instance;
-                                    this.GENERAL.InitTab(this.CurrentEntity,this.DecalarationData, this.IsNewOrEdit);
+                                    this.GENERAL.InitTab(this.CurrentEntity,this.DecalarationData, this.IsNewOrEdit,this.IsDisplayOnly);
                                 });
                         }
                         break;
@@ -200,7 +202,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.MOREDATA = cmpRef.instance;
-                                    this.MOREDATA.InitTab(this.CurrentEntity,this.DecalarationData, this.IsNewOrEdit); 
+                                    this.MOREDATA.InitTab(this.CurrentEntity,this.DecalarationData, this.IsNewOrEdit,this.IsDisplayOnly); 
                                 });
                         }
                         break;

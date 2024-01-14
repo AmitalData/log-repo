@@ -24,15 +24,17 @@
     }
 </style>
 <table>
-    <tr>
-        <td>
-            <div style="width:90%;text-align:center" *ngIf="IsDispalyOnly">
+    <tr style="height: 28px;">
+        <td *ngIf="IsDisplayOnly">
+            <div style="width:90%;text-align:center" >
                 <div class="DisbleBox">
                     {{'Customs.CertificateOfOrigin.O.DisplayOnly'| TextCodeTranslationPipe}}
                 </div>
             </div>
         </td>
-
+        <td *ngIf="ErrorsList?.length > 0">
+            <ValidationSummary class="StyleMess"   [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
+        </td>
     </tr>
     <tr style="height:300px">
         <td style="vertical-align:top">
@@ -191,7 +193,8 @@
                         <td>
                             <div style="display: flex; width: 146px;">
                                 <LogLabel [ObjectFieldName]="'IsUnitedInvoices'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
-                                <LogCheckBox [ObjectFieldName]="'IsUnitedInvoices'" [Checked]="IsUnitedInvoices" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogCheckBox>
+                                <LogCheckBox [ObjectFieldName]="'IsUnitedInvoices'" [Checked]="IsUnitedInvoices" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"
+                                              [Value]="IsUnitedInvoices"></LogCheckBox>
                             </div>
                         </td>
                         <td style="width: 30px;"></td>
@@ -214,7 +217,7 @@
                                 <log-column [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
                                     [binding]="'InvoicesIdUry'" [width]="'35'" [Alignment]="'left'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"  #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.InvoicesIdUry}}</span>
                                             </div>
@@ -227,7 +230,7 @@
                                     [header]="'Customs.CertificateOfOrigin.O.InvoiceNumber' | TextCodeTranslationPipe"
                                     [binding]="'InvoiceNumber'" [width]="'90'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"  #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.InvoiceNumber}}</span>
                                             </div>
@@ -240,7 +243,7 @@
                                     [header]="'Customs.CertificateOfOrigin.O.InvoiceDate' | TextCodeTranslationPipe"
                                     [binding]="'InvoiceDate'" [width]="'100'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"  #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.InvoiceDate | DateTimeToDatePipe}}</span>
                                             </div>
@@ -253,7 +256,7 @@
                                     [header]="'Customs.CertificateOfOrigin.O.InvoiceSum' | TextCodeTranslationPipe"
                                     [binding]="'InvoiceSum'" [width]="'120'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span style="padding-right:5px">{{item.InvoiceSum |
                                                     NumbersPipe:'n2'}}</span>
@@ -268,7 +271,7 @@
                                     [header]="'Customs.CertificateOfOrigin.O.ItemDescription' | TextCodeTranslationPipe"
                                     [binding]="'DescriptionOfInvoice'" [width]="'170'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.DescriptionOfInvoice}}</span>
                                             </div>
@@ -280,11 +283,11 @@
                                     [header]="'Customs.CertificateOfOrigin.O.IsInvoicesForPrint' | TextCodeTranslationPipe"
                                     [binding]="'IsInvoicesForPrint'" [width]="'40'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <LogCheckBox [ObjectFieldName]="'IsInvoicesForPrint'"
-                                                    [Checked]="item.IsInvoicesForPrint" [ObjectTableName]="ObjectTableName"
-                                                    [DataContext]="DataContext"></LogCheckBox>
+                                                    [Checked]="item.IsInvoicesForPrint" [ObjectTableName]="'Customs.CertificateOriginInvoice'"
+                                                    [DataContext]="DataContext"   (Changed)="OnChanged($event,item)" [Value]="item.IsInvoicesForPrint"></LogCheckBox>
                                             </div>
 
                                         </log-cell-template>
@@ -307,7 +310,7 @@
                                 <log-column [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
                                     [binding]="'InvoicesIdUry'" [width]="'35'" [Alignment]="'left'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.ItemSerial}}</span>
                                             </div>
@@ -320,7 +323,7 @@
                                     [header]="'Customs.CertificateOfOrigin.O.MarksAndNumbers' | TextCodeTranslationPipe"
                                     [binding]="'MarksAndNumbers'" [width]="'125'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.MarksAndNumbers}}</span>
                                             </div>
@@ -332,7 +335,7 @@
                                     [header]="'Customs.CertificateOfOrigin.O.ItemDescription' | TextCodeTranslationPipe"
                                     [binding]="'ItemDescription'" [width]="'125'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.ItemDescription}}</span>
                                             </div>
@@ -344,7 +347,7 @@
                                     [header]="'Customs.CertificateOfOrigin.O.PackageQuantity' | TextCodeTranslationPipe"
                                     [binding]="'PackageQuantity'" [width]="'40'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.PackageQuantity}}</span>
                                             </div>
@@ -356,7 +359,7 @@
                                     [header]="'Customs.CertificateOfOrigin.O.PackageType' | TextCodeTranslationPipe"
                                     [binding]="'PackageType'" [width]="'70'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.PackageType}}</span>
                                             </div>
@@ -367,7 +370,7 @@
                                 <log-column [header]="'Customs.CertificateOfOrigin.O.Weight' | TextCodeTranslationPipe"
                                     [binding]="'Weight'" [width]="'80'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.Weight}}</span>
                                             </div>
@@ -380,7 +383,7 @@
                                     [header]="'Customs.CertificateOfOrigin.O.MeasureType' | TextCodeTranslationPipe"
                                     [binding]="'MeasureType'" [width]="'80'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.MeasureType}}</span>
                                             </div>
@@ -393,7 +396,7 @@
                                     [header]="'Customs.CertificateOfOrigin.O.ContainerIsoCode' | TextCodeTranslationPipe"
                                     [binding]="'ContainerIsoCode'" [width]="'80'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.ContainerIsoCode}}</span>
                                             </div>
@@ -406,7 +409,7 @@
                                 <log-column [header]="'Customs.CertificateOfOrigin.O.ItemId' | TextCodeTranslationPipe"
                                     [binding]="'ItemId'" [width]="'80'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.ItemId}}</span>
                                             </div>
@@ -418,7 +421,7 @@
                                     [header]="'Customs.CertificateOfOrigin.O.OriginCriterionCode' | TextCodeTranslationPipe"
                                     [binding]="'OriginCriterionCode'" [width]="'70'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.OriginCriterionCode}}</span>
                                             </div>
@@ -431,12 +434,12 @@
                                     [visibility]="'visibile'"
                                     [header]="'Customs.CertificateOfOrigin.O.InvoiceConnect' | TextCodeTranslationPipe">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" #logcelltemplate>
+                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <span>{{item.InvoiceConnect}}</span>
                                             <span class="CellSeparator" style="float: right;"></span>
                                             <div
                                                 style=" float: right;width: 22px; height:20px; padding-top: 2px; display:block">
-                                                <IconButton [Name]="'Edit'" [IsSmall]="true"
+                                                <IconButton [Name]="'Edit'" [IsSmall]="true" [IsEnabled]="!IsDisplayOnly"
                                                     (click)="EditButtonClicked(item)"></IconButton>
                                             </div>
                                         </log-cell-template>

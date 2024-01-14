@@ -21,29 +21,25 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     public entityPM: CertificateOfOriginPM;
     public currentDeclaration: DeclarationPM;
     IsNewOrEdit: StatusCertificateOfOrigin;
+    IsDisplayOnly: boolean = false;
+
     controlEnabled: boolean;
-    isDispalyOnlyStatusList: number[] = [4, 8];
     constructor() {
         super();
     }
 
-    InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin) {
+    InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin,IsDisplayOnly:boolean) {
         this.entityPM = EntityPM;
         this.currentDeclaration = currentDeclaration;
-        
+        this.IsDisplayOnly = IsDisplayOnly;
         this.IsNewOrEdit = IsNewOrEdit;
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true:false;
         this.SetPropertiesEnabled();
     }
 
     SetPropertiesEnabled() {
-
-        // ADD to do Name FILDES 101507
-        var enabled = !this.IsDispalyOnly;
-        this.UIProperties.SetEnabled("CooTypeCode", this.ObjectTableName, enabled);
-
-
-
+     
+        var enabled = !this.IsDisplayOnly;
         // Fields in the First table
         this.UIProperties.SetEnabled("IsCumulation", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("CumulationCountry", this.ObjectTableName, enabled);
@@ -81,9 +77,6 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
 
-    public get IsDispalyOnly() {
-        return this.isDispalyOnlyStatusList.includes(Number(this.entityPM.CooStatusCode))
-    }
 
 
     //#region properties
