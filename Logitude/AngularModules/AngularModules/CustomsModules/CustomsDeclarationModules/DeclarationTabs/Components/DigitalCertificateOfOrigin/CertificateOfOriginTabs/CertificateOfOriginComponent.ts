@@ -3,11 +3,7 @@ import { EntityArgs } from '../../../../../../Infrastructure/DataContracts/Entit
 import { CreateClientRequestParams, ClientAdressParams, ClientAddressCommunicationType, ClientDrivingLicenseParams, ClientDrivingLicenseTypeParams } from 'Customs/DataContract/RequestParams/CreateClientRequestParams';
 
 declare var window: any;
-import { ClientPM } from 'Customs/EntityPMs/ClientPM';
-import { ClientPMService } from 'Customs/Services/StandardPMs/ClientPMService';
-import { ClientsTapagPM } from 'Customs/EntityPMs/ClientsTapagPM';
 import { ConfirmWindow } from 'Controls/Windows/ConfirmWindow';
-import { ClientItemPMService } from 'Customs/Services/StandardPMs/ClientItemPMService';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
@@ -40,12 +36,12 @@ export class CertificateOfOriginComponent extends BaseComponent {
     public TabsItemsSource: TabItem[] = [];
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public CurrentEntity: CertificateOfOriginPM;
-    clientPMService: CertificateOfOriginPMService = new CertificateOfOriginPMService();
-    // clientItemPMService: ClientItemPMService = new ClientItemPMService();
+    certificateOfOriginPMService: CertificateOfOriginPMService = new CertificateOfOriginPMService();
 
+    
     public entityResourceService: EntityResourceService = new EntityResourceService();
     public DataContext: any = this;
-    isNewClient: boolean;
+
     isExternalId: boolean;
     requestParams: CreateClientRequestParams;
     responseData: INF_MSG_GenericResponseData;
@@ -53,9 +49,11 @@ export class CertificateOfOriginComponent extends BaseComponent {
     public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     public isEntityChange: boolean = false;
+    public DecalarationData:DeclarationPM;
+    public IsNewOrEdit:StatusCertificateOfOrigin;
     isDispalyOnlyStatusList: number[] = [4, 8];
 
-    // ClientsTapagList: ClientsTapag[] = [];
+
     tapagNumberName = '';
     public isLoad:boolean = false;
     constructor(
@@ -71,7 +69,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
             theMessage => {
 
                 if (theMessage == "ReloadEntity") {
-                         this.clientPMService.get(this.CurrentEntity.Id).subscribe((response: any) => {
+                         this.certificateOfOriginPMService.get(this.CurrentEntity.Id).subscribe((response: any) => {
                              var result = response.Result;
                              if (!AppTool.IsNullOrEmpty(result)) {
                                  this.CurrentEntity = result;
@@ -88,8 +86,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
     }
 
 
-    DecalarationData:DeclarationPM;
-    IsNewOrEdit:StatusCertificateOfOrigin;
+    
     SetWindowArgs(args: any) {
 
         this.CurrentEntity = args.CertificateOfOrigin;
@@ -239,20 +236,28 @@ export class CertificateOfOriginComponent extends BaseComponent {
         }
     }
 
-    OkButtonClicked() {
-        this.isEntityChange = true;
-        if (this.isNewClient) {
-            this.clientPMService.insert(this.CurrentEntity).subscribe((response: any) => {
-                var result = response.Result;
-                this.CurrentSession.CloseCurrentWindow();
+    SaveButtonClicked() {
 
+        console.log(this.EntityPM);
+        debugger
+        
+        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        
+        if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsNew) {
+            this.CurrentSession.CloseCurrentWindow();
+            this.certificateOfOriginPMService.insert(this.CurrentEntity).subscribe((response: any) => {
+                var result = response.Result;
+                debugger
+                
             });
         }
-
-        else {
-            this.clientPMService.update(this.CurrentEntity).subscribe((response: any) => {
+        
+        else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit){
+            this.isEntityChange = true;
+            
+            this.certificateOfOriginPMService.update(this.CurrentEntity).subscribe((response: any) => {
                 var result = response.Result;
-                // this.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
                 this.CurrentSession.CloseCurrentWindow();
 
             });
@@ -269,90 +274,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
     }
 
 
-    OnCustomSendOptionsButtonClick(customSendOptionsArgs) {
-        //  alert(customSendOptionsArgs);
-
-        var errors: string[] = [];
-        Validator.TryValidateObject(this.CurrentEntity, "Customs.Client", errors);
-
-        // for (let item of this.CurrentEntity.ClientAddresses) {
-        //     Validator.TryValidateObject(item, "Customs.ClientAddress", errors);
-        // }
-
-        // if (this.CurrentEntity.ClientAddresses == null || (this.CurrentEntity.ClientAddresses != null && this.CurrentEntity.ClientAddresses.length == 0)) {
-        //     errors.push("חובה להזין לפחות כתובת םחת ללקוח");
-        // }
-
-       
-        this.ValidationErrorsList = errors;
-
-        if (errors.length == 0) {
-
-            this.CurrentSession.StartBusyIndicator("");
-
-            var currRequestParams = new CreateClientRequestParams();
-            currRequestParams.LoggingEnabled = true;
-            currRequestParams.LoggingUserId = SessionLocator.LoggedUserId;
-            currRequestParams.RequestVIA = customSendOptionsArgs.RequestVIA;
-            currRequestParams.ForcePersonalSign = customSendOptionsArgs.ForcePersonalSign;
-            currRequestParams.Tenant = SessionLocator.Tenant;
-            currRequestParams.LoggingEntityId = this.CurrentEntity.Id;
-            currRequestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.Client')[0].Id;
-            currRequestParams.LoggingEntityReference = this.CurrentEntity.Id;
-            currRequestParams.IsFakeResponse = true;
-            currRequestParams.RequestName = "Add Client Request";
-            currRequestParams.ResponseName = "Add Client Response";
-            currRequestParams.IsExternalId = this.isExternalId;
-            // currRequestParams.ClientTypeSpecificCode = this.CurrentEntity.ClientTypeSpecificCode;
-            // currRequestParams.IsActive = this.CurrentEntity.IsActive;
-            // currRequestParams.DunsNumber = this.CurrentEntity.DunsNumber;
-            // currRequestParams.EnglishBirthPlace = this.CurrentEntity.EnglishBirthPlace;
-            // currRequestParams.EnglishCorporationName = this.CurrentEntity.EnglishCorporationName;
-            // currRequestParams.EnglishFatherName = this.CurrentEntity.EnglishFatherName;
-            // currRequestParams.EnglishFirstName = this.CurrentEntity.EnglishFirstName;
-            // currRequestParams.EnglishLastName = this.CurrentEntity.EnglishLastName;
-            // currRequestParams.FullName = this.CurrentEntity.FullName;
-            // currRequestParams.GenderCode = this.CurrentEntity.GenderCode;
-            // currRequestParams.LocalCorporationName = this.CurrentEntity.LocalCorporationName;
-            // currRequestParams.LocalFirstName = this.CurrentEntity.LocalFirstName;
-            // currRequestParams.LocalLastName = this.CurrentEntity.LocalLastName;
-            // currRequestParams.PassportCountryCode = this.CurrentEntity.PassportCountryCode;
-            // currRequestParams.PassportExpirationDate = this.CurrentEntity.PassportExpirationDate;
-            // currRequestParams.PassportFirstName = this.CurrentEntity.PassportFirstName;
-            // currRequestParams.PassportIssueDate = this.CurrentEntity.PassportIssueDate;
-            // currRequestParams.PassportLastName = this.CurrentEntity.PassportLastName;
-            // currRequestParams.PassportNumber = this.CurrentEntity.PassportNumber;
-            // currRequestParams.PassportTypeCode = this.CurrentEntity.PassportTypeCode;
-            // currRequestParams.NationalIdentificationNumber = this.CurrentEntity.NationalIdentificationNumber;
-
-            // currRequestParams.BirthDate = this.CurrentEntity.BirthDate;
-            // currRequestParams.IsImporter = this.CurrentEntity.IsImporter;
-            // currRequestParams.IsExporter = this.CurrentEntity.IsExporter;
-            // currRequestParams.ConcurrencyGUID = this.CurrentEntity.ConcurrencyGUID;
-
-           
-
-            // CustomMessageProgressComponent
-            //     .ShowProgressBar(this.CurrentSession, currRequestParams.PBId,
-            //         "שליחת מסר הקמת ספק", false)
-            //     .then((res) => {
-            //         this.responseData = res;
-            //         this.OnMassageDisplayMethod();
-            //     }
-            //     ).catch((err) => {
-            //         //this.ValidationErrorsList = [];
-            //         //     this.ValidationErrorsList.push(err);
-            //     });
-
-
-            this.clientMessageService.CreateClientRequest(currRequestParams)
-                .subscribe((myServiceResponse: ServiceResponse) => {
-                });
-
-        }
-
-    }
-
+   
     OnMassageDisplayMethod() {
         if (this.requestParams == null) {
             this.requestParams = new CreateClientRequestParams();
@@ -382,21 +304,18 @@ export class CertificateOfOriginComponent extends BaseComponent {
     //         return;
     //     }
 
-    //     var windowArgs: any = {};
-    //     windowArgs.CustomerIndicationList =  this.CurrentEntity.ClientIndications;;
-    //     windowArgs.IsClientIndication = true
-    //     var logitudeWindow = new LogitudeWindow();
-    //     logitudeWindow.Width = 470;
-    //     logitudeWindow.Height = 520;
-    //     logitudeWindow.IsShowCloseButton = false;
-    //     logitudeWindow.Title = TextCodeTranslator.Translate("Customs.ClientIndication.O.IndicationClient"); 
-    //     logitudeWindow.WindowArgs = windowArgs;
-    //     logitudeWindow.Show('./CustomsModules/CustomsGeneralRequests/Components/CustomerIndicationComponent');
-    // }
+    SendButtonClicked(customSendOptionsArgs:any){
+        debugger
 
+
+
+
+    }
+    CancelButtonClicked() {
+        this.CurrentEntity.RejectChanges();
+        this.CurrentSession.CloseCurrentWindow();
+    }
 }
-
-
 
 class TabItem {
     public code: string;
@@ -407,89 +326,4 @@ class TabItem {
         this.textCode = TextCode;
     }
 }
-
-
-
-
-// export class ClientsTapag extends BaseComponent {
-//     public EntityPM: ClientsTapagPM;
-//     private Parent: CertificateOfOriginComponent;
-//     ObjectTableName: string = "Customs.ClientsTapag";
-//     private CurrentSession = SessionLocator.SelectedSession;
-//     constructor(item: ClientsTapagPM, parent: CertificateOfOriginComponent) {
-//         super();
-//         this.EntityPM = item;
-//         this.Parent = parent;
-//         //this.UIProperties.SetEnabled("TapagNumber", this.ObjectTableName, !this.Parent.IsDisplayOnly);
-
-//     }
-
-//     //#region Properties
-//     deleteTapagNumberVisible: boolean = false;
-//     public get DeleteTapagNumberVisible() { return this.deleteTapagNumberVisible; }
-//     public set DeleteTapagNumberVisible(newValue: boolean) { this.deleteTapagNumberVisible = newValue; }
-
-//     clientsTapagNumber: number = 1;
-//     public get ClientsTapagNumber() { return this.clientsTapagNumber; }
-//     public set ClientsTapagNumber(newValue: number) { this.clientsTapagNumber = newValue; }
-
-//     public get TapagNumber() { return this.EntityPM.TapagNumber; }
-//     public set TapagNumber(newValue: string) {
-
-//         this.EntityPM.TapagNumber = newValue;
-//         if (newValue != null) {
-//             if (this.Parent.ClientsTapagList.length == 1) {
-//                 this.Parent.CurrentEntity.AddClientsTapag(this.EntityPM);
-//             }
-//             this.Parent.AddTapagEnabled = true;
-//         }
-//         else {
-//             this.Parent.AddTapagEnabled = false;
-//         }
-
-//     }
-//     //#endregion
-
-//     OnMouseOver() {
-//         if (this.ClientsTapagNumber > 1) {
-//             this.DeleteTapagNumberVisible = true;
-//         }
-//     }
-
-//     OnMouseLeave() {
-//         if (!this.overCloseButton) {
-//             this.DeleteTapagNumberVisible = false;
-//         }
-//     }
-
-//     // close button
-//     overCloseButton: boolean = false;
-//     OnIconButtonMouseOver() {
-//         this.overCloseButton = true;
-//     }
-
-//     OnIconButtonMouseLeave() {
-//         this.overCloseButton = false;
-//     }
-
-
-//     DeleteTapagNumberButtonClicked() {
-
-//         var msg = TextCodeTranslator.Translate("Customs.ClientsTapag.O.DeleteTapagNumber");
-//         var confirmWindow = new ConfirmWindow();
-//         confirmWindow.Width = 400;
-//         confirmWindow.Height = 150;
-//         confirmWindow.Show(msg);
-//         confirmWindow.WindowClosed.subscribe((event: any) => {
-
-//             if (confirmWindow.Yes) { // YES
-//                 this.Parent.CurrentEntity.RemoveClientsTapag(this.EntityPM);
-//                 this.Parent.BuildClientsTapagList();
-//             }
-//         });
-//     }  
-// }
-
-
-
 

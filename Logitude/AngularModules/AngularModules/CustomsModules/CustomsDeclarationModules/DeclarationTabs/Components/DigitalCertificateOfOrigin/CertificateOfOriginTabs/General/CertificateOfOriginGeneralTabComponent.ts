@@ -23,6 +23,8 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
 
 export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.CertificateOfOrigin";
+    public ObjectTableNameCertificateOfOriginInvoice: string = "Customs.CertificateOfOriginInvoice";
+    public ObjectTableNameCertificateOfOriginItem: string = "Customs.CertificateOfOriginItem";
     public DataContext = this;
     public isCorporation: boolean;
     public isCitizen: boolean;
@@ -30,7 +32,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public entityPM: CertificateOfOriginPM;
     public currentDeclaration:DeclarationPM;
     public currentCard:CardPM;
-    // public CertificateOriginInvoiceItems : CertificateOfOriginInvoicePM[];
     public CertificateOriginInvoiceItems : ObservableCollection // type <CertificateOfOriginInvoicePM[]>;
     public CertificateOriginItemItems : ObservableCollection // type <CertificateOfOriginItemPM[]>;
     IsNewOrEdit: StatusCertificateOfOrigin;
@@ -45,10 +46,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM ,IsNewOrEdit: StatusCertificateOfOrigin,IsDisplayOnly:boolean) {
         
         this.entityPM = EntityPM;
+        this.currentDeclaration = currentDeclaration;
+        this.IsNewOrEdit = IsNewOrEdit;
+        this.IsDisplayOnly = IsDisplayOnly;
+
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
-        this.IsDisplayOnly = IsDisplayOnly;
-        this.currentDeclaration = currentDeclaration;
+
         if(currentDeclaration){
             this.InitializeRelatedDeclarationData();
 
@@ -62,21 +66,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             }
         }
 
-
-
-
-        this.IsNewOrEdit = IsNewOrEdit;
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ?true:false;
         this.SetPropertiesEnabled();
-
-
-        // this.isPassport = (AppTool.IsNullOrEmpty(this.entityPM.Id)) && (!AppTool.IsNullOrEmpty(this.entityPM.PassportNumber));
-
-
-        if (!AppTool.IsNullOrEmpty(this.entityPM?.Id)) {
-            // this.isCorporation = this.entityPM.Code.startsWith("5");
-            // this.isCitizen = (!this.entityPM.Code.startsWith("5")) && (this.entityPM.Code != "");
-        }
 
         this.SetWarning();
 
@@ -100,9 +91,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         });
 
-        
-        
-        
+                
         // Consignments for CertificateOriginItemItems
         this.currentDeclaration.Consignments.forEach((consignment) => {
             const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
@@ -134,9 +123,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.entityPM.CertificateOriginItemItems.push(mappedConsignments); 
 
         });
-        // return mappedSupplierInvoices;
-        // Assign the mappedSupplierInvoices to the CertificateOfOriginPM instance
-        // EntityPM.CertificateOriginInvoiceItems = mappedSupplierInvoices;
     }
   
 
@@ -153,6 +139,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.entityPM.CertificateOriginItemItems.push(item); 
         });
     }
+
     SetPropertiesEnabled() {
         var enabled = !this.IsDisplayOnly;
         this.UIProperties.SetEnabled("CooTypeCode", this.ObjectTableName, enabled);
@@ -177,16 +164,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("IsInvoicesForPrint", "Customs.CertificateOriginInvoice", enabled);
 
     }   
-
-
-   
     
     SetWarning() {
         this.UIProperties.SetWarning("CooTypeCode", this.ObjectTableName, true);
         this.UIProperties.SetWarning("RequestReasonCode", this.ObjectTableName, true);
     }
     
-   
 
     private getCardById(id:string) {
         var cardListService = new CardListService();
