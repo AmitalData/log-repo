@@ -3,6 +3,7 @@ import { CommunicationLogListService } from 'Common/Services/StandardLists/Commu
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
+import { AmitalGatewayUtil } from 'Infrastructure/Utilities/AmitalGatewayUtil';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { ShaamWebService } from 'Shipment/Services/ShaamWebService';
@@ -116,8 +117,17 @@ export class ShaamTokensComponent extends BaseComponent {
 
         localStorage.setItem('shaamTokenRedirect', location.href);
 
-        location.href = this.linkToCodeForToken;
-        // open(this.linkToCodeForToken, "_self")
+        if (AmitalGatewayUtil.Instance.AmitalBrowserInUse)
+            location.href = this.linkToCodeForToken;
+        else {
+            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+                "",
+                "",
+                'redirect',
+                AmitalGatewayUtil.Instance.GetDefaultUnifreightMessageM(),
+                'this.linkToCodeForToken',
+                false);
+        }
     }
 
     async initLinkToCodeForToken() {
