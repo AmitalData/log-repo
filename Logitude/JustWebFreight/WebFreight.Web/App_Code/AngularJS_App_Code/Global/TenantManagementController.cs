@@ -74,44 +74,27 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Global
             try
             {
                 string logKey = PerformanceLogger.LogCurrentTime();
-                string token = HttpContext.Current.Request.Headers["Token"];
-                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                bool isAuthentication = id == authToken.Tenant ? true : false;
-                if (!isAuthentication)
+                TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
+                TenantManagementPM tenantManagementPMResult = new TenantManagementPM();
+                TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(id);
+                PerformanceLogger.AddServerExecutionTimeHeader(logKey);
+                if (tenantManagementPM != null)
                 {
-                    isAuthentication = SecurityUtility.CheckIsUserCustomerCare(authToken.Email);
-                    if (!isAuthentication)
+                    tenantManagementPMResult = new TenantManagementPM
                     {
-                        isAuthentication = SecurityUtility.CheckFeature("Customer", "TENANTMANAGEMENT", authToken.Tenant);
-                        if (!isAuthentication) isAuthentication = SecurityUtility.CheckFeature("Opportunity", "TenantManagement", authToken.Tenant);
-                    }
-
-                }
-
-
-                if (isAuthentication)
-                {
-                    // SecurityUtility.CheckContactFeature("TenantManagement", "READ", authToken.Tenant);
-                    TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
-                    TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(id);
-                    PerformanceLogger.AddServerExecutionTimeHeader(logKey);
-                    return Request.CreateResponse(HttpStatusCode.OK, tenantManagementPM);
+                        EcommerceTenant = tenantManagementPM.EcommerceTenant
+                    };
+                    return Request.CreateResponse(HttpStatusCode.OK, tenantManagementPMResult);
                 }
                 else
                 {
-
                     throw new Exception("Sorry you're not authenticated to view company info.");
-
                 }
-
             }
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
-
         }
-
     }
 }
