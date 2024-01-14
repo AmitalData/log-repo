@@ -67,7 +67,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
-
+        
         this.ItemsSource = new ObservableCollection([]);
         this.CertificateOfOriginItems = new ObservableCollection([]);
 
@@ -168,6 +168,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         this.DisplayOnlyCheck();
     }
 
+    isNew =  StatusCertificateOfOrigin.IsNew;
+    isEdit =  StatusCertificateOfOrigin.IsEdit;
     selectedCertificateOfOrigin= new CertificateOfOriginPM();
     AddNewCertificateOfOrigin(isNewOrEditCertificateOfOrigin:StatusCertificateOfOrigin) {
         debugger
@@ -180,7 +182,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
             IsNewOrEdit : isNewOrEditCertificateOfOrigin
         };
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
+        logWindow.Width = 1030;
         logWindow.Height = 700;
         logWindow.Title =  !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.CooTypeCode) ? TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin") + ": " + this.selectedCertificateOfOrigin.CooTypeCode : TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
         // TODO: ADD to left side title
