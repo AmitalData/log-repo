@@ -45,7 +45,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.EnglishGoodsDescriptionRTF).HasColumnName("EnglishGoodsDescriptionRTF").HasMaxLength(100).IsUnicode(false);
 
-            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ChangeRequestTypePriority).HasColumnName("ChangeRequestTypePriority");
         }

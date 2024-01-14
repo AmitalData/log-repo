@@ -81,7 +81,7 @@
   <Column
     Name="CustomsItemID"
     Type="varchar"
-    Size="2">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

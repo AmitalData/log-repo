@@ -44,11 +44,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string GoodsDescriptionRTF { get; set; }
         [Column("EnglishGoodsDescriptionRTF")]
 	    public string EnglishGoodsDescriptionRTF { get; set; }
-        [ForeignKey("CB_CustomsItemID")]
+        [ForeignKey("CustomsItemID")]
         [Column("CustomsItemID")]
 	    public string CustomsItemID { get; set; }
 	      
-        public virtual CB_CustomsItem CB_CustomsItemID { get; set; }
+        public virtual CB_CustomsItem CustomsItemID { get; set; }
         [Column("ChangeRequestTypePriority")]
 	    public int ChangeRequestTypePriority { get; set; }
     }
