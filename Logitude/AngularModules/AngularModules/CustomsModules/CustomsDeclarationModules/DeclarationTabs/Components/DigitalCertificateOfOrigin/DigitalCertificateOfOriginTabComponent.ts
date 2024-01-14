@@ -67,7 +67,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
-
+        
         this.ItemsSource = new ObservableCollection([]);
         this.CertificateOfOriginItems = new ObservableCollection([]);
 
@@ -168,6 +168,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         this.DisplayOnlyCheck();
     }
 
+    isNew =  StatusCertificateOfOrigin.IsNew;
+    isEdit =  StatusCertificateOfOrigin.IsEdit;
     selectedCertificateOfOrigin= new CertificateOfOriginPM();
     AddNewCertificateOfOrigin(isNewOrEditCertificateOfOrigin:StatusCertificateOfOrigin) {
         debugger
