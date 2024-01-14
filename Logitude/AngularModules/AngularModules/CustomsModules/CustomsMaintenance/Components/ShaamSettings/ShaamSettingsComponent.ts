@@ -68,11 +68,7 @@ export class ShaamSettingsComponent extends BaseComponent {
         }
 
         this.key = shaamSettings.amitalTaxesUrl; 
-        this.secret = shaamSettings.secret;
-        // [this.amitalTaxesUrl, this.secret] = await new Promise(res => setTimeout(() => {
-        //     res(['api-res', 'secret-res'])
-        // }, 500));
-        console.log('res return: amitalTaxesUrl', this.key, 'secret', this.secret)
+        this.secret = shaamSettings.secret;        
     }
 
     async OkButtonClicked() {
@@ -89,7 +85,6 @@ export class ShaamSettingsComponent extends BaseComponent {
         try {
             await this.shaamWebService.postShaamSettings(this.key, this.secret);
             SessionLocator.SelectedSession.StopBusyIndicator();
-            console.log('amitalTaxesUrl', this.key, 'secret', this.secret)
         } catch (error) {
             SessionLocator.SelectedSession.StopBusyIndicator();
             console.log(error)

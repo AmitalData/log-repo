@@ -28,7 +28,7 @@ import { ShaamWebService } from 'Shipment/Services/ShaamWebService';
             padding:5px;
         }
     `]
-}) 
+})
 export class ShaamTokensComponent extends BaseComponent {
     DataContext: ShaamTokensComponent = this;
     ObjectTableName: string = "Customs.ConfirmationNumberTokenLog";
@@ -66,7 +66,7 @@ export class ShaamTokensComponent extends BaseComponent {
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         const pageSize: number = take;
         const page: number = pageSize == 0 ? 1 : (skip / pageSize) + 1;
-        
+
         return new Promise(resolve => resolve(new ShaamWebService().getTokens(pageSize, page)));
     }
 
@@ -107,16 +107,17 @@ export class ShaamTokensComponent extends BaseComponent {
     async openLinkToCodeForToken() {
         var t = new Date();
         t.setSeconds(t.getSeconds() + 30);
-        
-        while(!this.linkToCodeForToken && t > (new Date()))
-            await new Promise(res => setTimeout(() => {res('')}, 1000));
 
-        if(!this.linkToCodeForToken)
+        while (!this.linkToCodeForToken && t > (new Date()))
+            await new Promise(res => setTimeout(() => { res('') }, 1000));
+
+        if (!this.linkToCodeForToken)
             throw TextCodeTranslator.Translate('General.B.Erroroccured')
 
-        localStorage.setItem('shaamTokenRedirect',location.href);
+        localStorage.setItem('shaamTokenRedirect', location.href);
 
-        open(this.linkToCodeForToken, "_self")
+        location.href = this.linkToCodeForToken;
+        // open(this.linkToCodeForToken, "_self")
     }
 
     async initLinkToCodeForToken() {
