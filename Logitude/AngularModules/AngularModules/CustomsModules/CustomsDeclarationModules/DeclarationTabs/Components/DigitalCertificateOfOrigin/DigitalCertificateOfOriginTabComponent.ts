@@ -180,7 +180,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
             IsNewOrEdit : isNewOrEditCertificateOfOrigin
         };
         var logWindow = new LogitudeWindow();
-        logWindow.Width = 1000;
+        logWindow.Width = 1030;
         logWindow.Height = 700;
         logWindow.Title =  !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.CooTypeCode) ? TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin") + ": " + this.selectedCertificateOfOrigin.CooTypeCode : TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
         // TODO: ADD to left side title
