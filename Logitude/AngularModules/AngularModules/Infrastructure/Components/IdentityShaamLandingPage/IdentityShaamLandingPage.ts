@@ -17,6 +17,8 @@ import { ShaamWebService } from "Shipment/Services/ShaamWebService";
         '.center { position: fixed; top: 50%; left: 50%;   transform: translate(-50%, -50%); }',
         '.msg { font-size: 30px; width: max-content; height: max-content; color: green }',
         '.error-msg { color: red }',
+        'h1 { font-size: 50px; }',
+        'h3 { font-size: 35px; }',
     ]
 
 })
