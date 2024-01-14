@@ -48,12 +48,12 @@ export class ShaamWebService {
         ) as Observable<string>;
     }
 
-    getShaamSettings(): Promise<any> {
-        return this.http.get(this.apiUrl + '/settings', { headers: this.headers }).toPromise();
+    getShaamSettings(): Promise<ShaamSettings> {
+        return this.http.get(this.apiUrl + '/settings', { headers: this.headers }).toPromise() as Promise<ShaamSettings>;
     }
 
     postShaamSettings(key, secret): Promise<any> {
-        return this.http.post(
+        return this.http.put(
             this.apiUrl + '/UpdateSettings',
             { clientId: key, secret },
             { headers: this.headers }).toPromise();
@@ -77,3 +77,13 @@ interface TokensResponse {
     tokens: Token[];
     count: number;
 }
+
+export interface ShaamSettings {
+    id: string;
+    clientId: string;
+    secret: string;
+    companyName: string;
+    createDate: string;
+    updateDate: string;
+    tenant: number;
+  }

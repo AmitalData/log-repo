@@ -4,7 +4,7 @@ import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
-import { ShaamWebService } from 'Shipment/Services/ShaamWebService';
+import { ShaamSettings, ShaamWebService } from 'Shipment/Services/ShaamWebService';
 
 export type ShaamSettingsArgs = {
     windowInstance: LogitudeWindow;
@@ -57,7 +57,7 @@ export class ShaamSettingsComponent extends BaseComponent {
     
     async initShaamSettings() {
         SessionLocator.SelectedSession.StartBusyIndicator('');
-        let shaamSettings;
+        let shaamSettings: ShaamSettings;
 
         try {            
             shaamSettings = await this.shaamWebService.getShaamSettings();
@@ -67,7 +67,7 @@ export class ShaamSettingsComponent extends BaseComponent {
             this.showErrorMessage();          
         }
 
-        this.key = shaamSettings.amitalTaxesUrl; 
+        this.key = shaamSettings.clientId; 
         this.secret = shaamSettings.secret;        
     }
 
