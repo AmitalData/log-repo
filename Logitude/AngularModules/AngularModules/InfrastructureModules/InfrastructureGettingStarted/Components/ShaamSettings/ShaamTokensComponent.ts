@@ -125,7 +125,7 @@ export class ShaamTokensComponent extends BaseComponent {
                 "",
                 'redirect',
                 AmitalGatewayUtil.Instance.GetDefaultUnifreightMessageM(),
-                'this.linkToCodeForToken',
+                this.linkToCodeForToken,
                 false);
         }
     }

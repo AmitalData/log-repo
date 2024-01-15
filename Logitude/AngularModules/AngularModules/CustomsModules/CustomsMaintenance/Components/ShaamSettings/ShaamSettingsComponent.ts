@@ -16,7 +16,7 @@ export type ShaamSettingsArgs = {
     <table style='width:450px; height: 200px'>
         <tr style='height: 50px'>
             <td style='width:80px'>
-                <LogLabel [Text]="'API Key'" [DataContext]="DataContext"></LogLabel>
+                <LogLabel [Text]="'App ID'" [DataContext]="DataContext"></LogLabel>
             </td>
             <td>
                 <LogTextBox [DataContext]="DataContext" [Text]="key" [ObjectFieldName]='"key"'></LogTextBox>
@@ -24,7 +24,7 @@ export type ShaamSettingsArgs = {
         </tr>
         <tr style='height: 50px'>
             <td style='width:80px'>
-                <LogLabel [Text]="'API Secret'" [DataContext]="DataContext"></LogLabel>
+                <LogLabel [Text]="'App Secret'" [DataContext]="DataContext"></LogLabel>
             </td>
             <td>
                 <LogTextBox [DataContext]="DataContext" [Text]="secret" [ObjectFieldName]='"secret"'></LogTextBox>
