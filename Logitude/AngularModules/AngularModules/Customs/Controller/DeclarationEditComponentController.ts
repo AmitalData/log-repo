@@ -78,6 +78,10 @@ export class DeclarationEditComponentController implements IEditComponentControl
                 allTabs.splice(indexOfTab, 1);
 
             }
+            var indexOfTab = allTabs.findIndex(t => t.Code == "DCOO");
+            if (indexOfTab > -1) {
+                allTabs.splice(indexOfTab, 1);
+            }
         }
 
 
