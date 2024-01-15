@@ -284,17 +284,8 @@ export class CertificateOfOriginComponent extends BaseComponent {
         }
     }
     IsSendDocumentEnabled:boolean = true;
-    SaveButtonClicked(){
-        debugger
-
-    }
-    SendButtonClicked(){
-        debugger
-    }
-    CancelButtonClicked() {
-        this.CurrentEntity.RejectChanges();
-        this.CurrentSession.CloseCurrentWindow();
-    }
+   
+  
 
 
   
