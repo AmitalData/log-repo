@@ -37,6 +37,7 @@ export class ShaamTokensComponent extends BaseComponent {
     finishBuildColumns: boolean = false
     loggedUserCode: string = SessionLocator.LoggedUserPM.Code;
     linkToCodeForToken: string = "";
+    public static readonly shaamTokenRedirect = 'shaamTokenRedirect'
 
     constructor(
         private _entityResourceService: EntityResourceService,
@@ -115,7 +116,7 @@ export class ShaamTokensComponent extends BaseComponent {
         if (!this.linkToCodeForToken)
             throw TextCodeTranslator.Translate('General.B.Erroroccured')
 
-        localStorage.setItem('shaamTokenRedirect', location.href);
+        localStorage.setItem(ShaamTokensComponent.shaamTokenRedirect, location.href);
 
         if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse)
             location.href = this.linkToCodeForToken;
@@ -123,7 +124,7 @@ export class ShaamTokensComponent extends BaseComponent {
             AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
                 "",
                 "",
-                'redirect',
+                'OpenNewBrowser',
                 AmitalGatewayUtil.Instance.GetDefaultUnifreightMessageM(),
                 this.linkToCodeForToken,
                 false);
