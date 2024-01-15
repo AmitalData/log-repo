@@ -334,12 +334,25 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
                         });
                     }
 
-                    if (entityPM.NumberOfUsers != poco.NumberOfUsers || entityPM.FreeUsers != poco.FreeUsers)
+                    if (entityPM.NumberOfUsers != poco.NumberOfUsers || entityPM.TotalNumberOfUsers != poco.TotalNumberOfUsers || entityPM.FreeUsers != poco.FreeUsers)
                     {
                         string usersNotes = null;
                         if(entityPM.NumberOfUsers != poco.NumberOfUsers)
                         {
                             usersNotes = "Number of users changed from " + poco.NumberOfUsers + " to " + entityPM.NumberOfUsers;
+                        }
+
+                        if (entityPM.TotalNumberOfUsers != poco.TotalNumberOfUsers)
+                        {
+                            if (string.IsNullOrEmpty(usersNotes))
+                            {
+                                usersNotes = "Total number of users changed from " + poco.TotalNumberOfUsers + " to " + entityPM.TotalNumberOfUsers;
+                            }
+
+                            else
+                            {
+                                usersNotes = usersNotes + Environment.NewLine + "Total number of users changed from " + poco.TotalNumberOfUsers + " to " + entityPM.TotalNumberOfUsers;
+                            }
                         }
 
                         if (entityPM.FreeUsers != poco.FreeUsers)
@@ -351,7 +364,7 @@ namespace Logitude.BL.GlobalModel.Tools.TraceEvents
 
                             else
                             {
-                                usersNotes = usersNotes + Environment.NewLine +  "Number of free users changed from " + poco.FreeUsers + " to " + entityPM.FreeUsers;
+                                usersNotes = usersNotes + Environment.NewLine + "Number of free users changed from " + poco.FreeUsers + " to " + entityPM.FreeUsers;
                             }
                         }
 
