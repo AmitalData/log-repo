@@ -136,11 +136,23 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CarWeightMap());
 	
+            modelBuilder.Configurations.Add(new CB_ComputationMethodDataMap());
+	
             modelBuilder.Configurations.Add(new CB_CustomsItemMap());
 	
             modelBuilder.Configurations.Add(new CB_CustomsItemDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_PropertiesDetailsHistoryMap());
+	
+            modelBuilder.Configurations.Add(new CB_QuotaMap());
+	
+            modelBuilder.Configurations.Add(new CB_RuleMap());
+	
+            modelBuilder.Configurations.Add(new CB_RuleDetailsHistoryMap());
+	
+            modelBuilder.Configurations.Add(new CB_TariffMap());
+	
+            modelBuilder.Configurations.Add(new CB_TariffDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_TradeAgreementMap());
 	
@@ -947,6 +959,18 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new VendorTypeMap());
 	
 				
+			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.AlternateDefinedPerUnitMeasure).HasPrecision(2, 2);
+				
+			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.AlternateRate).HasPrecision(2, 2);
+				
+			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.DefinedPerUnitMethod).HasPrecision(2, 2);
+				
+			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.OptionalTaxAddition).HasPrecision(2, 2);
+				
+			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.Rate).HasPrecision(2, 2);
+				
+			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.ReductionRate).HasPrecision(2, 2);
+				
 			modelBuilder.Entity<CB_PropertiesDetailsHistory>().Property(x => x.VatDiscountRate).HasPrecision(2, 2);
 				
 			modelBuilder.Entity<ClaimImporterDeclarsPage3B>().Property(x => x.SaleAmountAfter).HasPrecision(16, 2);
@@ -1663,6 +1687,12 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CB_ComputationMethodData> CB_ComputationMethodDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CB_CustomsItem> CB_CustomsItems 
 	 {
 	      get; set;
@@ -1676,6 +1706,36 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CB_PropertiesDetailsHistory> CB_PropertiesDetailsHistorys 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_Quota> CB_Quotas 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_Rule> CB_Rules 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_RuleDetailsHistory> CB_RuleDetailsHistorys 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_Tariff> CB_Tariffs 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_TariffDetailsHistory> CB_TariffDetailsHistorys 
 	 {
 	      get; set;
 	 

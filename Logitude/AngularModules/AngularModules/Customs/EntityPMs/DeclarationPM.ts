@@ -1530,6 +1530,11 @@ export class DeclarationPM {
     public set UNFCourier(newValue: boolean) { if (this.uNFCourier != newValue) { this.uNFCourier = newValue; this.MarkAsDirty("UNFCourier"); } }
        
 	 
+    private effectiveFlight: boolean;
+    public get EffectiveFlight() { return this.effectiveFlight; }
+    public set EffectiveFlight(newValue: boolean) { if (this.effectiveFlight != newValue) { this.effectiveFlight = newValue; this.MarkAsDirty("EffectiveFlight"); } }
+       
+	 
      
 	private declarationPayments: DeclarationPaymentPM[];
     get  DeclarationPayments() {
@@ -1564,12 +1569,7 @@ export class DeclarationPM {
         }
     }
     //public DeclarationPayments: Array<DeclarationPaymentPM>= [];
-     private effectiveFlight: boolean;
-    public get EffectiveFlight() { return this.effectiveFlight; }
-    public set EffectiveFlight(newValue: boolean) { if (this.effectiveFlight != newValue) { this.effectiveFlight = newValue; this.MarkAsDirty("EffectiveFlight"); } }
-       
-	 
-
+ 
     public OldEntityPM: DeclarationPM;
 		
     public IsDirty: boolean;

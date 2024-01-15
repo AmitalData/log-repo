@@ -37,15 +37,15 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.EntityStatusID).HasColumnName("EntityStatusID").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.EnglishGoodsDescription).HasColumnName("EnglishGoodsDescription").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.EnglishGoodsDescription).HasColumnName("EnglishGoodsDescription").IsMaxLength().IsUnicode(false);
 
-            this.Property(t => t.GoodsDescription).HasColumnName("GoodsDescription").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.GoodsDescription).HasColumnName("GoodsDescription").IsMaxLength().IsUnicode(false);
 
-            this.Property(t => t.GoodsDescriptionRTF).HasColumnName("GoodsDescriptionRTF").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.GoodsDescriptionRTF).HasColumnName("GoodsDescriptionRTF").IsMaxLength().IsUnicode(false);
 
-            this.Property(t => t.EnglishGoodsDescriptionRTF).HasColumnName("EnglishGoodsDescriptionRTF").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.EnglishGoodsDescriptionRTF).HasColumnName("EnglishGoodsDescriptionRTF").IsMaxLength().IsUnicode(false);
 
-            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ChangeRequestTypePriority).HasColumnName("ChangeRequestTypePriority");
         }

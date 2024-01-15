@@ -51,9 +51,15 @@ namespace Logitude.Customs.Data
 		 IDbSet<CargoStatus> CargoStatuses { get; }
 		 IDbSet<CargoType> CargoTypes { get; }
 		 IDbSet<CarWeight> CarWeights { get; }
+		 IDbSet<CB_ComputationMethodData> CB_ComputationMethodDatas { get; }
 		 IDbSet<CB_CustomsItem> CB_CustomsItems { get; }
 		 IDbSet<CB_CustomsItemDetailsHistory> CB_CustomsItemDetailsHistorys { get; }
 		 IDbSet<CB_PropertiesDetailsHistory> CB_PropertiesDetailsHistorys { get; }
+		 IDbSet<CB_Quota> CB_Quotas { get; }
+		 IDbSet<CB_Rule> CB_Rules { get; }
+		 IDbSet<CB_RuleDetailsHistory> CB_RuleDetailsHistorys { get; }
+		 IDbSet<CB_Tariff> CB_Tariffs { get; }
+		 IDbSet<CB_TariffDetailsHistory> CB_TariffDetailsHistorys { get; }
 		 IDbSet<CB_TradeAgreement> CB_TradeAgreements { get; }
 		 IDbSet<CB_TradeAgreementHistory> CB_TradeAgreementHistories { get; }
 		 IDbSet<CertificateExemptionType> CertificateExemptionTypes { get; }

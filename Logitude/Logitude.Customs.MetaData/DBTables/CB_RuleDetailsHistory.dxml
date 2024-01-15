@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CB_RuleDetailsHistorys"
+  OldNames="RuleDetailsHistorys"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Title"
+    Type="varchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StartDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EndDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntityStatusID"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RuleID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Rules"
+    Type="varchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EnglishRules"
+    Type="varchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="OrderinalPostion"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="Parent_RuleDetailsHistoryID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChangeRequestTypePriority"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RulesRTF"
+    Type="varchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EnglishRulesRTF"
+    Type="varchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="EntityStatusID"
+    ReferencedTable="CustomsEntityStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="RuleID"
+    ReferencedTable="CB_Rules"
+    ReferencedColumn="ID"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="Parent_RuleDetailsHistoryID"
+    ReferencedTable="CB_RuleDetailsHistorys"
+    ReferencedColumn="ID"
+    ReferencedTableSchema="Customs" />
+</Table>

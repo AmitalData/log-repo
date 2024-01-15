@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_PropertiesDetailsHistoryUpdateClass
    {  		
-		public const string HashString = "19812645c2e5f8e63ff411467c64a66f";
+		public const string HashString = "82ddc474d19c46ddea253e3a5d3111e5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -112,13 +112,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCounter =  false,
 			      				    EnableAddFromLOV =  false,
 			      				    IsRestrictable =  false,
-			      				    IsMain =  false,
+			      				    IsMain =  true,
 			      				    IsAutoComplete =  false,
 			      				    EnableEditFromLOV =  false,
 			      				    SortingByObjectField =  "ID",
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
-			      				    IsComposition =  true,
+			      				    IsComposition =  false,
 			      				    EnableSecurity =  false,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "היסטוריה של מאפיינים של פרט מכס",
 			      				    DefaultText =  "Properties Details History",
-			      				    Code =  "66fa",
+			      				    Code =  "0bab",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2037,7 +2037,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable CB_PropertiesDetailsHistoryObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CB_PropertiesDetailsHistory" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature CB_PropertiesDetailsHistoryFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CB_PropertiesDetailsHistoryObjectTable.Id, Tenant = 0, NameTextCodeCode = "CB_PropertiesDetailsHistory.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CB_PropertiesDetailsHistoryObjectTable);
+		   Feature CB_PropertiesDetailsHistoryFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CB_PropertiesDetailsHistoryObjectTable.Id, Tenant = 0, NameTextCodeCode = "CB_PropertiesDetailsHistory.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CB_PropertiesDetailsHistoryObjectTable);
+		   Feature CB_PropertiesDetailsHistoryFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CB_PropertiesDetailsHistoryObjectTable.Id, Tenant = 0, NameTextCodeCode = "CB_PropertiesDetailsHistory.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CB_PropertiesDetailsHistoryObjectTable);
+		   Feature CB_PropertiesDetailsHistoryFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CB_PropertiesDetailsHistoryObjectTable.Id, Tenant = 0, NameTextCodeCode = "CB_PropertiesDetailsHistory.Features.PackageFeature", NameTextCodeDefaultText = "CB_PropertiesDetailsHistory Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CB_PropertiesDetailsHistoryObjectTable);    
 	    
 		}
 
