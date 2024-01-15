@@ -54,6 +54,8 @@ namespace Logitude.Customs.Data
 		 IDbSet<CB_CustomsItem> CB_CustomsItems { get; }
 		 IDbSet<CB_CustomsItemDetailsHistory> CB_CustomsItemDetailsHistorys { get; }
 		 IDbSet<CB_PropertiesDetailsHistory> CB_PropertiesDetailsHistorys { get; }
+		 IDbSet<CB_TradeAgreement> CB_TradeAgreements { get; }
+		 IDbSet<CB_TradeAgreementHistory> CB_TradeAgreementHistories { get; }
 		 IDbSet<CertificateExemptionType> CertificateExemptionTypes { get; }
 		 IDbSet<CertificateOfOrigin> CertificateOfOrigins { get; }
 		 IDbSet<CertificateOfOriginInvoice> CertificateOfOriginInvoices { get; }

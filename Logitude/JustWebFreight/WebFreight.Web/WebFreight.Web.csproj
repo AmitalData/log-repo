@@ -1200,6 +1200,8 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_CustomsItemDetailsHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_CustomsItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_PropertiesDetailsHistoryViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_TradeAgreementHistoryViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_TradeAgreementViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginInvoiceViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CertificateOfOriginStatusCodeEnumViewsController.Generated.cs" />
@@ -1247,6 +1249,8 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\OcrStatusViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\VendorCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_CustomsItemController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_TradeAgreementController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_TradeAgreementHistoryController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginInvoiceController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginItemController.Generated.cs" />
@@ -3401,6 +3405,8 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_CustomsItemDetailsHistoryUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_CustomsItemUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_PropertiesDetailsHistoryUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_TradeAgreementHistoryUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CB_TradeAgreementUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CertificateOfOriginInvoiceUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CertificateOfOriginItemUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\CertificateOfOriginStatusCodeEnumUpdateClass.cs" />

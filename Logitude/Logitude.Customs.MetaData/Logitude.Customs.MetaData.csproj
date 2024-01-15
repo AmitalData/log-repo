@@ -248,6 +248,7 @@
     <None Include="DBTables\CB_CustomsItem.dxml" />
     <None Include="DBTables\CB_CustomsItemDetailsHistory.dxml" />
     <None Include="DBTables\CB_PropertiesDetailsHistory.dxml" />
+    <None Include="DBTables\CB_TradeAgreement.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
     <None Include="DBTables\CertificateOfOrigin.dxml" />
     <None Include="DBTables\CertificateOfOriginInvoice.dxml" />
@@ -636,6 +637,8 @@
     <None Include="DBTables\VendorType.dxml" />
     <None Include="EntityFiles\CB_CustomsItemDetailsHistory.lxml" />
     <None Include="EntityFiles\CB_PropertiesDetailsHistory.lxml" />
+    <None Include="EntityFiles\CB_TradeAgreement.lxml" />
+    <None Include="EntityFiles\CB_TradeAgreementHistory.lxml" />
     <None Include="EntityFiles\ConfirmationNumberTokenLog.lxml" />
     <None Include="EntityFiles\AddressCurrency.lxml" />
     <None Include="EntityFiles\CertificateOfOrigin.lxml" />
@@ -654,6 +657,7 @@
     <None Include="EntityFiles\RegularitySource.lxml" />
     <None Include="EntityFiles\ChangeType.lxml" />
     <None Include="EntityFiles\EntryExitType.lxml" />
+    <None Include="EntityFiles\TradeAgreementDetailsHistory_777.lxml" />
     <None Include="EntityFiles\TradeLevyStatus.lxml" />
     <None Include="EntityFiles\RegularityPublication.lxml" />
     <None Include="EntityFiles\LevyTrust.lxml" />

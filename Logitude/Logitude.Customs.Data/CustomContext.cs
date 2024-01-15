@@ -142,6 +142,10 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CB_PropertiesDetailsHistoryMap());
 	
+            modelBuilder.Configurations.Add(new CB_TradeAgreementMap());
+	
+            modelBuilder.Configurations.Add(new CB_TradeAgreementHistoryMap());
+	
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
 	
             modelBuilder.Configurations.Add(new CertificateOfOriginMap());
@@ -1672,6 +1676,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CB_PropertiesDetailsHistory> CB_PropertiesDetailsHistorys 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_TradeAgreement> CB_TradeAgreements 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_TradeAgreementHistory> CB_TradeAgreementHistories 
 	 {
 	      get; set;
 	 

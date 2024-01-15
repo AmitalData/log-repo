@@ -73,6 +73,8 @@
     <Compile Include="EntityPMs\Generated\CB_CustomsItemDetailsHistoryPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_CustomsItemPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\CB_PropertiesDetailsHistoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CB_TradeAgreementHistoryPM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\CB_TradeAgreementPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ChangeTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ComputationMethodPM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\ConditionalExemptionTypePM.Generated.cs" />
