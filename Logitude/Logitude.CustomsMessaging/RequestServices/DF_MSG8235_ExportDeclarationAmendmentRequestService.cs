@@ -3,7 +3,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
- using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools;
 using Logitude.Customs.BL.EntityDataMappings;
@@ -57,15 +57,19 @@ namespace Logitude.CustomsMessaging.RequestServices
         string functionalReferenceID = "";
         private Stopwatch _Stopwatch;
         private AmitalContext _AmitalContext;
-         private string _userId;
+        private string _userId;
 
-        private bool isExportClose=false;
+        private bool isExportClose = false;
         public override void ManipulateRequestParams(AmendmentRequestParams requestParams)
         {
+
             if (requestParams.RequestVIA == SendRequestVIA.DCABatch)
             {
                 return;
             }
+            var settings = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+            var maxItemsSendInteractive = settings.MaxItemsSendInteractive ?? 100;
+            var maxSISendInteractive = settings.MaxSISendInteractive ?? 15;
             int countItems = 0;
             int countSI = 0;
             int backgroundcountItems = 0;
@@ -78,14 +82,14 @@ namespace Logitude.CustomsMessaging.RequestServices
             try
             {
                 _userId = requestParams.LoggingUserId;
-                   var siqs = new SupplierInvoiceQueryService(requestParams.Tenant);
+                var siqs = new SupplierInvoiceQueryService(requestParams.Tenant);
                 SItoAccumulate = siqs.GetSupplierInvoiceToAccumulateCount(requestParams.Tenant, requestParams.AppicationId);
                 var ssiqs = new SupplierInvoiceItemQueryService(requestParams.Tenant);
                 bool noAccumulateForNow = true;//itzik +ihab 
                 if (noAccumulateForNow)
                 {
                     countSI = siqs.GetSupplierInvoiceCountForDeclaration(requestParams.AppicationId, requestParams.Tenant);
-                    countItems = ssiqs.GetDeclarationCountOfSupplierInvoiceItems(requestParams.Tenant, requestParams.AppicationId,true);
+                    countItems = ssiqs.GetDeclarationCountOfSupplierInvoiceItems(requestParams.Tenant, requestParams.AppicationId, true);
                     LogMessagingUtil.Instance.AppendLine("GetDeclarationCountOfSupplierInvoiceItems: " + countItems.ToString());
                 }
                 else
@@ -93,10 +97,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                     countItems = siqs.GetDeclarationCountOfSupplierInvoiceItemsForAccumulation(requestParams.Tenant, requestParams.AppicationId);
                     LogMessagingUtil.Instance.AppendLine("GetDeclarationCountOfSupplierInvoiceItemsForAccumulation: " + countItems.ToString());
                 }
-                
+
                 backgroundcountItems = countItems;
                 existSupplierInvoiceItemsWithParent = ssiqs.ExistSupplierInvoiceItemsWithParent(requestParams.Tenant, requestParams.AppicationId);
-                if ((countItems > 100 || SItoAccumulate > 0) && existSupplierInvoiceItemsWithParent > 0)
+                if ((countItems > maxItemsSendInteractive || SItoAccumulate > 0) && existSupplierInvoiceItemsWithParent > 0)
                 {
                     //existSupplierInvoiceItemsWithoutHash = qs.ExistSupplierInvoiceItemsWithoutHash(requestParams.Tenant, requestParams.AppicationId
                     if (countItems < 999 && SItoAccumulate > 0) onlyAlwaysAccumulate = true;
@@ -107,7 +111,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                         {
                             countItems = existSupplierInvoiceItemsWithParent;
                         }
-                        if (backgroundcountItems > 100)
+                        if (backgroundcountItems > maxItemsSendInteractive)
                         {
                             backgroundcountItems = existSupplierInvoiceItemsWithParent;
                         }
@@ -144,31 +148,31 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
                 else
                 {
-                    if (backgroundcountItems >= 100)
+                    if (backgroundcountItems >= maxItemsSendInteractive)
                     {
                         if (requestParams.RequestVIA == SendRequestVIA.DCABatch)
                         {
                             LogMessagingUtil.Instance.AppendLine("***User**** Send this request VIA DCABatch-- no need to change !!!");
-                            LogMessagingUtil.Instance.AppendLine("הצהרה זו מכילה מעל 100 פרטי מכס ולכן תשודר ברקע");
+                            LogMessagingUtil.Instance.AppendLine(string.Format("הצהרה זו מכילה מעל {0} פרטי מכס ולכן תשודר ברקע", maxItemsSendInteractive));
                         }
                         else
                         {
                             requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
                             LogMessagingUtil.Instance.AppendLine("ManipulateRequestParams:requestParams.RequestVIA = SendRequestVIA.WebServiceBatch");
-                            LogMessagingUtil.Instance.AppendLine("הצהרה זו מכילה מעל 100 פרטי מכס ולכן תשודר ברקע");
-                            requestParams.RequestVIAChangeDue = ("הצהרה זו מכילה מעל 100 פרטי מכס ולכן תשודר ברקע");
+                            LogMessagingUtil.Instance.AppendLine(string.Format("הצהרה זו מכילה מעל {0} פרטי מכס ולכן תשודר ברקע", maxItemsSendInteractive));
+                            requestParams.RequestVIAChangeDue = (string.Format("הצהרה זו מכילה מעל {0} פרטי מכס ולכן תשודר ברקע", maxItemsSendInteractive));
                         }
 
                     }
                     if (
-                        ( requestParams.RequestVIA == SendRequestVIA.WebServiceInteractive 
-                        || requestParams.RequestVIA == SendRequestVIA.Default) 
-                        &&  countSI > 15)
+                        (requestParams.RequestVIA == SendRequestVIA.WebServiceInteractive
+                        || requestParams.RequestVIA == SendRequestVIA.Default)
+                        && countSI > maxSISendInteractive)
                     {
                         requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
                         LogMessagingUtil.Instance.AppendLine("ManipulateRequestParams:requestParams.RequestVIA = SendRequestVIA.WebServiceBatch");
-                        LogMessagingUtil.Instance.AppendLine("הצהרה זו מכילה מעל 15 חן ספק ולכן תשודר ברקע");
-                        requestParams.RequestVIAChangeDue = ("הצהרה זו מכילה מעל 15 חן ספק ולכן תשודר ברקע");
+                        LogMessagingUtil.Instance.AppendLine(string.Format("הצהרה זו מכילה מעל {0} חן ספק ולכן תשודר ברקע", maxSISendInteractive));
+                        requestParams.RequestVIAChangeDue = (string.Format("הצהרה זו מכילה מעל {0} חן ספק ולכן תשודר ברקע", maxSISendInteractive));
 
 
                     }
@@ -191,8 +195,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             var declarationQueryService = new DeclarationQueryService(_context);
             declarationQueryService.LoadSupplierInvoicesItemsParentsOnly = true;
             _DeclarationPM = declarationQueryService.GetSingle(requestParams.AppicationId, true, false);
-            
-            _DeclarationPMOrg = isExportClose ? _DeclarationPM:  declarationQueryService.GetAcceptDeclarationAmendment(_DeclarationPM.AmendmentOriginalDeclartation, _DeclarationPM.Tenant);
+
+            _DeclarationPMOrg = isExportClose ? _DeclarationPM : declarationQueryService.GetAcceptDeclarationAmendment(_DeclarationPM.AmendmentOriginalDeclartation, _DeclarationPM.Tenant);
         }
 
 
@@ -203,11 +207,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                 this._context = CustomContext.GetContext(requestParams.Tenant);
             }
         }
- 
+
         public override DF_NG_8235_MSG14000_ExportDeclarationAmendmentRequestMsg GetRequest(AmendmentRequestParams requestParams)
         {
 
-            
+
 
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIA = " + requestParams.RequestVIA.ToString());
             LogMessagingUtil.Instance.AppendLine("GetRequest:requestParams.RequestVIAChangeDue = " + requestParams.RequestVIAChangeDue);
@@ -220,13 +224,13 @@ namespace Logitude.CustomsMessaging.RequestServices
                 if (requestParams.RequestVIAChangeDue == ("בהצהרה זו יש חשבון ספק שמסומן לצבירה ולכן ההצהרה תיצבר")) onlyAlwaysAccumulate = true;
                 bool isAccurate = mySIAccumulationUtil.Fast_IsAllItemsHaveHash_IsAccurate(onlyAlwaysAccumulate);
                 LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "Is All Items Have Hash=" + isAccurate.ToString());
-                
+
                 if (!isAccurate)
                 {
                     _Stopwatch = Stopwatch.StartNew();
                     using (var tran = TransactionFactory.GetNewTransaction())
                     {
-                        mySIAccumulationUtil.FastDeleteAllParent(); 
+                        mySIAccumulationUtil.FastDeleteAllParent();
                         tran.Complete();
                     }
                     LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "Fast Delete All Parent Items Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
@@ -245,7 +249,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 int countItems = 0;
                 int existSupplierInvoiceItemsWithParent = 0;
                 var qs = new SupplierInvoiceItemQueryService(requestParams.Tenant);
-                 var siqs = new SupplierInvoiceQueryService(requestParams.Tenant);
+                var siqs = new SupplierInvoiceQueryService(requestParams.Tenant);
                 countItems = siqs.GetDeclarationCountOfSupplierInvoiceItemsForAccumulation(requestParams.Tenant, requestParams.AppicationId);
 
                 existSupplierInvoiceItemsWithParent = qs.ExistSupplierInvoiceItemsWithParent(requestParams.Tenant, requestParams.AppicationId);
@@ -269,11 +273,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                         tran.Complete();
                     }
                     LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "SI Accumulation clearance Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
-                 }
+                }
 
-             }
+            }
 
-             bool fromMevaker = false;
+            bool fromMevaker = false;
             if (!string.IsNullOrWhiteSpace(requestParams.UnifreightListOnServerOnly))
             {
                 var dic = UnifreightListsUtil.Deserialize(requestParams.UnifreightListOnServerOnly);
@@ -298,9 +302,9 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             LogMessagingUtil.Instance.AppendLine("declaration retrieve from db");
 
-             req.Response = new UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.Response();
+            req.Response = new UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.Response();
 
-            req.Response.Declaration =  Getdeclaration(_DeclarationPM , _DeclarationPMOrg);
+            req.Response.Declaration = Getdeclaration(_DeclarationPM, _DeclarationPMOrg);
             this.MyRequestSheetParam = new RequestSheetParam();
             this.MyRequestSheetParam.CustomFileNo = _DeclarationPMOrg.CustomFileNo;
             this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -327,7 +331,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     req.Response.FunctionalReferenceID = new ResponseFunctionalReferenceIDType
                     {
-                        Value =  CodeCounter.GetNumber("AmendmentRequestNumber", _DeclarationPMOrg.Tenant).ToString()
+                        Value = CodeCounter.GetNumber("AmendmentRequestNumber", _DeclarationPMOrg.Tenant).ToString()
                     };
                 }
                 else
@@ -341,10 +345,10 @@ namespace Logitude.CustomsMessaging.RequestServices
             functionalReferenceID = req.Response.FunctionalReferenceID.Value;
 
             req.Response.IssueDateTime = DataTypeConvertorUtil.Convert(DateTime.Now);
-            
+
             req.Response.AdditionalInformation = AdditionalInformation();
 
-          
+
 
             if (isExportClose)
             {
@@ -354,18 +358,18 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 req.Response.FunctionCode = new ResponseFunctionCodeType { Value = "1" };
             }
-             LogMessagingUtil.Instance.AppendLine("declaration build" + requestParams.AppicationId);
+            LogMessagingUtil.Instance.AppendLine("declaration build" + requestParams.AppicationId);
 
             //if(!isExportClose)
-             UpdateDeclaration(req.Response, requestParams.LoggingUserId);
+            UpdateDeclaration(req.Response, requestParams.LoggingUserId);
 
 
             _context = null;
             return req;
         }
 
- 
-        private void UpdateDeclaration(UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.Response response ,string LoggingUserId)
+
+        private void UpdateDeclaration(UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.Response response, string LoggingUserId)
         {
             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(_context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
             if (isExportClose)
@@ -379,7 +383,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (!isExportClose) _DeclarationPM.AmendmentRequestNumber = response.FunctionalReferenceID.Value;
 
             _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
- 
+
 
             var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
             {
@@ -407,7 +411,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
 
 
-          var  myUpdateEventContextTagModel = new EventContextTagModel()
+            var myUpdateEventContextTagModel = new EventContextTagModel()
             {
                 CallProccessID = EventContextTagModel.ProccessEnum.DF_NG_5117_ImportDeclerationAmendmentReplyResponseService,
                 EventCode = "DCH",
@@ -416,7 +420,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             };
             _DeclarationPM.CurrentContextTag = myUpdateEventContextTagModel;
 
- 
+
 
             declarationUpdateService.Update(_DeclarationPM, true);
         }
@@ -424,7 +428,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private ResponseAdditionalInformation[] AdditionalInformation()
         {
-          List< ResponseAdditionalInformation>  responseAdditionalInformation = new List<ResponseAdditionalInformation>();
+            List<ResponseAdditionalInformation> responseAdditionalInformation = new List<ResponseAdditionalInformation>();
 
             if (!isExportClose)
             {
@@ -449,15 +453,16 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
 
             }
-            else { 
+            else
+            {
                 responseAdditionalInformation.Add(new ResponseAdditionalInformation { StatementTypeCode = new AdditionalInformationStatementTypeCodeType { Value = "28" }, Content = new AdditionalDocumentTypeTextType { Value = "declaration closed" } });
             }
             return responseAdditionalInformation.ToArray();
-         }
+        }
 
         private void UCBatchCheckLock(GenericRequestParams requestParams, DeclarationPM declarationPM)
         {
-  
+
             LogMessagingUtil.Instance.AppendLine("CourierMaster Send Batch===> CheckLock");
 
             long lCUSTOMFILENO;
@@ -490,12 +495,12 @@ namespace Logitude.CustomsMessaging.RequestServices
             //If TaxationDateTime is not Today change it before sending
             if (!_DeclarationPM.TaxationDateTime.HasValue ||
                 (_DeclarationPM.TaxationDateTime.HasValue && _DeclarationPM.TaxationDateTime.Value.Date < DateTime.Now.Date))
-            {               
+            {
                 DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(this._context, new Dictionary<string, IContext>(), _DeclarationPM.Tenant);
                 _DeclarationPM.ChangeSetOp = ChangeSetOperation.Update;
                 _DeclarationPM.TaxationDateTime = TenantServerConfigration.GetCurrentDateTime(_DeclarationPM.Tenant);
 
-      
+
                 declarationUpdateService.Update(_DeclarationPM, true);
             }
         }
@@ -509,7 +514,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             return ret;
         }
 
- 
+
         T SetAmountTypeValue<T>(string CurrencyCode, decimal val)
               where T : AmountType, new()
         {
@@ -543,7 +548,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             var measurementUnitRealString = "";
             if (String.IsNullOrWhiteSpace(measurementUnit)) // hard coded
             {
-             }
+            }
             else
             {
                 var list = Enum.GetNames(typeof(MeasurementUnitCommonCodeContentType)).ToList();
@@ -556,18 +561,18 @@ namespace Logitude.CustomsMessaging.RequestServices
                     measurementUnitRealString = list.FirstOrDefault(unit => unit == measurementUnit.Reverse());
                 }
             }
-            
+
             if (String.IsNullOrWhiteSpace(measurementUnitRealString))
             {
-             }
-            
+            }
+
             MeasurementUnitCommonCodeContentType measurementCommonUnit;
             var success = Enum.TryParse(measurementUnitRealString, out measurementCommonUnit);
-            
- 
+
+
             if (!success)
             {
-             }
+            }
             ;
 
             return new T()
@@ -766,7 +771,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             foreach (var customsDocumentPM in customsDocumentPMList)
             {
-                 if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId)) // Mirit 22/12/15 19136
+                if (!string.IsNullOrWhiteSpace(customsDocumentPM.CustomsDocId)) // Mirit 22/12/15 19136
                 {
                     var declarationDMExtensionsAdditionalDocument = new DeclarationAdditionalDocument();
                     declarationDMExtensionsAdditionalDocument.DMExtensions = new DeclarationAdditionalDocumentDMExtensions();
@@ -779,20 +784,20 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             //if(isExportClose || declarationPM.IsExportClosed)
             //{
-                var closingDataDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = declarationPM.Id, ParentEntityCode = "ExportDeclarationClosingData" }, declarationPM.Tenant);
+            var closingDataDocumentPMList = customsDocumentQueryService.GetCustomsDocumentPMListWithoutRequestedDoc(new GetTicketsParams() { ParentEntityId = declarationPM.Id, ParentEntityCode = "ExportDeclarationClosingData" }, declarationPM.Tenant);
 
-                foreach (var closingDataDocumentPM in closingDataDocumentPMList)
+            foreach (var closingDataDocumentPM in closingDataDocumentPMList)
+            {
+                if (!string.IsNullOrWhiteSpace(closingDataDocumentPM.CustomsDocId))
                 {
-                    if (!string.IsNullOrWhiteSpace(closingDataDocumentPM.CustomsDocId))
-                    {
-                        var declarationDMExtensionsAdditionalDocument = new DeclarationAdditionalDocument();
-                        declarationDMExtensionsAdditionalDocument.DMExtensions = new DeclarationAdditionalDocumentDMExtensions();
-                        declarationDMExtensionsAdditionalDocument.DMExtensions.ExternalAttachmentID = new ExternalAttachmentIDType();
-                        declarationDMExtensionsAdditionalDocument.DMExtensions.ExternalAttachmentID.Value = closingDataDocumentPM.ExternalAttachmentId;
+                    var declarationDMExtensionsAdditionalDocument = new DeclarationAdditionalDocument();
+                    declarationDMExtensionsAdditionalDocument.DMExtensions = new DeclarationAdditionalDocumentDMExtensions();
+                    declarationDMExtensionsAdditionalDocument.DMExtensions.ExternalAttachmentID = new ExternalAttachmentIDType();
+                    declarationDMExtensionsAdditionalDocument.DMExtensions.ExternalAttachmentID.Value = closingDataDocumentPM.ExternalAttachmentId;
 
-                        declarationDMExtensionsAdditionalDocumentList.Add(declarationDMExtensionsAdditionalDocument);
-                    }
+                    declarationDMExtensionsAdditionalDocumentList.Add(declarationDMExtensionsAdditionalDocument);
                 }
+            }
             //}
             return declarationDMExtensionsAdditionalDocumentList.ToArray();
         }
@@ -802,13 +807,13 @@ namespace Logitude.CustomsMessaging.RequestServices
 
         private DeclarationDMExtensions GetDMExtensions(DeclarationPM declarationPM)
         {
-           
+
 
             var DMExtensions = new DeclarationDMExtensions();
             DMExtensions.AgentFileReferenceID = SetIDTypeValue<AgentFileReferenceIDType>(_DeclarationPMOrg.CustomFileNo); //new AgentFileReferenceIDType() { Value = declarationPM.CustomFileNo };
 
             DMExtensions.ReferenceDateTime = DataTypeConvertorUtil.Convert(declarationPM.TaxationDateTime);
-                                                                                                                      // moran 25.5.14 - Bug 6059 - commented -->
+            // moran 25.5.14 - Bug 6059 - commented -->
             DMExtensions.VersionID = SetIDTypeValue<DeclarationVersionIDType>(declarationPM.VersionId); // new DeclarationDMExtensionsVersionID() { Value = declarationPM.VersionId };
             DMExtensions.ExternalDeclarationID = SetIDTypeValue<ExternalDeclarationIDType>(String.IsNullOrWhiteSpace(declarationPM.ExternalDeclarationNumber) ? declarationPM.CustomFileNo : declarationPM.ExternalDeclarationNumber); // hard coded - mandatory - takes from field other than the mapped if empty 
             // DMExtensions.ExternalDeclarationID = SetIDTypeValue<ExternalDeclarationIDType>(declarationPM.CustomFileNo); //new AgentFileReferenceIDType() { Value = declarationPM.CustomFileNo };
@@ -836,7 +841,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             //}
 
 
-           if(declarationPM.IsExporterConfirmation || declarationPM.IsConvertedDeclaration) DMExtensions.TransferDeclarationToDestinationCountry = new TransferDeclarationToDestinationCountryIndType() { Value = declarationPM.IsExporterConfirmation };
+            if (declarationPM.IsExporterConfirmation || declarationPM.IsConvertedDeclaration) DMExtensions.TransferDeclarationToDestinationCountry = new TransferDeclarationToDestinationCountryIndType() { Value = declarationPM.IsExporterConfirmation };
 
 
             if (declarationPM.DeclarationExportRecipients != null && declarationPM.DeclarationExportRecipients.Count() > 0)
@@ -888,8 +893,8 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-        
- 
+
+
 
         public string ImportersCheck(string importerField, string importerCode, string importerId, string importerType,
    string importerName, string importerAddress, string importerPassportNumber, string importerPassCountryCode)
@@ -1073,7 +1078,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             return declarationExporterList.ToArray();
         }
-       
+
         private List<DeclarationGoodsShipment> GetDeclarationGoodsShipment(DeclarationPM declarationPM)
         {
             var declarationGoodsShipmentList = new List<DeclarationGoodsShipment>();
@@ -1099,12 +1104,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                 var declarationGoodsShipment = new DeclarationGoodsShipment();
 
                 declarationGoodsShipment.SequenceNumeric = supplierInvoicePM.SequenceNumeric.Value;
-                
+
                 // declarationGoodsShipment.SequenceNumericSpecified = true;
 
                 //
                 declarationGoodsShipment.Invoice = GetDeclarationGoodsShipmentInvoice(supplierInvoicePM, declarationPM.Direction);
- 
+
                 string vendorNumber = GetVendorNumber(supplierInvoicePM.VendorId);
 
                 if (!string.IsNullOrEmpty(supplierInvoicePM.IncotermCode))
@@ -1114,8 +1119,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                         ConditionCode = SetCodeTypeValue<TradeTermsConditionCodeType>(supplierInvoicePM.IncotermCode),
                     };
                 }
-  
- 
+
+
                 var declarationConsignmentList = new List<DeclarationGoodsShipmentExportConsignment>();
                 var declarationImportConsignmentList = new List<DeclarationGoodsShipmentImportConsignment>();
                 for (int consignmentSeq = 0; consignmentSeq < declarationPM.Consignments.Count(); consignmentSeq++)
@@ -1186,11 +1191,11 @@ namespace Logitude.CustomsMessaging.RequestServices
                 {
                     Value = consignmentPM.OriginCountryCode
                 },
-            }; 
+            };
             if (consignmentPM.IsLastReleaseFromWarehous == "T")
             {
-            dmExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType();
-           
+                dmExtensions.LastReleaseFromWarehousInd = new LastReleaseFromWarehousIndType();
+
                 dmExtensions.LastReleaseFromWarehousInd.Value = true;
             }
             else
@@ -1330,11 +1335,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                 ID = SetIDTypeValue<DeclarationGoodsShipmentExportConsignmentUnloadingLocationID>(consignmentPM.ExportUnloadingPortCode), //consignmentPM.UnloadPortCode// new UnloadingLocationIdentificationIDType() { Value = consignmentPM.UnloadPortCode },
                                                                                                                                           // ArrivalDateTime = consignmentPM.UnloadDate.HasValue ? DataTypeConvertorUtil.Convert(consignmentPM.UnloadDate.Value) : null,
             };
-			if (!string.IsNullOrEmpty(consignmentPM.ExportLoadingPortCode)) { 
-              declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentExportConsignmentLoadingLocation()
-              {
-                  ID = SetIDTypeValue<DeclarationGoodsShipmentExportConsignmentLoadingLocationID>(consignmentPM.ExportLoadingPortCode) //consignmentPM.LoadingPortCode new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
-              };
+            if (!string.IsNullOrEmpty(consignmentPM.ExportLoadingPortCode))
+            {
+                declarationConsignment.LoadingLocation = new DeclarationGoodsShipmentExportConsignmentLoadingLocation()
+                {
+                    ID = SetIDTypeValue<DeclarationGoodsShipmentExportConsignmentLoadingLocationID>(consignmentPM.ExportLoadingPortCode) //consignmentPM.LoadingPortCode new LoadingLocationIdentificationIDType() { Value = consignmentPM.LoadingPortCode }
+                };
             }
             declarationConsignment.DMExtensions = GetDMExtensionsConsignment(consignmentPM);
 
@@ -1435,7 +1441,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-        private DeclarationGoodsShipmentInvoice GetDeclarationGoodsShipmentInvoice(SupplierInvoicePM supplierInvoicePM,string direction)
+        private DeclarationGoodsShipmentInvoice GetDeclarationGoodsShipmentInvoice(SupplierInvoicePM supplierInvoicePM, string direction)
         {
             var declarationGoodsShipmentInvoice = new DeclarationGoodsShipmentInvoice();
             declarationGoodsShipmentInvoice.ID = SetIDTypeValue<InvoiceIdentificationIDType>(supplierInvoicePM.InvoiceNumber);
@@ -1444,7 +1450,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             if (supplierInvoicePM.IssueDate.HasValue)
             {
                 declarationGoodsShipmentInvoice.IssueDateTime = DataTypeConvertorUtil.Convert(supplierInvoicePM.IssueDate);
-                
+
             } // <--
             //IssueDateTimeType
             // moran 13.7.14 - Task 6817 - enter into 'if' - cancel hard code -->
@@ -1459,7 +1465,7 @@ namespace Logitude.CustomsMessaging.RequestServices
         }
 
 
-        private DeclarationGoodsShipmentInvoiceDMExtensions GetDMExtensionsGoodsShipment(SupplierInvoicePM supplierInvoicePM,string direction)
+        private DeclarationGoodsShipmentInvoiceDMExtensions GetDMExtensionsGoodsShipment(SupplierInvoicePM supplierInvoicePM, string direction)
         {
 
             var DMExtensions = new DeclarationGoodsShipmentInvoiceDMExtensions();
@@ -1507,7 +1513,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 DMExtensions.PaymentDetails = DeclarationGoodsShipmentInvoiceDMExtensionsPaymentDetails.ToArray();
             }
             DMExtensions.DutyRegimeProtocolCode = SetCodeTypeValue<DeclarationGoodsShipmentInvoiceDMExtensionsDutyRegimeProtocolCode>(supplierInvoicePM.DutyRegimeProtocolCode);
-           
+
             DMExtensions.BuyerDetails = new DeclarationGoodsShipmentInvoiceDMExtensionsBuyerDetails();
 
             DMExtensions.BuyerDetails.Name = supplierInvoicePM.BuyerName;
@@ -1644,21 +1650,21 @@ namespace Logitude.CustomsMessaging.RequestServices
                 var supplierInvoiceItemPM = supplierInvoicePM.SupplierInvoiceItems[goodsItemSeq];
                 var declarationGoodsShipmentGovernmentAgencyGoodsItem = new DeclarationGoodsShipmentGovernmentAgencyGoodsItem();
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.SequenceNumeric = supplierInvoiceItemPM.SequenceNumeric.Value; // moran 23.8.16 - changed from goodsItemSeq + 1;
-                            
- 
-                if(!string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode))
-                declarationGoodsShipmentGovernmentAgencyGoodsItem.Origin = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemOrigin()
-                {
-                    CountryCode = new OriginCountryCodeType() { Value = supplierInvoiceItemPM.OriginCountryCode }
-                };
+
+
+                if (!string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode))
+                    declarationGoodsShipmentGovernmentAgencyGoodsItem.Origin = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemOrigin()
+                    {
+                        CountryCode = new OriginCountryCodeType() { Value = supplierInvoiceItemPM.OriginCountryCode }
+                    };
 
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.GovernmentProcedure = GetGoodsItemGovernmentProcedure(supplierInvoiceItemPM.SupplierInvoiceItemProcesTypes);
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.Commodity = GetGoodsItemCommodity(supplierInvoiceItemPM);
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.GoodsMeasure = GetGoodsMeasure(supplierInvoiceItemPM); // MUST
-             
+
                 declarationGoodsShipmentGovernmentAgencyGoodsItem.PreviousDocument = GetPreviousDocument(supplierInvoiceItemPM);
 
-             
+
                 //if (!String.IsNullOrWhiteSpace(supplierInvoiceItemPM.ManufactureIdentifier))
                 //{
                 //   // declarationGoodsShipmentGovernmentAgencyGoodsItem.Manufacturer = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemManufacturer()
@@ -1744,8 +1750,8 @@ namespace Logitude.CustomsMessaging.RequestServices
                     declarationGoodsShipmentAdditionalDocument.DMExtensions = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemAdditionalDocumentDMExtensions();
                     //mirit20131222 declarationGoodsShipmentAdditionalDocument.DMExtensions.AttachmentID = SetIDTypeValue<AttachmentIDType>(CertificateItem.CustomsAttachmentID);
                     declarationGoodsShipmentAdditionalDocument.DMExtensions.LPCOTypeCode = SetCodeTypeValue<LpcoTypeCodeType>(CertificateItem.ResConfirmationTypeCode);
-                    declarationGoodsShipmentAdditionalDocument.DMExtensions.RequirementLicenseType = SetCodeTypeValue<requirementLicenseType> (CertificateItem.ReqConfirmationTypeCode);
-       
+                    declarationGoodsShipmentAdditionalDocument.DMExtensions.RequirementLicenseType = SetCodeTypeValue<requirementLicenseType>(CertificateItem.ReqConfirmationTypeCode);
+
 
 
                     declarationGoodsShipmentAdditionalDocument.DMExtensions.ExternalAttachmentID = SetIDTypeValue<ExternalAttachmentIDType>(CertificateItem.CustomsAttachmentID);
@@ -1757,7 +1763,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
             return goodsItemAdditionalDocumentList.OrderBy(x => x.DMExtensions.SequenceNumeric).ToArray();
         }
-        
+
         private DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodity GetGoodsItemCommodity(SupplierInvoiceItemPM supplierInvoiceItemPM)
         {
             decimal sequenceNumeric;
@@ -1773,10 +1779,10 @@ namespace Logitude.CustomsMessaging.RequestServices
                 myDeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassification = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodityClassification()
                 {
                     ID = SetIDTypeValue<ClassificationIdentificationIDType>(supplierInvoiceItemPM.DangerousClassificationCode), // new ClassificationIdentificationIDType()
-                   
+
                     IdentificationTypeCode = SetCodeTypeValue<ClassificationIdentificationTypeCodeType>("SSO"),
-                   
-                   
+
+
                 };
             }
             var declarationGoodsItemCommodity = new DeclarationGoodsShipmentGovernmentAgencyGoodsItemCommodity();
@@ -2048,12 +2054,12 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
                 //SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTaxExemptCode>(String.IsNullOrWhiteSpace(supplierInvoiceItemPM.TaxExemptCode) ? "1" : supplierInvoiceItemPM.TaxExemptCode)
             }
-            
+
             DMExtensions.Vehicle = GetDeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsProductIdentification(supplierInvoiceItemPM.SupplierInvoiceItemVehicles); // Mirit 16/08/15 Task 15960
 
-                                                                                                                                                                             //SetIDTypeValue<PreferenceDocumentNumberType>("11"); //                                                                                                                                                            // SetIDTypeValue<PreferenceDocumentNumberType>("11"); //
+            //SetIDTypeValue<PreferenceDocumentNumberType>("11"); //                                                                                                                                                            // SetIDTypeValue<PreferenceDocumentNumberType>("11"); //
             DMExtensions.PreferenceDocumentNumber = SetIDTypeValue<PreferenceDocumentNumberType>(supplierInvoiceItemPM.PreferenceDocumentNumber);
-            DMExtensions.InvoiceLineNumbers =  supplierInvoiceItemPM.ActualInvoiceLines;
+            DMExtensions.InvoiceLineNumbers = supplierInvoiceItemPM.ActualInvoiceLines;
             DMExtensions.TransactionNatureCode = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsTransactionNatureCode>(supplierInvoiceItemPM.TransactionNatureCode);
             DMExtensions.ClaimReasonCode = SetCodeTypeValue<DeclarationGoodsShipmentGovernmentAgencyGoodsItemDMExtensionsClaimReasonCode>(supplierInvoiceItemPM.ClaimReasonCode);
             DMExtensions.ValuationAdjustment = GetGoodsItemValuationAdjustment(supplierInvoiceItemPM);

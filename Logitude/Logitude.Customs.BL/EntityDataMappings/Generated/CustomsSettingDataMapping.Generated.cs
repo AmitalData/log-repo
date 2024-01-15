@@ -52,7 +52,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SuppressIIGMessageToDate, 
 	         HSMCompanyId, 
 	         HSMToken, 
-	         StandAlone,
+	         StandAlone, 
+	         MaxItemsSendInteractive, 
+	         MaxSISendInteractive,
 	      }
 
 
@@ -92,7 +94,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SuppressIIGMessageToDate, 
 	         HSMCompanyId, 
 	         HSMToken, 
-	         StandAlone,
+	         StandAlone, 
+	         MaxItemsSendInteractive, 
+	         MaxSISendInteractive,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -249,6 +253,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StandAlone))
             {
 				entityPOCO.StandAlone = entityPM.StandAlone;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxItemsSendInteractive))
+            {
+				entityPOCO.MaxItemsSendInteractive = entityPM.MaxItemsSendInteractive;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxSISendInteractive))
+            {
+				entityPOCO.MaxSISendInteractive = entityPM.MaxSISendInteractive;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -412,6 +426,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.StandAlone = entityPOCO.StandAlone;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MaxItemsSendInteractive))
+            {
+					entityPM.MaxItemsSendInteractive = entityPOCO.MaxItemsSendInteractive;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MaxSISendInteractive))
+            {
+					entityPM.MaxSISendInteractive = entityPOCO.MaxSISendInteractive;
+            }
+
 		}
 
 		public void PMToOldPM(CustomsSettingPM entityPM, CustomsSettingPM oldEntityPM)
@@ -566,6 +590,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.StandAlone))
             {
                 oldEntityPM.StandAlone = entityPM.StandAlone;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxItemsSendInteractive))
+            {
+                oldEntityPM.MaxItemsSendInteractive = entityPM.MaxItemsSendInteractive;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MaxSISendInteractive))
+            {
+                oldEntityPM.MaxSISendInteractive = entityPM.MaxSISendInteractive;
             }
 			
 		}
