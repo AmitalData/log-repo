@@ -2400,21 +2400,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void CheckIfGlaccountIsConnectedToBankAccountOrCashBook(GLAccountPM entityPM, GLAccount entityPOCO)
         {
-            BankAccountRepository repo = new BankAccountRepository(entityPM.Tenant);
-            var isGlaccountExistsInBankAccount = repo.CheckIfGlAccountExistsInBankAccount(entityPM.Id, entityPM.Tenant);
+            if(entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency && entityPM.IsMultiCurrency == true)
+            {
+                BankAccountRepository repo = new BankAccountRepository(entityPM.Tenant);
+                var isGlaccountExistsInBankAccount = repo.CheckIfGlAccountExistsInBankAccount(entityPM.Id, entityPM.Tenant);
 
-            var isGlaccountExistsInCashBook = false;
-            if (!isGlaccountExistsInBankAccount)
-            {
-                CashBookRepository cashBookRepository = new CashBookRepository(entityPM.Tenant);
-                isGlaccountExistsInCashBook = cashBookRepository.CheckIfGlAccountExistsInCashBook(entityPM.Id, entityPM.Tenant);
+                var isGlaccountExistsInCashBook = false;
+                if (!isGlaccountExistsInBankAccount)
+                {
+                    CashBookRepository cashBookRepository = new CashBookRepository(entityPM.Tenant);
+                    isGlaccountExistsInCashBook = cashBookRepository.CheckIfGlAccountExistsInCashBook(entityPM.Id, entityPM.Tenant);
+                }
+                if (entityPM.ChartOfAccountsTypeCode == ChartOfAccountsTypeEnum.Banks.ToIntString() && (isGlaccountExistsInBankAccount || isGlaccountExistsInCashBook)) 
+                {
+                    bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                    throw new ApplicationException(TranslateTextsClass.Translate("BankAccounts.O.PreventChangingToIsMultiCurrency", 0, useLocal));
+                }
             }
-            if (entityPM.ChartOfAccountsTypeCode == ChartOfAccountsTypeEnum.Banks.ToIntString() && (isGlaccountExistsInBankAccount || isGlaccountExistsInCashBook)
-                && (entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency && entityPM.IsMultiCurrency == true)) 
-            {
-                bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
-                throw new ApplicationException(TranslateTextsClass.Translate("BankAccounts.O.PreventChangingToIsMultiCurrency", 0, useLocal));
-            }
+            
         }
 
         private static void CheckSplittedGLAccount(GLAccountPM entityPM)
