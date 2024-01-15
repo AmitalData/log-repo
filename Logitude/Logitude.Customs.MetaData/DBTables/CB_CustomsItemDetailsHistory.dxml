@@ -53,28 +53,28 @@
   <Column
     Name="EnglishGoodsDescription"
     Type="varchar"
-    Size="100">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="GoodsDescription"
     Type="varchar"
-    Size="100">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="GoodsDescriptionRTF"
     Type="varchar"
-    Size="100">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="EnglishGoodsDescriptionRTF"
     Type="varchar"
-    Size="100">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>

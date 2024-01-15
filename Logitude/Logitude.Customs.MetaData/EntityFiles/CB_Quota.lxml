@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;מכסה&quot;"
   DefaultText="&quot;Quota&quot;"
-  Code="&quot;98e1&quot;"
+  Code="&quot;9366&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -91,6 +91,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ID&quot;"
     ListPropertyPath="&quot;ID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -164,6 +165,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CreateDate&quot;"
     ListPropertyPath="&quot;CreateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -237,6 +239,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdateDate&quot;"
     ListPropertyPath="&quot;UpdateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -310,6 +313,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Title&quot;"
     ListPropertyPath="&quot;Title&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -356,6 +360,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.CB_QuotaHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CB_Quota&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -384,6 +397,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

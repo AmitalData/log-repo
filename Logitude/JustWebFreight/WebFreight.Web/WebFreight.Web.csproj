@@ -1254,6 +1254,8 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\VendorCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_ComputationMethodDataController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_CustomsItemController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_CustomsItemDetailsHistoryController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_PropertiesDetailsHistoryController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_QuotaController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RuleController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CB_RuleDetailsHistoryController.Generated.cs" />

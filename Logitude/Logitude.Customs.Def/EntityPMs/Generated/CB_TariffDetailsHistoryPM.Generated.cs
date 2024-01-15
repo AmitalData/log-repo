@@ -204,29 +204,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int changeRequestTypePriority ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public int ChangeRequestTypePriority  
-	   {
-	    
-	     get
-		{
-		   return changeRequestTypePriority;
-		 }
-		 set
-		 {
-		   if(changeRequestTypePriority != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeRequestTypePriority",OldValue=changeRequestTypePriority,NewValue=value,PropertyType="int"};
-		    NotifyPropertyChanged(values);
-		   changeRequestTypePriority=value;
-		   }
-			
-		 }
-	   }
 	  private string withinQuota_ComputMethDataID ;
 	  	  
        

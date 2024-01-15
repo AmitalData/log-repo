@@ -41,7 +41,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Rules).HasColumnName("Rules").IsMaxLength().IsUnicode(false);
 
-            this.Property(t => t.EnglishRules).HasColumnName("EnglishRules").HasMaxLength(100).IsUnicode(false);
+            this.Property(t => t.EnglishRules).HasColumnName("EnglishRules").IsMaxLength().IsUnicode(false);
 
             this.Property(t => t.OrderinalPostion).HasColumnName("OrderinalPostion");
 

@@ -58,12 +58,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ChangeRequestTypePriority"
-    Type="int">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="WithinQuota_ComputMethDataID"
     Type="varchar"
     Size="15">

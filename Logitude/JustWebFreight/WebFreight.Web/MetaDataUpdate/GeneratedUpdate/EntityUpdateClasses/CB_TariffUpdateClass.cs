@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_TariffUpdateClass
    {  		
-		public const string HashString = "5d74703bad9ecfbb4ae414cc0a0df036";
+		public const string HashString = "868c2925b7e5fc97b71b253227de12cd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -104,6 +104,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasFiltersMenu =  false,
 			      				    IsEditable =  false,
 			      				    IsNewWizard =  false,
+			      				    LookUp1 =  "ID",
 			      				    KeyPropertyPath =  "ID",
 			      				    AutoCompleteSearchWindow =  false,
 			      				    IsClosed =  false,
@@ -126,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "תעריף פרט מכס",
 			      				    DefaultText =  "Tariff",
-			      				    Code =  "e341",
+			      				    Code =  "9e40",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

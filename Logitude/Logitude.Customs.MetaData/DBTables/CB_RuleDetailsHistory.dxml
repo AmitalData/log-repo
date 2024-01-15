@@ -68,7 +68,7 @@
   <Column
     Name="EnglishRules"
     Type="varchar"
-    Size="100">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>

@@ -6,18 +6,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-export class CB_TariffDetailsHistoryList {
+export class CB_CustomsItemDetailsHistoryList {
    
 	ID: string;
 	CreateDate: Date;
 	UpdateDate: Date;
-	TariffID: string;
-	QuotaID: string;
+	Title: string;
 	StartDate: Date;
 	EndDate: Date;
 	EntityStatusID: string;
-	WithinQuota_ComputMethDataID: string;
-	WithoutQuota_ComputMethDataID: string;
+	EnglishGoodsDescription: string;
+	GoodsDescription: string;
+	GoodsDescriptionRTF: string;
+	EnglishGoodsDescriptionRTF: string;
+	CustomsItemID: string;
 	ChangeRequestTypePriority: number;
 	
 }

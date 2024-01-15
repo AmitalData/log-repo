@@ -27,24 +27,25 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public DateTime UpdateDate { get; set; }
         [Column("TariffID")]
 	    public string TariffID { get; set; }
-        [ForeignKey("QuotaID")]
+        [ForeignKey("Quota")]
         [Column("QuotaID")]
 	    public string QuotaID { get; set; }
 	      
-        public virtual CB_Quota QuotaID { get; set; }
+        public virtual CB_Quota Quota { get; set; }
         [Column("StartDate")]
 	    public DateTime? StartDate { get; set; }
         [Column("EndDate")]
 	    public DateTime? EndDate { get; set; }
-        [ForeignKey("EntityStatusID")]
+        [ForeignKey("EntityStatusCode")]
         [Column("EntityStatusID")]
 	    public string EntityStatusID { get; set; }
 	      
-        public virtual CustomsEntityStatus EntityStatusID { get; set; }
-        [Column("ChangeRequestTypePriority")]
-	    public int ChangeRequestTypePriority { get; set; }
+        public virtual CustomsEntityStatus EntityStatusCode { get; set; }
+        [ForeignKey("WithinQuota_ComputationMethodDataID")]
         [Column("WithinQuota_ComputMethDataID")]
 	    public string WithinQuota_ComputMethDataID { get; set; }
+	      
+        public virtual CB_ComputationMethodData WithinQuota_ComputationMethodDataID { get; set; }
         [ForeignKey("WithoutQuota_ComputationMethodDataID")]
         [Column("WithoutQuota_ComputMethDataID")]
 	    public string WithoutQuota_ComputMethDataID { get; set; }

@@ -30,7 +30,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StartDate, 
 	         EndDate, 
 	         EntityStatusID, 
-	         ChangeRequestTypePriority, 
 	         WithinQuota_ComputMethDataID, 
 	         WithoutQuota_ComputMethDataID, 
 	         ChangeRequestTypePriority,
@@ -48,7 +47,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         StartDate, 
 	         EndDate, 
 	         EntityStatusID, 
-	         ChangeRequestTypePriority, 
 	         WithinQuota_ComputMethDataID, 
 	         WithoutQuota_ComputMethDataID, 
 	         ChangeRequestTypePriority,
@@ -93,11 +91,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityStatusID))
             {
 				entityPOCO.EntityStatusID = entityPM.EntityStatusID;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangeRequestTypePriority))
-            {
-				entityPOCO.ChangeRequestTypePriority = entityPM.ChangeRequestTypePriority;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WithinQuota_ComputMethDataID))
@@ -159,11 +152,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.EntityStatusID = entityPOCO.EntityStatusID;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChangeRequestTypePriority))
-            {
-					entityPM.ChangeRequestTypePriority = entityPOCO.ChangeRequestTypePriority;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.WithinQuota_ComputMethDataID))
             {
 					entityPM.WithinQuota_ComputMethDataID = entityPOCO.WithinQuota_ComputMethDataID;
@@ -218,11 +206,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.EntityStatusID))
             {
                 oldEntityPM.EntityStatusID = entityPM.EntityStatusID;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangeRequestTypePriority))
-            {
-                oldEntityPM.ChangeRequestTypePriority = entityPM.ChangeRequestTypePriority;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.WithinQuota_ComputMethDataID))

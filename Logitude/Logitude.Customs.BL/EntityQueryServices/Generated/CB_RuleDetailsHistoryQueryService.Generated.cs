@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class CB_RuleDetailsHistoryQueryService: EntityQueryService<CB_RuleDetailsHistory,CB_RuleDetailsHistoryKeys,CB_RuleDetailsHistoryPM,object,CB_RuleDetailsHistoryKeys>
+   public partial class CB_RuleDetailsHistoryQueryService: EntityQueryService<CB_RuleDetailsHistory,CB_RuleDetailsHistoryKeys,CB_RuleDetailsHistoryPM,CB_RulePM,CB_RuleKeys>
    {
    
         CB_RuleDetailsHistoryRepository repository;

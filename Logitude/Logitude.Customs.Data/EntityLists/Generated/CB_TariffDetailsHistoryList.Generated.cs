@@ -31,8 +31,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string EntityStatusID  { get; set; }
        [DataMember]
-       public int ChangeRequestTypePriority  { get; set; }
-       [DataMember]
        public string WithinQuota_ComputMethDataID  { get; set; }
        [DataMember]
        public string WithoutQuota_ComputMethDataID  { get; set; }

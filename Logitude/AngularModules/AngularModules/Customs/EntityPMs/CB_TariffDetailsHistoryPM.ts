@@ -7,6 +7,7 @@
 //------------------------------------------------------------------------------
 //------------------------------------------------------------------------------
 
+import {CB_TariffPM} from './CB_TariffPM';
 import {UIProperties, UIProperty} from '../../Infrastructure/Components/LogitudeComponents/UIProperties';
 import {ServiceHelper} from '../../Infrastructure/Utilities/ServiceHelper';
 import {ServiceLocator} from '../../Infrastructure/Locators/ServiceLocator';
@@ -18,11 +19,13 @@ export class CB_TariffDetailsHistoryPM {
 
       @Output() PropertyChanged: EventEmitter<PropertyChangedArgs> = new EventEmitter<PropertyChangedArgs>();
       public UIProperties: UIProperties;
-	  constructor() {
+	        constructor(_entityParentPM: any) {
+          this.EntityParentPM = _entityParentPM;
           this.UIProperties = new UIProperties(this); 
           this.IsDirty = false;
       }
- 	 
+
+	 
     
     private iD: string;
     public get ID() { return this.iD; }
@@ -64,11 +67,6 @@ export class CB_TariffDetailsHistoryPM {
     public set EntityStatusID(newValue: string) { if (this.entityStatusID != newValue) { this.entityStatusID = newValue; this.MarkAsDirty("EntityStatusID"); } }
        
 	 
-    private changeRequestTypePriority: number;
-    public get ChangeRequestTypePriority() { return this.changeRequestTypePriority; }
-    public set ChangeRequestTypePriority(newValue: number) { if (this.changeRequestTypePriority != newValue) { this.changeRequestTypePriority = newValue; this.MarkAsDirty("ChangeRequestTypePriority"); } }
-       
-	 
     private withinQuota_ComputMethDataID: string;
     public get WithinQuota_ComputMethDataID() { return this.withinQuota_ComputMethDataID; }
     public set WithinQuota_ComputMethDataID(newValue: string) { if (this.withinQuota_ComputMethDataID != newValue) { this.withinQuota_ComputMethDataID = newValue; this.MarkAsDirty("WithinQuota_ComputMethDataID"); } }
@@ -86,14 +84,26 @@ export class CB_TariffDetailsHistoryPM {
 	 
 
     public OldEntityPM: CB_TariffDetailsHistoryPM;
-		
+	
+    private entityParentPM: any;
+    public get EntityParentPM() { return this.entityParentPM; }
+    public set EntityParentPM(newValue: any) { this.entityParentPM = newValue; }
+
+    private changeSetOp: string;
+    public get ChangeSetOp() { return this.changeSetOp; }
+    public set ChangeSetOp(newValue: string) { this.changeSetOp = newValue;  }//this.MarkAsDirty(); mohammad removed it because it sets the dirty bool to true when there is no changes.
+
+    public UniqueKey: string;
+	 	
     public IsDirty: boolean;
     public DisableMarkAsDirty: boolean = false;
     MarkAsDirty(propertyName:string = null) {
        if(!this.DisableMarkAsDirty)
        {
         this.IsDirty = true;
-		  	
+		  if (this.EntityParentPM) {
+            this.EntityParentPM.MarkAsDirty();
+        }	
         if (propertyName != null) {
             this.PropertyChanged.emit(new PropertyChangedArgs(propertyName,this));
             ServiceLocator.RulesValidator.ApplyEntityChangedRules(propertyName, this, "Customs.CB_TariffDetailsHistory");

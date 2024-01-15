@@ -22,7 +22,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class CB_TariffDetailsHistoryUpdateService:EntityUpdateService<CB_TariffDetailsHistory,CB_TariffDetailsHistoryPM,EntityPM>
+   public partial class CB_TariffDetailsHistoryUpdateService:EntityUpdateService<CB_TariffDetailsHistory,CB_TariffDetailsHistoryPM,CB_TariffPM>
    {
    
         CB_TariffDetailsHistoryRepository entityRepository;

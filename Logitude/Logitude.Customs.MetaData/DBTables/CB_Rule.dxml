@@ -27,7 +27,7 @@
   <Column
     Name="Title"
     Type="varchar"
-    Size="100">
+    Size="255">
     <Constraints
       Nullable="true" />
   </Column>

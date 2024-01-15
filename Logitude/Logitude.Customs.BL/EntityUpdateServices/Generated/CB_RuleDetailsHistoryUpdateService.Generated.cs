@@ -22,7 +22,7 @@ using Logitude.Customs.Data;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 { 
-   public partial class CB_RuleDetailsHistoryUpdateService:EntityUpdateService<CB_RuleDetailsHistory,CB_RuleDetailsHistoryPM,EntityPM>
+   public partial class CB_RuleDetailsHistoryUpdateService:EntityUpdateService<CB_RuleDetailsHistory,CB_RuleDetailsHistoryPM,CB_RulePM>
    {
    
         CB_RuleDetailsHistoryRepository entityRepository;

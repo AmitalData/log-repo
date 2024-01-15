@@ -49,7 +49,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ReductionRate).HasColumnName("ReductionRate").HasPrecision(2, 2);
 
-            this.Property(t => t.TariffRelatedToQuotaID).HasColumnName("TariffRelatedToQuotaID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.TariffRelatedToQuotaID).HasColumnName("TariffRelatedToQuotaID").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.Notes).HasColumnName("Notes").HasMaxLength(255).IsUnicode(false);
 

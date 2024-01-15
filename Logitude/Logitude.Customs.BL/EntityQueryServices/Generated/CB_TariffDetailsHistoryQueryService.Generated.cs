@@ -17,7 +17,7 @@ using Logitude.Customs.Data;
 using Simplog.Server.Infrastructure;
 namespace Logitude.Customs.BL.EntityQueryServices
 { 
-   public partial class CB_TariffDetailsHistoryQueryService: EntityQueryService<CB_TariffDetailsHistory,CB_TariffDetailsHistoryKeys,CB_TariffDetailsHistoryPM,object,CB_TariffDetailsHistoryKeys>
+   public partial class CB_TariffDetailsHistoryQueryService: EntityQueryService<CB_TariffDetailsHistory,CB_TariffDetailsHistoryKeys,CB_TariffDetailsHistoryPM,CB_TariffPM,CB_TariffKeys>
    {
    
         CB_TariffDetailsHistoryRepository repository;

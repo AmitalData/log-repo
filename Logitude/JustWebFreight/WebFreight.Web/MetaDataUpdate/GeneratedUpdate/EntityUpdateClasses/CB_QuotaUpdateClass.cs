@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_QuotaUpdateClass
    {  		
-		public const string HashString = "2b36c0f77ed025abcdc1592b3291a67b";
+		public const string HashString = "72350e26506de6fc95b699a63636dc58";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "מכסה",
 			      				    DefaultText =  "Quota",
-			      				    Code =  "98e1",
+			      				    Code =  "9366",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -171,6 +171,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CreateDate",
 					  						ListPropertyPath =  "CreateDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -231,6 +232,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "UpdateDate",
 					  						ListPropertyPath =  "UpdateDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -291,6 +293,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Title",
 					  						ListPropertyPath =  "Title",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -334,7 +337,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CB_QuotaObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CB_Quota" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CB_QuotaObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CB_Quota").ToList();
+		       
+	      
+
+	         Screen CB_QuotaCustomsCB_QuotaHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CB_Quota.HeaderScreen", Name = "Customs.CB_QuotaHeaderScreen", ObjectTableId = CB_QuotaObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CB_QuotaObjectTable.HeaderScreenId = CB_QuotaCustomsCB_QuotaHeaderScreenScreen0.Id;
+		    CB_QuotaObjectTable.HeaderScreenCode = CB_QuotaCustomsCB_QuotaHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
