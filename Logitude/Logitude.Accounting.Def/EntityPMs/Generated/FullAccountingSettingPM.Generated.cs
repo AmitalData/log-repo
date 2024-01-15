@@ -1354,7 +1354,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-
 	  private int? amountForConfirmationNumber ;
 	  	  
        
