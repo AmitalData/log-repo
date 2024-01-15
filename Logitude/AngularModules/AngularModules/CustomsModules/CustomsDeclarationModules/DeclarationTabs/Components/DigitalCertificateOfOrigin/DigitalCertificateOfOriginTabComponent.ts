@@ -177,18 +177,15 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     AddNewCertificateOfOrigin(isNewOrEditCertificateOfOrigin:StatusCertificateOfOrigin) {
         debugger
 
-
         // initilize new certificate:
         const newCertificateOfOriginPM = new CertificateOfOriginPM();
         newCertificateOfOriginPM.DeclarationId = this.EntityPM.Id;
         newCertificateOfOriginPM.Tenant = this.EntityPM.Tenant;
         
 
-        //TODO: add new CertificateOfOrigin
         // on click item get one CertificateOfOrigin
         var args: any = {
             Decalaration: this.EntityPM,
-            // CertificateOfOrigin: !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin) ? this.selectedCertificateOfOrigin : newCertificateOfOriginPM,
             CertificateOfOrigin:  isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsNew ? newCertificateOfOriginPM : this.selectedCertificateOfOrigin,
             IsNewOrEdit : isNewOrEditCertificateOfOrigin
         };
@@ -219,10 +216,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     }
 
     getCertificateOfOrigins() {
-      
         const filters = new ApiQueryFilters();    
-      
-
         filters.PageSize = 200;
         filters.PageIndex = 0;
         filters.GetAll = false;
