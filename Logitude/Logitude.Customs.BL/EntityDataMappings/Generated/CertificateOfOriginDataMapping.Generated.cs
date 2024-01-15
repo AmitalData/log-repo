@@ -169,7 +169,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CooPdf, 
 	         CoodPdf1, 
 	         OpenByUser, 
-	         IsSubmitted,
+	         IsSubmitted, 
+	         OpenByUserName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -1365,10 +1366,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.CoodPdf1)) //T4 find type == nText 
             {
                 entityPM.CoodPdf1 = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CoodPdf1));
-            }
-            if (!String.IsNullOrWhiteSpace(entityPM.OpenByUser)) //T4 find type == nText 
-            {
-                entityPM.OpenByUser = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.OpenByUser));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

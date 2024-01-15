@@ -477,8 +477,8 @@
   </Column>
   <Column
     Name="OpenByUser"
-    Type="nvarchar"
-    Size="35">
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -618,4 +618,9 @@
     ReferencedTable="CertificateOfOriginStatusCodeEnums"
     ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="OpenByUser"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

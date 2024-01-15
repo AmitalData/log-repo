@@ -235,8 +235,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CooPdf { get; set; }
         [Column("CoodPdf1")]
 	    public string CoodPdf1 { get; set; }
+        [ForeignKey("CreateByUser")]
         [Column("OpenByUser")]
 	    public string OpenByUser { get; set; }
+	      
+        public virtual User CreateByUser { get; set; }
         [Column("IsSubmitted")]
 	    public bool IsSubmitted { get; set; }
     }

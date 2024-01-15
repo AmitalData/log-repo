@@ -172,7 +172,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CoodPdf1).HasColumnName("CoodPdf1").HasMaxLength(125).IsUnicode(true);
 
-            this.Property(t => t.OpenByUser).HasColumnName("OpenByUser").HasMaxLength(35).IsUnicode(true);
+            this.Property(t => t.OpenByUser).HasColumnName("OpenByUser").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.IsSubmitted).HasColumnName("IsSubmitted");
         }

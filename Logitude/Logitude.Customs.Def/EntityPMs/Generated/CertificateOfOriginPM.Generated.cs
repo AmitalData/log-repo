@@ -1723,7 +1723,30 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedCertificateOriginItemItems = value; }
 	    }
-	     }
+	  	  private string openByUserName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OpenByUserName  
+	   {
+	    
+	     get
+		{
+		   return openByUserName;
+		 }
+		 set
+		 {
+		   if(openByUserName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OpenByUserName",OldValue=openByUserName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   openByUserName=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 
