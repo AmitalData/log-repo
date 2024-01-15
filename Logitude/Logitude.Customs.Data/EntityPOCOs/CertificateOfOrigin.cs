@@ -58,17 +58,17 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("ExporterCountry")]
 	    public string ExporterCountry { get; set; }
 	      
-        public virtual Country Country1 { get; set; }
+        public virtual CustomsCountry Country1 { get; set; }
         [ForeignKey("Country2")]
         [Column("TradeAgreementCountry1")]
 	    public string TradeAgreementCountry1 { get; set; }
 	      
-        public virtual Country Country2 { get; set; }
+        public virtual CustomsCountry Country2 { get; set; }
         [ForeignKey("Country3")]
         [Column("TradeAgreementCountry2")]
 	    public string TradeAgreementCountry2 { get; set; }
 	      
-        public virtual Country Country3 { get; set; }
+        public virtual CustomsCountry Country3 { get; set; }
         [ForeignKey("CountryGroup1")]
         [Column("TradeAgreementGroupOfCountries")]
 	    public string TradeAgreementGroupOfCountries { get; set; }
@@ -82,7 +82,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("ConsigneeCountry")]
 	    public string ConsigneeCountry { get; set; }
 	      
-        public virtual Country Country4 { get; set; }
+        public virtual CustomsCountry Country4 { get; set; }
         [Column("ConsigneeRemarks")]
 	    public string ConsigneeRemarks { get; set; }
         [Column("IsConsigneeForPrint")]
@@ -91,7 +91,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("OriginCountry")]
 	    public string OriginCountry { get; set; }
 	      
-        public virtual Country Country5 { get; set; }
+        public virtual CustomsCountry Country5 { get; set; }
         [ForeignKey("CountryGroup2")]
         [Column("OriginGroupOfCountry")]
 	    public string OriginGroupOfCountry { get; set; }
@@ -101,7 +101,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("DestinationCountry")]
 	    public string DestinationCountry { get; set; }
 	      
-        public virtual Country Country6 { get; set; }
+        public virtual CustomsCountry Country6 { get; set; }
         [ForeignKey("CountryGroup3")]
         [Column("DestinationGroupOfCountries")]
 	    public string DestinationGroupOfCountries { get; set; }
@@ -120,7 +120,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("CumulationCountry")]
 	    public string CumulationCountry { get; set; }
 	      
-        public virtual Country Country7 { get; set; }
+        public virtual CustomsCountry Country7 { get; set; }
         [ForeignKey("CountryGroup4")]
         [Column("CumulationGroupOfCountries")]
 	    public string CumulationGroupOfCountries { get; set; }
@@ -148,7 +148,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("IssuingCountry")]
 	    public string IssuingCountry { get; set; }
 	      
-        public virtual Country Country8 { get; set; }
+        public virtual CustomsCountry Country8 { get; set; }
         [ForeignKey("City2")]
         [Column("CityOfDeclaration")]
 	    public string CityOfDeclaration { get; set; }
@@ -158,7 +158,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("CountryOfDeclaration")]
 	    public string CountryOfDeclaration { get; set; }
 	      
-        public virtual Country Country9 { get; set; }
+        public virtual CustomsCountry Country9 { get; set; }
         [Column("DateOfDeclaration")]
 	    public DateTime? DateOfDeclaration { get; set; }
         [Column("IsDeclaredByManufacture")]
@@ -177,7 +177,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("NonExportCountry")]
 	    public string NonExportCountry { get; set; }
 	      
-        public virtual Country Country10 { get; set; }
+        public virtual CustomsCountry Country10 { get; set; }
         [Column("NonImportBillOfLadingNum")]
 	    public string NonImportBillOfLadingNum { get; set; }
         [ForeignKey("InternationalSite1")]
@@ -193,7 +193,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("NonTransirCountry")]
 	    public string NonTransirCountry { get; set; }
 	      
-        public virtual Country Country11 { get; set; }
+        public virtual CustomsCountry Country11 { get; set; }
         [ForeignKey("InternationalSite2")]
         [Column("NonPortOfEntrance")]
 	    public string NonPortOfEntrance { get; set; }

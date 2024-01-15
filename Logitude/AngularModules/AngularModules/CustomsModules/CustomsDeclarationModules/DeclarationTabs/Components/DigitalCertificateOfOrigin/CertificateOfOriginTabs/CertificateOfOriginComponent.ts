@@ -30,13 +30,12 @@ import { StatusCertificateOfOrigin } from '../DigitalCertificateOfOriginTabCompo
 })
 
 export class CertificateOfOriginComponent extends BaseComponent {
-    public IsDisplayOnly: boolean = false;
     public right: any;
     public CustomSendOptionsButtonCanForcePersonalSign: any;
 
     public TabsItemsSource: TabItem[] = [];
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
-    public CurrentEntity: CertificateOfOriginPM;
+    public EntityPM: CertificateOfOriginPM;
     certificateOfOriginPMService: CertificateOfOriginPMService = new CertificateOfOriginPMService();
 
     
@@ -52,6 +51,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
     public isEntityChange: boolean = false;
     public DecalarationData:DeclarationPM;
     public IsNewOrEdit:StatusCertificateOfOrigin;
+    isDispalyOnlyStatusList: number[] = [4, 8];
 
 
     tapagNumberName = '';
@@ -69,11 +69,11 @@ export class CertificateOfOriginComponent extends BaseComponent {
             theMessage => {
 
                 if (theMessage == "ReloadEntity") {
-                         this.certificateOfOriginPMService.get(this.CurrentEntity.Id).subscribe((response: any) => {
+                         this.certificateOfOriginPMService.get(this.EntityPM.Id).subscribe((response: any) => {
                              var result = response.Result;
                              if (!AppTool.IsNullOrEmpty(result)) {
-                                 this.CurrentEntity = result;
-                                 this.entityArgs.EntityPM = this.CurrentEntity;
+                                 this.EntityPM = result;
+                                 this.entityArgs.EntityPM = this.EntityPM;
                              }
 
                          });
@@ -89,14 +89,14 @@ export class CertificateOfOriginComponent extends BaseComponent {
     
     SetWindowArgs(args: any) {
 
-        this.CurrentEntity = args.CertificateOfOrigin;
+        this.EntityPM = args.CertificateOfOrigin;
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
        
         
         this.BuildTabs();
         this.RunComponent();
-        this.entityArgs.EntityPM = this.CurrentEntity;
+        this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.CertificateOfOrigin";
 
 
@@ -114,11 +114,13 @@ export class CertificateOfOriginComponent extends BaseComponent {
 
 
     addTapagEnabled: boolean;
-    public get AddTapagEnabled() { return this.CurrentEntity ? this.addTapagEnabled : null; }
+    public get AddTapagEnabled() { return this.EntityPM ? this.addTapagEnabled : null; }
     public set AddTapagEnabled(newValue: boolean) {
         this.addTapagEnabled = newValue;
     }
-
+    public get IsDisplayOnly() {
+        return this.isDispalyOnlyStatusList.includes(Number(this.EntityPM?.CooStatusCode))
+    }
     BuildTabs() {
         this.TabsItemsSource = [];
 
@@ -186,7 +188,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.GENERAL = cmpRef.instance;
-                                    this.GENERAL.InitTab(this.CurrentEntity,this.DecalarationData, this.IsNewOrEdit);
+                                    this.GENERAL.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit);
                                 });
                         }
                         break;
@@ -197,7 +199,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.MOREDATA = cmpRef.instance;
-                                    this.MOREDATA.InitTab(this.CurrentEntity,this.DecalarationData, this.IsNewOrEdit); 
+                                    this.MOREDATA.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit); 
                                 });
                         }
                         break;
@@ -243,7 +245,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
         
         if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsNew) {
             this.CurrentSession.CloseCurrentWindow();
-            this.certificateOfOriginPMService.insert(this.CurrentEntity).subscribe((response: any) => {
+            this.certificateOfOriginPMService.insert(this.EntityPM).subscribe((response: any) => {
                 var result = response.Result;
                 debugger
                 
@@ -253,7 +255,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
         else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit){
             this.isEntityChange = true;
             
-            this.certificateOfOriginPMService.update(this.CurrentEntity).subscribe((response: any) => {
+            this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
                 var result = response.Result;
                 this.CurrentSession.CurrentEditComponent.SaveChanges();
                 this.CurrentSession.CloseCurrentWindow();
@@ -282,11 +284,16 @@ export class CertificateOfOriginComponent extends BaseComponent {
         }
     }
     IsSendDocumentEnabled:boolean = true;
+   
+  
 
 
   
-        
-
+    // ShowClientIndication() {
+       
+    //     if (this.CurrentEntity.ClientIndications == null || this.CurrentEntity.ClientIndications.length == 0) {
+    //         return;
+    //     }
 
     SendButtonClicked(customSendOptionsArgs:any){
         debugger
@@ -296,7 +303,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
 
     }
     CancelButtonClicked() {
-        this.CurrentEntity.RejectChanges();
+        this.EntityPM.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
 }

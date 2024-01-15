@@ -12,6 +12,7 @@ import { CardPM } from 'Common/EntityPMs/CardPM';
 import { StatusCertificateOfOrigin } from '../../DigitalCertificateOfOriginTabComponent';
 import { SupplierInvoicePM } from 'Customs/EntityPMs/SupplierInvoicePM';
 import { ExportStorageListService } from 'Customs/Services/StandardLists/ExportStorageListService';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 
 
@@ -33,19 +34,25 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public currentCard:CardPM;
     public CertificateOriginInvoiceItems : ObservableCollection // type <CertificateOfOriginInvoicePM[]>;
     public CertificateOriginItemItems : ObservableCollection // type <CertificateOfOriginItemPM[]>;
-    IsNewOrEdit: StatusCertificateOfOrigin;
+    public IsNewOrEdit: StatusCertificateOfOrigin;
+    public IsDisplayMode:boolean = true;
+    public IsEditMode:boolean = true;
+    
     controlEnabled: boolean;
-    isDispalyOnlyStatusList:number[] = [4,8];
+    IsDisplayOnly: boolean = false;
+    public ErrorsList: string[];
     constructor() {
         super();
     }
 
    
-    InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM ,IsNewOrEdit: StatusCertificateOfOrigin) {
+    InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM ,IsNewOrEdit: StatusCertificateOfOrigin,IsDisplayOnly:boolean) {
         
         this.entityPM = EntityPM;
         this.currentDeclaration = currentDeclaration;
         this.IsNewOrEdit = IsNewOrEdit;
+        this.IsDisplayOnly = IsDisplayOnly;
+
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
 
@@ -70,7 +77,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     
     InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM: CertificateOfOriginPM) {
-        // SupplierInvoices for CertificateOriginInvoiceItems
+        // SupplierInvoices for CertificateOriginInvoiceItems:
+        this.entityPM.CertificateOriginInvoiceItems = [];
         this.currentDeclaration.SupplierInvoices.forEach((supplierInvoice) => {
             const mappedInvoice = new CertificateOfOriginInvoicePM(EntityPM);
             mappedInvoice.InvoicesIdUry = supplierInvoice.SequenceNumeric;
@@ -87,8 +95,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         });
 
-                
-        // Consignments for CertificateOriginItemItems
+        // Consignments for CertificateOriginItemItems:
+        this.entityPM.CertificateOriginItemItems = [];
         this.currentDeclaration.Consignments.forEach((consignment) => {
             const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
             
@@ -137,7 +145,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     SetPropertiesEnabled() {
-        var enabled = !this.IsDispalyOnly;
+        var enabled = !this.IsDisplayOnly;
         this.UIProperties.SetEnabled("CooTypeCode", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("RequestReasonCode", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("DateOfDeclaration", this.ObjectTableName, enabled);
@@ -157,6 +165,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("TradeAgreementCountry2", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("IsUnitedInvoices", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, enabled);
+        this.UIProperties.SetEnabled("IsInvoicesForPrint", "Customs.CertificateOriginInvoice", enabled);
+
     }   
     
     SetWarning() {
@@ -209,9 +219,26 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
        
     }
 
-    public get IsDispalyOnly() { 
-        return this.isDispalyOnlyStatusList.includes(Number(this.entityPM.CooStatusCode))
+    OnChanged($event,item) {  
+           
+        this.ErrorsList = [];
+        var prevIsInvoicesForPrint = item.IsInvoicesForPrint;
+        item.IsInvoicesForPrint = !item.IsInvoicesForPrint;
+             
+        var InvoicesForPrintList = this.CertificateOriginInvoiceItems.Collection.filter(x => x.IsInvoicesForPrint);
+
+        if(this.IsUnitedInvoices && InvoicesForPrintList.length < 2) {
+            this.IsUnitedInvoices = false;
+            this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.OneNotUnited')];
+        }
+        else if(this.IsUnitedInvoices && InvoicesForPrintList.find(x => x.CurrencyTypeCode != item.CurrencyTypeCode)) {
+            item.IsInvoicesForPrint =   prevIsInvoicesForPrint == false? null : false;
+            this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.DifferentNotUnited')];
+
+        }
+       
     }
+
 
     //#region  CertificateOfOriginInvoice properties
     public get InvoiceNumber(): string {
@@ -482,9 +509,26 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         return this.entityPM.IsUnitedInvoices;
     }
     public set IsUnitedInvoices(newValue: boolean) {
-        this.entityPM.IsUnitedInvoices = newValue;
-    }
+        this.ErrorsList = [];
 
+         if(newValue)
+            this.ValidateIsUnitedInvoices();
+
+         if(this.ErrorsList.length > 0)
+            this.entityPM.IsUnitedInvoices =   this.entityPM.IsUnitedInvoices == false? null : false;
+         else 
+            this.entityPM.IsUnitedInvoices = newValue;
+    }
+    ValidateIsUnitedInvoices() {
+         var InvoicesForPrintList = this.CertificateOriginInvoiceItems.Collection.filter(x=> x.IsInvoicesForPrint);
+      
+         if(InvoicesForPrintList.length < 2)
+           this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.OneNotUnited')];
+         else if(InvoicesForPrintList.find(x => x.CurrencyTypeCode != InvoicesForPrintList[0].CurrencyTypeCode))
+           this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.DifferentNotUnited')];
+
+
+    }
     public get CustomsHouse(): string {
         return this.entityPM.CustomsHouse;
     }

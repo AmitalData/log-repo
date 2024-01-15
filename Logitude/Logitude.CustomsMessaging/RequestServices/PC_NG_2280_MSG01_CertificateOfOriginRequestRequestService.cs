@@ -1,10 +1,12 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.AmitalMessaging.Infrastructure.FuStatus;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.RequestServices;
 using Logitude.Server.Tools;
+using Microsoft.Practices.ObjectBuilder2;
 using Simplog.Data.InfrastructureModel.Repositories;
 using System;
 using System.Collections.Generic;
@@ -42,9 +44,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 			};
 
-
 			myMsg.CertificateOfOrigin = GetCertificateOfOrigin(certificateOfOrigin);
-			myMsg.CertificateOfOrigin.CertificateOfOriginRequestInvoiceDetail = GetCertificateOfOriginRequestInvoiceDetail(certificateOfOrigin.CertificateOriginInvoiceItems,certificateOfOrigin.CertificateOriginItemItems);
+			myMsg.CertificateOfOrigin.CertificateOfOriginRequestInvoiceDetail = certificateOfOrigin.IsUnitedInvoices ? 
+				GetCertificateOfOriginRequestInvoiceDetailUnitedInvoices(certificateOfOrigin.CertificateOriginInvoiceItems, certificateOfOrigin.CertificateOriginItemItems) :
+				GetCertificateOfOriginRequestInvoiceDetail(certificateOfOrigin.CertificateOriginInvoiceItems, certificateOfOrigin.CertificateOriginItemItems);
+
 			myMsg.NonManipulationCertificate = new PC_NG_2280_MSG01_CertificateOfOriginRequestNonManipulationCertificate()
 			{
 				ExportDate = Convert.ToDateTime(certificateOfOrigin.NonExportDate),
@@ -128,7 +132,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			{
 				var CertificateOfOriginInvoiceDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail()
 				{
-                   InvoiceNum = item.InvoiceNumber,
+                    InvoiceNum = item.InvoiceNumber,
 					InvoiceDate =Convert.ToDateTime(item.InvoiceDate),
 					InvoiceSum = Convert.ToInt32(item.InvoiceSum),
 					CurrencyType = item.CurrencyTypeCode,
@@ -164,6 +168,59 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             return CertificateOfOriginInvoicesDetails.ToArray();
         }
+		public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail[] GetCertificateOfOriginRequestInvoiceDetailUnitedInvoices(List<CertificateOfOriginInvoicePM> CertificateOfOriginInvoices, List<CertificateOfOriginItemPM> CertificateOfOriginItems)
+		{
+			var CertificateOfOriginInvoicesDetails = new List<PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail>();
+			var CertificateOfOriginInvoiceDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail();
 
+			CertificateOfOriginInvoices = CertificateOfOriginInvoices.FindAll(x => x.IsInvoicesForPrint == true);
+			foreach (var item in CertificateOfOriginInvoices)
+			{
+				if (CertificateOfOriginInvoices.First() == item)
+				{
+					CertificateOfOriginInvoiceDetail.InvoiceNum = item.InvoiceNumber;
+					CertificateOfOriginInvoiceDetail.InvoiceDate = Convert.ToDateTime(item.InvoiceDate);
+					CertificateOfOriginInvoiceDetail.InvoiceSum = Convert.ToInt32(item.InvoiceSum);
+					CertificateOfOriginInvoiceDetail.CurrencyType = item.CurrencyTypeCode;
+					CertificateOfOriginInvoiceDetail.DescriptionOfInvoice = item.DescriptionOfInvoice;
+					CertificateOfOriginInvoiceDetail.IsInvoicesForPrint = item.IsInvoicesForPrint;
+
+				}
+				else
+				{
+					CertificateOfOriginInvoiceDetail.InvoiceNum += ("," + item.InvoiceNumber);
+					CertificateOfOriginInvoiceDetail.InvoiceSum += Convert.ToInt32(item.InvoiceSum);
+
+				}
+
+			}
+			foreach (var item1 in CertificateOfOriginItems)
+			{
+				var IsInvoiceConnect = CertificateOfOriginInvoices.Exists(x=> item1.InvoiceConnect.Split(',').Contains(x.InvoicesIdUry.ToString()));
+
+				if (CertificateOfOriginItems.Count() == 1 || string.IsNullOrEmpty(item1.InvoiceConnect) || IsInvoiceConnect)
+				{
+					var CertificateOfOriginRequestItemDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetailCertificateOfOriginRequestItemDetail()
+					{
+						ItemSerial = Convert.ToInt32(item1.ItemSerial),
+						ItemId = item1.ItemId,
+						OriginCriterion = item1.OriginCriterionCode,
+						MarksAndNumbers = item1.MarksAndNumbers,
+						PackageQuantity = Convert.ToInt32(item1.PackageQuantity),
+						PackageType = item1.PackageType,
+						ContainerISOCode = item1.ContainerIsoCode,
+						ItemDescription = item1.ItemDescription,
+						Weight = Convert.ToDecimal(item1.Weight),
+						MeasureType = item1.MeasureType,
+
+					};
+
+					CertificateOfOriginInvoiceDetail.CertificateOfOriginRequestItemDetail.Append(CertificateOfOriginRequestItemDetail);
+				}
+			}
+			CertificateOfOriginInvoicesDetails.Add(CertificateOfOriginInvoiceDetail);
+
+			return CertificateOfOriginInvoicesDetails.ToArray();
+		}
 	}
 }
