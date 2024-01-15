@@ -22,6 +22,7 @@ import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTransla
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 import { ThresholdTypes } from 'InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent';
 import { HostScreenService } from 'Common/Components/HostScreen/HostScreenService';
+import { CustomsCloudComponentArgs } from 'InfrastructureModules/InfrastructureOthers/Components/CustomsCloud/CustomsCloudComponent';
 
 @Component({
     
@@ -35,6 +36,7 @@ export class MaintenanceComponent {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     private textCodeTranslationPipe: TextCodeTranslationPipe;
+    private readonly invoiceConfirmationNumber = "InvoiceConfirmationNumber";
 
     public EntityStatusToggle: boolean = false;
     constructor() {
@@ -75,7 +77,7 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
          
-        if (FeatureLocator.HasFeaturePermession("General", "SHAAMTOKEN"))
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber))
             this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
         
         if (SessionLocator.Tenant == 0) {
@@ -227,6 +229,14 @@ export class MaintenanceComponent {
     }
 
     private BuildSystemSettings() {
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) {
+            var item2 = new MenusTablePM();
+            item2.CategoryTypeCode = "CMS";
+            item2.Icon = "Settings"
+            item2.Code = "CUSC";
+            item2.ObjectTableName = "Customs Cloud";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item2));
+        }
 
         if (FeatureLocator.HasFeaturePermession("General", "TERMOFUSERFEATUE")) {
             var item2 = new MenusTablePM();
@@ -907,7 +917,7 @@ export class MaintenanceComponent {
     }
      
     private BuildShaamTokenManagementMenu() {
-        if (FeatureLocator.HasFeaturePermession("General", "SHAAMTOKEN")) {
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) {
             var item = new MenusTablePM();
             item.CategoryTypeCode = "SHA";
             item.Icon = "List"
@@ -955,6 +965,17 @@ export class MaintenanceComponent {
                 
                 case "SHAAM_TOKEN": {                        
                     HostScreenService.open(TextCodeTranslator.Translate('General.MC.TokenManagement'),'CreateNewShaamToken');                        
+                    break;
+                }
+
+                case "CUSC": {
+                    const logWindow: LogitudeWindow = new LogitudeWindow();
+                    logWindow.Width = 500;
+                    logWindow.Height = 300;
+                    logWindow.Title = "Customs Cloud";
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.WindowArgs = { windowInstance: logWindow } as CustomsCloudComponentArgs;
+                    logWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CustomsCloud/CustomsCloudComponent');
                     break;
                 }
 
