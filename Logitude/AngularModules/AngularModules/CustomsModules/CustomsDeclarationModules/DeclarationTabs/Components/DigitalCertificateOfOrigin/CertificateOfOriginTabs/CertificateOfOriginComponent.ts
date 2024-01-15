@@ -249,8 +249,6 @@ export class CertificateOfOriginComponent extends BaseComponent {
             this.CurrentSession.CloseCurrentWindow();
             this.certificateOfOriginPMService.insert(this.EntityPM).subscribe((response: any) => {
                 var result = response.Result;
-                debugger
-                
             });
         }
         
@@ -288,15 +286,6 @@ export class CertificateOfOriginComponent extends BaseComponent {
     IsSendDocumentEnabled:boolean = true;
    
   
-
-
-  
-    // ShowClientIndication() {
-       
-    //     if (this.CurrentEntity.ClientIndications == null || this.CurrentEntity.ClientIndications.length == 0) {
-    //         return;
-    //     }
-
     SendButtonClicked(customSendOptionsArgs:any){
         debugger
 
