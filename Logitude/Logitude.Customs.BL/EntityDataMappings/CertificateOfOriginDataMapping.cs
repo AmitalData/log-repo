@@ -10,6 +10,8 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.CommonDataModel.EntityPMs;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -28,7 +30,12 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(CertificateOfOriginPM entityPM, CertificateOfOrigin entityPOCO)
         {
-            //throw new NotImplementedException();
+            UserQueryService UserQueryServiceRepository = new UserQueryService(entityPOCO.Tenant);
+            User User = UserQueryServiceRepository.GetUserById(entityPM.OpenByUser, entityPOCO.Tenant);
+            if(User != null)
+            {
+                entityPM.OpenByUserName = User.Code;
+            }
         }
    }
 

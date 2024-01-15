@@ -72,11 +72,11 @@
                                     (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
                                     <log-column
                                         [header]="'Customs.SupplierInvoice.F.SequenceNumeric' | TextCodeTranslationPipe"
-                                        [binding]="'SequenceNumeric'" [width]="'35'" [Alignment]="'left'">
+                                        [binding]="'index'" [width]="'35'" [Alignment]="'left'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
-                                                    <span>{{item.SequenceNumeric}}</span>
+                                                    <span>{{item.index}}</span>
                                                 </div>
 
                                             </log-cell-template>
@@ -171,25 +171,22 @@
                                         [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <span class="CellSeparator" style="float: right;"></span>
-                                                <div style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
-                                                    <!-- <button>סטטוס תעודה</button> -->
-
+                                                <!-- <span class="CellSeparator" style="float: right;"></span> -->
+                                                <div style="width: 114px;float: right; height:20px; padding-top: 2px; display:block">
                                                     <button [disabled]="false" class="Button"  (click)="SendMsgCooStatusCode()" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
                                                         {{'Customs.CertificateOfOrigin.O.CooStatusCode'| TextCodeTranslationPipe}}           
-                                                    </button>
-                                                   
+                                                    </button>                                                   
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>
+                                    
                                     <log-column [width]="'120'" [Editable]="true" [Alignment]="'right'"
                                         [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <span class="CellSeparator" style="float: right;"></span>
-                                                <div style="width: 22px; float: right; height:20px; padding-top: 2px; display:block">
-                                                    <!-- <button>העתקת תעודה</button> -->
+                                                <!-- <span class="CellSeparator" style="float: right;"></span> -->
+                                                <div style="width: 114px;float: right; height:20px; padding-top: 2px; display:block">
                                                     <button [disabled]="false" class="Button"  (click)="CopyOfCertificate()" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
                                                         {{'Customs.CertificateOfOrigin.O.CopyOfCertificate'| TextCodeTranslationPipe}}           
                                                     </button>
@@ -202,19 +199,14 @@
                                         [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <span class="CellSeparator" style="float: right;"></span>
-
-                                                <div
-                                                    style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
-                                                    <IconButton [Name]="'Delete'" [IsSmall]="true"
-                                                        (click)="DeleteButtonClicked(item)"
-                                                        [IsEnabled]="!IsDisplayOnly"></IconButton>
-                                                </div>
-                                                <div
-                                                    style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
-                                                    <img class="PDFIcon" src="./Images/SimplogIcons/File-pdf-48.png"/>
-
-                                                </div>
+                                                    <div style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
+                                                        <IconButton [Name]="'Delete'" [IsSmall]="true"
+                                                            (click)="DeleteButtonClicked(item)"
+                                                            [IsEnabled]="!IsDisplayOnly"></IconButton>
+                                                    </div>                                                    
+                                                    <div style="width: 22px; float: right; height:20px; padding-top: 2px;display:block">
+                                                        <img style="width: 18px; display: flex" class="PDFIcon" src="./Images/SimplogIcons/File-pdf-48.png"/>
+                                                    </div>
                                             </log-cell-template>
                                         </ng-template>
                                     </log-column>

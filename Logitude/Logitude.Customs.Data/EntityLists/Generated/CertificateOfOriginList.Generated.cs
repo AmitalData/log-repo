@@ -156,6 +156,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string OpenByUser  { get; set; }
        [DataMember]
        public bool IsSubmitted  { get; set; }
+       [DataMember]
+       public string OpenByUserName  { get; set; }
    }
 
 }

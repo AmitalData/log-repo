@@ -92,7 +92,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
         this.EntityPM = args.CertificateOfOrigin;
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
-       
+        debugger
         
         this.BuildTabs();
         this.RunComponent();
@@ -240,6 +240,8 @@ export class CertificateOfOriginComponent extends BaseComponent {
 
         console.log(this.EntityPM);
         debugger
+        
+        this.EntityPM.IsUnitedInvoices ?  this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
         
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
         

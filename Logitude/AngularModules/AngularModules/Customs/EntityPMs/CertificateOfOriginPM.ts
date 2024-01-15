@@ -449,7 +449,12 @@ export class CertificateOfOriginPM {
         }
     }
     //public CertificateOriginItemItems: Array<CertificateOfOriginItemPM>= [];
- 
+     private openByUserName: string;
+    public get OpenByUserName() { return this.openByUserName; }
+    public set OpenByUserName(newValue: string) { if (this.openByUserName != newValue) { this.openByUserName = newValue; this.MarkAsDirty("OpenByUserName"); } }
+       
+	 
+
     public OldEntityPM: CertificateOfOriginPM;
 		
     public IsDirty: boolean;

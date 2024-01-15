@@ -79,6 +79,7 @@ export class CertificateOfOriginList {
 	CoodPdf1: string;
 	OpenByUser: string;
 	IsSubmitted: boolean;
+	OpenByUserName: string;
 	
 }
  

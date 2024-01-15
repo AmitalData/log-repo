@@ -56,8 +56,21 @@ using System.Xml;
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
     public partial class CertificateOfOriginUpdateService
-	{     
-       
+	{
+
+        protected override void OnCreating(CertificateOfOriginPM entityPM, EntityPM entityParentPM)
+        {
+
+            // update user data:
+            ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+            Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+            entityPM.OpenByUser = contact.Id;
+            //update counter:
+            entityPM.Counter = CodeCounter.GetNumber("Counter", entityPM.Tenant).ToString();
+
+        }
+
         protected override void UpdateComposition(CertificateOfOriginPM entityPM)
         {
 			CertificateOfOriginInvoiceUpdateService consignmentUpdateService = new CertificateOfOriginInvoiceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);

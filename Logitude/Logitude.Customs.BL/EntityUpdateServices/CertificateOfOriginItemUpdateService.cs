@@ -12,12 +12,11 @@ using Simplog.Server.Infrastructure;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
-    public partial class CertificateOfOriginInvoiceUpdateService
+    public partial class CertificateOfOriginItemUpdateService
 	{
-        protected override void OnCreating(CertificateOfOriginInvoicePM entityPM, CertificateOfOriginPM entityParentPM)
+        protected override void OnCreating(CertificateOfOriginItemPM entityPM, CertificateOfOriginPM entityParentPM)
         {
             entityPM.CertificateOfOriginId = entityParentPM.Id;
-            entityPM.Tenant = entityParentPM.Tenant;
         }
  
     }

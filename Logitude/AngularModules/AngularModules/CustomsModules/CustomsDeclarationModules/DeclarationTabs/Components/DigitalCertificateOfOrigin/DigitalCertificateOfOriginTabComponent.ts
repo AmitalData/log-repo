@@ -24,6 +24,8 @@ import { Guid } from '../../../../../Infrastructure/Utilities/Guid';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { CertificateOfOriginPMService } from 'Customs/Services/StandardPMs/CertificateOfOriginPMService';
 import { CertificateOfOriginPM } from 'Customs/EntityPMs/CertificateOfOriginPM';
+import { CertificateOfOriginListService } from 'Customs/Services/StandardLists/CertificateOfOriginListService';
+
 declare var attachmentUploader, ResultAsArray: any;
 
 @Component({
@@ -45,6 +47,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     public UploadFileId: string = Guid.NewRandomString();
     filterImageParameter: ImageParameter;
     certificateOfOriginPMService: CertificateOfOriginPMService;
+    certificateOfOriginListService: CertificateOfOriginListService = new CertificateOfOriginListService();
 
 
     public ItemsSource: ObservableCollection;
@@ -174,19 +177,26 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     AddNewCertificateOfOrigin(isNewOrEditCertificateOfOrigin:StatusCertificateOfOrigin) {
         debugger
 
+
+        // initilize new certificate:
+        const newCertificateOfOriginPM = new CertificateOfOriginPM();
+        newCertificateOfOriginPM.DeclarationId = this.EntityPM.Id;
+        newCertificateOfOriginPM.Tenant = this.EntityPM.Tenant;
+        
+
         //TODO: add new CertificateOfOrigin
         // on click item get one CertificateOfOrigin
         var args: any = {
             Decalaration: this.EntityPM,
-            CertificateOfOrigin: !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin) ? this.selectedCertificateOfOrigin : new CertificateOfOriginPM(),
+            // CertificateOfOrigin: !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin) ? this.selectedCertificateOfOrigin : newCertificateOfOriginPM,
+            CertificateOfOrigin:  isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsNew ? newCertificateOfOriginPM : this.selectedCertificateOfOrigin,
             IsNewOrEdit : isNewOrEditCertificateOfOrigin
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1030;
         logWindow.Height = 700;
-        logWindow.Title =  !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.CooTypeCode) ? TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin") + ": " + this.selectedCertificateOfOrigin.CooTypeCode : TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
         // TODO: ADD to left side title
-        // logWindow.TitleStatus =  !AppTool.IsNullOrEmpty( this.selectedCertificateOfOrigin.CooStatusCode) ? TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode") + ": " + this.selectedCertificateOfOrigin.CooStatusCode : TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode");
+        logWindow.Title =  !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.CooTypeCode) ? TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin") + ": " + this.selectedCertificateOfOrigin.CooTypeCode : TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
         
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
@@ -212,30 +222,34 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
       
         const filters = new ApiQueryFilters();    
       
+
+        filters.PageSize = 200;
+        filters.PageIndex = 0;
         filters.GetAll = false;
         filters.GetCount = true;
-        filters.SortBy = "SequenceNumeric";
-        filters.SortDirection = "Ascending";
-        filters.addAdditionalFilter("DeclarationId", this.EntityPM.Id , null, null, "Equals", false, false, false, "string");
-        filters.addAdditionalFilter("Tenant", this.EntityPM.Tenant , null, null, "Equals", false, false, false, "string");
-   
-        this._entityListService.getByFilters("Customs.CertificateOfOrigin", filters).then((myResult:any) => {
-            console.log("Response: ", myResult);
+
+        filters.addAdditionalFilter("DeclarationId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string", false);
+        filters.addAdditionalFilter("Tenant", this.EntityPM.Tenant, null, null, "Equals", true, false, false, "string");
+
+        this.certificateOfOriginListService.getByFilters(filters).subscribe(myResult => {   
             if (myResult == null) {
                 this.CertificateOfOrigins =  [];
             }
-
             else {
                 var myResponse: ServiceResponse = myResult;
                 if (!myResponse.HasError && myResponse.Result) {
-                    this.ItemsSource = myResponse.Result;
-                    this.CertificateOfOrigins =  myResponse.Result;        
-                    this.ItemsSource.InsertCollection(this.CertificateOfOrigins, true);
+
+                    this.CertificateOfOrigins =  myResponse.Result;       
+                    this.ItemsSource.Clear();    
+                    
+                    this.CertificateOfOrigins.forEach(certificateOfOrigin=>{
+                        this.ItemsSource.Insert(certificateOfOrigin , true);
+                    })
                 }
             }
+           
         });
-
-
+  
         //Select last selected row, or first
         if (this.SelectedRowB4Refresh) {
 
