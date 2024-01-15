@@ -109,7 +109,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             foreach(var customsItem in customsItems)
             {
                 propertiesDetailsHistory = propertiesDetailsHistoryQueryService.GetPropertiesDetailsHistoryByCustomsItemId(customsItem.ID, getFromCache);
-                if(propertiesDetailsHistory != null && propertiesDetailsHistory.StartDate < DateTime.Now && propertiesDetailsHistory.EndDate > DateTime.Now)
+                if(propertiesDetailsHistory != null && propertiesDetailsHistory.StartDate < DateTime.Now && propertiesDetailsHistory.EndDate > DateTime.Now && propertiesDetailsHistory.MeasurementUnitID!=null)
                 {
                     break;
                 }
