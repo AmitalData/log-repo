@@ -106,7 +106,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         currentDBListCustomsItemRow = dbListCustomsItemRows.FirstOrDefault(rec => rec.ID == mehesCustomsItemRow.ID.ToString());
                         currentDBListCustomsItemDetailsHistoryRow = dbListCustomsItemDetailsHistoryRows.Where(rec => rec.CustomsItemID == mehesCustomsItemRow.ID.ToString() && rec.EntityStatusID!=4).OrderByDescending (rec => rec.EndDate).FirstOrDefault();
-                        currentDBListPropertiesDetailsHistoryRow= dbListPropertiesDetailsHistoryRows.Where(rec=>rec.CustomsItemID==mehesCustomsItemRow.ID.ToString() && rec.EntityStatusID != 4).OrderByDescending(rec=>rec.EndDate).FirstOrDefault();
+                        currentDBListPropertiesDetailsHistoryRow= dbListPropertiesDetailsHistoryRows.Where(rec=>rec.CustomsItemID==mehesCustomsItemRow.ID.ToString() && rec.EntityStatusID != 4).OrderByDescending(rec=>rec.StartDate).FirstOrDefault();
                         if (currentDBListCustomsItemRow == null)
                         {
                             currentDBListCustomsItemRow = new CustomsItemPM();

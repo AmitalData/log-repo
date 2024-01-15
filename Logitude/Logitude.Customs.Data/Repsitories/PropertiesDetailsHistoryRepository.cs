@@ -58,7 +58,7 @@ namespace Logitude.Customs.Data.Repsitories
                     {
                         return null;
                     }
-                    var ValidRows = list.Where(r => r.StartDate <= toDay && r.EndDate > toDay);
+                    var ValidRows = list.Where(r => r.StartDate <= toDay && r.EndDate > toDay && r.MeasurementUnitID!=null);
                     PropertiesDetailsHistory latestRow;
                     if (ValidRows != null)
                     {
