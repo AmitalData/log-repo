@@ -99,21 +99,21 @@
   <Column
     Name="ExporterCountry"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="TradeAgreementCountry1"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="TradeAgreementCountry2"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -141,7 +141,7 @@
   <Column
     Name="ConsigneeCountry"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -161,7 +161,7 @@
   <Column
     Name="OriginCountry"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -175,7 +175,7 @@
   <Column
     Name="DestinationCountry"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -209,7 +209,7 @@
   <Column
     Name="CumulationCountry"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -263,7 +263,7 @@
   <Column
     Name="IssuingCountry"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -277,7 +277,7 @@
   <Column
     Name="CountryOfDeclaration"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -327,7 +327,7 @@
   <Column
     Name="NonExportCountry"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>
@@ -361,7 +361,7 @@
   <Column
     Name="NonTransirCountry"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>

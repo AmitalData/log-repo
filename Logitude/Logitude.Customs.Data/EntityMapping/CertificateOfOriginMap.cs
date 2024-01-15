@@ -49,11 +49,11 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ExporterAddress).HasColumnName("ExporterAddress").HasMaxLength(256).IsUnicode(true);
 
-            this.Property(t => t.ExporterCountry).HasColumnName("ExporterCountry").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ExporterCountry).HasColumnName("ExporterCountry").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.TradeAgreementCountry1).HasColumnName("TradeAgreementCountry1").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.TradeAgreementCountry1).HasColumnName("TradeAgreementCountry1").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.TradeAgreementCountry2).HasColumnName("TradeAgreementCountry2").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.TradeAgreementCountry2).HasColumnName("TradeAgreementCountry2").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.TradeAgreementGroupOfCountries).HasColumnName("TradeAgreementGroupOfCountries").HasMaxLength(2).IsUnicode(false);
 
@@ -61,17 +61,17 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ConsigneeAddress).HasColumnName("ConsigneeAddress").HasMaxLength(256).IsUnicode(true);
 
-            this.Property(t => t.ConsigneeCountry).HasColumnName("ConsigneeCountry").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConsigneeCountry).HasColumnName("ConsigneeCountry").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.ConsigneeRemarks).HasColumnName("ConsigneeRemarks").HasMaxLength(256).IsUnicode(true);
 
             this.Property(t => t.IsConsigneeForPrint).HasColumnName("IsConsigneeForPrint");
 
-            this.Property(t => t.OriginCountry).HasColumnName("OriginCountry").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.OriginCountry).HasColumnName("OriginCountry").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.OriginGroupOfCountry).HasColumnName("OriginGroupOfCountry").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.DestinationCountry).HasColumnName("DestinationCountry").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.DestinationCountry).HasColumnName("DestinationCountry").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.DestinationGroupOfCountries).HasColumnName("DestinationGroupOfCountries").HasMaxLength(2).IsUnicode(false);
 
@@ -81,7 +81,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.IsCumulation).HasColumnName("IsCumulation");
 
-            this.Property(t => t.CumulationCountry).HasColumnName("CumulationCountry").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CumulationCountry).HasColumnName("CumulationCountry").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.CumulationGroupOfCountries).HasColumnName("CumulationGroupOfCountries").HasMaxLength(2).IsUnicode(false);
 
@@ -97,11 +97,11 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CustomsHouse).HasColumnName("CustomsHouse").HasMaxLength(17).IsUnicode(false);
 
-            this.Property(t => t.IssuingCountry).HasColumnName("IssuingCountry").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.IssuingCountry).HasColumnName("IssuingCountry").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.CityOfDeclaration).HasColumnName("CityOfDeclaration").HasMaxLength(5).IsUnicode(false);
 
-            this.Property(t => t.CountryOfDeclaration).HasColumnName("CountryOfDeclaration").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CountryOfDeclaration).HasColumnName("CountryOfDeclaration").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.DateOfDeclaration).HasColumnName("DateOfDeclaration");
 
@@ -117,7 +117,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.NonExportDate).HasColumnName("NonExportDate");
 
-            this.Property(t => t.NonExportCountry).HasColumnName("NonExportCountry").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.NonExportCountry).HasColumnName("NonExportCountry").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.NonImportBillOfLadingNum).HasColumnName("NonImportBillOfLadingNum").HasMaxLength(35).IsUnicode(true);
 
@@ -127,7 +127,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.NonExportBillOfLadingNum).HasColumnName("NonExportBillOfLadingNum").HasMaxLength(35).IsUnicode(true);
 
-            this.Property(t => t.NonTransirCountry).HasColumnName("NonTransirCountry").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.NonTransirCountry).HasColumnName("NonTransirCountry").HasMaxLength(2).IsUnicode(false);
 
             this.Property(t => t.NonPortOfEntrance).HasColumnName("NonPortOfEntrance").HasMaxLength(17).IsUnicode(false);
 
