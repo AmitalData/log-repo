@@ -185,6 +185,8 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.CargoTrackingPrivateShowEvents = entityPM.CargoTrackingPrivateShowEvents;
             entityPOCO.LogoURL = entityPM.LogoURL;
             entityPOCO.ServiceAgreementURL = entityPM.ServiceAgreementURL;
+            entityPOCO.ExportTenant = entityPM.ExportTenant;
+            entityPOCO.ExportLoginCredintial = entityPM.ExportLoginCredintial;
 
             string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())

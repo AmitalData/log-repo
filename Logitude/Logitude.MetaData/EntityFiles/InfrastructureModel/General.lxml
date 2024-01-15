@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;f336&quot;"
+  Code="&quot;3e76&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5875,19 +5875,19 @@
     <TextCode
       Code="&quot;General.MC.TokenManagement&quot;"
       DefaultText="&quot;Token Management&quot;"
-      LocalDefaultText="&quot;ניהול טוקנים&quot;"
+      LocalDefaultText="&quot;&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.MC.Logs&quot;"
       DefaultText="&quot;Logs&quot;"
-      LocalDefaultText="&quot;לוגים&quot;"
+      LocalDefaultText="&quot;&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.MC.ShaamTokenManagement&quot;"
       DefaultText="&quot;SHAAM Token Management&quot;"
-      LocalDefaultText="&quot;שעם ניהול טוקנים&quot;"
+      LocalDefaultText="&quot;&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
@@ -8270,7 +8270,7 @@
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />
     <Feature
-      Code="&quot;SHAAMTOKEN&quot;"
+      Code="&quot;invoiceConfirmationNumber&quot;"
       FeatureTypeCode="&quot;MENU&quot;"
       FeatureTextCodeCode="&quot;General.Features.SHAAMTOKEN&quot;"
       FeatureDefaultText="&quot;SHAAM Token &quot;"

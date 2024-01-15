@@ -13,4 +13,15 @@ export class TaxesWebService {
     getTokens(): Promise<string> {
         return this.http.get(this.apiUrl + '/getlinkLogin', { headers: this.headers }).toPromise() as Promise<string>;
     }
+
+    getCloudSettings(): Promise<any> {
+        return this.http.get(this.apiUrl + '/cloudSettings', { headers: this.headers }).toPromise() as Promise<any>;
+    }
+
+    putCloudSettings(exportTenant: string, exportLoginCredential: string): Promise<any> {
+        return this.http.put(
+            this.apiUrl + '/UpdateSettings',
+            { exportTenant, exportLoginCredential },
+            { headers: this.headers }).toPromise();
+    }
 }

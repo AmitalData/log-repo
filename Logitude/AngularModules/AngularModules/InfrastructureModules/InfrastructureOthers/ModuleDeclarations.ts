@@ -29,6 +29,7 @@ import { NewImageLibraryComponent } from './Components/ImageLibrary/NewImageLibr
 import { ImageLibraryGeneralTabComponent } from './Components/ImageLibrary/ImageLibraryGeneralTabComponent';
 import { VizionAutomaticRequestComponent } from './Components/Vizion/VizionAutomaticRequestComponent';
 import { TermsofUseComponent } from './Components/TermsOfUse/TermsofUseComponent';
+import { CustomsCloudComponent } from './Components/CustomsCloud/CustomsCloudComponent';
 
 export const Components =
     [
@@ -62,7 +63,8 @@ export const Components =
         NewImageLibraryComponent,
         ImageLibraryGeneralTabComponent,
         VizionAutomaticRequestComponent,
-        TermsofUseComponent
+        TermsofUseComponent,
+        CustomsCloudComponent,
     ];
 
 export class ModuleDeclarations {
@@ -102,6 +104,7 @@ export class ModuleDeclarations {
             case "ImageLibraryGeneralTabComponent": { myResult = ImageLibraryGeneralTabComponent; break; }
             case "VizionAutomaticRequestComponent": { myResult = VizionAutomaticRequestComponent; break; }
             case "TermsofUseComponent": { myResult = TermsofUseComponent; break; }
+            case "CustomsCloudComponent": { myResult = CustomsCloudComponent; break; }
         }
 
         return myResult;
