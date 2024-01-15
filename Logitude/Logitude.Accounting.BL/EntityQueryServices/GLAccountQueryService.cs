@@ -131,15 +131,28 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         }
         public IQueryable<string> GetQGLAccIdBySalesmanId(int tenant, string SalesmanId, string AccountTypeCode)
         {
-            var q = (
-                from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
-                join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
-                on a.Id equals card.GLAccountId
-                join cust in (this.context as AccountingContext).Customers
-                .Where(r => r.SalesmanUserId == SalesmanId && r.Tenant == tenant)
-                on card.Id equals cust.Id
-                select a.Id);
-            return q;
+            IQueryable<string> q = (
+               from a in this.repository.GetQAllByAccountTypeCode(tenant, AccountTypeCode)
+               join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
+               on a.Id equals card.GLAccountId
+
+               join cust in (this.context as AccountingContext).Customers
+               .Where(r => r.SalesmanUserId == SalesmanId && r.Tenant == tenant)
+               on card.Id equals cust.Id
+
+               select a.Id);
+
+            IQueryable<string> qChild = (from b in q
+                                         join glaccountChild in this.context.GLAccountCurrencies.Where(r => r.Tenant == tenant)
+                                         on b equals glaccountChild.MainGLAccountId
+                                         select glaccountChild.GLAccountId);
+
+            IQueryable<string> combinedQuery = q.Concat(qChild);
+
+
+
+
+            return combinedQuery;
         }
         public bool CheckIfDisplayNumberExists(string displayNo, string internalNumber, int tenant)
         {
