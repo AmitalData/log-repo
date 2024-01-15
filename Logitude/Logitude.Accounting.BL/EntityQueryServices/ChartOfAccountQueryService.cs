@@ -38,7 +38,10 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }
             // filter by id from table chartofaccounts #192454 (#195781)
             // chartOfAccounts ids list are selected from filter in UI.
-            qBase = qBase.Where(i => chartOfAccounts.Any(item => item == i.Id));
+            if(chartOfAccounts != null)
+            {
+                qBase = qBase.Where(i => chartOfAccounts.Any(item => item == i.Id));
+            }
 
             var qL1 = qBase
             .Where(chartOA => chartOA.ParentId == null)
