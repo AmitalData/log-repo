@@ -150,7 +150,12 @@ export class ARPaymentMenuButtonsHandler {
 
                             break;
                         }
-
+                        case "VoidARPaymentOperationsSeparator":{
+                            if (SessionLocator.TenantPM.AccountingActivated == true) {
+                                button.IsHidden =true;
+                                break;
+                            }
+                        }
                         case "VoidARPayemnt": {
                             if (SessionLocator.TenantPM.AccountingActivated) {
                                 if (this.EntityPM.StatusCode == "AD") {
