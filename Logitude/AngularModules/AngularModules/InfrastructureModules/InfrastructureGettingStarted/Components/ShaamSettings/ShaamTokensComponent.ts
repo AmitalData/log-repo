@@ -126,7 +126,7 @@ export class ShaamTokensComponent extends BaseComponent {
                 "",
                 'OpenNewBrowser',
                 AmitalGatewayUtil.Instance.GetDefaultUnifreightMessageM(),
-                this.linkToCodeForToken,
+                '"' + this.linkToCodeForToken + '"',
                 false);
         }
     }
