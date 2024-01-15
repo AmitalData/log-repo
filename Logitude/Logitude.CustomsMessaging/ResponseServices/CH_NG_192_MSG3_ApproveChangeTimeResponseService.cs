@@ -95,6 +95,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (requestParams.IsAngularClient)
                 {
                     customCheckData.Succeeded = true;
+                    customCheckData.UserMessage = "נשלח בהצלחה";
                 }
 
             }

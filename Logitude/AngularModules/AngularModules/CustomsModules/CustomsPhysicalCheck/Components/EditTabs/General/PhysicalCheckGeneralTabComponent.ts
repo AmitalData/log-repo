@@ -253,7 +253,7 @@ export class PhysicalCheckGeneralTabComponent
     }
 
     checkEarlierDateFeature() {
-        return FeatureLocator.HasFeaturePermession("PhysicalCheck", "EarlierDateFeature");
+        return FeatureLocator.HasFeaturePermession("Customs.PhysicalCheck", "EarlierDateFeature");
     }
 
     SetEarlierDateFieldsEnable(enable: boolean) {
