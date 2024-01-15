@@ -119,7 +119,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
         this.addTapagEnabled = newValue;
     }
     public get IsDisplayOnly() {
-        return this.isDispalyOnlyStatusList.includes(Number(this.CurrentEntity?.CooStatusCode))
+        return this.isDispalyOnlyStatusList.includes(Number(this.EntityPM?.CooStatusCode))
     }
     BuildTabs() {
         this.TabsItemsSource = [];

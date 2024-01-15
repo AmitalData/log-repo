@@ -308,7 +308,7 @@
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                 [ItemSource]="CertificateOriginItemItems" >
                                 <log-column [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
-                                    [binding]="'InvoicesIdUry'" [width]="'35'" [Alignment]="'left'">
+                                    [binding]="'ItemSerial'" [width]="'35'" [Alignment]="'left'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
                                             <div style="text-align:right">

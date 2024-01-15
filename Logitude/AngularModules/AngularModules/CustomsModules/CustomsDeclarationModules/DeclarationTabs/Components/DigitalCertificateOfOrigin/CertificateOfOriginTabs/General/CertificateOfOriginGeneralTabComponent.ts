@@ -34,7 +34,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public currentCard:CardPM;
     public CertificateOriginInvoiceItems : ObservableCollection // type <CertificateOfOriginInvoicePM[]>;
     public CertificateOriginItemItems : ObservableCollection // type <CertificateOfOriginItemPM[]>;
-    IsNewOrEdit: StatusCertificateOfOrigin;
+    public IsNewOrEdit: StatusCertificateOfOrigin;
+    public IsDisplayMode:boolean = true;
+    public IsEditMode:boolean = true;
+    
     controlEnabled: boolean;
     IsDisplayOnly: boolean = false;
     public ErrorsList: string[];
@@ -74,7 +77,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     
     InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM: CertificateOfOriginPM) {
-        // SupplierInvoices for CertificateOriginInvoiceItems
+        // SupplierInvoices for CertificateOriginInvoiceItems:
+        this.entityPM.CertificateOriginInvoiceItems = [];
         this.currentDeclaration.SupplierInvoices.forEach((supplierInvoice) => {
             const mappedInvoice = new CertificateOfOriginInvoicePM(EntityPM);
             mappedInvoice.InvoicesIdUry = supplierInvoice.SequenceNumeric;
@@ -91,8 +95,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         });
 
-                
-        // Consignments for CertificateOriginItemItems
+        // Consignments for CertificateOriginItemItems:
+        this.entityPM.CertificateOriginItemItems = [];
         this.currentDeclaration.Consignments.forEach((consignment) => {
             const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
             
