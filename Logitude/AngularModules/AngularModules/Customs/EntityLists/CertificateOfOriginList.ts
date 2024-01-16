@@ -82,6 +82,7 @@ export class CertificateOfOriginList {
 	OpenByUserName: string;
 	CooTypeCodeName: string;
 	RequestReasonCodeName: string;
+	CooStatusCodeName: string;
 	
 }
  

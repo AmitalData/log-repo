@@ -171,6 +171,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
                                               RequestReasonCodeName = a.RequestReasonCodeEnum.LocalName,
 
+											  CooStatusCodeName = a.CertificateOfOriginStatusCodeEnum.LocalName,
+
                                               IsSubmitted = a.IsSubmitted,
 					
 		                    	            });
