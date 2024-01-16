@@ -41,7 +41,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ReplacementReason).HasColumnName("ReplacementReason").HasMaxLength(128).IsUnicode(true);
 
-            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.DeclarationId).HasColumnName("DeclarationId").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ExporterVat).HasColumnName("ExporterVat").HasMaxLength(9).IsUnicode(true);
 
