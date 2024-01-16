@@ -535,14 +535,16 @@ export class HomeComponent implements OnDestroy{
 
                                 AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
                                 this.ProductMessage();
+                                this.afterLogin();
                             });
                         }
                     }
                     else {
                         this.ShowExportDeclaration();
-
+                        
                         AmitalGatewayUtil.Instance.NoteUnifreightIamReady();
                         this.ProductMessage();
+                        this.afterLogin();
                     }
                 }, 500);
         }
@@ -602,6 +604,17 @@ export class HomeComponent implements OnDestroy{
 
         }
     }
+
+    afterLogin() {
+        // this.runLogitudeCommand();
+    }
+
+    runLogitudeCommand(){
+        const logitudeCommandId: string = new URLSearchParams(window.location.search).get('logitudeCommandId');
+        if(logitudeCommandId)
+            this.UnifaceRequest({ detail: { LogitudeCommandId: logitudeCommandId }});        
+    }
+
     public get IsAmitalBackButtonDisable() {
 
         if (AppTool.IsNullOrEmpty(AmitalGatewayUtil))
@@ -622,6 +635,13 @@ export class HomeComponent implements OnDestroy{
         }
         AmitalGatewayUtil.Instance.AmitalBackButtonClicked();
     }
+
+    @HostListener('window:message', ['$event'])
+    onMessage(event) {
+        if(event.data.isFromIframe)
+            this.UnifaceRequest(event.data);
+    }
+
     @HostListener('window:UnifaceRequestEvent', ['$event'])
     UnifaceRequest(event) {
         let myParam = event.detail;

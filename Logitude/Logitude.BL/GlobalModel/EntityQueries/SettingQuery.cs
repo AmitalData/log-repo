@@ -4,11 +4,18 @@ using System.Linq;
 using System.Web;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Logitude.BL.GlobalModel.EntityPMs;
+using System.Text;
+using System.Security.Claims;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using Logitude.Customs.BL.BL;
 
 namespace Logitude.BL.GlobalModel.EntityQueries
 {
     public class SettingQuery
     {
+        IDictionary<string, object> cache = new Dictionary<string, object>();
+
         SettingRepository repository;
 
         public SettingQuery()
@@ -102,6 +109,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                           DocumentFilingEmailDomain = a.DocumentFilingEmailDomain,
                           System2RedirectFraction = a.System2RedirectFraction,
                           ReportsRunUsingWR = a.ReportsRunUsingWR,
+                          AmitalTaxesUrl = a.AmitalTaxesUrl,
+                          PrivateKey = a.PrivateKey,
+                          TaxesRediractUrl = a.TaxesRediractUrl,
                       }).FirstOrDefault();
 
             return entity;
@@ -146,5 +156,37 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             return Settings;
         }
+
+        public SettingPM GetSinglePMFromCahche() => CacheHelper.GetFromCache("SettingPM", GetSinglePM);        
+
+        public string GetJwtToken(int tenant)
+        {            
+            string cacheKey = "jwt" + tenant;
+            int expireDays = 1;
+
+            if (cache.ContainsKey(cacheKey))
+            {
+                JwtCache jwtCache = (JwtCache)cache[cacheKey];
+                if (jwtCache.expires.AddMinutes(-5) > DateTime.Now)
+                    return jwtCache.jwt;
+            }
+
+            var claims = new[] { new Claim("tenant", tenant.ToString()) };
+            string privateKey = GetSinglePMFromCahche().PrivateKey;
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(privateKey));
+            var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+            JwtSecurityToken token = new JwtSecurityToken(null, null, claims, null, DateTime.Now.AddDays(expireDays), creds);
+
+            string tokenString = new JwtSecurityTokenHandler().WriteToken(token);
+
+            cache[cacheKey] = new JwtCache() { jwt = tokenString, expires = DateTime.Now.AddDays(expireDays) };
+            return tokenString;
+        }
+    }
+
+    class JwtCache
+    {
+        public DateTime expires { get; set; }
+        public string jwt { get; set; }
     }
 }

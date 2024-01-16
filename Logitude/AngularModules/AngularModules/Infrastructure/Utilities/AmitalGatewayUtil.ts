@@ -28,6 +28,7 @@ import { EntityPMService } from '../Services/EntityPMService';
 import { CourierMasterPMService } from '../../Customs/Services/StandardPMs/CourierMasterPMService';
 import { ServiceResponse } from '../DataContracts/ServiceResponse';
 import { DeclarationWebService } from '../../Customs/Services/WebServices/DeclarationWebService';
+import { MaintenanceComponent } from 'Infrastructure/Components/Maintenance/MaintenanceComponent';
 
 
 export class AmitalGatewayUtil {
@@ -61,6 +62,7 @@ export class AmitalGatewayUtil {
         }*/
     }
     NoteUnifreightIamReady() {
+        this.sendPostMessage("site ready");
 
         let myRequestWrapper = new RequestWrapperM();
         myRequestWrapper.MessageID = "NoteUnifreightIamReady";
@@ -266,7 +268,7 @@ export class AmitalGatewayUtil {
     }
     public SendRequestToUnifreightAsync(
         SenderID: string, ReceiverID: string, MessageID: string,
-        unifreightMessageM: UnifreightMessageM, MoreParams: string) {
+        unifreightMessageM: UnifreightMessageM, MoreParams: string, showAlert: boolean = true) {
 
 
         let requestWrapper = new RequestWrapperM()
@@ -275,24 +277,28 @@ export class AmitalGatewayUtil {
         requestWrapper.MessageID = MessageID;
         requestWrapper.UnifreightMessage = unifreightMessageM;
         requestWrapper.MoreParams = MoreParams;
-
-        this.SendRequestJSONToUnifreightAsync(requestWrapper);
+    
+        this.sendPostMessage(MoreParams);
+        this.SendRequestJSONToUnifreightAsync(requestWrapper, showAlert);
     }
 
-    SendRequestJSONToUnifreightAsync(myRequestWrapper: RequestWrapperM) {
-
-        if (AppTool.IsNullOrEmpty(window.parent._JavascriptGateway)) {
-            alert("_JavascriptGateway not exist !!!");
-            SessionLocator.SelectedSession.StopBusyIndicator();
-            return;
-
-        } else {
-            var myRequestWrapperJSON = JSON.stringify(myRequestWrapper);
-            window.parent._JavascriptGateway.SendRequestJSONToUnifreightAsync(myRequestWrapperJSON);
-        }
+    SendRequestJSONToUnifreightAsync(myRequestWrapper: RequestWrapperM, showAlert: boolean = true) {
+        try {            
+            if (AppTool.IsNullOrEmpty(window.parent._JavascriptGateway) && showAlert) {
+                alert("_JavascriptGateway not exist !!!");
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                return;
+                
+            } else {
+                var myRequestWrapperJSON = JSON.stringify(myRequestWrapper);
+                window.parent._JavascriptGateway.SendRequestJSONToUnifreightAsync(myRequestWrapperJSON);
+            }
+        } catch (error) {}
     }
     public IsAmitalBackButtonDisable: boolean = false;
     AmitalBackButtonClicked() {
+        this.sendPostMessage("amitalBackButtonClicked");
+
         let RequestWrapper = new RequestWrapperM()
         let myUnifreightMessageM = new UnifreightMessageM();
         //myUnifreightMessageM.LogitudeCommandId = "LogitudeCommandId";
@@ -309,6 +315,16 @@ export class AmitalGatewayUtil {
     public IsTabCA23: boolean = true;//the 1st tab ==> the default tab !!
     public _LastUnifreightMessageM: UnifreightMessageM;
     
+    private sendPostMessage(messageID: string, moreParams?: string): void {
+        if (!window.parent) return;
+        
+        const msg = { messageID: messageID, moreParams: moreParams };
+        window.parent.postMessage(msg, '*');
+            
+        if (window.parent.parent)
+            window.parent.parent.postMessage(msg, '*');
+    }
+
     UnifaceRequest(myParam, myEditTab, change2EditTab: () => void, change2CA23Tab: () => void) {
         const MaintenanceMenu: string = "General.MH.Maintenance";
         let unifreightMessage: UnifreightMessageM = myParam;
@@ -317,7 +333,7 @@ export class AmitalGatewayUtil {
         //}
         this._LastUnifreightMessageM = unifreightMessage
         this._LastUnifreightMessageM.Requset = this._LastUnifreightMessageM.Requset || [];
-        this._LastUnifreightMessageM.Response = this._LastUnifreightMessageM.Response || [];
+        this._LastUnifreightMessageM.Response = this._LastUnifreightMessageM.Response || [];        
         switch (unifreightMessage.LogitudeCommandId) {
             
             case "SessionLocator.SelectedSession.CurrentEditComponent.ReloadEntityPM()": 
@@ -535,17 +551,86 @@ export class AmitalGatewayUtil {
                 break;
             }
                  
+            case "CreateNewShaamToken": {
+                this.openCreateNewShaamToken(MaintenanceMenu);      
+                break;
+            }
+
+            case "ConfirmationNumberTokenLog": {
+                this.openConfirmationNumberTokenLog(change2EditTab, MaintenanceMenu);
+                break;
+            }
+                 
+            case "showShaamTokenManagment": {
+                this.openCreateNewShaamToken2(MaintenanceMenu);
+            }
+            
             default: {
                 //throw new Error("UnifaceRequest get bad  unifreightMessage (LogitudeCommandId is unknown ) " + unifreightMessage.LogitudeCommandId);
                 this.UnifaceRequestArrived.emit(myParam)
                 //break;
                 //SessionLocator.SelectedSession
                 //SessionLocator.AllSessions[0].
-            }
-
+            }            
+        }        
+    }
+    
+    async openCreateNewShaamToken2(maintenanceMenu: string) {        
+        this.SelectCustomsRequestMenu(maintenanceMenu);
+        let maintenanceComponent: MaintenanceComponent | null = SessionLocator.SelectedSession.menuReference.find(com => com.instance instanceof MaintenanceComponent)?.instance;
+        
+         while (!maintenanceComponent?.PagesMenu) {
+            await new Promise(res => setTimeout(() => res(null), 100));
+            maintenanceComponent = SessionLocator.SelectedSession.menuReference.find(com => com.instance instanceof MaintenanceComponent)?.instance;
         }
 
+        const mainItem = maintenanceComponent.PagesMenu.find(x => x.Code === 'SHA');
+        maintenanceComponent.PageChanged(mainItem);
     }
+
+    async openCreateNewShaamToken(MaintenanceMenu: string) {
+
+        this.SelectCustomsRequestMenu(MaintenanceMenu);
+        new EntityResourceService().getEntityResourceByTableName("Customs.ConfirmationNumberTokenLog", 0).subscribe((response: any) => {
+            const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
+            const logWindow = new LogitudeWindow();
+            logWindow.Width = window.outerWidth;
+            logWindow.Height = window.outerHeight;
+            logWindow.Title = windowTitle;
+            logWindow.IsShowCloseButton = true;
+            logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
+            logWindow.WindowClosed.subscribe(() => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
+        });
+
+    }
+    async openConfirmationNumberTokenLog(change2EditTab: () => void, MaintenanceMenu: string) {
+        while (!SessionLocator.SelectedSession?.MainMenuComponent)
+            await new Promise(res => setTimeout(() => res(null), 100));
+
+        this.SelectCustomsRequestMenu(MaintenanceMenu);                
+        change2EditTab();
+
+        const objectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
+        const allQueries: any[] = window.Queries.filter(x => x.ObjectTableId === objectTableId).sort((a, b) => { return a.IndexOrder - b.IndexOrder });
+        const selectedQuery = allQueries.filter(f => ((f.UserId == SessionLocator.LoggedUserId && f.Tenant == SessionLocator.Tenant) || f.Tenant == 0))[0];
+        const objectTablePM = window.ObjectTables.filter(d => d.Id == objectTableId)[0];
+
+        const listArgs: any = {};
+        listArgs.QueryCode = selectedQuery.Code;
+        listArgs.ObjectTableName = objectTablePM.Name;
+        listArgs.BackButtonTitle = "Back";
+
+        new EntityResourceService().getEntityResourceByTableName(listArgs.ObjectTableName, 0).subscribe((response: any) => {
+            listArgs.DisplayTitle = TextCodeTranslator.Translate(selectedQuery.NameTextCodeCode);
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/ListComponent/ListComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run(listArgs);
+                    cmpRef.instance.BackCompleted.subscribe(bk => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
+                });
+        });
+    }
+
     SelectCustomsRequestMenu(menuCode: string = "General.MH.Customs") {
          
         var mySelectedItem = SessionLocator.SelectedSession.MainMenuComponent.MainMenuItems

@@ -456,6 +456,8 @@ import { StatusFieldTypeListService } from './Services/StandardLists/StatusField
 import { GTBFUSTATUWebService } from './Services/WebServices/GTBFUSTATUWebService';
 import { ManifestCargoStatusListService } from './Services/StandardLists/ManifestCargoStatusListService';
 import { ServersNamePMService } from './Services/StandardPMs/ServersNamePMService';
+import { ConfirmationNumberTokenLogListService } from './Services/StandardLists/ConfirmationNumberTokenLogListService';
+import { ConfirmationNumberTokenLogPMService } from './Services/StandardPMs/ConfirmationNumberTokenLogPMService';
 
 
 export class ModuleProviders {
@@ -918,6 +920,8 @@ export class ModuleProviders {
             case "VendorCommissionService": { myResult = new VendorCommissionService(); break; }
             case "DeclarationAmendmentSharedDataService": { myResult = new DeclarationAmendmentSharedDataService(); break; }
             case "PhysicalCheckEditComponentController": { myResult = new PhysicalCheckEditComponentController(); break; }
+            case "ConfirmationNumberTokenLogListService": { myResult = new ConfirmationNumberTokenLogListService(); break; }
+            case "ConfirmationNumberTokenLogPMService": { myResult = new ConfirmationNumberTokenLogPMService(); break; }
 
                 
 

@@ -35,7 +35,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;1ca9&quot;"
+  Code="&quot;280b&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5088,6 +5088,24 @@
       LocalDefaultText="&quot; הצעות מחיר (OP)&quot;"
       TextCodeTypeCode="&quot;MH&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.ShaamTokenManagement&quot;"
+      DefaultText="&quot;SHAAM Token Management&quot;"
+      LocalDefaultText="&quot;&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.TokenManagement&quot;"
+      DefaultText="&quot;Token Management&quot;"
+      LocalDefaultText="&quot;&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.MC.Logs&quot;"
+      DefaultText="&quot;Logs&quot;"
+      LocalDefaultText="&quot;&quot;"
+      TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature
@@ -7121,6 +7139,15 @@
       FeatureTypeCode="&quot;OTH&quot;"
       FeatureTextCodeCode="&quot;General.Features.General.Features.OceanInsightsSettings&quot;"
       FeatureDefaultText="&quot;Ocean Insights Settings&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;InvoiceConfirmationNumber&quot;"
+      FeatureTypeCode="&quot;MENU&quot;"
+      FeatureTextCodeCode="&quot;General.Features.SHAAMTOKEN&quot;"
+      FeatureDefaultText="&quot;Invoice Confirmation Number&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
