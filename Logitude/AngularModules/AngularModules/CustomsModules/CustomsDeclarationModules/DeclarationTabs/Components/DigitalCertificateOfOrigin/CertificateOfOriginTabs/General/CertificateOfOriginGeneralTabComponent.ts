@@ -250,7 +250,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         // logcelltemplate.isEditable = true;
     }
    
-    OnDescriptionOfInvoiceLostFocus(logCellTemplate: any, classificationTextBox: CertificateOfOriginInvoicePM){
+    OnDescriptionOfInvoiceLostFocus(logCellTemplate: any, classificationTextBox: any){
         this.DescriptionOfInvoice = classificationTextBox.DescriptionOfInvoice;
 
     }
