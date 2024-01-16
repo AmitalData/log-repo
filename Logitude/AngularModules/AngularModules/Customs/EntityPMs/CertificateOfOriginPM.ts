@@ -469,6 +469,11 @@ export class CertificateOfOriginPM {
     public set CooStatusCodeName(newValue: string) { if (this.cooStatusCodeName != newValue) { this.cooStatusCodeName = newValue; this.MarkAsDirty("CooStatusCodeName"); } }
        
 	 
+    private listCounter: number;
+    public get ListCounter() { return this.listCounter; }
+    public set ListCounter(newValue: number) { if (this.listCounter != newValue) { this.listCounter = newValue; this.MarkAsDirty("ListCounter"); } }
+       
+	 
 
     public OldEntityPM: CertificateOfOriginPM;
 		

@@ -1815,6 +1815,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int listCounter ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int ListCounter  
+	   {
+	    
+	     get
+		{
+		   return listCounter;
+		 }
+		 set
+		 {
+		   if(listCounter != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ListCounter",OldValue=listCounter,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   listCounter=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

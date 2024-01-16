@@ -83,6 +83,7 @@ export class CertificateOfOriginList {
 	CooTypeCodeName: string;
 	RequestReasonCodeName: string;
 	CooStatusCodeName: string;
+	ListCounter: number;
 	
 }
  

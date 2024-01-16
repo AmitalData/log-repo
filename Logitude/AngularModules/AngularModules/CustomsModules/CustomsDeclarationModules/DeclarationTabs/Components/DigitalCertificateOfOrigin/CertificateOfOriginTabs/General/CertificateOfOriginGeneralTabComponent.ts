@@ -114,7 +114,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             
             mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
 
-            
+            // #101498 after this task is finish- add this field initilize - field ContainerTypeWCO
             // mappedConsignments.ContainerIsoCode = // get from exoorterstoeage; 
 
             
