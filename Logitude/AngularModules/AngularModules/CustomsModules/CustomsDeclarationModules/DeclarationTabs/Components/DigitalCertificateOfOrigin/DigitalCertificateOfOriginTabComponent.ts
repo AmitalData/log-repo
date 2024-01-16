@@ -186,7 +186,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         // on click item get one CertificateOfOrigin
         var args: any = {
             Decalaration: this.EntityPM,
-            CertificateOfOrigin:  isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsNew ? newCertificateOfOriginPM : this.selectedCertificateOfOrigin,
+            CertificateOfOrigin:  isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? this.selectedCertificateOfOrigin : newCertificateOfOriginPM ,
             IsNewOrEdit : isNewOrEditCertificateOfOrigin
         };
         var logWindow = new LogitudeWindow();
@@ -327,53 +327,15 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     
 
 
+  
+
     EditButtonClicked(item: CertificateOfOriginPM) {
-        var errors = [];
-        Validator.TryValidateObject(this.EntityPM, "Customs.Declaration", errors);
-
-        for (let item of this.EntityPM.Consignments) {
-            for (let line of item.ConsignmentPackages) {
-                if (line.MarksNumbers == null && line.PackageMeasureQualifierCode == null && line.PackageQuantity == null && line.PackageTypeCode == null && line.GrossMassMeasure == null) {
-                    var errorMessage = TextCodeTranslator.Translate("Customs.Declaration.O.EmptyConsignmentPackage");
-                    if (!AppTool.IsNullOrEmpty(errorMessage)) {
-                        errors.push(errorMessage);
-                    }
-                }
-            }
-        }
-        if (errors.length > 0) {
-            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = errors;
-        }
-        else {
-            this.CurrentSession.CurrentEditComponent.ValidationErrorsList = [];
-            if (this.EntityPM.IsDirty) {
-                this.CurrentSession.StartBusyIndicator("");
-                this.declarationPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-                    var declaration = response.Result;
-                    this.CurrentSession.StopBusyIndicator();
-                    if (!AppTool.IsNullOrEmpty(declaration)) {
-
-                        if (!AppTool.IsNullOrEmpty(item)) {
-                            this.EditCertificateOfOrigin(item);
-
-                        }
-                    }
-
-                });
-            }
-            else {
-                this.EditCertificateOfOrigin(item);
-            }
-        }
-
-
+        debugger
+        this.selectedCertificateOfOrigin = item;
+        this.AddNewCertificateOfOrigin(this.isEdit)
 
     }
 
-    EditCertificateOfOrigin(item: CertificateOfOriginPM) {   
-        this.CurrentSession.StartBusyIndicator("");
-    }
 
     DeleteButtonClicked(item: CertificateOfOriginPM) {
         var confirmWindow = new ConfirmWindow();
