@@ -25,6 +25,7 @@ import { variable } from '@angular/compiler/src/output/output_ast';
 import { CertificateOfOriginPMService } from 'Customs/Services/StandardPMs/CertificateOfOriginPMService';
 import { CertificateOfOriginPM } from 'Customs/EntityPMs/CertificateOfOriginPM';
 import { CertificateOfOriginListService } from 'Customs/Services/StandardLists/CertificateOfOriginListService';
+import { SendRequestVIA } from 'Customs/DataContract/RequestParams/RequestParamsBase';
 
 declare var attachmentUploader, ResultAsArray: any;
 
