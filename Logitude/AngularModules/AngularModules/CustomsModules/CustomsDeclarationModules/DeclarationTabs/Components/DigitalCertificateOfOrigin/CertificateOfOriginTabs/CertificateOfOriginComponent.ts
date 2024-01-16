@@ -21,6 +21,10 @@ import { CertificateOfOriginPM } from 'Customs/EntityPMs/CertificateOfOriginPM';
 import { CertificateOfOriginPMService } from 'Customs/Services/StandardPMs/CertificateOfOriginPMService';
 import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { StatusCertificateOfOrigin } from '../DigitalCertificateOfOriginTabComponent';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
+import { SendRequestVIA } from 'Customs/DataContract/RequestParams/RequestParamsBase';
+import { CertificateOfOriginWebService } from 'Customs/Services/WebServices/CertificateOfOriginWebService';
+import { CertificateOfOriginRequestRequestParams } from 'Customs/DataContract/RequestParams/CertificateOfOriginRequestRequestParams';
 
 
 @Component({
@@ -287,12 +291,47 @@ export class CertificateOfOriginComponent extends BaseComponent {
    
   
     SendButtonClicked(customSendOptionsArgs:any){
+        var certificateOfOriginWebService = new CertificateOfOriginWebService();
+        var requestParams= new CertificateOfOriginRequestRequestParams();
+        requestParams.LoggingEnabled = true;
+        requestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        requestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.CertificateOfOrigin')[0].Id;
+        requestParams.LoggingEntityId = this.EntityPM.Id;
+        // TODO: change SendRequestVIA PARAMETER by the option are choosed
+        requestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        requestParams.Tenant = SessionLocator.Tenant;
+        requestParams.CertificateOfOriginId = this.EntityPM.Id;
+        requestParams.DeclarationId = this.EntityPM.Id;
+        requestParams.CustomFileNo = this.DecalarationData.CustomFileNo;
+        requestParams.RequestReasonCode = Number(this.EntityPM.RequestReasonCode);
+
         debugger
-
-
+        this.CurrentSession.StartBusyIndicator("Sending...");
+        certificateOfOriginWebService.PostCertificateOfOriginRequest(requestParams)
+        .subscribe((myServiceResponse: ServiceResponse) => {
+            this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
+                this.CurrentSession.StopBusyIndicator();
+                if (!myServiceResponse.Result.HasException) {
+                    let messageWindow = new MessageWindow();
+                    messageWindow.Width = 300;
+                    messageWindow.Height = 180;
+                    messageWindow.Show("מסר סטטוס הצהרות נשלח בהצלחה");
+                }
+                else {
+                    let messageWindow = new MessageWindow();
+                    messageWindow.Width = 300;
+                    messageWindow.Height = 180;
+                    messageWindow.Title = "שליחה נכשלה";
+                    messageWindow.RTL = true;
+                    messageWindow.ShowErrorIcon = true;
+                    messageWindow.Show(myServiceResponse.Result.UserMessage);
+                }
+        });
 
 
     }
+
+    
     CancelButtonClicked() {
         this.EntityPM.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();

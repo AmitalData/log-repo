@@ -164,8 +164,14 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          CoodPdf1 = a.CoodPdf1,
 					
 					                          OpenByUser = a.OpenByUser,
-					
-					                          IsSubmitted = a.IsSubmitted,
+
+											  OpenByUserName = a.CreateByUser.Code,
+                                              
+											  CooTypeCodeName = a.CertificateOfOriginTypeCodeEnum.LocalName,
+
+                                              RequestReasonCodeName = a.RequestReasonCodeEnum.LocalName,
+
+                                              IsSubmitted = a.IsSubmitted,
 					
 		                    	            });
             return query;

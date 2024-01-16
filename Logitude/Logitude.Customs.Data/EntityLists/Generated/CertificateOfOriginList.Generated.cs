@@ -158,6 +158,10 @@ namespace Logitude.Customs.Data.EntityLists
        public bool IsSubmitted  { get; set; }
        [DataMember]
        public string OpenByUserName  { get; set; }
+       [DataMember]
+       public string CooTypeCodeName  { get; set; }
+       [DataMember]
+       public string RequestReasonCodeName  { get; set; }
    }
 
 }
