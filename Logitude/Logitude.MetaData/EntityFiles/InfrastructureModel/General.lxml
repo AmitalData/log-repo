@@ -4008,6 +4008,12 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
     <TextCode
+      Code="&quot;Accounting.O.NewReconcileNoAdjusment&quot;"
+      DefaultText="&quot;The difference must be equal to zero, may not write an adjustment journal for a 'Works' account&quot;"
+      LocalDefaultText="&quot;ההפרש חייב להיות שווה לאפס, לא ניתן ליצור פקודת יומן על כרטיס מסוג עבודות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
       Code="&quot;Accounting.O.OutOfDeposit&quot;"
       DefaultText="&quot;Out of Deposit&quot;"
       LocalDefaultText="&quot;הוצאה מהפקדה&quot;"

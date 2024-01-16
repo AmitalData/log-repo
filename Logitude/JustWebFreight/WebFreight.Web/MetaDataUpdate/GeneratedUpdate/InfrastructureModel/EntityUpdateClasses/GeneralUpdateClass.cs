@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "3e7b74b2a89e07e60385f94489034fac";
+		public const string HashString = "7967d941810307676873a3d1281f76bd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2163,7 +2163,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingONewReconcileWithAdjusment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.NewReconcileWithAdjusment", DefaultText = "The difference must be equal to zero, In this case, new reconcile with adjusment will be created",LocalDefaultText = @"ההפרש חייב להיות שווה לאפס, במקרה כזה תיווצר התאמה עם תיקון שיוצר פקודת יומן חדשה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_AccountingOOutOfDeposit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.OutOfDeposit", DefaultText = "Out of Deposit",LocalDefaultText = @"הוצאה מהפקדה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+            TextCode GeneralTextCode_AccountingONewReconcileNoAdjusment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.NewReconcileNoAdjusment", DefaultText = "The difference must be equal to zero, may not write an adjustment journal for a 'Works' account", LocalDefaultText = @"ההפרש חייב להיות שווה לאפס, לא ניתן ליצור פקודת יומן על כרטיס מסוג עבודות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+            TextCode GeneralTextCode_AccountingOOutOfDeposit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.OutOfDeposit", DefaultText = "Out of Deposit",LocalDefaultText = @"הוצאה מהפקדה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingOOutOfDepositMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.OutOfDepositMSG", DefaultText = "The selected cheque will be out of deposite and returned to cashbook",LocalDefaultText = @"ההמחאות שנבחרו יוצאו מההפקדה ויוחזרו לקופה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
