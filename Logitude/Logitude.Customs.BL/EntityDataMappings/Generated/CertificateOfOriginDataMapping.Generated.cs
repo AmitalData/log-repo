@@ -170,7 +170,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CoodPdf1, 
 	         OpenByUser, 
 	         IsSubmitted, 
-	         OpenByUserName,
+	         OpenByUserName, 
+	         CooTypeCodeName, 
+	         RequestReasonCodeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

@@ -454,6 +454,16 @@ export class CertificateOfOriginPM {
     public set OpenByUserName(newValue: string) { if (this.openByUserName != newValue) { this.openByUserName = newValue; this.MarkAsDirty("OpenByUserName"); } }
        
 	 
+    private cooTypeCodeName: string;
+    public get CooTypeCodeName() { return this.cooTypeCodeName; }
+    public set CooTypeCodeName(newValue: string) { if (this.cooTypeCodeName != newValue) { this.cooTypeCodeName = newValue; this.MarkAsDirty("CooTypeCodeName"); } }
+       
+	 
+    private requestReasonCodeName: string;
+    public get RequestReasonCodeName() { return this.requestReasonCodeName; }
+    public set RequestReasonCodeName(newValue: string) { if (this.requestReasonCodeName != newValue) { this.requestReasonCodeName = newValue; this.MarkAsDirty("RequestReasonCodeName"); } }
+       
+	 
 
     public OldEntityPM: CertificateOfOriginPM;
 		

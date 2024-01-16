@@ -100,7 +100,7 @@
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
-                                                    <span>{{item.CooTypeCode}}</span>
+                                                    <span>{{item.CooTypeCodeName}}</span>
                                                 </div>
 
                                             </log-cell-template>
@@ -112,7 +112,7 @@
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
-                                                    <span>{{item.RequestReasonCode}}</span>
+                                                    <span>{{item.RequestReasonCodeName}}</span>
                                                 </div>
 
                                             </log-cell-template>
@@ -124,7 +124,7 @@
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
-                                                    <span>{{item.OpenByUser}}</span>
+                                                    <span>{{item.OpenByUserName}}</span>
                                                 </div>
 
                                             </log-cell-template>
@@ -171,7 +171,6 @@
                                         [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <!-- <span class="CellSeparator" style="float: right;"></span> -->
                                                 <div style="width: 114px;float: right; height:20px; padding-top: 2px; display:block">
                                                     <button [disabled]="false" class="Button"  (click)="SendMsgCooStatusCode()" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
                                                         {{'Customs.CertificateOfOrigin.O.CooStatusCode'| TextCodeTranslationPipe}}           
@@ -185,7 +184,6 @@
                                         [visibility]="'visibile'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
-                                                <!-- <span class="CellSeparator" style="float: right;"></span> -->
                                                 <div style="width: 114px;float: right; height:20px; padding-top: 2px; display:block">
                                                     <button [disabled]="false" class="Button"  (click)="CopyOfCertificate()" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
                                                         {{'Customs.CertificateOfOrigin.O.CopyOfCertificate'| TextCodeTranslationPipe}}           
