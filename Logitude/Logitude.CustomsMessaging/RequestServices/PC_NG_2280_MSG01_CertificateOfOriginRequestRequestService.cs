@@ -23,51 +23,57 @@ namespace Logitude.CustomsMessaging.ResponseServices
             base.OnRequestFail(requestParams);
         }
 
-        public override PC_NG_2280_MSG01_CertificateOfOriginRequest GetRequest(CertificateOfOriginRequestRequestParams requestParams)
-        {
-            var myMsg = new PC_NG_2280_MSG01_CertificateOfOriginRequest();
-			CertificateOfOriginQueryService certificateOfOriginQueryService =  new CertificateOfOriginQueryService(requestParams.Tenant);
-           var certificateOfOrigin =  certificateOfOriginQueryService.GetSingle(requestParams.CertificateOfOriginId,true,false);
+		public override PC_NG_2280_MSG01_CertificateOfOriginRequest GetRequest(CertificateOfOriginRequestRequestParams requestParams)
+		{
+			var RequestReasonCodeList = new List<string> { "10", "13", "14" };
+			var myMsg = new PC_NG_2280_MSG01_CertificateOfOriginRequest();
+			CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(requestParams.Tenant);
+			var certificateOfOrigin = certificateOfOriginQueryService.GetSingle(requestParams.CertificateOfOriginId, true, false);
 			DeclarationQueryService declarationQueryService = new DeclarationQueryService(requestParams.Tenant);
 			var declarationPM = declarationQueryService.GetSingle(certificateOfOrigin.DeclarationId, true, false);
-			requestParams.RequestReasonCode = Convert.ToInt32(certificateOfOrigin.RequestReasonCode);
 
 			myMsg.AgentRequest = new PC_NG_2280_MSG01_CertificateOfOriginRequestAgentRequest()
-            {
+			{
 				internalApplication = certificateOfOrigin.Counter,
-				certificateOfOriginTypeCode = Convert.ToInt32( certificateOfOrigin.CooTypeCode),
-				requestReasonCode = Convert.ToInt32(certificateOfOrigin.RequestReasonCode),
+				certificateOfOriginTypeCode = Convert.ToInt32(certificateOfOrigin.CooTypeCode),
+				requestReasonCode = requestParams.RequestReasonCode,
 				certificateID = certificateOfOrigin.COONumber,
 				certificateIdToCancel = certificateOfOrigin.COONumberToCancel,
 				replacementReason = certificateOfOrigin.ReplacementReason,
 				exportDeclarationNum = declarationPM?.DeclarationNumber,
 
 			};
-
-			myMsg.CertificateOfOrigin = GetCertificateOfOrigin(certificateOfOrigin);
-			myMsg.CertificateOfOrigin.CertificateOfOriginRequestInvoiceDetail = certificateOfOrigin.IsUnitedInvoices ? 
-				GetCertificateOfOriginRequestInvoiceDetailUnitedInvoices(certificateOfOrigin.CertificateOriginInvoiceItems, certificateOfOrigin.CertificateOriginItemItems) :
-				GetCertificateOfOriginRequestInvoiceDetail(certificateOfOrigin.CertificateOriginInvoiceItems, certificateOfOrigin.CertificateOriginItemItems);
-
-			myMsg.NonManipulationCertificate = new PC_NG_2280_MSG01_CertificateOfOriginRequestNonManipulationCertificate()
+			
+			if (certificateOfOrigin.CooTypeCode != "5" && !RequestReasonCodeList.Contains(requestParams.RequestReasonCode.ToString())) 
 			{
-				ExportDate = Convert.ToDateTime(certificateOfOrigin.NonExportDate),
-				ExportCountry = certificateOfOrigin.NonExportCountry,
-				ImportBillOfLadingNum = certificateOfOrigin.NonImportBillOfLadingNum,
-				ExportPort = certificateOfOrigin.NonExportPort,
-				ImportDate = Convert.ToDateTime(certificateOfOrigin.NonImportDate),
-				ExportBillOFLadingNum = certificateOfOrigin.NonExportBillOfLadingNum,
-				TransirCountry = certificateOfOrigin.NonTransirCountry,
-				PortOfEntrance = certificateOfOrigin.NonPortOfEntrance,
-				ExpectedExitDate = Convert.ToDateTime(certificateOfOrigin.NonExpectedExitDate),
-				ExitPort = certificateOfOrigin.NonExitPort,
-				GoodsDescription = certificateOfOrigin.NonGoodsDescription,
-				DeclaringCompany = certificateOfOrigin.NonDeclaringCompany,
-				DeclaringPerson = certificateOfOrigin.NonDeclaringPerson,
-				DeclaringPosition = certificateOfOrigin.NonDeclaringPosition,
-				ManifestNum = certificateOfOrigin.NonManifestNum,
 
-			};
+			      myMsg.CertificateOfOrigin = GetCertificateOfOrigin(certificateOfOrigin);
+			      myMsg.CertificateOfOrigin.CertificateOfOriginRequestInvoiceDetail = certificateOfOrigin.IsUnitedInvoices ? 
+			      	GetCertificateOfOriginRequestInvoiceDetailUnitedInvoices(certificateOfOrigin.CertificateOriginInvoiceItems, certificateOfOrigin.CertificateOriginItemItems) :
+			      	GetCertificateOfOriginRequestInvoiceDetail(certificateOfOrigin.CertificateOriginInvoiceItems, certificateOfOrigin.CertificateOriginItemItems);
+            }
+			if (!RequestReasonCodeList.Contains(requestParams.RequestReasonCode.ToString()))
+			{
+				myMsg.NonManipulationCertificate = new PC_NG_2280_MSG01_CertificateOfOriginRequestNonManipulationCertificate()
+				{
+					ExportDate = Convert.ToDateTime(certificateOfOrigin.NonExportDate),
+					ExportCountry = certificateOfOrigin.NonExportCountry,
+					ImportBillOfLadingNum = certificateOfOrigin.NonImportBillOfLadingNum,
+					ExportPort = certificateOfOrigin.NonExportPort,
+					ImportDate = Convert.ToDateTime(certificateOfOrigin.NonImportDate),
+					ExportBillOFLadingNum = certificateOfOrigin.NonExportBillOfLadingNum,
+					TransirCountry = certificateOfOrigin.NonTransirCountry,
+					PortOfEntrance = certificateOfOrigin.NonPortOfEntrance,
+					ExpectedExitDate = Convert.ToDateTime(certificateOfOrigin.NonExpectedExitDate),
+					ExitPort = certificateOfOrigin.NonExitPort,
+					GoodsDescription = certificateOfOrigin.NonGoodsDescription,
+					DeclaringCompany = certificateOfOrigin.NonDeclaringCompany,
+					DeclaringPerson = certificateOfOrigin.NonDeclaringPerson,
+					DeclaringPosition = certificateOfOrigin.NonDeclaringPosition,
+					ManifestNum = certificateOfOrigin.NonManifestNum,
+
+				};
+			}
 
 			this.MyRequestSheetParam = new RequestSheetParam();
 			this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
