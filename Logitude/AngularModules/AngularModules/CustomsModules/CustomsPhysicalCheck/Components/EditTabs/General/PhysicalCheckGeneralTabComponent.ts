@@ -24,6 +24,7 @@ import { IIGGeneralMessagesService } from '../../../../../Customs/Services/WebSe
 import { CustomMessageProgressComponent } from '../../../../../CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import {EntityResourceService} from '../../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationEventManager } from 'Customs/Utilities/DeclarationEventManager';
+import { MessageWindow } from 'Controls/Windows/MessageWindow';
 
 @Component({
     selector:'PhysicalCheckAvailableTimes',
@@ -396,8 +397,16 @@ export class PhysicalCheckGeneralTabComponent
 
         debugger
         this._IIGGeneralMessagesService.PostChangingTimeRequestParams(checkParams)
-            .subscribe(() => {
-                debugger
+            .subscribe((myServiceResponse: ServiceResponse) => {
+                if (!myServiceResponse.HasError && myServiceResponse.Result != null && myServiceResponse.Result.HasException != true) {
+                    var messageWindow = new MessageWindow();
+                    messageWindow.Width = 400;
+                    messageWindow.Height = 200;
+                    messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+                    messageWindow.Show("בקשה נשלחה בהצלחה.");
+
+                }
+                SessionLocator.SelectedSession.CloseCurrentWindow();
             }
         );
 
