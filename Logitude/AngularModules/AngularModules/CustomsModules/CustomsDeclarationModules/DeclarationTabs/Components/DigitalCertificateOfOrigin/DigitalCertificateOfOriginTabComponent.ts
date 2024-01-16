@@ -193,8 +193,13 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1030;
         logWindow.Height = 700;
+        
+        let title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");      
+        logWindow.Title = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? title += `: ${this.selectedCertificateOfOrigin.COONumber}` : title;
+
         // TODO: ADD to left side title
-        logWindow.Title =  !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.CooTypeCode) ? TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin") + ": " + this.selectedCertificateOfOrigin.CooTypeCode : TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
+        let CertificateOfOriginStatus = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode");
+        //logWindow.titleSide = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? CertificateOfOriginStatus += `: ${this.selectedCertificateOfOrigin.CooStatusCode}` : title ;
         
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
