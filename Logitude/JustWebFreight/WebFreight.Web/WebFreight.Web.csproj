@@ -1198,6 +1198,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientItemViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\SupplierInvioceExportDefaultExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ClientIndicationViewsController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ConfirmationNumberTokenLogViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CountryCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CourierHawbFromExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomDocumentTypeTenantViewsController.Generated.cs" />
@@ -1377,6 +1378,9 @@
     <Compile Include="Controllers\Test\TestController.cs" />
     <Compile Include="Controllers\WebDomainControllers\PotentialAddressController.cs" />
     <Compile Include="Controllers\WebDomainControllers\QuoteOPDomainController.cs" />
+    <Compile Include="Controllers\WebServices\Services\AllocateInvoiceService.cs" />
+    <Compile Include="Controllers\WebServices\Services\ShaamService.cs" />
+    <Compile Include="Controllers\WebServices\ShaamWebServiceController.cs" />
     <Compile Include="Controllers\WebServices\ShipmentContainersWebServiceController.cs" />
     <Compile Include="CustomModel\DomainServices\CustomDomainService.LoadingSiteType.cs" />
     <Compile Include="CustomModel\DomainServices\Generated\LogisticActionRequestTypeDomainService.Generated.cs" />
@@ -3367,6 +3371,7 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientIndicationUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientsPoaUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ClientsTapagUpdateClass.cs" />
+    <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConfirmationNumberTokenLogUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConsignmentPackDangerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationHataraStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationStatusCodeUpdateClass.cs" />
@@ -5349,6 +5354,7 @@
     <Content Include="WcfApi\CustomerAdditionalServiceDWWcfService.svc" />
     <Content Include="WcfApi\CustomerCompetitorDWWcfService.svc" />
     <Content Include="WcfApi\CustomerDWWcfService.svc" />
+    <Content Include="WcfApi\ShaamWcfService.svc" />
     <Content Include="WcfApi\OceanInsightsTestWcfService.svc" />
     <Content Include="WcfApi\StatusCodeWcfService.svc" />
     <Content Include="WcfApi\OcrDocumentWcfService.svc" />
@@ -6947,11 +6953,15 @@
     <Compile Include="WcfApi\IDeclarationStatusWcfService.cs" />
     <Compile Include="WcfApi\IDefaultValueWcfService.cs" />
     <Compile Include="WcfApi\IDefaultTypeWcfService.cs" />
+    <Compile Include="WcfApi\IShaamWcfService.cs" />
     <Compile Include="WcfApi\IOcrDocumentWcfService.cs" />
     <Compile Include="WcfApi\IExternalTasksQueueExportSignWcfService.cs" />
     <Compile Include="WcfApi\IPaymentTermWcfService.cs" />
     <Compile Include="WcfApi\IStatusCodeWcfService.cs" />
     <Compile Include="WcfApi\IWarehouseWcfService.cs" />
+    <Compile Include="WcfApi\ShaamWcfService.svc.cs">
+      <DependentUpon>ShaamWcfService.svc</DependentUpon>
+    </Compile>
     <Compile Include="WcfApi\OceanInsightsTestWcfService.svc.cs">
       <DependentUpon>OceanInsightsTestWcfService.svc</DependentUpon>
     </Compile>

@@ -58,7 +58,7 @@ export class DocumentsPanelComponent {
                 this.forwarding = TextCodeTranslator.Translate('Customs.CustomsDocument.O.ExportFile');
                 this.DocumentFilterSelectedValue = "all";
             });
-
+            this._entityResourceService.getEntityResourceByTableName("Customs.OcrDocument").subscribe((response: any) => {});
 
         }
     }

@@ -278,7 +278,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					ExportDeclarationUpdate();
 					if (IseatureClosingAutoExpDec)
 					{
+						AppendLogLine("before SendClosing: ");
+
 						SendClosing();
+						AppendLogLine("after SendClosing: ");
+
 					}
 					MyGenericResponseObj.Message = "עודכנה הצהרת יצוא";
 					MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
@@ -986,24 +990,41 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 		}		
 		private void SendClosing()
 		{
+			try { 
 
-			if (FieldError.Length == 0)
-			{
-				if (documentsFilingPM.IsNotCustomsDocId)
-				{
-					documentsFilingPM.DeclarationId = _MyDeclarationPM.Id;
-					documentsFilingPM.LoggedUserId = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
-					ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", documentsFilingPM.Tenant)) as ISendBondedCustomDocumentService;
-					myISendBondedCustomDocumentService.JustDoIt(documentsFilingPM);
-				}
-				else 
-				{
-				   ICustomsAutoDecClosing CustomsAutoDecClosing = ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new ParameterOverride("", 1)) as ICustomsAutoDecClosing;
-				   CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
-				}
+			    if (FieldError.Length == 0)
+			    {
+			    	AppendLogLine("FieldError.Length == 0");
+			    
+			    	if (documentsFilingPM.IsNotCustomsDocId)
+			    	{
+			    		AppendLogLine("documentsFilingPM.IsNotCustomsDocId" + documentsFilingPM.IsNotCustomsDocId);
+			    
+			    		documentsFilingPM.DeclarationId = _MyDeclarationPM.Id;
+			    		documentsFilingPM.LoggedUserId = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
+			    		ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", documentsFilingPM.Tenant)) as ISendBondedCustomDocumentService;
+			    		myISendBondedCustomDocumentService.JustDoIt(documentsFilingPM);
+			    		AppendLogLine("After JustDoIt");
+			    	}
+			    	else 
+			    	{
+			    		AppendLogLine("Before Send8235");
+			    
+			    		ICustomsAutoDecClosing CustomsAutoDecClosing = ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new ParameterOverride("", 1)) as ICustomsAutoDecClosing;
+			    	   CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
+			    		AppendLogLine("After Send8235");
+			    
+			    	}
+			    }
+			    else { 
+			    	RaiseEvent(_MyDeclarationPM, null, "CF1", FieldError.ToString());
+			    	AppendLogLine("RaiseEvent CF1");
+			    }
 			}
-			else
-				RaiseEvent(_MyDeclarationPM, null, "CF1", FieldError.ToString());
+			catch (Exception ex)
+			{
+				AppendLogLine("Exception SendClosing" + ex.ToString());
+			}
 		}
 		private void FillExportDeclarationClosingDataFromUNF()
 		{
@@ -1279,7 +1300,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				AppendLogLine("try to update FlightDate " + _AmitalCustomsFile.FlightDate + " to DeclarationPM.Id: " + _MyDeclarationPM.Id);
 				try
 				{
+					AppendLogLine("Before Update _MyDeclarationPM: " + _MyDeclarationPM.Id);
 					declarationUpdateService.Update(_MyDeclarationPM, true);
+					AppendLogLine("After Update _MyDeclarationPM: " + _MyDeclarationPM.Id);
 				}
 				catch (DbEntityValidationException ex)
 				{

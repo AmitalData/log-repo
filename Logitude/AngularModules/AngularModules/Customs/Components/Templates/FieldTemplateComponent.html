@@ -819,6 +819,12 @@
                 </div>
             </div>
 
+            <div *ngIf="ObjectTableName == 'Customs.ConfirmationNumberTokenLog'">
+                <div *ngIf="FieldName == 'ShowLog'" style="width: 50px; display: flex" class="MediaFillAbsolute">
+                    <button class="CenterCenter Button" (click)="OnShowLogclick($event)">{{'ConfirmationNumberTokenLog.O.Log' | TextCodeTranslationPipe}}</button>
+                </div>
+            </div>
+
             <!-- Spot Light -->
             <div *ngIf="IsSpotLightTemplate">
                 <div #SpotLight></div>

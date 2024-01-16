@@ -802,6 +802,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? maxItemsSendInteractive ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? MaxItemsSendInteractive  
+	   {
+	    
+	     get
+		{
+		   return maxItemsSendInteractive;
+		 }
+		 set
+		 {
+		   if(maxItemsSendInteractive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MaxItemsSendInteractive",OldValue=maxItemsSendInteractive,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   maxItemsSendInteractive=value;
+		   }
+			
+		 }
+	   }
+	  private int? maxSISendInteractive ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? MaxSISendInteractive  
+	   {
+	    
+	     get
+		{
+		   return maxSISendInteractive;
+		 }
+		 set
+		 {
+		   if(maxSISendInteractive != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MaxSISendInteractive",OldValue=maxSISendInteractive,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   maxSISendInteractive=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

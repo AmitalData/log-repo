@@ -68,6 +68,7 @@
     <Compile Include="EntityPMs\CargoIdentifireTypePM.cs" />
     <Compile Include="EntityPMs\ConfirmationTypePM.cs" />
     <Compile Include="EntityPMs\Generated\RequestToAdvanceAQueuePM.Generated.cs" />
+    <Compile Include="EntityPMs\Generated\ConfirmationNumberTokenLogPM.Generated.cs" />
     <Compile Include="EntityPMs\InternalBorderSiteTypePM.cs" />
     <Compile Include="EntityPMs\Generated\AmedmentTypePM.Generated.cs" />
     <Compile Include="EntityPMs\Generated\AmendCancellRequestInitiatorPM.Generated.cs" />

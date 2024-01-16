@@ -84,5 +84,8 @@ namespace Simplog.Global.Data.GlobalModel.EntityPOCOs
         public string AmitalCloudEnvironmentURL { get; set; }
 
         public string AmitalCloudLogitudeTenantPrimaryKey { get; set; }
+        public string PrivateKey { get; set; }
+        public string AmitalTaxesUrl { get; set; }
+        public string TaxesRediractUrl { get; set; }
 }
 }

@@ -190,6 +190,7 @@ import { PrivateLabelLoginProcessComponent } from './Components/LoginComponent/P
 import { AutomationsConditionsViewDetailsComponent } from './Components/Maintenance/Automation/AutomationsConditionsViewDetailsComponent';
 import { AutomationConditionsDetailsComponent } from './Components/Maintenance/Automation/AutomationConditionsDetailsComponent';
 import { CreateTaskResultComponent } from './Components/Maintenance/Automation/AutomationResult/CreateTaskResultComponent';
+import { IdentityShaamLandingPageComponent } from './Components/IdentityShaamLandingPage/IdentityShaamLandingPage';
  
  
 
@@ -393,9 +394,8 @@ export const Components =
         PrivateLabelLoginProcessComponent,
          
         AutomationConditionsDetailsComponent,
-        AutomationsConditionsViewDetailsComponent
-
-        
+        AutomationsConditionsViewDetailsComponent,
+        IdentityShaamLandingPageComponent,        
     ];
 
 export class ModuleDeclarations {
@@ -504,6 +504,7 @@ export class ModuleDeclarations {
             case 'SendDocumentResultComponent': { myResult = SendDocumentResultComponent; break; } 
             case 'PrivateLabelLoginProcessComponent': { myResult = PrivateLabelLoginProcessComponent; break; } 
             case 'CreateTaskResultComponent': { myResult = CreateTaskResultComponent; break; }
+            case 'IdentityShaamLandingPageComponent': { myResult = IdentityShaamLandingPageComponent; break; }
                  
                  
 
