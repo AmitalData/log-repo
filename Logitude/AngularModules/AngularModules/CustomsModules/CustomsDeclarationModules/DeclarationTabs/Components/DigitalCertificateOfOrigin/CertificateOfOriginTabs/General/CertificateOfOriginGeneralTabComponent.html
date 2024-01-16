@@ -269,15 +269,22 @@
 
                                 <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.ItemDescription' | TextCodeTranslationPipe"
-                                    [binding]="'DescriptionOfInvoice'" [width]="'170'" [Alignment]="'right'">
+                                    [binding]="'DescriptionOfInvoice'" [width]="'170'" [Alignment]="'right'" [Editable]="true" >
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly" #logcelltemplate>
-                                            <div style="text-align:right">
+                                        <log-cell-template #logcelltemplate (CellClicked)="onCellSelected($event,logcelltemplate,item)" [RIndex]="item.InvoicesIdUry">
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.DescriptionOfInvoice}}</span>
                                             </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogTextBox  #DescriptionOfInvoiceTextBox [ObjectFieldName]="'DescriptionOfInvoice'" [DataContext]="item" [FocusOnMe]="true" [InputType]="'text'" 
+                                                [IsAccumulative]="true" [Text]="DescriptionOfInvoice" [ObjectTableName]="'Customs.CertificateOriginInvoice'" [HideColumns]="true"
+                                                (LostFocus)="OnDescriptionOfInvoiceLostFocus(logcelltemplate,DescriptionOfInvoiceTextBox)"></LogTextBox>
+                                            </div>
                                         </log-cell-template>
+
                                     </ng-template>
                                 </log-column>
+                            
 
                                 <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.IsInvoicesForPrint' | TextCodeTranslationPipe"
