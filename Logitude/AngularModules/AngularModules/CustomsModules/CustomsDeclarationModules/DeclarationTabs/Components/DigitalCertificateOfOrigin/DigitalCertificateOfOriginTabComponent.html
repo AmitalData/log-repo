@@ -71,12 +71,12 @@
                                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ItemsSource"
                                     (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
                                     <log-column
-                                        [header]="'Customs.SupplierInvoice.F.SequenceNumeric' | TextCodeTranslationPipe"
-                                        [binding]="'RowNumber'" [width]="'35'" [Alignment]="'left'">
+                                        [header]="'Customs.CertificateOfOrigin.F.ListCounter' | TextCodeTranslationPipe"
+                                        [binding]="'ListCounter'" [width]="'35'" [Alignment]="'left'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
-                                                    <span>{{item.RowNumber}}</span>
+                                                    <span>{{item.ListCounter}}</span>
                                                 </div>
 
                                             </log-cell-template>
