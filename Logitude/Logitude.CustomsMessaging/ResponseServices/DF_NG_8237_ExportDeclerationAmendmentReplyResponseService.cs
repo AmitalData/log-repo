@@ -33,6 +33,7 @@ using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceRef
 using Simplog.Data.CommonDataModel;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Microsoft.Practices.ObjectBuilder2;
+using System.Globalization;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -1259,8 +1260,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
 	}
 	public class CustomsAutoDecClosing : ICustomsAutoDecClosing
 	{
-		public void Send8235(DeclarationPM decPm, string LoggingUserId = "")
+		
+	public void Send8235(DeclarationPM decPm, string LoggingUserId = "")
 		{
+			DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
+			string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220227T155633.LogUntilDateyyyyMMdd"];
+			if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+			{
+				stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+													"yyyyMMdd",
+													CultureInfo.InvariantCulture,
+													DateTimeStyles.None);
+			}
+			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing ENTER Send8235", false, "sendClosing", stopLogAt);
+
 			var requestParamsData = new AmendmentRequestParams();
 
 			var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -1281,11 +1294,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			requestParamsData.IsTransShipment = decPm.DeclarationTypeCode == "3";
 			requestParamsData.IsFromAutoClosing = true;
 
+			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing BEFORE SEND"  , false, "sendClosing", stopLogAt);
 
 
 			ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
 					  new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
 					  new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
+			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
+
 
 		}
 	}
