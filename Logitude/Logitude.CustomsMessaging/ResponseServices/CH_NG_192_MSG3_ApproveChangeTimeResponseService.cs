@@ -148,6 +148,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     break;
                 case 4:
                     phsicalCheckPM.BringQueueForwardIndicatorS = "4";
+                    physicalCheckUpdateService.Update(phsicalCheckPM, true);
+
                     break;
                 case 5:
                     phsicalCheckPM.BringQueueForwardIndicatorS = "5";
