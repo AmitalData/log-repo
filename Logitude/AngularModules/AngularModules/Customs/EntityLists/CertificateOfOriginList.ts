@@ -80,6 +80,8 @@ export class CertificateOfOriginList {
 	OpenByUser: string;
 	IsSubmitted: boolean;
 	OpenByUserName: string;
+	CooTypeCodeName: string;
+	RequestReasonCodeName: string;
 	
 }
  

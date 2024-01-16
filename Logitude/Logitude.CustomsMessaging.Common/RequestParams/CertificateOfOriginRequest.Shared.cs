@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace Logitude.CustomsMessaging.Common.RequestParams
 {
-    public class CertificateOfOriginRequestRequestParams : RequestParamsBase
-    {
-        public string CertificateOfOriginId { get; set; }
+    public class CertificateOfOriginRequestRequestParams : GenericRequestParams
+	{		
+		public string CertificateOfOriginId { get; set; }
 		public string DeclarationId { get; set; }
 		public string CustomFileNo { get; set; }
         public int RequestReasonCode { get; set; }

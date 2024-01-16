@@ -1328,6 +1328,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceInputTypeController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ReferenceStatusController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SignStationController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\WebServices\CertificateOfOriginController.cs" />
     <Compile Include="Controllers\CustomsModel\WebServices\GTBFUSTATUWebServiceController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ServersNameController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\SchedulerParamController.Generated.cs" />
