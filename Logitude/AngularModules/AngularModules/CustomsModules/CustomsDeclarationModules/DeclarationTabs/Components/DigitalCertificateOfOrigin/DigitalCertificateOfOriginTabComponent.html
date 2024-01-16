@@ -72,11 +72,11 @@
                                     (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
                                     <log-column
                                         [header]="'Customs.SupplierInvoice.F.SequenceNumeric' | TextCodeTranslationPipe"
-                                        [binding]="'index'" [width]="'35'" [Alignment]="'left'">
+                                        [binding]="'Id'" [width]="'35'" [Alignment]="'left'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
-                                                    <span>{{item.index}}</span>
+                                                    <span>{{item.Id}}</span>
                                                 </div>
 
                                             </log-cell-template>
