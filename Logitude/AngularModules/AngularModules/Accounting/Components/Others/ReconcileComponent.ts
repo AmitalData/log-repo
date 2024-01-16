@@ -866,18 +866,30 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
             //Adjust
             if (this.SelectedLines.Length > 0 && this.TotalsDeference != 0) {
-                //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
-                //this.AdjustButton();
-                var confirmWindow = new ConfirmWindow();
-                confirmWindow.Width = 390;
-                confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
-                confirmWindow.WindowClosed.subscribe((event: any) => {
-                    if (confirmWindow.Yes) {
-                        this.AdjustWithNewJournalScreen();
-                    } else if (confirmWindow.No) {
-                    }
-                });
+
+                var chartType = this.GLAccountPM.ChartOfAccountsTypeCode; // 6 == Works
+                if (chartType == "6") {
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Width = 390;
+                    confirmWindow.IsYesEnabled = false;
+                    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileNoAdjusment"));
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                    });
+                } else {
+                    //errors.push(TextCodeTranslator.Translate("Accounting.General.O.DifferenceMustEqual0"));//"The difference must be equal to zero"
+                    //this.AdjustButton();
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Width = 390;
+                    confirmWindow.Show(TextCodeTranslator.Translate("Accounting.O.NewReconcileWithAdjusment"));
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.Yes) {
+                            this.AdjustWithNewJournalScreen();
+                        } else if (confirmWindow.No) {
+                        }
+                    });
+                }
                 return;
+
             }
             //
 
