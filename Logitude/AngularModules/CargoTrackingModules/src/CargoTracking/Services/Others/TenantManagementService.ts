@@ -11,7 +11,7 @@ import { SessionInfo } from "src/Infrastructure/Utilities/SessionInfo";
 export class TenantManagementService {
     private _apiUrl: string;
     public authHeaders = ServiceHelper.GetHeadersWithToken();
-
+    public headers = ServiceHelper.GetHeaders();
     constructor(
         private _http: HttpClient,
         @Inject('BASE_URL') baseUrl: string
@@ -31,7 +31,7 @@ export class TenantManagementService {
         //authHeader.append('Token', SessionInfo.Token);
         var callTime = new Date();
        
-            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, this.authHeaders).pipe(
+            return this._http.get(this._apiUrl + '/getsingle?' + 'id=' + id, { headers: this.headers}).pipe(
                 map((response: ServiceResponse) => {
                     var serviceResponse: ServiceResponse = new ServiceResponse();
                     serviceResponse = response;
