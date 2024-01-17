@@ -12,6 +12,8 @@ export class ReconcileEventManager {
     static SupperssOnRowSelectedAction: boolean = false; // for Manage Reconciliation
     static _SelectedItems: ObservableCollection = new ObservableCollection([]); // for Manage Reconciliation
     static IsAllSelected:boolean=false; // for Manage Reconciliation
+    static UnAllSelected:boolean=false; // for Manage Reconciliation
+
  
 
 }

@@ -54,7 +54,7 @@ export class ManageReconciliationListTemplate {
             if (ReconcileEventManager.IsAllSelected == true) {
                 this.CheckBoxClicked(true);
             }
-            else {
+            if(ReconcileEventManager.UnAllSelected == true){
                 this.CheckBoxClicked(false);
             }
         }
