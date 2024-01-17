@@ -205,8 +205,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
-            this.ReloadMyScreen();
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+            this.ReloadMyScreen();
         });
     }
     
@@ -247,41 +247,20 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
                     this.CertificateOfOrigins.forEach(certificateOfOrigin=>{
                         certificateOfOrigin.ListCounter = ++counter;
                         this.ItemsSource.Insert(certificateOfOrigin , true);
-                    });
-                    
+                    });       
                 }
             }
-           
         });
-  
-        //Select last selected row, or first
-        if (this.SelectedRowB4Refresh) {
-
-            // if (this.SelectedRowB4Refresh == this.lastDeletedItem) { //deleted item
-            //     this.OnRowSelected(this.CertificateOfOrigins[0]);
-            // } else {
-            //     var selectedInvoiceKey = this.SelectedRowB4Refresh.;
-            //     var selectedInvoice = this.CertificateOfOrigins.filter(d => d.InvoiceCounterKey == selectedInvoiceKey)[0];
-            //     this.OnRowSelected(selectedInvoice);
-            // }
-
-        }
-        // else
-        //     this.OnRowSelected(this.CertificateOfOrigins[0]);
     }
 
     public SelectedRow: CertificateOfOriginPM = null;
     public SelectedRowB4Refresh: CertificateOfOriginPM = null;
     OnRowSelected(itemComponent: CertificateOfOriginPM) {
-
         this.SelectedRow = itemComponent;
         this.SelectedRowB4Refresh = this.SelectedRow;
         this.filterAgrs = new ApiQueryFilters();
 
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
-        if (itemComponent) {
-        
-        }
     }
 
     DataSource = {
@@ -332,18 +311,10 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
        
     }
 
-    private _entityResourceService: EntityResourceService = new EntityResourceService();
-
-    
-
-
-  
-
     EditButtonClicked(item: CertificateOfOriginPM) {
         debugger
         this.selectedCertificateOfOrigin = item;
         this.AddNewCertificateOfOrigin(this.isEdit)
-
     }
 
 
@@ -352,15 +323,16 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         confirmWindow.Width = 300;
         confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
 
-        // confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteInvoice"));
-        // confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
-        // confirmWindow.WindowClosed.subscribe((event: any) => {
-        //     if (confirmWindow.Yes) {
-                
-        //     } else if (confirmWindow.No) {
-
-        //     }
-        // });
+        confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteInvoice"));
+        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+        confirmWindow.WindowClosed.subscribe((event: any) => {
+            if (confirmWindow.Yes) {
+                // TODO: add a delete function
+            }
+            else if (confirmWindow.No) {
+               // TODO: a canclation function
+            }
+        });
     }
 
 
