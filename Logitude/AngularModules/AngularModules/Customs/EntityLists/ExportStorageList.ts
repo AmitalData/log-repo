@@ -52,6 +52,7 @@ export class ExportStorageList {
 	ExportLoadingPortName: string;
 	StorageStatusName: string;
 	ConnectedDeclaration: boolean;
+	ContainerTypeWCO: string;
 	
 }
  

@@ -27,6 +27,16 @@ namespace Logitude.Customs.BL.EntityQueryServices
 			entityPM.CertificateOriginItemItems = certificateOfOriginItemQueryService.GetMulti(CertificateOfOriginKeys, false);
 
 		}
+		public CertificateOfOriginPM GetCertificateOfOriginByCounter(string Counter)
+		{
+			 var certificateOfOrigin = repository.GetCertificateOfOriginByCounter(Counter);
+			CertificateOfOriginPM certificateOfOriginPM = null;
+			if (certificateOfOrigin != null)
+			{
+				certificateOfOriginPM = this.GetEntityPM(certificateOfOrigin, false, null);			
+			}
+			return certificateOfOriginPM;
+		}
 
 	}
 }

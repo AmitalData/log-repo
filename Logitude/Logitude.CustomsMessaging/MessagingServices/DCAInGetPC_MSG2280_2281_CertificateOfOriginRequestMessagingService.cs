@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using UnifreightIIG.Common.ClientSdk;
 using UnifreightIIG.Common.CertificateOfOriginRequestServiceReference;
 using UnifreightIIG.Common.TheGateway;
+using Logitude.Customs.Def.EntityPMs;
 
 namespace Logitude.CustomsMessaging.MessagingServices
 {
@@ -34,12 +35,17 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         protected override CertificateOfOriginRequestRequestParams CreateDefaultRequestParamsFromCustomsResponse(PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback customsResponse)
         {
-            var myRequestParams = new CertificateOfOriginRequestRequestParams()
+			CertificateOfOriginPM entity = new CertificateOfOriginQueryService(CustomContext.GetContext(0)).GetCertificateOfOriginByCounter(
+			   customsResponse.CertificateOfOriginRequestFeedback.internalApplication);
+			var myRequestParams = new CertificateOfOriginRequestRequestParams()
             {
-                LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CertificateOfOrigin"),
-            };
+				LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration"),
+			    LoggingEntityId = entity.DeclarationId,
+			    LoggingObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.CertificateOfOrigin"),
+			    LoggingEntityId2 = entity.Id
+		    };
             return myRequestParams;
-        }
+		}
 
 
         protected override PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback CallWS(PC_NG_2280_MSG01_CertificateOfOriginRequest customRequest, CertificateOfOriginRequestRequestParams requestParams, out string exceptionMessage)

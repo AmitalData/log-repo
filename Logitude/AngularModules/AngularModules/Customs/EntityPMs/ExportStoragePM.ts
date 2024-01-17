@@ -239,6 +239,11 @@ export class ExportStoragePM {
     public set StorageStatusName(newValue: string) { if (this.storageStatusName != newValue) { this.storageStatusName = newValue; this.MarkAsDirty("StorageStatusName"); } }
        
 	 
+    private containerTypeWCO: string;
+    public get ContainerTypeWCO() { return this.containerTypeWCO; }
+    public set ContainerTypeWCO(newValue: string) { if (this.containerTypeWCO != newValue) { this.containerTypeWCO = newValue; this.MarkAsDirty("ContainerTypeWCO"); } }
+       
+	 
 
     public OldEntityPM: ExportStoragePM;
 		
