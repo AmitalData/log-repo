@@ -237,6 +237,15 @@ export class LogitudeWindow {
         }
     }
 
+    private subTitle: string = null;
+    get SubTitle() { return this.subTitle; }
+    set SubTitle(newValue: string) {
+        this.subTitle = newValue;
+        if (this.InstanceComponent) {
+            this.InstanceComponent.SubTitle = newValue;
+        }
+    }
+
 
 }
 
@@ -250,6 +259,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
     public Width: string = "750px";
     public Height: string = "500px";
     public Title: string = null;
+    public SubTitle: string = null;
     public TitleIcon: string = null;
     public CustomTitleIcon: string = null;
     public ShowModal: boolean = true;
@@ -305,6 +315,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.CreateDynamicIds();
 
         this.Title = logWindow.Title;
+        this.SubTitle = logWindow.SubTitle;
         this.TitleIcon = logWindow.TitleIcon;
         this.WindowArgs = logWindow.WindowArgs;
         this.NewWizardArgs = logWindow.NewWizardArgs;
@@ -343,6 +354,7 @@ export class LogitudeWindowTemplateComponent implements AfterViewInit {
         this.ShowHeaderButtons = true;
         this.CreateDynamicIds();
         this.Title = logWindow.Title;
+        this.SubTitle = logWindow.SubTitle;
         this.TitleIcon = logWindow.TitleIcon;
         this.WindowArgs = logWindow.WindowArgs;
         this.NewWizardArgs = logWindow.NewWizardArgs;

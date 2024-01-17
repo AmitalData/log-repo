@@ -195,12 +195,12 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         logWindow.Height = 700;
         
         let title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");      
-        logWindow.Title = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? title += `: ${this.selectedCertificateOfOrigin.COONumber}` : title;
+        logWindow.Title = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? title += `: ${this.selectedCertificateOfOrigin.COONumber }` : title;
 
         // TODO: ADD to left side title
         let CertificateOfOriginStatus = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode");
-        //logWindow.titleSide = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? CertificateOfOriginStatus += `: ${this.selectedCertificateOfOrigin.CooStatusCode}` : title ;
-        
+        logWindow.SubTitle = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? CertificateOfOriginStatus += `: ${this.selectedCertificateOfOrigin.CooStatusCodeName}` : null;
+
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent');
