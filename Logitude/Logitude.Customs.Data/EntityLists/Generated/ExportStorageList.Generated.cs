@@ -102,6 +102,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string StorageStatusName  { get; set; }
        [DataMember]
        public bool? ConnectedDeclaration  { get; set; }
+       [DataMember]
+       public string ContainerTypeWCO  { get; set; }
    }
 
 }

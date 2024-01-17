@@ -48,7 +48,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ExportUnloadingPortCode, 
 	         FinalDestinationPortCode, 
 	         IsDangerousGoods, 
-	         ActionCode,
+	         ActionCode, 
+	         ContainerTypeWCO,
 	      }
 
 
@@ -97,7 +98,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         ProcedureCurrentName, 
 	         ActionName, 
 	         ExportLoadingPortName, 
-	         StorageStatusName,
+	         StorageStatusName, 
+	         ContainerTypeWCO,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -234,6 +236,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActionCode))
             {
 				entityPOCO.ActionCode = entityPM.ActionCode;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerTypeWCO))
+            {
+				entityPOCO.ContainerTypeWCO = entityPM.ContainerTypeWCO;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -377,6 +384,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ActionCode = entityPOCO.ActionCode;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ContainerTypeWCO))
+            {
+					entityPM.ContainerTypeWCO = entityPOCO.ContainerTypeWCO;
+            }
+
 		}
 
 		public void PMToOldPM(ExportStoragePM entityPM, ExportStoragePM oldEntityPM)
@@ -511,6 +523,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ActionCode))
             {
                 oldEntityPM.ActionCode = entityPM.ActionCode;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ContainerTypeWCO))
+            {
+                oldEntityPM.ContainerTypeWCO = entityPM.ContainerTypeWCO;
             }
 			
 		}

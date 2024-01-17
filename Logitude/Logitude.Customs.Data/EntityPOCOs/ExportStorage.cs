@@ -103,6 +103,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string ActionCode { get; set; }
 	      
         public virtual ExportLogisticPermitAction ExportLogisticPermitAction { get; set; }
+        [Column("ContainerTypeWCO")]
+	    public string ContainerTypeWCO { get; set; }
     }
 }
 	 
