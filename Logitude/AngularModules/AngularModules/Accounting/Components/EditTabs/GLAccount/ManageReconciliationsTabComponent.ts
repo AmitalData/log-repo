@@ -79,6 +79,10 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
 
     }
 
+    ngOnDestroy(){
+        ReconcileEventManager._SelectedItems.Collection = [];
+        ReconcileEventManager.IsAllSelected=false;
+    }
 
     //#region Filters Properties
     private fromDate: Date;
@@ -344,7 +348,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     }
 
     CancelSelectedRecoButtonClicked() {
-        if (ReconcileEventManager._SelectedItems?.Collection?.length ?? 0) {
+        if (ReconcileEventManager._SelectedItems?.Collection == null || ReconcileEventManager._SelectedItems.Collection.length === 0) {
             const confirmWindow = new ConfirmWindow();
             const msg = TextCodeTranslator.Translate("GLAccount.O.NoSelectedItems");
             confirmWindow.Show(msg);
@@ -363,6 +367,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
                 const service = new ReconciliationExtendedPMService();
                 service.CancelSelectedReco(selectedIds).subscribe(
                     (response: ServiceResponse) => {
+                        this.RefreshButtonClicked();
                         // Handle success if needed
                         console.log('Reconciliation canceled successfully', response);
                     },
