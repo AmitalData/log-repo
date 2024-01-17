@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CB_RegularityInceptions"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RegularityRequirementID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="InterConditionsRelationshipID"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsPersonalImportIncluded"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RequirementGoodsDescription"
+    Type="varchar"
+    Size="-1">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RegularityRequirementWarnID"
+    OldNames="RegularityRequirementWarnsID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsCarnetIncluded"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="RegularityRequirementID"
+    ReferencedTable="CB_RegularityRequirements"
+    ReferencedColumn="ID"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="InterConditionsRelationshipID"
+    ReferencedTable="InterConditionsRelationships"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="RegularityRequirementWarnID"
+    ReferencedTable="RegularityRequirementWarnings"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

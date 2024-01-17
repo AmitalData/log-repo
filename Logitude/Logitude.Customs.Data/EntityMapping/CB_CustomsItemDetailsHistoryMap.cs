@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
-            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate").IsRequired();
+            this.Property(t => t.UpdateDate).HasColumnName("UpdateDate");
 
             this.Property(t => t.Title).HasColumnName("Title").HasMaxLength(255).IsUnicode(false);
 

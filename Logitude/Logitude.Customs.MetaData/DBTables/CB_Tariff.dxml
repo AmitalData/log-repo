@@ -27,7 +27,7 @@
   <Column
     Name="TradeAgreementID"
     Type="varchar"
-    Size="8">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -40,8 +40,8 @@
   </Column>
   <Relation
     ForeignKeyColumn="TradeAgreementID"
-    ReferencedTable="TradeAgreements"
-    ReferencedColumn="Code"
+    ReferencedTable="CB_TradeAgreements"
+    ReferencedColumn="ID"
     ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="CustomsItemID"

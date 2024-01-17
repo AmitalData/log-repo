@@ -1,0 +1,279 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class CB_LevyConditionPM : EntityPM
+   {
+   	  private string iD ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ID  
+	   {
+	    
+	     get
+		{
+		   return iD;
+		 }
+		 set
+		 {
+		   if(iD != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   iD=value;
+		   }
+			
+		 }
+	   }
+	  private int? levyConditionNumber ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? LevyConditionNumber  
+	   {
+	    
+	     get
+		{
+		   return levyConditionNumber;
+		 }
+		 set
+		 {
+		   if(levyConditionNumber != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LevyConditionNumber",OldValue=levyConditionNumber,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   levyConditionNumber=value;
+		   }
+			
+		 }
+	   }
+	  private string levyGoodsDescription ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LevyGoodsDescription  
+	   {
+	    
+	     get
+		{
+		   return levyGoodsDescription;
+		 }
+		 set
+		 {
+		   if(levyGoodsDescription != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LevyGoodsDescription",OldValue=levyGoodsDescription,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   levyGoodsDescription=value;
+		   }
+			
+		 }
+	   }
+	  private string customsItemID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CustomsItemID  
+	   {
+	    
+	     get
+		{
+		   return customsItemID;
+		 }
+		 set
+		 {
+		   if(customsItemID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemID",OldValue=customsItemID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   customsItemID=value;
+		   }
+			
+		 }
+	   }
+	  private string vendorID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VendorID  
+	   {
+	    
+	     get
+		{
+		   return vendorID;
+		 }
+		 set
+		 {
+		   if(vendorID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorID",OldValue=vendorID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vendorID=value;
+		   }
+			
+		 }
+	   }
+	  private string countryGroupID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CountryGroupID  
+	   {
+	    
+	     get
+		{
+		   return countryGroupID;
+		 }
+		 set
+		 {
+		   if(countryGroupID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryGroupID",OldValue=countryGroupID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   countryGroupID=value;
+		   }
+			
+		 }
+	   }
+	  private bool isCountriesGroup ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsCountriesGroup  
+	   {
+	    
+	     get
+		{
+		   return isCountriesGroup;
+		 }
+		 set
+		 {
+		   if(isCountriesGroup != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsCountriesGroup",OldValue=isCountriesGroup,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isCountriesGroup=value;
+		   }
+			
+		 }
+	   }
+	  private string countryID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CountryID  
+	   {
+	    
+	     get
+		{
+		   return countryID;
+		 }
+		 set
+		 {
+		   if(countryID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CountryID",OldValue=countryID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   countryID=value;
+		   }
+			
+		 }
+	   }
+	  private string tradeLevyID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string TradeLevyID  
+	   {
+	    
+	     get
+		{
+		   return tradeLevyID;
+		 }
+		 set
+		 {
+		   if(tradeLevyID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TradeLevyID",OldValue=tradeLevyID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   tradeLevyID=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime startDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime StartDate  
+	   {
+	    
+	     get
+		{
+		   return startDate;
+		 }
+		 set
+		 {
+		   if(startDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="StartDate",OldValue=startDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   startDate=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime endDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime EndDate  
+	   {
+	    
+	     get
+		{
+		   return endDate;
+		 }
+		 set
+		 {
+		   if(endDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EndDate",OldValue=endDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   endDate=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

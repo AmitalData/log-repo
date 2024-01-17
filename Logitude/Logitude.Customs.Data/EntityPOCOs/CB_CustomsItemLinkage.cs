@@ -1,0 +1,43 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Data.QuoteModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.ShipmentsModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+
+namespace Logitude.Customs.Data.EntityPOCOs
+{
+   
+    public class CB_CustomsItemLinkage
+    {
+	 string dbms;
+
+        [Key]
+        [Column("ID")]
+	    public string ID { get; set; }
+        [ForeignKey("ChangeTypeCode")]
+        [Column("ChangeTypeID")]
+	    public string ChangeTypeID { get; set; }
+	      
+        public virtual ChangeType ChangeTypeCode { get; set; }
+        [Column("ChangeDate")]
+	    public DateTime ChangeDate { get; set; }
+        [ForeignKey("CustomsItemDetailsHistory")]
+        [Column("CustomsItemDetailsHistoryID")]
+	    public string CustomsItemDetailsHistoryID { get; set; }
+	      
+        public virtual CB_CustomsItemDetailsHistory CustomsItemDetailsHistory { get; set; }
+        [ForeignKey("Connected_CustomsItemDetailsHistory")]
+        [Column("Connect_CustItemDetailsHistID")]
+	    public string Connect_CustItemDetailsHistID { get; set; }
+	      
+        public virtual CB_CustomsItemDetailsHistory Connected_CustomsItemDetailsHistory { get; set; }
+    }
+}
+	 

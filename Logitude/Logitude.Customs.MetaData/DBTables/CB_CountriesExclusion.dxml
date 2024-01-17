@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CB_CountriesExclusions"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="RegularityRequirementID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CountryID"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="RegularityRequirementID"
+    ReferencedTable="CB_RegularityRequirements"
+    ReferencedColumn="ID"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CountryID"
+    ReferencedTable="CustomsCountries"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

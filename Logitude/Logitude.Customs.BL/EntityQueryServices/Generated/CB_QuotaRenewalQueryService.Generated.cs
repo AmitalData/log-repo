@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class CB_QuotaRenewalQueryService: EntityQueryService<CB_QuotaRenewal,CB_QuotaRenewalKeys,CB_QuotaRenewalPM,object,CB_QuotaRenewalKeys>
+   {
+   
+        CB_QuotaRenewalRepository repository;
+		ICustomContext  context;
+        public CB_QuotaRenewalQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new CB_QuotaRenewalRepository(context);
+            Repository = repository;
+            mapping = new CB_QuotaRenewalDataMapping();
+        }
+
+        public CB_QuotaRenewalQueryService(CB_QuotaRenewalRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new CB_QuotaRenewalDataMapping();
+        }
+
+        public CB_QuotaRenewalQueryService(ICustomContext context)
+        {
+            this.repository = new CB_QuotaRenewalRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new CB_QuotaRenewalDataMapping();
+        }
+		 
+		public  CB_QuotaRenewalPM GetSingle(string id,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new CB_QuotaRenewalKeys(){ ID = id };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(CB_QuotaRenewal entityPOCO)
+        {
+            CB_QuotaRenewalKeys entityKeys = new CB_QuotaRenewalKeys() { ID = entityPOCO.ID,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

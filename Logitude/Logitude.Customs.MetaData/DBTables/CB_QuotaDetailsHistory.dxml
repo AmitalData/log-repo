@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CB_QuotaDetailsHistorys"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="StartDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EndDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntityStatusID"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="IsImportLicenseRequired"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="MeasurementUnitID"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Quantity"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QuotaComputationBasisID"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QuotaIncrementID"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RenewalMethodID"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="RenewalUntilDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="QuotaID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChangeRequestTypePriority"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="QuotaValueIncrement"
+    Type="decimal"
+    Precision="2"
+    Scale="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="PerYearFrequency"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CurrencyTypeID"
+    Type="varchar"
+    Size="3">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="EntityStatusID"
+    ReferencedTable="CustomsEntityStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="MeasurementUnitID"
+    ReferencedTable="MeasurmentUnits"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="QuotaComputationBasisID"
+    ReferencedTable="QuotaComputationBasises"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="QuotaIncrementID"
+    ReferencedTable="QuotaIncrements"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="RenewalMethodID"
+    ReferencedTable="RenewalMethods"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="QuotaID"
+    ReferencedTable="CB_Quotas"
+    ReferencedColumn="ID"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="PerYearFrequency"
+    ReferencedTable="PerYearFrequencies"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CurrencyTypeID"
+    ReferencedTable="CurrencyTypes"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>

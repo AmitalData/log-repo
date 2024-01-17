@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CB_CustomsBookAdditionsDetailsHistorys"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="UpdateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TypeID"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Title"
+    Type="varchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="StartDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EndDate"
+    Type="datetime">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EntityStatusID"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="EnglishTitle"
+    Type="varchar"
+    Size="255">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CustomsBookAdditionID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ChangeRequestTypePriority"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="EntityStatusID"
+    ReferencedTable="CustomsEntityStatuses"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CustomsBookAdditionID"
+    ReferencedTable="CB_CustomsBookAdditions"
+    ReferencedColumn="ID"
+    ReferencedTableSchema="Customs" />
+</Table>

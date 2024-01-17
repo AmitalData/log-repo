@@ -51,17 +51,32 @@ namespace Logitude.Customs.Data
 		 IDbSet<CargoStatus> CargoStatuses { get; }
 		 IDbSet<CargoType> CargoTypes { get; }
 		 IDbSet<CarWeight> CarWeights { get; }
+		 IDbSet<CB_AdditionRulesDetailsHistory> CB_AdditionRulesDetailsHistorys { get; }
 		 IDbSet<CB_ComputationMethodData> CB_ComputationMethodDatas { get; }
+		 IDbSet<CB_CountriesExclusion> CB_CountriesExclusions { get; }
+		 IDbSet<CB_CustomsBookAddition> CB_CustomsBookAdditions { get; }
+		 IDbSet<CB_CustomsBookAdditionsDetailsHistory> CB_CustomsBookAdditionsDetailsHistorys { get; }
 		 IDbSet<CB_CustomsItem> CB_CustomsItems { get; }
 		 IDbSet<CB_CustomsItemDetailsHistory> CB_CustomsItemDetailsHistorys { get; }
+		 IDbSet<CB_CustomsItemExclusion> CB_CustomsItemExclusion { get; }
+		 IDbSet<CB_CustomsItemLinkage> CB_CustomsItemLinkages { get; }
+		 IDbSet<CB_LevyCondition> CB_LevyConditions { get; }
+		 IDbSet<CB_LevyExclusion> CB_LevyExclusions { get; }
 		 IDbSet<CB_PropertiesDetailsHistory> CB_PropertiesDetailsHistorys { get; }
 		 IDbSet<CB_Quota> CB_Quotas { get; }
+		 IDbSet<CB_QuotaDetailsHistory> CB_QuotaDetailsHistorys { get; }
+		 IDbSet<CB_QuotaRenewal> CB_QuotaRenewals { get; }
+		 IDbSet<CB_RegularityInception> CB_RegularityInceptions { get; }
+		 IDbSet<CB_RegularityRequiredCertificate> CB_RegularityRequiredCertificates { get; }
+		 IDbSet<CB_RegularityRequirement> CB_RegularityRequirements { get; }
 		 IDbSet<CB_Rule> CB_Rules { get; }
 		 IDbSet<CB_RuleDetailsHistory> CB_RuleDetailsHistorys { get; }
 		 IDbSet<CB_Tariff> CB_Tariffs { get; }
 		 IDbSet<CB_TariffDetailsHistory> CB_TariffDetailsHistorys { get; }
 		 IDbSet<CB_TradeAgreement> CB_TradeAgreements { get; }
 		 IDbSet<CB_TradeAgreementHistory> CB_TradeAgreementHistories { get; }
+		 IDbSet<CB_TradeLevy> CB_TradeLevys { get; }
+		 IDbSet<CB_Vendor> CB_Vendors { get; }
 		 IDbSet<CertificateExemptionType> CertificateExemptionTypes { get; }
 		 IDbSet<CertificateOfOrigin> CertificateOfOrigins { get; }
 		 IDbSet<CertificateOfOriginInvoice> CertificateOfOriginInvoices { get; }
@@ -369,6 +384,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<RefundCustomerActivityType> RefundCustomerActivityTypes { get; }
 		 IDbSet<RegisteredWarehouseSiteType> RegisteredWarehouseSiteTypes { get; }
 		 IDbSet<RegularityPublication> RegularityPublications { get; }
+		 IDbSet<RegularityRequirementWarning> RegularityRequirementWarnings { get; }
 		 IDbSet<RegularitySource> RegularitySources { get; }
 		 IDbSet<ReleaseMessageType> ReleaseMessageTypes { get; }
 		 IDbSet<RenewalMethod> RenewalMethods { get; }

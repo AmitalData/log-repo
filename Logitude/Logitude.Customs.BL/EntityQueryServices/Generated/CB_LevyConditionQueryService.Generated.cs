@@ -1,0 +1,69 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+using Simplog.Server.Infrastructure;
+namespace Logitude.Customs.BL.EntityQueryServices
+{ 
+   public partial class CB_LevyConditionQueryService: EntityQueryService<CB_LevyCondition,CB_LevyConditionKeys,CB_LevyConditionPM,object,CB_LevyConditionKeys>
+   {
+   
+        CB_LevyConditionRepository repository;
+		ICustomContext  context;
+        public CB_LevyConditionQueryService(int tenant)
+        {
+		    context = CustomContext.GetContext(tenant);
+            MainContext = context;
+            repository = new CB_LevyConditionRepository(context);
+            Repository = repository;
+            mapping = new CB_LevyConditionDataMapping();
+        }
+
+        public CB_LevyConditionQueryService(CB_LevyConditionRepository repository)
+        {
+            this.repository = repository;
+            Repository = repository;
+            mapping = new CB_LevyConditionDataMapping();
+        }
+
+        public CB_LevyConditionQueryService(ICustomContext context)
+        {
+            this.repository = new CB_LevyConditionRepository(context);
+            this.context = context;
+
+            MainContext = context;
+            Repository = repository;
+            mapping = new CB_LevyConditionDataMapping();
+        }
+		 
+		public  CB_LevyConditionPM GetSingle(string id,bool getComposition, bool getFromCache)
+        {
+             EntityKeys = new CB_LevyConditionKeys(){ ID = id };
+
+			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
+        }
+
+       
+	    protected override EntityKeyFields GetKeys(CB_LevyCondition entityPOCO)
+        {
+            CB_LevyConditionKeys entityKeys = new CB_LevyConditionKeys() { ID = entityPOCO.ID,  };
+            return entityKeys;
+        }
+     
+	 
+   }
+   
+}
+	 

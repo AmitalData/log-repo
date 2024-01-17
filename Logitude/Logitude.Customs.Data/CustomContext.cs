@@ -136,15 +136,41 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CarWeightMap());
 	
+            modelBuilder.Configurations.Add(new CB_AdditionRulesDetailsHistoryMap());
+	
             modelBuilder.Configurations.Add(new CB_ComputationMethodDataMap());
+	
+            modelBuilder.Configurations.Add(new CB_CountriesExclusionMap());
+	
+            modelBuilder.Configurations.Add(new CB_CustomsBookAdditionMap());
+	
+            modelBuilder.Configurations.Add(new CB_CustomsBookAdditionsDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_CustomsItemMap());
 	
             modelBuilder.Configurations.Add(new CB_CustomsItemDetailsHistoryMap());
 	
+            modelBuilder.Configurations.Add(new CB_CustomsItemExclusionMap());
+	
+            modelBuilder.Configurations.Add(new CB_CustomsItemLinkageMap());
+	
+            modelBuilder.Configurations.Add(new CB_LevyConditionMap());
+	
+            modelBuilder.Configurations.Add(new CB_LevyExclusionMap());
+	
             modelBuilder.Configurations.Add(new CB_PropertiesDetailsHistoryMap());
 	
             modelBuilder.Configurations.Add(new CB_QuotaMap());
+	
+            modelBuilder.Configurations.Add(new CB_QuotaDetailsHistoryMap());
+	
+            modelBuilder.Configurations.Add(new CB_QuotaRenewalMap());
+	
+            modelBuilder.Configurations.Add(new CB_RegularityInceptionMap());
+	
+            modelBuilder.Configurations.Add(new CB_RegularityRequiredCertificateMap());
+	
+            modelBuilder.Configurations.Add(new CB_RegularityRequirementMap());
 	
             modelBuilder.Configurations.Add(new CB_RuleMap());
 	
@@ -157,6 +183,10 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new CB_TradeAgreementMap());
 	
             modelBuilder.Configurations.Add(new CB_TradeAgreementHistoryMap());
+	
+            modelBuilder.Configurations.Add(new CB_TradeLevyMap());
+	
+            modelBuilder.Configurations.Add(new CB_VendorMap());
 	
             modelBuilder.Configurations.Add(new CertificateExemptionTypeMap());
 	
@@ -772,6 +802,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new RegularityPublicationMap());
 	
+            modelBuilder.Configurations.Add(new RegularityRequirementWarningMap());
+	
             modelBuilder.Configurations.Add(new RegularitySourceMap());
 	
             modelBuilder.Configurations.Add(new ReleaseMessageTypeMap());
@@ -972,6 +1004,8 @@ namespace Logitude.Customs.Data
 			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.ReductionRate).HasPrecision(2, 2);
 				
 			modelBuilder.Entity<CB_PropertiesDetailsHistory>().Property(x => x.VatDiscountRate).HasPrecision(2, 2);
+				
+			modelBuilder.Entity<CB_QuotaDetailsHistory>().Property(x => x.QuotaValueIncrement).HasPrecision(2, 2);
 				
 			modelBuilder.Entity<ClaimImporterDeclarsPage3B>().Property(x => x.SaleAmountAfter).HasPrecision(16, 2);
 				
@@ -1687,7 +1721,31 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CB_AdditionRulesDetailsHistory> CB_AdditionRulesDetailsHistorys 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CB_ComputationMethodData> CB_ComputationMethodDatas 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_CountriesExclusion> CB_CountriesExclusions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_CustomsBookAddition> CB_CustomsBookAdditions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_CustomsBookAdditionsDetailsHistory> CB_CustomsBookAdditionsDetailsHistorys 
 	 {
 	      get; set;
 	 
@@ -1705,6 +1763,30 @@ namespace Logitude.Customs.Data
 	 
 	 }
 	
+	 public IDbSet<CB_CustomsItemExclusion> CB_CustomsItemExclusion 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_CustomsItemLinkage> CB_CustomsItemLinkages 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_LevyCondition> CB_LevyConditions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_LevyExclusion> CB_LevyExclusions 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CB_PropertiesDetailsHistory> CB_PropertiesDetailsHistorys 
 	 {
 	      get; set;
@@ -1712,6 +1794,36 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CB_Quota> CB_Quotas 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_QuotaDetailsHistory> CB_QuotaDetailsHistorys 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_QuotaRenewal> CB_QuotaRenewals 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_RegularityInception> CB_RegularityInceptions 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_RegularityRequiredCertificate> CB_RegularityRequiredCertificates 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_RegularityRequirement> CB_RegularityRequirements 
 	 {
 	      get; set;
 	 
@@ -1748,6 +1860,18 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CB_TradeAgreementHistory> CB_TradeAgreementHistories 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_TradeLevy> CB_TradeLevys 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CB_Vendor> CB_Vendors 
 	 {
 	      get; set;
 	 
@@ -3590,6 +3714,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<RegularityPublication> RegularityPublications 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RegularityRequirementWarning> RegularityRequirementWarnings 
 	 {
 	      get; set;
 	 

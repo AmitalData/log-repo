@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Table
+  Name="CB_LevyExclusions"
+  Schema="Customs"
+  DBType="Main"
+  Module="Customs">
+  <Column
+    Name="ID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      PrimaryKey="true"
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="LevyExclusionNumber"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="TradeLevyID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="VendorID"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CountryGroupID"
+    Type="varchar"
+    Size="2">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Relation
+    ForeignKeyColumn="TradeLevyID"
+    ReferencedTable="CB_TradeLevys"
+    ReferencedColumn="ID"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="VendorID"
+    ReferencedTable="CB_Vendors"
+    ReferencedColumn="ID"
+    ReferencedTableSchema="Customs" />
+  <Relation
+    ForeignKeyColumn="CountryGroupID"
+    ReferencedTable="CountryGroups"
+    ReferencedColumn="Code"
+    ReferencedTableSchema="Customs" />
+</Table>
