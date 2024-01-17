@@ -7,7 +7,8 @@
                     <tr class="TabTitleRow">
                         <td>{{'Accounting.General.O.ManageReconciliation' | TextCodeTranslationPipe}}</td>
                         <td style="width: 57px;">
-                            <button  *ngIf="CancelSelectedRecoFeature" class="Button" (click)="CancelSelectedRecoButtonClicked()">{{'GLAccount.O.CancelSelectedReco' | TextCodeTranslationPipe}}</button>
+                            <button  [disabled]="this.CancelRecoDisabled"
+                             *ngIf="CancelSelectedRecoFeature" class="Button" (click)="CancelSelectedRecoButtonClicked()">{{'GLAccount.O.CancelSelectedReco' | TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
 

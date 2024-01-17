@@ -209,6 +209,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
     }
 
+    CancelRecoDisabled=true;
     BuildColumns() {
         this.columns = [];
         this.columns.push({
@@ -272,7 +273,18 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
                         if (ReconcileEventManager._SelectedItems.Collection.includes($event.line)) {
                             ReconcileEventManager._SelectedItems.Remove($event.line);
                         }
+                        if(ReconcileEventManager.UnAllSelected){
+                            ReconcileEventManager._SelectedItems.Collection = [];
+                        }
                     }
+                }
+                if(ReconcileEventManager.IsAllSelected ==false){
+                    this.CancelRecoDisabled=false;
+                }
+                if(ReconcileEventManager._SelectedItems?.Collection == null || ReconcileEventManager._SelectedItems.Collection.length === 0){
+                    this.CancelRecoDisabled=true;
+                }else{
+                    this.CancelRecoDisabled=false;
                 }
             });
         }
@@ -387,11 +399,17 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     isAllSelected: boolean = false;
     get IsAllSelected() { return this.isAllSelected; }
     set IsAllSelected(value: boolean) {
-        if (this.isAllSelected != value) {
+        if (value) {
             this.isAllSelected = value;
             ReconcileEventManager.IsAllSelected = value;
+            ReconcileEventManager.UnAllSelected = !value;
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
 
+        }else{
+            this.isAllSelected = value;
+            ReconcileEventManager.UnAllSelected = !value;
+            ReconcileEventManager.IsAllSelected = value;
+            this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
     }
 
