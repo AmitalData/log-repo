@@ -23,6 +23,9 @@ export class CertificateOfOriginItemList {
 	MeasureType: string;
 	InvoiceConnect: string;
 	ContainerIsoCode: string;
+	PackingTypeName: string;
+	MeasureTypeName: string;
+	OriginCriterionCodeName: string;
 	
 }
  

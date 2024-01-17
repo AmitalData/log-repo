@@ -38,22 +38,29 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          ItemId = a.ItemId,
 					
 					                          OriginCriterionCode = a.OriginCriterionCode,
+
+					                          OriginCriterionCodeName = a.OriginCriterion.LocalName,
 					
 					                          MarksAndNumbers = a.MarksAndNumbers,
 					
 					                          PackageQuantity = a.PackageQuantity,
 					
 					                          PackageType = a.PackageType,
-					
-					                          ItemDescription = a.ItemDescription,
+
+                                              PackingTypeName = a.PackingType.LocalName,
+
+                                              ItemDescription = a.ItemDescription,
 					
 					                          Weight = a.Weight,
 					
 					                          MeasureType = a.MeasureType,
-					
-					                          InvoiceConnect = a.InvoiceConnect,
+
+											  MeasureTypeName = a.MeasurmentUnit.LocalName,
+
+                                                InvoiceConnect = a.InvoiceConnect,
 					
 					                          ContainerIsoCode = a.ContainerIsoCode,
+
 					
 		                    	            });
             return query;
