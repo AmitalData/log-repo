@@ -13,6 +13,7 @@ import { StatusCertificateOfOrigin } from '../../DigitalCertificateOfOriginTabCo
 import { SupplierInvoicePM } from 'Customs/EntityPMs/SupplierInvoicePM';
 import { ExportStorageListService } from 'Customs/Services/StandardLists/ExportStorageListService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { LogCellTemplateComponent } from 'Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
 
 
 
@@ -23,7 +24,7 @@ import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator'
 
 export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.CertificateOfOrigin";
-    public ObjectTableNameCertificateOfOriginInvoice: string = "Customs.CertificateOfOriginInvoice";
+    public ObjectTableNameCertificateOfOriginInvoice: string = "Customs.CertificateOriginInvoice";
     public ObjectTableNameCertificateOfOriginItem: string = "Customs.CertificateOfOriginItem";
     public DataContext = this;
     public isCorporation: boolean;
@@ -114,7 +115,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             
             mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
 
-            
+            // #101498 after this task is finish- add this field initilize - field ContainerTypeWCO
             // mappedConsignments.ContainerIsoCode = // get from exoorterstoeage; 
 
             
@@ -239,15 +240,30 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
        
     }
 
+    SelectedRow: CertificateOfOriginInvoicePM;
 
-    //#region  CertificateOfOriginInvoice properties
-    public get InvoiceNumber(): string {
-        return this.entityPM.Id;
+    onCellSelected($event, logcelltemplate:LogCellTemplateComponent, Item: CertificateOfOriginInvoicePM) {
+        this.DescriptionOfInvoice = Item.DescriptionOfInvoice;
+        debugger
+        logcelltemplate.IsDisplayMode = false;
+        logcelltemplate.IsEditMode = true;
+        // logcelltemplate.isEditable = true;
     }
-    public set InvoiceNumber(newValue: string) {
-        this.entityPM.Id = newValue;
+   
+    OnDescriptionOfInvoiceLostFocus(logCellTemplate: any, classificationTextBox: any){
+        this.DescriptionOfInvoice = classificationTextBox.DescriptionOfInvoice;
+
     }
-    //#endregion CertificateOfOriginInvoice properties
+    
+   
+    
+    _DescriptionOfInvoice:string;
+    public get DescriptionOfInvoice(): string {
+        return this._DescriptionOfInvoice;
+    }
+    public set DescriptionOfInvoice(newValue: string) {
+        this._DescriptionOfInvoice = newValue;
+    }
 
     //#region  CertificateOfOrigin properties
     public get Id(): string {

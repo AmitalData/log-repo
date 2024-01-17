@@ -1792,6 +1792,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string cooStatusCodeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CooStatusCodeName  
+	   {
+	    
+	     get
+		{
+		   return cooStatusCodeName;
+		 }
+		 set
+		 {
+		   if(cooStatusCodeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CooStatusCodeName",OldValue=cooStatusCodeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   cooStatusCodeName=value;
+		   }
+			
+		 }
+	   }
+	  private int listCounter ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int ListCounter  
+	   {
+	    
+	     get
+		{
+		   return listCounter;
+		 }
+		 set
+		 {
+		   if(listCounter != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ListCounter",OldValue=listCounter,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   listCounter=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

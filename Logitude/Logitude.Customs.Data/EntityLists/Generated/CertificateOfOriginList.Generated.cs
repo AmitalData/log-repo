@@ -162,6 +162,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string CooTypeCodeName  { get; set; }
        [DataMember]
        public string RequestReasonCodeName  { get; set; }
+       [DataMember]
+       public string CooStatusCodeName  { get; set; }
+       [DataMember]
+       public int ListCounter  { get; set; }
    }
 
 }

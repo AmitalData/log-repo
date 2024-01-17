@@ -178,7 +178,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     AddNewCertificateOfOrigin(isNewOrEditCertificateOfOrigin:StatusCertificateOfOrigin) {
         debugger
 
-        // initilize new certificate:
+        // initilize new certificatgetCertificateOfOriginse:
         const newCertificateOfOriginPM = new CertificateOfOriginPM();
         newCertificateOfOriginPM.DeclarationId = this.EntityPM.Id;
         newCertificateOfOriginPM.Tenant = this.EntityPM.Tenant;
@@ -193,13 +193,19 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1030;
         logWindow.Height = 700;
+        
+        let title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");      
+        logWindow.Title = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? title += `: ${this.selectedCertificateOfOrigin.COONumber}` : title;
+
         // TODO: ADD to left side title
-        logWindow.Title =  !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.CooTypeCode) ? TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin") + ": " + this.selectedCertificateOfOrigin.CooTypeCode : TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
+        let CertificateOfOriginStatus = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode");
+        //logWindow.titleSide = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? CertificateOfOriginStatus += `: ${this.selectedCertificateOfOrigin.CooStatusCode}` : title ;
         
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
+            this.ReloadMyScreen();
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
     }
@@ -236,10 +242,13 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
 
                     this.CertificateOfOrigins =  myResponse.Result;       
                     this.ItemsSource.Clear();    
-                    
+                    // change the counter from server
+                    let counter = 0;
                     this.CertificateOfOrigins.forEach(certificateOfOrigin=>{
+                        certificateOfOrigin.ListCounter = ++counter;
                         this.ItemsSource.Insert(certificateOfOrigin , true);
-                    })
+                    });
+                    
                 }
             }
            
