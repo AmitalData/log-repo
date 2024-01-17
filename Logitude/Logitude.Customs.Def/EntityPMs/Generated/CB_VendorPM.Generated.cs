@@ -1,0 +1,141 @@
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using System.ServiceModel.DomainServices.Server; 
+using Logitude.Server.Tools; 
+using System.Runtime.Serialization;
+using Simplog.Server.Infrastructure.DataContracts; 
+using Logitude.Customs.Def.Validators;
+  
+namespace Logitude.Customs.Def.EntityPMs
+{
+   [CustomValidation(typeof(CustomsClassLevelValidator), "ValidateClass")]
+   [DataContract]
+   public partial class CB_VendorPM : EntityPM
+   {
+   	  private string iD ;
+	  
+       [Key]
+	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ID  
+	   {
+	    
+	     get
+		{
+		   return iD;
+		 }
+		 set
+		 {
+		   if(iD != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   iD=value;
+		   }
+			
+		 }
+	   }
+	  private string title ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Title  
+	   {
+	    
+	     get
+		{
+		   return title;
+		 }
+		 set
+		 {
+		   if(title != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Title",OldValue=title,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   title=value;
+		   }
+			
+		 }
+	   }
+	  private int state ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int State  
+	   {
+	    
+	     get
+		{
+		   return state;
+		 }
+		 set
+		 {
+		   if(state != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="State",OldValue=state,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChanged(values);
+		   state=value;
+		   }
+			
+		 }
+	   }
+	  private string englishCountryName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string EnglishCountryName  
+	   {
+	    
+	     get
+		{
+		   return englishCountryName;
+		 }
+		 set
+		 {
+		   if(englishCountryName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="EnglishCountryName",OldValue=englishCountryName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   englishCountryName=value;
+		   }
+			
+		 }
+	   }
+	  private string vendorSingleStringAddress ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string VendorSingleStringAddress  
+	   {
+	    
+	     get
+		{
+		   return vendorSingleStringAddress;
+		 }
+		 set
+		 {
+		   if(vendorSingleStringAddress != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorSingleStringAddress",OldValue=vendorSingleStringAddress,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   vendorSingleStringAddress=value;
+		   }
+			
+		 }
+	   }
+   }
+   
+}
+	 

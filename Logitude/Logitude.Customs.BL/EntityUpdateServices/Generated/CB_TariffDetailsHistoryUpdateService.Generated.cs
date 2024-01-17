@@ -1,0 +1,74 @@
+ 
+using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Simplog.Server.Infrastructure;
+using Logitude.Server.Tools;
+using Simplog.Data.Helpers;
+using Logitude.Server.Tools.Counters;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using System.Web;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Def.EntityPMs;
+using Logitude.Customs.BL.EntityDataMappings;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data;
+
+namespace Logitude.Customs.BL.EntityUpdateServices
+{ 
+   public partial class CB_TariffDetailsHistoryUpdateService:EntityUpdateService<CB_TariffDetailsHistory,CB_TariffDetailsHistoryPM,CB_TariffPM>
+   {
+   
+        CB_TariffDetailsHistoryRepository entityRepository;
+        public CB_TariffDetailsHistoryUpdateService(IContext mainContext,Dictionary<string,IContext> additionalContexts, int tenant)
+            : base(mainContext,additionalContexts, tenant)
+        {
+            ICustomContext  context = mainContext as CustomContext;
+            context = context ??mainContext as ICustomContext ; //Up line is A BUG -and i need it 4 Fakes
+            Mapping = new CB_TariffDetailsHistoryDataMapping();
+            Repository = new CB_TariffDetailsHistoryRepository(context);
+        }
+
+       
+        private ICustomContext currentContext;
+        public CB_TariffDetailsHistoryUpdateService(int tenant)
+        {
+            currentContext = CustomContext.GetContext(tenant);
+        }
+
+        public CB_TariffDetailsHistoryUpdateService(ICustomContext context)
+        {
+            currentContext = context;
+        }
+
+		
+		protected override EntityKeyFields GetKeys(CB_TariffDetailsHistoryPM entityPM)
+        {
+            CB_TariffDetailsHistoryKeys entityKeys = new CB_TariffDetailsHistoryKeys() { ID = entityPM.ID };
+            return entityKeys;
+        }
+
+		
+		protected override void FillDefaultValuesOnCreate(CB_TariffDetailsHistoryPM entityPM)
+        {     
+  
+		
+	    }
+        
+		protected override void FillDefaultValuesOnUpdate(CB_TariffDetailsHistoryPM entityPM)
+        {       
+           
+        }
+		  
+		 
+	 
+   }
+   
+}
+	 

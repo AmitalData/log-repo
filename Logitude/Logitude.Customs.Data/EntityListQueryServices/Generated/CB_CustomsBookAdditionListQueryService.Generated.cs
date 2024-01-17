@@ -1,0 +1,171 @@
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Server.Infrastructure.DataContracts;
+using Simplog.Server.Infrastructure.Helpers;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Text;
+using System.Threading.Tasks;
+using System.Xml.Serialization;
+
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.EntityLists;
+
+namespace Logitude.Customs.Data.EntityListQueryServices
+{ 
+
+    public partial class CB_CustomsBookAdditionListQueryService
+    {
+         private ICustomContext context;
+        public CB_CustomsBookAdditionListQueryService(ICustomContext context)
+        {
+            this.context = context;
+        }
+
+        public List<CB_CustomsBookAdditionList> GetList(QueryOperations queryOperations, int tenant)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<CB_CustomsBookAddition> iQueryable = (from a in context.CB_CustomsBookAdditions
+                                               select a);
+            			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+
+            iQueryable = filter.GetFilteredQuery<CB_CustomsBookAddition>(nonListQueryOperation, iQueryable);
+
+            int skippedPorts = queryOperations.PageIndex;
+
+            IQueryable<CB_CustomsBookAdditionList> query2 = GetIqueryableList(iQueryable);
+           
+            query2 = filter.GetFilteredQuery<CB_CustomsBookAdditionList>(listQueryOperation, query2);
+
+            if (!string.IsNullOrEmpty(queryOperations.SortByColumnName) && !string.IsNullOrEmpty(queryOperations.SortDirectin))
+            {
+                PropertyInfo propInfo = typeof(CB_CustomsBookAdditionList).GetProperty(queryOperations.SortByColumnName);
+                List<ObjectField> CB_CustomsBookAdditionObjectFields = ObjectFieldRepository.GetObjectFieldsByObjectTableName("Customs.CB_CustomsBookAddition",tenant).ToList();
+
+                ObjectField objectField = (from a in CB_CustomsBookAdditionObjectFields
+                                           where a.FieldName == queryOperations.SortByColumnName
+                                           select a).FirstOrDefault();
+
+                if (objectField != null)
+                {
+				 if (objectField.IsCustom)
+                    {
+                        query2 = sortClass.GetSorterQuery<CB_CustomsBookAdditionList, string>(queryOperations, query2);
+                    }
+                    else
+                    {
+                     switch (objectField.DataTypeCode.ToLower())
+                     {
+                         case "ntext":
+                        case "text":
+                            {
+                                query2 = sortClass.GetSorterQuery<CB_CustomsBookAdditionList, string>(queryOperations, query2);
+                                break;
+                            }
+						case "sigdouble":
+						case "double":
+                            {
+                                query2 = sortClass.GetSorterQuery<CB_CustomsBookAdditionList, double>(queryOperations, query2);
+                                break;
+                            }
+						case "date":
+                        case "datetime":
+                            {
+                                query2 = sortClass.GetSorterQuery<CB_CustomsBookAdditionList, DateTime>(queryOperations, query2);
+                                break;
+                            }
+						case "unsinteger":
+                        case "integer":
+                            {
+                                query2 = sortClass.GetSorterQuery<CB_CustomsBookAdditionList, int>(queryOperations, query2);
+                                break;
+                            }
+                        case "boolean":
+                            {
+                                query2 = sortClass.GetSorterQuery<CB_CustomsBookAdditionList, bool>(queryOperations, query2);
+                                break;
+                            }
+						case "unsdecimal":
+						case "decimal":
+                            {
+                                query2 = sortClass.GetSorterQuery<CB_CustomsBookAdditionList, decimal>(queryOperations, query2);
+                                break;
+                            }
+                        default:
+                            {
+                                query2 = query2.OrderByDescending(d => d.ID);
+                                break;
+                            }
+                    }
+				 }
+                }
+            }
+		    else
+            {
+                query2 = query2.OrderByDescending(d => d.ID);
+            }
+			if(!queryOperations.GetAll)
+			{
+             query2 = query2.Skip(skippedPorts);
+             query2 = query2.Take(queryOperations.PageSize);
+			}
+            return query2.ToList();
+
+    
+        }
+
+         public List<CB_CustomsBookAdditionList> GetList(int tenant)
+         {
+             return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
+         }
+
+        public CB_CustomsBookAdditionList GetSingle(string id)
+        {
+            IQueryable<CB_CustomsBookAddition> CB_CustomsBookAdditionQuery = (from a in context.CB_CustomsBookAdditions
+                                                       where a.ID == id
+                                                       select a);
+
+             
+            IQueryable<CB_CustomsBookAdditionList> CB_CustomsBookAdditionListQuery = GetIqueryableList( CB_CustomsBookAdditionQuery);
+            CB_CustomsBookAdditionList CB_CustomsBookAdditionList = CB_CustomsBookAdditionListQuery.FirstOrDefault();
+            return CB_CustomsBookAdditionList;
+           
+        }
+
+        public int GetListCount(QueryOperations queryOperations)
+        {
+            GenericFilter filter = new GenericFilter();
+            GenericSort sortClass = new GenericSort();
+
+            IQueryable<CB_CustomsBookAddition> iQueryable = (from a in context.CB_CustomsBookAdditions  select a);
+
+			  			iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+
+            QueryOperations nonListQueryOperation = new QueryOperations();
+            nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false).ToList();
+            QueryOperations listQueryOperation = new QueryOperations();
+            listQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == true).ToList();
+            
+			iQueryable = filter.GetFilteredQuery<CB_CustomsBookAddition>(nonListQueryOperation, iQueryable);
+
+            IQueryable<CB_CustomsBookAdditionList> query2 = GetIqueryableList(iQueryable);
+
+            query2 = filter.GetFilteredQuery<CB_CustomsBookAdditionList>(listQueryOperation, query2);
+            int count = query2.Count();
+            return count;
+        }
+
+      
+    }
+}
+	 

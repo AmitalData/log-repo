@@ -245,8 +245,32 @@
     <None Include="DBTables\CargoStatus.dxml" />
     <None Include="DBTables\CargoType.dxml" />
     <None Include="DBTables\CarWeight.dxml" />
+    <None Include="DBTables\CB_AdditionRulesDetailsHistory.dxml" />
+    <None Include="DBTables\CB_ComputationMethodData.dxml" />
+    <None Include="DBTables\CB_CountriesExclusion.dxml" />
+    <None Include="DBTables\CB_CustomsBookAddition.dxml" />
+    <None Include="DBTables\CB_CustomsBookAdditionsDetailsHistory.dxml" />
     <None Include="DBTables\CB_CustomsItem.dxml" />
+    <None Include="DBTables\CB_CustomsItemDetailsHistory.dxml" />
+    <None Include="DBTables\CB_CustomsItemExclusion.dxml" />
+    <None Include="DBTables\CB_CustomsItemLinkage.dxml" />
+    <None Include="DBTables\CB_LevyCondition.dxml" />
+    <None Include="DBTables\CB_LevyExclusion.dxml" />
     <None Include="DBTables\CB_PropertiesDetailsHistory.dxml" />
+    <None Include="DBTables\CB_Quota.dxml" />
+    <None Include="DBTables\CB_QuotaDetailsHistory.dxml" />
+    <None Include="DBTables\CB_QuotaRenewal.dxml" />
+    <None Include="DBTables\CB_RegularityInception.dxml" />
+    <None Include="DBTables\CB_RegularityRequiredCertificate.dxml" />
+    <None Include="DBTables\CB_RegularityRequirement.dxml" />
+    <None Include="DBTables\CB_Rule.dxml" />
+    <None Include="DBTables\CB_RuleDetailsHistory.dxml" />
+    <None Include="DBTables\CB_Tariff.dxml" />
+    <None Include="DBTables\CB_TariffDetailsHistory.dxml" />
+    <None Include="DBTables\CB_TradeAgreement.dxml" />
+    <None Include="DBTables\CB_TradeAgreementHistory.dxml" />
+    <None Include="DBTables\CB_TradeLevy.dxml" />
+    <None Include="DBTables\CB_Vendor.dxml" />
     <None Include="DBTables\CertificateExemptionType.dxml" />
     <None Include="DBTables\CertificateOfOrigin.dxml" />
     <None Include="DBTables\CertificateOfOriginInvoice.dxml" />
@@ -546,6 +570,7 @@
     <None Include="DBTables\RefundCustomerActivityType.dxml" />
     <None Include="DBTables\RegisteredWarehouseSiteType.dxml" />
     <None Include="DBTables\RegularityPublication.dxml" />
+    <None Include="DBTables\RegularityRequirementWarning.dxml" />
     <None Include="DBTables\RegularitySource.dxml" />
     <None Include="DBTables\ReleaseMessageType.dxml" />
     <None Include="DBTables\RenewalMethod.dxml" />
@@ -633,7 +658,28 @@
     <None Include="DBTables\VendorStatus.dxml" />
     <None Include="DBTables\VendorTransactionType.dxml" />
     <None Include="DBTables\VendorType.dxml" />
+    <None Include="EntityFiles\CB_AdditionRulesDetailsHistory.lxml" />
+    <None Include="EntityFiles\CB_CustomsBookAddition.lxml" />
+    <None Include="EntityFiles\CB_CustomsBookAdditionsDetailsHistory.lxml" />
+    <None Include="EntityFiles\CB_CustomsItemLinkage.lxml" />
+    <None Include="EntityFiles\CB_LevyCondition.lxml" />
+    <None Include="EntityFiles\CB_LevyExclusion.lxml" />
+    <None Include="EntityFiles\CB_RegularityRequiredCertificate.lxml" />
+    <None Include="EntityFiles\CB_TradeLevy.lxml" />
+    <None Include="EntityFiles\CB_Vendor.lxml" />
+    <None Include="EntityFiles\RegularityRequirementWarning.lxml" />
+    <None Include="EntityFiles\CB_ComputationMethodData.lxml" />
+    <None Include="EntityFiles\CB_CountriesExclusion.lxml" />
+    <None Include="EntityFiles\CB_CustomsItemDetailsHistory.lxml" />
+    <None Include="EntityFiles\CB_CustomsItemExclusion.lxml" />
     <None Include="EntityFiles\CB_PropertiesDetailsHistory.lxml" />
+    <None Include="EntityFiles\CB_Quota.lxml" />
+    <None Include="EntityFiles\CB_QuotaDetailsHistory.lxml" />
+    <None Include="EntityFiles\CB_RegularityInception.lxml" />
+    <None Include="EntityFiles\CB_Rule.lxml" />
+    <None Include="EntityFiles\CB_Tariff.lxml" />
+    <None Include="EntityFiles\CB_TradeAgreement.lxml" />
+    <None Include="EntityFiles\CB_TradeAgreementHistory.lxml" />
     <None Include="EntityFiles\ConfirmationNumberTokenLog.lxml" />
     <None Include="EntityFiles\AddressCurrency.lxml" />
     <None Include="EntityFiles\CertificateOfOrigin.lxml" />
@@ -652,6 +698,8 @@
     <None Include="EntityFiles\RegularitySource.lxml" />
     <None Include="EntityFiles\ChangeType.lxml" />
     <None Include="EntityFiles\EntryExitType.lxml" />
+    <None Include="EntityFiles\CB_RuleDetailsHistory.lxml" />
+    <None Include="EntityFiles\TradeAgreementDetailsHistory_777.lxml" />
     <None Include="EntityFiles\TradeLevyStatus.lxml" />
     <None Include="EntityFiles\RegularityPublication.lxml" />
     <None Include="EntityFiles\LevyTrust.lxml" />
@@ -1199,6 +1247,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="EntityFiles\CB_CustomsItem.lxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EntityFiles\CB_TariffDetailsHistory.lxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EntityFiles\CB_RegularityRequirement.lxml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="EntityFiles\CB_QuotaRenewal.lxml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
