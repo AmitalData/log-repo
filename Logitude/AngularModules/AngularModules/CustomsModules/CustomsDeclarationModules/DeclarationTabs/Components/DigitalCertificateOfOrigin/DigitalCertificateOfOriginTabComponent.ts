@@ -178,7 +178,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     AddNewCertificateOfOrigin(isNewOrEditCertificateOfOrigin:StatusCertificateOfOrigin) {
         debugger
 
-        // initilize new certificate:
+        // initilize new certificatgetCertificateOfOriginse:
         const newCertificateOfOriginPM = new CertificateOfOriginPM();
         newCertificateOfOriginPM.DeclarationId = this.EntityPM.Id;
         newCertificateOfOriginPM.Tenant = this.EntityPM.Tenant;
@@ -205,6 +205,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         logWindow.ShowCloseButton = true;
         logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent');
         logWindow.WindowClosed.subscribe(($event: any) => {
+            this.ReloadMyScreen();
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
     }
@@ -241,10 +242,13 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
 
                     this.CertificateOfOrigins =  myResponse.Result;       
                     this.ItemsSource.Clear();    
-                    
+                    // change the counter from server
+                    let counter = 0;
                     this.CertificateOfOrigins.forEach(certificateOfOrigin=>{
+                        certificateOfOrigin.ListCounter = ++counter;
                         this.ItemsSource.Insert(certificateOfOrigin , true);
-                    })
+                    });
+                    
                 }
             }
            
