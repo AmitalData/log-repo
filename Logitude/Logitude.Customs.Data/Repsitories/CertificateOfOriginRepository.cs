@@ -9,6 +9,8 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
 
 namespace Logitude.Customs.Data.Repsitories
 {
@@ -20,8 +22,15 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+		public CertificateOfOrigin GetCertificateOfOriginByCounter(string Counter)
+		{
+			return (from a in context.CertificateOfOrigins
+					where a.Counter == Counter
+					select a).FirstOrDefault();
 
-   }
+		}
+
+	}
 
 }
    

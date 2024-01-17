@@ -102,6 +102,21 @@ export class CertificateOfOriginItemPM {
     public set ContainerIsoCode(newValue: string) { if (this.containerIsoCode != newValue) { this.containerIsoCode = newValue; this.MarkAsDirty("ContainerIsoCode"); } }
        
 	 
+    private packingTypeName: string;
+    public get PackingTypeName() { return this.packingTypeName; }
+    public set PackingTypeName(newValue: string) { if (this.packingTypeName != newValue) { this.packingTypeName = newValue; this.MarkAsDirty("PackingTypeName"); } }
+       
+	 
+    private measureTypeName: string;
+    public get MeasureTypeName() { return this.measureTypeName; }
+    public set MeasureTypeName(newValue: string) { if (this.measureTypeName != newValue) { this.measureTypeName = newValue; this.MarkAsDirty("MeasureTypeName"); } }
+       
+	 
+    private originCriterionCodeName: string;
+    public get OriginCriterionCodeName() { return this.originCriterionCodeName; }
+    public set OriginCriterionCodeName(newValue: string) { if (this.originCriterionCodeName != newValue) { this.originCriterionCodeName = newValue; this.MarkAsDirty("OriginCriterionCodeName"); } }
+       
+	 
 
     public OldEntityPM: CertificateOfOriginItemPM;
 	

@@ -17,9 +17,13 @@ namespace Logitude.Customs.Data.Repsitories
         
 		public List<CertificateOfOriginItem> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
-        }
+
+			CertificateOfOriginKeys certificateOfOriginKeys = entityKeys as CertificateOfOriginKeys;
+
+			return (from a in context.CertificateOfOriginItems
+					where a.CertificateOfOriginId == certificateOfOriginKeys.Id
+					select a).ToList();
+		}
 
    }
 
