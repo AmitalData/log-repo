@@ -14,6 +14,7 @@ import { SupplierInvoicePM } from 'Customs/EntityPMs/SupplierInvoicePM';
 import { ExportStorageListService } from 'Customs/Services/StandardLists/ExportStorageListService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogCellTemplateComponent } from 'Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
+import { SupplierInvoiceExtendedPMService } from 'Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 
 
 
@@ -47,15 +48,32 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
 
+    supplierInvoiceExtendedPMService:SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
 
         this.entityPM = EntityPM;
-        this.currentDeclaration = currentDeclaration;
+        
         this.IsNewOrEdit = IsNewOrEdit;
         this.IsDisplayOnly = IsDisplayOnly;
 
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
+        
+        this.currentDeclaration = currentDeclaration;
+
+        this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {
+            var result = response.Result;
+            if (!AppTool.IsNullOrEmpty(result)) {
+                currentDeclaration.SupplierInvoices = result;
+                this.currentDeclaration.SupplierInvoices = result;
+
+                if (currentDeclaration) {
+                    this.InitializeRelatedDeclarationData();
+                }
+            } 
+
+           
+        });
 
         if (currentDeclaration) {
             this.InitializeRelatedDeclarationData();
@@ -69,7 +87,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 this.InitilizeListsFromCertificateOfOrigin(EntityPM);
             }
         }
-
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
         this.SetPropertiesEnabled();
 
@@ -183,9 +200,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             if (!myResponse.HasError) {
                 this.currentCard = myResponse.Result;
                 this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
-
                 this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
-
+                //this.ExporterName = this.entityPM.ExporterName;
+                //this.ExporterAddress =  this.entityPM.ExporterAddress;
+                
             }
         });
     }
@@ -423,7 +441,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     public set ExporterName(newValue: string) {
         this.entityPM.ExporterName = newValue;
-
     }
 
     public get ExporterAddress(): string {

@@ -96,7 +96,6 @@ export class CertificateOfOriginComponent extends BaseComponent {
         this.EntityPM = args.CertificateOfOrigin;
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
-        debugger
 
         this.BuildTabs();
         this.RunComponent();
