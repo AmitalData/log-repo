@@ -2858,7 +2858,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   TextCode TaxReportTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "TaxReport.Q.ALLTAXREPORTS", DefaultText = @"Tax Reports",LocalDefaultText = "דוח מע\"מ", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
 			   Feature TaxReportFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "TaxReport.Q.ALLTAXREPORTS", ObjectTableId = TaxReportObjectTable.Id, Tenant = 0, NameTextCodeCode = "TaxReportFeatures.ALLTAXREPORTS", NameTextCodeDefaultText = "ALLTAXREPORTS", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,TaxReportObjectTable, addedFeatures, addedTextCodes);
 
-	        //TextCodeRepository.SubmitChanges();
+	        //TextCodeRepository.SubmitChanges();  
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
