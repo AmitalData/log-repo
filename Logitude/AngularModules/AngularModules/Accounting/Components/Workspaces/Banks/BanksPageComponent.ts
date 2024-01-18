@@ -20,7 +20,6 @@ import {CurrencyListService} from '../../../../Common/Services/StandardLists/Cur
 import {RatesTableListService} from '../../../../Infrastructure/Services/StandardLists/RatesTableListService';
 //import {List} from '../../../../Infrastructure/DataContracts/Dashboard/List';
 import {AppTool} from '../../../../Infrastructure/Tools';
-import {ReconcileEventManager} from '../../../Utilities/ReconcileEventManager';
 import {BankAccountExtendedListService} from '../../../Services/ExtendedLists/BankAccountExtendedListService';
 import {BankAccountSummary} from '../../../DataContracts/AccountingSummery';
 import {PaymentChequeSummary} from '../../../DataContracts/AccountingSummery';

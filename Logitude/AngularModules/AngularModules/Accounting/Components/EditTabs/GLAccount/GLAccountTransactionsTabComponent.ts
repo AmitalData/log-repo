@@ -118,7 +118,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.amountForeign = value;
         }
     }
-    constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef) {
+
+    reconcileEventManager: ReconcileEventManager = new ReconcileEventManager();
+
+    constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.UsingLogGridV2 = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0] ? true : false;
@@ -137,7 +140,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         //this.GetNonReconciledTransactionsCount();
 
         // Set GLAccountReconcileMethodCode to use it in reconcile window
-        ReconcileEventManager.GLAccountReconcileMethodCode = this.EntityPM.ReconcileMethodCode;
+        this.reconcileEventManager.GLAccountReconcileMethodCode = this.EntityPM.ReconcileMethodCode;
 
         //Set Currency LOV editability
         if (this.EntityPM.IsMultiCurrency) {
@@ -1107,8 +1110,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
                 // original amount currency
                 var originalAmountCurrency;
-                if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
-                else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
+                if (this.reconcileEventManager.GLAccountReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
+                else if (this.reconcileEventManager.GLAccountReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
 
 
                 var windowArgs: any = {};

@@ -17,7 +17,6 @@ import { GLAccountList } from '../../EntityLists/GLAccountList';
 import { GLAccountListService } from '../../Services/StandardLists/GLAccountListService';
 import { GLAccountExtendedListService } from '../../Services/ExtendedLists/GLAccountExtendedListService';
 import { LedgerTransactionExtendedListService } from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
-import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
 import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
 import { CardList } from 'Common/EntityLists/CardList';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';

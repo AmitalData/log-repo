@@ -7,7 +7,6 @@ import { GLAccountPM } from '../../../EntityPMs/GLAccountPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
-import { ReconcileEventManager } from '../../../Utilities/ReconcileEventManager';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
@@ -57,8 +56,6 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
         this.LoadDefaultValues();
 
         this.LoadGridData();
-
-        ReconcileEventManager.GLAccountReconcileMethodCode = this.glaccountPM.ReconcileMethodCode;
 
         this.UIProperties.SetEnabled("CurrencyId", "GLAccount", this.glaccountPM.IsMultiCurrency);
 
