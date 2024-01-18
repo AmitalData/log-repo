@@ -142,6 +142,8 @@
                                                [autoLoad]="true" 
                                                [QueryChangeEvent]="onQueryChangeEvent"
                                                (rowSelectedEvent)="onRowSelected($event)"
+                                               [PassAdditionalDataToTemplates]="true"
+                                               [GridAdditionalData]="{ReconcileEventManager:reconcileEventManager}"
                                                [IsCustomTemplate]="true">
                                 </logitude-grid>
                             </div>
