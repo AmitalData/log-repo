@@ -327,7 +327,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
 
 
     CancelButtonClicked() {
-        this.EntityPM.RejectChanges();
+        // this.EntityPM.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
 }
