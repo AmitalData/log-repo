@@ -197,7 +197,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
         };
         var logWindow = new LogitudeWindow();
         logWindow.Width = 1030;
-        logWindow.Height = 700;
+        logWindow.Height = 725;
         
         let title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");      
         logWindow.Title = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? title += `: ${this.selectedCertificateOfOrigin.COONumber }` : title;
@@ -275,16 +275,9 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     }
 
     getCertificateOfOrigins() {
-        const filters = new ApiQueryFilters();    
-        filters.PageSize = 200;
-        filters.PageIndex = 0;
-        filters.GetAll = false;
-        filters.GetCount = true;
-
-        filters.addAdditionalFilter("DeclarationId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string", false);
-        filters.addAdditionalFilter("Tenant", this.EntityPM.Tenant, null, null, "Equals", true, false, false, "string");
-
-        this.certificateOfOriginListService.getByFilters(filters).subscribe(myResult => {   
+       
+        this.certificateOfOriginWebService.GetCertificateOfOriginByID(this.EntityPM.Id,this.EntityPM.Tenant).subscribe(myResult => {   
+            
             if (myResult == null) {
                 this.CertificateOfOrigins =  [];
             }

@@ -12,6 +12,7 @@ using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Data;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -36,6 +37,27 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 entityPM.OpenByUserName = User.Code;
             }
+			var certificateOfOriginTypeCodeEnumQueryService = new CertificateOfOriginTypeCodeEnumQueryService(entityPOCO.Tenant);
+			var certificateOfOriginTypeCodeEnum = certificateOfOriginTypeCodeEnumQueryService.GetSingle(entityPOCO.CooTypeCode, false, true);
+			if (certificateOfOriginTypeCodeEnum != null)
+			{
+				entityPM.CooTypeCodeName = certificateOfOriginTypeCodeEnum.LocalName;
+			}
+			var requestReasonCodeEnumQueryService = new RequestReasonCodeEnumQueryService(entityPOCO.Tenant);
+			var requestReasonCodeEnum = requestReasonCodeEnumQueryService.GetSingle(entityPOCO.RequestReasonCode, false, true);
+			if (requestReasonCodeEnum != null)
+			{
+				entityPM.RequestReasonCodeName = requestReasonCodeEnum.LocalName;
+			}
+			var certificateOfOriginStatusCodeEnumQueryService = new CertificateOfOriginStatusCodeEnumQueryService(entityPOCO.Tenant);
+			var certificateOfOriginStatusCodeEnum = certificateOfOriginStatusCodeEnumQueryService.GetSingle(entityPOCO.CooStatusCode, false, true);
+			if (certificateOfOriginStatusCodeEnum != null)
+			{
+				entityPM.CooStatusCodeName = certificateOfOriginStatusCodeEnum.LocalName;
+			}
+
+
+		
         }
    }
 
