@@ -950,7 +950,9 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
                                     this.PaymentTermId = this.glaccount.PaymentTerms;
                                 else
                                     this.PaymentTermId = this.glaccount.PaymentTermId;
-                                
+                                if (AppTool.IsNullOrEmpty(this.PaymentTermId)) {
+                                    this.PaymentTermId = SessionLocator.TenantPM.PaymentTermId;
+                                }
                                 this.EntityPM.VendorGLAccountId = this.glaccount.Id;
                                 this.EntityPM.IsEquipment = this.glaccount.IsEquipmentVendor;
                             }
