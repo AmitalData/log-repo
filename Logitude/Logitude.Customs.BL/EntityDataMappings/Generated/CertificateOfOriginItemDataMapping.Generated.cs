@@ -57,7 +57,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Weight, 
 	         MeasureType, 
 	         InvoiceConnect, 
-	         ContainerIsoCode,
+	         ContainerIsoCode, 
+	         PackingTypeName, 
+	         MeasureTypeName, 
+	         OriginCriterionCodeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();

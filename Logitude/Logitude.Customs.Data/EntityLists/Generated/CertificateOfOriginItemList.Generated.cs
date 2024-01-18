@@ -44,6 +44,12 @@ namespace Logitude.Customs.Data.EntityLists
        public string InvoiceConnect  { get; set; }
        [DataMember]
        public string ContainerIsoCode  { get; set; }
+       [DataMember]
+       public string PackingTypeName  { get; set; }
+       [DataMember]
+       public string MeasureTypeName  { get; set; }
+       [DataMember]
+       public string OriginCriterionCodeName  { get; set; }
    }
 
 }

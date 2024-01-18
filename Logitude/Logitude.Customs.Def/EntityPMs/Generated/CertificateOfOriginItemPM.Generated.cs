@@ -365,6 +365,75 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string packingTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string PackingTypeName  
+	   {
+	    
+	     get
+		{
+		   return packingTypeName;
+		 }
+		 set
+		 {
+		   if(packingTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="PackingTypeName",OldValue=packingTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   packingTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string measureTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MeasureTypeName  
+	   {
+	    
+	     get
+		{
+		   return measureTypeName;
+		 }
+		 set
+		 {
+		   if(measureTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MeasureTypeName",OldValue=measureTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   measureTypeName=value;
+		   }
+			
+		 }
+	   }
+	  private string originCriterionCodeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OriginCriterionCodeName  
+	   {
+	    
+	     get
+		{
+		   return originCriterionCodeName;
+		 }
+		 set
+		 {
+		   if(originCriterionCodeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OriginCriterionCodeName",OldValue=originCriterionCodeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   originCriterionCodeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

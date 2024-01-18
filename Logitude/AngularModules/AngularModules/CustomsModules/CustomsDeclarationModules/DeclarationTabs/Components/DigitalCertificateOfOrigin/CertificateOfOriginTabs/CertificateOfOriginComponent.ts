@@ -45,8 +45,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     certificateOfOriginListService: CertificateOfOriginListService = new CertificateOfOriginListService();
 
-    
-    
+
     public entityResourceService: EntityResourceService = new EntityResourceService();
     public DataContext: any = this;
 
@@ -72,35 +71,34 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         });
         this.entityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
 
-        this.entityArgs.EntityArgEventEmitter.subscribe(
-            theMessage => {
+            this.entityArgs.EntityArgEventEmitter.subscribe(
+                theMessage => {
 
-                if (theMessage == "ReloadEntity") {
-                         this.certificateOfOriginPMService.get(this.EntityPM.Id).subscribe((response: any) => {
-                             var result = response.Result;
-                             if (!AppTool.IsNullOrEmpty(result)) {
-                                 this.EntityPM = result;
-                                 this.entityArgs.EntityPM = this.EntityPM;
-                             }
+                    if (theMessage == "ReloadEntity") {
+                        this.certificateOfOriginPMService.get(this.EntityPM.Id).subscribe((response: any) => {
+                            var result = response.Result;
+                            if (!AppTool.IsNullOrEmpty(result)) {
+                                this.EntityPM = result;
+                                this.entityArgs.EntityPM = this.EntityPM;
+                            }
 
-                         });
-                     }
-                 }
+                        });
+                    }
+                }
 
-             );
+            );
              this.isLoad=true;
         });
     }
 
 
-    
+
     SetWindowArgs(args: any) {
 
         this.EntityPM = args.CertificateOfOrigin;
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
-        debugger
-        
+
         this.BuildTabs();
         this.RunComponent();
         this.entityArgs.EntityPM = this.EntityPM;
@@ -182,7 +180,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
     private MOREDATA: any = null;
     private REQUESTSHEET: any = null;
     private ANSWERTOCERTIFICATE: any = null;
-   
+
     public ClientItemsList = null;
     public SelectedTab: TabItem;
     SelectionChanged() {
@@ -200,7 +198,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                         }
                         break;
                     }
-            
+
                     case "MOREDATA": {
                         if (this.MOREDATA == null) {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent', myLocation.viewContainerRef)
@@ -211,7 +209,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                         }
                         break;
                     }
-            
+
                     case "REQUESTSHEET": {
                         if (this.REQUESTSHEET == null) {
                             this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
@@ -223,68 +221,61 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                                         this.REQUESTSHEET.MyRequestOnly = false;
                                         this.REQUESTSHEET.SetEntityArgs(this.entityArgs);
                                     });
- 
+
                             });
                         }
                         break;
                     }
-            
+
                     case "ANSWERTOCERTIFICATE": {
                         // Add logic for ANSWERTOCERTIFICATE case here
                         break;
                     }
-            
+
                     // Add more cases as needed for other options
-            
+
                 }
             }
-            
-          
+
+
         }
     }
 
     SaveButtonClicked() {
+        if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
+            return;
+        }
 
-        console.log(this.EntityPM);
-        debugger
-        
         this.EntityPM.IsUnitedInvoices ?  this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
-        
+
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        
+
         if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsNew) {
             this.CurrentSession.CloseCurrentWindow();
             this.certificateOfOriginPMService.insert(this.EntityPM).subscribe((response: any) => {
                 var result = response.Result;
             });
         }
-        
+
         else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit){
             this.isEntityChange = true;
-            
+
             this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
                 var result = response.Result;
                 this.CurrentSession.CurrentEditComponent.SaveChanges();
                 this.CurrentSession.CloseCurrentWindow();
-
             });
-
         }
-        // if (this.ClientItemsList != null) {
-        //     this.ClientItemsList.forEach(element => {
-        //         this.clientItemPMService.update(element.ClientItemPM).subscribe((response: any) => {
-        //         });
-        //     });
-
-        // }
-
     }
 
    
   
    
     async SendButtonClicked(customSendOptionsArgs:any){
-
+        
+        if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) { // manddatory fields
+            return;
+        }
         var requestParams= new CertificateOfOriginRequestRequestParams();
         requestParams.LoggingEnabled = true;
         requestParams.LoggingUserId = SessionLocator.LoggedUserId;
