@@ -844,13 +844,13 @@
     <div style="flex-grow: 1000;">
         <div class="GeneratedGridContainer" *ngIf="columnsReady">
             <logitude-grid *ngIf="!UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
-                [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
-                [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
+                [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns" [GridAdditionalData]="{ReconcileEventManager:reconcileEventManager}"
+                [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" [PassAdditionalDataToTemplates]="true" (DataLoaded)="OnDataLoaded($event)"
                 [IsCustomTemplate]="true" [MyScrollTop]="10000000">
             </logitude-grid>
             <logitude-grid-v2 *ngIf="UsingLogGridV2" GridWidth="100%" GridHeight="100%" [ObjectTable]="ObjectTableName"
-                [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns"
-                [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" (DataLoaded)="OnDataLoaded($event)"
+                [dataSource]="DataSource" [MenuHeaderchangeevent]="MenuHeaderchangeevent" [columns]="columns" [GridAdditionalData]="{ReconcileEventManager:reconcileEventManager}"
+                [autoLoad]="true" [QueryChangeEvent]="onQueryChangeEvent" [PassAdditionalDataToTemplates]="true" (DataLoaded)="OnDataLoaded($event)"
                 [IsCustomTemplate]="true" [MyScrollTop]="10000000">
             </logitude-grid-v2>
 

@@ -8,7 +8,6 @@ import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalEx
 import {ARPaymentExtendedListService} from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
 import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
 import {AppTool} from '../../../Infrastructure/Tools';
-import {ReconcileEventManager} from '../../Utilities/ReconcileEventManager';
 
 import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 @Component({
@@ -34,7 +33,6 @@ export class GlAccountInterestTransactionsListTemplate {
     public isRTL: boolean = false;
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
-
     constructor(private CD: ChangeDetectorRef) {
         this.SetDefaultVariables();
     }

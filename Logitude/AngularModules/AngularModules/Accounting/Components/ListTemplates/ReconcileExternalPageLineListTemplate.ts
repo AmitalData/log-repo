@@ -1,4 +1,4 @@
-﻿import {Component,ChangeDetectorRef} from '@angular/core';
+import {Component,ChangeDetectorRef} from '@angular/core';
 import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
 import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
 import {OnInit, Output, EventEmitter, ComponentRef, QueryList} from '@angular/core';
@@ -30,7 +30,7 @@ export class ReconcileExternalPageLineListTemplate {
         this.checkBoxState = isChecked;
 
     }
-
+    reconcileEventManager: ReconcileEventManager;
     constructor(private CD: ChangeDetectorRef) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
@@ -39,7 +39,7 @@ export class ReconcileExternalPageLineListTemplate {
         this.rowData = rowData;
         this.fieldName = fieldName;
         this.AdditionalData = MyAdditionalData;
-
+        this.reconcileEventManager = this.AdditionalData?.GridAdditionalData?.ReconcileEventManager;
         var isDestroyed: boolean = this.CD['destroyed'];
         if (!isDestroyed) {
             this.CD.detectChanges();
@@ -49,18 +49,17 @@ export class ReconcileExternalPageLineListTemplate {
     CheckBoxClicked(checked: boolean) {
         console.log("clicked: ", checked);
         this.rowData['IsChecked'] = checked;
-
-        if(!ReconcileEventManager.CheckBoxChecked)
-            ReconcileEventManager.CheckBoxChecked = new EventEmitter();
-        ReconcileEventManager.CheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData.rowIndex });
+        if (!this.reconcileEventManager.CheckBoxChecked)
+            this.reconcileEventManager.CheckBoxChecked = new EventEmitter();
+        this.reconcileEventManager.CheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData.rowIndex });
 
     }
     ExtPageCheckBoxClicked(checked: boolean) {
         console.log("clicked: ", checked);
         // this.rowData['IsChecked'] = checked;
 
-        
-        ReconcileEventManager.ExtPageCheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData.rowIndex });
+
+        this.reconcileEventManager.ExtPageCheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData.rowIndex });
 
     }
 

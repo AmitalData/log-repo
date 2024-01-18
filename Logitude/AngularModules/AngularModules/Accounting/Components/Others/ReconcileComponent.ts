@@ -288,7 +288,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     isFullAccounting: boolean = SessionLocator.TenantPM.AccountingActivated;
     CurrencyFilters: ApiQueryFilters = new ApiQueryFilters();
-
+    reconcileEventManager:ReconcileEventManager=new ReconcileEventManager();
     constructor(public CD: ChangeDetectorRef) {
         super();
 
@@ -296,8 +296,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     ngOnDestroy() {
-        AppTool.KillEventEmitter(ReconcileEventManager.CheckBoxChecked);
-        ReconcileEventManager.CheckBoxChecked = new EventEmitter();
+        AppTool.KillEventEmitter(this.reconcileEventManager.CheckBoxChecked);
+        this.reconcileEventManager.CheckBoxChecked = new EventEmitter();
         this.IsComponentDestroyed = true;
     }
 
@@ -319,7 +319,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.windowArgs = args;
 
             this.GLAccountPM = args.GLAccountPM;
-            ReconcileEventManager.GLAccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
+            this.reconcileEventManager.GLAccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
             if (!AppTool.IsNullOrEmpty(args.IsMultiWithReconcileMethodCodeEqualOne)) {
                 this.IsMultiWithReconcileMethodCodeEqualOne = args.IsMultiWithReconcileMethodCodeEqualOne;
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Reconciliation.O.WarningMultiRecoOne"));
@@ -1349,7 +1349,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNotes", 'Text', TextCodeTranslator.Translate("ARInvoice.F.InternalNotes")));
 
-        ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
+        this.reconcileEventManager.CheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
                 var row = $event.line;
                 var rowId = $event.line.Id;

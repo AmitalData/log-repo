@@ -9,7 +9,6 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 //import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
 import { LogitudeWindow } from '../../../Controls/Windows/LogitudeWindow';
