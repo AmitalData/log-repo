@@ -27,7 +27,7 @@
         height: 21px!important;
         display: flex;
         align-items: center;
-        justify-content: flex-start;
+        justify-content: center;
     }
 </style>
 <table *ngIf="EntityPM != null &&  EntityPM.Direction=='E'">
@@ -132,11 +132,11 @@
                                     </log-column>
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.O.CooNumber' | TextCodeTranslationPipe"
-                                        [binding]="'CooNumber'" [width]="'135'" [Alignment]="'right'">
+                                        [binding]="'COONumber'" [width]="'135'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
-                                                    <span>{{item.CooNumber}}</span>
+                                                    <span>{{item.COONumber}}</span>
                                                 </div>
                                             </log-cell-template>
                                         </ng-template>

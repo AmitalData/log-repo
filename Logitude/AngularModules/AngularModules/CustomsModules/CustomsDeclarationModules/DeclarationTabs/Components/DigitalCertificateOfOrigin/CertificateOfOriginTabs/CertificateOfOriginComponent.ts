@@ -336,7 +336,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
     }
     
     CancelButtonClicked() {
-        this.EntityPM.RejectChanges();
+        // this.EntityPM.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
 }
