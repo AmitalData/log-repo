@@ -24,8 +24,12 @@ import { Guid } from '../../../../../Infrastructure/Utilities/Guid';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { CertificateOfOriginPMService } from 'Customs/Services/StandardPMs/CertificateOfOriginPMService';
 import { CertificateOfOriginPM } from 'Customs/EntityPMs/CertificateOfOriginPM';
+import { CertificateOfOriginWebService } from 'Customs/Services/WebServices/CertificateOfOriginWebService';
+import { CertificateOfOriginRequestRequestParams } from 'Customs/DataContract/RequestParams/CertificateOfOriginRequestRequestParams';
 import { CertificateOfOriginListService } from 'Customs/Services/StandardLists/CertificateOfOriginListService';
-import { SendRequestVIA } from 'Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomSendOptionsArgs, SendRequestVIA } from 'Customs/DataContract/RequestParams/RequestParamsBase';
+import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
+import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from 'CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
 
 declare var attachmentUploader, ResultAsArray: any;
 
@@ -36,7 +40,7 @@ declare var attachmentUploader, ResultAsArray: any;
     providers: [DeclarationExtendedListService]
 })
 
-export class DigitalCertificateOfOriginTabComponent extends BaseComponent implements OnInit {
+export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMassaging implements OnInit {
     public onQueryChangeEvent: any;
     public EntityPM: DeclarationPM;
 
@@ -49,6 +53,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
     filterImageParameter: ImageParameter;
     certificateOfOriginPMService: CertificateOfOriginPMService;
     certificateOfOriginListService: CertificateOfOriginListService = new CertificateOfOriginListService();
+    certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
 
 
     public ItemsSource: ObservableCollection;
@@ -215,8 +220,55 @@ export class DigitalCertificateOfOriginTabComponent extends BaseComponent implem
         this.OnRowSelected(this.SelectedRow);
     }
 
-    SendMsgCooStatusCode() {
+
+    async SendMsgCooStatusCode(item) {
+        var requestParams= new CertificateOfOriginRequestRequestParams();
+        requestParams.LoggingEnabled = true;
+        requestParams.LoggingUserId = SessionLocator.LoggedUserId;
+        requestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.CertificateOfOrigin')[0].Id;
+        requestParams.LoggingEntityId = item.Id;
+        requestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        requestParams.Tenant = SessionLocator.Tenant;
+        requestParams.CertificateOfOriginId = item.Id;
+        requestParams.DeclarationId = this.EntityPM.Id;
+        requestParams.CustomFileNo = this.EntityPM.CustomFileNo;
+        requestParams.RequestReasonCode = 13;
+
+
+        
+        CustomMessageProgressComponent
+            .ShowProgressBar(this.CurrentSession,requestParams.PBId,
+            "שליחת שאילתא לסטטוס תעודה", true)
+            .then((res) => {
+                
+                this.ResponseData = res;
+                this.OnMassageDisplayMethod();
+            }
+            ).catch((err) => {
+                
+                this.ValidationErrorsList.push(err);
+            });
+
+
+        this.certificateOfOriginWebService.PostCertificateOfOriginRequest(requestParams)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+                
+            });
+    }
+    OnMassageDisplayMethod() {
+        
+        if (this.RequestParams == null) {
+            this.RequestParams = new CertificateOfOriginRequestRequestParams();
+        }
+
+        this.RefreshScreen();
+    }
+    RefreshScreen() {
      
+        if (this.ResponseData == null) {
+            return;
+        }
+
     }
     CopyOfCertificate() {
      
