@@ -188,7 +188,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 _DBExportStoragePM.ExportUnloadingPortCode = _UnifreigntExportStorage.General.FirstDestinationInternationalSiteID;
                 _DBExportStoragePM.FinalDestinationPortCode = _UnifreigntExportStorage.General.FinalDestinationInternationalSiteID;
 
-                if (_UnifreigntExportStorage.CargoIdentifier != null)
+				if (_UnifreigntExportStorage.CargoIdentifier != null)
                 {
                     _DBExportStoragePM.CargoTypeCode = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierType;
                     _DBExportStoragePM.FirstCargoID = _UnifreigntExportStorage.CargoIdentifier.CargoIdentifierKey1;
@@ -249,11 +249,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
 
                 //_DBExportStoragePM.StorageStatus = (_UnifreigntExportStorage.StorageStatus ?? "").ToLower();
                 _DBExportStoragePM.StorageStatus = _UnifreigntExportStorage.StorageStatus;
+				if (_UnifreigntExportStorage.ContainerDetails != null)
+				{
+					_DBExportStoragePM.ContainerTypeWCO = _UnifreigntExportStorage.ContainerDetails.ContainerTypeWCO;
+				}
 
 
-
-
-                exportStorageUpdateService.Update(_DBExportStoragePM, true);
+				exportStorageUpdateService.Update(_DBExportStoragePM, true);
 
                 scope.Complete();
             }
