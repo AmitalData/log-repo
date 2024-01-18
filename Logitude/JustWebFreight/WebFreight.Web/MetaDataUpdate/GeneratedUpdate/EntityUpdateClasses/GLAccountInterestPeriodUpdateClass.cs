@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountInterestPeriodUpdateClass
    {  		
-		public const string HashString = "22c3970217e3ea07ab070147083531cb";
+		public const string HashString = "1f7af35d133dd49af166eef25c7eaf0a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "GLAccount Interest Period",
-			      				    Code =  "7ab1",
+			      				    Code =  "0fab",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -683,7 +683,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CreditInterestRateBaseId",
 					  						DefaultText =  "Credit Interest Rate Base",
-					  						FullLocalDefaultText =  "אחוז תוספת  ריבית זכות",
+					  						FullLocalDefaultText =  "בסיס ריבית זכות",
+					  						ListFieldLable =  "CreditInterestRateBaseIdListLable",
+					  						ListLableDefaultText =  "בסיס ריבית זכות",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "InterestBasesType",
 					  						NavigationPropertyName =  "CreditInterestBasesType",
