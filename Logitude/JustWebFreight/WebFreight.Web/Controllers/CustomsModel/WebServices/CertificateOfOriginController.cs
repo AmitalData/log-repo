@@ -1,4 +1,6 @@
-﻿using Logitude.CustomsMessaging.Common.RequestParams;
+﻿using Logitude.Customs.BL.EntityQueryServices;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.CustomsMessaging.Common.RequestParams;
 using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.CustomsMessaging.MessagingServices;
 using System;
@@ -33,5 +35,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-    }
+
+		public HttpResponseMessage GetCertificateOfOriginByID(string declarationId ,int tenant)
+		{
+			try
+			{
+				CertificateOfOriginQueryService certificateOfOriginQueryService =  new CertificateOfOriginQueryService(tenant);
+                 var certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(declarationId, tenant);
+
+				return Request.CreateResponse(HttpStatusCode.OK, certificateOfOrigins);
+			}
+			catch (Exception ex)
+			{
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+		}
+	}
 }
