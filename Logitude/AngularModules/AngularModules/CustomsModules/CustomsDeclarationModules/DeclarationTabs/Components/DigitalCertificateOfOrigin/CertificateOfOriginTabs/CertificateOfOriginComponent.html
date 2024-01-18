@@ -14,11 +14,6 @@
 
 
 <table>
-    <tr *ngIf="ValidationErrorsList != null && ValidationErrorsList.length > 0" style="height:1px;">
-        <td colspan="4">
-            <ValidationSummary [ItemsSource]="ValidationErrorsList" [SingleLine]="false"></ValidationSummary>
-        </td>
-    </tr>
 
     <tr>
         <td colspan="4">
@@ -103,11 +98,11 @@
                     (click)="CancelButtonClicked()">{{'Customs.General.B.Cancel'  |TextCodeTranslationPipe}}</button>
                 </div>
                 <div style="width: 57px;vertical-align: bottom;">
-                    <button class="RedButton" (click)="SaveButtonClicked()"  [disabled]="!IsSendDocumentEnabled || IsDisplayOnly">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
+                    <button class="RedButton" (click)="SaveButtonClicked()"  [disabled]="IsDisplayOnly">{{'General.B.Save' | TextCodeTranslationPipe}}</button>
                 </div>
                 
                 <div style="width: 110px;vertical-align: bottom;">
-                    <custom-send-options [IsDisabled]="!IsSendDocumentEnabled || IsDisplayOnly" [AvoidDoubleClick]="true" #MyCustomSendOptionsComponent (SendButtonClicked)="SendButtonClicked($event)">
+                    <custom-send-options [IsDisabled]="IsDisplayOnly" [AvoidDoubleClick]="true" #MyCustomSendOptionsComponent (SendButtonClicked)="SendButtonClicked($event)">
                     </custom-send-options>
                 </div>
                 

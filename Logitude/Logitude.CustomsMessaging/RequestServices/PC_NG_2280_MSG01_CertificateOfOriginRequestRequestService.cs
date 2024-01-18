@@ -90,7 +90,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			ExporterId = certificateOfOrigin.ExporterVat,
 				ExporterName = certificateOfOrigin.ExporterName,
 				ExporterAddress = certificateOfOrigin.ExporterAddress,
-				ExporterCountry = certificateOfOrigin.ExporterVat,
+				ExporterCountry = certificateOfOrigin.ExporterCountry,
 				TradeAgreementCountry1 = certificateOfOrigin.TradeAgreementCountry1,
 				TradeAgreementCountry2 = certificateOfOrigin.TradeAgreementCountry2,
 				TradeAgreementGroupOfCountries = Convert.ToInt32(certificateOfOrigin.TradeAgreementGroupOfCountries),
@@ -138,13 +138,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			{
 				var CertificateOfOriginInvoiceDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetail()
 				{
-                    InvoiceNum = item.InvoiceNumber,
-					InvoiceDate =Convert.ToDateTime(item.InvoiceDate),
+					InvoiceNum = item.InvoiceNumber,
+					InvoiceDate = Convert.ToDateTime(item.InvoiceDate),
 					InvoiceSum = Convert.ToInt32(item.InvoiceSum),
 					CurrencyType = item.CurrencyTypeCode,
 					DescriptionOfInvoice = item.DescriptionOfInvoice,
 					IsInvoicesForPrint = item.IsInvoicesForPrint,
 				};
+				List<PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetailCertificateOfOriginRequestItemDetail> CertificateOfOriginRequestItemDetailList = new List<PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetailCertificateOfOriginRequestItemDetail>();
                 foreach (var item1 in CertificateOfOriginItems)
                 {
 					
@@ -163,10 +164,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					    	MeasureType = item1.MeasureType,
 					    
 					    };
-					    
-                        CertificateOfOriginInvoiceDetail.CertificateOfOriginRequestItemDetail.Append(CertificateOfOriginRequestItemDetail);
+						CertificateOfOriginRequestItemDetailList.Add(CertificateOfOriginRequestItemDetail);
 					}
+					
 				}
+				CertificateOfOriginInvoiceDetail.CertificateOfOriginRequestItemDetail = CertificateOfOriginRequestItemDetailList.ToArray();
+
 				CertificateOfOriginInvoicesDetails.Add(CertificateOfOriginInvoiceDetail);
 
 			}
@@ -200,6 +203,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				}
 
 			}
+			List<PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetailCertificateOfOriginRequestItemDetail> CertificateOfOriginRequestItemDetailList = new List<PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetailCertificateOfOriginRequestItemDetail>();
+
 			foreach (var item1 in CertificateOfOriginItems)
 			{
 				var IsInvoiceConnect = CertificateOfOriginInvoices.Exists(x=> item1.InvoiceConnect.Split(',').Contains(x.InvoicesIdUry.ToString()));
@@ -221,9 +226,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 					};
 
-					CertificateOfOriginInvoiceDetail.CertificateOfOriginRequestItemDetail.Append(CertificateOfOriginRequestItemDetail);
+					CertificateOfOriginRequestItemDetailList.Add(CertificateOfOriginRequestItemDetail);
 				}
 			}
+			CertificateOfOriginInvoiceDetail.CertificateOfOriginRequestItemDetail = CertificateOfOriginRequestItemDetailList.ToArray();
+
 			CertificateOfOriginInvoicesDetails.Add(CertificateOfOriginInvoiceDetail);
 
 			return CertificateOfOriginInvoicesDetails.ToArray();

@@ -14,6 +14,7 @@ import { SupplierInvoicePM } from 'Customs/EntityPMs/SupplierInvoicePM';
 import { ExportStorageListService } from 'Customs/Services/StandardLists/ExportStorageListService';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogCellTemplateComponent } from 'Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
+import { SupplierInvoiceExtendedPMService } from 'Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
 
 
 
@@ -38,7 +39,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public IsNewOrEdit: StatusCertificateOfOrigin;
     public IsDisplayMode: boolean = true;
     public IsEditMode: boolean = true;
-
+public isReady:boolean;
     controlEnabled: boolean;
     IsDisplayOnly: boolean = false;
     public ErrorsList: string[];
@@ -47,33 +48,59 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
 
+    supplierInvoiceExtendedPMService:SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
 
         this.entityPM = EntityPM;
-        this.currentDeclaration = currentDeclaration;
+        
         this.IsNewOrEdit = IsNewOrEdit;
         this.IsDisplayOnly = IsDisplayOnly;
 
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
+        
+        this.currentDeclaration = currentDeclaration;
 
-        if (currentDeclaration) {
-            this.InitializeRelatedDeclarationData();
+        this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {
+            var result = response.Result;
+            if (!AppTool.IsNullOrEmpty(result)) {
+                var cardListService = new CardListService();
+                cardListService.getSingleFromCache(currentDeclaration.CustomerId).subscribe((myResponse: any) => {
+                    if (!myResponse.HasError) {
+                        this.currentCard = myResponse.Result;
+                        this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
+                        this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
+                      
+                currentDeclaration.SupplierInvoices = result;
+                this.currentDeclaration.SupplierInvoices = result;
 
-            if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
-                // build map of the list to initialize
-                this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
+            
 
-            }
-            else if (IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
-                this.InitilizeListsFromCertificateOfOrigin(EntityPM);
-            }
-        }
+                if (currentDeclaration) {
+                    this.InitializeRelatedDeclarationData();
+         
+                     if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
+                         // build map of the list to initialize
+                         this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
+         
+                     }
+                     else if (IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
+                         this.InitilizeListsFromCertificateOfOrigin(EntityPM);
+                     }
+                 }
+                 this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
+                 this.SetPropertiesEnabled();
+         
+                 this.SetWarning();
+                 this.isReady=true;
+                }
+            });
+            } 
+    
+           
+        });
 
-        this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
-        this.SetPropertiesEnabled();
-
-        this.SetWarning();
+  
 
     }
 
@@ -114,7 +141,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             }
             mappedConsignments.ItemDescription = consignment.CargoDescription;
             mappedConsignments.PackageType = consignmentPackage.PackageTypeCode;
-
+            mappedConsignments.PackingTypeName =consignmentPackage.PackageTypeName;
+            mappedConsignments.MeasureTypeName = consignmentPackage.GrossMassMeasureTypeName;
             mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
 
             // #101498 after this task is finish- add this field initilize - field ContainerTypeWCO
@@ -169,7 +197,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetEnabled("IsUnitedInvoices", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("TradeAgreementGroupOfCountries", this.ObjectTableName, enabled);
         this.UIProperties.SetEnabled("IsInvoicesForPrint", "Customs.CertificateOriginInvoice", enabled);
-
     }
 
     SetWarning() {
@@ -184,9 +211,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             if (!myResponse.HasError) {
                 this.currentCard = myResponse.Result;
                 this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
-
                 this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
-
+                //this.ExporterName = this.entityPM.ExporterName;
+                //this.ExporterAddress =  this.entityPM.ExporterAddress;
+                
             }
         });
     }
@@ -244,29 +272,26 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
 
 
-
-    // OnDescriptionOfInvoiceLostFocus(logCellTemplate: any, descriptionTextBox: any){
-    //     this.DescriptionOfInvoice = descriptionTextBox.DescriptionOfInvoice;
-    // }
-    // OnMarksAndNumbersLostFocus(logCellTemplate: any, marksAndNumbersTextBox: any){
-    //     this.DescriptionOfInvoice = marksAndNumbersTextBox.MarksAndNumbers;
-    // }
-    // OnItemDescriptionLostFocus(logcelltemplate,ItemDescriptionTextBox){
-    //     this.DescriptionOfInvoice = marksAndNumbersTextBox.MarksAndNumbers;
-    // }
-
-
     // Edit Mode region:
     onCellSelected($event, logcelltemplate: LogCellTemplateComponent, Item: any) {
         logcelltemplate.IsDisplayMode = false;
         logcelltemplate.IsEditMode = true;
     }
-    // OnPackageTypeLostFocus(logcelltemplate,PackageTypeTextBox, value){
-    //     this.PackageType = PackageTypeTextBox.DisplayValue;
-    //     value = PackageTypeTextBox.DisplayValue;
-    //     debugger
-    // }
+    OnPackageTypeLostFocus(logcelltemplate,PackageTypeTextBox, value){
+        this.PackingTypeName = PackageTypeTextBox.DisplayValue;
+        value = PackageTypeTextBox.DisplayValue;
+        debugger
+    }
 
+    SetLocalName(entity, fieldName,item) {
+        debugger;
+        if (!AppTool.IsNullOrEmpty(entity)) {
+            this.CertificateOriginItemItems.Collection.filter(x=>x.ItemSerial ==item.ItemSerial)[0][fieldName] = entity.LocalName;
+        } else {
+            this[fieldName] = null;
+        }
+
+    }
     _ItemId: string;
     public get ItemId(): string {
         return this._ItemId;
@@ -330,6 +355,16 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this._PackageType = newValue;
     }
 
+    
+    _PackingTypeName: string;
+    public get PackingTypeName(): string {
+        return this._PackingTypeName;
+    }
+    public set PackingTypeName(newValue: string) {
+        this._PackingTypeName = newValue;
+    }
+
+   
     _Weight: number;
     public get Weight(): number {
         return this._Weight;
@@ -424,7 +459,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     public set ExporterName(newValue: string) {
         this.entityPM.ExporterName = newValue;
-
     }
 
     public get ExporterAddress(): string {

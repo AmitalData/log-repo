@@ -30,6 +30,14 @@ namespace Logitude.Customs.Data.Repsitories
 
 		}
 
+		public List<CertificateOfOrigin> GetCertificateOfOriginsByDeclarationId(string declarationId, int tenant)
+		{
+			return (from a in context.CertificateOfOrigins
+					where a.Tenant == tenant && a.DeclarationId == declarationId 
+					select a).ToList();
+
+		}
+
 	}
 
 }

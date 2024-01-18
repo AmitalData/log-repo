@@ -25,6 +25,8 @@ import { MessageWindow } from 'Controls/Windows/MessageWindow';
 import { SendRequestVIA } from 'Customs/DataContract/RequestParams/RequestParamsBase';
 import { CertificateOfOriginWebService } from 'Customs/Services/WebServices/CertificateOfOriginWebService';
 import { CertificateOfOriginRequestRequestParams } from 'Customs/DataContract/RequestParams/CertificateOfOriginRequestRequestParams';
+import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from 'CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
+import { CertificateOfOriginListService } from 'Customs/Services/StandardLists/CertificateOfOriginListService';
 
 
 @Component({
@@ -33,16 +35,17 @@ import { CertificateOfOriginRequestRequestParams } from 'Customs/DataContract/Re
     providers: [EntityArgs],
 })
 
-export class CertificateOfOriginComponent extends BaseComponent {
+export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
     public right: any;
-    public CustomSendOptionsButtonCanForcePersonalSign: any;
 
     public TabsItemsSource: TabItem[] = [];
     @ViewChildren(LocationDirective) public AllLocations: QueryList<LocationDirective>;
     public EntityPM: CertificateOfOriginPM;
     certificateOfOriginPMService: CertificateOfOriginPMService = new CertificateOfOriginPMService();
+    certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
+    certificateOfOriginListService: CertificateOfOriginListService = new CertificateOfOriginListService();
 
-    
+
     public entityResourceService: EntityResourceService = new EntityResourceService();
     public DataContext: any = this;
 
@@ -50,7 +53,6 @@ export class CertificateOfOriginComponent extends BaseComponent {
     requestParams: CreateClientRequestParams;
     responseData: INF_MSG_GenericResponseData;
     clientMessageService: ClientMessagesService = new ClientMessagesService();
-    public ValidationErrorsList: string[] = [];
     private CurrentSession = SessionLocator.SelectedSession;
     public isEntityChange: boolean = false;
     public DecalarationData:DeclarationPM;
@@ -69,35 +71,34 @@ export class CertificateOfOriginComponent extends BaseComponent {
         });
         this.entityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
 
-        this.entityArgs.EntityArgEventEmitter.subscribe(
-            theMessage => {
+            this.entityArgs.EntityArgEventEmitter.subscribe(
+                theMessage => {
 
-                if (theMessage == "ReloadEntity") {
-                         this.certificateOfOriginPMService.get(this.EntityPM.Id).subscribe((response: any) => {
-                             var result = response.Result;
-                             if (!AppTool.IsNullOrEmpty(result)) {
-                                 this.EntityPM = result;
-                                 this.entityArgs.EntityPM = this.EntityPM;
-                             }
+                    if (theMessage == "ReloadEntity") {
+                        this.certificateOfOriginPMService.get(this.EntityPM.Id).subscribe((response: any) => {
+                            var result = response.Result;
+                            if (!AppTool.IsNullOrEmpty(result)) {
+                                this.EntityPM = result;
+                                this.entityArgs.EntityPM = this.EntityPM;
+                            }
 
-                         });
-                     }
-                 }
+                        });
+                    }
+                }
 
-             );
+            );
              this.isLoad=true;
         });
     }
 
 
-    
+
     SetWindowArgs(args: any) {
 
         this.EntityPM = args.CertificateOfOrigin;
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
-        debugger
-        
+
         this.BuildTabs();
         this.RunComponent();
         this.entityArgs.EntityPM = this.EntityPM;
@@ -179,7 +180,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
     private MOREDATA: any = null;
     private REQUESTSHEET: any = null;
     private ANSWERTOCERTIFICATE: any = null;
-   
+
     public ClientItemsList = null;
     public SelectedTab: TabItem;
     SelectionChanged() {
@@ -197,7 +198,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
                         }
                         break;
                     }
-            
+
                     case "MOREDATA": {
                         if (this.MOREDATA == null) {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent', myLocation.viewContainerRef)
@@ -208,7 +209,7 @@ export class CertificateOfOriginComponent extends BaseComponent {
                         }
                         break;
                     }
-            
+
                     case "REQUESTSHEET": {
                         if (this.REQUESTSHEET == null) {
                             this.entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
@@ -220,120 +221,122 @@ export class CertificateOfOriginComponent extends BaseComponent {
                                         this.REQUESTSHEET.MyRequestOnly = false;
                                         this.REQUESTSHEET.SetEntityArgs(this.entityArgs);
                                     });
- 
+
                             });
                         }
                         break;
                     }
-            
+
                     case "ANSWERTOCERTIFICATE": {
                         // Add logic for ANSWERTOCERTIFICATE case here
                         break;
                     }
-            
+
                     // Add more cases as needed for other options
-            
+
                 }
             }
-            
-          
+
+
         }
     }
 
     SaveButtonClicked() {
+        if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
+            return;
+        }
 
-        console.log(this.EntityPM);
-        debugger
-        
         this.EntityPM.IsUnitedInvoices ?  this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
-        
+
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        
+
         if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsNew) {
             this.CurrentSession.CloseCurrentWindow();
             this.certificateOfOriginPMService.insert(this.EntityPM).subscribe((response: any) => {
                 var result = response.Result;
             });
         }
-        
+
         else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit){
             this.isEntityChange = true;
-            
+
             this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
                 var result = response.Result;
                 this.CurrentSession.CurrentEditComponent.SaveChanges();
                 this.CurrentSession.CloseCurrentWindow();
-
             });
-
-        }
-        // if (this.ClientItemsList != null) {
-        //     this.ClientItemsList.forEach(element => {
-        //         this.clientItemPMService.update(element.ClientItemPM).subscribe((response: any) => {
-        //         });
-        //     });
-
-        // }
-
-    }
-
-
-   
-    OnMassageDisplayMethod() {
-        if (this.requestParams == null) {
-            this.requestParams = new CreateClientRequestParams();
-        }
-        if (this.responseData == null) {
-            this.responseData = new INF_MSG_GenericResponseData();
         }
     }
-    IsSendDocumentEnabled:boolean = true;
+
    
   
-    SendButtonClicked(customSendOptionsArgs:any){
-        var certificateOfOriginWebService = new CertificateOfOriginWebService();
+   
+    async SendButtonClicked(customSendOptionsArgs:any){
+        
+        if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) { // manddatory fields
+            return;
+        }
         var requestParams= new CertificateOfOriginRequestRequestParams();
         requestParams.LoggingEnabled = true;
         requestParams.LoggingUserId = SessionLocator.LoggedUserId;
         requestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.CertificateOfOrigin')[0].Id;
         requestParams.LoggingEntityId = this.EntityPM.Id;
-        // TODO: change SendRequestVIA PARAMETER by the option are choosed
-        requestParams.RequestVIA = SendRequestVIA.WebServiceInteractive;
+        requestParams.RequestVIA = customSendOptionsArgs.SendRequestVIA;
         requestParams.Tenant = SessionLocator.Tenant;
         requestParams.CertificateOfOriginId = this.EntityPM.Id;
-        requestParams.DeclarationId = this.EntityPM.Id;
+        requestParams.DeclarationId = this.DecalarationData.Id;
         requestParams.CustomFileNo = this.DecalarationData.CustomFileNo;
         requestParams.RequestReasonCode = Number(this.EntityPM.RequestReasonCode);
-
-        debugger
-        this.CurrentSession.StartBusyIndicator("Sending...");
-        certificateOfOriginWebService.PostCertificateOfOriginRequest(requestParams)
-        .subscribe((myServiceResponse: ServiceResponse) => {
-            this.CurrentSession.CurrentEditComponent.LoadCompleted.emit(true);
-                this.CurrentSession.StopBusyIndicator();
-                if (!myServiceResponse.Result.HasException) {
-                    let messageWindow = new MessageWindow();
-                    messageWindow.Width = 300;
-                    messageWindow.Height = 180;
-                    messageWindow.Show("מסר סטטוס הצהרות נשלח בהצלחה");
-                }
-                else {
-                    let messageWindow = new MessageWindow();
-                    messageWindow.Width = 300;
-                    messageWindow.Height = 180;
-                    messageWindow.Title = "שליחה נכשלה";
-                    messageWindow.RTL = true;
-                    messageWindow.ShowErrorIcon = true;
-                    messageWindow.Show(myServiceResponse.Result.UserMessage);
-                }
-        });
+        
+        CustomMessageProgressComponent
+            .ShowProgressBar(this.CurrentSession,requestParams.PBId,
+            "שליחת שאילתא לסטטוס תעודה", true)
+            .then((res) => {
+                
+                this.ResponseData = res;
+                this.OnMassageDisplayMethod();
+            }
+            ).catch((err) => {
+                
+                this.ValidationErrorsList.push(err);
+            });
 
 
+        this.certificateOfOriginWebService.PostCertificateOfOriginRequest(requestParams)
+            .subscribe((myServiceResponse: ServiceResponse) => {
+                
+            });
     }
+    OnMassageDisplayMethod() {
+        
+        if (this.RequestParams == null) {
+            this.RequestParams = new CertificateOfOriginRequestRequestParams();
+        }
 
+        this.RefreshScreen();
+    }
+    RefreshScreen() {
+     
+        if (this.ResponseData == null) {
+            return;
+        }
+        this.certificateOfOriginListService.getSingle(this.ResponseData.AppicationId).subscribe(myResult => {   
+           
+               
+                if (!myResult.HasError && myResult.Result) {
+
+                    this.EntityPM =  myResult.Result;       
+                    
+                    
+                }
+           
+           
+        });
+      
+    }
     
     CancelButtonClicked() {
-        this.EntityPM.RejectChanges();
+        // this.EntityPM.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
     }
 }
