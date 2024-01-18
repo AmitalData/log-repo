@@ -1297,6 +1297,7 @@
     <Compile Include="EntityQueryServiceExt\CustomsDocumentQueryServiceExt.cs" />
     <Compile Include="EntityQueryServices\CargoIdentifireTypeQueryService.cs" />
     <Compile Include="EntityQueryServices\CertificateOfOriginInvoiceQueryService.cs" />
+    <Compile Include="EntityQueryServices\CertificateOfOriginItemQueryService.cs" />
     <Compile Include="EntityQueryServices\CertificateOfOriginStatusCodeEnumQueryService.cs" />
     <Compile Include="EntityQueryServices\ClientItemQueryService.cs" />
     <Compile Include="EntityQueryServices\ConfirmationTypeQueryService.cs" />

@@ -19,11 +19,15 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPMToPOCO(CertificateOfOriginItemPM entityPM, CertificateOfOriginItem entityPOCO)
         {
-            if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Id))
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
-                entityPOCO.Id = entityPM.Id;
+                if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Id))
+                {
+                    entityPOCO.Id = entityPM.Id;
 
+                }
             }
+
         }
 
         public void CustomPOCOToPM(CertificateOfOriginItemPM entityPM, CertificateOfOriginItem entityPOCO)

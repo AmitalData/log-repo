@@ -10,6 +10,7 @@ import { SessionInfo } from '../../../Infrastructure/Utilities/SessionInfo';
 import { CLAIM_2340_ClaimRequestRequestParams } from '../../DataContract/RequestParams/CLAIM_2340_ClaimRequestRequestParams';
 import { ContinuousRequestOnClaimFileRequestParams } from '../../DataContract/RequestParams/ContinuousRequestOnClaimFileRequestParams';
 import { CertificateOfOriginRequestRequestParams } from 'Customs/DataContract/RequestParams/CertificateOfOriginRequestRequestParams';
+import { CertificateOfOriginPM } from 'Customs/EntityPMs/CertificateOfOriginPM';
 
 
 @Injectable()
@@ -67,6 +68,43 @@ export class CertificateOfOriginWebService {
         }
 
         );
+    }
+
+    delete(certificateOfOriginId: string) {
+
+
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            var mappedEntity:CertificateOfOriginPM;
+            // mappedEntity = this.MapJsonToEntityPM(entityPM, false);
+
+            return this._http.delete(this._apiUrl + '/Delete/?' + 'CertificateOfOriginId=' + certificateOfOriginId , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var pm = response;
+                if (pm) {
+                    var mappedResult: CertificateOfOriginPM;
+                    //   mappedResult = this.MapJsonToEntityPM(pm, true, entityPM);
+                    serviceResponse.Result = mappedResult;
+                }
+
+
+                return serviceResponse;
+
+            }),catchError(ServiceHelper.HandleServiceError));
+
+        }
+
+        );
+
     }
    
 }
