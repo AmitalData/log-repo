@@ -24,7 +24,7 @@
         white-space: normal;
     }
 </style>
-<table>
+<table *ngIf="isReady">
     <tr style="height: 28px;" *ngIf="ErrorsList?.length > 0 || IsDisplayOnly">
         <td *ngIf="IsDisplayOnly">
             <div style="width:90%;text-align:center">
@@ -483,25 +483,16 @@
                                             [RIndex]="item.InvoicesIdUry">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
-                                                <span>{{item.PackageType}}</span>
-                                                <!-- <span>{{item.PackageTypeName}}</span> -->
+                                                <span>{{item.PackingTypeName}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <!-- <LogLov #PackageTypeTextBox [ObjectFieldName]="'PackageType'"
-                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'" [DataContext]="item"
-                                                    [LookUpTableName]="'Customs.PackingType'"
-                                                    (SelectedItemChanged)="item.PackageType = $event"
-                                                    [DisplayMemberPath]="'Code'" [HideColumns]="true" [FocusOnMe]="true"
-                                                    [SelectedValue]="PackageType" 
-                                                    (LostFocus)="OnPackageTypeLostFocus(logcelltemplate,PackageTypeTextBox, item.PackageType)">
-                                                </LogLov> -->
-                                                <!-- change it to log lov -->
-                                                <LogTextBox #PackageTypeTextBox [ObjectFieldName]="'PackageType'"
-                                                    [DataContext]="item" [FocusOnMe]="true" [InputType]="'nText'"
-                                                    [IsAccumulative]="true" [Text]="PackageType"
-                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
-                                                    [HideColumns]="true">
-                                                </LogTextBox>
+                                                <LogLov [ObjectFieldName]="'PackageType'"
+                                                [ObjectTableName]="'Customs.CertificateOfOriginItem'"
+                                                [DataContext]="item" [LookUpTableName]="'Customs.PackingType'"
+                                                [HideColumns]="true"
+                                                (SelectedItemChanged)="SetLocalName($event, 'PackingTypeName',item)"
+                                                [FocusOnMe]="'true'">
+                                            </LogLov>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
@@ -537,25 +528,17 @@
                                             [RIndex]="item.InvoicesIdUry">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
-                                                <!-- <span>{{item.MeasureTypeName}}</span> -->
-                                                <span>{{item.MeasureType}}</span>
+                                                <span>{{item.MeasureTypeName}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
-                                                <!-- <LogLov #MeasureTypeTextBox [ObjectFieldName]="'MeasureType'"
+                                                <LogLov #MeasureTypeTextBox [ObjectFieldName]="'MeasureType'"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'" [DataContext]="item"
                                                     [LookUpTableName]="'Customs.MeasurmentUnit'"
-                                                    (SelectedItemChanged)="item.MeasureType = $event"
-                                                    [DisplayMemberPath]="'Code'" [HideColumns]="true" [FocusOnMe]="true"
-                                                    [SelectedValue]="MeasureType" 
-                                                    (LostFocus)="OnMeasureTypeLostFocus(logcelltemplate,MeasureTypeTextBox, item.MeasureType)">
-                                                </LogLov> -->
-                                                <!-- change it to log lov -->
-                                                <LogTextBox #MeasureTypeTextBox [ObjectFieldName]="'MeasureType'"
-                                                    [DataContext]="item" [FocusOnMe]="true" [InputType]="'nText'"
-                                                    [IsAccumulative]="true" [Text]="MeasureType"
-                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
-                                                    [HideColumns]="true">
-                                                </LogTextBox>
+                                                    (SelectedItemChanged)="SetLocalName($event, 'MeasureTypeName',item)"
+                                                   [HideColumns]="true" [FocusOnMe]="true"
+                                                    
+                                                    >
+                                                </LogLov>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
