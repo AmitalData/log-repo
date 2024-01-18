@@ -35,7 +35,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
             User User = UserQueryServiceRepository.GetUserById(entityPM.OpenByUser, entityPOCO.Tenant);
             if(User != null)
             {
-                entityPM.OpenByUserName = User.Code;
+                entityPM.OpenByUserName = User.ExternalCode;
             }
 			var certificateOfOriginTypeCodeEnumQueryService = new CertificateOfOriginTypeCodeEnumQueryService(entityPOCO.Tenant);
 			var certificateOfOriginTypeCodeEnum = certificateOfOriginTypeCodeEnumQueryService.GetSingle(entityPOCO.CooTypeCode, false, true);
