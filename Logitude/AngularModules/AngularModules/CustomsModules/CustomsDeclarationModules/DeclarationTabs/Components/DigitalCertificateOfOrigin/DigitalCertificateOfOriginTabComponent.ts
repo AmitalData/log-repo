@@ -181,8 +181,6 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     isEdit =  StatusCertificateOfOrigin.IsEdit;
     selectedCertificateOfOrigin= new CertificateOfOriginPM();
     AddNewCertificateOfOrigin(isNewOrEditCertificateOfOrigin:StatusCertificateOfOrigin) {
-        debugger
-
         // initilize new certificatgetCertificateOfOriginse:
         const newCertificateOfOriginPM = new CertificateOfOriginPM();
         newCertificateOfOriginPM.DeclarationId = this.EntityPM.Id;
@@ -270,12 +268,13 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
         }
 
     }
+
+    // #101512 copy CertificateOfOrigin
     CopyOfCertificate() {
      
     }
 
     getCertificateOfOrigins() {
-       
         this.certificateOfOriginWebService.GetCertificateOfOriginByID(this.EntityPM.Id,this.EntityPM.Tenant).subscribe(myResult => {   
             
             if (myResult == null) {
@@ -308,45 +307,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
 
-    DataSource = {
-        pageSize: 10,
-        rowCount: null,
-        sortingCol: "SequenceNumeric",
-        sortingDir: "Ascending",
-        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
-            var tempo = this.getRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
-            return tempo;
-
-        },
-    };
-
-    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-        if (filters == null) {
-            filters = new ApiQueryFilters();
-        }
-        filters.PageSize = take;
-        filters.PageIndex = skip;
-        filters.GetAll = false;
-        filters.GetCount = true;
-        filters.SortBy = "SequenceNumeric";
-        filters.SortDirection = "Ascending";
-        if (this.SelectedRow) {
-
-            // if (this.SelectedRow.IsAccumalated) {
-            //     filters.addAdditionalFilter("IsParent", true, null, null, "Equals", false, false, false, "boolean");
-            // }
-            // filters.addAdditionalFilter("DeclarationId", this.SelectedRow.DeclarationId, null, null, "Equals", false, false, false, "string");
-            // filters.addAdditionalFilter("CounterKey", this.SelectedRow.InvoiceCounterKey, null, null, "Equals", false, false, false, "number");
-        }
-        else {
-            filters.addAdditionalFilter("DeclarationId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        }
-        return this._entityListService.getByFilters("Customs.CertificateOfOrigin", filters);
-    }
-
-
     filterAgrs: ApiQueryFilters;
-    
     public CertificateOfOriginComprehensiveUpdate: CertificateOfOriginPM[] = [];
     IsComprehensiveUpdateChecked(checked: boolean, item: CertificateOfOriginPM) {
 
@@ -357,29 +318,40 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     }
 
     EditButtonClicked(item: CertificateOfOriginPM) {
-        debugger
         this.selectedCertificateOfOrigin = item;
         this.AddNewCertificateOfOrigin(this.isEdit)
     }
 
 
     DeleteButtonClicked(item: CertificateOfOriginPM) {
-        var confirmWindow = new ConfirmWindow();
-        confirmWindow.Width = 300;
-        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+        if(!item) return;
+        this.selectedCertificateOfOrigin = item;
+        if(this.selectedCertificateOfOrigin.IsSubmitted){
+            
+            var confirmWindow = new ConfirmWindow();
+            confirmWindow.Width = 300;
+            // TODO: change to text code
+            confirmWindow.Show("האם למחוק את התעודה?");
+            confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+            confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        debugger
+                        // TODO: Finish fix error in server side:
+                        // this.DeleteSelected(this.selectedCertificateOfOrigin)
+                    }
+                    else if (confirmWindow.No) {
+                        this.selectedCertificateOfOrigin = null;
+                    }
+            });
+        }
+        else{
+            // TODO: Display some msg? 
+        }
 
-        confirmWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeleteInvoice"));
-        confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
-        confirmWindow.WindowClosed.subscribe((event: any) => {
-            if (confirmWindow.Yes) {
-                // TODO: add a delete function
-            }
-            else if (confirmWindow.No) {
-               // TODO: a canclation function
-            }
-        });
+
+
+        
     }
-
 
     lastDeletedItem: CertificateOfOriginPM;
     DeleteSelected(item: CertificateOfOriginPM) {
@@ -388,18 +360,23 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
 
         var SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
             SaveCompletedEvent.unsubscribe();
-            // this.certificateOfOriginPMService.delete(item.DeclarationId, item.InvoiceCounterKey).subscribe((myResponse: ServiceResponse) => {
-
-            //     if (!myResponse.HasError) {
-            //         this.ItemsSource.Remove(item);
-            //         this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            //         this.CurrentSession.StopBusyIndicator();
-            //     }
-            // });
+            this.certificateOfOriginWebService.delete(item.Id).subscribe((myResponse: ServiceResponse) => {
+                
+                if (!myResponse.HasError) {
+                    this.ItemsSource.Remove(item);
+                    this.ReloadMyScreen();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
         });
 
         this.CurrentSession.CurrentEditComponent.SaveChanges();
+     
+       
+
     }
+  
 
    
     public ShowMessage(message: string) {

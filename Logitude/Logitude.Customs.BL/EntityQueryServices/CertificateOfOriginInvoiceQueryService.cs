@@ -15,7 +15,20 @@ namespace Logitude.Customs.BL.EntityQueryServices
 {
 	public partial class CertificateOfOriginInvoiceQueryService : EntityQueryService<CertificateOfOriginInvoice, CertificateOfOriginInvoiceKeys, CertificateOfOriginInvoicePM, CertificateOfOriginPM, CertificateOfOriginKeys>
 	{
-		
 
-	}
+        public List<CertificateOfOriginInvoicePM> GetCertificateOfOriginInvoicesByCertificateId(string certificateId, int tenant)
+        {
+            var CertificateOfOriginInvoiceList = repository.GetCertificateOfOriginInvoicesByCertificateId(certificateId, tenant);
+            List<CertificateOfOriginInvoicePM> CertificateOfOriginInvoicePMList = new List<CertificateOfOriginInvoicePM>();
+
+            if (CertificateOfOriginInvoiceList != null)
+            {
+                foreach (var Invoice in CertificateOfOriginInvoiceList)
+                {
+                    CertificateOfOriginInvoicePMList.Add(this.GetEntityPM(Invoice, true, new CertificateOfOriginInvoiceKeys { Id = Invoice.Id }));
+                }
+            }
+            return CertificateOfOriginInvoicePMList;
+        }
+    }
 }
