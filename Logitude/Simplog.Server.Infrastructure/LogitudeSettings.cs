@@ -162,6 +162,7 @@ namespace Simplog.Server.Infrastructure
         public static string WorkflowStorageAccountName { get; set; }
         public static string WorkflowStorageAccountKey { get; set; }
 		public static string WindWardSettings { get; set; }
+		public static string LogitudeIISURL { get; set; }
 
 	}
 

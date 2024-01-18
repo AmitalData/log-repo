@@ -22,6 +22,10 @@ using WebFreight.Web.Helpers;
 using WebFreight.Web.Security;
 using Logitude.BL.CommonDataModel.EntityLists;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using Simplog.Server.Infrastructure;
+using System.Text;
+using Newtonsoft.Json;
+using System.Configuration;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -87,7 +91,37 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
                 else
                 {
-                    string urlImage = reportHelper.GetSpecificPageFromStimulReportAsBase64(reportFliter);
+
+					bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true"; 
+                    string urlImage = string.Empty;
+
+					if (isAppService && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
+                    {
+                        string URI = LogitudeSettings.LogitudeIISURL.TrimEnd('/') + "/api/Report/" + "GetSpecificPageFromStimulReportAsBase64";
+
+                        using (var client = new HttpClient())
+                        {
+                            string serializedObject = JsonConvert.SerializeObject(reportFliter);
+                            StringContent content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+                            var result1 = client.PostAsync(URI, content);
+
+                            result1.Wait();
+                            if (result1.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                
+								  var jsonData = result1.Result.Content.ReadAsStringAsync().Result;
+								var urlResponse = JsonConvert.DeserializeObject<UrlResponse>(jsonData.ToString());
+								urlImage = urlResponse.url;
+								reportFliter.PageCount = urlResponse.pageCount;
+							}
+
+                        }
+                    }
+                    else
+                    {
+						urlImage = reportHelper.GetSpecificPageFromStimulReportAsBase64(reportFliter);
+					}
+						 
                     if (string.IsNullOrEmpty(urlImage)) throw new Exception("Can't find file (" + reportFliter.ReportKey + "@" + reportFliter.ReportName + ")");
                     return Request.CreateResponse(HttpStatusCode.OK, GetBuildStimulReportResult(reportFliter, urlImage));
                 }
@@ -135,24 +169,54 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 
                 if (result != null)
                 {
-                    stiReport.LoadDocument(result);
 
-                    if (type == "Excel")
-                    {
 
-                        extension = "xlsx";
-                        StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
-                        setting.UseOnePageHeaderAndFooter = true;
-                        StiExcel2007ExportService service = new StiExcel2007ExportService();
-                        service.ExportExcel(stiReport, memoryStream, setting);
-                    }
+					bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
 
+					if (isAppService && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
+					{
+						string URI = LogitudeSettings.LogitudeIISURL.TrimEnd('/') + "/api/Report/" + "GetMemoryStreamForExcelOrPdf";
+
+						using (var client = new HttpClient())
+						{
+                            var memoryStreamForExcelOrPdfRequest = new { Result = result, Type = type };
+
+							string serializedObject = JsonConvert.SerializeObject(memoryStreamForExcelOrPdfRequest);
+							StringContent content = new StringContent(serializedObject, Encoding.UTF8, "application/json");
+							var result1 = client.PostAsync(URI, content);
+
+							result1.Wait();
+							if (result1.Result.StatusCode == System.Net.HttpStatusCode.OK)
+							{
+
+								var  memoryStream1 = result1.Result.Content.ReadAsAsync(typeof(MemoryStream)).Result;
+                                memoryStream = (MemoryStream)memoryStream1;
+								
+							}
+
+						}
+                        extension = type == "Excel" ? "xlsx" : "pdf";
+					}
                     else
                     {
-                        stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
-                        extension = "pdf";
-                    }
+						stiReport.LoadDocument(result);
 
+						if (type == "Excel")
+						{
+
+							extension = "xlsx";
+							StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
+							setting.UseOnePageHeaderAndFooter = true;
+							StiExcel2007ExportService service = new StiExcel2007ExportService();
+							service.ExportExcel(stiReport, memoryStream, setting);
+						}
+
+						else
+						{
+							stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+							extension = "pdf";
+						}
+					}
                     if (memoryStream != null)
                     {
                         byte[] ByteData = memoryStream.ToArray();
@@ -300,12 +364,148 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 }
             }
         }
-    }
 
-    public class ReportBuildResult
+        [HttpPost]
+		public HttpResponseMessage GetSpecificPageFromStimulReportAsBase64(ReportFliter reportFliter)
+		{
+			try
+			{
+				
+				ReportHelper reportHelper = new ReportHelper();
+				UrlResponse urlResponse =new UrlResponse();
+				string url = "";
+				string extension = "tiff"; //IsUsingFileStreamAndTiffImage(reportFliter.tenant) ? "tiff" : "mdc";
+				IBlobService storageservice = ContainerAccessor.Container.Resolve(typeof(IBlobService), "StorageService", new ParameterOverride("", 1)) as IBlobService;
+				BlobFileInfo fileInfo = reportHelper.GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName + extension), extension, reportFliter.tenant);
+				byte[] result = storageservice.Read(fileInfo);
+				if (result != null)
+				{
+					urlResponse.url = reportHelper.GetSpecificPageFromTiffImageAsBase64(reportFliter, ref result);
+					urlResponse.pageCount = reportFliter.PageCount;
+
+				}
+
+				storageservice.Dispose();
+
+
+				return Request.CreateResponse(HttpStatusCode.OK, urlResponse);
+
+			}
+
+			catch (Exception ex)
+			{
+
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+		}
+
+		[HttpPost]
+		public HttpResponseMessage GetMemoryStreamForExcelOrPdf(MemoryStreamForExcelOrPdfRequest memoryStreamForExcelOrPdfRequest)
+		{
+			try
+			{
+				StiReport stiReport = new StiReport();
+				MemoryStream memoryStream = new MemoryStream();
+
+
+				stiReport.LoadDocument(memoryStreamForExcelOrPdfRequest.Result);
+
+				if (memoryStreamForExcelOrPdfRequest.Type == "Excel")
+				{
+
+					
+					StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
+					setting.UseOnePageHeaderAndFooter = true;
+					StiExcel2007ExportService service = new StiExcel2007ExportService();
+					service.ExportExcel(stiReport, memoryStream, setting);
+				}
+
+				else
+				{
+					stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+					
+				}
+
+
+				return Request.CreateResponse(HttpStatusCode.OK, memoryStream);
+
+			}
+
+			catch (Exception ex)
+			{
+
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+		}
+
+		[HttpPost]
+		public HttpResponseMessage GetMemoryStreamForPrintExcelOrPdf(MemoryStreamForPrintExcelOrPdfRequest memoryStreamForPrintExcelOrPdfRequest)
+		{
+			try
+			{
+				StiReport stiReport = new StiReport();
+				MemoryStream memoryStream = new MemoryStream();
+
+				stiReport.LoadDocument(memoryStreamForPrintExcelOrPdfRequest.Result);
+
+				if (memoryStreamForPrintExcelOrPdfRequest.Type == "PrintToPDF")
+				{
+
+					stiReport.ExportDocument(StiExportFormat.Pdf, memoryStream);
+
+				}
+				else if (memoryStreamForPrintExcelOrPdfRequest.Type == "MicrosoftExce" || memoryStreamForPrintExcelOrPdfRequest.Type == "MicrosoftExceAdvanced")
+				{
+
+					StiExcel2007ExportSettings setting = new StiExcel2007ExportSettings();
+					setting.UseOnePageHeaderAndFooter = memoryStreamForPrintExcelOrPdfRequest.UseOnePageHeaderAndFooter;
+					setting.ExportDataOnly = memoryStreamForPrintExcelOrPdfRequest.ExportDataOnly;
+					setting.ExportObjectFormatting = memoryStreamForPrintExcelOrPdfRequest.ExportObjectFormatting;
+					StiExcel2007ExportService service = new StiExcel2007ExportService();
+					service.ExportExcel(stiReport, memoryStream, setting);
+					
+
+				}
+
+
+				return Request.CreateResponse(HttpStatusCode.OK, memoryStream);
+
+			}
+
+			catch (Exception ex)
+			{
+
+				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+			}
+		}
+
+	}
+
+	public class ReportBuildResult
     {
         public string ExceptionMessage { get; set; }
         public bool HasError { get; set; }
         public string StatusCode { get; set; }
     }
+	public class UrlResponse
+	{
+		public string url { get; set; }
+		public int pageCount { get; set; }
+		
+	}
+	public class MemoryStreamForExcelOrPdfRequest
+	{
+		public byte[] Result { get; set; }
+		public string Type { get; set; }
+
+	}
+	public class MemoryStreamForPrintExcelOrPdfRequest
+	{
+		public byte[] Result { get; set; }
+		public string Type { get; set; }
+		public bool UseOnePageHeaderAndFooter { get; set; }
+		public bool ExportDataOnly { get; set; }
+		public bool ExportObjectFormatting { get; set; }
+
+	}
 }

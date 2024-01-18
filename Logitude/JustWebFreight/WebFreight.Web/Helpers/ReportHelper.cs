@@ -257,7 +257,7 @@ namespace WebFreight.Web.Helpers
             BlobFileInfo fileInfo = GetNewBlobFileInfo((reportFliter.ReportKey + "@" + reportFliter.ReportName + extension), extension, reportFliter.tenant);
             byte[] result = storageservice.Read(fileInfo);
             if (result != null)
-            {
+            {								
                 url = GetSpecificPageFromTiffImageAsBase64(reportFliter,ref result);
 
             }
@@ -2211,7 +2211,7 @@ namespace WebFreight.Web.Helpers
             return chunkSize;
         }
 
-        private BlobFileInfo GetNewBlobFileInfo(string fileName, string extension, int tenant)
+        public BlobFileInfo GetNewBlobFileInfo(string fileName, string extension, int tenant)
         {
             BlobFileInfo fileInfo = new BlobFileInfo()
             {
