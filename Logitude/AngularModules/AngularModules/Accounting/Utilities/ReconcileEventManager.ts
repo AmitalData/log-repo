@@ -5,9 +5,9 @@ export class ReconcileEventManager {
      ExtPageCheckBoxChecked: EventEmitter<any> = new EventEmitter(); // for bank account page lines
      RowUnselected: EventEmitter<any> = new EventEmitter();
      GLAccountReconcileMethodCode: string;
-    static ManageReconciliationCheckBoxChecked: EventEmitter<any> = new EventEmitter(); // for Manage Reconciliation
-    static SupperssOnRowSelectedAction: boolean = false; // for Manage Reconciliation
-    static _SelectedItems: ObservableCollection = new ObservableCollection([]); // for Manage Reconciliation
-    static IsAllSelected:boolean=false; // for Manage Reconciliation
-    static UnAllSelected:boolean=false; // for Manage Reconciliation
+     ManageReconciliationCheckBoxChecked: EventEmitter<any> = new EventEmitter(); // for Manage Reconciliation
+     SupperssOnRowSelectedAction: boolean = false; // for Manage Reconciliation
+     _SelectedItems: ObservableCollection = new ObservableCollection([]); // for Manage Reconciliation
+     IsAllSelected:boolean=false; // for Manage Reconciliation
+     UnAllSelected:boolean=false; // for Manage Reconciliation
 }

@@ -24,7 +24,7 @@ export class ManageReconciliationListTemplate {
 
     public isRTL: boolean = false;
 
-
+    reconcileEventManager:ReconcileEventManager;
     constructor(private CD: ChangeDetectorRef) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
@@ -34,7 +34,7 @@ export class ManageReconciliationListTemplate {
         this.fieldName = fieldName;
         this.AdditionalData = MyAdditionalData;
 
-      
+        this.reconcileEventManager = this.AdditionalData?.GridAdditionalData?.ReconcileEventManager;
         if (fieldName == "SelectCheckBox") {
             this.BuildCheckBox();
 
@@ -47,14 +47,14 @@ export class ManageReconciliationListTemplate {
     }
 
     BuildCheckBox() {
-        if (ReconcileEventManager._SelectedItems.Collection.includes(this.rowData)) {
+        if (this.reconcileEventManager._SelectedItems.Collection.includes(this.rowData)) {
             this.CheckBoxClicked(true);
         }
         else {
-            if (ReconcileEventManager.IsAllSelected == true) {
+            if (this.reconcileEventManager.IsAllSelected == true) {
                 this.CheckBoxClicked(true);
             }
-            if(ReconcileEventManager.UnAllSelected == true){
+            if(this.reconcileEventManager.UnAllSelected == true){
                 this.CheckBoxClicked(false);
             }
         }
@@ -62,13 +62,13 @@ export class ManageReconciliationListTemplate {
     CheckBoxClicked(checked: boolean) {
         this.rowData['IsChecked'] = checked;
 
-        if (!ReconcileEventManager.ManageReconciliationCheckBoxChecked)
-            ReconcileEventManager.ManageReconciliationCheckBoxChecked = new EventEmitter();
-        ReconcileEventManager.ManageReconciliationCheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData?.rowIndex });
+        if (!this.reconcileEventManager.ManageReconciliationCheckBoxChecked)
+        this.reconcileEventManager.ManageReconciliationCheckBoxChecked = new EventEmitter();
+        this.reconcileEventManager.ManageReconciliationCheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData?.rowIndex });
 
     }
     handleDivClick() {
-        ReconcileEventManager.SupperssOnRowSelectedAction = true;
+        this.reconcileEventManager.SupperssOnRowSelectedAction = true;
     }
 
 }
