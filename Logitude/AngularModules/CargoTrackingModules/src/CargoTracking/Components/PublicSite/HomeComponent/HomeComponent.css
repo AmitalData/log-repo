@@ -27,15 +27,22 @@ a:focus {
 
 .web-header {
     /* border-bottom: 1px solid #ececec; */
-    position: relative;
+    position: fixed;
     height: 93px;
     user-select: none;
     background: white;
     display: flex;
-    max-width: 1400px;
     margin: 0px auto;
+    width: 100%;
+    z-index: 1;
 }
-
+.main-content {
+    padding-top:93px;
+    min-height: calc(82vh - 110px);
+    background-size: cover;
+    background-repeat: no-repeat;
+    flex: 1;
+}
 .vertical-center {
     margin: 0;
     position: absolute;
@@ -153,7 +160,13 @@ a:focus {
         display: none;
     }
     .mobile-header {
+        position:fixed;
         display: block;
+        width: 100%;
+        z-index: 1;
+    }
+    .main-content {
+        padding-top:60px;
     }
     .mobile-header .icon {
         display: inline-block;
