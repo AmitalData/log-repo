@@ -799,7 +799,8 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.OppositeAccountNumber))
             {
                 oldEntityPM.OppositeAccountNumber = entityPM.OppositeAccountNumber;
-            }	
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(FullAccountingSettingPM entityPM)
