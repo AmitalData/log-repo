@@ -9,7 +9,9 @@ using Logitude.Customs.Data;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Customs.Def.EntityPMs;
 using Logitude.Customs.Def.Messaging.Customs;
+using Logitude.Server.Tools;
 using Logitude.Server.Tools.Contracts;
+using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.Models;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -17,6 +19,7 @@ using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Diagnostics;
 using System.Linq;
 using Unifreight.BL.EntityPMs.UGenerated;
@@ -166,7 +169,10 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 if (fast)
                 {
                     DeclarationUpdateService.DeclarationSupplierInvoicesFastDelete(_MyDeclarationPM, dbContext);
-                    dbContext = CustomContext.GetContext(ResolvedTenant());
+					var mySupplierInvoiceInvoiceItemVehicleUpdateService = new SupplierInvoiceItemVehicleUpdateService(_context, new Dictionary<string, IContext>(), _MyDeclarationPM.Tenant);
+					mySupplierInvoiceInvoiceItemVehicleUpdateService.FastDeleteComposition(new Logitude.Customs.Data.EntityKeys.DeclarationKeys() { Id = _MyDeclarationPM.Id });
+
+					dbContext = CustomContext.GetContext(ResolvedTenant());
                     DeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), ResolvedTenant());
                 }
                 else
@@ -704,8 +710,8 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                         this._MySupplierInvoicePM.ChangeSetOp = ChangeSetOperation.Update;
                     }
 
-                }
-            }
+                }               
+			}
 
             MyGenericResponseObj.Stage = "Mapping";
             /*
@@ -925,14 +931,14 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
 
             Dictionary<string, string> ClasificationQtyTypes = new Dictionary<string, string>() { };
             CustomsItemQueryService customsItemQueryService = new CustomsItemQueryService(ResolvedTenant());
-
-            foreach (var invoiceItem in invoice.INVOICEITEMS)
+			
+			foreach (var invoiceItem in invoice.INVOICEITEMS)
             {
                 int int1 = 0;
                 decimal decimal1 = 0;
                 SupplierInvoiceItemPM SupplierInvoiceItemPM;
-
-                if (mode != "UPDATE_ONLY")
+              
+				if (mode != "UPDATE_ONLY")
                 {
                     SupplierInvoiceItemPM = new SupplierInvoiceItemPM();
                 }
@@ -1152,7 +1158,12 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
                 {
                     throw new BusinessErrorException("Error in parsing LINE_ID (" + invoiceItem.LINE_ID + ") into integer");
                 }
-                if (SupplierInvoiceItemPM.ChangeSetOp != ChangeSetOperation.Update)
+
+				if (invoiceItem.VEHICLES != null)
+				{
+					SupplierInvoiceItemPM.SupplierInvoiceItemVehicles = GetSupplierInvoiceItemVehiclePM(invoiceItem, SupplierInvoiceItemPM);			
+				}
+				if (SupplierInvoiceItemPM.ChangeSetOp != ChangeSetOperation.Update)
                 {
                     SupplierInvoiceItemPM.Tenant = ResolvedTenant();
                     SupplierInvoiceItemPM.ChangeSetOp = ChangeSetOperation.Insert;
@@ -1478,7 +1489,48 @@ namespace Logitude.CustomsMessaging.U2L.Sivug
             }
         }
 
-        public string GetTranslationL2P(string partnerID, string tableID, string localCode)
+
+		private List<SupplierInvoiceItemVehiclePM> GetSupplierInvoiceItemVehiclePM(INVOICEITEMS invoiceItem, SupplierInvoiceItemPM supplierInvoiceItemPM)
+		{
+			var SupplierInvoiceItemVehiclePMList = new List<SupplierInvoiceItemVehiclePM>();
+			SupplierInvoiceItemVehiclePM supplierInvoiceItemVehiclePM = null;
+
+
+			if (invoiceItem.VEHICLES != null)
+			{
+                    
+				if (!string.IsNullOrEmpty(invoiceItem.VEHICLES.VEHICLECHASSISNUMBER))
+				{
+					supplierInvoiceItemVehiclePM = new SupplierInvoiceItemVehiclePM();
+					supplierInvoiceItemVehiclePM.DeclarationId = supplierInvoiceItemPM.DeclarationId;
+					supplierInvoiceItemVehiclePM.SequenceNumeric = 1;
+					supplierInvoiceItemVehiclePM.VehicleTypeCode = "CN";
+					supplierInvoiceItemVehiclePM.VehicleChassisNumber = invoiceItem.VEHICLES.VEHICLECHASSISNUMBER;
+					supplierInvoiceItemVehiclePM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
+
+					if (invoiceItem.VEHICLES.EXCLUDEFROMINTERFACE == "TRUE")
+						supplierInvoiceItemVehiclePM.ExcludeFromInterface = true;
+					supplierInvoiceItemVehiclePM.ChangeSetOp = ChangeSetOperation.Insert;
+
+					SupplierInvoiceItemVehiclePMList.Add(supplierInvoiceItemVehiclePM);
+				}
+				if (!string.IsNullOrEmpty(invoiceItem.VEHICLES.RICHBITFILENUMBER))
+				{
+					supplierInvoiceItemVehiclePM = new SupplierInvoiceItemVehiclePM();
+					supplierInvoiceItemVehiclePM.DeclarationId = supplierInvoiceItemPM.DeclarationId;
+					supplierInvoiceItemVehiclePM.SequenceNumeric = 1;
+					supplierInvoiceItemVehiclePM.VehicleTypeCode = "ZZZ";
+					supplierInvoiceItemVehiclePM.RichbitFileNumber = invoiceItem.VEHICLES.RICHBITFILENUMBER;
+					supplierInvoiceItemVehiclePM.Tenant = (this._MyDeclarationPM.Tenant > 0) ? this._MyDeclarationPM.Tenant : ResolvedTenant();
+					supplierInvoiceItemVehiclePM.ChangeSetOp = ChangeSetOperation.Insert;
+					SupplierInvoiceItemVehiclePMList.Add(supplierInvoiceItemVehiclePM);
+				}				
+			}
+
+			return SupplierInvoiceItemVehiclePMList;
+		}
+
+		public string GetTranslationL2P(string partnerID, string tableID, string localCode)
         {
             var rec = (from a in amitalContext.GTRTRANs
                        where a.PARTNERID == partnerID && a.TABLEID == tableID && a.LOCALCODE == localCode
