@@ -39,7 +39,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public IsNewOrEdit: StatusCertificateOfOrigin;
     public IsDisplayMode: boolean = true;
     public IsEditMode: boolean = true;
-public isReady:boolean;
+    public isReady: boolean;
     controlEnabled: boolean;
     IsDisplayOnly: boolean = false;
     public ErrorsList: string[];
@@ -48,59 +48,65 @@ public isReady:boolean;
     }
 
 
-    supplierInvoiceExtendedPMService:SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
+    supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
 
         this.entityPM = EntityPM;
-        
+
         this.IsNewOrEdit = IsNewOrEdit;
         this.IsDisplayOnly = IsDisplayOnly;
 
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
-        
+
         this.currentDeclaration = currentDeclaration;
 
-        this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {
+        this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {            
             var result = response.Result;
             if (!AppTool.IsNullOrEmpty(result)) {
                 var cardListService = new CardListService();
                 cardListService.getSingleFromCache(currentDeclaration.CustomerId).subscribe((myResponse: any) => {
                     if (!myResponse.HasError) {
                         this.currentCard = myResponse.Result;
-                        this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
-                        this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
-                      
-                currentDeclaration.SupplierInvoices = result;
-                this.currentDeclaration.SupplierInvoices = result;
+                        if(IsNewOrEdit == StatusCertificateOfOrigin.IsNew){
+                            this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
+                            this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
+                        }
+                        else if (IsNewOrEdit == StatusCertificateOfOrigin.IsEdit) {
+                            this.entityPM.ExporterName = EntityPM.ExporterName;
+                            this.entityPM.ExporterAddress = EntityPM.ExporterAddress;
+                        }
 
-            
+                        currentDeclaration.SupplierInvoices = result;
+                        this.currentDeclaration.SupplierInvoices = result;
 
-                if (currentDeclaration) {
-                    this.InitializeRelatedDeclarationData();
-         
-                     if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
-                         // build map of the list to initialize
-                         this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
-         
-                     }
-                     else if (IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
-                         this.InitilizeListsFromCertificateOfOrigin(EntityPM);
-                     }
-                 }
-                 this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
-                 this.SetPropertiesEnabled();
-         
-                 this.SetWarning();
-                 this.isReady=true;
-                }
-            });
-            } 
-    
-           
+
+
+                        if (currentDeclaration) {
+                            this.InitializeRelatedDeclarationData();
+
+                            if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
+                                // build map of the list to initialize
+                                this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
+
+                            }
+                            else if (IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
+                                this.InitilizeListsFromCertificateOfOrigin(EntityPM);
+                            }
+                        }
+                        this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
+                        this.SetPropertiesEnabled();
+
+                        this.SetWarning();
+                        this.isReady = true;
+                    }
+                });
+            }
+
+
         });
 
-  
+
 
     }
 
@@ -141,7 +147,7 @@ public isReady:boolean;
             }
             mappedConsignments.ItemDescription = consignment.CargoDescription;
             mappedConsignments.PackageType = consignmentPackage.PackageTypeCode;
-            mappedConsignments.PackingTypeName =consignmentPackage.PackageTypeName;
+            mappedConsignments.PackingTypeName = consignmentPackage.PackageTypeName;
             mappedConsignments.MeasureTypeName = consignmentPackage.GrossMassMeasureTypeName;
             mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
 
@@ -165,13 +171,11 @@ public isReady:boolean;
         // update CertificateOriginInvoice list:
         EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
             this.CertificateOriginInvoiceItems.Insert(item);
-            this.entityPM.CertificateOriginInvoiceItems.push(item);
         });
 
         // update CertificateOriginItemItems list:
         EntityPM.CertificateOriginItemItems.forEach((item) => {
             this.CertificateOriginItemItems.Insert(item);
-            this.entityPM.CertificateOriginItemItems.push(item);
         });
     }
 
@@ -212,9 +216,6 @@ public isReady:boolean;
                 this.currentCard = myResponse.Result;
                 this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
                 this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
-                //this.ExporterName = this.entityPM.ExporterName;
-                //this.ExporterAddress =  this.entityPM.ExporterAddress;
-                
             }
         });
     }
@@ -277,16 +278,10 @@ public isReady:boolean;
         logcelltemplate.IsDisplayMode = false;
         logcelltemplate.IsEditMode = true;
     }
-    OnPackageTypeLostFocus(logcelltemplate,PackageTypeTextBox, value){
-        this.PackingTypeName = PackageTypeTextBox.DisplayValue;
-        value = PackageTypeTextBox.DisplayValue;
-        debugger
-    }
 
-    SetLocalName(entity, fieldName,item) {
-        debugger;
+    SetLocalName(entity, fieldName, item) {
         if (!AppTool.IsNullOrEmpty(entity)) {
-            this.CertificateOriginItemItems.Collection.filter(x=>x.ItemSerial ==item.ItemSerial)[0][fieldName] = entity.LocalName;
+            this.CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.LocalName;
         } else {
             this[fieldName] = null;
         }
@@ -355,7 +350,7 @@ public isReady:boolean;
         this._PackageType = newValue;
     }
 
-    
+
     _PackingTypeName: string;
     public get PackingTypeName(): string {
         return this._PackingTypeName;
@@ -364,7 +359,7 @@ public isReady:boolean;
         this._PackingTypeName = newValue;
     }
 
-   
+
     _Weight: number;
     public get Weight(): number {
         return this._Weight;
