@@ -47,12 +47,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			if (certificateOfOrigin.CooTypeCode != "5" && !RequestReasonCodeList.Contains(requestParams.RequestReasonCode.ToString())) 
 			{
 
-			      myMsg.CertificateOfOrigin = GetCertificateOfOrigin(certificateOfOrigin);
+			      myMsg.CertificateOfOrigin = GetCertificateOfOrigin(certificateOfOrigin, declarationPM?.ImporterCode);
 			      myMsg.CertificateOfOrigin.CertificateOfOriginRequestInvoiceDetail = certificateOfOrigin.IsUnitedInvoices ? 
 			      	GetCertificateOfOriginRequestInvoiceDetailUnitedInvoices(certificateOfOrigin.CertificateOriginInvoiceItems, certificateOfOrigin.CertificateOriginItemItems) :
 			      	GetCertificateOfOriginRequestInvoiceDetail(certificateOfOrigin.CertificateOriginInvoiceItems, certificateOfOrigin.CertificateOriginItemItems);
             }
-			if (!RequestReasonCodeList.Contains(requestParams.RequestReasonCode.ToString()))
+			if (certificateOfOrigin.CooTypeCode == "5" && !RequestReasonCodeList.Contains(requestParams.RequestReasonCode.ToString()))
 			{
 				myMsg.NonManipulationCertificate = new PC_NG_2280_MSG01_CertificateOfOriginRequestNonManipulationCertificate()
 				{
@@ -84,10 +84,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyRequestSheetParam.RequestDescription = "בקשת תעודת מקור : " + certificateOfOrigin.Counter;
 			return myMsg;
 		}
-        public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin GetCertificateOfOrigin(CertificateOfOriginPM certificateOfOrigin)
+        public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin GetCertificateOfOrigin(CertificateOfOriginPM certificateOfOrigin,string exporterVat)
         {
             PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin() {
-			ExporterId = certificateOfOrigin.ExporterVat,
+			    ExporterId = exporterVat,
 				ExporterName = certificateOfOrigin.ExporterName,
 				ExporterAddress = certificateOfOrigin.ExporterAddress,
 				ExporterCountry = certificateOfOrigin.ExporterCountry,
