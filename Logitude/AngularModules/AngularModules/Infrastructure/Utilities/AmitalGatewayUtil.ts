@@ -278,7 +278,7 @@ export class AmitalGatewayUtil {
         requestWrapper.UnifreightMessage = unifreightMessageM;
         requestWrapper.MoreParams = MoreParams;
     
-        this.sendPostMessage(MoreParams);
+        this.sendPostMessage(MessageID, MoreParams);
         this.SendRequestJSONToUnifreightAsync(requestWrapper, showAlert);
     }
 
