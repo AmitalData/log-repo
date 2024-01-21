@@ -171,13 +171,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         // update CertificateOriginInvoice list:
         EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
             this.CertificateOriginInvoiceItems.Insert(item);
-            this.entityPM.CertificateOriginInvoiceItems.push(item);
         });
 
         // update CertificateOriginItemItems list:
         EntityPM.CertificateOriginItemItems.forEach((item) => {
             this.CertificateOriginItemItems.Insert(item);
-            this.entityPM.CertificateOriginItemItems.push(item);
         });
     }
 

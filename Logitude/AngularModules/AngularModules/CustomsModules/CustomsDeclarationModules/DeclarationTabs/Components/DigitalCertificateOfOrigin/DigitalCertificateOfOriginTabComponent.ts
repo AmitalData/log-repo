@@ -196,12 +196,13 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
         logWindow.Width = 1030;
         logWindow.Height = 725;
         
+        // Main Title
         let title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");      
-        logWindow.Title = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? title += `: ${this.selectedCertificateOfOrigin.COONumber }` : title;
+        logWindow.Title = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit && !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.COONumber) ? title += `: ${this.selectedCertificateOfOrigin.COONumber }` : title;
 
-        // TODO: ADD to left side title
+        // Side Title
         let CertificateOfOriginStatus = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode");
-        logWindow.SubTitle = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? CertificateOfOriginStatus += `: ${this.selectedCertificateOfOrigin.CooStatusCodeName}` : null;
+        logWindow.SubTitle = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit && !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.CooStatusCodeName) ? CertificateOfOriginStatus += `: ${this.selectedCertificateOfOrigin.CooStatusCodeName}` : null;
 
         logWindow.WindowArgs = args;
         logWindow.ShowCloseButton = true;
@@ -325,7 +326,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     DeleteButtonClicked(item: CertificateOfOriginPM) {
         if(!item) return;
         this.selectedCertificateOfOrigin = item;
-        if(this.selectedCertificateOfOrigin.IsSubmitted){
+        if(!this.selectedCertificateOfOrigin.IsSubmitted){
             
             var confirmWindow = new ConfirmWindow();
             confirmWindow.Width = 300;
