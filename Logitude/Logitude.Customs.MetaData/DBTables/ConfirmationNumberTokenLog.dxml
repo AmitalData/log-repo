@@ -65,4 +65,11 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SearchFields"
+    Type="nvarchar"
+    Size="2000">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

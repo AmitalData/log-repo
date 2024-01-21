@@ -34,6 +34,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CommunicationLogId  { get; set; }
        [DataMember]
        public string ShowLog  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
    }
 
 }
