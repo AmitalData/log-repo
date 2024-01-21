@@ -34,6 +34,7 @@ using Simplog.Data.CommonDataModel;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Microsoft.Practices.ObjectBuilder2;
 using System.Globalization;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -1261,7 +1262,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 	public class CustomsAutoDecClosing : ICustomsAutoDecClosing
 	{
 		
-	public void Send8235(DeclarationPM decPm, string LoggingUserId = "")
+	    public void Send8235(DeclarationPM decPm, string LoggingUserId = "")
 		{
 			DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
 			string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220227T155633.LogUntilDateyyyyMMdd"];
@@ -1275,10 +1276,18 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing ENTER Send8235", false, "sendClosing", stopLogAt);
 
 			var requestParamsData = new AmendmentRequestParams();
+			var signQueueHSMService = new SignQueueHSMService();
+			var loggedUserId = string.Empty;
 
 			var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-			var loggedUserId =!string.IsNullOrEmpty(LoggingUserId)? LoggingUserId: AuthenticationUtil.ResolveUserId(decPm.Tenant);
-
+			if (signQueueHSMService.IsHSMSign_IsOn(decPm.Tenant))
+			{
+				loggedUserId = !string.IsNullOrEmpty(LoggingUserId) ? LoggingUserId : AuthenticationUtil.ResolveUserId(decPm.Tenant);
+			}
+			else
+			{
+				loggedUserId = decPm.SignedByUserId;
+			}
 			requestParamsData.Tenant = decPm.Tenant;
 			requestParamsData.AppicationId = decPm.Id;
 			requestParamsData.LoggingEnabled = true;
