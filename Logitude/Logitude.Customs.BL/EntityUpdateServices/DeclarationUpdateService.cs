@@ -3730,7 +3730,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public bool CheckIfRequiredFieldForCourierHasChanged(DeclarationPM entityPM, Declaration entityPOCO)
         {
             //Check Declaration fields
-            if (entityPOCO.AgentId != entityPM.AgentId || entityPOCO.ImporterName != entityPM.ImporterName || entityPOCO.ImporterAddress != entityPM.ImporterAddress)
+            if (entityPOCO.AgentId != entityPM.AgentId || entityPOCO.ImporterName != entityPM.ImporterName || !AreEqualIgnoringSpaces(entityPOCO.ImporterAddress, entityPM.ImporterAddress))
             {
                 return true;
             }
@@ -3753,7 +3753,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             else
                             {
                                 if (entityPOCO.CasualSupplierName != entityPM.CasualSupplierName ||
-                                    entityPOCO.CasualSupplierAddress != entityPM.CasualSupplierAddress)
+                                    !AreEqualIgnoringSpaces(entityPOCO.CasualSupplierAddress,entityPM.CasualSupplierAddress))
                                 {
                                     return true;
                                 }
