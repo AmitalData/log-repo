@@ -3,6 +3,7 @@ using Logitude.BL.GlobalModel.EntityQueries;
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using System.ServiceModel.Channels;
 
 namespace WebFreight.Web.Helpers.ExportServer
 {
@@ -16,7 +17,7 @@ namespace WebFreight.Web.Helpers.ExportServer
         {
             TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
             int? exportTenant = tenantManagementPM.ExportTenant;
-            if(exportTenant == null || string.IsNullOrEmpty(tenantManagementPM.ExportLoginCredintial))
+            if (exportTenant == null || string.IsNullOrEmpty(tenantManagementPM.ExportLoginCredintial))
                 throw new Exception("not config in table tenant managment field Export Login Credintial or field export tenant for tenant " + tenant);
 
             string token = GetToken(exportTenant.Value, email, tenantManagementPM.ExportLoginCredintial);
@@ -35,10 +36,10 @@ namespace WebFreight.Web.Helpers.ExportServer
 
         private static void initToken(int tenant, string email, string exportLoginCredintial)
         {            
-            APICredentialsParameters aPICredentialsParameters = new APICredentialsParameters() { PrimaryKey = exportLoginCredintial, Tenant = tenant };
-            BasicHttpBinding binding = new BasicHttpBinding();
-            EndpointAddress address = new EndpointAddress(exportUrl + "/WcfApi/LoginWcfService.svc");
-            ChannelFactory<ILoginWcfService> factory = new ChannelFactory<ILoginWcfService>(binding, address);
+            APICredentialsParameters aPICredentialsParameters = new APICredentialsParameters() { PrimaryKey = exportLoginCredintial, Tenant = tenant };                        
+            ChannelFactory<ILoginWcfService> factory = new ChannelFactory<ILoginWcfService>(
+                exportUrl.StartsWith("https") ? (Binding)new BasicHttpsBinding() : (Binding)new BasicHttpBinding(), 
+                new EndpointAddress(exportUrl + "/WcfApi/LoginWcfService.svc"));
             ILoginWcfService channel = factory.CreateChannel();
             Response result = channel.LoginByCredential(email, aPICredentialsParameters);
 
