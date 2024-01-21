@@ -186,7 +186,6 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
         newCertificateOfOriginPM.DeclarationId = this.EntityPM.Id;
         newCertificateOfOriginPM.Tenant = this.EntityPM.Tenant;
         
-
         // on click item get one CertificateOfOrigin
         var args: any = {
             Decalaration: this.EntityPM,
@@ -335,9 +334,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
             confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
-                        debugger
-                        // TODO: Finish fix error in server side:
-                        // this.DeleteSelected(this.selectedCertificateOfOrigin)
+                        this.DeleteSelected(this.selectedCertificateOfOrigin)
                     }
                     else if (confirmWindow.No) {
                         this.selectedCertificateOfOrigin = null;
