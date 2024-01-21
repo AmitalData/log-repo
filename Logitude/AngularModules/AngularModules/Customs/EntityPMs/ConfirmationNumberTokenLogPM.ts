@@ -69,6 +69,11 @@ export class ConfirmationNumberTokenLogPM {
     public set CommunicationLogId(newValue: string) { if (this.communicationLogId != newValue) { this.communicationLogId = newValue; this.MarkAsDirty("CommunicationLogId"); } }
        
 	 
+    private searchFields: string;
+    public get SearchFields() { return this.searchFields; }
+    public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
+       
+	 
 
     public OldEntityPM: ConfirmationNumberTokenLogPM;
 		

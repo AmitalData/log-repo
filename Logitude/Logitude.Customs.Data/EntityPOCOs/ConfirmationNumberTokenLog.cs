@@ -37,6 +37,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int? CommunicationType { get; set; }
         [Column("CommunicationLogId")]
 	    public string CommunicationLogId { get; set; }
+        [Column("SearchFields")]
+	    public string SearchFields { get; set; }
     }
 }
 	 

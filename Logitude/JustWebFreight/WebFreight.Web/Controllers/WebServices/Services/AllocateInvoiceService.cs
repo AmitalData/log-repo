@@ -31,6 +31,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
                 CompanyIdInvoiceProducer = invoice.Vat_Number.ToString(),
                 CompanyIdInvoiceRecipient = invoice.Customer_VAT_Number.ToString(),
                 CommunicationLogId = communicationLogId,
+                SearchFields = invoice.Vat_Number.ToString() + "," + invoice.Customer_VAT_Number.ToString() + "," + invoice.Invoice_ID
             });
             confirmationNumberTokenLogRepository.SubmitChanges();
 
