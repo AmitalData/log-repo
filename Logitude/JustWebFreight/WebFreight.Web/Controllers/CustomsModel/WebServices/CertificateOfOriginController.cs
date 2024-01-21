@@ -94,6 +94,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 
                                 CertificateOfOriginId = Invoice.CertificateOfOriginId,
                                 InvoicesIdUry = Invoice.InvoicesIdUry,
+                                Id = Invoice.Id,
                                 Tenant = Invoice.Tenant,
                                 ChangeSetOp = ChangeSetOperation.Delete,
                             };
@@ -111,6 +112,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                                
                                 CertificateOfOriginId = item.CertificateOfOriginId,
                                 ItemSerial = item.ItemSerial,
+                                Id = item.Id,
                                 Tenant = item.Tenant,
                                 ChangeSetOp = ChangeSetOperation.Delete,
                             };
