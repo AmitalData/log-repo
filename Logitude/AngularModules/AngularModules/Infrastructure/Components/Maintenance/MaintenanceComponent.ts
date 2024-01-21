@@ -22,6 +22,9 @@ import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTransla
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 import { HostScreenService } from 'Common/Components/HostScreen/HostScreenService';
 import { CustomsCloudComponentArgs } from 'InfrastructureModules/InfrastructureOthers/Components/CustomsCloud/CustomsCloudComponent';
+import { HomeScreenEvent, HomeScreenEventTypes, HostScreenComponent } from 'Common/Components/HostScreen/HostScreenComponent';
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
     
@@ -966,8 +969,8 @@ export class MaintenanceComponent {
                     break;
                 }
                 
-                case "SHAAM_TOKEN": {                        
-                    HostScreenService.open(TextCodeTranslator.Translate('General.MC.TokenManagement'),'CreateNewShaamToken');                        
+                case "SHAAM_TOKEN": {        
+                    this.openTokenManagment();                
                     break;
                 }
 
@@ -1842,6 +1845,27 @@ export class MaintenanceComponent {
                 }
             }
         }
+    }
+
+    private async openTokenManagment() {
+        const logitudeWindow: LogitudeWindow = HostScreenService.open(TextCodeTranslator.Translate('General.MC.TokenManagement'),'CreateNewShaamToken');
+        const hostScreenComponent: HostScreenComponent = await this.withWindowComponentLoaded(logitudeWindow);
+        const subscription: Subscription  =  hostScreenComponent.$event
+            .pipe(filter((event: HomeScreenEvent) => event.event === HomeScreenEventTypes.openNewBrowser))
+            .subscribe((event: HomeScreenEvent) => {
+                subscription.unsubscribe();
+                logitudeWindow.Close('');
+                this.openTokenManagment();
+        })
+    }
+    
+    private async withWindowComponentLoaded(logitudeWindow: LogitudeWindow) {
+        return new Promise<any>(resolve => {
+            const subscription: Subscription =  logitudeWindow.ComponentLoaded.subscribe(component => {
+                subscription.unsubscribe();
+                resolve(component);
+            })            
+        });
     }
 
     private ShowCustomObject(item: any) {

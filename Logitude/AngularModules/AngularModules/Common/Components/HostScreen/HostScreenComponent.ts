@@ -5,6 +5,7 @@ import { MessageWindow } from "Controls/Windows/MessageWindow";
 import { TaxesWebService } from "Customs/Services/WebServices/TaxesWebService";
 import { EntityResourceService } from "Infrastructure/Services/EntityResourceService";
 import { TextCodeTranslator } from "Infrastructure/Utilities/TextCodeTranslator";
+import { Observable, Subject } from "rxjs";
 
 @Component({
     selector: 'app-host-screen',
@@ -17,9 +18,11 @@ export class HostScreenComponent {
     confirmationNumberTokenLogIsOpen: boolean = false;
     logitudeCommandId: string = '';
     windowInstance: LogitudeWindow = null;
+    private readonly event: Subject<HomeScreenEvent> = new Subject<HomeScreenEvent>();
+    public readonly $event: Observable<HomeScreenEvent> = this.event.asObservable();
 
-    constructor(private domSanitizer: DomSanitizer) { 
-        new EntityResourceService().getEntityResourceByTableName("CommunicationLog", 0).subscribe((resp: any) => {})
+    constructor(private domSanitizer: DomSanitizer) {
+        new EntityResourceService().getEntityResourceByTableName("CommunicationLog", 0).subscribe((resp: any) => { })
     }
 
     SetWindowArgs(args: { logitudeCommandId: string, windowInstance: LogitudeWindow }) {
@@ -40,6 +43,12 @@ export class HostScreenComponent {
 
         if (data?.messageID === 'site ready')
             this.sendLogitudeCommand(message.source as Window);
+
+        if (data?.messageID === 'OpenNewBrowser') {
+            const link: string = data.moreParams.replace('"', '').replace('"', '');
+            this.event.next({ event: HomeScreenEventTypes.openNewBrowser, data: link });
+            open(link);
+        }
     }
 
     async initUrlLoignToExport() {
@@ -72,7 +81,14 @@ export class HostScreenComponent {
     }
 }
 
+export enum HomeScreenEventTypes { openNewBrowser }
+
+export type HomeScreenEvent = {
+    event: HomeScreenEventTypes,
+    data?: any
+}
+
 export type PostMessageData = {
-    messageID?: string, 
+    messageID?: string,
     moreParams?: string
 }
