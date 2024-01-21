@@ -280,7 +280,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     SetLocalName(entity, fieldName, item) {
-        debugger;
         if (!AppTool.IsNullOrEmpty(entity)) {
             this.CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.LocalName;
         } else {
