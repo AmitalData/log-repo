@@ -52,6 +52,7 @@ using System.Configuration;
 using System.Globalization;
 using Logitude.Customs.BL.Messaging.ILSWS;
 using System.Xml;
+using Microsoft.Practices.ObjectBuilder2;
 
 namespace Logitude.Customs.BL.EntityUpdateServices
 {
@@ -73,7 +74,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
         protected override void UpdateComposition(CertificateOfOriginPM entityPM)
         {
-			CertificateOfOriginInvoiceUpdateService consignmentUpdateService = new CertificateOfOriginInvoiceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            if(entityPM.ChangeSetOp == ChangeSetOperation.Update)
+            {
+                entityPM.CertificateOriginInvoiceItems.ForEach(item => item.ChangeSetOp = ChangeSetOperation.Update);
+                entityPM.CertificateOriginItemItems.ForEach(item => item.ChangeSetOp = ChangeSetOperation.Update);
+            }
+            CertificateOfOriginInvoiceUpdateService consignmentUpdateService = new CertificateOfOriginInvoiceUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             consignmentUpdateService.UpdateMulti(entityPM.CertificateOriginInvoiceItems, entityPM.DeletedCertificateOriginInvoiceItems, entityPM, false);
 
 			CertificateOfOriginItemUpdateService certificateOfOriginItemUpdateService = new CertificateOfOriginItemUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
