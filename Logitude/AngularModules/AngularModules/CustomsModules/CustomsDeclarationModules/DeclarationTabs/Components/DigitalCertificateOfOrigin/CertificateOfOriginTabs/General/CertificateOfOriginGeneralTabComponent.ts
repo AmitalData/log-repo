@@ -67,28 +67,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 var cardListService = new CardListService();
                 cardListService.getSingleFromCache(currentDeclaration.CustomerId).subscribe((myResponse: any) => {
                     if (!myResponse.HasError) {
-                        this.currentCard = myResponse.Result;
-                        if(IsNewOrEdit == StatusCertificateOfOrigin.IsNew){
-                            this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
-                            this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
-                        }
-                        else if (IsNewOrEdit == StatusCertificateOfOrigin.IsEdit) {
-                            this.entityPM.ExporterName = EntityPM.ExporterName;
-                            this.entityPM.ExporterAddress = EntityPM.ExporterAddress;
-                        }
-
+                        this.currentCard = myResponse.Result;  
                         currentDeclaration.SupplierInvoices = result;
                         this.currentDeclaration.SupplierInvoices = result;
 
-
-
                         if (currentDeclaration) {
-                            this.InitializeRelatedDeclarationData();
-
                             if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
-                                // build map of the list to initialize
-                                this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
-
+                                this.InitNewCertificate(EntityPM);
                             }
                             else if (IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
                                 this.InitilizeListsFromCertificateOfOrigin(EntityPM);
@@ -105,9 +90,14 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
 
         });
+    }
 
+    InitNewCertificate(EntityPM:CertificateOfOriginPM){
+         this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
+         this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
 
-
+         this.InitializeRelatedDeclarationData();
+         this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
     }
 
     InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM: CertificateOfOriginPM) {
