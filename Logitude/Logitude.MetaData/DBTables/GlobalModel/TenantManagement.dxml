@@ -1114,6 +1114,19 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ExportLoginCredintial"
+    Type="varchar"
+    Size="50">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ExportTenant"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="GlobalTenants"
