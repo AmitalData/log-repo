@@ -25,8 +25,6 @@ import { SupplierInvoiceExtendedPMService } from 'Customs/Services/ExtendedPMs/S
 
 export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public ObjectTableName: string = "Customs.CertificateOfOrigin";
-    public ObjectTableNameCertificateOfOriginInvoice: string = "Customs.CertificateOriginInvoice";
-    public ObjectTableNameCertificateOfOriginItem: string = "Customs.CertificateOfOriginItem";
     public DataContext = this;
     public isCorporation: boolean;
     public isCitizen: boolean;
@@ -115,7 +113,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedInvoice.IsInvoicesForPrint = true;
 
             // add to collection
-            this.CertificateOriginInvoiceItems.Insert(mappedInvoice);
+            this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoiceLine(mappedInvoice,this));
             this.entityPM.CertificateOriginInvoiceItems.push(mappedInvoice);
 
         });
@@ -150,7 +148,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             // exportStorageListService.getByFilters() 
 
             // add to collection    
-            this.CertificateOriginItemItems.Insert(mappedConsignments);
+            this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemLine(mappedConsignments,this));
             this.entityPM.CertificateOriginItemItems.push(mappedConsignments);
 
         });
@@ -160,12 +158,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     InitilizeListsFromCertificateOfOrigin(EntityPM: CertificateOfOriginPM) {
         // update CertificateOriginInvoice list:
         EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
-            this.CertificateOriginInvoiceItems.Insert(item);
+            this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoiceLine(item,this));
         });
 
         // update CertificateOriginItemItems list:
         EntityPM.CertificateOriginItemItems.forEach((item) => {
-            this.CertificateOriginItemItems.Insert(item);
+            this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemLine(item,this));
         });
     }
 
@@ -251,7 +249,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         if (this.IsUnitedInvoices && InvoicesForPrintList.length < 2) {
             this.IsUnitedInvoices = false;
-            this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.OneNotUnited')];
         }
         else if (this.IsUnitedInvoices && InvoicesForPrintList.find(x => x.CurrencyTypeCode != item.CurrencyTypeCode)) {
             item.IsInvoicesForPrint = prevIsInvoicesForPrint == false ? null : false;
@@ -277,88 +274,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         }
 
     }
-    _ItemId: string;
-    public get ItemId(): string {
-        return this._ItemId;
-    }
-    public set ItemId(newValue: string) {
-        this._ItemId = newValue;
-    }
-
-    _MeasureType: string;
-    public get MeasureType(): string {
-        return this._MeasureType;
-    }
-    public set MeasureType(newValue: string) {
-        this._MeasureType = newValue;
-    }
-
-    _ContainerIsoCode: string;
-    public get ContainerIsoCode(): string {
-        return this._ContainerIsoCode;
-    }
-    public set ContainerIsoCode(newValue: string) {
-        this._ContainerIsoCode = newValue;
-    }
-
-    _MarksAndNumbers: string;
-    public get MarksAndNumbers(): string {
-        return this._MarksAndNumbers;
-    }
-    public set MarksAndNumbers(newValue: string) {
-        this._MarksAndNumbers = newValue;
-    }
-    _DescriptionOfInvoice: string;
-    public get DescriptionOfInvoice(): string {
-        return this._DescriptionOfInvoice;
-    }
-    public set DescriptionOfInvoice(newValue: string) {
-        this._DescriptionOfInvoice = newValue;
-    }
-
-    _ItemDescription: string;
-    public get ItemDescription(): string {
-        return this._ItemDescription;
-    }
-    public set ItemDescription(newValue: string) {
-        this._ItemDescription = newValue;
-    }
-
-    _PackageQuantity: number;
-    public get PackageQuantity(): number {
-        return this._PackageQuantity;
-    }
-    public set PackageQuantity(newValue: number) {
-        this._PackageQuantity = newValue;
-    }
-
-    _PackageType: string;
-    public get PackageType(): string {
-        return this._PackageType;
-    }
-    public set PackageType(newValue: string) {
-        this._PackageType = newValue;
-    }
-
-
-    _PackingTypeName: string;
-    public get PackingTypeName(): string {
-        return this._PackingTypeName;
-    }
-    public set PackingTypeName(newValue: string) {
-        this._PackingTypeName = newValue;
-    }
-
-
-    _Weight: number;
-    public get Weight(): number {
-        return this._Weight;
-    }
-    public set Weight(newValue: number) {
-        this._Weight = newValue;
-    }
-    // end region Edit Mode
-
+    
     //#region  CertificateOfOrigin properties
     public get Id(): string {
         return this.entityPM.Id;
@@ -889,4 +805,141 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     //#endregion CertificateOfOrigin properties
 
+}
+
+export class CertificateOfOriginInvoiceLine extends BaseComponent {
+    public entityPM: CertificateOfOriginInvoicePM;
+    public ObjectTableName: string = "Customs.CertificateOfOriginInvoice";
+    public DataContext = this;
+    Parent: CertificateOfOriginGeneralTabComponent;
+    constructor(EntityPM: CertificateOfOriginInvoicePM, parent: CertificateOfOriginGeneralTabComponent) {
+        super();
+        this.entityPM = EntityPM;
+        this.Parent = parent;
+    }
+
+    public get InvoicesIdUry(): number {
+        return this.entityPM.InvoicesIdUry;
+    }
+    public set InvoicesIdUry(newValue: number) {
+        this.entityPM.InvoicesIdUry = newValue;
+    }
+
+    public get InvoiceNumber(): number {
+        return this.entityPM.InvoicesIdUry;
+    }
+    public set InvoiceNumber(newValue: number) {
+        this.entityPM.InvoicesIdUry = newValue;
+    }
+
+    public get InvoiceDate(): Date {
+        return this.entityPM.InvoiceDate;
+    }
+    public set InvoiceDate(newValue: Date) {
+        this.entityPM.InvoiceDate = newValue;
+    }
+
+    public get InvoiceSum(): string {
+        return this.entityPM.InvoiceSum;
+    }
+    public set InvoiceSum(newValue: string) {
+        this.entityPM.InvoiceSum = newValue;
+    }
+
+    public get DescriptionOfInvoice(): string {
+        return this.entityPM.DescriptionOfInvoice;
+    }
+    public set DescriptionOfInvoice(newValue: string) {
+        this.entityPM.DescriptionOfInvoice = newValue;
+    }
+
+    public get IsInvoicesForPrint(): boolean {
+        return this.entityPM.IsInvoicesForPrint;
+    }
+    public set IsInvoicesForPrint(newValue: boolean) {
+        this.entityPM.IsInvoicesForPrint = newValue;
+    }   
+}
+
+
+export class CertificateOfOriginItemLine extends BaseComponent {
+    public entityPM: CertificateOfOriginItemPM;
+    public ObjectTableName: string = "Customs.CertificateOfOriginItem";
+    public DataContext = this;
+    Parent: CertificateOfOriginGeneralTabComponent;
+    constructor(EntityPM: CertificateOfOriginItemPM, parent: CertificateOfOriginGeneralTabComponent) {
+        super();
+        this.entityPM = EntityPM;
+        this.Parent = parent;
+    }
+
+    public get ItemSerial(): number {
+        return this.entityPM.ItemSerial;
+    }
+    public set ItemSerial(newValue: number) {
+        this.entityPM.ItemSerial = newValue;
+    }
+
+    public get ItemId(): string {
+        return this.entityPM.ItemId;
+    }
+    public set ItemId(newValue: string) {
+        this.entityPM.ItemId = newValue;
+    }
+
+    public get MeasureType(): string {
+        return this.entityPM.MeasureType;
+    }
+    public set MeasureType(newValue: string) {
+        this.entityPM.MeasureType = newValue;
+    }
+
+    public get ContainerIsoCode(): string {
+        return this.entityPM.ContainerIsoCode;
+    }
+    public set ContainerIsoCode(newValue: string) {
+        this.entityPM.ContainerIsoCode = newValue;
+    }
+
+    public get MarksAndNumbers(): string {
+        return this.entityPM.MarksAndNumbers;
+    }
+    public set MarksAndNumbers(newValue: string) {
+        this.entityPM.MarksAndNumbers = newValue;
+    }
+  
+    public get ItemDescription(): string {
+        return this.entityPM.ItemDescription;
+    }
+    public set ItemDescription(newValue: string) {
+        this.entityPM.ItemDescription = newValue;
+    }
+
+    public get PackageQuantity(): number {
+        return this.entityPM.PackageQuantity;
+    }
+    public set PackageQuantity(newValue: number) {
+        this.entityPM.PackageQuantity = newValue;
+    }
+
+    public get PackageType(): string {
+        return this.entityPM.PackageType;
+    }
+    public set PackageType(newValue: string) {
+        this.entityPM.PackageType = newValue;
+    }
+
+    public get PackingTypeName(): string {
+        return this.entityPM.PackingTypeName;
+    }
+    public set PackingTypeName(newValue: string) {
+        this.entityPM.PackingTypeName = newValue;
+    }
+
+    public get Weight(): number {
+        return this.entityPM.Weight;
+    }
+    public set Weight(newValue: number) {
+        this.entityPM.Weight = newValue;
+    }
 }

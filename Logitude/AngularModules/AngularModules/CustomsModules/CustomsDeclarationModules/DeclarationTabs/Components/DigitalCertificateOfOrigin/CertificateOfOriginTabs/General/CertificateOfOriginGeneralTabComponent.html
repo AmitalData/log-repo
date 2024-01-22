@@ -25,7 +25,7 @@
     }
 </style>
 <table *ngIf="isReady">
-    <tr style="height: 28px;" *ngIf="ErrorsList?.length > 0 || IsDisplayOnly">
+    <tr style="height: 28px;">
         <td *ngIf="IsDisplayOnly">
             <div style="width:90%;text-align:center">
                 <div class="DisbleBox">
@@ -344,7 +344,7 @@
                                                 <LogTextBox #DescriptionOfInvoiceTextBox
                                                     [ObjectFieldName]="'DescriptionOfInvoice'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
-                                                    [Text]="DescriptionOfInvoice"
+                                                    [Text]="item.DescriptionOfInvoice"
                                                     [ObjectTableName]="'Customs.CertificateOriginInvoice'"
                                                     [HideColumns]="true">
                                                 </LogTextBox>
@@ -353,7 +353,6 @@
 
                                     </ng-template>
                                 </log-column>
-
 
                                 <log-column
                                     [header]="'Customs.CertificateOfOrigin.O.IsInvoicesForPrint' | TextCodeTranslationPipe"
@@ -368,7 +367,6 @@
                                                     [DataContext]="DataContext" (Changed)="OnChanged($event,item)"
                                                     [Value]="item.IsInvoicesForPrint"></LogCheckBox>
                                             </div>
-
                                         </log-cell-template>
                                     </ng-template>
                                 </log-column>
@@ -406,7 +404,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.InvoicesIdUry">
+                                            [RIndex]="item.ItemSerial">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.MarksAndNumbers}}</span>
@@ -415,7 +413,7 @@
                                                 <LogTextBox #MarksAndNumbersTextBox
                                                     [ObjectFieldName]="'MarksAndNumbers'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
-                                                    [Text]="MarksAndNumbers"
+                                                    [Text]="item.MarksAndNumbers"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true">
                                                 </LogTextBox>
@@ -431,7 +429,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.InvoicesIdUry">
+                                            [RIndex]="item.ItemSerial">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ItemDescription}}</span>
@@ -440,7 +438,7 @@
                                                 <LogTextBox #ItemDescriptionTextBox
                                                     [ObjectFieldName]="'ItemDescription'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
-                                                    [Text]="ItemDescription"
+                                                    [Text]="item.ItemDescription"
                                                     [ObjectTableName]="'Customs.CertificateOriginInvoice'"
                                                     [HideColumns]="true">
                                                 </LogTextBox>
@@ -456,7 +454,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.InvoicesIdUry">
+                                            [RIndex]="item.ItemSerial">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.PackageQuantity}}</span>
@@ -465,7 +463,7 @@
                                                 <LogTextBox #PackageQuantityTextBox
                                                     [ObjectFieldName]="'PackageQuantity'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'number'" [IsAccumulative]="true"
-                                                    [Text]="PackageQuantity"
+                                                    [Text]="item.PackageQuantity"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true">
                                                 </LogTextBox>
@@ -480,7 +478,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.InvoicesIdUry">
+                                            [RIndex]="item.ItemSerial">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.PackingTypeName}}</span>
@@ -503,7 +501,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.InvoicesIdUry">
+                                            [RIndex]="item.ItemSerial">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.Weight}}</span>
@@ -511,7 +509,7 @@
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox #WeightTextBox [ObjectFieldName]="'Weight'"
                                                     [DataContext]="item" [FocusOnMe]="true" [InputType]="'number'"
-                                                    [IsAccumulative]="true" [Text]="Weight"
+                                                    [IsAccumulative]="true" [Text]="item.Weight"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true"></LogTextBox>
                                             </div>
@@ -525,7 +523,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.InvoicesIdUry">
+                                            [RIndex]="item.ItemSerial">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.MeasureTypeName}}</span>
@@ -551,7 +549,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.InvoicesIdUry">
+                                            [RIndex]="item.ItemSerial">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ContainerIsoCode}}</span>
@@ -560,7 +558,7 @@
                                                 <LogTextBox #ContainerIsoCodeTextBox
                                                     [ObjectFieldName]="'ContainerIsoCode'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
-                                                    [Text]="ContainerIsoCode"
+                                                    [Text]="item.ContainerIsoCode"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true">
                                                 </LogTextBox>
@@ -575,7 +573,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.InvoicesIdUry">
+                                            [RIndex]="item.ItemSerial">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ItemId}}</span>
@@ -583,7 +581,7 @@
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox #ItemIdTextBox [ObjectFieldName]="'ItemId'"
                                                     [DataContext]="item" [FocusOnMe]="true" [InputType]="'nText'"
-                                                    [IsAccumulative]="true" [Text]="ItemId"
+                                                    [IsAccumulative]="true" [Text]="item.ItemId"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true">
                                                 </LogTextBox>
