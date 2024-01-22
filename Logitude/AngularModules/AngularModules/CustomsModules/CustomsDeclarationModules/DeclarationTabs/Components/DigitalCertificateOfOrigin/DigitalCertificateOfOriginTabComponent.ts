@@ -355,24 +355,13 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     DeleteSelected(item: CertificateOfOriginPM) {
         this.CurrentSession.StartBusyIndicator("");
         this.lastDeletedItem = item;
-
-        var SaveCompletedEvent = this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
-            SaveCompletedEvent.unsubscribe();
-            this.certificateOfOriginWebService.delete(item.Id).subscribe((myResponse: ServiceResponse) => {
-                
-                if (!myResponse.HasError) {
-                    this.ItemsSource.Remove(item);
-                    this.ReloadMyScreen();
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    this.CurrentSession.StopBusyIndicator();
-                }
-            });
+        this.certificateOfOriginWebService.delete(item.Id).subscribe((myResponse: ServiceResponse) => {                
+            if (!myResponse.HasError) {
+                this.ItemsSource.Remove(item);
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.StopBusyIndicator();
+            }
         });
-
-        this.CurrentSession.CurrentEditComponent.SaveChanges();
-     
-       
-
     }
   
 
