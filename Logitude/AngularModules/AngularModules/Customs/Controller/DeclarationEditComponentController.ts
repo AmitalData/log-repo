@@ -65,7 +65,12 @@ export class DeclarationEditComponentController implements IEditComponentControl
             }
             var indexOfTab = allTabs.findIndex(t => t.Code == "DCOO");
             if (indexOfTab > -1) {
-                allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.DigitalCertificateOfOrigin";
+                if(currentEntity.DeclarationTypeCode == "2" || currentEntity.DeclarationTypeCode == "3"){
+                    allTabs[indexOfTab].TabNameTextCodeCode = "Customs.Declaration.TH.DigitalCertificateOfOrigin";
+                }
+                else {
+                    allTabs.splice(indexOfTab, 1);
+                }
             }
         }
         else {
@@ -78,6 +83,7 @@ export class DeclarationEditComponentController implements IEditComponentControl
                 allTabs.splice(indexOfTab, 1);
 
             }
+            
             var indexOfTab = allTabs.findIndex(t => t.Code == "DCOO");
             if (indexOfTab > -1) {
                 allTabs.splice(indexOfTab, 1);
