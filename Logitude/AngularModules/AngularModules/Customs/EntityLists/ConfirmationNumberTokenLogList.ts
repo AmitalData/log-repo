@@ -18,6 +18,7 @@ export class ConfirmationNumberTokenLogList {
 	CommunicationType: number;
 	CommunicationLogId: string;
 	ShowLog: string;
+	SearchFields: string;
 	
 }
  

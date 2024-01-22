@@ -40,6 +40,8 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.CommunicationType).HasColumnName("CommunicationType");
 
             this.Property(t => t.CommunicationLogId).HasColumnName("CommunicationLogId").HasMaxLength(15).IsUnicode(false);
+
+            this.Property(t => t.SearchFields).HasColumnName("SearchFields").HasMaxLength(2000).IsUnicode(true);
         }
     }
 }

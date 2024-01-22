@@ -118,17 +118,14 @@ export class ShaamTokensComponent extends BaseComponent {
 
         localStorage.setItem(ShaamTokensComponent.shaamTokenRedirect, location.href);
 
-        if (!AmitalGatewayUtil.Instance.AmitalBrowserInUse)
-            location.href = this.linkToCodeForToken;
-        else {
-            AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
-                "",
-                "",
-                'OpenNewBrowser',
-                AmitalGatewayUtil.Instance.GetDefaultUnifreightMessageM(),
-                '"' + this.linkToCodeForToken + '"',
-                false);
-        }
+        AmitalGatewayUtil.Instance.SendRequestToUnifreightAsync(
+            "",
+            "",
+            'OpenNewBrowser',
+            AmitalGatewayUtil.Instance.GetDefaultUnifreightMessageM(),
+            '"' + this.linkToCodeForToken + '"',
+            false);
+        location.href = this.linkToCodeForToken;
     }
 
     async initLinkToCodeForToken() {
