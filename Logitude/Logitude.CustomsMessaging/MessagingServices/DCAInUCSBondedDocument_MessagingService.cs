@@ -400,8 +400,9 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 else
                 {
                     LogitudeSettings.HandleLogMe("!interactive before cresteCRS", false, "sendOcrDocument", stopLogAt);
+					LogitudeSettings.HandleLogMe("_DocumentsFilingPM.IsNotCustomsDocId" + _DocumentsFilingPM.IsNotCustomsDocId, false, "sendClosing", stopLogAt);
 
-                    string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
+					string key = ProcessLockTableUtil.Instance.GetKey4UCBUD2LT(_DocumentsFilingPM.Id, _DocumentsFilingPM.Tenant);
                     using (var disposableToken =
                         ProcessLockTableUtil.Instance.GetProcessLockTableDisposable(_DocumentsFilingPM.Tenant, true, key,
                         "UCBNDCD.CRS", true)

@@ -95,6 +95,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 if (requestParams.IsAngularClient)
                 {
                     customCheckData.Succeeded = true;
+                    customCheckData.UserMessage = "נשלח בהצלחה";
                 }
 
             }
@@ -147,6 +148,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     break;
                 case 4:
                     phsicalCheckPM.BringQueueForwardIndicatorS = "4";
+                    phsicalCheckPM.ChangeSetOp = ChangeSetOperation.Update;
+                    physicalCheckUpdateService.Update(phsicalCheckPM, true);
+
                     break;
                 case 5:
                     phsicalCheckPM.BringQueueForwardIndicatorS = "5";
