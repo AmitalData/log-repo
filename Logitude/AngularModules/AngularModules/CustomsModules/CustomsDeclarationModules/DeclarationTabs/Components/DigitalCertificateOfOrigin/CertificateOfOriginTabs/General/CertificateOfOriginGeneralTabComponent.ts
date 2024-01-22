@@ -894,6 +894,13 @@ export class CertificateOfOriginItemLine extends BaseComponent {
         this.entityPM.MeasureType = newValue;
     }
 
+    public get MeasureTypeName(): string {
+        return this.entityPM.MeasureTypeName;
+    }
+    public set MeasureTypeName(newValue: string) {
+        this.entityPM.MeasureTypeName = newValue;
+    }
+
     public get ContainerIsoCode(): string {
         return this.entityPM.ContainerIsoCode;
     }
