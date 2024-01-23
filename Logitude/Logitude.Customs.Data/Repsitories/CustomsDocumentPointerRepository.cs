@@ -80,7 +80,7 @@ namespace Logitude.Customs.Data.Repsitories
             (context as System.Data.Entity.Infrastructure.IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
             List<string> ticketsIds = (from a in context.CustomsDocumentsTickets
-                                       where a.DocumentsFilingId == customsDocumentId
+                                       where a.DocumentsFilingId == customsDocumentId && a.Tenant == tenant
                                        select a.Id).ToList();
 
             List<CustomsDocumentPointer> customsDocumentPointers;
