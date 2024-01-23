@@ -163,7 +163,7 @@ namespace Logitude.Customs.Data.Repsitories
             //return customsDocumentPointers;
 
             List<string> ticketsIds = (from a in context.CustomsDocumentsTickets
-                                       where a.RequestedCustomsDocId == requiredDocID // ??
+                                       where a.RequestedCustomsDocId == requiredDocID
                                        select a.Id).ToList();
 
             customsDocumentPointers = (from a in context.CustomsDocumentPointers
