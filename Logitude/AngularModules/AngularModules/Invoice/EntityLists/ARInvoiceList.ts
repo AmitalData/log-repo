@@ -166,5 +166,6 @@ export class ARInvoiceList {
 		
 		IsSigned: string;
 		IsSignedName: string;
+		ConfirmationNumber: string;
 	
-}
+}
