@@ -49,7 +49,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     constructor() {
         super();
     }
-
+    
 
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
@@ -304,6 +304,21 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         }
 
     }
+
+    CheckMandatoryFields() {
+        if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {
+            this.ErrorsList = ["סוג תעודת מקור וסיבת בקשה הם שדות חובה"];
+        }
+        else if (!this.entityPM.CooTypeCode) {
+            this.ErrorsList = ["סוג תעודת מקור הוא שדה חובה"];
+        }
+        else if (!this.entityPM.RequestReasonCode) {
+            this.ErrorsList = ["סיבת בקשה הוא שדה חובה"];
+        }
+        else{
+            this.ErrorsList = [];
+        }
+    }
     
     //#region  CertificateOfOrigin properties
     public get Id(): string {
@@ -339,6 +354,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     public set CooTypeCode(newValue: string) {
         this.entityPM.CooTypeCode = newValue;
+        if(this.ErrorsList?.length > 0 || this.IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
+            this.CheckMandatoryFields();
+        }
     }
 
     public get RequestReasonCode(): string {
@@ -346,6 +364,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     public set RequestReasonCode(newValue: string) {
         this.entityPM.RequestReasonCode = newValue;
+        if(this.ErrorsList?.length > 0 || this.IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
+            this.CheckMandatoryFields();
+        }
     }
 
     public get COONumber(): string {
