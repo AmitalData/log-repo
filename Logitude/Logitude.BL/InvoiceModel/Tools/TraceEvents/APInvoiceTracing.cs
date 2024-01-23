@@ -5,6 +5,7 @@ using Logitude.BL.Security;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using System.Collections.Generic;
 
 namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
 {
@@ -40,21 +41,8 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
 
             else if(!isCreatedAPInvoiceCopied)
             {
-                if(entityPM.IsEquipment != invoice.IsEquipment)
-                {
-                    CreateEventForUpdateIsEquipment(entityPM, invoice, loggedContact, showLocals);
-                }
-
-                else {
-                    EventTracer.CreateTraceEvent(new EventTracerArgs()
-                    {
-                        Tenant = entityPM.Tenant,
-                        EventTypeCode = "UPPI",
-                        UserId = loggedContact.Id,
-                        EntityId = entityPM.Id,
-                        ObjectTableName = "APInvoice",
-                    });
-                }
+                // trace the change in the AP invoice
+                CreateEventForUpdate(entityPM, invoice, loggedContact, showLocals);
             }
 
             if (entityPM.SetApproved)
@@ -115,9 +103,24 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 Notes = string.Concat(TranslateTextsClass.Translate("APInvoice.M.CopiedFromAPInvoiceNumber", entityPM.Tenant, showLocals), ' ', entityPM.CopiedFrom)
             });
         }
-        private static void CreateEventForUpdateIsEquipment(APInvoicePM entityPM, APInvoice invoice, ContactPM loggedContact, bool showLocals)
+        private static void CreateEventForUpdate(APInvoicePM entityPM, APInvoice invoice, ContactPM loggedContact, bool showLocals)
         {
-            string notes = GetTraceEventNotesForUpdateIsEquipment(entityPM, invoice, showLocals);
+            List<string> notesList = new List<string>();
+
+            // if is equipment has been changed
+            if (entityPM.IsEquipment != invoice.IsEquipment)
+            {
+                string note = GetTraceEventNotesForUpdateIsEquipment(entityPM, invoice, showLocals);
+                notesList.Add(note);
+            }
+
+            // if confirmation number has been changed
+            if (entityPM.ConfirmationNumber != invoice.ConfirmationNumber)
+            {
+                string note = TranslateTextsClass.Translate("APInvoice.F.ConfirmationNumber", entityPM.Tenant) + ":\n" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + invoice.ConfirmationNumber?.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + entityPM.ConfirmationNumber?.ToString();
+                notesList.Add(note);
+            }
+
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 Tenant = entityPM.Tenant,
@@ -125,7 +128,7 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                 UserId = loggedContact.Id,
                 EntityId = entityPM.Id,
                 ObjectTableName = "APInvoice",
-                Notes = notes,
+                Notes = ( notesList.Count > 0 ) ? string.Join("\n", notesList) : null
             });
         }
 
