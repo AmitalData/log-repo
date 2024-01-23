@@ -824,6 +824,7 @@
     <Compile Include="Controllers\ShipmentsModel\Extended\ContainersController.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBAdditionalHandlingInfoViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\AWBAdditionalHandlingInfoController.Generated.cs" />
+    <Compile Include="Controllers\Texas\TaxesController.cs" />
     <Compile Include="Controllers\WebServices\WindWardWebServiceController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCardController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowContactController.cs" />
@@ -3058,6 +3059,9 @@
     <Compile Include="Helpers\ExcelReport\ExcelReportMrtBuilder.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportService.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportUpdateService.cs" />
+    <Compile Include="Helpers\ExportServer\ExportServerLogin.cs" />
+    <Compile Include="Helpers\ExportServer\ExportServerService.cs" />
+    <Compile Include="Helpers\ExportServer\LoginImportWcfStruct.cs" />
     <Compile Include="Helpers\ExternalAPITemplatesBuilder.cs" />
     <Compile Include="Helpers\ExternalAPIResponseParameters.cs" />
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />
@@ -6595,9 +6599,7 @@
       <DependentUpon>ShipmentPackingWebService.asmx</DependentUpon>
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="ReportsWebServices\ShipmentPackingDataProviderService.cs">
-      <SubType>Component</SubType>
-    </Compile>
+    <Compile Include="ReportsWebServices\ShipmentPackingDataProviderService.cs" />
     <Compile Include="RequestParams\GetQuickbooksTablesRequestParams.Shared.cs" />
     <Compile Include="RequestParams\QuickbooksTransferParams.Shared.cs" />
     <Compile Include="RequestParams\StartTransferReadyInvoicesRequestParams.Shared.cs" />

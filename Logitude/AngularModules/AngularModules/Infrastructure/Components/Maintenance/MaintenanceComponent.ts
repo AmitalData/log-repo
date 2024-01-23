@@ -20,6 +20,11 @@ import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
+import { HostScreenService } from 'Common/Components/HostScreen/HostScreenService';
+import { CustomsCloudComponentArgs } from 'InfrastructureModules/InfrastructureOthers/Components/CustomsCloud/CustomsCloudComponent';
+import { HomeScreenEvent, HomeScreenEventTypes, HostScreenComponent } from 'Common/Components/HostScreen/HostScreenComponent';
+import { filter } from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 
 @Component({
     
@@ -33,6 +38,7 @@ export class MaintenanceComponent {
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
     private textCodeTranslationPipe: TextCodeTranslationPipe;
+    private readonly invoiceConfirmationNumber = "InvoiceConfirmationNumber";
 
     public EntityStatusToggle: boolean = false;
     constructor() {
@@ -73,7 +79,9 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
          
-
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber))
+            this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
+        
         if (SessionLocator.Tenant == 0) {
             this.PagesMenu.push(new Menu("MNG", TextCodeTranslator.Translate("General.MC.Management.Management")));
         }
@@ -208,6 +216,7 @@ export class MaintenanceComponent {
         this.BuildTransmissionsMenus();
         this.BuildCustomizationMenus();
         this.BuildCustomObjectsMenus();
+        this.BuildShaamTokenManagementMenu();
         this.PageChanged(this.PagesMenu[0]);
     }
     CheckDeploymentPackageFeatures() {
@@ -222,6 +231,14 @@ export class MaintenanceComponent {
     }
 
     private BuildSystemSettings() {
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) {
+            var item2 = new MenusTablePM();
+            item2.CategoryTypeCode = "CMS";
+            item2.Icon = "Settings"
+            item2.Code = "CUSC";
+            item2.ObjectTableName = "Customs Cloud";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item2));
+        }
 
         if (FeatureLocator.HasFeaturePermession("General", "TERMOFUSERFEATUE")) {
             var item2 = new MenusTablePM();
@@ -826,7 +843,6 @@ export class MaintenanceComponent {
         }
     }
 
-
     IsCustomizationMaintenanceMenuVisible(): boolean {
 
         if (SessionLocator.Tenant == 261) {
@@ -905,6 +921,25 @@ export class MaintenanceComponent {
         maintenanceMenuItem.DescriptionText = objectTable.Description != null ? objectTable.Description : TextCodeTranslator.Translate(objectTable.DescriptionTextCodeCode);
         this.AllMaintenanceMenu.push(maintenanceMenuItem);
     }
+     
+    private BuildShaamTokenManagementMenu() {
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "SHA";
+            item.Icon = "List"
+            item.Code = "SHAAM_LOGS";
+            item.ObjectTableName = TextCodeTranslator.Translate('General.MC.Logs'),
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "SHA";
+            item.Icon = "Settings"
+            item.Code = "SHAAM_TOKEN";
+            item.ObjectTableName = TextCodeTranslator.Translate('General.MC.TokenManagement');
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
+    }
+
     // Commands
     PageChanged(item: Menu) {
         this.SelectedMenu = item;
@@ -929,6 +964,27 @@ export class MaintenanceComponent {
     ItemClicked(item: MaintenanceMenuItem) {
         if (item) {
             switch (item.Code) {
+                case "SHAAM_LOGS": {
+                    HostScreenService.open(TextCodeTranslator.Translate('General.MC.Logs'),'ConfirmationNumberTokenLog');
+                    break;
+                }
+                
+                case "SHAAM_TOKEN": {        
+                    this.openTokenManagment();                
+                    break;
+                }
+
+                case "CUSC": {
+                    const logWindow: LogitudeWindow = new LogitudeWindow();
+                    logWindow.Width = 500;
+                    logWindow.Height = 300;
+                    logWindow.Title = "Customs Cloud";
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.WindowArgs = { windowInstance: logWindow } as CustomsCloudComponentArgs;
+                    logWindow.Show('./InfrastructureModules/InfrastructureOthers/Components/CustomsCloud/CustomsCloudComponent');
+                    break;
+                }
+
                 case "DFES": {
                     var windowTitle = "Document Filing Email Settings";
                     var logWindow = new LogitudeWindow();
@@ -1789,6 +1845,27 @@ export class MaintenanceComponent {
                 }
             }
         }
+    }
+
+    private async openTokenManagment() {
+        const logitudeWindow: LogitudeWindow = HostScreenService.open(TextCodeTranslator.Translate('General.MC.TokenManagement'),'CreateNewShaamToken');
+        const hostScreenComponent: HostScreenComponent = await this.withWindowComponentLoaded(logitudeWindow);
+        const subscription: Subscription  =  hostScreenComponent.$event
+            .pipe(filter((event: HomeScreenEvent) => event.event === HomeScreenEventTypes.openNewBrowser))
+            .subscribe((event: HomeScreenEvent) => {
+                subscription.unsubscribe();
+                logitudeWindow.Close('');
+                this.openTokenManagment();
+        })
+    }
+    
+    private async withWindowComponentLoaded(logitudeWindow: LogitudeWindow) {
+        return new Promise<any>(resolve => {
+            const subscription: Subscription =  logitudeWindow.ComponentLoaded.subscribe(component => {
+                subscription.unsubscribe();
+                resolve(component);
+            })            
+        });
     }
 
     private ShowCustomObject(item: any) {
