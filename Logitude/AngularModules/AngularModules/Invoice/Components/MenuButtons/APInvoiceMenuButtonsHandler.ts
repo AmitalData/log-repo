@@ -41,12 +41,7 @@ export class APInvoiceMenuButtonsHandler {
 
                     switch (button.EventCode) {
                         case "SaveAPInvoice": {
-                            myButtonIsDisabled = true;
-
-                            if (AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) || this.EntityPM.StatusCode == "WA" || (this.EntityPM.StatusCode == this.approvedStatusCode && SessionLocator.TenantPM.AccountingActivated == true)) {
-                                myButtonIsDisabled = false;
-                            }
-
+                            // display always the save button
                             break;
                         }
 
