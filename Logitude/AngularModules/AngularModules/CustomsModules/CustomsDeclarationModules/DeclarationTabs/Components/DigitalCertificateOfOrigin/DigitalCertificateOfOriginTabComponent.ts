@@ -319,7 +319,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
 
     EditButtonClicked(item: CertificateOfOriginPM) {
         this.selectedCertificateOfOrigin = item;
-        this.AddNewCertificateOfOrigin(this.isEdit)
+        this.AddNewCertificateOfOrigin(this.isEdit);
     }
 
 
@@ -335,7 +335,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
             confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                     if (confirmWindow.Yes) {
-                        this.DeleteSelected(this.selectedCertificateOfOrigin)
+                        this.DeleteSelected(this.selectedCertificateOfOrigin);
                     }
                     else if (confirmWindow.No) {
                         this.selectedCertificateOfOrigin = null;
