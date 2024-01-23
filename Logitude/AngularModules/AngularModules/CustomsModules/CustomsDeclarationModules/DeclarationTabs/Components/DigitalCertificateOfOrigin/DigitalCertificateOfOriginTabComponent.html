@@ -72,7 +72,7 @@
                                     (SelectedItemChanged)="OnRowSelected($event)" [SelectedRow]="SelectedRow">
                                     <log-column
                                         [header]="'Customs.CertificateOfOrigin.F.ListCounter' | TextCodeTranslationPipe"
-                                        [binding]="'ListCounter'" [width]="'35'" [Alignment]="'center'">
+                                        [binding]="'ListCounter'" [width]="'35'" [Alignment]="'right'">
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="text-align:right">
