@@ -251,19 +251,24 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
         if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsNew) {
-            this.CurrentSession.CloseCurrentWindow();
             this.certificateOfOriginPMService.insert(this.EntityPM).subscribe((response: any) => {
                 var result = response.Result;
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
-
+        
         else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit){
             this.isEntityChange = true;
-
+            
             this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
                 var result = response.Result;
                 this.CurrentSession.CurrentEditComponent.SaveChanges();
                 this.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
