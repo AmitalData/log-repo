@@ -316,11 +316,40 @@ namespace Logitude.Customs.BL.EntityQueryServices
             return DocumentDeclarationId;
         }
 
-        private static ResultByDocumentType GetDocumentIdByDocumentTypeNotDeleted(string declarationId, int tenant, DocumentType type, ObjectTable objectTable, DocumentsFilingRepository documentRepository)
+		public string GetCOOEDocument(string declarationId, string certificateOfOriginId, int tenant)
+		{
+			string DocumentDeclarationId = "";
+			//DeclarationVersion = null; ;
+			//CacheMessageSender
+			DocumentTypeRepository documentTypeRep = new DocumentTypeRepository(tenant);
+			DocumentType type = documentTypeRep.GetSingleDocumentTypeByCode("COOE", tenant);
+			ObjectTableRepository objectTableRep = new ObjectTableRepository(tenant);
+			ObjectTable objectTable = objectTableRep.GetObjectTableByName("Customs.Declaration", tenant, true);
+			ObjectTable objectTableCertificate = objectTableRep.GetObjectTableByName("Customs.CertificateOfOrigin", tenant, true);
+
+			DocumentsFilingRepository documentRepository = new DocumentsFilingRepository(tenant);
+			if (type != null)
+			{
+				if (type.ObjectTableId == objectTable.Id)
+				{
+
+						var res = GetDocumentIdByDocumentTypeNotDeleted(declarationId, tenant, type, objectTable, documentRepository, certificateOfOriginId, objectTableCertificate);
+						if (res != null)
+						{
+							DocumentDeclarationId = res.DocumentId;
+						}
+		
+				}
+			}
+			return DocumentDeclarationId;
+		}
+		private static ResultByDocumentType GetDocumentIdByDocumentTypeNotDeleted(string declarationId, int tenant, DocumentType type, ObjectTable objectTable, DocumentsFilingRepository documentRepository,string certificateOfOriginId = null, ObjectTable objectTableChiled  =null)
         {
             string DocumentsFilingId;
             string documentTypeId = type.Id;
-            var dtoList = documentRepository.GetByEntity(objectTable.Id, declarationId, tenant);
+            var dtoList = string.IsNullOrEmpty(certificateOfOriginId) ? documentRepository.GetByEntity(objectTable.Id, declarationId, tenant):
+			   documentRepository.GetByEntityAndChiled(objectTable.Id, declarationId, objectTableChiled.Id, certificateOfOriginId, tenant);
+
             dtoList = dtoList.Where(a => a.DocumentTypeId == documentTypeId).ToList();
             var list = dtoList.Select(r => r.Id).ToList();
             if (!LogitudeSettings.GetLogitudeCustomsSettingsMInject(tenant).IsConnectedToUniFreight)

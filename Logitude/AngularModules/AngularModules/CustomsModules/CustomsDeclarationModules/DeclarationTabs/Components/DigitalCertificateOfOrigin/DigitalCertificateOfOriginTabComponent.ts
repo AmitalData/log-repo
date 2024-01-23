@@ -30,6 +30,7 @@ import { CertificateOfOriginListService } from 'Customs/Services/StandardLists/C
 import { CustomSendOptionsArgs, SendRequestVIA } from 'Customs/DataContract/RequestParams/RequestParamsBase';
 import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/Components/CustomMessageProgressComponent';
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from 'CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
+import { DownloadManager } from 'Infrastructure/Utilities/DownloadManager';
 
 declare var attachmentUploader, ResultAsArray: any;
 
@@ -273,7 +274,16 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     CopyOfCertificate() {
      
     }
-
+    ShowCertificatePDF(item) {
+        this.certificateOfOriginWebService.GetCertificateOfOriginDocumentDeclarationId(this.EntityPM.Id,item.Id)
+        .subscribe((myResponse: ServiceResponse) => {
+            var myRes = myResponse.Result;
+            if (!AppTool.IsNullOrEmpty(myRes.DocumentDeclarationId)) {
+                DownloadManager.DownloadPage(myRes.DocumentDeclarationId);
+            }
+        });
+    }
+ 
     getCertificateOfOrigins() {
         this.certificateOfOriginWebService.GetCertificateOfOriginByID(this.EntityPM.Id,this.EntityPM.Tenant).subscribe(myResult => {   
             

@@ -261,7 +261,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         if (this.IsUnitedInvoices && InvoicesForPrintList.length < 2) {
             this.IsUnitedInvoices = false;
-            this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.OneNotUnited')];
         }
         else if (this.IsUnitedInvoices && InvoicesForPrintList.find(x => x.CurrencyTypeCode != item.CurrencyTypeCode)) {
             item.IsInvoicesForPrint = prevIsInvoicesForPrint == false ? null : false;
