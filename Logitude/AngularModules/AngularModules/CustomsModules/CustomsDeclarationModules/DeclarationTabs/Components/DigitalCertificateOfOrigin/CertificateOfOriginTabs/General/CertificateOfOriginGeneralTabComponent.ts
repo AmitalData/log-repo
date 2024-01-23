@@ -15,6 +15,11 @@ import { ExportStorageListService } from 'Customs/Services/StandardLists/ExportS
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 import { LogCellTemplateComponent } from 'Infrastructure/Components/LogitudeComponents/EditableLogGridComponent/LogCellTemplateComponent';
 import { SupplierInvoiceExtendedPMService } from 'Customs/Services/ExtendedPMs/SupplierInvoiceExtendedPMService';
+import { MeasurmentUnitListService } from 'Customs/Services/StandardLists/MeasurmentUnitListService';
+import { PackingTypeListService } from 'Customs/Services/StandardLists/PackingTypeListService';
+import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
+import { MeasurmentUnitList } from 'Customs/EntityLists/MeasurmentUnitList';
+import { PackingTypeList } from 'Customs/EntityLists/PackingTypeList';
 
 
 
@@ -163,10 +168,35 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         // update CertificateOriginItemItems list:
         EntityPM.CertificateOriginItemItems.forEach((item) => {
+            this.getMeasureNameFromCash(item.MeasureType,item);
+            this.getPackageTypeNameFromCash(item.PackageType,item);
             this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemLine(item,this));
         });
     }
 
+    private measurmentUnitListService: MeasurmentUnitListService = new MeasurmentUnitListService();
+    private packingTypeListService: PackingTypeListService = new PackingTypeListService();
+
+    getMeasureNameFromCash(code,item){       
+        this.measurmentUnitListService.getSingleFromCache(code).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var result: MeasurmentUnitList = myResponse.Result;
+                if (result != null) {
+                    item.MeasureTypeName = result.LocalName;
+                }
+            }
+        });
+    }
+    getPackageTypeNameFromCash(code,item){
+        this.packingTypeListService.getSingleFromCache(code).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var result:  PackingTypeList = myResponse.Result;
+                if (result != null) {
+                    item.PackingTypeName = result.LocalName;
+                }
+            }
+        });
+    }
     SetPropertiesEnabled() {
         var enabled = !this.IsDisplayOnly;
         this.UIProperties.SetEnabled("CooTypeCode", this.ObjectTableName, enabled);
