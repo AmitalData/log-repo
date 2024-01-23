@@ -243,6 +243,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
 
     SaveButtonClicked() {
         if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
+            this.GENERAL.CheckMandatoryFields();
             return;
         }
 
@@ -251,31 +252,35 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
         if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsNew) {
-            this.CurrentSession.CloseCurrentWindow();
             this.certificateOfOriginPMService.insert(this.EntityPM).subscribe((response: any) => {
                 var result = response.Result;
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.StopBusyIndicator();
+                
+                this.IsNewOrEdit = StatusCertificateOfOrigin.IsEdit;
             });
         }
-
+        
         else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit){
             this.isEntityChange = true;
-
+            
             this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
                 var result = response.Result;
                 this.CurrentSession.CurrentEditComponent.SaveChanges();
-                this.CurrentSession.CloseCurrentWindow();
+                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                this.CurrentSession.StopBusyIndicator();
             });
         }
     }
 
-   
-  
-   
+    
     async SendButtonClicked(customSendOptionsArgs:any){
-        
-        if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) { // manddatory fields
+        if(!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
+            this.GENERAL.CheckMandatoryFields();
             return;
         }
+
         var requestParams= new CertificateOfOriginRequestRequestParams();
         requestParams.LoggingEnabled = true;
         requestParams.LoggingUserId = SessionLocator.LoggedUserId;
