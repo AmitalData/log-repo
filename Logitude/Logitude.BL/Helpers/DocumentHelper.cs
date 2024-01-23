@@ -42,6 +42,8 @@ using User = Simplog.Data.CommonDataModel.EntityPOCOs.User;
 using WebFreight.Web;
 using Logitude.XSD.CW_API.ABM;
 using Logitude.BL.InvoiceModel.Tools;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
 
 namespace Logitude.BL.Helpers
 {
@@ -50,6 +52,7 @@ namespace Logitude.BL.Helpers
 
         private readonly bool IsAutomation;
         private int Tenant;
+        public bool isInterestReport = false;
 
         public DocumentHelper(bool isAutomation = false )
         {
@@ -418,7 +421,14 @@ namespace Logitude.BL.Helpers
                 userId = loggedUser.Id;
             }
             try {
-                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, "חשבונית חתומה", null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id, null, null, null);
+                Document documentInterestReport = new Document();
+                string documentInterestReportId = "";
+                if (this.isInterestReport && arinvocie.ARInvoiceTypeCode=="IT")
+                {
+                    documentInterestReportId = this.GetDocumentInterestReportId(arinvocie.Id, tenant);
+                  
+                }
+                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, "חשבונית חתומה", null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, null, null);
                 if (!string.IsNullOrEmpty(documentId))
                 {
                     arinvocie.IsSigned = "3";
@@ -685,7 +695,24 @@ namespace Logitude.BL.Helpers
             return document.Id;
         }
 
+        public string GetDocumentInterestReportId(string ARInvocieId,int tenant)
+        {
+            ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+            DocumentRepository documentRepository = new DocumentRepository(commoncontext);
+            DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
+            DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+            InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
+            InterestReport interestReport = interestReportRepository.GetSingleByARInvoiceId(ARInvocieId, tenant);
+            DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(interestReport.Id, tenant).FirstOrDefault();
+            return   documentRepository.GetSingleDocument(tenant, myDocumentFilings?.DocumentId)?.Id;
 
+
+        }
+
+
+
+
+       
 
     }
       

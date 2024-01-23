@@ -422,6 +422,10 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
         [DataMember]
+        public bool SendingInterestReport { get; set; }
+
+        [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
+        [DataMember]
         public string CustomerStatusName { get; set; }
 
         [DataMember]
