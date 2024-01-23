@@ -92,9 +92,11 @@ namespace WebFreight.Web.WebPages
 					string documentName = "";
 					string ShowType = "attachment";
 					string contentType = "";
+
+					var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
 					bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
 
-					if (isAppService && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
+					if ((isAppServiceENV  || isAppService) && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
 					{
 						string URI = LogitudeSettings.LogitudeIISURL.TrimEnd('/') + "/api/Report/" + "GetMemoryStreamForPrintExcelOrPdf";
 
