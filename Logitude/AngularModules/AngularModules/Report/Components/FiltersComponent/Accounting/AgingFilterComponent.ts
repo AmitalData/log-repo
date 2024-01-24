@@ -124,7 +124,6 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
 
     SetUIProperties()
     {
-        this.UIProperties.SetRequired("AgingForDate", "GLAccount", true);
         //this.UIProperties.SetRequired("Customer", "GLAccount", true);
         //this.UIProperties.SetRequired("NumberOfMonths", "GLAccount", true);
 
@@ -239,7 +238,6 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
                 return false;
             } else {
                 this.UIProperties.SetValidity("AgingForDate", "GLAccount", true, "valid");
-                this.UIProperties.SetRequired("AgingForDate", "GLAccount", false);
                 return true;
             }
         }
