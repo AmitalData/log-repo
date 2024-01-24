@@ -171,7 +171,8 @@
                                     [StartSearchFromNumber]="5">
                                 </LogLov>
                             </td>
-                            <td style="width: 35px;" *ngIf="!IsSalesmanRestricted"></td>
+                            <td *ngIf="!IsSalesmanRestricted"></td>
+                            <td colspan="3" *ngIf="IsSalesmanRestricted"></td>
                             <td style="width: 150px; padding: 0 10px; text-align: right;" class="Label">
                                 {{ 'Accounting.General.O.FilterBy' | TextCodeTranslationPipe }}
                             </td>
