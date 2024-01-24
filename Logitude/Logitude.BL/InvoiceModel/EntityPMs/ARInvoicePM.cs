@@ -66,6 +66,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string IssuedByUserId { get; set; }
 
         public string IsSigned { get; set; }
+        public string ConfirmationNumber { get; set; }
 
 
         [CustomValidation(typeof(Validators.ValidationClass), "ValidateClass")]
