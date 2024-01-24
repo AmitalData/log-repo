@@ -175,6 +175,7 @@ export class ShipmentPMService {
                 var pmresponse: ServiceResponse;
                 pmresponse = new ServiceResponse();
                 pmresponse.Result = entity;
+                //todo:liron add bit
                 pmresponse.Data = response.headers.get('WhatsAppMessagingPhoneNumber');
                 return pmresponse;
 

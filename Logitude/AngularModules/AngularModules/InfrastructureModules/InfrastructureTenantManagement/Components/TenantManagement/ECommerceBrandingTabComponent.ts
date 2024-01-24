@@ -246,6 +246,15 @@ export class ECommerceBrandingTabComponent extends BaseComponent implements Afte
 
         }
     }
+    get TranzilaPaymentWithBit() {
+        return this.EntityPM.TranzilaPaymentWithBit;
+    }
+    set TranzilaPaymentWithBit(value: boolean) {
+        if (this.EntityPM.TranzilaPaymentWithBit != value) {
+            this.EntityPM.TranzilaPaymentWithBit = value;
+
+        }
+    }
     get LogoURL() {
         return this.EntityPM.LogoURL;
     }

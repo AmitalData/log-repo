@@ -603,7 +603,10 @@ export class TenantManagementPM {
     public get EnableBranding() { return this.enableBranding; }
     public set EnableBranding(newValue: boolean) { if (this.enableBranding != newValue) { this.enableBranding = newValue; this.MarkAsDirty("EnableBranding"); } }
        
-	 
+    private tranzilaPaymentWithBit: boolean;
+    public get TranzilaPaymentWithBit() { return this.tranzilaPaymentWithBit; }
+    public set TranzilaPaymentWithBit(newValue: boolean) { if (this.tranzilaPaymentWithBit != newValue) { this.tranzilaPaymentWithBit = newValue; this.MarkAsDirty("TranzilaPaymentWithBit"); } }
+       
     private enableExportToExcel: boolean;
     public get EnableExportToExcel() { return this.enableExportToExcel; }
     public set EnableExportToExcel(newValue: boolean) { if (this.enableExportToExcel != newValue) { this.enableExportToExcel = newValue; this.MarkAsDirty("EnableExportToExcel"); } }
