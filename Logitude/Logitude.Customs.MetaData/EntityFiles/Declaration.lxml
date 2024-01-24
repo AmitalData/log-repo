@@ -27851,6 +27851,12 @@
       LocalDefaultText="&quot;תעודת מקור&quot;"
       TextCodeTypeCode="&quot;TH&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.DeclarationReconstructionRequired&quot;"
+      DefaultText="&quot;Please send a request for declaration reconstruction&quot;"
+      LocalDefaultText="&quot;יש לבצע בקשה לשחזור נתוני הצהרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

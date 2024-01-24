@@ -330,6 +330,22 @@ export class DeclarationAmendmentComponent extends BaseComponent implements OnIn
         }
     }
 
+    public OnOpenNewAmendmentClicked() {
+
+        // in import, for the first amendment if there is a hatara date but no payment date, show a warning
+        if (this.EntityPM.Direction != "E" && this.amendmentObslist.Length == 0 && this.EntityPM.HatraDate && !this.EntityPM.PaymentDate) {
+            var messageWindow = new MessageWindow();
+            messageWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
+            messageWindow.Width = 250;
+            messageWindow.Height = 150;
+            messageWindow.OkButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
+            messageWindow.Show(TextCodeTranslator.Translate("Customs.Declaration.O.DeclarationReconstructionRequired"));
+        }
+        else {
+            this.OpenNewAmendment(null, null);
+        }
+    }
+
 
     public OpenNewAmendment(id, declarationNumber, copy: boolean =false) {
 

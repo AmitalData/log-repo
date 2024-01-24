@@ -87,7 +87,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    {  		
 
 
-		public const string HashString = "cc328edb3a68a2762f8548ab64eb8ad0";
+		public const string HashString = "295e024767545c22beb3d6ee3cf33db7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -21898,6 +21898,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationTHNewCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.NewCertificateOfOrigin", DefaultText = "New Certificate Of Origin",LocalDefaultText = @"תעודה חדשה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationTHCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CertificateOfOrigin", DefaultText = "Certificate Of Origin",LocalDefaultText = @"תעודת מקור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationReconstructionRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationReconstructionRequired", DefaultText = "Please send a request for declaration reconstruction",LocalDefaultText = @"יש לבצע בקשה לשחזור נתוני הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
