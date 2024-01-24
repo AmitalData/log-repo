@@ -151,9 +151,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     //#region Filters
 
     //row 1
-    currentDate: Date = new Date();
-    agingForDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate() + 1, 0, 0, 0); // +1 is to include today date to allowed values
-
+    private agingForDate: Date = new Date();
     public get AgingForDate() { return this.agingForDate; }
     public set AgingForDate(value: Date)
     {
