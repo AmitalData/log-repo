@@ -562,7 +562,7 @@ export class AmitalGatewayUtil {
             }
                  
             case "showShaamTokenManagment": {
-                this.openCreateNewShaamToken2(MaintenanceMenu);
+                this.showShaamTokenManagment(MaintenanceMenu);
             }
             
             default: {
@@ -575,8 +575,8 @@ export class AmitalGatewayUtil {
         }        
     }
     
-    async openCreateNewShaamToken2(maintenanceMenu: string) {        
-        this.SelectCustomsRequestMenu(maintenanceMenu);
+    async showShaamTokenManagment(maintenanceMenu: string) {        
+        this.SelectCustomsRequestMenuSafty(maintenanceMenu);
         let maintenanceComponent: MaintenanceComponent | null = SessionLocator.SelectedSession.menuReference.find(com => com.instance instanceof MaintenanceComponent)?.instance;
         
          while (!maintenanceComponent?.PagesMenu) {
@@ -589,8 +589,7 @@ export class AmitalGatewayUtil {
     }
 
     async openCreateNewShaamToken(MaintenanceMenu: string) {
-
-        this.SelectCustomsRequestMenu(MaintenanceMenu);
+        this.SelectCustomsRequestMenuSafty(MaintenanceMenu);
         new EntityResourceService().getEntityResourceByTableName("Customs.ConfirmationNumberTokenLog", 0).subscribe((response: any) => {
             const windowTitle = TextCodeTranslator.Translate('General.MC.TokenManagement');
             const logWindow = new LogitudeWindow();
@@ -601,13 +600,10 @@ export class AmitalGatewayUtil {
             logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
             logWindow.WindowClosed.subscribe(() => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
         });
-
     }
-    async openConfirmationNumberTokenLog(change2EditTab: () => void, MaintenanceMenu: string) {
-        while (!SessionLocator.SelectedSession?.MainMenuComponent)
-            await new Promise(res => setTimeout(() => res(null), 100));
 
-        this.SelectCustomsRequestMenu(MaintenanceMenu);                
+    async openConfirmationNumberTokenLog(change2EditTab: () => void, MaintenanceMenu: string) {
+        this.SelectCustomsRequestMenuSafty(MaintenanceMenu);                
         change2EditTab();
 
         const objectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
@@ -629,6 +625,13 @@ export class AmitalGatewayUtil {
                     cmpRef.instance.BackCompleted.subscribe(bk => AmitalGatewayUtil.Instance.AmitalBackButtonClicked());
                 });
         });
+    }
+
+    async SelectCustomsRequestMenuSafty(menuCode: string) {
+        while (!SessionLocator.SelectedSession?.MainMenuComponent)
+            await new Promise(res => setTimeout(() => res(null), 100));
+
+        return this.SelectCustomsRequestMenu(menuCode);           
     }
 
     SelectCustomsRequestMenu(menuCode: string = "General.MH.Customs") {
