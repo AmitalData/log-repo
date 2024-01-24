@@ -52,6 +52,7 @@ export class CustomsAnswersComponent extends BaseComponent implements AfterViewI
     public IsDescriptionVisible: boolean = false;
     ResponseData: INF_MSG_GenericResponseData;
     SmalllogoHtmlId: string = Guid.newGuid();
+    CriticalWarningCode: string = "5";
 
     Errorslist: ObservableCollection = new ObservableCollection([]);
     Warninglist: ObservableCollection = new ObservableCollection([]);
