@@ -120,8 +120,7 @@
         </tr>
 
         <tr>
-            <td style="color:#1B90CB; font-size:15px; line-height: 15px;">{{ 'Accounting.General.O.FilterBy' |
-                TextCodeTranslationPipe }}</td>
+            <td style="color:#1B90CB; font-size:15px; line-height: 15px;">{{ 'Accounting.General.O.FilterBy' |TextCodeTranslationPipe }}</td>
         </tr>
 
         <tr>
@@ -129,56 +128,11 @@
                 <div style="width: 1475px;">
 
                     <table class="AbdullahTable" *ngIf="isReady">
-
-                        <!-- <tr>
-        <td style="width: 150px; padding: 0 5px;" class="Label">
-            {{ 'Accounting.General.O.FilterBy' | TextCodeTranslationPipe }}
-        </td>
-        <td style="width: 270px;" colspan="2">
-            <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
-                <li float-start id="filter_customer" (click)="FilterItemClicked('filter_customer')" style="height: 22px;"
-                    [class.SelectedFilter]="filterSelectedValue === 'filter_customer'">
-                    {{'GLAccount.O.Customer' | TextCodeTranslationPipe}}
-                </li>
-                <li float-start id="filter_vendor" (click)="FilterItemClicked('filter_vendor')" style="height: 22px;"
-                    [class.SelectedFilter]="filterSelectedValue === 'filter_vendor'">
-                    {{'GLAccount.O.Vendor' | TextCodeTranslationPipe}}
-                </li>
-            </ul>
-        </td>
-
-        <td style="width: 35px;"></td>
-
-        <td style="width: 185px; padding-right: 5px;" class="Label">
-
-        </td>
-        <td style="width: 155px;">
-
-        </td>
-        <td style="width: 100px;"></td>
-
-        <td style="width: 100px; padding-right: 5px;" class="Label">
-
-        </td>
-        <td></td>
-    </tr> -->
-
                         <tr>
                             <!-- AgingForDate -->
                             <td style="width: 160px; padding-right: 5px;" class="Label">
-                                <!-- <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.AgingForDate'" [ObjectFieldName]="'AgingForDate'"
-                    [DataContext]="DataContext"></LogLabel> -->
-                                <ul float-start class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL">
-                                    <li float-start id="filter_Due" (click)="DateFilterItemClicked('filter_Due')"
-                                        [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Due'">
-                                        {{ 'GLAccounts.O.Collecting' | TextCodeTranslationPipe }}
-                                    </li>
-                                    <li float-start id="filter_Accounting"
-                                        (click)="DateFilterItemClicked('filter_Accounting')"
-                                        [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Accounting'">
-                                        {{ 'GLAccounts.O.Accounting' | TextCodeTranslationPipe }}
-                                    </li>
-                                </ul>
+                                <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.AgingForDate'"
+                                    [ObjectFieldName]="'AgingForDate'" [DataContext]="DataContext"></LogLabel>
                             </td>
                             <td style="width: 135px;">
                                 <LogDatePicker [ObjectTableName]="'GLAccount'" [ObjectFieldName]="'AgingForDate'"
@@ -213,20 +167,80 @@
                                 <LogLov [ObjectFieldName]="'Customer'" [ObjectTableName]="'GLAccount'"
                                     [DataContext]="DataContext" [DependencyFilter1Value]="false"
                                     [DependencyFilter2Value]="AccountTypeCode" [SelectedValue]="Customer"
-                                    [LookUpTableName]="'GLAccount'" [HideColumns]="true"  [StartSearchFromChar]="3"
+                                    [LookUpTableName]="'GLAccount'" [HideColumns]="true" [StartSearchFromChar]="3"
                                     [StartSearchFromNumber]="5">
                                 </LogLov>
                             </td>
                             <td style="width: 35px;" *ngIf="!IsSalesmanRestricted"></td>
+                            <td style="width: 150px; padding: 0 10px; text-align: right;" class="Label">
+                                {{ 'Accounting.General.O.FilterBy' | TextCodeTranslationPipe }}
+                            </td>
+                            <td style="width: 270px;" colspan="2">
+                                <ul float-start class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL">
+                                    <li float-start id="filter_Due" (click)="DateFilterItemClicked('filter_Due')"
+                                        [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Due'">
+                                        {{ 'GLAccounts.O.Collecting' | TextCodeTranslationPipe }}
+                                    </li>
+                                    <li float-start id="filter_Accounting"
+                                        (click)="DateFilterItemClicked('filter_Accounting')"
+                                        [class.SelectedFilter]="DateFilterSelectedValue === 'filter_Accounting'">
+                                        {{ 'GLAccounts.O.Accounting' | TextCodeTranslationPipe }}
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
 
+                        <tr>
+                            <!-- SalesmanUserId -->
+                            <td style="padding-right: 5px;" class="Label">
+                                <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'"
+                                    [Text]="'Accounting.General.O.Salesman'| TextCodeTranslationPipe"
+                                    [DataContext]="DataContext"></LogLabel>
+                            </td>
+                            <td style="">
+                                <!--[ObjectFieldName]="'SalesmanUserId'"-->
+                                <LogLov [ObjectFieldName]="'Salesman'" [ObjectTableName]="'GLAccount'"
+                                    [DataContext]="DataContext" [LookUpTableName]="'User'" [SelectedValue]="Salesman"
+                                    [QueryFilterItems]="SalesmanFilterItems" [HideColumns]="true">
+                                </LogLov>
+                            </td>
+                            <td style=""></td>
+                            <td></td>
+
+
+                            <!-- Chart of account type -->
+                            <td style="width:120px">
+                                <LogLabel [ObjectFieldName]="'ChartOfAccountId'"
+                                    [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
+                                    [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
+                                </LogLabel>
+
+
+                            </td>
+                            <td style="width:140px" [attr.colspan]="IsSalesmanRestricted?2:1">
+                                <div style="width:140px">
+                                    <LogLov style="display: block;" float-start
+                                        [ObjectFieldName]="'ChartOfAccountsId_Dummy'" [ObjectTableName]="'GLAccount'"
+                                        [DataContext]="DataContext" [LookUpTableName]="'ChartOfAccount'"
+                                        (SelectedItemChanged)="ChartOfAccount = $event" [ForceShowAddLink]="true"
+                                        [SelectedValue]="ChartOfAccountsId_Dummy" [DependencyFilter1Value]="null"
+                                        [DependencyFilter2Value]="ChartOfAccountsTypeCode || '3'" [HideAddLink]="true"
+                                        [HideColumns]="true">
+                                    </LogLov>
+                                </div>
+                            </td>
+
+
+                            <td *ngIf="!IsSalesmanRestricted" style="width: 35px;"></td>
 
                             <!-- Balance -->
-                            <td style="width:120px;" [style.width.px]="IsSalesmanRestricted?'130':'150'"  class="Label"
+                            <td style="width:120px;" [style.width.px]="IsSalesmanRestricted?'130':'150'" class="Label"
                                 text-start>
-                                <LogLabel [ObjectTableName]="'GLAccount'" [TextCode]="'GLAccount.O.BalanceInHebrew'"
-                                    [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
+                                <LogLabel [ObjectTableName]="'GLAccount'"
+                                    [TextCode]="'GLAccount.O.Display'" [DataContext]="DataContext">
+                                </LogLabel>
                             </td>
-                            <td style="width: 230px"  [attr.colspan]="IsSalesmanRestricted ? '2' : '1'">
+                            <td [attr.colspan]="2">
                                 <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
                                     <li float-start id="filter_All" (click)="BalanceFilterItemClicked('filter_All')"
                                         style="height: 22px;width: 50px;"
@@ -249,107 +263,40 @@
                                     </li>
                                 </ul>
                             </td>
-                            <td colspan="2" style="width:380px"  *ngIf="balanceFilterSelectedValue === 'filter_DebtBetween'">
 
-                                <LogLabel style="display:inline-block;width:60px" [ObjectTableName]="'GLAccount'" [TextCode]="'GLaccount.O.From'"
-                                          [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
-                                <div style="max-width: 90px; display:inline-block;position:relative;top:2px">
-                                    <LogTextBox [ObjectFieldName]="'FromBalance'" [InputType]="'decimal'" [DataContext]="DataContext"
-                                                [NoObjectField]="true" [ObjectTableName]="'GLAccount'"
-                                                [HideColumns]="true">
-                                    </LogTextBox>
-                                </div>
+                            <td colspan="2" style="width:380px"
+                                *ngIf="balanceFilterSelectedValue === 'filter_DebtBetween'">
 
-                                <LogLabel style="display:inline-block;width:40px" [ObjectTableName]="'GLAccount'" [TextCode]="'GLaccount.O.To'"
-                                          [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
-                                <div style="max-width: 90px;display:inline-block;position:relative;top:2px">
-                                    <LogTextBox [ObjectFieldName]="'ToBalance'" [InputType]="'decimal'" [DataContext]="DataContext"
-                                                [NoObjectField]="true" [ObjectTableName]="'GLAccount'"
-                                                [HideColumns]="true">
-                                    </LogTextBox>
-                                </div>
-                            </td>
-
-                        </tr>
-
-                        <tr>
-                            <!-- SalesmanUserId -->
-                            <td style="padding-right: 5px;" class="Label">
-                                <LogLabel [ObjectFieldName]="'SalesmanUserId'" [ObjectTableName]="'GLAccount'"
-                               [Text]="'Accounting.General.O.Salesman'| TextCodeTranslationPipe"
+                                <LogLabel style="display:inline-block;width:60px" [ObjectTableName]="'GLAccount'"
+                                    [TextCode]="'GLaccount.O.From'" [ObjectFieldName]="'NumberOfMonths'"
                                     [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="">
-                                <!--[ObjectFieldName]="'SalesmanUserId'"-->
-                                <LogLov [ObjectFieldName]="'Salesman'" [ObjectTableName]="'GLAccount'"
-                                    [DataContext]="DataContext" [LookUpTableName]="'User'" [SelectedValue]="Salesman"
-                                    [QueryFilterItems]="SalesmanFilterItems" [HideColumns]="true">
-                                </LogLov>
-                            </td>
-                            <td style=""></td>
-                            <td></td>
-
-
-                            <!-- Chart of account type -->
-                            <td style="width:120px">
-                                <LogLabel [ObjectFieldName]="'ChartOfAccountId'"
-                                        [Text]="'GLAccount.F.ChartOfAccountsId' | TextCodeTranslationPipe"
-                                        [ObjectTableName]="'GLAccount'" [DataContext]="DataContext">
-                            </LogLabel>
-
-
-                            </td>
-                            <td style="width:140px" [attr.colspan]="IsSalesmanRestricted?2:1">
-                                <div style="width:140px">
-                                    <LogLov style="display: block;" float-start
-                                            [ObjectFieldName]="'ChartOfAccountsId_Dummy'"
-                                            [ObjectTableName]="'GLAccount'"
-                                            [DataContext]="DataContext"
-                                            [LookUpTableName]="'ChartOfAccount'"
-                                            (SelectedItemChanged)="ChartOfAccount = $event"
-                                            [ForceShowAddLink]="true"
-                                            [SelectedValue]="ChartOfAccountsId_Dummy"
-                                            [DependencyFilter1Value]="null"
-                                            [DependencyFilter2Value]="ChartOfAccountsTypeCode || '3'"
-                                            [HideAddLink]="true"
-                                            [HideColumns]="true">
-                                    </LogLov>
+                                <div style="max-width: 90px; display:inline-block;position:relative;top:2px">
+                                    <LogTextBox [ObjectFieldName]="'FromBalance'" [InputType]="'decimal'"
+                                        [DataContext]="DataContext" [NoObjectField]="true"
+                                        [ObjectTableName]="'GLAccount'" [HideColumns]="true">
+                                    </LogTextBox>
                                 </div>
-                            </td>
 
-
-                            <td *ngIf="!IsSalesmanRestricted" style="width: 35px;" ></td>
-
-
-                            <!-- NumberOfMonths -->
-                            <td colspan="3" style="width: 230px; " class="Label">
-
-                                <LogLabel style="padding-top: 3px;" [style.width.px]="IsSalesmanRestricted?'130':'205'"   float-start [ObjectTableName]="'GLAccount'" [TextCode]="'AgingReport.O.NumberMonthsBackwards'"
-                                    [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
-
-                                <div  style="width: 100px; " float-start>
-                                    <LogTextBox [ObjectFieldName]="'NumberOfMonths'" [InputType]="'unsinteger'" [DataContext]="DataContext"
-                                        [Text]="NumberOfMonths" [NoObjectField]="true" [ObjectTableName]="'GLAccount'" [HideColumns]="true">
+                                <LogLabel style="display:inline-block;width:40px" [ObjectTableName]="'GLAccount'"
+                                    [TextCode]="'GLaccount.O.To'" [ObjectFieldName]="'NumberOfMonths'"
+                                    [DataContext]="DataContext"></LogLabel>
+                                <div style="max-width: 90px;display:inline-block;position:relative;top:2px">
+                                    <LogTextBox [ObjectFieldName]="'ToBalance'" [InputType]="'decimal'"
+                                        [DataContext]="DataContext" [NoObjectField]="true"
+                                        [ObjectTableName]="'GLAccount'" [HideColumns]="true">
                                     </LogTextBox>
                                 </div>
                             </td>
 
-                            <td colspan="3" style="padding-right: 100px;">
-                                <div   style="width: 90px;">
-                                    <button class="GreenButton" (click)="RunButtonClicked()">
-                                        {{
-                                        'AgingReport.O.RunReport' | TextCodeTranslationPipe
-                                        }}
-                                    </button>
-                                </div>
-                            </td>
+
+
                         </tr>
 
                         <tr>
                             <!-- Collector -->
                             <td style="padding-right: 5px;" class="Label">
                                 <LogLabel [ObjectFieldName]="'CollectorId'" [ObjectTableName]="'GLAccount'"
-                                [Text]="'Accounting.General.O.Collector'| TextCodeTranslationPipe"
+                                    [Text]="'Accounting.General.O.Collector'| TextCodeTranslationPipe"
                                     [DataContext]="DataContext"></LogLabel>
                             </td>
                             <td style="">
@@ -358,46 +305,37 @@
                                     [HideColumns]="true">
                                 </LogLov>
                             </td>
-                            <td style=""></td>
-
                             <td></td>
-
-
+                            <td></td>
                             <!-- Chart of account -->
                             <td style="width:120px">
-                                <LogLabel float-start  [ObjectTableName]="'GLAccount'"
-                                [TextCode]="'General.Accounting.O.AgingMethod'" [DataContext]="DataContext">
-                            </LogLabel>
+                                <LogLabel float-start [ObjectTableName]="'GLAccount'"
+                                    [TextCode]="'General.Accounting.O.AgingMethod'" [DataContext]="DataContext">
+                                </LogLabel>
                             </td>
                             <td style="width:135px">
-                                <ComboBox style="width:140px" float-start  [ItemsSource]="AgingMethodsList" [Binding]="Name"
-                                [SelectedItem]="SelectedAgingMethod"
-                                (SelectedItemChanged)="SelectedAgingMethod = $event"></ComboBox>
+                                <ComboBox style="width:140px" float-start [ItemsSource]="AgingMethodsList"
+                                    [Binding]="Name" [SelectedItem]="SelectedAgingMethod"
+                                    (SelectedItemChanged)="SelectedAgingMethod = $event"></ComboBox>
+                            </td>
+                            <td></td>
+                            <!-- NumberOfMonths -->
+                            <td colspan="3" style="width: 230px; " class="Label">
+
+                                <LogLabel style="padding-top: 3px;" [style.width.px]="IsSalesmanRestricted?'130':'205'"
+                                    float-start [ObjectTableName]="'GLAccount'"
+                                    [TextCode]="'AgingReport.O.NumberMonthsBackwards'"
+                                    [ObjectFieldName]="'NumberOfMonths'" [DataContext]="DataContext"></LogLabel>
+
+                                <div style="width: 100px; " float-start>
+                                    <LogTextBox [ObjectFieldName]="'NumberOfMonths'" [InputType]="'unsinteger'"
+                                        [DataContext]="DataContext" [Text]="NumberOfMonths" [NoObjectField]="true"
+                                        [ObjectTableName]="'GLAccount'" [HideColumns]="true">
+                                    </LogTextBox>
+                                </div>
                             </td>
 
-                            <td></td>
-                             <!-- Currency -->
-                             <td style="width: 120px; ">
-                             <LogLabel [TextCode]="'Accounting.General.O.Currency'" [DataContext]="DataContext"></LogLabel>
-                            </td>
-                            <td style="width: 201px;"  colspan="2">
-                                <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
-                                    <li float-start id="filter_OriginalCurr" (click)="CurrencyFilterClicked('filter_OriginalCurr')"
-                                        style="height: 22px;width: 120px;"
-                                        [class.SelectedFilter]="currencyFilterSelectedValue === 'filter_OriginalCurr'">
-                                        &nbsp;&nbsp;
-                                        {{ 'Accounting.General.O.Original' | TextCodeTranslationPipe }}
-                                        &nbsp;&nbsp;
-                                    </li>
-                                    <li float-start id="filter_LocalCurr"
-                                        (click)="CurrencyFilterClicked('filter_LocalCurr')"
-                                        style="height: 22px;width: 110px;"
-                                        [class.SelectedFilter]="currencyFilterSelectedValue === 'filter_LocalCurr'">
-                                        {{ 'GLAccount.O.LocalInHebrew' | TextCodeTranslationPipe }}
-                                    </li>
-                                </ul>
-                            </td>
-                            <td style="width: 35px;" ></td>
+                            <td style="width: 35px;"></td>
 
                             <!-- Aging methods -->
                             <td style="padding-right: 5px;" colspan="2" class="Label">
@@ -417,7 +355,8 @@
                             <!-- Category -->
                             <td style="padding-right: 5px;" class="Label">
                                 <LogLabel [ObjectFieldName]="'Category'" [ObjectTableName]="'GLAccount'"
-                                    [Text]="'GLAccount.O.Category'| TextCodeTranslationPipe" [DataContext]="DataContext"></LogLabel>
+                                    [Text]="'GLAccount.O.Category'| TextCodeTranslationPipe"
+                                    [DataContext]="DataContext"></LogLabel>
                             </td>
                             <td>
                                 <ComboBox [ItemsSource]="CategoriesList"
@@ -474,26 +413,41 @@
 
                             </td>
                             <td></td>
-
-                            <!-- CurrenciesDetailed -->
-
-                            <td>
-                                <!-- <LogLabel [ObjectTableName]="'GLAccount'"
-                                    [TextCode]="'AgingReport.O.CurrenciesDetailed'" [DataContext]="DataContext">
-                                </LogLabel> -->
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <!-- Currency -->
+                            <td style="width: 120px; ">
+                                <LogLabel [TextCode]="'Accounting.General.O.Currency'" [DataContext]="DataContext">
+                                </LogLabel>
                             </td>
-
-                            <td style="">
-                                <!-- <CheckBox [IsChecked]="CurrenciesDetailed" (Checked)="CurrenciesDetailed = $event">
-                                </CheckBox> -->
+                            <td style="width: 201px;" colspan="2">
+                                <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL" float-start>
+                                    <li float-start id="filter_OriginalCurr"
+                                        (click)="CurrencyFilterClicked('filter_OriginalCurr')"
+                                        style="height: 22px;width: 120px;"
+                                        [class.SelectedFilter]="currencyFilterSelectedValue === 'filter_OriginalCurr'">
+                                        &nbsp;&nbsp;
+                                        {{ 'Accounting.General.O.Original' | TextCodeTranslationPipe }}
+                                        &nbsp;&nbsp;
+                                    </li>
+                                    <li float-start id="filter_LocalCurr"
+                                        (click)="CurrencyFilterClicked('filter_LocalCurr')"
+                                        style="height: 22px;width: 110px;"
+                                        [class.SelectedFilter]="currencyFilterSelectedValue === 'filter_LocalCurr'">
+                                        {{ 'GLAccount.O.LocalInHebrew' | TextCodeTranslationPipe }}
+                                    </li>
+                                </ul>
                             </td>
-
-                            <td style=""></td>
-
-                            <td style=""></td>
-
-                            <!--<td style=""></td>-->
-
+                            <td colspan="3">
+                                <div style="width: 90px;">
+                                    <button class="GreenButton" (click)="RunButtonClicked()">
+                                        {{
+                                        'AgingReport.O.RunReport' | TextCodeTranslationPipe
+                                        }}
+                                    </button>
+                                </div>
+                            </td>
                         </tr>
 
                         <tr style="height: 15px;">

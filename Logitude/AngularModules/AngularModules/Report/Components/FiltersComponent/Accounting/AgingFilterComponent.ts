@@ -29,7 +29,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     public ValidationErrorsList: string[] = [];
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
     isReady: boolean = false;
-    IsSalesmanRestricted: boolean = false ;
+    IsSalesmanRestricted: boolean = true ;
     public SalesmanFilterItems: ApiQueryFilters;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
@@ -152,7 +152,9 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     //#region Filters
 
     //row 1
-    private agingForDate: Date = new Date();
+    currentDate: Date = new Date();
+    agingForDate = new Date(this.currentDate.getFullYear(), this.currentDate.getMonth(), this.currentDate.getDate() + 1, 0, 0, 0); // +1 is to include today date to allowed values
+
     public get AgingForDate() { return this.agingForDate; }
     public set AgingForDate(value: Date)
     {
@@ -553,7 +555,6 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     }
     BalanceFilterChanged()
     {
-
         switch (this.balanceFilterSelectedValue) {
             case 'filter_All':
                 //   this.AccountTypeCode = '2';

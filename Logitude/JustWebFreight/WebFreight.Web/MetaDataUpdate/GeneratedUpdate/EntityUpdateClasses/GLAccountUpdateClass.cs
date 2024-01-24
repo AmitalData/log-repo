@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountUpdateClass
    {  		
-		public const string HashString = "bcb12b8b23474c618ce73678d48745a7";
+		public const string HashString = "d3b87e1bfd7770153d7b32a439b80e0a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14069,6 +14069,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode GLAccountTextCode_GLAccountsOFutureCheque = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccounts.O.FutureCheque", DefaultText = "FutureCheque",LocalDefaultText = @"פירוט המחאות עתידיות", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GLAccountTextCode_GLAccountOClosingBalanceAccordingToTheBalanceInDue = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.ClosingBalanceAccordingToTheBalanceInDue", DefaultText = "Closing balance according to the balance In Due",LocalDefaultText = @"יתרת סגירה לפי יתרה לגביה", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode GLAccountTextCode_GLAccountODisplay = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "GLAccount.O.Display", DefaultText = "Display",LocalDefaultText = @"להציג", ObjectTableId = GLAccountObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
