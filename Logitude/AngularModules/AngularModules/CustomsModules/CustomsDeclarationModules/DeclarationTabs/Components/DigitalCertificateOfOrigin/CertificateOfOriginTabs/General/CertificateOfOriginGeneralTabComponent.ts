@@ -318,12 +318,15 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     CheckMandatoryFields() {
         if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {
+            // this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.MandatoryFields')];
             this.ErrorsList = ["סוג תעודת מקור וסיבת בקשה הם שדות חובה"];
         }
         else if (!this.entityPM.CooTypeCode) {
+            // this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.TypeCodeMandatory')];
             this.ErrorsList = ["סוג תעודת מקור הוא שדה חובה"];
         }
         else if (!this.entityPM.RequestReasonCode) {
+            // this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.RequestReasonMandatory')];
             this.ErrorsList = ["סיבת בקשה הוא שדה חובה"];
         }
         else {
