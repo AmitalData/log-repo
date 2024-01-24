@@ -29,7 +29,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = "משלוח נוצר", 
                 Inactive = false, 
                 Weight = 10, 
-                ExportWeight = 60, 
+                ExportWeight = 10, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -80,7 +80,7 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "6,Arrival,הגעה", 
                 LocalName = "הגעה", 
                 Weight = 60, 
-                ExportWeight = 10, 
+                ExportWeight = 60, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
