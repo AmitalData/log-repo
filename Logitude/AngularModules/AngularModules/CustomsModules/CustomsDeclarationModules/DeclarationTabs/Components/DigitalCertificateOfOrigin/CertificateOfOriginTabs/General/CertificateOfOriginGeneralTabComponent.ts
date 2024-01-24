@@ -23,6 +23,8 @@ import { PackingTypeList } from 'Customs/EntityLists/PackingTypeList';
 import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
 import { ExportStorageWebService } from 'Customs/Services/WebServices/ExportStorageWebService';
 import { ExportStorageList } from 'Customs/EntityLists/ExportStorageList';
+import { OriginCriterionListService } from 'Customs/Services/StandardLists/OriginCriterionListService';
+import { OriginCriterionList } from 'Customs/EntityLists/OriginCriterionList';
 
 
 
@@ -56,7 +58,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
-
         this.entityPM = EntityPM;
 
         this.IsNewOrEdit = IsNewOrEdit;
@@ -76,7 +77,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                         this.currentCard = myResponse.Result;
                         currentDeclaration.SupplierInvoices = result;
                         this.currentDeclaration.SupplierInvoices = result;
-
+                        
                         if (currentDeclaration) {
                             if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
                                 this.InitNewCertificate(EntityPM);
@@ -179,16 +180,18 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         // update CertificateOriginItemItems list:
         EntityPM.CertificateOriginItemItems.forEach((item) => {
-            this.getMeasureNameFromCash(item.MeasureType, item);
-            this.getPackageTypeNameFromCash(item.PackageType, item);
+            this.getMeasureNameFromCache(item.MeasureType, item);
+            this.getPackageTypeNameFromCache(item.PackageType, item);
+            this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, item);
             this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemLine(item, this));
         });
     }
 
     private measurmentUnitListService: MeasurmentUnitListService = new MeasurmentUnitListService();
     private packingTypeListService: PackingTypeListService = new PackingTypeListService();
+    private originCriterionListService: OriginCriterionListService = new OriginCriterionListService();
 
-    getMeasureNameFromCash(code, item) {
+    getMeasureNameFromCache(code, item) {
         this.measurmentUnitListService.getSingleFromCache(code).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var result: MeasurmentUnitList = myResponse.Result;
@@ -198,12 +201,23 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             }
         });
     }
-    getPackageTypeNameFromCash(code, item) {
+    getPackageTypeNameFromCache(code, item) {
         this.packingTypeListService.getSingleFromCache(code).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var result: PackingTypeList = myResponse.Result;
                 if (result != null) {
                     item.PackingTypeName = result.LocalName;
+                }
+            }
+        });
+    }
+    getOriginCriterionCodeNameFromCache(code, item) {
+        // this.originCriterionListService.getSingleFromCache(code).subscribe((myResponse: ServiceResponse) => {
+        this.originCriterionListService.getSingle(code).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var result: OriginCriterionList = myResponse.Result;
+                if (result != null) {
+                    item.OriginCriterionCodeName = result.LocalName;
                 }
             }
         });
@@ -1013,5 +1027,17 @@ export class CertificateOfOriginItemLine extends BaseComponent {
     }
     public set Weight(newValue: number) {
         this.entityPM.Weight = newValue;
+    }
+    public get OriginCriterionCode(): string {
+        return this.entityPM.OriginCriterionCode;
+    }
+    public set OriginCriterionCode(newValue: string) {
+        this.entityPM.OriginCriterionCode = newValue;
+    }
+    public get OriginCriterionCodeName(): string {
+        return this.entityPM.OriginCriterionCodeName;
+    }
+    public set OriginCriterionCodeName(newValue: string) {
+        this.entityPM.OriginCriterionCodeName = newValue;
     }
 }

@@ -135,18 +135,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.NonExitPort).HasColumnName("NonExitPort").HasMaxLength(17).IsUnicode(false);
 
-            dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
-            if (dbms == "oracle")
-            {
-              this.Property(t => t.NonGoodsDescription).HasMaxLength(2000);
-			}
-            else
-            {
-              this.Property(t => t.NonGoodsDescription).HasMaxLength(8000);
-			}
-
-
-            this.Property(t => t.NonGoodsDescription).HasColumnName("NonGoodsDescription").IsUnicode(true);
+            this.Property(t => t.NonGoodsDescription).HasColumnName("NonGoodsDescription").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.NonDeclaringCompany).HasColumnName("NonDeclaringCompany").HasMaxLength(128).IsUnicode(true);
 
