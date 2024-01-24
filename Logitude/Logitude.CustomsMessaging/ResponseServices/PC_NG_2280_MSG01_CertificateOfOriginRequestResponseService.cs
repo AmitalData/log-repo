@@ -16,18 +16,34 @@ using Logitude.AmitalMessaging.Utils;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.BL.TraceEvents;
+using System;
+
+using Logitude.BL.CommonDataModel.EntityPMs;
+using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.CustomsMessaging.Helpers;
+using Simplog.Data.CommonDataModel;
+using Unifreight.BL.EntityQueryServices;
+using Unifreight.Data.AmitalModel;
+using Attachment = UnifreightIIG.Common.CertificateOfOriginRequestServiceReference.Attachment;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class PC_NG_2280_MSG01_CertificateOfOriginRequestResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback, CertificateOfOriginRequestRequestParams>
     {
+		private DateTime _TransmitionDateTime;
+
         public override INF_MSG_GenericResponseData GetResponse(PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback customResponse, CertificateOfOriginRequestRequestParams requestParams) =>
             this.MyResponseData;        
 
         public override void Update(PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback customResponse, CertificateOfOriginRequestRequestParams requestParams)
         {
+			_TransmitionDateTime = customResponse.ResponseContentHeader.TransmitionDateTime;
+			this.MyResponseData = new INF_MSG_GenericResponseData();
+
             ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
-			CertificateOfOriginUpdateService certificateOfOriginUpdateService = new CertificateOfOriginUpdateService(requestParams.Tenant);
+			CertificateOfOriginUpdateService certificateOfOriginUpdateService = new CertificateOfOriginUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
 
 			CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(requestParams.Tenant);
 			var certificateOfOriginPM = certificateOfOriginQueryService.GetSingle(requestParams.CertificateOfOriginId, true, false);
@@ -75,6 +91,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 						certificateOfOriginPM.ErrXml = string.Concat(certificateOfOriginPM.ErrXml, ErrorXml);
 					}
 				}
+				certificateOfOriginPM.ChangeSetOp = ChangeSetOperation.Update;
+				certificateOfOriginUpdateService.Update(certificateOfOriginPM, true);
+
 				this.MyResponseData.ApplicationID = requestParams.CertificateOfOriginId;
 				this.MyResponseData.Succeeded = true;
 				this.MyResponseData.UserMessage = userMessage;
@@ -97,6 +116,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 			}
 
+			certificateOfOriginPM.ChangeSetOp = ChangeSetOperation.Update;
 			certificateOfOriginUpdateService.Update(certificateOfOriginPM,true);
 
 			this.MyResponseData = new INF_MSG_GenericResponseData();
