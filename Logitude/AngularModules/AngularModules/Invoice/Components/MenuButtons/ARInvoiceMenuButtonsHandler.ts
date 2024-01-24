@@ -63,8 +63,8 @@ export class ARInvoiceMenuButtonsHandler {
                                 button.IsHidden = true;
                             }
                             else {
-                                // display always the save button but change its label
-                                button.LabelTextCodeCode = (this.EntityPM.IsConstituentInvoice || this.EntityPM.IsSigned) ? "General.B.Save" : "ARInvoice.B.SaveAsDraft";
+                                // display always the save button. show "save" label for all status different from draft
+                                button.LabelTextCodeCode = (this.EntityPM.StatusCode && this.EntityPM.StatusCode != "DR")? "General.B.Save": "ARInvoice.B.SaveAsDraft";
                             }
                             break;
                         }
