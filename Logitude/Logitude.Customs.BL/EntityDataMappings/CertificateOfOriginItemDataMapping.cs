@@ -32,7 +32,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(CertificateOfOriginItemPM entityPM, CertificateOfOriginItem entityPOCO)
         {
-            //throw new NotImplementedException();
+            entityPM.OriginCriterionCode = entityPOCO.OriginCriterionCode;
         }
    }
 

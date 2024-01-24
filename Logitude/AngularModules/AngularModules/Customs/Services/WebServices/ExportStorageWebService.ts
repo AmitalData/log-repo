@@ -20,7 +20,6 @@ export class ExportStorageWebService {
 
 
     GetByCargoKeys(firstCargoID: string, secondCargoID: string, thirdCargoID: string, cargoIdentifierType: string, tenant: number) {
-        debugger
         return defer(() => {
 
             var authHeader = new Headers();
@@ -31,7 +30,6 @@ export class ExportStorageWebService {
             serviceResponse = new ServiceResponse();
 
             return this._http.get(this._apiUrl + "/GetByCargoKeys/?firstCargoID=" + firstCargoID + "&secondCargoID=" + secondCargoID + "&thirdCargoID=" + thirdCargoID + "&cargoIdentifierType=" + cargoIdentifierType + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                debugger
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;
                 return serviceResponse;
