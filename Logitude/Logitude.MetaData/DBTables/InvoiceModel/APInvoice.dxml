@@ -521,6 +521,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ConfirmationNumber"
+    Type="varchar"
+    Size="30">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="Cards"
