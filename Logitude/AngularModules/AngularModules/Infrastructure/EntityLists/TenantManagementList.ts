@@ -113,6 +113,7 @@ export class TenantManagementList {
 		MobileTotalLastWeek: number;
 		MobileTotalLastMonth: number;
 		EnableBranding: boolean;
+		TranzilaPaymentWithBit: boolean;
 		EnableExportToExcel: boolean;
 		CustomerURL: string;
 		HideSharedlogistics: boolean;

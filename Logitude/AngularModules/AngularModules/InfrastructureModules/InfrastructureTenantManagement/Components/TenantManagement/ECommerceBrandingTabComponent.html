@@ -275,8 +275,17 @@
                                 [ObjectFieldName]="'EcommerceSupportEmail'" [ObjectTableName]="'TenantManagement'"
                                 [DataContext]="DataContext"></LogTextBox>
                         </td>
-                        <td>
+                        <td style="width:30px">
                             <div></div>
+                        </td>
+                        
+                        <td style="width:110px;">
+                            <LogLabel [ObjectFieldName]="'TranzilaPaymentWithBit'" [ObjectTableName]="'TenantManagement'"
+                                [DataContext]="EntityPM"></LogLabel>
+                        </td>
+                        <td style="width:160px">
+                            <LogCheckBox [ObjectFieldName]="'TranzilaPaymentWithBit'" [Checked]="TranzilaPaymentWithBit"
+                                [ObjectTableName]="'TenantManagement'" [DataContext]="EntityPM"></LogCheckBox>
                         </td>
                     </tr>
 

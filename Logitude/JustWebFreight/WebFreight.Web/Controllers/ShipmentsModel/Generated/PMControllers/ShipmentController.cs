@@ -759,7 +759,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Generated.PMControllers
             TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
             TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
             if (tenantManagementPM != null && !string.IsNullOrEmpty(tenantManagementPM.WhatsAppMessagingPhoneNumber))
-            {
+            {//todo:liron add
                 HttpContext.Current.Response.Headers.Add("WhatsAppMessagingPhoneNumber", tenantManagementPM.WhatsAppMessagingPhoneNumber);
                 HttpContext.Current.Response.Headers.Add("Access-Control-Expose-Headers", "WhatsAppMessagingPhoneNumber");
             }

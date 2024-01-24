@@ -333,6 +333,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public set thtk(newValue: string) { this.AdditionalData.PaymentData.thtk = newValue; }
 
     public get TargetEnv() {
+        //todo:liron add bit parameter
         let directTranzilaLink = this.GetDirectTranzilaLink();
         var Env = directTranzilaLink + this.AdditionalData.PaymentData?.TargetEnv + "/";//amitaltest
         return Env;
