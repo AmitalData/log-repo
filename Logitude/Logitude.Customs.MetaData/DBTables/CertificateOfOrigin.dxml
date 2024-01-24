@@ -423,7 +423,7 @@
   <Column
     Name="ErrXml"
     Type="nvarchar"
-    Size="2000">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>
