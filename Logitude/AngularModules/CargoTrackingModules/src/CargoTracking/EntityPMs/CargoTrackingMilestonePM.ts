@@ -54,6 +54,11 @@ export class CargoTrackingMilestonePM {
     public set Weight(newValue: number) { if (this.weight != newValue) { this.weight = newValue; this.MarkAsDirty("Weight"); } }
        
 	 
+    private exportWeight: number;
+    public get ExportWeight() { return this.exportWeight; }
+    public set ExportWeight(newValue: number) { if (this.exportWeight != newValue) { this.exportWeight = newValue; this.MarkAsDirty("ExportWeight"); } }
+       
+	 
 
     public OldEntityPM: CargoTrackingMilestonePM;
 		

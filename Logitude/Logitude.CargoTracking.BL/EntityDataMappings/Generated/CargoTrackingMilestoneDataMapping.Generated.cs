@@ -27,7 +27,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         SearchFields, 
 	         LocalName, 
 	         Inactive, 
-	         Weight,
+	         Weight, 
+	         ExportWeight,
 	      }
 
 
@@ -39,7 +40,8 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 	         SearchFields, 
 	         LocalName, 
 	         Inactive, 
-	         Weight,
+	         Weight, 
+	         ExportWeight,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -71,6 +73,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Weight))
             {
 				entityPOCO.Weight = entityPM.Weight;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportWeight))
+            {
+				entityPOCO.ExportWeight = entityPM.ExportWeight;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -109,6 +116,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 					entityPM.Weight = entityPOCO.Weight;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ExportWeight))
+            {
+					entityPM.ExportWeight = entityPOCO.ExportWeight;
+            }
+
 		}
 
 		public void PMToOldPM(CargoTrackingMilestonePM entityPM, CargoTrackingMilestonePM oldEntityPM)
@@ -138,6 +150,11 @@ namespace Logitude.CargoTracking.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Weight))
             {
                 oldEntityPM.Weight = entityPM.Weight;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ExportWeight))
+            {
+                oldEntityPM.ExportWeight = entityPM.ExportWeight;
             }
 			
 		}

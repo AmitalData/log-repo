@@ -6,6 +6,9 @@ export class MilestonePermissiosViewModel {
     public entityPM: any;
 
     public get MilestoneName() { return this.entityPM.EnglishName }
+    public get ImportWeight() { return this.entityPM.Weight }
+    public get ExportWeight() { return this.entityPM.ExportWeight }
+
 
     public get CustomerChooseIsChecked() {
         if (this.entityPM) {

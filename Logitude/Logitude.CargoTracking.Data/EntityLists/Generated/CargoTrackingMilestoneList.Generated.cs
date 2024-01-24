@@ -26,6 +26,8 @@ namespace Logitude.CargoTracking.Data.EntityLists
        public bool Inactive  { get; set; }
        [DataMember]
        public int? Weight  { get; set; }
+       [DataMember]
+       public int? ExportWeight  { get; set; }
    }
 
 }

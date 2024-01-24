@@ -31,6 +31,8 @@ namespace Logitude.CargoTracking.Data.EntityPOCOs
 	    public bool Inactive { get; set; }
         [Column("Weight")]
 	    public int? Weight { get; set; }
+        [Column("ExportWeight")]
+	    public int? ExportWeight { get; set; }
     }
 }
 	 

@@ -14,6 +14,7 @@ export class CargoTrackingMilestoneList {
 	LocalName: string;
 	Inactive: boolean;
 	Weight: number;
+	ExportWeight: number;
 	
 }
  

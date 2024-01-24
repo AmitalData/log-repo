@@ -29,6 +29,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = "משלוח נוצר", 
                 Inactive = false, 
                 Weight = 10, 
+                ExportWeight = 10, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -38,6 +39,7 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "2,Booking,בוצעה הזמנה", 
                 LocalName = "בוצעה הזמנה", 
                 Weight = 20, 
+                ExportWeight = 20, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -47,6 +49,7 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "3,Pickup,נאסף מהספק", 
                 LocalName = "נאסף מהספק", 
                 Weight = 30, 
+                ExportWeight = 30, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -57,6 +60,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = " אחסנה בנמל מוצא", 
                 Inactive = false, 
                 Weight = 40, 
+                ExportWeight = 40, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -66,6 +70,7 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "5,Departure,המראה", 
                 LocalName = "המראה", 
                 Weight = 50, 
+                ExportWeight = 50, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -75,6 +80,7 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "6,Arrival,הגעה", 
                 LocalName = "הגעה", 
                 Weight = 60, 
+                ExportWeight = 60, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -84,6 +90,7 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "7,Destination Warehouse,אחסנה בנמל יעד", 
                 LocalName = "אחסנה בנמל יעד", 
                 Weight = 70, 
+                ExportWeight = 70, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -94,6 +101,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = "הועבר לסוכן מכס", 
                 Inactive = false, 
                 Weight = 80, 
+                ExportWeight = 80, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -103,6 +111,7 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "9,Customs Process,בתהליך מכס", 
                 LocalName = "בתהליך מכס", 
                 Weight = 90, 
+                ExportWeight = 90, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -112,6 +121,7 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "10,Goods Classification,סיווג", 
                 LocalName = "סיווג", 
                 Weight = 100, 
+                ExportWeight = 100, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -121,6 +131,7 @@ namespace Logitude.CargoTracking.BL
                 SearchFields = "11,Document Inspection,ביקורת מסמכים", 
                 LocalName = "ביקורת מסמכים", 
                 Weight = 110, 
+                ExportWeight = 110, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -131,6 +142,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = "נשלחה בקשת תשלום", 
                 Inactive = false, 
                 Weight = 120, 
+                ExportWeight = 120, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -141,6 +153,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = "התקבל תשלום", 
                 Inactive = false, 
                 Weight = 130, 
+                ExportWeight = 130, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -151,6 +164,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = "שולם למכס", 
                 Inactive = false, 
                 Weight = 140, 
+                ExportWeight = 140, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -161,6 +175,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = "התרת מכס", 
                 Inactive = false, 
                 Weight = 150, 
+                ExportWeight = 150, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -171,6 +186,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = "גייטפס מוכן", 
                 Inactive = false, 
                 Weight = 160, 
+                ExportWeight = 160, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -181,6 +197,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = "נמסר למוביל", 
                 Inactive = false, 
                 Weight = 170, 
+                ExportWeight = 170, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -191,6 +208,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = "יצא להפצה", 
                 Inactive = false, 
                 Weight = 180, 
+                ExportWeight = 180, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -201,6 +219,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = "נמסר ללקוח", 
                 Inactive = false, 
                 Weight = 190, 
+                ExportWeight = 190, 
 			});
 			 
             all.Add(new CargoTrackingMilestoneDetails()
@@ -211,6 +230,7 @@ namespace Logitude.CargoTracking.BL
                 LocalName = "הופקה חשבונית", 
                 Inactive = false, 
                 Weight = 200, 
+                ExportWeight = 200, 
 			});
 			
             return all;
@@ -223,12 +243,13 @@ namespace Logitude.CargoTracking.BL
 			newPoco.SearchFields = GetSearchFields(this);   
 		    newPoco.LocalName = this.LocalName;  
 		    newPoco.Inactive = this.Inactive;  
-		    newPoco.Weight = this.Weight;   
+		    newPoco.Weight = this.Weight;  
+		    newPoco.ExportWeight = this.ExportWeight;   
         }
 
 		public string GetSearchFields(CargoTrackingMilestone rec)
         {   
-           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.LocalName,",",rec.Inactive,",",rec.Weight,",");
+           return String.Concat(rec.Code,",",rec.EnglishName,",",rec.LocalName,",",rec.Inactive,",",rec.Weight,",",rec.ExportWeight,",");
         }
    }
 }

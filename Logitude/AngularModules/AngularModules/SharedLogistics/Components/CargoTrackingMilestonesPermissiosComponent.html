@@ -44,7 +44,11 @@
                                                            <table>
                                                                <tr>
                                                                    <td style="width: 100%; min-width: 100%;text-align:center">Milestone Name</td>
+                                                                   <td style="width:80px; min-width:80px;text-align:center ">Import Weight</td>
+                                                                   <td style="width:80px; min-width:80px;text-align:center ">Export Weight</td>
                                                                    <td style="width:70px; min-width:70px;text-align:center ">Choose</td>
+                                                                   
+
                                                                </tr>
                                                            </table>
                                                        </div>
@@ -60,12 +64,19 @@
                                                                                            <td class="GridViewCell" style="width: 100%; min-width: 100%; max-width: 100%; position: relative;">
                                                                                                <div style="text-align:left">{{item.MilestoneName}}</div>
                                                                                            </td>
+                                                                                           <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px; position: relative;">
+                                                                                                <div style="text-align:left">{{item.ImportWeight}}</div>
+                                                                                            </td>
+                                                                                            <td class="GridViewCell" style="width: 80px; min-width: 80px; max-width: 80px; position: relative;">
+                                                                                                <div style="text-align:left">{{item.ExportWeight}}</div>
+                                                                                            </td>
                                                                                            <td class="CellStretched" style="width: 70px; min-width: 70px; max-width: 70px; position: relative;">
                                                                                                <div class="CheckBox">
                                                                                                    <input class="CenterCenter" style="text-align:center" [attr.id]="item.CustomerChooseCheckedBoxId" type="checkbox" [(ngModel)]="item.CustomerChooseIsChecked" />
                                                                                                    <label class="CenterCenter" [attr.for]="item.CustomerChooseCheckedBoxId"></label>
                                                                                                </div>
                                                                                            </td>
+                                                                                          
                                                                                        </tr>
                                                                                        <tr><td colspan="10"></td></tr>
                                                                                    </table>
