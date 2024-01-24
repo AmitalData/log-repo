@@ -388,7 +388,7 @@
   <Column
     Name="NonGoodsDescription"
     Type="nvarchar"
-    Size="8000">
+    Size="-1">
     <Constraints
       Nullable="true" />
   </Column>

@@ -272,7 +272,7 @@
                             <logitude-edit-grid style="min-width: 500px;" GridWidth="500px" GridHeight="100%"
                                 [ItemSource]="CertificateOriginInvoiceItems">
                                 <log-column [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
-                                    [binding]="'InvoicesIdUry'" [width]="'35'" [Alignment]="'left'">
+                                    [binding]="'InvoicesIdUry'" [width]="'35'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
                                             #logcelltemplate>
@@ -386,7 +386,7 @@
                             <logitude-edit-grid GridWidth="100%" GridHeight="100%"
                                 [ItemSource]="CertificateOriginItemItems">
                                 <log-column [header]="'Customs.CertificateOfOrigin.O.number' | TextCodeTranslationPipe"
-                                    [binding]="'ItemSerial'" [width]="'35'" [Alignment]="'left'">
+                                    [binding]="'ItemSerial'" [width]="'35'" [Alignment]="'right'">
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
                                             #logcelltemplate>
@@ -598,7 +598,6 @@
                                             #logcelltemplate>
                                             <div style="text-align:right">
                                                 <span>{{item.OriginCriterionCodeName}}</span>
-                                                <!-- <span>{{item.OriginCriterionCode}}</span> -->
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
