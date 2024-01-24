@@ -851,8 +851,14 @@
   <Column
     Name="IsSigned"
     OldNames="is_signed"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="ConfirmationNumber"
     Type="varchar"
-    Size="3">
+    Size="30">
     <Constraints
       Nullable="true" />
   </Column>
@@ -1000,11 +1006,6 @@
     ForeignKeyColumn="DocumentTemplateId"
     ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="IsSigned"
-    ReferencedTable="ARInvoicesSignedStatuses"
-    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,InvoiceDate" />
