@@ -20,6 +20,9 @@ import { PackingTypeListService } from 'Customs/Services/StandardLists/PackingTy
 import { ServiceResponse } from 'Infrastructure/DataContracts/ServiceResponse';
 import { MeasurmentUnitList } from 'Customs/EntityLists/MeasurmentUnitList';
 import { PackingTypeList } from 'Customs/EntityLists/PackingTypeList';
+import { ConsignmentPM } from 'Customs/EntityPMs/ConsignmentPM';
+import { ExportStorageWebService } from 'Customs/Services/WebServices/ExportStorageWebService';
+import { ExportStorageList } from 'Customs/EntityLists/ExportStorageList';
 
 
 
@@ -49,7 +52,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     constructor() {
         super();
     }
-    
+
 
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
@@ -64,13 +67,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         this.currentDeclaration = currentDeclaration;
 
-        this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {            
+        this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {
             var result = response.Result;
             if (!AppTool.IsNullOrEmpty(result)) {
                 var cardListService = new CardListService();
                 cardListService.getSingleFromCache(currentDeclaration.CustomerId).subscribe((myResponse: any) => {
                     if (!myResponse.HasError) {
-                        this.currentCard = myResponse.Result;  
+                        this.currentCard = myResponse.Result;
                         currentDeclaration.SupplierInvoices = result;
                         this.currentDeclaration.SupplierInvoices = result;
 
@@ -95,12 +98,12 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         });
     }
 
-    InitNewCertificate(EntityPM:CertificateOfOriginPM){
-         this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
-         this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
+    InitNewCertificate(EntityPM: CertificateOfOriginPM) {
+        this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
+        this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
 
-         this.InitializeRelatedDeclarationData();
-         this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
+        this.InitializeRelatedDeclarationData();
+        this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
     }
 
     InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM: CertificateOfOriginPM) {
@@ -118,7 +121,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedInvoice.IsInvoicesForPrint = true;
 
             // add to collection
-            this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoiceLine(mappedInvoice,this));
+            this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoiceLine(mappedInvoice, this));
             this.entityPM.CertificateOriginInvoiceItems.push(mappedInvoice);
 
         });
@@ -145,39 +148,47 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
 
             // #101498 after this task is finish- add this field initilize - field ContainerTypeWCO
-            // mappedConsignments.ContainerIsoCode = // get from exoorterstoeage; 
-
-
-            // field mappedConsignments.ContainerIsoCode: get from exportStorage by 
-            // var exportStorageListService = new ExportStorageListService();
-            // exportStorageListService.getByFilters() 
+            this.getContainerTypeWCOData(consignment, mappedConsignments);
 
             // add to collection    
-            this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemLine(mappedConsignments,this));
+            this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemLine(mappedConsignments, this));
             this.entityPM.CertificateOriginItemItems.push(mappedConsignments);
 
         });
     }
 
+    exportStorageWebService = new ExportStorageWebService();
+    getContainerTypeWCOData(consignment: ConsignmentPM, mappedConsignments: CertificateOfOriginItemPM) {
+        // ContainerTypeWCO
+        // CARGOTYPECODE,FIRSTCARGOID,SECONDCARGOID, THIRDCARGOID
+        this.exportStorageWebService.GetByCargoKeys(consignment.ManifestNumber, consignment.SecondCargoID, consignment.ThirdCargoID, consignment.CargoTypeCode, this.entityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
+            if (!myResponse.HasError) {
+                var result: ExportStorageList = myResponse.Result;
+                if (result != null) {
+                    mappedConsignments.ContainerIsoCode = result.ContainerTypeWCO;
+                }
+            }
+        });
+    }
 
     InitilizeListsFromCertificateOfOrigin(EntityPM: CertificateOfOriginPM) {
         // update CertificateOriginInvoice list:
         EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
-            this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoiceLine(item,this));
+            this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoiceLine(item, this));
         });
 
         // update CertificateOriginItemItems list:
         EntityPM.CertificateOriginItemItems.forEach((item) => {
-            this.getMeasureNameFromCash(item.MeasureType,item);
-            this.getPackageTypeNameFromCash(item.PackageType,item);
-            this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemLine(item,this));
+            this.getMeasureNameFromCash(item.MeasureType, item);
+            this.getPackageTypeNameFromCash(item.PackageType, item);
+            this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemLine(item, this));
         });
     }
 
     private measurmentUnitListService: MeasurmentUnitListService = new MeasurmentUnitListService();
     private packingTypeListService: PackingTypeListService = new PackingTypeListService();
 
-    getMeasureNameFromCash(code,item){       
+    getMeasureNameFromCash(code, item) {
         this.measurmentUnitListService.getSingleFromCache(code).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var result: MeasurmentUnitList = myResponse.Result;
@@ -187,10 +198,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             }
         });
     }
-    getPackageTypeNameFromCash(code,item){
+    getPackageTypeNameFromCash(code, item) {
         this.packingTypeListService.getSingleFromCache(code).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
-                var result:  PackingTypeList = myResponse.Result;
+                var result: PackingTypeList = myResponse.Result;
                 if (result != null) {
                     item.PackingTypeName = result.LocalName;
                 }
@@ -307,19 +318,22 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     CheckMandatoryFields() {
         if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {
+            // this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.MandatoryFields')];
             this.ErrorsList = ["סוג תעודת מקור וסיבת בקשה הם שדות חובה"];
         }
         else if (!this.entityPM.CooTypeCode) {
+            // this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.TypeCodeMandatory')];
             this.ErrorsList = ["סוג תעודת מקור הוא שדה חובה"];
         }
         else if (!this.entityPM.RequestReasonCode) {
+            // this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.RequestReasonMandatory')];
             this.ErrorsList = ["סיבת בקשה הוא שדה חובה"];
         }
-        else{
+        else {
             this.ErrorsList = [];
         }
     }
-    
+
     //#region  CertificateOfOrigin properties
     public get Id(): string {
         return this.entityPM.Id;
@@ -354,7 +368,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     public set CooTypeCode(newValue: string) {
         this.entityPM.CooTypeCode = newValue;
-        if(this.ErrorsList?.length > 0 || this.IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
+        if (this.ErrorsList?.length > 0 || this.IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
             this.CheckMandatoryFields();
         }
     }
@@ -364,7 +378,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
     public set RequestReasonCode(newValue: string) {
         this.entityPM.RequestReasonCode = newValue;
-        if(this.ErrorsList?.length > 0 || this.IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
+        if (this.ErrorsList?.length > 0 || this.IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
             this.CheckMandatoryFields();
         }
     }
@@ -909,7 +923,7 @@ export class CertificateOfOriginInvoiceLine extends BaseComponent {
     }
     public set IsInvoicesForPrint(newValue: boolean) {
         this.entityPM.IsInvoicesForPrint = newValue;
-    }   
+    }
 }
 
 
@@ -965,7 +979,7 @@ export class CertificateOfOriginItemLine extends BaseComponent {
     public set MarksAndNumbers(newValue: string) {
         this.entityPM.MarksAndNumbers = newValue;
     }
-  
+
     public get ItemDescription(): string {
         return this.entityPM.ItemDescription;
     }

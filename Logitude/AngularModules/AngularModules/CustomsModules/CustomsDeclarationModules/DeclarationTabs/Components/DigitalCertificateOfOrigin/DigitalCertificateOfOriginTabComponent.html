@@ -185,7 +185,7 @@
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="width: 114px;float: right; height:20px; padding-top: 2px; display:block">
-                                                    <button [disabled]="false" class="Button"  (click)="CopyOfCertificate()" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
+                                                    <button [disabled]="false" class="Button"  (click)="CopyOfCertificate(item)" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
                                                         {{'Customs.CertificateOfOrigin.O.CopyOfCertificate'| TextCodeTranslationPipe}}           
                                                     </button>
                                                 </div>

@@ -94,7 +94,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
 
 
     SetWindowArgs(args: any) {
-
         this.EntityPM = args.CertificateOfOrigin;
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
@@ -103,8 +102,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         this.RunComponent();
         this.entityArgs.EntityPM = this.EntityPM;
         this.entityArgs.ObjectTableName = "Customs.CertificateOfOrigin";
-
-
     }
 
     private selectedTabCode: string;
@@ -128,12 +125,10 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
     }
     BuildTabs() {
         this.TabsItemsSource = [];
-
         this.TabsItemsSource.push(new TabItem("GENERAL", "Customs.Declaration.TH.General"));
         this.TabsItemsSource.push(new TabItem("MOREDATA", "Customs.Declaration.O.MoreData"));
         this.TabsItemsSource.push(new TabItem("REQUESTSHEET", "Customs.Declaration.TH.RequestSheet"));
         this.TabsItemsSource.push(new TabItem("ANSWERTOCERTIFICATE", "Customs.CertificateOfOrigin.O.AnswerToCertificate"));
-
 
         // this.BuildClientsTapagList();
         this.selectedTabCode = "GENERAL";
@@ -253,12 +248,14 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
 
         if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsNew) {
             this.certificateOfOriginPMService.insert(this.EntityPM).subscribe((response: any) => {
-                var result = response.Result;
-                this.CurrentSession.CurrentEditComponent.SaveChanges();
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                this.CurrentSession.StopBusyIndicator();
+                if (!response.HasError) {
+                    var result = response.Result;
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.StopBusyIndicator();
+                    this.IsNewOrEdit = StatusCertificateOfOrigin.IsEdit;
+                }
                 
-                this.IsNewOrEdit = StatusCertificateOfOrigin.IsEdit;
             });
         }
         
@@ -266,10 +263,12 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
             this.isEntityChange = true;
             
             this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
-                var result = response.Result;
-                this.CurrentSession.CurrentEditComponent.SaveChanges();
-                this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                this.CurrentSession.StopBusyIndicator();
+                if (!response.HasError) {
+                    var result = response.Result;
+                    this.CurrentSession.CurrentEditComponent.SaveChanges();
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.CurrentSession.StopBusyIndicator();
+                }
             });
         }
     }
