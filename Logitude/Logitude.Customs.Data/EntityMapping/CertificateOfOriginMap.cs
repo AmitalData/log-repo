@@ -145,7 +145,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.NonManifestNum).HasColumnName("NonManifestNum").HasMaxLength(35).IsUnicode(true);
 
-            this.Property(t => t.ErrXml).HasColumnName("ErrXml").HasMaxLength(2000).IsUnicode(true);
+            this.Property(t => t.ErrXml).HasColumnName("ErrXml").IsMaxLength().IsUnicode(true);
 
             this.Property(t => t.CooStatusCode).HasColumnName("CooStatusCode").HasMaxLength(2).IsUnicode(false);
 
