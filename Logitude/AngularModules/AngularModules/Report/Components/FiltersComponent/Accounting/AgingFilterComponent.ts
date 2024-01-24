@@ -29,7 +29,7 @@ export class AgingFilterComponent extends BaseComponent implements OnInit
     public ValidationErrorsList: string[] = [];
     @Output() RunReportEvent: EventEmitter<ReportFliter> = new EventEmitter<ReportFliter>();
     isReady: boolean = false;
-    IsSalesmanRestricted: boolean = true ;
+    IsSalesmanRestricted: boolean = false ;
     public SalesmanFilterItems: ApiQueryFilters;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
