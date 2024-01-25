@@ -43,6 +43,7 @@ export class AmitalGatewayUtil {
     public UnifaceRequestArrived: EventEmitter<any> = new EventEmitter();
 
     private _AmitalBrowserInUse: boolean = false;
+    public get isUnifreightHost(): boolean { return !!window.parent._JavascriptGateway; }
     public get AmitalBrowserInUse(): boolean { return (this._AmitalBrowserInUse === true); }
     public set AmitalBrowserInUse(newValue: boolean) { this._AmitalBrowserInUse = newValue; }
     public IsDeclarationInUse(CustomFileNo: string, IsConvertedDeclaration: boolean, IsConnectedToUnifreight: boolean): boolean {
