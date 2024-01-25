@@ -61,19 +61,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
         this.entityPM = EntityPM;
-
         this.IsNewOrEdit = IsNewOrEdit;
         this.IsDisplayOnly = IsDisplayOnly;
-
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
-
         this.currentDeclaration = currentDeclaration;
 
-
         if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
-
-
             this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {
                 var result = response.Result;
                 if (!AppTool.IsNullOrEmpty(result)) {
@@ -84,32 +78,25 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                             currentDeclaration.SupplierInvoices = result;
                             this.currentDeclaration.SupplierInvoices = result;
                             this.InitNewCertificate(EntityPM);
-                            this.isReady = true;                            
+                            this.isReady = true;
                         }
                     });
-                }   
+                }
             });
-           
-
         }
         else if (IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
             this.InitilizeListsFromCertificateOfOrigin(EntityPM);
             this.isReady = true;
-
         }
-        this.SetPropertiesEnabled();
 
+        this.SetPropertiesEnabled();
         this.SetWarning();
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
-
-
-        
     }
 
     InitNewCertificate(EntityPM: CertificateOfOriginPM) {
         this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
         this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
-
         this.InitializeRelatedDeclarationData();
         this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
     }
@@ -168,7 +155,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     exportStorageWebService = new ExportStorageWebService();
     getContainerTypeWCOData(consignment: ConsignmentPM, mappedConsignments: CertificateOfOriginItemPM) {
         // ContainerTypeWCO
-        // CARGOTYPECODE,FIRSTCARGOID,SECONDCARGOID, THIRDCARGOID
+        // find by: CARGOTYPECODE,FIRSTCARGOID,SECONDCARGOID, THIRDCARGOID
         this.exportStorageWebService.GetByCargoKeys(consignment.ManifestNumber, consignment.SecondCargoID, consignment.ThirdCargoID, consignment.CargoTypeCode, this.entityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var result: ExportStorageList = myResponse.Result;
@@ -306,7 +293,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         windowArgs.selectInvoicesOnly = selectInvoicesOnly;
 
         windowArgs.existInvoices = item.InvoiceConnect;
-        
+
         windowArgs.CertificateOfOriginItem = item;
         windowArgs.IsEntityDisplayOnly = isEntityDisplayOnly;
 
@@ -334,7 +321,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 if (!hasLineschosen) {
                     // do somthing?
                 }
-                
+
             });
         }
         this.SelectionCompleted.emit(args);
@@ -1004,7 +991,7 @@ export class CertificateOfOriginItemLine extends BaseComponent {
     public set InvoiceConnect(newValue: string) {
         this.entityPM.InvoiceConnect = newValue;
     }
-    
+
     public get ItemSerial(): number {
         return this.entityPM.ItemSerial;
     }
