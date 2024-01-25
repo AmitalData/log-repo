@@ -37,6 +37,7 @@ import { DigitalCertificateOfOriginTabComponent } from './Components/DigitalCert
 import { CertificateOfOriginComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent';
 import { CertificateOfOriginGeneralTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent';
 import { CertificateOfOriginMoreDetailsTabComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent';
+import { CertificateAnswersComponent } from './Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateAnswers/CertificateAnswersComponent';
 
 
 export const Components =
@@ -79,7 +80,8 @@ export const Components =
         DigitalCertificateOfOriginTabComponent,
         CertificateOfOriginComponent,
         CertificateOfOriginGeneralTabComponent,
-        CertificateOfOriginMoreDetailsTabComponent
+        CertificateOfOriginMoreDetailsTabComponent,
+        CertificateAnswersComponent
 
     ];
 
@@ -129,6 +131,7 @@ export class ModuleDeclarations {
             case "CertificateOfOriginComponent": { myResult = CertificateOfOriginComponent; break; }
             case "CertificateOfOriginGeneralTabComponent": { myResult = CertificateOfOriginGeneralTabComponent; break; }
             case "CertificateOfOriginMoreDetailsTabComponent": { myResult = CertificateOfOriginMoreDetailsTabComponent; break; }
+            case "CertificateAnswersComponent": { myResult = CertificateAnswersComponent; break; }
 
         }
 

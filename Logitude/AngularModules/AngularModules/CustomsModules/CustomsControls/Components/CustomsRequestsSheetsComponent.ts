@@ -491,7 +491,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'RequestDescription',
             DataTypeCode: 'String',//'Number',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestDescription"),
-            Styles: { width: '220px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '135px' }: { width: '220px' },
             IsCustomTemplate: true
             , ServerSideSortable: true,
             SortByName: 'RequestDescription'
@@ -501,7 +501,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'CustomFileNo',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.CustomFileNo"),
-            Styles: { width: '100px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '85px' }: { width: '100px' }, 
             IsCustomTemplate: true,
 
             ServerSideSortable: true,
@@ -511,7 +511,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'RequestStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestStatusName"),
-            Styles: { width: '100px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '80px' }: { width: '100px' }, 
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'RequestStatusName'
@@ -520,7 +520,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'RequestCreateDate',
             DataTypeCode: 'Date',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestCreateDate"),
-            Styles: { width: '160px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '120px' }: { width: '160px' }, 
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
@@ -533,7 +533,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'RequestOwnerName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.RequestOwnerName"),
-            Styles: { width: '140px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '65px' }: { width: '140px' }, 
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'RequestOwnerName'
@@ -551,6 +551,7 @@ export class CustomsRequestsSheetsComponent
             ServerSideSortable: true,
             SortByName: 'IsDCA'
         });
+        if(!this.entityArgs.IsFromStandAloneScreen){
         this.columns.push({
             FieldName: 'IsRestored',
             DataTypeCode: 'String',
@@ -562,6 +563,7 @@ export class CustomsRequestsSheetsComponent
             ServerSideSortable: true,
             SortByName: 'IsRestored'
         });
+        }
         this.columns.push({
             FieldName: 'CancleRequest',
             DataTypeCode: 'String',
