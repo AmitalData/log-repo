@@ -11168,7 +11168,7 @@ namespace WebFreight.Web.ReportsWebServices
                     {
                         if (!string.IsNullOrEmpty(item.ChartOfAcountType))
                         {
-                            chartType = typeQueryService.GetSingle(item.ChartOfAcountType, false, false);
+                            chartType = chartOfAccountTypes.FirstOrDefault(x => x.Code == item.ChartOfAcountType);
                             if (chartType != null) { typeName = chartType.LocalName; }
                         }
                         ResultList record = new ResultList()
@@ -11605,7 +11605,7 @@ namespace WebFreight.Web.ReportsWebServices
                         ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
                         if (parent == null)
                         {
-                            ChartOfAccountsTypePM chartOfAccountType = typeQueryService.GetSingle(item.ChartOfAcountType, false, false);
+                            ChartOfAccountsTypePM chartOfAccountType = chartOfAccountTypes.FirstOrDefault(x => x.Code == item.ChartOfAcountType);
 
                             if (chartOfAccountType != null)
                             {
