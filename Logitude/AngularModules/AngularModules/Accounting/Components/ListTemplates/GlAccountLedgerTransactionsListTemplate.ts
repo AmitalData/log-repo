@@ -201,6 +201,30 @@ export class GlAccountLedgerTransactionsListTemplate {
 
         if (
             !AppTool.IsNullOrEmpty(
+                this.rowData["ReconcileMethodCode"]
+            )
+        ) {
+            if (this.rowData["ReconcileMethodCode"] == "0") {
+                // 0-local currency
+
+                if (this.rowData["LocalAmountCredit"] == 0) {
+                    return this.rowData["LocalAmountDebit"];
+                } else {
+                    return this.rowData["LocalAmountCredit"]; // -1 *
+                }
+            } else if (
+                this.rowData["ReconcileMethodCode"] == "1"
+            ) {
+                // 1-foreign currency
+
+                if (this.rowData["ForeignAmountCredit"] == 0) {
+                    return this.rowData["ForeignAmountDebit"];
+                } else {
+                    return this.rowData["ForeignAmountCredit"];  // -1 *
+                }
+            }
+        } else if (
+            !AppTool.IsNullOrEmpty(
                 ReconcileEventManager.GLAccountReconcileMethodCode
             )
         ) {
