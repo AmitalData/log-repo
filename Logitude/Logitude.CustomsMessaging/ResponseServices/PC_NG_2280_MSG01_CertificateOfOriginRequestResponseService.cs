@@ -71,32 +71,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 			if (customResponse.ResponseContentHeader.Exception != null)
 			{
-					string userMessage = "";
-
-				foreach (UnifreightIIG.Common.CertificateOfOriginRequestServiceReference.Exception exception in customResponse.ResponseContentHeader.Exception)
-				{
-					if (!string.IsNullOrWhiteSpace(userMessage))
-					{
-						userMessage = userMessage + @"";
-					}
-					userMessage = userMessage + exception.ExeptionDescription;
-					var ErrorXml = XmlGenericUtil<UnifreightIIG.Common.CertificateOfOriginRequestServiceReference.Exception>.SerializeObject(exception);
-
-					if (string.IsNullOrEmpty(certificateOfOriginPM.ErrXml))
-					{
-						certificateOfOriginPM.ErrXml = ErrorXml;
-					}
-					else
-					{
-						certificateOfOriginPM.ErrXml = string.Concat(certificateOfOriginPM.ErrXml, ErrorXml);
-					}
-				}
+				certificateOfOriginPM.ErrXml = XmlGenericUtil<UnifreightIIG.Common.CertificateOfOriginRequestServiceReference.Exception[]>.SerializeObject(customResponse.ResponseContentHeader.Exception);
 				certificateOfOriginPM.ChangeSetOp = ChangeSetOperation.Update;
 				certificateOfOriginUpdateService.Update(certificateOfOriginPM, true);
 
 				this.MyResponseData.ApplicationID = requestParams.CertificateOfOriginId;
 				this.MyResponseData.Succeeded = true;
-				this.MyResponseData.UserMessage = userMessage;
+				this.MyResponseData.UserMessage = "התקבלו שגיאות במסר תעודת מקור";
 				this.MyResponseData.HasException = true;
 
 					return;
