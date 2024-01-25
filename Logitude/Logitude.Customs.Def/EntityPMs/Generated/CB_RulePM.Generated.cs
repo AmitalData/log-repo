@@ -66,12 +66,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime updateDate ;
+	  private DateTime? updateDate ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime UpdateDate  
+       public DateTime? UpdateDate  
 	   {
 	    
 	     get
@@ -82,7 +82,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(updateDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDate",OldValue=updateDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDate",OldValue=updateDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   updateDate=value;
 		   }

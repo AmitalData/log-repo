@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;גרסת הסכם סחר&quot;"
   DefaultText="&quot;Trade Agreement Details History&quot;"
-  Code="&quot;77ff&quot;"
+  Code="&quot;27bf&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -92,6 +92,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ID&quot;"
     ListPropertyPath="&quot;ID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -166,6 +167,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CreateDate&quot;"
     ListPropertyPath="&quot;CreateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -241,6 +243,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdateDate&quot;"
     ListPropertyPath="&quot;UpdateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -263,7 +266,7 @@
     ListFieldLable="&quot;UpdateDateListLable&quot;"
     ListLableDefaultText="&quot;Update Date&quot;"
     ListLocalDefaultText="&quot;תאריך עדכון אחרון&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
@@ -316,6 +319,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;StartDate&quot;"
     ListPropertyPath="&quot;StartDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -391,6 +395,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EndDate&quot;"
     ListPropertyPath="&quot;EndDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -467,6 +472,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EntityStatusID&quot;"
     ListPropertyPath="&quot;EntityStatusID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -544,6 +550,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Version&quot;"
     ListPropertyPath="&quot;Version&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -620,6 +627,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;TradeAgreementID&quot;"
     ListPropertyPath="&quot;TradeAgreementID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -697,6 +705,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ChangeRequestTypePriority&quot;"
     ListPropertyPath="&quot;ChangeRequestTypePriority&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -744,6 +753,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.CB_TradeAgreementHistoryHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CB_TradeAgreementHistory&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -772,6 +790,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

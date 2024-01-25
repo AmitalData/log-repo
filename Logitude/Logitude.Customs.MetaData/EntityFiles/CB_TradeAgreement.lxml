@@ -40,7 +40,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;רשימת הסכמי סחר&quot;"
   DefaultText="&quot;Trade Agreements&quot;"
-  Code="&quot;373a&quot;"
+  Code="&quot;bcda&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -92,6 +92,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ID&quot;"
     ListPropertyPath="&quot;ID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -165,6 +166,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CreateDate&quot;"
     ListPropertyPath="&quot;CreateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -239,6 +241,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdateDate&quot;"
     ListPropertyPath="&quot;UpdateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -261,7 +264,7 @@
     ListFieldLable="&quot;UpdateDateListLable&quot;"
     ListLableDefaultText="&quot;Update Date&quot;"
     ListLocalDefaultText="&quot;תאריך עדכון אחרון&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
@@ -314,6 +317,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Title&quot;"
     ListPropertyPath="&quot;Title&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -389,6 +393,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AdditionName&quot;"
     ListPropertyPath="&quot;AdditionName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -465,6 +470,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CountryGroupID&quot;"
     ListPropertyPath="&quot;CountryGroupID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -543,6 +549,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CustomsBookTypeID&quot;"
     ListPropertyPath="&quot;CustomsBookTypeID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -621,6 +628,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EntityStatusID&quot;"
     ListPropertyPath="&quot;EntityStatusID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -643,7 +651,7 @@
     ListFieldLable="&quot;EntityStatusIDListLable&quot;"
     ListLableDefaultText="&quot;Entity Status ID&quot;"
     ListLocalDefaultText="&quot;סטטוס הרשומה&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="true"
     ForeignEntity="CustomsEntityStatus"
     DontBuildRelationOnDB="false"
@@ -698,6 +706,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;TradeAgreementAbbreviation&quot;"
     ListPropertyPath="&quot;TradeAgreementAbbreviation&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -745,6 +754,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.CB_TradeAgreementHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CB_TradeAgreement&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -773,6 +791,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

@@ -38,7 +38,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;חידושים של מכסות&quot;"
   DefaultText="&quot;Quota Renewal&quot;"
-  Code="&quot;4e2c&quot;"
+  Code="&quot;edab&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -90,6 +90,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ID&quot;"
     ListPropertyPath="&quot;ID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -165,6 +166,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CreateDate&quot;"
     ListPropertyPath="&quot;CreateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -240,6 +242,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdateDate&quot;"
     ListPropertyPath="&quot;UpdateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -262,7 +265,7 @@
     ListFieldLable="&quot;UpdateDateListLable&quot;"
     ListLableDefaultText="&quot;Update Date&quot;"
     ListLocalDefaultText="&quot;תאריך עדכון אחרון&quot;"
-    IsNullable="false"
+    IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
@@ -315,6 +318,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AllocationQuantity&quot;"
     ListPropertyPath="&quot;AllocationQuantity&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -390,6 +394,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;StartDate&quot;"
     ListPropertyPath="&quot;StartDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -465,6 +470,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EndDate&quot;"
     ListPropertyPath="&quot;EndDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -541,6 +547,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EntityStatusID&quot;"
     ListPropertyPath="&quot;EntityStatusID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -619,6 +626,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;QuotaDetailsHistoryID&quot;"
     ListPropertyPath="&quot;QuotaDetailsHistoryID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -696,6 +704,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Step&quot;"
     ListPropertyPath="&quot;Step&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -743,6 +752,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.CB_QuotaRenewalHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CB_QuotaRenewal&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -771,6 +789,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />
