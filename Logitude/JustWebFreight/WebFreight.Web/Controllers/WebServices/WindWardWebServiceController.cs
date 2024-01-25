@@ -4,7 +4,6 @@ using Newtonsoft.Json.Linq;
 using System.Web.Http;
 using System.Net.Http;
 using System;
-using System.Text.Json;
 using System.Net;
 using WebFreight.Web.Helpers;
 using Simplog.Server.Infrastructure;
