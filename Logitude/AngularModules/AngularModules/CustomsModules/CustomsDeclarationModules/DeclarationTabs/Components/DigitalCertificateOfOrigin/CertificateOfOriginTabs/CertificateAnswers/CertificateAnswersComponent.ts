@@ -24,9 +24,9 @@ import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 export class CertificateAnswersComponent extends BaseComponent  {
   
     public certificateOfOriginPM: CertificateOfOriginPM;
-    Feedbacklist: ObservableCollection = new ObservableCollection([]);
-    Errorslist: ObservableCollection = new ObservableCollection([]);
-    Warninglist: ObservableCollection = new ObservableCollection([]);
+    Feedbacklist: ObservableCollection;
+    Errorslist: ObservableCollection;
+    Warninglist: ObservableCollection;
 
     FeedbackCount: string = "";
     ErrorsCount: string = "";
@@ -52,12 +52,15 @@ export class CertificateAnswersComponent extends BaseComponent  {
 
     InitTab(EntityPM: CertificateOfOriginPM) {
         this.certificateOfOriginPM = EntityPM;
-
+        this.Feedbacklist = new ObservableCollection([]);
+        this.Errorslist  = new ObservableCollection([]);
+        this.Warninglist = new ObservableCollection([]);
       
         this.SetAnswerDescreption();
  
         this.SetAnswerCount();
     }
+    
     SetAnswerDescreption(){
          // Feedbacklist
          var descriptionFeedback = "";
