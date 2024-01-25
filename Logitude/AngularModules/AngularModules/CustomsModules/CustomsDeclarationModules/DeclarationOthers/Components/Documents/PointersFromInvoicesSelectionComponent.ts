@@ -52,75 +52,107 @@ export class PointersFromInvoicesSelectionComponent {
 
     isExportDeclaration: boolean = false;
     IsVisibile: boolean = false;
+    existInvoices:number[];
     SetWindowArgs(args: any) {
-        this.DeclarationPM = args.DeclarationPM;
-        if (this.DeclarationPM != null && this.DeclarationPM.Direction == "E") {
-            this.isExportDeclaration = true;
-        }
-        this.CustomsDocumentsTicket = args.CustomsDocumentsTicket;
-        this.SelectInvoicesOnly = args.selectInvoicesOnly;
-        //this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
-        this.initialSelectedItems = this.CustomsDocumentsTicket.ConnectedInvoiceItemsSequences;
+        if(args.CertificateOfOriginItem){
+            this.isForCertificateOfOriginGeneralTabScreen = true;
 
-        var connectedCounterKeys = "";
-        var connectedLineNumbers = "";
-        this.CustomsDocumentsTicket.CustomsDocumentPointers.forEach((pointer) => {
-            if (pointer.Child1EntityId != null && pointer.Child2EntityId) {
-            connectedCounterKeys = connectedCounterKeys + "," + pointer.Child1EntityId;
-              if (this.CustomsDocumentsTicket.ConnectedInvoiceItemsSequences.indexOf(pointer.Child2EntityId) > -1) {
-                connectedLineNumbers = connectedLineNumbers + "," + pointer.Child2EntityId;
-              }
+
+            this.DeclarationPM = args.DeclarationPM;
+            if (this.DeclarationPM != null && this.DeclarationPM.Direction == "E") {
+                this.isExportDeclaration = true;
             }
-        });
+            if(args.existInvoices){
+                let selectedInvoices = args.existInvoices.split(',');
+                this.existInvoices = selectedInvoices.map(str => Number(str));
+            }
+            this.SelectInvoicesOnly = args.selectInvoicesOnly;
 
-        if (!AppTool.IsNullOrEmpty(connectedCounterKeys) && !AppTool.IsNullOrEmpty(connectedCounterKeys)) {
-            this.supplierInvoiceExtendedListService.GetSelectedSupplierInvoiceItemLists(this.DeclarationPM.Id, connectedCounterKeys, connectedLineNumbers).subscribe((response:any) => {
-                var resp = response.Result;
-                resp.forEach((item) => {
-                    this.StaticSelectedInvoiceItems.Insert(item);
-                });
+            var connectedCounterKeys = "";
+            var connectedLineNumbers = "";
+            this.BuildInvoicesListForCerficate();
+        
+            this.IsEntityDisplayOnly = args.IsEntityDisplayOnly;
+            if (this.IsEntityDisplayOnly) {
+                this.IsDisplayOnly = true;
+                this.DisplayOnlyMessage = "מסמך לתצוגה בלבד";
+            }
+            else {
+                this.IsDisplayOnly = false;
+                this.DisplayOnlyMessage = "";
+            }
+        }
+        else {
 
-                this.BuildInvoicesList();
+            this.DeclarationPM = args.DeclarationPM;
+            if (this.DeclarationPM != null && this.DeclarationPM.Direction == "E") {
+                this.isExportDeclaration = true;
+            }
+            this.CustomsDocumentsTicket = args.CustomsDocumentsTicket;
+            this.SelectInvoicesOnly = args.selectInvoicesOnly;
+            //this.entityResourceService.getEntityResourceByTableName("Customs.SupplierInvoiceItem").subscribe((response: any) => {
+            this.initialSelectedItems = this.CustomsDocumentsTicket.ConnectedInvoiceItemsSequences;
+    
+            var connectedCounterKeys = "";
+            var connectedLineNumbers = "";
+            this.CustomsDocumentsTicket.CustomsDocumentPointers.forEach((pointer) => {
+                if (pointer.Child1EntityId != null && pointer.Child2EntityId) {
+                connectedCounterKeys = connectedCounterKeys + "," + pointer.Child1EntityId;
+                  if (this.CustomsDocumentsTicket.ConnectedInvoiceItemsSequences.indexOf(pointer.Child2EntityId) > -1) {
+                    connectedLineNumbers = connectedLineNumbers + "," + pointer.Child2EntityId;
+                  }
+                }
             });
-        }
-        else {
-            this.BuildInvoicesList();
-        }
-        //this.BuildInvoicesList();
-        //this.SelectedItemChangedEvt = this.SelectedInvoiceItems.Changed.subscribe((response) => {
-        //    if (response.Operation == "insert") {
-        //        //this.SelectedInvoiceItems.Collection.forEach((item) => {
-        //        var exists = this.StaticSelectedInvoiceItems.Collection.filter(d => d.CounterKey == response.Item.rowData.CounterKey && d.LineNumber == response.Item.rowData.LineNumber)[0];
-        //        if (!exists) {
-        //            this.StaticSelectedInvoiceItems.Insert(response.Item.rowData);
-        //        }
-        //        // });
-        //    }
-        //    else if (response.Operation == "remove") {
-        //        var exists = this.StaticSelectedInvoiceItems.Collection.filter(d => d.CounterKey == response.Item.rowData.CounterKey && d.LineNumber == response.Item.rowData.LineNumber)[0];
-        //        this.StaticSelectedInvoiceItems.Remove(exists);
-        //    }
-
-
-        //    //var previousSelected = this.StaticSelectedInvoiceItems;
-        //    //previousSelected.Collection.forEach((item) => {
-        //    //    var exists = this.SelectedInvoiceItems.Collection.filter(d => d.rowData.CounterKey == item.CounterKey && d.rowData.LineNumber == item.LineNumber)[0];
-        //    //    if (!exists) {
-        //    //        this.StaticSelectedInvoiceItems.Remove(item);
-        //    //    }
-        //    //});
-        //});
-
-        this.IsEntityDisplayOnly = args.IsEntityDisplayOnly;
-        if (this.CustomsDocumentsTicket.RequestedCustomsDocId || this.IsEntityDisplayOnly) {
-            this.IsDisplayOnly = true;
-            this.DisplayOnlyMessage = "מסמך לתצוגה בלבד";
-        }
-        else {
-            this.IsDisplayOnly = false;
-            this.DisplayOnlyMessage = "";
-        }
-        //});
+    
+            if (!AppTool.IsNullOrEmpty(connectedCounterKeys) && !AppTool.IsNullOrEmpty(connectedCounterKeys)) {
+                this.supplierInvoiceExtendedListService.GetSelectedSupplierInvoiceItemLists(this.DeclarationPM.Id, connectedCounterKeys, connectedLineNumbers).subscribe((response:any) => {
+                    var resp = response.Result;
+                    resp.forEach((item) => {
+                        this.StaticSelectedInvoiceItems.Insert(item);
+                    });
+    
+                    this.BuildInvoicesList();
+                });
+            }
+            else {
+                this.BuildInvoicesList();
+            }
+            //this.BuildInvoicesList();
+            //this.SelectedItemChangedEvt = this.SelectedInvoiceItems.Changed.subscribe((response) => {
+            //    if (response.Operation == "insert") {
+            //        //this.SelectedInvoiceItems.Collection.forEach((item) => {
+            //        var exists = this.StaticSelectedInvoiceItems.Collection.filter(d => d.CounterKey == response.Item.rowData.CounterKey && d.LineNumber == response.Item.rowData.LineNumber)[0];
+            //        if (!exists) {
+            //            this.StaticSelectedInvoiceItems.Insert(response.Item.rowData);
+            //        }
+            //        // });
+            //    }
+            //    else if (response.Operation == "remove") {
+            //        var exists = this.StaticSelectedInvoiceItems.Collection.filter(d => d.CounterKey == response.Item.rowData.CounterKey && d.LineNumber == response.Item.rowData.LineNumber)[0];
+            //        this.StaticSelectedInvoiceItems.Remove(exists);
+            //    }
+    
+    
+            //    //var previousSelected = this.StaticSelectedInvoiceItems;
+            //    //previousSelected.Collection.forEach((item) => {
+            //    //    var exists = this.SelectedInvoiceItems.Collection.filter(d => d.rowData.CounterKey == item.CounterKey && d.rowData.LineNumber == item.LineNumber)[0];
+            //    //    if (!exists) {
+            //    //        this.StaticSelectedInvoiceItems.Remove(item);
+            //    //    }
+            //    //});
+            //});
+    
+            //});
+            this.IsEntityDisplayOnly = args.IsEntityDisplayOnly;
+            if (this.CustomsDocumentsTicket.RequestedCustomsDocId || this.IsEntityDisplayOnly) {
+                this.IsDisplayOnly = true;
+                this.DisplayOnlyMessage = "מסמך לתצוגה בלבד";
+            }
+            else {
+                this.IsDisplayOnly = false;
+                this.DisplayOnlyMessage = "";
+            }
+        } 
     }
 
     BuildInvoicesList() {
@@ -164,6 +196,47 @@ export class PointersFromInvoicesSelectionComponent {
 
     }
 
+    isForCertificateOfOriginGeneralTabScreen = false;
+    BuildInvoicesListForCerficate() {
+        this.SupplierInvoicesList.Clear();
+        this.Invoices = this.DeclarationPM.SupplierInvoices;
+        
+        var temp: SupplierInvoiceLine[] = [];
+        this.Invoices.forEach(invoice=>{
+            if (invoice) {
+                var exists: SupplierInvoicePM = this.SelectedInvoices.Collection.filter(d => d.InvoiceCounterKey == invoice.InvoiceCounterKey)[0];
+                if (!exists) {
+                    var line: SupplierInvoiceLine = new SupplierInvoiceLine(invoice, this);
+                    var exist = temp.filter(d => d.InvoiceCounterKey == line.InvoiceCounterKey)[0];
+                    if (!exist) {
+                        this.SupplierInvoicesList.Insert(line); 
+                        temp.push(line); 
+                    }
+                }
+            }
+        });
+        this.SelectedInvoices.Collection = temp;
+        this.SelectedRows = this.SelectedInvoices.Collection;
+        
+
+
+        for (var item of this.Invoices) {
+            var invoice: SupplierInvoicePM = this.SupplierInvoicesList.Collection.filter(d => d.InvoiceCounterKey == item.InvoiceCounterKey)[0];
+            if (!invoice) {
+                var line: SupplierInvoiceLine = new SupplierInvoiceLine(item, this);
+                if (!this.SupplierInvoicesList.Collection.includes(line)) {
+                    if(this.existInvoices) {
+                        if (this.existInvoices.includes(invoice.InvoiceCounterKey)) {
+
+
+                            this.SupplierInvoicesList.Insert(line);
+                        }                    
+                    }
+                }
+            }
+        }
+        this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+    }
 
     SelectedRow: SupplierInvoiceLine;
     SelectedRows: SupplierInvoiceLine[];

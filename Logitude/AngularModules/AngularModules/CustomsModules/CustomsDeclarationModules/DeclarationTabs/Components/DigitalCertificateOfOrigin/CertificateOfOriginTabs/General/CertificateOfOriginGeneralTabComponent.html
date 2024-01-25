@@ -23,6 +23,11 @@
         max-width: 660px;
         white-space: normal;
     }
+    #connectedInvoices {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
 </style>
 <table *ngIf="isReady">
     <tr style="height: 28px;">
@@ -610,13 +615,14 @@
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
                                             #logcelltemplate>
-                                            <span>{{item.InvoiceConnect}}</span>
-                                            <span class="CellSeparator" style="float: right;"></span>
-                                            <div
-                                                style=" float: right;width: 22px; height:20px; padding-top: 2px; display:block">
-                                                <IconButton [Name]="'Edit'" [IsSmall]="true"
-                                                    [IsEnabled]="!IsDisplayOnly" (click)="EditButtonClicked(item)">
-                                                </IconButton>
+                                            <div id="connectedInvoices">
+                                                <div>{{item.InvoiceConnect}}</div>
+                                                <div
+                                                    style=" float: right;width: 22px; height:20px; padding-top: 2px; display:block">
+                                                    <IconButton [Name]="'Edit'" [IsSmall]="true"
+                                                        [IsEnabled]="!IsDisplayOnly" (click)="ShowSelectionComponent(currentDeclaration, false, false, item)">
+                                                    </IconButton>
+                                                </div>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>

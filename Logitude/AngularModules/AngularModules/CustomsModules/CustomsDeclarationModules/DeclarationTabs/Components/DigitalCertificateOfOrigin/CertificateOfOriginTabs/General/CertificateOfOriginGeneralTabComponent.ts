@@ -25,6 +25,8 @@ import { ExportStorageWebService } from 'Customs/Services/WebServices/ExportStor
 import { ExportStorageList } from 'Customs/EntityLists/ExportStorageList';
 import { OriginCriterionListService } from 'Customs/Services/StandardLists/OriginCriterionListService';
 import { OriginCriterionList } from 'Customs/EntityLists/OriginCriterionList';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
+import { EventEmitter } from '@angular/core';
 
 
 
@@ -59,19 +61,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
         this.entityPM = EntityPM;
-
         this.IsNewOrEdit = IsNewOrEdit;
         this.IsDisplayOnly = IsDisplayOnly;
-
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
-
         this.currentDeclaration = currentDeclaration;
 
-
         if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
-
-
             this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {
                 var result = response.Result;
                 if (!AppTool.IsNullOrEmpty(result)) {
@@ -82,32 +78,25 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                             currentDeclaration.SupplierInvoices = result;
                             this.currentDeclaration.SupplierInvoices = result;
                             this.InitNewCertificate(EntityPM);
-                            this.isReady = true;                            
+                            this.isReady = true;
                         }
                     });
-                }   
+                }
             });
-           
-
         }
         else if (IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
             this.InitilizeListsFromCertificateOfOrigin(EntityPM);
             this.isReady = true;
-
         }
-        this.SetPropertiesEnabled();
 
+        this.SetPropertiesEnabled();
         this.SetWarning();
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
-
-
-        
     }
 
     InitNewCertificate(EntityPM: CertificateOfOriginPM) {
         this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
         this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
-
         this.InitializeRelatedDeclarationData();
         this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
     }
@@ -166,7 +155,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     exportStorageWebService = new ExportStorageWebService();
     getContainerTypeWCOData(consignment: ConsignmentPM, mappedConsignments: CertificateOfOriginItemPM) {
         // ContainerTypeWCO
-        // CARGOTYPECODE,FIRSTCARGOID,SECONDCARGOID, THIRDCARGOID
+        // find by: CARGOTYPECODE,FIRSTCARGOID,SECONDCARGOID, THIRDCARGOID
         this.exportStorageWebService.GetByCargoKeys(consignment.ManifestNumber, consignment.SecondCargoID, consignment.ThirdCargoID, consignment.CargoTypeCode, this.entityPM.Tenant).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var result: ExportStorageList = myResponse.Result;
@@ -295,8 +284,47 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     }
 
-    EditButtonClicked(Item) {
+    public selectedCertificateOfOriginItem: CertificateOfOriginItemPM;
+    ShowSelectionComponent(currentDeclaration: DeclarationPM, customParam: boolean, isEntityDisplayOnly: boolean, item: CertificateOfOriginItemPM) {
+        this.selectedCertificateOfOriginItem = item;
+        var selectInvoicesOnly = customParam;
+        var windowArgs: any = {};
+        windowArgs.DeclarationPM = currentDeclaration;
+        windowArgs.selectInvoicesOnly = selectInvoicesOnly;
 
+        windowArgs.existInvoices = item.InvoiceConnect;
+
+        windowArgs.CertificateOfOriginItem = item;
+        windowArgs.IsEntityDisplayOnly = isEntityDisplayOnly;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Height = 700;
+        logWindow.Width = 1000;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(ok => {
+                if (ok) {
+                    this.SelectionInvoicesCompleted(comp);
+                }
+            });
+        });
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/Documents/PointersFromInvoicesSelectionComponent');
+    }
+
+    public SelectionCompleted: EventEmitter<any> = new EventEmitter();
+    SelectionInvoicesCompleted(args) {
+        if (args.SelectedInvoices != null) {
+            this.selectedCertificateOfOriginItem.InvoiceConnect = args.ConnectedInvoices;
+            args.SelectedInvoices.Collection.forEach((invoice) => {
+                var hasLineschosen = args.StaticSelectedInvoiceItems.Collection.filter(d => d.DeclarationId == invoice.DeclarationId && d.CounterKey == invoice.InvoiceCounterKey)[0];
+                if (!hasLineschosen) {
+                    // do somthing?
+                }
+
+            });
+        }
+        this.SelectionCompleted.emit(args);
     }
 
     OnChanged($event, item) {
@@ -955,6 +983,13 @@ export class CertificateOfOriginItemLine extends BaseComponent {
         super();
         this.entityPM = EntityPM;
         this.Parent = parent;
+    }
+
+    public get InvoiceConnect(): string {
+        return this.entityPM.InvoiceConnect;
+    }
+    public set InvoiceConnect(newValue: string) {
+        this.entityPM.InvoiceConnect = newValue;
     }
 
     public get ItemSerial(): number {

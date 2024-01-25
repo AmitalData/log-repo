@@ -257,6 +257,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
 
     
     async SendButtonClicked(customSendOptionsArgs:any){
+        this.SaveButtonClicked();  // save before send
+
         if(!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
             this.GENERAL.CheckMandatoryFields();
             return;
