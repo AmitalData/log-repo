@@ -224,13 +224,12 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                     }
 
                     case "ANSWERTOCERTIFICATE": {
-                        if (this.ANSWERTOCERTIFICATE == null) {
                                 SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateAnswers/CertificateAnswersComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.ANSWERTOCERTIFICATE = cmpRef.instance;
                                     this.ANSWERTOCERTIFICATE.InitTab(this.EntityPM); 
                                 });
-                        }
+                       
                         break;
                     }
 
