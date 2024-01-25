@@ -68,35 +68,40 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         this.currentDeclaration = currentDeclaration;
 
-        this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {
-            var result = response.Result;
-            if (!AppTool.IsNullOrEmpty(result)) {
-                var cardListService = new CardListService();
-                cardListService.getSingleFromCache(currentDeclaration.CustomerId).subscribe((myResponse: any) => {
-                    if (!myResponse.HasError) {
-                        this.currentCard = myResponse.Result;
-                        currentDeclaration.SupplierInvoices = result;
-                        this.currentDeclaration.SupplierInvoices = result;
-                        
-                        if (currentDeclaration) {
-                            if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
-                                this.InitNewCertificate(EntityPM);
-                            }
-                            else if (IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
-                                this.InitilizeListsFromCertificateOfOrigin(EntityPM);
-                            }
+
+        if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
+
+
+            this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {
+                var result = response.Result;
+                if (!AppTool.IsNullOrEmpty(result)) {
+                    var cardListService = new CardListService();
+                    cardListService.getSingleFromCache(currentDeclaration.CustomerId).subscribe((myResponse: any) => {
+                        if (!myResponse.HasError) {
+                            this.currentCard = myResponse.Result;
+                            currentDeclaration.SupplierInvoices = result;
+                            this.currentDeclaration.SupplierInvoices = result;
+                            this.InitNewCertificate(EntityPM);
+                            this.isReady = true;                            
                         }
-                        this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
-                        this.SetPropertiesEnabled();
+                    });
+                }   
+            });
+           
 
-                        this.SetWarning();
-                        this.isReady = true;
-                    }
-                });
-            }
+        }
+        else if (IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
+            this.InitilizeListsFromCertificateOfOrigin(EntityPM);
+            this.isReady = true;
+
+        }
+        this.SetPropertiesEnabled();
+
+        this.SetWarning();
+        this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
 
 
-        });
+        
     }
 
     InitNewCertificate(EntityPM: CertificateOfOriginPM) {

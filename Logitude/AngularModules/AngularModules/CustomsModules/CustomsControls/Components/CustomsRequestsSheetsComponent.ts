@@ -400,7 +400,7 @@ export class CustomsRequestsSheetsComponent
             //////never tested !!!!!!!- copy from silverlight
             filters.addAdditionalFilter("Id", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         }
-       else if (objectTableName === "Customs.ExportStorage" || objectTableName === "Customs.CertificateOfOrigin") {
+       else if (objectTableName === "Customs.ExportStorage" || (objectTableName === "Customs.CertificateOfOrigin" && !AppTool.IsNullOrEmpty(this.entityArgs.EntityPM.Id))) {
           
             filters.addAdditionalFilter("ObjectTableId2", objectTableId1, null, null, "Equals", false, false, false, "string");
             let EntityId2 = this.entityArgs.EntityPM.Id;
@@ -544,7 +544,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'IsDCA',
             DataTypeCode: 'boolean',
             Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.IsDCA"),
-            Styles: { width: '50px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '38px' }: { width: '50px' }, 
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
@@ -599,7 +599,7 @@ export class CustomsRequestsSheetsComponent
             FieldName: 'ReAnalyze',
             DataTypeCode: 'String',
             Display: '',//TextCodeTranslator.Translate("CommunicationLogSteps.O.Log"),
-            Styles: { width: '80px' },
+            Styles: this.entityArgs.IsFromStandAloneScreen?{ width: '70px' }: { width: '80px' }, 
             IsCustomTemplate: true,
             HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
             HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
@@ -675,7 +675,7 @@ export class CustomsRequestsSheetsComponent
             //////never tested !!!!!!!- copy from silverlight
             filters.addAdditionalFilter("Id", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         }
-        else if (objectTableName === "Customs.ExportStorage" || objectTableName === "Customs.CertificateOfOrigin") {
+        else if (objectTableName === "Customs.ExportStorage" || (objectTableName === "Customs.CertificateOfOrigin" && !AppTool.IsNullOrEmpty(this.entityArgs.EntityPM.Id))) {
             
             filters.addAdditionalFilter("ObjectTableId2", objectTableId1, null, null, "Equals", false, false, false, "string");
             let EntityId2 = this.entityArgs.EntityPM.Id;
