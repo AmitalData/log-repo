@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginUpdateClass
    {  		
-		public const string HashString = "93305fd4025c7ee836d3e12b96074447";
+		public const string HashString = "1fb72504a5d14f86c614b72654ab2c4d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "תעודות מקור",
 			      				    DefaultText =  "Certificate Of Origin",
-			      				    Code =  "a6a0",
+			      				    Code =  "72d8",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -5096,6 +5096,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOTypeCodeMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.TypeCodeMandatory", DefaultText = "Type Code Mandatory",LocalDefaultText = @"סוג תעודת מקור הוא שדה חובה", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginORequestReasonMandatory = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.RequestReasonMandatory", DefaultText = "RequestReasonMandatory",LocalDefaultText = @"סיבת בקשה הוא שדה חובה", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode CertificateOfOriginTextCode_CustomsCertificateOfOriginOFeedback = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOrigin.O.Feedback", DefaultText = "Feedback",LocalDefaultText = @"הודעת מעריך", ObjectTableId = CertificateOfOriginObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -214,6 +214,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                                         this.REQUESTSHEET.IsTitleHidden = false;
                                         this.REQUESTSHEET.Title = TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
                                         this.REQUESTSHEET.MyRequestOnly = false;
+                                        this.entityArgs.IsFromStandAloneScreen = true;
                                         this.REQUESTSHEET.SetEntityArgs(this.entityArgs);
                                     });
 
@@ -223,7 +224,12 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                     }
 
                     case "ANSWERTOCERTIFICATE": {
-                        // Add logic for ANSWERTOCERTIFICATE case here
+                                SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateAnswers/CertificateAnswersComponent', myLocation.viewContainerRef)
+                                .then(cmpRef => {
+                                    this.ANSWERTOCERTIFICATE = cmpRef.instance;
+                                    this.ANSWERTOCERTIFICATE.InitTab(this.EntityPM); 
+                                });
+                       
                         break;
                     }
 
