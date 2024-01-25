@@ -49,10 +49,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
     public entityResourceService: EntityResourceService = new EntityResourceService();
     public DataContext: any = this;
 
-    isExternalId: boolean;
-    requestParams: CreateClientRequestParams;
     responseData: INF_MSG_GenericResponseData;
-    clientMessageService: ClientMessagesService = new ClientMessagesService();
     private CurrentSession = SessionLocator.SelectedSession;
     public isEntityChange: boolean = false;
     public DecalarationData:DeclarationPM;
@@ -60,35 +57,11 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
     isDispalyOnlyStatusList: number[] = [4, 8];
 
 
-    tapagNumberName = '';
-    public isLoad:boolean = false;
     constructor(
         public entityArgs: EntityArgs,
     ) {
         super();
-        this.entityResourceService.getEntityResourceByTableName("Customs.ClientsTapag").subscribe((response: any) => {
-            this.tapagNumberName = 'TapagNumber';
-        });
-        this.entityResourceService.getEntityResourceByTableName("Customs.ClientIndication").subscribe((response: any) => {
-
-            this.entityArgs.EntityArgEventEmitter.subscribe(
-                theMessage => {
-
-                    if (theMessage == "ReloadEntity") {
-                        this.certificateOfOriginPMService.get(this.EntityPM.Id).subscribe((response: any) => {
-                            var result = response.Result;
-                            if (!AppTool.IsNullOrEmpty(result)) {
-                                this.EntityPM = result;
-                                this.entityArgs.EntityPM = this.EntityPM;
-                            }
-
-                        });
-                    }
-                }
-
-            );
-             this.isLoad=true;
-        });
+       
     }
 
 
@@ -224,7 +197,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                     }
 
                     case "ANSWERTOCERTIFICATE": {
-                        if(this.REQUESTSHEET == null) {
+                        if(this.ANSWERTOCERTIFICATE == null) {
                                 SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateAnswers/CertificateAnswersComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.ANSWERTOCERTIFICATE = cmpRef.instance;
