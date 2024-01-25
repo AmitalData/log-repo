@@ -25,6 +25,11 @@ import { ExportStorageWebService } from 'Customs/Services/WebServices/ExportStor
 import { ExportStorageList } from 'Customs/EntityLists/ExportStorageList';
 import { OriginCriterionListService } from 'Customs/Services/StandardLists/OriginCriterionListService';
 import { OriginCriterionList } from 'Customs/EntityLists/OriginCriterionList';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
+import { CustomsDocumentsTicketPM } from 'Customs/EntityPMs/CustomsDocumentsTicketPM';
+import { CustomsDocumentPointerPM } from 'Customs/EntityPMs/CustomsDocumentPointerPM';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
+import { EventEmitter } from '@angular/core';
 
 
 
@@ -77,7 +82,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                         this.currentCard = myResponse.Result;
                         currentDeclaration.SupplierInvoices = result;
                         this.currentDeclaration.SupplierInvoices = result;
-                        
+
                         if (currentDeclaration) {
                             if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
                                 this.InitNewCertificate(EntityPM);
@@ -290,8 +295,47 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     }
 
-    EditButtonClicked(Item) {
+    public selectedCertificateOfOriginItem: CertificateOfOriginItemPM;
+    ShowSelectionComponent(currentDeclaration: DeclarationPM, customParam: boolean, isEntityDisplayOnly: boolean, item: CertificateOfOriginItemPM) {
+        this.selectedCertificateOfOriginItem = item;
+        var selectInvoicesOnly = customParam;
+        var windowArgs: any = {};
+        windowArgs.DeclarationPM = currentDeclaration;
+        windowArgs.selectInvoicesOnly = selectInvoicesOnly;
 
+        windowArgs.existInvoices = item.InvoiceConnect;
+        debugger
+        windowArgs.CertificateOfOriginItem = item;
+        windowArgs.IsEntityDisplayOnly = isEntityDisplayOnly;
+
+        var logWindow = new LogitudeWindow();
+        logWindow.Height = 700;
+        logWindow.Width = 1000;
+        logWindow.ShowCloseButton = true;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.ComponentLoaded.subscribe(comp => {
+            logWindow.WindowClosed.subscribe(ok => {
+                if (ok) {
+                    this.SelectionInvoicesCompleted(comp);
+                }
+            });
+        });
+        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationOthers/Components/Documents/PointersFromInvoicesSelectionComponent');
+    }
+
+    public SelectionCompleted: EventEmitter<any> = new EventEmitter();
+    SelectionInvoicesCompleted(args) {
+        if (args.SelectedInvoices != null) {
+            this.selectedCertificateOfOriginItem.InvoiceConnect = args.ConnectedInvoices;
+            args.SelectedInvoices.Collection.forEach((invoice) => {
+                var hasLineschosen = args.StaticSelectedInvoiceItems.Collection.filter(d => d.DeclarationId == invoice.DeclarationId && d.CounterKey == invoice.InvoiceCounterKey)[0];
+                if (!hasLineschosen) {
+                    // do somthing?
+                }
+                
+            });
+        }
+        this.SelectionCompleted.emit(args);
     }
 
     OnChanged($event, item) {
@@ -950,6 +994,13 @@ export class CertificateOfOriginItemLine extends BaseComponent {
         super();
         this.entityPM = EntityPM;
         this.Parent = parent;
+    }
+
+    public get InvoiceConnect(): string {
+        return this.entityPM.InvoiceConnect;
+    }
+    public set InvoiceConnect(newValue: string) {
+        this.entityPM.InvoiceConnect = newValue;
     }
 
     public get ItemSerial(): number {
