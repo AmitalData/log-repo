@@ -991,21 +991,21 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new VendorTypeMap());
 	
 				
-			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.AlternateDefinedPerUnitMeasure).HasPrecision(4, 2);
+			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.AlternateDefinedPerUnitMeasure).HasPrecision(5, 2);
 				
-			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.AlternateRate).HasPrecision(4, 2);
+			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.AlternateRate).HasPrecision(5, 2);
 				
-			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.DefinedPerUnitMethod).HasPrecision(4, 2);
+			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.DefinedPerUnitMethod).HasPrecision(5, 2);
 				
-			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.OptionalTaxAddition).HasPrecision(4, 2);
+			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.OptionalTaxAddition).HasPrecision(5, 2);
 				
-			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.Rate).HasPrecision(4, 2);
+			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.Rate).HasPrecision(5, 2);
 				
-			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.ReductionRate).HasPrecision(4, 2);
+			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.ReductionRate).HasPrecision(5, 2);
 				
-			modelBuilder.Entity<CB_PropertiesDetailsHistory>().Property(x => x.VatDiscountRate).HasPrecision(2, 2);
+			modelBuilder.Entity<CB_PropertiesDetailsHistory>().Property(x => x.VatDiscountRate).HasPrecision(4, 2);
 				
-			modelBuilder.Entity<CB_QuotaDetailsHistory>().Property(x => x.QuotaValueIncrement).HasPrecision(2, 2);
+			modelBuilder.Entity<CB_QuotaDetailsHistory>().Property(x => x.QuotaValueIncrement).HasPrecision(8, 2);
 				
 			modelBuilder.Entity<ClaimImporterDeclarsPage3B>().Property(x => x.SaleAmountAfter).HasPrecision(16, 2);
 				
