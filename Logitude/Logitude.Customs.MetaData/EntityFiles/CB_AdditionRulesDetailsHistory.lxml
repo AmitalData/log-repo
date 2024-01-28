@@ -38,7 +38,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;היסטוריה של כללים עבור תוספות לספר המכס&quot;"
   DefaultText="&quot;Addition Rules Details History&quot;"
-  Code="&quot;40bf&quot;"
+  Code="&quot;5d43&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -91,6 +91,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ID&quot;"
     ListPropertyPath="&quot;ID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -166,6 +167,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CreateDate&quot;"
     ListPropertyPath="&quot;CreateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -241,6 +243,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdateDate&quot;"
     ListPropertyPath="&quot;UpdateDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -316,6 +319,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Title&quot;"
     ListPropertyPath="&quot;Title&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -391,6 +395,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;StartDate&quot;"
     ListPropertyPath="&quot;StartDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -466,6 +471,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EndDate&quot;"
     ListPropertyPath="&quot;EndDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -542,6 +548,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EntityStatusID&quot;"
     ListPropertyPath="&quot;EntityStatusID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -619,6 +626,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Rules&quot;"
     ListPropertyPath="&quot;Rules&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -694,6 +702,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EnglishRules&quot;"
     ListPropertyPath="&quot;EnglishRules&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -769,6 +778,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;RulesRTF&quot;"
     ListPropertyPath="&quot;RulesRTF&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -844,6 +854,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ChangeRequestTypePriority&quot;"
     ListPropertyPath="&quot;ChangeRequestTypePriority&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -920,6 +931,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CustomsBookAdditionID&quot;"
     ListPropertyPath="&quot;CustomsBookAdditionID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -938,10 +950,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;CustomsBookAdditionID&quot;"
     DefaultText="&quot;Customs Book Addition ID&quot;"
-    FullLocalDefaultText="&quot;תוספת לספר המכס&quot;"
+    FullLocalDefaultText="&quot;מצביע ל- CustomsBookAddition&quot;"
     ListFieldLable="&quot;CustomsBookAdditionIDListLable&quot;"
     ListLableDefaultText="&quot;Customs Book Addition ID&quot;"
-    ListLocalDefaultText="&quot;תוספת לספר המכס&quot;"
+    ListLocalDefaultText="&quot;מצביע ל- CustomsBookAddition&quot;"
     IsNullable="false"
     IsForeignKey="true"
     ForeignEntity="CB_CustomsBookAddition"
@@ -997,6 +1009,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EnglishRulesRTF&quot;"
     ListPropertyPath="&quot;EnglishRulesRTF&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -1044,6 +1057,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.CB_AdditionRulesDetailsHistoryHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CB_AdditionRulesDetailsHistory&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -1072,6 +1094,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_CustomsItemLinkageUpdateClass
    {  		
-		public const string HashString = "c41c68ccfa009d8c4f5f26cc76d25aa5";
+		public const string HashString = "3f38e270e50401f03d4584a73674da60";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "היסטוריית סיווגים",
 			      				    DefaultText =  "Customs Item Linkage",
-			      				    Code =  "2c14",
+			      				    Code =  "411a",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -254,10 +254,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChangeDate",
 					  						DefaultText =  "ChangeDate",
-					  						FullLocalDefaultText =  "תאריך השינוי",
+					  						FullLocalDefaultText =  "תאריך יצירה",
 					  						ListFieldLable =  "ChangeDateListLable",
 					  						ListLableDefaultText =  "Change Date",
-					  						ListLocalDefaultText =  "תאריך השינוי",
+					  						ListLocalDefaultText =  "תאריך יצירה",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
