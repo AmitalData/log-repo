@@ -37,7 +37,7 @@ import { DatePipe } from '@angular/common';
 import { TenantManagementPM } from 'Infrastructure/EntityPMs/TenantManagementPM';
 
 
-@Component({    
+@Component({
     templateUrl: './ECommercePaymentRequestMobileComponent.html',
     styleUrls: ['./mobilePayments.scss', './detailsMobile.scss']
 })
@@ -106,6 +106,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     ShowErrorMessage: boolean = false;
     SecurityKey: string = "";
     Tenant: number = null;
+    TranzilaPaymentWithBit: string = "0";
     WhatsAppMessagingNumber: string = "00";
     ShowWhatsAppIcon: boolean = false;
 
@@ -146,7 +147,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
                 this.AdditionalData = MyResult.Result;//AdditionalResult.Result
                 if (this.AdditionalData.IsPaymentRequired) {
                     if (this.EntityPm) {
-                        
+
                         this.SetTotalAmountInNIS();
                     }
                 }
@@ -195,7 +196,8 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     MapFieldsFromResponseData(responseResult) {
         if (responseResult.Data) {
-            this.WhatsAppMessagingNumber = responseResult.Data;
+            this.TranzilaPaymentWithBit = responseResult.Data.TranzilaPaymentWithBit;
+            this.WhatsAppMessagingNumber = responseResult.Data.WhatsAppMessagingNumber;
             this.SetShowWatsAppIcon();
         }
     }
@@ -333,7 +335,6 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
     public set thtk(newValue: string) { this.AdditionalData.PaymentData.thtk = newValue; }
 
     public get TargetEnv() {
-        //todo:liron add bit parameter
         let directTranzilaLink = this.GetDirectTranzilaLink();
         var Env = directTranzilaLink + this.AdditionalData.PaymentData?.TargetEnv + "/";//amitaltest
         return Env;
@@ -382,6 +383,18 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
 
     OnPayClick() {
         //alert("Yes");
+        if (this.TranzilaPaymentWithBit == "1") {
+            // Create a hidden input element
+            var hiddenInput = document.createElement("input");
+
+            // Set the attributes for the input element
+            hiddenInput.setAttribute("type", "hidden");
+            hiddenInput.setAttribute("name", "bit_pay");
+            hiddenInput.setAttribute("value", "1");
+
+            // Append the input element to the form with the id "form"
+            document.forms['form'].appendChild(hiddenInput);
+        }
         document.forms["form"].action = this.TargetEnv
         document.forms["form"].submit();
     }
@@ -404,7 +417,7 @@ export class ECommercePaymentRequestMobileComponent extends BaseComponent implem
         //});
 
     }
-    
+
     async initTenantManagements(securityKey: string) {
         const data: UrlAndLogo = await this._ShipmentPMService.getLogoAndUrlWithoutToken(securityKey)
         this.logoImg = data.logo;
