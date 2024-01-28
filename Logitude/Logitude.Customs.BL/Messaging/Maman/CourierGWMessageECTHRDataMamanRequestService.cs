@@ -230,7 +230,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 AirlineCode = customsAirline.AirlineCode ?? "",
                 FltNo = CInt(myCourierMasterPM.FlightNumber),
                 //FltDate = _CourierMasterPM.DepartureDate.GetValueOrDefault().Date,// fltdate is not nullable ??
-                LandTime = myCourierMasterPM.EstimatedArrivalDate,// LandTime is not nullable ??
+                LandTime = FormatDateTimeForJson(myCourierMasterPM.EstimatedArrivalDate),// LandTime is not nullable ??
                 DecNoOfPackags = DecNoOfPackags,
                 DecWeight = DecWeight,
                 DolarValue = DolarValue,
@@ -242,9 +242,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
                  CustomerPhone = myDeclarationPM.CasualImporterTel ?? "",
                 //                DestLineDesc = "1",//יש לנהל קו הפרדה פר לקוח                יעד הפצה של חברת ההפצה לצורך בניית ממשקים
                 DestLineDesc = declarationCourierStatusPM.DistributionArea ?? "כללי",// " - שינוי בשדה יעד המטען שליחה של "כללי" כברירת מחדל במקום 1
-                BaldarMessageTime = DateTime.Now,
+                BaldarMessageTime = FormatDateTimeForJson(DateTime.Now),
                 BaldarHp = myDeclarationPM.AgentId??"",
-                OpenBaldarAwbDate = GetOpenBaldarAwbDate(myDeclarationPM),// _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ThirdCargoID.GetValueOrDefault(),///ThirdCargoID.Consignment
+                OpenBaldarAwbDate = FormatDateTimeForJson(GetOpenBaldarAwbDate(myDeclarationPM)),// _DeclarationPM.Consignments.DefaultIfEmpty(new ConsignmentPM()).First().ThirdCargoID.GetValueOrDefault(),///ThirdCargoID.Consignment
 
                 //Task 46455:
                 DestLineCode = "9999999999",
@@ -261,7 +261,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             if (myCourierMasterPM.DepartureDate.HasValue)
             {
-                courierHawbMamanModel.FltDate = myCourierMasterPM.DepartureDate.GetValueOrDefault().Date;// fltdate is not nullable ??
+                courierHawbMamanModel.FltDate = FormatDateTimeForJson(myCourierMasterPM.DepartureDate.GetValueOrDefault().Date);// fltdate is not nullable ??
             }
             return courierHawbMamanModel;
         }
@@ -283,6 +283,17 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 DateTime.TryParseExact(myConsignmentPM.ThirdCargoID, "ddMMyy", CultureInfo.InvariantCulture, DateTimeStyles.None, out d);
             }
             return d;
+        }
+        static string FormatDateTimeForJson(DateTime? dateTime)
+        {
+            if (dateTime.HasValue)
+            {
+                return dateTime.Value.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private int CInt(string string_Maybe_mAWB)
@@ -315,8 +326,8 @@ namespace Logitude.Customs.BL.Messaging.Maman
         public string HawbExtnd { get; set; }
         public string AirlineCode { get; set; }
         public int FltNo { get; set; }
-        public DateTime? FltDate { get; set; }
-        public DateTime? LandTime { get; set; }
+        public string FltDate { get; set; }
+        public string LandTime { get; set; }
         public int DecNoOfPackags { get; set; }
         public decimal DecWeight { get; set; }
         public decimal DolarValue { get; set; }
@@ -334,9 +345,9 @@ namespace Logitude.Customs.BL.Messaging.Maman
         public string CustomIkuv { get; set; }
         //TAsk 46455.
 
-        public DateTime BaldarMessageTime { get; set; }
+        public string BaldarMessageTime { get; set; }
         public string BaldarHp { get; set; }
-        public DateTime OpenBaldarAwbDate { get; set; }
+        public string OpenBaldarAwbDate { get; set; }
 
         public int ResponseStatusCode { get; set; }
         public string ResponseStatusMsg { get; set; }
