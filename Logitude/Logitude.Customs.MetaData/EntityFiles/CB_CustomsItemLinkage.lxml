@@ -218,9 +218,9 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <field
-    Id="&quot;40b32411-f025-4668-a00d-12e290b36e78&quot;"
-    FieldName="&quot;CustomsItemDetailsHistoryID&quot;"
-    OldNames="CustomsItemDetailsHistoryID"
+    Id="&quot;c38b5d7f-2d45-4549-b4b3-b8e4c5465349&quot;"
+    FieldName="&quot;ChangeDate&quot;"
+    OldNames="ChangeDate"
     IsNew="true"
     IsChecked="true"
     IsDeleted="false"
