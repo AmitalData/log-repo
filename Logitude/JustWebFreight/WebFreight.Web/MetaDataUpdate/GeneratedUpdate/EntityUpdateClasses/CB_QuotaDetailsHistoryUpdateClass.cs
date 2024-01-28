@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_QuotaDetailsHistoryUpdateClass
    {  		
-		public const string HashString = "debdb58e9c0c8c43edd98718cea5ed62";
+		public const string HashString = "da17f35b3c57bf0bebc9f3c9cc54f33b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  " היסטוריה של מאפיינים של מכסות",
 			      				    DefaultText =  "Quota Details History",
-			      				    Code =  "6873",
+			      				    Code =  "e0fa",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -1073,7 +1073,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
 					  						DisplayInDocumentReferences =  false,
-					  						NumberOfDigits =  8,
+					  						NumberOfDigits =  12,
 					  						DigitsAfterPoint =  2,
 					  						InActive =  false,
 					  						DisplayLongName =  false,

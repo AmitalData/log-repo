@@ -1003,9 +1003,9 @@ namespace Logitude.Customs.Data
 				
 			modelBuilder.Entity<CB_ComputationMethodData>().Property(x => x.ReductionRate).HasPrecision(5, 2);
 				
-			modelBuilder.Entity<CB_PropertiesDetailsHistory>().Property(x => x.VatDiscountRate).HasPrecision(4, 2);
+			modelBuilder.Entity<CB_PropertiesDetailsHistory>().Property(x => x.VatDiscountRate).HasPrecision(6, 2);
 				
-			modelBuilder.Entity<CB_QuotaDetailsHistory>().Property(x => x.QuotaValueIncrement).HasPrecision(8, 2);
+			modelBuilder.Entity<CB_QuotaDetailsHistory>().Property(x => x.QuotaValueIncrement).HasPrecision(12, 2);
 				
 			modelBuilder.Entity<ClaimImporterDeclarsPage3B>().Property(x => x.SaleAmountAfter).HasPrecision(16, 2);
 				

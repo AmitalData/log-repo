@@ -179,7 +179,7 @@
   <Column
     Name="VatDiscountRate"
     Type="decimal"
-    Precision="4"
+    Precision="6"
     Scale="2">
     <Constraints
       Nullable="false" />
