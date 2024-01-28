@@ -28,8 +28,8 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          ID = a.ID,
 					
 					                          ChangeTypeID = a.ChangeTypeID,
-					
-					                          ChangeDate = a.ChangeDate,
+
+                                              CreateDate = a.CreateDate,
 					
 					                          CustomsItemDetailsHistoryID = a.CustomsItemDetailsHistoryID,
 					
