@@ -23,6 +23,11 @@
         max-width: 660px;
         white-space: normal;
     }
+    #connectedInvoices {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
 </style>
 <table *ngIf="isReady">
     <tr style="height: 28px;">
@@ -594,10 +599,20 @@
                                     [header]="'Customs.CertificateOfOrigin.O.OriginCriterionCode' | TextCodeTranslationPipe"
                                     [binding]="'OriginCriterionCode'" [width]="'70'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
-                                            #logcelltemplate>
-                                            <div style="text-align:right">
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.ItemSerial">
+                                            <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.OriginCriterionCodeName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov #OriginCriterionCodeTextBox [ObjectFieldName]="'OriginCriterionCode'"
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'" [DataContext]="item"
+                                                    [LookUpTableName]="'Customs.OriginCriterion'"
+                                                    (SelectedItemChanged)="SetLocalName($event, 'OriginCriterionCodeName',item)"
+                                                   [HideColumns]="true" [FocusOnMe]="true">
+                                                </LogLov>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
@@ -610,13 +625,14 @@
                                     <ng-template let-item>
                                         <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
                                             #logcelltemplate>
-                                            <span>{{item.InvoiceConnect}}</span>
-                                            <span class="CellSeparator" style="float: right;"></span>
-                                            <div
-                                                style=" float: right;width: 22px; height:20px; padding-top: 2px; display:block">
-                                                <IconButton [Name]="'Edit'" [IsSmall]="true"
-                                                    [IsEnabled]="!IsDisplayOnly" (click)="EditButtonClicked(item)">
-                                                </IconButton>
+                                            <div id="connectedInvoices">
+                                                <div>{{item.InvoiceConnect}}</div>
+                                                <div
+                                                    style=" float: right;width: 22px; height:20px; padding-top: 2px; display:block">
+                                                    <IconButton [Name]="'Edit'" [IsSmall]="true"
+                                                        [IsEnabled]="!IsDisplayOnly" (click)="ShowSelectionComponent(currentDeclaration, false, false, item)">
+                                                    </IconButton>
+                                                </div>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>

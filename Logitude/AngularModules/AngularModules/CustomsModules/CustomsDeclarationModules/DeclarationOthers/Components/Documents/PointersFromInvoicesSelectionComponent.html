@@ -180,7 +180,7 @@
     </tr>
 
     <!-- SupplierInvoicesList -->
-    <tr style="height: 55px;">
+    <tr style="height: 55px;" *ngIf="!isForCertificateOfOriginGeneralTabScreen">
         <td style="vertical-align: bottom; padding-bottom: 4px;" class="subTitle">
             <div *ngIf="!isExportDeclaration">
                 {{'Customs.Declaration.O.Items' | TextCodeTranslationPipe}}
@@ -190,7 +190,7 @@
             </div>
         </td>
     </tr>
-    <tr>
+    <tr *ngIf="!isForCertificateOfOriginGeneralTabScreen">
         <td>
             <div class="CellContent" *ngIf="!SelectInvoicesOnly">
                 <logitude-grid GridWidth="100%" GridHeight="100%"
