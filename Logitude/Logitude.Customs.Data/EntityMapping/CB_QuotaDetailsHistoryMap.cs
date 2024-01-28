@@ -53,7 +53,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ChangeRequestTypePriority).HasColumnName("ChangeRequestTypePriority");
 
-            this.Property(t => t.QuotaValueIncrement).HasColumnName("QuotaValueIncrement").HasPrecision(8, 2);
+            this.Property(t => t.QuotaValueIncrement).HasColumnName("QuotaValueIncrement").HasPrecision(12, 2);
 
             this.Property(t => t.PerYearFrequency).HasColumnName("PerYearFrequency").HasMaxLength(4).IsUnicode(false);
 
