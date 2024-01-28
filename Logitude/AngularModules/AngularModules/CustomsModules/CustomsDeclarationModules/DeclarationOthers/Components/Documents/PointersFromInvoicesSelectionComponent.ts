@@ -56,8 +56,6 @@ export class PointersFromInvoicesSelectionComponent {
     SetWindowArgs(args: any) {
         if(args.CertificateOfOriginItem){
             this.isForCertificateOfOriginGeneralTabScreen = true;
-
-
             this.DeclarationPM = args.DeclarationPM;
             if (this.DeclarationPM != null && this.DeclarationPM.Direction == "E") {
                 this.isExportDeclaration = true;
@@ -66,21 +64,14 @@ export class PointersFromInvoicesSelectionComponent {
                 let selectedInvoices = args.existInvoices.split(',');
                 this.existInvoices = selectedInvoices.map(str => Number(str));
             }
-            this.SelectInvoicesOnly = args.selectInvoicesOnly;
-
-            var connectedCounterKeys = "";
-            var connectedLineNumbers = "";
             this.BuildInvoicesListForCerficate();
-        
+
+            this.SelectInvoicesOnly = args.selectInvoicesOnly;
+            var connectedCounterKeys = "";
+            var connectedLineNumbers = "";   
             this.IsEntityDisplayOnly = args.IsEntityDisplayOnly;
-            if (this.IsEntityDisplayOnly) {
-                this.IsDisplayOnly = true;
-                this.DisplayOnlyMessage = "מסמך לתצוגה בלבד";
-            }
-            else {
-                this.IsDisplayOnly = false;
-                this.DisplayOnlyMessage = "";
-            }
+            this.IsDisplayOnly = false;
+            this.DisplayOnlyMessage = "";
         }
         else {
 
@@ -200,41 +191,14 @@ export class PointersFromInvoicesSelectionComponent {
     BuildInvoicesListForCerficate() {
         this.SupplierInvoicesList.Clear();
         this.Invoices = this.DeclarationPM.SupplierInvoices;
-        
-        var temp: SupplierInvoiceLine[] = [];
+        this.SelectedInvoices = new ObservableCollection([]);
         this.Invoices.forEach(invoice=>{
-            if (invoice) {
-                var exists: SupplierInvoicePM = this.SelectedInvoices.Collection.filter(d => d.InvoiceCounterKey == invoice.InvoiceCounterKey)[0];
-                if (!exists) {
-                    var line: SupplierInvoiceLine = new SupplierInvoiceLine(invoice, this);
-                    var exist = temp.filter(d => d.InvoiceCounterKey == line.InvoiceCounterKey)[0];
-                    if (!exist) {
-                        this.SupplierInvoicesList.Insert(line); 
-                        temp.push(line); 
-                    }
-                }
-            }
+            var line: SupplierInvoiceLine = new SupplierInvoiceLine(invoice, this);
+            this.SupplierInvoicesList.Insert(line); 
+            if(this.existInvoices?.filter(i => i == invoice.InvoiceCounterKey)[0]) {
+                this.SelectedInvoices.Insert(line);
+            } 
         });
-        this.SelectedInvoices.Collection = temp;
-        this.SelectedRows = this.SelectedInvoices.Collection;
-        
-
-
-        for (var item of this.Invoices) {
-            var invoice: SupplierInvoicePM = this.SupplierInvoicesList.Collection.filter(d => d.InvoiceCounterKey == item.InvoiceCounterKey)[0];
-            if (!invoice) {
-                var line: SupplierInvoiceLine = new SupplierInvoiceLine(item, this);
-                if (!this.SupplierInvoicesList.Collection.includes(line)) {
-                    if(this.existInvoices) {
-                        if (this.existInvoices.includes(invoice.InvoiceCounterKey)) {
-
-
-                            this.SupplierInvoicesList.Insert(line);
-                        }                    
-                    }
-                }
-            }
-        }
         this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
     }
 
