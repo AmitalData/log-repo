@@ -599,10 +599,20 @@
                                     [header]="'Customs.CertificateOfOrigin.O.OriginCriterionCode' | TextCodeTranslationPipe"
                                     [binding]="'OriginCriterionCode'" [width]="'70'" [Alignment]="'right'">
                                     <ng-template let-item>
-                                        <log-cell-template [IgnoreMods]="true" [IsEnabled]="!IsDisplayOnly"
-                                            #logcelltemplate>
-                                            <div style="text-align:right">
+                                        <log-cell-template #logcelltemplate
+                                            (CellClicked)="onCellSelected($event,logcelltemplate,item)"
+                                            [RIndex]="item.ItemSerial">
+                                            <div class="TextTrimming" style="text-align:right"
+                                                *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.OriginCriterionCodeName}}</span>
+                                            </div>
+                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                                <LogLov #OriginCriterionCodeTextBox [ObjectFieldName]="'OriginCriterionCode'"
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'" [DataContext]="item"
+                                                    [LookUpTableName]="'Customs.OriginCriterion'"
+                                                    (SelectedItemChanged)="SetLocalName($event, 'OriginCriterionCodeName',item)"
+                                                   [HideColumns]="true" [FocusOnMe]="true">
+                                                </LogLov>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
