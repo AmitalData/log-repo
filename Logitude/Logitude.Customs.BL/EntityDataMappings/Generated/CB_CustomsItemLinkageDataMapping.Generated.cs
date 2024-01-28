@@ -24,9 +24,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		     None,  
 	         ID, 
 	         ChangeTypeID, 
-	         ChangeDate, 
 	         CustomsItemDetailsHistoryID, 
-	         Connect_CustItemDetailsHistID,
+	         Connect_CustItemDetailsHistID, 
+	         CreateDate,
 	      }
 
 
@@ -35,9 +35,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 		     None,  
 	         ID, 
 	         ChangeTypeID, 
-	         ChangeDate, 
 	         CustomsItemDetailsHistoryID, 
-	         Connect_CustItemDetailsHistID,
+	         Connect_CustItemDetailsHistID, 
+	         CreateDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -51,11 +51,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.ChangeTypeID = entityPM.ChangeTypeID;
 			}
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangeDate))
-            {
-				entityPOCO.ChangeDate = entityPM.ChangeDate;
-			}
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemDetailsHistoryID))
             {
 				entityPOCO.CustomsItemDetailsHistoryID = entityPM.CustomsItemDetailsHistoryID;
@@ -64,6 +59,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Connect_CustItemDetailsHistID))
             {
 				entityPOCO.Connect_CustItemDetailsHistID = entityPM.Connect_CustItemDetailsHistID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+				entityPOCO.CreateDate = entityPM.CreateDate;
 			}
 			}
 
@@ -80,11 +80,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.ChangeTypeID = entityPOCO.ChangeTypeID;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.ChangeDate))
-            {
-					entityPM.ChangeDate = entityPOCO.ChangeDate;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CustomsItemDetailsHistoryID))
             {
 					entityPM.CustomsItemDetailsHistoryID = entityPOCO.CustomsItemDetailsHistoryID;
@@ -93,6 +88,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Connect_CustItemDetailsHistID))
             {
 					entityPM.Connect_CustItemDetailsHistID = entityPOCO.Connect_CustItemDetailsHistID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CreateDate))
+            {
+					entityPM.CreateDate = entityPOCO.CreateDate;
             }
 
 		}
@@ -106,11 +106,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.ChangeTypeID = entityPM.ChangeTypeID;
             }
 			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChangeDate))
-            {
-                oldEntityPM.ChangeDate = entityPM.ChangeDate;
-            }
-			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemDetailsHistoryID))
             {
                 oldEntityPM.CustomsItemDetailsHistoryID = entityPM.CustomsItemDetailsHistoryID;
@@ -119,6 +114,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Connect_CustItemDetailsHistID))
             {
                 oldEntityPM.Connect_CustItemDetailsHistID = entityPM.Connect_CustItemDetailsHistID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CreateDate))
+            {
+                oldEntityPM.CreateDate = entityPM.CreateDate;
             }
 			
 		}

@@ -35,7 +35,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public DateTime StartDate  { get; set; }
        [DataMember]
-       public DateTime EndDate  { get; set; }
+       public DateTime? EndDate  { get; set; }
    }
 
 }

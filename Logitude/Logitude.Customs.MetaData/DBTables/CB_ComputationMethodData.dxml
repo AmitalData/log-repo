@@ -15,7 +15,7 @@
   <Column
     Name="AlternateDefinedPerUnitMeasure"
     Type="decimal"
-    Precision="2"
+    Precision="4"
     Scale="2">
     <Constraints
       Nullable="true" />
@@ -23,7 +23,7 @@
   <Column
     Name="AlternateRate"
     Type="decimal"
-    Precision="2"
+    Precision="4"
     Scale="2">
     <Constraints
       Nullable="true" />
@@ -52,7 +52,7 @@
   <Column
     Name="DefinedPerUnitMethod"
     Type="decimal"
-    Precision="2"
+    Precision="4"
     Scale="2">
     <Constraints
       Nullable="true" />
@@ -81,7 +81,7 @@
   <Column
     Name="OptionalTaxAddition"
     Type="decimal"
-    Precision="2"
+    Precision="4"
     Scale="2">
     <Constraints
       Nullable="true" />
@@ -89,7 +89,7 @@
   <Column
     Name="Rate"
     Type="decimal"
-    Precision="2"
+    Precision="4"
     Scale="2">
     <Constraints
       Nullable="true" />
@@ -97,7 +97,7 @@
   <Column
     Name="ReductionRate"
     Type="decimal"
-    Precision="2"
+    Precision="4"
     Scale="2">
     <Constraints
       Nullable="true" />

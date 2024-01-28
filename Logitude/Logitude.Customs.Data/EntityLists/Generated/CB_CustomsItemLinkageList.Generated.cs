@@ -19,11 +19,11 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ChangeTypeID  { get; set; }
        [DataMember]
-       public DateTime ChangeDate  { get; set; }
-       [DataMember]
        public string CustomsItemDetailsHistoryID  { get; set; }
        [DataMember]
        public string Connect_CustItemDetailsHistID  { get; set; }
+       [DataMember]
+       public DateTime CreateDate  { get; set; }
    }
 
 }

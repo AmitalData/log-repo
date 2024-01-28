@@ -55,7 +55,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("StartDate")]
 	    public DateTime StartDate { get; set; }
         [Column("EndDate")]
-	    public DateTime EndDate { get; set; }
+	    public DateTime? EndDate { get; set; }
     }
 }
 	 
