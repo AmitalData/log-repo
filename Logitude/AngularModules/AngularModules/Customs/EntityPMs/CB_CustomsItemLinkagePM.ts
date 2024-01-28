@@ -34,11 +34,6 @@ export class CB_CustomsItemLinkagePM {
     public set ChangeTypeID(newValue: string) { if (this.changeTypeID != newValue) { this.changeTypeID = newValue; this.MarkAsDirty("ChangeTypeID"); } }
        
 	 
-    private changeDate: Date;
-    public get ChangeDate() { return this.changeDate; }
-    public set ChangeDate(newValue: Date) { if (this.changeDate != newValue) { this.changeDate = newValue; this.MarkAsDirty("ChangeDate"); } }
-       
-	 
     private customsItemDetailsHistoryID: string;
     public get CustomsItemDetailsHistoryID() { return this.customsItemDetailsHistoryID; }
     public set CustomsItemDetailsHistoryID(newValue: string) { if (this.customsItemDetailsHistoryID != newValue) { this.customsItemDetailsHistoryID = newValue; this.MarkAsDirty("CustomsItemDetailsHistoryID"); } }
@@ -47,6 +42,11 @@ export class CB_CustomsItemLinkagePM {
     private connect_CustItemDetailsHistID: string;
     public get Connect_CustItemDetailsHistID() { return this.connect_CustItemDetailsHistID; }
     public set Connect_CustItemDetailsHistID(newValue: string) { if (this.connect_CustItemDetailsHistID != newValue) { this.connect_CustItemDetailsHistID = newValue; this.MarkAsDirty("Connect_CustItemDetailsHistID"); } }
+       
+	 
+    private createDate: Date;
+    public get CreateDate() { return this.createDate; }
+    public set CreateDate(newValue: Date) { if (this.createDate != newValue) { this.createDate = newValue; this.MarkAsDirty("CreateDate"); } }
        
 	 
 

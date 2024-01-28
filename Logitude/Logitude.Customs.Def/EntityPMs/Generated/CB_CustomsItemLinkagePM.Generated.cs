@@ -66,29 +66,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private DateTime changeDate ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public DateTime ChangeDate  
-	   {
-	    
-	     get
-		{
-		   return changeDate;
-		 }
-		 set
-		 {
-		   if(changeDate != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChangeDate",OldValue=changeDate,NewValue=value,PropertyType="DateTime"};
-		    NotifyPropertyChanged(values);
-		   changeDate=value;
-		   }
-			
-		 }
-	   }
 	  private string customsItemDetailsHistoryID ;
 	  	  
        
@@ -131,6 +108,29 @@ namespace Logitude.Customs.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Connect_CustItemDetailsHistID",OldValue=connect_CustItemDetailsHistID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   connect_CustItemDetailsHistID=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime createDate ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime CreateDate  
+	   {
+	    
+	     get
+		{
+		   return createDate;
+		 }
+		 set
+		 {
+		   if(createDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CreateDate",OldValue=createDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   createDate=value;
 		   }
 			
 		 }

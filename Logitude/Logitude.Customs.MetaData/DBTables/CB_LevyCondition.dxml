@@ -76,7 +76,7 @@
     Name="EndDate"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="CustomsItemID"

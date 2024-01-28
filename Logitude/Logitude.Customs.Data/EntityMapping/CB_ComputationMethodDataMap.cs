@@ -25,9 +25,9 @@ namespace Logitude.Customs.Data.EntityMapping
 	 
             this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.AlternateDefinedPerUnitMeasure).HasColumnName("AlternateDefinedPerUnitMeasure").HasPrecision(2, 2);
+            this.Property(t => t.AlternateDefinedPerUnitMeasure).HasColumnName("AlternateDefinedPerUnitMeasure").HasPrecision(4, 2);
 
-            this.Property(t => t.AlternateRate).HasColumnName("AlternateRate").HasPrecision(2, 2);
+            this.Property(t => t.AlternateRate).HasColumnName("AlternateRate").HasPrecision(4, 2);
 
             this.Property(t => t.CalculationReference).HasColumnName("CalculationReference").HasMaxLength(255).IsUnicode(false);
 
@@ -35,7 +35,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CurrencyTypeID).HasColumnName("CurrencyTypeID").HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.DefinedPerUnitMethod).HasColumnName("DefinedPerUnitMethod").HasPrecision(2, 2);
+            this.Property(t => t.DefinedPerUnitMethod).HasColumnName("DefinedPerUnitMethod").HasPrecision(4, 2);
 
             this.Property(t => t.EnglishCalculationReference).HasColumnName("EnglishCalculationReference").HasMaxLength(255).IsUnicode(false);
 
@@ -43,11 +43,11 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.Alternate_MeasurementUnitID).HasColumnName("Alternate_MeasurementUnitID").HasMaxLength(3).IsUnicode(false);
 
-            this.Property(t => t.OptionalTaxAddition).HasColumnName("OptionalTaxAddition").HasPrecision(2, 2);
+            this.Property(t => t.OptionalTaxAddition).HasColumnName("OptionalTaxAddition").HasPrecision(4, 2);
 
-            this.Property(t => t.Rate).HasColumnName("Rate").HasPrecision(2, 2);
+            this.Property(t => t.Rate).HasColumnName("Rate").HasPrecision(4, 2);
 
-            this.Property(t => t.ReductionRate).HasColumnName("ReductionRate").HasPrecision(2, 2);
+            this.Property(t => t.ReductionRate).HasColumnName("ReductionRate").HasPrecision(4, 2);
 
             this.Property(t => t.TariffRelatedToQuotaID).HasColumnName("TariffRelatedToQuotaID").HasMaxLength(2).IsUnicode(false);
 

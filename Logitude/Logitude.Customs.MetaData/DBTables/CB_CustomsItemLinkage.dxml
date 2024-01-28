@@ -20,12 +20,6 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="ChangeDate"
-    Type="datetime">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="CustomsItemDetailsHistoryID"
     Type="varchar"
     Size="15">
@@ -38,6 +32,12 @@
     Size="15">
     <Constraints
       Nullable="true" />
+  </Column>
+  <Column
+    Name="CreateDate"
+    Type="datetime">
+    <Constraints
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="ChangeTypeID"

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_LevyConditionUpdateClass
    {  		
-		public const string HashString = "15dbe04540ffef803127f53fde4b1eab";
+		public const string HashString = "0ec8f6fbe9e7a001989c645ba5292e50";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "תנאי בהיטל",
 			      				    DefaultText =  "Levy Condition",
-			      				    Code =  "8ad8",
+			      				    Code =  "30a7",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
