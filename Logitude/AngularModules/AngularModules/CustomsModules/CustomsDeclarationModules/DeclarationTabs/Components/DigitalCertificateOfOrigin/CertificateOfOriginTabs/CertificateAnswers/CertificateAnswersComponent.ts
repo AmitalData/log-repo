@@ -60,7 +60,7 @@ export class CertificateAnswersComponent extends BaseComponent  {
  
         this.SetAnswerCount();
     }
-    
+
     SetAnswerDescreption(){
          // Feedbacklist
          var descriptionFeedback = "";
@@ -81,22 +81,45 @@ export class CertificateAnswersComponent extends BaseComponent  {
         
                const jsonResult = xmljs.xml2json(this.certificateOfOriginPM.ErrXml, options);
                const parsedObject = JSON.parse(jsonResult);
-        
-               parsedObject.ArrayOfException.Exception.forEach((item) => {
-                   var descriptionErrorOrWarning = "";
-                    if(!AppTool.IsNullOrEmpty(item.ExceptionParms))
-                     descriptionErrorOrWarning += (item.ExceptionParms._text + " ")
-                    if(!AppTool.IsNullOrEmpty(item.ExeptionDescription))
-                      descriptionErrorOrWarning += (item.ExeptionDescription._text)
-        
-                    if(item.ExceptionLevel._text == '3') {
-                      this.Errorslist.Insert(new LineModel(descriptionErrorOrWarning));
+               
+                if(parsedObject !== null){
+                    if(Array.isArray(parsedObject.ArrayOfException.Exception)){
+                        parsedObject.ArrayOfException.Exception.forEach((item) => {
+                            this.MapException(item);
+                        });
                     }
-                    else if(item.ExceptionLevel._text == '1' || item.ExceptionLevel._text == '2') {
-                      this.Warninglist.Insert(new LineModel(descriptionErrorOrWarning));
+                    else if (typeof parsedObject.ArrayOfException.Exception === 'object'){
+                        this.MapException(parsedObject.ArrayOfException.Exception);
+                
                     }
-               });
+                }
+
+                
+              
             }
+    }
+    MapException(item) {
+        var descriptionErrorOrWarning = "";
+        if(!AppTool.IsNullOrEmpty(item.ExceptionParms)){
+            if(Array.isArray(item.ExceptionParms)){
+                item.ExceptionParms.forEach((exceptionParm) => {
+                    descriptionErrorOrWarning += (exceptionParm._text + " ")
+                });
+            }
+            else if (typeof item.ExceptionParms === 'object'){
+                descriptionErrorOrWarning += (item.ExceptionParms._text + " ")
+        
+            }
+        }
+        if(!AppTool.IsNullOrEmpty(item.ExeptionDescription))
+          descriptionErrorOrWarning += (item.ExeptionDescription._text)
+
+        if(item.ExceptionLevel._text == '3') {
+          this.Errorslist.Insert(new LineModel(descriptionErrorOrWarning));
+        }
+        else if(item.ExceptionLevel._text == '1' || item.ExceptionLevel._text == '2') {
+          this.Warninglist.Insert(new LineModel(descriptionErrorOrWarning));
+        }
     }
 
     SetAnswerCount(){
