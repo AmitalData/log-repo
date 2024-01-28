@@ -77,7 +77,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CarWeightID).HasColumnName("CarWeightID").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.VatDiscountRate).HasColumnName("VatDiscountRate").HasPrecision(2, 2);
+            this.Property(t => t.VatDiscountRate).HasColumnName("VatDiscountRate").HasPrecision(4, 2);
 
             dbms = System.Configuration.ConfigurationManager.AppSettings.Get("DBMS");
             if (dbms == "oracle")

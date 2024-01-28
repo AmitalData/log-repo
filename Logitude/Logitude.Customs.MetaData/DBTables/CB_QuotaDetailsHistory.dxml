@@ -105,7 +105,7 @@
   <Column
     Name="QuotaValueIncrement"
     Type="decimal"
-    Precision="2"
+    Precision="8"
     Scale="2">
     <Constraints
       Nullable="true" />
