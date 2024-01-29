@@ -59,7 +59,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 LedgerTransactionQueryService ledgerTransactionQuery = new LedgerTransactionQueryService(entityPM.Tenant);
                 for (int _month = entityPOCO.OpenMonth; _month >= entityPM.OpenMonth; _month--)
                 {
-                    IQueryable<LedgerTransaction> monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonth(entityPOCO.Year, _month, entityPOCO.Tenant);
+                    //IQueryable<LedgerTransaction> monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonth(entityPOCO.Year, _month, entityPOCO.Tenant);
+
+                    IQueryable<LedgerTransaction> monthTransactions = null;
+
+                    switch (entityPM.PeriodTypeCode)
+                    {
+                        case "1": // Accounting
+                            monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonthBySourceTypeMode(entityPOCO.Year, _month, entityPOCO.Tenant, "!=2", "");
+                            break;
+                        case "2": // Invoice
+                            monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonthBySourceTypeMode(entityPOCO.Year, _month, entityPOCO.Tenant, "2", "!=IT");
+                            break;
+                        case "3": // Interest Invoice
+                            monthTransactions = ledgerTransactionQuery.GetLedgerTransactionsForMonthBySourceTypeMode(entityPOCO.Year, _month, entityPOCO.Tenant, "2", "IT");
+                            break;
+                        default:
+                            break;
+                    }
                     bool monthHasTransactions = monthTransactions.Any();
                     if (monthHasTransactions)
                     {

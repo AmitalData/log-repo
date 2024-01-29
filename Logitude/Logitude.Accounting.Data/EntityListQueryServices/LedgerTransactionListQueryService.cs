@@ -15,6 +15,10 @@ using Logitude.Accounting.Data.Enums;
 using Logitude.Server.Tools.Helpers;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Server.Infrastructure;
 
 namespace Logitude.Accounting.Data.EntityListQueryServices
 {
@@ -384,9 +388,127 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                 iQueryable = q;
             }
+
+
+            if (queryOperations.QueryFilterItems.Exists(d => d.FieldName == "OnlyNonInvoice"))
+            {
+                QueryFilterItem myfilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "OnlyNonInvoice");
+                if (myfilter != null && (bool)myfilter.FieldValue == true && myfilter.Operator == "Equal")
+                {
+
+                    
+                    var q = from lt in iQueryable
+                            join journal in context.Journals on lt.JournalId equals journal.Id
+                            where lt.Tenant == tenant
+                               && journal.Tenant == tenant
+                               && journal.AccountingEntityCode != "2"
+                            select lt;
+
+                    iQueryable = q;
+                }
+            }
+
+            if (queryOperations.QueryFilterItems.Exists(d => d.FieldName == "OnlyInterestInvoice"))
+            {
+                QueryFilterItem myfilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "OnlyInterestInvoice");
+                if (myfilter != null && (bool)myfilter.FieldValue == true && myfilter.Operator == "Equal")
+                {
+                    List<string> invs = null;
+                    QueryFilterItem datefilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "AccountingDate");
+                    if (datefilter != null && datefilter.Operator == "Between")
+                    {
+                        DateTime fromdate = (DateTime)datefilter.FieldValue;
+                        int month = fromdate.Month;
+                        int year = fromdate.Year;
+                        ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
+                        invs = GetListFirstInterestInvoiceIdByMonth(aRInvoiceRepository, year, month, tenant);
+                    }
+
+                    if (invs == null) invs = new List<string>();
+
+                    var q = from lt in iQueryable
+                            join journal in context.Journals on lt.JournalId equals journal.Id
+                            join inv in invs on journal.AccountingEntityId equals inv
+                            where lt.Tenant == tenant
+                               && journal.Tenant == tenant
+                               && journal.AccountingEntityCode == "2"
+                            select lt;
+
+                    iQueryable = q;
+                }
+            }
+
+            if (queryOperations.QueryFilterItems.Exists(d => d.FieldName == "OnlyNonInterestInvoice"))
+            {
+                QueryFilterItem myfilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "OnlyNonInterestInvoice");
+                if (myfilter != null && (bool)myfilter.FieldValue == true && myfilter.Operator == "Equal")
+                {
+                    List<string> invs = null;
+                    QueryFilterItem datefilter = queryOperations.QueryFilterItems.FirstOrDefault(x => x.FieldName == "AccountingDate");
+                    if (datefilter != null && datefilter.Operator == "Between")
+                    {
+                        DateTime fromdate = (DateTime)datefilter.FieldValue;
+                        int month = fromdate.Month;
+                        int year = fromdate.Year;
+                        ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
+                        invs = GetListFirstNonInterestInvoiceIdByMonth(aRInvoiceRepository, year, month, tenant);
+                    }
+
+                    if (invs == null) invs = new List<string>();
+
+                    var q = from lt in iQueryable
+                            join journal in context.Journals on lt.JournalId equals journal.Id
+                            join inv in invs on journal.AccountingEntityId equals inv
+                            where lt.Tenant == tenant
+                               && journal.Tenant == tenant
+                               && journal.AccountingEntityCode == "2"
+                            select lt;
+
+                    iQueryable = q;
+                }
+            }
+
             iQueryable = customFilter.GetFilteredQuery(customizedQueryOperation, iQueryable,tenant);
             return iQueryable;
         }
+
+
+        private List<string> GetListFirstInterestInvoiceIdByMonth(ARInvoiceRepository repository, int year, int month, int tenant)
+        {
+            DateTime monthStart = new DateTime(year, month, 1, 0, 0, 0);
+            DateTime monthEnd = new DateTime(year, month, DateTime.DaysInMonth(year, month), 23, 59, 59);
+            List<string> result = new List<string>();
+            var q = (from a in repository.context.ARInvoices 
+                          where a.Tenant == tenant && a.ARInvoiceTypeCode == "IT" 
+                          && a.InvoiceDate >= monthStart
+                          && a.InvoiceDate <= monthEnd
+                          select a);
+            if (q != null)
+            {
+                ARInvoice inv = q.FirstOrDefault();
+                if (inv != null) result.Add(inv.Id);   
+            }
+            return result;
+        }
+
+        private List<string> GetListFirstNonInterestInvoiceIdByMonth(ARInvoiceRepository repository, int year, int month, int tenant)
+        {
+            DateTime monthStart = new DateTime(year, month, 1, 0, 0, 0);
+            DateTime monthEnd = new DateTime(year, month, DateTime.DaysInMonth(year, month), 23, 59, 59);
+            List<string> result = new List<string>(); 
+            var q = (from a in repository.context.ARInvoices
+                     where a.Tenant == tenant && a.ARInvoiceTypeCode != "IT"
+                     && a.InvoiceDate >= monthStart
+                     && a.InvoiceDate <= monthEnd
+                     select a);
+            if (q != null)
+            {
+                ARInvoice inv = q.FirstOrDefault();
+                if (inv != null) result.Add(inv.Id);
+            }
+            return result;
+        }
+
         private int? GetSecurityLevel(int tenant)
         {
             User loggedUser = GetLoggedUser(tenant);
