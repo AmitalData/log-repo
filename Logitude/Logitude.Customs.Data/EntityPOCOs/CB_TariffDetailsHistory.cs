@@ -24,7 +24,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
-	    public DateTime UpdateDate { get; set; }
+	    public DateTime? UpdateDate { get; set; }
         [Column("TariffID")]
 	    public string TariffID { get; set; }
         [ForeignKey("Quota")]

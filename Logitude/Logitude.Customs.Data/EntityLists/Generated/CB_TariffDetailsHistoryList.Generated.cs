@@ -19,7 +19,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
-       public DateTime UpdateDate  { get; set; }
+       public DateTime? UpdateDate  { get; set; }
        [DataMember]
        public string TariffID  { get; set; }
        [DataMember]
