@@ -15,6 +15,10 @@ using System.Threading.Tasks;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.CloseTables;
 using System.Data.Entity;
+using Logitude.Accounting.Data.EntityLists;
+using Logitude.BL.InvoiceModel.EntityQueries;
+using Simplog.Data.InvoiceModel.Repositories;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -1122,6 +1126,103 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             return pocos;
         }
 
+        public IQueryable<LedgerTransaction> GetLedgerTransactionsForMonthBySourceTypeMode(int year, int month, int tenant, string sourceTypeCode, string mode)
+        {
+            //IQueryable<LedgerTransaction> pocos = repository.GetTransactionsForMonthAndSourceTypeMode(year, month, tenant, sourceTypeCode, mode);
+            IQueryable<LedgerTransaction> pocos = GetTransactionsForMonthAndSourceTypeMode(year, month, tenant, sourceTypeCode, mode);
+            return pocos;
+        }
+
+
+        public IQueryable<LedgerTransaction> GetTransactionsForMonthAndSourceTypeMode(int year, int month, int tenant, string sourceTypeCode, string mode)
+        {
+            DateTime monthStart = new DateTime(year, month, 1, 0, 0, 0);
+            DateTime monthEnd = new DateTime(year, month, DateTime.DaysInMonth(year, month), 23, 59, 59);
+            IQueryable<LedgerTransaction> pocos = null;
+            if (sourceTypeCode == "!=2") // Only Non-Invoice
+            {
+                pocos =
+                    (from lt in context.LedgerTransactions
+                     join journal in context.Journals on lt.JournalId equals journal.Id
+                     where lt.AccountingDate >= monthStart
+                        && lt.AccountingDate <= monthEnd
+                        && lt.Tenant == tenant
+                        && journal.Tenant == tenant
+                        && journal.AccountingEntityCode != "2"
+                     select lt).OrderByDescending(a => a.AccountingDate);
+            }
+            else
+            {
+                List<string> invs = null;
+                ARInvoiceRepository aRInvoiceRepository = new ARInvoiceRepository(tenant);
+                
+
+                if (mode == "IT") // Only Interest Invoice
+                {
+                    invs = GetListFirstInterestInvoiceIdByMonth(aRInvoiceRepository, monthStart, monthEnd, tenant);
+                    if (invs == null) invs = new List<string>();
+                    pocos =
+                        (from lt in context.LedgerTransactions
+                         join journal in context.Journals on lt.JournalId equals journal.Id
+                         join inv in invs on journal.AccountingEntityId equals inv
+                         where lt.AccountingDate >= monthStart
+                            && lt.AccountingDate <= monthEnd
+                            && lt.Tenant == tenant
+                            && journal.Tenant == tenant
+                            && journal.AccountingEntityCode == "2"
+                         select lt).OrderByDescending(a => a.AccountingDate);
+                }
+                else // Only Non-Interest Invoice
+                {
+                    invs = GetListFirstNonInterestInvoiceIdByMonth(aRInvoiceRepository, monthStart, monthEnd, tenant);
+                    if (invs == null) invs = new List<string>();
+                    pocos =
+                        (from lt in context.LedgerTransactions
+                         join journal in context.Journals on lt.JournalId equals journal.Id
+                         join inv in invs on journal.AccountingEntityId equals inv
+                         where lt.AccountingDate >= monthStart
+                            && lt.AccountingDate <= monthEnd
+                            && lt.Tenant == tenant
+                            && journal.Tenant == tenant
+                            && journal.AccountingEntityCode == "2"
+                         select lt).OrderByDescending(a => a.AccountingDate);
+                }
+
+            }
+            return pocos;
+        }
+
+        private List<string> GetListFirstInterestInvoiceIdByMonth(ARInvoiceRepository repository, DateTime monthStart, DateTime monthEnd, int tenant)
+        {
+            List<string> result = new List<string>();
+            var q = (from a in repository.context.ARInvoices
+                     where a.Tenant == tenant && a.ARInvoiceTypeCode == "IT"
+                     && a.InvoiceDate >= monthStart
+                     && a.InvoiceDate <= monthEnd
+                     select a);
+            if (q != null)
+            {
+                ARInvoice inv = q.FirstOrDefault();
+                if (inv != null) result.Add(inv.Id);
+            }
+            return result;
+        }
+
+        private List<string> GetListFirstNonInterestInvoiceIdByMonth(ARInvoiceRepository repository, DateTime monthStart, DateTime monthEnd, int tenant)
+        {
+            List<string> result = new List<string>();
+            var q = (from a in repository.context.ARInvoices
+                     where a.Tenant == tenant && a.ARInvoiceTypeCode != "IT"
+                     && a.InvoiceDate >= monthStart
+                     && a.InvoiceDate <= monthEnd
+                     select a);
+            if (q != null)
+            {
+                ARInvoice inv = q.FirstOrDefault();
+                if (inv != null) result.Add(inv.Id);
+            }
+            return result;
+        }
         public List<LedgerTransactionPM> GetByJournalIdAndForeignAmountDebitNotEqualZero(string journalId, int tenant)
         {
             List<LedgerTransaction> ledgerTransactionPOCOs = null;
