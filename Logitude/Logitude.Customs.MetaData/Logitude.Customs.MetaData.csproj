@@ -245,6 +245,7 @@
     <None Include="DBTables\CertificateOfOrigin.dxml" />
     <None Include="DBTables\CertificateOfOriginInvoice.dxml" />
     <None Include="DBTables\CertificateOfOriginItem.dxml" />
+    <None Include="DBTables\CertificateOfOriginMandatoryFields.dxml" />
     <None Include="DBTables\CertificateOfOriginStatusCodeEnum.dxml" />
     <None Include="DBTables\CertificateOfOriginTypeCodeEnum.dxml" />
     <None Include="DBTables\CertificatesStatus.dxml" />
@@ -628,6 +629,7 @@
     <None Include="EntityFiles\DefaultValue.lxml" />
     <None Include="EntityFiles\CertificateOfOriginTypeCodeEnum.lxml" />
     <None Include="EntityFiles\CertificateOfOriginStatusCodeEnum.lxml" />
+    <None Include="EntityFiles\CertificateOfOriginMandatoryFields.lxml" />
     <None Include="EntityFiles\RequestReasonCodeEnum.lxml" />
     <None Include="EntityFiles\OriginCriterion.lxml" />
     <None Include="EntityFiles\GovernmentProcTypeTenant.lxml" />

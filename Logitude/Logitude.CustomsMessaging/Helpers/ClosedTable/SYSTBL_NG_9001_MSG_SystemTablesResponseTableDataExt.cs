@@ -22,6 +22,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         public OriginCriterion MyOriginCriterion { get; set; }
         public CertificateOfOriginTypeCodeEnum MyCertificateOfOriginTypeCodeEnum { get; set; }
         public CertificateOfOriginStatusCodeEnum MyCertificateOfOriginStatusCodeEnum { get; set; }
+        public CertificateOfOriginMandatoryFields MyCertificateOfOriginMandatoryFields{ get; set; }
         public ConfirmationType MyConfirmationType { get; set; }
         public ItemGovernmentProcedureType MyItemGovernmentProcedureType { get; set; }
 
@@ -131,6 +132,14 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     {
         public bool IsCustomApprovalRequired { get; set; }
         public bool IsCriterionMandatory { get; set; }
+
+    }
+    public class CertificateOfOriginMandatoryFields
+    {
+        public string MappedCertificatOriginId { get; set; }
+        public bool IsMandatory { get; set; }
+        public int Location { get; set; }
+        public DateTime LastUpdatedDate { get; set; }
 
     }
 
