@@ -152,7 +152,8 @@ namespace Logitude.Customs.BL.BL
 
 
                 var updateDeclarationPending903InvalidPhoneNumberService = new UpdateDeclarationPending903InvalidPhoneNumberService(declarationPM);
-                updateDeclarationPending903InvalidPhoneNumberService.Calc(myDeclarationCourierStatusPM);
+                LogMessagingUtil.Instance.AppendLine("CalcAll->calc903");
+                    updateDeclarationPending903InvalidPhoneNumberService.Calc(myDeclarationCourierStatusPM);
 
                
 
@@ -721,6 +722,7 @@ namespace Logitude.Customs.BL.BL
         }
         public void Calc(DeclarationCourierStatusPM myDeclarationCourierStatusPM)
         {
+            LogMessagingUtil.Instance.AppendLine("Calc903!!!!()");
             if (declarationPM == null || myDeclarationCourierStatusPM == null) return;
             string courierReasonCode = "903";
             if (myDeclarationCourierStatusPM == null)
@@ -728,6 +730,7 @@ namespace Logitude.Customs.BL.BL
                 return;//not courier 
             }
             var declarationPending903PM = myDeclarationCourierStatusPM.DeclarationPendings.Where(r => r.DeclarationID == declarationPM.Id && r.CourierPendingReasonCode == courierReasonCode).FirstOrDefault();
+            LogMessagingUtil.Instance.AppendLine("declarationPending903PM?"+ declarationPending903PM==null?"yes":"no");
             bool valid = false;
             if (string.IsNullOrWhiteSpace(declarationPM.CasualImporterTel))
             {
@@ -774,12 +777,14 @@ namespace Logitude.Customs.BL.BL
                             CourierPendingReasonCode = courierReasonCode,
                             Status = "A",
                         };
+                        LogMessagingUtil.Instance.AppendLine(" myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPending903PM);");
 
                         myDeclarationCourierStatusPM.DeclarationPendings.Add(declarationPending903PM);
                         if (myDeclarationCourierStatusPM.ChangeSetOp == ChangeSetOperation.None)
                         {
                             myDeclarationCourierStatusPM.ChangeSetOp = ChangeSetOperation.Update;
                         }
+                        LogMessagingUtil.Instance.AppendLine("myDeclarationCourierStatusPM.ChangeSetO" + myDeclarationCourierStatusPM.ChangeSetOp);
                     }
 
 
