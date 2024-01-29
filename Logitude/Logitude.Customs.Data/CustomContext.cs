@@ -140,6 +140,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CertificateOfOriginItemMap());
 	
+            modelBuilder.Configurations.Add(new CertificateOfOriginMandatoryFieldsMap());
+	
             modelBuilder.Configurations.Add(new CertificateOfOriginStatusCodeEnumMap());
 	
             modelBuilder.Configurations.Add(new CertificateOfOriginTypeCodeEnumMap());
@@ -1614,6 +1616,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CertificateOfOriginItem> CertificateOfOriginItems 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<CertificateOfOriginMandatoryFields> CertificateOfOriginMandatoryFieldss 
 	 {
 	      get; set;
 	 

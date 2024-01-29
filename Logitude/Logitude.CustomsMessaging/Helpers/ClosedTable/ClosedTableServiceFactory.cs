@@ -467,6 +467,25 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                         );
                     }
                     break;
+                case "2095":
+                case "CertificateOfOriginMandatoryFields":
+                    {
+                        closedTableService = new Update2095CertificateOfOriginMandatoryFieldsTypeView(customContext, entitySystemTables,
+                          (mycustomContext) =>
+                          {
+                              return new
+                                  CertificateOfOriginMandatoryFieldsUpdateService(mycustomContext, new Dictionary<string, IContext>(), tenant);
+                          },
+                        (mycustomContext) =>
+                        {
+                            var qs = new CertificateOfOriginMandatoryFieldsQueryService(mycustomContext);
+                            return qs as ICanGetAllClosedTable<CertificateOfOriginMandatoryFieldsPM>;
+                        }
+                        , tenant
+                        , false
+                        );
+                    }
+                    break;
                 case "1422":
                 case "ItemGovernmentProcedureType":
                     {

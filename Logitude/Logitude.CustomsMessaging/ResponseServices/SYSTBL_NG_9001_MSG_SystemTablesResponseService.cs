@@ -679,6 +679,49 @@ ID List :
                                                 });
                         return extList;
 
+                    }    
+                case "2095":
+                case "CertificateOfOriginMandatoryFields":
+                    {
+                        var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
+                        Logitude.CustomsMessaging.Helpers.ClosedTable.
+                                                    ManipulateCustomResponse.
+                                                DataSetToTableData(customResponse,
+                                                (newResponseTableData, dr) =>
+                                                {
+                                                    var newExt = SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt.CreateNew(newResponseTableData);
+                                                    newExt.MyCertificateOfOriginMandatoryFields = new Helpers.ClosedTable.CertificateOfOriginMandatoryFields();
+
+                                                    if (!writeHighlight)
+                                                    {
+                                                        writeHighlight = true;
+                                                    }
+                                                    if (dr["MappedCertificatOriginId"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCertificateOfOriginMandatoryFields.MappedCertificatOriginId = dr["MappedCertificatOriginId"]?.ToString();
+                                                    }
+                                                    if (dr["Location"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCertificateOfOriginMandatoryFields.Location = (int?)dr["Location"];
+                                                    }
+                                                    if (dr["LastUpdatedDate"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCertificateOfOriginMandatoryFields.LastUpdatedDate = (DateTime?)dr["LastUpdatedDate"];
+                                                    }
+                                                    if (dr["IsMandatory"] != DBNull.Value && dr["IsMandatory"] != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCertificateOfOriginMandatoryFields.IsMandatory = Convert.ToBoolean(dr["IsMandatory"]);
+                                                    }
+
+
+                                                    extList.Add(newExt);
+                                                });
+                        return extList;
+
                     } 
                 case "1957":
                 case "CertificateOfOriginStatusCodeEnum":

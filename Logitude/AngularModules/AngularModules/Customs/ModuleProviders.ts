@@ -265,6 +265,7 @@ import { PhysicalCheckCodeListService } from './Services/StandardLists/PhysicalC
 import { SchedulerParamListService } from './Services/StandardLists/SchedulerParamListService';
 import { VendorCurrencyListService } from './Services/StandardLists/VendorCurrencyListService';
 import { CertificateOfOriginListService } from './Services/StandardLists/CertificateOfOriginListService';
+import { CertificateOfOriginMandatoryFieldsListService } from './Services/StandardLists/CertificateOfOriginMandatoryFieldsListService';
 
 
 //#endregion
@@ -639,6 +640,7 @@ export class ModuleProviders {
             case "SubCountryListService": { myResult = new SubCountryListService(); break; }
             case "SupplierInvoiceListService": { myResult = new SupplierInvoiceListService(); break; }
             case "CertificateOfOriginListService": { myResult = new CertificateOfOriginListService(); break; }
+            case "CertificateOfOriginMandatoryFieldsListService": { myResult = new CertificateOfOriginMandatoryFieldsListService(); break; }
             case "TapagConnectionTableListService": { myResult = new TapagConnectionTableListService(); break; }
             case "TapagListService": { myResult = new TapagListService(); break; }
             case "TapagTypeListService": { myResult = new TapagTypeListService(); break; }
