@@ -154,25 +154,13 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
             CertificateOfOrigin: isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit ? this.selectedCertificateOfOrigin : newCertificateOfOriginPM,
             IsNewOrEdit: isNewOrEditCertificateOfOrigin
         };
-        var logWindow = new LogitudeWindow();
-        logWindow.Width = 1030;
-        logWindow.Height = 725;
 
-        // Main Title
-        let title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
-        logWindow.Title = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit && !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.COONumber) ? title += `: ${this.selectedCertificateOfOrigin.COONumber}` : title;
+        if(isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsNew){
+            this.openLogWindow(isNewOrEditCertificateOfOrigin,args);
+            return;
+        }
 
-        // Side Title
-        let CertificateOfOriginStatus = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode");
-        logWindow.SubTitle = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit && !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.CooStatusCodeName) ? CertificateOfOriginStatus += `: ${this.selectedCertificateOfOrigin.CooStatusCodeName}` : null;
-
-        logWindow.WindowArgs = args;
-        logWindow.ShowCloseButton = true;
-        logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent');
-        logWindow.WindowClosed.subscribe(($event: any) => {
-            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-            this.ReloadMyScreen();
-        });
+        this.getCertificateOfOriginByIDAndopenLogWindow(args.CertificateOfOrigin.Id, this.EntityPM.Id,isNewOrEditCertificateOfOrigin,args);
     }
 
     ViewInitCompleted($event) {
@@ -263,6 +251,38 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
             }
         });
     }
+    
+    getCertificateOfOriginByIDAndopenLogWindow(certificateOfOriginId, declarationId,isNewOrEditCertificateOfOrigin,args) {
+        this.certificateOfOriginWebService.GetCertificateOfOriginByIDIncludeChildrens(certificateOfOriginId, declarationId, this.EntityPM.Tenant).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            if (!myResponse.HasError && myResponse.Result) {
+                this.selectedCertificateOfOrigin = myResponse.Result;
+                args.CertificateOfOrigin = myResponse.Result;
+                this.openLogWindow(isNewOrEditCertificateOfOrigin,args);
+            }
+        });
+    }
+
+    openLogWindow(isNewOrEditCertificateOfOrigin,args){
+        var logWindow = new LogitudeWindow();
+                logWindow.Width = 1030;
+                logWindow.Height = 725;
+                // Main Title
+                let title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
+                logWindow.Title = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit && !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.COONumber) ? title += `: ${this.selectedCertificateOfOrigin.COONumber}` : title;
+        
+                // Side Title
+                let CertificateOfOriginStatus = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode");
+                logWindow.SubTitle = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit && !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.CooStatusCodeName) ? CertificateOfOriginStatus += `: ${this.selectedCertificateOfOrigin.CooStatusCodeName}` : null;
+        
+                logWindow.WindowArgs = args;
+                logWindow.ShowCloseButton = true;
+                logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent');
+                logWindow.WindowClosed.subscribe(($event: any) => {
+                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.ReloadMyScreen();
+                });
+    }
 
     public SelectedRow: CertificateOfOriginPM = null;
     public SelectedRowB4Refresh: CertificateOfOriginPM = null;
@@ -282,27 +302,35 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
 
     // #101512 copy CertificateOfOrigin
     CopyOfCertificate(item: CertificateOfOriginPM) {
-        let newCertificateOfOriginPM = new CertificateOfOriginPM();
-        newCertificateOfOriginPM = item;
-        newCertificateOfOriginPM.Id = null;
-        newCertificateOfOriginPM.Counter = null;
-        newCertificateOfOriginPM.COONumber = null;
-        newCertificateOfOriginPM.CooStatusCode = null;
-        newCertificateOfOriginPM.CooStatusCodeName = null;
-        
-        newCertificateOfOriginPM.IsUnitedInvoices ? newCertificateOfOriginPM.IsUnitedInvoices : newCertificateOfOriginPM.IsUnitedInvoices = false;
-        this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
-        this.certificateOfOriginPMService.insert(newCertificateOfOriginPM).subscribe((response: any) => {
-            if (!response.HasError) {
-                var result = response.Result;
-                this.CurrentSession.CurrentEditComponent.SaveChanges();
-                // this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                this.CurrentSession.StopBusyIndicator();
-    
-                // open the copied certificate on edit mode:
-                this.selectedCertificateOfOrigin = result;
-                this.AddNewCertificateOfOrigin(this.isEdit);
+        this.certificateOfOriginWebService.GetCertificateOfOriginByIDIncludeChildrens(item.Id,  this.EntityPM.Id, this.EntityPM.Tenant).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            if (!myResponse.HasError && myResponse.Result) {
+                this.selectedCertificateOfOrigin = myResponse.Result;
+            
+                let newCertificateOfOriginPM = new CertificateOfOriginPM();
+                newCertificateOfOriginPM = this.selectedCertificateOfOrigin;
+                newCertificateOfOriginPM.Id = null;
+                newCertificateOfOriginPM.Counter = null;
+                newCertificateOfOriginPM.COONumber = null;
+                newCertificateOfOriginPM.CooStatusCode = null;
+                newCertificateOfOriginPM.CooStatusCodeName = null;
+                
+                newCertificateOfOriginPM.IsUnitedInvoices ? newCertificateOfOriginPM.IsUnitedInvoices : newCertificateOfOriginPM.IsUnitedInvoices = false;
+                this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        
+                this.certificateOfOriginPMService.insert(newCertificateOfOriginPM).subscribe((response: any) => {
+                    if (!response.HasError) {
+                        var result = response.Result;
+                        this.CurrentSession.CurrentEditComponent.SaveChanges();
+                        // this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                        this.CurrentSession.StopBusyIndicator();
+            
+                        // open the copied certificate on edit mode:
+                        this.selectedCertificateOfOrigin = result;
+                        this.AddNewCertificateOfOrigin(this.isEdit);
+                    }
+                });
             }
         });
     }
