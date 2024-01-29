@@ -179,7 +179,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					string existId = myQueryService.GetIdByCustomFileNo(_AmitalCustomsFile.CustomFileNo, ResolvedTenant());
 					_AmitalCustomsFile.Id = existId;
 				}
-
+				if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.Id) && _AmitalCustomsFile.Direction == "E")
+				{
+					DeclarationRepository declarationRepository = new DeclarationRepository(_context);
+					_AmitalCustomsFile.Id = declarationRepository.GetAcceptDeclarationIdAmendment(_AmitalCustomsFile.Id, ResolvedTenant());
+				}
 
 				/// Exist
 				if (String.IsNullOrWhiteSpace(_AmitalCustomsFile.Id))
