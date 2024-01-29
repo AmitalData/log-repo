@@ -81,6 +81,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CertificateOfOrigin> CertificateOfOrigins { get; }
 		 IDbSet<CertificateOfOriginInvoice> CertificateOfOriginInvoices { get; }
 		 IDbSet<CertificateOfOriginItem> CertificateOfOriginItems { get; }
+		 IDbSet<CertificateOfOriginMandatoryFields> CertificateOfOriginMandatoryFieldss { get; }
 		 IDbSet<CertificateOfOriginStatusCodeEnum> CertificateOfOriginStatusCodeEnums { get; }
 		 IDbSet<CertificateOfOriginTypeCodeEnum> CertificateOfOriginTypeCodeEnums { get; }
 		 IDbSet<CertificatesStatus> CertificatesStatuses { get; }
