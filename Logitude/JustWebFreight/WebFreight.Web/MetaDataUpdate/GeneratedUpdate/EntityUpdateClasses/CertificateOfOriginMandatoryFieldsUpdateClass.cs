@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginMandatoryFieldsUpdateClass
    {  		
-		public const string HashString = "21d63a7dd2872954bfac4b3147d01a52";
+		public const string HashString = "21d1e47dbce185eb25c437f36de22d9e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -614,6 +614,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Location",
 					  						ListPropertyPath =  "Location",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -676,6 +677,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "LastUpdatedDate",
 					  						ListPropertyPath =  "LastUpdatedDate",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -745,15 +747,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CertificateOfOriginMandatoryFieldsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CertificateOfOriginMandatoryFieldsTextCode_0.Id, NameTextCodeCode = CertificateOfOriginMandatoryFieldsTextCode_0.Code, ObjectTableName = "Customs.CertificateOfOriginMandatoryFields", Code = "CertificateOfOriginMandatoryFields",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, QuerySection = "Customs.CertificateOfOriginMandatoryFields", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CertificateOfOriginMandatoryFieldsFeature_0.Id,FeatureUniqeCode= CertificateOfOriginMandatoryFieldsFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query CertificateOfOriginMandatoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CertificateOfOriginMandatoryFieldsTextCode_0.Id, NameTextCodeCode = CertificateOfOriginMandatoryFieldsTextCode_0.Code, ObjectTableName = "Customs.CertificateOfOriginMandatoryFields", Code = "CertificateOfOriginMandatory",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, QuerySection = "Customs.CertificateOfOriginMandatoryFields", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CertificateOfOriginMandatoryFieldsFeature_0.Id,FeatureUniqeCode= CertificateOfOriginMandatoryFieldsFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
-			 QueryColumn CertificateOfOriginMandatoryFieldsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryFieldsQuery.Id,QueryCode = CertificateOfOriginMandatoryFieldsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Code" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn CertificateOfOriginMandatoryFieldsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryFieldsQuery.Id,QueryCode = CertificateOfOriginMandatoryFieldsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificatOriginId" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CertificateOfOriginMandatoryFieldsQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryFieldsQuery.Id,QueryCode = CertificateOfOriginMandatoryFieldsQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.IsMandatory" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CertificateOfOriginMandatoryFieldsQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryFieldsQuery.Id,QueryCode = CertificateOfOriginMandatoryFieldsQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Location" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.LastUpdatedDate" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
