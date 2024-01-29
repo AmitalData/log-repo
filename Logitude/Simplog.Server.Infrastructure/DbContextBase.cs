@@ -692,10 +692,7 @@ Simplog.Server.Infrastructure.DbContextBaseUtil.ToLog =true;");
             string ConnSchemaUserId)
         {
 
-            if (LogitudeSettings.DatabaseManagementSystem != "oracle")
-            {
-                return;
-            }
+          
             if (schema == LogitudeDBSchema.none)
             {
                 throw new Exception("LogitudeDBSchema.none !!?????");

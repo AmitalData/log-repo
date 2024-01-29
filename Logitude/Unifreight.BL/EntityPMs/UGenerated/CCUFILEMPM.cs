@@ -11,7 +11,7 @@ namespace Unifreight.BL.EntityPMs
     {
         public int FILENO { get; set; }
 
-        public double? ACCEPTEDPRICE { get; set; }
+        public long? ACCEPTEDPRICE { get; set; }
 
         public string APARTMENTNO { get; set; }
 
@@ -21,19 +21,19 @@ namespace Unifreight.BL.EntityPMs
 
         public string CHANGE { get; set; }
 
-        public double? CHANGINGVALUE { get; set; }
+        public long? CHANGINGVALUE { get; set; }
 
         public DateTime? CHARGESYSPRINT { get; set; }
 
-        public double? CIFVALUE { get; set; }
+        public long? CIFVALUE { get; set; }
 
         public string CITYSYMBOL { get; set; }
 
-        public double? CLOSUREVALUE { get; set; }
+        public long? CLOSUREVALUE { get; set; }
 
         public string COINID { get; set; }
 
-        public double? CURRENCYRATE { get; set; }
+        public long? CURRENCYRATE { get; set; }
 
         public string CUSTOMAGENT { get; set; }
 
@@ -55,13 +55,13 @@ namespace Unifreight.BL.EntityPMs
 
         public string ENTRANCE { get; set; }
 
-        public double? EXPENSEVALUE { get; set; }
+        public long? EXPENSEVALUE { get; set; }
 
         public string FAMILYNAME { get; set; }
 
-        public double? FEECARRIER { get; set; }
+        public long? FEECARRIER { get; set; }
 
-        public double? FEEPLATFORM { get; set; }
+        public long? FEEPLATFORM { get; set; }
 
         public short? FILECLOSE { get; set; }
 
@@ -71,7 +71,7 @@ namespace Unifreight.BL.EntityPMs
 
         public string FROMIIG { get; set; }
 
-        public double? GOODSVALUE { get; set; }
+        public long? GOODSVALUE { get; set; }
 
         public DateTime? GRANTDATE { get; set; }
 
@@ -79,7 +79,7 @@ namespace Unifreight.BL.EntityPMs
 
         public string GRNTTYPEID { get; set; }
 
-        public double? GUARANTEEAMNT { get; set; }
+        public long? GUARANTEEAMNT { get; set; }
 
         public string HOUSE { get; set; }
 
@@ -89,17 +89,17 @@ namespace Unifreight.BL.EntityPMs
 
         public string IMPORTTYPE { get; set; }
 
-        public decimal? INDEXVALUE { get; set; }
+        public long? INDEXVALUE { get; set; }
 
         public string INDICATORS { get; set; }
 
-        public double? INSURANCEAMNT { get; set; }
+        public long? INSURANCEAMNT { get; set; }
 
         public string INSURANCECURR { get; set; }
 
-        public double? INSURANCEPERCENT { get; set; }
+        public long? INSURANCEPERCENT { get; set; }
 
-        public double? INSURANCEVALUE { get; set; }
+        public long? INSURANCEVALUE { get; set; }
 
         public int? MEHESDRAFTSTATUS { get; set; }
 
@@ -115,9 +115,9 @@ namespace Unifreight.BL.EntityPMs
 
         public DateTime? PAYTIME { get; set; }
 
-        public double? PRICEINDEX { get; set; }
+        public long? PRICEINDEX { get; set; }
 
-        public double? REGIONVALUE { get; set; }
+        public long? REGIONVALUE { get; set; }
 
         public string RESHIMONNO { get; set; }
 
@@ -129,21 +129,21 @@ namespace Unifreight.BL.EntityPMs
 
         public string SELLCONDITIONID { get; set; }
 
-        public double? SERVICEVALUE { get; set; }
+        public long? SERVICEVALUE { get; set; }
 
         public string STORAGEREQUEST { get; set; }
 
         public string STREET { get; set; }
 
-        public double? TOTALTAX { get; set; }
+        public long? TOTALTAX { get; set; }
 
         public string TRANCURRENCY { get; set; }
 
         public string TRANSIMPORTID { get; set; }
 
-        public double? TRANSPVALFC { get; set; }
+        public long? TRANSPVALFC { get; set; }
 
-        public double? TRANSPVALUE { get; set; }
+        public long? TRANSPVALUE { get; set; }
 
         public DateTime? TSHUMOTTAXPRINT { get; set; }
 

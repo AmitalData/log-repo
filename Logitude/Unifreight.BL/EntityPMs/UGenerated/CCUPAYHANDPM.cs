@@ -32,11 +32,11 @@ namespace Unifreight.BL.EntityPMs
         [DataMember]
         public string OBJECTIONEXPLAIN { get; set; }
         [DataMember]
-        public double? PAYTAX { get; set; }
+        public long? PAYTAX { get; set; }
         [DataMember]
         public string PROCESSWANT { get; set; }
         [DataMember]
-        public double? REJECTTAX { get; set; }
+        public long? REJECTTAX { get; set; }
         [DataMember]
         public int? REQUESTCODE { get; set; }
         [DataMember]
@@ -48,9 +48,9 @@ namespace Unifreight.BL.EntityPMs
         [DataMember]
         public DateTime? TIME7 { get; set; }
         [DataMember]
-        public double? TOTALPAYDEPOSIT { get; set; }
+        public long? TOTALPAYDEPOSIT { get; set; }
         [DataMember]
-        public double? TOTALPAYTAX { get; set; }
+        public long? TOTALPAYTAX { get; set; }
         [DataMember]
         public string TRANSIMPORTERNAME { get; set; }
     }

@@ -88,11 +88,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             OurVersionToUpdateDeclarationPlatformFeeAndPrimaryInvoice(dirtyDeclarationPM);
             //var setting = CustomsSettingQueryService.GetSettingByTenant(dirtyDeclarationPM.Tenant);
             //if (!setting.IsConnectedToUniFreight)
-            if(!dirtyDeclarationPM.IsConnectedToUnifreight)
-            {
-                LogitudeSettings.HandleLogMe("IsConnectedToUnifreight == " + dirtyDeclarationPM.IsConnectedToUnifreight, false, "UpdateUnifreight_" + dirtyDeclarationPM.Id, stopLogAt);
-                return;
-            }
+            //if(!dirtyDeclarationPM.IsConnectedToUnifreight)
+            //{
+            //    LogitudeSettings.HandleLogMe("IsConnectedToUnifreight == " + dirtyDeclarationPM.IsConnectedToUnifreight, false, "UpdateUnifreight_" + dirtyDeclarationPM.Id, stopLogAt);
+            //    return;
+            //}
 
             string loggingUserId = "";
             /*var contactRep = new ContactRepository(dirtyDeclarationPM.Tenant);
@@ -753,8 +753,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             try
             {
                 
-                if (isConnectedToUniFreight)
-                {
+             
                     _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
@@ -771,7 +770,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         };
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
-                }
+               
                //we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                     var requestData = "";
                     var addStatus = ""; // moran 17.9.15 - Task 15458

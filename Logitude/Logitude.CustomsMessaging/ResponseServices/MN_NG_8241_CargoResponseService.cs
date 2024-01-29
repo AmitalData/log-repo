@@ -813,7 +813,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
             try
             {
-                if (isConnectedToUniFreight)
+              
                     _AmitalContext = AmitalContext.GetContext(_MyDeclarationPM.Tenant);
               
                 var requestData = "";
@@ -846,7 +846,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 {
                     return;
                 }
-                if (isConnectedToUniFreight) {
+             
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
                     CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", _MyDeclarationPM.CustomFileNo, false);
                     if (myCCUQUELOCK == null)
@@ -862,7 +862,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
-                }
+               
                 if (_MyDeclarationPM.CurrentContextTag is CargoQueryContext)
                 {
                     var myCargoQueryContext = _MyDeclarationPM.CurrentContextTag as CargoQueryContext;
@@ -872,8 +872,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     {
                         myCustomFileNo = myCFIPACKS.CFIPACKS_DATA[0].FILE_NO;
                         var xmlCFIPACKS = XmlGenericUtil<CFIPACKS>.SerializeObject(myCFIPACKS, true);
-                        if (isConnectedToUniFreight) {
-                            var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
+                        myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
 
                             CCUQUELOCKPM myCCUQUELOCK_Packs = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myCFIPACKS.CFIPACKS_DATA[0].FILE_NO, false);
                             if (myCCUQUELOCK_Packs == null)
@@ -889,7 +888,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                 myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                                 myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                             }
-                        }
+                      
 
                         transmission mytransmission = GetTransmission(myCFIPACKS, "AMITAL", "Customs packs from logitude");
                         var xmltransmission = XmlGenericUtil<transmission>.SerializeObject(mytransmission, true);

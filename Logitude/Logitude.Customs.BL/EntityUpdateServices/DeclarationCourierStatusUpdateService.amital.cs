@@ -158,8 +158,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             try
             {
-                var requestData = "";
-                if (isConnectedToUniFreight) {
+                    var requestData = "";
                     AmitalContext _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
 
                     var myCCUQUELOCKQueryService = new Unifreight.BL.EntityQueryServices.CCUQUELOCKQueryService(_AmitalContext);
@@ -179,7 +178,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         };
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
-                }
+                
                 
 
                     string unifreightUser = null;
@@ -234,7 +233,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     };
                 if (isConnectedToUniFreight)
                 {
-                    AmitalContext _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
+                  
 
                     var myYCULTASKUpdateService = new Unifreight.BL.EntityUpdateServices.YCULTASKUpdateService(_AmitalContext);
                     myYCULTASKUpdateService.DontAddTransaction = true;
@@ -265,7 +264,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 
                 if (isConnectedToUniFreight)
                 {
-                    AmitalContext _AmitalContext = AmitalContext.GetContext(dirtyDeclarationPM.Tenant);
 
                     var myGGGQPM = new GGGQPM()
                     {

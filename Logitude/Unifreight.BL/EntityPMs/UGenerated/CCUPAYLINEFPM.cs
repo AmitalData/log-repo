@@ -23,7 +23,7 @@ namespace Unifreight.BL.EntityPMs
         
         public string HASHAVUTCODE { get; set; }
         
-        public double? PAYAMOUNT { get; set; }
+        public long? PAYAMOUNT { get; set; }
         
         public DateTime? PAYDATE { get; set; }
 

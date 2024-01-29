@@ -193,10 +193,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //if (setting != null)
                 //{
                 //  if (!setting.IsConnectedToUnifreight)
-                if (!_DirtyDeclarationPM.IsConnectedToUnifreight)
-                {
-                    return;
-                }
+                //if (!_DirtyDeclarationPM.IsConnectedToUnifreight)
+                //{
+                //    return;
+                //}
                 //}
 
 
@@ -207,7 +207,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
                 try
                 {
-                    if (setting.IsConnectedToUniFreight) {
+                   
                          _AmitalContext = AmitalContext.GetContext(_DirtyDeclarationPM.Tenant);
 
                         //AmitalContext.SetOracleMonitor();
@@ -222,13 +222,16 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         if (FILENO.HasValue)
                         {
                             LogMessagingUtil.Instance.AppendLine("Update3: GetFILENOByCUSTOMFILENO, file: " + lCUSTOMFILENO);
+                        bool isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
+                        if (isConnectedToUniFreight) {
                             int? FILENO1 = myCCUFILEMQueryService.GetFILENOByCUSTOMFILENO_forUpdateNOWAIT(lCUSTOMFILENO);
+                        }
 
-                            //if(file!=null) file.WriteLine("UnifrightDeclarationUpdateService - Updating " + FILENO + ": " + DateTime.Now.ToString());
-                            //if(file!=null) file.WriteLine("Start Deleting " + FILENO + ": " + DateTime.Now.ToString());
+                        //if(file!=null) file.WriteLine("UnifrightDeclarationUpdateService - Updating " + FILENO + ": " + DateTime.Now.ToString());
+                        //if(file!=null) file.WriteLine("Start Deleting " + FILENO + ": " + DateTime.Now.ToString());
 
-                            //do not need the composite due we delete all down entities !!!_CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, true, false);
-                            _CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);
+                        //do not need the composite due we delete all down entities !!!_CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, true, false);
+                        _CCUFILEMPM = myCCUFILEMQueryService.GetSingle(FILENO.Value, false, false);
                             if (_CCUFILEMPM == null)
                             {
                                 LogMessagingUtil.Instance.AppendLine("Update4: _CCUFILEMPM GetSingle failed, file no: " + FILENO.Value);
@@ -435,7 +438,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                             //if(file!=null) file.WriteLine("End Updating " + FILENO + ": " + DateTime.Now.ToString());
                         }
-                    }
+
                  
                     if (doTask && _DirtyDeclarationPM.IsCancelled != true)//eitan h 12/3/15 task 11788
                     {
@@ -679,7 +682,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var requestData = "";
 
             var unifreightUser = AuthenticationUtil.ResolveUnifreightUserId(_DirtyDeclarationPM.Tenant);
-            if (setting.IsConnectedToUniFreight) {
+         
                 var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
                 CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", customFile.ToString(), false);
                 if (myCCUQUELOCK == null)
@@ -694,7 +697,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                     myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                 }
-            }
+         
 
             #region remarkedCode
             //if (_FromMessaging == true)
@@ -745,8 +748,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     myCustomFileNo = myCFIPACKS.CFIPACKS_DATA[0].FILE_NO;
                     var xmlCFIPACKS = XmlGenericUtil<CFIPACKS>.SerializeObject(myCFIPACKS, true);
-                    if (setting.IsConnectedToUniFreight) {
-                        var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
+                 
+                         myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
                         CCUQUELOCKPM myCCUQUELOCK_Packs = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", myCFIPACKS.CFIPACKS_DATA[0].FILE_NO, false);
                         if (myCCUQUELOCK_Packs == null)
                         {
@@ -760,7 +763,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                             myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                         }
-                    }
+                   
                 
 
                     //transmission mytransmission = GetTransmission<CFIPACKS>(myCFIPACKS, "AMITAL", "Customs packs from logitude");
@@ -1373,7 +1376,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 _CCUFILEMPM.DRAWNO = _DirtyDeclarationPM.DeclarationNumber.GetLast(9); //Last 9 chars
                 _CCUFILEMPM.DRAWNON = _DirtyDeclarationPM.DeclarationNumber;
             }
-
+          
             _CCUFILEMPM.RESHIMONTYPE = GetTranslationP2L("IIGC", "CTBRESHTYPE", _DirtyDeclarationPM.ProcedureCurrentCode);
             if (String.IsNullOrWhiteSpace(_CCUFILEMPM.RESHIMONTYPE))
             {
@@ -1582,10 +1585,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 _CCUFILEMPM.GRANTTIME = new DateTime(_EmptyDate.Year, _EmptyDate.Month, _EmptyDate.Day, _DirtyDeclarationPM.HatraDate.Value.Hour, _DirtyDeclarationPM.HatraDate.Value.Minute, 0, _DirtyDeclarationPM.HatraDate.Value.Kind);
             }
 
-            _CCUFILEMPM.CIFVALUE = _DirtyDeclarationPM.CIFValue.ToNullableDouble("_DirtyDeclarationPM.CIFValue");
-            _CCUFILEMPM.ACCEPTEDPRICE = _DirtyDeclarationPM.DealValue.ToNullableDouble("_DirtyDeclarationPM.DealValue");
-            _CCUFILEMPM.TOTALTAX = _DirtyDeclarationPM.TotalTax.ToNullableDouble("_DirtyDeclarationPM.TotalTax");
-            _CCUFILEMPM.GOODSVALUE = _DirtyDeclarationPM.DealValueWithoutFactor.ToNullableDouble("_DirtyDeclarationPM.DealValueWithoutFactor");
+            _CCUFILEMPM.CIFVALUE = (long?)_DirtyDeclarationPM.CIFValue.ToNullableDouble("_DirtyDeclarationPM.CIFValue");
+            _CCUFILEMPM.ACCEPTEDPRICE = (long?)_DirtyDeclarationPM.DealValue.ToNullableDouble("_DirtyDeclarationPM.DealValue");
+            _CCUFILEMPM.TOTALTAX = (long?)_DirtyDeclarationPM.TotalTax.ToNullableDouble("_DirtyDeclarationPM.TotalTax");
+            _CCUFILEMPM.GOODSVALUE = (long?)_DirtyDeclarationPM.DealValueWithoutFactor.ToNullableDouble("_DirtyDeclarationPM.DealValueWithoutFactor");
             //_CCUFILEMPM.MEHESDRAFTSTATUS = _DirtyDeclarationPM.DeclarationStatusTypeCode.ToNullableInt("_DirtyDeclarationPM.DeclarationStatusTypeCode"); // moran 9.2.15 - Task 1613
             _CCUFILEMPM.MEHESDRAFTSTATUS = TranslateDeclarationStatusTypeCodeToUNF(_DirtyDeclarationPM.DeclarationStatusTypeCode);
 
@@ -1815,7 +1818,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         totalFreightList = totalFreightList + (decimal)decSupplierInvoice.TotalFreightInFreightCurrency;
                     }
                 }
-                _CCUFILEMPM.TRANSPVALFC = (double)totalFreightList;
+                _CCUFILEMPM.TRANSPVALFC = (long?)totalFreightList;
                 _CCUFILEMPM.TRANCURRENCYN = freightCurrencyList[0];
             }
         }
@@ -1871,11 +1874,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             cCUTAXPM.TAXTYPE = GetTranslationP2L("IIGC", "CTBTAXTYPE", decDeclarationTaxes.TaxTypeCode);
             cCUTAXPM.TAXTYPEN = decDeclarationTaxes.TaxTypeCode;
             //cCUTAXPM.TAXAMOUNT = decDeclarationTaxes.TotalAmount.ToNullableDouble("decDeclarationTaxes.TotalAmount");
-            cCUTAXPM.TAXAMOUNT = decDeclarationTaxes.TotalAmount.ToNullableDouble("decDeclarationTaxes.TotalAmount") + decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
+            cCUTAXPM.TAXAMOUNT = (long?)decDeclarationTaxes.TotalAmount.ToNullableDouble("decDeclarationTaxes.TotalAmount") + (long?)decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
             //cCUTAXPM.TAXTOPAY = cCUTAXPM.TAXAMOUNT - decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
-            cCUTAXPM.TAXTOPAY = decDeclarationTaxes.TotalAmount.ToNullableDouble("decDeclarationTaxes.TotalAmount");
-            cCUTAXPM.POSTPONEDTAX = decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
-            cCUTAXPM.TAXBASIS = decDeclarationTaxes.TaxBaseAmount.ToNullableDouble("decDeclarationTaxes.TaxBaseAmount");
+            cCUTAXPM.TAXTOPAY = (long?)decDeclarationTaxes.TotalAmount.ToNullableDouble("decDeclarationTaxes.TotalAmount");
+            cCUTAXPM.POSTPONEDTAX = (long?)decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
+            cCUTAXPM.TAXBASIS = (long?)decDeclarationTaxes.TaxBaseAmount.ToNullableDouble("decDeclarationTaxes.TaxBaseAmount");
 
             return cCUTAXPM;
         }
@@ -2416,7 +2419,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             //if Supplier Invoice Modifications of type I02 is empty - Take Type I01
             if (_CCUFILEMPM.FEEPLATFORM == 0)
             {
-                _CCUFILEMPM.FEEPLATFORM = _CCUFILEMPMSupplierInvoiceModificationsI01;
+                _CCUFILEMPM.FEEPLATFORM = (long)_CCUFILEMPMSupplierInvoiceModificationsI01;
             }
             //This is to be done in a full saving mode ONLY  --->
         }
@@ -2489,7 +2492,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 //Take the Exchange rate from the Main Account, if it does not exist calculate it according the InvoiceCurrencyTypeCode
                 if (decSupplierInvoice.ExchangeRate.HasValue && decSupplierInvoice.ExchangeRate > 0)
                 {
-                    _CCUFILEMPM.CURRENCYRATE = decSupplierInvoice.ExchangeRate.ToNullableDouble("decSupplierInvoice.ExchangeRate");
+                    _CCUFILEMPM.CURRENCYRATE = (long?)decSupplierInvoice.ExchangeRate.ToNullableDouble("decSupplierInvoice.ExchangeRate");
                     _CCUFILEMPM.CURRENCYRATENEW = decSupplierInvoice.ExchangeRate.Value; // moran 12.1.16 - Task 17425
                 }
                 else
@@ -2499,7 +2502,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         if (!string.IsNullOrWhiteSpace(rate.ExchangeRate.ToString()))
                         {
-                            _CCUFILEMPM.CURRENCYRATE = rate.ExchangeRate.ToNullableDouble("rate.ExchangeRate");
+                            _CCUFILEMPM.CURRENCYRATE = (long?)rate.ExchangeRate.ToNullableDouble("rate.ExchangeRate");
                             _CCUFILEMPM.CURRENCYRATENEW = rate.ExchangeRate.Value; // moran 12.1.16 - Task 17425
                         }
                     }
@@ -2509,7 +2512,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 _MainAccountSet = true;
             }
 
-            _CCUFILEMPM.TRANSPVALUE = _CCUFILEMPM.TRANSPVALUE.GetValueOrDefault() + decSupplierInvoice.TotalFreightInNIS.ToNullableDouble("decSupplierInvoice.TotalFreightInNIS").GetValueOrDefault();
+            _CCUFILEMPM.TRANSPVALUE = _CCUFILEMPM.TRANSPVALUE.GetValueOrDefault() +(long?)decSupplierInvoice.TotalFreightInNIS.ToNullableDouble("decSupplierInvoice.TotalFreightInNIS").GetValueOrDefault();
 
             double? amountDouble = 0;
             double amountDouble2 = 0;
@@ -2517,7 +2520,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             amountDouble = Transfer(decSupplierInvoice.InsuranceAmount, decSupplierInvoice.InsruanceCurrencyTypeCode, "ILS", decSupplierInvoice.ExchangeRate);
             if (amountDouble != null)
             {
-                _CCUFILEMPM.INSURANCEVALUE = _CCUFILEMPM.INSURANCEVALUE.GetValueOrDefault() + amountDouble;
+                _CCUFILEMPM.INSURANCEVALUE = _CCUFILEMPM.INSURANCEVALUE.GetValueOrDefault() + (long)amountDouble;
             }
 
             ////<--- Yuval Chalup 02.08.2015 // Mirit 10/07/16 Task 20996
@@ -2535,7 +2538,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (double.TryParse(decSupplierInvoice.InsruancePercentage.ToString(), out amountDouble2))
             {
-                _CCUFILEMPM.INSURANCEPERCENT = amountDouble2;
+                _CCUFILEMPM.INSURANCEPERCENT = (long)amountDouble2;
             }
 
             //<--- Yuval Chalup 31.12.2014 AMI-52371
@@ -2558,11 +2561,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                 }
 
-                _CCUFILEMPM.INDEXVALUE = _CCUFILEMPM.INDEXVALUE.GetValueOrDefault() + ((decSupplierInvoice.InvoiceAmount * invoiceExchangeRate) / firstInvoiceExchangeRate);
+                _CCUFILEMPM.INDEXVALUE = _CCUFILEMPM.INDEXVALUE.GetValueOrDefault() +(long) ((decSupplierInvoice.InvoiceAmount * invoiceExchangeRate) / firstInvoiceExchangeRate);
             }
             else
             {
-                _CCUFILEMPM.INDEXVALUE = _CCUFILEMPM.INDEXVALUE.GetValueOrDefault() + decSupplierInvoice.InvoiceAmount;
+                _CCUFILEMPM.INDEXVALUE = _CCUFILEMPM.INDEXVALUE.GetValueOrDefault() +(long?) decSupplierInvoice.InvoiceAmount;
             }
             supplierInvoicePM.VALUE = decSupplierInvoice.InvoiceAmount.ToNullableDouble("decSupplierInvoice.InvoiceAmount");
             //Yuval Chalup 31.12.2014 AMI-52371 --->
@@ -2590,7 +2593,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
              CalculateSupplierInvoiceModifications(_CCUFILEMPM, supplierInvoicePM, decSupplierInvoice);
 
             supplierInvoicePM.CHANGINGVALUE = supplierInvoicePM.CHANGINGVALUE.GetValueOrDefault() + supplierInvoicePM.VALUE;
-            _CCUFILEMPM.CHANGINGVALUE = _CCUFILEMPM.INDEXVALUE.ToNullableDouble("_CCUFILEMPM.INDEXVALUE");  // += supplierInvoicePM.CHANGINGVALUE; // moran 23.11.16 - Bug 21746 - change handle to get the same value as index
+            _CCUFILEMPM.CHANGINGVALUE = _CCUFILEMPM.INDEXVALUE;  // += supplierInvoicePM.CHANGINGVALUE; // moran 23.11.16 - Bug 21746 - change handle to get the same value as index
 
             if (!_UpdateCCUFILEMFromSupplerInvoice)
             {
@@ -2657,7 +2660,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     case "09":
                     case "9":
                         amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, "ILS", null);
-                        _CCUFILEMPM.REGIONVALUE = _CCUFILEMPM.REGIONVALUE.GetValueOrDefault() + amountDouble;
+                        _CCUFILEMPM.REGIONVALUE = _CCUFILEMPM.REGIONVALUE.GetValueOrDefault() + (long)amountDouble;
                         break;
                     case "I01":
                         amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, "ILS", null);
@@ -2665,13 +2668,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         break;
                     case "I02":
                         amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, "ILS", null);
-                        _CCUFILEMPM.FEEPLATFORM = _CCUFILEMPM.FEEPLATFORM.GetValueOrDefault() + amountDouble;
+                        _CCUFILEMPM.FEEPLATFORM = _CCUFILEMPM.FEEPLATFORM.GetValueOrDefault() + (long)amountDouble;
                         break;
                     case "160":
                         if(isCancelUpdateExpenses != "Y")
                         {
                             amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, "ILS", null);
-                            _CCUFILEMPM.EXPENSEVALUE = _CCUFILEMPM.EXPENSEVALUE.GetValueOrDefault() + amountDouble;
+                            _CCUFILEMPM.EXPENSEVALUE = _CCUFILEMPM.EXPENSEVALUE.GetValueOrDefault() +(long) amountDouble;
                         }
                         amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, decSupplierInvoice.InvoiceCurrencyTypeCode, null);
                         supplierInvoicePM.CHANGINGVALUE = supplierInvoicePM.CHANGINGVALUE.GetValueOrDefault() + amountDouble;
@@ -2695,7 +2698,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     //<---Yuval Chalup 16.02.2016 TASK-19998 (Also remark case "265" and "16" above)
                     case "I10":
                         amountDouble = Transfer(decSupplierInvoiceModifications.Amount, decSupplierInvoiceModifications.CurrencyTypeCode, "ILS", null);
-                        _CCUFILEMPM.SERVICEVALUE = _CCUFILEMPM.SERVICEVALUE.GetValueOrDefault() + amountDouble;
+                        _CCUFILEMPM.SERVICEVALUE = _CCUFILEMPM.SERVICEVALUE.GetValueOrDefault() +(long) amountDouble;
                         supplierInvoicePM.COMMISSION = supplierInvoicePM.COMMISSION.GetValueOrDefault() + amountDouble;
                         break;
                     //Yuval Chalup 16.02.2016 TASK-19998 --->
@@ -2906,17 +2909,17 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             supplierInvoiceItem103PM.PURCHCOUNTRYN = decSupplierInvoice.IssueCountryCode;
             supplierInvoiceItem103PM.WHOLESALEPRICE = decSupplierInvoiceItem.WholeSaleItemPrice;
             /////supplierInvoiceItem103PM.DISCOUNTCODE = GetTranslationP2L("IIGC", "CTBDISCOUNT", decSupplierInvoiceItem.TaxExemptCode); ;Yuval Chalup 30.11.2016 TASK-24754 (Removed)
-            supplierInvoiceItem103PM.QUANTITY = decSupplierInvoiceItem.InvoiceQuantity.ToNullableDouble("decSupplierInvoiceItem.InvoiceQuantity");
-            supplierInvoiceItem103PM.EXTRAQNTY = decSupplierInvoiceItem.AdditionalQuantity.ToNullableDouble("decSupplierInvoiceItem.AdditionalQuantity");
-            supplierInvoiceItem103PM.STSQNTY = decSupplierInvoiceItem.StatisticQuantity.ToNullableDouble("decSupplierInvoiceItem.StatisticQuantity");
+            supplierInvoiceItem103PM.QUANTITY = (long?)decSupplierInvoiceItem.InvoiceQuantity.ToNullableDouble("decSupplierInvoiceItem.InvoiceQuantity");
+            supplierInvoiceItem103PM.EXTRAQNTY = (long?)decSupplierInvoiceItem.AdditionalQuantity.ToNullableDouble("decSupplierInvoiceItem.AdditionalQuantity");
+            supplierInvoiceItem103PM.STSQNTY = (long?)decSupplierInvoiceItem.StatisticQuantity.ToNullableDouble("decSupplierInvoiceItem.StatisticQuantity");
             supplierInvoiceItem103PM.TSVIRA = true;
             if (decSupplierInvoice.IsAccumalated)
             {
                 supplierInvoiceItem103PM.TSVIRA = false;
             }
             supplierInvoiceItem103PM.ORIGINVALUE = decSupplierInvoiceItem.ItemPrice;
-            supplierInvoiceItem103PM.NIDHEMEHESPCNT = decSupplierInvoiceItem.DeferredCustomsTax.ToNullableDouble("decSupplierInvoiceItem.DeferredCustomsTax");
-            supplierInvoiceItem103PM.NIDHEMASPCNT = decSupplierInvoiceItem.DeferredPurchaseTax.ToNullableDouble("decSupplierInvoiceItem.DeferredPurchaseTax");
+            supplierInvoiceItem103PM.NIDHEMEHESPCNT = (long?)decSupplierInvoiceItem.DeferredCustomsTax.ToNullableDouble("decSupplierInvoiceItem.DeferredCustomsTax");
+            supplierInvoiceItem103PM.NIDHEMASPCNT = (long?)decSupplierInvoiceItem.DeferredPurchaseTax.ToNullableDouble("decSupplierInvoiceItem.DeferredPurchaseTax");
             double? FOREIGNCURRVAL_AfterExchangeRate = 0;
             string currencyCode = decSupplierInvoiceItem.ItemPriceCurrencyCode;
             if (string.IsNullOrWhiteSpace(currencyCode))
@@ -2958,8 +2961,8 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
                 //Update 105 accumulated fields from PARENT item 
                 if (supplierInvoiceItemParentPM != null)
                 {
-                    supplierInvoiceItem105PM.QUANTITY = supplierInvoiceItemParentPM.InvoiceQuantity.ToNullableDouble("decSupplierInvoiceItem.InvoiceQuantity");
-                    supplierInvoiceItem105PM.STSQNTY = supplierInvoiceItemParentPM.StatisticQuantity.ToNullableDouble("decSupplierInvoiceItem.StatisticQuantity");
+                    supplierInvoiceItem105PM.QUANTITY = (long?)supplierInvoiceItemParentPM.InvoiceQuantity.ToNullableDouble("decSupplierInvoiceItem.InvoiceQuantity");
+                    supplierInvoiceItem105PM.STSQNTY = (long?)supplierInvoiceItemParentPM.StatisticQuantity.ToNullableDouble("decSupplierInvoiceItem.StatisticQuantity");
                     currencyCode = supplierInvoiceItemParentPM.ItemPriceCurrencyCode;
                     if (string.IsNullOrWhiteSpace(currencyCode))
                     {
@@ -3042,8 +3045,8 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             CCUTRANSPVALPM cCUTRANSPVALPM = new CCUTRANSPVALPM();
             cCUTRANSPVALPM.ChangeSetOp = ChangeSetOperation.Insert;
 
-            cCUTRANSPVALPM.TRANSPVALFC = supplierInvoiceFreightAmounts.Amount.ToNullableDouble("supplierInvoiceFreightAmounts.Amount");
-
+            cCUTRANSPVALPM.TRANSPVALFC = (long?)supplierInvoiceFreightAmounts.Amount.ToNullableDouble("supplierInvoiceFreightAmounts.Amount");
+           
             cCUTRANSPVALPM.CURRID = GetTranslationP2L("IIGC", "CTBCURRENCY", supplierInvoiceFreightAmounts.CurrencyTypeCode);
             cCUTRANSPVALPM.CURRIDN = supplierInvoiceFreightAmounts.CurrencyTypeCode;
 
@@ -3054,7 +3057,7 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
                 currencyCode = decSupplierInvoice.InvoiceCurrencyTypeCode;
             }
             CURRID_AfterExchangeRate = Transfer(supplierInvoiceFreightAmounts.Amount, currencyCode, "ILS", null);
-            cCUTRANSPVALPM.TRANSPVAL = CURRID_AfterExchangeRate;
+            cCUTRANSPVALPM.TRANSPVAL = (long?)CURRID_AfterExchangeRate;
 
             return cCUTRANSPVALPM;
         }
@@ -3102,7 +3105,7 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
                     case "09":
                     case "9":
                         amountDouble = Transfer(decSupplierInvoiceItemsModifications.Amount, decSupplierInvoiceItemsModifications.CurrencyTypeCode, "ILS", decSupplierInvoice.ExchangeRate);
-                        supplierInvoiceItem103PM.RAISEVALUE = supplierInvoiceItem103PM.RAISEVALUE.GetValueOrDefault() + amountDouble;
+                        supplierInvoiceItem103PM.RAISEVALUE = supplierInvoiceItem103PM.RAISEVALUE.GetValueOrDefault() + (long?)amountDouble;
                         break;
                     default:
                         break;
@@ -3227,15 +3230,15 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             //cCUTAXPM.GOODSNO = mySupplierInvoiceItem103PM.ITEMLINENO;
             nullableInt = decSupplierInvoiceItem.LineNumber;
             cCUTAXPM.GOODSNO = (decSupplierInvoiceItem == null) ? null : nullableInt;
-            cCUTAXPM.TAXBASIS = decSupplierInvoiceItemTaxes.TaxBaseAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxBaseAmount");
+            cCUTAXPM.TAXBASIS = (long?)decSupplierInvoiceItemTaxes.TaxBaseAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxBaseAmount");
             //cCUTAXPM.TAXAMOUNT = decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount");
-            cCUTAXPM.TAXAMOUNT = decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount") + decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
-            cCUTAXPM.POSTPONEDTAX = decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
+            cCUTAXPM.TAXAMOUNT = (long?)decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount") + (long?)decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
+            cCUTAXPM.POSTPONEDTAX = (long?)decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
             //cCUTAXPM.TAXTOPAY = cCUTAXPM.TAXAMOUNT - cCUTAXPM.POSTPONEDTAX;
-            cCUTAXPM.TAXTOPAY = decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount");
-            cCUTAXPM.TAXRATE = decSupplierInvoiceItemTaxes.TaxRate.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxRate");
+            cCUTAXPM.TAXTOPAY = (long?)decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount");
+            cCUTAXPM.TAXRATE = (long?)decSupplierInvoiceItemTaxes.TaxRate.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxRate");
             //cCUTAXPM.DEFINEDTAX = cCUTAXPM.POSTPONEDTAX; //Remarked by Yuval Chalup TASK-21875 05.07.2016
-            cCUTAXPM.ADDTAXRATE = decSupplierInvoiceItemTaxes.AlternateRate.ToNullableDouble("decSupplierInvoiceItemTaxes.AlternateRate");
+            cCUTAXPM.ADDTAXRATE = (long?)decSupplierInvoiceItemTaxes.AlternateRate.ToNullableDouble("decSupplierInvoiceItemTaxes.AlternateRate");
             if (cCUTAXPM.PRATMEHES != null) // moran 17.1.16 - Task 19798
             {
                 _loanAmount += decSupplierInvoiceItemTaxes.TotalBtlCoverageNIS;
@@ -3390,13 +3393,13 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             cCUTAXPM.PRATMEHESN = (supplierInvoiceItem105PM == null) ? "" : supplierInvoiceItem105PM.PRATMEHESN;
             nullableInt = supplierInvoiceItem105PM.LINENO;
             cCUTAXPM.GOODSNO = nullableInt;
-            cCUTAXPM.TAXBASIS = decSupplierInvoiceItemTaxes.TaxBaseAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxBaseAmount");
-            cCUTAXPM.TAXAMOUNT = decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount") + decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
-            cCUTAXPM.POSTPONEDTAX = decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
-            cCUTAXPM.TAXTOPAY = decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount");
-            cCUTAXPM.TAXRATE = decSupplierInvoiceItemTaxes.TaxRate.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxRate");
-            cCUTAXPM.ADDTAXRATE = decSupplierInvoiceItemTaxes.AlternateRate.ToNullableDouble("decSupplierInvoiceItemTaxes.AlternateRate");
-            cCUTAXPM.TAXBASIS = decSupplierInvoiceItemTaxes.TaxBaseAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxBaseAmount");
+            cCUTAXPM.TAXBASIS = (long?)decSupplierInvoiceItemTaxes.TaxBaseAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxBaseAmount");
+            cCUTAXPM.TAXAMOUNT = (long?)decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount") + (long?)decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
+            cCUTAXPM.POSTPONEDTAX = (long?)decSupplierInvoiceItemTaxes.DeferedTaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.DeferedTaxAmount");
+            cCUTAXPM.TAXTOPAY = (long?)decSupplierInvoiceItemTaxes.TaxAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxAmount");
+            cCUTAXPM.TAXRATE = (long?)decSupplierInvoiceItemTaxes.TaxRate.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxRate");
+            cCUTAXPM.ADDTAXRATE = (long?)decSupplierInvoiceItemTaxes.AlternateRate.ToNullableDouble("decSupplierInvoiceItemTaxes.AlternateRate");
+            cCUTAXPM.TAXBASIS = (long?)decSupplierInvoiceItemTaxes.TaxBaseAmount.ToNullableDouble("decSupplierInvoiceItemTaxes.TaxBaseAmount");
             if (cCUTAXPM.PRATMEHES != null)
             {
                 _loanAmount += decSupplierInvoiceItemTaxes.TotalBtlCoverageNIS;
@@ -3580,12 +3583,12 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             cCUCARSCPM.CHASSISNO = decSupplierInvioceItemsCars.VehicleChassisNumber;
             cCUCARSCPM.CARMODEL = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().VehicleModel;
             cCUCARSCPM.ENGINENO = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().EngineNumber;
-            cCUCARSCPM.FOB = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().VehicleValue.ToNullableDouble("VehicleValue");
+            cCUCARSCPM.FOB = (long?)decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().VehicleValue.ToNullableDouble("VehicleValue");
             cCUCARSCPM.EXEMPTTYPE = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().Exempt_type;
             cCUCARSCPM.WINDOWNO = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().WindowNumber;
-            cCUCARSCPM.BUYTAX = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().ChassisPurchaseTax.ToNullableDouble("ChassisPurchaseTax");
-            cCUCARSCPM.GENERALTAX = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().ChassisTax.ToNullableDouble("ChassisTax");
-            cCUCARSCPM.VATRESHIMON = decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().ChassisVat.ToNullableDouble("ChassisVat");
+            cCUCARSCPM.BUYTAX = (long?)decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().ChassisPurchaseTax.ToNullableDouble("ChassisPurchaseTax");
+            cCUCARSCPM.GENERALTAX = (long?)decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().ChassisTax.ToNullableDouble("ChassisTax");
+            cCUCARSCPM.VATRESHIMON = (long?)decSupplierInvioceItemsCars.SupplierInvoiceItemVehicleAdds.FirstOrDefault().ChassisVat.ToNullableDouble("ChassisVat");
 
             return cCUCARSCPM;
         }
@@ -3649,6 +3652,8 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
         //int i;
         private string GetTranslationP2L(string partnerID, string tableID, string partnerCode)
         {
+            bool isConnectedToUnifreight = CustomsSettingQueryService.GetSettingByTenant(this._DirtyDeclarationPM.Tenant).IsConnectedToUniFreight;
+
             //i++;
             //_HashSet.Add(partnerID + "," + tableID + "," + partnerCode);
             //if (!_HashSet1.ContainsKey(this.GetHashCode().ToString() + tableID))
@@ -3657,41 +3662,46 @@ decSupplierInvoiceItem.CounterKey, decSupplierInvoiceItem.LineNumber, this._Dirt
             //}
             //_HashSet1[this.GetHashCode().ToString() + tableID] = ++_HashSet1[this.GetHashCode().ToString() + tableID];
             //return "";
-            if (partnerID == null || tableID == null || partnerCode == null)
-            {
-                return ("");
-            }
-
-            if (_GTRTRANQueryService == null)
-            {
-                _GTRTRANQueryService = new GTRTRANQueryService(_AmitalContext);
-            }
-            if (tableID == "CTBCURRENCY" || tableID == "CTBTARIFF" || tableID == "CTBCOUNTRY")
-            {
-                return GetTranslationP2LFromCache(partnerID, tableID, partnerCode);
-            }
-            var myGTRTRANPM = _GTRTRANQueryService.GetSingle(partnerID, tableID, partnerCode, null, true);
-            //GTRTRAN myGTRTRANPM = myGTRTRANQueryService.GetTranslationP2L(partnerID, tableID, partnerCode);
-
-            if (myGTRTRANPM == null)
-            {
-                if (tableID == "CTBBONDED") // moran 15.5.16 - Task 20709
+            if (isConnectedToUnifreight) {
+                if (partnerID == null || tableID == null || partnerCode == null)
                 {
-                    CTBBONDEDQueryService myCTBBONDEDQueryService = new CTBBONDEDQueryService(_AmitalContext);
+                    return ("");
+                }
 
-                    var myCTBBONDED = myCTBBONDEDQueryService.GetSingle(partnerCode, true);
-                    if (myCTBBONDED != null)
+                if (_GTRTRANQueryService == null)
+                {
+                    _GTRTRANQueryService = new GTRTRANQueryService(_AmitalContext);
+                }
+                if (tableID == "CTBCURRENCY" || tableID == "CTBTARIFF" || tableID == "CTBCOUNTRY")
+                {
+                    return GetTranslationP2LFromCache(partnerID, tableID, partnerCode);
+                }
+                var myGTRTRANPM = _GTRTRANQueryService.GetSingle(partnerID, tableID, partnerCode, null, true);
+                //GTRTRAN myGTRTRANPM = myGTRTRANQueryService.GetTranslationP2L(partnerID, tableID, partnerCode);
+
+                if (myGTRTRANPM == null)
+                {
+                    if (tableID == "CTBBONDED") // moran 15.5.16 - Task 20709
                     {
-                        if (!string.IsNullOrWhiteSpace(myCTBBONDED.WAREHOUSEID) && myCTBBONDED.WAREHOUSEID.Length == 4) // moran 24.8.16 - Task 22652 - enter into 'if'
+                        CTBBONDEDQueryService myCTBBONDEDQueryService = new CTBBONDEDQueryService(_AmitalContext);
+
+                        var myCTBBONDED = myCTBBONDEDQueryService.GetSingle(partnerCode, true);
+                        if (myCTBBONDED != null)
                         {
-                            return (myCTBBONDED.WAREHOUSEID);
+                            if (!string.IsNullOrWhiteSpace(myCTBBONDED.WAREHOUSEID) && myCTBBONDED.WAREHOUSEID.Length == 4) // moran 24.8.16 - Task 22652 - enter into 'if'
+                            {
+                                return (myCTBBONDED.WAREHOUSEID);
+                            }
                         }
                     }
+                    return ("");
                 }
-                return ("");
+
+                return (myGTRTRANPM.LOCALCODE);
             }
 
-            return (myGTRTRANPM.LOCALCODE);
+            return "";
+           
         }
 
         private string GetTranslationP2LFromCache(string partnerID, string tableID, string partnerCode)

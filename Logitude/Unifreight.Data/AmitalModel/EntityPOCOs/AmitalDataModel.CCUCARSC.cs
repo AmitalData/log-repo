@@ -210,7 +210,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for FOB in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> FOB
+        public virtual global::System.Nullable<long> FOB
         {
             get
             {
@@ -225,14 +225,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _FOB;
+        private global::System.Nullable<long> _FOB;
 
 
         /// <summary>
         /// There are no comments for GENERALTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> GENERALTAX
+        public virtual global::System.Nullable<long> GENERALTAX
         {
             get
             {
@@ -247,14 +247,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _GENERALTAX;
+        private global::System.Nullable<long> _GENERALTAX;
 
 
         /// <summary>
         /// There are no comments for BUYTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> BUYTAX
+        public virtual global::System.Nullable<long> BUYTAX
         {
             get
             {
@@ -269,14 +269,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _BUYTAX;
+        private global::System.Nullable<long> _BUYTAX;
 
 
         /// <summary>
         /// There are no comments for VATRESHIMON in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> VATRESHIMON
+        public virtual global::System.Nullable<long> VATRESHIMON
         {
             get
             {
@@ -291,7 +291,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _VATRESHIMON;
+        private global::System.Nullable<long> _VATRESHIMON;
 
 
         /// <summary>
