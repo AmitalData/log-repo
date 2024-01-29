@@ -627,6 +627,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Location&quot;"
     ListPropertyPath="&quot;Location&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -702,6 +703,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;LastUpdatedDate&quot;"
     ListPropertyPath="&quot;LastUpdatedDate&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -752,7 +754,7 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
-    Code="&quot;CertificateOfOriginMandatoryFields&quot;"
+    Code="&quot;CertificateOfOriginMandatory&quot;"
     TextCode="&quot;Certificate Of Origin Mandatory Fields&quot;"
     LocalTextCode="&quot;שדות חובה פר תעודת מקור&quot;"
     QueryGroupCode="&quot;c8e3&quot;"
@@ -763,7 +765,7 @@
     IsAddNewEntity="false"
     IsPackagable="true"
     DefaultSortName="&quot;Code&quot;"
-    DefaultSortDirection="&quot;Desending&quot;"
+    DefaultSortDirection="&quot;Ascending&quot;"
     QueryGroupName="&quot; Query Group&quot;"
     TextCodeCode="&quot;CertificateOfOriginMandatoryFields.Q.CertificateOfOriginMandatoryFields&quot;"
     FeatureCode="&quot;CertificateOfOriginMandatoryFields.Q.CertificateOfOriginMandatoryFields&quot;"
@@ -772,23 +774,43 @@
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;CertificateOfOriginMandatoryFields&quot;"
+        QueryCode="&quot;CertificateOfOriginMandatory&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;Code&quot;"
         ColumnWidth="50" />
       <QueryColumn
-        QueryCode="&quot;CertificateOfOriginMandatoryFields&quot;"
+        QueryCode="&quot;CertificateOfOriginMandatory&quot;"
         IndexOrder="1"
+        ObjectFieldName="&quot;MappedCertificatOriginId&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CertificateOfOriginMandatory&quot;"
+        IndexOrder="2"
+        ObjectFieldName="&quot;IsMandatory&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CertificateOfOriginMandatory&quot;"
+        IndexOrder="3"
+        ObjectFieldName="&quot;Location&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CertificateOfOriginMandatory&quot;"
+        IndexOrder="4"
+        ObjectFieldName="&quot;LastUpdatedDate&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CertificateOfOriginMandatory&quot;"
+        IndexOrder="5"
         ObjectFieldName="&quot;LocalName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;CertificateOfOriginMandatoryFields&quot;"
-        IndexOrder="2"
+        QueryCode="&quot;CertificateOfOriginMandatory&quot;"
+        IndexOrder="6"
         ObjectFieldName="&quot;EnglishName&quot;"
         ColumnWidth="100" />
       <QueryColumn
-        QueryCode="&quot;CertificateOfOriginMandatoryFields&quot;"
-        IndexOrder="3"
+        QueryCode="&quot;CertificateOfOriginMandatory&quot;"
+        IndexOrder="7"
         ObjectFieldName="&quot;Inactive&quot;"
         ColumnWidth="50" />
     </QueryColumns>
