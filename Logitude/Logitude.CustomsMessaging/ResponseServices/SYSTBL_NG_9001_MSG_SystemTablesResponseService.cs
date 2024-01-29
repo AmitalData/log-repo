@@ -707,12 +707,12 @@ ID List :
                                                     if (dr["Location"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginMandatoryFields.Location = (int?)dr["Location"];
+                                                        newExt.MyCertificateOfOriginMandatoryFields.Location = (int)dr["Location"];
                                                     }
                                                     if (dr["LastUpdatedDate"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginMandatoryFields.LastUpdatedDate = (DateTime?)dr["LastUpdatedDate"];
+                                                        newExt.MyCertificateOfOriginMandatoryFields.LastUpdatedDate = (DateTime)dr["LastUpdatedDate"];
                                                     }
                                                     if (dr["IsMandatory"] != DBNull.Value && dr["IsMandatory"] != null)
                                                     {
