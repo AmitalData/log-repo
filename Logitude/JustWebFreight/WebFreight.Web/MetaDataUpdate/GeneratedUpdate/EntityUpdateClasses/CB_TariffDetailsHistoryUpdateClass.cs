@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_TariffDetailsHistoryUpdateClass
    {  		
-		public const string HashString = "a8fb993f7c849ff0a0a00721f93cf3a0";
+		public const string HashString = "00aad5bfabfc9361d7d01395c9dcf97c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "היסטוריית תעריף של פרט מכס",
 			      				    DefaultText =  "Tariff Details History",
-			      				    Code =  "fcae",
+			      				    Code =  "eb94",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
