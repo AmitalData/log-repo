@@ -1010,6 +1010,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             }
             if (entityPM.CasualImporterTel != entityPOCO.CasualImporterTel)
             {
+                LogMessagingUtil.Instance.AppendLine("UpdateDeclarationPending903InvalidPhoneNumber");
                 UpdateDeclarationPending903InvalidPhoneNumber(entityPM);
             }
 
