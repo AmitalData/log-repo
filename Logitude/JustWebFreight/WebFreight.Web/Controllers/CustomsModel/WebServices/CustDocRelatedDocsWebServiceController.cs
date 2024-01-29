@@ -114,7 +114,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                         }
  
                     }
-
+                        if(externalEntityReferences!=null)
                         documentFilings = documentsFilingQuery.GetDocumentsFilingsByRferenceForRelatedDocuments(authToken.Tenant, externalEntityReferences);
 
                     }
