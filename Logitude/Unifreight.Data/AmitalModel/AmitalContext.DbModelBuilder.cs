@@ -11,7 +11,7 @@ using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Simplog.Server.Infrastructure;
 using Devart.Data.Oracle;
 using System.Diagnostics;
-
+using System.Data.SqlClient;
 
 namespace Unifreight.Data.AmitalModel
 {
@@ -50,14 +50,23 @@ namespace Unifreight.Data.AmitalModel
                 });
             }
             else
-            {     
-                ConnSchemaUserId=   new Devart.Data.Oracle.OracleConnectionStringBuilder(connection.ConnectionString)?.UserId?.ToUpper();
+            {
+                if(LogitudeSettings.DatabaseManagementSystem!= "oracle")
+                     ConnSchemaUserId = "dbo";
             }
             var compiledModel = _ModelCache.GetOrAdd(
                 Tuple.Create(tenantSeed, connection.ConnectionString),
                 t =>
                 {
-                    var modelBuilder = GetBuilder();
+                    DbModelBuilder modelBuilder  =null;
+                    if (LogitudeSettings.DatabaseManagementSystem == "oracle")
+                    {
+                        modelBuilder = GetBuilder();
+                    }
+                    else
+                    {     modelBuilder = GetBuilderToSql();
+                     }
+
                     modelBuilder.SetDefaultSchema(LogitudeDBSchema.LOGITUDE_MAIN, ConnSchemaUserId);
 
                     var model = modelBuilder.Build(connection);

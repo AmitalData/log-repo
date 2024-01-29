@@ -77,7 +77,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TRANSPVALFC in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> TRANSPVALFC
+        public virtual global::System.Nullable<long> TRANSPVALFC
         {
             get
             {
@@ -92,7 +92,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _TRANSPVALFC;
+        private global::System.Nullable<long> _TRANSPVALFC;
 
     
         /// <summary>
@@ -121,7 +121,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TRANSPVAL in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> TRANSPVAL
+        public virtual global::System.Nullable<long> TRANSPVAL
         {
             get
             {
@@ -136,7 +136,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _TRANSPVAL;
+        private global::System.Nullable<long> _TRANSPVAL;
 
     
         /// <summary>

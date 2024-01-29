@@ -561,7 +561,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for INDEXVALUE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<decimal> INDEXVALUE
+        public virtual global::System.Nullable<long> INDEXVALUE
         {
             get
             {
@@ -576,7 +576,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<decimal> _INDEXVALUE;
+        private global::System.Nullable<long> _INDEXVALUE;
 
 
         /// <summary>
@@ -605,7 +605,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for CHANGINGVALUE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> CHANGINGVALUE
+        public virtual global::System.Nullable<long> CHANGINGVALUE
         {
             get
             {
@@ -620,14 +620,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _CHANGINGVALUE;
+        private global::System.Nullable<long> _CHANGINGVALUE;
 
 
         /// <summary>
         /// There are no comments for REGIONVALUE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> REGIONVALUE
+        public virtual global::System.Nullable<long> REGIONVALUE
         {
             get
             {
@@ -642,14 +642,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _REGIONVALUE;
+        private global::System.Nullable<long> _REGIONVALUE;
 
 
         /// <summary>
         /// There are no comments for TRANSPVALUE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> TRANSPVALUE
+        public virtual global::System.Nullable<long> TRANSPVALUE
         {
             get
             {
@@ -664,14 +664,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _TRANSPVALUE;
+        private global::System.Nullable<long> _TRANSPVALUE;
 
 
         /// <summary>
         /// There are no comments for INSURANCEVALUE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> INSURANCEVALUE
+        public virtual global::System.Nullable<long> INSURANCEVALUE
         {
             get
             {
@@ -686,14 +686,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _INSURANCEVALUE;
+        private global::System.Nullable<long> _INSURANCEVALUE;
 
 
         /// <summary>
         /// There are no comments for SERVICEVALUE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> SERVICEVALUE
+        public virtual global::System.Nullable<long> SERVICEVALUE
         {
             get
             {
@@ -708,14 +708,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _SERVICEVALUE;
+        private global::System.Nullable<long> _SERVICEVALUE;
 
 
         /// <summary>
         /// There are no comments for EXPENSEVALUE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> EXPENSEVALUE
+        public virtual global::System.Nullable<long> EXPENSEVALUE
         {
             get
             {
@@ -730,14 +730,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _EXPENSEVALUE;
+        private global::System.Nullable<long> _EXPENSEVALUE;
 
 
         /// <summary>
         /// There are no comments for CLOSUREVALUE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> CLOSUREVALUE
+        public virtual global::System.Nullable<long> CLOSUREVALUE
         {
             get
             {
@@ -752,14 +752,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _CLOSUREVALUE;
+        private global::System.Nullable<long> _CLOSUREVALUE;
 
 
         /// <summary>
         /// There are no comments for FEECARRIER in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> FEECARRIER
+        public virtual global::System.Nullable<long> FEECARRIER
         {
             get
             {
@@ -774,14 +774,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _FEECARRIER;
+        private global::System.Nullable<long> _FEECARRIER;
 
 
         /// <summary>
         /// There are no comments for FEEPLATFORM in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> FEEPLATFORM
+        public virtual global::System.Nullable<long> FEEPLATFORM
         {
             get
             {
@@ -796,14 +796,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _FEEPLATFORM;
+        private global::System.Nullable<long> _FEEPLATFORM;
 
 
         /// <summary>
         /// There are no comments for CURRENCYRATE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> CURRENCYRATE
+        public virtual global::System.Nullable<long> CURRENCYRATE
         {
             get
             {
@@ -818,14 +818,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _CURRENCYRATE;
+        private global::System.Nullable<long> _CURRENCYRATE;
 
 
         /// <summary>
         /// There are no comments for PRICEINDEX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> PRICEINDEX
+        public virtual global::System.Nullable<long> PRICEINDEX
         {
             get
             {
@@ -840,14 +840,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _PRICEINDEX;
+        private global::System.Nullable<long> _PRICEINDEX;
 
 
         /// <summary>
         /// There are no comments for GOODSVALUE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> GOODSVALUE
+        public virtual global::System.Nullable<long> GOODSVALUE
         {
             get
             {
@@ -862,14 +862,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _GOODSVALUE;
+        private global::System.Nullable<long> _GOODSVALUE;
 
 
         /// <summary>
         /// There are no comments for CIFVALUE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> CIFVALUE
+        public virtual global::System.Nullable<long> CIFVALUE
         {
             get
             {
@@ -884,14 +884,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _CIFVALUE;
+        private global::System.Nullable<long> _CIFVALUE;
 
 
         /// <summary>
         /// There are no comments for ACCEPTEDPRICE in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> ACCEPTEDPRICE
+        public virtual global::System.Nullable<long> ACCEPTEDPRICE
         {
             get
             {
@@ -906,14 +906,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _ACCEPTEDPRICE;
+        private global::System.Nullable<long> _ACCEPTEDPRICE;
 
 
         /// <summary>
         /// There are no comments for TOTALTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> TOTALTAX
+        public virtual global::System.Nullable<long> TOTALTAX
         {
             get
             {
@@ -928,14 +928,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _TOTALTAX;
+        private global::System.Nullable<long> _TOTALTAX;
 
 
         /// <summary>
         /// There are no comments for TRANSPVALFC in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> TRANSPVALFC
+        public virtual global::System.Nullable<long> TRANSPVALFC
         {
             get
             {
@@ -950,7 +950,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _TRANSPVALFC;
+        private global::System.Nullable<long> _TRANSPVALFC;
 
 
         /// <summary>
@@ -979,7 +979,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for INSURANCEPERCENT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> INSURANCEPERCENT
+        public virtual global::System.Nullable<long> INSURANCEPERCENT
         {
             get
             {
@@ -994,7 +994,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _INSURANCEPERCENT;
+        private global::System.Nullable<long> _INSURANCEPERCENT;
 
 
         /// <summary>
@@ -1023,7 +1023,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for INSURANCEAMNT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> INSURANCEAMNT
+        public virtual global::System.Nullable<long> INSURANCEAMNT
         {
             get
             {
@@ -1038,7 +1038,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _INSURANCEAMNT;
+        private global::System.Nullable<long> _INSURANCEAMNT;
 
 
         /// <summary>
@@ -1287,7 +1287,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for GUARANTEEAMNT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> GUARANTEEAMNT
+        public virtual global::System.Nullable<long> GUARANTEEAMNT
         {
             get
             {
@@ -1302,7 +1302,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _GUARANTEEAMNT;
+        private global::System.Nullable<long> _GUARANTEEAMNT;
 
 
         /// <summary>

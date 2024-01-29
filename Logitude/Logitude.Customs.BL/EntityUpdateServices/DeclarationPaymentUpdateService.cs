@@ -52,17 +52,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
             var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-            if (setting.IsConnectedToUniFreight)
-            {
+          
                 var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
                 declarationQueryService.LoadSupplierInvoicesWithItems = false;
                 var declaration = declarationQueryService.GetSingle(entityPM.DeclarationId, true, true);
                 //UpdateUnifreight(entityPM, declaration);
                 var unifreightDeclarationPaymentUpdateService = new UnifreightDeclarationPaymentUpdateService(entityPM, declaration);
-                unifreightDeclarationPaymentUpdateService.Update();
-            }
-
-            base.OnUpdating(entityPM);
+               unifreightDeclarationPaymentUpdateService.Update();
+       
+                 base.OnUpdating(entityPM);
         }
 
 

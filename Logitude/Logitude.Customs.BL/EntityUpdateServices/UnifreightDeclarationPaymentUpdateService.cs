@@ -250,8 +250,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         //           case Simplog.Server.Infrastructure.ChangeSetOperation.Insert:
                         //           case Simplog.Server.Infrastructure.ChangeSetOperation.Update:
                         _CCUPAYHAND.TOTALPAYTAX = _CCUPAYHAND.TOTALPAYTAX.GetValueOrDefault() +
-                            decDeclarationTaxes.TotalAmount.ToNullableDouble("decDeclarationTaxes.TotalAmount") -
-                            decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
+                            (long?)decDeclarationTaxes.TotalAmount.ToNullableDouble("decDeclarationTaxes.TotalAmount") -
+                         (long?)decDeclarationTaxes.DeferredTaxAmount.ToNullableDouble("decDeclarationTaxes.DeferredTaxAmount");
                         break;
                 }
             }
@@ -319,8 +319,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 curCCUPAYLINEF.PAYMETHOD = "0" + curCCUPAYLINEF.PAYMETHOD;
             }
-            curCCUPAYLINEF.PAYAMOUNT = decDeclarationPaymentMethods.Amount.ToNullableDouble("decDeclarationPaymentMethods.Amount");
-            _CCUPAYHAND.PAYTAX = _CCUPAYHAND.PAYTAX.GetValueOrDefault() + decDeclarationPaymentMethods.Amount.ToNullableDouble("decDeclarationPaymentMethods.Amount");
+            curCCUPAYLINEF.PAYAMOUNT = (long?)decDeclarationPaymentMethods.Amount.ToNullableDouble("decDeclarationPaymentMethods.Amount");
+            _CCUPAYHAND.PAYTAX = _CCUPAYHAND.PAYTAX.GetValueOrDefault() + (long?)decDeclarationPaymentMethods.Amount.ToNullableDouble("decDeclarationPaymentMethods.Amount");
 
             //curCCUPAYLINEF.TYPE = decDeclarationPaymentMethods.;
             if (decDeclarationPaymentMethods.PayerActivityTypeCode == "0")

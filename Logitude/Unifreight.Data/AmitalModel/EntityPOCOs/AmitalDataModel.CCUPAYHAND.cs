@@ -19,7 +19,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
 
     /// <summary>
     /// There are no comments for Unifreight.Data.AmitalModel.CCUPAYHAND in the schema.
-    /// </summary>
+    /// </summary>f
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
     public partial class CCUPAYHAND : INotifyPropertyChanged    {
 
@@ -77,7 +77,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for PAYTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> PAYTAX
+        public virtual global::System.Nullable<long> PAYTAX
         {
             get
             {
@@ -92,14 +92,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _PAYTAX;
+        private global::System.Nullable<long> _PAYTAX;
 
     
         /// <summary>
         /// There are no comments for REJECTTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> REJECTTAX
+        public virtual global::System.Nullable<long> REJECTTAX
         {
             get
             {
@@ -114,7 +114,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _REJECTTAX;
+        private global::System.Nullable<long> _REJECTTAX;
 
     
         /// <summary>
@@ -165,7 +165,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for TOTALPAYTAX in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> TOTALPAYTAX
+        public virtual global::System.Nullable<long> TOTALPAYTAX
         {
             get
             {
@@ -180,14 +180,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _TOTALPAYTAX;
+        private global::System.Nullable<long> _TOTALPAYTAX;
 
     
         /// <summary>
         /// There are no comments for TOTALPAYDEPOSIT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> TOTALPAYDEPOSIT
+        public virtual global::System.Nullable<long> TOTALPAYDEPOSIT
         {
             get
             {
@@ -202,7 +202,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _TOTALPAYDEPOSIT;
+        private global::System.Nullable<long> _TOTALPAYDEPOSIT;
 
     
         /// <summary>

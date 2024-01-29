@@ -1205,8 +1205,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             //var setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
             //if (setting.IsConnectedToUniFreight)
-            if (_MyDeclarationPM.IsConnectedToUnifreight)
-            {
+          
                 //<--- Yuval Chalup 09.11.2015 TASK-16498 - Update PaymentOrderNumber in Payment
                 if (customResponse.DeclarationPaymentDetails != null)
                 {
@@ -1217,7 +1216,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         unifreightDeclarationPaymentUpdateService.Update();
                     }
                 }
-            }
+         
             //Yuval Chalup 09.11.2015 TASK-16498 --->
 
             if (customResponse.CollateralRequestDetails != null) // Create Collateral

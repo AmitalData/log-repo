@@ -517,11 +517,11 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.PAYTAX)
                     .HasColumnName(@"PAY_TAX")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.REJECTTAX)
                     .HasColumnName(@"REJECT_TAX")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.HANDTYPE)
                     .HasColumnName(@"HAND_TYPE")
@@ -534,11 +534,11 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.TOTALPAYTAX)
                     .HasColumnName(@"TOTAL_PAY_TAX")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.TOTALPAYDEPOSIT)
                     .HasColumnName(@"TOTAL_PAY_DEPOSIT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUPAYHAND>()
                 .Property(p => p.HANDDATE)
                     .HasColumnName(@"HAND_DATE")
@@ -662,22 +662,22 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.RAISEPERCENT)
                     .HasColumnName(@"RAISE_PERCENT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.RAISEVALUE)
                     .HasColumnName(@"RAISE_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.NISVALUE)
                     .HasColumnName(@"NIS_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.QUANTITY)
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.EXTRAQNTY)
                     .HasColumnName(@"EXTRA_QNTY")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.WHOLESALEPRICE)
                     .HasColumnName(@"WHOLESALE_PRICE")
@@ -685,7 +685,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.IMPORTADDITION)
                     .HasColumnName(@"IMPORT_ADDITION")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.DISCOUNTCODE)
                     .HasColumnName(@"DISCOUNT_CODE")
@@ -704,23 +704,23 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.AGNTPAYCUST)
                     .HasColumnName(@"AGNT_PAY_CUST")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.AGNTPAYTAX)
                     .HasColumnName(@"AGNT_PAY_TAX")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.AGNTPAYBITHA)
                     .HasColumnName(@"AGNT_PAY_BITHA")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.NIDHEMEHESPCNT)
                     .HasColumnName(@"NIDHE_MEHES_PCNT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.NIDHEMASPCNT)
                     .HasColumnName(@"NIDHE_MAS_PCNT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.VEHICLECODE)
                     .HasColumnName(@"VEHICLE_CODE")
@@ -822,7 +822,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.STSQNTY)
                     .HasColumnName(@"STS_QNTY")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUSUPITEM>()
                 .Property(p => p.PRATMEHESN)
                     .HasColumnName(@"PRAT_MEHES_N")
@@ -1138,22 +1138,22 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.RAISEPERCENT)
                     .HasColumnName(@"RAISE_PERCENT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.RAISEVALUE)
                     .HasColumnName(@"RAISE_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.NISVALUE)
                     .HasColumnName(@"NIS_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.QUANTITY)
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.EXTRAQNTY)
                     .HasColumnName(@"EXTRA_QNTY")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.WHOLESALEPRICE)
                     .HasColumnName(@"WHOLESALE_PRICE")
@@ -1161,7 +1161,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.IMPORTADDITION)
                     .HasColumnName(@"IMPORT_ADDITION")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.DISCOUNTCODE)
                     .HasColumnName(@"DISCOUNT_CODE")
@@ -1180,23 +1180,23 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.AGNTPAYCUST)
                     .HasColumnName(@"AGNT_PAY_CUST")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.AGNTPAYTAX)
                     .HasColumnName(@"AGNT_PAY_TAX")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.AGNTPAYBITHA)
                     .HasColumnName(@"AGNT_PAY_BITHA")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.NIDHEMEHESPCNT)
                     .HasColumnName(@"NIDHE_MEHES_PCNT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.NIDHEMASPCNT)
                     .HasColumnName(@"NIDHE_MAS_PCNT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.VEHICLECODE)
                     .HasColumnName(@"VEHICLE_CODE")
@@ -1289,7 +1289,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.STSQNTY)
                     .HasColumnName(@"STS_QNTY")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCUSTITEM>()
                 .Property(p => p.PRATMEHESN)
                     .HasColumnName(@"PRAT_MEHES_N")
@@ -1383,7 +1383,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.PAYAMOUNT)
                     .HasColumnName(@"PAY_AMOUNT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUPAYLINEF>()
                 .Property(p => p.ACCOUNTNAME)
                     .HasColumnName(@"ACCOUNT_NAME")
@@ -1465,19 +1465,19 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.TAXBASIS)
                     .HasColumnName(@"TAX_BASIS")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.TAXAMOUNT)
                     .HasColumnName(@"TAX_AMOUNT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.POSTPONEDTAX)
                     .HasColumnName(@"POSTPONED_TAX")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.TAXTOPAY)
                     .HasColumnName(@"TAX_TO_PAY")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.TAXCALCCODE)
                     .HasColumnName(@"TAX_CALC_CODE")
@@ -1485,23 +1485,23 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.TAXRATE)
                     .HasColumnName(@"TAX_RATE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.DEFINEDTAX)
                     .HasColumnName(@"DEFINED_TAX")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.ADDTAXRATE)
                     .HasColumnName(@"ADD_TAX_RATE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.ADDEFINEDTAX)
                     .HasColumnName(@"AD_DEFINED_TAX")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.ADDIMPORT)
                     .HasColumnName(@"ADD_IMPORT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTAX>()
                 .Property(p => p.PRATMEHESN)
                     .HasColumnName(@"PRAT_MEHES_N")
@@ -1635,7 +1635,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.INDEXVALUE)
                     .HasColumnName(@"INDEX_VALUE")
-                    .HasColumnType("decimal");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.COINID)
                     .HasColumnName(@"COIN_ID")
@@ -1644,67 +1644,67 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.CHANGINGVALUE)
                     .HasColumnName(@"CHANGING_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.REGIONVALUE)
                     .HasColumnName(@"REGION_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.TRANSPVALUE)
                     .HasColumnName(@"TRANSP_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.INSURANCEVALUE)
                     .HasColumnName(@"INSURANCE_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.SERVICEVALUE)
                     .HasColumnName(@"SERVICE_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.EXPENSEVALUE)
                     .HasColumnName(@"EXPENSE_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.CLOSUREVALUE)
                     .HasColumnName(@"CLOSURE_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.FEECARRIER)
                     .HasColumnName(@"FEE_CARRIER")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.FEEPLATFORM)
                     .HasColumnName(@"FEE_PLATFORM")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.CURRENCYRATE)
                     .HasColumnName(@"CURRENCY_RATE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.PRICEINDEX)
                     .HasColumnName(@"PRICE_INDEX")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.GOODSVALUE)
                     .HasColumnName(@"GOODS_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.CIFVALUE)
                     .HasColumnName(@"CIF_VALUE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.ACCEPTEDPRICE)
                     .HasColumnName(@"ACCEPTED_PRICE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.TOTALTAX)
                     .HasColumnName(@"TOTAL_TAX")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.TRANSPVALFC)
                     .HasColumnName(@"TRANSP_VAL_FC")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.TRANCURRENCY)
                     .HasColumnName(@"TRAN_CURRENCY")
@@ -1713,7 +1713,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.INSURANCEPERCENT)
                     .HasColumnName(@"INSURANCE_PERCENT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.INSURANCECURR)
                     .HasColumnName(@"INSURANCE_CURR")
@@ -1722,7 +1722,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.INSURANCEAMNT)
                     .HasColumnName(@"INSURANCE_AMNT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.PAYDATE)
                     .HasColumnName(@"PAY_DATE")
@@ -1771,7 +1771,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.GUARANTEEAMNT)
                     .HasColumnName(@"GUARANTEE_AMNT")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.IMPORTTYPE)
                     .HasColumnName(@"IMPORT_TYPE")
@@ -1893,7 +1893,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUFILEM>()
                 .Property(p => p.TOTALINVOICELINESNO)
                     .HasColumnName(@"TOTAL_INVOICE_LINES_NO")
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
 
 
 
@@ -3017,11 +3017,11 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"LINE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTRANSPVAL>()
                 .Property(p => p.TRANSPVALFC)
                     .HasColumnName(@"TRANSP_VAL_FC")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTRANSPVAL>()
                 .Property(p => p.CURRID)
                     .HasColumnName(@"CURR_ID")
@@ -3030,7 +3030,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUTRANSPVAL>()
                 .Property(p => p.TRANSPVAL)
                     .HasColumnName(@"TRANSP_VAL")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUTRANSPVAL>()
                 .Property(p => p.CURRIDN)
                     .HasColumnName(@"CURR_ID_N")
@@ -3367,7 +3367,7 @@ namespace Unifreight.Data.AmitalModel
             modelBuilder.Entity<CCUCARL>()
                 .Property(p => p.MADADRATE)
                     .HasColumnName(@"MADAD_RATE")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCARL>()
                 .Property(p => p.FUELTYPE)
                     .HasColumnName(@"FUEL_TYPE")
@@ -3375,7 +3375,7 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("char");
             modelBuilder.Entity<CCUCARL>()
                 .Property(p => p.WEIGHT)
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCARL>()
                 .Property(p => p.FFU1)
                     .HasMaxLength(50)
@@ -4548,19 +4548,19 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnType("char");
             modelBuilder.Entity<CCUCARSC>()
                 .Property(p => p.FOB)
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCARSC>()
                 .Property(p => p.GENERALTAX)
                     .HasColumnName(@"GENERAL_TAX")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCARSC>()
                 .Property(p => p.BUYTAX)
                     .HasColumnName(@"BUY_TAX")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCARSC>()
                 .Property(p => p.VATRESHIMON)
                     .HasColumnName(@"VAT_RESHIMON")
-                    .HasColumnType("double");
+                    .HasColumnType("int64");
             modelBuilder.Entity<CCUCARSC>()
                 .Property(p => p.EXEMPTTYPE)
                     .HasColumnName(@"EXEMPT_TYPE")
@@ -10897,8 +10897,1923 @@ namespace Unifreight.Data.AmitalModel
             #endregion
             return modelBuilder;///base.OnModelCreating(modelBuilder);
         }
+        public static DbModelBuilder GetBuilderToSql()//protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            DbModelBuilder modelBuilder = new DbModelBuilder(DbModelBuilderVersion.V4_1);
 
 
+
+            #region CCUMSHGR
+
+            modelBuilder.Entity<CCUMSHGR>()
+                .HasKey(p => new { p.FILENO, p.LINENO })
+                .ToTable("CCUMSHGR", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("bigint");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.MISHGORNO)
+                    .HasColumnName(@"MISHGOR_NO")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.TRANSPTYPE)
+                    .HasColumnName(@"TRANSP_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.MANIFESTNO)
+                    .HasColumnName(@"MANIFEST_NO")
+                    .HasMaxLength(6)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.IDENTIFIERTYPE)
+                    .HasColumnName(@"IDENTIFIER_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.IDENTIFIERNO)
+                    .HasColumnName(@"IDENTIFIER_NO")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.HAWB)
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.HAWBDATE)
+                    .HasColumnName(@"HAWB_DATE")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.CARNETNUMBER)
+                    .HasColumnName(@"CARNET_NUMBER")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.STORAGESITE)
+                    .HasColumnName(@"STORAGE_SITE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.WAREHOUSEID)
+                    .HasColumnName(@"WAREHOUSE_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.WAREHOUSEREC)
+                    .HasColumnName(@"WAREHOUSE_REC")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.EXPORTLAND)
+                    .HasColumnName(@"EXPORT_LAND")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.LOADPORTID)
+                    .HasColumnName(@"LOADPORT_ID")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.DESCOFGOODS1)
+                    .HasColumnName(@"DESC_OF_GOODS1")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.DESCOFGOODS2)
+                    .HasColumnName(@"DESC_OF_GOODS2")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.DESCOFGOODS3)
+                    .HasColumnName(@"DESC_OF_GOODS3")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.CARRIERID)
+                    .HasColumnName(@"CARRIER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.UNLOADPORTID)
+                    .HasColumnName(@"UNLOADPORT_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.UNLOADDATE)
+                    .HasColumnName(@"UNLOAD_DATE")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.QUANTITY)
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.PACKTYPEID)
+                    .HasColumnName(@"PACKTYPE_ID")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.WEIGHT)
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.PARTIALITYID)
+                    .HasColumnName(@"PARTIALITY_ID")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.MISHGORTYPE)
+                    .HasColumnName(@"MISHGOR_TYPE")
+                    .HasMaxLength(6)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.SEALQTY)
+                    .HasColumnName(@"SEAL_QTY")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.PACKDET)
+                    .HasColumnName(@"PACK_DET")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.ADDQUANTITY)
+                    .HasColumnName(@"ADD_QUANTITY")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.WAREHOUSEIDN)
+                    .HasColumnName(@"WAREHOUSE_ID_N")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.WAREHOUSERECN)
+                    .HasColumnName(@"WAREHOUSE_REC_N")
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.EXPORTLANDN)
+                    .HasColumnName(@"EXPORT_LAND_N")
+                    .HasMaxLength(2)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.PACKTYPEIDN)
+                    .HasColumnName(@"PACKTYPE_ID_N")
+                    .HasMaxLength(4)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.HAWBN)
+                    .HasColumnName(@"HAWB_N")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.IDENTIFIERTYPEN)
+                    .HasColumnName(@"IDENTIFIER_TYPE_N")
+                    .HasMaxLength(4)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.FIRSTCARGOID)
+                    .HasColumnName(@"FIRST_CARGO_ID")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUMSHGR>()
+                .Property(p => p.SECONDCARGOID)
+                    .HasColumnName(@"SECOND_CARGO_ID")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar");
+
+            #endregion
+
+            #region CCUPAYHAND
+
+            modelBuilder.Entity<CCUPAYHAND>()
+                .HasKey(p => p.FILENO)
+                .ToTable("CCUPAYHAND", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.DRAFTSTATUS)
+                    .HasColumnName(@"DRAFT_STATUS")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.PAYTAX)
+                    .HasColumnName(@"PAY_TAX")
+                 .HasColumnType("decimal");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.REJECTTAX)
+                    .HasColumnName(@"REJECT_TAX")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.HANDTYPE)
+                    .HasColumnName(@"HAND_TYPE")
+                    .HasColumnType("bit");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.PROCESSWANT)
+                    .HasColumnName(@"PROCESS_WANT")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.TOTALPAYTAX)
+                    .HasColumnName(@"TOTAL_PAY_TAX")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.TOTALPAYDEPOSIT)
+                    .HasColumnName(@"TOTAL_PAY_DEPOSIT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.HANDDATE)
+                    .HasColumnName(@"HAND_DATE")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.RESHIMONSIGNTYPE)
+                    .HasColumnName(@"RESHIMON_SIGN_TYPE")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.RESHIMONSIGN)
+                    .HasColumnName(@"RESHIMON_SIGN")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.REQUESTCODE)
+                    .HasColumnName(@"REQUEST_CODE")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.AGENTEXPLAIN)
+                    .HasColumnName(@"AGENT_EXPLAIN")
+                    .HasMaxLength(75)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.OBJECTIONEXPLAIN)
+                    .HasColumnName(@"OBJECTION_EXPLAIN")
+                    .HasMaxLength(75)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.DATE7)
+                    .HasColumnName(@"DATE_7")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.TIME7)
+                    .HasColumnName(@"TIME_7")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.IMPORTERNAME)
+                    .HasColumnName(@"IMPORTER_NAME")
+                    .HasMaxLength(55)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.TRANSIMPORTERNAME)
+                    .HasColumnName(@"TRANS_IMPORTER_NAME")
+                    .HasMaxLength(55)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.BONDEDNAME)
+                    .HasColumnName(@"BONDED_NAME")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.ENTRYID)
+                    .HasColumnName(@"ENTRY_ID")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUPAYHAND>()
+                .Property(p => p.SIGNERID)
+                    .HasColumnName(@"SIGNER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar");
+
+            #endregion
+
+            #region CCUSUPITEM
+
+            modelBuilder.Entity<CCUSUPITEM>()
+                .HasKey(p => new { p.FILENO, p.ACCLINENO, p.LINENO })
+                .ToTable("CCUSUPITEMS", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.ACCLINENO)
+                    .HasColumnName(@"ACC_LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.PRATMEHES)
+                    .HasColumnName(@"PRAT_MEHES")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.TARIFFCODE)
+                    .HasColumnName(@"TARIFF_CODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.ESSENTIALITEM)
+                    .HasColumnName(@"ESSENTIAL_ITEM")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.BITHATAXITEM)
+                    .HasColumnName(@"BITHA_TAX_ITEM")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.ORIGINCOUNTRY)
+                    .HasColumnName(@"ORIGIN_COUNTRY")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.PURCHCOUNTRY)
+                    .HasColumnName(@"PURCH_COUNTRY")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.FOREIGNCURRVAL)
+                    .HasColumnName(@"FOREIGN_CURR_VAL")
+                     .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.RAISEPERCENT)
+                    .HasColumnName(@"RAISE_PERCENT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.RAISEVALUE)
+                    .HasColumnName(@"RAISE_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.NISVALUE)
+                    .HasColumnName(@"NIS_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.QUANTITY)
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.EXTRAQNTY)
+                    .HasColumnName(@"EXTRA_QNTY")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.WHOLESALEPRICE)
+                    .HasColumnName(@"WHOLESALE_PRICE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.IMPORTADDITION)
+                    .HasColumnName(@"IMPORT_ADDITION")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.DISCOUNTCODE)
+                    .HasColumnName(@"DISCOUNT_CODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.LICENSENO)
+                    .HasColumnName(@"LICENSE_NO")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.STANDARDNO)
+                    .HasColumnName(@"STANDARD_NO")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.AGNTPAYCUST)
+                    .HasColumnName(@"AGNT_PAY_CUST")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.AGNTPAYTAX)
+                    .HasColumnName(@"AGNT_PAY_TAX")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.AGNTPAYBITHA)
+                    .HasColumnName(@"AGNT_PAY_BITHA")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.NIDHEMEHESPCNT)
+                    .HasColumnName(@"NIDHE_MEHES_PCNT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.NIDHEMASPCNT)
+                    .HasColumnName(@"NIDHE_MAS_PCNT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.VEHICLECODE)
+                    .HasColumnName(@"VEHICLE_CODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.ABSAMOUNT)
+                    .HasColumnName(@"ABS_AMOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.AIRBAGSAMOUNT)
+                    .HasColumnName(@"AIRBAGS_AMOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.ACAMOUNT)
+                    .HasColumnName(@"AC_AMOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.EXPRESHIMONNO)
+                    .HasColumnName(@"EXP_RESHIMON_NO")
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.EXPPRAT)
+                    .HasColumnName(@"EXP_PRAT")
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.GUARANTEENO)
+                    .HasColumnName(@"GUARANTEE_NO")
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.GUARANPERCENT)
+                    .HasColumnName(@"GUARAN_PERCENT")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.GUARANTEETYPE)
+                    .HasColumnName(@"GUARANTEE_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.EXEMPTIONCODE)
+                    .HasColumnName(@"EXEMPTION_CODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.GOODSDESC)
+                    .HasColumnName(@"GOODS_DESC")
+                    .HasMaxLength(30)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.CURRENCYCODE)
+                    .HasColumnName(@"CURRENCY_CODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.PRATMEHESCAN)
+                    .HasColumnName(@"PRAT_MEHES_CAN")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.AUTONOMYBOOK)
+                    .HasColumnName(@"AUTONOMY_BOOK")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.PRIVATEIMPCURR)
+                    .HasColumnName(@"PRIVATE_IMP_CURR")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.TSVIRA)
+                    .HasColumnType("bit");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.KATALOGNO)
+                    .HasColumnName(@"KATALOG_NO")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.ITEMNO)
+                    .HasColumnName(@"ITEM_NO")
+                    .HasMaxLength(30)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.ITEMLINENO)
+                    .HasColumnName(@"ITEM_LINE_NO")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.ORIGINVALUE)
+                    .HasColumnName(@"ORIGIN_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.UNITID)
+                    .HasColumnName(@"UNIT_ID")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.STSQNTY)
+                    .HasColumnName(@"STS_QNTY")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.PRATMEHESN)
+                    .HasColumnName(@"PRAT_MEHES_N")
+                    .HasMaxLength(12)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.ORIGINCOUNTRYN)
+                    .HasColumnName(@"ORIGIN_COUNTRY_N")
+                    .HasMaxLength(2)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUSUPITEM>()
+                .Property(p => p.PURCHCOUNTRYN)
+                    .HasColumnName(@"PURCH_COUNTRY_N")
+                    .HasMaxLength(2)
+                    .HasColumnType("varchar");
+
+            #endregion
+
+
+            #region CCUCRREQ
+
+            modelBuilder.Entity<CCUCRREQ>()
+                .HasKey(p => new { p.ACCLINENO, p.ENTNAME, p.FILENO, p.ITEMLINE, p.LINENO })
+                .ToTable("CCUCRREQ", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.ENTNAME)
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.ACCLINENO)
+                    .HasColumnName(@"ACC_LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.ITEMLINE)
+                    .HasColumnName(@"ITEM_LINE")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.REQCERTID)
+                    .HasColumnName(@"REQ_CERT_ID")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.GCRCRTFID)
+                    .HasColumnName(@"GCRCRTF_ID")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.GCRCRTFCLOSE)
+                    .HasColumnName(@"GCRCRTF_CLOSE")
+                    .HasColumnType("bit");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.PRATMEHES)
+                    .HasColumnName(@"PRAT_MEHES")
+                    .HasMaxLength(11)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.CERTIFICATENO)
+                    .HasColumnName(@"CERTIFICATE_NO")
+                    .HasMaxLength(20)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.APPROVCODE)
+                    .HasColumnName(@"APPROV_CODE")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.APPROVTYPE)
+                    .HasColumnName(@"APPROV_TYPE")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.SINUMBER)
+                    .HasColumnName(@"SI_NUMBER")
+                    .HasMaxLength(20)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.SUPPLIERID)
+                    .HasColumnName(@"SUPPLIER_ID")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.SUPPLIERCOUNTRY)
+                    .HasColumnName(@"SUPPLIER_COUNTRY")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.ITEMNO)
+                    .HasColumnName(@"ITEM_NO")
+                    .HasMaxLength(30)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.FENTNAME)
+                    .HasColumnName(@"F_ENTNAME")
+                    .HasMaxLength(32)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.REMARKS)
+                    .HasMaxLength(256)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.ADDREQUESTNO)
+                    .HasColumnName(@"ADD_REQUEST_NO")
+                    .HasMaxLength(10)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUCRREQ>()
+                .Property(p => p.REQUESTNO)
+                    .HasColumnName(@"REQUEST_NO")
+                    .HasMaxLength(50)
+                    .HasColumnType("varchar");
+            #endregion
+                       
+             #region CCUCUSTITEM
+
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .HasKey(p => new { p.FILENO, p.LINENO })
+                .ToTable("CCUCUSTITEMS", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.PRATMEHES)
+                    .HasColumnName(@"PRAT_MEHES")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.SUPPLIERACCOUNT)
+                    .HasColumnName(@"SUPPLIER_ACCOUNT")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.TARIFFCODE)
+                    .HasColumnName(@"TARIFF_CODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.ESSENTIALITEM)
+                    .HasColumnName(@"ESSENTIAL_ITEM")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.BITHATAXITEM)
+                    .HasColumnName(@"BITHA_TAX_ITEM")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.ORIGINCOUNTRY)
+                    .HasColumnName(@"ORIGIN_COUNTRY")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.PURCHCOUNTRY)
+                    .HasColumnName(@"PURCH_COUNTRY")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.FOREIGNCURRVAL)
+                    .HasColumnName(@"FOREIGN_CURR_VAL")
+                     .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.RAISEPERCENT)
+                    .HasColumnName(@"RAISE_PERCENT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.RAISEVALUE)
+                    .HasColumnName(@"RAISE_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.NISVALUE)
+                    .HasColumnName(@"NIS_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.QUANTITY)
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.EXTRAQNTY)
+                    .HasColumnName(@"EXTRA_QNTY")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.WHOLESALEPRICE)
+                    .HasColumnName(@"WHOLESALE_PRICE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.IMPORTADDITION)
+                    .HasColumnName(@"IMPORT_ADDITION")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.DISCOUNTCODE)
+                    .HasColumnName(@"DISCOUNT_CODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.LICENSENO)
+                    .HasColumnName(@"LICENSE_NO")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.STANDARDNO)
+                    .HasColumnName(@"STANDARD_NO")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.AGNTPAYCUST)
+                    .HasColumnName(@"AGNT_PAY_CUST")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.AGNTPAYTAX)
+                    .HasColumnName(@"AGNT_PAY_TAX")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.AGNTPAYBITHA)
+                    .HasColumnName(@"AGNT_PAY_BITHA")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.NIDHEMEHESPCNT)
+                    .HasColumnName(@"NIDHE_MEHES_PCNT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.NIDHEMASPCNT)
+                    .HasColumnName(@"NIDHE_MAS_PCNT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.VEHICLECODE)
+                    .HasColumnName(@"VEHICLE_CODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.ABSAMOUNT)
+                    .HasColumnName(@"ABS_AMOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.AIRBAGSAMOUNT)
+                    .HasColumnName(@"AIRBAGS_AMOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.ACAMOUNT)
+                    .HasColumnName(@"AC_AMOUNT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.EXPRESHIMONNO)
+                    .HasColumnName(@"EXP_RESHIMON_NO")
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.EXPPRAT)
+                    .HasColumnName(@"EXP_PRAT")
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.GUARANTEENO)
+                    .HasColumnName(@"GUARANTEE_NO")
+                    .HasMaxLength(8)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.GUARANPERCENT)
+                    .HasColumnName(@"GUARAN_PERCENT")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.GUARANTEETYPE)
+                    .HasColumnName(@"GUARANTEE_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.EXEMPTIONCODE)
+                    .HasColumnName(@"EXEMPTION_CODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.GOODSDESC)
+                    .HasColumnName(@"GOODS_DESC")
+                    .HasMaxLength(30)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.CURRENCYCODE)
+                    .HasColumnName(@"CURRENCY_CODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.PRATMEHESCAN)
+                    .HasColumnName(@"PRAT_MEHES_CAN")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.AUTONOMYBOOK)
+                    .HasColumnName(@"AUTONOMY_BOOK")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.PRIVATEIMPCURR)
+                    .HasColumnName(@"PRIVATE_IMP_CURR")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.TSVIRA)
+                    .HasColumnType("bit");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.KATALOGNO)
+                    .HasColumnName(@"KATALOG_NO")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.ORDERLINE)
+                    .HasColumnName(@"ORDER_LINE")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.UNITID)
+                    .HasColumnName(@"UNIT_ID")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.STSQNTY)
+                    .HasColumnName(@"STS_QNTY")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.PRATMEHESN)
+                    .HasColumnName(@"PRAT_MEHES_N")
+                    .HasMaxLength(12)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.ORIGINCOUNTRYN)
+                    .HasColumnName(@"ORIGIN_COUNTRY_N")
+                    .HasMaxLength(2)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUCUSTITEM>()
+                .Property(p => p.PURCHCOUNTRYN)
+                    .HasColumnName(@"PURCH_COUNTRY_N")
+                    .HasMaxLength(2)
+                    .HasColumnType("varchar");
+
+            #endregion
+
+            ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+            #region CCUQUELOCK
+            ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+            modelBuilder.Entity<CCUQUELOCK>()
+                .HasKey(p => new
+                {
+                    p.ENTNAME,
+                    ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                    ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                    p.FILE_NO
+                    ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                    ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                })////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                .ToTable("CCUQUELOCK", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUQUELOCK>()
+                .Property(p => p.ENTNAME)
+                    .IsRequired()
+                    .HasMaxLength(16)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUQUELOCK>()
+                .Property(p =>
+                ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                p.FILE_NO
+                ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                ////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                )
+                    .HasColumnName(@"FILE_NO")////**** ITZIK :YUVAL PLS SET THE PROPERTY FROM FILENO TO FILE_NO !!!!
+                    .IsRequired()
+                    .HasMaxLength(32)
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("varchar");
+
+            #endregion
+
+            #region CCUPAYLINEF
+
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .HasKey(p => new { p.FILENO, p.LINENO })
+                .ToTable("CCUPAYLINEF", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.PAYORDNO)
+                    .HasColumnName(@"PAY_ORD_NO")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.PAYMETHOD)
+                    .HasColumnName(@"PAY_METHOD")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.TYPE)
+                    .HasColumnType("SMALLINT");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.PAYEETYPE)
+                    .HasColumnName(@"PAYEE_TYPE")
+                    .HasColumnType("SMALLINT");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.PAYAMOUNT)
+                    .HasColumnName(@"PAY_AMOUNT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.ACCOUNTNAME)
+                    .HasColumnName(@"ACCOUNT_NAME")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.BANKID)
+                    .HasColumnName(@"BANK_ID")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.BANKBRANCH)
+                    .HasColumnName(@"BANK_BRANCH")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.BANKACCOUNT)
+                    .HasColumnName(@"BANK_ACCOUNT")
+                    .HasMaxLength(11)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.PAYREF)
+                    .HasColumnName(@"PAY_REF")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.PAYDATE)
+                    .HasColumnName(@"PAY_DATE")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.TREATFILE)
+                    .HasColumnName(@"TREAT_FILE")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.VATBANK)
+                    .HasColumnName(@"VAT_BANK")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUPAYLINEF>()
+                .Property(p => p.HASHAVUTCODE)
+                    .HasColumnName(@"HASHAVUT_CODE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+
+            #endregion
+
+            #region CCUTAX
+
+            modelBuilder.Entity<CCUTAX>()
+                .HasKey(p => new { p.FILENO, p.LINENO })
+                .ToTable("CCUTAX", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.PRATMEHES)
+                    .HasColumnName(@"PRAT_MEHES")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.GOODSNO)
+                    .HasColumnName(@"GOODS_NO")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.TAXTYPE)
+                    .HasColumnName(@"TAX_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.TAXBASIS)
+                    .HasColumnName(@"TAX_BASIS")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.TAXAMOUNT)
+                    .HasColumnName(@"TAX_AMOUNT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.POSTPONEDTAX)
+                    .HasColumnName(@"POSTPONED_TAX")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.TAXTOPAY)
+                    .HasColumnName(@"TAX_TO_PAY")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.TAXCALCCODE)
+                    .HasColumnName(@"TAX_CALC_CODE")
+                    .HasColumnType("SMALLINT");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.TAXRATE)
+                    .HasColumnName(@"TAX_RATE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.DEFINEDTAX)
+                    .HasColumnName(@"DEFINED_TAX")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.ADDTAXRATE)
+                    .HasColumnName(@"ADD_TAX_RATE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.ADDEFINEDTAX)
+                    .HasColumnName(@"AD_DEFINED_TAX")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.ADDIMPORT)
+                    .HasColumnName(@"ADD_IMPORT")
+                    .HasColumnType("float");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.PRATMEHESN)
+                    .HasColumnName(@"PRAT_MEHES_N")
+                    .HasMaxLength(12)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUTAX>()
+                .Property(p => p.TAXTYPEN)
+                    .HasColumnName(@"TAX_TYPE_N")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar");
+
+            #endregion
+
+            #region CCUFILEM
+
+            modelBuilder.Entity<CCUFILEM>()
+                .HasKey(p => p.FILENO)
+                .ToTable("CCUFILEM", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("bigint");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CUSTOMERID)
+                    .HasColumnName(@"CUSTOMER_ID")
+                    .HasMaxLength(15)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CUSTOMFILENO)
+                    .HasColumnName(@"CUSTOM_FILE_NO")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.DRAWNO)
+                    .HasColumnName(@"DRAW_NO")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.RESHIMONTYPE)
+                    .HasColumnName(@"RESHIMON_TYPE")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.RESHIMONNO)
+                    .HasColumnName(@"RESHIMON_NO")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.DRAFTDATE)
+                    .HasColumnName(@"DRAFT_DATE")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.AUTONOMY)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.STORAGEREQUEST)
+                    .HasColumnName(@"STORAGE_REQUEST")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CUSTOMSBRANCH)
+                    .HasColumnName(@"CUSTOMS_BRANCH")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CUSTOMAGENT)
+                    .HasColumnName(@"CUSTOM_AGENT")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.IMPORTERID)
+                    .HasColumnName(@"IMPORTER_ID")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.BRANCHID)
+                    .HasColumnName(@"BRANCH_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.DEPARTID)
+                    .HasColumnName(@"DEPART_ID")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.OPENDATE)
+                    .HasColumnName(@"OPEN_DATE")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.FOLUPDATE)
+                    .HasColumnName(@"FOL_UP_DATE")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.FILECLOSE)
+                    .HasColumnName(@"FILE_CLOSE")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.OPENBYUSER)
+                    .HasColumnName(@"OPEN_BY_USER")
+                    .HasMaxLength(15)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CHANGE)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.TRANSIMPORTID)
+                    .HasColumnName(@"TRANS_IMPORT_ID")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.RIGHTOWNID)
+                    .HasColumnName(@"RIGHT_OWN_ID")
+                    .HasColumnType("SMALLINT");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.RESHMDATE)
+                    .HasColumnName(@"RESHM_DATE")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.WARNINGDATE)
+                    .HasColumnName(@"WARNING_DATE")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.SELLCONDITIONID)
+                    .HasColumnName(@"SELL_CONDITION_ID")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.INDEXVALUE)
+                    .HasColumnName(@"INDEX_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.COINID)
+                    .HasColumnName(@"COIN_ID")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CHANGINGVALUE)
+                    .HasColumnName(@"CHANGING_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.REGIONVALUE)
+                    .HasColumnName(@"REGION_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.TRANSPVALUE)
+                    .HasColumnName(@"TRANSP_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.INSURANCEVALUE)
+                    .HasColumnName(@"INSURANCE_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.SERVICEVALUE)
+                    .HasColumnName(@"SERVICE_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.EXPENSEVALUE)
+                    .HasColumnName(@"EXPENSE_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CLOSUREVALUE)
+                    .HasColumnName(@"CLOSURE_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.FEECARRIER)
+                    .HasColumnName(@"FEE_CARRIER")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.FEEPLATFORM)
+                    .HasColumnName(@"FEE_PLATFORM")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CURRENCYRATE)
+                    .HasColumnName(@"CURRENCY_RATE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.PRICEINDEX)
+                    .HasColumnName(@"PRICE_INDEX")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.GOODSVALUE)
+                    .HasColumnName(@"GOODS_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CIFVALUE)
+                    .HasColumnName(@"CIF_VALUE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.ACCEPTEDPRICE)
+                    .HasColumnName(@"ACCEPTED_PRICE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.TOTALTAX)
+                    .HasColumnName(@"TOTAL_TAX")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.TRANSPVALFC)
+                    .HasColumnName(@"TRANSP_VAL_FC")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.TRANCURRENCY)
+                    .HasColumnName(@"TRAN_CURRENCY")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.INSURANCEPERCENT)
+                    .HasColumnName(@"INSURANCE_PERCENT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.INSURANCECURR)
+                    .HasColumnName(@"INSURANCE_CURR")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.INSURANCEAMNT)
+                    .HasColumnName(@"INSURANCE_AMNT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.PAYDATE)
+                    .HasColumnName(@"PAY_DATE")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.PAYTIME)
+                    .HasColumnName(@"PAY_TIME")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.MEHESDRAFTSTATUS)
+                    .HasColumnName(@"MEHES_DRAFT_STATUS")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.GRANTDATE)
+                    .HasColumnName(@"GRANT_DATE")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.GRANTTIME)
+                    .HasColumnName(@"GRANT_TIME")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.INDICATORS)
+                    .HasMaxLength(20)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CUSTOMPRINT)
+                    .HasColumnName(@"CUSTOM_PRINT")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.TSHUMOTTAXPRINT)
+                    .HasColumnName(@"TSHUMOT_TAX_PRINT")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CHARGESYSPRINT)
+                    .HasColumnName(@"CHARGE_SYS_PRINT")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CUSTOMAGENTPRINT)
+                    .HasColumnName(@"CUSTOM_AGENT_PRINT")
+                    .HasColumnType("DateTime");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.GRNTTYPEID)
+                    .HasColumnName(@"GRNT_TYPE_ID")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.GUARANTEEAMNT)
+                    .HasColumnName(@"GUARANTEE_AMNT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.IMPORTTYPE)
+                    .HasColumnName(@"IMPORT_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.PASSPORTNO)
+                    .HasColumnName(@"PASSPORT_NO")
+                    .HasMaxLength(9)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.PASSPCTRY)
+                    .HasColumnName(@"PASSP_CTRY")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.IMPORTERSTS)
+                    .HasColumnName(@"IMPORTER_STS")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.FAMILYNAME)
+                    .HasColumnName(@"FAMILY_NAME")
+                    .HasMaxLength(18)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.FIRSTNAME)
+                    .HasColumnName(@"FIRST_NAME")
+                    .HasMaxLength(12)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CITYSYMBOL)
+                    .HasColumnName(@"CITY_SYMBOL")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.STREET)
+                    .HasMaxLength(17)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.HOUSE)
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.ENTRANCE)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.APARTMENTNO)
+                    .HasColumnName(@"APARTMENT_NO")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.ZIPCODE)
+                    .HasColumnName(@"ZIP_CODE")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.FROMIIG)
+                    .HasColumnName(@"FROM_IIG")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.RESHIMONTYPEN)
+                    .HasColumnName(@"RESHIMON_TYPE_N")
+                    .HasMaxLength(7)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.RESHIMONNON)
+                    .HasColumnName(@"RESHIMON_NO_N")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.COINIDN)
+                    .HasColumnName(@"COIN_ID_N")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.TRANCURRENCYN)
+                    .HasColumnName(@"TRAN_CURRENCY_N")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.INSURANCECURRN)
+                    .HasColumnName(@"INSURANCE_CURR_N")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CANCELLED)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.LOANAMOUNT)
+                    .HasColumnName(@"LOAN_AMOUNT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.CURRENCYRATENEW)
+                    .HasColumnName(@"CURRENCY_RATE_NEW")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.DRAWNON)
+                    .HasColumnName(@"DRAW_NO_N")
+                    .HasMaxLength(35)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.PRATMEHESLIST)
+                    .HasColumnName(@"PRAT_MEHES_LIST")
+                    .HasMaxLength(30)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.ALLPRATMEHESLIST)
+                    .HasColumnName(@"ALL_PRAT_MEHES_LIST")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.NOOFINVOICES)
+                    .HasColumnName(@"NO_OF_INVOICES")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUFILEM>()
+                .Property(p => p.TOTALINVOICELINESNO)
+                    .HasColumnName(@"TOTAL_INVOICE_LINES_NO")
+                    .HasColumnType("decimal");
+
+
+
+
+
+
+
+
+            #endregion
+
+
+            #region CCUTRANSPVAL
+
+            modelBuilder.Entity<CCUTRANSPVAL>()
+                .HasKey(p => new { p.FILENO, p.LINENO })
+                .ToTable("CCUTRANSPVAL", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUTRANSPVAL>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUTRANSPVAL>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUTRANSPVAL>()
+                .Property(p => p.TRANSPVALFC)
+                    .HasColumnName(@"TRANSP_VAL_FC")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUTRANSPVAL>()
+                .Property(p => p.CURRID)
+                    .HasColumnName(@"CURR_ID")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUTRANSPVAL>()
+                .Property(p => p.TRANSPVAL)
+                    .HasColumnName(@"TRANSP_VAL")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUTRANSPVAL>()
+                .Property(p => p.CURRIDN)
+                    .HasColumnName(@"CURR_ID_N")
+                    .HasMaxLength(3)
+                    .HasColumnType("varchar");
+
+            #endregion
+
+            #region CCUMESSAGE
+
+            modelBuilder.Entity<CCUMESSAGE>()
+                .HasKey(p => new { p.FILENO, p.LINENO })
+                .ToTable("CCUMESSAGE", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.GROUPNO)
+                    .HasColumnName(@"GROUP_NO")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.GROUPKEY)
+                    .HasColumnName(@"GROUP_KEY")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.REFERENCE)
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.MESSAGENO)
+                    .HasColumnName(@"MESSAGE_NO")
+                    .HasMaxLength(5)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.APPROVCODEID)
+                    .HasColumnName(@"APPROV_CODE_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.APPROVTYPEID)
+                    .HasColumnName(@"APPROV_TYPE_ID")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.APPROVNO)
+                    .HasColumnName(@"APPROV_NO")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.ADDITIONID)
+                    .HasColumnName(@"ADDITION_ID")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.GENERAL)
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.APPROVELEVEL)
+                    .HasColumnName(@"APPROVE_LEVEL")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUMESSAGE>()
+                .Property(p => p.MESSAGETXT)
+                    .HasColumnName(@"MESSAGE_TXT")
+                    .HasColumnType("varchar(max)");
+
+            #endregion
+
+            #region CCUCARL
+
+            modelBuilder.Entity<CCUCARL>()
+                .HasKey(p => new { p.COUNTER, p.FILENO, p.LINENO })
+                .ToTable("CCUCARL", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.COUNTER)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.RIHBIT)
+                    .HasMaxLength(12)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.ENGINEVOL)
+                    .HasColumnName(@"ENGINE_VOL")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.SHEILDNO)
+                    .HasColumnName(@"SHEILD_NO")
+                    .HasMaxLength(20)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.MNFDATE)
+                    .HasColumnName(@"MNF_DATE")
+                    .HasMaxLength(4)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.A)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.B)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.E)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.MEMIRTYPE)
+                    .HasColumnName(@"MEMIR_TYPE")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.MADADRATE)
+                    .HasColumnName(@"MADAD_RATE")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.FUELTYPE)
+                    .HasColumnName(@"FUEL_TYPE")
+                    .HasMaxLength(1)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.WEIGHT)
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.FFU1)
+                    .HasMaxLength(50)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.FFU2)
+                    .HasMaxLength(50)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.ABSDEDUCT)
+                    .HasColumnName(@"ABS_DEDUCT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.KARITDEDUCT)
+                    .HasColumnName(@"KARIT_DEDUCT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.BAKARADEDUCT)
+                    .HasColumnName(@"BAKARA_DEDUCT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.MEMIRDEDUCT)
+                    .HasColumnName(@"MEMIR_DEDUCT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.MADADDEDUCT)
+                    .HasColumnName(@"MADAD_DEDUCT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCARL>()
+                .Property(p => p.HYBRID)
+                    .HasColumnType("int");
+
+            #endregion
+
+             #region CCUTSRUFOT
+
+            modelBuilder.Entity<CCUTSRUFOT>()
+                .HasKey(p => new { p.FILENO, p.LINENO })
+                .ToTable("CCUTSRUFOT", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUTSRUFOT>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUTSRUFOT>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUTSRUFOT>()
+                .Property(p => p.TSRUFAID)
+                    .HasColumnName(@"TSRUFA_ID")
+                    .HasMaxLength(3)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUTSRUFOT>()
+                .Property(p => p.QUANTITY)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUTSRUFOT>()
+                .Property(p => p.TSRUFANO)
+                    .HasColumnName(@"TSRUFA_NO")
+                    .HasMaxLength(10)
+                    .HasColumnType("char");
+
+            #endregion
+
+          
+            #region CCUCAR
+
+            modelBuilder.Entity<CCUCAR>()
+                .HasKey(p => new { p.FILENO, p.LINENO })
+                .ToTable("CCUCAR", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUCAR>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCAR>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCAR>()
+                .Property(p => p.ABSDEDUCT)
+                    .HasColumnName(@"ABS_DEDUCT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCAR>()
+                .Property(p => p.KARITDEDUCT)
+                    .HasColumnName(@"KARIT_DEDUCT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCAR>()
+                .Property(p => p.BAKARADEDUCT)
+                    .HasColumnName(@"BAKARA_DEDUCT")
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCAR>()
+                .Property(p => p.MEMIRDEDUCT)
+                    .HasColumnName(@"MEMIR_DEDUCT")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCAR>()
+                .Property(p => p.MADADDEDUCT)
+                    .HasColumnName(@"MADAD_DEDUCT")
+                    .HasColumnType("decimal");
+
+            #endregion
+
+            #region CCUCARSC
+
+            modelBuilder.Entity<CCUCARSC>()
+                .HasKey(p => new { p.COUNTER, p.FILENO, p.LINENO })
+                .ToTable("CCUCARSC", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.COUNTER)
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.VEHICLEFILE)
+                    .HasColumnName(@"VEHICLE_FILE")
+                    .HasMaxLength(12)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.CARMODEL)
+                    .HasColumnName(@"CAR_MODEL")
+                    .HasMaxLength(25)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.CHASSISNO)
+                    .HasColumnName(@"CHASSIS_NO")
+                    .HasMaxLength(18)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.ENGINENO)
+                    .HasColumnName(@"ENGINE_NO")
+                    .HasMaxLength(20)
+                    .HasColumnType("varchar");
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.WINDOWNO)
+                    .HasColumnName(@"WINDOW_NO")
+                    .HasMaxLength(13)
+                    .HasColumnType("char");
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.FOB)
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.GENERALTAX)
+                    .HasColumnName(@"GENERAL_TAX")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.BUYTAX)
+                    .HasColumnName(@"BUY_TAX")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.VATRESHIMON)
+                    .HasColumnName(@"VAT_RESHIMON")
+                    .HasColumnType("decimal");
+            modelBuilder.Entity<CCUCARSC>()
+                .Property(p => p.EXEMPTTYPE)
+                    .HasColumnName(@"EXEMPT_TYPE")
+                    .HasMaxLength(2)
+                    .HasColumnType("char");
+
+            #endregion
+
+            #region CCUSIGNUM
+
+            modelBuilder.Entity<CCUSIGNUM>()
+                .HasKey(p => new { p.FILENO, p.LINENOMSHGR, p.LINENOSIGN })
+                .ToTable("CCUSIGNUM", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUSIGNUM>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSIGNUM>()
+                .Property(p => p.LINENOMSHGR)
+                    .HasColumnName(@"LINE_NO_MSHGR")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSIGNUM>()
+                .Property(p => p.LINENOSIGN)
+                    .HasColumnName(@"LINE_NO_SIGN")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSIGNUM>()
+                .Property(p => p.SIGNNUM)
+                    .HasColumnName(@"SIGN_NUM")
+                    .HasMaxLength(30)
+                    .HasColumnType("char");
+
+            #endregion
+
+        
+            #region CCUSUPITEMSI
+
+            modelBuilder.Entity<CCUSUPITEMSI>()
+                .HasKey(p => new { p.ACCLINENO, p.FILENO, p.LINEID, p.LINENO, p.SICOUNTER })
+                .ToTable("CCUSUPITEMSI", "AMITESTM");
+            // Properties:
+            modelBuilder.Entity<CCUSUPITEMSI>()
+                .Property(p => p.FILENO)
+                    .HasColumnName(@"FILE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSUPITEMSI>()
+                .Property(p => p.ACCLINENO)
+                    .HasColumnName(@"ACC_LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSUPITEMSI>()
+                .Property(p => p.LINENO)
+                    .HasColumnName(@"LINE_NO")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSUPITEMSI>()
+                .Property(p => p.SICOUNTER)
+                    .HasColumnName(@"SI_COUNTER")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSUPITEMSI>()
+                .Property(p => p.LINEID)
+                    .HasColumnName(@"LINE_ID")
+                    .IsRequired()
+                    .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
+                    .HasColumnType("int");
+            modelBuilder.Entity<CCUSUPITEMSI>()
+                .Property(p => p.MOREDATA)
+                    .HasColumnName(@"MORE_DATA")
+                    .HasMaxLength(1024)
+                    .HasColumnType("varchar");
+
+            #endregion
+
+           
+            #region Disabled conventions
+
+
+            #endregion
+            return modelBuilder;///base.OnModelCreating(modelBuilder);
+        }
 
         public virtual DbSet<YCULPROCESS> YCULPROCESSES { get; set; }
         public virtual DbSet<GGGQ> GGGQs { get; set; }

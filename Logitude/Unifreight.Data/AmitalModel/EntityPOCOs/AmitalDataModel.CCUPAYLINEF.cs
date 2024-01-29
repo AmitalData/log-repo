@@ -165,7 +165,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for PAYAMOUNT in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> PAYAMOUNT
+        public virtual global::System.Nullable<long> PAYAMOUNT
         {
             get
             {
@@ -180,7 +180,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _PAYAMOUNT;
+        private global::System.Nullable<long> _PAYAMOUNT;
 
     
         /// <summary>
