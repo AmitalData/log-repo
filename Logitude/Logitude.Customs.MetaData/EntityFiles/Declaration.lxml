@@ -21579,6 +21579,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <field
     Id="&quot;7ce1cacd-8a3a-400e-9072-6100b231fbe9&quot;"
     FieldName="&quot;EffectiveFlight&quot;"
@@ -21607,6 +21608,7 @@
     PMPropertyPath="&quot;EffectiveFlight&quot;"
     ListPropertyPath="&quot;EffectiveFlight&quot;"
     DisplayInLookUpIndex="0"
+
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -28169,6 +28171,15 @@
       FeatureTypeCode="&quot;ACT&quot;"
       FeatureTextCodeCode="&quot;Customs.Declaration.Features.CancelPaymentFeature&quot;"
       FeatureDefaultText="&quot;Cancel Payment Feature&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;Pending900InDetainedOrPhysicalCheck&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Declaration.Features.Pending900InDetainedOrPhysicalCheck&quot;"
+      FeatureDefaultText="&quot;גביה - בתהליך בדיקה פיזית/מעוכבים&quot;"
       IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
