@@ -937,11 +937,11 @@ export class CertificateOfOriginInvoiceLine extends BaseComponent {
         this.entityPM.InvoicesIdUry = newValue;
     }
 
-    public get InvoiceNumber(): number {
-        return this.entityPM.InvoicesIdUry;
+    public get InvoiceNumber(): string {
+        return this.entityPM.InvoiceNumber;
     }
-    public set InvoiceNumber(newValue: number) {
-        this.entityPM.InvoicesIdUry = newValue;
+    public set InvoiceNumber(newValue: string) {
+        this.entityPM.InvoiceNumber = newValue;
     }
 
     public get InvoiceDate(): Date {
