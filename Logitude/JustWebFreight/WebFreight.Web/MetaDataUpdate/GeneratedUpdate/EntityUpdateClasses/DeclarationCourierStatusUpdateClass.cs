@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class DeclarationCourierStatusUpdateClass
    {  		
-		public const string HashString = "b31a2617163f70e9aa36b98422c5a4e0";
+		public const string HashString = "d658145c85c9bd7fb4675a5f68452952";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -6295,6 +6295,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusONotCheckDeclarations = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.NotCheckDeclarations", DefaultText = "Not Check declarations",LocalDefaultText = @"לא נבחרו הצהרות", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOCity = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.City", DefaultText = "City",LocalDefaultText = @"עיר", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode DeclarationCourierStatusTextCode_CustomsDeclarationCourierStatusOMultipleStorageSitesConfirmation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.DeclarationCourierStatus.O.MultipleStorageSitesConfirmation", DefaultText = "There are declarations with different storage sites, should still proceed with submitting a payment?",LocalDefaultText = @"יש הצהרות עם אתרי אחסון שונים, האם בכל זאת להמשיך עם הגשת תשלום?", ObjectTableId = DeclarationCourierStatusObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

@@ -7575,6 +7575,12 @@
       LocalDefaultText="&quot;עיר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.DeclarationCourierStatus.O.MultipleStorageSitesConfirmation&quot;"
+      DefaultText="&quot;There are declarations with different storage sites, should still proceed with submitting a payment?&quot;"
+      LocalDefaultText="&quot;יש הצהרות עם אתרי אחסון שונים, האם בכל זאת להמשיך עם הגשת תשלום?&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

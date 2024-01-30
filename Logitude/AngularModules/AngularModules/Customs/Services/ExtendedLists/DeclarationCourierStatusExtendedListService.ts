@@ -83,6 +83,45 @@ export class DeclarationCourierStatusExtendedListService {
         });
     }
 
+    
+    getGroupByStorageSite(courierMasterId: string, declarationCourierList: []) {
+
+		var urlparameters = '/getgroupbystoragesite?';
+
+        if (declarationCourierList && declarationCourierList.length) {
+            urlparameters = urlparameters.concat("&declarationCourierList=").concat(JSON.stringify(declarationCourierList));
+        }
+        else {
+            urlparameters = urlparameters.concat("&courierMasterId=").concat(courierMasterId);
+        }
+
+        var authHeader = new Headers();
+        authHeader.append('Token', SessionInfo.Token);
+        var callUrl = this._apiUrl.concat(urlparameters);//
+
+
+        return defer(() => {
+            return this._http.get(callUrl, ServiceHelper.GetHttpHeaders()).pipe(map((response:any) => {
+
+                var serviceResponse: ServiceResponse;
+                serviceResponse = response;
+                var _mappedListsArray: Array<DeclarationCourierStatusList> = [];
+                if (serviceResponse.Result) {
+                    for (var key in serviceResponse.Result) {
+
+                        var entity: DeclarationCourierStatusList;
+                        entity = this.MapJsonToEntityList(serviceResponse.Result[key]);
+                        _mappedListsArray.push(entity);
+
+                    }
+                }
+
+                serviceResponse.Result = _mappedListsArray;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+	}
+
     MapJsonToEntityList(jsonList: any) {
 
         var entityList: DeclarationCourierStatusList;

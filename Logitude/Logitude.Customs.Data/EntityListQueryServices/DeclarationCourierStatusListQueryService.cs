@@ -555,6 +555,44 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             query2 = filter.GetFilteredQuery<DeclarationCourierStatusList>(listQueryOperation, query2);
             return query2;
         }
+
+        public int GetCountGroupByStorageCode(int tenant, string courierMasterId = null, List<string> declarationsList = null)
+        {
+            IQueryable<GetStorageSiteByIdResult> query;
+
+            if (declarationsList != null && declarationsList.Count > 0)
+            {
+                query = (from dcs in context.DeclarationCourierStatuses
+                         join c in context.Consignments on dcs.DeclarationId equals c.DeclarationId
+                         where declarationsList.Contains(dcs.DeclarationId)
+                         select new GetStorageSiteByIdResult { Tenant = dcs.Tenant, CourierPaymentStatusCode = dcs.CourierPaymentStatusCode, StorageSiteCode = c.StorageSiteCode });
+            }
+            else
+            {
+                query = (from cd in context.CourierDeclarations
+                         join dcs in context.DeclarationCourierStatuses on cd.DeclarationId equals dcs.DeclarationId
+                         join c in context.Consignments on cd.DeclarationId equals c.DeclarationId
+                         where cd.CourierMasterId == courierMasterId
+                         select new GetStorageSiteByIdResult { Tenant = cd.Tenant, CourierPaymentStatusCode = dcs.CourierPaymentStatusCode, StorageSiteCode = c.StorageSiteCode });
+            }
+
+            // get data for specific tenant and only for courier that are ready for payments and group it by the storage site
+            var querynew = query.Where(a => a.Tenant == tenant && a.CourierPaymentStatusCode == "R")
+                .GroupBy(a => a.StorageSiteCode)
+                .Select(group => new { StorageSite = group.Key, Total = group.Count() });
+
+            var response = querynew.ToList();
+
+            // return the count of storage sites for the courier ID / declaration IDs
+            return response.Count;
+        }
+    }
+
+    public class GetStorageSiteByIdResult
+    {
+        public int Tenant { get; set; }
+        public string CourierPaymentStatusCode { get; set; }
+        public string StorageSiteCode { get; set; }
     }
 
     public class MyJoin
