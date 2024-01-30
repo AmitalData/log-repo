@@ -37,12 +37,12 @@ namespace WebFreight.Web.Controllers.WebServices
 					reader.DateParseHandling = DateParseHandling.None;
 					 webhookObject = JObject.Load(reader);
 				}
-			
 
+				dynamic webhookObjectData = webhookObject?.data != null ? webhookObject?.data : webhookObject;
+				
+				string sentAt = webhookObjectData?.metadata?.sentAt;
 
-				string sentAt = webhookObject?.data?.metadata?.sentAt;
-
-				var enrichedData = webhookService.AddDataToJSON(webhookObject?.data, sentAt);
+				var enrichedData = webhookService.AddDataToJSON(webhookObjectData, sentAt);
 				var result = webhookService.JsonToXML(enrichedData);
 
 				var xmlString = result.OuterXml;
