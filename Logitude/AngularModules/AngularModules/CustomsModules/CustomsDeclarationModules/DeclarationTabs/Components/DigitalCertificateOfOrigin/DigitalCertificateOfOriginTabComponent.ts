@@ -229,14 +229,12 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
         }
     }
 
-    ShowCertificatePDF(item) {
-        this.certificateOfOriginWebService.GetCertificateOfOriginDocumentDeclarationId(this.EntityPM.Id, item.Id)
-            .subscribe((myResponse: ServiceResponse) => {
-                var myRes = myResponse.Result;
-                if (!AppTool.IsNullOrEmpty(myRes.DocumentDeclarationId)) {
-                    DownloadManager.DownloadPage(myRes.DocumentDeclarationId);
-                }
-            });
+    ShowCertificatePDF(docId) {
+       
+        if (!AppTool.IsNullOrEmpty(docId)) {
+            DownloadManager.DownloadPage(docId);
+        }
+          
     }
 
     getCertificateOfOrigins() {

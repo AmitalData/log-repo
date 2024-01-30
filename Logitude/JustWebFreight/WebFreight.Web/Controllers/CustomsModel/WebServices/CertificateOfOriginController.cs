@@ -142,30 +142,6 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
         }
-		public HttpResponseMessage GetCertificateOfOriginDocumentDeclarationId(string declarationId, string certificateOfOriginId)
-		{
-			try
-			{
-				string token = HttpContext.Current.Request.Headers["Token"];
-				AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-				int tenant = authToken.Tenant;
-
-				ICustomContext customContext = CustomContext.GetContext(tenant);
-				CustomsDocumentQueryService customsDocumentQuery = new CustomsDocumentQueryService(customContext);
-				string DocumentDeclarationId = customsDocumentQuery.GetCOOEDocument(declarationId,certificateOfOriginId,  tenant);
-
-
-
-				return Request.CreateResponse(HttpStatusCode.OK,
-					new
-					{
-						DocumentDeclarationId = DocumentDeclarationId,
-					});
-			}
-			catch (Exception ex)
-			{
-				return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
-			}
-		}
+		
 	}
 }

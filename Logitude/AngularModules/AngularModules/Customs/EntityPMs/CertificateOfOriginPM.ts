@@ -474,6 +474,20 @@ export class CertificateOfOriginPM {
     public set ListCounter(newValue: number) { if (this.listCounter != newValue) { this.listCounter = newValue; this.MarkAsDirty("ListCounter"); } }
        
 	 
+     
+	private certificateOriginDocuments: string[];
+    get  CertificateOriginDocuments() {
+        if (this.certificateOriginDocuments == null) {
+            this.certificateOriginDocuments = [];
+        }
+
+        return this.certificateOriginDocuments;
+    }
+    set  CertificateOriginDocuments(newValue: string[]) {
+        if (this.certificateOriginDocuments != newValue) {
+            this.certificateOriginDocuments = newValue;
+        }
+    }
 
     public OldEntityPM: CertificateOfOriginPM;
 		
