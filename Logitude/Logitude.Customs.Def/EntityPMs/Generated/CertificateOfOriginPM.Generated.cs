@@ -1838,7 +1838,40 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-   }
+
+	   private List<string> certificateOriginDocuments;
+	 
+		     
+	   [Include]
+	   [Association("", "","")]
+	   [DataMember]
+	   public virtual List<string> CertificateOriginDocuments  
+	   {
+	        get
+             {
+                 if (certificateOriginDocuments == null)
+                 {
+                     certificateOriginDocuments = new List<string>();
+                 }
+                 return certificateOriginDocuments;
+              }
+             set { certificateOriginDocuments = value; }
+	    }
+		   
+	   private List<string>  deletedCertificateOriginDocuments;
+	   public virtual List<string> DeletedCertificateOriginDocuments  
+	   {
+	        get
+             {
+                 if ( deletedCertificateOriginDocuments == null)
+                 {
+                      deletedCertificateOriginDocuments = new List<string>();
+                 }
+                 return  deletedCertificateOriginDocuments;
+              }
+             set {  deletedCertificateOriginDocuments = value; }
+	    }
+	     }
    
 }
 	 

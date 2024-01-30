@@ -9,6 +9,8 @@ using Logitude.Customs.Data.EntityKeys;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools;
 using Simplog.Server.Infrastructure;
+using Logitude.BL.CommonDataModel.EntityQueries;
+
 
 
 namespace Logitude.Customs.BL.EntityQueryServices
@@ -39,6 +41,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
 		}
 		public List<CertificateOfOriginPM> GetCertificateOfOriginsByDeclarationId(string declarationId ,int tenant)
 		{
+			ICustomContext context = MainContext as CustomContext;
+
+			DocumentsFilingQuery documentsFilingQueryService = new DocumentsFilingQuery();
 			var certificateOfOriginList = repository.GetCertificateOfOriginsByDeclarationId(declarationId, tenant);
 			List<CertificateOfOriginPM> certificateOfOriginPMList = new List<CertificateOfOriginPM>();
 
@@ -46,7 +51,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
 			{
 				foreach (var item in certificateOfOriginList)
 				{
-					certificateOfOriginPMList.Add(this.GetEntityPM(item, false, new CertificateOfOriginKeys { Id = item.Id}));
+					var certificateOfOriginPM = this.GetEntityPM(item, false, new CertificateOfOriginKeys { Id = item.Id });
+				
+					certificateOfOriginPM.CertificateOriginDocuments = documentsFilingQueryService.GetCOOEDocument(declarationId, item.Id, tenant);
+					certificateOfOriginPMList.Add(certificateOfOriginPM);
+
 				}
 			}
 			return certificateOfOriginPMList;
