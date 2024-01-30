@@ -118,6 +118,7 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
              HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
              IsCustomTemplate: true
          });
+         //todo:liron add new column
          this.columns.push({
              FieldName: 'Currency',
              DataTypeCode: 'String',
