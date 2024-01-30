@@ -215,6 +215,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
         if (this.ResponseData == null) {
             return;
         }
+        this.ReloadMyScreen();
     }
 
     ShowCertificatePDF(item) {
