@@ -308,10 +308,12 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         if (this.ResponseData == null) {
             return;
         }
-        this.certificateOfOriginListService.getSingle(this.ResponseData.ApplicationID).subscribe(myResult => {                       
-                if (!myResult.HasError && myResult.Result) {
-                    this.EntityPM =  myResult.Result;                          
-                }
+       
+        this.certificateOfOriginWebService.GetCertificateOfOriginByIDIncludeChildrens(this.ResponseData.ApplicationID, this.DecalarationData.Id, this.EntityPM.Tenant).subscribe(myResult => {
+            var myResponse: ServiceResponse = myResult;
+            if (!myResult.HasError && myResult.Result) {
+                this.EntityPM =  myResult.Result;                          
+            }
         });
       
     }
