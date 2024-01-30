@@ -44,6 +44,7 @@ using Logitude.Accounting.BL.Utils;
 using System.Xml.Serialization;
 using System.IO;
 using Logitude.Accounting.BL.CoreBL.Batch;
+using System.Globalization;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -442,7 +443,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             }
         }
 
-        private void CheckIfGLAccountIsControlGLAccount(GLAccountPM entityPM) {
+        private void CheckIfGLAccountIsControlGLAccount(GLAccountPM entityPM)
+        {
             // FullAccountingSettingQueryService fullAccountingSettingQueryService = new FullAccountingSettingQueryService(entityPM.Tenant);
             FullAccountingSettingPM fullAccountingSetting = FullAccountingSettingQueryService.Get(entityPM.Tenant);
             if (!string.IsNullOrWhiteSpace(entityPM.ParentAccountId) &&
@@ -453,7 +455,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 fullAccountingSetting.OceanImportJobControlAccountId == entityPM.Id ||
                 fullAccountingSetting.AirExportJobControlAccountId == entityPM.Id ||
                 fullAccountingSetting.AirImportJobControlAccountId == entityPM.Id
-                )) {
+                ))
+            {
                 throw new ApplicationException("Can't set parent account for control accounts");
             }
 
@@ -469,7 +472,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CheckIfGLAccountIsControlGLAccount(entityPM);
             ContactPM contact = GetLoggedContact(entityPM.Tenant);
             bool showLocals = !contact.DontShowLocal;
-            if (entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete && s.PeriodStartDate !=null).GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
+            if (entityPM.GLAccountInterestPeriods.Where(s => s.ChangeSetOp != ChangeSetOperation.Delete && s.PeriodStartDate != null).GroupBy(x => x.PeriodStartDate).Any(g => g.Count() > 1))
             {
 
                 throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.LineDateExist", entityPM.Tenant, showLocals));
@@ -504,8 +507,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             }
                             else
                             {
-                                GLAccountInterestPeriodPM item = entityPM.GLAccountInterestPeriods.Where(d => d.PeriodStartDate <= entityPM.InterestCalculationStartDate && d.LineNumber != periodPM.LineNumber ).FirstOrDefault();
-                                if (item == null )
+                                GLAccountInterestPeriodPM item = entityPM.GLAccountInterestPeriods.Where(d => d.PeriodStartDate <= entityPM.InterestCalculationStartDate && d.LineNumber != periodPM.LineNumber).FirstOrDefault();
+                                if (item == null)
                                 {
                                     throw new ApplicationException(TextCodesTranslator.TranslateText("GLAccount.O.InterestCalculationStartDateValidation", entityPM.Tenant, showLocals) + " (" + String.Format("{0:dd.MM.yy}", entityPM.InterestCalculationStartDate.Value.Date) + ")");
 
@@ -758,21 +761,21 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             GLAccountFollowUpDataUpdateService gLAccountFollowUpDataUpdateService = new GLAccountFollowUpDataUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
             if (gLAccountFollowUpData != null)
             {
-                gLAccountFollowUpData= UpdateGLAccountFollowUpData(entityPM, gLAccountFollowUpData, loggedUser);
+                gLAccountFollowUpData = UpdateGLAccountFollowUpData(entityPM, gLAccountFollowUpData, loggedUser);
             }
             else
             {
-                if(entityPM.GLAccountFollowUpRemarks != null || entityPM.GLAccountFollowUpDate!= null
+                if (entityPM.GLAccountFollowUpRemarks != null || entityPM.GLAccountFollowUpDate != null
                     || entityPM.FollowupNotes != null || entityPM.FollowupDate != null)
-                    gLAccountFollowUpData= CreateGLAccountFollowUpData(entityPM, loggedUser);
+                    gLAccountFollowUpData = CreateGLAccountFollowUpData(entityPM, loggedUser);
             }
-            if( gLAccountFollowUpData != null)
-                gLAccountFollowUpDataUpdateService.Update(gLAccountFollowUpData,true);
+            if (gLAccountFollowUpData != null)
+                gLAccountFollowUpDataUpdateService.Update(gLAccountFollowUpData, true);
         }
-        private GLAccountFollowUpDataPM CreateGLAccountFollowUpData(GLAccountPM accountPM,ContactPM loggedUser)
+        private GLAccountFollowUpDataPM CreateGLAccountFollowUpData(GLAccountPM accountPM, ContactPM loggedUser)
         {
             GLAccountFollowUpDataPM gLAccountFollowUpData = new GLAccountFollowUpDataPM();
-            gLAccountFollowUpData= MapGLAccountFollowUpFields(gLAccountFollowUpData, accountPM, loggedUser);
+            gLAccountFollowUpData = MapGLAccountFollowUpFields(gLAccountFollowUpData, accountPM, loggedUser);
             gLAccountFollowUpData.ChangeSetOp = ChangeSetOperation.Insert;
             return gLAccountFollowUpData;
         }
@@ -788,7 +791,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 gLAccountFollowUpData.FollowUpDate = accountPM.FollowupDate;
                 gLAccountFollowUpData.FollowUpRemarks = accountPM.FollowupNotes;
             }
-            else {
+            else
+            {
                 gLAccountFollowUpData.FollowUpDate = null;
                 gLAccountFollowUpData.FollowUpRemarks = null;
             }
@@ -801,7 +805,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private GLAccountFollowUpDataPM UpdateGLAccountFollowUpData(GLAccountPM accountPM, GLAccountFollowUpDataPM gLAccountFollowUpData, ContactPM loggedUser)
         {
-            gLAccountFollowUpData=  MapGLAccountFollowUpFields(gLAccountFollowUpData, accountPM, loggedUser);
+            gLAccountFollowUpData = MapGLAccountFollowUpFields(gLAccountFollowUpData, accountPM, loggedUser);
             gLAccountFollowUpData.ChangeSetOp = ChangeSetOperation.Update;
             return gLAccountFollowUpData;
         }
@@ -1076,7 +1080,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             }
                             if (line.StandardInterestRateBaseId != gLAccountInterestPeriodPM.StandardInterestRateBaseId)
                             {
-                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.StandardInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.StandardInterestRateBaseName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.StandardInterestRateBaseName  + "\n";
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.StandardInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.StandardInterestRateBaseName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.StandardInterestRateBaseName + "\n";
                             }
                             if (line.StandardAddInterestPercent != gLAccountInterestPeriodPM.StandardAddInterestPercent)
                             {
@@ -1084,7 +1088,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             }
                             if (line.ExceptionalInterestRateBaseId != gLAccountInterestPeriodPM.ExceptionalInterestRateBaseId)
                             {
-                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.ExceptionalInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.ExceptionalInterestRateName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.ExceptionalInterestRateName  + "\n";
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.ExceptionalInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.ExceptionalInterestRateName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.ExceptionalInterestRateName + "\n";
                             }
                             if (line.ExceptionalAddInterestPercent != gLAccountInterestPeriodPM.ExceptionalAddInterestPercent)
                             {
@@ -1092,7 +1096,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             }
                             if (line.CreditInterestRateBaseId != gLAccountInterestPeriodPM.CreditInterestRateBaseId)
                             {
-                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.CreditInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.CreditInterestRateBaseName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.CreditInterestRateBaseName  + "\n";
+                                notes += TranslateTextsClass.Translate("GLAccountInterestPeriod.F.CreditInterestRateBaseId", line.Tenant, showLocals) + "," + TranslateTextsClass.Translate("Accounting.General.O.OldValue", line.Tenant, showLocals) + line.CreditInterestRateBaseName + TranslateTextsClass.Translate("Accounting.General.O.NewValue", line.Tenant, showLocals) + gLAccountInterestPeriodPM.CreditInterestRateBaseName + "\n";
                             }
                             if (line.CreditAddInterestPercent != gLAccountInterestPeriodPM.CreditAddInterestPercent)
                             {
@@ -1838,9 +1842,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             ContactPM contact = GetLoggedContact(accountPM.Tenant);
             showLocals = !contact.DontShowLocal;
             gLAccountFollowUp = GetGLAccountFollowUpDataPM(accountPM);
-            if(gLAccountFollowUp != null)
+            if (gLAccountFollowUp != null)
             {
-                if(gLAccountFollowUp.FollowUpDate != accountPM.GLAccountFollowUpDate)
+                if (gLAccountFollowUp.FollowUpDate != accountPM.GLAccountFollowUpDate)
                 {
                     string oldValue = gLAccountFollowUp.FollowUpDate.ToString();
                     string newValue = accountPM.GLAccountFollowUpDate.ToString();
@@ -1860,7 +1864,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private void CreateEvent(string eventCode, string oldValue, string newValue)
         {
             String notes = TranslateTextsClass.Translate("Accounting.General.O.OldValue", EntityPM.Tenant, showLocals) +
-                           oldValue+TranslateTextsClass.Translate("Accounting.General.O.NewValue", EntityPM.Tenant, showLocals) + newValue;
+                           oldValue + TranslateTextsClass.Translate("Accounting.General.O.NewValue", EntityPM.Tenant, showLocals) + newValue;
             EventTracer.CreateTraceEvent(new EventTracerArgs()
             {
                 EntityId = EntityPM.Id,
@@ -1881,9 +1885,9 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             SendHybridTask(entityPM);
         }
 
-        private string GetDisplayNumberFromGLAccount(string GLAccountId,int tenant)
+        private string GetDisplayNumberFromGLAccount(string GLAccountId, int tenant)
         {
-            GLAccountQueryService query = new  GLAccountQueryService(tenant);
+            GLAccountQueryService query = new GLAccountQueryService(tenant);
             return query.GetDisplayNumberByGLAccountId(GLAccountId, tenant);
         }
 
@@ -1912,7 +1916,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             foreach (string property in properties)
             {
                 SetNotesAndEventCodeForTraceEvent(property);
-                if(notes != null)
+                if (notes != null)
                     CreateUpdateTraceEvent(notes, eventCode);
 
 
@@ -2010,7 +2014,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                 case "ReportingAsAnotherDocument":
                     {
-                        if(EntityPOCO.ReportingAsAnotherDocument != EntityPM.ReportingAsAnotherDocument)
+                        if (EntityPOCO.ReportingAsAnotherDocument != EntityPM.ReportingAsAnotherDocument)
                         {
                             eventCode = "GLRC";
                             notes = "";
@@ -2388,31 +2392,23 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             CheckMultiToSingleCurrencyChanged(entityPM, entityPOCO);
             CheckSingleToSingleCurrencyChanged(entityPM, entityPOCO);
-            if (entityPM.ChangeSetOp != ChangeSetOperation.Insert) {
-                CheckIfGlaccountIsConnectedToBankAccountOrCashBook(entityPM, entityPOCO);
+            if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
+            {
+                CheckIfGlaccountIsConnectedToBankGlAccount(entityPM, entityPOCO);
             }
             CheckReconcileMethodChange(entityPM, entityPOCO);
         }
 
-        private void CheckIfGlaccountIsConnectedToBankAccountOrCashBook(GLAccountPM entityPM, GLAccount entityPOCO)
+        private void CheckIfGlaccountIsConnectedToBankGlAccount(GLAccountPM entityPM, GLAccount entityPOCO)
         {
-            if(entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency && entityPM.IsMultiCurrency == true)
+            BankAccountRepository repo = new BankAccountRepository(entityPM.Tenant);
+            var isGlaccountExistsInBankAccount = repo.CheckIfGlAccountExistsInBankAccount(entityPM.Id, entityPM.Tenant);
+            if (entityPM.ChartOfAccountsTypeCode == ChartOfAccountsTypeEnum.Banks.ToIntString() && isGlaccountExistsInBankAccount
+                && ((entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency) || (entityPOCO.CurrencyId != entityPM.CurrencyId)))
             {
-                BankAccountRepository repo = new BankAccountRepository(entityPM.Tenant);
-                var isGlaccountExistsInBankAccount = repo.CheckIfGlAccountExistsInBankAccount(entityPM.Id, entityPM.Tenant);
-                var isGlaccountExistsInCashBook = false;
-                if (!isGlaccountExistsInBankAccount)
-                {
-                    CashBookRepository cashBookRepository = new CashBookRepository(entityPM.Tenant);
-                    isGlaccountExistsInCashBook = cashBookRepository.CheckIfGlAccountExistsInCashBook(entityPM.Id, entityPM.Tenant);
-                }
-                if (entityPM.ChartOfAccountsTypeCode == ChartOfAccountsTypeEnum.Banks.ToIntString() && (isGlaccountExistsInBankAccount || isGlaccountExistsInCashBook)) 
-                {
-                    bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
-                    throw new ApplicationException(TranslateTextsClass.Translate("BankAccounts.O.PreventChangingToIsMultiCurrency", 0, useLocal));
-                }
+                bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
+                throw new ApplicationException(TranslateTextsClass.Translate("BankAccounts.O.PreventChangingCurrency", 0, useLocal));
             }
-            
         }
 
         private static void CheckSplittedGLAccount(GLAccountPM entityPM)
@@ -2594,6 +2590,133 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 
             }, false);
+        }
+        public class CsvModel
+        {
+            public int Tenant { get; set; }
+            public string DisplayNumber { get; set; }
+            public string DeductionFileNumber { get; set; }
+            public string DeductionTypeId { get; set; }
+        }
+        public class CsvError
+        {
+            public int LineNumber { get; set; }
+            public string DisplayNumber { get; set; }
+            public string Error { get; set; }
+        }
+
+        public class UpdateFromCsvResult
+        {
+            public List<CsvError> Errors { get; set; }
+            public int UpdateCounter { get; set; }
+        }
+        private List<CsvModel> getCsvModelList(byte[] fileUploaded)
+        {
+            List<CsvModel> records = new List<CsvModel>();
+            string decodedString = Encoding.UTF8.GetString(fileUploaded);
+            var textReader = new StringReader(decodedString);
+            using (var csv = new CsvHelper.CsvReader(textReader, CultureInfo.InvariantCulture))
+            {
+                records = csv.GetRecords<CsvModel>().ToList();
+            }
+            return records;
+        }
+        public UpdateFromCsvResult UpdateFromCsv(byte[] fileUploader, int tenant)
+        {
+            List<CsvError> Errors = new List<CsvError>();
+
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+            IAccountingContext accountingContext = AccountingContext.GetContext(tenant);
+
+            CountryRepository countryRepository = new CountryRepository(objectContext);
+
+            GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(accountingContext);
+            WithholdingTaxDeductionTypeQueryService withholdingTaxDeductionTypeQueryService = new WithholdingTaxDeductionTypeQueryService(accountingContext);
+            AccountingCompanyTypeQueryService accountingCompanyTypeQueryService = new AccountingCompanyTypeQueryService(accountingContext);
+
+            int updateCounter = 0;
+            List<CsvModel> csvModelList = getCsvModelList(fileUploader);
+
+            if (csvModelList != null)
+            {
+                for (int i = 0; i < csvModelList.Count; i++)
+                {
+                    try
+                    {
+                        bool isChanged = false;
+                        GLAccountPM gLAccountPM = gLAccountQueryService.GetSinglePMByDisplayNumber(csvModelList[i].DisplayNumber, csvModelList[i].Tenant);
+                        if (gLAccountPM == null)
+                        {
+                            Errors.Add(new CsvError { DisplayNumber = csvModelList[i].DisplayNumber, LineNumber = i + 1, Error = "Not Found" });
+                        }
+                        else
+                        {
+                            AccountingCompanyTypePM accountingCompanyTypePM = accountingCompanyTypeQueryService.GetByCode(csvModelList[i].DeductionTypeId, gLAccountPM.Tenant, true);
+                            WithholdingTaxDeductionTypePM withholdingTaxDeductionTypePM = withholdingTaxDeductionTypeQueryService.GetByCode("06", gLAccountPM.Tenant, true);
+                            if (string.IsNullOrWhiteSpace(gLAccountPM.DeductionFileNumber))
+                            {
+                                gLAccountPM.DeductionFileNumber = csvModelList[i].DeductionFileNumber;
+                                isChanged = true;
+                            }
+                            if (string.IsNullOrWhiteSpace(gLAccountPM.DeductionTypeId))
+                            {
+                                gLAccountPM.DeductionTypeId = accountingCompanyTypePM.Id;
+                                isChanged = true;
+                            }
+                            if (string.IsNullOrWhiteSpace(gLAccountPM.DeductionFileTypeId))
+                            {
+                                gLAccountPM.DeductionFileTypeId = withholdingTaxDeductionTypePM.Id;
+                                isChanged = true;
+                            }
+                            if (isChanged)
+                            {
+                                gLAccountPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                                Update(gLAccountPM, true);
+                            }
+
+                            List<CardList> connectedCards = gLAccountQueryService.GetConnectedCards(gLAccountPM.Id, gLAccountPM.Tenant);
+
+                            foreach (CardList card in connectedCards)
+                            {
+                                AddressRepository repo = new AddressRepository(card.Tenant);
+                                var mainAddress = repo.GetMainAddressByCardId(card.Id, card.Tenant);
+                                if (mainAddress == null)
+                                {
+                                    AddressService service = new AddressService(objectContext, gLAccountPM.Tenant);
+                                    Country country = countryRepository.GetSingleCountryByCode("IL", card.Tenant, true);
+                                    AddressPM entityPM = new AddressPM()
+                                    {
+                                        Tenant = gLAccountPM.Tenant,
+                                        AddressTypeId = "M",
+                                        Description = "Main Address",
+                                        Name = card.LocalName,
+                                        CardId = card.Id,
+                                        CountryId = country.Id,
+                                    };
+                                    isChanged = true;
+                                    service.Create(entityPM);
+                                }
+                            }
+                            if (isChanged)
+                                updateCounter++;
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Errors.Add(new CsvError { DisplayNumber = csvModelList[i].DisplayNumber, Error = ex.Message, LineNumber = i + 1 });
+                    }
+                }
+                UpdateFromCsvResult res = new UpdateFromCsvResult
+                {
+                    Errors = Errors,
+                    UpdateCounter = updateCounter
+                };
+                return res;
+            }
+            else
+            {
+                throw new Exception("File is empty");
+            }
         }
     }
 

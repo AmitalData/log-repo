@@ -603,6 +603,16 @@ export class GLAccountPMService {
 			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
-		 
+    
+    UpdateFromCsv(fileUploadParamerter: any) {
+        return defer(() => {
+            return this._http.post(this._apiUrl + "/UpdateFromCsv", JSON.stringify(fileUploadParamerter), ServiceHelper.GetHttpHeaders()).pipe(map((response: any) => {                    
+                    var serviceResponse: ServiceResponse;
+                    serviceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }), catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
 }
