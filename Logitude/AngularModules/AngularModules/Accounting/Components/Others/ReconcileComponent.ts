@@ -545,6 +545,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     OriginalAmountTextCode;
 
     InitTextCodes() {
+        debugger;
         if (this.IsMultiWithReconcileMethodCodeEqualOne) {
             this.OpenAmountTextCode = TextCodeTranslator.Translate("LedgerTransaction.F.OpenAmount");
             this.OriginalAmountTextCode = TextCodeTranslator.Translate("Accounting.General.O.OriginalAmount");
@@ -1251,6 +1252,18 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             IsCustomTemplate: true,
             ServerSideSortable: true,
             SortByName: 'OriginalAmount',
+        });
+        this.columns.push({ // Check ReconcileMethodCode.GLAccounts:
+            FieldName: 'ForeignAmount',
+            DataTypeCode: 'String',
+            //Display: 'Original Amount (' + this.originalAmountCurrency + ')',
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.ForeignAmount"),
+            Styles: { width: '150px' },
+            HtmlListComponentName: 'GlAccountLedgerTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true,
+            SortByName: 'ForeignAmount',
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OriginalAmount", 'Decimal', this.OriginalAmountTextCode));
         //this.columns.push({
