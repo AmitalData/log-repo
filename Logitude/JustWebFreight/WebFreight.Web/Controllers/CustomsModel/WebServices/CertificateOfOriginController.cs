@@ -62,6 +62,21 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 			}
 		}
 
+        public HttpResponseMessage GetCertificateOfOriginByIDIncludeChildrens(string certificateId, string declarationId, int tenant)
+        {
+            try
+            {
+                CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(tenant);
+                var certificateOfOrigin = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationIdIncludeChildrens(certificateId,declarationId, tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, certificateOfOrigin);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage Delete(string certificateOfOriginId)
         {
             if (ModelState.IsValid)

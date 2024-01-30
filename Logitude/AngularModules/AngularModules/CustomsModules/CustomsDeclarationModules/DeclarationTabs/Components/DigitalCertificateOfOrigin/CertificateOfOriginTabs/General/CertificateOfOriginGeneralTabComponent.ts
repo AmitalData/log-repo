@@ -365,16 +365,16 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     CheckMandatoryFields() {
         if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {
-            // this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.MandatoryFields')];
-            this.ErrorsList = ["סוג תעודת מקור וסיבת בקשה הם שדות חובה"];
+            this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.MandatoryFields')];
+            // this.ErrorsList = ["סוג תעודת מקור וסיבת בקשה הם שדות חובה"];
         }
         else if (!this.entityPM.CooTypeCode) {
-            // this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.TypeCodeMandatory')];
-            this.ErrorsList = ["סוג תעודת מקור הוא שדה חובה"];
+            this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.TypeCodeMandatory')];
+            // this.ErrorsList = ["סוג תעודת מקור הוא שדה חובה"];
         }
         else if (!this.entityPM.RequestReasonCode) {
-            // this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.RequestReasonMandatory')];
-            this.ErrorsList = ["סיבת בקשה הוא שדה חובה"];
+            this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.RequestReasonMandatory')];
+            // this.ErrorsList = ["סיבת בקשה הוא שדה חובה"];
         }
         else {
             this.ErrorsList = [];
@@ -937,11 +937,11 @@ export class CertificateOfOriginInvoiceLine extends BaseComponent {
         this.entityPM.InvoicesIdUry = newValue;
     }
 
-    public get InvoiceNumber(): number {
-        return this.entityPM.InvoicesIdUry;
+    public get InvoiceNumber(): string {
+        return this.entityPM.InvoiceNumber;
     }
-    public set InvoiceNumber(newValue: number) {
-        this.entityPM.InvoicesIdUry = newValue;
+    public set InvoiceNumber(newValue: string) {
+        this.entityPM.InvoiceNumber = newValue;
     }
 
     public get InvoiceDate(): Date {

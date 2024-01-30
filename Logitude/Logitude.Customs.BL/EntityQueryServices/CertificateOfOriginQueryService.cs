@@ -46,11 +46,23 @@ namespace Logitude.Customs.BL.EntityQueryServices
 			{
 				foreach (var item in certificateOfOriginList)
 				{
-					certificateOfOriginPMList.Add(this.GetEntityPM(item, true, new CertificateOfOriginKeys { Id = item.Id}));
+					certificateOfOriginPMList.Add(this.GetEntityPM(item, false, new CertificateOfOriginKeys { Id = item.Id}));
 				}
 			}
 			return certificateOfOriginPMList;
 		}
 
-	}
+        public CertificateOfOriginPM GetCertificateOfOriginsByDeclarationIdIncludeChildrens(string certificateId, string declarationId, int tenant)
+        {
+            CertificateOfOrigin certificateOfOrigin = repository.GetCertificateOfOriginsByDeclarationIdIncludeChildrens(certificateId, declarationId, tenant);
+            CertificateOfOriginPM certificateOfOriginPM = new CertificateOfOriginPM();
+
+            if (certificateOfOrigin != null)
+            {
+                certificateOfOriginPM = this.GetEntityPM(certificateOfOrigin, true, new CertificateOfOriginKeys { Id = certificateOfOrigin.Id });
+            }
+            return certificateOfOriginPM;
+        }
+
+    }
 }
