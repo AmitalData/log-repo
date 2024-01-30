@@ -69,6 +69,7 @@ export class GLAccountShortTitleComponent {
     _PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
     OpenCardScreen(cardId:string)
     {
+        //todo:liron open card screen
         var selectedCard;
         if(this.ConnectedCards.length==1){
              selectedCard = this.ConnectedCards[0];
@@ -136,7 +137,7 @@ export class GLAccountShortTitleComponent {
         }
 
     }
-
+//todo:liron GetConnectedCards
     GetConnectedCards(accountId: string)
     {
 
