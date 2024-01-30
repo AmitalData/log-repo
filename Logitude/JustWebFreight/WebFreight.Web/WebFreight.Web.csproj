@@ -1196,6 +1196,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\DecCargoSplitConExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\PendingByKeywordsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ClientItemExtendedController.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\DeclarationCourierStatusViewsController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CarWeightViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_AdditionRulesDetailsHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_ComputationMethodDataViewsController.Generated.cs" />
