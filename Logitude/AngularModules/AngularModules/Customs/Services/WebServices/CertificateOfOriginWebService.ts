@@ -69,6 +69,26 @@ export class CertificateOfOriginWebService {
 
         );
     }
+    GetCertificateOfOriginByIDIncludeChildrens(certificateId:string, declarationId: string, tenant: number) {
+        return defer(() => {
+
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+
+            return this._http.get(this._apiUrl + "/GetCertificateOfOriginByIDIncludeChildrens/?certificateId=" + certificateId + "&declarationId=" + declarationId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                serviceResponse.Result = response;
+                return serviceResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        }
+
+        );
+    }
 
     delete(certificateOfOriginId: string) {
 
