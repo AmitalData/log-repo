@@ -217,7 +217,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.IsAmendment = true;
                     declarationPM.Consignments = GetConsignments(declaration, tenant, declarationPM, context, declarationOrg?.Consignments, isAmendApprove);
                     declarationPM.ExportFlightDate = declarationOrg?.ExportFlightDate;
-                    declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+					declarationPM.SignedByUserId = declarationOrg?.SignedByUserId;
+					declarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
 
                 }
