@@ -312,21 +312,21 @@ namespace Logitude.Accounting.BL.Validators
           JournalPM myJournalPM,
           System.ComponentModel.DataAnnotations.ValidationContext accountingValidationContextServiceProvider)
         {
-#if true
+#if false
 
                 if (myJournalPM.ExternalSystem=="AMITAL"  && !String.IsNullOrWhiteSpace(myJournalPM.ExternalNo))
   {
-            if (myJournalPM.ChangeSetOp== Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
-          
+                if (myJournalPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+
                 {
                     return ValidationResult.Success;
                 }
                 else
                 {
                     return IsJournalValidThin(myJournalPM, accountingValidationContextServiceProvider);
-                }
-    
             }
+
+        }
 #endif
 
             decimal creditTotal = 0;
