@@ -264,6 +264,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     }
 
     openLogWindow(isNewOrEditCertificateOfOrigin,args){
+        if(this.isOpen) return;
+        this.isOpen = true;
         var logWindow = new LogitudeWindow();
                 logWindow.Width = 1030;
                 logWindow.Height = 725;
@@ -281,6 +283,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
                 logWindow.WindowClosed.subscribe(($event: any) => {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.ReloadMyScreen();
+                    this.isOpen = false;
                 });
     }
 
@@ -295,6 +298,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     }
 
     filterAgrs: ApiQueryFilters;
+    isOpen:boolean;
     EditButtonClicked(item: CertificateOfOriginPM) {
         this.selectedCertificateOfOrigin = item;
         this.AddNewCertificateOfOrigin(this.isEdit);
@@ -343,8 +347,8 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
             confirmWindow.Width = 300;
             // TODO: change to text code
             // let deleteCertificate = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DeleteCertificate");
-            // confirmWindow.Show(deleteCertificate);
-            confirmWindow.Show("האם למחוק את התעודה?");
+            // confirmWindow.Show("האם למחוק את התעודה?");
+            confirmWindow.Show(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.DeleteCertificate"));
             confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
             confirmWindow.WindowClosed.subscribe((event: any) => {
                 if (confirmWindow.Yes) {
