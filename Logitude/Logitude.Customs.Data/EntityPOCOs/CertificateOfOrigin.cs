@@ -242,6 +242,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual User CreateByUser { get; set; }
         [Column("IsSubmitted")]
 	    public bool IsSubmitted { get; set; }
+        [Column("UpdateDeclaration")]
+	    public string UpdateDeclaration { get; set; }
     }
 }
 	 

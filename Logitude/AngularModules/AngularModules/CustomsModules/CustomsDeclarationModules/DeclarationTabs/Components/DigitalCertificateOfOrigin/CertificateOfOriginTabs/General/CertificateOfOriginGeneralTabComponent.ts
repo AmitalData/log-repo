@@ -958,6 +958,13 @@ export class CertificateOfOriginInvoiceLine extends BaseComponent {
         this.entityPM.InvoiceSum = newValue;
     }
 
+    public get CurrencyTypeCode(): string {
+        return this.entityPM.CurrencyTypeCode;
+    }
+    public set CurrencyTypeCode(newValue: string) {
+        this.entityPM.CurrencyTypeCode = newValue;
+    }
+
     public get DescriptionOfInvoice(): string {
         return this.entityPM.DescriptionOfInvoice;
     }
