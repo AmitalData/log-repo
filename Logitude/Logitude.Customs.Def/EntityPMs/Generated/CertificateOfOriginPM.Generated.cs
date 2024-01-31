@@ -1871,7 +1871,30 @@ namespace Logitude.Customs.Def.EntityPMs
               }
              set {  deletedCertificateOriginDocuments = value; }
 	    }
-	     }
+	  	  private string updateDeclaration ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string UpdateDeclaration  
+	   {
+	    
+	     get
+		{
+		   return updateDeclaration;
+		 }
+		 set
+		 {
+		   if(updateDeclaration != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="UpdateDeclaration",OldValue=updateDeclaration,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   updateDeclaration=value;
+		   }
+			
+		 }
+	   }
+   }
    
 }
 	 

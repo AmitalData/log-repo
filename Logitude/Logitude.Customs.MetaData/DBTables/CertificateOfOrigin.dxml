@@ -488,6 +488,13 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="UpdateDeclaration"
+    Type="varchar"
+    Size="1">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="CooTypeCode"
     ReferencedTable="CertificateOfOriginTypeCodeEnums"
