@@ -278,7 +278,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         
         CustomMessageProgressComponent
             .ShowProgressBar(this.CurrentSession,requestParams.PBId,
-            "שליחת שאילתא לסטטוס תעודה", true)
+            "שליחת בקשה לתעודת מקור", true)
             .then((res) => {
                 
                 this.ResponseData = res;
