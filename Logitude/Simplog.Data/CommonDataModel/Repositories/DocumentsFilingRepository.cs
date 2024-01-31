@@ -178,20 +178,15 @@ namespace Simplog.Data.CommonDataModel.Repositories
             var allForEntity = q.ToList();
 			return allForEntity;
         }
-		public List<DocumentsFilingDTO> GetByEntityAndChiled(string objectTableId, string entityId,string objectTableIdChiled, string entityIdChiled, int tenant)
+		public IQueryable<DocumentsFiling> GetByEntityAndChiled(string objectTableId, string entityId,string objectTableIdChiled, string entityIdChiled, int tenant,string documentTypeId)
 		{
-			var q = (from a in context.DocumentsFilings
-					 where
-					 //a.DocumentTypeId == documentTypeId && 
-					 a.Tenant == tenant && a.ObjectTableId == objectTableId && a.EntityId == entityId && a.ChildObjectTableId == objectTableIdChiled && a.ChildEntityId == entityIdChiled
-					 select new DocumentsFilingDTO()
-					 {
-						 Id = a.Id,
-						 DocumentTypeId = a.DocumentTypeId,
-						 DocumentId = a.DocumentId
-					 });
-			var allForEntity = q.ToList();
-			return allForEntity;
+            var q = (from a in context.DocumentsFilings
+                     where
+                     a.Tenant == tenant && a.ObjectTableId == objectTableId && a.EntityId == entityId && a.ChildObjectTableId == objectTableIdChiled && a.ChildEntityId == entityIdChiled && a.DocumentTypeId == documentTypeId
+                     select a);
+					
+			
+			return q;
 		}
 
 		public string GetDocumentIdByDocumentType(string documentTypeId, string objectTableId, string entityId, int tenant ,out string DocumentsFilingId)

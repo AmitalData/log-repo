@@ -124,7 +124,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				IsExportDecForPrintSpecified = true,
 				CustomsHouse = certificateOfOrigin.CustomsHouse,
 				IssuingCountry = certificateOfOrigin.IssuingCountry,
-				CityOfDeclaration = Convert.ToInt32(certificateOfOrigin.CityOfDeclaration),
+				CityOfDeclaration = string.IsNullOrEmpty(certificateOfOrigin.CityOfDeclaration) ? null : (int?)Convert.ToInt32(certificateOfOrigin.CityOfDeclaration),
 				CityOfDeclarationSpecified = true,
 				CountryOfDeclaration = certificateOfOrigin.CountryOfDeclaration,
 				DateOfDeclaration = Convert.ToDateTime(certificateOfOrigin.DateOfDeclaration),
@@ -156,6 +156,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					InvoiceNum = item.InvoiceNumber,
 					InvoiceDate = Convert.ToDateTime(item.InvoiceDate),
 					InvoiceSum = Convert.ToInt32(item.InvoiceSum),
+					InvoiceSumSpecified = true,
 					CurrencyType = item.CurrencyTypeCode,
 					DescriptionOfInvoice = item.DescriptionOfInvoice,
 					IsInvoicesForPrint = item.IsInvoicesForPrint,
@@ -168,10 +169,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					    var CertificateOfOriginRequestItemDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetailCertificateOfOriginRequestItemDetail()
 					    {
 					    	ItemSerial = Convert.ToInt32(item1.ItemSerial),
-					    	ItemId = item1.ItemId,
+							ItemSerialSpecified = true,
+							ItemId = item1.ItemId,
 					    	OriginCriterion = item1.OriginCriterionCode,
 					    	MarksAndNumbers = item1.MarksAndNumbers,
 					    	PackageQuantity = Convert.ToInt32(item1.PackageQuantity),
+							PackageQuantitySpecified = true,
 					    	PackageType = item1.PackageType,
 					    	ContainerISOCode = item1.ContainerIsoCode,
 					    	ItemDescription = item1.ItemDescription,
@@ -205,6 +208,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					CertificateOfOriginInvoiceDetail.InvoiceNum = item.InvoiceNumber;
 					CertificateOfOriginInvoiceDetail.InvoiceDate = Convert.ToDateTime(item.InvoiceDate);
 					CertificateOfOriginInvoiceDetail.InvoiceSum = Convert.ToInt32(item.InvoiceSum);
+					CertificateOfOriginInvoiceDetail.InvoiceSumSpecified = true;
 					CertificateOfOriginInvoiceDetail.CurrencyType = item.CurrencyTypeCode;
 					CertificateOfOriginInvoiceDetail.DescriptionOfInvoice = item.DescriptionOfInvoice;
 					CertificateOfOriginInvoiceDetail.IsInvoicesForPrint = item.IsInvoicesForPrint;
@@ -229,10 +233,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					var CertificateOfOriginRequestItemDetail = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOriginCertificateOfOriginRequestInvoiceDetailCertificateOfOriginRequestItemDetail()
 					{
 						ItemSerial = Convert.ToInt32(item1.ItemSerial),
+						ItemSerialSpecified = true,
 						ItemId = item1.ItemId,
 						OriginCriterion = item1.OriginCriterionCode,
 						MarksAndNumbers = item1.MarksAndNumbers,
 						PackageQuantity = Convert.ToInt32(item1.PackageQuantity),
+						PackageQuantitySpecified = true,
 						PackageType = item1.PackageType,
 						ContainerISOCode = item1.ContainerIsoCode,
 						ItemDescription = item1.ItemDescription,
