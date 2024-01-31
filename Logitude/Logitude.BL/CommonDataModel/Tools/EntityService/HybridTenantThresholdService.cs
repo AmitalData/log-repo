@@ -51,7 +51,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
         {
             this.isNewEntity = false;
             this.entityPm = entityPM;
-            this.Poco = entityRepository.GetSingleHybridTenantThreshold(entityPm.Tenant);
+            this.Poco = entityRepository.GetSingleHybridTenantThreshold(entityPm.Tenant,entityPm.TypeCode);
 
             // HybridTenantThresholdValidating.Validate(entityPM);
              //HybridTenantThresholdTracing.Trace(entityPM, Poco, isNewEntity);

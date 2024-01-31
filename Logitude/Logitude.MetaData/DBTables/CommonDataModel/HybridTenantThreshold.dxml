@@ -2,7 +2,8 @@
 <Table
   Name="HybridTenantThresholds"
   Schema="dbo"
-  DBType="Main">
+  DBType="Main"
+  Module="Common">
   <Column
     Name="Tenant"
     Type="int">
@@ -23,9 +24,12 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="Type"
-    Type="int">
+    Name="TypeCode"
+    OldNames="Type"
+    Type="int"
+     DefaultValue="0">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
 </Table>

@@ -7,14 +7,15 @@ using System.Threading.Tasks;
 
 namespace Simplog.Data.CommonDataModel.EntityPOCOs
 {
-    public class HybridTenantThreshold
+  public  class HybridTenantThreshold
     {
 
         [Key]
         public int Tenant { get; set; }
         public int FailedThresold { get; set; }
         public int WaitingThresold { get; set; }
-        public int Type { get; set; }
+        [Key]
+        public int TypeCode { get; set; }
     }
 
     public enum ThresholdTypes

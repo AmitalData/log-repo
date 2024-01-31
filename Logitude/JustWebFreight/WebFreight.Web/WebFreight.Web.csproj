@@ -4003,6 +4003,7 @@
     <Content Include="Monitoring\ForwarderShipmentDocumentQueue.aspx" />
     <Content Include="Monitoring\ForwarderShipmentQueue.aspx" />
     <Content Include="Monitoring\FTPCommunicationMonitoring.aspx" />
+    <Content Include="Monitoring\CloudThreshold.aspx" />
     <Content Include="Monitoring\LogBoxApprovePaymentQueue.aspx" />
     <Content Include="Monitoring\LogBoxDocumentsQueue.aspx" />
     <Content Include="Monitoring\CToolQueue.aspx" />
@@ -6264,6 +6265,13 @@
     </Compile>
     <Compile Include="Monitoring\FTPCommunicationMonitoring.aspx.designer.cs">
       <DependentUpon>FTPCommunicationMonitoring.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Monitoring\CloudThreshold.aspx.cs">
+      <DependentUpon>CloudThreshold.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Monitoring\CloudThreshold.aspx.designer.cs">
+      <DependentUpon>CloudThreshold.aspx</DependentUpon>
     </Compile>
     <Compile Include="Monitoring\LogBoxApprovePaymentQueue.aspx.cs">
       <DependentUpon>LogBoxApprovePaymentQueue.aspx</DependentUpon>

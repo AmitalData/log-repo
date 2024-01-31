@@ -32,12 +32,12 @@ export class HybridTenantThresholdListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/hybridtenantthresholdviews';  
     }
 
-	getSingle(tenant: number) {
+	getSingle(tenant: number, typecode: number) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'tenant=' + tenant, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'tenant=' + tenant+'&'+'typecode=' + typecode, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class HybridTenantThresholdListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "HybridTenantThreshold", "GetSingleList", 'tenant=' + tenant); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "HybridTenantThreshold", "GetSingleList", 'tenant=' + tenant+'&'+'typecode=' + typecode); 
 
 						return serviceResponse;
 					}),
@@ -117,7 +117,7 @@ export class HybridTenantThresholdListService {
 			if (propName == "TreeFilters" && propValue && propValue.length > 0) {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }
-
+			
 			if (propName == "ParentEntity" && propValue) {
                 urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
             }
