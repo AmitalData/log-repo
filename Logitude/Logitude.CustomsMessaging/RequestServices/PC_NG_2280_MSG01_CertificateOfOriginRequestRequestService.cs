@@ -124,7 +124,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				IsExportDecForPrintSpecified = true,
 				CustomsHouse = certificateOfOrigin.CustomsHouse,
 				IssuingCountry = certificateOfOrigin.IssuingCountry,
-				CityOfDeclaration = Convert.ToInt32(certificateOfOrigin.CityOfDeclaration),
+				CityOfDeclaration = string.IsNullOrEmpty(certificateOfOrigin.CityOfDeclaration) ? null : (int?)Convert.ToInt32(certificateOfOrigin.CityOfDeclaration),
 				CityOfDeclarationSpecified = true,
 				CountryOfDeclaration = certificateOfOrigin.CountryOfDeclaration,
 				DateOfDeclaration = Convert.ToDateTime(certificateOfOrigin.DateOfDeclaration),
