@@ -21571,6 +21571,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+
   <field
     Id="&quot;ffc43462-cc5e-4583-9219-e5d6dd05427d&quot;"
     FieldName="&quot;DeclarationPayments&quot;"
@@ -21599,6 +21600,7 @@
     PMPropertyPath="&quot;DeclarationPayments&quot;"
     ListPropertyPath="&quot;DeclarationPayments&quot;"
     DisplayInLookUpIndex="0"
+
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
