@@ -84,6 +84,7 @@ export class CertificateOfOriginList {
 	RequestReasonCodeName: string;
 	CooStatusCodeName: string;
 	ListCounter: number;
+	UpdateDeclaration: string;
 	
 }
  

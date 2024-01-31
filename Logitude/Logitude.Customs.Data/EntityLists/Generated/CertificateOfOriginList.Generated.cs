@@ -166,6 +166,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string CooStatusCodeName  { get; set; }
        [DataMember]
        public int ListCounter  { get; set; }
+       [DataMember]
+       public string UpdateDeclaration  { get; set; }
    }
 
 }
