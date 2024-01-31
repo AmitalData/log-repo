@@ -72,7 +72,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             string ExceptionDescription = "";
             var ExeptionDescription = "";
-            if (customResponse.ResponseContentHeader.Exception != null)
+            if (customResponse?.ResponseContentHeader?.Exception != null)
             {
                 foreach (var rec in customResponse.ResponseContentHeader.Exception)
                 {
