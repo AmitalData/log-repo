@@ -2432,5 +2432,9 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return false;
         }
-    }
+		public string GetSignedByUserIdByCustomFileNo(int tenant, string customFileNo)
+		{
+			return this.repository.GetSignedByUserIdByCustomFileNo(tenant, customFileNo);
+		}
+	}
 }

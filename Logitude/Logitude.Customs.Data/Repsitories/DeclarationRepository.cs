@@ -1516,7 +1516,17 @@ namespace Logitude.Customs.Data.Repsitories
             return decNum;
 
         }
-    }
+		public string GetSignedByUserIdByCustomFileNo(int tenant, string customFileNo)
+		{
+			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+			var decSignedByUserId = (from a in context.Declarations
+						  where a.Tenant == tenant && a.CustomFileNo == customFileNo && !string.IsNullOrEmpty(a.SignedByUserId)
+						  select a.SignedByUserId).FirstOrDefault();
+			return decSignedByUserId;
+
+		}
+	}
 
 
     public class ExportReport1

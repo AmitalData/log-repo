@@ -1274,7 +1274,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 													DateTimeStyles.None);
 			}
 			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing ENTER Send8235", false, "sendClosing", stopLogAt);
-
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(decPm.Tenant);
 			var requestParamsData = new AmendmentRequestParams();
 			var signQueueHSMService = new SignQueueHSMService();
 			var loggedUserId = string.Empty;
@@ -1286,7 +1286,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			}
 			else
 			{
-				loggedUserId = decPm.SignedByUserId;
+                if(!string.IsNullOrEmpty(decPm.SignedByUserId))
+                {
+					loggedUserId = decPm.SignedByUserId;
+				}
+                else
+                {
+					loggedUserId  =  declarationQueryService.GetSignedByUserIdByCustomFileNo(decPm.Tenant, decPm.CustomFileNo);
+				}
 			}
 			requestParamsData.Tenant = decPm.Tenant;
 			requestParamsData.AppicationId = decPm.Id;
