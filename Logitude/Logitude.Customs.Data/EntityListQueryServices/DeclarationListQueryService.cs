@@ -252,7 +252,6 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                                                          ImporterAddress = a.ImporterAddress,
                                                          ImporterAddressForExport = a.ImporterAddress,
                                                          ImporterName = a.Importer != null ? a.Importer.FullName : a.ImporterName,
-                                                         ImporterId = a.ImporterId,
                                                          EntitleImporterName = a.EntitleImporter.FullName,
                                                          UserNotes = a.UserNotes,
                                                          ImporterTypeCode = a.ImporterTypeCode,
