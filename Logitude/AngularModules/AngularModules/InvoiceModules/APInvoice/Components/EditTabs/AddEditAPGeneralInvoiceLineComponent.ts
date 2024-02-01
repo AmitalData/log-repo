@@ -9,6 +9,8 @@ import {VatTypesValidator} from '../../../../Infrastructure/Validators/VatTypesV
 import {Cloner} from '../../../../Infrastructure/Utilities/Cloner';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { ColumnsWidths } from 'Infrastructure/Components/LogitudeComponents/LogLovV2Component';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+
 @Component({
     
     templateUrl: './AddEditAPGeneralInvoiceLineComponent.html',
@@ -35,6 +37,14 @@ export class AddEditAPGeneralInvoiceLineComponent {
         }
     }
 
+    public ChargeTypesQueryFilters: ApiQueryFilters;
+    private BuildQueryFilters() {
+        this.ChargeTypesQueryFilters = new ApiQueryFilters();
+        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
+    }
+
     FillChargesTypesCustomLOVColumnsWidths()
     {
         this.ColumnsWidths = [
@@ -54,6 +64,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
         this.DataContext = dataContext;
         this.EntityPM = dataContext.invoiceLinePM;
         this.Clone();
+        this.BuildQueryFilters();
     }
 
     CancelButtonClicked() {
