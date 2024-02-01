@@ -218,7 +218,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         }
     }
 
-    SaveButtonClicked() {
+    SaveAndSendClick(customSendOptionsArgs:any = null) {
         if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
             this.GENERAL.CheckMandatoryFields();
             return;
@@ -236,6 +236,10 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.CurrentSession.StopBusyIndicator();
                     this.IsNewOrEdit = StatusCertificateOfOrigin.IsEdit;
+
+                    if(customSendOptionsArgs){
+                        this.SendButtonClicked(customSendOptionsArgs);
+                    }
                 }
                 
             });
@@ -250,6 +254,10 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.CurrentSession.StopBusyIndicator();
+
+                    if(customSendOptionsArgs){
+                        this.SendButtonClicked(customSendOptionsArgs);
+                    }
                 }
             });
         }
@@ -257,7 +265,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
 
     
     async SendButtonClicked(customSendOptionsArgs:any){
-        this.SaveButtonClicked();  // save before send
 
         if(!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
             this.GENERAL.CheckMandatoryFields();
