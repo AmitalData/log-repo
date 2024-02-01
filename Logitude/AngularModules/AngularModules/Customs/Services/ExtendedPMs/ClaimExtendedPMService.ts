@@ -1,0 +1,1406 @@
+
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
+import { defer, of } from 'rxjs';
+import {ServiceResponse} from '../../../Infrastructure/DataContracts/ServiceResponse';
+import {ClassLevelValidator} from '../../../Infrastructure/Validators/ClassLevelValidator';
+import {Guid} from '../../../Infrastructure/Utilities/Guid';
+import {InfraSettings} from '../../../Infrastructure/Utilities/InfraSettings';
+import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
+import {SessionInfo} from '../../../Infrastructure/Utilities/SessionInfo';
+import {CustomFieldClass} from '../../../Infrastructure/DataContracts/CustomFieldClass'
+import {PerformanceLogger} from '../../../Infrastructure/Utilities/PerformanceLogger';
+
+import {ClaimPM} from '../../EntityPMs/ClaimPM';
+
+import {ClaimImporterDeclarsPage3PM} from '../../EntityPMs/ClaimImporterDeclarsPage3PM';
+
+import {ClaimImporterDeclarsP3LoiPM} from '../../EntityPMs/ClaimImporterDeclarsP3LoiPM';
+import {ClaimsRelatedEntityPM} from '../../EntityPMs/ClaimsRelatedEntityPM';
+
+import {ClaimsRelatedEntitiesAmountPM} from '../../EntityPMs/ClaimsRelatedEntitiesAmountPM';
+import {ClaimsRelatedEntitiesReasonPM} from '../../EntityPMs/ClaimsRelatedEntitiesReasonPM';
+import {ClaimsRelatedEntsReasonsExpPM} from '../../EntityPMs/ClaimsRelatedEntsReasonsExpPM';
+import {ClaimsRelatedEntsExpDeclarPM} from '../../EntityPMs/ClaimsRelatedEntsExpDeclarPM';
+import {ClaimsRelatedEntitiesSeizurePM} from '../../EntityPMs/ClaimsRelatedEntitiesSeizurePM';
+import {ClaimsRelatedEntitiesRefundPM} from '../../EntityPMs/ClaimsRelatedEntitiesRefundPM';
+import {ClaimImporterDeclarsPage3APM} from '../../EntityPMs/ClaimImporterDeclarsPage3APM';
+import {ClaimImporterDeclarsPage3BPM} from '../../EntityPMs/ClaimImporterDeclarsPage3BPM';
+import {ClaimValidator} from '../../Validators/ClaimValidator';
+
+@Injectable()
+
+export class ClaimExtendedPMService {
+ private _http: HttpClient;
+ private _apiUrl: string;
+ constructor() {
+        this._http = ServiceHelper.HttpClient;
+        this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/claimExtended';      
+    }
+
+	insert(entityPM: ClaimPM) {
+ 
+		var callTime = new Date();  
+		
+		return defer(() => {
+
+			var serviceResponse: ServiceResponse = new ServiceResponse();
+			var validator: ClassLevelValidator = new ClassLevelValidator();                
+			var errorsArray = validator.Validate("Customs.Claim", entityPM);
+
+			var customValidator :ClaimValidator = new ClaimValidator();
+			var validationErrorsArr = customValidator.Validate(entityPM);
+			if(validationErrorsArr)
+			{
+				errorsArray = errorsArray.concat(validationErrorsArr);
+			}
+
+			if (errorsArray.length == 0) {
+
+				var mappedEntity: ClaimPM = this.MapJsonToEntityPM(entityPM, false);
+				
+				return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), ServiceHelper.GetHttpFullHeaders())
+					.pipe(
+						map((response: HttpResponse<any>) => {
+
+							var pm = response.body;
+							if (pm) {
+								var mappedResult: ClaimPM = this.MapJsonToEntityPM(pm, true, entityPM);
+								serviceResponse.Result = mappedResult;
+							}						
+
+							var servertime = response.headers.get('ServerExecutionTime');
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "Claim", "SaveChanges", "");                    
+												                             
+							return serviceResponse;
+						}),
+
+						catchError(ServiceHelper.HandleServiceError));
+			}
+
+			else {
+				serviceResponse.HasError = true;
+				serviceResponse.ErrorsArray = errorsArray;
+				return of(serviceResponse);
+			}
+		});
+	}  
+
+	  MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ClaimPM = null) {
+
+         
+        if (!entityPM) {
+            
+            entityPM = new ClaimPM();
+			entityPM.DisableMarkAsDirty = true;
+        }
+
+		var customFields: Array<string> = [];
+        for (var i = 1; i < 11; i++) {
+            customFields.push("Field" + i);
+        }
+            var jsonPMKeys = Object.keys(jsonPM);
+
+            for (var key in jsonPMKeys) {
+			 if (jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "PropertyChanged") {
+
+                continue;
+            }
+                var property = jsonPMKeys[key];
+				
+			  if(customFields.indexOf(property) > -1)
+                {
+                if (jsonPM[property]) {
+                    var customFieldClass: CustomFieldClass = new CustomFieldClass(jsonPM[property].Value, jsonPM[property].FieldName, jsonPM[property].TableName);
+                    entityPM[property] = customFieldClass;
+                }
+            }
+            else {
+                entityPM[property] = jsonPM[property];
+            }
+                 
+            }
+			
+               this.MapClaimImporterDeclarsPage3(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapClaimsRelatedEntities(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapClaimImporterDeclarsPage3A(entityPM, jsonPM, mapParent); // Call composition tables map methods
+               this.MapClaimImporterDeclarsPage3B(entityPM, jsonPM, mapParent); // Call composition tables map methods
+			 
+            
+
+		if (mapParent) {
+                entityPM.OldEntityPM = this.clone(entityPM);
+			   			   
+            entityPM.OldEntityPM.ClaimImporterDeclarsPage3 = [];
+            for (var item in entityPM.ClaimImporterDeclarsPage3) {
+            var myClaimImporterDeclarsPage3PM = entityPM.ClaimImporterDeclarsPage3[item];
+            var newClaimImporterDeclarsPage3PM: ClaimImporterDeclarsPage3PM = this.clone(myClaimImporterDeclarsPage3PM);
+						
+                newClaimImporterDeclarsPage3PM.ClaimImporterDeclarsP3Loi = [];
+                for (var k in myClaimImporterDeclarsPage3PM.ClaimImporterDeclarsP3Loi) {
+				    var myClaimImporterDeclarsP3LoiPM =myClaimImporterDeclarsPage3PM.ClaimImporterDeclarsP3Loi[k];
+				    var newClaimImporterDeclarsP3LoiPM=this.clone(myClaimImporterDeclarsPage3PM.ClaimImporterDeclarsP3Loi[k]);
+                    newClaimImporterDeclarsPage3PM.ClaimImporterDeclarsP3Loi.push(newClaimImporterDeclarsP3LoiPM);
+
+					                 }
+							 
+            entityPM.OldEntityPM.ClaimImporterDeclarsPage3.push(newClaimImporterDeclarsPage3PM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.ClaimsRelatedEntities = [];
+            for (var item in entityPM.ClaimsRelatedEntities) {
+            var myClaimsRelatedEntityPM = entityPM.ClaimsRelatedEntities[item];
+            var newClaimsRelatedEntityPM: ClaimsRelatedEntityPM = this.clone(myClaimsRelatedEntityPM);
+						
+                newClaimsRelatedEntityPM.ClaimsRelatedEntitiesAmounts = [];
+                for (var k in myClaimsRelatedEntityPM.ClaimsRelatedEntitiesAmounts) {
+				    var myClaimsRelatedEntitiesAmountPM =myClaimsRelatedEntityPM.ClaimsRelatedEntitiesAmounts[k];
+				    var newClaimsRelatedEntitiesAmountPM=this.clone(myClaimsRelatedEntityPM.ClaimsRelatedEntitiesAmounts[k]);
+                    newClaimsRelatedEntityPM.ClaimsRelatedEntitiesAmounts.push(newClaimsRelatedEntitiesAmountPM);
+
+					                 }
+                newClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons = [];
+                for (var k in myClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons) {
+				    var myClaimsRelatedEntitiesReasonPM =myClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons[k];
+				    var newClaimsRelatedEntitiesReasonPM=this.clone(myClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons[k]);
+                    newClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons.push(newClaimsRelatedEntitiesReasonPM);
+
+					                 newClaimsRelatedEntitiesReasonPM.ClaimsRelatedEntsReasonsExps = [];
+                for (var k in myClaimsRelatedEntitiesReasonPM.ClaimsRelatedEntsReasonsExps) {
+				    var myClaimsRelatedEntsReasonsExpPM =myClaimsRelatedEntitiesReasonPM.ClaimsRelatedEntsReasonsExps[k];
+				    var newClaimsRelatedEntsReasonsExpPM=this.clone(myClaimsRelatedEntitiesReasonPM.ClaimsRelatedEntsReasonsExps[k]);
+                    newClaimsRelatedEntitiesReasonPM.ClaimsRelatedEntsReasonsExps.push(newClaimsRelatedEntsReasonsExpPM);
+
+					                 }
+                }
+                newClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars = [];
+                for (var k in myClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars) {
+				    var myClaimsRelatedEntsExpDeclarPM =myClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars[k];
+				    var newClaimsRelatedEntsExpDeclarPM=this.clone(myClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars[k]);
+                    newClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars.push(newClaimsRelatedEntsExpDeclarPM);
+
+					                 }
+                newClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures = [];
+                for (var k in myClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures) {
+				    var myClaimsRelatedEntitiesSeizurePM =myClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures[k];
+				    var newClaimsRelatedEntitiesSeizurePM=this.clone(myClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures[k]);
+                    newClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures.push(newClaimsRelatedEntitiesSeizurePM);
+
+					                 }
+                newClaimsRelatedEntityPM.ClaimsRelatedEntitiesRefunds = [];
+                for (var k in myClaimsRelatedEntityPM.ClaimsRelatedEntitiesRefunds) {
+				    var myClaimsRelatedEntitiesRefundPM =myClaimsRelatedEntityPM.ClaimsRelatedEntitiesRefunds[k];
+				    var newClaimsRelatedEntitiesRefundPM=this.clone(myClaimsRelatedEntityPM.ClaimsRelatedEntitiesRefunds[k]);
+                    newClaimsRelatedEntityPM.ClaimsRelatedEntitiesRefunds.push(newClaimsRelatedEntitiesRefundPM);
+
+					                 }
+							 
+            entityPM.OldEntityPM.ClaimsRelatedEntities.push(newClaimsRelatedEntityPM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.ClaimImporterDeclarsPage3A = [];
+            for (var item in entityPM.ClaimImporterDeclarsPage3A) {
+            var myClaimImporterDeclarsPage3APM = entityPM.ClaimImporterDeclarsPage3A[item];
+            var newClaimImporterDeclarsPage3APM: ClaimImporterDeclarsPage3APM = this.clone(myClaimImporterDeclarsPage3APM);
+						
+							 
+            entityPM.OldEntityPM.ClaimImporterDeclarsPage3A.push(newClaimImporterDeclarsPage3APM);
+            }
+			   			   			   
+            entityPM.OldEntityPM.ClaimImporterDeclarsPage3B = [];
+            for (var item in entityPM.ClaimImporterDeclarsPage3B) {
+            var myClaimImporterDeclarsPage3BPM = entityPM.ClaimImporterDeclarsPage3B[item];
+            var newClaimImporterDeclarsPage3BPM: ClaimImporterDeclarsPage3BPM = this.clone(myClaimImporterDeclarsPage3BPM);
+						
+							 
+            entityPM.OldEntityPM.ClaimImporterDeclarsPage3B.push(newClaimImporterDeclarsPage3BPM);
+            }
+			   
+		}
+        else {
+
+            entityPM.OldEntityPM = null;
+        }
+		entityPM.IsDirty = false;
+	    entityPM.DisableMarkAsDirty = false;
+
+        return entityPM;
+    }
+
+    MapClaimImporterDeclarsPage3(entityPM: ClaimPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClaimImporterDeclarsPage3: ClaimImporterDeclarsPage3PM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClaimImporterDeclarsPage3 = entityPM.OldEntityPM.ClaimImporterDeclarsPage3;
+        }
+
+        entityPM.ClaimImporterDeclarsPage3 = new Array<ClaimImporterDeclarsPage3PM>();
+        for (var item in jsonPM.ClaimImporterDeclarsPage3) {
+            var jItem = jsonPM.ClaimImporterDeclarsPage3[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClaimImporterDeclarsPage3PM: ClaimImporterDeclarsPage3PM;
+	  
+            if (mapParent) {
+                newClaimImporterDeclarsPage3PM = new ClaimImporterDeclarsPage3PM(entityPM);
+            }
+            else
+            {
+                newClaimImporterDeclarsPage3PM = new ClaimImporterDeclarsPage3PM(null);
+            }
+ 			newClaimImporterDeclarsPage3PM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClaimImporterDeclarsPage3PM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClaimImporterDeclarsPage3PM.UniqueKey = Guid.newGuid();
+                newClaimImporterDeclarsPage3PM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClaimImporterDeclarsPage3PM.OldEntityPM = this.clone(newClaimImporterDeclarsPage3PM);
+ 
+
+                this.MapClaimImporterDeclarsP3Loi(newClaimImporterDeclarsPage3PM, jItem, mapParent);
+                newClaimImporterDeclarsPage3PM.OldEntityPM.ClaimImporterDeclarsP3Loi = [];
+                for (var k in newClaimImporterDeclarsPage3PM.ClaimImporterDeclarsP3Loi) {
+                    //var clonedInside = this.clone(newClaimImporterDeclarsPage3PM.ClaimImporterDeclarsP3Loi[k]);
+                    newClaimImporterDeclarsPage3PM.OldEntityPM.ClaimImporterDeclarsP3Loi.push(newClaimImporterDeclarsPage3PM.ClaimImporterDeclarsP3Loi[k].OldEntityPM); // clone old ClaimImporterDeclarsP3Loi//
+                }
+
+				
+            }
+            else {
+                if (newClaimImporterDeclarsPage3PM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClaimImporterDeclarsPage3PM.ChangeSetOp = "Update";
+                }
+                else {
+                        newClaimImporterDeclarsPage3PM.ChangeSetOp = "Insert";
+                }
+ 
+
+                this.MapClaimImporterDeclarsP3Loi(newClaimImporterDeclarsPage3PM, jItem, mapParent);
+ 
+                newClaimImporterDeclarsPage3PM.OldEntityPM = null;
+                newClaimImporterDeclarsPage3PM.EntityParentPM = null;
+            }
+			 newClaimImporterDeclarsPage3PM.DisableMarkAsDirty = false;
+			 newClaimImporterDeclarsPage3PM.IsDirty = false;
+            entityPM.ClaimImporterDeclarsPage3.push(newClaimImporterDeclarsPage3PM);
+        }
+        if (oldClaimImporterDeclarsPage3) {
+            
+            for (var itemKey in oldClaimImporterDeclarsPage3) {
+                if (entityPM.ClaimImporterDeclarsPage3.filter(p=> p.UniqueKey === oldClaimImporterDeclarsPage3[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClaimImporterDeclarsPage3[itemKey]) {
+                        //oldClaimImporterDeclarsPage3[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClaimImporterDeclarsPage3.push(oldClaimImporterDeclarsPage3[itemKey]);
+						var oldItemJson = oldClaimImporterDeclarsPage3[itemKey];
+                        var deletedPM: ClaimImporterDeclarsPage3PM = new ClaimImporterDeclarsPage3PM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+ 
+
+                        this.MapClaimImporterDeclarsP3Loi(deletedPM, oldItemJson, mapParent);
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClaimImporterDeclarsPage3.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapClaimImporterDeclarsP3Loi(entityPM: ClaimImporterDeclarsPage3PM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClaimImporterDeclarsP3Loi: ClaimImporterDeclarsP3LoiPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClaimImporterDeclarsP3Loi = entityPM.OldEntityPM.ClaimImporterDeclarsP3Loi;
+        }
+
+        entityPM.ClaimImporterDeclarsP3Loi = new Array<ClaimImporterDeclarsP3LoiPM>();
+        for (var item in jsonPM.ClaimImporterDeclarsP3Loi) {
+            var jItem = jsonPM.ClaimImporterDeclarsP3Loi[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClaimImporterDeclarsP3LoiPM: ClaimImporterDeclarsP3LoiPM;
+	  
+            if (mapParent) {
+                newClaimImporterDeclarsP3LoiPM = new ClaimImporterDeclarsP3LoiPM(entityPM);
+            }
+            else
+            {
+                newClaimImporterDeclarsP3LoiPM = new ClaimImporterDeclarsP3LoiPM(null);
+            }
+ 			newClaimImporterDeclarsP3LoiPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClaimImporterDeclarsP3LoiPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClaimImporterDeclarsP3LoiPM.UniqueKey = Guid.newGuid();
+                newClaimImporterDeclarsP3LoiPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClaimImporterDeclarsP3LoiPM.OldEntityPM = this.clone(newClaimImporterDeclarsP3LoiPM);
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newClaimImporterDeclarsP3LoiPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newClaimImporterDeclarsP3LoiPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClaimImporterDeclarsP3LoiPM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newClaimImporterDeclarsP3LoiPM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+                newClaimImporterDeclarsP3LoiPM.OldEntityPM = null;
+                newClaimImporterDeclarsP3LoiPM.EntityParentPM = null;
+            }
+			 newClaimImporterDeclarsP3LoiPM.DisableMarkAsDirty = false;
+			 newClaimImporterDeclarsP3LoiPM.IsDirty = false;
+            entityPM.ClaimImporterDeclarsP3Loi.push(newClaimImporterDeclarsP3LoiPM);
+        }
+        if (oldClaimImporterDeclarsP3Loi) {
+            
+            for (var itemKey in oldClaimImporterDeclarsP3Loi) {
+                if (entityPM.ClaimImporterDeclarsP3Loi.filter(p=> p.UniqueKey === oldClaimImporterDeclarsP3Loi[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClaimImporterDeclarsP3Loi[itemKey]) {
+                        //oldClaimImporterDeclarsP3Loi[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClaimImporterDeclarsP3Loi.push(oldClaimImporterDeclarsP3Loi[itemKey]);
+						var oldItemJson = oldClaimImporterDeclarsP3Loi[itemKey];
+                        var deletedPM: ClaimImporterDeclarsP3LoiPM = new ClaimImporterDeclarsP3LoiPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClaimImporterDeclarsP3Loi.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+ 
+    MapClaimsRelatedEntities(entityPM: ClaimPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClaimsRelatedEntities: ClaimsRelatedEntityPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClaimsRelatedEntities = entityPM.OldEntityPM.ClaimsRelatedEntities;
+        }
+
+        entityPM.ClaimsRelatedEntities = new Array<ClaimsRelatedEntityPM>();
+        for (var item in jsonPM.ClaimsRelatedEntities) {
+            var jItem = jsonPM.ClaimsRelatedEntities[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClaimsRelatedEntityPM: ClaimsRelatedEntityPM;
+	  
+            if (mapParent) {
+                newClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(entityPM);
+            }
+            else
+            {
+                newClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(null);
+            }
+ 			newClaimsRelatedEntityPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClaimsRelatedEntityPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClaimsRelatedEntityPM.UniqueKey = Guid.newGuid();
+                newClaimsRelatedEntityPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClaimsRelatedEntityPM.OldEntityPM = this.clone(newClaimsRelatedEntityPM);
+ 
+
+                this.MapClaimsRelatedEntitiesAmounts(newClaimsRelatedEntityPM, jItem, mapParent);
+                newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntitiesAmounts = [];
+                for (var k in newClaimsRelatedEntityPM.ClaimsRelatedEntitiesAmounts) {
+                    //var clonedInside = this.clone(newClaimsRelatedEntityPM.ClaimsRelatedEntitiesAmounts[k]);
+                    newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntitiesAmounts.push(newClaimsRelatedEntityPM.ClaimsRelatedEntitiesAmounts[k].OldEntityPM); // clone old ClaimsRelatedEntitiesAmounts//
+                }
+ 
+
+                this.MapClaimsRelatedEntitiesReasons(newClaimsRelatedEntityPM, jItem, mapParent);
+                newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntitiesReasons = [];
+                for (var k in newClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons) {
+                    //var clonedInside = this.clone(newClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons[k]);
+                    newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntitiesReasons.push(newClaimsRelatedEntityPM.ClaimsRelatedEntitiesReasons[k].OldEntityPM); // clone old ClaimsRelatedEntitiesReasons//
+                }
+ 
+
+                this.MapClaimsRelatedEntsExpDeclars(newClaimsRelatedEntityPM, jItem, mapParent);
+                newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntsExpDeclars = [];
+                for (var k in newClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars) {
+                    //var clonedInside = this.clone(newClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars[k]);
+                    newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntsExpDeclars.push(newClaimsRelatedEntityPM.ClaimsRelatedEntsExpDeclars[k].OldEntityPM); // clone old ClaimsRelatedEntsExpDeclars//
+                }
+ 
+
+                this.MapClaimsRelatedEntitiesSeizures(newClaimsRelatedEntityPM, jItem, mapParent);
+                newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntitiesSeizures = [];
+                for (var k in newClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures) {
+                    //var clonedInside = this.clone(newClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures[k]);
+                    newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntitiesSeizures.push(newClaimsRelatedEntityPM.ClaimsRelatedEntitiesSeizures[k].OldEntityPM); // clone old ClaimsRelatedEntitiesSeizures//
+                }
+ 
+
+                this.MapClaimsRelatedEntitiesRefunds(newClaimsRelatedEntityPM, jItem, mapParent);
+                newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntitiesRefunds = [];
+                for (var k in newClaimsRelatedEntityPM.ClaimsRelatedEntitiesRefunds) {
+                    //var clonedInside = this.clone(newClaimsRelatedEntityPM.ClaimsRelatedEntitiesRefunds[k]);
+                    newClaimsRelatedEntityPM.OldEntityPM.ClaimsRelatedEntitiesRefunds.push(newClaimsRelatedEntityPM.ClaimsRelatedEntitiesRefunds[k].OldEntityPM); // clone old ClaimsRelatedEntitiesRefunds//
+                }
+
+				
+            }
+            else {
+                if (newClaimsRelatedEntityPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClaimsRelatedEntityPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newClaimsRelatedEntityPM.ChangeSetOp = "Insert";
+                }
+ 
+
+                this.MapClaimsRelatedEntitiesAmounts(newClaimsRelatedEntityPM, jItem, mapParent);
+ 
+
+                this.MapClaimsRelatedEntitiesReasons(newClaimsRelatedEntityPM, jItem, mapParent);
+ 
+
+                this.MapClaimsRelatedEntsExpDeclars(newClaimsRelatedEntityPM, jItem, mapParent);
+ 
+
+                this.MapClaimsRelatedEntitiesSeizures(newClaimsRelatedEntityPM, jItem, mapParent);
+ 
+
+                this.MapClaimsRelatedEntitiesRefunds(newClaimsRelatedEntityPM, jItem, mapParent);
+ 
+                newClaimsRelatedEntityPM.OldEntityPM = null;
+                newClaimsRelatedEntityPM.EntityParentPM = null;
+            }
+			 newClaimsRelatedEntityPM.DisableMarkAsDirty = false;
+			 newClaimsRelatedEntityPM.IsDirty = false;
+            entityPM.ClaimsRelatedEntities.push(newClaimsRelatedEntityPM);
+        }
+        if (oldClaimsRelatedEntities) {
+            
+            for (var itemKey in oldClaimsRelatedEntities) {
+                if (entityPM.ClaimsRelatedEntities.filter(p=> p.UniqueKey === oldClaimsRelatedEntities[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClaimsRelatedEntities[itemKey]) {
+                        //oldClaimsRelatedEntities[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClaimsRelatedEntities.push(oldClaimsRelatedEntities[itemKey]);
+						var oldItemJson = oldClaimsRelatedEntities[itemKey];
+                        var deletedPM: ClaimsRelatedEntityPM = new ClaimsRelatedEntityPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+ 
+
+                        this.MapClaimsRelatedEntitiesAmounts(deletedPM, oldItemJson, mapParent);
+ 
+
+                        this.MapClaimsRelatedEntitiesReasons(deletedPM, oldItemJson, mapParent);
+ 
+
+                        this.MapClaimsRelatedEntsExpDeclars(deletedPM, oldItemJson, mapParent);
+ 
+
+                        this.MapClaimsRelatedEntitiesSeizures(deletedPM, oldItemJson, mapParent);
+ 
+
+                        this.MapClaimsRelatedEntitiesRefunds(deletedPM, oldItemJson, mapParent);
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClaimsRelatedEntities.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapClaimsRelatedEntitiesAmounts(entityPM: ClaimsRelatedEntityPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClaimsRelatedEntitiesAmounts: ClaimsRelatedEntitiesAmountPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClaimsRelatedEntitiesAmounts = entityPM.OldEntityPM.ClaimsRelatedEntitiesAmounts;
+        }
+
+        entityPM.ClaimsRelatedEntitiesAmounts = new Array<ClaimsRelatedEntitiesAmountPM>();
+        for (var item in jsonPM.ClaimsRelatedEntitiesAmounts) {
+            var jItem = jsonPM.ClaimsRelatedEntitiesAmounts[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClaimsRelatedEntitiesAmountPM: ClaimsRelatedEntitiesAmountPM;
+	  
+            if (mapParent) {
+                newClaimsRelatedEntitiesAmountPM = new ClaimsRelatedEntitiesAmountPM(entityPM);
+            }
+            else
+            {
+                newClaimsRelatedEntitiesAmountPM = new ClaimsRelatedEntitiesAmountPM(null);
+            }
+ 			newClaimsRelatedEntitiesAmountPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClaimsRelatedEntitiesAmountPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClaimsRelatedEntitiesAmountPM.UniqueKey = Guid.newGuid();
+                newClaimsRelatedEntitiesAmountPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClaimsRelatedEntitiesAmountPM.OldEntityPM = this.clone(newClaimsRelatedEntitiesAmountPM);
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newClaimsRelatedEntitiesAmountPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newClaimsRelatedEntitiesAmountPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClaimsRelatedEntitiesAmountPM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newClaimsRelatedEntitiesAmountPM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+                newClaimsRelatedEntitiesAmountPM.OldEntityPM = null;
+                newClaimsRelatedEntitiesAmountPM.EntityParentPM = null;
+            }
+			 newClaimsRelatedEntitiesAmountPM.DisableMarkAsDirty = false;
+			 newClaimsRelatedEntitiesAmountPM.IsDirty = false;
+            entityPM.ClaimsRelatedEntitiesAmounts.push(newClaimsRelatedEntitiesAmountPM);
+        }
+        if (oldClaimsRelatedEntitiesAmounts) {
+            
+            for (var itemKey in oldClaimsRelatedEntitiesAmounts) {
+                if (entityPM.ClaimsRelatedEntitiesAmounts.filter(p=> p.UniqueKey === oldClaimsRelatedEntitiesAmounts[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClaimsRelatedEntitiesAmounts[itemKey]) {
+                        //oldClaimsRelatedEntitiesAmounts[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClaimsRelatedEntitiesAmounts.push(oldClaimsRelatedEntitiesAmounts[itemKey]);
+						var oldItemJson = oldClaimsRelatedEntitiesAmounts[itemKey];
+                        var deletedPM: ClaimsRelatedEntitiesAmountPM = new ClaimsRelatedEntitiesAmountPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClaimsRelatedEntitiesAmounts.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapClaimsRelatedEntitiesReasons(entityPM: ClaimsRelatedEntityPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClaimsRelatedEntitiesReasons: ClaimsRelatedEntitiesReasonPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClaimsRelatedEntitiesReasons = entityPM.OldEntityPM.ClaimsRelatedEntitiesReasons;
+        }
+
+        entityPM.ClaimsRelatedEntitiesReasons = new Array<ClaimsRelatedEntitiesReasonPM>();
+        for (var item in jsonPM.ClaimsRelatedEntitiesReasons) {
+            var jItem = jsonPM.ClaimsRelatedEntitiesReasons[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClaimsRelatedEntitiesReasonPM: ClaimsRelatedEntitiesReasonPM;
+	  
+            if (mapParent) {
+                newClaimsRelatedEntitiesReasonPM = new ClaimsRelatedEntitiesReasonPM(entityPM);
+            }
+            else
+            {
+                newClaimsRelatedEntitiesReasonPM = new ClaimsRelatedEntitiesReasonPM(null);
+            }
+ 			newClaimsRelatedEntitiesReasonPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClaimsRelatedEntitiesReasonPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClaimsRelatedEntitiesReasonPM.UniqueKey = Guid.newGuid();
+                newClaimsRelatedEntitiesReasonPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClaimsRelatedEntitiesReasonPM.OldEntityPM = this.clone(newClaimsRelatedEntitiesReasonPM);
+ 
+
+                this.MapClaimsRelatedEntsReasonsExps(newClaimsRelatedEntitiesReasonPM, jItem, mapParent);
+                newClaimsRelatedEntitiesReasonPM.OldEntityPM.ClaimsRelatedEntsReasonsExps = [];
+                for (var k in newClaimsRelatedEntitiesReasonPM.ClaimsRelatedEntsReasonsExps) {
+                    //var clonedInside = this.clone(newClaimsRelatedEntitiesReasonPM.ClaimsRelatedEntsReasonsExps[k]);
+                    newClaimsRelatedEntitiesReasonPM.OldEntityPM.ClaimsRelatedEntsReasonsExps.push(newClaimsRelatedEntitiesReasonPM.ClaimsRelatedEntsReasonsExps[k].OldEntityPM); // clone old ClaimsRelatedEntsReasonsExps//
+                }
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newClaimsRelatedEntitiesReasonPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newClaimsRelatedEntitiesReasonPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClaimsRelatedEntitiesReasonPM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newClaimsRelatedEntitiesReasonPM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+
+                this.MapClaimsRelatedEntsReasonsExps(newClaimsRelatedEntitiesReasonPM, jItem, mapParent);
+ 
+                newClaimsRelatedEntitiesReasonPM.OldEntityPM = null;
+                newClaimsRelatedEntitiesReasonPM.EntityParentPM = null;
+            }
+			 newClaimsRelatedEntitiesReasonPM.DisableMarkAsDirty = false;
+			 newClaimsRelatedEntitiesReasonPM.IsDirty = false;
+            entityPM.ClaimsRelatedEntitiesReasons.push(newClaimsRelatedEntitiesReasonPM);
+        }
+        if (oldClaimsRelatedEntitiesReasons) {
+            
+            for (var itemKey in oldClaimsRelatedEntitiesReasons) {
+                if (entityPM.ClaimsRelatedEntitiesReasons.filter(p=> p.UniqueKey === oldClaimsRelatedEntitiesReasons[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClaimsRelatedEntitiesReasons[itemKey]) {
+                        //oldClaimsRelatedEntitiesReasons[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClaimsRelatedEntitiesReasons.push(oldClaimsRelatedEntitiesReasons[itemKey]);
+						var oldItemJson = oldClaimsRelatedEntitiesReasons[itemKey];
+                        var deletedPM: ClaimsRelatedEntitiesReasonPM = new ClaimsRelatedEntitiesReasonPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+ 
+
+                        this.MapClaimsRelatedEntsReasonsExps(deletedPM, oldItemJson, mapParent);
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClaimsRelatedEntitiesReasons.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapClaimsRelatedEntsReasonsExps(entityPM: ClaimsRelatedEntitiesReasonPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClaimsRelatedEntsReasonsExps: ClaimsRelatedEntsReasonsExpPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClaimsRelatedEntsReasonsExps = entityPM.OldEntityPM.ClaimsRelatedEntsReasonsExps;
+        }
+
+        entityPM.ClaimsRelatedEntsReasonsExps = new Array<ClaimsRelatedEntsReasonsExpPM>();
+        for (var item in jsonPM.ClaimsRelatedEntsReasonsExps) {
+            var jItem = jsonPM.ClaimsRelatedEntsReasonsExps[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClaimsRelatedEntsReasonsExpPM: ClaimsRelatedEntsReasonsExpPM;
+	  
+            if (mapParent) {
+                newClaimsRelatedEntsReasonsExpPM = new ClaimsRelatedEntsReasonsExpPM(entityPM);
+            }
+            else
+            {
+                newClaimsRelatedEntsReasonsExpPM = new ClaimsRelatedEntsReasonsExpPM(null);
+            }
+ 			newClaimsRelatedEntsReasonsExpPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClaimsRelatedEntsReasonsExpPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClaimsRelatedEntsReasonsExpPM.UniqueKey = Guid.newGuid();
+                newClaimsRelatedEntsReasonsExpPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClaimsRelatedEntsReasonsExpPM.OldEntityPM = this.clone(newClaimsRelatedEntsReasonsExpPM);
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newClaimsRelatedEntsReasonsExpPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newClaimsRelatedEntsReasonsExpPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClaimsRelatedEntsReasonsExpPM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newClaimsRelatedEntsReasonsExpPM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+                newClaimsRelatedEntsReasonsExpPM.OldEntityPM = null;
+                newClaimsRelatedEntsReasonsExpPM.EntityParentPM = null;
+            }
+			 newClaimsRelatedEntsReasonsExpPM.DisableMarkAsDirty = false;
+			 newClaimsRelatedEntsReasonsExpPM.IsDirty = false;
+            entityPM.ClaimsRelatedEntsReasonsExps.push(newClaimsRelatedEntsReasonsExpPM);
+        }
+        if (oldClaimsRelatedEntsReasonsExps) {
+            
+            for (var itemKey in oldClaimsRelatedEntsReasonsExps) {
+                if (entityPM.ClaimsRelatedEntsReasonsExps.filter(p=> p.UniqueKey === oldClaimsRelatedEntsReasonsExps[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClaimsRelatedEntsReasonsExps[itemKey]) {
+                        //oldClaimsRelatedEntsReasonsExps[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClaimsRelatedEntsReasonsExps.push(oldClaimsRelatedEntsReasonsExps[itemKey]);
+						var oldItemJson = oldClaimsRelatedEntsReasonsExps[itemKey];
+                        var deletedPM: ClaimsRelatedEntsReasonsExpPM = new ClaimsRelatedEntsReasonsExpPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClaimsRelatedEntsReasonsExps.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+ 
+    MapClaimsRelatedEntsExpDeclars(entityPM: ClaimsRelatedEntityPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClaimsRelatedEntsExpDeclars: ClaimsRelatedEntsExpDeclarPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClaimsRelatedEntsExpDeclars = entityPM.OldEntityPM.ClaimsRelatedEntsExpDeclars;
+        }
+
+        entityPM.ClaimsRelatedEntsExpDeclars = new Array<ClaimsRelatedEntsExpDeclarPM>();
+        for (var item in jsonPM.ClaimsRelatedEntsExpDeclars) {
+            var jItem = jsonPM.ClaimsRelatedEntsExpDeclars[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClaimsRelatedEntsExpDeclarPM: ClaimsRelatedEntsExpDeclarPM;
+	  
+            if (mapParent) {
+                newClaimsRelatedEntsExpDeclarPM = new ClaimsRelatedEntsExpDeclarPM(entityPM);
+            }
+            else
+            {
+                newClaimsRelatedEntsExpDeclarPM = new ClaimsRelatedEntsExpDeclarPM(null);
+            }
+ 			newClaimsRelatedEntsExpDeclarPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClaimsRelatedEntsExpDeclarPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClaimsRelatedEntsExpDeclarPM.UniqueKey = Guid.newGuid();
+                newClaimsRelatedEntsExpDeclarPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClaimsRelatedEntsExpDeclarPM.OldEntityPM = this.clone(newClaimsRelatedEntsExpDeclarPM);
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newClaimsRelatedEntsExpDeclarPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newClaimsRelatedEntsExpDeclarPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClaimsRelatedEntsExpDeclarPM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newClaimsRelatedEntsExpDeclarPM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+                newClaimsRelatedEntsExpDeclarPM.OldEntityPM = null;
+                newClaimsRelatedEntsExpDeclarPM.EntityParentPM = null;
+            }
+			 newClaimsRelatedEntsExpDeclarPM.DisableMarkAsDirty = false;
+			 newClaimsRelatedEntsExpDeclarPM.IsDirty = false;
+            entityPM.ClaimsRelatedEntsExpDeclars.push(newClaimsRelatedEntsExpDeclarPM);
+        }
+        if (oldClaimsRelatedEntsExpDeclars) {
+            
+            for (var itemKey in oldClaimsRelatedEntsExpDeclars) {
+                if (entityPM.ClaimsRelatedEntsExpDeclars.filter(p=> p.UniqueKey === oldClaimsRelatedEntsExpDeclars[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClaimsRelatedEntsExpDeclars[itemKey]) {
+                        //oldClaimsRelatedEntsExpDeclars[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClaimsRelatedEntsExpDeclars.push(oldClaimsRelatedEntsExpDeclars[itemKey]);
+						var oldItemJson = oldClaimsRelatedEntsExpDeclars[itemKey];
+                        var deletedPM: ClaimsRelatedEntsExpDeclarPM = new ClaimsRelatedEntsExpDeclarPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClaimsRelatedEntsExpDeclars.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapClaimsRelatedEntitiesSeizures(entityPM: ClaimsRelatedEntityPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClaimsRelatedEntitiesSeizures: ClaimsRelatedEntitiesSeizurePM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClaimsRelatedEntitiesSeizures = entityPM.OldEntityPM.ClaimsRelatedEntitiesSeizures;
+        }
+
+        entityPM.ClaimsRelatedEntitiesSeizures = new Array<ClaimsRelatedEntitiesSeizurePM>();
+        for (var item in jsonPM.ClaimsRelatedEntitiesSeizures) {
+            var jItem = jsonPM.ClaimsRelatedEntitiesSeizures[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClaimsRelatedEntitiesSeizurePM: ClaimsRelatedEntitiesSeizurePM;
+	  
+            if (mapParent) {
+                newClaimsRelatedEntitiesSeizurePM = new ClaimsRelatedEntitiesSeizurePM(entityPM);
+            }
+            else
+            {
+                newClaimsRelatedEntitiesSeizurePM = new ClaimsRelatedEntitiesSeizurePM(null);
+            }
+ 			newClaimsRelatedEntitiesSeizurePM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClaimsRelatedEntitiesSeizurePM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClaimsRelatedEntitiesSeizurePM.UniqueKey = Guid.newGuid();
+                newClaimsRelatedEntitiesSeizurePM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClaimsRelatedEntitiesSeizurePM.OldEntityPM = this.clone(newClaimsRelatedEntitiesSeizurePM);
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newClaimsRelatedEntitiesSeizurePM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newClaimsRelatedEntitiesSeizurePM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClaimsRelatedEntitiesSeizurePM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newClaimsRelatedEntitiesSeizurePM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+                newClaimsRelatedEntitiesSeizurePM.OldEntityPM = null;
+                newClaimsRelatedEntitiesSeizurePM.EntityParentPM = null;
+            }
+			 newClaimsRelatedEntitiesSeizurePM.DisableMarkAsDirty = false;
+			 newClaimsRelatedEntitiesSeizurePM.IsDirty = false;
+            entityPM.ClaimsRelatedEntitiesSeizures.push(newClaimsRelatedEntitiesSeizurePM);
+        }
+        if (oldClaimsRelatedEntitiesSeizures) {
+            
+            for (var itemKey in oldClaimsRelatedEntitiesSeizures) {
+                if (entityPM.ClaimsRelatedEntitiesSeizures.filter(p=> p.UniqueKey === oldClaimsRelatedEntitiesSeizures[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClaimsRelatedEntitiesSeizures[itemKey]) {
+                        //oldClaimsRelatedEntitiesSeizures[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClaimsRelatedEntitiesSeizures.push(oldClaimsRelatedEntitiesSeizures[itemKey]);
+						var oldItemJson = oldClaimsRelatedEntitiesSeizures[itemKey];
+                        var deletedPM: ClaimsRelatedEntitiesSeizurePM = new ClaimsRelatedEntitiesSeizurePM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClaimsRelatedEntitiesSeizures.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapClaimsRelatedEntitiesRefunds(entityPM: ClaimsRelatedEntityPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClaimsRelatedEntitiesRefunds: ClaimsRelatedEntitiesRefundPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClaimsRelatedEntitiesRefunds = entityPM.OldEntityPM.ClaimsRelatedEntitiesRefunds;
+        }
+
+        entityPM.ClaimsRelatedEntitiesRefunds = new Array<ClaimsRelatedEntitiesRefundPM>();
+        for (var item in jsonPM.ClaimsRelatedEntitiesRefunds) {
+            var jItem = jsonPM.ClaimsRelatedEntitiesRefunds[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClaimsRelatedEntitiesRefundPM: ClaimsRelatedEntitiesRefundPM;
+	  
+            if (mapParent) {
+                newClaimsRelatedEntitiesRefundPM = new ClaimsRelatedEntitiesRefundPM(entityPM);
+            }
+            else
+            {
+                newClaimsRelatedEntitiesRefundPM = new ClaimsRelatedEntitiesRefundPM(null);
+            }
+ 			newClaimsRelatedEntitiesRefundPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClaimsRelatedEntitiesRefundPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClaimsRelatedEntitiesRefundPM.UniqueKey = Guid.newGuid();
+                newClaimsRelatedEntitiesRefundPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClaimsRelatedEntitiesRefundPM.OldEntityPM = this.clone(newClaimsRelatedEntitiesRefundPM);
+
+				
+            }
+            else {
+                if (entityPM.ChangeSetOp === "Delete") {
+                    newClaimsRelatedEntitiesRefundPM.ChangeSetOp = "Delete";
+                }
+                else {
+                    if (newClaimsRelatedEntitiesRefundPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClaimsRelatedEntitiesRefundPM.ChangeSetOp = "Update";
+                    }
+                else {
+                        newClaimsRelatedEntitiesRefundPM.ChangeSetOp = "Insert";
+                    }
+                }
+ 
+                newClaimsRelatedEntitiesRefundPM.OldEntityPM = null;
+                newClaimsRelatedEntitiesRefundPM.EntityParentPM = null;
+            }
+			 newClaimsRelatedEntitiesRefundPM.DisableMarkAsDirty = false;
+			 newClaimsRelatedEntitiesRefundPM.IsDirty = false;
+            entityPM.ClaimsRelatedEntitiesRefunds.push(newClaimsRelatedEntitiesRefundPM);
+        }
+        if (oldClaimsRelatedEntitiesRefunds) {
+            
+            for (var itemKey in oldClaimsRelatedEntitiesRefunds) {
+                if (entityPM.ClaimsRelatedEntitiesRefunds.filter(p=> p.UniqueKey === oldClaimsRelatedEntitiesRefunds[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClaimsRelatedEntitiesRefunds[itemKey]) {
+                        //oldClaimsRelatedEntitiesRefunds[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClaimsRelatedEntitiesRefunds.push(oldClaimsRelatedEntitiesRefunds[itemKey]);
+						var oldItemJson = oldClaimsRelatedEntitiesRefunds[itemKey];
+                        var deletedPM: ClaimsRelatedEntitiesRefundPM = new ClaimsRelatedEntitiesRefundPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClaimsRelatedEntitiesRefunds.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+ 
+    MapClaimImporterDeclarsPage3A(entityPM: ClaimPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClaimImporterDeclarsPage3A: ClaimImporterDeclarsPage3APM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClaimImporterDeclarsPage3A = entityPM.OldEntityPM.ClaimImporterDeclarsPage3A;
+        }
+
+        entityPM.ClaimImporterDeclarsPage3A = new Array<ClaimImporterDeclarsPage3APM>();
+        for (var item in jsonPM.ClaimImporterDeclarsPage3A) {
+            var jItem = jsonPM.ClaimImporterDeclarsPage3A[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClaimImporterDeclarsPage3APM: ClaimImporterDeclarsPage3APM;
+	  
+            if (mapParent) {
+                newClaimImporterDeclarsPage3APM = new ClaimImporterDeclarsPage3APM(entityPM);
+            }
+            else
+            {
+                newClaimImporterDeclarsPage3APM = new ClaimImporterDeclarsPage3APM(null);
+            }
+ 			newClaimImporterDeclarsPage3APM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClaimImporterDeclarsPage3APM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClaimImporterDeclarsPage3APM.UniqueKey = Guid.newGuid();
+                newClaimImporterDeclarsPage3APM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClaimImporterDeclarsPage3APM.OldEntityPM = this.clone(newClaimImporterDeclarsPage3APM);
+
+				
+            }
+            else {
+                if (newClaimImporterDeclarsPage3APM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClaimImporterDeclarsPage3APM.ChangeSetOp = "Update";
+                }
+                else {
+                        newClaimImporterDeclarsPage3APM.ChangeSetOp = "Insert";
+                }
+ 
+                newClaimImporterDeclarsPage3APM.OldEntityPM = null;
+                newClaimImporterDeclarsPage3APM.EntityParentPM = null;
+            }
+			 newClaimImporterDeclarsPage3APM.DisableMarkAsDirty = false;
+			 newClaimImporterDeclarsPage3APM.IsDirty = false;
+            entityPM.ClaimImporterDeclarsPage3A.push(newClaimImporterDeclarsPage3APM);
+        }
+        if (oldClaimImporterDeclarsPage3A) {
+            
+            for (var itemKey in oldClaimImporterDeclarsPage3A) {
+                if (entityPM.ClaimImporterDeclarsPage3A.filter(p=> p.UniqueKey === oldClaimImporterDeclarsPage3A[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClaimImporterDeclarsPage3A[itemKey]) {
+                        //oldClaimImporterDeclarsPage3A[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClaimImporterDeclarsPage3A.push(oldClaimImporterDeclarsPage3A[itemKey]);
+						var oldItemJson = oldClaimImporterDeclarsPage3A[itemKey];
+                        var deletedPM: ClaimImporterDeclarsPage3APM = new ClaimImporterDeclarsPage3APM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClaimImporterDeclarsPage3A.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+    MapClaimImporterDeclarsPage3B(entityPM: ClaimPM, jsonPM: any, mapParent: boolean = true) {
+
+        var oldClaimImporterDeclarsPage3B: ClaimImporterDeclarsPage3BPM[] = [];
+        if (entityPM.OldEntityPM && !mapParent) {
+            oldClaimImporterDeclarsPage3B = entityPM.OldEntityPM.ClaimImporterDeclarsPage3B;
+        }
+
+        entityPM.ClaimImporterDeclarsPage3B = new Array<ClaimImporterDeclarsPage3BPM>();
+        for (var item in jsonPM.ClaimImporterDeclarsPage3B) {
+            var jItem = jsonPM.ClaimImporterDeclarsPage3B[item];
+            if (mapParent && (jItem.ChangeSetOp == "Delete" || jItem.ChangeSetOp == 3)) {
+                continue;
+            }
+            var newClaimImporterDeclarsPage3BPM: ClaimImporterDeclarsPage3BPM;
+	  
+            if (mapParent) {
+                newClaimImporterDeclarsPage3BPM = new ClaimImporterDeclarsPage3BPM(entityPM);
+            }
+            else
+            {
+                newClaimImporterDeclarsPage3BPM = new ClaimImporterDeclarsPage3BPM(null);
+            }
+ 			newClaimImporterDeclarsPage3BPM.DisableMarkAsDirty = true;
+               
+            var pmKeysArray = Object.keys(jItem);
+            for (var pmKey in pmKeysArray) {
+                if ((!mapParent && pmKeysArray[pmKey] === "entityParentPM" )|| pmKeysArray[pmKey] === "UIProperties" || pmKeysArray[pmKey] === "PropertyChanged") {
+                    continue;
+                }
+                var pmProperty = pmKeysArray[pmKey];
+                newClaimImporterDeclarsPage3BPM[pmProperty] = jItem[pmProperty];
+            }
+           
+			 
+            if (mapParent) {
+                newClaimImporterDeclarsPage3BPM.UniqueKey = Guid.newGuid();
+                newClaimImporterDeclarsPage3BPM.ChangeSetOp = "None";
+                jItem.ChangeSetOp = "None";
+                newClaimImporterDeclarsPage3BPM.OldEntityPM = this.clone(newClaimImporterDeclarsPage3BPM);
+
+				
+            }
+            else {
+                if (newClaimImporterDeclarsPage3BPM.UniqueKey) {
+
+                    if (jItem.IsDirty)
+                        newClaimImporterDeclarsPage3BPM.ChangeSetOp = "Update";
+                }
+                else {
+                        newClaimImporterDeclarsPage3BPM.ChangeSetOp = "Insert";
+                }
+ 
+                newClaimImporterDeclarsPage3BPM.OldEntityPM = null;
+                newClaimImporterDeclarsPage3BPM.EntityParentPM = null;
+            }
+			 newClaimImporterDeclarsPage3BPM.DisableMarkAsDirty = false;
+			 newClaimImporterDeclarsPage3BPM.IsDirty = false;
+            entityPM.ClaimImporterDeclarsPage3B.push(newClaimImporterDeclarsPage3BPM);
+        }
+        if (oldClaimImporterDeclarsPage3B) {
+            
+            for (var itemKey in oldClaimImporterDeclarsPage3B) {
+                if (entityPM.ClaimImporterDeclarsPage3B.filter(p=> p.UniqueKey === oldClaimImporterDeclarsPage3B[itemKey].UniqueKey).length === 0) {
+				
+                    if (oldClaimImporterDeclarsPage3B[itemKey]) {
+                        //oldClaimImporterDeclarsPage3B[itemKey].ChangeSetOp = "Delete";
+                        //entityPM.ClaimImporterDeclarsPage3B.push(oldClaimImporterDeclarsPage3B[itemKey]);
+						var oldItemJson = oldClaimImporterDeclarsPage3B[itemKey];
+                        var deletedPM: ClaimImporterDeclarsPage3BPM = new ClaimImporterDeclarsPage3BPM(null);
+						deletedPM.DisableMarkAsDirty = true;
+                        var pmKeys = Object.keys(oldItemJson);
+                        for (var key in pmKeys) {
+
+                            if ((!mapParent && pmKeys[key] === "entityParentPM") || pmKeys[key] === "UIProperties" || pmKeys[key] === "OldEntityPM" || pmKeys[key] === "PropertyChanged") {
+                                continue;
+                            }
+
+                            var property = pmKeys[key];
+                            deletedPM[property] = oldItemJson[property];
+                        }
+
+					    deletedPM.DisableMarkAsDirty = false;
+                        deletedPM.IsDirty = false;
+                        deletedPM.ChangeSetOp = "Delete";
+                        
+                        deletedPM.OldEntityPM = null;
+                        entityPM.ClaimImporterDeclarsPage3B.push(deletedPM);
+                    }
+                }
+            }
+        }
+    }
+
+	  public clone(jsonPM: any) {
+        var entityPM: any;
+        entityPM = {};
+
+        var jsonPMKeys = Object.keys(jsonPM);
+        for (var key in jsonPMKeys) {
+            
+            if ((jsonPMKeys[key] === "entityParentPM") || jsonPMKeys[key] === "UIProperties" || jsonPMKeys[key] === "OldEntityPM" || jsonPMKeys[key] === "PropertyChanged") {
+                continue;
+            }
+
+            var property = jsonPMKeys[key];
+            entityPM[property] = jsonPM[property];
+
+        }
+        return entityPM;
+    }
+
+	  public GetNewEntityPM() {		 
+		    var entityPM: ClaimPM;
+			entityPM = new ClaimPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
+			return entityPM;
+    }
+		 
+
+}

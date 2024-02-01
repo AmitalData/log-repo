@@ -9,7 +9,7 @@ import { NewEntityArgs } from '../../../../Infrastructure/Args';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ClaimPM } from '../../../../Customs/EntityPMs/ClaimPM';
-import { ClaimPMService } from '../../../../Customs/Services/StandardPMs/ClaimPMService';
+import { ClaimExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/ClaimExtendedPMService';
 import { ClaimWebService } from '../../../../Customs/Services/WebServices/ClaimWebService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
@@ -26,7 +26,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[] = [];
     QueryNameText: string = "";
 
-    private _ClaimPMService: ClaimPMService = new ClaimPMService();
+    private _ClaimExtendedPMService: ClaimExtendedPMService = new ClaimExtendedPMService();    
     private _ClaimWebService: ClaimWebService = new ClaimWebService();
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -62,12 +62,20 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
             this.EntityPM.CustomerId = value;
         }
     }
+
+    get CustomFileNo() { return this.EntityPM.CustomFileNo; }
+    set CustomFileNo(value: string) {
+        if (this.EntityPM.CustomFileNo != value) {
+            this.EntityPM.CustomFileNo = value;
+        }
+    }
+
     //#endregion
 
     OkButtonClicked() {
         this.ValidationErrorsList = [];
 
-        if (AppTool.IsNullOrEmpty(this.CustomerId)) {
+        if (AppTool.IsNullOrEmpty(this.CustomerId) && AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.ClientIsMandatory"));
         }
         if (AppTool.IsNullOrEmpty(this.ClaimOfficeCode)) {
@@ -98,7 +106,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
             }
         }
 
-        this._ClaimPMService.insert(this.EntityPM).subscribe((myResult:any) => {
+        this._ClaimExtendedPMService.insert(this.EntityPM).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 var entity = mm.Result;

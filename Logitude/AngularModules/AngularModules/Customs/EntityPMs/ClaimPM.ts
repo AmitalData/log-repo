@@ -444,6 +444,11 @@ export class ClaimPM {
     public set ClaimAmount(newValue: number) { if (this.claimAmount != newValue) { this.claimAmount = newValue; this.MarkAsDirty("ClaimAmount"); } }
        
 	 
+    private customFileNo: string;
+    public get CustomFileNo() { return this.customFileNo; }
+    public set CustomFileNo(newValue: string) { if (this.customFileNo != newValue) { this.customFileNo = newValue; this.MarkAsDirty("CustomFileNo"); } }
+       
+	 
 
     public OldEntityPM: ClaimPM;
 		
