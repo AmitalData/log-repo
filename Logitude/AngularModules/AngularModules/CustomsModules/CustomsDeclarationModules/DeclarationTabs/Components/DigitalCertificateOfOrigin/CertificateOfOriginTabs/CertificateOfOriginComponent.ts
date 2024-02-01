@@ -308,7 +308,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
             this.RequestParams = new CertificateOfOriginRequestRequestParams();
         }
         
-        if(!AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)){
+        if(this.EntityPM?.ErrXml && !AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)){
             this.selectedTabCode="ANSWERTOCERTIFICATE"
             this.SelectionChanged();
         }
