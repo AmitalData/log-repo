@@ -144,7 +144,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                                 ClaimEntityTypeCode = "1055", // = hatsarat yivu
                                 ClaimEntityNumber = declaration.DeclarationNumber,
                                 ExternalClaimNumber = entityPM.CustomFileNo,
-                                ClaimExplanation = ".",
+                                ClaimExplanation = " ", // workaround: this field is required in the db but we can not fill it instead of the customer
                                 DeclarationVersion = AdaptDeclarationVersion(declaration.VersionId),
                                 IsFinancialRefundDemand = true,
                                 WarehouseTypeCode = declaration.StorageSiteCode,
