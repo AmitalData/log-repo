@@ -299,7 +299,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
 
         this.certificateOfOriginWebService.PostCertificateOfOriginRequest(requestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
-                
+
             });
     }
     OnMassageDisplayMethod() {
@@ -307,7 +307,11 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         if (this.RequestParams == null) {
             this.RequestParams = new CertificateOfOriginRequestRequestParams();
         }
-
+        
+        if(!AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)){
+            this.selectedTabCode="ANSWERTOCERTIFICATE"
+            this.SelectionChanged();
+        }
         this.RefreshScreen();
     }
     RefreshScreen() {
@@ -319,7 +323,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         this.certificateOfOriginWebService.GetCertificateOfOriginByIDIncludeChildrens(this.ResponseData.ApplicationID, this.DecalarationData.Id, this.EntityPM.Tenant).subscribe(myResult => {
             var myResponse: ServiceResponse = myResult;
             if (!myResult.HasError && myResult.Result) {
-                this.EntityPM =  myResult.Result;                          
+                this.EntityPM =  myResult.Result;                               
             }
         });
       
