@@ -1,6 +1,4 @@
-﻿using Logitude.BL.GlobalModel.EntityPMs;
-using Logitude.BL.GlobalModel.EntityQueries;
-using Logitude.Customs.Data.EntityPOCOs;
+﻿using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.Server.Tools.Counters;
 using Newtonsoft.Json;
@@ -57,9 +55,9 @@ namespace WebFreight.Web.Controllers.WebServices.Services
         public string Client_Software_Key { get; set; }
         public double Amount_Before_Discount { get; set; }
         public double Discount { get; set; }
-        public int Payment_Amount { get; set; }
-        public int VAT_Amount { get; set; }
-        public int Payment_Amount_Including_VAT { get; set; }
+        public double Payment_Amount { get; set; }
+        public double VAT_Amount { get; set; }
+        public double Payment_Amount_Including_VAT { get; set; }
         public string Invoice_Note { get; set; }
         public int Action { get; set; }
         public int Vehicle_License_Number { get; set; }
@@ -81,9 +79,9 @@ namespace WebFreight.Web.Controllers.WebServices.Services
             public double Quantity { get; set; }
             public double Price_Per_Unit { get; set; }
             public double Discount { get; set; }
-            public int Total_Amount { get; set; }
-            public int VAT_Rate { get; set; }
-            public int VAT_Amount { get; set; }
+            public double Total_Amount { get; set; }
+            public double VAT_Rate { get; set; }
+            public double VAT_Amount { get; set; }
         }
     }
 }
