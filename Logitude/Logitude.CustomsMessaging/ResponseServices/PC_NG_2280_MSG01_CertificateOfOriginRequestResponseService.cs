@@ -82,7 +82,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 					return;
 			}
-				
+			certificateOfOriginPM.ErrXml = null;
 			certificateOfOriginPM.COONumber = customResponse.CertificateOfOriginRequestFeedback.certificateID;
 			certificateOfOriginPM.CooStatusCode = customResponse.CertificateOfOriginRequestFeedback.certificateOfOriginStatusCode.ToString();
 			certificateOfOriginPM.FeedbackRemark = customResponse.CertificateOfOriginRequestFeedback.FeedbackRemark;

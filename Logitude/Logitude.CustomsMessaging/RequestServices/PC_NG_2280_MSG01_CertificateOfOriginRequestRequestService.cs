@@ -47,7 +47,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			if (certificateOfOrigin.CooTypeCode != "5" && !RequestReasonCodeList.Contains(requestParams.RequestReasonCode.ToString())) 
 			{
 
-			      myMsg.CertificateOfOrigin = GetCertificateOfOrigin(certificateOfOrigin, declarationPM?.ImporterCode);
+			      myMsg.CertificateOfOrigin = GetCertificateOfOrigin(certificateOfOrigin, declarationPM);
 			      myMsg.CertificateOfOrigin.CertificateOfOriginRequestInvoiceDetail = certificateOfOrigin.IsUnitedInvoices ? 
 			      	GetCertificateOfOriginRequestInvoiceDetailUnitedInvoices(certificateOfOrigin.CertificateOriginInvoiceItems, certificateOfOrigin.CertificateOriginItemItems) :
 			      	GetCertificateOfOriginRequestInvoiceDetail(certificateOfOrigin.CertificateOriginInvoiceItems, certificateOfOrigin.CertificateOriginItemItems);
@@ -84,10 +84,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
             this.MyRequestSheetParam.RequestDescription = (requestParams.RequestReasonCode == 13 ? "סטטוס תעודת מקור: " : "בקשת תעודת מקור: " )+ certificateOfOrigin.Counter;
 			return myMsg;
 		}
-        public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin GetCertificateOfOrigin(CertificateOfOriginPM certificateOfOrigin,string exporterVat)
+        public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin GetCertificateOfOrigin(CertificateOfOriginPM certificateOfOrigin,DeclarationPM declarationPM)
         {
             PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin() {
-			    ExporterId = exporterVat,
+			    ExporterId = declarationPM?.ImporterCode,
 				ExporterName = certificateOfOrigin.ExporterName,
 				ExporterAddress = certificateOfOrigin.ExporterAddress,
 				ExporterCountry = certificateOfOrigin.ExporterCountry,
@@ -122,8 +122,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				Observations = certificateOfOrigin.Observations,
 				IsExportDecForPrint = certificateOfOrigin.IsExportDecForPrint,
 				IsExportDecForPrintSpecified = true,
-				CustomsHouse = certificateOfOrigin.CustomsHouse,
-				IssuingCountry = certificateOfOrigin.IssuingCountry,
+				CustomsHouse = !string.IsNullOrEmpty(certificateOfOrigin.CustomsHouse)? certificateOfOrigin.CustomsHouse:declarationPM?.DeclarationOfficeHandlerCode,
+				IssuingCountry = "IL",
 				CityOfDeclaration = string.IsNullOrEmpty(certificateOfOrigin.CityOfDeclaration) ? null : (int?)Convert.ToInt32(certificateOfOrigin.CityOfDeclaration),
 				CityOfDeclarationSpecified = true,
 				CountryOfDeclaration = certificateOfOrigin.CountryOfDeclaration,
