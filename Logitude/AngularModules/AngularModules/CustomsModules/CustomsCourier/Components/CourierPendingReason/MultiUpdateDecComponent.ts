@@ -15,6 +15,8 @@ import { ApiQueryFilters } from "../../../../Infrastructure/DataContracts/ApiQue
 import { customsItemsService } from "QuoteOPM/Utilities/customsItems.service";
 import { combineLatest, forkJoin } from "rxjs";
 import { DeclarationsBulkFeedWebService } from "Customs/Services/WebServices/DeclarationsBulkFeedWebService";
+import { EntityArgs } from "Infrastructure/DataContracts/EntityArgs";
+import { LogitudeWindow } from "Controls/Windows/LogitudeWindow";
 
 @Component({
 
@@ -449,10 +451,19 @@ export class MultiUpdateDecComponent extends BaseComponent {
             .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.CancelButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
 
@@ -464,7 +475,25 @@ export class MultiUpdateDecComponent extends BaseComponent {
         //    this.CancelButtonClicked();
         //});
     }
+    LoadCustomsRequestSheetsScreen(RequestInProgressList:string){
+       
+        var entityArgs=new EntityArgs();
+       // entityArgs.EntityPM = this.entityPM;
+        entityArgs.ObjectTableName="Customs.CourierMaster";
+        entityArgs.OriginEntity=RequestInProgressList;
+        let windowTitle = TextCodeTranslator.Translate("TextCodeTranslator");
+        let logWindow = new LogitudeWindow();
+        logWindow.Width = 1300;
+        logWindow.Height = 700;
+        logWindow.Title = windowTitle;
+        logWindow.IsShowCloseButton = true;
+        logWindow.WindowArgs = entityArgs;
+        
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent');
 
+
+ 
+    }
     CancelButtonClicked() {
         this.CurrentSession.CloseCurrentWindowEmit("");
     }

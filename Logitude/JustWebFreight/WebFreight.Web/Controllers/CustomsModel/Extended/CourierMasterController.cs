@@ -37,6 +37,8 @@ using Logitude.CustomsMessaging.Common.ResponseData;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.BL.BL;
 using Logitude.BL.CommonDataModel.EntityQueries;
+using static Dropbox.Api.Sharing.ListFileMembersIndividualResult;
+using Microsoft.TeamFoundation.Build.WebApi;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -223,6 +225,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                string RequestInProgressList;
                 var messagingService = new DCAInUCB1170_MsgMessagingService();
                 var sts = messagingService.CreateCRS(tenant, null,
                     new SendALLCorrectRequestParams()
@@ -230,13 +233,14 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                         CourierMasterId = CourierMasterId,
                         HAWB = HAWB,
                         CourierDeclarationStatusCode = CourierDeclarationStatusCode
-                    }
+                    }, out RequestInProgressList
                     //CourierMasterId, HAWB, CourierDeclarationStatusCode
                     );
-
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
                 return Request.CreateResponse(HttpStatusCode.OK,
-
-                    sts
+                   result
                     );
             }
 
@@ -258,9 +262,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB1170_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel?requestParamsData.LoggingUserId:null, requestParamsData);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel?requestParamsData.LoggingUserId:null, requestParamsData, out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -281,9 +288,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCBStorageSite_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData, out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -304,9 +314,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCBClosePending_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel?requestParamsData.LoggingUserId:null, requestParamsData);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel?requestParamsData.LoggingUserId:null, requestParamsData, out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -325,10 +338,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(tenant);
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                string RequestInProgressList;
                 var messagingService = new DCAInUCAApproveAllPending_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel? requestParamsData.LoggingUserId:null, requestParamsData);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel? requestParamsData.LoggingUserId:null, requestParamsData, out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -351,11 +367,13 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new
                     DCAInUCB2755_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, UserId, CourierMasterId, HAWB, InternalBankId, IsWorkSheetFromExcel);
-
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, UserId, CourierMasterId, HAWB, InternalBankId, IsWorkSheetFromExcel,out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
                 return Request.CreateResponse(HttpStatusCode.OK,
-
-                    sts
+                    result
                     );
             }
 
@@ -378,9 +396,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB2755_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, loggingUserId, requestParamsData.CourierMasterId, requestParamsData.HAWB, requestParamsData.InternalBankId, requestParamsData.IsWorkSheetFromExcel, requestParamsData.Declarations);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, loggingUserId, requestParamsData.CourierMasterId, requestParamsData.HAWB, requestParamsData.InternalBankId, requestParamsData.IsWorkSheetFromExcel, out RequestInProgressList, requestParamsData.Declarations);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -401,6 +422,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB2750_MsgMessagingService();
+                string RequestInProgressList;
                 var sts = messagingService.CreateCRS(tenant, null,
                     new SendALLCorrectRequestParams()
                     {
@@ -408,9 +430,11 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     CourierMasterId,
                         HAWB = HAWB,
                         CourierDeclarationStatusCode = CourierDeclarationStatusCode
-                    });
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                    }, out  RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -431,9 +455,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB2750_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel? requestParamsData.LoggingUserId:null, requestParamsData);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel? requestParamsData.LoggingUserId:null, requestParamsData,out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -454,9 +481,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
                 var messagingService = new DCAInUCBCTML_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel? requestParamsData .LoggingUserId: null, requestParamsData);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel? requestParamsData .LoggingUserId: null, requestParamsData, out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -477,9 +507,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCB2715_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel? requestParamsData.LoggingUserId:null, requestParamsData);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, requestParamsData.IsWorkSheetFromExcel? requestParamsData.LoggingUserId:null, requestParamsData,out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -498,9 +531,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 
                 var messagingService = new DCAInUCBSendDelayForm_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData, out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
@@ -517,8 +553,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 int tenant = authToken.Tenant;
                 SecurityUtility.AuthenticationOnTenant(tenant);
                 var messagingService = new DCAInUCB2715SendNow_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, courierMasterId, MAWB);
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, null, courierMasterId, MAWB, out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
             catch (Exception ex)
             {
@@ -542,34 +582,37 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
 
                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
-
+               string RequestInProgressList;
                 var messagingService = new DCAInUCB8250_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, loggingUserId, CourierMasterId, testerSendOption, IsWorkSheetFromExcel, workSheetLoggedUser);
+                var sts = messagingService.CreateCRS(tenant, loggingUserId, CourierMasterId, testerSendOption, IsWorkSheetFromExcel, workSheetLoggedUser,out RequestInProgressList);
 
 
-               /* var declarationsText = string.Join(",", declarations);
-                var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
-                string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
-                var service = new DF_NG_8250_Web01_DeclarationStatus_RequestMessagingService();
-                var requestParams8250 = new DeclarationStatusRequestParams()
-                {
-                    Tenant = tenant,
-                    LoggingEnabled = true,
-                    LoggingObjectTableId = objectTableIdCourierMaster,
-                    LoggingEntityId = CourierMasterId,
-                    DeclarationList = declarationsText,
-                    InterfaceTypeCode = "8250",
-                    LoggingUserId = loggingUserId,
-                    RequestVIA = SendRequestVIA.WebServiceBatch,
-                    DeclarationRadio = true,
-                    TesterSendOption = testerSendOption,
-                    CourierMaster = HAWB
-                };
-                var res = service.Send(requestParams8250);
-                if (res.HasException)
-                    return Request.CreateResponse(HttpStatusCode.OK, res.UserMessage);*/
+                /* var declarationsText = string.Join(",", declarations);
+                 var objectTableIdCourierMaster = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
+                 string loggingUserId = AuthenticationUtil.ResolveUserId(tenant);
+                 var service = new DF_NG_8250_Web01_DeclarationStatus_RequestMessagingService();
+                 var requestParams8250 = new DeclarationStatusRequestParams()
+                 {
+                     Tenant = tenant,
+                     LoggingEnabled = true,
+                     LoggingObjectTableId = objectTableIdCourierMaster,
+                     LoggingEntityId = CourierMasterId,
+                     DeclarationList = declarationsText,
+                     InterfaceTypeCode = "8250",
+                     LoggingUserId = loggingUserId,
+                     RequestVIA = SendRequestVIA.WebServiceBatch,
+                     DeclarationRadio = true,
+                     TesterSendOption = testerSendOption,
+                     CourierMaster = HAWB
+                 };
+                 var res = service.Send(requestParams8250);
+                 if (res.HasException)
+                     return Request.CreateResponse(HttpStatusCode.OK, res.UserMessage);*/
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
 
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -992,14 +1035,25 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
         {
             try
             {
-                var res = new DCI_CourierMastersConnectedMessagingService().CreateCRS(param);
-                return Request.CreateResponse(HttpStatusCode.OK, res);
+                string RequestInProgressList;
+                var res = new DCI_CourierMastersConnectedMessagingService().CreateCRS(param,out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = res;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+
+        public class DataResult
+        {
+            public string RequestInProgressList { get; set; }
+            public string Message { get; set; }
         }
     }
 }

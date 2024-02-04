@@ -104,7 +104,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                     trans.Complete();
-                    return "המסר נבנה בהצלחה וישלח בתהליך רקע";
+                    
+             return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
                 {
@@ -118,6 +119,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCB9999 SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                  
                     return "קיים מסר זהה בתהליך";
                  }
             }

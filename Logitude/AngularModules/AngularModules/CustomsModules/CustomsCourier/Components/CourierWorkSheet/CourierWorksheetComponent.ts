@@ -37,6 +37,8 @@ import { CourierMasterService } from 'Customs/Services/Others/CourierMasterServi
 
 import { SendALLDelayFormParams } from '../../../../Customs/DataContract/RequestParams/SendALLDelayFormParams';
 import { InterfaceTenantDefinitionsWebService } from 'Customs/Services/WebServices/InterfaceTenantDefinitionsWebService';
+import { List } from 'Infrastructure/DataContracts/Dashboard/List';
+import { isDebuggerStatement } from 'typescript';
 
 
 @Component({
@@ -407,9 +409,18 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
 
@@ -453,9 +464,18 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                             .subscribe((res: any) => {
                                 this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
-                                myMessageWindow.Show(res.Result);
+                                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                                    myMessageWindow.ShowEventButton=true;
+                                    myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                                }  
+                                myMessageWindow.Show(res.Message);
                                 myMessageWindow.WindowClosed.subscribe(s => {
                                     this.RefreshButtonClicked();
+                                });
+                                myMessageWindow.SendEvent.subscribe(s=>{
+                                    if(s){
+                                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                                    }
                                 });
                             });
                     }
@@ -464,9 +484,18 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                             .subscribe((res: any) => {
                                 this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
-                                myMessageWindow.Show(res.Result);
+                                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                                    myMessageWindow.ShowEventButton=true;
+                                    myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                                }  
+                                myMessageWindow.Show(res.Message);
                                 myMessageWindow.WindowClosed.subscribe(s => {
                                     this.RefreshButtonClicked();
+                                });
+                                myMessageWindow.SendEvent.subscribe(s=>{
+                                    if(s){
+                                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                                    }
                                 });
                             });
                     }
@@ -528,9 +557,18 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
         //this.SendALLCorrectDec_OLD(courierDeclarationStatusCode);
@@ -2140,10 +2178,37 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
-                //this.RefreshButtonClicked();
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }                
+                myMessageWindow.Show(res.Message);
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
+             })
             });
     }
+    LoadCustomsRequestSheetsScreen(RequestInProgressList:string){
+       
+         var entityArgs=new EntityArgs();
+         entityArgs.EntityPM = this.entityPM;
+         entityArgs.ObjectTableName="Customs.CourierMaster";
+         entityArgs.OriginEntity=RequestInProgressList;
+         let windowTitle = TextCodeTranslator.Translate("TextCodeTranslator");
+         let logWindow = new LogitudeWindow();
+         logWindow.Width = 1300;
+         logWindow.Height = 700;
+         logWindow.Title = windowTitle;
+         logWindow.IsShowCloseButton = true;
+         logWindow.WindowArgs = entityArgs;
+         
+         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent');
+ 
+ 
+  
+     }
 
     SendFTPMamanRequestMethod() {
 
@@ -2170,7 +2235,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             var myMessageWindow = new MessageWindow();
             myMessageWindow.Width = 250;
             myMessageWindow.Height = 150;
-            myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען"); //TextCodeTranslator.Translate("Customs.CourierMaster.O.NoResults"));
+            myMessageWindow.Show("לא ניתן לבצע גייטפס העברות ללא מזהה מטען"); //TextCodeTranslator.TextCodeTranslator("Customs.CourierMaster.O.NoResults"));
             return;
         }
 
@@ -2203,9 +2268,18 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
 
@@ -2239,9 +2313,18 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
                     .subscribe((res: any) => {
                         this.currentSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
-                        myMessageWindow.Show(res.Result);
+                        if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                            myMessageWindow.ShowEventButton=true;
+                            myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                        }  
+                        myMessageWindow.Show(res.Message);
                         myMessageWindow.WindowClosed.subscribe(s => {
                             this.RefreshButtonClicked();
+                        });
+                        myMessageWindow.SendEvent.subscribe(s=>{
+                            if(s){
+                                this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                            }
                         });
                     });
             }
@@ -2349,13 +2432,21 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
-                        var myMessageWindow = new MessageWindow();
-                        myMessageWindow.Show(res.Result);
+                        if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                            myMessageWindow.ShowEventButton=true;
+                            myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                        }  
+                        myMessageWindow.Show(res.Message);
 
 
                         myMessageWindow.WindowClosed.subscribe(s => {
                             this.RefreshButtonClicked();
 
+                        });
+                        myMessageWindow.SendEvent.subscribe(s=>{
+                            if(s){
+                                this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                            }
                         });
                     });
 
@@ -2398,17 +2489,22 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
 
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
-                        var myMessageWindow = new MessageWindow();
-                        myMessageWindow.Show(res.Result);
-
-
+                        if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                            myMessageWindow.ShowEventButton=true;
+                            myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                        }  
+                        myMessageWindow.Show(res.Message);
                         myMessageWindow.WindowClosed.subscribe(s => {
                             this.RefreshButtonClicked();
 
                         });
+                        myMessageWindow.SendEvent.subscribe(s=>{
+                            if(s){
+                                this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                            }
+                        });
+
                     });
-
-
             }
         });
 
@@ -2608,9 +2704,18 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
     }
@@ -2622,9 +2727,18 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    myMessageWindow.EventButtonText=TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
     }

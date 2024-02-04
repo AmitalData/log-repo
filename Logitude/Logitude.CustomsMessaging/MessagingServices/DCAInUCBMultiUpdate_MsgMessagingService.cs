@@ -100,7 +100,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return genericRequestParams;
         }
 
-        public string CreateCRS(int tenant, string LoggingUserId, MultiUpdateRequestParams multiUpdateRequestParams, QueryOperations queryOperations = null)
+        public string CreateCRS(int tenant, string LoggingUserId, MultiUpdateRequestParams multiUpdateRequestParams, out string RequestInProgressListOut, QueryOperations queryOperations = null)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -110,6 +110,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, multiUpdateRequestParams.Declarationid, null, null, null, true);
                 if (RequestInProgressList != null && RequestInProgressList.Count > 0)
                 {
+                    RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
+
                     return "קיים מסר זהה בתהליך";
                 }
             }
@@ -119,6 +121,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, multiUpdateRequestParams.CourierMasterId, null, null, null, true);
                 if (RequestInProgressList != null && RequestInProgressList.Count > 0)
                 {
+                    RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
+
                     return "קיים מסר זהה בתהליך";
                 }
             }
@@ -186,6 +190,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }, xmlESBResponseXmlClass);
 
                     trans.Complete();
+                    RequestInProgressListOut = "";
                     return "תהליך יתעדכן ברקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -198,6 +203,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("DCAMU SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
                     return "קיים מסר זהה בתהליך";
                 }
             }

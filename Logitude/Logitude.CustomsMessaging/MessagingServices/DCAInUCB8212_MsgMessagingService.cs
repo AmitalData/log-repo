@@ -58,7 +58,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, null, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
-
+               
                 ///throw new System.Exception("Requestsheet  with Interface Type  = UCB2755  already in progress  !!!");
                 return "קיים מסר זהה בתהליך";
 
@@ -117,6 +117,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                     trans.Complete();
+               
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)

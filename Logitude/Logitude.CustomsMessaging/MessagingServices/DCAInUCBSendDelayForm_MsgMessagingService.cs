@@ -76,7 +76,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             throw new NotImplementedException();
         }
 
-        public string CreateCRS(int tenant, string LoggingUserId, SendALLDelayFormParams mySendALLDelayFormParams)
+        public string CreateCRS(int tenant, string LoggingUserId, SendALLDelayFormParams mySendALLDelayFormParams, out string RequestInProgressListOut)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
@@ -84,6 +84,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendALLDelayFormParams.CourierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
+                RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
+
                 return "קיים מסר זהה בתהליך";
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCBSEDF  !!!");
@@ -140,6 +142,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                     trans.Complete();
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("xmlESBResponseXmlClass  " + xmlESBResponseXmlClass);
+                    RequestInProgressListOut = "";
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -152,6 +155,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCBSEDF SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
                     return "קיים מסר זהה בתהליך";
                 }
             }

@@ -396,9 +396,18 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
 
@@ -444,9 +453,18 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                             .subscribe((res: any) => {
                                 this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
-                                myMessageWindow.Show(res.Result);
+                                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                                    myMessageWindow.ShowEventButton=true;
+                                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                                }  
+                                myMessageWindow.Show(res.Message);
                                 myMessageWindow.WindowClosed.subscribe(s => {
                                     this.RefreshButtonClicked();
+                                });
+                                myMessageWindow.SendEvent.subscribe(s=>{
+                                    if(s){
+                                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                                    }
                                 });
                             });
                     }
@@ -455,9 +473,18 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                             .subscribe((res: any) => {
                                 this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
-                                myMessageWindow.Show(res.Result);
+                                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                                    myMessageWindow.ShowEventButton=true;
+                                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                                }  
+                                myMessageWindow.Show(res.Message);
                                 myMessageWindow.WindowClosed.subscribe(s => {
                                     this.RefreshButtonClicked();
+                                });
+                                myMessageWindow.SendEvent.subscribe(s=>{
+                                    if(s){
+                                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                                    }
                                 });
                             });
                     }
@@ -521,9 +548,18 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
         //this.SendALLCorrectDec_OLD(courierDeclarationStatusCode);
@@ -2029,7 +2065,16 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
+                });
                 //this.RefreshButtonClicked();
             });
     }
@@ -2064,9 +2109,18 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
 
@@ -2100,15 +2154,43 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
                     .subscribe((res: any) => {
                         this.currentSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
-                        myMessageWindow.Show(res.Result);
+                        if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                            myMessageWindow.ShowEventButton=true;
+                            TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                        }  
+                        myMessageWindow.Show(res.Message);
                         myMessageWindow.WindowClosed.subscribe(s => {
                             this.RefreshButtonClicked();
+                        });
+                        myMessageWindow.SendEvent.subscribe(s=>{
+                            if(s){
+                                this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                            }
                         });
                     });
             }
             confirm.Close();
         });
 
+    }
+    LoadCustomsRequestSheetsScreen(RequestInProgressList:string){
+       
+        var entityArgs=new EntityArgs();
+        entityArgs.EntityPM = this.entityPM;
+        entityArgs.ObjectTableName="Customs.CourierMaster";
+        entityArgs.OriginEntity=RequestInProgressList;
+        let windowTitle = TextCodeTranslator.Translate("TextCodeTranslator");
+        let logWindow = new LogitudeWindow();
+        logWindow.Width = 1300;
+        logWindow.Height = 700;
+        logWindow.Title = windowTitle;
+        logWindow.IsShowCloseButton = true;
+        logWindow.WindowArgs = entityArgs;
+        
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent');
+
+
+ 
     }
 
     private GetIsSendDocumentsFromQueueButton() {
@@ -2190,13 +2272,19 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
-                        var myMessageWindow = new MessageWindow();
-                        myMessageWindow.Show(res.Result);
-
-
+                        if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                            myMessageWindow.ShowEventButton=true;
+                            TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                        }                          
+                        myMessageWindow.Show(res.Message);
                         myMessageWindow.WindowClosed.subscribe(s => {
                             this.RefreshButtonClicked();
 
+                        });
+                        myMessageWindow.SendEvent.subscribe(s=>{
+                            if(s){
+                                this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                            }
                         });
                     });
 
@@ -2236,13 +2324,19 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
 
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         var myMessageWindow = new MessageWindow();
-                        var myMessageWindow = new MessageWindow();
-                        myMessageWindow.Show(res.Result);
-
-
+                        if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                            myMessageWindow.ShowEventButton=true;
+                            TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                        }  
+                        myMessageWindow.Show(res.Message);
                         myMessageWindow.WindowClosed.subscribe(s => {
                             this.RefreshButtonClicked();
 
+                        });
+                        myMessageWindow.SendEvent.subscribe(s=>{
+                            if(s){
+                                this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                            }
                         });
                     });
 
@@ -2376,9 +2470,18 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
     }
@@ -2390,9 +2493,18 @@ export class CourierWorksheetFromExcelComponent extends BaseComponent implements
             .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
     }

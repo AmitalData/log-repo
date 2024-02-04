@@ -67,7 +67,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         customResponse.ServerSplitDocumentList = list100;
                         customResponse.LoggingUserId = requestParams.LoggingUserId;
                         var CreateDCAInUCB2715SendNow_MsgMessagingService = new CRSUtil();
-                        CreateDCAInUCB2715SendNow_MsgMessagingService.CreateCRS_DCAIn<DCAInUCB2715SendNowWithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
+                        CreateDCAInUCB2715SendNow_MsgMessagingService.CreateCRS_DCAIn<DCAInUCB2715SendNowWithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase), out string list);
 
                     });
             }

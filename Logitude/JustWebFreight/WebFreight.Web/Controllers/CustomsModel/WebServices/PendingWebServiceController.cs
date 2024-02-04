@@ -19,6 +19,7 @@ using System.Web.Http;
 using WebFreight.Web.Controllers.CustomsModel.Extended;
 using WebFreight.Web.DataContracts;
 using WebFreight.Web.Helpers;
+using static WebFreight.Web.Controllers.CustomsModel.Extended.CourierMasterController;
 
 namespace WebFreight.Web.Controllers.WebServices
 {
@@ -57,8 +58,7 @@ namespace WebFreight.Web.Controllers.WebServices
 
                 QueryOperations queryOperations = CourierDeclarationPendingListExtendedController.CreateQueryOperations(filters, authToken.Tenant, "Customs.DeclarationCourierStatus");
                 string res = new DCAInUCBUCADPE_MsgMessagingService().CreateCRS(authToken.Tenant, requestParamsData, queryOperations);
-                //TestPending(authToken.Tenant, requestParamsData, queryOperations);
-                //string res = "aa";
+                
 
                 return Request.CreateResponse(HttpStatusCode.OK, res);
             }
@@ -83,9 +83,12 @@ namespace WebFreight.Web.Controllers.WebServices
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCBMultiUpdate_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData, queryOperations);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData, out RequestInProgressList, queryOperations);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)

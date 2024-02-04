@@ -12,6 +12,7 @@ using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Xml.Serialization;
 using UnifreightIIG.Common.ClientAddMessageServiceReference;
 using UnifreightIIG.Common.CommonIIGInterface;
@@ -38,18 +39,24 @@ namespace Logitude.CustomsMessaging.MessagingServices
             get { return "CourierMastersConnected"; }
         }
 
-        public string CreateCRS(DCI_CourierMastersConnectedResponseContentHeader myDCAInUCBClosePendingWithResponseContentHeader)
+        public string CreateCRS(DCI_CourierMastersConnectedResponseContentHeader myDCAInUCBClosePendingWithResponseContentHeader, out string RequestInProgressListOut)
         {
-            if (CheckHaveReqInQ("Customs.CourierMaster", myDCAInUCBClosePendingWithResponseContentHeader.tenant, myDCAInUCBClosePendingWithResponseContentHeader.courierMasterId))
+            var RequestInProgressList = CheckHaveReqInQ("Customs.CourierMaster", myDCAInUCBClosePendingWithResponseContentHeader.tenant, myDCAInUCBClosePendingWithResponseContentHeader.courierMasterId);
+            if (RequestInProgressList != null && RequestInProgressList.Count > 0)
+            {
+                RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
+
                 return "קיים מסר זהה בתהליך";
+            }
+            
 
             LogMessagingUtil.Instance.AppendLine($"Build !!!Requestsheet  with Interface Type  = ${MainInterfaceCode} !!!");
 
             myDCAInUCBClosePendingWithResponseContentHeader.ResponseContentHeader = new DefaultResponseContentHeader() { TransmitionDateTime = DateTime.Now };
 
             string body = XmlGenericUtil<DCI_CourierMastersConnectedResponseContentHeader>.SerializeObject(myDCAInUCBClosePendingWithResponseContentHeader);
-
-            return SendToQ(body, myDCAInUCBClosePendingWithResponseContentHeader.tenant);
+            RequestInProgressListOut = "";
+            return SendToQ(body, myDCAInUCBClosePendingWithResponseContentHeader.tenant, out  RequestInProgressListOut);
         }
 
 
@@ -85,15 +92,15 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
-        private bool CheckHaveReqInQ(string objectTableName, int tenant, string entityId)
+        private List<CustomsRequestsSheetPM> CheckHaveReqInQ(string objectTableName, int tenant, string entityId)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName(objectTableName);
             var customsRequestsSheetQS = new CustomsRequestsSheetQueryService(tenant);
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, MainInterfaceCode, objectTableId, entityId, null, null, null, true);
-            return RequestInProgressList != null && RequestInProgressList.Count > 0;
+            return RequestInProgressList;
         }
 
-        private string SendToQ(string body, int tenant)
+        private string SendToQ(string body, int tenant, out string RequestInProgressListOut)
         {
             string uniComm = null;
             string fileName = null;
@@ -131,6 +138,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }, xmlESBResponseXmlClass);
 
                     trans.Complete();
+                    RequestInProgressListOut = "";
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -143,6 +151,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("ClosePending SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
                     return "קיים מסר זהה בתהליך";
                 }
             }

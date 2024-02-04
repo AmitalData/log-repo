@@ -54,15 +54,16 @@ namespace Logitude.Customs.CustomsMessaging.Tasks
                     } 
                    if( GetRequiredFieldErrorsForCourierDeclarationIsValid(courierMaster.Id, courierMaster.Tenant))
 
-                    { 
-                    var messagingService = new DCAInUCB1170_MsgMessagingService();
+                    {
+                        string RequestInProgressList;
+                        var messagingService = new DCAInUCB1170_MsgMessagingService();
                     var sts = messagingService.CreateCRS(t.Tenant, null,
                         new SendALLCorrectRequestParams()
                         {
                             CourierMasterId = courierMaster.Id,
                             HAWB = courierMaster.HAWB,
                             // CourierDeclarationStatusCode = courierMaster.
-                        }
+                        }, out RequestInProgressList
 
                         );}
                 }
