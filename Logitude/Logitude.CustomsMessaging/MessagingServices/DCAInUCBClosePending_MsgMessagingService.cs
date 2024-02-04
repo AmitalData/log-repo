@@ -81,7 +81,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return genericRequestParams;
         }
 
-        public string CreateCRS(int tenant, string LoggingUserId, PendingRequestParams mySendClosePendingRequestParams)
+        public string CreateCRS(int tenant, string LoggingUserId, PendingRequestParams mySendClosePendingRequestParams, out string RequestInProgressListOut)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
@@ -93,7 +93,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendClosePendingRequestParams.CourierMasterId, null, null, null, true, null, mySendClosePendingRequestParams.IsWorkSheetFromExcel, mySendClosePendingRequestParams.LoggingUserId);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
-                return "קיים מסר זהה בתהליך";
+                RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
+               return "קיים מסר זהה בתהליך";
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = ClosePending  !!!");
 
@@ -153,6 +154,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }, xmlESBResponseXmlClass);
 
                     trans.Complete();
+                    RequestInProgressListOut = "";
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -165,6 +167,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("ClosePending SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
                     return "קיים מסר זהה בתהליך";
                 }
             }

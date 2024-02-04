@@ -101,7 +101,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             int tenant,
             string LoggingUserId,
             DocumentsFilingPM documentsFilingPM,
-            string CustomsDoucumentTypeCode        
+            string CustomsDoucumentTypeCode, out string RequestInProgressListOut
             )
         {
 			Stopwatch _Stopwatch1;
@@ -144,6 +144,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
                 LogMessagingUtil.Instance.AppendLine("קיים מסר זהה בתהליך");
                 ///throw new System.Exception("Requestsheet  with Interface Type  = UCBUCBNDCD  already in progress  !!!");
+                         RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
+
                 return "קיים מסר זהה בתהליך";
 
             }
@@ -160,6 +162,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LogitudeSettings.HandleLogMe("cresteCRS -2715 קיים מסר זהה בתהליך", false, "sendOcrDocument", stopLogAt);
 
                 LogMessagingUtil.Instance.AppendLine("2715 קיים מסר זהה בתהליך");
+                RequestInProgressListOut = string.Join(",", RequestInProgressList2715.Select(request => request.Id.ToString())); ;
+
                 return " 2715 קיים מסר זהה בתהליך";
             }
 
@@ -174,6 +178,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 LogitudeSettings.HandleLogMe("cresteCRS - קיים סימוכין מכס", false, "sendOcrDocument", stopLogAt);
 
                 LogMessagingUtil.Instance.AppendLine("קיים סימוכין מכס");
+                RequestInProgressListOut = "";
                 return "קיים סימוכין מכס";
 
             }
@@ -247,6 +252,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     LogitudeSettings.HandleLogMe("cresteCRS - המסר נבנה בהצלחה וישלח בתהליך רקע", false, "sendOcrDocument", stopLogAt);
 
                     LogMessagingUtil.Instance.AppendLine("המסר נבנה בהצלחה וישלח בתהליך רקע");
+                    RequestInProgressListOut = "";
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -262,7 +268,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCBUCBNDCD SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
                     LogitudeSettings.HandleLogMe("cresteCRS - קיים מסר זהה בתהליך LINE 249", false, "sendOcrDocument", stopLogAt);
-
+                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
                     return "קיים מסר זהה בתהליך";
                     //throw;
                 }
@@ -411,11 +417,12 @@ namespace Logitude.CustomsMessaging.MessagingServices
 						_Stopwatch = Stopwatch.StartNew();
 						
 						var myDCAInUCBUD2LT_MsgMessagingService = new DCAInUCSBondedDocument_MessagingService();
+                        string RequestInProgressList;
                         string crs = myDCAInUCBUD2LT_MsgMessagingService.CreateCRS(
                             _DocumentsFilingPM.Tenant, 
                             loggingUserId,
                             _DocumentsFilingPM,
-                            myDocumentsFilingMetaDataValueReferenceAsDocType);
+                            myDocumentsFilingMetaDataValueReferenceAsDocType, out  RequestInProgressList);
                         logData = LogMessagingUtil.Instance.ToString();
                         LogitudeSettings.HandleLogMe("after cresteCRS", false, "sendOcrDocument", stopLogAt);
 

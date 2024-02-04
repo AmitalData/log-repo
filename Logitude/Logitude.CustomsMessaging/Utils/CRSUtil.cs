@@ -19,7 +19,7 @@ namespace Logitude.CustomsMessaging.Utils
     public class CRSUtil
     {
 
-        public string CreateCRS_DCAIn<TCustomResponse>(TCustomResponse customResponse, RequestParamsBase requestParams)
+        public string CreateCRS_DCAIn<TCustomResponse>(TCustomResponse customResponse, RequestParamsBase requestParams, out string RequestInProgressListOut)
             where TCustomResponse : class
 
         {
@@ -70,7 +70,7 @@ namespace Logitude.CustomsMessaging.Utils
 
                 }, xmlESBResponseXmlClass);
 
-
+                RequestInProgressListOut = "";
                 return "המסר נבנה בהצלחה וישלח בתהליך רקע";
             }
             catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -79,7 +79,9 @@ namespace Logitude.CustomsMessaging.Utils
                 {
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" UCB2750 SameRequestInProgress!! " + myCustomsRequestsSheetServiceException.Message);
                 }
+                RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
                 throw myCustomsRequestsSheetServiceException;
+
                 return "קיים מסר זהה בתהליך";
             }
 

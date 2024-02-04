@@ -90,7 +90,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
      
 
-        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string master,string InternalBankId, Boolean IsWorkSheetFromExcel, List<string> DeclarationsList = null)
+        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string master,string InternalBankId, Boolean IsWorkSheetFromExcel, out string RequestInProgressListOut, List<string> DeclarationsList = null)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
@@ -102,7 +102,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, CourierMasterId, null, null, null, true,null, IsWorkSheetFromExcel, LoggingUserId);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
-
+               RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
                 ///throw new System.Exception("Requestsheet  with Interface Type  = UCB2755  already in progress  !!!");
                 return "קיים מסר זהה בתהליך";
 
@@ -168,12 +168,14 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                     trans.Complete();
+                    RequestInProgressListOut = "";
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
                 when (myCustomsRequestsSheetServiceException.Where == CustomsRequestsSheetDomainModelServiceException.WhereEnum.CourierForceSignException)
                 {
                     Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine(" CourierForceSignException!! " + myCustomsRequestsSheetServiceException.Message);
+                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
                     return myCustomsRequestsSheetServiceException.InnerException.Message;
                 }
 
@@ -189,6 +191,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCB2755 SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
                     return "קיים מסר זהה בתהליך";
                     //throw;
                 }

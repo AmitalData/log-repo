@@ -72,6 +72,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, requestParamsData.courierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
+             
                 return "קיים מסר זהה בתהליך";
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCADPE  !!!");
@@ -120,6 +121,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }, xmlESBResponseXmlClass);
 
                     trans.Complete();
+                   
                     return "תהליך יתעדכן ברקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -132,6 +134,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("DCAUAC SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                
                     return "קיים מסר זהה בתהליך";
                 }
             }

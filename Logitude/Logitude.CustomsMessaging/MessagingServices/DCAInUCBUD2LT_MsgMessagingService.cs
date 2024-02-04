@@ -127,6 +127,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     objectTableDocumentsFilingId, documentsFilingPM.Id, null, true);
                 if (RequestInProgressList != null && RequestInProgressList.Count > 0)
                 {
+                   
 
                     ///throw new System.Exception("Requestsheet  with Interface Type  = UCBUD2LT  already in progress  !!!");
                     return "קיים מסר זהה בתהליך";
@@ -139,6 +140,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             {
                 if (Communications.GetSingleCommunicationLogInProccess(tenant, documentsFilingPM.EntityId, "RabbitMQ", documentsFilingPM.Id) != null)
                 {
+              
                     return "קיים מסר זהה בתהליך )RABBITMQ(";
                 }
             }
@@ -278,6 +280,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
  
 
                     trans.Complete();
+              
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -292,6 +295,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCBUD2LT SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                  
                     return "קיים מסר זהה בתהליך";
                     //throw;
                 }

@@ -79,7 +79,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
 
-        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string testerSendOption,Boolean IsWorkSheetFromExcel,string workSheetLoggedUser)
+        public string CreateCRS(int tenant, string LoggingUserId, string CourierMasterId, string testerSendOption,Boolean IsWorkSheetFromExcel,string workSheetLoggedUser,out string RequestInProgressListOut)
         {
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
             var objectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -88,7 +88,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, CourierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
-                ///throw new System.Exception("Requestsheet  with Interface Type  = UCB8250  already in progress  !!!");
+                RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
                 return "קיים מסר זהה בתהליך";
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = UCB8250  !!!");
@@ -121,8 +121,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             if (RequestInProgressList2 != null && RequestInProgressList2.Count > 0)
                 {
-                    ///throw new System.Exception("Requestsheet  with Interface Type  = UCB8250  already in progress  !!!");
-                    return "קיים מסר זהה בתהליך";
+                RequestInProgressListOut = string.Join(",", RequestInProgressList2.Select(request => request.Id.ToString())); 
+                return "קיים מסר זהה בתהליך";
                 }
                 // }
 
@@ -185,6 +185,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }, xmlESBResponseXmlClass);
 
                     trans.Complete();
+                    RequestInProgressListOut = "";
+
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -197,6 +199,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCB8250 SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
                     return "קיים מסר זהה בתהליך";
                 }
             }

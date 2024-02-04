@@ -68,6 +68,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, Declarationid, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
+
                 return "קיים מסר זהה בתהליך";
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = DCAUAC  !!!");

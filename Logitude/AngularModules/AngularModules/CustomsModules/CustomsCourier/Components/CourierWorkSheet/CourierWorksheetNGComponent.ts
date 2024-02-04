@@ -374,9 +374,18 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
 
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
 
@@ -420,9 +429,18 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                             .subscribe((res: any) => {
                                 this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
-                                myMessageWindow.Show(res.Result);
+                                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                                    myMessageWindow.ShowEventButton=true;
+                                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                                }  
+                                myMessageWindow.Show(res.Message);
                                 myMessageWindow.WindowClosed.subscribe(s => {
                                     this.RefreshButtonClicked();
+                                });
+                                myMessageWindow.SendEvent.subscribe(s=>{
+                                    if(s){
+                                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                                    }
                                 });
                             });
                     }
@@ -431,9 +449,18 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
                             .subscribe((res: any) => {
                                 this.currentSession.StopBusyIndicator();
                                 var myMessageWindow = new MessageWindow();
-                                myMessageWindow.Show(res.Result);
+                                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                                    myMessageWindow.ShowEventButton=true;
+                                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                                }  
+                                myMessageWindow.Show(res.Message);
                                 myMessageWindow.WindowClosed.subscribe(s => {
                                     this.RefreshButtonClicked();
+                                });
+                                myMessageWindow.SendEvent.subscribe(s=>{
+                                    if(s){
+                                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                                    }
                                 });
                             });
                     }
@@ -494,9 +521,18 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
         //this.SendALLCorrectDec_OLD(courierDeclarationStatusCode);
@@ -1833,7 +1869,16 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             .subscribe((res: any) => {
                 this.currentSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
+                });
                 //this.RefreshButtonClicked();
             });
     }
@@ -1895,12 +1940,40 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
                 });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
+                });
             });
 
+    }
+    LoadCustomsRequestSheetsScreen(RequestInProgressList:string){
+       
+        var entityArgs=new EntityArgs();
+        entityArgs.EntityPM = this.entityPM;
+        entityArgs.ObjectTableName="Customs.CourierMaster";
+        entityArgs.OriginEntity=RequestInProgressList;
+        let windowTitle = TextCodeTranslator.Translate("TextCodeTranslator");
+        let logWindow = new LogitudeWindow();
+        logWindow.Width = 1300;
+        logWindow.Height = 700;
+        logWindow.Title = windowTitle;
+        logWindow.IsShowCloseButton = true;
+        logWindow.WindowArgs = entityArgs;
+        
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent');
+
+
+ 
     }
     private GetMamanPUR() {//ILMMN;ILOVL
         var myCustomsSettingExtendedListService = new CustomsSettingExtendedListService();
@@ -2073,9 +2146,18 @@ export class CourierWorksheetNGComponent extends BaseComponent implements OnDest
             .subscribe((res: any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
                 myMessageWindow.WindowClosed.subscribe(s => {
                     this.RefreshButtonClicked();
+                });
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
                 });
             });
     }

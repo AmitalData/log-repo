@@ -8,6 +8,7 @@ import { catchError, map } from "rxjs/operators";
 import { ServiceResponse } from "../../../Infrastructure/DataContracts/ServiceResponse";
 import { SessionInfo } from "../../../Infrastructure/Utilities/SessionInfo";
 import { SendMultiUpdateRequestParams } from "../../DataContract/RequestParams/SendMultiUpdateRequestParams";
+import { DataResult } from "../Others/CourierMasterService";
 
 @Injectable()
 export class PendingWebService {
@@ -104,12 +105,11 @@ export class PendingWebService {
 
             return this._http.post(
                 this._apiUrl + "/PostSendMultiUpdate?" + this.logtuideTableDataService.apiQueryFilterToQueryString(customFilter),
-                JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = messString;
-
+                JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var res:any=response;
+                    var serviceResponse: DataResult=new DataResult();
+                    serviceResponse.Message =res?.Message ;
+                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
                     return serviceResponse;
                 }), catchError(ServiceHelper.HandleServiceError));
             ;

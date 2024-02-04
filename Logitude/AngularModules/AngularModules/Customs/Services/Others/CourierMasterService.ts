@@ -20,6 +20,8 @@ import { LogtuideTableDataService } from 'QuoteOPM/Components/NewEntity/componen
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
 import { GenericRequestParams } from 'Customs/DataContract/RequestParams/GenericRequestParams';
+import { List } from 'cypress/types/lodash';
+import { CustomsRequestsSheetPM } from 'Customs/EntityPMs/CustomsRequestsSheetPM';
 
 
 @Injectable()
@@ -309,15 +311,11 @@ export class CourierMasterService {
         var callTime = new Date();
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendPayReadyLow2755?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&InternalBankId=' + InternalBankId + '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel + '&UserId=' + SessionLocator.LoggedUserId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var messString = response;
-                
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = messString;
-
-                
-                return serviceResponse;
+                var res:any=response;
+                    var serviceResponse: DataResult=new DataResult();
+                    serviceResponse.Message =res?.Message ;
+                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
+                    return serviceResponse;
 
             }),catchError(ServiceHelper.HandleServiceError));
         });
@@ -335,15 +333,11 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendPayReadyLow2755/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
-
-
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = messString;
-
-
+                this._apiUrl + '/PostSendPayReadyLow2755/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var res:any=response;
+                    var serviceResponse: DataResult=new DataResult();
+                    serviceResponse.Message =res?.Message ;
+                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
             ;
@@ -387,15 +381,11 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendALLTerminal/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
-
-
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = messString;
-
-
+                this._apiUrl + '/PostSendALLTerminal/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var res:any=response;
+                    var serviceResponse: DataResult=new DataResult();
+                    serviceResponse.Message =res?.Message ;
+                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
             ;
@@ -413,15 +403,11 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendALLCorrectDec/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
-
-
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = messString;
-
-
+                this._apiUrl + '/PostSendALLCorrectDec/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var res:any=response;
+                    var serviceResponse: DataResult=new DataResult();
+                    serviceResponse.Message =res?.Message ;
+                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
             ;
@@ -440,15 +426,11 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendDelayFormForDeclarations/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
-
-
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = messString;
-
-
+                this._apiUrl + '/PostSendDelayFormForDeclarations/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var res:any=response;
+                    var serviceResponse: DataResult=new DataResult();
+                    serviceResponse.Message =res?.Message ;
+                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
                     return serviceResponse;
                 }), catchError(ServiceHelper.HandleServiceError));
             ;
@@ -467,16 +449,12 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendALLCorrectManifest/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
-
-
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = messString;
-
-
-                    return serviceResponse;
+                this._apiUrl + '/PostSendALLCorrectManifest/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                var res:any=response;
+                var serviceResponse: DataResult=new DataResult();
+                serviceResponse.Message =res?.Message ;
+                serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
+                return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
             ;
 
@@ -494,12 +472,11 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendALLChangeStorageSiteCode/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = messString;
-
+                this._apiUrl + '/PostSendALLChangeStorageSiteCode/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var res:any=response;
+                    var serviceResponse: DataResult=new DataResult();
+                    serviceResponse.Message =res?.Message ;
+                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
             ;
@@ -518,11 +495,11 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendUnCorrectDocuments/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = messString;
+                this._apiUrl + '/PostSendUnCorrectDocuments/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var res:any=response;
+                    var serviceResponse: DataResult=new DataResult();
+                    serviceResponse.Message =res?.Message ;
+                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
             ;
@@ -536,18 +513,10 @@ export class CourierMasterService {
         var callTime = new Date();
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendDocumentsFromQueue?' + 'courierMasterId=' + courierMasterId + '&MAWB=' + MAWB, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var messString = response;
-
-
-
-
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = messString;
-
-
-
+                var res:any=response;
+                var serviceResponse: DataResult=new DataResult();
+                serviceResponse.Message =res?.Message ;
+                serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
                 return serviceResponse;
 
             }), catchError(ServiceHelper.HandleServiceError));
@@ -560,19 +529,12 @@ export class CourierMasterService {
         var callTime = new Date();
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendALLCorrectManifest?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&CourierDeclarationStatusCode=' + CourierDeclarationStatusCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var messString = response;
-
-
-
-
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = messString;
-
-
-
+                var res:any=response;
+                var serviceResponse: DataResult=new DataResult();
+                serviceResponse.Message =res?.Message ;
+                serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
                 return serviceResponse;
+
 
             }),catchError(ServiceHelper.HandleServiceError));
         });
@@ -585,19 +547,11 @@ export class CourierMasterService {
         var callTime = new Date();
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendALLCorrectDec?' + 'CourierMasterId=' + CourierMasterId + '&HAWB=' + HAWB + '&CourierDeclarationStatusCode=' + CourierDeclarationStatusCode, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var messString = response;
-
-
-
-
-
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = messString;
-
-
-
-                return serviceResponse;
+                var res:any=response;
+                    var serviceResponse: DataResult=new DataResult();
+                    serviceResponse.Message =res?.Message ;
+                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
+                    return serviceResponse;
 
             }),catchError(ServiceHelper.HandleServiceError));
         });
@@ -615,10 +569,11 @@ export class CourierMasterService {
         return defer(() => {
             return this._http.get(this._apiUrl + '/GetSendALLDeclarationsStatusRequest?' + 'CourierMasterId=' + CourierMasterId +
                 '&testerSendOption=' +  sTesterSendOption+ '&IsWorkSheetFromExcel=' + IsWorkSheetFromExcel+ '&workSheetLoggedUser=' + userId, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
-                var messString = response;
-                var serviceResponse: ServiceResponse;
-                serviceResponse = new ServiceResponse();
-                serviceResponse.Result = messString;
+                   
+                var res:any=response;
+                var serviceResponse: DataResult=new DataResult();
+                serviceResponse.Message =res?.Message ;
+                serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
                 return serviceResponse;
 
             }),catchError(ServiceHelper.HandleServiceError));
@@ -757,12 +712,11 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostSendClosePending/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = messString;
-
+                this._apiUrl + '/PostSendClosePending/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var res:any=response;
+                    var serviceResponse: DataResult=new DataResult();
+                    serviceResponse.Message =res?.Message ;
+                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
             ;
@@ -793,11 +747,12 @@ export class CourierMasterService {
             serviceResponse = new ServiceResponse();
 
             return this._http.post(
-                this._apiUrl + '/PostApprovePending/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
-                    var messString = res;
-                    var serviceResponse: ServiceResponse;
-                    serviceResponse = new ServiceResponse();
-                    serviceResponse.Result = messString;
+                this._apiUrl + '/PostApprovePending/', JSON.stringify(requestParams), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                    var res:any=response;
+                    var serviceResponse: DataResult=new DataResult();
+                    serviceResponse.Message =res?.Message ;
+                    serviceResponse.RequestInProgressList =res?.RequestInProgressList ;
+                    return serviceResponse;
 
                     return serviceResponse;
                 }),catchError(ServiceHelper.HandleServiceError));
@@ -805,4 +760,12 @@ export class CourierMasterService {
 
         });
     }
+
+   
+      
 }
+export class DataResult {
+    RequestInProgressList: string;
+    Message: string;
+  }
+  

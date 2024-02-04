@@ -341,7 +341,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
                             return;
                         }
                         var RequestInProgressInterfaceTypeName = listRequestInProgress.First().InterfaceTypeName;
-                        ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName);
+                        var RequestInProgressInterfaceId = string.Join(",", listRequestInProgress.Select(request => request.Id.ToString()));
+
+                        ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName, RequestInProgressInterfaceId);
                         return;
                     }
                 }
@@ -357,22 +359,24 @@ namespace Logitude.Customs.BL.Messaging.Customs
             if (listSameInterfaceCodePerEntity_InProgress.Count > 0)
             {
                 var RequestInProgressInterfaceTypeName = listSameInterfaceCodePerEntity_InProgress.First().InterfaceTypeName;
-                ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName);
+                var RequestInProgressInterfaceId = listSameInterfaceCodePerEntity_InProgress.All(a => a.Id != null).ToString();
+
+                ThrowRequestInProgress(requestParams, RequestInProgressInterfaceTypeName, RequestInProgressInterfaceId);
             }
         }
 
-        private void ThrowRequestInProgress(TRequestParams requestParams, string RequestInProgressInterfaceTypeName)
+        private void ThrowRequestInProgress(TRequestParams requestParams, string RequestInProgressInterfaceTypeName, string RequestInProgressInterfaceId="")
         {
             var text = //TranslateTextsClass.GetTranslation("Customs.General.RequestInProgress", "", null, null, this._Tenant);
                 TranslateTextsClass.Translate("Customs.General.RequestInProgress", this._Tenant);
             text = String.Format(text, RequestInProgressInterfaceTypeName);
             NoteClientNoRequestSheet4U(requestParams, text);
-
-
-            var ex = new CustomsRequestsSheetDomainModelServiceException(
+             var ex = new CustomsRequestsSheetDomainModelServiceException(
             CustomsRequestsSheetDomainModelServiceException.WhereEnum.SameRequestInProgress, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
-                text, null);
+                text,
+                null);
             ex.SuppressExceptionTostring = true;
+            ex.CustomsRequestsSheetId = RequestInProgressInterfaceId;
             throw ex;
         }
 

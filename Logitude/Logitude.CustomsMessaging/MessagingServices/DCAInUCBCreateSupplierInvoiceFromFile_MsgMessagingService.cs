@@ -73,6 +73,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                 var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, declarationid, null, null, null, true);
                 if (RequestInProgressList != null && RequestInProgressList.Count > 0)
                 {
+                   
                     return "קיים מסר זהה בתהליך";
                 }
             }

@@ -61,7 +61,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
         }
 
         public string CreateCRS(int tenant, string LoggingUserId, string Declarationid, string customFileNo, string attachmentTypeCode,
-            string reqConfirmationTypeCode, string resConfirmationTypeCode, string certificateNumber,string certificateExemptionTypeCode, string selectedInvoiceItemsKeys)
+            string reqConfirmationTypeCode, string resConfirmationTypeCode, string certificateNumber,string certificateExemptionTypeCode, string selectedInvoiceItemsKeys, out string RequestInProgressListOut)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
@@ -69,6 +69,8 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, Declarationid, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
+                RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
+
                 return "קיים מסר זהה בתהליך";
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = DCACCFII  !!!");
@@ -124,6 +126,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }, xmlESBResponseXmlClass);
 
                     trans.Complete();
+                    RequestInProgressListOut = "";
                     return "תהליך יתעדכן ברקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -136,6 +139,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("DCACCFII SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
                     return "קיים מסר זהה בתהליך";
                 }
             }

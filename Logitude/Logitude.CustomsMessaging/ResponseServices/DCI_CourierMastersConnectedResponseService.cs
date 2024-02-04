@@ -128,7 +128,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 customResponse.ServerSplitDeclarationsList = list100;
                 customResponse.LoggingUserId = requestParams.LoggingUserId;
                 customResponse.Connect = connect;
-                new CRSUtil().CreateCRS_DCAIn<DCI_CourierMastersConnectedResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
+                new CRSUtil().CreateCRS_DCAIn<DCI_CourierMastersConnectedResponseContentHeader>(customResponse, (requestParams as RequestParamsBase), out string list);
             });
             return count;
         }
