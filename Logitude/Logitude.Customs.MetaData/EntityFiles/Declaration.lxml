@@ -21501,7 +21501,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;ffc43462-cc5e-4583-9219-e5d6dd05427d&quot;"
     FieldName="&quot;DeclarationPayments&quot;"
@@ -21579,7 +21578,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;7ce1cacd-8a3a-400e-9072-6100b231fbe9&quot;"
     FieldName="&quot;EffectiveFlight&quot;"
@@ -21608,7 +21606,6 @@
     PMPropertyPath="&quot;EffectiveFlight&quot;"
     ListPropertyPath="&quot;EffectiveFlight&quot;"
     DisplayInLookUpIndex="0"
-
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -27801,6 +27798,12 @@
       Code="&quot;Customs.Declaration.O.DeletePointer&quot;"
       DefaultText="&quot;Pointers successfully deleted&quot;"
       LocalDefaultText="&quot;נתוני ההצבעה נמחקו בהצלחה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Declaration.O.test&quot;"
+      DefaultText="&quot;test&quot;"
+      LocalDefaultText="&quot;אני רוצה לבדוק האם הא והם מתחלפות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
