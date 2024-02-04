@@ -11703,10 +11703,7 @@ namespace WebFreight.Web.ReportsWebServices
 
                 #region Fill Report Data
                 totalData.ForDate = toDate;
-                var watch = System.Diagnostics.Stopwatch.StartNew();
-
                 FilterChartOfAccountsAndTypes(totalData, list);
-                watch.Start();
                 Parallel.ForEach(list, (item) => {
 
 
@@ -11765,14 +11762,8 @@ namespace WebFreight.Web.ReportsWebServices
                     }
                 });
 
-                watch.Stop();
-                Logger.Debug("RecalculateParentTotals ForEach:" + watch.ElapsedMilliseconds.ToString());
-                watch.Restart();
-                watch.Start();
+              
                 RecalculateParentTotals(totalData);
-                watch.Stop();
-                Logger.Debug("RecalculateParentTotals ForEach:" + watch.ElapsedMilliseconds.ToString());
-
 
             }
 
@@ -11886,10 +11877,7 @@ namespace WebFreight.Web.ReportsWebServices
         private void RecalculateParentTotals(ResultList record, RevenueExpenseDataProvider totalData)
         {
             List<ResultList> relatedRecords = totalData.ResultList.Where(c => c.ParentId == record.ParentId).ToList();
-            Logger.Debug("RecalculateParentTotals" + relatedRecords.Count());
-
             var parentRecords = totalData.ResultList.Where(d => d.Id == record.ParentId).ToList();
-            Logger.Debug("RecalculateParentTotals" + relatedRecords.Count());
 
             foreach (var parentRecord in parentRecords)
             {
@@ -11903,7 +11891,6 @@ namespace WebFreight.Web.ReportsWebServices
                 parentRecord.ForeignCredit = relatedRecords.Sum(c => c.ForeignCredit);
                 parentRecord.ForeignDebit = relatedRecords.Sum(c => c.ForeignDebit);
                 parentRecord.ForeignOpenBalance = relatedRecords.Sum(c => c.ForeignOpenBalance);
-                Logger.Debug($"Code block executed {executionCount} times.");
 
             }
         }
@@ -11931,7 +11918,6 @@ namespace WebFreight.Web.ReportsWebServices
                         parentRecord.ForeignDebit = group.Sum(c => c.ForeignDebit);
                         parentRecord.ForeignOpenBalance = group.Sum(c => c.ForeignOpenBalance);
 
-                        Logger.Debug($"Code block executed {executionCount} times."); 
                     }
                 }
             }
