@@ -94,7 +94,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                         var CreateDCAInUCBAC_MsgMessagingService = new CRSUtil();
                         CreateDCAInUCBAC_MsgMessagingService
-                        .CreateCRS_DCAIn<DCAInUCBACWithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
+                        .CreateCRS_DCAIn<DCAInUCBACWithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase), out string list);
 
                     });
                 }
