@@ -22,7 +22,7 @@
   <Column
     Name="CountryID"
     Type="varchar"
-    Size="2">
+    Size="6">
     <Constraints
       Nullable="true" />
   </Column>
@@ -30,10 +30,5 @@
     ForeignKeyColumn="RegularityRequirementID"
     ReferencedTable="CB_RegularityRequirements"
     ReferencedColumn="ID"
-    ReferencedTableSchema="Customs" />
-  <Relation
-    ForeignKeyColumn="CountryID"
-    ReferencedTable="CustomsCountries"
-    ReferencedColumn="Code"
     ReferencedTableSchema="Customs" />
 </Table>

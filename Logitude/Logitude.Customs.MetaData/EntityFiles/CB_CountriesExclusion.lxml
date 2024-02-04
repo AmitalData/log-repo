@@ -38,7 +38,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;החרגת מדינה בדרישת חוקיות&quot;"
   DefaultText="&quot;Countries Exclusion&quot;"
-  Code="&quot;b200&quot;"
+  Code="&quot;0225&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -90,6 +90,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ID&quot;"
     ListPropertyPath="&quot;ID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -166,6 +167,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;RegularityRequirementID&quot;"
     ListPropertyPath="&quot;RegularityRequirementID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -223,10 +225,9 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.CB_CountriesExclusion&quot;"
-    FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;CustomsCountry&quot;"
+    FieldsDataType="&quot;Text&quot;"
     MinLength="0"
-    MaxLength="2"
+    MaxLength="6"
     IsRequired="false"
     CopyToDW="false"
     DisplayOnLookUp="false"
@@ -235,7 +236,7 @@
     DisplayOnly="false"
     SystemRequired="false"
     ObjectFieldNotRequired="false"
-    SystemMaxLength="2"
+    SystemMaxLength="6"
     DisplayInList="true"
     IsCustomFilter="false"
     Operator="&quot;Equals&quot;"
@@ -244,6 +245,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CountryID&quot;"
     ListPropertyPath="&quot;CountryID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -267,10 +269,10 @@
     ListLableDefaultText="&quot;Country ID&quot;"
     ListLocalDefaultText="&quot;מזהה ארץ&quot;"
     IsNullable="false"
-    IsForeignKey="true"
-    ForeignEntity="CustomsCountry"
+    IsForeignKey="false"
+    ForeignEntity=""
     DontBuildRelationOnDB="false"
-    NavigationPropertyName="CountryCode"
+    NavigationPropertyName=""
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -293,6 +295,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.CB_CountriesExclusionHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CB_CountriesExclusion&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -321,6 +332,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

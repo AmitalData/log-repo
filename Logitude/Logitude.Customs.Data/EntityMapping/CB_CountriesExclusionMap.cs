@@ -27,7 +27,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.RegularityRequirementID).HasColumnName("RegularityRequirementID").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.CountryID).HasColumnName("CountryID").HasMaxLength(2).IsUnicode(false);
+            this.Property(t => t.CountryID).HasColumnName("CountryID").HasMaxLength(6).IsUnicode(false);
         }
     }
 }

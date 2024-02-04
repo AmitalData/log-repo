@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_CountriesExclusionUpdateClass
    {  		
-		public const string HashString = "0d5bfa5ce4b8f7530e83be49f8fc7e7d";
+		public const string HashString = "b12ffff1e1e45f96209cef54af771089";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "החרגת מדינה בדרישת חוקיות",
 			      				    DefaultText =  "Countries Exclusion",
-			      				    Code =  "b200",
+			      				    Code =  "0225",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -172,6 +172,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RegularityRequirementID",
 					  						ListPropertyPath =  "RegularityRequirementID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -215,10 +216,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CountryID",
 					  						ObjectTableName =  "Customs.CB_CountriesExclusion",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CustomsCountry",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  6,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -226,7 +226,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  2,
+					  						SystemMaxLength =  6,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",
@@ -235,6 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CountryID",
 					  						ListPropertyPath =  "CountryID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -279,7 +280,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CB_CountriesExclusionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CB_CountriesExclusion" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CB_CountriesExclusionObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CB_CountriesExclusion").ToList();
+		       
+	      
+
+	         Screen CB_CountriesExclusionCustomsCB_CountriesExclusionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CB_CountriesExclusion.HeaderScreen", Name = "Customs.CB_CountriesExclusionHeaderScreen", ObjectTableId = CB_CountriesExclusionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CB_CountriesExclusionObjectTable.HeaderScreenId = CB_CountriesExclusionCustomsCB_CountriesExclusionHeaderScreenScreen0.Id;
+		    CB_CountriesExclusionObjectTable.HeaderScreenCode = CB_CountriesExclusionCustomsCB_CountriesExclusionHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

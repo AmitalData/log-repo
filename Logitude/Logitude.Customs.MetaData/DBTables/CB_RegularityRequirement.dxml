@@ -22,12 +22,12 @@
     Name="UpdateDate"
     Type="datetime">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="CountryID"
     Type="varchar"
-    Size="2">
+    Size="6">
     <Constraints
       Nullable="true" />
   </Column>
@@ -96,11 +96,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Relation
-    ForeignKeyColumn="CountryID"
-    ReferencedTable="CustomsCountries"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="Customs" />
   <Relation
     ForeignKeyColumn="CustomsItemID"
     ReferencedTable="CB_CustomsItems"
