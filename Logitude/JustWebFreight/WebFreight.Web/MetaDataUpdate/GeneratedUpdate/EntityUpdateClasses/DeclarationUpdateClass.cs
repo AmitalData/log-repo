@@ -87,7 +87,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
    {  		
 
 
-		public const string HashString = "295e024767545c22beb3d6ee3cf33db7";
+		public const string HashString = "b3c9e5386aaeacf9bb0fc242fe131d29";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -18847,6 +18847,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_CancelPaymentFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelPaymentFeature", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CancelPaymentFeature", NameTextCodeDefaultText = @"Cancel Payment Feature" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
+
    
 	    
 		}
@@ -21900,6 +21901,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode DeclarationTextCode_CustomsDeclarationTHCertificateOfOrigin = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.TH.CertificateOfOrigin", DefaultText = "Certificate Of Origin",LocalDefaultText = @"תעודת מקור", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode DeclarationTextCode_CustomsDeclarationODeclarationReconstructionRequired = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.DeclarationReconstructionRequired", DefaultText = "Please send a request for declaration reconstruction",LocalDefaultText = @"יש לבצע בקשה לשחזור נתוני הצהרה", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode DeclarationTextCode_CustomsDeclarationOtest = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Declaration.O.test", DefaultText = "test",LocalDefaultText = @"אני רוצה לבדוק האם הא והם מתחלפות", ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
