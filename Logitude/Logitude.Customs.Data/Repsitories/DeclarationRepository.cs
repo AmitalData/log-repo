@@ -1011,7 +1011,7 @@ namespace Logitude.Customs.Data.Repsitories
             return
                   (
                   from rec in context.Declarations
-                  where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && rec.AmendmentStatus == "1") || (IsDCA == false))
+                  where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && (rec.AmendmentStatus == "1" || rec.AmendmentStatus == null)) || (IsDCA == false))
 				  select rec
                   ).OrderByDescending(x => x.CreateDateTime)
                   .FirstOrDefault();
