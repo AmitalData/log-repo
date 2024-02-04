@@ -114,7 +114,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (phsicalCheckPM == null)
             {
-                return ;
+                phsicalCheckPM= physicalCheckQueryService.GetPhysicalCheckByCheckId(customResponse?.ApproveChangeTimeRequest?.checkId.ToString());
+                if (phsicalCheckPM == null)
+                {
+                    return;
+                }
             }
 
 
