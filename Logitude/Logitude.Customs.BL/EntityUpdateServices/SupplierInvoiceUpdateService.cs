@@ -83,7 +83,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
                     declarationPM = declarationQueryService.GetSingle(entityPM.DeclarationId, false, false);
-                    if (declarationPM?.Direction == "E" && declarationPM?.IsAmendment == true && entityPM.SequenceNumeric.GetValueOrDefault() == 0)
+                    // && declarationPM?.IsAmendment == true && entityPM.SequenceNumeric.GetValueOrDefault() == 0
+                    if (declarationPM?.Direction == "E")
                         entityPM.SequenceNumeric = entityPM.InvoiceCounterKey;
                 }
             }
