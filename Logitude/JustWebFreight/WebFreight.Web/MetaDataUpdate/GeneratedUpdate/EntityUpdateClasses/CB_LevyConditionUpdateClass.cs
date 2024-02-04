@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_LevyConditionUpdateClass
    {  		
-		public const string HashString = "0ec8f6fbe9e7a001989c645ba5292e50";
+		public const string HashString = "89764572a6346581de02642dcb0dc7b6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "תנאי בהיטל",
 			      				    DefaultText =  "Levy Condition",
-			      				    Code =  "30a7",
+			      				    Code =  "6666",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -533,10 +533,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CountryID",
 					  						ObjectTableName =  "Customs.CB_LevyCondition",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CustomsCountry",
+					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
-					  						MaxLength =  2,
+					  						MaxLength =  6,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -544,7 +543,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  2,
+					  						SystemMaxLength =  6,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						Operator =  "Equals",

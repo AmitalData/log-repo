@@ -24,12 +24,9 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
-	    public DateTime UpdateDate { get; set; }
-        [ForeignKey("CountryCode")]
+	    public DateTime? UpdateDate { get; set; }
         [Column("CountryID")]
 	    public string CountryID { get; set; }
-	      
-        public virtual CustomsCountry CountryCode { get; set; }
         [Column("IsAllCountries")]
 	    public bool IsAllCountries { get; set; }
         [ForeignKey("CustomsItem")]

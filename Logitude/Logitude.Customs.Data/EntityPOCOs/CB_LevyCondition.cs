@@ -42,11 +42,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual CountryGroup CountryGroupCode { get; set; }
         [Column("IsCountriesGroup")]
 	    public bool IsCountriesGroup { get; set; }
-        [ForeignKey("CountryCode")]
         [Column("CountryID")]
 	    public string CountryID { get; set; }
-	      
-        public virtual CustomsCountry CountryCode { get; set; }
         [ForeignKey("TradeLevy")]
         [Column("TradeLevyID")]
 	    public string TradeLevyID { get; set; }

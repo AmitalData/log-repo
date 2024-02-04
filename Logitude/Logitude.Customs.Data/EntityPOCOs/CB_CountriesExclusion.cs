@@ -26,11 +26,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string RegularityRequirementID { get; set; }
 	      
         public virtual CB_RegularityRequirement RegularityRequirement { get; set; }
-        [ForeignKey("CountryCode")]
         [Column("CountryID")]
 	    public string CountryID { get; set; }
-	      
-        public virtual CustomsCountry CountryCode { get; set; }
     }
 }
 	 
