@@ -21,8 +21,11 @@ import { ClientPM } from 'Customs/EntityPMs/ClientPM';
 import { ClientsAddressCommTypePM } from 'Customs/EntityPMs/ClientsAddressCommTypePM';
 import { ClientPMService } from 'Customs/Services/StandardPMs/ClientPMService';
  import { DeclarationExtendedListService } from '../../../../../Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { DeclarationPMService } from '../../../../../Customs/Services/StandardPMs/DeclarationPMService';
 import { ClaimsRelatedEntitiesReasonPM } from 'Customs/EntityPMs/ClaimsRelatedEntitiesReasonPM';
 import { ClaimsRelatedEntsReasonsExpPM } from 'Customs/EntityPMs/ClaimsRelatedEntsReasonsExpPM';
+import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
+import { ClaimsRelatedEntitiesAmountPM } from 'Customs/EntityPMs/ClaimsRelatedEntitiesAmountPM';
  
 @Component({
     
@@ -32,6 +35,7 @@ import { ClaimsRelatedEntsReasonsExpPM } from 'Customs/EntityPMs/ClaimsRelatedEn
 export class ClaimGeneralTabComponent extends BaseComponent {
   public IsDisplayOnly: boolean = false;
   public FooterMethods: any;
+  public shownDeclarationDataWithoutSaving: boolean = false;
 
     public DataContext: ClaimGeneralTabComponent = this;
     public EntityPM: ClaimPM = new ClaimPM();
@@ -47,6 +51,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
     private isControlEnabled: boolean = true;
     IsClientPassportEnabled: boolean = false;
     _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
+    private _declarationPMService: DeclarationPMService = new DeclarationPMService();
 
     public ClaimPMService: ClaimPMService = new ClaimPMService;
     public ClientMessagesService: ClientMessagesService = new ClientMessagesService;
@@ -65,20 +70,109 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                     this.currentSession.StopBusyIndicator();
                     if (this.entityArgs.EntityPM != null) {
                         this.EntityPM = this.entityArgs.EntityPM;
-                        this.BuildRelatedEntitiesList();
-                        this.BuildAddressesList();
-                        if (AppTool.IsNullOrEmpty(this.ClientId) &&
-                            !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
-                            this.IsClientPassportEnabled = true;
-                            this.UIProperties.SetEnabled("ClientId", "Customs.Claim", false);
+
+                        if (this.EntityPM.CustomFileNo) {
+                            this.DisplayDeclarationDataByCustomFileNo(this.EntityPM.CustomFileNo);
+                        }
+                        else {
+                            this.FinalizeEntityBuilds();
                         }
                     }
-                    this.Listen();
-                    this.IsLoaded = true;
+                    else {
+                        this.Listen();
+                        this.IsLoaded = true;
+                    }
                 });
             });
         });
 
+    }
+
+    FinalizeEntityBuilds() {
+        this.BuildRelatedEntitiesList();
+        this.BuildAddressesList();
+        if (AppTool.IsNullOrEmpty(this.ClientId) &&
+            !AppTool.IsNullOrEmpty(this.EntityPM.PassportTypeCode) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportNumber) || !AppTool.IsNullOrEmpty(this.EntityPM.PassportCountryTypeCode)) {
+            this.IsClientPassportEnabled = true;
+            this.UIProperties.SetEnabled("ClientId", "Customs.Claim", false);
+        }
+        this.Listen();
+        this.IsLoaded = true;
+    }
+
+    DisplayDeclarationDataByCustomFileNo(customFileNo: string) {
+
+        // get the declaration id by custom file number
+        return this._declarationExtendedListService.GetSingleDeclarationByCustomFileNo(customFileNo).subscribe((response: ServiceResponse) => {
+            let declarationId = response.Result?.Id;
+            if (!AppTool.IsNullOrEmpty(declarationId)) {
+
+                // get declaration pm by id
+                this._declarationPMService.get(declarationId).subscribe((response: ServiceResponse) => {
+
+                    // if the storage site is empty, get it from the declaration consignment
+                    let declaration: DeclarationPM = response.Result;
+                    if (AppTool.IsNullOrEmpty(declaration.StorageSiteCode)) {
+                        this._declarationExtendedListService.GetConsignmentListPMByCustomFileNo(customFileNo).subscribe((consignmentResponse: ServiceResponse) => {
+                            if (consignmentResponse.Result?.length > 0) {
+                                declaration.StorageSiteCode = consignmentResponse.Result[0].StorageSiteCode;
+                            }
+                            this.SetDeclarationData(declaration);
+                        });
+                    }
+                    else {
+                        this.SetDeclarationData(declaration);
+                    }
+                });
+            }
+            else {
+                this.FinalizeEntityBuilds();
+            }
+        });
+    }
+
+    SetDeclarationData(declaration: DeclarationPM) {
+        // set Claims data
+        this.EntityPM.CustomerId = declaration.CustomerId;
+        this.EntityPM.CustomerName = declaration.CustomerName;
+        this.EntityPM.ClientId = declaration.ImporterId;
+        this.EntityPM.ReferantId = declaration.ReferentUserId;
+
+        // set Claims Related Entity and Entities Amount
+        let claimsRelatedEntityPM = new ClaimsRelatedEntityPM(this.EntityPM);
+        claimsRelatedEntityPM.ClaimId = this.EntityPM.Id;
+        claimsRelatedEntityPM.Tenant = this.EntityPM.Tenant;
+        claimsRelatedEntityPM.EntityCounterKey = 1;
+        claimsRelatedEntityPM.ClaimEntityTypeName = "הצהרת יבוא";
+        claimsRelatedEntityPM.ClaimEntityTypeCode = "1055";
+        claimsRelatedEntityPM.ClaimEntityNumber = declaration.DeclarationNumber;
+        claimsRelatedEntityPM.ExternalClaimNumber = declaration.CustomFileNo;
+        claimsRelatedEntityPM.DeclarationVersion = declaration.VersionId? parseFloat(declaration.VersionId): null;
+        claimsRelatedEntityPM.IsFinancialRefundDemand = true;
+        claimsRelatedEntityPM.WarehouseTypeCode = declaration.StorageSiteCode;
+
+        let claimsAmountList = [];
+        let incrementTax = 0;
+        declaration.DeclarationTaxes.forEach(tax => {
+            incrementTax++;
+            let claimsRelatedEntitiesAmountPM = new ClaimsRelatedEntitiesAmountPM(null);
+            claimsRelatedEntitiesAmountPM.ClaimId = this.EntityPM.Id;
+            claimsRelatedEntitiesAmountPM.Tenant = this.EntityPM.Tenant;
+            claimsRelatedEntitiesAmountPM.CounterKey = claimsRelatedEntityPM.EntityCounterKey;
+            claimsRelatedEntitiesAmountPM.LineNo = incrementTax;
+            claimsRelatedEntitiesAmountPM.PaymentTypeCode = tax.TaxTypeCode;
+            claimsRelatedEntitiesAmountPM.PaymentTypeName = tax.TaxTypeName;
+            claimsRelatedEntitiesAmountPM.Amount = tax.TaxToPay;
+            claimsAmountList.push(claimsRelatedEntitiesAmountPM);
+        });
+        claimsRelatedEntityPM.ClaimsRelatedEntitiesAmounts = claimsAmountList;
+
+        let newClaimsRelatedEntityLineComponent = new ClaimsRelatedEntityLineComponent(claimsRelatedEntityPM, this.EntityPM, false);
+        this.ClaimsRelatedEntitiesObslist.Insert(newClaimsRelatedEntityLineComponent);
+        this.EntityPM.AddClaimsRelatedEntity(claimsRelatedEntityPM);
+
+        this.shownDeclarationDataWithoutSaving = true;
+        this.FinalizeEntityBuilds();
     }
 
     private Listen() {
@@ -431,18 +525,23 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
     //#region Related Entities
     EditButtonClicked(item: ClaimsRelatedEntityLineComponent) {
-        SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
-        SessionLocator.SelectedSession.StartBusyIndicator("");
+        if (this.shownDeclarationDataWithoutSaving) {
+            this.EditClaimsRelatedEntityLine(item, false);
+        }
+        else {
+            SessionLocator.SelectedSession.CurrentEditComponent.ValidationErrorsList = [];
+            SessionLocator.SelectedSession.StartBusyIndicator("");
 
-        this.ClaimPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
-            var claim = response.Result;
-            SessionLocator.SelectedSession.StopBusyIndicator();
-            if (!AppTool.IsNullOrEmpty(claim)) {
-                if (!AppTool.IsNullOrEmpty(item)) {
-                    this.EditClaimsRelatedEntityLine(item, false);
+            this.ClaimPMService.update(this.EntityPM).subscribe((response: ServiceResponse) => {
+                var claim = response.Result;
+                SessionLocator.SelectedSession.StopBusyIndicator();
+                if (!AppTool.IsNullOrEmpty(claim)) {
+                    if (!AppTool.IsNullOrEmpty(item)) {
+                        this.EditClaimsRelatedEntityLine(item, false);
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     EditClaimsRelatedEntityLine(item: ClaimsRelatedEntityLineComponent, isNewEntity: boolean) {
@@ -475,6 +574,10 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             if (event == 'ok') {
                 this.RefreshEntity();
                 //this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+            }
+            // if the new entity creation has been canceled, remove it from the table
+            else if (event == 'cancel' && isNewEntity) {
+                this.DeleteSelected(item);
             }
         });
 

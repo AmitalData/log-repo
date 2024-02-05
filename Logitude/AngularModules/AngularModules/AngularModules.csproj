@@ -5757,7 +5757,6 @@
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\ClaimsRelatedEntityExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CouriersVatExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\ClientExtendedPMService.ts" />
-    <TypeScriptCompile Include="Customs\Services\ExtendedPMs\ClaimExtendedExtendedPMService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsDocumentsTicketsExtendedService.ts" />
     <TypeScriptCompile Include="Customs\Services\ExtendedPMs\CustomsRequestSheetExtendedPMService.ts" />
     <TypeScriptCompile Include="CustomsModules\CustomsListTemplates\Components\DeclarationSupplierInvoiceListTemplate.ts" />

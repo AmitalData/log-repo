@@ -9,7 +9,7 @@ import { NewEntityArgs } from '../../../../Infrastructure/Args';
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { ClaimPM } from '../../../../Customs/EntityPMs/ClaimPM';
-import { ClaimExtendedPMService } from '../../../../Customs/Services/ExtendedPMs/ClaimExtendedPMService';
+import { ClaimPMService } from '../../../../Customs/Services/StandardPMs/ClaimPMService';
 import { ClaimWebService } from '../../../../Customs/Services/WebServices/ClaimWebService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 
@@ -26,7 +26,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
     public ValidationErrorsList: string[] = [];
     QueryNameText: string = "";
 
-    private _ClaimExtendedPMService: ClaimExtendedPMService = new ClaimExtendedPMService();    
+    private _ClaimPMService: ClaimPMService = new ClaimPMService();    
     private _ClaimWebService: ClaimWebService = new ClaimWebService();
 
     private CurrentSession = SessionLocator.SelectedSession;
@@ -106,21 +106,22 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
             }
         }
 
-        this._ClaimExtendedPMService.insert(this.EntityPM).subscribe((myResult:any) => {
+        this._ClaimPMService.insert(this.EntityPM).subscribe((myResult:any) => {
             var mm: ServiceResponse = myResult;
             if (!mm.HasError) {
                 var entity = mm.Result;
                 this.CurrentSession.CloseCurrentWindowEmit("ok");
 
                 SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent',
-                    this.CurrentSession.SessionLocation.viewContainerRef)
-                    .then(cmpRef => {
-                        cmpRef.instance.ComponentRef = cmpRef;
-                        cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName, BackButtonLabel: this.QueryNameText });
-                        cmpRef.instance.BackCompleted.subscribe(($event: any) => {
-                            this.CancelButtonClicked();
-                        });
+                this.CurrentSession.SessionLocation.viewContainerRef)
+                .then(cmpRef => {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: entity.Id, ObjectTableName: this.ObjectTableName, BackButtonLabel: this.QueryNameText, 
+                        EntityFields: [{FieldName: "CustomFileNo", FieldValue: this.EntityPM.CustomFileNo }]});
+                    cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                        this.CancelButtonClicked();
                     });
+                });
             }
             else {
                 this.ValidationErrorsList = mm.ErrorsArray;
