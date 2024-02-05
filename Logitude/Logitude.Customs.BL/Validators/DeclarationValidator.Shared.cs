@@ -376,7 +376,7 @@ namespace Logitude.Customs.BL.Validators
         {
             if (this._DeclarationPM != null)
             {
-                if (this._DeclarationPM.IsClose)
+                if (this._DeclarationPM.IsClose && _DeclarationPM.Direction != "E")
                 {
                     var errorMessage = "Customs.Declaration.O.Closed";
                     if (!string.IsNullOrWhiteSpace(errorMessage))
