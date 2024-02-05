@@ -489,16 +489,7 @@ export class MaintenanceComponent {
         }
     }
 
-    private BuildCustomsMenus() {        
-        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) {
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "CSM";
-            item.Icon = "Settings"
-            item.Code = "CSSS";
-            item.ObjectTableName = TextCodeTranslator.Translate("General.MC.Customs.ShaamSettings") || 'Shaam Settings';
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        }
-
+    private BuildCustomsMenus() {               
         if (window.ObjectTables.filter(d => d.Name == "Customs.Client")[0] != null) {
 
             if (FeatureLocator.HasFeaturePermession("Customs.Client", "AUTHORIZAT")) {
@@ -802,6 +793,16 @@ export class MaintenanceComponent {
         item.ObjectTableName = "Customs.ConfirmationNumberTokenLog";
         item.TranslatedName = 'Token Managment', TextCodeTranslator.Translate('General.MC.TokenManagement');
         this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
+        if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "SHA";
+            item.Icon = "Settings"
+            item.Code = "CSSS";
+            item.ObjectTableName = TextCodeTranslator.Translate("General.MC.Customs.ShaamSettings") || 'Shaam Settings';
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
+
     }
 
     // Commands

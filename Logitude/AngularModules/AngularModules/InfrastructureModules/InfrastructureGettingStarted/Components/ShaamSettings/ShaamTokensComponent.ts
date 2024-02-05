@@ -77,10 +77,10 @@ export class ShaamTokensComponent extends BaseComponent {
             { FieldName: 'userCode', Display: 'User Code', Styles: { width: '100px' } },
             { FieldName: 'createDate', Display: 'Create Date', Styles: { width: '140px' }, isTemplate: true },
             { FieldName: 'refreshExpierDate', Display: 'Refresh Expier Date', Styles: { width: '140px' }, isTemplate: true },
-            { FieldName: 'refreshToken', Display: 'Refresh Token', Styles: { width: '800px' } },
             { FieldName: 'accessExpireDate', Display: 'Access Expire Date', Styles: { width: '140px' }, isTemplate: true },
-            { FieldName: 'accessToken', Display: 'Access Token', Styles: { width: '460px' } },
             { FieldName: 'isActive', Display: 'IsActive', Styles: { width: '60px' }, isTemplate: true },
+            { FieldName: 'refreshToken', Display: 'Refresh Token', Styles: { width: '200px' } },
+            { FieldName: 'accessToken', Display: 'Access Token', Styles: { width: '200px' } },
         ]
 
         this.columns = [];
