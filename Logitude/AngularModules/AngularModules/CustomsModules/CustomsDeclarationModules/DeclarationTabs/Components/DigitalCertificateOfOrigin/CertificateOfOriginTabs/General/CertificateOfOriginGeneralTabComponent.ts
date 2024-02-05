@@ -185,6 +185,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         });
     }
 
+    updateEntity(EntityPM: CertificateOfOriginPM){
+        this.entityPM = EntityPM;
+        this.InitilizeListsFromCertificateOfOrigin(EntityPM);
+    }
+
     private measurmentUnitListService: MeasurmentUnitListService = new MeasurmentUnitListService();
     private packingTypeListService: PackingTypeListService = new PackingTypeListService();
     private originCriterionListService: OriginCriterionListService = new OriginCriterionListService();
