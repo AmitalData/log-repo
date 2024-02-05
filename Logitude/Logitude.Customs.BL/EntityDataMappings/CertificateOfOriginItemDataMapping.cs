@@ -35,10 +35,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
 
             var originCriterionQueryService = new OriginCriterionQueryService(entityPOCO.Tenant);
-            var originCriterin = originCriterionQueryService.GetSingle(entityPOCO.OriginCriterionCode, false, true);
-            if (originCriterin != null)
+            var originCriterion = originCriterionQueryService.GetSingle(entityPOCO.OriginCriterionCode, false, true);
+            if (originCriterion != null)
             {
-                entityPM.OriginCriterionCodeName = originCriterin.OriginCriterionCode;
+                entityPM.OriginCriterionCodeName = originCriterion.OriginCriterionCode;
             }
         }
    }

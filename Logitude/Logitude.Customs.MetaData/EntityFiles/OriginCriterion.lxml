@@ -16,7 +16,7 @@
   IsEditable="false"
   IsNewWizard="false"
   LookUp1="&quot;Code&quot;"
-  LookUp2="&quot;LocalName&quot;"
+  LookUp2="&quot;OriginCriterionCode&quot;"
   KeyPropertyPath="&quot;Code&quot;"
   AutoCompleteSearchWindow="false"
   IsClosed="true"
