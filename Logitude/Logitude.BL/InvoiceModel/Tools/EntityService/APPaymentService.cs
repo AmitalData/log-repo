@@ -1089,6 +1089,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     if (allConnectedItems.Count > 0)
                                     {
                                         invoice.IsClosed = true;
+                                        //***102417/
+                                        Logger.LogMe("APPaymentService.UpdateInvoiceAmounts: APInvoice status 'Paid' Inv No. " + invoice.InvoiceNumber.ToString()
+                                            + ", old status= " + invoice.StatusCode
+                                            + ", allConnectedItems.Count= " + allConnectedItems.Count.ToString()
+                                            + ", invoiceAmountDue= " + invoiceAmountDue.ToString(), false, "APINV_PD"); 
                                         invoice.StatusCode = "PD";
                                     }
                                 }

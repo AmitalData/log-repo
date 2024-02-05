@@ -46,6 +46,7 @@ using Logitude.BL.ShipmentsModel.APIDataContract;
 using Logitude.Customs.BL.EntityQueryServices;
 using Simplog.Data.InvoiceModel.Repositories;
 using Logitude.BL.Security;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
@@ -487,6 +488,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     var transactionAmount = account.ReconcileMethodCode == ReconcileMethodValues.LocalCurrency ? ledgerTransactionPM.LocalAmountCredit : ledgerTransactionPM.ForeignAmountCredit;
                     if (ledgerTransactionPM.OpenAmount == 0)
                     {
+                        //***102417/
+                        Logger.LogMe("ReconciliationUpdateService.UpdateLedgerTransaction: APInvoice status 'Paid' Inv No. " + invoice.InvoiceNumber.ToString()
+                            + ", HasFeatureToggle 'ILO'"
+                            + ", old status= " + invoice.StatusCode
+                            + ", ledgerTransactionPM.Id= " + ledgerTransactionPM.Id.ToString()
+                            + ", reconciliationLine.ReconciliationId= " + reconciliationLine.ReconciliationId.ToString(), false, "APINV_PD");
                         invoice.IsClosed = true;
                         invoice.StatusCode = "PD";
                     }
