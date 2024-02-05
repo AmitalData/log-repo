@@ -25,20 +25,41 @@ import { ShaamWebService } from "Shipment/Services/ShaamWebService";
 export class IdentityShaamLandingPageComponent {
     loadingNotfinish: boolean = true;
     error: boolean = false;
+    readonly userKey: string = 'shaamRediract_user';
+    readonly tenantKey: string = 'shaamRediract_tenant';
     msg: string = '';
     shaamTokenRedirect: string = '';
 
     ngOnInit() {
-        this.createNewRefreshToken();
+        this.rediractOrCreateNewToken();
+    }
+
+    rediractOrCreateNewToken() {
+        const redirectToShaam: string = new URLSearchParams(window.location.search).get('redirectToShaam');
+        if (redirectToShaam){
+            this.saveUserDataInStorage();
+            location.href = redirectToShaam;
+        } else
+            this.createNewRefreshToken();
+
+    }
+
+    saveUserDataInStorage() {
+        const urlParams: URLSearchParams = new URLSearchParams(window.location.search);        
+        localStorage[this.userKey] = urlParams.get('user');
+        localStorage[this.tenantKey] = urlParams.get('tenant');        
+    }
+    
+    GetUserDataFromStorage(): { user: string; tenant: number;} {
+        return {
+            user: localStorage[this.userKey],
+            tenant: localStorage[this.tenantKey],
+        }
     }
 
     private async createNewRefreshToken() {
-        const urlParameter: string = SessionLocator.ExternalParams.Menu;
-        const params: string[] = urlParameter.split(';');
-        const tenant = +params[1];
-        const user: string = params[2];
+        const { user, tenant }: { user: string; tenant: number;} = this.GetUserDataFromStorage();
         const code: string = SessionLocator.ExternalParams['code'];
-
         try {
             if (!user || !code || tenant == null || tenant == undefined)
                 throw `parameter not found - user: ${user}, code: ${code}, tenant: ${tenant}`;
