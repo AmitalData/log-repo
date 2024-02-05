@@ -240,12 +240,15 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
                     this.CertificateOfOrigins.sort((a, b) => parseInt(a.Counter) - parseInt(b.Counter));
 
                     this.ItemsSource.Clear();
-                    // change the counter from server
                     let counter = 0;
                     this.CertificateOfOrigins.forEach(certificateOfOrigin => {
                         certificateOfOrigin.ListCounter = ++counter;
                         this.ItemsSource.Insert(certificateOfOrigin, true);
                     });
+                }
+                // Select Row 
+                if(this.SelectedRow?.Id){
+                    this.SelectedRow = this.ItemsSource.Collection.filter(item=>item.Id == this.SelectedRow?.Id)[0];
                 }
             }
         });
@@ -261,7 +264,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
             }
         });
     }
-
+    
     openLogWindow(isNewOrEditCertificateOfOrigin,args){
         if(this.isOpen) return;
         this.isOpen = true;
@@ -279,6 +282,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
                 logWindow.WindowArgs = args;
                 logWindow.ShowCloseButton = true;
                 logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent');
+                args.logWindow = logWindow;
                 logWindow.WindowClosed.subscribe(($event: any) => {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.ReloadMyScreen();
