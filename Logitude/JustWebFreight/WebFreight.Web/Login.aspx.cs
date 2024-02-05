@@ -61,16 +61,10 @@ namespace WebFreight.Web
             else
                 enableHttps = false;
 
-            if (!IsPostBack && Request.RawUrl.Contains("?Menu=IdentityShaamLandingPage;"))
-            {
-                IGlobalContext objectContext = GlobalContext.GetContext();
-                SettingRepository MySettingRepository = new SettingRepository(objectContext);
-                SettingQuery MySettingQuery = new SettingQuery(MySettingRepository);
-                var MySettings = MySettingQuery.GetSinglePM();
-
-                string RedirectUrl = Request.IsLocal ? "http://localhost:4200" : "~/Angular" + MySettings.HtmlVersion + "/index.html";
+            if (!IsPostBack && (Request.QueryString["Menu"] == "IdentityShaamLandingPage"))
+            { 
+                string RedirectUrl = GetLinkToAngularSite();
                 RedirectUrl += "?" + HttpUtility.UrlDecode(Request.QueryString.ToString());
-
                 Response.Redirect(RedirectUrl);
             }
 
@@ -141,6 +135,17 @@ namespace WebFreight.Web
             }
 
             this.SetPartnerEnvironment();
+        }
+
+        private string GetLinkToAngularSite()
+        {
+            IGlobalContext objectContext = GlobalContext.GetContext();
+            SettingRepository MySettingRepository = new SettingRepository(objectContext);
+            SettingQuery MySettingQuery = new SettingQuery(MySettingRepository);
+            var MySettings = MySettingQuery.GetSinglePM();
+
+            string RedirectUrl = Request.IsLocal ? "http://localhost:4200" : "~/Angular" + MySettings.HtmlVersion + "/index.html";
+            return RedirectUrl;
         }
 
         private void SetPartnerEnvironment()

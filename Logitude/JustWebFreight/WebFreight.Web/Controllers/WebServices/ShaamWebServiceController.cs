@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Logitude.BL.GlobalModel.EntityQueries;
+using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using System;
@@ -15,6 +16,7 @@ namespace WebFreight.Web.Controllers.WebServices
     {
         ShaamService shaamService = new ShaamService();
         AllocateInvoiceService allocateInvoiceService = new AllocateInvoiceService();
+        string TaxesRediractUrl = new SettingQuery().GetSinglePMFromCahche().TaxesRediractUrl;
 
         [HttpGet]
         [Route("linkToCodeForToken")]
@@ -23,6 +25,9 @@ namespace WebFreight.Web.Controllers.WebServices
             return TryCatchWrapper((tenant) =>
             {
                 HttpClienResponse apiToShaamRes = shaamService.LinkToCodeForToken(tenant.Value, user);
+                if (apiToShaamRes.Res.StatusCode == HttpStatusCode.OK)
+                    apiToShaamRes.Content = $"{TaxesRediractUrl}&user={user}&tenant={tenant}&redirectToShaam={apiToShaamRes.Content}";
+
                 return apiToShaamRes;
             }, ReturnContent.VALUE);
         }
