@@ -27,6 +27,7 @@ import { OriginCriterionListService } from 'Customs/Services/StandardLists/Origi
 import { OriginCriterionList } from 'Customs/EntityLists/OriginCriterionList';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { EventEmitter } from '@angular/core';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 
 
@@ -176,7 +177,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         EntityPM.CertificateOriginItemItems.forEach((item) => {
             this.getMeasureNameFromCache(item.MeasureType, item);
             this.getPackageTypeNameFromCache(item.PackageType, item);
-            this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, item);
+            this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, true, item);
             this.CertificateOriginItemItems.Insert(new CertificateOfOriginItemLine(item, this));
         });
     }
@@ -205,13 +206,17 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             }
         });
     }
-    getOriginCriterionCodeNameFromCache(code, item) {
-        // this.originCriterionListService.getSingleFromCache(code).subscribe((myResponse: ServiceResponse) => {
+    CriterionTypesFilterItems: ApiQueryFilters;
+    getOriginCriterionCodeNameFromCache(code, isInitField, item = null) {
         this.originCriterionListService.getSingle(code).subscribe((myResponse: ServiceResponse) => {
             if (!myResponse.HasError) {
                 var result: OriginCriterionList = myResponse.Result;
                 if (result != null) {
-                    item.OriginCriterionCodeName = result.LocalName;
+                    if(isInitField && item)
+                        item.OriginCriterionCodeName = result.OriginCriterionCode;
+                    // filter data:
+                    this.CriterionTypesFilterItems = new ApiQueryFilters();
+                    this.CriterionTypesFilterItems.addAdditionalFilter("CertificateOfOriginTypeCodeID",this.entityPM.CooTypeCode, null, null, "Equals", false, false, false, "number");
                 }
             }
         });
@@ -356,6 +361,10 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     SetLocalName(entity, fieldName, item) {
         if (!AppTool.IsNullOrEmpty(entity)) {
+            if(fieldName == "OriginCriterionCodeName"){
+                this.CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.OriginCriterionCode;
+                return;
+            }
             this.CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.LocalName;
         } else {
             this[fieldName] = null;
@@ -418,6 +427,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         if (this.ErrorsList?.length > 0 || this.IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
             this.CheckMandatoryFields();
         }
+        this.entityPM.CertificateOriginItemItems.forEach(item=>{
+            this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, true, item);
+        });
     }
 
     public get RequestReasonCode(): string {
