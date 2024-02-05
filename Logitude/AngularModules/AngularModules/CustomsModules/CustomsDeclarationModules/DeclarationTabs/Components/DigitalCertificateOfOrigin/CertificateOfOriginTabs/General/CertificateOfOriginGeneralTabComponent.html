@@ -340,7 +340,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.InvoicesIdUry">
+                                            [RIndex]="item.InvoicesIdUry" [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.DescriptionOfInvoice}}</span>
@@ -409,7 +409,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial">
+                                            [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.MarksAndNumbers}}</span>
@@ -434,7 +434,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial">
+                                            [RIndex]="item.ItemSerial" [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ItemDescription}}</span>
@@ -459,7 +459,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial">
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.PackageQuantity}}</span>
@@ -483,7 +483,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial">
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.PackingTypeName}}</span>
@@ -506,7 +506,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial">
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.Weight}}</span>
@@ -528,7 +528,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial">
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.MeasureTypeName}}</span>
@@ -553,7 +553,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial">
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ContainerIsoCode}}</span>
@@ -577,7 +577,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial">
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ItemId}}</span>
@@ -600,7 +600,7 @@
                                     <ng-template let-item>
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
-                                            [RIndex]="item.ItemSerial">
+                                            [RIndex]="item.ItemSerial"  [IsEnabled]="!IsDisplayOnly">
                                             <div class="TextTrimming" style="text-align:right"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.OriginCriterionCodeName}}</span>

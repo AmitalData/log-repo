@@ -178,7 +178,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.GENERAL = cmpRef.instance;
-                                    this.GENERAL.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit);
+                                    this.GENERAL.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit,this.IsDisplayOnly);
                                 });
                         }
                         break;
@@ -189,7 +189,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.MOREDATA = cmpRef.instance;
-                                    this.MOREDATA.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit); 
+                                    this.MOREDATA.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit,this.IsDisplayOnly); 
                                 });
                         }
                         break;
