@@ -10,6 +10,7 @@ using Logitude.Server.Tools;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Def.EntityPMs; 
 using Logitude.Customs.Data;
+using Logitude.Customs.BL.EntityQueryServices;
 
 namespace Logitude.Customs.BL.EntityDataMappings
 {
@@ -32,7 +33,13 @@ namespace Logitude.Customs.BL.EntityDataMappings
 
         public void CustomPOCOToPM(CertificateOfOriginItemPM entityPM, CertificateOfOriginItem entityPOCO)
         {
-            entityPM.OriginCriterionCode = entityPOCO.OriginCriterionCode;
+
+            var originCriterionQueryService = new OriginCriterionQueryService(entityPOCO.Tenant);
+            var originCriterin = originCriterionQueryService.GetSingle(entityPOCO.OriginCriterionCode, false, true);
+            if (originCriterin != null)
+            {
+                entityPM.OriginCriterionCodeName = originCriterin.OriginCriterionCode;
+            }
         }
    }
 
