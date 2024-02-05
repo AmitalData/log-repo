@@ -51,6 +51,7 @@ using Simplog.Server.Infrastructure.Interfaces;
 using Microsoft.Practices.Unity;
 using Logitude.Server.Tools.Interfaces;
 using Logitude.Server.Tools.TreeFilterQuery;
+using System.IO;
 using Microsoft.Azure.Management.ResourceManager;
 
 namespace WebFreight.Web
@@ -66,7 +67,7 @@ namespace WebFreight.Web
             LogitudeAppSettings.IsRecycled = true;
             LogitudeAppSettings.WarmingIsFinished = false;
             //} 
-
+            NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "NLog.config"));
 
             if (string.IsNullOrEmpty(LogitudeSettings.DeploymentStage))
             {

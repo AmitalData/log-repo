@@ -110,6 +110,17 @@ namespace Logitude.Accounting.Data.Repositories
             return q.ToList();
 
         }
+
+
+        public List<ChartOfAccount> GetAllByTenant(int tenant)
+        {
+            var q = (from a in context.ChartOfAccounts
+                     where a.Tenant == tenant
+                     select a);
+
+            return q.ToList();
+
+        }
     }
 
 }
