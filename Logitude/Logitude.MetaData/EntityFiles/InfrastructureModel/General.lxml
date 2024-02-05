@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;3e76&quot;"
+  Code="&quot;0386&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -2696,8 +2696,8 @@
       IsSpellChecked="false" />
     <TextCode
       Code="&quot;General.M.Max&quot;"
-      DefaultText="&quot;%FieldName Field length must be less than %Maxlength&quot;"
-      LocalDefaultText="&quot;%FieldName אורך השדה חייב להיות קטן מ- %Maxlength&quot;"
+      DefaultText="&quot;%FieldName Field length must be less than or equal to %Maxlength&quot;"
+      LocalDefaultText="&quot;%FieldName אורך השדה חייב להיות קטן או שווה %Maxlength&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
