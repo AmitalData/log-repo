@@ -240,7 +240,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
             this.GENERAL.CheckMandatoryFields();
             return;
         }
-
         this.EntityPM.IsUnitedInvoices ?  this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
@@ -264,12 +263,14 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         
         else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit){
             this.isEntityChange = true;
-            
             this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
                 if (!response.HasError) {
                     var result = response.Result;
+                    this.EntityPM = result;
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    this.GENERAL.InitilizeListsFromCertificateOfOrigin(result);                        
+                    // this.RefreshScreen();
+                    //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.CurrentSession.StopBusyIndicator();
 
                     if(customSendOptionsArgs){

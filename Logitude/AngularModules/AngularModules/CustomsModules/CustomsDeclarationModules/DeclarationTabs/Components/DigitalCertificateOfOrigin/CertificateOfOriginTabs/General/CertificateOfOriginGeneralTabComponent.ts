@@ -168,6 +168,9 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     InitilizeListsFromCertificateOfOrigin(EntityPM: CertificateOfOriginPM) {
+        this.CertificateOriginInvoiceItems.Clear();
+        this.CertificateOriginItemItems.Clear();
+        
         // update CertificateOriginInvoice list:
         EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
             this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoiceLine(item, this));
