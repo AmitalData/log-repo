@@ -345,13 +345,13 @@
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.DescriptionOfInvoice}}</span>
                                             </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                            <div *ngIf="logcelltemplate.IsEditMode" style="height: 90%; width: 100%; max-height: 25px;">
                                                 <LogTextBox #DescriptionOfInvoiceTextBox
                                                     [ObjectFieldName]="'DescriptionOfInvoice'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
                                                     [Text]="item.DescriptionOfInvoice"
                                                     [ObjectTableName]="'Customs.CertificateOriginInvoice'"
-                                                    [HideColumns]="true">
+                                                    [HideColumns]="true" [IsMultiline]="true">
                                                 </LogTextBox>
                                             </div>
                                         </log-cell-template>
@@ -439,13 +439,13 @@
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ItemDescription}}</span>
                                             </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode">
+                                            <div class="Tbl1Col1" *ngIf="logcelltemplate.IsEditMode" style="height: 90%; width: 100%; max-height: 25px;">
                                                 <LogTextBox #ItemDescriptionTextBox
                                                     [ObjectFieldName]="'ItemDescription'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
                                                     [Text]="item.ItemDescription"
                                                     [ObjectTableName]="'Customs.CertificateOriginInvoice'"
-                                                    [HideColumns]="true">
+                                                    [HideColumns]="true" [IsMultiline]="true">
                                                 </LogTextBox>
                                             </div>
                                         </log-cell-template>
