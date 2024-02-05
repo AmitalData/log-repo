@@ -135,11 +135,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 mappedConsignments.PackageQuantity = consignmentPackage.PackageQuantity;
                 mappedConsignments.Weight = consignmentPackage.GrossMassMeasure;
                 mappedConsignments.MeasureType = consignmentPackage.GrossMassMeasureTypeCode;
+                mappedConsignments.PackageType = !AppTool.IsNullOrEmpty(consignmentPackage.PackageTypeCode) ? consignmentPackage.PackageTypeCode : "";
+                mappedConsignments.PackingTypeName = consignmentPackage.PackageTypeName ? consignmentPackage.PackageTypeName : "";
+                mappedConsignments.MeasureTypeName = consignmentPackage.GrossMassMeasureTypeName;
             }
             mappedConsignments.ItemDescription = consignment.CargoDescription;
-            mappedConsignments.PackageType = consignmentPackage.PackageTypeCode;
-            mappedConsignments.PackingTypeName = consignmentPackage.PackageTypeName;
-            mappedConsignments.MeasureTypeName = consignmentPackage.GrossMassMeasureTypeName;
             mappedConsignments.ItemId = this.currentDeclaration.SupplierInvoices[0]?.SupplierInvoiceItems[0]?.ClassificationCode.substring(0, 6);
 
             // #101498 after this task is finish- add this field initilize - field ContainerTypeWCO
