@@ -1526,6 +1526,16 @@ namespace Logitude.Customs.Data.Repsitories
 			return decSignedByUserId;
 
 		}
+		public List<Declaration> GetDeclarationsByExportFile(int tenant,string exportFile)
+		{
+			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+			List<Declaration> declarations = (from a in context.Declarations
+											  where a.Tenant == tenant && a.ExportFile == exportFile && !string.IsNullOrEmpty(a.DeclarationNumber) && a.DeclarationStatusTypeCode != "36"
+											  select a).ToList();
+
+			return declarations;
+		}
 	}
 
 
