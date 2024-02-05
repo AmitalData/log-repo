@@ -210,7 +210,6 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.ClaimPM.RejectChanges();
-        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         this.CurrentSession.CloseCurrentWindowEmit('cancel');
     }
 
@@ -260,7 +259,10 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
         //this.ClaimPMService.update(this.ClaimPM)
         this.CurrentSession.CurrentEditComponent.SaveCompleted.subscribe((myResult:any) => {
             var res: ServiceResponse = myResult;
-            if (!res.HasError) {
+
+            // EditComponent.SaveCompleted returns true on success, false on error
+            // if (!res.HasError) {
+            if (res) {
                 var entity = res.Result;
 
                 console.log("..Saved Successfully ", entity);
