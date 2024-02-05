@@ -2436,5 +2436,19 @@ namespace Logitude.Customs.BL.EntityQueryServices
 		{
 			return this.repository.GetSignedByUserIdByCustomFileNo(tenant, customFileNo);
 		}
+		public List<DeclarationPM> GetDeclarationsByExportFile(int tenant, string exportFile)
+		{
+			List<Declaration> declarations = repository.GetDeclarationsByExportFile(tenant, exportFile);
+			DeclarationDataMapping mappings = new DeclarationDataMapping();
+			List<DeclarationPM> declarationPMs = new List<DeclarationPM>();
+			foreach (Declaration declaration in declarations)
+			{
+				DeclarationPM declarationPM = new DeclarationPM();
+				mappings.CustomPOCOToPM(declarationPM, declaration);
+				mappings.POCOToPM(declarationPM, declaration);
+				declarationPMs.Add(declarationPM);
+			}
+			return declarationPMs;
+		}
 	}
 }
