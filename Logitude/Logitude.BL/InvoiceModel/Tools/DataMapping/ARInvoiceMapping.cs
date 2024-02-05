@@ -95,6 +95,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.PaymentReferences = entityPM.PaymentReferences;
             entity.SATCancelReasonCode = entityPM.SATCancelReasonCode;
             entity.TotalEquation = entityPM.TotalEquation;
+            entity.ConfirmationNumber = entityPM.ConfirmationNumber;
 
             if (entityPM.HouseNumber != null)
             {
