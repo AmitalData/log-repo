@@ -214,11 +214,11 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                 if (result != null) {
                     if(isInitField && item)
                         item.OriginCriterionCodeName = result.OriginCriterionCode;
-                    // filter data:
-                    this.CriterionTypesFilterItems = new ApiQueryFilters();
-                    this.CriterionTypesFilterItems.addAdditionalFilter("CertificateOfOriginTypeCodeID",this.entityPM.CooTypeCode, null, null, "Equals", false, false, false, "number");
                 }
             }
+            // filter data:
+            this.CriterionTypesFilterItems = new ApiQueryFilters();
+            this.CriterionTypesFilterItems.addAdditionalFilter("CertificateOfOriginTypeCodeID",this.entityPM.CooTypeCode, null, null, "Equals", false, false, false, "number");
         });
     }
     SetPropertiesEnabled() {
@@ -428,7 +428,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.CheckMandatoryFields();
         }
         this.entityPM.CertificateOriginItemItems.forEach(item=>{
-            this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, true, item);
+            this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, false, item);
         });
     }
 
