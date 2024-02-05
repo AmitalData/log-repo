@@ -207,7 +207,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             bool testedAndFoundAllOK = true;
             if (testedAndFoundAllOK)
             {
-                journal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Approved;
+                journal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.InProcessing;
             }
             else
             {
@@ -321,7 +321,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
             bool testedAndFoundAllOK = true;
             if (testedAndFoundAllOK)
             {
-                journal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Approved;
+                journal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.InProcessing;
             }
             else
             {

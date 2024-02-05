@@ -238,7 +238,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 UpdatedByUserId = DepositPM.UpdatedByUserId,
                 AccountingDate = DepositPM.DepositDate,
                 TypeCode = "0", //Manual
-                StatusCode = "2", // Approved
+                StatusCode = "6", // Approved
                 AccountingEntityId = DepositPM.Id,
                 AccountingEntityReference = DepositPM.DepositNumber.ToString(),
                 ExternalNo = null,

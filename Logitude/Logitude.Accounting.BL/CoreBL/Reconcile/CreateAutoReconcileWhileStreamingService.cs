@@ -123,7 +123,7 @@ namespace Logitude.Accounting.BL.CoreBL
             var newLTranListOfAccountID = _NewLedgerTransactionsWithCounters.Where(r => r.AccountId == currentAccountId).ToList();
             if (newLTranListOfAccountID == null || newLTranListOfAccountID.Count == 0)
             {
-                string errortext = $"Account {currentAccountId} is not found in Ledger Transactions to be reconciled";
+                string errortext = $"Account {currentAccountId} is not found in Ledger Transactions to be reconciled"; 
                 throw new ApplicationException(errortext);
             }
             decimal totalNewLedgerOpenAmount = newLTranListOfAccountID.Sum(r => r.OpenAmount);

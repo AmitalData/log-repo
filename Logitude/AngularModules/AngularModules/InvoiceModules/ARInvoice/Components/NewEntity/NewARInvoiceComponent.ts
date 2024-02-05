@@ -34,6 +34,7 @@ import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocat
 import { SessionInfo } from 'Infrastructure/Utilities/SessionInfo';
 import { DocumentTypeTemplatePMExtendedService } from '../../../../Common/Services/ExtendedPMs/DocumentTypeTemplatePMExtendedService';
 import { DocumentTypeTemplateList } from '../../../../Common/EntityLists/DocumentTypeTemplateList';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 declare var window: any;
 
 @Component({
@@ -56,12 +57,13 @@ export class NewARInvoiceComponent extends BaseComponent {
     public IsLoadDocumentTemplateReady = false;
     public IsDocumentTypeTemplateChange = false;
 
-    
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityResourceService: EntityResourceService) {
         super();
 
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-
+        this.InitLOVFilters();
         this.InitializeServices();
 
 
@@ -76,7 +78,10 @@ export class NewARInvoiceComponent extends BaseComponent {
 
         this.SetRegionalTaxVisibility();
     }
-    
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     public DisplaySATSettings: boolean = false;
     public IsIntercompanyVisible: boolean = false;
     public AllVatTypes: VatTypeList[] = [];

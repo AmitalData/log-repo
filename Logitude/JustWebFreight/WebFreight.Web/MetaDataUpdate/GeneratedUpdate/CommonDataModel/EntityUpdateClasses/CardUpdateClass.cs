@@ -7843,7 +7843,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InsruedcreditLimit",
 					  						DefaultText =  "Insrued Credit Limit  ",
-					  						FullLocalDefaultText =  "מסגרת אשראי מבוטחת",
+					  						FullLocalDefaultText =  "מסגרת םשרםי מבוטחת",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,

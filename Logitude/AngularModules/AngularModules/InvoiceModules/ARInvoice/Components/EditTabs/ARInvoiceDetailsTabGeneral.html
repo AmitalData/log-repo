@@ -62,6 +62,7 @@
                                                 </td>
                                             </tr>
 
+
                                             <!-- BillToId -->
                                             <tr class="FormFieldRow">
                                                 <td style="width: 135px;">
@@ -79,11 +80,12 @@
                                                             [DependencyFilter1IsList]="true"
                                                             [DisplayFieldsFromList]="DisplayFieldsFromList"
                                                             [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                                            [CustomizedWidth]="BillToLovSizeForFullAccounting"
                                                             [QueryFilterItems]="BillToFilter"
                                                             [CustomizedWidth]="BillToLovSizeForFullAccounting"
                                                             [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5">
+                                            [StartSearchFromNumber]="5"
+                                            [QueryFilterItems]="GLAccountsFilterItems">
+
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -367,9 +369,9 @@
                                                 <td style="width: 80px;">
                                                     <button class="Button" [disabled]="!VatTypeFilterIsEnabled" (click)="VatTypeFilterClicked()">{{'ARInvoice.B.Details.ApplyToAll' | TextCodeTranslationPipe}}</button>
                                                 </td>
-                                            </tr>
-                                        </table>
-                                    </td>
+                                </tr>
+                            </table>
+                        </td>
                                 </tr>
                             </table>
                         </td>
@@ -723,6 +725,7 @@
                             </div>
                         </td>
                     </tr>
+
 
                 </table>
             </div>

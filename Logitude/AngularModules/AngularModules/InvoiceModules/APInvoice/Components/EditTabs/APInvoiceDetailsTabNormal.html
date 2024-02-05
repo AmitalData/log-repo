@@ -30,7 +30,8 @@
                                                             [DependencyFilter1Value]="VendorDependencyProperty1"
                                                             [DependencyFilter1IsList]="true"
                                                             [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5">
+                                            [StartSearchFromNumber]="5"
+                                            [QueryFilterItems]="GLAccountsFilterItems">
                                                     </LogLov>
                                                 </td>
                                             </tr>
@@ -74,7 +75,6 @@
                                                 </td>
                                             </tr>
 
-                                          
                                         </table>
                                     </td>
 
@@ -142,6 +142,21 @@
 
                                                 <td>
                                                     <LogTextBox [ObjectFieldName]="'VATNumber'" [Text]="VATNumber" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogTextBox>
+                                                </td>
+                                            </tr>
+
+                                            <!-- AccountingDate -->
+                                            <tr *ngIf="IsAccountingActivated" class="FormFieldRow">
+                                                <td>
+                                                    <LogLabel [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName" [DataContext]="DataContext"></LogLabel>
+                                                </td>
+
+                                                <td>
+                                                    <LogDatePicker [ObjectFieldName]="'AccountingDate'" [ObjectTableName]="ObjectTableName" [SelectedDateValue]="AccountingDate" [InputType]="'date'" [DataContext]="DataContext"></LogDatePicker>
+                                                </td>
+
+                                                <td>
+                                                    <div></div>
                                                 </td>
                                             </tr>
 

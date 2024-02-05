@@ -49,6 +49,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     isGenerateClicked = false;
     isGenerateEnabled = true;
     private iGlobalDomainService: GlobalDomainService;
+
     previousPermissionBuildMonthsValue: any;
     showPermissionBuildMonths: boolean = true;    
     permissionBuildMonthsInProcess: boolean = false;
@@ -220,6 +221,7 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
     get PermissionBuildMonths() {
         return this.EntityPM.PermissionBuildMonths;
     }
+
 
     set PermissionBuildMonths(value: any) {
         this.setPermissionBuildMonths(value);    

@@ -36,8 +36,9 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { AccountingSettingListService } from '../../../../Common/Services/StandardLists/AccountingSettingListService';
 import { GLAccountList } from 'Accounting/EntityLists/GLAccountList';
 import { GLAccountListService } from 'Accounting/Services/StandardLists/GLAccountListService';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
-@Component({    
+@Component({
     templateUrl: './APInvoiceDetailsTabNormal.html',
 })
 export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestroy {
@@ -57,14 +58,17 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
     QBOGlobalAccountingSystemCode = "QBOG";
     public IsAccountingActivated = false;
     public IsUsingVirtuallization: boolean = false;
+    public GLAccountsFilterItems: ApiQueryFilters;
 
     constructor(private entityArgs: EntityArgs) {
         super();
+        this.InitLOVFilters();
         this.SetIsUsingVirtuallization();
         if (ObjectsLocator.GlobalSetting) {
             this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         }
-        this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+  this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
+
         this.EntityPM = entityArgs.EntityPM;
         this.ItemsSource = new ObservableCollection([]);
         this.todayDate = DateTool.GetCurrentDateAsUtc();
@@ -83,7 +87,10 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         }
         this.IsTotalVatEnabled = this.CheckIsTotalVatEnabled();
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     SetIsUsingVirtuallization() {
         var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
         if (hasGridVirtuallizationToggleFeature) {
@@ -828,6 +835,20 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
         this.UpdateData();
     }
 
+    get AccountingDate() { return this.EntityPM.AccountingDate; }
+    set AccountingDate(value: Date) {
+        if (this.EntityPM.AccountingDate != value) {
+            this.EntityPM.AccountingDate = value;
+            if (value == null) {
+                this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, true);
+            }
+            else {
+                this.UIProperties.SetRequired("AccountingDate", this.ObjectTableName, false);
+            }
+
+        }
+    }
+
     get SubTotalInLocalCurrency() { return this.EntityPM.SubTotalInLocalCurrency; }
     set SubTotalInLocalCurrency(value: number) {
         var setValue: number = AppTool.Round(value, 2);
@@ -988,7 +1009,7 @@ export class APInvoiceDetailsTabNormal extends BaseComponent implements OnDestro
                     this.VATNumber = list.VatNumber;
                     this.EntityPM.VendorName = list.LocalName || list.EnglishName;
                     this.EntityPM.VendorLocalName = list.LocalName;
-                    
+
                     if (!AppTool.IsNullOrEmpty(list.InvoiceCurrencyId)) {
                         this.InvoiceCurrencyId = list.InvoiceCurrencyId;
                     }

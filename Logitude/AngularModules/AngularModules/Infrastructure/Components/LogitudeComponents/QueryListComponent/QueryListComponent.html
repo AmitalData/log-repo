@@ -201,8 +201,8 @@
                     <img (click)="ItemClicked(item)" [attr.src]="'./Images/Menu/Person.small.png'" width="18" style="margin-right:5px;margin-top:9px;position:relative;pointer-events:none;" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" />
                 </div>
 
-                <div style="max-width:100px;" class="TextTrimming" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" [style.padding-right]="LayoutDirection=='rtl' ? '15px' : ''">
-                    <span (click)="ItemClicked(item)" title="{{item[Binding] | TextCodeTranslationPipe}}" *ngIf="Binding != null" style="float:left;max-width:100px;" class="TextTrimming">{{item[Binding] | TextCodeTranslationPipe}}</span>
+                <div style="max-width:90px;" class="TextTrimming" [style.float]="LayoutDirection=='rtl' ? 'right' : 'left'" [style.padding-right]="LayoutDirection=='rtl' ? '15px' : ''">
+                    <span (click)="ItemClicked(item)" title="{{item[Binding] | TextCodeTranslationPipe}}" *ngIf="Binding != null" style="float:left;max-width:90px;" class="TextTrimming">{{item[Binding] | TextCodeTranslationPipe}}</span>
                 </div>
 
                 <div>

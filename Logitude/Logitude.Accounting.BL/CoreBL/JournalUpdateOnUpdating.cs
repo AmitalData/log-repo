@@ -247,7 +247,7 @@ namespace Logitude.Accounting.BL
 
                 case JournalStatusTypePM.StatusCodeEnum.WaitingforApprove:
                     break;
-                case JournalStatusTypePM.StatusCodeEnum.Approved:
+                case JournalStatusTypePM.StatusCodeEnum.InProcessing:
                     var journalApproveParser = NewJournalApproveParser(journalPM);
                     journalApproveParser.OnApproveUpdatingFillArrangeJournalPMResetControlAccount();
                     journalApproveParser.ParseIt();//throw exception if not valid !!!!

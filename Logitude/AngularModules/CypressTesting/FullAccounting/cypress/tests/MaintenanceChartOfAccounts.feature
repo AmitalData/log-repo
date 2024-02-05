@@ -6,7 +6,7 @@ Feature: Chart of Account Create, Search and Edit from Maintenance
         Given the user logged in and open "טבלת קבוצת מאזן" in maintenance menu
         And a Chart of Account with the following details
             | Code        | Random           |
-            | EnglishName | Chart of Account |
+            | EnglishName | Chart Of Account |
             | LocalName   | טבלת קבוצת מאזן |
             | Type        | Customer         |
 

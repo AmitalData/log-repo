@@ -1,18 +1,18 @@
 
-import {Component, Output, EventEmitter} from '@angular/core';
-import {TextCodeTranslationPipe} from '../../../Controls/Pipes/TextCodeTranslationPipe';
+import { Component, Output, EventEmitter } from '@angular/core';
+import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 
-import {WebFreightDomainService} from '../../../Infrastructure/Services/WebFreightDomainService';
+import { WebFreightDomainService } from '../../../Infrastructure/Services/WebFreightDomainService';
 //import {ServiceArgs} from '../../../Infrastructure/DataContracts/ServiceArgs';
-import {ApiQueryFilters} from '../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {SessionLocator} from '../../../Infrastructure/Utilities/SessionLocator';
-import {TextCodeTranslator} from '../../../Infrastructure/Utilities/TextCodeTranslator';
-import {ServiceHelper} from '../../../Infrastructure/Utilities/ServiceHelper';
-import {AmitalGatewayUtil} from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
-import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
+import { ApiQueryFilters } from '../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator';
+import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ServiceHelper } from '../../../Infrastructure/Utilities/ServiceHelper';
+import { AmitalGatewayUtil } from '../../../Infrastructure/Utilities/AmitalGatewayUtil';
+import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { HttpClient } from '@angular/common/http';
-import {LogboxShipmentExportExcelService} from '../../../Shipment/Services/Others/LogboxShipmentExportExcelService';
+import { LogboxShipmentExportExcelService } from '../../../Shipment/Services/Others/LogboxShipmentExportExcelService';
 import { LogitudeGridExportToExcelExtendedPMService } from 'Common/Services/ExtendedPMs/LogitudeGridExportToExcelExtendedPMService';
 import { interval, Observable, TimeInterval, timer } from 'rxjs';
 import { takeUntil, timeInterval } from 'rxjs/operators';
@@ -36,7 +36,7 @@ export class Export2ExcelControl {
     url: string;
     RTL: boolean = ObjectsLocator.GlobalSetting == undefined ? false : (ObjectsLocator.GlobalSetting.LayoutDirection == 'rtl' ? true : false);//true;
     private CurrentSession = SessionLocator.SelectedSession;
-  constructor(private http: HttpClient) {
+    constructor(private http: HttpClient) {
 
     }
     ObjectTableName: string;
@@ -50,16 +50,15 @@ export class Export2ExcelControl {
     Type: string
     ExportExcelArgs: any;
     WebFreightDomainService: WebFreightDomainService;
-    ReconcileExcelDataArgs : ReconcileExcelDataArgs;
+    ReconcileExcelDataArgs: ReconcileExcelDataArgs;
     SetWindowArgs(args: any) {
-
         this.QueryType = args.QueryType ? args.QueryType : "";
         this.queryName = args.QueryName;
         this.ExportExcelArgs = args.ExportExcelArgs;
         this.ReconcileExcelDataArgs = args.ReconcileExcelDataArgs;
         this.Type = args.Type ? args.Type : "";
 
-       if (this.QueryType == "LogBox") {
+        if (this.QueryType == "LogBox") {
             var logboxShipmentExportExcelService: LogboxShipmentExportExcelService = new LogboxShipmentExportExcelService();
             logboxShipmentExportExcelService.GetQueryToExcelData(this.ExportExcelArgs).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) this.CompleteExcelData(myResponse.Result);
@@ -102,8 +101,8 @@ export class Export2ExcelControl {
             this.userid = args.userid;
             this.Filters = args.Filters;
             this.WebFreightDomainService.getExcelData(this.Filters, this.queryCode, args.tenant, args.userid, args.currentObjectTable).subscribe((myResult: ExportResult) => {
-               this.HandleExportResult(myResult);
-           }, error => { this.OnError(error)});
+                this.HandleExportResult(myResult);
+            }, error => { this.OnError(error) });
         }
 
     }
@@ -137,7 +136,7 @@ export class Export2ExcelControl {
         return source.pipe(takeUntil(timer$));
 
     }
-    private StartExecutionLogCheckTimerSub: any= null;
+    private StartExecutionLogCheckTimerSub: any = null;
     IsStartExecutionLogCheckTimer = false;
     IsSucceeded = false;
     StartExecutionLogCheckTimer(logId: string) {
@@ -161,34 +160,34 @@ export class Export2ExcelControl {
 
                 this.WebFreightDomainService.GetQueryExportExecutionLogStatus(logId).subscribe(
                     (res: ServiceResponse) => {
-                    const pmResponse: ServiceResponse = res;
-                    if (this.IsStartExecutionLogCheckTimer) {
-                        if (pmResponse.HasError
-                            || (pmResponse.Result && pmResponse.Result.ExceptionMessage)
-                            || (pmResponse.Result && pmResponse.Result.StatusCode === "D")) {
+                        const pmResponse: ServiceResponse = res;
+                        if (this.IsStartExecutionLogCheckTimer) {
+                            if (pmResponse.HasError
+                                || (pmResponse.Result && pmResponse.Result.ExceptionMessage)
+                                || (pmResponse.Result && pmResponse.Result.StatusCode === "D")) {
 
-                            this.IsSucceeded = true;
-                            this.StopQueryLogCheckTimer();
+                                this.IsSucceeded = true;
+                                this.StopQueryLogCheckTimer();
 
-                            this.CompleteExcelData(this.FileName);
-                        }
-                        if (!pmResponse.HasError) {
-                            const result = pmResponse.Result;
-                            if (result) {
-                                if (result.ExceptionMessage) {
+                                this.CompleteExcelData(this.FileName);
+                            }
+                            if (!pmResponse.HasError) {
+                                const result = pmResponse.Result;
+                                if (result) {
+                                    if (result.ExceptionMessage) {
+                                        this.ShowRetryOption();
+                                    }
+                                }
+                            }
+                            else {
+                                if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
                                     this.ShowRetryOption();
                                 }
                             }
                         }
-                        else {
-                            if (pmResponse.ErrorsArray && pmResponse.ErrorsArray.length > 0) {
-                                this.ShowRetryOption();
-                            }
-                        }
-                    }
                     },
-                    error => {console.log(error)}
-                    );
+                    error => { console.log(error) }
+                );
             }
         },
             error => { console.log(error) },
@@ -236,10 +235,11 @@ export class Export2ExcelControl {
     }
 
 
-    SaveExcelFile(tenant: number, FileName: string, OTName: string , Type: string) {
+    SaveExcelFile(tenant: number, FileName: string, OTName: string, Type: string) {
         var tempDate = new Date();
         var MyDate = tempDate.getDate() + "-" + (tempDate.getMonth() + 1) + "-" + tempDate.getFullYear();
-        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() +  "&qname=" + this.queryName + "_" + MyDate+ "&type=" + this.Type ;
+        var url = ServiceHelper.GetLogitudeURL() + "WebPages/DawnLoadExcelPage.aspx?fileName=" + FileName + "&tempId=" + ServiceHelper.GetLDocumentDownloadToken() + "&qname=" + this.queryName + "_" + MyDate + "&type=" + this.Type;
+       // url += "&Type=SaveToMicrosoftExcel2007"; 
         //if (AmitalGatewayUtil.Instance.AmitalBrowserInUse) {
         //    AmitalGatewayUtil.Instance.DeclarationMessaging.RaiseOpenNewBrowser(url);
         //} else

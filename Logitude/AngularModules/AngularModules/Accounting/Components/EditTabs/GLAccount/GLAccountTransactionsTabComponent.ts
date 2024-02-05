@@ -1,29 +1,29 @@
 import { DateTool } from './../../../../Infrastructure/Tools';
 import { Component, OnInit, Output, EventEmitter, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { AppTool } from '../../../../Infrastructure/Tools';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {LogitudeWindow} from '../../../../Controls/Windows/LogitudeWindow';
-import {SessionInfo} from '../../../../Infrastructure/Utilities/SessionInfo';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
+import { SessionInfo } from '../../../../Infrastructure/Utilities/SessionInfo';
 
-import {GLAccountPM} from '../../../EntityPMs/GLAccountPM';
-import {LedgerTransactionList} from '../../../EntityLists/LedgerTransactionList';
-import {CurrencyList} from '../../../../Common/EntityLists/CurrencyList';
-import {RatesTableList} from '../../../../Infrastructure/EntityLists/RatesTableList';
-import {LTBResponse} from '../../../DataContracts/LTBResponse';
-import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { GLAccountPM } from '../../../EntityPMs/GLAccountPM';
+import { LedgerTransactionList } from '../../../EntityLists/LedgerTransactionList';
+import { CurrencyList } from '../../../../Common/EntityLists/CurrencyList';
+import { RatesTableList } from '../../../../Infrastructure/EntityLists/RatesTableList';
+import { LTBResponse } from '../../../DataContracts/LTBResponse';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 
-import {ReconcileEventManager} from '../../../Utilities/ReconcileEventManager';
-import {LedgerTransactionListService} from '../../../Services/StandardLists/LedgerTransactionListService';
-import {LedgerTransactionExtendedListService} from '../../../Services/ExtendedLists/LedgerTransactionExtendedListService';
-import {GLAccountExtendedListService} from '../../../Services/ExtendedLists/GLAccountExtendedListService';
-import {EntityListService} from '../../../../Infrastructure/Services/EntityListService';
-import {CurrencyListService} from '../../../../Common/Services/StandardLists/CurrencyListService';
-import {RatesTableListService} from '../../../../Infrastructure/Services/StandardLists/RatesTableListService';
+import { ReconcileEventManager } from '../../../Utilities/ReconcileEventManager';
+import { LedgerTransactionListService } from '../../../Services/StandardLists/LedgerTransactionListService';
+import { LedgerTransactionExtendedListService } from '../../../Services/ExtendedLists/LedgerTransactionExtendedListService';
+import { GLAccountExtendedListService } from '../../../Services/ExtendedLists/GLAccountExtendedListService';
+import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
+import { CurrencyListService } from '../../../../Common/Services/StandardLists/CurrencyListService';
+import { RatesTableListService } from '../../../../Infrastructure/Services/StandardLists/RatesTableListService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
 import { QueryColumnPM } from 'Infrastructure/EntityPMs/QueryColumnPM';
@@ -33,6 +33,7 @@ import { TaxReportPM } from '../../../EntityPMs/TaxReportPM';
 import { CodeNameClass } from '../../../../Infrastructure/DataContracts/CodeNameClass';
 import { FullAccountingSettingList } from '../../../../Accounting/EntityLists/FullAccountingSettingList';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
+import { Operators } from 'Accounting/DataContracts/Operators';
 
 @Component({
 
@@ -40,7 +41,7 @@ import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
     providers: [LedgerTransactionListService, LedgerTransactionExtendedListService, GLAccountExtendedListService]
 })
 
-export class GLAccountTransactionsTabComponent extends BaseComponent implements OnInit, AfterViewInit{
+export class GLAccountTransactionsTabComponent extends BaseComponent implements OnInit, AfterViewInit {
     @Output() onQueryChangeEvent = new EventEmitter();
     public EntityPM: GLAccountPM = null;
     public ObjectTableName = "GLAccount";
@@ -49,7 +50,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     private fullAccountingSetting: FullAccountingSettingList;
     // Services
     private _entityListService: EntityListService;
-    public LogitudeGridExportToExcelComponent:LogitudeGridExportToExcelComponent;
+    public LogitudeGridExportToExcelComponent: LogitudeGridExportToExcelComponent;
     private _CurrencyListService: CurrencyListService = new CurrencyListService();
     private _RatesTableListService: RatesTableListService = new RatesTableListService();
     private ledgerTransactionListService: LedgerTransactionListService = new LedgerTransactionListService();
@@ -69,13 +70,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     ratesTable: RatesTableList[];
     public LTBSummery: LTBResponse = new LTBResponse();
     public OpenReconciliationMessage: string = "There are no Open Transactions";
-    public TaxReportLists: CodeNameClass[] =[];
+    public TaxReportLists: CodeNameClass[] = [];
     LocalSums: number[];
     ForeignSums: number[];
     isSingleCurrency: boolean = false;
     isControlAccount: boolean = false;
     ShowSecondDateFilter: boolean = false;
-    public UsingLogGridV2:boolean= false;
+    public UsingLogGridV2: boolean = false;
     public isRTL: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
     public UseTaxreportFilter: boolean = false;
@@ -83,11 +84,47 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     isFullAccounting: boolean = SessionLocator.TenantPM.AccountingActivated;
     isVatInputOrOutput: boolean = false;
     columnsReady: boolean = false;
+    amountLocalFieldFilter: FilterItem;
+    amountForeignFieldFilter: FilterItem;
+
+    operatorsList =
+        [{ Code: Operators.Equals, EnglishName: 'Equals', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Equals") },
+        { Code: Operators.NotEqual, EnglishName: 'Not Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.NotEqual") },
+        { Code: Operators.LargerThan, EnglishName: 'Larger Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LargerThan") },
+        { Code: Operators.LessThan, EnglishName: 'Less Than', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThan") },
+        { Code: Operators.LessThanOrEqual, EnglishName: 'Less Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.LessThanOrEqual") },
+        { Code: Operators.GreaterThanOrEqual, EnglishName: 'Greater Than Or Equal', LocalName: TextCodeTranslator.Translate("Accounting.General.O.GreaterThanOrEqual") },
+        { Code: Operators.Between, EnglishName: 'Between', LocalName: TextCodeTranslator.Translate("Accounting.General.O.Between") },
+        ];
+    selectedAmountLocalOperator: { Code: string, EnglishName: string, LocalName: string };
+    selectedAmountForeignOperator: { Code: string, EnglishName: string, LocalName: string };
+
+    amountLocal: number;
+    amountLocalFrom: number;
+    amountLocalTo: number;
+    get AmountLocal() { return this.amountLocal; }
+    set AmountLocal(value: number) {
+        if (this.amountLocal != value) {
+            this.amountLocal = value;
+        }
+    }
+
+    amountForeign: number;
+    amountForeignFrom: number;
+    amountForeignTo: number;
+    get AmountForeign() { return this.amountForeign; }
+    set AmountForeign(value: number) {
+        if (this.amountForeign != value) {
+            this.amountForeign = value;
+        }
+    }
+
+    reconcileEventManager: ReconcileEventManager = new ReconcileEventManager();
 
     constructor(private entityArgs: EntityArgs, private CD: ChangeDetectorRef){
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
-        this.UsingLogGridV2 = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0]? true : false;
+        this.UsingLogGridV2 = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0] ? true : false;
         this._entityListService = new EntityListService();
         this.EntityPM = entityArgs.EntityPM;
         this.CurrencyId = this.EntityPM.CurrencyId;
@@ -103,12 +140,12 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         //this.GetNonReconciledTransactionsCount();
 
         // Set GLAccountReconcileMethodCode to use it in reconcile window
-        ReconcileEventManager.GLAccountReconcileMethodCode = this.EntityPM.ReconcileMethodCode;
+        this.reconcileEventManager.GLAccountReconcileMethodCode = this.EntityPM.ReconcileMethodCode;
 
         //Set Currency LOV editability
         if (this.EntityPM.IsMultiCurrency) {
             this.UIProperties.SetEnabled("CurrencyId", "GLAccount", true);
-            if(this.EntityPM?.GLAccountCurrencies.length > 0)
+            if (this.EntityPM?.GLAccountCurrencies.length > 0)
                 this.splittedByCurrencyCheckBox = true;
         } else {
             this.UIProperties.SetEnabled("CurrencyId", "GLAccount", false);
@@ -133,36 +170,41 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
         this.GetTransactionsCurrencies();
         this.GetFullAccountingSettings();
-        if(this.isFullAccounting)
-        this.SetGLAccountsFromDateInLocalStorage();            
+        if (this.isFullAccounting)
+            this.SetGLAccountsFromDateInLocalStorage();
 
     }
-    SetGLAccountsFromDateInLocalStorage(){
+    SetGLAccountsFromDateInLocalStorage() {
         var retrievedObject = localStorage.getItem("GLAccounts-fromDate");
-        if(retrievedObject!=null){
-            var gLAccounts_FromDate=JSON.parse(retrievedObject);
+        if (retrievedObject != null) {
+            var gLAccounts_FromDate = JSON.parse(retrievedObject);
             gLAccounts_FromDate.forEach(element => {
-            var today=new Date();
-            var CreateDate=new Date(element.creatDate);
-            var difference = Math.floor((Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) - Date.UTC(CreateDate.getFullYear(), CreateDate.getMonth(), CreateDate.getDate()) ) /(1000 * 60 * 60 * 24));
-            if( difference <= 30 )
-                 this.GLAccountsFromDateInLocalStorage.push(element); 
+                var today = new Date();
+                var CreateDate = new Date(element.creatDate);
+                var difference = Math.floor((Date.UTC(today.getFullYear(), today.getMonth(), today.getDate()) - Date.UTC(CreateDate.getFullYear(), CreateDate.getMonth(), CreateDate.getDate())) / (1000 * 60 * 60 * 24));
+                if (difference <= 30)
+                    this.GLAccountsFromDateInLocalStorage.push(element);
             });
-            localStorage.setItem( "GLAccounts-fromDate" , JSON.stringify(this.GLAccountsFromDateInLocalStorage) );
+            localStorage.setItem("GLAccounts-fromDate", JSON.stringify(this.GLAccountsFromDateInLocalStorage));
         }
     }
-   
+
 
     public DateFilterWidth: number;
+    public DateFilterWidth2: number;
     SetDateFilterWidth() {
         if (this.isVatInputOrOutput) {
-            this.DateFilterWidth = this.isRTL ? 270 : 340;
+            this.DateFilterWidth = this.isRTL ? 288 : 340;
+            this.DateFilterWidth2 = this.isRTL ? 288 : 340;
         }
         else {
-            this.DateFilterWidth= 270;
+            this.DateFilterWidth = 288;
+            this.DateFilterWidth2 = 340;
         }
 
     }
+
+
 
     GetFullAccountingSettings() {
 
@@ -191,7 +233,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.CurrentSession.StopBusyIndicator();
             if (this.TenatTaxReports != null) {
                 this.TenatTaxReports.forEach(p => {
-                    this.TaxReportLists.push(new CodeNameClass(p.Id, this.FormatTaxReportDate(p.TaxReportMonth) ));
+                    this.TaxReportLists.push(new CodeNameClass(p.Id, this.FormatTaxReportDate(p.TaxReportMonth)));
                 });
 
             }
@@ -200,8 +242,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         });
     }
     FormatTaxReportDate(date: Date) {
-      var newDate=  new Date(date);
-        var month: number = newDate.getMonth()+1;
+        var newDate = new Date(date);
+        var month: number = newDate.getMonth() + 1;
         var year: number = newDate.getFullYear();
         return month + "." + year;
     }
@@ -217,32 +259,30 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.ToDate = new Date();
         this.oldToDate = new Date();
         var lastmonth = today.setMonth(today.getMonth() - 1);
-        var fromDateInLocalStorage = this.isFullAccounting? this.GetFromDateInLocalStorage() : null; 
-         if( fromDateInLocalStorage!=null )
-        {
+        var fromDateInLocalStorage = this.isFullAccounting ? this.GetFromDateInLocalStorage() : null;
+        if (fromDateInLocalStorage != null) {
             this.FromDate = new Date(fromDateInLocalStorage.fromDate);
             this.oldFromDate = new Date(fromDateInLocalStorage.fromDate);
         }
-        else
-        {
+        else {
             this.FromDate = new Date(lastmonth);
             this.oldFromDate = new Date(lastmonth);
-        }       
+        }
         //#endregion
 
         this.CD.detectChanges();
     }
-    GetFromDateInLocalStorage(){
+    GetFromDateInLocalStorage() {
         var retrievedObject = localStorage.getItem("GLAccounts-fromDate");
-        if(retrievedObject!=null){
-            var gLAccounts_FromDate=JSON.parse(retrievedObject);
+        if (retrievedObject != null) {
+            var gLAccounts_FromDate = JSON.parse(retrievedObject);
 
-           var gLAccountFromDate =gLAccounts_FromDate.find(obj=> {
-            return obj.Id ===  "GLAccount-"+this.EntityPM.Id;
-           });
+            var gLAccountFromDate = gLAccounts_FromDate.find(obj => {
+                return obj.Id === "GLAccount-" + this.EntityPM.Id;
+            });
             return gLAccountFromDate;
         }
-            return null
+        return null
     }
 
     LoadDefaultValues() {
@@ -297,36 +337,33 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             //    //this.GetTransactions();
             //    //this.GetLTB();
             //}
-            if(this.isFullAccounting && this.oldFromDate != null &&this.fromDate!=null){
-                    var  _fromDate =  [this.fromDate.getFullYear().toString(), this.FromDate.getMonth(), this.FromDate.getDate()].join(";");
-                    this.AddFromDateInLocalStorage( this.EntityPM.Id , this.fromDate);   
+            if (this.isFullAccounting && this.oldFromDate != null && this.fromDate != null) {
+                var _fromDate = [this.fromDate.getFullYear().toString(), this.FromDate.getMonth(), this.FromDate.getDate()].join(";");
+                this.AddFromDateInLocalStorage(this.EntityPM.Id, this.fromDate);
             }
             if (!this.isValidate)
-               this.validateDates();
+                this.validateDates();
             else {
                 this.isValidate = false;
             }
         }
     }
 
-    AddFromDateInLocalStorage(Id ,fromDate){ 
-        let indexToUpdate = this.GLAccountsFromDateInLocalStorage.findIndex(item => item.Id == "GLAccount-"+Id );
-        if(indexToUpdate != -1)
-          this.GLAccountsFromDateInLocalStorage[indexToUpdate].fromDate= fromDate;
-        else
-        {
-            var today=new Date();
-            var gLAccount_fromDate ={ Id : "GLAccount-"+Id , fromDate : fromDate , creatDate : today };
+    AddFromDateInLocalStorage(Id, fromDate) {
+        let indexToUpdate = this.GLAccountsFromDateInLocalStorage.findIndex(item => item.Id == "GLAccount-" + Id);
+        if (indexToUpdate != -1)
+            this.GLAccountsFromDateInLocalStorage[indexToUpdate].fromDate = fromDate;
+        else {
+            var today = new Date();
+            var gLAccount_fromDate = { Id: "GLAccount-" + Id, fromDate: fromDate, creatDate: today };
             this.GLAccountsFromDateInLocalStorage.push(gLAccount_fromDate);
         }
-        try
-        {
-            localStorage.setItem( "GLAccounts-fromDate" , JSON.stringify(this.GLAccountsFromDateInLocalStorage) );
+        try {
+            localStorage.setItem("GLAccounts-fromDate", JSON.stringify(this.GLAccountsFromDateInLocalStorage));
         }
-        catch(e)
-        {
+        catch (e) {
             console.log(e.toString());
-            
+
         }
     }
 
@@ -361,7 +398,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         if (this.fromDate2 != value) {
             this.fromDate2 = value;
             if (!this.isValidate)
-               this.validateAdditionalDates();
+                this.validateAdditionalDates();
             else {
                 this.isValidate = false;
             }
@@ -449,7 +486,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     public QueryColumns: QueryColumnPM[] = [];
     BuildColumns() {
         this.columns = [];
-                this.columns.push({
+        this.columns.push({
             FieldName: 'GLAccountIndicator',
             DataTypeCode: 'text',
             Display: '',
@@ -469,7 +506,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("AccountingDate",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.AccountingDate")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("AccountingDate", 'DateTime', TextCodeTranslator.Translate("LedgerTransaction.F.AccountingDate")));
 
         this.columns.push({
             FieldName: 'DocumentDate',
@@ -480,7 +517,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("DocumentDate",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("DocumentDate", 'DateTime', TextCodeTranslator.Translate("LedgerTransaction.F.DocumentDate")));
 
         this.columns.push({
             FieldName: 'DueDate',
@@ -491,7 +528,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("DueDate",'DateTime',TextCodeTranslator.Translate("LedgerTransaction.F.DueDate")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("DueDate", 'DateTime', TextCodeTranslator.Translate("LedgerTransaction.F.DueDate")));
 
         this.columns.push({
             FieldName: 'Source',
@@ -502,7 +539,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Source",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Source")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Source", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.Source")));
 
         this.columns.push({
             FieldName: 'LocalAmountCredit',
@@ -513,7 +550,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CalculatedLocalAmount",'Decimal',TextCodeTranslator.Translate("LedgerTransaction.O.LocalAmount")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CalculatedLocalAmount", 'Decimal', TextCodeTranslator.Translate("LedgerTransaction.O.LocalAmount")));
 
         this.columns.push({
             FieldName: 'CumulativeLocalAmount',
@@ -524,7 +561,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CumulativeLocalAmount",'Decimal',TextCodeTranslator.Translate("LedgerTransaction.F.CumulativeLocalAmount")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CumulativeLocalAmount", 'Decimal', TextCodeTranslator.Translate("LedgerTransaction.F.CumulativeLocalAmount")));
 
         //this.columns.push({
         //    FieldName: 'CurrencyCode',
@@ -543,8 +580,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                 IsCustomTemplate: true
             });
-            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CalculatedForeignAmount",'Decimal',TextCodeTranslator.Translate("LedgerTransaction.O.ForeignAmount")));
-            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CurrencySign",'Text',TextCodeTranslator.Translate("LedgerTransaction.O.Currency"))); 
+            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CalculatedForeignAmount", 'Decimal', TextCodeTranslator.Translate("LedgerTransaction.O.ForeignAmount")));
+            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CurrencySign", 'Text', TextCodeTranslator.Translate("LedgerTransaction.O.Currency")));
 
 
             if (this.EntityPM.IsMultiCurrency != true) {
@@ -557,7 +594,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                     IsCustomTemplate: true
                 });
-                this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CumulativeForeignAmountSign",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.CumulativeForeignAmount")));
+                this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("CumulativeForeignAmountSign", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.CumulativeForeignAmount")));
 
             }
         }
@@ -568,7 +605,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             Styles: { width: '90px' },
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference1",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Reference1")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference1", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.Reference1")));
 
         this.columns.push({
             FieldName: 'Reference2',
@@ -577,7 +614,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             Styles: { width: '90px' },
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference2",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Reference2")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference2", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.Reference2")));
 
         this.columns.push({
             FieldName: 'Reference3',
@@ -586,9 +623,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             Styles: { width: '90px' },
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference3",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Reference3")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Reference3", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.Reference3")));
         
         this.columns.push({
+
             FieldName: this.CheckOppositeAccountIsActive(),
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("LedgerTransaction.F.OppositeAccountLocalName"),
@@ -597,7 +635,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OppositeAccountLocalName",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.OppositeAccountLocalName")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("OppositeAccountLocalName", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.OppositeAccountLocalName")));
 
         this.columns.push({
             FieldName: 'JournalNumber',
@@ -608,7 +646,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("JournalNumber",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.JournalNumber")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("JournalNumber", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.JournalNumber")));
 
         this.columns.push({
             FieldName: 'AccountDisplayNumber',
@@ -621,7 +659,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("AccountDisplayNumber", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.AccountDisplayNumber")));
 
-        if(this.isVatInputOrOutput) {
+        if (this.isVatInputOrOutput) {
             this.columns.push({
                 FieldName: 'TaxReportId',
                 DataTypeCode: 'text',
@@ -631,8 +669,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
                 IsCustomTemplate: true,
             });
-            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TaxReportId",'Text',TextCodeTranslator.Translate("TaxReport.Q.ALLTAXREPORTS")));
-        }            
+            this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("TaxReportId", 'Text', TextCodeTranslator.Translate("TaxReport.Q.ALLTAXREPORTS")));
+        }
 
         this.columns.push({
             FieldName: 'Notes',
@@ -643,18 +681,18 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsListTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes",'Text',TextCodeTranslator.Translate("LedgerTransaction.F.Notes")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes", 'Text', TextCodeTranslator.Translate("LedgerTransaction.F.Notes")));
 
         this.columns.push({
             FieldName: 'InternalNote',
             DataTypeCode: 'String',
-            Display: TextCodeTranslator.Translate("LedgerTransaction.F.InternalNote"), 
+            Display: TextCodeTranslator.Translate("LedgerTransaction.F.InternalNote"),
             Styles: { width: '200px' },
             HtmlListComponentName: 'GlAccountLedgerTransactionsInternalNotesTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountLedgerTransactionsInternalNotesTemplate',
             IsCustomTemplate: true
         });
-        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNote",'Text',TextCodeTranslator.Translate("ARInvoice.F.InternalNotes")));
+        this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNote", 'Text', TextCodeTranslator.Translate("ARInvoice.F.InternalNotes")));
 
 
         //this.CustomColumnsReady.emit(this.columns);
@@ -673,12 +711,12 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     @Output() MenuHeaderchangeevent = new EventEmitter();
 
-    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string,filters:ApiQueryFilters=null) {
+    getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
         this.filterAgrs = new ApiQueryFilters();
 
         if (this.dateFilter) {
             this.filterAgrs.AdditionalFilters.push(this.dateFilter);
-         } else {
+        } else {
             return new Promise((resolve, reject) => { });
         }
         if (this.currencyFilter) {
@@ -689,17 +727,24 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             this.filterAgrs.AdditionalFilters.push(this.searchFieldFilter);
 
         }
+
+        if (this.amountLocalFieldFilter) {
+            this.filterAgrs.AdditionalFilters.push(this.amountLocalFieldFilter);
+        }
+        if (this.amountForeignFieldFilter) {
+            this.filterAgrs.AdditionalFilters.push(this.amountForeignFieldFilter);
+        }
         if (this._dateTypeCode) {
-            let dummyFilter =  new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
+            let dummyFilter = new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
             this.filterAgrs.AdditionalFilters.push(dummyFilter);
-        }else{
+        } else {
             var msg = new MessageWindow();
             msg.Show("No filter selected!!!!");
             return;
         }
 
         if (this.date2TypeCode && this.FromDate2 && this.ToDate2) {
-            let dummyFilter =  new FilterItem("Date2TypeCode", this.date2TypeCode, null, null, "Equals", false, false, false, "string", false);
+            let dummyFilter = new FilterItem("Date2TypeCode", this.date2TypeCode, null, null, "Equals", false, false, false, "string", false);
             this.filterAgrs.AdditionalFilters.push(this.dateFilter2);
             this.filterAgrs.AdditionalFilters.push(dummyFilter);
         }
@@ -724,19 +769,19 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.filterAgrs.addAdditionalFilter("IncludeChildAccounts", this.attachedGLAccountCheckBox == null ? false : this.attachedGLAccountCheckBox, null, null, "Equals", false, false, false, "boolean");
         this.filterAgrs.addAdditionalFilter("NotIncludedInAnyTaxReport", this.notIncludedInAnyTaxReport == null ? false : this.notIncludedInAnyTaxReport, null, null, "Equals", false, false, false, "boolean");
 
-        this.filterAgrs.addAdditionalFilter("UseTaxreportFilter", this.UseTaxreportFilter , null, null, "Equals", false, false, false, "boolean");
+        this.filterAgrs.addAdditionalFilter("UseTaxreportFilter", this.UseTaxreportFilter, null, null, "Equals", false, false, false, "boolean");
 
         return this._entityListService.getExtendedByFilters("LedgerTransaction", this.filterAgrs);//this.ledgerTransactionListExtendedService.getByFilters(filters);
     }
 
 
 
-    public ExportToExcelClick(){
-       // this._entityResourceService.getEntityResourceByTableName("LedgerTransaction", 0).subscribe((response: any) => {
-        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("GLAccountLedgerTransaction",this.filterAgrs,this.QueryColumns,"SaveToMicrosoftExcel2007",true);
-      //  });
+    public ExportToExcelClick() {
+        // this._entityResourceService.getEntityResourceByTableName("LedgerTransaction", 0).subscribe((response: any) => {
+        this.LogitudeGridExportToExcelComponent.ExportToExcelExcute("GLAccountLedgerTransaction", this.filterAgrs, this.QueryColumns, "SaveToMicrosoftExcel2007", true);
+        //  });
     }
- 
+
     GetTransactions() {
         var filters = new ApiQueryFilters;
         if (this.dateFilter) {
@@ -747,7 +792,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
         filters.PageSize = 10000;
         filters.addAdditionalFilter("AccountId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
-        this.ledgerTransactionListService.getByFilters(filters).subscribe((myResult:any) => {
+        this.ledgerTransactionListService.getByFilters(filters).subscribe((myResult: any) => {
             console.log("Response: ", myResult);
             if (myResult == null) {
                 this.ItemsSource = [];
@@ -762,7 +807,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
                     // check if transactions is multi currency
                     this.isSingleCurrency = true;
-                    for (var i = 0; i < this.ItemsSource.length -1 ; i++) {
+                    for (var i = 0; i < this.ItemsSource.length - 1; i++) {
                         if (this.ItemsSource[i].CurrencyId != this.ItemsSource[i + 1].CurrencyId)
                             this.isSingleCurrency = false;
                     }
@@ -786,14 +831,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     }
 
     GetLTB() {
-
         // Filters
         var filters = new ApiQueryFilters;
         if (this.dateFilter) {
             filters.AdditionalFilters.push(this.dateFilter);
         } else {
             return;
-        }
+        } 
         if (this.currencyFilter) {
             filters.AdditionalFilters.push(this.currencyFilter);
         }
@@ -801,13 +845,21 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
         if (this._dateTypeCode) {
-            let dummyFilter =  new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
+            let dummyFilter = new FilterItem("DateTypeCode", this._dateTypeCode, null, null, "Equals", false, false, false, "string", false);
             filters.AdditionalFilters.push(dummyFilter);
         }
         if (this.date2TypeCode && this.FromDate2 && this.ToDate2) {
-            let dummyFilter =  new FilterItem("Date2TypeCode", this.date2TypeCode, null, null, "Equals", false, false, false, "string", false);
+            let dummyFilter = new FilterItem("Date2TypeCode", this.date2TypeCode, null, null, "Equals", false, false, false, "string", false);
             filters.AdditionalFilters.push(this.dateFilter2);
             filters.AdditionalFilters.push(dummyFilter);
+        }
+
+
+        if (this.amountLocalFieldFilter) {
+            filters.AdditionalFilters.push(this.amountLocalFieldFilter);
+        }
+        if (this.amountForeignFieldFilter) {
+            filters.AdditionalFilters.push(this.amountForeignFieldFilter);
         }
         filters.PageSize = 30;
         filters.GetAll = false;
@@ -822,34 +874,34 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.MenuHeaderchangeevent.emit({ Filters: filters, IgnoreFilter: false });
 
         this.ledgerTransactionListExtendedService.getBalanceByFilters(filters).subscribe((myResponse: ServiceResponse) => {
-                        //console.log("Response: ", myResult);
-                        //if (myResult == null) {
-                        //}
-                        //else {
-                             if (!myResponse.HasError) {
-                                 this.LTBSummery = myResponse.Result;
-                                // if (this.EntityPM.IsMultiCurrency) {
-                                    var text = " &nbsp;";
+            //console.log("Response: ", myResult);
+            //if (myResult == null) {
+            //}
+            //else {
+            if (!myResponse.HasError) {
+                this.LTBSummery = myResponse.Result;
+                // if (this.EntityPM.IsMultiCurrency) {
+                var text = " &nbsp;";
 
-                                    for (let item of this.LTBSummery.EndBalanceForeignList) {
-                                        item.CurrencyCode = this.GetCurrencyCode(item.CurrencyId);
-                                        item.CurrencySign = this.GetCurrencySign(item.CurrencyId);
-                                    }
+                for (let item of this.LTBSummery.EndBalanceForeignList) {
+                    item.CurrencyCode = this.GetCurrencyCode(item.CurrencyId);
+                    item.CurrencySign = this.GetCurrencySign(item.CurrencyId);
+                }
 
-                                    for (let item of this.LTBSummery.StartBalanceForeignList) {
-                                        item.CurrencyCode = this.GetCurrencyCode(item.CurrencyId);
-                                        item.CurrencySign = this.GetCurrencySign(item.CurrencyId);
+                for (let item of this.LTBSummery.StartBalanceForeignList) {
+                    item.CurrencyCode = this.GetCurrencyCode(item.CurrencyId);
+                    item.CurrencySign = this.GetCurrencySign(item.CurrencyId);
 
-                                        //text += item.CurrencyCode + ' ' + item.BalanceForeign + ' ' + item.CurrencyCode + '<br>';
-                                    }
+                    //text += item.CurrencyCode + ' ' + item.BalanceForeign + ' ' + item.CurrencyCode + '<br>';
+                }
 
-                                    this.OpenAmountHint = text;
-                                // }
+                this.OpenAmountHint = text;
+                // }
 
-                                console.log("Result: ", myResponse.Result);
-                            }
-                        //}
-                    });
+                console.log("Result: ", myResponse.Result);
+            }
+            //}
+        });
 
     }
 
@@ -876,27 +928,26 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     }
 
-    GetTransactionsCurrencies(){
+    GetTransactionsCurrencies() {
         this.CurrentSession.StartBusyIndicatorLoading();
         this._LedgerTransactionExtendedListService.GetTransactionsCurrencies(this.EntityPM.Id, this.SplittedByCurrencyCheckBox, this.AttachedGLAccountCheckBox)
-            .subscribe((serviceResponse: ServiceResponse) =>
-        {
-            if (serviceResponse.Result) {
-                var result = serviceResponse.Result;
-                console.log("[GetTransactionsCurrencies]", result);
-                var currenciesIds: string[] = result;
+            .subscribe((serviceResponse: ServiceResponse) => {
+                if (serviceResponse.Result) {
+                    var result = serviceResponse.Result;
+                    console.log("[GetTransactionsCurrencies]", result);
+                    var currenciesIds: string[] = result;
 
-                this.CurrencyFilters = new ApiQueryFilters();
-                this.CurrencyFilters.addAdditionalFilter("Id", currenciesIds.join(','), null, null, "InListExact", false, false, false, "string", false, true);
+                    this.CurrencyFilters = new ApiQueryFilters();
+                    this.CurrencyFilters.addAdditionalFilter("Id", currenciesIds.join(','), null, null, "InListExact", false, false, false, "string", false, true);
 
-                this.CurrentSession.StopBusyIndicator();
-            }
-        });
+                    this.CurrentSession.StopBusyIndicator();
+                }
+            });
     }
 
     reconciliationCount: number = 0;
     GetNonReconciledTransactionsCount() {
-        this.glAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe((myResult:number) => {
+        this.glAccountExtendedListService.GetAccountReconcilesCount(this.EntityPM.Id).subscribe((myResult: number) => {
             this.reconciliationCount = 0;
 
             if (!AppTool.IsNullOrEmpty(myResult)) {
@@ -913,7 +964,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         });
     }
 
- 
+
     CheckOppositeAccountIsActive(): string {        
         return this.fullAccountingSetting.OppositeAccountNumber ? 'OppositeAccountDisplayNumber':'OppositeAccountLocalName';
     }
@@ -925,9 +976,9 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 result = this.TenantCurrencySign;
             }
             else {
-                if(SessionLocator.TenantPM.CurrencyId == this.EntityPM.CurrencyId)
+                if (SessionLocator.TenantPM.CurrencyId == this.EntityPM.CurrencyId)
                     result = this.TenantCurrencySign;
-                else if(this.LTBSummery.StartBalanceForeignList?.length > 0)
+                else if (this.LTBSummery.StartBalanceForeignList?.length > 0)
                     result = this.EntityPM.CurrencySign;
             }
         }
@@ -935,17 +986,16 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     }
     GetOpenBalanceAmount() {
         var result = 0;
-        if (this.EntityPM && this.LTBSummery)
-        {
+        if (this.EntityPM && this.LTBSummery) {
             if (this.EntityPM.IsMultiCurrency) {
-                if(this.LTBSummery.StartBalanceLocal)
+                if (this.LTBSummery.StartBalanceLocal)
                     result = Number(this.LTBSummery.StartBalanceLocal);
             }
             else {
-                if(SessionLocator.TenantPM.CurrencyId == this.EntityPM.CurrencyId){
+                if (SessionLocator.TenantPM.CurrencyId == this.EntityPM.CurrencyId) {
                     result = Number(this.LTBSummery.StartBalanceLocal);
                 }
-                else if(this.LTBSummery.StartBalanceForeignList?.length > 0)
+                else if (this.LTBSummery.StartBalanceForeignList?.length > 0)
                     result = Number(this.LTBSummery.StartBalanceForeignList[0].BalanceForeign);
             }
 
@@ -963,9 +1013,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     oldFromDate: Date;
     isValidate: boolean = false;
     validateDates() {
-        
+        if (this.FromDate != null) {
+            this.FromDate.setUTCHours(0, 0, 0, 0);
+        }
+        if (this.toDate != null) {
+            this.toDate.setUTCHours(0, 0, 0, 0);
+        }
         if (this.FromDate > this.ToDate && !AppTool.IsNullOrEmpty(this.toDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
-
             this.timerToken = setTimeout(() => {
                 this.UIProperties.SetValidity("ToDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateGreater"));
                 this.UIProperties.SetValidity("FromDate", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
@@ -996,18 +1050,21 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
     }
     validateAdditionalDates() {
+        if (this.FromDate2 != null) {
+            this.FromDate2.setUTCHours(0, 0, 0, 0);
+        }
+        if (this.ToDate2 != null) {
+            this.ToDate2.setUTCHours(0, 0, 0, 0);
+        }
         if (this.FromDate2 > this.ToDate2) {
-
-            this.timerToken = setTimeout(() =>
-            {
+            this.timerToken = setTimeout(() => {
                 this.UIProperties.SetValidity("ToDate2", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.ToDateGreater"));
                 this.UIProperties.SetValidity("FromDate2", this.ObjectTableName, false, TextCodeTranslator.Translate("Accounting.General.O.FromDateMustSmallerToDate"));
                 this.CD.detectChanges();
             }, 200);
 
         } else {
-            this.timerToken = setTimeout(() =>
-            {
+            this.timerToken = setTimeout(() => {
                 this.UIProperties.SetValidity("ToDate2", this.ObjectTableName, true, "");
                 this.UIProperties.SetValidity("FromDate2", this.ObjectTableName, true, "");
                 this.CD.detectChanges();
@@ -1020,14 +1077,15 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     //load data after validate date
     LoadData() {
+
         if (!AppTool.IsNullOrEmpty(this.ToDate) && !AppTool.IsNullOrEmpty(this.FromDate)) {
 
-            var _fromDate =  [this.fromDate.getFullYear().toString(), this.FromDate.getMonth(), this.FromDate.getDate()].join(";");
-            var _toDate =  [this.toDate.getFullYear().toString(), this.toDate.getMonth(), this.toDate.getDate()].join(";");
+            var _fromDate = [this.fromDate.getFullYear().toString(), this.FromDate.getMonth(), this.FromDate.getDate()].join(";");
+            var _toDate = [this.toDate.getFullYear().toString(), this.toDate.getMonth(), this.toDate.getDate()].join(";");
             this.dateFilter = new FilterItem("AccountingDate", _fromDate, _toDate, null, "Between", false, false, false, "Date", false);
-            if(this.fromDate2 && this.toDate2){
-                let _fromDate2 =  [this.fromDate2.getFullYear().toString(), this.FromDate2.getMonth(), this.FromDate2.getDate()].join(";");
-                let _toDate2 =  [this.toDate2.getFullYear().toString(), this.toDate2.getMonth(), this.toDate2.getDate()].join(";");
+            if (this.fromDate2 && this.toDate2) {
+                let _fromDate2 = [this.fromDate2.getFullYear().toString(), this.FromDate2.getMonth(), this.FromDate2.getDate()].join(";");
+                let _toDate2 = [this.toDate2.getFullYear().toString(), this.toDate2.getMonth(), this.toDate2.getDate()].join(";");
                 this.dateFilter2 = new FilterItem("Date2Filter", _fromDate2, _toDate2, null, "Between", false, false, false, "Date", false);
             }
 
@@ -1036,7 +1094,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
 
     }
-    
+
     //#endregion
 
     //#region Buttons + CheckBox Handlers
@@ -1052,8 +1110,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
                 // original amount currency
                 var originalAmountCurrency;
-                if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
-                else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
+                if (this.reconcileEventManager.GLAccountReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
+                else if (this.reconcileEventManager.GLAccountReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
 
 
                 var windowArgs: any = {};
@@ -1083,14 +1141,13 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     RefreshButtonClicked() {
         this.LoadAllScreenData();
-        if(this.EntityPM.IsMultiCurrency) {
+        if (this.EntityPM.IsMultiCurrency) {
             this.GetTransactionsCurrencies();
         }
         //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
     }
 
     LoadAllScreenData() {
-        if (this._dateTypeCode !="4")
         this.GetLTB();
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
         this.GetNonReconciledTransactionsCount();
@@ -1139,38 +1196,38 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
     OnMouseOver() {
         this.isMouseIn = true;
         //if (this.currencyRate) {
-            this.timerToken = setTimeout(() => {
-                var item = document.getElementById("tooltip-1");
-                if (AppTool.IsNullOrEmpty(item))
+        this.timerToken = setTimeout(() => {
+            var item = document.getElementById("tooltip-1");
+            if (AppTool.IsNullOrEmpty(item))
+                return;
+            var itemRect = item.getBoundingClientRect();
+
+            if (this.isMouseIn) {
+                var i = document.getElementById("tooltip-body-1");
+                if (AppTool.IsNullOrEmpty(i))
                     return;
-                var itemRect = item.getBoundingClientRect();
+                document.getElementById("tooltip-body-1").style.position = "fixed";
+                document.getElementById("tooltip-body-1").style.top = (itemRect.top - 70) + 'px';
+                document.getElementById("tooltip-body-1").style.left = (itemRect.left + 22) + 'px';
+                document.getElementById("tooltip-body-1").style.visibility = "visible";
 
-                if (this.isMouseIn) {
-                    var i = document.getElementById("tooltip-body-1");
-                    if (AppTool.IsNullOrEmpty(i))
-                        return;
-                    document.getElementById("tooltip-body-1").style.position = "fixed";
-                    document.getElementById("tooltip-body-1").style.top = (itemRect.top - 70) + 'px';
-                    document.getElementById("tooltip-body-1").style.left = (itemRect.left + 22) + 'px';
-                    document.getElementById("tooltip-body-1").style.visibility = "visible";
+                //this.timerToken = setTimeout(() => {
+                //    document.getElementById("tooltip-body-1").style.visibility = "hidden";
 
-                    //this.timerToken = setTimeout(() => {
-                    //    document.getElementById("tooltip-body-1").style.visibility = "hidden";
+                //}, 15000);
+            }
 
-                    //}, 15000);
-                }
-
-            }, 100);
+        }, 100);
         //}
     }
     OnMouseLeave() {
         this.isMouseIn = false;
         //if (this.currencyRate) {
 
-            this.timerToken = setTimeout(() => {
-                document.getElementById("tooltip-body-1").style.visibility = "hidden";
+        this.timerToken = setTimeout(() => {
+            document.getElementById("tooltip-body-1").style.visibility = "hidden";
 
-            }, 400);
+        }, 400);
 
         //}
 
@@ -1234,7 +1291,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         this.TenantCurrency = SessionLocator.TenantPM.CurrencyCode;
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
 
-        this._CurrencyListService.getAll().subscribe((myResult:any) => {
+        this._CurrencyListService.getAll().subscribe((myResult: any) => {
             console.log("Currencies: ", myResult);
             if (myResult == null) {
                 this.Currencies = [];
@@ -1263,11 +1320,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         return AppTool.IsNullOrEmpty(c) ? null : c.Sign;
     }
 
-    CalculateLocalAmount(foreignCurrencyId: string,foreignAmount: number) {
+    CalculateLocalAmount(foreignCurrencyId: string, foreignAmount: number) {
         if (!AppTool.IsNullOrEmpty(foreignAmount) || !AppTool.IsNullOrEmpty(this.ratesTable)) {
 
-            if (foreignCurrencyId)
-            {
+            if (foreignCurrencyId) {
                 var rate = this.ratesTable.find(d => d.ForeignCurrencyId == foreignCurrencyId);
                 if (rate)
                     return rate.Rate * foreignAmount;
@@ -1276,8 +1332,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                     return 0;
                 }
             }
-            else
-            {
+            else {
                 console.error("Cannot convert foreign amount to local amount, foreign Currency Id does not provided! ", foreignCurrencyId);
                 return 0;
             }
@@ -1300,13 +1355,11 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
     }
     FilterLines() {
-
         //Task 46666: Transaction Tab - date filter new design
         // <DateTypeCode>2</DateTypeCode> 1/2/3
         // Accounting- - code 1- חשבונםי
         // Due - code 2 - לגביה
         // Reference -code-3-  םסמכתם
-
         switch (this.filterSelectedValue) {
             case 'filter_accounting':
                 this._dateTypeCode = '1';
@@ -1328,12 +1381,10 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
                 break;
         }
 
-        if (this.date2TypeCode != '4' && this._dateTypeCode != '4') {
+        if (this._dateTypeCode != '4') {
             this.UseTaxreportFilter = false;
-             this.RefreshButtonClicked();
-         }
-
-
+            this.RefreshButtonClicked();
+        }
     }
     ResetLTBFields() {
         if (this.LTBSummery) {
@@ -1358,13 +1409,11 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         }
     }
     Date2FilterLines() {
-
         //Task 46666: Transaction Tab - date filter new design
         // <DateTypeCode>2</DateTypeCode> 1/2/3
         // Accounting- - code 1- חשבונםי
         // Due - code 2 - לגביה
         // Reference -code-3-  םסמכתם
-
         switch (this.filterSelectedValue2) {
             case 'filter_accounting':
                 this.date2TypeCode = '1';
@@ -1375,28 +1424,141 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
             case 'filter_reference':
                 this.date2TypeCode = '3';
                 break;
-            case 'filter_Tax':
-                this.date2TypeCode = '4';
-                this.UseTaxreportFilter = true;
-                this.ResetLTBFields();
-                this.NotIncludedInAnyTaxReport = true;
-                break;
             default:
                 break;
         }
-        if (this.date2TypeCode != '4' && this._dateTypeCode != '4') {
-           this.UseTaxreportFilter = false;
-            this.RefreshButtonClicked();
-        }
-
-
+        this.RefreshButtonClicked();
     }
-    ResetAdditionalDateFilter(){
+
+    ResetAdditionalDateFilter() {
         this.FromDate2 = null;
         this.ToDate2 = null;
         this.RefreshButtonClicked();
         this.ShowSecondDateFilter = false;
 
+    }
+    //#endregion
+
+    //#region IsLocalAmount
+    AmountLocalOperatorChanged($event) {
+        this.selectedAmountLocalOperator = $event
+        this.AmountLocalTextChanged(this.AmountLocal);
+    }
+    AmountLocalTextChanged(num) {
+        this.amountLocal = num;
+        if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amountLocal) && this.selectedAmountLocalOperator) {
+            var amountFieldName = 'IsLocalAmount';
+            this.timerToken = setTimeout(() => {
+                if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amountLocal)) {
+                    this.amountLocalFieldFilter = new FilterItem(amountFieldName, num, null, null, this.selectedAmountLocalOperator.Code, true, false, false, "number", false);
+                    this.RefreshButtonClicked();
+                } else {
+                    this.amountLocalFieldFilter = null;
+                    this.RefreshButtonClicked();
+                }
+            }, 700);
+
+        }
+        else {
+            this.timerToken = setTimeout(() => {
+                this.amountLocalFieldFilter = null;
+                this.RefreshButtonClicked();
+            }, 700);
+
+        }
+    }
+    AmountLocalTextToChanged(num) {
+        this.amountLocalTo = num;
+        this.filterByAmountLocalFromAndTo();
+    }
+    AmountLocalTextFromChanged(num) {
+        this.amountLocalFrom = num;
+        this.filterByAmountLocalFromAndTo();
+    }
+
+    private filterByAmountLocalFromAndTo() {
+        if (!AppTool.IsNullOrEmpty(this.amountLocalFrom) && !AppTool.IsNullOrEmpty(this.amountLocalTo) && this.selectedAmountLocalOperator) {
+            var amountFieldName = 'IsLocalAmount';
+            this.timerToken = setTimeout(() => {
+                if (!AppTool.IsNullOrEmpty(this.amountLocalFrom) && !AppTool.IsNullOrEmpty(this.amountLocalTo)) {
+                    this.amountLocalFieldFilter = new FilterItem(amountFieldName, this.amountLocalFrom, this.amountLocalTo, null, this.selectedAmountLocalOperator.Code, true, false, false, "number", false);
+                    this.RefreshButtonClicked();
+                } else {
+                    this.amountLocalFieldFilter = null;
+                    this.RefreshButtonClicked();
+                }
+            }, 700);
+
+        }
+        else {
+            this.timerToken = setTimeout(() => {
+                this.amountLocalFieldFilter = null;
+                this.RefreshButtonClicked();
+            }, 700);
+
+        }
+    }
+    //#endregion
+
+    //#region IsForeignAmount
+    AmountForeignOperatorChanged($event) {
+        this.selectedAmountForeignOperator = $event
+        this.AmountForeignTextChanged(this.AmountForeign);
+    }
+    AmountForeignTextChanged(num) {
+        this.amountForeign = num;
+        if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amountForeign) && this.selectedAmountForeignOperator) {
+            var amountFieldName = 'IsForeignAmount';
+            this.timerToken = setTimeout(() => {
+                if (!AppTool.IsNullOrEmpty(num) && !AppTool.IsNullOrEmpty(this.amountForeign)) {
+                    this.amountForeignFieldFilter = new FilterItem(amountFieldName, num, null, null, this.selectedAmountForeignOperator.Code, true, false, false, "number", false);
+
+                    this.RefreshButtonClicked();
+                } else {
+                    this.amountForeignFieldFilter = null;
+                    this.RefreshButtonClicked();
+                }
+            }, 700);
+
+        }
+        else {
+            this.timerToken = setTimeout(() => {
+                this.amountForeignFieldFilter = null;
+                this.RefreshButtonClicked();
+            }, 700);
+
+        }
+    }
+    AmountForeignTextToChanged(num) {
+        this.amountForeignTo = num;
+        this.filterByAmountForeignFromAndTo();
+    }
+    AmountForeignTextFromChanged(num) {
+        this.amountForeignFrom = num;
+        this.filterByAmountForeignFromAndTo();
+    }
+
+    private filterByAmountForeignFromAndTo() {
+        if (!AppTool.IsNullOrEmpty(this.amountForeignFrom) && !AppTool.IsNullOrEmpty(this.amountForeignTo) && this.selectedAmountForeignOperator) {
+            var amountFieldName = 'IsForeignAmount';
+            this.timerToken = setTimeout(() => {
+                if (!AppTool.IsNullOrEmpty(this.amountForeignFrom) && !AppTool.IsNullOrEmpty(this.amountForeignTo)) {
+                    this.amountForeignFieldFilter = new FilterItem(amountFieldName, this.amountForeignFrom, this.amountForeignTo, null, this.selectedAmountForeignOperator.Code, true, false, false, "number", false);
+                    this.RefreshButtonClicked();
+                } else {
+                    this.amountForeignFieldFilter = null;
+                    this.RefreshButtonClicked();
+                }
+            }, 700);
+
+        }
+        else {
+            this.timerToken = setTimeout(() => {
+                this.amountForeignFieldFilter = null;
+                this.RefreshButtonClicked();
+            }, 700);
+
+        }
     }
     //#endregion
 

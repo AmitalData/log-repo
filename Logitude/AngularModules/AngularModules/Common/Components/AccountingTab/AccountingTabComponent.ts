@@ -15,8 +15,10 @@ import { AccountingEventManager } from 'Accounting/Utilities/AccountingEventMana
     <div class="TabHolder">
         <table>
             <tr class="TabTitleRow">
-                <td>{{TabTitleTextCode | TextCodeTranslationPipe}}
-                ({{AccountInfo}})</td> 
+                 <td>{{TabTitleTextCode | TextCodeTranslationPipe}}
+                     ({{AccountInfo}})
+               </td>
+
             </tr>
 
             <tr>
@@ -61,11 +63,15 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
 
                                         this.LoadComponent();
                                     });
+
                                 });
+
                             });
+
                         });
                     });
                 });
+
             });
         });
 
@@ -145,20 +151,6 @@ export class AccountingTabComponent implements OnInit, AfterViewInit {
         }
         this.GetAccountInfo();     
 
-var myService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
-//myService.GetByGLAccountsDisplayNumber(this.EntityPM.gLAccountNumber, this.EntityPM.tenant).subscribe((myResponse: ServiceResponse) => {
-//    if (!myResponse.HasError && myResponse != null) {
-//        var result = myResponse.Result;
-//        if (result != null) {
-//            if (result.CurrencySign != null ){
-//            this.AccountInfo = result.LocalName + ',' + result.DisplayNumber + ',' + result.CurrencySign;
-//            }
-//            else{
-//                this.AccountInfo = result.LocalName + ',' + result.DisplayNumber;
-//            }
-//        }
-//    }
-//});
 
     }
     private GetAccountInfo(){
@@ -178,6 +170,8 @@ var myService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
                 }
             });
         }
+
+
 
     }
     private LoadCompletedEvent: any = null;

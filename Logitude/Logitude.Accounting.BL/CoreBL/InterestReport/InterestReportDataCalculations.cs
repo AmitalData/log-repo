@@ -177,15 +177,14 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
             SubmitInterestReportLinesByDate(interestReportLinesByDatePMs);
             SubmitChangesToInterestReport();
         }
-        private void validateInterestReportClosingBalance(List<InterestReportLinesByDatePM> interestReportLinesByDatePMs)
-        {
+       
+        private void validateInterestReportClosingBalance(List<InterestReportLinesByDatePM> interestReportLinesByDatePMs) {
             var totalInterestTransactionsLocalAmount = interestTransactionPMs.Sum(x => x.LocalAmount);
             var interestReportLinesByDateTotalLocalAmount = interestReportLinesByDatePMs.Sum(x => x.TotalAmount);
-
+            
             var totalInterestTransactionsLocalAmountWithOpenBalance = interestReportPM.OpenBalance + totalInterestTransactionsLocalAmount;
             var interestReportLinesByDateTotalLocalAmountWithOpenBalance = interestReportPM.OpenBalance + interestReportLinesByDateTotalLocalAmount;
-            if (interestReportPM.CloseBalance == null)
-            {
+            if (interestReportPM.CloseBalance == null) {
                 return;
             }
 
@@ -203,6 +202,7 @@ namespace Logitude.Accounting.BL.CoreBL.InterestReport
                 throw new ApplicationException(message);
             }
         }
+
         private void SetGLAccountCreditAllotmentPercentageByGLAccountId(InterestReportPM interestReportPM)
         {
             GLAccountQueryService gLAccountQueryService = new GLAccountQueryService(interestReportPM.Tenant);

@@ -27,7 +27,7 @@ import { filter } from 'rxjs/operators';
     //directives: [CORE_DIRECTIVES, ObjectFieldTemplate, ListHeaderTemplateComponent, ListTemplateComponent],
     providers: [PubSubService1],
     //pipes: [TextCodeTranslationPipe],
-    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'NoDataTextCode', 'CheckboxProp', 'ChangeCheckBoxesState','FilterChangedEvent'],
+    inputs: ['columns', 'rowCount', 'dataSource', 'searchFields', 'queryId', 'queryCode', 'QueryChangeEvent', 'Filterchangeevent', 'pubSubAdvanceQueryFiltersServiceRecived', 'autoLoad', 'SearchFieldchangeevent', 'MenuHeaderchangeevent', 'SelectedRow', 'ObjectTable', 'ColumnsReady', 'IsCustomTemplate', 'CustomColumnsReady', 'SelectFirstRow', 'EnableRowHoverVisibility', 'RowHoverVisibilityQueryName', 'HoverTemplateIndex', 'HasPermition', 'ShowArrow', 'IsGradiantSelectedColor', 'rowHeight', 'RowHoverColor', 'RowBackGroundColor', 'ChangeColorByPropName', 'ChangeColorByPropValue', 'IgnoreRowHoverVisibilityQueryName', 'PassAdditionalDataToTemplates', 'GridAdditionalData', 'ShowHLineOverRow', 'EnableRowToolTip', 'ToolTipWidth', 'ToolTipHeight', 'ToolTipBinding', 'IsAllRecordsChecked', 'HighLightSelectedRow', 'SelectedRows', 'EnableMultiSelection', 'CustomBackFromEdit', 'CheckBoxFilterChanged', 'IsCheckBoxEnabled', 'FireCheckBoxChecked', 'Disabled', 'UseBusyIndecator', 'MarkIsChecked', 'MyScrollTop', 'MySelectedRowIndex', 'SortServerProp', 'ReloadData', 'NoDataTextCode', 'CheckboxProp', 'ChangeCheckBoxesState','FilterChangedEvent'],
     changeDetection: ChangeDetectionStrategy.OnPush
 })
 
@@ -39,6 +39,7 @@ export class LogGridComponent implements OnInit, AfterViewInit, OnChanges, OnDes
     ReloadData: boolean = false;
     CheckboxProp: string;
     public PassAdditionalDataToTemplates: boolean = false;
+    public GridAdditionalData:any;
     public RowBackGroundColor: string = "";
     public HighLightSelectedRow: boolean = true;
     public ChangeColorByPropName: string = "";

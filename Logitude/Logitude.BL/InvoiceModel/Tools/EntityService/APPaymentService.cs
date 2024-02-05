@@ -1062,17 +1062,21 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                         if ((invoiceAmount < 0) || (PaidAmount <= invoiceAmount))
                         {
-                            invoice.IsClosed = false;
-                            if (!_invoiceStatusAccordingToLedgerOpenAmount && (invoice.StatusCode == "PD" || invoice.StatusCode == "PP"))
+                            if (!FeatureToggleHelper.HasFeatureToggle("PSR", entityPM.Tenant))
                             {
-                                if (PaidAmount != 0)
-                                {
-                                    invoice.StatusCode = "PP";
-                                }
 
-                                else
+                                invoice.IsClosed = false;
+                            if (!_invoiceStatusAccordingToLedgerOpenAmount && (invoice.StatusCode == "PD" || invoice.StatusCode == "PP"))
                                 {
-                                    invoice.StatusCode = "AD";
+                                    if (PaidAmount != 0)
+                                    {
+                                        invoice.StatusCode = "PP";
+                                    }
+
+                                    else
+                                    {
+                                        invoice.StatusCode = "AD";
+                                    }
                                 }
                             }
 
@@ -1081,6 +1085,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             invoice.AmountDue = invoiceAmountDue;
                             invoice.AmountDueInLocalCurrency = MethodHelper.Round((invoice.AmountDue * invoice.InvoiceCurrencyExchangeRate), 2);
                             invoice.AmountDueInProfitCurrency = MethodHelper.Round((invoice.AmountDueInLocalCurrency / invoice.ProfitCurrencyExchangeRate), 2);
+                            if (!FeatureToggleHelper.HasFeatureToggle("PSR", entityPM.Tenant))
+                            {
                             if (!_invoiceStatusAccordingToLedgerOpenAmount)
                             {
                                 if (invoiceAmountDue == 0)
@@ -1110,6 +1116,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                     throw new Exception("The Amount due is not suitable to the total amount paid, for invoice: " + invoice.InvoiceNumber);
                                 }
                             }
+                           }
                         }
 
                         else
@@ -1510,7 +1517,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             journal.CreateDate = TenantServerConfigration.GetCurrentDateTime(paymentPM.Tenant);
             journal.AccountingDate = paymentPM.RegisterDate.Value;
             journal.TypeCode = "0";
-            journal.StatusCode = "2";
+            journal.StatusCode = "6";
             journal.CreatedByUserId = paymentPM.CreatedByUserId;
             journal.AccountingEntityCode = "5";
             journal.AccountingEntityId = paymentPM.Id;

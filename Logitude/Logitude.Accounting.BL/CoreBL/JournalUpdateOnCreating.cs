@@ -124,7 +124,7 @@ namespace Logitude.Accounting.BL.CoreBL
             if (String.IsNullOrWhiteSpace(entityPM.TypeCode)) entityPM.TypeCode = "0"; //Manual
             if (String.IsNullOrWhiteSpace(entityPM.AccountingEntityCode)) entityPM.AccountingEntityCode = "1"; //Journal
             if (String.IsNullOrWhiteSpace(entityPM.CreatedByUserId)) entityPM.CreatedByUserId = AuthenticationUtil.GetAuthenticatedUser();// "1-14733"; //Alex //COMPILE//
-            if (entityPM.StatusCode == "2" && String.IsNullOrWhiteSpace(entityPM.ApprovedByUserId)) entityPM.CreatedByUserId = entityPM.CreatedByUserId;
+            if (entityPM.StatusCode == "6" && String.IsNullOrWhiteSpace(entityPM.ApprovedByUserId)) entityPM.ApprovedByUserId = entityPM.CreatedByUserId;
             if (entityPM.JournalLines != null)
             {
                 //if (entityPM.CreateDate == DateTime.MinValue) entityPM.CreateDate = DateTime.Now;

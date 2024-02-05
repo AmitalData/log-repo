@@ -19,6 +19,7 @@ export function FillGLAccountDetails(gLAccountsDetails: GLAccountsDetails, curre
     FillCurrency(gLAccountsDetails.Currency)
     cy.FillLogLov(GLAccountsSelectors.ReconcileMethod, gLAccountsDetails.ReconcileMethod, true)
     Actions.FillCheckBoxProcess(GLAccountsSelectors.MultiCurrencyCheckBox, gLAccountsDetails.MultiCurrencyCheckBox)
+    cy.wait(5000)
     cy.FillLogLov(GLAccountsSelectors.RevenueExpenseType, gLAccountsDetails.RevenueExpenseType, true)
 }
 
@@ -54,7 +55,7 @@ export function OpenGLAccounts() {
 }
 
 export function SaveGLAccounts() {
-    cy.DefineRequestWait(RestAPI.PUT, URLs.GLAccounts, RequestAliases.PutGLAccounts);
+    cy.DefineRequestWait(RestAPI.PUT, URLs.GLAccountsPut, RequestAliases.PutGLAccounts);
     cy.Click(GLAccountsSelectors.SaveButton, null)
 }
 

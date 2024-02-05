@@ -103,7 +103,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
         let parseobj = JSON.parse(this._TextBoxParam);
         let _http = ServiceHelper.HttpClient;
         let _apiUrl = ServiceHelper.GetLogitudeURL() + 'api/GLAccounts';
-        _http.post(_apiUrl, JSON.stringify(parseobj), ServiceHelper.GetHttpFullHeaders())
+        _http.post(_apiUrl + "/post", JSON.stringify(parseobj), ServiceHelper.GetHttpFullHeaders())
             //ajax.post(
             //    ServiceHelper.GetLogitudeURL() + 'api/journals',
             //    this._TextBoxParam,
@@ -316,6 +316,12 @@ export class AccountingMainTesterComponent extends BaseComponent {
         };
         this.StrandartOp(opr, obj, () => { });
     }
+
+    JournalApproveReturnToQueue_Click() {
+        let opr = "JournalApproveReturnToQueue_Click";
+        let obj = { Tenant: 1, AllTenants: false };
+        this.StrandartOp(opr, obj, () => { });
+    }
     WorkWithoutQueue_Click() {
         let opr = "WorkWithoutQueue_Click";
         let obj = { Tenant: 1, JournalId: "1-55235" };
@@ -516,6 +522,7 @@ Line3
         }
         return headers;
     }
+
     CreateJournalTask_Click() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 750;
@@ -523,6 +530,14 @@ Line3
         logitudeWindow.Title = "Accounting Load Test";
         logitudeWindow.Show('./Accounting/Components/Maintenance/AccountingLoadTestComponent');
     }
+
+    UploadExpenses_Click() {
+        var logitudeWindow = new LogitudeWindow();
+        logitudeWindow.Width = 750;
+        logitudeWindow.Title = "Upload Deduction details";
+        logitudeWindow.Show('./Accounting/Components/Maintenance/UploadExpensesComponent');
+    }
+
     BuildTenant_Click() {
         let paramDefault: any =
         {
@@ -1015,6 +1030,39 @@ Line3
     }
 
 
+
+
+    ButtonAPInvoiceStatusUpdate_Click() {
+        let defaultParam: any = {};
+        defaultParam.Tenant = 1;
+        defaultParam.InvoiceNumber = ""
+        defaultParam.FromInvoiceDate = "01.01.2023";
+        defaultParam.ToInvoiceDate = "31.01.2023";
+        defaultParam.Batch = 1;
+        defaultParam.Comment = "Enter InvoiceNumber, or leave it empty but enter the dates";
+        if (AppTool.IsNullOrEmpty(this._TextBoxParam)) {
+            this._TextBoxParam = JSON.stringify(defaultParam);
+            return;
+        }
+        let objToCheck1 = JSON.parse(this._TextBoxParam);
+        let _APInvoiceStatusUpdateUrl = ServiceHelper.GetLogitudeURL() + '/api/APInvoiceStatusUpdate';
+        let myUrl = _APInvoiceStatusUpdateUrl + "?tenant=" + objToCheck1.Tenant;
+        myUrl = myUrl + "&invoiceNumber=" + objToCheck1.InvoiceNumber;
+        myUrl = myUrl + "&fromInvoiceDate=" + objToCheck1.FromInvoiceDate;
+        myUrl = myUrl + "&toInvoiceDate=" + objToCheck1.ToInvoiceDate;
+        myUrl = myUrl + "&batch=" + objToCheck1.Batch;
+
+        this.CurrentSession.StartBusyIndicatorCreating();
+        let _http = ServiceHelper.HttpClient;
+        _http.get(myUrl, ServiceHelper.GetHttpFullHeaders())
+            .subscribe(
+                r => { this._LabelLog = JSON.stringify(r); },
+                e => { this._LabelLog = JSON.stringify(e); },
+                () => { this.CurrentSession.StopBusyIndicator(); }
+            );
+    }
+
+
     ButtonBanksCCExternalReco_Click() {
         let defaultParam: any = {};
         defaultParam.Tenant = 1;
@@ -1044,6 +1092,8 @@ Line3
                 () => { this.CurrentSession.StopBusyIndicator(); }
             );
     }
+
+   
 
 
     ButtonGLAccountMultiToCurrency_Click() {
@@ -1220,7 +1270,8 @@ Line4
             "VoidedByUserName": null,
             "IsVoided": null,
             "VoidedBy": null,
-            "ExternalSystem": "AMITAL"
+            "ExternalSystem": "AMITAL",
+            "AllTenants": "False"
         };
         this._TextBoxParam = JSON.stringify(journal);
 

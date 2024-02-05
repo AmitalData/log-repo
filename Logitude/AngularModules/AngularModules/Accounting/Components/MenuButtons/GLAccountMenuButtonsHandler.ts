@@ -17,7 +17,6 @@ import { GLAccountList } from '../../EntityLists/GLAccountList';
 import { GLAccountListService } from '../../Services/StandardLists/GLAccountListService';
 import { GLAccountExtendedListService } from '../../Services/ExtendedLists/GLAccountExtendedListService';
 import { LedgerTransactionExtendedListService } from '../../Services/ExtendedLists/LedgerTransactionExtendedListService';
-import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
 import { GLAccountExtendedPMService } from 'Accounting/Services/ExtendedPMs/GLAccountExtendedPMService';
 import { CardList } from 'Common/EntityLists/CardList';
 import { GLAccountSecurityLevelService } from 'Accounting/Utilities/GLAccountSecurityLevelService';
@@ -147,6 +146,7 @@ export class GLAccountMenuButtonsHandler {
                                 break;
                             }
                     }
+
                 }
             }
         }
@@ -215,23 +215,31 @@ export class GLAccountMenuButtonsHandler {
         myGLAccountListService.getSingle(this.EntityPM.Id)
             .subscribe((response: ServiceResponse) => {
                 var gLAccount: GLAccountList = response.Result as GLAccountList;
-
-                if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) {
-                    this.EntityPM.Inactive = inactive;
-                    if (inactive) {
-                        this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
-                    }
-                    this.SaveChenges();
-                } else {
+                
+                if (!gLAccount.BalanceInLocalCurrency || gLAccount.BalanceInLocalCurrency == 0) 
+                    this.SetReactivateAccount(inactive);
+                
+                else if (!inactive) 
+                    this.SetReactivateAccount(inactive);
+                
+                else {
                     this.entityArgs.EditComponent.ValidationErrorsList = [];
                     this.entityArgs.EditComponent.ValidationErrorsList.push(TextCodeTranslator.Translate("Accounting.General.O.GLABalanceNotEqual0"));
                 }
             });
     }
+
+    private SetReactivateAccount(inactive) {
+        this.EntityPM.Inactive = inactive;
+        if (inactive) {
+            this.EntityPM.ActiveStatusName = TextCodeTranslator.Translate("GLAccounts.Q.Inactive");
+        }
+        this.SaveChenges();
+    }
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
     }
-
+    
     ReconcileButtonClicked() {
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();

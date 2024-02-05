@@ -232,6 +232,11 @@ export class JournalLinePM {
     public set CreditAccountEnglishName(newValue: string) { if (this.creditAccountEnglishName != newValue) { this.creditAccountEnglishName = newValue; this.MarkAsDirty("CreditAccountEnglishName"); } }
        
 	 
+    private confirmationNumber: string;
+    public get ConfirmationNumber() { return this.confirmationNumber; }
+    public set ConfirmationNumber(newValue: string) { if (this.confirmationNumber != newValue) { this.confirmationNumber = newValue; this.MarkAsDirty("ConfirmationNumber"); } }
+       
+	 
 
     public OldEntityPM: JournalLinePM;
 	

@@ -702,10 +702,18 @@
                                                             <div></div>
                                                         </td>
                                                     </tr>
-
-                                                    <tr>
+                                                    <tr class="FormFieldRow">
                                                         <td>
-                                                            <div></div>
+                                                            <LogLabel [ObjectFieldName]="'AmountForConfirmationNumber'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"></LogLabel>
+                                                        </td>
+
+                                                        <td colspan="2">
+                                                            <LogTextBox [ObjectFieldName]="'AmountForConfirmationNumber'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [InputType]="'integer'" [DataContext]="DataContext">
+                                                            </LogTextBox>
                                                         </td>
                                                     </tr>
                                                     <tr class="FormFieldRow">

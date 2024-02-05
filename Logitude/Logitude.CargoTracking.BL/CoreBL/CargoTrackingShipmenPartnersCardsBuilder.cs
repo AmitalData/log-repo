@@ -39,7 +39,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 new PartnerCardMetaData("Agent", "AgentId", "AgentName"),
                 new PartnerCardMetaData("Agent", "AgentId", "AgentName", true),
                 new PartnerCardMetaData("Customer", "CustomerId", "CustomerName"),
-                new PartnerCardMetaData("Freight Forwarder", "FreightForwarderId", "FreightForwarderName"),
+                new PartnerCardMetaData("Freight Forwarder", "FreightForwarderId", "FreightForwarderName",false,true),
                 new PartnerCardMetaData("consignee", "ConsigneeId", "ConsigneeName"),
                 new PartnerCardMetaData("consignee", "ConsigneeId", "ConsigneeName", true),
                 new PartnerCardMetaData("shipper", "ShipperId", "ShipperName"),
@@ -223,8 +223,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
                 var name = GetProperty(shipmentPM, partnerCardMetaData.NameFieldName);
                 var address = GetPartnerAddress(id);
                 if (partnerCardMetaData.SkipIfEmpty && 
-                    (string.IsNullOrEmpty(name) || name.Trim().Equals("---")) &&
-                    (string.IsNullOrEmpty(address) || address.Trim().Equals(",")))
+                    (string.IsNullOrEmpty(name) || name.Equals("---")) &&
+                    (string.IsNullOrEmpty(address) || address.Equals(",") || address.Equals(", ")))
                     return;
 
                 partnerCards.Add(new PartnerCard()
@@ -247,8 +247,8 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             {
                 var name = GetProperty(shipmentOrderPM, partnerCardMetaData.NameFieldName);
                 var address = GetPartnerAddress(id);
-                if ( (string.IsNullOrEmpty(name) || name.Trim().Equals("---")) &&
-                    (string.IsNullOrEmpty(address) || address.Trim().Equals(",")) )
+                if ( (string.IsNullOrEmpty(name) || name.Equals("---")) &&
+                    (string.IsNullOrEmpty(address) || address.Equals(",")|| address.Equals(", ")) )
                     return;
                 partnerCards.Add(new PartnerCard()
                 {

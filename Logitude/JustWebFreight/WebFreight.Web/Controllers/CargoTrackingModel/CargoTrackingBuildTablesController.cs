@@ -42,11 +42,18 @@ namespace WebFreight.Web.Controllers.AccountingModel
             {
                 string token = HttpContext.Current.Request.Headers["Token"];
                 AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
-                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
-                if(Args.Tenant.HasValue)
-                    SecurityUtility.AuthenticationOnTenant(Args.Tenant.Value);
-
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);                
                 int tenant = authToken.Tenant;
+
+                if (Args.Tenant.HasValue)
+                {
+                    SecurityUtility.AuthenticationOnTenant(Args.Tenant.Value);
+                }
+                else
+                {
+                    Args.Tenant = tenant;
+                }
+
                 CreateBatchTaskExecution(Args, BatchTaskNames.BuildCargoTrackingShipments, "Logitude.CargoTracking.BL.CoreBL.Batch.BuildCargoTrackingShipments,Logitude.CargoTracking.BL", tenant);
                 return Request.CreateResponse(HttpStatusCode.OK, Args);
             }

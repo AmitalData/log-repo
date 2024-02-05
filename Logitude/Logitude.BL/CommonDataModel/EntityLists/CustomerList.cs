@@ -178,6 +178,8 @@ namespace Logitude.BL.CommonDataModel.EntityLists
         
         [DataMember]
         public int? SharedLogisticsInvitationStatusCode { get; set; }
+
+
         [DataMember]
         public string CargoTrackingInvitationStatusName { get; set; }
         

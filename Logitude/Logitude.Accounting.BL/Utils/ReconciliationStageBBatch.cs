@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.Data;
+using System.Diagnostics;
 
 namespace Logitude.Accounting.BL.Utils
 {
@@ -44,10 +45,11 @@ namespace Logitude.Accounting.BL.Utils
         {
             return _StatusCode;
         }
-        public void RunReconciliationStageB(ReconciliationStageBArg reconciliationStageBArg)
+        public void RunReconciliationStageB(ReconciliationStageBArg reconciliationStageBArg, int timeoutinmin, ref bool retry)
         {
             try
             {
+                var sw = Stopwatch.StartNew();
                 int SUB_BATCH_SIZE = 50; // 100;
                 int tenant = reconciliationStageBArg.Tenant;
                 string myGLAccountId = reconciliationStageBArg.GLAccountId;
@@ -102,7 +104,9 @@ namespace Logitude.Accounting.BL.Utils
                     }
                 }
                 reconciableGroupList.Sort((x, y) => x._Acc.CompareTo(y._Acc));
-                reconciableGroupList.ForEach(recoGroup =>
+
+                foreach (ReconciableGroup recoGroup in reconciableGroupList)
+                //reconciableGroupList.ForEach(recoGroup =>
                 {
                     string gLAccountId = GetGroupGLAccountId(recoGroup._LineGroup);
                     if (!String.IsNullOrWhiteSpace(gLAccountId))
@@ -111,17 +115,23 @@ namespace Logitude.Accounting.BL.Utils
                         {
                             ReconcileOneRef(recoGroup._LineGroup, gLAccountId, ledgerTransactionQueryService);
                             _counter++;
-                            scope.Complete();
+                            scope.Complete(); 
+                            madeList.Add(recoGroup._Acc);
+
+                            if (sw.Elapsed.TotalMinutes >= timeoutinmin)
+                            {
+                                retry = true;
+                                break;
+                            }
                         }
-                        madeList.Add(recoGroup._Acc);
                    }
-                });
+                }
              //   _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum: {String.Join(", ", _WrongSum.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
                 _ResponseText = $"Good: {goodList.Count},  Bad: {badList.Count},   Made: {madeList.Count}, No Lines: {String.Join(", ", _NoLines.ToArray())}, Wrong Action: {String.Join(", ", _WrongAction.ToArray())}, Wrong Sum To Match: {String.Join(", ", _WrongSumToMatch.ToArray())}";
             }
-            catch (Exception e)
+            catch //(Exception e)
             {
-                throw new Exception($"ReconciliationStageBBatch failure {e.Message} Inner Exception: {e.InnerException.Message}", e);
+                throw; // new Exception($"ReconciliationStageBBatch failure {e.Message} Inner Exception: {e.InnerException.Message}", e);
             }
         }
 

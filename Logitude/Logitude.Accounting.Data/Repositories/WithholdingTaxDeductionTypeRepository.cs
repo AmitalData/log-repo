@@ -49,7 +49,9 @@ namespace Logitude.Accounting.Data.Repositories
             return (from a in context.WithholdingTaxDeductionTypes
                     where a.Code == Code && a.Tenant == tenant
 
-                    select a).FirstOrDefault();
+                          select a).FirstOrDefault();
+            }
+            return entity;
         }
 
         public List<WithholdingTaxDeductionType> GetAll()

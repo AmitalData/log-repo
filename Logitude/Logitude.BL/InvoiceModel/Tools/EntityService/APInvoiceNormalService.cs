@@ -1838,16 +1838,19 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     {
                         entityPM.AmountDue = MethodHelper.Round((entityPM.AmountInInvoiceCurrency.Value - conntectedPaymentAmount), 2);
 
-                        if (conntectedPaymentAmount < entityPM.AmountInInvoiceCurrency)
+                        if (!FeatureToggleHelper.HasFeatureToggle("PSR", entityPM.Tenant))
                         {
-                            entityPM.StatusCode = "PP";
-                            entityPM.IsClosed = false;
-                        }
+                            if (conntectedPaymentAmount < entityPM.AmountInInvoiceCurrency)
+                            {
+                                entityPM.StatusCode = "PP";
+                                entityPM.IsClosed = false;
+                            }
 
-                        else
-                        {
-                            entityPM.StatusCode = "PD";
-                            entityPM.IsClosed = true;
+                            else
+                            {
+                                entityPM.StatusCode = "PD";
+                                entityPM.IsClosed = true;
+                            }
                         }
                     }
                     else
@@ -2098,7 +2101,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                     journal.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
                     journal.AccountingDate = theEntityPm.AccountingDate != null ? theEntityPm.AccountingDate.Value : TenantServerConfigration.GetCurrentDateTime(tenant);
                     journal.TypeCode = "0";
-                    journal.StatusCode = "2";
+                    journal.StatusCode = "6";
                     journal.CreatedByUserId = theEntityPm.CreatedByUserId;
                     journal.AccountingEntityCode = "4";
                     journal.AccountingEntityId = theEntityPm.Id;

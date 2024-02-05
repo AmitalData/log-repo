@@ -10,15 +10,14 @@ Given("the user logged in and navigates to Full Accounting workspace", () => {
     cy.Login();
     Actions.NavigatesFullAccounting()
 });
-
 Given("an AR Payment with the following details", (dataTable) => {
+    
     ARPaymentActions.NavigatesARPaymentWorkspace()
     let ARPaymentDetails = Assists.CreateInstance<ARPaymentDetails>(dataTable, true);
     ARPaymentActions.FillARPayment(ARPaymentDetails)
 });
 
 When("create AR Payment", () => {
-    //ARPaymentActions.CreateARPayment()
     ARPaymentActions.ApproveARPayment()
 });
 
@@ -41,12 +40,13 @@ Then("the AR Payment should approve successfully", () => {
 });
 //#endregion
 
+
 //#region Void AR Payment
 When("void AR Payment", () => {
-    ARPaymentActions.VoidARPayment()
+   ARPaymentActions.VoidARPayment()
 });
 
 Then("the AR Payment should void successfully", () => {
-    ARPaymentActions.AssertVoidARPayment()
+   ARPaymentActions.AssertVoidARPayment()
 });
 //#endregion

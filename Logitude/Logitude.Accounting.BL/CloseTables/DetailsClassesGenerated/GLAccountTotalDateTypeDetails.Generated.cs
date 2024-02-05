@@ -38,6 +38,12 @@ namespace Logitude.Accounting.BL
                 Code = "3", 
                 Name = "Document Date", 
 			});
+			 
+            all.Add(new GLAccountTotalDateTypeDetails()
+            {    
+                Code = "4", 
+                Name = "Tax", 
+			});
 			
             return all;
        }

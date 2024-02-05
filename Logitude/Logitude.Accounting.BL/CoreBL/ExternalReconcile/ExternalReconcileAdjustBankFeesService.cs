@@ -196,7 +196,7 @@ namespace Logitude.Accounting.BL.CoreBL.ExternalReconcile
 
             if (existingExternalJournalsReconcilies.Any())
             {
-                throw new ApplicationException("There is already journal reconciliation has been created");
+                throw new ApplicationException("ישנן תנועות שסומנו ונמצאות בתהליך התאמה על ידי משתמש או סשן אחר, יש לבצע רענון לצאת ממסך התאמות ללא שמירת השורות ולהיכנס מחדש.");
             }
             
 
@@ -561,7 +561,7 @@ new JournalLinePM()
             bool testedAndFoundAllOK = true;
             if (testedAndFoundAllOK)
             {
-                TheNewJournal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.Approved;
+                TheNewJournal.StatusCodeEnum = JournalStatusTypePM.StatusCodeEnum.InProcessing;
             }
             else
             {

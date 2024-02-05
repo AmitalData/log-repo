@@ -21,11 +21,13 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
         private const string ExportShipmentDirection = "E";
         private ShipmentOrderPM shipmentOrderPM;
         private ShipmentPM shipmentPM;
-        private List<RoutingStep> routingSteps = new List<RoutingStep>();
-        public CargoTrackingShipmentRouteBuilder(ShipmentOrderPM ShipmentOrderPM, ShipmentPM shipmentPM)
+		ShipmentPM forwardingShipmentPM;
+		private List<RoutingStep> routingSteps = new List<RoutingStep>();
+        public CargoTrackingShipmentRouteBuilder(ShipmentOrderPM ShipmentOrderPM, ShipmentPM shipmentPM, ShipmentPM forwardingShipmentPM)
         {
             this.shipmentOrderPM = ShipmentOrderPM;
             this.shipmentPM = shipmentPM;
+            this.forwardingShipmentPM = forwardingShipmentPM;
         }
         public List<RoutingStep> BuildRoute()
         {
@@ -278,7 +280,7 @@ namespace Logitude.CargoTracking.BL.EntityQueryServices
             {
                 TransportModeCode = WarehouseTransportMode,
                 Description = shipmentPM.WarehouseLegRemarks ?? "WarehouseLeg",
-                FromPortLabel = shipmentPM.WarehouseLegTerminalCode,
+                FromPortLabel = forwardingShipmentPM.WarehouseLegWarehouseName,
             };
 
             SetWarehouseLegDirections(shipmentPM, step);

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalReconcileUpdateClass
    {  		
-		public const string HashString = "861f3a08546644e9a8be63aa9cdad49e";
+		public const string HashString = "56926caba0c1f76d422132041878cdd1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -130,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "פ יומן תנעות להתאמה",
 			      				    DefaultText =  "Journal Reconcile With Transactions ID",
-			      				    Code =  "537b",
+			      				    Code =  "f106",
 			      				    Name =  "JournalReconcile Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -812,7 +812,21 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable JournalReconcileObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "JournalReconcile" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode JournalReconcileTextCode_JournalReconcileOTotalReconciliationAmountIsZero = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalReconcile.O.TotalReconciliationAmountIsZero", DefaultText = "Total ReconciliationAmount is zero",LocalDefaultText = @".לא ניתן לבצע את הפעולה , הסכום להתאמה בתנועה השתנה", ObjectTableId = JournalReconcileObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalReconcileTextCode_JournalReconcileOCantReconcileLedgerTransactionsMoreOne = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalReconcile.O.CantReconcileLedgerTransactionsMoreOne", DefaultText = "It is not possible to reconcile ledger transactions for more than one currency.",LocalDefaultText = @"לא אופיינה התאמת תנועות ליותר ממטבע אחד", ObjectTableId = JournalReconcileObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalReconcileTextCode_JournalReconcileOCurrencyRateDoesNotExist = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalReconcile.O.CurrencyRateDoesNotExist", DefaultText = "The currency rate does not exist in the currency rate table",LocalDefaultText = @"שער המטבע לא קיים בטבלת שערי המטבעות", ObjectTableId = JournalReconcileObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode JournalReconcileTextCode_JournalReconcileOReconcileProgressByAnother = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalReconcile.O.ReconcileProgressByAnother", DefaultText = "There are ledger transactions that have been marked in reconcile progress by another user or session, you must refresh, exit the reconciliation screen without saving the rows and re-enter",LocalDefaultText = @"ישנן תנועות שסומנו ונמצאות בתהליך התאמה על ידי משתמש או סשן אחר, יש לבצע רענון לצאת ממסך התאמות ללא שמירת השורות ולהיכנס מחדש", ObjectTableId = JournalReconcileObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

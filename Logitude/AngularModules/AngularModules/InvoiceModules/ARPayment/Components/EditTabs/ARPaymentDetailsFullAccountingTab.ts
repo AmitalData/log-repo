@@ -92,6 +92,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     public PartnerTypes: PartnerTypeList[] = [];
     private FullAccountingSetting: FullAccountingSettingPM = new FullAccountingSettingPM();
     public BillToFilter:ApiQueryFilters;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     get TextStore()
     {
         return TextStore;
@@ -120,7 +122,9 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         this.EntityPM = entityArgs.EntityPM;
         if( this.EntityPM.StatusCode==null)
             this.CreateARPayment();
+            this.InitLOVFilters();
         this.SetAmountCurrencyCode();
+
         this.ComputeLocalAmount();
         this.SetPaymentAmount();
         this.SetChequeAmount();
@@ -180,7 +184,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         //#endregion
         if (!this.PrintNotes) this.PrintNotes = TextCodeTranslator.Translate("ARPayment.S.ShortTitle");
 
-        this.GetData();
+        this.ReloadGLAccount();
 
         // this.UIProperties.SetEnabled("AmountToReconcile","LedgerTransaction",!this.IsGridReadOnly);
         this.InitializeBillToLov();
@@ -190,6 +194,11 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
     InitLOVBillToFilters() {
         this.BillToFilter = new ApiQueryFilters();
         this.BillToFilter.addAdditionalFilter("ActiveGLAccount", true, null, null, "Equals", true, false, false, "Boolean");
+    }
+
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
     GetFullAccountingSettings() {
         this.CurrentSession.StartBusyIndicatorLoading();
@@ -254,6 +263,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         });
 
     }
+
+
 
 
     private SetChequeAmount() {
@@ -760,7 +771,6 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         if (!this.IsScreenEnabled) {
             this.DisabledPartnerTypes = true;
             this.UIProperties.SetEnabled("AccountingPaymentMethodId", this.ObjectTableName, false);
-            this.UIProperties.SetEnabled("AmountInPaymentCurrency", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("RegisterDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ValueDate", this.ObjectTableName, false);
             this.UIProperties.SetEnabled("ChequeOrPaymentRef", this.ObjectTableName, false);
@@ -1204,8 +1214,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         // this.ItemsSource.InsertCollection(itemsCollection);
         // this.UpdateSummary();
         // this.IsDataLoaded = true;
-    }
-    AllowedPartnerTypesCodes: string[] = ['CS','AG','AC','AL','CG','SG','SL','TR','VD','WH'];
+}
+	AllowedPartnerTypesCodes: string[] = ['CS','AG','AC','AL','CG','SG','SL','TR','VD','WH'];  
     filterByPartnerTypeCode: string;
     isPartnerTypesFilterEnabled: boolean = false;
     getPartnerTypes(){
@@ -1213,41 +1223,44 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
         {
             var partnerTypes: PartnerTypeList[] = res.Result || [];
             this.PartnerTypes = partnerTypes.filter(d => this.AllowedPartnerTypesCodes.indexOf(d.Id) > -1); // filter
-            if( this.EntityPM.StatusCode=="DR")
-                this.SelectedPartnerType = partnerTypes.filter(d => d.Id == 'CS')[0]; // default
-            this.getSelectedPartnerTypes(partnerTypes);
+			if( this.EntityPM.StatusCode=="DR")
+           		this.SelectedPartnerType = partnerTypes.filter(d => d.Id == 'CS')[0]; // default
+			this.getSelectedPartnerTypes(partnerTypes);
         });
     }
 
     getSelectedPartnerTypes(partnerTypes){
-        var myCardService = new CardListService;
-        myCardService.getSingle(this.EntityPM.BillToId).subscribe((myResponse: ServiceResponse) => {
-            if (myResponse != null) {
-                if (!myResponse.HasError) {
-                    var list: CardList = myResponse.Result;
+		var myCardService = new CardListService;
+		myCardService.getSingle(this.EntityPM.BillToId).subscribe((myResponse: ServiceResponse) => {
+			if (myResponse != null) {
+				if (!myResponse.HasError) {
+					var list: CardList = myResponse.Result;
+                    if(list!=null)
                     this.SelectedPartnerType = partnerTypes.filter(d => d.Id == list.PartnerTypeId)[0];
-                }
-            }
-        });
+				}
+			}
+		});
 
-    }
-    private _SelectedPartnerType : PartnerTypeList;
+	}
+	private _SelectedPartnerType : PartnerTypeList;
     public get SelectedPartnerType() : PartnerTypeList {
-        return this._SelectedPartnerType;
+		return this._SelectedPartnerType;
     }
+
     public set SelectedPartnerType(type : PartnerTypeList) {
         this._SelectedPartnerType = type;
         this.filterByPartnerTypeCode = type.Id;
 
-    }
 
+    }
     // BillTo
     get BillToId()
     {
         if (this.EntityPM == null) {
             return null;
         }
-        return this.EntityPM.BillToId;
+
+		return this.EntityPM.BillToId;		
     }
     set BillToId(value: string)
     {
@@ -2455,6 +2468,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
             }
 
             this.bankTransferAmount = value;
+
             if(value==null){
                 this.UIProperties.SetRequired("AmountInPaymentCurrency", this.ObjectTableName, true);
             }
@@ -2463,6 +2477,7 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.UIProperties.SetRequired("AmountInPaymentCurrency", this.ObjectTableName, false);
             }
 
+			
             if (this.EntityPM.AccountingPaymentMethodCode == "BT") {
                 this.UpdateBankTransferAmountFieldForBankTransferPayment();
             }

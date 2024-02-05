@@ -10,6 +10,7 @@ import {
 } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+
 import {Router, ActivatedRoute, NavigationStart, NavigationEnd} from '@angular/router';
 import {FormBuilder} from '@angular/forms';
 import {CargoTrackingSearchService} from '../../../../Services/Others/CargoTrackingSearchService';
@@ -156,13 +157,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         SessionInfo.LoggedUserCompanyLogins = JSON.parse(sessionStorage.getItem("LoggedUserCompanyLogins"));
         if (!SessionInfo.IsAdmin) {
             this.GetInvitedCustomers();
-            // if(SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === false)
-            // {
-
-            // }
         }
-
-
+       
     }
 
     GetInvitedCustomers() {
@@ -832,12 +828,11 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
 
     private async filterWithAllCustomersWhenCustomersNotSelected() {
         let filter: CargoTrackingShipmentSearchInput = Object.assign({}, this.ShipmentSearchInput);
-        filter.CustomersIds = filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds;        
+        if(!SessionInfo.IsAdmin) {filter.CustomersIds =filter.CustomersIds.length == 0 ? this.InvitedCustomers.map(d => d.CardId) : filter.CustomersIds};
         filter.FromDate = await this.getFromDate();
-
         return filter;
     }
- 
+
     private async getFromDate() {
         const fromDate = new Date();
         this.backMonths = this.backMonths || await this.tenantManagementService.getShipmentBuildMonth();
@@ -845,10 +840,8 @@ export class ShipmentsListComponent implements AfterViewInit, OnInit {
         fromDate.setMonth(fromDate.getMonth() - this.backMonths);
         return fromDate;
     }
- 
     private async InitiateShipmentDataSource() {
         let filter = await this.filterWithAllCustomersWhenCustomersNotSelected();
-        
         this.ShipmentsDataSource = new ShipmentDataSource(this.changeDetector, this.searchService, filter, this);
         let s = SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0];
         if (SessionInfo.LoggedUserCompanyLogins.filter(a => a.Tenant == this.tenant)[0].IsUser === true) {

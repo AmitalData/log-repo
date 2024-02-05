@@ -175,10 +175,6 @@ export class APInvoiceMenuButtonsHandler {
         }
     }
     private SetEnableForCopyInvoiceButton(myButtonIsDisabled: boolean) {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.StatusCode) && this.EntityPM.StatusCode != this.approvedStatusCode) {
-            myButtonIsDisabled = true;
-        }
-
         if (this.EntityPM != null && this.EntityPM.IsExternalEntity) {
             myButtonIsDisabled = true;
         }

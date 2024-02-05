@@ -11,6 +11,7 @@ import { InterestReportPM } from '../../EntityPMs/InterestReportPM';
 import { InterestReportGeneralTabComponent } from '../EditTabs/InterestReport/GeneralTab/InterestReportGeneralTabComponent';
 import { EntityArgs } from '../../../Infrastructure/DataContracts/EntityArgs';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
 
 @Component({
     selector: 'NewInterestReportComponent',
@@ -29,6 +30,8 @@ export class NewInterestReportComponent extends BaseComponent implements OnDestr
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
     myService: InterestReportPMService;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(public entityArgs: EntityArgs) {
         super();
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
@@ -38,6 +41,7 @@ export class NewInterestReportComponent extends BaseComponent implements OnDestr
         this.EntityPM.Tenant = this.TenantPM.Id;
         this.myService = new InterestReportPMService();
         this.Listen();
+        this.InitLOVFilters();
     }
  
     private SaveCompletedEvent: any = null;
@@ -57,6 +61,10 @@ export class NewInterestReportComponent extends BaseComponent implements OnDestr
                 }
             });
         }
+    }
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
 
     get InterestCalculationDate() {

@@ -221,20 +221,22 @@ export class ReceivablePageComponent {
     //#region ARPayments
     NewARPaymentMethod() {
         var FinalText = TextCodeTranslator.Translate("ARPayment.O.New");
+
         if (SessionLocator.TenantPM.AccountingActivated)
-        {
+         {
             var entity = new ARPaymentPM();
             entity.IsFullAccounting = true;
             entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
 
             SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
                 .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: "", EntityPM: entity, ObjectTableName: 'ARPayment' });
-                });
-        }
-        else
-        {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({ EntityId: "", EntityPM: entity, ObjectTableName: 'ARPayment' });
+            });
+         }
+         else
+         {
+
 
             // var FinalText = this.getAutoNewName();
             var logWindow = new LogitudeWindow();
@@ -248,7 +250,8 @@ export class ReceivablePageComponent {
             //        cmpRef.instance.ComponentRef = cmpRef;
             //        cmpRef.instance.Run({ EntityId: "", EntityPM: new ARPaymentPM(), ObjectTableName: 'ARPayment' });
             //    });
-        }
+         }
+
     }   
     filterAgrs: ApiQueryFilters;
     private getAutoNewName() {
@@ -426,6 +429,7 @@ export class ReceivablePageComponent {
         if (SessionLocator.TenantPM.AccountingActivated ) {
             var entity = new ARInvoicePM();
             entity.ARInvoiceTypeCode = type;
+            entity.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
             entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
             entity.PrintNotes = TextCodeTranslator.Translate("ARInvoice.O.Invoice");
             this.GetCurrenciesExchangeRateByValueDate(entity);

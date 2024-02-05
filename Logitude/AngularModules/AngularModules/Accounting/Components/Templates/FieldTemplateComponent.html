@@ -217,7 +217,20 @@
                             Entity.StatusLocalName : Entity.StatusName
                             }}
                         </div>
+                        <div *ngIf="FieldValue == 'In processing'" style="color: rgb(114, 19, 238);">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
+                        </div>
+                        <div *ngIf="FieldValue == 'Failed'" style="color: rgb(4, 159, 152);">
+                            {{
+ showLocal ?
+                            Entity.StatusLocalName : Entity.StatusName
+                            }}
+                        </div>
                     </div>
+                 
                     <div *ngIf="FieldName == 'AccountingEntityReference'">
                         <div *ngIf="IsHeaderScreenTemplate">
                             <a href="javascript:;" (click)="OpenSource(Entity.AccountingEntityId)">{{FieldValue}}</a>

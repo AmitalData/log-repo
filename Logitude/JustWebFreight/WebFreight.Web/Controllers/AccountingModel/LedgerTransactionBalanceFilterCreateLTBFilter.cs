@@ -90,8 +90,21 @@ public class LedgerTransactionBalanceFilterCreateLTBFilter
                 var searchFields = searchFieldsf.FieldValue.ToString();
                 LTBFilter.SearchFields = searchFields;
             }
-           
-            LTBFilter.GLAccountId = glAccountId;
+			//amountLocal
+			var IsLocalAmountf = filters_list.Where(d => d.FieldName == "IsLocalAmount").FirstOrDefault();
+			if (IsLocalAmountf != null)
+			{				
+				LTBFilter.AmountLocalFilter = IsLocalAmountf;
+			}
+			//amountForeign
+			var IsForeignAmountf = filters_list.Where(d => d.FieldName == "IsForeignAmount").FirstOrDefault();
+			if (IsForeignAmountf != null)
+			{
+				
+				LTBFilter.AmountForeignlFilter = IsForeignAmountf;
+			}
+
+			LTBFilter.GLAccountId = glAccountId;
             LTBFilter.DateTypeCode = _dateTypeCode;
             //LTBFilter.From = Convert.ToDateTime(from);
             //LTBFilter.To = Convert.ToDateTime(to);

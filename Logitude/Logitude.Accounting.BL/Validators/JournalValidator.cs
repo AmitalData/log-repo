@@ -755,7 +755,7 @@ namespace Logitude.Accounting.BL.Validators
 
             if (debitTotal != creditTotal)
             {
-                if ((myJournalPM.StatusCode == "1") || (myJournalPM.StatusCode == "2"))//Draft = 0,//WaitingforApprove = 1,//Approved = 2,//Voided = 3
+                if ((myJournalPM.StatusCode == "1")  || (myJournalPM.StatusCode == "6"))//Draft = 0,//WaitingforApprove = 1,//Approved = 2,//Voided = 3
                 {
                    errorsList.AddNew(TranslateMyTextCode(JournalValidator.M_JournalAmountNotMatched, myJournalPM.Tenant)+ " " + Math.Abs(debitTotal - creditTotal));
                 }
@@ -850,10 +850,10 @@ namespace Logitude.Accounting.BL.Validators
    
         private bool CheckIfFutureDateErrorsExist(JournalPM myJournalPM)
         {
-            const string statusCode_JournalApproved = "2";
+            const string statusCode_JournalProgress = "6";
             const string AccountingEntityCode_Journal = "1";
             var isJournalManuallyCreated = myJournalPM.AccountingEntityCode == AccountingEntityCode_Journal;
-            var isIsFutureDateErrorsExistAndJournalApproved = IsFutureDateErrorsExist && myJournalPM.StatusCode == statusCode_JournalApproved;
+            var isIsFutureDateErrorsExistAndJournalApproved = IsFutureDateErrorsExist && myJournalPM.StatusCode == statusCode_JournalProgress;
             if (isIsFutureDateErrorsExistAndJournalApproved && isJournalManuallyCreated)
                 return true;
             else
@@ -1268,7 +1268,7 @@ accountingValidationContextServiceProvider
                     
 
 
-                    var isApproved=myJournalPM.StatusCode=="2";
+                    var isApproved=myJournalPM.StatusCode=="6";
                     if (isApproved)
                     {
                         var debitDebitControlId = myJournalLinePM.DebitControlAccountId;

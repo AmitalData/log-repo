@@ -363,60 +363,131 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             itLine.JournalId = journalPM.Id;
                             itLine.JournalNumber = journalPM.JournalNumber;
+
                             bool lineFound = false;
                             JournalLinePM jlPM = null;
-                            foreach (JournalLinePM journalLine in journalPM.JournalLines)
+                            if (itLine.JournalLineNumber != 0)
                             {
-                                InterestTransactionUniqueConstraintFields uniqueConstraintFields_current;
-
-                                if ((journalLine.ActionCode == "2" || journalLine.ActionCode == "3") && itLine.CreditAmount != 0m && journalLine.CreditAccountId == itLine.GLAccountId
-                                    && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference))) 
-                                 //   && (!firstDuplicateFound || journalLine.LocalAmount == itLine.CreditAmount))
+                                JournalLinePM journalLine_1 = journalPM.JournalLines.Where(jl => jl.Line == itLine.JournalLineNumber).FirstOrDefault();
+                                if (journalLine_1 != null)
                                 {
-                                    uniqueConstraintFields_current = new InterestTransactionUniqueConstraintFields()
+                                    InterestTransactionUniqueConstraintFields uniqueConstraintFields_current;
+
+                                    if (journalLine_1.Line == itLine.JournalLineNumber && (journalLine_1.ActionCode == "2" || journalLine_1.ActionCode == "3") && itLine.CreditAmount != 0m && journalLine_1.CreditAccountId == itLine.GLAccountId
+                                             && (journalLine_1.Reference1 == itLine.Reference || journalLine_1.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference)))
                                     {
-                                        GLAccountId = itLine.GLAccountId,
-                                        Tenant = tenant,
-                                        InterestEntityTypeCode = "3", //(Journal)
-                                        EntityId = journalLine.JournalId,
-                                        OriginalEntityLineNumber = journalLine.Line,
-                                        ForeignAmount = 0m,// itLine.ForeignAmount,
-                                        LocalAmount = 0m,// itLine.LocalAmount,
-                                        CurrencyId = itLine.CurrencyId,
-                                    };
-                                    InterestTransactionUniqueConstraintFields x = _itjlCache.FirstOrDefault(f => f.GLAccountId == uniqueConstraintFields_current.GLAccountId && f.Tenant == uniqueConstraintFields_current.Tenant
-                                    && f.InterestEntityTypeCode == uniqueConstraintFields_current.InterestEntityTypeCode && f.OriginalEntityLineNumber == uniqueConstraintFields_current.OriginalEntityLineNumber
-                                    && f.EntityId == uniqueConstraintFields_current.EntityId);
-                                    if (x == null)
+                                        uniqueConstraintFields_current = new InterestTransactionUniqueConstraintFields()
+                                        {
+                                            GLAccountId = itLine.GLAccountId,
+                                            Tenant = tenant,
+                                            InterestEntityTypeCode = "3", //(Journal)
+                                            EntityId = journalLine_1.JournalId,
+                                            OriginalEntityLineNumber = journalLine_1.Line,
+                                            ForeignAmount = 0m, 
+                                            LocalAmount = 0m, 
+                                            CurrencyId = itLine.CurrencyId,
+                                            IT_JlineNumber = itLine.JournalLineNumber,
+                                            JournalLineNumber = journalLine_1.Line,
+                                        };
+                                        InterestTransactionUniqueConstraintFields x = _itjlCache.FirstOrDefault(f => f.GLAccountId == uniqueConstraintFields_current.GLAccountId && f.Tenant == uniqueConstraintFields_current.Tenant
+                                        && f.InterestEntityTypeCode == uniqueConstraintFields_current.InterestEntityTypeCode && f.OriginalEntityLineNumber == uniqueConstraintFields_current.OriginalEntityLineNumber
+                                        && f.EntityId == uniqueConstraintFields_current.EntityId && f.JournalLineNumber == uniqueConstraintFields_current.JournalLineNumber);
+                                        if (x == null)
+                                        {
+                                            lineFound = true;
+                                            jlPM = journalLine_1;
+                                        }
+                                    }
+
+                                    else if (journalLine_1.Line == itLine.JournalLineNumber && (journalLine_1.ActionCode == "1" || journalLine_1.ActionCode == "3") && itLine.DebitAmount != 0m && journalLine_1.DebitAccountId == itLine.GLAccountId
+                                        && (journalLine_1.Reference1 == itLine.Reference || journalLine_1.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference)))
                                     {
-                                        lineFound = true;
-                                        jlPM = journalLine;
-                                        break;
+                                        uniqueConstraintFields_current = new InterestTransactionUniqueConstraintFields()
+                                        {
+                                            GLAccountId = itLine.GLAccountId,
+                                            Tenant = tenant,
+                                            InterestEntityTypeCode = "3", //(Journal)
+                                            EntityId = journalLine_1.JournalId,
+                                            OriginalEntityLineNumber = journalLine_1.Line,
+                                            ForeignAmount = 0m, 
+                                            LocalAmount = 0m, 
+                                            CurrencyId = itLine.CurrencyId,
+                                            IT_JlineNumber = itLine.JournalLineNumber,
+                                            JournalLineNumber = journalLine_1.Line,
+                                        };
+                                        InterestTransactionUniqueConstraintFields y = _itjlCache.FirstOrDefault(f => f.GLAccountId == uniqueConstraintFields_current.GLAccountId && f.Tenant == uniqueConstraintFields_current.Tenant
+                                        && f.InterestEntityTypeCode == uniqueConstraintFields_current.InterestEntityTypeCode && f.OriginalEntityLineNumber == uniqueConstraintFields_current.OriginalEntityLineNumber
+                                        && f.EntityId == uniqueConstraintFields_current.EntityId && f.JournalLineNumber == uniqueConstraintFields_current.JournalLineNumber);
+                                        if (y == null)
+                                        {
+                                            lineFound = true;
+                                            jlPM = journalLine_1;
+                                        }
                                     }
                                 }
-                                else if ((journalLine.ActionCode == "1" || journalLine.ActionCode == "3") && itLine.DebitAmount != 0m && journalLine.DebitAccountId == itLine.GLAccountId
-                                    && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference)))
-                                  //  && (!firstDuplicateFound || journalLine.LocalAmount == itLine.DebitAmount))
+
+                            }
+                            // = false;
+                            //JournalLinePM jlPM = null;
+                            if (!lineFound)
+                            {
+                                foreach (JournalLinePM journalLine in journalPM.JournalLines)
                                 {
-                                    uniqueConstraintFields_current = new InterestTransactionUniqueConstraintFields()
+                                    InterestTransactionUniqueConstraintFields uniqueConstraintFields_current;
+
+                                    if ((journalLine.ActionCode == "2" || journalLine.ActionCode == "3") && itLine.CreditAmount != 0m && journalLine.CreditAccountId == itLine.GLAccountId
+                                        && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference)))
+                                    //   && (!firstDuplicateFound || journalLine.LocalAmount == itLine.CreditAmount))
                                     {
-                                        GLAccountId = itLine.GLAccountId,
-                                        Tenant = tenant,
-                                        InterestEntityTypeCode = "3", //(Journal)
-                                        EntityId = journalLine.JournalId,
-                                        OriginalEntityLineNumber = journalLine.Line,
-                                        ForeignAmount = 0m,// itLine.ForeignAmount,
-                                        LocalAmount = 0m,// itLine.LocalAmount,
-                                        CurrencyId = itLine.CurrencyId,
-                                    };
-                                    InterestTransactionUniqueConstraintFields y = _itjlCache.FirstOrDefault(f => f.GLAccountId == uniqueConstraintFields_current.GLAccountId && f.Tenant == uniqueConstraintFields_current.Tenant
-                                    && f.InterestEntityTypeCode == uniqueConstraintFields_current.InterestEntityTypeCode && f.OriginalEntityLineNumber == uniqueConstraintFields_current.OriginalEntityLineNumber
-                                    && f.EntityId == uniqueConstraintFields_current.EntityId);
-                                    if (y == null)
+                                        uniqueConstraintFields_current = new InterestTransactionUniqueConstraintFields()
+                                        {
+                                            GLAccountId = itLine.GLAccountId,
+                                            Tenant = tenant,
+                                            InterestEntityTypeCode = "3", //(Journal)
+                                            EntityId = journalLine.JournalId,
+                                            OriginalEntityLineNumber = journalLine.Line,
+                                            ForeignAmount = 0m,// itLine.ForeignAmount,
+                                            LocalAmount = 0m,// itLine.LocalAmount,
+                                            CurrencyId = itLine.CurrencyId,
+                                            IT_JlineNumber = itLine.JournalLineNumber,
+                                            JournalLineNumber = journalLine.Line,
+                                        };
+                                        InterestTransactionUniqueConstraintFields x = _itjlCache.FirstOrDefault(f => f.GLAccountId == uniqueConstraintFields_current.GLAccountId && f.Tenant == uniqueConstraintFields_current.Tenant
+                                        && f.InterestEntityTypeCode == uniqueConstraintFields_current.InterestEntityTypeCode && f.OriginalEntityLineNumber == uniqueConstraintFields_current.OriginalEntityLineNumber
+                                        && f.EntityId == uniqueConstraintFields_current.EntityId && f.JournalLineNumber == uniqueConstraintFields_current.JournalLineNumber);
+                                        if (x == null)
+                                        {
+                                            lineFound = true;
+                                            jlPM = journalLine;
+                                            break;
+                                        }
+                                    }
+                                    else if ((journalLine.ActionCode == "1" || journalLine.ActionCode == "3") && itLine.DebitAmount != 0m && journalLine.DebitAccountId == itLine.GLAccountId
+                                        && (journalLine.Reference1 == itLine.Reference || journalLine.Reference2 == itLine.Reference || String.IsNullOrWhiteSpace(itLine.Reference)))
+                                    //  && (!firstDuplicateFound || journalLine.LocalAmount == itLine.DebitAmount))
                                     {
-                                        lineFound = true;
-                                        jlPM = journalLine;
-                                        break;
+                                        uniqueConstraintFields_current = new InterestTransactionUniqueConstraintFields()
+                                        {
+                                            GLAccountId = itLine.GLAccountId,
+                                            Tenant = tenant,
+                                            InterestEntityTypeCode = "3", //(Journal)
+                                            EntityId = journalLine.JournalId,
+                                            OriginalEntityLineNumber = journalLine.Line,
+                                            ForeignAmount = 0m,// itLine.ForeignAmount,
+                                            LocalAmount = 0m,// itLine.LocalAmount,
+                                            CurrencyId = itLine.CurrencyId,
+                                            IT_JlineNumber = itLine.JournalLineNumber,
+                                            JournalLineNumber = journalLine.Line,
+                                        };
+                                        InterestTransactionUniqueConstraintFields y = _itjlCache.FirstOrDefault(f => f.GLAccountId == uniqueConstraintFields_current.GLAccountId && f.Tenant == uniqueConstraintFields_current.Tenant
+                                        && f.InterestEntityTypeCode == uniqueConstraintFields_current.InterestEntityTypeCode && f.OriginalEntityLineNumber == uniqueConstraintFields_current.OriginalEntityLineNumber
+                                        && f.EntityId == uniqueConstraintFields_current.EntityId && f.JournalLineNumber == uniqueConstraintFields_current.JournalLineNumber);
+                                        if (y == null)
+                                        {
+                                            lineFound = true;
+                                            jlPM = journalLine;
+                                            break;
+                                        }
                                     }
                                 }
                             }
@@ -448,6 +519,8 @@ namespace Logitude.Accounting.BL.CoreBL
                                     ForeignAmount = itLine.ForeignAmount,
                                     LocalAmount = itLine.LocalAmount,
                                     CurrencyId = itLine.CurrencyId,
+                                    IT_JlineNumber = itLine.JournalLineNumber,
+                                    JournalLineNumber = jlPM.Line,
                                 };
                                 InterestTransactionPM itPM = itQueryService.GetTransactionByUniqueConstraintFields(uniqueConstraintFields);
                                 if (itPM != null)
@@ -730,6 +803,12 @@ namespace Logitude.Accounting.BL.CoreBL
             }
 
 
+
+            if (count > 9)
+            {
+                rec.JournalLineNumber = int.Parse(values[9]);
+            }
+            else { rec.JournalLineNumber = 0; }
 
             return rec;
         }

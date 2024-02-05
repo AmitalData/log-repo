@@ -46,7 +46,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
 
     public partial class GLAccountsController : ApiController
     {
-      
+
 
         public HttpResponseMessage GetSingleByDispalyNumberAndTenant(string displayNumber, int tenant)
         {
@@ -229,10 +229,10 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
             catch (Exception ex)
             {
-                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-        
+
         public HttpResponseMessage GetConnectedCardsForGLAccount(string accountId)
         {
             try
@@ -274,9 +274,6 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
-
-
-
 
         [HttpPost]
         public HttpResponseMessage UpdateFromCsv(ImageParameter fileUploadParamerter)
@@ -324,11 +321,5 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
             }
 
         }
-
-
-        
-
-
-
     }
 }

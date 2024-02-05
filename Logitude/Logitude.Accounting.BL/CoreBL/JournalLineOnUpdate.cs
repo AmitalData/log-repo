@@ -28,7 +28,7 @@ namespace Logitude.Accounting.BL.CoreBL
             this._MainContext = mainContext;
         }
 
-        const string RevaluationAccountingEntityCode = "8";//	שערוך Revaluation
+        const string RevaluationAccountingEntityCode = "8";//	שערוך Revaluation   
         const string AdjustmentAccountingEntityCode = "10";//	התאמה Adjustment
 
         public virtual void OnUpdate(JournalLinePM journalLinePM, JournalPM journalPM)
@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.CoreBL
             ///if (!journalPM.ConversionJournal)
             {
                 bool haveChange = false;
-                haveChange = FixCredit(journalLinePM, haveChange,
+                haveChange = FixCredit(journalLinePM, haveChange, 
                     journalPM.ConversionJournal || journalPM.AccountingEntityCode == RevaluationAccountingEntityCode || journalPM.AccountingEntityCode == AdjustmentAccountingEntityCode,
                     suppressInactiveCheck
                     );
@@ -123,7 +123,7 @@ namespace Logitude.Accounting.BL.CoreBL
         private bool FixCredit(JournalLinePM journalLinePM, bool haveChange, bool conversionAdjustmentOrRevaluation_Journal, bool suppressInactive)
         {
             var creditIVerifyGLAccountManager = GetIVerifyGLAccountManager();
-            creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber,
+            creditIVerifyGLAccountManager.Verify(this._MainContext, journalLinePM.Tenant, journalLinePM.CreditAccountId, journalLinePM.CreditAccountNumber, 
                 journalLinePM.CurrencyId, conversionAdjustmentOrRevaluation_Journal, suppressInactive);
 
             if (IsFromMumps(journalLinePM) ||
@@ -132,7 +132,7 @@ namespace Logitude.Accounting.BL.CoreBL
                             journalLinePM.ActionTypeCodeEnum == JournalActionTypeEnum.DebitCreditAndVatdeduction
                             )
             {
-
+                
                 haveChange = (journalLinePM.CreditAccountId != creditIVerifyGLAccountManager.AccountId ||
                     journalLinePM.CreditControlAccountId != creditIVerifyGLAccountManager.ControlAccountId);
                 if (haveChange)
@@ -146,7 +146,7 @@ namespace Logitude.Accounting.BL.CoreBL
             return haveChange;
         }
 
-        private bool FixDebit(JournalLinePM journalLinePM, bool haveChange, FullAccountingSettingPM accountingSettings, bool conversionAdjustmentOrRevaluation_Journal, bool suppressInactiveCheck)
+        private bool FixDebit(JournalLinePM journalLinePM, bool haveChange, FullAccountingSettingPM accountingSettings, bool conversionAdjustmentOrRevaluation_Journal,bool suppressInactiveCheck)
         {
             var debitIVerifyGLAccountManager = GetIVerifyGLAccountManager();
             debitIVerifyGLAccountManager.Verify(
@@ -175,7 +175,7 @@ namespace Logitude.Accounting.BL.CoreBL
     journalLinePM.ActionTypeCodeEnum == JournalActionTypeEnum.DebitCreditAndVatdeduction
     )
                 {
-
+                   
                     if (!haveChange)
                     {
                         haveChange = (journalLinePM.DebitAccountId != debitIVerifyGLAccountManager.AccountId ||
@@ -186,7 +186,7 @@ namespace Logitude.Accounting.BL.CoreBL
                         }
                     }
 
-
+                    
 
                     journalLinePM.DebitAccountId = debitIVerifyGLAccountManager.AccountId;
 
@@ -195,7 +195,6 @@ namespace Logitude.Accounting.BL.CoreBL
             journalLinePM.DebitControlAccountId = debitIVerifyGLAccountManager.ControlAccountId;
             return haveChange;
         }
-
 
         private static bool CreditAccountIsNotVATOutputGLAccountId(JournalLinePM journalLinePM, FullAccountingSettingPM accountingSettings)
         {

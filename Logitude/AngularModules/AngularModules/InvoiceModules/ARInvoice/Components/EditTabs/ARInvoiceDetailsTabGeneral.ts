@@ -67,14 +67,20 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     public AllowVatTypes: boolean = true;
     public IsUsingVirtuallization: boolean = false;
     public InvoicePartners: InvoicePartnerType[] = [];
+
     public BillToFilter:ApiQueryFilters;
     public PartnerTypeComboBoxIsDisabled: boolean = true;
+ public GLAccountsFilterItems: ApiQueryFilters;
     constructor(private entityArgs: EntityArgs, private cdRef: ChangeDetectorRef) {
+   
+
+
         super();
         // this.CurrentSession.StartBusyIndicatorLoading();
         this.IsAccountingActivated = SessionLocator.TenantPM.AccountingActivated;
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.EntityPM = entityArgs.EntityPM;
+        this.InitLOVFilters();
         this.BuildPartnersTypes();
         this.IsManifest = this.EntityPM.ARInvoiceTypeCode == "MN" ? true : false;
         this.IsCustomsInvoice = (this.EntityPM.ARInvoiceTypeCode == "CI" || this.EntityPM.ARInvoiceTypeCode == "CC") ? true : false;
@@ -98,7 +104,10 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     get CheckIsFullAccounting() {
         return SessionLocator.TenantPM.AccountingActivated;
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     BuildPartnersTypes() {
         this.InvoicePartners = InvoiceTool.GetARInvoicePartners(null);
         this.PartnersTypeSelectionMethod(this.InvoicePartners[0]);
@@ -117,7 +126,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     PartnersTypeSelectionMethod(selected: InvoicePartnerType) {
         if (this.SelectedPartnerType != selected) {
             this.SelectedPartnerType = selected;
-
+            
             if (selected) {
                 this.EntityPM.BillToPartnerTypeId = selected.PartnerTypeId;
                 this.BillToDependencyValue1 = selected.PartnerTypeId;
@@ -136,6 +145,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
     }
 
     private billToPartnerTypeId: string;
+
 
     SetIsUsingVirtuallization() {
         var hasGridVirtuallizationToggleFeature = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "EVG")[0]
@@ -605,6 +615,7 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.ComputeRelativeRateDate();
         }
     }
+
 
     ComputeRelativeRateDate() {
         this.RelativeRateDate = DateTool.GetRelativeRateDate(this.InvoiceDate, this.ExchangeRateDate, "old");

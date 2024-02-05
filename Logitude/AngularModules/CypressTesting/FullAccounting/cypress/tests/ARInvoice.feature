@@ -5,21 +5,21 @@ Feature: AR Invoice
     Scenario: Create new AR Invoice
         Given the user logged in and navigates to Full Accounting workspace
         And an AR Invoice with the following details
-            | BillTo          | BDDCustomer |
-            | InvoiceCurrency | NIS         |
-            | InvoiceDate     | 03/09/2021  |
-            | PaymentTerm     | Cash        |
-            | DueDate         | 03/09/2021  |
-            | VATNo           | Zero        |
-            | Branch          | Main Office |
-            | VATType         | Zero        |
-        
+            | BillTo          | רונן ארז דולר |
+            | InvoiceCurrency | USD            |
+            | InvoiceDate     | Current Date   |
+            | PaymentTerm     | Cash           |
+            | DueDate         | Current30      |
+            | VATNo           | Zero           |
+            | Branch          | Main Office    |
+            | VATType         | Zero           |
+
     Scenario: Add new Invoice Line
         Given Invoice line with the following details
-            | ChargesType      | BDDChargeType  |
+            | ChargesType      | Air Freight    |
             | LocalDescription | LocalDirection |
             | VatType          | Zero           |
-            | ForiegnCurrency  | NIS            |
+            | ForiegnCurrency  | USD            |
             | Quantity         | 100            |
             | UnitPrice        | 100            |
         When add Invoice Line

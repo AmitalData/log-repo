@@ -12,10 +12,11 @@ export function NavigatesAPPaymentWorkspace() {
 }
 
 export function FillAPPayment(aPPaymentDetails: APPaymentDetails) {
-    cy.FillLogLov(APPaymentSelectors.APPaymentVendor, aPPaymentDetails.Vendor, false)
+    cy.FillLogLov(APPaymentSelectors.APPaymentVendor, aPPaymentDetails.Vendor, true)
     cy.FillLogLov(APPaymentSelectors.APPaymentMethod, aPPaymentDetails.PaymentMethod, true)
     cy.FillLogTextBox(APPaymentSelectors.APPaymentAmount, aPPaymentDetails.PaymentAmount)
     cy.FillLogTextBox(APPaymentSelectors.APPaymentRegisterDate, aPPaymentDetails.RegisterDate)
+    //cy.FillLogLov(APPaymentSelectors.APPaymentBranch,aPPaymentDetails.BranchId, true)
 }
 
 export function SaveAPPayment() {
@@ -35,18 +36,22 @@ export function ApproveAPPayment() {
 
 export function AssertApproveAPPayment() {
     BaseAssertion.AssertStatusCode(RequestAliases.PutAPPayments, 200)
-    cy.wait(5000)
+    
 }
 
 export function VoidAPPayment() {
+
     cy.DefineRequestWait(RestAPI.PUT, URLs.APPayments, RequestAliases.APPayments)
     cy.Click(BaseSelectors.MenuButtons, null)
     cy.Click(APPaymentSelectors.VoidButton, null)
     cy.FillLogTextBox(APPaymentSelectors.CancelationNotes, BaseSelectors.ContainsCancel)
     cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
-    cy.Click(BaseSelectors.RedButton + BaseSelectors.LastElement, null)
+    cy.Click(APPaymentSelectors.ConfirmWindow,null)
+    
+    
 }
 
 export function AssertVoidAPPayment() {
     BaseAssertion.AssertStatusCode(RequestAliases.APPayments, 200)
 }
+

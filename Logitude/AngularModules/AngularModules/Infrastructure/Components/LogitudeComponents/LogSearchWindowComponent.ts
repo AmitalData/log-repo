@@ -370,7 +370,6 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
     }
     //#region My Data
-    private cardExtendedPMService:CardExtendedPMService=new CardExtendedPMService()
 
     public rowCount: number;
     DataSource = {
@@ -538,6 +537,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
             return tempo;
         },
     };
+    private cardExtendedPMService:CardExtendedPMService=new CardExtendedPMService()
 
     //tenent 0
     getRows2(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
@@ -564,7 +564,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         }
         var parentName = this.GetObjectTableName(this.ObjectTableName);
         var parenttable = window.ObjectTables.filter(d => d.Name === parentName)[0];
-        var inactiveField = window.ObjectFields.filter(d => d.FieldName.toLowerCase() === "inactive" &&( d.ObjectTableId === parenttable.Id || d.ObjectTableId === this.ObjectTable.Id))[0];
+        var inactiveField = window.ObjectFields.filter(d => d.FieldName?.toLowerCase() === "inactive" &&( d.ObjectTableId === parenttable.Id || d.ObjectTableId === this.ObjectTable.Id))[0];
 
         if (inactiveField && !this.ShowInActive) {
             filters.addAdditionalFilter(inactiveField.FieldName, false, null, null, "Equals", false, false, false, null);
@@ -580,11 +580,14 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
           //  filters.addAdditionalFilter("CompactSearchField", searchfields, null, null, "Contains", false, false, false, null);
           //  return this._entityListService.getByCompactFilters(rowsObjectTable, filters);
        // }
-         if (rowsObjectTable == "Card"){
+        //else {
+            filters = this.FillTreeFilterDetails(filters);
+            if (rowsObjectTable == "Card"){
                     
-            return this.cardExtendedPMService.getByCompactFilters(rowsObjectTable, filters);
+                return this.cardExtendedPMService.getByCompactFilters(rowsObjectTable, filters);
+    
+            }
 
-           }
             return this._entityListService.getByFilters(rowsObjectTable, filters);
       //  }
     }

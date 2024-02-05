@@ -1534,7 +1534,10 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             }
 
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
-            string[] invoiceStatusCodes = { "DR", "LL" };
+            // string[] invoiceStatusCodes = { "DR", "LL" };
+            HashSet<string> invoiceStatusCodes = new HashSet<string>();
+            invoiceStatusCodes.Add("DR");
+            invoiceStatusCodes.Add("LL");
 
             var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch").Include("ARInvoicesSignedStatus")
                          select new ARInvoiceList()
@@ -1623,9 +1626,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              MainEntityId = entity.MainEntityId,
                              MasterEntityId = entity.MainEntityId,
                              MainEntityReference = entity.MainEntityReference,
-                             IsDueDateColorRed = (entity.DueDate == null || entity.StatusCode == "PD") ? false : (entity.DueDate.Value < todayDate ? true : false),
-                             IsDigitalDueDateColorRed = (entity.DueDate == null || entity.PaidStatus == "Paid") ? false : (entity.DueDate.Value < todayDate ? true : false),
-                             IsExpectedPaymentDateColorRed = (entity.ExpectedPaymentDate == null || entity.StatusCode == "PD") ? false : (entity.ExpectedPaymentDate.Value < todayDate ? true : false),
+                          //   IsDueDateColorRed = (entity.DueDate == null || entity.StatusCode == "PD") ? false : (entity.DueDate.Value < todayDate ? true : false),
+                           //  IsDigitalDueDateColorRed = (entity.DueDate == null || entity.PaidStatus == "Paid") ? false : (entity.DueDate.Value < todayDate ? true : false),
+                            // IsExpectedPaymentDateColorRed = (entity.ExpectedPaymentDate == null || entity.StatusCode == "PD") ? false : (entity.ExpectedPaymentDate.Value < todayDate ? true : false),
                              UpdateDate = entity.UpdateDate,
                              UpdatedByUserId = entity.UpdatedByUserId,
                              ApprovedDate = entity.ApprovedDate,

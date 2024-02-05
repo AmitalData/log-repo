@@ -430,8 +430,7 @@ namespace WebFreight.Web.Helpers
 
                 object[] parameters = new object[] { xmlFilters, tenant };
                 int count = 0;
-                if (!Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) || (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant)) && !exportToExcelArgs.IsXslxFormat)
-                     count = (int)getCountMethodInfo.Invoke(context, parameters);
+                count = (int)getCountMethodInfo.Invoke(context, parameters);
 
                 LogMessagingUtil.Instance.AppendLine(Environment.NewLine + "1 Took:" + _Stopwatch.Elapsed.ToString()); _Stopwatch.Restart();
                 if (count > 0 || Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant))
@@ -489,7 +488,7 @@ namespace WebFreight.Web.Helpers
                         //IEnumerator datalist = querableEntities.GetEnumerator();
 
 
-                        if (Logitude.Server.Tools.Helpers.FeatureToggleHelper.HasFeatureToggle("NXL", tenant) && exportToExcelArgs.IsXslxFormat)
+                        if (exportToExcelArgs.IsXslxFormat)
                         {
                             return this.NpoiExcelGenerator(datalist, query, queryColumns, tenant);
                         }
@@ -1403,23 +1402,39 @@ namespace WebFreight.Web.Helpers
                             {
                                 value = info.GetValue(a, null) != null ? info.GetValue(a, null) : null ;
                             }
-                            
-                            if(column.ObjectFieldDataTypeCode == "DateTime")
+
+                            if (column.ObjectFieldDataTypeCode == "DateTime" && value != null)
                             {
                                 value = value.ToString("dd/MM/yyyy");
-                                    
-                             }
-                            
+
+                            }
+
                             cell.SetCellType(GetCellType(column.ObjectFieldDataTypeCode));
 
                             value = value != null ? value : "";
-
+                            if (value != null)
+                                value = value.ToString();
 
                             if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Numeric)
-                                cell.SetCellValue((double)value);
+                            {
+                                if (value is double || value is int || value is float)
+                                {
+                                    cell.SetCellValue(Convert.ToDouble(value));
+                                }
+                                else if (value is decimal)
+                                {
+                                    // Handle Decimal type
+                                    cell.SetCellValue(Convert.ToDouble((decimal)value));
+                                }
+                                else
+                                {
+                                    cell.SetCellValue(0); // Set a default value or handle accordingly
+                                }
+                            }
                             else if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Boolean)
                                 cell.SetCellValue(bool.Parse(value));
                             else
+                                
                                 cell.SetCellValue(value.ToString());
                             i++;
                         }

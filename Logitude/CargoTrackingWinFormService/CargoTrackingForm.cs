@@ -28,10 +28,11 @@ namespace CargoTrackingWinFormService.Forms
  
 
         private string FromLocalConectionstring = "2022R1_Main,sa,Saas256,.";
-        private string FromTestConectionstring = "LogitudeMain-Test2,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
+        
+        private string FromTestConectionstring = "Main-Test,sa,Saas256,testaccsqldb.israelcentral.cloudapp.azure.com";
         private string FromCloudConectionstring = "Main,CloudApp,London2020!,amitaldata.cloudapp.net";
         private string ToLocalConectionstring = "CargoTracking,sa,Saas256,.";
-        private string ToTestConectionstring = "CargoTracking,sa,Saas256,logitudetestdb.westeurope.cloudapp.azure.com";
+        private string ToTestConectionstring = "CargoTracking,sa,Saas256,testaccsqldb.israelcentral.cloudapp.azure.com";
         private string ToCloudConectionstring = "CargoTracking,amitaladmin,London2015!London2015!,amital.database.windows.net";
         private List<string> ErrorsValidatons = new List<string>();
         string SelectedTable = null;

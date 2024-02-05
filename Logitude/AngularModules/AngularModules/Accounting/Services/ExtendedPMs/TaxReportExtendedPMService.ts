@@ -87,7 +87,8 @@ export class TaxReportExtendedPMService {
 
 
     PostCreateTaxReportInBatch(taxReportPM: TaxReportPM) {
-        return this.httpClient.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(taxReportPM),  ServiceHelper.GetHttpHeaders()).pipe(
+        var mappedEntity: TaxReportPM = this.MapJsonToEntityPM(taxReportPM, false);
+        return this.httpClient.post(this._apiUrl + "/PostCreateTaxReportInBatch", JSON.stringify(mappedEntity),  ServiceHelper.GetHttpHeaders()).pipe(
             map(res => {
                 var serviceResponse: ServiceResponse;
                 serviceResponse = new ServiceResponse();

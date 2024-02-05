@@ -68,12 +68,15 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
     BillToLovSizeForFullAccounting:number;
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     @ViewChild('Child', { read: ViewContainerRef, static: false }) viewContainerRef: ViewContainerRef;
     constructor(private _entityResourceService: EntityResourceService) {
         super();
         this.accountingActivated = SessionLocator.TenantPM.AccountingActivated;
         this._entityResourceService.getEntityResourceByTableName("ARPayment", 0).subscribe((response: any) => {});
         this._entityResourceService.getEntityResourceByTableName("ARInvoice", 0).subscribe((response: any) => {});
+        this.InitLOVFilters();
         this.InitializeBillToLov();
         this.loadPartnerTypesFilter();
 
@@ -101,6 +104,10 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
         if (FeatureLocator.HasFeaturePermession("General", "General.Features.SystemCurrencies")) {
             this.IsEditExchangeRateVisible = true;
         }
+    }
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
     InitializeInvoice() {
         if (this.invoicePm == null) {

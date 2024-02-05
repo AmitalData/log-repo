@@ -16,6 +16,7 @@ using Logitude.Accounting.Data.EntityKeys;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.CloseTables;
+using Simplog.Server.Infrastructure.Helpers;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -64,6 +65,35 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             //}
             return query;
         }
+
+        public List<DuplicateRows> GetDuplicateRows(string taxReportId, int tenant)
+        {
+            IQueryable<string> duplicates = from t in context.TaxReportLines
+                             where t.Tenant == tenant && t.TaxReportId == taxReportId
+                             group t by new { t.Reference, t.VatNumber } into g
+                             where g.Count() > 1
+                             select g.Key.Reference + "_" + g.Key.VatNumber;
+
+            IQueryable<DuplicateRows> q = from t in context.TaxReportLines.Include("Journal")
+                    where t.Tenant == tenant &&
+                        t.TaxReportId == taxReportId &&
+                        duplicates.Contains(t.Reference + "_" + t.VatNumber)
+                    select new DuplicateRows
+                    {
+                        Reference = t.Reference,
+                        VatNumber = t.VatNumber,
+                        IsVoided = t.Journal.IsVoided,
+                        ReferenceDate = t.ReferenceDate,
+                        AccountingEntityId = t.Journal.AccountingEntityId,
+                        AccountingEntityCode = t.Journal.AccountingEntityCode,
+                        Line = t.Line
+                    };
+
+            List<DuplicateRows> res = q.ToList();
+
+            return res;
+        }
+
         public List<TaxReportLinePM> GetSpecificReportLines(string taxReportId, int tenant)
         {
             IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
@@ -80,6 +110,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             }).ToList();
             return listQuery;
         }
+
         public List<TaxReportLinePM> GetReportLinesPMs(string taxReportId, int tenant)
         {
             IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
@@ -136,6 +167,16 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return reports.Where(d => d.IsCancelled == false).ToList();
         }
+
+        public List<TaxReport> GetFutureActiveReportsByTaxReportMonth(DateTime dateTime, int tenant) // not cancelled
+        {
+            TaxReportRepository reportsRepo = new TaxReportRepository(context);
+
+            IQueryable<TaxReport> reports = reportsRepo.GetFutureReportsByTaxReportMonth(dateTime, tenant);
+
+            return reports.Where(d => d.IsCancelled == false).ToList();
+        }
+
         public List<TaxReportPM> GetTransmittedTaxReports(int tenant)
         {
             TaxReportRepository reportsRepo = new TaxReportRepository(context);
@@ -145,24 +186,45 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         }
 
-        public bool CheckIfTaxReportCanHaveClosingJournal(string taxReportId, string vatOutputGLAccountId, int tenant)
+        public bool CheckIfTaxReportCanHaveClosingJournal(string taxReportId, string vatOutputGLAccountId, int tenant, ref List<TaxReportLine> reconciledLines)
         {
-            return true;
-            //  var sameReferenceAndOppositeVatLines = context.TaxReportLines.Where(x => x.TaxReportId == taxReportId && x.Tenant == tenant && x.VatAmount != 0)
-            //            .GroupBy(x => new { reference = x.Reference, vatAmount = Math.Abs(x.VatAmount.Value) }).Where(g => g.Count() > 1).ToList();
-            //  var taxReportLinesReferences = sameReferenceAndOppositeVatLines.Select(x => x.Key.reference);
+            //return true;
+            var sameReferenceAndOppositeVatLines = context.TaxReportLines.Where(x => x.TaxReportId == taxReportId && x.Tenant == tenant && x.VatAmount != 0)
+                      .GroupBy(x => new { reference = x.Reference, vatAmount = Math.Abs(x.VatAmount.Value) }).Where(g => g.Count() > 1).ToList();
+            var taxReportLinesReferences = sameReferenceAndOppositeVatLines.Select(x => x.Key.reference);
 
-            //bool hasOutputReconciledLines = (from line in context.TaxReportLines
-            //                                 join ledger in context.LedgerTransactions on line.JournalId equals ledger.JournalId
-            //                                 where line.OutputOrInput == TaxReportLineOutType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == vatOutputGLAccountId
-            //                                        && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
-            //                                 select line).Any();
-            //bool hasInputReconciledLines = (from line in context.TaxReportLines
-            //                                join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
-            //                                where line.OutputOrInput == TaxReportLineInputType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0
-            //                                         && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
-            //                                select line).Any();
-            //return !(hasOutputReconciledLines || hasInputReconciledLines);
+            var outputReconciledLinesQ = (from line in context.TaxReportLines
+                                             join ledger in context.LedgerTransactions on line.JournalId equals ledger.JournalId
+                                             where line.OutputOrInput == TaxReportLineOutType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0 && ledger.AccountId == vatOutputGLAccountId
+                                                    && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                                             select line);
+
+            bool hasOutputReconciledLines = outputReconciledLinesQ.Any();
+
+            if (hasOutputReconciledLines)
+            {
+                reconciledLines = outputReconciledLinesQ.ToList();
+            }
+            else
+            {
+                reconciledLines = new List<TaxReportLine>();
+            }
+
+            var inputReconciledLinesQ = (from line in context.TaxReportLines
+                                            join ledger in context.LedgerTransactions on line.LedgerTransactionId equals ledger.Id
+                                            where line.OutputOrInput == TaxReportLineInputType && line.TaxReportId == taxReportId && line.Tenant == tenant && line.VatAmount != 0
+                                                     && line.TransmitStatusCode == TaxReportLineTransmitStatusValues.Fortransmit && !taxReportLinesReferences.Contains(line.Reference) && (ledger.IsReconciled == true || ledger.InReconcileProgress == true)
+                                            select line);
+
+            bool hasInputReconciledLines = inputReconciledLinesQ.Any();
+
+            if (hasInputReconciledLines)
+            {
+                reconciledLines = reconciledLines.Concat(inputReconciledLinesQ).ToList();
+            }
+
+
+            return !(hasOutputReconciledLines || hasInputReconciledLines);
         }
 
         public List<TaxReportLine> GetTaxReportReconciledLines(string taxReportId, int tenant)
@@ -226,6 +288,14 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 select a).FirstOrDefault();        
     }
 
-
-
+    public class DuplicateRows
+    {
+        public string Reference { get;set; }
+        public string VatNumber { get;set; }
+        public bool? IsVoided { get;set; }
+        public DateTime? ReferenceDate { get;set; }
+        public string AccountingEntityId { get;set; }
+        public string AccountingEntityCode { get; set; }
+        public int Line { get; set; }
+    }
 }

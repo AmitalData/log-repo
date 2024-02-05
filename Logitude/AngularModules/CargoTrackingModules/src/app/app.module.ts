@@ -56,8 +56,8 @@ import { LogboxShipmentExportExcelService } from 'src/CargoTracking/Services/Oth
 import { LogitudeGridExportToExcelService } from 'src/CargoTracking/Services/Others/LogitudeGridExportToExcelComponent';
 import { SafePipe } from 'src/Infrastructure/Pipes/SafePipe';
 import { StopLoopPipe } from 'src/Infrastructure/Pipes/StopLoopPipe';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TenantManagementService } from 'src/CargoTracking/Services/Others/TenantManagementService';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 export function getBaseUrl() {
     return document.getElementsByTagName('base')[0].href;

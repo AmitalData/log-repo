@@ -295,7 +295,8 @@
                                (SortInvoked)="OnSortInvoked($event)"
                                (DataLoaded)="onDataLoaded()"
                                [ChangeCheckBoxesState]="ChangeCheckBoxesState"
-                               (rowSelectedEvent)="onRowSelected($event)">
+                               (rowSelectedEvent)="onRowSelected($event)"
+                               [GridAdditionalData]="{ReconcileEventManager:reconcileEventManager}">
                 </logitude-grid>
             </div>
         </td>

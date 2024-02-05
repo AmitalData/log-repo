@@ -45,10 +45,10 @@ namespace Logitude.Accounting.BL.Utils
         private string _ResponseText;
         private HttpStatusCode _StatusCode;
         private List<string> _badList;
-        private int _AccMade = 0;
+        private int _AccMade = 0; 
         private int _RecosMade = 0;
         private int _TransactionsMade = 0;
-        private bool _retry;
+        private bool _retry; 
         private bool _errors = false;
 
         public GLAccountMultiToCurrencyBatch()
@@ -181,7 +181,7 @@ namespace Logitude.Accounting.BL.Utils
                     if (othercurr)
                     {
                         this.AddErrorRow($"GLAccount {gLAccountPM.DisplayNumber} Id={gLAccountPM} has transactions not in {currency.Code}");
-                        //  _errors = true;
+                      //  _errors = true;
                         only_part_2 = true;
                         recoMethod = gLAccountPM.ReconcileMethodCode;
                     }
@@ -231,7 +231,7 @@ namespace Logitude.Accounting.BL.Utils
                             throw;
                         }
                     }
-                    if (recoMethod == ReconcileMethodValues.LocalCurrency)
+                    if (recoMethod == ReconcileMethodValues.LocalCurrency)  
                     {
                         // Open Transactions - Local
                         using (var scope = TransactionFactory.GetTransaction(TimeSpan.FromMinutes(4)))

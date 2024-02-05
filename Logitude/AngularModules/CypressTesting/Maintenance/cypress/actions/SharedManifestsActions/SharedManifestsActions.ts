@@ -102,7 +102,7 @@ export function LoginSecondTenant(customerCareUser = true) {
 function DevelopmentModeLogin(customerCareUser) {
 
     cy.fixture("Login.json").then(loginData => {
-
+debugger
         let email = customerCareUser ? loginData.customerCareEmail : loginData.email;
         let password = customerCareUser ? loginData.customerCarePassword : loginData.password;
         let url = loginData.url;

@@ -5,5 +5,5 @@ export interface APPaymentDetails {
     PaymentCurrency: string,
     Rate: string,
     RegisterDate: string,
-    Branch: string
+    BranchId: string
 }

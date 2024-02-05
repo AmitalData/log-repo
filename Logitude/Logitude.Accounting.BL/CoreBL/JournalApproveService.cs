@@ -47,6 +47,10 @@ using Microsoft.Practices.Unity;
 using System.Collections;
 using Logitude.Accounting.Data.EntityLists;
 using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
+using Simplog.Data.InfrastructureModel.Repositories;
+using Simplog.Data.InfrastructureModel.EntityPOCOs;
+using Logitude.CRM.Data.EntityPOCOs;
+
 
 namespace Logitude.Accounting.BL.CoreBL
 {
@@ -339,10 +343,10 @@ namespace Logitude.Accounting.BL.CoreBL
         private void CalculateTotalFutureOpenChequesForCreditGlAccount(List<LedgerTransactionPM> ledgerTrasnctions)
         {
 
-            if ((_JournalPM.AccountingEntityCode == "3" || _JournalPM.AccountingEntityCode == "1") && _JournalPM.ExternalSystem.ToUpper() !="AMITAL")
+            if ((_JournalPM.AccountingEntityCode == "3" || _JournalPM.AccountingEntityCode == "1") && _JournalPM.ExternalSystem?.ToUpper() != "AMITAL")
             {
-               
-                if(ledgerTrasnctions.Count > 0)
+
+                if (ledgerTrasnctions.Count > 0)
                 {
                     GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(_Tenant);
                     GLAccountMoreDataQueryService gLAccountMoreDataQueryService = new GLAccountMoreDataQueryService(_Tenant);
@@ -905,7 +909,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     var jus = //new JournalUpdateService(SeedTenant);
     new JournalUpdateService(MyContext, new Dictionary<string, IContext>(), SeedTenant);
 
-                    pm.StatusCode = "2";
+                    pm.StatusCode = "6";
                     pm.ChangeSetOp = ChangeSetOperation.Update;
                     jus.Update(pm, true);
                     scope.Complete();
@@ -988,6 +992,70 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
 
                     OnException(null, null, journalId, SeedTenant, eee);
+                    //LogMessagingUtil.Instance.AppendLine(journalId.ToString() + " " + eee.Message);
+                    //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
+                    Thread.Sleep(500);
+
+                    //throw;
+                }
+
+            }
+
+
+
+
+        }
+        public static void ReturnToQueue(int SeedTenant, bool AllTenants)
+        {
+            var sw = new Stopwatch();
+
+            List<JournalPM> waitingJournal = null;
+            //List<string> Last_journalBufferKeys = null;
+            sw.Restart();
+            using (var scope = TransactionFactory.GetTransaction())
+            // maybe to do GetNewSerializableTransaction Lock ?!?!?!
+            {
+
+                var journalQS = new JournalQueryService(SeedTenant);
+
+                waitingJournal = journalQS.GetJournalByTenant(SeedTenant, AllTenants).ToList();
+
+            }
+            sw.Stop();
+            if (sw.Elapsed > TimeSpan.FromSeconds(2))
+            {
+                Debug.WriteLine("Improve SQL Query Performance !!!");
+            }
+            if (waitingJournal == null)
+            {
+
+                Thread.Sleep(500);
+                return;
+            }
+            if (waitingJournal.Count == 0)
+            {
+
+                Thread.Sleep(500);
+                return;
+            }
+            waitingJournal = new List<JournalPM>(waitingJournal);
+            foreach (var journal in waitingJournal)
+            {
+                try
+                {
+                    if (journal.QueueId != null)
+                    {
+                        QueueMessageRepository QueueMessageRepository = new QueueMessageRepository(SeedTenant);
+                        var status = QueueMessageRepository.GetSingleQueueMessage(Convert.ToInt64(journal.QueueId))?.Status;
+                        if (status != 1)
+                            continue;
+                    }
+                    JournalApproveService.EnqueueDB(journal);
+                }
+                catch (Exception eee)
+                {
+
+                    OnException(null, null, journal?.Id, SeedTenant, eee);
                     //LogMessagingUtil.Instance.AppendLine(journalId.ToString() + " " + eee.Message);
                     //ExceptionHandler.HandleException(eee, DateTime.Now, 0, "", "JournalApproveWorkerRole", "approveJournalService.SubmitApprove", null);
                     Thread.Sleep(500);
@@ -1416,12 +1484,83 @@ namespace Logitude.Accounting.BL.CoreBL
                     LogMessagingUtil.Instance.AppendLine("Not streamed !!");
                     LogMessagingUtil.Instance.AppendLine(stringBuilder.ToString());
                 }
-
+                else
+                {
+                   
+                    this.CreateJournalAdditionalDataWhenApprovingJournal(this._JournalPM);
+                    
+                }
 
             }
 
         }
+        private void CreateJournalAdditionalDataWhenApprovingJournal(JournalPM journal)
+        {
+                CreateJournalAdditionalDataForEachDebitInputLine(journal);
+                CreateJournalAdditionalDataForARInvoiceJournal(journal);
+        }
+        private void CreateJournalAdditionalDataForEachDebitInputLine(JournalPM journal)
+        {
+            if (journal.AccountingEntityCode != JournalAccountingEntities.ARInvoice && (String.IsNullOrEmpty(journal.ExternalSystem) || journal.ExternalSystem != "AMITAL"))
+            {
+                List<JournalLinePM> jourlDebitInputLines = SelectJournalDebitLinesFromJournalLines(journal);
+                foreach (JournalLinePM journalLine in jourlDebitInputLines)
+                {
+                    JournalAdditionalDataPM journalAdditionalDataPM = MapJournalAdditionalDataFields(journalLine, journal);
+                    if (!this.CheckIfExistInDb(journalAdditionalDataPM.JournalId, journalAdditionalDataPM.JournalLineNumber, journalAdditionalDataPM.Tenant))
+                    {
+                        SaveJournalAdditionalData(journalAdditionalDataPM);
+                    }
 
+                }
+            }
+        }
+        private Boolean CheckIfExistInDb(string journalId, int JournalLineNumber,int tenant)
+        {
+            JournalAdditionalDataQueryService journalAdditionalDataQueryService = new JournalAdditionalDataQueryService(tenant);
+            return journalAdditionalDataQueryService.CheckIfJournalAdditionalDataExist(journalId, JournalLineNumber, tenant);
+        }
+        private void CreateJournalAdditionalDataForARInvoiceJournal(JournalPM journal)
+        {
+            if (journal.AccountingEntityCode == JournalAccountingEntities.ARInvoice && (String.IsNullOrEmpty(journal.ExternalSystem) || journal.ExternalSystem != "AMITAL"))
+            {
+                JournalAdditionalDataPM journalAdditionalDataPM = MapJournalAdditionalDataFields(null, journal);
+                if (!this.CheckIfExistInDb(journalAdditionalDataPM.JournalId, journalAdditionalDataPM.JournalLineNumber, journalAdditionalDataPM.Tenant))
+                {
+                    SaveJournalAdditionalData(journalAdditionalDataPM);
+                }
+            }
+        }
+        private void SaveJournalAdditionalData(JournalAdditionalDataPM journalAdditionalDataPM)
+        {
+            IAccountingContext MyContext = AccountingContext.GetContext(journalAdditionalDataPM.Tenant);
+            JournalAdditionalDataUpdateService additionalDataUpdateService = new JournalAdditionalDataUpdateService((IAccountingContext)MyContext, new Dictionary<string, IContext>(), journalAdditionalDataPM.Tenant);
+            additionalDataUpdateService.Update(journalAdditionalDataPM, true);
+        }
+        private List<JournalLinePM> SelectJournalDebitLinesFromJournalLines(JournalPM journal)
+        {
+            FullAccountingSettingPM setting = GetFullAccountingSetting(journal.Tenant);
+
+            return journal.JournalLines.Where(d => d.ActionTypeCode == JournalActionTypes.Debit && d.DebitAccountId == setting.VATInputsGLAccountId).ToList();
+        }
+
+        private JournalAdditionalDataPM MapJournalAdditionalDataFields(JournalLinePM journalLine, JournalPM journal)
+        {
+            return new JournalAdditionalDataPM()
+            {
+                JournalId = journal.Id,
+                ChangeSetOp = ChangeSetOperation.Insert,
+                TaxReportId = null,
+                TaxReportTransmitStatusCode = null,
+                Tenant = journal.Tenant,
+                JournalLineNumber = journalLine != null ? journalLine.Line : 1,
+            };
+        }
+        private FullAccountingSettingPM GetFullAccountingSetting(int tenant)
+        {
+            FullAccountingSettingQueryService settingQueryService = new FullAccountingSettingQueryService(tenant);
+            return settingQueryService.GetSingleFullAccountingSetting(tenant);
+        }
         private static SqlParameter GettGLAccountAgingDataType(List<GLAccountAgingDataPM> gLAccountAgingDataPMs)
         {
             var listDBTypeGLAccountAgingData =

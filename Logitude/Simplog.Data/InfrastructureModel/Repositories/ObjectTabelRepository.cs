@@ -92,7 +92,9 @@ namespace Simplog.Data.InfrastructureModel.Repositories
         {
             string entityName = "ObjectTable" + id + tenant;
             ObjectTable entity;
-            if (getFromCache)
+            getFromCache = true;
+
+			if (getFromCache)
             {
                
                     if (CacheManager.CacheWrapper.Get(entityName) == null)

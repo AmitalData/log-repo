@@ -13,65 +13,30 @@ Given("the user logged in and navigates to Full Accounting workspace", () => {
 });
 
 Given("an AR Payment with the following details", (dataTable) => {
-    ARPaymentActions.NavigatesARPaymentWorkspace();
-    let ARPaymentDetails = Assists.CreateInstance<ARPaymentDetails>(dataTable, true);
-    ARPaymentActions.FillChequeARPayment(ARPaymentDetails);
-    cy.wait(2000);
+    debugger
+    ChequeDepositActions.NavigatesChequeDepositWizerd()
+    let ARPaymentDetails = Assists.CreateInstance<ChequeDepositDetails>(dataTable, true);
+    ChequeDepositActions.FillChequeDepositDetails(ARPaymentDetails)
+
 });
 
-// When("create AR Payment", () => {
-//     ARPaymentActions.CreateARPayment()
-// });
 
-// Then("the AR Payment should get successfully", () => {
-//     ARPaymentActions.AssertCreateARPayment()
-// });
-//#endregion
+When("create AR Payment", () => {
+    ChequeDepositActions.CreateChequeDeposit();
+});
 
-//#region Approve the AR Invoice
+
 Given("a cheque with the following details", (dataTable) => {
-    let ARPaymentDetails = Assists.CreateInstance<ARPaymentDetails>(dataTable, true);
-    ARPaymentActions.FillChequeDetails(ARPaymentDetails)
+    let ARPaymentDetails = Assists.CreateInstance<ChequeDepositDetails>(dataTable, true);
+    ChequeDepositActions.FillChequeDepositAmount(ARPaymentDetails)
 });
 
 When("Approve the AR Payment", () => {
-    ARPaymentActions.ApproveARPayment()
-});
-
-Then("the AR Payment should approve successfully", () => {
-    ARPaymentActions.AssertApproveARPayment()
-});
-//#endregion
-
-//#region Create new Cheque Deposit
-Given("the user navigates to cheque deposit wizerd", () => {
-    ChequeDepositActions.NavigatesChequeDepositWizerd()
-});
-
-Given("a cheque deposit with the following details", (dataTable) => {
-    let chequeDepositDetails = Assists.CreateInstance<ChequeDepositDetails>(dataTable, true);
-    ChequeDepositActions.FillChequeDepositDetails(chequeDepositDetails)
-});
-
-When("create cheque deposit", () => {
-    ChequeDepositActions.CreateChequeDeposit()
-});
-
-Then("the cheque deposit should get successfully", () => {
-    ChequeDepositActions.AssertCreateChequeDeposit()
-});
-//#endregion
-
-//#region Approve the Cheque Deposit
-Given("select the all cheques in the cheque deposit", () => {
-    ChequeDepositActions.SelectAllCheques()
-});
-
-When("Approve the cheque deposit", () => {
     ChequeDepositActions.ApproveChequeDeposit()
 });
 
-Then("the cheque deposit should approve successfully", () => {
+Then("the AR Payment should approve successfully", () => {
     ChequeDepositActions.AssertApproveChequeDeposit()
 });
 //#endregion
+

@@ -53,7 +53,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
 			base.OnCreating(entityPM, entityParentPM);
         }
-
         protected override void OnUpdating(JournalLinePM entityPM)
         {
             var myName = this.NameOf();

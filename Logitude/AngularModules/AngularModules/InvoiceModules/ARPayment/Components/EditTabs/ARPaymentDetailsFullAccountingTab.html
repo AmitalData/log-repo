@@ -151,6 +151,7 @@
                                 <tr>
                                     <td style="width:360px;">
                                         <table>
+
                                             <!-- PartnerTypes Filter -->
                                             <tr  class="customtrclass">
                                                 <td style="width:120px; height: 25px; padding-left: 10px; ">
@@ -171,6 +172,7 @@
                                                 </td>
 
                                             </tr>
+
                                             <!-- BillToId -->
                                             <tr class="customtrclass">
                                                 <td style="width:120px; height:25px; ">
@@ -180,20 +182,22 @@
                                                 </td>
 
                                                 <td style="width:230px; ">
-                                                    <LogLov [ObjectFieldName]="'BillToId'"
-                                                            [ObjectTableName]="ObjectTableName"
-                                                            [DataContext]="DataContext"
-                                                            [SelectedValue]="BillToId"
-                                                            [LookUpTableName]="'Card'"
-                                                            [DependencyFilter1Value]="filterByPartnerTypeCode"
-                                                            [DisplayFieldsFromList]="DisplayFieldsFromList"
-                                                            [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
-                                                            [CustomizedWidth]="BillToLovSizeForFullAccounting"
+                                                <LogLov [ObjectFieldName]="'BillToId'"
+                                                        [ObjectTableName]="ObjectTableName"
+                                                        [DataContext]="DataContext"
+                                                        [SelectedValue]="BillToId"
+                                                        [LookUpTableName]="'Card'"
+                                                        [DependencyFilter1Value]="filterByPartnerTypeCode"
+                                                        [DisplayFieldsFromList]="DisplayFieldsFromList"
+                                                        [DisplayLocalFieldsFromList]="DisplayLocalFieldsFromList"
+
                                                             [QueryFilterItems]="BillToFilter"
                                                             [CustomizedWidth]="BillToLovSizeForFullAccounting"
                                                             [StartSearchFromChar]="3"
-                                            [StartSearchFromNumber]="5">
-                                                    </LogLov>
+                                            [StartSearchFromNumber]="5"
+                                            [QueryFilterItems]="GLAccountsFilterItems">
+
+                                                </LogLov>
 
                                                 </td>
 

@@ -20,6 +20,7 @@ using System.Runtime.Remoting.Contexts;
 using Logitude.CargoTracking.Data.Model;
 using System.Globalization;
 
+
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
 {
 

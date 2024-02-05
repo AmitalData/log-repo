@@ -3698,10 +3698,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;OppositeAccountLocalName&quot;"
     DefaultText="&quot;Opposite Account Local Name&quot;"
-    FullLocalDefaultText="&quot;חשבון נגדי&quot;"
+    FullLocalDefaultText="&quot;שם מקומי של חשבון נגדי&quot;"
     ListFieldLable="&quot;OppositeAccountLocalNameListLable&quot;"
     ListLableDefaultText="&quot;Opposite Account Local Name&quot;"
-    ListLocalDefaultText="&quot;חשבון נגדי&quot;"
+    ListLocalDefaultText="&quot;שם מקומי של חשבון נגדי&quot;"
     IsNullable="true"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -5664,7 +5664,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
- <field
+  <field
     Id="&quot;4808272f-abdd-4f6d-8f2a-a46abcbe11cd&quot;"
     FieldName="&quot;SecurityLevelFiltering&quot;"
     OldNames="SecurityLevelFiltering"

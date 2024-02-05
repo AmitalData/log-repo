@@ -20,12 +20,14 @@ import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
+import { ThresholdTypes } from 'InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent';
+import { ThresholdTypes } from 'InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent';
+=========
 import { HostScreenService } from 'Common/Components/HostScreen/HostScreenService';
 import { CustomsCloudComponentArgs } from 'InfrastructureModules/InfrastructureOthers/Components/CustomsCloud/CustomsCloudComponent';
 import { HomeScreenEvent, HomeScreenEventTypes, HostScreenComponent } from 'Common/Components/HostScreen/HostScreenComponent';
-import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { ThresholdTypes } from 'InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent';
+>>>>>>>>> Temporary merge branch 2
 
 @Component({
     
@@ -496,6 +498,14 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Container Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
+            if (SessionLocator.Tenant == 0) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "ReleaseSettings";
+                item.ObjectTableName = "Release Settings";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
             var item1 = new MenusTablePM();
             item1.CategoryTypeCode = "CMS";
             item1.Icon = "Settings"
@@ -750,16 +760,15 @@ export class MaintenanceComponent {
             item.ObjectTableName = "Cache Log";
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
-
-
-        // if (FeatureLocator.HasFeaturePermession("UserDefinedReport", "Module")) {
-        //     var item = new MenusTablePM();
-        //     item.CategoryTypeCode = "OTH";
-        //     item.Icon = "Settings"
-        //     item.Code = "UDR";
-        //     item.ObjectTableName = "UserDefinedReport";
-        //     this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        // }
+        
+        if (FeatureLocator.HasFeaturePermession("General", "CARGOTRACKING")) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "OTH";
+            item.Icon = "Settings"
+            item.Code = "CARGO";
+            item.ObjectTableName = "Cargo Tracking";
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
       
 
         if (SessionLocator.Tenant == 0) {
@@ -794,16 +803,6 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "ErrorLog")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-             var item = new MenusTablePM();
-            item.CategoryTypeCode = "OTH";
-            item.Icon = "Settings"
-            item.Code = "CARGO";
-            item.ObjectTableName = "Cargo Tracking";
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-       
-
-           
-
             var item = new MenusTablePM();
             item.CategoryTypeCode = "MNG";
             item.Icon = "List"
@@ -812,7 +811,6 @@ export class MaintenanceComponent {
             item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "BatchServicesLog")[0].Id
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
-           
         }
 
         else {
@@ -1687,6 +1685,15 @@ export class MaintenanceComponent {
                         logitudeWindow.Title = "Container Settings";
                         logitudeWindow.Show('./ShipmentModules/ShipmentOthers/Components/ContainerSetting/ContainerSettingsComponent');
                     });
+                    break;
+                }
+                case "ReleaseSettings": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Width = 1200;
+                    logitudeWindow.Height = 600;
+                    logitudeWindow.Title = "Release Settings";
+                    logitudeWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/Workspaces/ReleaseSettingsComponent');
                     break;
                 }
 

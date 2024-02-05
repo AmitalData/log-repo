@@ -167,7 +167,7 @@
   </Column>
   <Column
     Name="ConfirmationNumber"
-    Type="varchar"
+    Type="nvarchar"
     Size="30">
     <Constraints
       Nullable="true" />

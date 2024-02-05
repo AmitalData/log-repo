@@ -134,7 +134,7 @@ namespace WebFreight.Web.Controllers.AccountingModel
             else
             {
                 var acc = gLAccountQueryService.GetSingleByAccountId(accountId, tenant);
-                if (acc == null)
+                if (acc == null) 
                 {
                     message = "Account {accountId} not found";
                     return isSuccess;

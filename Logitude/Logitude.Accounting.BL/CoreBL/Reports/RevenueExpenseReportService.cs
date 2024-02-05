@@ -79,9 +79,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
             }
 
-            using (var transactionScope = TransactionFactory.GetNewTransaction(TimeSpan.FromMinutes(__TimeOutInMinutes)) //snapshot isolation performance
-                )
-            {
+       
 
 
 
@@ -527,7 +525,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                 DbLog = "";// _DbLogger.ToString();
                 result = l;
                 return l;
-            }
+            
         }
 
         private  static IQueryable<TrailReportTemp> GetMoneyDataPerDate(

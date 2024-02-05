@@ -78,6 +78,8 @@ namespace Logitude.Accounting.Data.EntityMapping
             this.Property(t => t.LedgerTransactionId).HasColumnName("LedgerTransactionId").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.SubTotalInLocalCurrency).HasColumnName("SubTotalInLocalCurrency");
+
+            this.Property(t => t.ConfirmationNumber).HasColumnName("ConfirmationNumber").HasMaxLength(30).IsUnicode(true);
         }
     }
 }

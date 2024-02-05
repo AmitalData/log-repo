@@ -3,5 +3,7 @@ export interface APInvoiceDetails {
     InvoiceNumber: string,
     InvoiceAmount: string,
     InvoiceDate: string,
-    AccountingDate: string
+    AccountingDate: string,
+    PaymentTerm: string,
+    BranchId: string,
 }

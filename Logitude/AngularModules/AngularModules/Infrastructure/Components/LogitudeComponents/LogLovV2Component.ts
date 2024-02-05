@@ -3100,8 +3100,6 @@ export class LogLovV2Component implements OnInit, AfterViewInit, OnDestroy {
     }
 
     CallDataFromCache(searchText: string, filters: ApiQueryFilters, setFirstAsSelected: boolean = false) {
-
-debugger
         if (!this.LookUpTable.AutoCompleteSearchWindow) {
             filters.PageSize = 1000;
         }
@@ -3319,7 +3317,6 @@ debugger
     }
 
     CallDataFromServer(searchText: string, filters: ApiQueryFilters) {
-debugger
         if (!this.LookUpTable.AutoCompleteSearchWindow) {
             if (this.DefaultPageSize) {
                 filters.PageSize = this.DefaultPageSize;

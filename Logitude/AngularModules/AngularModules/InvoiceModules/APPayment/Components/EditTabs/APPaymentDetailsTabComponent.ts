@@ -70,6 +70,8 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     VendorLovSizeForFullAccounting:number;
     _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
     public FilterInvoiceByAPPayment:boolean= false
+    public GLAccountsFilterItems: ApiQueryFilters;
+
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
         super();
 
@@ -79,6 +81,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         }
         this.IsFullAccounting = SessionLocator.TenantPM.AccountingActivated;
+        this.InitLOVFilters();
         this.InitializeBillToLov()
         this.EntityPM = entityArgs.EntityPM;
         this.ReconcileInternalTrans = this.EntityPM.ReconcileInternalTrans;
@@ -108,7 +111,10 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
 
         this.LocalCurrencyCode = SessionLocator.LocalCurrencyCode;
     }
-
+    InitLOVFilters() {
+        this.GLAccountsFilterItems = new ApiQueryFilters();
+        this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
+    }
     private InitializeBillToLov() {
         if (this.IsFullAccounting) {
             this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
@@ -254,8 +260,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private LoadTaxPercentage() {
         if (this.IsFullAccounting)
         {
-           
-debugger
                 this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
@@ -945,7 +949,7 @@ debugger
             if(this.IsFullAccounting)
                 this.GetConnectedGLAccount();
         else {
-               this.GetConnectedBillTo();
+                this.GetConnectedBillTo();
                 this.FilterInvoiceByAPPayment=false;
                 this.LoadData();
             }
@@ -1296,7 +1300,6 @@ debugger
         return this.EntityPM.TaxDeductionPercentage;
     }
     set TaxDeductionPercentage(value: number) {
-        debugger
         if (this.EntityPM != null) {
             if (this.EntityPM.TaxDeductionPercentage != value) {
 

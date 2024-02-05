@@ -561,7 +561,7 @@ namespace WebFreight.Web.Controllers.ShipmentsModel.Extended
                 data.UserIdNumberUpdateDate = TenantServerConfigration.GetCurrentDateTime(data.Tenant);
                 data.ApprovedByUserName = entity.ApprovedByUserName;
                 data.UserAcceptSaveID = entity.UserAcceptSaveID;
-
+                 
                 Repository.Update(data);
                 Repository.SubmitChanges();
 

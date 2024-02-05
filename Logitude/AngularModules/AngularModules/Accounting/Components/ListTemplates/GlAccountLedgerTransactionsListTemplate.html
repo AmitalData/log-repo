@@ -153,14 +153,20 @@
     </div>
 
     <!-- OppositeAccount -->
-    <div [style.text-align]="isRTL ? 'right' : 'left'" [title]="rowData['OppositeAccountDisplayNumber']"
+                                                                        <!-- title = toolTip -->
+    <div [style.text-align]="isRTL ? 'right' : 'left'" [title]="rowData['OppositeAccountDisplayNumber']" 
         class="TextTrimming" *ngIf="fieldName == 'OppositeAccountLocalName'">
         <a (click)="OpenGLAccount('OppositeAccountId')">{{ rowData['OppositeAccountLocalName'] }}</a>
 
     </div>
+    <div [style.text-align]="isRTL ? 'right' : 'left'" [title]="rowData['OppositeAccountLocalName']"
+        class="TextTrimming" *ngIf="fieldName == 'OppositeAccountDisplayNumber'">
+        <a (click)="OpenGLAccount('OppositeAccountId')">{{ rowData['OppositeAccountDisplayNumber'] }}</a>
+
+    </div>
 
 
-
+    
     <!-- **** -->
     <!-- Reconcile Window -->
     <div class="TextTrimming" *ngIf="fieldName == 'SelectCheckBox'" style="padding: 4px 7px;">

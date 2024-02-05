@@ -363,8 +363,8 @@ private selectedItems:ObservableCollection;
     filters.GetAll = true;
     filters.GetCount = true;
    
-    if (!this.ShowPrintedInvoice) {
-      filters.addAdditionalFilter("IsPrinted", false, null, null, "Equal", false, false, false, "Boolean")
+    if (this.ShowPrintedInvoice) {
+      filters.addAdditionalFilter("IsPrinted", true, null, null, "Equal", false, false, false, "Boolean")
     }
     filters.addAdditionalFilter("InvoiceDate", this.fromDate, this.toDate, null, "Between", false, false, false, "DateTime"); 
     filters.addAdditionalFilter("ARInvoiceTypeCode", "IT", null ,null, "Equal", false, false, false, "string"); 

@@ -42,7 +42,8 @@
   ParentTableName="Journal"
   LocalDefaultText="&quot;פ יומן תנעות להתאמה&quot;"
   DefaultText="&quot;Journal Reconcile With Transactions ID&quot;"
-  Code="&quot;537b&quot;"
+  Code="&quot;f106&quot;"
+
   Name="&quot;JournalReconcile Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -58,13 +59,14 @@
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
   TenantZeroData="false"
-  Code1="&quot;66f9&quot;"
+  Code1="&quot;af89&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
   DisableSearchBox="false"
   HasDocuments="false"
   IsLookUp="false"
   IsTabsHidden="false"
+
   DxmlDatabaseTypeCode="Main"
   DxmlDatabaseSchemaCode="dbo">
   <field
@@ -598,6 +600,7 @@
     CanAutomateSetValue="false"
     DisplayInAutomationAsEnitity="false"
     HasTemplate="false"
+
     IsCustom="false"
     IsSpellCheckedFullFieldLable="false"
     IsSpellCheckedHelpLocalDefaultText="false"
@@ -792,6 +795,32 @@
   </EventTypes>
   <Records />
   <DataContracts />
-  <AdditionalTextCodes />
+  <AdditionalTextCodes>
+    <TextCode
+      Code="&quot;JournalReconcile.O.TotalReconciliationAmountIsZero&quot;"
+      DefaultText="&quot;Total ReconciliationAmount is zero&quot;"
+      LocalDefaultText="&quot;.לא ניתן לבצע את הפעולה , הסכום להתאמה בתנועה השתנה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;JournalReconcile.O.CantReconcileLedgerTransactionsMoreOne&quot;"
+      DefaultText="&quot;It is not possible to reconcile ledger transactions for more than one currency.&quot;"
+      LocalDefaultText="&quot;לא אופיינה התאמת תנועות ליותר ממטבע אחד&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;JournalReconcile.O.CurrencyRateDoesNotExist&quot;"
+      DefaultText="&quot;The currency rate does not exist in the currency rate table&quot;"
+      LocalDefaultText="&quot;שער המטבע לא קיים בטבלת שערי המטבעות&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;JournalReconcile.O.ReconcileProgressByAnother&quot;"
+      DefaultText="&quot;There are ledger transactions that have been marked in reconcile progress by another user or session, you must refresh, exit the reconciliation screen without saving the rows and re-enter&quot;"
+      LocalDefaultText="&quot;ישנן תנועות שסומנו ונמצאות בתהליך התאמה על ידי משתמש או סשן אחר, יש לבצע רענון לצאת ממסך התאמות ללא שמירת השורות ולהיכנס מחדש&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+  </AdditionalTextCodes>
+
   <AdditionalFeatures />
 </entity>
