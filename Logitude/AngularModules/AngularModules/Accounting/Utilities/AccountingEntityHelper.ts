@@ -1,3 +1,6 @@
+import { AppTool } from "Infrastructure/Tools";
+import { SessionLocator } from "Infrastructure/Utilities/SessionLocator";
+
 export class AccountingEntityHelper {
 
     static getEntityIcon(_sourceTypeCode: string) {
@@ -76,6 +79,46 @@ export class AccountingEntityHelper {
         return iconTxt;
     }
 
+    static GetPartnerTypeObjectTableName(partnerTypeId: string){
+        var objectTableName;
+        switch (partnerTypeId) {
+            case 'AG': { objectTableName = 'Agent'; break; }
+            case 'AL': { objectTableName = 'Airline'; break; }
+            case 'CG': { objectTableName = 'CustomAgent'; break; }
+            case 'CH': { objectTableName = 'CustomsShipper'; break; }
+            case 'CS': { objectTableName = 'Customer'; break; }
+            case 'PO': { objectTableName = 'Customer'; break; }
+            case 'PT': { objectTableName = 'Participant'; break; }
+            case 'SG': { objectTableName = 'ShippingAgent'; break; }
+            case 'SL': { objectTableName = 'ShippingLine'; break; }
+            case 'TR': { objectTableName = 'Trucker'; break; }
+            case 'VD': { objectTableName = 'Vendor'; break; }
+            case 'WH': { objectTableName = 'Warehouse'; break; }
+            case 'AC': { objectTableName = 'AccountingPartner'; break; }
+
+            case 'CC': { objectTableName = 'Custom Clearance'; break; } // not found
+            case 'CO': { objectTableName = 'Coloader'; break; } // not found
+            case 'FL': { objectTableName = 'Freelancer'; break; } // not found
+            case 'OT': { objectTableName = 'Others'; break; } // not found
+        }
+        return objectTableName;
+    }
+
+    static OpenCard(connectedCardId: string, partnerTypeName: string, selectedTabCode: string)
+    {
+        if (!AppTool.IsNullOrEmpty(connectedCardId)) {
+            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', SessionLocator.SelectedSession.SessionLocation.viewContainerRef)
+                .then(cmpRef =>
+                {
+                    cmpRef.instance.ComponentRef = cmpRef;
+                    cmpRef.instance.Run({ EntityId: connectedCardId, ObjectTableName: partnerTypeName == "Others" || partnerTypeName == "Coloader" ? "Vendor" : partnerTypeName, SelectedTabCode: selectedTabCode });
+                    cmpRef.instance.BackCompleted.subscribe(bk =>
+                    {
+                    });
+                });
+        }
+    }
+    
     static getEntityObjectTableName(sourceTypeCode: string) {
         let tableName = 'Journal';
 

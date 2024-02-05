@@ -95,7 +95,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.PaymentReferences = entityPM.PaymentReferences;
             entity.SATCancelReasonCode = entityPM.SATCancelReasonCode;
             entity.TotalEquation = entityPM.TotalEquation;
-            
+            entity.ConfirmationNumber = entityPM.ConfirmationNumber;
+
             if (entityPM.HouseNumber != null)
             {
                 entityPM.HouseNumber = entityPM.HouseNumber.Trim();
@@ -202,7 +203,6 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.PeriodCode = entityPM.PeriodCode;
             entity.RelatedInvoice = entityPM.RelatedInvoice;
             entity.DocumentFilingId = entityPM.DocumentFilingId;
-            entity.ConfirmationNumber = entityPM.ConfirmationNumber;
             entityPM.SetVoided = false;
             entityPM.SetAsSent = false;
             entityPM.SetApproved = false;
@@ -257,6 +257,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.PaidDate = entityPM.PaidDate;
             entity.PaidStatus= entityPM.PaidStatus;
             entity.DocumentTemplateId = entityPM.DocumentTemplateId;
+
             MapConcurrencyFields(entityPM, entity, isNewState);
         }
 
@@ -323,7 +324,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ForeignCurrencyId = entityPM.ForeignCurrencyId;
             entity.ExchangeRate = entityPM.ExchangeRate;
             entity.PaymentAmount = entityPM.PaymentAmount;
-            
+
         }
 
         public static string GetBillToGLAccountId(string billToId, int tenant)

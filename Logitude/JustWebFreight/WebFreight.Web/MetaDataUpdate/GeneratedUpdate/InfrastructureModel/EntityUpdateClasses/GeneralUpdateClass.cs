@@ -84,9 +84,9 @@ using Logitude.DashboardModule.BL;
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.EntityUpdateClasses
 {
    public class GeneralUpdateClass
-   {  		
-		public const string HashString = "7967d941810307676873a3d1281f76bd";
-	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
+   {
+        public const string HashString = "ca5d23be1fd9cceff1294d0756aa8a81";
+        public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
             AddObjectsAndObjectFields.AddObjectTable(new ObjectTableDetails()
@@ -714,8 +714,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 		   Feature GeneralFeature_DocumentType_CustomizedResetPasswordEmail  = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "DocumentType.CustomizedResetPasswordEmail ", FeatureTypeCode = "OTH", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.DocumentType.CustomizedResetPasswordEmail ", NameTextCodeDefaultText = @"Customized Reset Password Email " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_SHLOGANDMOBILE = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "SHLOGANDMOBILE", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.SHLOGANDMOBILE", NameTextCodeDefaultText = @"Shared Logistics and Mobile" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
-	    
-		   Feature GeneralFeature_General_Features_ReleaseSettings = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "General.Features.ReleaseSettings", FeatureTypeCode = "MENU", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.General.Features.ReleaseSettings", NameTextCodeDefaultText = @"Release Settings" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
 		   Feature GeneralFeature_invoiceConfirmationNumber = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "invoiceConfirmationNumber", FeatureTypeCode = "MENU", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, NameTextCodeCode = "General.Features.invoiceConfirmationNumber", NameTextCodeDefaultText = @"Invoice Confirmation Number " }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,GeneralObjectTable);
 
@@ -1725,7 +1723,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralBClear = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.Clear", DefaultText = "Clear",LocalDefaultText = @"נקה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.Max", DefaultText = "%FieldName Field length must be less than %Maxlength",LocalDefaultText = @"%FieldName אורך השדה חייב להיות קטן מ- %Maxlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMMax = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.Max", DefaultText = "%FieldName Field length must be less than or equal to %Maxlength",LocalDefaultText = @"%FieldName אורך השדה חייב להיות קטן או שווה %Maxlength", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralOAPPayments = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.O.APPayments", DefaultText = "AP/ Payments",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2105,13 +2103,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingOSelectTwoTransactionAtLeast = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.SelectTwoTransactionAtLeast", DefaultText = "Please select at least two transactions in order to create a new external reconciliation",LocalDefaultText = @"חובה לבחור לפחות שתי תנועות ע''מ ליצור התאמה חדשה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-           TextCode GeneralTextCode_AccountingOTaxLineTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxLineTitle", DefaultText = "New tax deduction period", LocalDefaultText = @"תקופת ניכוי חדשה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingOTaxLineTitle = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxLineTitle", DefaultText = "New tax deduction period",LocalDefaultText = @"תקופת ניכוי חדשה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-           TextCode GeneralTextCode_AccountingOTaxRepProblem = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxRepProblem", DefaultText = "The problem is in the line", LocalDefaultText = @"הבעיה מצויה בשורה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-           TextCode GeneralTextCode_AccountingOTaxRepProblem_2 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.TaxRepProblem_2", DefaultText = "of this report in Journal No", LocalDefaultText = @"בדוח זה בפקודת יומן מספר", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-           TextCode GeneralTextCode_AccountingOMustBeLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MustBeLess", DefaultText = "From date must be less than to date",LocalDefaultText = @"מ-תאריך חייב להיות קטן מ-עד תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingOMustBeLess = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MustBeLess", DefaultText = "From date must be less than to date",LocalDefaultText = @"מ-תאריך חייב להיות קטן מ-עד תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingOMustBeLarger = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.MustBeLarger", DefaultText = "To date must be larger than from date",LocalDefaultText = @"עד תאריך חייב להיות גדול מ-תאריך", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
@@ -2163,9 +2157,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_AccountingONewReconcileWithAdjusment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.NewReconcileWithAdjusment", DefaultText = "The difference must be equal to zero, In this case, new reconcile with adjusment will be created",LocalDefaultText = @"ההפרש חייב להיות שווה לאפס, במקרה כזה תיווצר התאמה עם תיקון שיוצר פקודת יומן חדשה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
-            TextCode GeneralTextCode_AccountingONewReconcileNoAdjusment = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.NewReconcileNoAdjusment", DefaultText = "The difference must be equal to zero, may not write an adjustment journal for a 'Works' account", LocalDefaultText = @"ההפרש חייב להיות שווה לאפס, לא ניתן ליצור פקודת יומן על כרטיס מסוג עבודות", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
-
-            TextCode GeneralTextCode_AccountingOOutOfDeposit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.OutOfDeposit", DefaultText = "Out of Deposit",LocalDefaultText = @"הוצאה מהפקדה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_AccountingOOutOfDeposit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.OutOfDeposit", DefaultText = "Out of Deposit",LocalDefaultText = @"הוצאה מהפקדה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_AccountingOOutOfDepositMSG = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Accounting.O.OutOfDepositMSG", DefaultText = "The selected cheque will be out of deposite and returned to cashbook",LocalDefaultText = @"ההמחאות שנבחרו יוצאו מההפקדה ויוחזרו לקופה", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 

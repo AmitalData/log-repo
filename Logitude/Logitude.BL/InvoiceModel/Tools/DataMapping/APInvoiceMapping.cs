@@ -59,6 +59,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.AccountingDate = entityPM.AccountingDate;
                 entity.IsExternalEntity = entityPM.IsExternalEntity;
                 entity.TotalEquation = entityPM.TotalEquation;
+                entity.ConfirmationNumber = entityPM.ConfirmationNumber;
 
                 if (entityPM.InvoiceNumber != null)
                 {
