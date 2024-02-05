@@ -216,6 +216,7 @@
     <Compile Include="EntityListQueryServices\TenantIdleStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\UserDefinedReportListQueryService.cs" />
     <Compile Include="EntityListQueryServices\VatReportStatusListQueryService.cs" />
+    <Compile Include="EntityLists\CashBookLineList.cs" />
     <Compile Include="EntityLists\Generated\AccountingEntityJournalList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AccountingIntegrityCheckList.Generated.cs" />
     <Compile Include="EntityLists\Generated\AccountingNoteList.Generated.cs" />

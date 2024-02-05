@@ -172,6 +172,15 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
              HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
              IsCustomTemplate: true
          });
+         this.columns.push({
+            FieldName: 'CardLocalName',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Card.F.LocalName"),
+            Styles: { width: '110px' },
+            HtmlListComponentName: 'CashBookLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+            IsCustomTemplate: true
+        });
          //this.CustomColumnsReady.emit(this.columns);
      }
 
