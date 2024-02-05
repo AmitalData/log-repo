@@ -82,7 +82,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     }
                 }
 
-            }            
+            }
 
             FillSearchFields(entityPM);
 
@@ -2392,15 +2392,16 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CheckMultiToSingleCurrencyChanged(entityPM, entityPOCO);
             CheckSingleToSingleCurrencyChanged(entityPM, entityPOCO);
 
-            if (entityPM.ChangeSetOp != ChangeSetOperation.Insert) {
+            if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
+            {
                 CheckIfGlaccountIsConnectedToBankAccountOrCashBook(entityPM, entityPOCO);
             }
             CheckReconcileMethodChange(entityPM, entityPOCO);
         }
 
-        private void CheckIfGlaccountIsConnectedToBankGlAccount(GLAccountPM entityPM, GLAccount entityPOCO)
+        private void CheckIfGlaccountIsConnectedToBankAccountOrCashBook(GLAccountPM entityPM, GLAccount entityPOCO)
         {
-            if(entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency && entityPM.IsMultiCurrency == true)
+            if (entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency && entityPM.IsMultiCurrency == true)
             {
                 BankAccountRepository repo = new BankAccountRepository(entityPM.Tenant);
                 var isGlaccountExistsInBankAccount = repo.CheckIfGlAccountExistsInBankAccount(entityPM.Id, entityPM.Tenant);
@@ -2411,13 +2412,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     CashBookRepository cashBookRepository = new CashBookRepository(entityPM.Tenant);
                     isGlaccountExistsInCashBook = cashBookRepository.CheckIfGlAccountExistsInCashBook(entityPM.Id, entityPM.Tenant);
                 }
-                if (entityPM.ChartOfAccountsTypeCode == ChartOfAccountsTypeEnum.Banks.ToIntString() && (isGlaccountExistsInBankAccount || isGlaccountExistsInCashBook)) 
+                if (entityPM.ChartOfAccountsTypeCode == ChartOfAccountsTypeEnum.Banks.ToIntString() && (isGlaccountExistsInBankAccount || isGlaccountExistsInCashBook))
                 {
                     bool useLocal = LoggedContactResolver.GetLoggedContactShowLocal(entityPM.Tenant);
                     throw new ApplicationException(TranslateTextsClass.Translate("BankAccounts.O.PreventChangingToIsMultiCurrency", 0, useLocal));
                 }
             }
-            
+
         }
 
         private static void CheckSplittedGLAccount(GLAccountPM entityPM)
@@ -2624,10 +2625,10 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             List<CsvModel> records = new List<CsvModel>();
             string decodedString = Encoding.UTF8.GetString(fileUploaded);
             var textReader = new StringReader(decodedString);
-            using (var csv = new CsvHelper.CsvReader(textReader, CultureInfo.InvariantCulture))
-            {
-                records = csv.GetRecords<CsvModel>().ToList();
-            }
+            //using (var csv = new CsvHelper.CsvReader(textReader, CultureInfo.InvariantCulture))
+            //{
+            //    records = csv.GetRecords<CsvModel>().ToList();
+            //}
             return records;
         }
         public UpdateFromCsvResult UpdateFromCsv(byte[] fileUploader, int tenant)
