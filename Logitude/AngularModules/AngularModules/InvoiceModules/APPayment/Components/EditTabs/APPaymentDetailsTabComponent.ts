@@ -254,8 +254,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private LoadTaxPercentage() {
         if (this.IsFullAccounting)
         {
-           
-debugger
                 this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
@@ -1296,7 +1294,6 @@ debugger
         return this.EntityPM.TaxDeductionPercentage;
     }
     set TaxDeductionPercentage(value: number) {
-        debugger
         if (this.EntityPM != null) {
             if (this.EntityPM.TaxDeductionPercentage != value) {
 
