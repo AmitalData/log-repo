@@ -27803,7 +27803,7 @@
     <TextCode
       Code="&quot;Customs.Declaration.O.test&quot;"
       DefaultText="&quot;test&quot;"
-      LocalDefaultText="&quot;אני רוצה לבדוק האם הא והם מתחלפות&quot;"
+      LocalDefaultText="&quot; אנאנאנ אני רוצה לבדוק האם הא והם מתחלפות&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
