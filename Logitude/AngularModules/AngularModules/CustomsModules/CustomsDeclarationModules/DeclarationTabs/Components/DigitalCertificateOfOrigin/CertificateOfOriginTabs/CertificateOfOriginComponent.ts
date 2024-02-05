@@ -248,9 +248,12 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
             this.certificateOfOriginPMService.insert(this.EntityPM).subscribe((response: any) => {
                 if (!response.HasError) {
                     var result = response.Result;
+                    this.EntityPM = result;
+                    //this.GENERAL.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit,this.IsDisplayOnly);
+                    this.GENERAL.InitilizeListsFromCertificateOfOrigin(this.EntityPM);                           
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
-                    this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.CurrentSession.StopBusyIndicator();
+                    //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.IsNewOrEdit = StatusCertificateOfOrigin.IsEdit;
 
                     if(customSendOptionsArgs){
@@ -267,11 +270,12 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                 if (!response.HasError) {
                     var result = response.Result;
                     this.EntityPM = result;
+                    // this.GENERAL.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit,this.IsDisplayOnly);
+                    this.GENERAL.InitilizeListsFromCertificateOfOrigin(this.EntityPM);                        
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
-                    this.GENERAL.InitilizeListsFromCertificateOfOrigin(result);                        
-                    // this.RefreshScreen();
-                    //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.CurrentSession.StopBusyIndicator();
+                    //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+                    
 
                     if(customSendOptionsArgs){
                         this.SendButtonClicked(customSendOptionsArgs);
@@ -318,7 +322,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         this.certificateOfOriginWebService.PostCertificateOfOriginRequest(requestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
 
-            });
+        });
     }
     OnMassageDisplayMethod() {
         
@@ -342,6 +346,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
             var myResponse: ServiceResponse = myResult;
             if (!myResult.HasError && myResult.Result) {
                 this.EntityPM =  myResult.Result;
+                this.GENERAL.updateEntity(myResult.Result);
                 this.CertificateChanges.next(true);                              
             }
         });
