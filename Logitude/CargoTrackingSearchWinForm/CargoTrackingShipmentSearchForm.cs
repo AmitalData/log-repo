@@ -14,7 +14,7 @@ namespace CargoTrackingSearchWinForm
     public partial class CargoTrackingShipmentSearchForm : Form
     {
         private string LocalConectionstring = "CargoTracking,sa,Saas256,.";
-        private string TestConectionstring = "Main-Test,sa,Saas256,amitaltestdb.westeurope.cloudapp.azure.com";
+        private string TestConectionstring = "Main-Test,sa,Saas256,test-sqldb.israelcentral.cloudapp.azure.com";
         private string CloudConectionstring = "Main,sa,Saas256,amitaldata.cloudapp.net";
         private string CurrentConectionstring;
         public CargoTrackingShipmentSearchForm()
