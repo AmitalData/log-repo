@@ -29,7 +29,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Inactive, 
 	         IsMandatory, 
 	         Location, 
-	         LastUpdatedDate,
+	         LastUpdatedDate, 
+	         MappedCertificateFields,
 	      }
 
 
@@ -43,7 +44,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Inactive, 
 	         IsMandatory, 
 	         Location, 
-	         LastUpdatedDate,
+	         LastUpdatedDate, 
+	         MappedCertificateFieldsName, 
+	         MappedCertificateFields,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -85,6 +88,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUpdatedDate))
             {
 				entityPOCO.LastUpdatedDate = entityPM.LastUpdatedDate;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MappedCertificateFields))
+            {
+				entityPOCO.MappedCertificateFields = entityPM.MappedCertificateFields;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -133,6 +141,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.LastUpdatedDate = entityPOCO.LastUpdatedDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MappedCertificateFields))
+            {
+					entityPM.MappedCertificateFields = entityPOCO.MappedCertificateFields;
+            }
+
 		}
 
 		public void PMToOldPM(CertificateOfOriginMandatoryFieldsPM entityPM, CertificateOfOriginMandatoryFieldsPM oldEntityPM)
@@ -172,6 +185,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LastUpdatedDate))
             {
                 oldEntityPM.LastUpdatedDate = entityPM.LastUpdatedDate;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MappedCertificateFields))
+            {
+                oldEntityPM.MappedCertificateFields = entityPM.MappedCertificateFields;
             }
 			
 		}

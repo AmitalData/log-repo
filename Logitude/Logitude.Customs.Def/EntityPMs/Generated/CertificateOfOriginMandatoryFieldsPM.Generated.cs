@@ -204,6 +204,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string mappedCertificateFieldsName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MappedCertificateFieldsName  
+	   {
+	    
+	     get
+		{
+		   return mappedCertificateFieldsName;
+		 }
+		 set
+		 {
+		   if(mappedCertificateFieldsName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MappedCertificateFieldsName",OldValue=mappedCertificateFieldsName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mappedCertificateFieldsName=value;
+		   }
+			
+		 }
+	   }
+	  private string mappedCertificateFields ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MappedCertificateFields  
+	   {
+	    
+	     get
+		{
+		   return mappedCertificateFields;
+		 }
+		 set
+		 {
+		   if(mappedCertificateFields != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MappedCertificateFields",OldValue=mappedCertificateFields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mappedCertificateFields=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -30,6 +30,10 @@ namespace Logitude.Customs.Data.EntityLists
        public int? Location  { get; set; }
        [DataMember]
        public DateTime? LastUpdatedDate  { get; set; }
+       [DataMember]
+       public string MappedCertificateFieldsName  { get; set; }
+       [DataMember]
+       public string MappedCertificateFields  { get; set; }
    }
 
 }

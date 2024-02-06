@@ -64,6 +64,16 @@ export class CertificateOfOriginMandatoryFieldsPM {
     public set LastUpdatedDate(newValue: Date) { if (this.lastUpdatedDate != newValue) { this.lastUpdatedDate = newValue; this.MarkAsDirty("LastUpdatedDate"); } }
        
 	 
+    private mappedCertificateFieldsName: string;
+    public get MappedCertificateFieldsName() { return this.mappedCertificateFieldsName; }
+    public set MappedCertificateFieldsName(newValue: string) { if (this.mappedCertificateFieldsName != newValue) { this.mappedCertificateFieldsName = newValue; this.MarkAsDirty("MappedCertificateFieldsName"); } }
+       
+	 
+    private mappedCertificateFields: string;
+    public get MappedCertificateFields() { return this.mappedCertificateFields; }
+    public set MappedCertificateFields(newValue: string) { if (this.mappedCertificateFields != newValue) { this.mappedCertificateFields = newValue; this.MarkAsDirty("MappedCertificateFields"); } }
+       
+	 
 
     public OldEntityPM: CertificateOfOriginMandatoryFieldsPM;
 		
