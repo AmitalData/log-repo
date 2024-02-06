@@ -64,6 +64,26 @@ export class CertificateOfOriginMandatoryFieldsPM {
     public set LastUpdatedDate(newValue: Date) { if (this.lastUpdatedDate != newValue) { this.lastUpdatedDate = newValue; this.MarkAsDirty("LastUpdatedDate"); } }
        
 	 
+    private mappedCertificateFieldsName: string;
+    public get MappedCertificateFieldsName() { return this.mappedCertificateFieldsName; }
+    public set MappedCertificateFieldsName(newValue: string) { if (this.mappedCertificateFieldsName != newValue) { this.mappedCertificateFieldsName = newValue; this.MarkAsDirty("MappedCertificateFieldsName"); } }
+       
+	 
+    private mappedCertificateFields: string;
+    public get MappedCertificateFields() { return this.mappedCertificateFields; }
+    public set MappedCertificateFields(newValue: string) { if (this.mappedCertificateFields != newValue) { this.mappedCertificateFields = newValue; this.MarkAsDirty("MappedCertificateFields"); } }
+       
+	 
+    private certificateOfOriginTypeCodeID: number;
+    public get CertificateOfOriginTypeCodeID() { return this.certificateOfOriginTypeCodeID; }
+    public set CertificateOfOriginTypeCodeID(newValue: number) { if (this.certificateOfOriginTypeCodeID != newValue) { this.certificateOfOriginTypeCodeID = newValue; this.MarkAsDirty("CertificateOfOriginTypeCodeID"); } }
+       
+	 
+    private certificateOfOriginTypeName: string;
+    public get CertificateOfOriginTypeName() { return this.certificateOfOriginTypeName; }
+    public set CertificateOfOriginTypeName(newValue: string) { if (this.certificateOfOriginTypeName != newValue) { this.certificateOfOriginTypeName = newValue; this.MarkAsDirty("CertificateOfOriginTypeName"); } }
+       
+	 
 
     public OldEntityPM: CertificateOfOriginMandatoryFieldsPM;
 		

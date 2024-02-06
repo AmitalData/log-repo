@@ -204,6 +204,98 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string mappedCertificateFieldsName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MappedCertificateFieldsName  
+	   {
+	    
+	     get
+		{
+		   return mappedCertificateFieldsName;
+		 }
+		 set
+		 {
+		   if(mappedCertificateFieldsName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MappedCertificateFieldsName",OldValue=mappedCertificateFieldsName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mappedCertificateFieldsName=value;
+		   }
+			
+		 }
+	   }
+	  private string mappedCertificateFields ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string MappedCertificateFields  
+	   {
+	    
+	     get
+		{
+		   return mappedCertificateFields;
+		 }
+		 set
+		 {
+		   if(mappedCertificateFields != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MappedCertificateFields",OldValue=mappedCertificateFields,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   mappedCertificateFields=value;
+		   }
+			
+		 }
+	   }
+	  private int? certificateOfOriginTypeCodeID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? CertificateOfOriginTypeCodeID  
+	   {
+	    
+	     get
+		{
+		   return certificateOfOriginTypeCodeID;
+		 }
+		 set
+		 {
+		   if(certificateOfOriginTypeCodeID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CertificateOfOriginTypeCodeID",OldValue=certificateOfOriginTypeCodeID,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   certificateOfOriginTypeCodeID=value;
+		   }
+			
+		 }
+	   }
+	  private string certificateOfOriginTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CertificateOfOriginTypeName  
+	   {
+	    
+	     get
+		{
+		   return certificateOfOriginTypeName;
+		 }
+		 set
+		 {
+		   if(certificateOfOriginTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CertificateOfOriginTypeName",OldValue=certificateOfOriginTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   certificateOfOriginTypeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

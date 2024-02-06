@@ -48,6 +48,12 @@ namespace Logitude.Customs.Data.EntityMapping
             this.Property(t => t.Location).HasColumnName("Location");
 
             this.Property(t => t.LastUpdatedDate).HasColumnName("LastUpdatedDate");
+
+            this.Property(t => t.MappedCertificateFields).HasColumnName("MappedCertificateFields").HasMaxLength(5).IsUnicode(false);
+
+            this.Property(t => t.CertificateOfOriginTypeCodeID).HasColumnName("CertificateOfOriginTypeCodeID");
+
+            this.Property(t => t.CertificateOfOriginTypeName).HasColumnName("CertificateOfOriginTypeName").HasMaxLength(28).IsUnicode(true);
         }
     }
 }

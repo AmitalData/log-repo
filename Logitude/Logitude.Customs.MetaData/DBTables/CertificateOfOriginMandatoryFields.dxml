@@ -57,4 +57,24 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="MappedCertificateFields"
+    Type="varchar"
+    Size="5">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CertificateOfOriginTypeCodeID"
+    Type="int">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="CertificateOfOriginTypeName"
+    Type="nvarchar"
+    Size="28">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>
