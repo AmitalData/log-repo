@@ -1205,8 +1205,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 		
 	    public void Send8235(DeclarationPM decPm, string LoggingUserId = "")
 		{
-			DateTime stopLogAt = DateTime.MinValue;//DateTime stopLogAt = new DateTime(2020, 09, 01);
-			string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20220227T155633.LogUntilDateyyyyMMdd"];
+			DateTime stopLogAt = DateTime.MinValue;
+			
+			string UntilDateyyyyMMdd = Environment.GetEnvironmentVariable("20240205T155633.LogUntilDateyyyyMMdd");
+
 			if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
 			{
 				stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
@@ -1214,7 +1216,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 													CultureInfo.InvariantCulture,
 													DateTimeStyles.None);
 			}
-			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing ENTER Send8235", false, "sendClosing", stopLogAt);
+			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing ENTER Send8235"+ decPm?.Id, false, "sendClosing", stopLogAt);
+
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(decPm.Tenant);
 			var requestParamsData = new AmendmentRequestParams();
 			var signQueueHSMService = new SignQueueHSMService();
@@ -1236,6 +1239,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					loggedUserId  =  declarationQueryService.GetSignedByUserIdByCustomFileNo(decPm.Tenant, decPm.CustomFileNo);
 				}
 			}
+			LogitudeSettings.HandleLogMe("loggedUserId" + loggedUserId, false, "sendClosing", stopLogAt);
+
 			requestParamsData.Tenant = decPm.Tenant;
 			requestParamsData.AppicationId = decPm.Id;
 			requestParamsData.LoggingEnabled = true;
@@ -1253,11 +1258,20 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing BEFORE SEND"  , false, "sendClosing", stopLogAt);
 
-
-			ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
+            try
+            {           
+			  ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
 					  new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
 					  new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
-			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
+				LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
+
+			}
+			catch (System.Exception ex)
+            {
+				LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing ex" + ex.Message.ToString(), false, "sendClosing", stopLogAt);
+
+			}
+			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing FINISH SEND", false, "sendClosing", stopLogAt);
 
 
 		}

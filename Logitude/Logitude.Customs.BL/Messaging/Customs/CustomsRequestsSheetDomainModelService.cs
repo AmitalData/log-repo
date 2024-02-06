@@ -33,6 +33,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -117,8 +118,19 @@ namespace Logitude.Customs.BL.Messaging.Customs
         CustomsRequestsSheetDomainModelService(TRequestParams requestParams, RequestSheetParam reqSheetDetails, bool isInteractive)
             : this(requestParams.Tenant)//,requestParams.InterfaceTypeCode )
         {
-            // TODO: Complete member initialization
-            var sw = Stopwatch.StartNew();
+			DateTime stopLogAt = DateTime.MinValue;
+
+			string UntilDateyyyyMMdd = Environment.GetEnvironmentVariable("20240205T155633.LogUntilDateyyyyMMdd");
+
+			if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+			{
+				stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+													"yyyyMMdd",
+													CultureInfo.InvariantCulture,
+													DateTimeStyles.None);
+			}
+			// TODO: Complete member initialization
+			var sw = Stopwatch.StartNew();
             try
             {
                 this.IsInteractive = isInteractive;
@@ -215,7 +227,10 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
             catch (CourierForceSignException e)
             {
-                NoteClientNoRequestSheet4U(requestParams, e.Message);
+			
+				LogitudeSettings.HandleLogMe("line 230 CourierForceSignException" + e.Message.ToString(), false, "sendClosing", stopLogAt);
+
+				NoteClientNoRequestSheet4U(requestParams, e.Message);
                 throw new
                     CustomsRequestsSheetDomainModelServiceException(
                     CustomsRequestsSheetDomainModelServiceException.WhereEnum.CourierForceSignException, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
@@ -223,7 +238,9 @@ namespace Logitude.Customs.BL.Messaging.Customs
             }
             catch (Exception e)
             {
-                NoteClientNoRequestSheet4U(requestParams, e.ToString());
+				LogitudeSettings.HandleLogMe("line 251 Exception: " + e.ToString(), false, "sendClosing", stopLogAt);
+
+				NoteClientNoRequestSheet4U(requestParams, e.ToString());
                 throw new
                     CustomsRequestsSheetDomainModelServiceException(
                     CustomsRequestsSheetDomainModelServiceException.WhereEnum.CustomsRequestsSheetServiceException, CustomsRequestsSheetDomainModelServiceException.What2DoEnum.StopQueue,
