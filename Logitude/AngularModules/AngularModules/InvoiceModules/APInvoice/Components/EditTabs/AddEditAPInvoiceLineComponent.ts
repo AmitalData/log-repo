@@ -45,12 +45,7 @@ export class AddEditAPInvoiceLineComponent {
         this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
     }
 
-    public ChargeTypesQueryFilters: ApiQueryFilters;
-    private BuildQueryFilters() {
-        this.ChargeTypesQueryFilters = new ApiQueryFilters();
-        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "Boolean");
-    }
+ 
     
     public TotalVATOnly: boolean = false;
     SetDataContext(dataContext: APInvoiceLineItem) {

@@ -44,12 +44,7 @@ export class AddEditAPGeneralInvoiceLineComponent {
         this.GLAccountsFilterItems.addAdditionalFilter("GLAccountId", "null", null, null, "NotEqual", false, false, false, "string");
     }
     
-    public ChargeTypesQueryFilters: ApiQueryFilters;
-    private BuildQueryFilters() {
-        this.ChargeTypesQueryFilters = new ApiQueryFilters();
-        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "Boolean");
-        this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "Boolean");
-    }
+ 
 
     public ChargeTypesQueryFilters: ApiQueryFilters;
     private BuildQueryFilters() {

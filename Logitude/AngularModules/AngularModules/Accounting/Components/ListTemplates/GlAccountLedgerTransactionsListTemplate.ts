@@ -226,7 +226,7 @@ export class GlAccountLedgerTransactionsListTemplate {
             }
         } else if (
             !AppTool.IsNullOrEmpty(
-                ReconcileEventManager.GLAccountReconcileMethodCode
+                this.reconcileEventManager.GLAccountReconcileMethodCode
             )
         ) {
             if (this.reconcileEventManager.GLAccountReconcileMethodCode == "0") {
