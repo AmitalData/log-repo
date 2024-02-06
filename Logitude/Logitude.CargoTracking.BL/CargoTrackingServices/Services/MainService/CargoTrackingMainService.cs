@@ -46,7 +46,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             SetBuildProcessData(cargoTrackingDataBaseArgs);
             RecordUpdated = new RecordUpdated();
             if (cargoTrackingDataBaseArgs.CargoTrackingArguments != null && cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.HasValue)
-            {                
+            {
                 tenant = cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value;
             }
             RecordUpdated.IsFromBuild = ServiceHelper.GetIsIncrementalRunning(cargoTrackingDataBaseArgs.BuildCargoArgs.SourceConnectionString, tenant);
@@ -186,7 +186,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             if (bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments != null)
             {
                 BuildAllIndexesWithConstraient(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
-                Rename_Pre_Tables(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs);
+                Rename_Pre_Tables(bulkDataPreperation);
             }
             if (isUpadteWaterMark)
             {
@@ -244,7 +244,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
 
             BulkDataPreperation bulkDataPreperation = InitializeBulkDataPreperation(cargoTrackingDataBaseArgs);
 
-            using (SqlConnection sourceConnection = 
+            using (SqlConnection sourceConnection =
                                   new SqlConnection(cargoTrackingDataBaseArgs.BuildCargoArgs.SourceConnectionString))
             {
                 sourceConnection.Open();
@@ -426,16 +426,30 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             }
             return bulkDataPreperation;
         }
-        public void Rename_Pre_Tables(CargoTrackingArgs buildCargoArgs)
+        public void Rename_Pre_Tables(BulkDataPreperation bulkDataPreperation)
         {
-            if (buildCargoArgs.Table.ConditionsNumber > 1)
+            var buildArgs = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs;
+            var generalArgs = bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments;
+
+            if (buildArgs.Table.ConditionsNumber > 1)
             {
-                if (buildCargoArgs.Table.CurrentCondition == 3)
-                    StartRenameCargoTables(buildCargoArgs);
+                if (buildArgs.Table.CurrentCondition == 3)
+                {
+                    if (generalArgs.Tenant.HasValue && generalArgs.Tenant.Value != 0)
+                    {
+                        ServiceHelper.CopyFromOldTable(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.Tenant.Value);
+                    }
+                    StartRenameCargoTables(buildArgs);
+                }
             }
             else
-                StartRenameCargoTables(buildCargoArgs);
-
+            {
+                if (generalArgs.Tenant.HasValue && generalArgs.Tenant.Value != 0)
+                {
+                    ServiceHelper.CopyFromOldTable(bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs, bulkDataPreperation.CargoTrackingUpdateDataBaseArgs.CargoTrackingArguments.Tenant.Value);
+                }
+                StartRenameCargoTables(buildArgs);
+            }
         }
 
         private void StartRenameCargoTables(CargoTrackingArgs buildCargoArgs)
@@ -961,7 +975,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services
             {
                 updateCargoTrackingRecords.AllTenantIds = new List<int> { tenant };
             }
-                updateCargoTrackingRecords.MilestonesNotPermitted = cargoTrackingShipmentsService.GetAllNotPermittedMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString);
+            updateCargoTrackingRecords.MilestonesNotPermitted = cargoTrackingShipmentsService.GetAllNotPermittedMilestones(updateCargoTrackingRecords.CargoTrackingUpdateDataBaseArgs.BuildCargoArgs.SourceConnectionString);
 
             if (false)
             {
