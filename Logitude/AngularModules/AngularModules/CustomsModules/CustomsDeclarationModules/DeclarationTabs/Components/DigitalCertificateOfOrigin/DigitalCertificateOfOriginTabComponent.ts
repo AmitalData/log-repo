@@ -322,6 +322,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
                 newCertificateOfOriginPM.COONumber = null;
                 newCertificateOfOriginPM.CooStatusCode = null;
                 newCertificateOfOriginPM.CooStatusCodeName = null;
+                newCertificateOfOriginPM.IsSubmitted = false;
                 
                 newCertificateOfOriginPM.IsUnitedInvoices ? newCertificateOfOriginPM.IsUnitedInvoices : newCertificateOfOriginPM.IsUnitedInvoices = false;
                 this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));

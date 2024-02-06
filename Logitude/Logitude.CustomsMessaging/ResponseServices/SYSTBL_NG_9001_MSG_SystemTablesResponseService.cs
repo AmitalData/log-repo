@@ -1,5 +1,6 @@
 ﻿using Logitude.AmitalMessaging.Utils;
 using Logitude.BL.Helpers;
+using Logitude.Customs.BL.CloseTables;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.BL.Messaging.Customs;
@@ -702,29 +703,38 @@ ID List :
                                                     if (dr["CertificateOfOriginTypeCodeID"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginMandatoryFields.CertificateOfOriginTypeCodeID = (int)dr["CertificateOfOriginTypeCodeID"];
-                                                    }
-                                                    if (dr["CertificateOfOriginTypeCodeID"].ToString() != null)
+                                                        int d;
+                                                        if (dr["CertificateOfOriginTypeCodeID"] != DBNull.Value && int.TryParse(dr["CertificateOfOriginTypeCodeID"].ToString(), out d))
+                                                        {
+                                                            newExt.MyCertificateOfOriginMandatoryFields.CertificateOfOriginTypeCodeID = d;
+                                                        }
+                                                    } 
+                                                    if (dr["CertificateOfOriginTypeCodeName"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginMandatoryFields.CertificateOfOriginTypeName = dr["CertificateOfOriginTypeCodeName"].ToString();
+                                                        newExt.MyCertificateOfOriginMandatoryFields.CertificateOfOriginTypeName = dr["CertificateOfOriginTypeCodeName"]?.ToString();
                                                     }
-                                                    if (dr["Location"].ToString() != null)
+                                                    if (dr["ConstraintTypeEnumID"] != DBNull.Value && dr["ConstraintTypeEnumID"] != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginMandatoryFields.Location = (int)dr["Location"];
-                                                    }
-                                                    if (dr["LastUpdatedDate"].ToString() != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginMandatoryFields.LastUpdatedDate = (DateTime)dr["LastUpdatedDate"];
-                                                    }
-                                                    if (dr["IsMandatory"] != DBNull.Value && dr["IsMandatory"] != null)
-                                                    {
-                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginMandatoryFields.IsMandatory = Convert.ToBoolean(dr["IsMandatory"]);
+                                                        string constraintTypeValue = dr["ConstraintTypeEnumID"]?.ToString();
+                                                        if(constraintTypeValue != null) 
+                                                        {
+                                                            newExt.MyCertificateOfOriginMandatoryFields.IsMandatory = constraintTypeValue == "1" ? true : false;
+                                                        }
                                                     }
 
+
+                                                    //if (dr["Location"].ToString() != null)
+                                                    //{
+                                                    //    LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                    //    newExt.MyCertificateOfOriginMandatoryFields.Location = (int)dr["ID"];
+                                                    //}
+                                                    //if (dr["LastUpdatedDate"].ToString() != null)
+                                                    //{
+                                                    //    LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                    //    newExt.MyCertificateOfOriginMandatoryFields.LastUpdatedDate = (DateTime)dr["LastUpdatedDate"];
+                                                    //}
 
                                                     extList.Add(newExt);
                                                 });
