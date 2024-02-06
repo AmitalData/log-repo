@@ -52,7 +52,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
             // Arrange - Set up the initial state:
             var myJournalPM = new JournalPM()
             {
-                StatusCode = StatusCode_Approved,
+                StatusCode = "6",
                 JournalLines = new List<JournalLinePM>() { new JournalLinePM(){    ActionTypeCode=actionTypeCode,LocalAmount=localAmount}}
             };
 
@@ -80,7 +80,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             var myJournalPM = new JournalPM()
             {
-                StatusCode = StatusCode_Approved,
+                StatusCode = "6",
 
                 JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){  
@@ -107,7 +107,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             var myJournalPM = new JournalPM()
             {
-                StatusCode = StatusCode_Approved,
+                StatusCode = "6",
                 JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){  
                     ActionTypeCode="2",
@@ -133,7 +133,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             var myJournalPM = new JournalPM()
             {
-                StatusCode = StatusCode_Approved,
+                StatusCode = "6",
                 JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){  
                     ActionTypeCode="2",
@@ -159,7 +159,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             var myJournalPM = new JournalPM()
             {
-                StatusCode = StatusCode_Approved,
+                StatusCode = "6",
                 JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){  
                     ActionTypeCode="3",
@@ -185,7 +185,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             var myJournalPM = new JournalPM()
             {
-                StatusCode = StatusCode_Approved,
+                StatusCode = "6",
 
                 JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){  
@@ -212,7 +212,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             var myJournalPM = new JournalPM()
             {
-                StatusCode = StatusCode_Approved,
+                StatusCode = "6",
                 JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){  
                     ActionTypeCode="3",
@@ -237,7 +237,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             var myJournalPM = new JournalPM()
             {
-                StatusCode = StatusCode_Approved,
+                StatusCode = "6",
                 JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){  
                     ActionTypeCode="4",
@@ -264,7 +264,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             var myJournalPM = new JournalPM()
             {
-                StatusCode = StatusCode_Approved,
+                StatusCode = "6",
                 JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){  
                     ActionTypeCode="1",
@@ -294,7 +294,7 @@ namespace Logitude.UnitTest.Accounting.UniTests
 
             var myJournalPM = new JournalPM()
             {
-                StatusCode = StatusCode_Approved,
+                StatusCode = "6",
                 JournalLines = new List<JournalLinePM>() { 
                 new JournalLinePM(){  
                     ActionTypeCode="1",

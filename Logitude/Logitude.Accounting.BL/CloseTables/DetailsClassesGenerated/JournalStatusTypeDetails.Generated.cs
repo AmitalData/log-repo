@@ -74,6 +74,15 @@ namespace Logitude.Accounting.BL
                 LocalName = "מבוטל", 
                 Inactive = false, 
 			});
+			 
+            all.Add(new JournalStatusTypeDetails()
+            {    
+                JournalStatusID = "6", 
+                LocalName = "בעיבוד", 
+                SearchFields = "6,in processing,בעיבוד", 
+                EnglishName = "In processing", 
+                Inactive = false, 
+			});
 			
             return all;
        }

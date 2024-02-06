@@ -305,7 +305,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 else if (entityPM.StatusCode == "2") //Approved
                 {
 
-                    String notes = "Changed to: " + TraceIt_JournalStatusName(entityPM.StatusCode, entityPM.Tenant);
                     EventTracer.CreateTraceEvent(new EventTracerArgs()
                     {
                         EntityId = entityPM.Id,
@@ -315,6 +314,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         IsAddedManually = false,
                         EventTypeCode = "JAP",
 
+                    });
+                }
+
+                else if (entityPM.StatusCode == "6")
+                {
+
+                    EventTracer.CreateTraceEvent(new EventTracerArgs()
+                    {
+                        EntityId = entityPM.Id,
+                        Tenant = entityPM.Tenant,
+                        UserId = contact.Id,
+                        ObjectTableName = "Journal",
+                        IsAddedManually = false,
+                        EventTypeCode = "JAI",
                     });
                 }
 
@@ -386,6 +399,24 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                         });
 
+                    }
+                    else if (entityPM.StatusCode == "6")
+                    {
+                        ContactRepository contactRep = new ContactRepository(entityPM.Tenant);
+                        string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(entityPM.Tenant);
+                        Contact contact = contactRep.GetSingleContactByEmail(resolveLoggingUserId, entityPM.Tenant);
+                        String notes = "Changed to: " + TraceIt_JournalStatusName(entityPM.StatusCode, entityPM.Tenant);
+                        EventTracer.CreateTraceEvent(new EventTracerArgs()
+                        {
+                            EntityId = entityPM.Id,
+                            Tenant = entityPM.Tenant,
+                            UserId = contact.Id,
+                            ObjectTableName = "Journal",
+                            IsAddedManually = false,
+                            EventTypeCode = "JAI",
+                            Notes = notes,
+
+                        });
                     }
                     else if (entityPM.StatusCode == "3" || entityPM.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Cancelled)  //Approved
                     {
@@ -580,7 +611,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             {
 
 
-                if (entityPM.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved  //== "2") //Pending Approval  
+                if (entityPM.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.InProcessing  //== "2") //Pending Approval  
                     && string.IsNullOrWhiteSpace(entityPM.QueueId))
                 {
 
@@ -613,7 +644,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         }
         private void CreateJournalAdditionalDataWhenApprovingJournal(JournalPM journal)
         {
-            if (journal.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved && journal.ChangeSetOp == ChangeSetOperation.Insert)
+            if (journal.StatusCodeEnum == JournalStatusTypePM.StatusCodeEnum.Approved )//&& journal.ChangeSetOp == ChangeSetOperation.Insert)
             {
                 CreateJournalAdditionalDataForEachDebitInputLine(journal);
                 CreateJournalAdditionalDataForARInvoiceJournal(journal);

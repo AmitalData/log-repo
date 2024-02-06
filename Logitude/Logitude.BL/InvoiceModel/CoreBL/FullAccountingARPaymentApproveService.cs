@@ -926,7 +926,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant),
                 AccountingDate = paymentPM.RegisterDate.Value,
                 TypeCode = "0",
-                StatusCode = "2",
+                StatusCode = "6",
                 CreatedByUserId = paymentPM.CreatedByUserId,
                 AccountingEntityCode = "3",
                 AccountingEntityId = paymentPM.Id,
