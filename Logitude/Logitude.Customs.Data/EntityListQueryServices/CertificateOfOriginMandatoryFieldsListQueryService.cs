@@ -21,27 +21,34 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
 	    private IQueryable<CertificateOfOriginMandatoryFieldsList> GetIqueryableList(IQueryable<CertificateOfOriginMandatoryFields> iQueryable)
         {
-		IQueryable<CertificateOfOriginMandatoryFieldsList> query = (from a in iQueryable
-                                            select new CertificateOfOriginMandatoryFieldsList()
-											{
-                     
-					                          Code = a.Code,
-					
-					                          LocalName = a.LocalName,
-					
-					                          SearchFields = a.SearchFields,
-					
-					                          EnglishName = a.EnglishName,
-					
-					                          Inactive = a.Inactive,
-										
-					                          IsMandatory = a.IsMandatory,
-					
-					                          Location = a.Location,
-					
-					                          LastUpdatedDate = a.LastUpdatedDate,
-					
-		                    	            });
+			IQueryable<CertificateOfOriginMandatoryFieldsList> query = (from a in iQueryable.Include("objectfields")
+																		select new CertificateOfOriginMandatoryFieldsList()
+																		{
+
+																			Code = a.Code,
+
+																			LocalName = a.LocalName,
+
+																			SearchFields = a.SearchFields,
+
+																			EnglishName = a.EnglishName,
+
+																			Inactive = a.Inactive,
+
+																			IsMandatory = a.IsMandatory,
+
+																			Location = a.Location,
+
+																			LastUpdatedDate = a.LastUpdatedDate,
+
+																			MappedCertificateFields = a.MappedCertificateFields,
+                                                                            ///MappedCertificateFieldsName = a.MappedCertificateFieldsName,
+                                                                            CertificateOfOriginTypeCodeID = a.CertificateOfOriginTypeCodeID,
+
+                                                                            CertificateOfOriginTypeName = a.CertificateOfOriginTypeName,
+						
+
+																		}); ;
             return query;
 		}
 
