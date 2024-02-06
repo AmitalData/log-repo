@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ChargesTypeUpdateClass
    {  		
-		public const string HashString = "a53c91f25496015d36552aa1d296b1c4";
+		public const string HashString = "d15e036ad5ba3d8c89eb5acb4f062c55";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -103,6 +103,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    AvailableInCustomization =  true,
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  true,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -1746,6 +1747,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VatTypeId",
 					  						DefaultText =  "VAT Type",
+					  						FullLocalDefaultText =  "סוג מע\"מ",
+					  						ListFieldLable =  "VatTypeIdListLable",
+					  						ListLableDefaultText =  "VAT Type",
+					  						ListLocalDefaultText =  "סוג מע\"מ",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "VatType",
 					  						NavigationPropertyName =  "VatType",
@@ -1814,6 +1819,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChargesGroupCode",
 					  						DefaultText =  "Group Code",
+					  						FullLocalDefaultText =  "קוד קבוצה",
+					  						ListFieldLable =  "ChargesGroupCodeListLable",
+					  						ListLableDefaultText =  "Group Code",
+					  						ListLocalDefaultText =  "קוד קבוצה",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3078,10 +3087,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "VatTypeName",
 					  						DefaultText =  "Vat Type",
-					  						FullLocalDefaultText =  "VatTypeName",
+					  						FullLocalDefaultText =  "סוג מע\"מ",
 					  						ListFieldLable =  "VatTypeNameListLable",
 					  						ListLableDefaultText =  "Vat Type",
-					  						ListLocalDefaultText =  "Vat Type",
+					  						ListLocalDefaultText =  "סוג מע\"מ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3476,6 +3485,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChargesGroupId",
 					  						DefaultText =  "Group Code",
+					  						FullLocalDefaultText =  "קוד קבוצה",
+					  						ListFieldLable =  "ChargesGroupIdListLable",
+					  						ListLableDefaultText =  "Group Code",
+					  						ListLocalDefaultText =  "קוד קבוצה",
 					  						HelpTextCode =  "ChargesGroupId",
 					  						HelpTextDefaultText =  "Select the group to which this charge type belongs. Mandatory field. For example, if it belongs to the FRT-Freight group, then when adding this charge in a shipment Logitude will refer to the system currency defined for the freight group in setup.",
 					  						IsForeignKey =  true,
