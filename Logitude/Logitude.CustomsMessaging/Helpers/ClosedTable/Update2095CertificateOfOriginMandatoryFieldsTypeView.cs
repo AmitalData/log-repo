@@ -30,7 +30,6 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         {
             var gov = mehesTableRow.MyCertificateOfOriginMandatoryFields?? new CertificateOfOriginMandatoryFields();
             return base.IsEqual(mehesTableRow, curDbPM)
-                && gov.MappedCertificatOriginId == curDbPM.MappedCertificatOriginId
                 && gov.Location == curDbPM.Location
                 && gov.LastUpdatedDate == curDbPM.LastUpdatedDate
                 && gov.IsMandatory == curDbPM.IsMandatory;
@@ -42,7 +41,6 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
         {
             base.SetOtherFields(mehesTableRow, curDbPM);
             var gov = mehesTableRow.MyCertificateOfOriginMandatoryFields ?? new CertificateOfOriginMandatoryFields();
-            curDbPM.MappedCertificatOriginId = gov.MappedCertificatOriginId;
             curDbPM.Location = gov.Location;
             curDbPM.LastUpdatedDate = gov.LastUpdatedDate;
             curDbPM.IsMandatory = gov.IsMandatory;
