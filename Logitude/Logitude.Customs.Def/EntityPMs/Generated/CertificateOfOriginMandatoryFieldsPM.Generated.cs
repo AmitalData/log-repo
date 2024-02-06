@@ -250,6 +250,52 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private int? certificateOfOriginTypeCodeID ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public int? CertificateOfOriginTypeCodeID  
+	   {
+	    
+	     get
+		{
+		   return certificateOfOriginTypeCodeID;
+		 }
+		 set
+		 {
+		   if(certificateOfOriginTypeCodeID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CertificateOfOriginTypeCodeID",OldValue=certificateOfOriginTypeCodeID,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChanged(values);
+		   certificateOfOriginTypeCodeID=value;
+		   }
+			
+		 }
+	   }
+	  private string certificateOfOriginTypeName ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string CertificateOfOriginTypeName  
+	   {
+	    
+	     get
+		{
+		   return certificateOfOriginTypeName;
+		 }
+		 set
+		 {
+		   if(certificateOfOriginTypeName != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CertificateOfOriginTypeName",OldValue=certificateOfOriginTypeName,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   certificateOfOriginTypeName=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

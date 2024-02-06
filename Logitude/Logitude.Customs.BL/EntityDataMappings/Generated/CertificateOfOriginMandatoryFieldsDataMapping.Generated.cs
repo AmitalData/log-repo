@@ -30,7 +30,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsMandatory, 
 	         Location, 
 	         LastUpdatedDate, 
-	         MappedCertificateFields,
+	         MappedCertificateFields, 
+	         CertificateOfOriginTypeCodeID, 
+	         CertificateOfOriginTypeName,
 	      }
 
 
@@ -46,7 +48,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         Location, 
 	         LastUpdatedDate, 
 	         MappedCertificateFieldsName, 
-	         MappedCertificateFields,
+	         MappedCertificateFields, 
+	         CertificateOfOriginTypeCodeID, 
+	         CertificateOfOriginTypeName,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -93,6 +97,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MappedCertificateFields))
             {
 				entityPOCO.MappedCertificateFields = entityPM.MappedCertificateFields;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CertificateOfOriginTypeCodeID))
+            {
+				entityPOCO.CertificateOfOriginTypeCodeID = entityPM.CertificateOfOriginTypeCodeID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CertificateOfOriginTypeName))
+            {
+				entityPOCO.CertificateOfOriginTypeName = entityPM.CertificateOfOriginTypeName;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -146,6 +160,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.MappedCertificateFields = entityPOCO.MappedCertificateFields;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CertificateOfOriginTypeCodeID))
+            {
+					entityPM.CertificateOfOriginTypeCodeID = entityPOCO.CertificateOfOriginTypeCodeID;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.CertificateOfOriginTypeName))
+            {
+					entityPM.CertificateOfOriginTypeName = entityPOCO.CertificateOfOriginTypeName;
+            }
+
 		}
 
 		public void PMToOldPM(CertificateOfOriginMandatoryFieldsPM entityPM, CertificateOfOriginMandatoryFieldsPM oldEntityPM)
@@ -192,6 +216,16 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.MappedCertificateFields = entityPM.MappedCertificateFields;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CertificateOfOriginTypeCodeID))
+            {
+                oldEntityPM.CertificateOfOriginTypeCodeID = entityPM.CertificateOfOriginTypeCodeID;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CertificateOfOriginTypeName))
+            {
+                oldEntityPM.CertificateOfOriginTypeName = entityPM.CertificateOfOriginTypeName;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CertificateOfOriginMandatoryFieldsPM entityPM)
@@ -208,6 +242,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.CertificateOfOriginTypeName)) //T4 find type == nText 
+            {
+                entityPM.CertificateOfOriginTypeName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.CertificateOfOriginTypeName));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

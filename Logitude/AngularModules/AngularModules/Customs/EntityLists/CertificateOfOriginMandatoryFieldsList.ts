@@ -18,6 +18,8 @@ export class CertificateOfOriginMandatoryFieldsList {
 	LastUpdatedDate: Date;
 	MappedCertificateFieldsName: string;
 	MappedCertificateFields: string;
+	CertificateOfOriginTypeCodeID: number;
+	CertificateOfOriginTypeName: string;
 	
 }
  

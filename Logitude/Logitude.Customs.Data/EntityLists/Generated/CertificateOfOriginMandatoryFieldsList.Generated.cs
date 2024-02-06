@@ -34,6 +34,10 @@ namespace Logitude.Customs.Data.EntityLists
        public string MappedCertificateFieldsName  { get; set; }
        [DataMember]
        public string MappedCertificateFields  { get; set; }
+       [DataMember]
+       public int? CertificateOfOriginTypeCodeID  { get; set; }
+       [DataMember]
+       public string CertificateOfOriginTypeName  { get; set; }
    }
 
 }
