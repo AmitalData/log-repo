@@ -25,8 +25,6 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public bool Inactive  { get; set; }
        [DataMember]
-       public string MappedCertificatOriginId  { get; set; }
-       [DataMember]
        public bool IsMandatory  { get; set; }
        [DataMember]
        public int? Location  { get; set; }

@@ -29,11 +29,6 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string EnglishName { get; set; }
         [Column("Inactive")]
 	    public bool Inactive { get; set; }
-        [ForeignKey("CertificateOfOrigin")]
-        [Column("MappedCertificatOriginId")]
-	    public string MappedCertificatOriginId { get; set; }
-	      
-        public virtual CertificateOfOrigin CertificateOfOrigin { get; set; }
         [Column("IsMandatory")]
 	    public bool IsMandatory { get; set; }
         [Column("Location")]

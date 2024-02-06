@@ -27,7 +27,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         EnglishName, 
 	         Inactive, 
-	         MappedCertificatOriginId, 
 	         IsMandatory, 
 	         Location, 
 	         LastUpdatedDate,
@@ -42,7 +41,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         SearchFields, 
 	         EnglishName, 
 	         Inactive, 
-	         MappedCertificatOriginId, 
 	         IsMandatory, 
 	         Location, 
 	         LastUpdatedDate,
@@ -72,11 +70,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
 				entityPOCO.Inactive = entityPM.Inactive;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MappedCertificatOriginId))
-            {
-				entityPOCO.MappedCertificatOriginId = entityPM.MappedCertificatOriginId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMandatory))
@@ -125,11 +118,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.Inactive = entityPOCO.Inactive;
             }
 
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MappedCertificatOriginId))
-            {
-					entityPM.MappedCertificatOriginId = entityPOCO.MappedCertificatOriginId;
-            }
-
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsMandatory))
             {
 					entityPM.IsMandatory = entityPOCO.IsMandatory;
@@ -169,11 +157,6 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Inactive))
             {
                 oldEntityPM.Inactive = entityPM.Inactive;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MappedCertificatOriginId))
-            {
-                oldEntityPM.MappedCertificatOriginId = entityPM.MappedCertificatOriginId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsMandatory))
