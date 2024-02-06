@@ -21,14 +21,11 @@ import { ObjectTablePM } from '../../EntityPMs/ObjectTablePM';
 import { TextCodeTranslationPipe } from '../../../Controls/Pipes/TextCodeTranslationPipe';
 import { CustomizationPermissionService } from '../../../InfrastructureModules/InfrastructureCustomization/ExternalService/CustomizationPermissionService';
 import { ThresholdTypes } from 'InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent';
-import { ThresholdTypes } from 'InfrastructureModules/InfrastructureOthers/Components/CustomizeLogitude/HybridTenantThresholdComponent';
-=========
 import { HostScreenService } from 'Common/Components/HostScreen/HostScreenService';
 import { CustomsCloudComponentArgs } from 'InfrastructureModules/InfrastructureOthers/Components/CustomsCloud/CustomsCloudComponent';
 import { HomeScreenEvent, HomeScreenEventTypes, HostScreenComponent } from 'Common/Components/HostScreen/HostScreenComponent';
 import { Subscription } from 'rxjs';
->>>>>>>>> Temporary merge branch 2
-
+import { filter } from 'rxjs/operators';
 @Component({
     
 
