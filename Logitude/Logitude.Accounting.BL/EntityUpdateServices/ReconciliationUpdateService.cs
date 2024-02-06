@@ -477,7 +477,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
                     ledgerTransactionPM.IsReconciled = !reconciliationLine.IsPartial;
                 }
-                if (FeatureToggleHelper.HasFeatureToggle("ILO", ledgerTransactionPM.Tenant) && ledgerTransactionPM.SourceTypeCode == "4")
+             // if (FeatureToggleHelper.HasFeatureToggle("ILO", ledgerTransactionPM.Tenant) && ledgerTransactionPM.SourceTypeCode == "4")
+                if (ledgerTransactionPM.SourceTypeCode == "4")
                 {
                     IInvoiceContext invoiceContext = InvoiceContext.GetContext(ledgerTransactionPM.Tenant);
                     var invoiceRepository = new APInvoiceRepository(invoiceContext);

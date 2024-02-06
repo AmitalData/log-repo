@@ -95,7 +95,8 @@ namespace Logitude.Accounting.BL.CoreBL
 
                     CaclulateInvoiceAmount(invoice, transaction, entityPM);
                     CaclulateInvoiceStatus(invoice, entityPM.AccountReconcileMethodCode, transaction);
-                    if (FeatureToggleHelper.HasFeatureToggle("ILO", invoice.Tenant) && invoice.IsMultiCurrency)
+                //  if (FeatureToggleHelper.HasFeatureToggle("ILO", invoice.Tenant) && invoice.IsMultiCurrency)
+                    if (invoice.IsMultiCurrency)
                     {
                         LedgerTransactionQueryService transQuery = new LedgerTransactionQueryService(entityPM.Tenant);
                         var arinvoiceTransactions = transQuery.GetByJournalIdAndForeignAmountDebitNotEqualZero(invoice.JournalId, invoice.Tenant).ToList();
@@ -231,8 +232,8 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         private void CaclulateInvoiceStatus(ARInvoicePM invoice, string reconcileMethodCode, LedgerTransactionPM transaction)
         {
-            if (FeatureToggleHelper.HasFeatureToggle("ILO", transaction.Tenant))
-            {
+         // if (FeatureToggleHelper.HasFeatureToggle("ILO", transaction.Tenant))
+         // {
                 var transactionAmount = reconcileMethodCode == ReconcileMethodValues.LocalCurrency ? transaction.LocalAmountDebit : transaction.ForeignAmountDebit;
                 if (transaction.OpenAmount <= 0)
                 {
@@ -249,26 +250,26 @@ namespace Logitude.Accounting.BL.CoreBL
                     invoice.IsClosed = false;
                     invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
                 }
-            }
-            else {
-                var invoiceAmount = invoice.AmountInInvoiceCurrency;
-                if (invoice.AmountDue <= 0)
-                {
-                    invoice.IsClosed = true;
-                    invoice.StatusCode = ARInvoiceStatusValues.Paid;
-                }
-                else if (invoice.AmountDue < invoiceAmount)
-                {
-                    invoice.IsClosed = false;
-                    invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
-                }
-                else
-                {
-                    invoice.IsClosed = false;
-                    invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
+            //}
+            //else {
+            //    var invoiceAmount = invoice.AmountInInvoiceCurrency;
+            //    if (invoice.AmountDue <= 0)
+            //    {
+            //        invoice.IsClosed = true;
+            //        invoice.StatusCode = ARInvoiceStatusValues.Paid;
+            //    }
+            //    else if (invoice.AmountDue < invoiceAmount)
+            //    {
+            //        invoice.IsClosed = false;
+            //        invoice.StatusCode = ARInvoiceStatusValues.PartiallyPaid;
+            //    }
+            //    else
+            //    {
+            //        invoice.IsClosed = false;
+            //        invoice.StatusCode = ARInvoiceStatusValues.Unpaid;
 
-                }
-            }
+            //    }
+            //}
 
             
         }
