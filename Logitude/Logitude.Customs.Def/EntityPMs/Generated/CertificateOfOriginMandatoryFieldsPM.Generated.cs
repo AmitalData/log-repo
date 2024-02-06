@@ -135,29 +135,6 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string mappedCertificatOriginId ;
-	  	  
-       
-	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string MappedCertificatOriginId  
-	   {
-	    
-	     get
-		{
-		   return mappedCertificatOriginId;
-		 }
-		 set
-		 {
-		   if(mappedCertificatOriginId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="MappedCertificatOriginId",OldValue=mappedCertificatOriginId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   mappedCertificatOriginId=value;
-		   }
-			
-		 }
-	   }
 	  private bool isMandatory ;
 	  	  
        

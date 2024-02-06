@@ -13,7 +13,6 @@ export class CertificateOfOriginMandatoryFieldsList {
 	SearchFields: string;
 	EnglishName: string;
 	Inactive: boolean;
-	MappedCertificatOriginId: string;
 	IsMandatory: boolean;
 	Location: number;
 	LastUpdatedDate: Date;
