@@ -34,9 +34,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 					                          EnglishName = a.EnglishName,
 					
 					                          Inactive = a.Inactive,
-					
-					                          MappedCertificatOriginId = a.MappedCertificatOriginId,
-					
+										
 					                          IsMandatory = a.IsMandatory,
 					
 					                          Location = a.Location,
