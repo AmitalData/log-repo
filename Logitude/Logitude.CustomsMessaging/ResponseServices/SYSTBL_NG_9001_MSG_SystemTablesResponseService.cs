@@ -680,7 +680,7 @@ ID List :
                         return extList;
 
                     }    
-                case "2095":
+                case "239684":
                 case "CertificateOfOriginMandatoryFields":
                     {
                         var extList = new List<SYSTBL_NG_9001_MSG_SystemTablesResponseTableDataExt>();
@@ -696,10 +696,15 @@ ID List :
                                                     {
                                                         writeHighlight = true;
                                                     }
-                                                    if (dr["MappedCertificatOriginId"].ToString() != null)
+                                                    if (dr["CertificateOfOriginTypeCodeID"].ToString() != null)
                                                     {
                                                         LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
-                                                        newExt.MyCertificateOfOriginMandatoryFields.MappedCertificatOriginId = dr["MappedCertificatOriginId"]?.ToString();
+                                                        newExt.MyCertificateOfOriginMandatoryFields.CertificateOfOriginTypeCodeID = (int)dr["CertificateOfOriginTypeCodeID"];
+                                                    }
+                                                    if (dr["CertificateOfOriginTypeCodeID"].ToString() != null)
+                                                    {
+                                                        LogMessagingUtil.Instance.Append(newResponseTableData.id + ",");
+                                                        newExt.MyCertificateOfOriginMandatoryFields.CertificateOfOriginTypeName = dr["CertificateOfOriginTypeCodeName"].ToString();
                                                     }
                                                     if (dr["Location"].ToString() != null)
                                                     {

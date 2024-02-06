@@ -136,7 +136,10 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
     }
     public class CertificateOfOriginMandatoryFields
     {
-        public string MappedCertificatOriginId { get; set; }
+        public string MappedCertificateFieldsName { get; set; }
+        public string MappedCertificateFields { get; set; }
+        public string CertificateOfOriginTypeName { get; set; }
+        public int CertificateOfOriginTypeCodeID { get; set; }
         public bool IsMandatory { get; set; }
         public int Location { get; set; }
         public DateTime LastUpdatedDate { get; set; }

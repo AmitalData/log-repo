@@ -467,7 +467,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
                         );
                     }
                     break;
-                case "2095":
+                case "239684":
                 case "CertificateOfOriginMandatoryFields":
                     {
                         closedTableService = new Update2095CertificateOfOriginMandatoryFieldsTypeView(customContext, entitySystemTables,
