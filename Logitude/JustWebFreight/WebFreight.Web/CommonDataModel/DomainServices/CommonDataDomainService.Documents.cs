@@ -34,6 +34,7 @@ using ICSharpCode.SharpZipLib.Zip;
 using Logitude.Server.Tools.StorageService;
 using Microsoft.Practices.Unity;
 using ICSharpCode.SharpZipLib.Checksum;
+using System.Text;
 
 namespace WebFreight.Web.CommonDataModel.DomainServices
 {
@@ -740,7 +741,11 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             newDocumentFiling.Id = IdCounter.GetNumber("Document", tenant).ToString();
 
             Random rnd = new Random();
-            newDocumentFiling.SecurityId = newDocumentFiling.Id + RandomString(10);
+         // newDocumentFiling.SecurityId = newDocumentFiling.Id + RandomString(10);
+            string com_id = newDocumentFiling.Id;        // Length = 30
+            string com_md5 = CreateMD5(com_id); // Length = 32 
+            string com_short = newDocumentFiling.Id.Substring(0, 8);
+            newDocumentFiling.SecurityId = com_short + com_md5; // Length = 40
 
             newDocumentFiling.Code = CodeCounter.GetNumber("DocumentsFiling", tenant).ToString();
             newDocumentFiling.CreatedByUserId = loggedUser.Id;
@@ -761,6 +766,42 @@ namespace WebFreight.Web.CommonDataModel.DomainServices
             DocumentOutPM docPM = documentOutQuery.GetSinglePM(newDocument.Id, newDocument.Tenant);
             return docPM;
         }
+
+
+        private static string CreateMD5(string input)
+
+        {
+
+            // Use input string to calculate MD5 hash
+
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+
+            {
+
+                byte[] inputBytes = System.Text.Encoding.Unicode.GetBytes(input);
+
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                //return Convert.ToHexString(hashBytes); // .NET 5 +
+
+                //Convert the byte array to hexadecimal string prior to.NET 5
+
+                StringBuilder sb = new System.Text.StringBuilder();
+
+                for (int i = 0; i < hashBytes.Length; i++)
+
+                {
+
+                    sb.Append(hashBytes[i].ToString("X2"));
+
+                }
+
+                return sb.ToString();
+
+            }
+
+        }
+
 
         public void UpdateDocumentOut(DocumentOutPM currentEntity)
         {
