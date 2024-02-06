@@ -95,7 +95,7 @@ namespace Logitude.Accounting.BL.CoreBL.Reports.Aging
                 OrderDate = myorderLessThanExclusive,
                 OrderDateB4 = true,
                 AccountId = itemGLAccountAgingData.AccountId,
-                CurrencyId = String.IsNullOrWhiteSpace( CurrencyId )? CurrencyId : _AccountingCurrencyId,///groupByAccCurrr.Key.CurrencyId,///GLAccount that is not multi Currency Get Foreign 
+                CurrencyId = String.IsNullOrWhiteSpace( CurrencyId )?   _AccountingCurrencyId : CurrencyId,///groupByAccCurrr.Key.CurrencyId,///GLAccount that is not multi Currency Get Foreign 
                 Total = totalPast,
                 OpenCredit = 0,
                 OpenDebit = 0,
