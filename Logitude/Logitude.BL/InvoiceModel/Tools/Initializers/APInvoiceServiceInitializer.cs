@@ -58,7 +58,7 @@ namespace Logitude.BL.InvoiceModel.Tools.Initializers
             this.Repository = new APInvoiceRepository(Context);
             this.TodayDateTime = TenantServerConfigration.GetCurrentDateTime(Tenant);
             this.TodayDate = this.TodayDateTime.Value.Date;
-            _invoiceStatusAccordingToLedgerOpenAmount = FeatureToggleHelper.HasFeatureToggle("ILO", Tenant);
+            _invoiceStatusAccordingToLedgerOpenAmount = true; // FeatureToggleHelper.HasFeatureToggle("ILO", Tenant);
 
         }
 

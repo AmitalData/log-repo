@@ -50,6 +50,7 @@ using System.Transactions;
 using System.Data.Common;
 using Simplog.Global.Data.GlobalModel.Repositories;
 using Simplog.Global.Data.GlobalModel.EntityPOCOs;
+using Logitude.Server.Tools.Utils;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -648,6 +649,11 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             {
                 if (entityPM.AmountInInvoiceCurrency == 0)
                 {
+                    //***102417/
+                    Logger.LogMe("APInvoiceNormalService.InitializeComponent: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
+                        + ", SetApproved"
+                        + ", old status= " + entityPM.StatusCode
+                        + ", AmountInInvoiceCurrency= " + entityPM.AmountInInvoiceCurrency.ToString(), false, "APINV_PD");
                     entityPM.StatusCode = "PD";
                     entityPM.IsClosed = true;
                 }
@@ -1848,7 +1854,13 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
 
                             else
                             {
-                                entityPM.StatusCode = "PD";
+                            //***102417/
+                            Logger.LogMe("APInvoiceNormalService.UpdateInvoiceAmountDue: APInvoice status 'Paid' Inv No. " + entityPM.InvoiceNumber.ToString()
+                                + ", old status= " + entityPM.StatusCode
+                                + ", invoicepayments.Count= " + invoicepayments.Count.ToString()
+                                + ", connectedPaymentAmount= " + conntectedPaymentAmount.ToString()
+                                + ", AmountInInvoiceCurrency= " + entityPM.AmountInInvoiceCurrency.ToString(), false, "APINV_PD");
+                            entityPM.StatusCode = "PD";
                                 entityPM.IsClosed = true;
                             }
                         }
