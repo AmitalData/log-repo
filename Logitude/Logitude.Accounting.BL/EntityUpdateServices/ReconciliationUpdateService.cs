@@ -491,7 +491,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         //***102417/
                         Logger.LogMe("ReconciliationUpdateService.UpdateLedgerTransaction: APInvoice status 'Paid' Inv No. " + invoice.InvoiceNumber.ToString()
-                            + ", HasFeatureToggle 'ILO'"
+                         //   + ", HasFeatureToggle 'ILO'"
                             + ", old status= " + invoice.StatusCode
                             + ", ledgerTransactionPM.Id= " + ledgerTransactionPM.Id.ToString()
                             + ", reconciliationLine.ReconciliationId= " + reconciliationLine.ReconciliationId.ToString(), false, "APINV_PD");
