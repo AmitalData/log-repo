@@ -76,7 +76,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
             // Side Title
             let CertificateOfOriginStatus = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode");
             logWindow.SubTitle = this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit && !AppTool.IsNullOrEmpty(this.EntityPM.CooStatusCodeName) ? CertificateOfOriginStatus += `: ${this.EntityPM.CooStatusCodeName}` : null;
-            
+
             this.CurrentSession.CurrentEditComponent.SaveChanges();
             this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
         });
@@ -249,7 +249,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                 if (!response.HasError) {
                     var result = response.Result;
                     this.EntityPM = result;
-                    //this.GENERAL.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit,this.IsDisplayOnly);
+
                     this.GENERAL.InitilizeListsFromCertificateOfOrigin(this.EntityPM);                           
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
                     this.CurrentSession.StopBusyIndicator();
@@ -270,7 +270,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                 if (!response.HasError) {
                     var result = response.Result;
                     this.EntityPM = result;
-                    // this.GENERAL.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit,this.IsDisplayOnly);
+
                     this.GENERAL.InitilizeListsFromCertificateOfOrigin(this.EntityPM);                        
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
                     this.CurrentSession.StopBusyIndicator();
