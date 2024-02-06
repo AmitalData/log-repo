@@ -31,6 +31,11 @@ namespace Simplog.Global.Data.GlobalModel.Repositories
         {
             return from a in context.HelpResources select a;
         }
+        public IQueryable<HelpResource> GetReleaseHelpResources()
+        {
+            string type = "REL";
+            return (from a in context.HelpResources where a.Type == type select a).OrderByDescending(a => a.CreateDate).Take(5);
+        }
 
         public IQueryable<HelpResource> GetAllActiveHelpResources()
         {

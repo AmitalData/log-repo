@@ -495,6 +495,14 @@ export class MaintenanceComponent {
                 item.ObjectTableName = "Container Settings";
                 this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
             }
+            if (SessionLocator.Tenant == 0) {
+                var item = new MenusTablePM();
+                item.CategoryTypeCode = "CMS";
+                item.Icon = "Settings"
+                item.Code = "ReleaseSettings";
+                item.ObjectTableName = "Release Settings";
+                this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+            }
             var item1 = new MenusTablePM();
             item1.CategoryTypeCode = "CMS";
             item1.Icon = "Settings"
@@ -1685,6 +1693,15 @@ export class MaintenanceComponent {
                         logitudeWindow.Title = "Container Settings";
                         logitudeWindow.Show('./ShipmentModules/ShipmentOthers/Components/ContainerSetting/ContainerSettingsComponent');
                     });
+                    break;
+                }
+                case "ReleaseSettings": {
+                    var logitudeWindow = new LogitudeWindow();
+                    logitudeWindow.ShowCloseButton = true;
+                    logitudeWindow.Width = 1200;
+                    logitudeWindow.Height = 600;
+                    logitudeWindow.Title = "Release Settings";
+                    logitudeWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/Workspaces/ReleaseSettingsComponent');
                     break;
                 }
 

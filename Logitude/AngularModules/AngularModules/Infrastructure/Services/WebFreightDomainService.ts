@@ -83,6 +83,48 @@ export class WebFreightDomainService {
         });
     }
 
+    PutReleaseSettings(releaseDateString: string, isDeleteReleaseURL: boolean, releaseCode: string) {
+        var args = new ReleaseArgs();
+        args.ReleaseDateString = releaseDateString;
+        args.IsDeleteRelease = isDeleteReleaseURL;
+        args.ReleaseCode = releaseCode;
+
+        var mappedArgs: ReleaseArgs = this.MapJsonReleaseArgs(args);
+      //  var url = ServiceHelper.GetLogitudeURL() + 'api/TraceEventsDomain';
+
+        return defer(() => {
+            return this._http.put(this._apiUrl + "/PutReleaseSetting", JSON.stringify(mappedArgs), ServiceHelper.GetHttpHeaders()).pipe(map((response) => {
+                var myResult = response;
+
+                var myResponse = new ServiceResponse();
+                myResponse.Result = myResult;
+                return myResponse;
+            }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
+
+    private MapJsonReleaseArgs(json: any, args: ReleaseArgs = null) {
+        if (!args) {
+            args = new ReleaseArgs();
+        }
+
+        var jsonPMKeys = Object.keys(json);
+
+        for (var key in jsonPMKeys) {
+            var property = jsonPMKeys[key];
+
+            if (property === "UIProperties") {
+                continue;
+            }
+
+            else {
+                args[property] = json[property];
+            }
+        }
+
+        return args;
+    }
+
     private MapJsonTraceEventArgs(json: any, args: TraceEventsServiceArgs = null) {
         if (!args) {
             args = new TraceEventsServiceArgs();
@@ -369,4 +411,11 @@ export class NewTraceEventResult {
     public LastSharedEventLocation: string;
     public LastSharedEventNotes: string;
     public LastSharedEventDate: Date;
+}
+
+export class ReleaseArgs {
+    public ReleaseDateString: string;
+    public IsDeleteRelease: boolean;
+    public ReleaseCode: string;
+    
 }

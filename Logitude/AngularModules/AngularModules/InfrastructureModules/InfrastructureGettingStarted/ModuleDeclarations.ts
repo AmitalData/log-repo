@@ -19,6 +19,7 @@ import { ChangeCurrencyComponent } from './Components/SystemCurrencies/ChangeCur
 import { SystemDefaultsComponent } from './Components/SystemDefaults/SystemDefaultsComponent';
 import { DefaultRatiosComponent } from './Components/SystemDefaults/DefaultRatiosComponent';
 import { CustomizedARInvoiceCounterComponent } from './Components/Counters/EditComponents/CustomizedARInvoiceCounterComponent';
+import {ReleaseSettingsComponent} from './Components/Workspaces/ReleaseSettingsComponent';
 
 export const Components =
     [
@@ -43,6 +44,7 @@ export const Components =
         ChangeCurrencyComponent,
         DefaultRatiosComponent,
         CustomizedARInvoiceCounterComponent,
+        ReleaseSettingsComponent,
     ];
 
 export class ModuleDeclarations {
@@ -72,6 +74,7 @@ export class ModuleDeclarations {
             case "ChangeCurrencyComponent": { myResult = ChangeCurrencyComponent; break; }
             case "DefaultRatiosComponent": { myResult = DefaultRatiosComponent; break; }
             case "CustomizedARInvoiceCounterComponent": { myResult = CustomizedARInvoiceCounterComponent; break; }
+            case "ReleaseSettingsComponent": { myResult = ReleaseSettingsComponent; break; }
 
         }
 
