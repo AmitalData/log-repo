@@ -12741,19 +12741,19 @@ namespace Unifreight.Data.AmitalModel
                     .HasColumnName(@"FILE_NO")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("bigint");
             modelBuilder.Entity<CCUSIGNUM>()
                 .Property(p => p.LINENOMSHGR)
                     .HasColumnName(@"LINE_NO_MSHGR")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSIGNUM>()
                 .Property(p => p.LINENOSIGN)
                     .HasColumnName(@"LINE_NO_SIGN")
                     .IsRequired()
                     .HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None)
-                    .HasColumnType("int");
+                    .HasColumnType("decimal");
             modelBuilder.Entity<CCUSIGNUM>()
                 .Property(p => p.SIGNNUM)
                     .HasColumnName(@"SIGN_NUM")
