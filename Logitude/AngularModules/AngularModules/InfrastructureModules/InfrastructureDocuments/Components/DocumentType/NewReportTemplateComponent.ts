@@ -389,63 +389,70 @@ export class NewReportTemplateComponent extends BaseComponent implements OnInit 
         if ((this.ValueRadioChoice == "FromLibrary" || this.ValueRadioChoice == "Duplicate") && !this.DocumentTypeTemplateViewModelSelected) {
             this.ValidationErrorsList.push("Please select at least template");
         }
-        else { 
-            this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
-            switch (this.ValueRadioChoice) {
-                case "Blank":
-                    {
 
-                        var newTemplatePm = this.GetNewStanceFromDocumentTypeTemplatePM()
-                        this.InsertDocumentTypeTemplatePm(newTemplatePm);
-                        break;
-                    }
+        else {
+            const regex = new RegExp('^[^<+>#%&\\/\'"*?!:@=|]+$');
+            var valid: boolean = regex.test(this.Description);
+            if (this.Description && this.Description.trim() && !valid) {
+                this.ValidationErrorsList.push(`Forbidden character in the Description: ${this.Description}`);
+            } else {
+                this.CurrentSession.CurrentWindow.StartBusyIndicator("Saving...");
+                switch (this.ValueRadioChoice) {
+                    case "Blank":
+                        {
 
-                case "Duplicate":
-                    {
-                        if (this.DocumentTypeTemplateViewModelSelected) {
-                            var newTemplatePm = this.GetCopyStanceFromDocumentTypeTemplatePM(this.DocumentTypeTemplateViewModelSelected.Entity)
+                            var newTemplatePm = this.GetNewStanceFromDocumentTypeTemplatePM()
                             this.InsertDocumentTypeTemplatePm(newTemplatePm);
+                            break;
                         }
 
-                        break;
-                    }
+                    case "Duplicate":
+                        {
+                            if (this.DocumentTypeTemplateViewModelSelected) {
+                                var newTemplatePm = this.GetCopyStanceFromDocumentTypeTemplatePM(this.DocumentTypeTemplateViewModelSelected.Entity)
+                                this.InsertDocumentTypeTemplatePm(newTemplatePm);
+                            }
 
-                case "FromFile":
-                    {
-                        var newTemplatePm = this.GetNewStanceFromDocumentTypeTemplatePM();
-                        if (newTemplatePm.EditorTool == "R") {
-                            this._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(this.UploadTemplateBodyData).subscribe((res:any) => {
-                                var pmResponse: ServiceResponse = res;
-                                if (!pmResponse.HasError) {
-                                    var myResult = pmResponse.Result;
-                                    if (myResult) {
-                                        var htmltemplate: any = myResult;
-                                        if (htmltemplate) {
+                            break;
+                        }
 
-                                            htmltemplate.HeaderHtml = !AppTool.IsNullOrEmpty(htmltemplate.HeaderHtml) ? htmltemplate.HeaderHtml : "";
-                                            htmltemplate.FooterHtml = !AppTool.IsNullOrEmpty(htmltemplate.FooterHtml) ? htmltemplate.FooterHtml : "";
+                    case "FromFile":
+                        {
+                            var newTemplatePm = this.GetNewStanceFromDocumentTypeTemplatePM();
+                            if (newTemplatePm.EditorTool == "R") {
+                                this._documentTypeTemplatePMExtendedService.ConvertXmalByteTojosnObject(this.UploadTemplateBodyData).subscribe((res: any) => {
+                                    var pmResponse: ServiceResponse = res;
+                                    if (!pmResponse.HasError) {
+                                        var myResult = pmResponse.Result;
+                                        if (myResult) {
+                                            var htmltemplate: any = myResult;
+                                            if (htmltemplate) {
 
-                                            newTemplatePm.TemplateHeaderHtml = StringToBase64(htmltemplate.HeaderHtml);
-                                            newTemplatePm.TemplateFooterHtml = StringToBase64(htmltemplate.FooterHtml);
-                                            newTemplatePm.TemplateBodyHtml = StringToBase64(htmltemplate.BodyHtml);
-                                            newTemplatePm.TemplateHeaderHeight = htmltemplate.HeaderHeight;
-                                            newTemplatePm.TemplateFooterHeight = htmltemplate.FooterHeight;
+                                                htmltemplate.HeaderHtml = !AppTool.IsNullOrEmpty(htmltemplate.HeaderHtml) ? htmltemplate.HeaderHtml : "";
+                                                htmltemplate.FooterHtml = !AppTool.IsNullOrEmpty(htmltemplate.FooterHtml) ? htmltemplate.FooterHtml : "";
 
+                                                newTemplatePm.TemplateHeaderHtml = StringToBase64(htmltemplate.HeaderHtml);
+                                                newTemplatePm.TemplateFooterHtml = StringToBase64(htmltemplate.FooterHtml);
+                                                newTemplatePm.TemplateBodyHtml = StringToBase64(htmltemplate.BodyHtml);
+                                                newTemplatePm.TemplateHeaderHeight = htmltemplate.HeaderHeight;
+                                                newTemplatePm.TemplateFooterHeight = htmltemplate.FooterHeight;
+
+                                            }
                                         }
                                     }
-                                }
-                                this.InsertDocumentTypeTemplatePm(newTemplatePm);
-                            });
+                                    this.InsertDocumentTypeTemplatePm(newTemplatePm);
+                                });
 
 
-                        } else this.InsertDocumentTypeTemplatePm(newTemplatePm);
-
-                 
-                        break;
-                    }
+                            } else this.InsertDocumentTypeTemplatePm(newTemplatePm);
 
 
+                            break;
+                        }
 
+
+
+                } 
             }
         }
 
