@@ -342,6 +342,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private string overseasSuspendedCode ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string OverseasSuspendedCode  
+	   {
+	    
+	     get
+		{
+		   return overseasSuspendedCode;
+		 }
+		 set
+		 {
+		   if(overseasSuspendedCode != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="OverseasSuspendedCode",OldValue=overseasSuspendedCode,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   overseasSuspendedCode=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

@@ -42,6 +42,8 @@ namespace Logitude.Customs.Data.EntityLists
        public bool? RequiresApproval  { get; set; }
        [DataMember]
        public bool? RequiresPayment  { get; set; }
+       [DataMember]
+       public string OverseasSuspendedCode  { get; set; }
    }
 
 }

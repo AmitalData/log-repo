@@ -92,6 +92,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="OverseasSuspendedCode"
+    Type="varchar"
+    Size="4">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="ErrorPlace"
     ReferencedTable="PendingErrorPlaces"
