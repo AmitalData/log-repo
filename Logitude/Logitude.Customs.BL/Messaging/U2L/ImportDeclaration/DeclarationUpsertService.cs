@@ -179,7 +179,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					string existId = myQueryService.GetIdByCustomFileNo(_AmitalCustomsFile.CustomFileNo, ResolvedTenant());
 					_AmitalCustomsFile.Id = existId;
 				}
-
+				if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.Id) && _AmitalCustomsFile.Direction == "E")
+				{
+					DeclarationRepository declarationRepository = new DeclarationRepository(_context);
+					_AmitalCustomsFile.Id = declarationRepository.GetAcceptDeclarationIdAmendment(_AmitalCustomsFile.Id, ResolvedTenant());
+				}
 
 				/// Exist
 				if (String.IsNullOrWhiteSpace(_AmitalCustomsFile.Id))
@@ -278,7 +282,11 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					ExportDeclarationUpdate();
 					if (IseatureClosingAutoExpDec)
 					{
+						AppendLogLine("before SendClosing: ");
+
 						SendClosing();
+						AppendLogLine("after SendClosing: ");
+
 					}
 					MyGenericResponseObj.Message = "עודכנה הצהרת יצוא";
 					MyGenericResponseObj.ApplicationId = _MyDeclarationPM.Id;
@@ -298,14 +306,14 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				}
 
 
-				if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages == null)
-				{
-					this._MyDeclarationPM.Consignments[0].ConsignmentPackages = new List<Def.EntityPMs.ConsignmentPackagePM>();
-				}
-				if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Count == 0)
-				{
-					this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(new Def.EntityPMs.ConsignmentPackagePM() { ChangeSetOp = ChangeSetOperation.Insert, Tenant = ResolvedTenant() }); // moran 20.8.15 Task 15049 - add handle to initiate Tenant
-				}
+				//if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages == null)
+				//{
+				//	this._MyDeclarationPM.Consignments[0].ConsignmentPackages = new List<Def.EntityPMs.ConsignmentPackagePM>();
+				//}
+				//if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Count == 0)
+				//{
+				//	this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(new Def.EntityPMs.ConsignmentPackagePM() { ChangeSetOp = ChangeSetOperation.Insert, Tenant = ResolvedTenant() }); // moran 20.8.15 Task 15049 - add handle to initiate Tenant
+				//}
 
 
 
@@ -651,72 +659,63 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					}
 
 					// moran 1.2.17 - AMI-59543 <--
-					if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].ChangeSetOp != ChangeSetOperation.Insert)
+					if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Count == 0 || !this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Any(package => package.PackageMeasureQualifierCode == "2"))
 					{
-						this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].ChangeSetOp = ChangeSetOperation.Update;
-					}
-					//this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode = TranslatePackingType(_AmitalCustomsFile.PackageTypeCode); 
-					// moran 2.4.14 - add handle in case of empty value -->
-					//this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode = _AmitalCustomsFile.PackageTypeCode;
-					if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.PackageTypeCode))
-					{
-						//this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode = _AmitalCustomsFile.PackageTypeCode;
+						ConsignmentPackagePM consignmentPackagePM = new ConsignmentPackagePM();
+						consignmentPackagePM.ChangeSetOp = ChangeSetOperation.Insert;
 
-						var packingType = new PackingTypeRepository(ResolvedTenant());
-						var myPackingType = packingType.GetSingle(_AmitalCustomsFile.PackageTypeCode);
-						if (myPackingType == null && setting != null && setting.IsConnectedToUniFreight)
-						{
-							string PackageTypeCode = "";
-							PackageTypeCode = GetTranslationL2P("IIGC", "CTBPACKTYPE", _AmitalCustomsFile.PackageTypeCode);
+                        if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.PackageTypeCode))
+                        {
 
-							if (!string.IsNullOrWhiteSpace(PackageTypeCode)) this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode = PackageTypeCode;
-						}
-						else
-						{
-							this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode = myPackingType.Code.ToString();
-						}
-					}
-					else
-					{
-						this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageTypeCode = null;
-					}
-					// moran 2.4.14 - add handle in case of empty value <--
-					this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageMeasureQualifierCode = "2";
-					int packageQuantity = 0;
-					if (int.TryParse(_AmitalCustomsFile.PackageQuantity, out packageQuantity) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.PackageQuantity)) //Yuval Chalup 23.02.2016 TASK-20330 (Add  || string.IsNullOrWhiteSpace(_AmitalCustomsFile.PackageQuantity))
-					{
-						this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].PackageQuantity = packageQuantity;
-					}
-					decimal GrossMassMeasure = 0;
-					if (String.IsNullOrWhiteSpace(this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode))
-					{
-						this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "KGM";
-					}
-					if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out GrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure)) //Yuval Chalup 23.02.2016 TASK-20330 (Add  || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
-					{
+                            var packingType = new PackingTypeRepository(ResolvedTenant());
+                            var myPackingType = packingType.GetSingle(_AmitalCustomsFile.PackageTypeCode);
+                            if (myPackingType == null && setting != null && setting.IsConnectedToUniFreight)
+                            {
+                                string PackageTypeCode = "";
+                                PackageTypeCode = GetTranslationL2P("IIGC", "CTBPACKTYPE", _AmitalCustomsFile.PackageTypeCode);
 
-						string isOverrideWeight = CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight ?
-							GetAmitalDefault("ISRAEL", "CIM_NO_OVR_WGT", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant()) :
-							"N";
-						if (isOverrideWeight == "Y" && this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure > 0)
-						{
-							GrossMassMeasure = (decimal)this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure;
-						}
-						decimal weight = Math.Truncate(GrossMassMeasure);
-						if (weight > 99999999)
-						{
-							GrossMassMeasure = GrossMassMeasure / 1000;
-							this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "TNE";
-						}
-						else
-						{
-							if (this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode == "TNE")
-							{
-								this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasureTypeCode = "KGM";
-							}
-						}
-						this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].GrossMassMeasure = GrossMassMeasure;
-					}
+                                if (!string.IsNullOrWhiteSpace(PackageTypeCode)) 
+									consignmentPackagePM.PackageTypeCode = PackageTypeCode;
+                            }
+                            else
+                            {
+								consignmentPackagePM.PackageTypeCode = myPackingType.Code.ToString();
+                            }
+                        }
+                        else
+                        {
+							consignmentPackagePM.PackageTypeCode = null;
+                        }
+                        // moran 2.4.14 - add handle in case of empty value <--
+						consignmentPackagePM.PackageMeasureQualifierCode = "2";
+                        int packageQuantity = 0;
+                        if (int.TryParse(_AmitalCustomsFile.PackageQuantity, out packageQuantity) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.PackageQuantity)) //Yuval Chalup 23.02.2016 TASK-20330 (Add  || string.IsNullOrWhiteSpace(_AmitalCustomsFile.PackageQuantity))
+                        {
+							consignmentPackagePM.PackageQuantity = packageQuantity;
+                        }
+                        decimal GrossMassMeasure = 0;
+						
+						consignmentPackagePM.GrossMassMeasureTypeCode = "KGM";
+                        if (decimal.TryParse(_AmitalCustomsFile.GrossMassMeasure, out GrossMassMeasure) || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure)) //Yuval Chalup 23.02.2016 TASK-20330 (Add  || string.IsNullOrWhiteSpace(_AmitalCustomsFile.GrossMassMeasure))
+                        {
+
+                            string isOverrideWeight = CustomsSettingQueryService.GetSettingByTenant(ResolvedTenant()).IsConnectedToUniFreight ?
+                                GetAmitalDefault("ISRAEL", "CIM_NO_OVR_WGT", "NON", _AmitalCustomsFile.CustomerId, ResolvedTenant()) :
+                                "N";
+                           
+                            decimal weight = Math.Truncate(GrossMassMeasure);
+                            if (weight > 99999999)
+                            {
+                                GrossMassMeasure = GrossMassMeasure / 1000;
+								consignmentPackagePM.GrossMassMeasureTypeCode = "TNE";
+                            }
+							
+							consignmentPackagePM.GrossMassMeasure = GrossMassMeasure;
+                            this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(consignmentPackagePM);
+                        }
+                    }
+					
+					
 				}
 				else // moran 19.12.13 - task 2423 - multi Consignments adjusments
 				{
@@ -986,24 +985,41 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 		}		
 		private void SendClosing()
 		{
+			try { 
 
-			if (FieldError.Length == 0)
-			{
-				if (documentsFilingPM.IsNotCustomsDocId)
-				{
-					documentsFilingPM.DeclarationId = _MyDeclarationPM.Id;
-					documentsFilingPM.LoggedUserId = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
-					ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", documentsFilingPM.Tenant)) as ISendBondedCustomDocumentService;
-					myISendBondedCustomDocumentService.JustDoIt(documentsFilingPM);
-				}
-				else 
-				{
-				   ICustomsAutoDecClosing CustomsAutoDecClosing = ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new ParameterOverride("", 1)) as ICustomsAutoDecClosing;
-				   CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
-				}
+			    if (FieldError.Length == 0)
+			    {
+			    	AppendLogLine("FieldError.Length == 0");
+			    
+			    	if (documentsFilingPM.IsNotCustomsDocId)
+			    	{
+			    		AppendLogLine("documentsFilingPM.IsNotCustomsDocId" + documentsFilingPM.IsNotCustomsDocId);
+			    
+			    		documentsFilingPM.DeclarationId = _MyDeclarationPM.Id;
+			    		documentsFilingPM.LoggedUserId = AuthenticationUtil.ResolveUserId(_MyDeclarationPM.Tenant);
+			    		ISendBondedCustomDocumentService myISendBondedCustomDocumentService = ContainerAccessor.Container.Resolve(typeof(ISendBondedCustomDocumentService), "SendBondedCustomDocumentService", new ParameterOverride("", documentsFilingPM.Tenant)) as ISendBondedCustomDocumentService;
+			    		myISendBondedCustomDocumentService.JustDoIt(documentsFilingPM);
+			    		AppendLogLine("After JustDoIt");
+			    	}
+			    	else 
+			    	{
+			    		AppendLogLine("Before Send8235");
+			    
+			    		ICustomsAutoDecClosing CustomsAutoDecClosing = ContainerAccessor.Container.Resolve(typeof(ICustomsAutoDecClosing), "CustomsAutoDecClosing", new ParameterOverride("", 1)) as ICustomsAutoDecClosing;
+			    	   CustomsAutoDecClosing.Send8235(_MyDeclarationPM);
+			    		AppendLogLine("After Send8235");
+			    
+			    	}
+			    }
+			    else { 
+			    	RaiseEvent(_MyDeclarationPM, null, "CF1", FieldError.ToString());
+			    	AppendLogLine("RaiseEvent CF1");
+			    }
 			}
-			else
-				RaiseEvent(_MyDeclarationPM, null, "CF1", FieldError.ToString());
+			catch (Exception ex)
+			{
+				AppendLogLine("Exception SendClosing" + ex.ToString());
+			}
 		}
 		private void FillExportDeclarationClosingDataFromUNF()
 		{
@@ -1279,7 +1295,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				AppendLogLine("try to update FlightDate " + _AmitalCustomsFile.FlightDate + " to DeclarationPM.Id: " + _MyDeclarationPM.Id);
 				try
 				{
+					AppendLogLine("Before Update _MyDeclarationPM: " + _MyDeclarationPM.Id);
 					declarationUpdateService.Update(_MyDeclarationPM, true);
+					AppendLogLine("After Update _MyDeclarationPM: " + _MyDeclarationPM.Id);
 				}
 				catch (DbEntityValidationException ex)
 				{

@@ -507,6 +507,20 @@ namespace Logitude.Customs.Data.Repsitories
                   )
                   .FirstOrDefault();
         }
+        public Declaration GetOriginalDeclarationByCustomFileNo(string customFileNo, int tenant)
+        {
+
+            if (String.IsNullOrWhiteSpace(customFileNo)) return null;
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
+
+            return
+                  (
+                 from rec in context.Declarations
+                 where rec.CustomFileNo == customFileNo && rec.Tenant == tenant && (rec.IsAmendment == null || rec.IsAmendment == false)
+                 select rec
+                  )
+                  .FirstOrDefault();
+        }
         public string GetIdByCustomFileNo(string customFileNo, int tenant)
         {
 
@@ -952,21 +966,35 @@ namespace Logitude.Customs.Data.Repsitories
                   )
                   .FirstOrDefault();
         }
-        public Declaration GetDeclarationByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant)
+        public Declaration GetDeclarationByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant,string ExternalEntityName)
         {
             if (String.IsNullOrWhiteSpace(ExternalEntityReference)) return null;
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
 
-            return
-                  (
-                  from rec in context.Declarations
-                  where (rec.CustomFileNo == ExternalEntityReference && rec.Tenant == tenant && rec.Direction == "I") || (rec.ExportFile == ExternalEntityReference && rec.Tenant == tenant && rec.Direction == "E")
-                  select rec
-                  )
-                  .FirstOrDefault();
+            if(ExternalEntityName == "CFIFILEM")
+            {
+                return
+                 (
+                 from rec in context.Declarations
+                 where rec.CustomFileNo == ExternalEntityReference && rec.Tenant == tenant && rec.Direction == "I"
+                 select rec
+                 )
+                 .FirstOrDefault();
+            }
+            else
+            {
+                return
+                                (
+                                from rec in context.Declarations
+                                where rec.ExportFile == ExternalEntityReference && rec.Tenant == tenant && rec.Direction == "E"
+                                select rec
+                                )
+                                .FirstOrDefault();
+            }
+           
            
         }
-        public Declaration GetLastDeclarationByDeclarationId(string id, int tenant, bool isExport = false)
+        public Declaration GetLastDeclarationByDeclarationId(string id, int tenant, bool isExport = false, bool? IsDCA = false)
         {
             if (String.IsNullOrWhiteSpace(id)) return null;
             (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false; //Pasted from <http://stackoverflow.com/questions/682429/how-can-i-query-for-null-values-in-entity-framework?lq=1> 
@@ -975,7 +1003,7 @@ namespace Logitude.Customs.Data.Repsitories
                 return
                  (
                  from rec in context.Declarations
-                 where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && (rec.AmendmentStatus == null || rec.AmendmentStatus == "6")
+                 where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && (rec.AmendmentStatus == "6" || rec.AmendmentStatus == null)) ||(IsDCA == false && rec.AmendmentStatus == null))
                  select rec
                  ).OrderByDescending(x => x.CreateDateTime)
                  .FirstOrDefault();
@@ -983,8 +1011,8 @@ namespace Logitude.Customs.Data.Repsitories
             return
                   (
                   from rec in context.Declarations
-                  where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant
-                  select rec
+                  where rec.AmendmentOriginalDeclartation == id && rec.Tenant == tenant && ((IsDCA == true && (rec.AmendmentStatus == "1" || rec.AmendmentStatus == null)) || (IsDCA == false))
+				  select rec
                   ).OrderByDescending(x => x.CreateDateTime)
                   .FirstOrDefault();
         }
@@ -1488,7 +1516,27 @@ namespace Logitude.Customs.Data.Repsitories
             return decNum;
 
         }
-    }
+		public string GetSignedByUserIdByCustomFileNo(int tenant, string customFileNo)
+		{
+			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+			var decSignedByUserId = (from a in context.Declarations
+						  where a.Tenant == tenant && a.CustomFileNo == customFileNo && !string.IsNullOrEmpty(a.SignedByUserId)
+						  select a.SignedByUserId).FirstOrDefault();
+			return decSignedByUserId;
+
+		}
+		public List<Declaration> GetDeclarationsByExportFile(int tenant,string exportFile)
+		{
+			(context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
+			List<Declaration> declarations = (from a in context.Declarations
+											  where a.Tenant == tenant && a.ExportFile == exportFile && !string.IsNullOrEmpty(a.DeclarationNumber) && a.DeclarationStatusTypeCode != "36"
+											  select a).ToList();
+
+			return declarations;
+		}
+	}
 
 
     public class ExportReport1

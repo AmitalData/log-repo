@@ -159,6 +159,7 @@ import { ProductNameTypeListService } from './Services/StandardLists/ProductName
 import { RansomViolationTypeListService } from './Services/StandardLists/RansomViolationTypeListService';
 import { RegisteredWarehouseSiteTypeListService } from './Services/StandardLists/RegisteredWarehouseSiteTypeListService';
 import { RequestStatusListService } from './Services/StandardLists/RequestStatusListService';
+import { RequestToAdvanceAQueueListService } from './Services/StandardLists/RequestToAdvanceAQueueListService';
 import { ReturnConditionListService } from './Services/StandardLists/ReturnConditionListService';
 import { SalesTaxExemptionTypeListService } from './Services/StandardLists/SalesTaxExemptionTypeListService';
 import { SignatureTypeListService } from './Services/StandardLists/SignatureTypeListService';
@@ -461,6 +462,8 @@ import { StatusFieldTypeListService } from './Services/StandardLists/StatusField
 import { GTBFUSTATUWebService } from './Services/WebServices/GTBFUSTATUWebService';
 import { ManifestCargoStatusListService } from './Services/StandardLists/ManifestCargoStatusListService';
 import { ServersNamePMService } from './Services/StandardPMs/ServersNamePMService';
+import { ConfirmationNumberTokenLogListService } from './Services/StandardLists/ConfirmationNumberTokenLogListService';
+import { ConfirmationNumberTokenLogPMService } from './Services/StandardPMs/ConfirmationNumberTokenLogPMService';
 
 
 export class ModuleProviders {
@@ -629,6 +632,7 @@ export class ModuleProviders {
             case "RansomViolationTypeListService": { myResult = new RansomViolationTypeListService(); break; }
             case "RegisteredWarehouseSiteTypeListService": { myResult = new RegisteredWarehouseSiteTypeListService(); break; }
             case "RequestStatusListService": { myResult = new RequestStatusListService(); break; }
+            case "RequestToAdvanceAQueueListService": { myResult = new RequestToAdvanceAQueueListService(); break; }
             case "ReturnConditionListService": { myResult = new ReturnConditionListService(); break; }
             case "SalesTaxExemptionTypeListService": { myResult = new SalesTaxExemptionTypeListService(); break; }
             case "SignatureTypeListService": { myResult = new SignatureTypeListService(); break; }
@@ -928,6 +932,8 @@ export class ModuleProviders {
             case "VendorCommissionService": { myResult = new VendorCommissionService(); break; }
             case "DeclarationAmendmentSharedDataService": { myResult = new DeclarationAmendmentSharedDataService(); break; }
             case "PhysicalCheckEditComponentController": { myResult = new PhysicalCheckEditComponentController(); break; }
+            case "ConfirmationNumberTokenLogListService": { myResult = new ConfirmationNumberTokenLogListService(); break; }
+            case "ConfirmationNumberTokenLogPMService": { myResult = new ConfirmationNumberTokenLogPMService(); break; }
 
                 
 

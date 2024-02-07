@@ -1,0 +1,18 @@
+<div class="buttons">
+    <button class="Button" style="width: 150px; display: inline-block; margin: 20px 0" (click)="openLinkToCodeForToken()">{{'Customs.ConfirmationNumberTokenLog.O.GetNewToken' | TextCodeTranslationPipe}}</button>
+    
+    <button class="Button" style="width: 150px; display: inline-block; margin: 20px 0; margin-right: 20px;" (click)="refreshTable()">{{'Customs.ConfirmationNumberTokenLog.O.RefreshTable' | TextCodeTranslationPipe}}</button>
+</div>
+
+<div class="grid-container" *ngIf="finishBuildColumns">
+    <logitude-grid [ObjectTable]="ObjectTableName"
+                   [dataSource]="DataSource"
+                   [columns]="columns"
+                   [IsCustomTemplate]="true"
+                   [autoLoad]="true"
+                   [ChangeColorByPropName]="'UserCode'"
+                   [ChangeColorByPropValue]="loggedUserCode"
+                   [RowBackGroundColor]="'#07060626'"
+                   [QueryChangeEvent]="onQueryChangeEvent">
+    </logitude-grid>
+</div>

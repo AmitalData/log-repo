@@ -40,7 +40,7 @@
   ParentTableName="DeclarationCourierStatus"
   LocalDefaultText="&quot;Pending&quot;"
   DefaultText="&quot;Declaration Pending&quot;"
-  Code="&quot;6b9a&quot;"
+  Code="&quot;9866&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"

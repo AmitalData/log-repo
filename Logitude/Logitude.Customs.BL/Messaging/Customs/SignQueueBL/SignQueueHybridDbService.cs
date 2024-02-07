@@ -1,11 +1,15 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
+﻿using Logitude.BL.CommonDataModel.EntityQueries;
+using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.Repsitories;
 using Logitude.CustomsMessaging.Common.Gen;
 using Logitude.Server.Tools.ExternalServices;
+using Logitude.Server.Tools.Helpers;
 using Logitude.SystemLogs;
+using Simplog.Data.CommonDataModel.Repositories;
+using Simplog.Data.CommonDataModel;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
@@ -118,8 +122,11 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
         }
         public (string signCertificate, SignMethodByQueueEnum dSignMethodByQueue) GetAvailableSignServer(int tenant, SignQueueByType SignatureBy, string personId,bool isExport=false)
         {
-            
-            MySignStationList availableSignServer = null;
+			ICommonDataContext myContextCommon = CommonDataContext.GetContext(tenant);
+			FeatureRepository myFeatureRepository = new FeatureRepository(myContextCommon);
+			FeatureQuery featureQuery = new FeatureQuery(myFeatureRepository);
+
+			MySignStationList availableSignServer = null;
             var repo = new SignStationRepository(tenant);
             string customsAgentId = SignQueue.GetCustomsAgentIdFromTenant(tenant);
 
@@ -181,7 +188,15 @@ namespace Logitude.Customs.BL.Messaging.Customs.SignQueueBL
                         }
                         return (null, SignMethodByQueueEnum.None); ;
                     }
-                    if (DateTime.Now.Subtract(availableSignServer.LastAccessedAt) > TimeSpan.FromMinutes(LastAccessedInMin))
+
+					
+					var features = featureQuery.GetAllowedFeaturesForLoggedUser(AuthenticationUtil.ResolveUserId(tenant), tenant);
+					var featureIsExportSign = features.Features.FirstOrDefault(x => x.Code == "IsExportSign");
+					if (featureIsExportSign != null && isExport)
+					{
+						return (availableSignServer.SignCertificate, SignMethodByQueueEnum.HybridDbSignQueue);
+					}
+					if (DateTime.Now.Subtract(availableSignServer.LastAccessedAt) > TimeSpan.FromMinutes(LastAccessedInMin))
                     {
                         if (defaultSignServer != null)
                         {

@@ -140,6 +140,7 @@
     <Compile Include="EntityKeys\ClientIndicationKeys.cs" />
     <Compile Include="EntityKeys\ClientsPoaKeys.cs" />
     <Compile Include="EntityKeys\ClientsTapagKeys.cs" />
+    <Compile Include="EntityKeys\ConfirmationNumberTokenLogKeys.cs" />
     <Compile Include="EntityKeys\ConsignmentPackDangerKeys.cs" />
     <Compile Include="EntityKeys\ContainerizationHataraStatusKeys.cs" />
     <Compile Include="EntityKeys\ContainerizationKeys.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="EntityKeys\RefundCustomerActivityTypeKeys.cs" />
     <Compile Include="EntityKeys\ReleaseMessageTypeKeys.cs" />
     <Compile Include="EntityKeys\RequestReasonCodeEnumKeys.cs" />
+    <Compile Include="EntityKeys\RequestToAdvanceAQueueKeys.cs" />
     <Compile Include="EntityKeys\RequestTypeKeys.cs" />
     <Compile Include="EntityKeys\SchedulerParamKeys.cs" />
     <Compile Include="EntityKeys\SealCompletenesKeys.cs" />
@@ -316,6 +318,7 @@
     <Compile Include="EntityListQueryServices\ClientIndicationListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientsPoaListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ClientsTapagListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ConfirmationNumberTokenLogListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ConsignmentPackDangerListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerizationHataraStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ContainerizationListQueryService.cs" />
@@ -423,6 +426,7 @@
     <Compile Include="EntityListQueryServices\Generated\ClientIndicationListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientsPoaListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ClientsTapagListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ConfirmationNumberTokenLogListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ConsignmentPackDangerListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerizationHataraStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ContainerizationListQueryService.Generated.cs" />
@@ -529,6 +533,7 @@
     <Compile Include="EntityListQueryServices\Generated\RefundCustomerActivityTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ReleaseMessageTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestReasonCodeEnumListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\RequestToAdvanceAQueueListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\RequestTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SchedulerParamListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\SealCompletenesListQueryService.Generated.cs" />
@@ -597,6 +602,7 @@
     <Compile Include="EntityListQueryServices\RefundCustomerActivityTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ReleaseMessageTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestReasonCodeEnumListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\RequestToAdvanceAQueueListQueryService.cs" />
     <Compile Include="EntityListQueryServices\RequestTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SchedulerParamListQueryService.cs" />
     <Compile Include="EntityListQueryServices\SealCompletenesListQueryService.cs" />
@@ -636,6 +642,7 @@
     <Compile Include="EntityLists\Generated\CertificateOfOriginTypeCodeEnumList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientItemList.Generated.cs" />
     <Compile Include="EntityLists\Generated\ClientIndicationList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ConfirmationNumberTokenLogList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CountryCurrencyList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CourierHawbFromExcelList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CustomDocumentTypeTenantList.Generated.cs" />
@@ -649,6 +656,7 @@
     <Compile Include="EntityLists\Generated\OriginCriterionList.Generated.cs" />
     <Compile Include="EntityLists\Generated\RequestReasonCodeEnumList.Generated.cs" />
     <Compile Include="EntityLists\Generated\SupplierInvioceExportDefaultList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\RequestToAdvanceAQueueList.Generated.cs" />
     <Compile Include="EntityLists\Generated\UIMessageTenantList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OcrDocumentList.Generated.cs" />
     <Compile Include="EntityLists\Generated\OcrStatusList.Generated.cs" />
@@ -845,6 +853,7 @@
     <Compile Include="EntityMapping\ClientIndicationMap.cs" />
     <Compile Include="EntityMapping\ClientsPoaMap.cs" />
     <Compile Include="EntityMapping\ClientsTapagMap.cs" />
+    <Compile Include="EntityMapping\ConfirmationNumberTokenLogMap.cs" />
     <Compile Include="EntityMapping\ConsignmentPackDangerMap.cs" />
     <Compile Include="EntityMapping\ContainerizationHataraStatusMap.cs" />
     <Compile Include="EntityMapping\ContainerizationMap.cs" />
@@ -952,6 +961,7 @@
     <Compile Include="EntityMapping\RefundCustomerActivityTypeMap.cs" />
     <Compile Include="EntityMapping\ReleaseMessageTypeMap.cs" />
     <Compile Include="EntityMapping\RequestReasonCodeEnumMap.cs" />
+    <Compile Include="EntityMapping\RequestToAdvanceAQueueMap.cs" />
     <Compile Include="EntityMapping\RequestTypeMap.cs" />
     <Compile Include="EntityMapping\SchedulerParamMap.cs" />
     <Compile Include="EntityMapping\SealCompletenesMap.cs" />
@@ -1021,6 +1031,7 @@
     <Compile Include="EntityPOCOs\ClientIndication.cs" />
     <Compile Include="EntityPOCOs\ClientsPoa.cs" />
     <Compile Include="EntityPOCOs\ClientsTapag.cs" />
+    <Compile Include="EntityPOCOs\ConfirmationNumberTokenLog.cs" />
     <Compile Include="EntityPOCOs\ConsignmentPackDanger.cs" />
     <Compile Include="EntityPOCOs\Containerization.cs" />
     <Compile Include="EntityPOCOs\ContainerizationHataraStatus.cs" />
@@ -1129,6 +1140,7 @@
     <Compile Include="EntityPOCOs\RefundCustomerActivityType.cs" />
     <Compile Include="EntityPOCOs\ReleaseMessageType.cs" />
     <Compile Include="EntityPOCOs\RequestReasonCodeEnum.cs" />
+    <Compile Include="EntityPOCOs\RequestToAdvanceAQueue.cs" />
     <Compile Include="EntityPOCOs\RequestType.cs" />
     <Compile Include="EntityPOCOs\SchedulerParam.cs" />
     <Compile Include="EntityPOCOs\SealCompletenes.cs" />
@@ -1198,6 +1210,7 @@
     <Compile Include="Repsitories\ClientIndicationRepository.cs" />
     <Compile Include="Repsitories\ClientsPoaRepository.cs" />
     <Compile Include="Repsitories\ClientsTapagRepository.cs" />
+    <Compile Include="Repsitories\ConfirmationNumberTokenLogRepository.cs" />
     <Compile Include="Repsitories\ConsignmentPackDangerRepository.cs" />
     <Compile Include="Repsitories\ContainerizationHataraStatusRepository.cs" />
     <Compile Include="Repsitories\ContainerizationRepository.cs" />
@@ -1305,6 +1318,7 @@
     <Compile Include="Repsitories\Generated\ClientIndicationRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientsPoaRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ClientsTapagRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\ConfirmationNumberTokenLogRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ConsignmentPackDangerRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerizationHataraStatusRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ContainerizationRepository.Generated.cs" />
@@ -1411,6 +1425,7 @@
     <Compile Include="Repsitories\Generated\RefundCustomerActivityTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\ReleaseMessageTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestReasonCodeEnumRepository.Generated.cs" />
+    <Compile Include="Repsitories\Generated\RequestToAdvanceAQueueRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\RequestTypeRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SchedulerParamRepository.Generated.cs" />
     <Compile Include="Repsitories\Generated\SealCompletenesRepository.Generated.cs" />
@@ -1479,6 +1494,7 @@
     <Compile Include="Repsitories\RefundCustomerActivityTypeRepository.cs" />
     <Compile Include="Repsitories\ReleaseMessageTypeRepository.cs" />
     <Compile Include="Repsitories\RequestReasonCodeEnumRepository.cs" />
+    <Compile Include="Repsitories\RequestToAdvanceAQueueRepository.cs" />
     <Compile Include="Repsitories\RequestTypeRepository.cs" />
     <Compile Include="Repsitories\SchedulerParamRepository.cs" />
     <Compile Include="Repsitories\SealCompletenesRepository.cs" />

@@ -26,6 +26,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             var toSendStatusPCF = false;
             var toSendStatusPUI = false;
             var toSendStatusPUC = false;
+            var toSendStatusPCB = false;
 
             DeclarationPM connectedDeclarationPM = null;
             bool toLoadDeclarationPM = false;
@@ -59,12 +60,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     case EventContextTagModel.ProccessEnum.CH_NG_190_MSG1_NoticeToClientResponseServiceDelete:
                         toSendStatusPUC = true;
                         break;
+                    case EventContextTagModel.ProccessEnum.CH_NG_192_MSG1_QueueAdvanceDeniedResponseService:
+                        toSendStatusPCB = true;
+                        break;
                     default:
                         break;
                 }
             }
 
-            toLoadDeclarationPM = (toSendStatusPUI || toSendStatusPCE || toSendStatusPCF || toSendStatusPUC);
+            toLoadDeclarationPM = (toSendStatusPUI || toSendStatusPCE || toSendStatusPCF || toSendStatusPUC || toSendStatusPCB);
             if (toLoadDeclarationPM)
             {
                 connectedDeclarationPM = GetConnectedDeclarationPM(dirtyEntityPM);
@@ -89,6 +93,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             if (toSendStatusPUC)
             {
                 SendPUC(dirtyEntityPM, connectedDeclarationPM, loggingUserId);
+            }
+            if (toSendStatusPCB)
+            {
+                SendPCB(dirtyEntityPM, connectedDeclarationPM, loggingUserId);
             }
 
         }
@@ -119,6 +127,41 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                         status_DateTime = DateTime.Now,
                         //status_place = "FRA",
                         //status_save = "no_fail",
+                        comments = eventContextTagModel.FUStatusRemarks,
+                    }
+                };
+                AmitalEventTracer.CreateTraceEvent(myAmitalEventTracerModel);
+            }
+            catch (Exception)
+            {
+                // TODO: BL Stop Execute or Cuntinue - Ask IHAB
+                throw;
+            }
+        }
+         private void SendPCB(PhysicalCheckPM dirtyEntityPM, DeclarationPM connectedDeclarationPM, string loggingUserId)
+        {
+            try
+            {
+                var eventContextTagModel = dirtyEntityPM.CurrentContextTag as EventContextTagModel;
+                var myAmitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = dirtyEntityPM.Tenant,
+                    objectTableName = "Customs.PhysicalCheck",
+                    EventCode = "PCB",
+                    notes = eventContextTagModel.EventRemarks,
+                    CommunicationLoggingEntityReference = dirtyEntityPM.CheckId.ToString(),
+                    EntityId = dirtyEntityPM.Id,
+                    UserId = loggingUserId,
+
+                    CommunicationSubject = "FU Status PCB from logitude ",
+                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    {
+                        entname = "CFIFILEM",
+                        primary_number = connectedDeclarationPM.CustomFileNo,
+                        status = "new",
+                        xml_status = "new",
+                        status_id = "PCB",
+                        status_DateTime = DateTime.Now,
                         comments = eventContextTagModel.FUStatusRemarks,
                     }
                 };

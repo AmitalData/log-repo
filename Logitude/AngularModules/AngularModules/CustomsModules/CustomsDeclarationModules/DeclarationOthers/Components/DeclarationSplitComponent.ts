@@ -120,6 +120,8 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
                         this.DocumentFilterSelectedValue = "all";
                  
                  });
+                 this._entityResourceService.getEntityResourceByTableName("Customs.OcrDocument").subscribe((response: any) => {});
+
              }
                 
                 //// 2- get metadata values then

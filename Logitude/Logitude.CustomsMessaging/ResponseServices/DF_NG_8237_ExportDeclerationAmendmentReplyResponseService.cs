@@ -33,6 +33,8 @@ using UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceRef
 using Simplog.Data.CommonDataModel;
 using Logitude.Customs.Def.EntityQueryServicesExt;
 using Microsoft.Practices.ObjectBuilder2;
+using System.Globalization;
+using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -134,18 +136,19 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (AdditionalInformation != null)
                         status = AdditionalInformation.FirstOrDefault(x => x.Content != null && x.StatementTypeCode.Value == "32").Content.Value;
                     bool isAmendApprove = (status == "2" || status == "1");
+                    bool isDCA = requestParams.RequestVIA == SendRequestVIA.DCABatch;
 
-                    if (declaration != null)
+					if (declaration != null)
                     {
                         if (customResponse.Response.Declaration != null && (status == "2" || status == "1"))
-                            _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true, isAmendApprove: isAmendApprove);
+                            _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true, isAmendApprove: isAmendApprove,isDCA: isDCA);
                     }
                     else
                     {
                         if (customResponse.Response.Declaration != null && customResponse.Response.Declaration.ID != null && customResponse.Response.Declaration.ID.Value != null && customResponse.Response.Declaration.ID.Value.Substring(2, 2) == "99")
                         {
                             _MyDeclarationPM = myDeclarationUpdateService.GetSertByConvertedDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
-                            _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true);
+                            _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, true, isDCA: isDCA);
                         }
                         else if (customResponse.Response.Declaration != null)
                         {
@@ -153,12 +156,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                             if (_MyDeclarationPM != null)
                             {
-                                _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true, isAmendApprove: isAmendApprove);
+                                _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, _MyDeclarationPM.Id, out error, false, isUpdateAfterAccept: true, isAmendApprove: isAmendApprove, isDCA: isDCA);
                             }
                             else
                             {
                                 string id = myDeclarationQueryService.GetIdByDeclarationNumber(customResponse.Response.Declaration.ID.Value, requestParams.Tenant);
-                                _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false, isAmendApprove: isAmendApprove);
+                                _MyDeclarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(CastDeclaration(customResponse.Response.Declaration), requestParams.Tenant, false, id, out error, false, isAmendApprove: isAmendApprove, isDCA: isDCA);
                             }
                             fromMehes = true;
 
@@ -1258,12 +1261,44 @@ namespace Logitude.CustomsMessaging.ResponseServices
 	}
 	public class CustomsAutoDecClosing : ICustomsAutoDecClosing
 	{
-		public void Send8235(DeclarationPM decPm, string LoggingUserId = "")
+		
+	    public void Send8235(DeclarationPM decPm, string LoggingUserId = "")
 		{
+			DateTime stopLogAt = DateTime.MinValue;
+			
+			string UntilDateyyyyMMdd = Environment.GetEnvironmentVariable("20240205T155633.LogUntilDateyyyyMMdd");
+
+			if (!string.IsNullOrWhiteSpace(UntilDateyyyyMMdd))
+			{
+				stopLogAt = DateTime.ParseExact(UntilDateyyyyMMdd,
+													"yyyyMMdd",
+													CultureInfo.InvariantCulture,
+													DateTimeStyles.None);
+			}
+			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing ENTER Send8235"+ decPm?.Id, false, "sendClosing", stopLogAt);
+
+            DeclarationQueryService declarationQueryService = new DeclarationQueryService(decPm.Tenant);
 			var requestParamsData = new AmendmentRequestParams();
+			var signQueueHSMService = new SignQueueHSMService();
+			var loggedUserId = string.Empty;
 
 			var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-			var loggedUserId =!string.IsNullOrEmpty(LoggingUserId)? LoggingUserId: AuthenticationUtil.ResolveUserId(decPm.Tenant);
+			if (signQueueHSMService.IsHSMSign_IsOn(decPm.Tenant))
+			{
+				loggedUserId = !string.IsNullOrEmpty(LoggingUserId) ? LoggingUserId : AuthenticationUtil.ResolveUserId(decPm.Tenant);
+			}
+			else
+			{
+                if(!string.IsNullOrEmpty(decPm.SignedByUserId))
+                {
+					loggedUserId = decPm.SignedByUserId;
+				}
+                else
+                {
+					loggedUserId  =  declarationQueryService.GetSignedByUserIdByCustomFileNo(decPm.Tenant, decPm.CustomFileNo);
+				}
+			}
+			LogitudeSettings.HandleLogMe("loggedUserId" + loggedUserId, false, "sendClosing", stopLogAt);
 
 			requestParamsData.Tenant = decPm.Tenant;
 			requestParamsData.AppicationId = decPm.Id;
@@ -1280,11 +1315,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			requestParamsData.IsTransShipment = decPm.DeclarationTypeCode == "3";
 			requestParamsData.IsFromAutoClosing = true;
 
+			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing BEFORE SEND"  , false, "sendClosing", stopLogAt);
 
-
-			ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
+            try
+            {           
+			  ExportDeclarationAmendmentResponseData responseData = requestParamsData.IsTransShipment ?
 					  new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParamsData) :
 					  new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParamsData);
+				LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing AFTER SEND", false, "sendClosing", stopLogAt);
+
+			}
+			catch (System.Exception ex)
+            {
+				LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing ex" + ex.Message.ToString(), false, "sendClosing", stopLogAt);
+
+			}
+			LogitudeSettings.HandleLogMe("ICustomsAutoDecClosing FINISH SEND", false, "sendClosing", stopLogAt);
+
 
 		}
 	}

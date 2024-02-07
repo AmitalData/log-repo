@@ -41,6 +41,9 @@ namespace Logitude.CustomsMessaging.RequestServices
             {
                 return;
             }
+            var settings = CustomsSettingQueryService.GetSettingByTenant(requestParams.Tenant);
+            var maxItemsSendInteractive = settings.MaxItemsSendInteractive ?? 100;
+            var maxSISendInteractive = settings.MaxSISendInteractive ?? 15;
             int countItems = 0;
             int countSI = 0;
             int backgroundcountItems = 0;
@@ -70,7 +73,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                 backgroundcountItems = countItems;
                 existSupplierInvoiceItemsWithParent = ssiqs.ExistSupplierInvoiceItemsWithParent(requestParams.Tenant, requestParams.AppicationId);
-                if ((countItems > 100 || SItoAccumulate > 0) && existSupplierInvoiceItemsWithParent > 0)
+                if ((countItems > maxItemsSendInteractive || SItoAccumulate > 0) && existSupplierInvoiceItemsWithParent > 0)
                 {
                     //existSupplierInvoiceItemsWithoutHash = qs.ExistSupplierInvoiceItemsWithoutHash(requestParams.Tenant, requestParams.AppicationId
                     if (countItems < 999 && SItoAccumulate > 0) onlyAlwaysAccumulate = true;
@@ -81,7 +84,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                         {
                             countItems = existSupplierInvoiceItemsWithParent;
                         }
-                        if (backgroundcountItems > 100)
+                        if (backgroundcountItems > maxItemsSendInteractive)
                         {
                             backgroundcountItems = existSupplierInvoiceItemsWithParent;
                         }
@@ -118,31 +121,31 @@ namespace Logitude.CustomsMessaging.RequestServices
                 }
                 else
                 {
-                    if (backgroundcountItems >= 100)
+                    if (backgroundcountItems >= maxItemsSendInteractive)
                     {
                         if (requestParams.RequestVIA == SendRequestVIA.DCABatch)
                         {
                             LogMessagingUtil.Instance.AppendLine("***User**** Send this request VIA DCABatch-- no need to change !!!");
-                            LogMessagingUtil.Instance.AppendLine("הצהרה זו מכילה מעל 100 פרטי מכס ולכן תשודר ברקע");
+                            LogMessagingUtil.Instance.AppendLine(string.Format("הצהרה זו מכילה מעל {0} פרטי מכס ולכן תשודר ברקע",maxItemsSendInteractive));
                         }
                         else
                         {
                             requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
                             LogMessagingUtil.Instance.AppendLine("ManipulateRequestParams:requestParams.RequestVIA = SendRequestVIA.WebServiceBatch");
-                            LogMessagingUtil.Instance.AppendLine("הצהרה זו מכילה מעל 100 פרטי מכס ולכן תשודר ברקע");
-                            requestParams.RequestVIAChangeDue = ("הצהרה זו מכילה מעל 100 פרטי מכס ולכן תשודר ברקע");
+                            LogMessagingUtil.Instance.AppendLine(string.Format("הצהרה זו מכילה מעל {0} פרטי מכס ולכן תשודר ברקע", maxItemsSendInteractive));
+                            requestParams.RequestVIAChangeDue = string.Format("הצהרה זו מכילה מעל {0} פרטי מכס ולכן תשודר ברקע", maxItemsSendInteractive);
                         }
 
                     }
                     if (
                         (requestParams.RequestVIA == SendRequestVIA.WebServiceInteractive
                         || requestParams.RequestVIA == SendRequestVIA.Default)
-                        && countSI > 15)
+                        && countSI > maxSISendInteractive)
                     {
                         requestParams.RequestVIA = SendRequestVIA.WebServiceBatch;
                         LogMessagingUtil.Instance.AppendLine("ManipulateRequestParams:requestParams.RequestVIA = SendRequestVIA.WebServiceBatch");
-                        LogMessagingUtil.Instance.AppendLine("הצהרה זו מכילה מעל 15 חן ספק ולכן תשודר ברקע");
-                        requestParams.RequestVIAChangeDue = ("הצהרה זו מכילה מעל 15 חן ספק ולכן תשודר ברקע");
+                        LogMessagingUtil.Instance.AppendLine(string.Format("הצהרה זו מכילה מעל {0} חן ספק ולכן תשודר ברקע", maxSISendInteractive));
+                        requestParams.RequestVIAChangeDue = (string.Format("הצהרה זו מכילה מעל {0} חן ספק ולכן תשודר ברקע", maxSISendInteractive));
 
 
                     }

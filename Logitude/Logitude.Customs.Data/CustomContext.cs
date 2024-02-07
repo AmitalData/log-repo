@@ -226,6 +226,8 @@ namespace Logitude.Customs.Data
 	
             modelBuilder.Configurations.Add(new CommunicationTypeMap());
 	
+            modelBuilder.Configurations.Add(new ConfirmationNumberTokenLogMap());
+	
             modelBuilder.Configurations.Add(new ConfirmationTypeMap());
 	
             modelBuilder.Configurations.Add(new ConsignmentMap());
@@ -723,6 +725,8 @@ namespace Logitude.Customs.Data
             modelBuilder.Configurations.Add(new RequestReasonCodeEnumMap());
 	
             modelBuilder.Configurations.Add(new RequestStatusMap());
+	
+            modelBuilder.Configurations.Add(new RequestToAdvanceAQueueMap());
 	
             modelBuilder.Configurations.Add(new RequestTypeMap());
 	
@@ -1874,6 +1878,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<CommunicationType> CommunicationTypes 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<ConfirmationNumberTokenLog> ConfirmationNumberTokenLogs 
 	 {
 	      get; set;
 	 
@@ -3368,6 +3378,12 @@ namespace Logitude.Customs.Data
 	 }
 	
 	 public IDbSet<RequestStatus> RequestStatuses 
+	 {
+	      get; set;
+	 
+	 }
+	
+	 public IDbSet<RequestToAdvanceAQueue> RequestToAdvanceAQueues 
 	 {
 	      get; set;
 	 

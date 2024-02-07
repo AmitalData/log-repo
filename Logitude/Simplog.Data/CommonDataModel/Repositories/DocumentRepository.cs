@@ -5,6 +5,8 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Server.Infrastructure.Helpers;
 using Simplog.Server.Infrastructure;
 using System.Windows.Media;
+using System.Data.Entity.Infrastructure;
+using System;
 
 namespace Simplog.Data.CommonDataModel.Repositories
 {
@@ -62,12 +64,14 @@ namespace Simplog.Data.CommonDataModel.Repositories
                                      select a).ToList();
             return result;
         }
-        public string GetDocumentIdByFileName(string fileName,string extension)
+        public string GetDocumentIdByFileName(string fileName,string extension,int tenant)
         {
+           
+            (context as IObjectContextAdapter).ObjectContext.ContextOptions.UseCSharpNullComparisonBehavior = false;
+
             char[] delimiterChars = {  '-' };
-            int len= fileName.Length;
-            var query= (from a in context.Documents
-                    where a.Extension == extension && a.FileName.Substring(0, len) == fileName
+             var query= (from a in context.Documents
+                    where a.Tenant== tenant &&  a.Extension == extension && a.FileName.StartsWith(fileName) 
                     select a.Id);
             return query.FirstOrDefault();
         }

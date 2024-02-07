@@ -274,6 +274,21 @@ export class PhysicalCheckPM {
     public set SearchResultName(newValue: string) { if (this.searchResultName != newValue) { this.searchResultName = newValue; this.MarkAsDirty("SearchResultName"); } }
        
 	 
+    private requestToAdvanceAQueue: string;
+    public get RequestToAdvanceAQueue() { return this.requestToAdvanceAQueue; }
+    public set RequestToAdvanceAQueue(newValue: string) { if (this.requestToAdvanceAQueue != newValue) { this.requestToAdvanceAQueue = newValue; this.MarkAsDirty("RequestToAdvanceAQueue"); } }
+       
+	 
+    private requestDetails: string;
+    public get RequestDetails() { return this.requestDetails; }
+    public set RequestDetails(newValue: string) { if (this.requestDetails != newValue) { this.requestDetails = newValue; this.MarkAsDirty("RequestDetails"); } }
+       
+	 
+    private bringQueueForwardIndicatorS: string;
+    public get BringQueueForwardIndicatorS() { return this.bringQueueForwardIndicatorS; }
+    public set BringQueueForwardIndicatorS(newValue: string) { if (this.bringQueueForwardIndicatorS != newValue) { this.bringQueueForwardIndicatorS = newValue; this.MarkAsDirty("BringQueueForwardIndicatorS"); } }
+       
+	 
 
     public OldEntityPM: PhysicalCheckPM;
 		

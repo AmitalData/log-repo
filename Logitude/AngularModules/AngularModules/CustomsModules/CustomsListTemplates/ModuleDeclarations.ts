@@ -21,6 +21,7 @@ import { TransportModeListHeaderTemplate } from './Components/ListHeaderTemplate
 import { CustomsContainerizationListTemplate } from './Components/CustomsContainerizationListTemplate';
 import { BlackTransportModeListHeaderTemplate } from './Components/ListHeaderTemplates/BlackTransportModeListHeaderTemplate';
 import { CustomsExportStorageListTemplate } from './Components/CustomsExportStorageListTemplate';
+import { ShaamTokenTemplate } from './Components/ShaamTokenTemplate';
 
 
 
@@ -42,15 +43,14 @@ export const Components =
     CustomsCollateralListTemplate,
     CourierDeclarationWorkspaceListTemplate,
     DeclarationAmendmentListTemplate,
-        DeclarationListTemplate,
-        ActionListHeaderTemplate,
-        ArrivalDateListHeaderTemplate,
-        TransportModeListHeaderTemplate,
-        CustomsContainerizationListTemplate,
-        BlackTransportModeListHeaderTemplate,
-        CustomsExportStorageListTemplate
- 
-
+    DeclarationListTemplate,
+    ActionListHeaderTemplate,
+    ArrivalDateListHeaderTemplate,
+    TransportModeListHeaderTemplate,
+    CustomsContainerizationListTemplate,
+    BlackTransportModeListHeaderTemplate,
+    CustomsExportStorageListTemplate,
+    ShaamTokenTemplate,
   ];
 
 export class ModuleDeclarations {
@@ -82,9 +82,7 @@ export class ModuleDeclarations {
           case "CustomsContainerizationListTemplate": { myResult = CustomsContainerizationListTemplate; break; }
           case "BlackTransportModeListHeaderTemplate": { myResult = BlackTransportModeListHeaderTemplate; break; }
           case "CustomsExportStorageListTemplate": { myResult = CustomsExportStorageListTemplate; break; }
-
- 
-
+          case "ShaamTokenTemplate": { myResult = ShaamTokenTemplate; break; }
       }
 
     return myResult;

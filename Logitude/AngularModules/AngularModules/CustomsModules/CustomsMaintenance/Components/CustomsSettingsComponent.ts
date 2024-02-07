@@ -167,6 +167,12 @@ export class CustomsSettingsComponent
     get QtyFeedbackInPendingMessage() { return this.entityPM != null ? this.entityPM.QtyFeedbackInPendingMessage : null; }
     set QtyFeedbackInPendingMessage(value: number) {this.entityPM.QtyFeedbackInPendingMessage = value }
         
+    get MaxItemsSendInteractive() { return this.entityPM != null ? this.entityPM.MaxItemsSendInteractive : null; }
+    set MaxItemsSendInteractive(value: number) {this.entityPM.MaxItemsSendInteractive = value }
+
+    get MaxSISendInteractive() { return this.entityPM != null ? this.entityPM.MaxSISendInteractive : null; }
+    set MaxSISendInteractive(value: number) {this.entityPM.MaxSISendInteractive = value }
+    
     //get TotalInvoiceAmountInUSD() { return this.entityPM != null ? this.entityPM.TotalInvoiceAmountInUSD: null; }
     //set TotalInvoiceAmountInUSD(value: number) { this.entityPM.TotalInvoiceAmountInUSD = value }
 

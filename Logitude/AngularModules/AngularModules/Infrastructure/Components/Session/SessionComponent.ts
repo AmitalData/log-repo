@@ -308,6 +308,11 @@ export class SessionComponent {
 
     // MenuReferences
     private MenuReferences: Array<ComponentRef<any>>;
+
+    public get menuReference(): Array<ComponentRef<any>> {
+        return this.MenuReferences;
+    } 
+
     public AddMenuReference(element: ComponentRef<any>) {
         if (this.MenuReferences == null) {
             this.MenuReferences = new Array<ComponentRef<any>>();

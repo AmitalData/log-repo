@@ -182,7 +182,10 @@ namespace Logitude.Customs.BL.Messaging.U2L.ExportStorage
                 
                 _DBExportStoragePM.ExporterID = TranslateClient(_DBExportStoragePM.Tenant, _UnifreigntExportStorage.General.ExporterNumber);
                 //UnifreigntExportStorage.General.ExporterFileNumber = "Exp_Ref_INV1";
+                AppendLogLine("_UnifreigntExportStorage.General.ShipCode ***"+ _UnifreigntExportStorage.General.ShipCode);
                 _DBExportStoragePM.ShipCode = _UnifreigntExportStorage.General.ShipCode?.Replace("\n", "").Replace("\r", "").Replace(" ", "").TrimStart('0');
+                AppendLogLine("_DBExportStoragePM.ShipCode ***" + _DBExportStoragePM.ShipCode);
+
                 _DBExportStoragePM.ExportLoadingPortcode = _UnifreigntExportStorage.General.LoadingSite;
                 _DBExportStoragePM.StorageSiteCode = _UnifreigntExportStorage.General.ReceivingSite;
                 _DBExportStoragePM.ExportUnloadingPortCode = _UnifreigntExportStorage.General.FirstDestinationInternationalSiteID;

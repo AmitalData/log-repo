@@ -305,12 +305,12 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 
         }
-        public DeclarationPM GetSingleByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant)
+        public DeclarationPM GetSingleByCustomFileNoOrExportFile(string ExternalEntityReference, int tenant,string ExternalEntityName)
         {
             if (String.IsNullOrWhiteSpace(ExternalEntityReference)) return null;
             DeclarationPM declarationPM = new DeclarationPM();
             DeclarationDataMapping mapping = new DeclarationDataMapping();
-            var declaration = repository.GetDeclarationByCustomFileNoOrExportFile(ExternalEntityReference, tenant);
+            var declaration = repository.GetDeclarationByCustomFileNoOrExportFile(ExternalEntityReference, tenant, ExternalEntityName);
 
             if (declaration == null) return null;
 
@@ -2432,5 +2432,23 @@ namespace Logitude.Customs.BL.EntityQueryServices
             }
             return false;
         }
-    }
+		public string GetSignedByUserIdByCustomFileNo(int tenant, string customFileNo)
+		{
+			return this.repository.GetSignedByUserIdByCustomFileNo(tenant, customFileNo);
+		}
+		public List<DeclarationPM> GetDeclarationsByExportFile(int tenant, string exportFile)
+		{
+			List<Declaration> declarations = repository.GetDeclarationsByExportFile(tenant, exportFile);
+			DeclarationDataMapping mappings = new DeclarationDataMapping();
+			List<DeclarationPM> declarationPMs = new List<DeclarationPM>();
+			foreach (Declaration declaration in declarations)
+			{
+				DeclarationPM declarationPM = new DeclarationPM();
+				mappings.CustomPOCOToPM(declarationPM, declaration);
+				mappings.POCOToPM(declarationPM, declaration);
+				declarationPMs.Add(declarationPM);
+			}
+			return declarationPMs;
+		}
+	}
 }

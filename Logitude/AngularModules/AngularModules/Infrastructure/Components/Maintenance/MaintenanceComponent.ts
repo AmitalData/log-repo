@@ -16,6 +16,7 @@ import { DeclarationRemarksService } from '../../../Common/Services/ExtendedPMs/
 import { DeclarationRemarks } from '../../../Customs/EntityPMs/Extended/DeclarationRemarks';
 import { SessionInfo } from '../../Utilities/SessionInfo';
 import { AmitalGatewayUtil } from '../../Utilities/AmitalGatewayUtil';
+import { ShaamSettingsArgs } from 'CustomsModules/CustomsMaintenance/Components/ShaamSettings/ShaamSettingsComponent';
 //import {RecallClientsForCutoms} from '../../../Customs/Components/CustomsRequests/GeneralRequests/RecallClientsForCutoms';
 
 @Component({
@@ -29,6 +30,8 @@ export class MaintenanceComponent {
     LayoutDirection: string = 'ltr';
     private _entityResourceService: EntityResourceService = new EntityResourceService();
     private CurrentSession = SessionLocator.SelectedSession;
+    private readonly invoiceConfirmationNumber = "InvoiceConfirmationNumber";
+
     constructor() {
         this.ItemsSource = [];
         this.BuildPagesMenu();
@@ -49,23 +52,25 @@ export class MaintenanceComponent {
         this.PagesMenu.push(new Menu("OTH", TextCodeTranslator.Translate("General.MC.Others.Others")));
         this.PagesMenu.push(new Menu("PRS", TextCodeTranslator.Translate("General.MC.PersonalSettings.PersonalSettings")));
         this.PagesMenu.push(new Menu("CMS", TextCodeTranslator.Translate("General.MC.SystemSettings.SystemSettings")));
-
-
+        
         if (SessionLocator.Tenant == 0) {
             this.PagesMenu.push(new Menu("MNG", TextCodeTranslator.Translate("General.MC.Management.Management")));
         }
-
+        
         if (FeatureLocator.HasFeaturePermession("General", "LEADSOURCES") ||
-            FeatureLocator.HasFeaturePermession("General", "STAGES") ||
-            FeatureLocator.HasFeaturePermession("General", "ADDITIONALSERVICES") ||
-            FeatureLocator.HasFeaturePermession("General", "CLOSINGREASONS") ||
-            FeatureLocator.HasFeaturePermession("General", "COMPETITORS") ||
-            FeatureLocator.HasFeaturePermession("General", "OPPORTUNITYTYPES") ||
-            FeatureLocator.HasFeaturePermession("General", "INDUSTRIES") ||
-            FeatureLocator.HasFeaturePermession("General", "PRODUCTTYPES") ||
-            FeatureLocator.HasFeaturePermession("General", "EMAILALERTSETTINGS")) {
+        FeatureLocator.HasFeaturePermession("General", "STAGES") ||
+        FeatureLocator.HasFeaturePermession("General", "ADDITIONALSERVICES") ||
+        FeatureLocator.HasFeaturePermession("General", "CLOSINGREASONS") ||
+        FeatureLocator.HasFeaturePermession("General", "COMPETITORS") ||
+        FeatureLocator.HasFeaturePermession("General", "OPPORTUNITYTYPES") ||
+        FeatureLocator.HasFeaturePermession("General", "INDUSTRIES") ||
+        FeatureLocator.HasFeaturePermession("General", "PRODUCTTYPES") ||
+        FeatureLocator.HasFeaturePermession("General", "EMAILALERTSETTINGS")) {
             this.PagesMenu.push(new Menu("CRM", TextCodeTranslator.Translate("General.MC.CRM.CRM")));
         }
+        
+        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber))
+            this.PagesMenu.push(new Menu("SHA", TextCodeTranslator.Translate("General.MC.ShaamTokenManagement")));
 
         if (FeatureLocator.HasFeaturePermession("General", "TICKET")) {
             this.PagesMenu.push(new Menu("TKT", "Tickets"));
@@ -157,6 +162,7 @@ export class MaintenanceComponent {
         this.BuildAccountingMenus();
         this.BuildOtherMenus();
         this.BuildTransmissionsMenus();
+        this.BuildShaamTokenManagementMenu();
         this.PageChanged(this.PagesMenu[0]);
     }
     private BuildSystemSettings() {
@@ -483,8 +489,7 @@ export class MaintenanceComponent {
         }
     }
 
-    private BuildCustomsMenus() {
-
+    private BuildCustomsMenus() {               
         if (window.ObjectTables.filter(d => d.Name == "Customs.Client")[0] != null) {
 
             if (FeatureLocator.HasFeaturePermession("Customs.Client", "AUTHORIZAT")) {
@@ -579,7 +584,6 @@ export class MaintenanceComponent {
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
 
         }
-
     }
     private BuildAccountingMenus() {
 
@@ -624,7 +628,7 @@ export class MaintenanceComponent {
             item.Icon = "List"
             item.Code = "MTHP";
             item.ObjectTableName = "HybridPartner";
-            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "HybridPartner")[0].Id
+            item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "HybridPartner")[0].Id;
             this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
         }
 
@@ -770,8 +774,39 @@ export class MaintenanceComponent {
         }
     }
 
+    private BuildShaamTokenManagementMenu() {
+        if (!FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) return;
+
+        var item = new MenusTablePM();
+        item.CategoryTypeCode = "SHA";
+        item.Icon = "List"
+        item.Code = "SHAAM_LOGS";
+        item.ObjectTableName = "ConfirmationNumberTokenLog",
+        item.ObjectTableId = window.ObjectTables.filter(d => d.Name == "Customs.ConfirmationNumberTokenLog")[0].Id
+        item.TranslatedName = 'Logs', // TextCodeTranslator.Translate('General.MC.Logs');
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+    
+        var item = new MenusTablePM();
+        item.CategoryTypeCode = "SHA";
+        item.Icon = "Settings"
+        item.Code = "SHAAM_TOKEN";
+        item.ObjectTableName = "Customs.ConfirmationNumberTokenLog";
+        item.TranslatedName = 'Token Managment', TextCodeTranslator.Translate('General.MC.TokenManagement');
+        this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+
+        if (SessionLocator.LoggedUserPM.IsCustomerCare) {
+            var item = new MenusTablePM();
+            item.CategoryTypeCode = "SHA";
+            item.Icon = "Settings"
+            item.Code = "CSSS";
+            item.ObjectTableName = TextCodeTranslator.Translate("General.MC.Customs.ShaamSettings") || 'Shaam Settings';
+            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
+        }
+
+    }
+
     // Commands
-    PageChanged(item: Menu) {
+    public PageChanged(item: Menu) {
         this.SelectedMenu = item;
 
         var itemsSource: MaintenanceMenuItem[] = [];
@@ -795,6 +830,40 @@ export class MaintenanceComponent {
 
         if (item) {
             switch (item.Code) {
+                case "CSSS": {
+                    const logWindow = new LogitudeWindow();
+                    logWindow.Title = TextCodeTranslator.Translate('General.MC.TokenManagement');
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.WindowArgs = <ShaamSettingsArgs>{ windowInstance: logWindow };
+                    logWindow.Width = 500;
+                    logWindow.Height = 300;
+                    logWindow.Show('./CustomsModules/CustomsMaintenance/Components/ShaamSettings/ShaamSettingsComponent');
+                    break;
+                }
+
+                case "SHAAM_TOKEN": {
+                    this._entityResourceService.getEntityResourceByTableName("Customs.ConfirmationNumberTokenLog", 0).subscribe((response: any) => {                        
+                        const logWindow = new LogitudeWindow();
+                        logWindow.Width = window.outerWidth;
+                        logWindow.Height = window.outerHeight;
+                        logWindow.Title = TextCodeTranslator.Translate('General.MC.TokenManagement');
+                        logWindow.IsShowCloseButton = true;
+                        logWindow.Show('./InfrastructureModules/InfrastructureGettingStarted/Components/ShaamSettings/ShaamTokensComponent');
+                    });
+                    break;
+                }
+
+                case "DFES": {
+                    var windowTitle = "Document Filing Email Settings";
+                    var logWindow = new LogitudeWindow();
+                    logWindow.Width = 500;
+                    logWindow.Height = 400;
+                    logWindow.Title = windowTitle;
+                    logWindow.IsShowCloseButton = true;
+                    logWindow.Show('./Common/Components/Maintenance/DocumentFilingEmailSettings/DocumentFilingEmailSettingsComponent');
+                    break;
+                }
+
                 case "DFES": {
                     var windowTitle = "Document Filing Email Settings";
                     var logWindow = new LogitudeWindow();

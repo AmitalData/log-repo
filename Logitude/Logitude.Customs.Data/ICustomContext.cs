@@ -96,6 +96,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<CollateralType> CollateralTypes { get; }
 		 IDbSet<CommercialSale> CommercialSales { get; }
 		 IDbSet<CommunicationType> CommunicationTypes { get; }
+		 IDbSet<ConfirmationNumberTokenLog> ConfirmationNumberTokenLogs { get; }
 		 IDbSet<ConfirmationType> ConfirmationTypes { get; }
 		 IDbSet<Consignment> Consignments { get; }
 		 IDbSet<ConsignmentInternalTransition> ConsignmentInternalTransitions { get; }
@@ -345,6 +346,7 @@ namespace Logitude.Customs.Data
 		 IDbSet<ReleaseMessageType> ReleaseMessageTypes { get; }
 		 IDbSet<RequestReasonCodeEnum> RequestReasonCodeEnums { get; }
 		 IDbSet<RequestStatus> RequestStatuses { get; }
+		 IDbSet<RequestToAdvanceAQueue> RequestToAdvanceAQueues { get; }
 		 IDbSet<RequestType> RequestTypes { get; }
 		 IDbSet<RequiredGuaranteeType> RequiredGuaranteeTypes { get; }
 		 IDbSet<ReturnCondition> ReturnConditions { get; }

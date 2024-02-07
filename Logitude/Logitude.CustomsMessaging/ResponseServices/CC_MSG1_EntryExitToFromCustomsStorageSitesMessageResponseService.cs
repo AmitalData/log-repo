@@ -85,6 +85,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     var comments = commentsStorageSite + commentsContainerNumber + commentsExpectedArrivalSiteNumber + commentsDriverName + commentsDriverIdentityNumber + commentsVehicleNumber;
                     DefaultValueQueryService defaultValueQueryService = new DefaultValueQueryService(declaration.Tenant);
                     string defaultLex =defaultValueQueryService.GetDefault("ISRAEL", "CGG_EXITSTS_PCK", "NON", "NON", declaration.Tenant);
+                    string defaultLex2 = defaultValueQueryService.GetDefault("ISRAEL", "CGG_STS_LEX", "NON", "NON", declaration.Tenant);
+
                     Boolean raiseEvent = true;
                     if(defaultLex != null)
                     {
@@ -99,10 +101,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
 
                     }
+                    if(defaultLex2 != null)
+                    {
+                        raiseEvent = false;
+                    }
                     RaiseEvent(requestParams.Tenant, "EXT", "Exit From Storage Site", declaration, customResponse, comments + commentsCargoWeight);
                     if (raiseEvent)
                     {
-                        if (customResponse.ReportingDetails.isLastExiOrLasttEntry == true)
+                        if (customResponse.ReportingDetails.isLastExiOrLasttEntry == true&& string.IsNullOrEmpty(defaultLex2))
 
                             RaiseEvent(requestParams.Tenant, "LEX", "Last Exit From Storage Site", declaration, customResponse, comments);
                     }

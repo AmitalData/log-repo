@@ -78,7 +78,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         #endregion
 
-        public DeclarationPM MapResponseToDeclaration(Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept = false, bool isCopy = false, bool isClose = false, bool? isAmendApprove = null)
+        public DeclarationPM MapResponseToDeclaration(Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept = false, bool isCopy = false, bool isClose = false, bool? isAmendApprove = null, bool? isDCA = false)
         {
             error = "";
             try
@@ -205,7 +205,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 else
                 {
                     declarationPM = myQueryService.GetSingle(idOrg, true, false);
-                    var declarationId2 = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant, true)?.Id;
+                    var declarationId2 = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant, true, isDCA)?.Id;
                     invoicePMs = GetSupplierInvoices(declaration, tenant, context, declarationId2, declarationOrg);
                     DeleteSomeObjects(declarationPM, tenant, context);
                     declarationPM.DeclarationOfficeCode = GetValueIDType(declaration.DeclarationOfficeID);
@@ -217,7 +217,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     declarationPM.IsAmendment = true;
                     declarationPM.Consignments = GetConsignments(declaration, tenant, declarationPM, context, declarationOrg?.Consignments, isAmendApprove);
                     declarationPM.ExportFlightDate = declarationOrg?.ExportFlightDate;
-                    declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+					declarationPM.SignedByUserId = declarationOrg?.SignedByUserId;
+					declarationPM.ChangeSetOp = ChangeSetOperation.Update;
 
 
                 }
@@ -382,7 +383,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
                 string declarationId;
                 if (declarationOrg != null)
-                    declarationId = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant, true)?.Id;
+                    declarationId = declarationRepository.GetLastDeclarationByDeclarationId(declarationPM.AmendmentOriginalDeclartation, tenant, true, isDCA)?.Id;
                 else
                     declarationId = declarationPM.Id;
 

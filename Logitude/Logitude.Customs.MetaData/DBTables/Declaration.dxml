@@ -1359,4 +1359,6 @@
     Columns="Tenant,IsCancelled,IsClose,AmendmentDontDisplayInList,Direction" />
   <Index
     Columns="Direction,Tenant,AmendmentDontDisplayInList,IsCancelled,IsExportClosed,TransportModeId" />
+  <Index
+    Columns="Tenant,CustomFileNo,SignedByUserId" />
 </Table>
