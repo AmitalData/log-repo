@@ -28,6 +28,9 @@ import { OriginCriterionList } from 'Customs/EntityLists/OriginCriterionList';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { EventEmitter } from '@angular/core';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
+import { CertificateOfOriginMandatoryFieldsListService } from 'Customs/Services/StandardLists/CertificateOfOriginMandatoryFieldsListService';
+import { CertificateOfOriginWebService } from 'Customs/Services/WebServices/CertificateOfOriginWebService';
+import { CertificateOfOriginMandatoryFieldsList } from 'Customs/EntityLists/CertificateOfOriginMandatoryFieldsList';
 
 
 
@@ -92,6 +95,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         this.SetPropertiesEnabled();
         this.SetWarning();
+        debugger
+        // this.SetWarningByCooTypeCode(EntityPM.CooTypeCode);
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
     }
 
@@ -258,6 +263,20 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetWarning("RequestReasonCode", this.ObjectTableName, true);
     }
 
+    certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
+    SetWarningByCooTypeCode(CooTypeCode) {
+
+        this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
+            if (!myResponse.HasError) {
+                const certificateOfOriginMandatoryFieldsList = myResponse.Result;
+                certificateOfOriginMandatoryFieldsList.foreach(item =>{
+
+                    this.UIProperties.SetWarning(item.MappedCertificateFieldsName, this.ObjectTableName, true);
+
+                });
+            }
+        });
+    }
 
     private getCardById(id: string) {
         var cardListService = new CardListService();
@@ -431,13 +450,18 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         return this.entityPM.CooTypeCode;
     }
     public set CooTypeCode(newValue: string) {
+        
         this.entityPM.CooTypeCode = newValue;
         if (this.ErrorsList?.length > 0 || this.IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
             this.CheckMandatoryFields();
         }
-        this.entityPM.CertificateOriginItemItems.forEach(item=>{
-            this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, false, item);
-        });
+        if(this.entityPM.CooTypeCode){
+            this.entityPM.CertificateOriginItemItems.forEach(item=>{
+                this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, false, item);
+            });
+            debugger
+            // this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
+        }
     }
 
     public get RequestReasonCode(): string {

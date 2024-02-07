@@ -76,6 +76,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+        public HttpResponseMessage GetMandatoryFieldsByCooTypeCode(string cooTypeCode, int tenant)
+        {
+            try
+            {
+                CertificateOfOriginMandatoryFieldsQueryService certificateOfOriginMandatoryFieldsQueryService = new CertificateOfOriginMandatoryFieldsQueryService(tenant);
+                var mandatoryFields = certificateOfOriginMandatoryFieldsQueryService.GetMandatoryFieldsByCooTypeCode(cooTypeCode);
+
+                return Request.CreateResponse(HttpStatusCode.OK, mandatoryFields);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
 
         public HttpResponseMessage Delete(string certificateOfOriginId)
         {

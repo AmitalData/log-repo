@@ -1,4 +1,7 @@
-﻿using Logitude.Customs.Def.Contracts;
+﻿using Logitude.Customs.Data.EntityKeys;
+using Logitude.Customs.Data.EntityPOCOs;
+using Logitude.Customs.Data.Repsitories;
+using Logitude.Customs.Def.Contracts;
 using Logitude.Customs.Def.EntityPMs;
 using System;
 using System.Collections.Generic;
@@ -15,6 +18,25 @@ namespace Logitude.Customs.BL.EntityQueryServices
             var pocos = repository.GetAll().ToList();
             var pms = pocos.Select(poco => this.GetEntityPM(poco)).ToList();
             return pms;
+        }
+
+        public List<CertificateOfOriginMandatoryFieldsPM> GetMandatoryFieldsByCooTypeCode(string cooTypeCode)
+        {
+            CertificateOfOriginMandatoryFieldsRepository rep = new CertificateOfOriginMandatoryFieldsRepository(context);
+            List<CertificateOfOriginMandatoryFields> mandatoryFieldslist = rep.GetMandatoryFieldsByCooTypeCode(cooTypeCode);
+            List<CertificateOfOriginMandatoryFieldsPM> mandatoryFieldslistPM = new List<CertificateOfOriginMandatoryFieldsPM>();
+
+            if (mandatoryFieldslist != null)
+            {
+                foreach (var item in mandatoryFieldslist)
+                {
+                    var mandatoryFieldPM = this.GetEntityPM(item, false, new CertificateOfOriginMandatoryFieldsKeys { Code = item.Code.ToString() });
+
+                    mandatoryFieldslistPM.Add(mandatoryFieldPM);
+
+                }
+            }
+            return mandatoryFieldslistPM;
         }
     }
 }
