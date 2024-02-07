@@ -49,7 +49,6 @@ export class ReportTemplateComponent implements OnInit {
     ReportsTemplatePMLists: ReportsTemplatePM[] = [];
     CurrentReportsTemplatePM: ReportsTemplatePM;
 
-    public UIProperties: UIProperties;
     public ValidationErrorsList: string[];
 
     MessageReportsTemplatePMLists: ReportsTemplatePM[] = [];
