@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class LedgerTransactionUpdateClass
    {  		
-		public const string HashString = "a001627ec7ba5252fb0f3eca894854a4";
+		public const string HashString = "df0a0818d5834fa8cadfa3780152f05f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3002,10 +3002,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ForeignAmount",
 					  						DefaultText =  "Foreign Amount",
-					  						FullLocalDefaultText =  "סכום במטבע (ערך מוחלט)",
+					  						FullLocalDefaultText =  "סכום במטבע",
 					  						ListFieldLable =  "ForeignAmountListLable",
 					  						ListLableDefaultText =  "Foreign Amount",
-					  						ListLocalDefaultText =  "סכום במטבע (ערך מוחלט)",
+					  						ListLocalDefaultText =  "סכום במטבע",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
