@@ -131,6 +131,9 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
     ngOnInit() {
         var entity = new ARPaymentPM();
+        if(this.newARPaymentPM != null){
+            entity=this.newARPaymentPM;
+        }
         entity.IsFullAccounting = true;
         entity.BranchId = SessionLocator.LoggedUserPM?.BranchId;
 
@@ -267,6 +270,8 @@ export class NewARPaymentComponent extends BaseComponent implements OnInit {
 
             }
         }
+        this.Initialize();
+
     }
 
     public CurrencyList: CurrencyList[] = [];

@@ -42,7 +42,8 @@
   ParentTableName="Journal"
   LocalDefaultText="&quot;שורת פקודה&quot;"
   DefaultText="&quot;Journal Line&quot;"
-  Code="&quot;8bd3&quot;"
+
+  Code="&quot;b5e4&quot;"
   Name="&quot;JournalLine Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"

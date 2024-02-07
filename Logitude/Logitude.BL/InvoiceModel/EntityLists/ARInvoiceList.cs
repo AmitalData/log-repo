@@ -215,6 +215,5 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public string IsSignedName { get; set; }
 
         public string ConfirmationNumber { get; set; }
-
     }
 }
