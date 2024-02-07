@@ -20,8 +20,14 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
+        public List<CertificateOfOriginMandatoryFields> GetMandatoryFieldsByCooTypeCode(string cooTypeCode)
+        {
+            return (from a in context.CertificateOfOriginMandatoryFieldss
+                    where a.CertificateOfOriginTypeCodeID.ToString() == cooTypeCode
+                    select a).ToList();
+        }
 
-   }
+    }
 
 }
    
