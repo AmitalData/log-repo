@@ -46,6 +46,7 @@ namespace Logitude.CustomsMessaging.Helpers.ClosedTable
             curDbPM.IsMandatory = gov.IsMandatory;
             curDbPM.CertificateOfOriginTypeCodeID = gov.CertificateOfOriginTypeCodeID;
             curDbPM.CertificateOfOriginTypeName = gov.CertificateOfOriginTypeName;
+
             //curDbPM.MappedCertificateFields = gov.MappedCertificateFields;
             //curDbPM.MappedCertificateFieldsName = gov.MappedCertificateFieldsName;
         }
