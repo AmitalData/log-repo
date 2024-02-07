@@ -48,6 +48,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool? RequiresApproval { get; set; }
         [Column("RequiresPayment")]
 	    public bool? RequiresPayment { get; set; }
+        [Column("OverseasSuspendedCode")]
+	    public string OverseasSuspendedCode { get; set; }
     }
 }
 	 

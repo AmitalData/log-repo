@@ -94,6 +94,11 @@ export class CourierPendingReasonPM {
     public set RequiresPayment(newValue: boolean) { if (this.requiresPayment != newValue) { this.requiresPayment = newValue; this.MarkAsDirty("RequiresPayment"); } }
        
 	 
+    private overseasSuspendedCode: string;
+    public get OverseasSuspendedCode() { return this.overseasSuspendedCode; }
+    public set OverseasSuspendedCode(newValue: string) { if (this.overseasSuspendedCode != newValue) { this.overseasSuspendedCode = newValue; this.MarkAsDirty("OverseasSuspendedCode"); } }
+       
+	 
 
     public OldEntityPM: CourierPendingReasonPM;
 		

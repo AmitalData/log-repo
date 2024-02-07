@@ -22,6 +22,7 @@ export class CourierPendingReasonList {
 	SwissportSuspendedCode: string;
 	RequiresApproval: boolean;
 	RequiresPayment: boolean;
+	OverseasSuspendedCode: string;
 	
 }
  
