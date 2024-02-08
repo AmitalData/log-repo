@@ -18848,8 +18848,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
 		   Feature DeclarationFeature_CancelPaymentFeature = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CancelPaymentFeature", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.CancelPaymentFeature", NameTextCodeDefaultText = @"Cancel Payment Feature" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
-		   Feature DeclarationFeature_Pending900InDetainedOrPhysicalCheck = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Pending900InDetainedOrPhysicalCheck", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.Pending900InDetainedOrPhysicalCheck", NameTextCodeDefaultText = @"גביה - בתהליך בדיקה פיזית/מעוכבים" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
-
+ 
 		   Feature DeclarationFeature_IsExportSign = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "IsExportSign", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = DeclarationObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Declaration.Features.IsExportSign", NameTextCodeDefaultText = @"Is Export Sign" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,DeclarationObjectTable);
 
 
