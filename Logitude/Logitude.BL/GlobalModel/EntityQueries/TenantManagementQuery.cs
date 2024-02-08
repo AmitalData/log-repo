@@ -18,6 +18,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 {
     public class TenantManagementQuery
     {
+        private int tenant = 0;
         private TenantManagementRepository repository;
         public TenantManagementQuery()
         {
@@ -25,6 +26,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
         }
         public TenantManagementQuery(int tenant)
         {
+            this.tenant = tenant;
             repository = new TenantManagementRepository();
         }
         public TenantManagementQuery(TenantManagementRepository repository)
@@ -42,7 +44,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        Id = a.Id,
                                                        MainColor = a.MainColor,
                                                        SecondaryColor = a.SecondaryColor,
-                                                       TertiaryColor  =a.TertiaryColor,
+                                                       TertiaryColor=a.TertiaryColor,
                                                        BackgroundId = a.BackgroundId,
                                                        MobileBackgroundId = a.MobileBackgroundId,
                                                        ShipmentHeaderImageId = a.ShipmentHeaderImageId,
@@ -122,10 +124,10 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
         public int GetShipmentBuildMonth(int tenant)
         {
-            double? res = (from a in repository.context.TenantManagements 
-            where a.Id == tenant && a.ActivatePrivateSite
-            select a.PermissionBuildMonths).ToList().FirstOrDefault();
-            
+            double? res = (from a in repository.context.TenantManagements
+                           where a.Id == tenant && a.ActivatePrivateSite
+                           select a.PermissionBuildMonths).ToList().FirstOrDefault();
+
             return res != null ? (int)res.Value : 6;
         }
 
@@ -309,7 +311,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      DigitalPortalMobTotalLastWeek = a.DigitalPortalMobTotalLastWeek,
                                                      DigitalPortalMobTotalLastMonth = a.DigitalPortalMobTotalLastMonth,
                                                      DPArchiveShipmentCreateFilter = a.DPArchiveShipmentCreateFilter,
-                                                     DPArchiveShipmentArrivalFilter= a.DPArchiveShipmentArrivalFilter, 
+                                                     DPArchiveShipmentArrivalFilter= a.DPArchiveShipmentArrivalFilter,
                                                      DPArchiveShipmentDepartFilter = a.DPArchiveShipmentDepartFilter,
                                                      CargoTrackingPublicShowEvents = a.CargoTrackingPublicShowEvents,
                                                      CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
@@ -914,7 +916,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     ShowMoneyOrder = entity.ShowMoneyOrder,
                     CargoTrackingPublicShowEvents = entity.CargoTrackingPublicShowEvents,
                     CargoTrackingPrivateShowEvents = entity.CargoTrackingPrivateShowEvents,
-                     LogoURL = entity.LogoURL,
+                    LogoURL = entity.LogoURL,
                     ServiceAgreementURL = entity.ServiceAgreementURL,
                 };
             }
@@ -1602,9 +1604,19 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
         public List<TenantManagement> GetWhereHavePermissionBuildMonths()
         {
-            var q = from a in repository.context.TenantManagements
+            IQueryable<TenantManagement> q;
+            if (tenant == 0)
+            {
+                q = from a in repository.context.TenantManagements
                     where a.PermissionBuildMonths != null
-            select a;
+                    select a;
+            }
+            else
+            {
+                q = from a in repository.context.TenantManagements
+                    where a.Id == tenant && a.PermissionBuildMonths != null
+                    select a;
+            }
 
             return q.ToList();
         }
