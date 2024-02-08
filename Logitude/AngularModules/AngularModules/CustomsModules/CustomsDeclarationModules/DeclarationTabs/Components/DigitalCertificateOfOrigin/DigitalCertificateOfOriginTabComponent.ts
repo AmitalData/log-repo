@@ -30,6 +30,9 @@ import { CustomMessageProgressComponent } from 'CustomsModules/CustomsControls/C
 import { BaseRequestsSheetMassaging, IRequestsSheetMassagingComponent } from 'CustomsModules/CustomsRequests/Components/BaseRequestsSheetMassaging';
 import { DownloadManager } from 'Infrastructure/Utilities/DownloadManager';
 import { CertificateOfOriginComponent } from './CertificateOfOriginTabs/CertificateOfOriginComponent';
+import { GenericRequestParams } from 'Customs/DataContract/RequestParams/GenericRequestParams';
+import { DeclarationWebService } from 'Customs/Services/WebServices/DeclarationWebService';
+import { DeclarationEventManager } from 'Customs/Utilities/DeclarationEventManager';
 
 declare var attachmentUploader, ResultAsArray: any;
 
@@ -54,7 +57,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     certificateOfOriginPMService: CertificateOfOriginPMService;
     certificateOfOriginListService: CertificateOfOriginListService = new CertificateOfOriginListService();
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
-
+    declarationWebService: DeclarationWebService = new DeclarationWebService();
 
     public ItemsSource: ObservableCollection;
     public CertificateOfOrigins: CertificateOfOriginPM[];
@@ -71,6 +74,9 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     @Output() MenuHeaderchangeevent = new EventEmitter();
     private CurrentSession = SessionLocator.SelectedSession;
     IsDisplayMessage: boolean;
+    MessA: string = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.NumNotUpdate"); 
+    MessLinkA: string = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.AutoAmendment"); 
+    MessB: string = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.UpdatedItemInvoice"); 
 
     constructor(public entityArgs: EntityArgs, private CD: ChangeDetectorRef, public declarationExtendedListService: DeclarationExtendedListService) {
         super();
@@ -200,7 +206,12 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
 
         this.certificateOfOriginWebService.PostCertificateOfOriginRequest(requestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
-
+                if(myServiceResponse?.Result && !myServiceResponse?.Result.HasException){
+                    var message = new MessageWindow();
+                    message.ShowSuccessIcon = true;
+                    message.RTL = true;
+                    message.Show(myServiceResponse?.Result.UserMessage);
+                }
             });
     }
 
@@ -322,7 +333,9 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
                 newCertificateOfOriginPM.COONumber = null;
                 newCertificateOfOriginPM.CooStatusCode = null;
                 newCertificateOfOriginPM.CooStatusCodeName = null;
-                newCertificateOfOriginPM.IsSubmitted = false;
+                newCertificateOfOriginPM.IsSubmitted = false;                
+                newCertificateOfOriginPM.RequestReasonCode = null;
+
                 
                 newCertificateOfOriginPM.IsUnitedInvoices ? newCertificateOfOriginPM.IsUnitedInvoices : newCertificateOfOriginPM.IsUnitedInvoices = false;
                 this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
@@ -402,6 +415,78 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
             this.DisplayOnlyMessage = "לתצוגה בלבד - " + this.CurrentSession.CurrentEditComponent.EditComponentController.InDisplayModeMessage;
             return;
         }
+    }
+  
+    public OpenNewAmendmentWithSend(id, declarationNumber, copy: boolean =false) {
+
+        if (id == null) id = this.EntityPM.Id;//  !AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.AmendmentOriginalDeclartation :  this.EntityPM.Id;
+        if (declarationNumber == null) declarationNumber = this.EntityPM.DeclarationNumber;
+
+        var searchParams: GenericRequestParams = new GenericRequestParams();
+        searchParams.Tenant = SessionLocator.Tenant;
+        searchParams.AppicationId = id;
+        searchParams.LoggingEnabled = true;
+        searchParams.LoggingEntityId = id;
+        searchParams.LoggingEntityReference = declarationNumber;
+        searchParams.LoggingObjectTableId =  this.ObjectTableName;
+        searchParams.LoggingUserId = SessionLocator.LoggedUserId;
+        if (this.EntityPM.Direction == "E")
+            searchParams.RequestName = "Export Declaration Request";
+        else
+            searchParams.RequestName = "Declaration Request";
+        searchParams.ResponseName = "Declaration Response";
+        searchParams.RequestVIA = SendRequestVIA.DCABatch;
+        searchParams.ForcePersonalSign = false;
+        searchParams.LoggingEntityId2 = this.CertificateOfOrigins[0].Id;
+         this.CurrentSession.StartBusyIndicatorCreating();
+
+        this.declarationWebService
+            .GetNewAmendmentDeclarationWithSend(searchParams)
+            .subscribe((response: any) => {
+
+                if (response) {
+                    if (!response.HasError) {
+                        var entity = response.Result;
+                        if (entity != null) {
+                             //this.LoadDeclarationAmendmentsList();
+                            setTimeout(() => {
+                                this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
+                            }, 10);
+                            this.CurrentSession.StopBusyIndicator();
+                            
+                            this.openNewDeclaration(entity.Id);
+                        }
+                    }
+                    
+                    this.CurrentSession.StopBusyIndicator();
+                    new MessageWindow().Show(response?.Result || TextCodeTranslator.Translate('General.O.ErrorwhileCreating'));   
+                }
+        });
+    }
+    openNewDeclaration(id:string) {
+        SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+            .then(cmpRef => {
+                cmpRef.instance.ComponentRef = cmpRef;
+                cmpRef.instance.Run({
+                    EntityId: id, ObjectTableName: 'Customs.Declaration', BackButtonLabel: "תיקוני הצהרה" });
+                cmpRef.instance.BackCompleted.subscribe(($event: any) => {
+                    DeclarationEventManager.DeclarationAmendmentCancelled.emit(null);
+
+                    if (SessionLocator.SelectedSession != null && SessionLocator.SelectedSession.CurrentWindow != null) {
+                        SessionLocator.SelectedSession.CurrentWindow.SuppressBusyIndicator = false;
+                    }
+                });
+
+            });
+    }
+    public get IsOnlyOneCertificate(): boolean {
+        return this.CertificateOfOrigins?.length == 1
+    }
+    public get IsUpdateDeclarationA(): boolean {
+        return this.IsOnlyOneCertificate && this.CertificateOfOrigins[0].UpdateDeclaration =='A'
+    }
+    public get IsUpdateDeclarationB(): boolean {
+        return this.IsOnlyOneCertificate && this.CertificateOfOrigins[0].UpdateDeclaration =='B'
     }
 }
 

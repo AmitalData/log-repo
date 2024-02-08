@@ -1403,7 +1403,33 @@ export class DeclarationWebService {
             }), catchError(ServiceHelper.HandleServiceError));
         });
     }
+    GetNewAmendmentDeclarationWithSend(genericRequestParams: GenericRequestParams) {
+        debugger
+        return defer(() => {
 
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            var serviceResponse: ServiceResponse;
+            serviceResponse = new ServiceResponse();
+            var params = JSON.stringify(genericRequestParams);
+            return this._http.post(
+                this._apiUrl + '/PostNewAmendmentDeclarationWithSend/',
+                JSON.stringify(genericRequestParams),
+                ServiceHelper.GetHttpHeaders()).pipe(map((res) => {
+                   
+                    serviceResponse.Result = this.MapJsonToEntityPM(res, true);
+               
+
+                    return serviceResponse;
+
+                }),catchError(ServiceHelper.HandleServiceError));
+        }
+
+        );
+
+    }
 
     400919         
 

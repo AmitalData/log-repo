@@ -52,7 +52,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 			try
 			{
 				CertificateOfOriginQueryService certificateOfOriginQueryService =  new CertificateOfOriginQueryService(tenant);
-                 var certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(declarationId, tenant);
+                 var certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(declarationId, tenant,true);
 
 				return Request.CreateResponse(HttpStatusCode.OK, certificateOfOrigins);
 			}
