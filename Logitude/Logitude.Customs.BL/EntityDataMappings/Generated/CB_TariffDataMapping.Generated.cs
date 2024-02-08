@@ -26,7 +26,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CreateDate, 
 	         UpdateDate, 
 	         TradeAgreementID, 
-	         CustomsItemID,
+	         CustomsItemID, 
+	         Title,
 	      }
 
 
@@ -37,7 +38,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CreateDate, 
 	         UpdateDate, 
 	         TradeAgreementID, 
-	         CustomsItemID,
+	         CustomsItemID, 
+	         Title,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -64,6 +66,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.CustomsItemID))
             {
 				entityPOCO.CustomsItemID = entityPM.CustomsItemID;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Title))
+            {
+				entityPOCO.Title = entityPM.Title;
 			}
 			}
 
@@ -95,6 +102,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.CustomsItemID = entityPOCO.CustomsItemID;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Title))
+            {
+					entityPM.Title = entityPOCO.Title;
+            }
+
 		}
 
 		public void PMToOldPM(CB_TariffPM entityPM, CB_TariffPM oldEntityPM)
@@ -121,6 +133,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.CustomsItemID = entityPM.CustomsItemID;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Title))
+            {
+                oldEntityPM.Title = entityPM.Title;
+            }
+			
 		}
 
 	    public void EncodeBase64NVARCHARFields(CB_TariffPM entityPM)
@@ -129,6 +146,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             {
                 return;
 
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.Title)) //T4 find type == nText 
+            {
+                entityPM.Title = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Title));
             }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}

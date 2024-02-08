@@ -162,7 +162,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             claimsRelatedEntitiesAmountPM.LineNo = incrementTax;
             claimsRelatedEntitiesAmountPM.PaymentTypeCode = tax.TaxTypeCode;
             claimsRelatedEntitiesAmountPM.PaymentTypeName = tax.TaxTypeName;
-            claimsRelatedEntitiesAmountPM.Amount = tax.TaxToPay;
+            claimsRelatedEntitiesAmountPM.Amount = tax.TotalAmount;
             claimsAmountList.push(claimsRelatedEntitiesAmountPM);
         });
         claimsRelatedEntityPM.ClaimsRelatedEntitiesAmounts = claimsAmountList;

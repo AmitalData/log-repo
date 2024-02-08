@@ -49,6 +49,11 @@ export class CB_TariffPM {
     public set CustomsItemID(newValue: string) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
        
 	 
+    private title: string;
+    public get Title() { return this.title; }
+    public set Title(newValue: string) { if (this.title != newValue) { this.title = newValue; this.MarkAsDirty("Title"); } }
+       
+	 
 
     public OldEntityPM: CB_TariffPM;
 		

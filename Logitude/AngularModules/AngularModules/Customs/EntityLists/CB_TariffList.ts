@@ -13,6 +13,7 @@ export class CB_TariffList {
 	UpdateDate: Date;
 	TradeAgreementID: string;
 	CustomsItemID: string;
+	Title: string;
 	
 }
  

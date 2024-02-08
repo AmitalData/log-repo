@@ -75,11 +75,13 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
     OkButtonClicked() {
         this.ValidationErrorsList = [];
 
-        if (AppTool.IsNullOrEmpty(this.CustomerId) && AppTool.IsNullOrEmpty(this.CustomFileNo)) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.ClientIsMandatory"));
-        }
-        if (AppTool.IsNullOrEmpty(this.ClaimOfficeCode)) {
-            this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.DeclarationOfficeCodeMandatory"));
+        if (AppTool.IsNullOrEmpty(this.CustomFileNo)) {
+            if (AppTool.IsNullOrEmpty(this.CustomerId)) {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.ClientIsMandatory"));
+            }
+            if (AppTool.IsNullOrEmpty(this.ClaimOfficeCode)) {
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.DeclarationOfficeCodeMandatory"));
+            }
         }
 
         if (this.ValidationErrorsList.length > 0) {

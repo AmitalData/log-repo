@@ -219,7 +219,23 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 				return;
             }
-            setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
+			if ((requestParams.InterfaceTypeCode == "2751" || requestParams.InterfaceTypeCode == "2751T") && !string.IsNullOrEmpty(requestParams.LoggingEntityReference))
+            {
+				if (customResponse?.Response?.Declaration != null) 
+                { 
+				   CertificateOfOriginUpdateService certificateOfOriginUpdateService = new CertificateOfOriginUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+				   CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(_MyDeclarationPM.Tenant);
+                   
+				   var certificateOfOrigin = certificateOfOriginQueryService.GetSingle(requestParams.LoggingEntityReference, false,false);
+				   if (certificateOfOrigin != null  && certificateOfOrigin.UpdateDeclaration == "A")
+				   {
+				       certificateOfOrigin.UpdateDeclaration = "C";
+				       certificateOfOrigin.ChangeSetOp = ChangeSetOperation.Update;
+				       certificateOfOriginUpdateService.Update(certificateOfOrigin, true);
+				   }
+				}
+			}
+			setting = CustomsSettingQueryService.GetSettingByTenant(_MyDeclarationPM.Tenant);
             if (this._MyDeclarationPM.PaymentDate.HasValue)
             {
                 if (customResponse.Response != null && customResponse.Response.Status != null && (customResponse.Response.Status[0].NameCode.Value == "13" || customResponse.Response.Status[0].NameCode.Value == "14"))

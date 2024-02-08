@@ -41,7 +41,7 @@
   NewWizardControlName="&quot;&quot;"
   LocalDefaultText="&quot;תעודות מקור&quot;"
   DefaultText="&quot;Certificate Of Origin&quot;"
-  Code="&quot;f58e&quot;"
+  Code="&quot;1f7d&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -6184,6 +6184,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;UpdateDeclaration&quot;"
     ListPropertyPath="&quot;UpdateDeclaration&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6406,6 +6407,30 @@
       Code="&quot;Customs.CertificateOfOrigin.O.Feedback&quot;"
       DefaultText="&quot;Feedback&quot;"
       LocalDefaultText="&quot;הודעת מעריך&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.NotSendwithNum&quot;"
+      DefaultText="&quot;It is not possible to send because there is already a document number from customs&quot;"
+      LocalDefaultText="&quot;לא ניתן לבצע שליחה משום שכבר יש מס' תעוודה מהמכס&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.NumNotUpdate&quot;"
+      DefaultText="&quot;The certificate number is not updated in the accounts in the statement&quot;"
+      LocalDefaultText="&quot;מס' התעודה לא מעודכן בחשבונות בהצהרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.AutoAmendment&quot;"
+      DefaultText="&quot;Automatic statement correction broadcast&quot;"
+      LocalDefaultText="&quot;שידור תיקון הצהרה אוטומטי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.UpdatedItemInvoice&quot;"
+      DefaultText="&quot;The certificate tax has been updated in the accounts in the statement, but has not yet been approved&quot;"
+      LocalDefaultText="&quot;מס התעודה עודכן בחשבונות בהצהרה , אך טרם אושר&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
