@@ -408,7 +408,20 @@ namespace Logitude.BL.Helpers
 
         private void SendToEmailContact(string email, ARInvoice arinvocie,Document document,string DocumentFilingId, ARInvoiceRepository repository,int tenant)
         {
-            string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+            string loggedUserEmail = null;
+            try
+            {
+                 loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+            }
+            catch (Exception ex)
+            {
+                if (loggedUserEmail == null)
+                {
+                    ContactRepository contactRepository = new ContactRepository(tenant);
+                    Contact contact = contactRepository.GetContactByUserTypeAndTenant("S", tenant);
+                    loggedUserEmail = contact.Email;
+                }
+            }
             UserRepository userRepository = new UserRepository(Tenant);
             User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, tenant, true);
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
