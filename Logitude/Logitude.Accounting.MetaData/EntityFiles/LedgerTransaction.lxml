@@ -3400,10 +3400,10 @@
     DisplayLongName="false"
     FullFieldLable="&quot;ForeignAmount&quot;"
     DefaultText="&quot;Foreign Amount&quot;"
-    FullLocalDefaultText="&quot;סכום במטבע (ערך מוחלט)&quot;"
+    FullLocalDefaultText="&quot;סכום במטבע&quot;"
     ListFieldLable="&quot;ForeignAmountListLable&quot;"
     ListLableDefaultText="&quot;Foreign Amount&quot;"
-    ListLocalDefaultText="&quot;סכום במטבע (ערך מוחלט)&quot;"
+    ListLocalDefaultText="&quot;סכום במטבע&quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
@@ -5664,7 +5664,7 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
- <field
+  <field
     Id="&quot;4808272f-abdd-4f6d-8f2a-a46abcbe11cd&quot;"
     FieldName="&quot;SecurityLevelFiltering&quot;"
     OldNames="SecurityLevelFiltering"
