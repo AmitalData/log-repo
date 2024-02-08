@@ -292,6 +292,14 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
             this.GENERAL.CheckMandatoryFields();
             return;
         }
+        if(this.EntityPM.RequestReasonCode == '10' && !AppTool.IsNullOrEmpty(this.EntityPM.COONumber))
+        {
+            var message = new MessageWindow();
+            message.RTL = true;
+            
+            message.Show(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.NotSendwithNum"));
+            return;
+        }
 
         var requestParams= new CertificateOfOriginRequestRequestParams();
         requestParams.LoggingEnabled = true;
@@ -321,20 +329,21 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
 
         this.certificateOfOriginWebService.PostCertificateOfOriginRequest(requestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
-
-        });
+                if(myServiceResponse?.Result && !myServiceResponse?.Result.HasException){
+                    var message = new MessageWindow();
+                    message.ShowSuccessIcon = true;
+                    message.RTL = true;
+                    message.Show(myServiceResponse?.Result.UserMessage);
+                }
+                 
+            });
     }
     OnMassageDisplayMethod() {
-        
         if (this.RequestParams == null) {
             this.RequestParams = new CertificateOfOriginRequestRequestParams();
         }
-        
-        if(this.EntityPM?.ErrXml && !AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)){
-            this.selectedTabCode="ANSWERTOCERTIFICATE"
-            this.SelectionChanged();
-        }
         this.RefreshScreen();
+     
     }
     RefreshScreen() {
      
@@ -346,6 +355,11 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
             var myResponse: ServiceResponse = myResult;
             if (!myResult.HasError && myResult.Result) {
                 this.EntityPM =  myResult.Result;
+
+                if(this.EntityPM?.ErrXml && !AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)){
+                    this.selectedTabCode="ANSWERTOCERTIFICATE"
+                    this.SelectionChanged();
+                }
                 this.GENERAL.updateEntity(myResult.Result);
                 this.CertificateChanges.next(true);                              
             }

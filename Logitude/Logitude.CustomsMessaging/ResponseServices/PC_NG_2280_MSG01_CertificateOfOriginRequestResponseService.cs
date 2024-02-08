@@ -27,14 +27,38 @@ using Simplog.Data.CommonDataModel;
 using Unifreight.BL.EntityQueryServices;
 using Unifreight.Data.AmitalModel;
 using Attachment = UnifreightIIG.Common.CertificateOfOriginRequestServiceReference.Attachment;
+using Logitude.CustomsMessaging.MessagingServices;
+using Logitude.Customs.Data.EntityMapping;
+using System.Data.Entity;
+using Logitude.Customs.Data.Repsitories;
+using SupplierInvoiceQueryService = Logitude.Customs.BL.EntityQueryServices.SupplierInvoiceQueryService;
+using Logitude.Customs.Data.EntityKeys;
+using Logitude.Server.Tools;
+using Newtonsoft.Json;
+using UnifreightIIG.Common.DeclarationPrintServiceReference;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class PC_NG_2280_MSG01_CertificateOfOriginRequestResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback, CertificateOfOriginRequestRequestParams>
     {
 		private DateTime _TransmitionDateTime;
+		private ICustomContext dbContext;
+		public override Action<PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback> GetActionShrinkCustomResponse()
+		{
+			return new Action<PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback>(this.ShrinkCustomResponse);
+		}
+		void ShrinkCustomResponse(PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback customResponse)
+		{
+			if (customResponse == null) return;
+			if (customResponse.Attachment == null) return;
 
-        public override INF_MSG_GenericResponseData GetResponse(PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback customResponse, CertificateOfOriginRequestRequestParams requestParams) =>
+			foreach (var item in customResponse.Attachment)
+			{			
+			   var MD5Hash = MD5HashUtil.GetMD5Hash(item.content);
+			   item.content = System.Text.UTF8Encoding.UTF8.GetBytes(MD5Hash);		
+			}
+		}
+		public override INF_MSG_GenericResponseData GetResponse(PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback customResponse, CertificateOfOriginRequestRequestParams requestParams) =>
             this.MyResponseData;        
 
         public override void Update(PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback customResponse, CertificateOfOriginRequestRequestParams requestParams)
@@ -42,7 +66,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			_TransmitionDateTime = customResponse.ResponseContentHeader.TransmitionDateTime;
 			this.MyResponseData = new INF_MSG_GenericResponseData();
 
-            ICustomContext dbContext = CustomContext.GetContext(requestParams.Tenant);
+            dbContext = CustomContext.GetContext(requestParams.Tenant);
 			CertificateOfOriginUpdateService certificateOfOriginUpdateService = new CertificateOfOriginUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
 
 			CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(requestParams.Tenant);
@@ -92,6 +116,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 			if(requestParams.RequestReasonCode == 1)
 			  certificateOfOriginPM.IsSubmitted = true;
+
 			if (customResponse.Attachment != null)
 			{
 				DeclarationQueryService declarationQueryService = new DeclarationQueryService(certificateOfOriginPM.Tenant);
@@ -104,7 +129,12 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				RaiseEvent(certificateOfOriginPM, declarationPM, requestParams.LoggingUserId, "COO", _TransmitionDateTime);
 			}
 
+			var certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(requestParams.DeclarationId, requestParams.Tenant);
+			if (certificateOfOrigins != null && certificateOfOrigins.Count() == 1) 
+			{ 
 
+			   LogicCooNumberInDeclaration(requestParams.DeclarationId, requestParams.Tenant, certificateOfOriginPM);
+			}
 			certificateOfOriginPM.ChangeSetOp = ChangeSetOperation.Update;
 			certificateOfOriginUpdateService.Update(certificateOfOriginPM,true);
 
@@ -136,7 +166,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			//Check if file already exists
 			var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
 			var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("COOE", requestParams.Tenant);
-			var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(declarationPM.Id, null, objectTableId, "I", requestParams.Tenant);
+			var documentsFilingPMList = documentsFilingQuery.GetDocumentsFilingPMsByEntityIdAndObjectTable(declarationPM.Id, certificateOfOriginPM.Id, objectTableId, "I", requestParams.Tenant);
 			foreach (var documentItem in documentsFilingPMList)
 			{
 				if (documentItem.DocumentTypeId == documentType?.Id)
@@ -155,11 +185,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				}
 			}
 
-
-			//DocumentsMetaDataTypePM verPm= 
 			if (documentsFilingPM == null)
 			{
-				documentsFilingPM = CreateCertificateOfOriginDocument(attachment, declarationPM, requestParams, certificateOfOriginPM);
+				CreateCertificateOfOriginDocument(attachment, declarationPM, requestParams, certificateOfOriginPM);
 
 			}
 			else
@@ -210,6 +238,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			documentsFilingPM.Name = "תעודת מקור: " + certificateOfOriginPM.COONumber;
 			documentsFilingPM.UpdatedByUserId = requestParams.LoggingUserId;
 
+			documentsFilingService.OnlyIfChangeUpdateAndAddVersion = true;
+
 			documentsFilingService.Update(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
 			LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + " Updated For certificateOfOrigin " + certificateOfOriginPM.COONumber + " documentsFilingPM.ID= " + documentsFilingPM.Id);
 
@@ -252,5 +282,115 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 		}
 
-    }
+
+
+		private void LogicCooNumberInDeclaration(string declarationId, int tenant, CertificateOfOriginPM certificateOfOriginPM)
+		{			
+			DeclarationQueryService declarationQueryService = new DeclarationQueryService(tenant);
+			var declarationPM = declarationQueryService.GetSingle(declarationId, false, false);
+			if (declarationPM != null)
+			{
+				bool IsUpdated = UpdateCooNumberInDeclaration(declarationId, certificateOfOriginPM, Convert.ToBoolean(declarationPM.IsSubmitDeclaration));
+		
+				if (IsUpdated)
+				{
+					certificateOfOriginPM.UpdateDeclaration = "A";
+
+					if (declarationPM.IsSubmitDeclaration != true) {
+						SendDeclaration(declarationPM, certificateOfOriginPM.Id);
+					}
+				}
+			}
+		}
+		public bool UpdateCooNumberInDeclaration(string declarationId, CertificateOfOriginPM certificateOfOriginPM,bool IsSubmitDeclaration = false)
+		{
+			int tenant = certificateOfOriginPM.Tenant;
+			SupplierInvoiceQueryService supplierInvoiceQueryService = new SupplierInvoiceQueryService(tenant);
+			dbContext = CustomContext.GetContext(tenant);
+
+			SupplierInvoiceItemUpdateService supplierInvoiceItemUpdateService = new SupplierInvoiceItemUpdateService(dbContext, new Dictionary<string, IContext>(), tenant);
+
+			var supplierInvoices = supplierInvoiceQueryService.GetSupplierInvoicesForDeclaration(declarationId, tenant, true);
+
+			var IsUpdated = false;
+			var InvoiceItems = certificateOfOriginPM.CertificateOriginInvoiceItems.FindAll(x => x.IsInvoicesForPrint == true);
+			foreach (var supplierInvoice in supplierInvoices)
+			{
+				if (InvoiceItems.Any(x => x.InvoicesIdUry == supplierInvoice.SequenceNumeric))
+				{
+					foreach (var supplierInvoiceItem in supplierInvoice.SupplierInvoiceItems)
+					{
+						if (supplierInvoiceItem.PreferenceDocumentNumber != certificateOfOriginPM.COONumber && (string.IsNullOrEmpty(supplierInvoiceItem.OriginCountryCode) || supplierInvoiceItem.OriginCountryCode == "IL"))
+						{
+							if (!IsSubmitDeclaration) 
+							{
+							   supplierInvoiceItem.PreferenceDocumentNumber = certificateOfOriginPM.COONumber;
+							   supplierInvoiceItem.ChangeSetOp = ChangeSetOperation.Update;
+							   supplierInvoiceItemUpdateService.Update(supplierInvoiceItem, true);
+							}
+							IsUpdated = true;
+						}
+					}
+				}
+			}
+			return IsUpdated;
+		}
+		public INF_MSG_GenericResponseData SendDeclaration(DeclarationPM decPm, string certificateOfOriginId)
+		{
+			var requestParamsData = new GenericRequestParams();
+
+			var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+			var loggedUserId = AuthenticationUtil.ResolveUserId(decPm.Tenant);
+
+			requestParamsData.Tenant = decPm.Tenant;
+			requestParamsData.AppicationId = decPm.Id;
+			requestParamsData.LoggingEnabled = true;
+			requestParamsData.LoggingEntityId = decPm.Id;
+			requestParamsData.LoggingEntityReference = decPm.DeclarationNumber;
+			requestParamsData.LoggingObjectTableId = objecttableId;
+			requestParamsData.LoggingUserId = loggedUserId;
+			requestParamsData.RequestName = "Declaration Request";
+			requestParamsData.ResponseName = "Declaration Response";
+			requestParamsData.RequestVIA = SendRequestVIA.WebServiceBatch;
+			requestParamsData.ForcePersonalSign = false;
+			requestParamsData.LoggingEntityReference = certificateOfOriginId;
+
+
+			INF_MSG_GenericResponseData responseData = decPm.DeclarationTypeCode == "3" ?
+					  new SaveDF_MSG2751_2757_TransshipmentDeclarationRequestMessagingService().Send(requestParamsData) :
+					  new DF_NG_2751_MSG10000_ExportDeclarationMessagingService().Send(requestParamsData);
+
+			return responseData;
+		}
+		public INF_MSG_GenericResponseData SendAmendmentDeclaration(DeclarationPM decPm, string LoggingUserId = "")
+		{
+			var requestParamsData = new GenericRequestParams();
+
+			var objecttableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+			var loggedUserId = !string.IsNullOrEmpty(LoggingUserId) ? LoggingUserId : AuthenticationUtil.ResolveUserId(decPm.Tenant);
+
+			requestParamsData.Tenant = decPm.Tenant;
+			requestParamsData.AppicationId = decPm.Id;
+			requestParamsData.LoggingEnabled = true;
+			requestParamsData.LoggingEntityId = decPm.Id;
+			requestParamsData.LoggingEntityReference = decPm.DeclarationNumber;
+			requestParamsData.LoggingObjectTableId = objecttableId;
+			requestParamsData.LoggingUserId = loggedUserId;
+			requestParamsData.RequestName = (decPm.DeclarationTypeCode == "3" ? "Transshipment" : "Export") + " Amendment Declaration Request";
+			requestParamsData.ResponseName = "Amendment Declaration Response";
+			requestParamsData.RequestVIA = SendRequestVIA.WebServiceInteractive;
+			requestParamsData.ForcePersonalSign = false;
+
+
+
+			var serializedParent = JsonConvert.SerializeObject(requestParamsData);
+			AmendmentRequestParams requestParams = JsonConvert.DeserializeObject<AmendmentRequestParams>(serializedParent);
+
+			INF_MSG_GenericResponseData responseData = decPm.DeclarationTypeCode == "3" ?
+					  new DF_MSG8235_TransshipmentDeclarationAmendmentMessagingService().Send(requestParams) :
+					  new DF_MSG8235_ExportDeclarationAmendmentMessagingService().Send(requestParams);
+					
+			return responseData;
+		}
+	}
 }
