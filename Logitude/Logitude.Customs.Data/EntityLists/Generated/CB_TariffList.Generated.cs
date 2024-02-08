@@ -24,6 +24,8 @@ namespace Logitude.Customs.Data.EntityLists
        public string TradeAgreementID  { get; set; }
        [DataMember]
        public string CustomsItemID  { get; set; }
+       [DataMember]
+       public string Title  { get; set; }
    }
 
 }
