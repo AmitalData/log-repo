@@ -192,6 +192,9 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                                     this.MOREDATA.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit,this.IsDisplayOnly); 
                                 });
                         }
+                        else {
+                            this.MOREDATA.SetWarningByCooTypeCode(this.EntityPM.CooTypeCode);
+                        }
                         break;
                     }
 

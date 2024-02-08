@@ -95,8 +95,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         this.SetPropertiesEnabled();
         this.SetWarning();
-        debugger
-        // this.SetWarningByCooTypeCode(EntityPM.CooTypeCode);
+        this.SetWarningByCooTypeCode(EntityPM.CooTypeCode);
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
     }
 
@@ -265,13 +264,15 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     SetWarningByCooTypeCode(CooTypeCode) {
-
         this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
             if (!myResponse.HasError) {
-                const certificateOfOriginMandatoryFieldsList = myResponse.Result;
-                certificateOfOriginMandatoryFieldsList.foreach(item =>{
-
-                    this.UIProperties.SetWarning(item.MappedCertificateFieldsName, this.ObjectTableName, true);
+                // this.UIProperties.SetWarning("OriginCountry", this.ObjectTableName, true);
+                debugger
+                const certificateOfOriginMandatoryFieldsList = myResponse?.Result;
+                if (certificateOfOriginMandatoryFieldsList.length <= 0) return;
+                certificateOfOriginMandatoryFieldsList.forEach(item => {
+                    if (item.IsMandatory) 
+                        this.UIProperties.SetWarning(item.MandatoryFields, this.ObjectTableName, true);
 
                 });
             }
@@ -459,8 +460,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.entityPM.CertificateOriginItemItems.forEach(item=>{
                 this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, false, item);
             });
-            debugger
-            // this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
+            this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
         }
     }
 
