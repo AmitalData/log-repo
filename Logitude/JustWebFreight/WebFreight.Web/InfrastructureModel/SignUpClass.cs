@@ -3212,6 +3212,7 @@ namespace WebFreight.Web.InfrastructureModel
                     MamanSuspendedCode=type.MamanSuspendedCode,
                     UnifreightStatusCode=type.UnifreightStatusCode,
                     ErrorPlace=type.ErrorPlace,
+                    OverseasSuspendedCode = type.OverseasSuspendedCode,
 
 
                 };
