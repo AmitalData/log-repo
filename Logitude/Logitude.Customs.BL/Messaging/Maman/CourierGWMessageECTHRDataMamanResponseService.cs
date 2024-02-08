@@ -17,6 +17,8 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.Utils;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
@@ -187,7 +189,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
         
         {
             
-            var responeGWMessageECTHRData = ProxyUtil.JsonConvertDeserializeTyped<GWMessageECTHRData>(webAPIResultString);
+            var responeGWMessageECTHRData = JsonConvert.DeserializeObject< GWMessageECTHRData>(webAPIResultString,new IsoDateTimeConverter { DateTimeFormat="dd/MM/yyyy HH:mm" });
             if (responeGWMessageECTHRData == null)
             {
                 throw new Exception("(responeGWMessageECTHRData == null)");

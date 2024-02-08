@@ -7,6 +7,7 @@ using Logitude.Server.Tools.Utils;
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -119,7 +120,7 @@ namespace Logitude.Customs.BL.Messaging.Maman
                 ActionCode = mamanActionCodeUpdateOrCancel,
                 BaldarAwb = _DeclarationPM.CourierHAWB ?? "",
                 BaldarHp = _DeclarationPM.AgentId ?? "",
-                OpenBaldarAwbDate = CourierGWMessageECTHRDataMamanRequestService.GetOpenBaldarAwbDate(this._DeclarationPM),
+                OpenBaldarAwbDate = FormatDateTimeForJson(CourierGWMessageECTHRDataMamanRequestService.GetOpenBaldarAwbDate(this._DeclarationPM)),
                 SpSpclCode = mamanSpecialActionCode ?? "",
                 SpLabel1 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText1 ?? "" : "",
                 SpLabel2 = mamanSpecialActionCode == "4" ? pmDeclarationMamanSpecialAction.MamanLabelText2 ?? "" : "",
@@ -130,13 +131,25 @@ namespace Logitude.Customs.BL.Messaging.Maman
 
             };
         }
+        static string FormatDateTimeForJson(DateTime? dateTime)
+        {
+            if (dateTime.HasValue)
+            {
+                return dateTime.Value.ToString("dd/MM/yyyy HH:mm", CultureInfo.InvariantCulture);
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
+    
     public class ECSpclMamanMessage
     {
         public string ActionCode { get; set; }
         public string BaldarAwb { get; set; }
         public string BaldarHp { get; set; }
-        public DateTime OpenBaldarAwbDate { get; set; }
+        public string OpenBaldarAwbDate { get; set; }
         public string SpSpclCode { get; set; }
         
         public string SpLabel1 { get; set; }
