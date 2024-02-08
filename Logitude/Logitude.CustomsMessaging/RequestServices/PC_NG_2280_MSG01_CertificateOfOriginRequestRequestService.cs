@@ -62,7 +62,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 					ExportPort = certificateOfOrigin.NonExportPort,
 					ImportDate = Convert.ToDateTime(certificateOfOrigin.NonImportDate),
 					ExportBillOFLadingNum = certificateOfOrigin.NonExportBillOfLadingNum,
-					TransirCountry = certificateOfOrigin.NonTransirCountry,
+					TransirCountry = string.IsNullOrEmpty(certificateOfOrigin.NonTransirCountry)? "IL" : certificateOfOrigin.NonTransirCountry,
 					PortOfEntrance = certificateOfOrigin.NonPortOfEntrance,
 					ExpectedExitDate = Convert.ToDateTime(certificateOfOrigin.NonExpectedExitDate),
 					ExitPort = certificateOfOrigin.NonExitPort,
@@ -86,12 +86,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 		}
         public PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin GetCertificateOfOrigin(CertificateOfOriginPM certificateOfOrigin,DeclarationPM declarationPM)
         {
-            PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin() {
+			var CooTypeCodeList = new List<string> { "1", "2" };
+
+			PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin() {
 			    ExporterId = declarationPM?.ImporterCode,
 				ExporterName = certificateOfOrigin.ExporterName,
 				ExporterAddress = certificateOfOrigin.ExporterAddress,
 				ExporterCountry = certificateOfOrigin.ExporterCountry,
-				TradeAgreementCountry1 = certificateOfOrigin.TradeAgreementCountry1,
+				TradeAgreementCountry1 = CooTypeCodeList.Contains(certificateOfOrigin.TradeAgreementCountry1) ? "IL" : certificateOfOrigin.TradeAgreementCountry1,
 				TradeAgreementCountry2 = certificateOfOrigin.TradeAgreementCountry2,
 				TradeAgreementGroupOfCountries = Convert.ToInt32(certificateOfOrigin.TradeAgreementGroupOfCountries),
 				TradeAgreementGroupOfCountriesSpecified = true,
@@ -126,7 +128,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				IssuingCountry = "IL",
 				CityOfDeclaration = string.IsNullOrEmpty(certificateOfOrigin.CityOfDeclaration) ? null : (int?)Convert.ToInt32(certificateOfOrigin.CityOfDeclaration),
 				CityOfDeclarationSpecified = true,
-				CountryOfDeclaration = certificateOfOrigin.CountryOfDeclaration,
+				CountryOfDeclaration = CooTypeCodeList.Contains(certificateOfOrigin.CooTypeCode) ? "IL" : certificateOfOrigin.CountryOfDeclaration,
 				DateOfDeclaration = Convert.ToDateTime(certificateOfOrigin.DateOfDeclaration),
 				IsDeclaredByManufacturer = certificateOfOrigin.IsDeclaredByManufacture,
 				IsDeclaredByManufacturerSpecified = true,
@@ -226,7 +228,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 			foreach (var item1 in CertificateOfOriginItems)
 			{
-				var IsInvoiceConnect = CertificateOfOriginInvoices.Exists(x=> item1.InvoiceConnect.Split(',').Contains(x.InvoicesIdUry.ToString()));
+				var invoicesConnect = string.IsNullOrEmpty(item1.InvoiceConnect)?new string[0] :item1.InvoiceConnect?.Split(',');
+				var IsInvoiceConnect = CertificateOfOriginInvoices.Exists(x=> invoicesConnect.Contains(x.InvoicesIdUry.ToString()));
 
 				if (CertificateOfOriginItems.Count() == 1 || string.IsNullOrEmpty(item1.InvoiceConnect) || IsInvoiceConnect)
 				{

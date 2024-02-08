@@ -35,6 +35,8 @@ using Logitude.Customs.Def.EntityQueryServicesExt;
 using Microsoft.Practices.ObjectBuilder2;
 using System.Globalization;
 using Logitude.Customs.BL.Messaging.Customs.SignQueueBL;
+using Logitude.Customs.Data.Repsitories;
+using System.Data.Entity;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -124,8 +126,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     if (isExportCloseFromMehes && status == "4")
                         isExportClose = true;
                 }
+                bool isAmendApprove = false;
 
-                if (!isExportClose)
+				if (!isExportClose)
                 {
 
                     var declaration = myDeclarationQueryService.GetDeclarationByfunctionalReferenceID(functionalReferenceID, agentFileReferenceID, requestParams.Tenant);
@@ -135,7 +138,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     string status = "";
                     if (AdditionalInformation != null)
                         status = AdditionalInformation.FirstOrDefault(x => x.Content != null && x.StatementTypeCode.Value == "32").Content.Value;
-                    bool isAmendApprove = (status == "2" || status == "1");
+                    isAmendApprove = (status == "2" || status == "1");
                     bool isDCA = requestParams.RequestVIA == SendRequestVIA.DCABatch;
 
 					if (declaration != null)
@@ -168,6 +171,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
+                    
+
                 }
                 else
                 {
@@ -192,8 +197,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     this.MyResponseData.UserMessage = "Can not find declaration" + requestParams.AppicationId;
                     return;
                 }
+				if (!isExportClose)
+				{
+					PC_NG_2280_MSG01_CertificateOfOriginRequestResponseService _pc_NG_2280_MSG01_CertificateOfOriginRequestResponseService = new PC_NG_2280_MSG01_CertificateOfOriginRequestResponseService();
 
-                if (customResponse.ProceduralFaults != null)
+					CertificateOfOriginUpdateService certificateOfOriginUpdateService = new CertificateOfOriginUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
+					CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(_MyDeclarationPM.Tenant);
+					var certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
+					if (certificateOfOrigins != null && certificateOfOrigins.Count() == 1)
+                    {
+						var certificateOfOrigin = certificateOfOriginQueryService.GetSingle(certificateOfOrigins[0].Id, true, false);
+
+						bool IsUpdated = _pc_NG_2280_MSG01_CertificateOfOriginRequestResponseService.UpdateCooNumberInDeclaration(_MyDeclarationPM.Id, certificateOfOrigin, true);
+                        if(!IsUpdated) 
+                        { 
+						   certificateOfOrigins[0].UpdateDeclaration =  isAmendApprove ? "C" : "B";
+						   certificateOfOrigins[0].ChangeSetOp = ChangeSetOperation.Update;
+						   certificateOfOriginUpdateService.Update(certificateOfOrigins[0], true);
+                        }
+					}
+				}
+				if (customResponse.ProceduralFaults != null)
                 {
                     var ProceduralFaultDetailsXml_8237 = XmlGenericUtil<UnifreightIIG.Common.ExportDeclarationAmendmentRequestMsgRequestServiceReference.ProceduralFaultDetails[]>
                        .SerializeObject(customResponse.ProceduralFaults);
