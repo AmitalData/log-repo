@@ -333,10 +333,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
             this.RequestParams = new CertificateOfOriginRequestRequestParams();
         }
         
-        if(this.EntityPM?.ErrXml && !AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)){
-            this.selectedTabCode="ANSWERTOCERTIFICATE"
-            this.SelectionChanged();
-        }
         this.RefreshScreen();
     }
     RefreshScreen() {
@@ -350,7 +346,11 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
             if (!myResult.HasError && myResult.Result) {
                 this.EntityPM =  myResult.Result;
                 this.GENERAL.updateEntity(myResult.Result);
-                this.CertificateChanges.next(true);                              
+                this.CertificateChanges.next(true);          
+                if(this.EntityPM?.ErrXml && !AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)){
+                    this.selectedTabCode="ANSWERTOCERTIFICATE"
+                    this.SelectionChanged();
+                }
             }
         });
       
