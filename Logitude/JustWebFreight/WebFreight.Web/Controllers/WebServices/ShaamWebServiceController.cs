@@ -51,7 +51,7 @@ namespace WebFreight.Web.Controllers.WebServices
             {
                 HttpClienResponse apiToShaamRes = shaamService.NewRefreshToken(body.tenant, body.user, body.code);
                 return apiToShaamRes;
-            }, ReturnContent.NONE, false);
+            }, ReturnContent.JSON, false);
         }
 
         [HttpPost]

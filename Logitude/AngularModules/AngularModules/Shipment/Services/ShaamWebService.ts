@@ -42,10 +42,10 @@ export class ShaamWebService {
         ) as Observable<string>;
     }
 
-    postNewRefreshToken(tenant: number, user: string, code: string): Observable<string> {
+    postNewRefreshToken(tenant: number, user: string, code: string): Promise<newRefreshTokenResponse> {
         return this.http.post(
             this.apiUrl + '/newRefreshToken', { tenant, user, code }
-        ) as Observable<string>;
+        ).toPromise() as Promise<newRefreshTokenResponse>;
     }
 
     getShaamSettings(): Promise<ShaamSettings> {
@@ -60,6 +60,12 @@ export class ShaamWebService {
     }
 }
 
+export interface newRefreshTokenResponse {
+    message: string
+    errorCode: number
+    approved: boolean
+    status: number
+}
 
 interface Token {
     Id: string;
@@ -86,4 +92,4 @@ export interface ShaamSettings {
     createDate: string;
     updateDate: string;
     tenant: number;
-  }
+}
