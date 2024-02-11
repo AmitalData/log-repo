@@ -383,7 +383,17 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 CheckVATAmountInTheRecordIsHigherThanThePercentageOfVATAllowed(entityPM);
 
             }
+            
+            if (entityPM.StatusCode != "2" && entityPM.StatusCode != "1" && entityPM.StatusCode != "7")// these statuses are stronger than 11 
+            {
+                string[] validStatuses = { "C", "H", "K", "P", "R", "T" };
 
+                var _FullAccountingSetting = FullAccountingSettingQueryService.Get(entityPM.Tenant);
+                if (validStatuses.Contains(entityPM.LineTypeCode) && entityPM.TotalInvoiceAmount > _FullAccountingSetting.AmountForConfirmationNumber && string.IsNullOrEmpty(entityPM.ConfirmationNumber))
+                {
+                    entityPM.StatusCode = "11";
+                }
+            }
 
         }
 

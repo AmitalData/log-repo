@@ -75,6 +75,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                                                        IsEquipment = a.IsEquipment,
                                                        SubTotalInLocalCurrency=a.SubTotalInLocalCurrency,
+                                                       ConfirmationNumber=a.ConfirmationNumber,
 
                                                    });
             return query;

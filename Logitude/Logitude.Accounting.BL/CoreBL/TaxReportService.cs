@@ -156,8 +156,8 @@ namespace Logitude.Accounting.BL.CoreBL
                             UpdatedBUserName = taxReport.UpdatedByUserName,
                             Tenant = tenant,
                             TaxReportDate = taxReport.TaxReportMonth,
-                            LedgerTransactionId = taxData.LedgerTransactionId
-
+                            LedgerTransactionId = taxData.LedgerTransactionId,
+                            ConfirmationNumber=invoice.ConfirmationNumber,
                         };
                         Simplog.Data.CommonDataModel.EntityPOCOs.Card card = cards.Where(d => d.Id == invoice.BillToId).FirstOrDefault();
 
@@ -174,7 +174,6 @@ namespace Logitude.Accounting.BL.CoreBL
                         {
                             line.LineTypeCode = "S";
                         }
-
                         reportLinesList.Add(line);
                       //  UpdateJournalAdditionalDataRecord(line, null);
                     }
@@ -272,7 +271,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     TransmitStatusCode = transmitStatusCode,
                     TaxReportDate = taxReport.TaxReportMonth,                   
                     JournalLineNumber = transaction.JournalLineNumber,
-                    LedgerTransactionId = transaction.LedgerTransactionId
+                    LedgerTransactionId = transaction.LedgerTransactionId,
+                    ConfirmationNumber= aPInvoicePM != null ?  aPInvoicePM.ConfirmationNumber : null,
 
                 };
 
@@ -310,7 +310,10 @@ namespace Logitude.Accounting.BL.CoreBL
                 {
                     inputReportLine.LineTypeCode = "T";
                 }
-
+                if (inputReportLine.ConfirmationNumber == null && journal.ConfirmationNumber != null)
+                {
+                    inputReportLine.ConfirmationNumber = journal.ConfirmationNumber;
+                }
                 reportLinesList.Add(inputReportLine);
                 //     UpdateJournalAdditionalDataRecord(inputReportLine, transaction);
 
