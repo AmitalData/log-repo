@@ -42,7 +42,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;הגדרות הנהלת חשבונות&quot;"
   DefaultText="&quot;Full Accounting Settings&quot;"
-  Code="&quot;9346&quot;"
+  Code="&quot;07c0&quot;"
   Name="&quot;FullAccountingSetting Query Group&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Accounting&quot;"
