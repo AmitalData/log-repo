@@ -19,7 +19,7 @@
   LookUp2="&quot;LocalName&quot;"
   KeyPropertyPath="&quot;Code&quot;"
   AutoCompleteSearchWindow="false"
-  IsClosed="true"
+  IsClosed="false"
   CacheOnClient="false"
   EditableFromAutoCompleteWindow="false"
   HasCounter="false"

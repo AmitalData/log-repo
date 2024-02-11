@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginMandatoryFieldsUpdateClass
    {  		
-		public const string HashString = "771d30a4358180c494059d5820aa3060";
+		public const string HashString = "3db7731e457bf4b3afaa44336ce2beed";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -108,7 +108,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    LookUp2 =  "LocalName",
 			      				    KeyPropertyPath =  "Code",
 			      				    AutoCompleteSearchWindow =  false,
-			      				    IsClosed =  true,
+			      				    IsClosed =  false,
 			      				    CacheOnClient =  false,
 			      				    EditableFromAutoCompleteWindow =  false,
 			      				    HasCounter =  false,
@@ -981,7 +981,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+		   ObjectTable CertificateOfOriginMandatoryFieldsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CertificateOfOriginMandatoryFields" && d.Tenant == 0).FirstOrDefault(); 
+
+		   Feature CertificateOfOriginMandatoryFieldsFeatureNew = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "NEW", FeatureTypeCode = "NEW", IsBusinessUnitEnabled = false, ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, Tenant = 0, NameTextCodeCode = "CertificateOfOriginMandatoryFields.Features.New", NameTextCodeDefaultText = "New" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CertificateOfOriginMandatoryFieldsObjectTable);
+		   Feature CertificateOfOriginMandatoryFieldsFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, Tenant = 0, NameTextCodeCode = "CertificateOfOriginMandatoryFields.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CertificateOfOriginMandatoryFieldsObjectTable);
+		   Feature CertificateOfOriginMandatoryFieldsFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, Tenant = 0, NameTextCodeCode = "CertificateOfOriginMandatoryFields.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CertificateOfOriginMandatoryFieldsObjectTable);
+		   Feature CertificateOfOriginMandatoryFieldsFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, Tenant = 0, NameTextCodeCode = "CertificateOfOriginMandatoryFields.Features.PackageFeature", NameTextCodeDefaultText = "CertificateOfOriginMandatoryFields Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CertificateOfOriginMandatoryFieldsObjectTable);    
 	    
 		}
 
