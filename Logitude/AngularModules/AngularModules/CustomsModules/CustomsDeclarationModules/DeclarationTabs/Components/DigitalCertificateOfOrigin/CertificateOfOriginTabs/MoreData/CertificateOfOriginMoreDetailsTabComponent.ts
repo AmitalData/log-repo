@@ -78,6 +78,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
 
     }
 
+    mandatoryFielsList = [];
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     SetWarningByCooTypeCode(CooTypeCode) {
         this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
@@ -85,13 +86,31 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
                 const certificateOfOriginMandatoryFieldsList = myResponse?.Result;
                 if (certificateOfOriginMandatoryFieldsList.length <= 0) return;
                 certificateOfOriginMandatoryFieldsList.forEach(item => {
-                    if (item.IsMandatory)
-                        this.UIProperties.SetWarning(item.MandatoryFields, this.ObjectTableName, true);
+                    if (item.IsMandatory){
+                        this.mandatoryFielsList.push(item.MandatoryFieldName);
+                        this.UIProperties.SetWarning(item.MandatoryFieldName, this.ObjectTableName, true);
+                    }
                 });
             }
         });
     }
-
+    
+    CheckMandatoryCustomsFields(ValidationErrors = []){
+        debugger
+        // check:
+        let someName="CityOfDeclaration"
+        let field = this.entityPM[someName];
+        if(!field){
+            ValidationErrors.push(someName);
+        }
+        this.mandatoryFielsList.forEach(item => {
+            if(item){
+                let field = this.entityPM[item];
+                if (!field)
+                    ValidationErrors.push(item);
+            }
+        }); 
+    }
     //#region properties
 
     public get IsCumulation(): boolean {

@@ -36,7 +36,7 @@ import { BehaviorSubject } from 'rxjs';
     providers: [EntityArgs],
 })
 
-export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
+export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     public right: any;
 
     public TabsItemsSource: TabItem[] = [];
@@ -53,8 +53,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
     responseData: INF_MSG_GenericResponseData;
     private CurrentSession = SessionLocator.SelectedSession;
     public isEntityChange: boolean = false;
-    public DecalarationData:DeclarationPM;
-    public IsNewOrEdit:StatusCertificateOfOrigin;
+    public DecalarationData: DeclarationPM;
+    public IsNewOrEdit: StatusCertificateOfOrigin;
     isDispalyOnlyStatusList: number[] = [4, 8];
 
 
@@ -62,17 +62,17 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         public entityArgs: EntityArgs,
     ) {
         super();
-       
+
     }
 
     private CertificateChanges = new BehaviorSubject<boolean>(false);
-    isListenToChangeInCertificate(logWindow:LogitudeWindow = null){
+    isListenToChangeInCertificate(logWindow: LogitudeWindow = null) {
         // Certificate Changes subscriber:
         this.CertificateChanges.subscribe((value) => {
             // Main Title
             let title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
             logWindow.Title = this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit && !AppTool.IsNullOrEmpty(this.EntityPM.COONumber) ? title += `: ${this.EntityPM.COONumber}` : title;
-    
+
             // Side Title
             let CertificateOfOriginStatus = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode");
             logWindow.SubTitle = this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit && !AppTool.IsNullOrEmpty(this.EntityPM.CooStatusCodeName) ? CertificateOfOriginStatus += `: ${this.EntityPM.CooStatusCodeName}` : null;
@@ -178,7 +178,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.GENERAL = cmpRef.instance;
-                                    this.GENERAL.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit,this.IsDisplayOnly);
+                                    this.GENERAL.InitTab(this.EntityPM, this.DecalarationData, this.IsNewOrEdit, this.IsDisplayOnly);
                                 });
                         }
                         break;
@@ -189,7 +189,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.MOREDATA = cmpRef.instance;
-                                    this.MOREDATA.InitTab(this.EntityPM,this.DecalarationData, this.IsNewOrEdit,this.IsDisplayOnly); 
+                                    this.MOREDATA.InitTab(this.EntityPM, this.DecalarationData, this.IsNewOrEdit, this.IsDisplayOnly);
                                 });
                         }
                         else {
@@ -217,15 +217,15 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                     }
 
                     case "ANSWERTOCERTIFICATE": {
-                        if(this.ANSWERTOCERTIFICATE == null) {
-                                SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateAnswers/CertificateAnswersComponent', myLocation.viewContainerRef)
+                        if (this.ANSWERTOCERTIFICATE == null) {
+                            SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateAnswers/CertificateAnswersComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.ANSWERTOCERTIFICATE = cmpRef.instance;
-                                    this.ANSWERTOCERTIFICATE.InitTab(this.EntityPM); 
+                                    this.ANSWERTOCERTIFICATE.InitTab(this.EntityPM);
                                 });
-                            }
+                        }
                         else
-                            this.ANSWERTOCERTIFICATE.InitTab(this.EntityPM); 
+                            this.ANSWERTOCERTIFICATE.InitTab(this.EntityPM);
                         break;
                     }
 
@@ -238,12 +238,12 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         }
     }
 
-    SaveAndSendClick(customSendOptionsArgs:any = null) { 
+    SaveAndSendClick(customSendOptionsArgs: any = null) {
         if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
             this.GENERAL.CheckMandatoryFields();
             return;
         }
-        this.EntityPM.IsUnitedInvoices ?  this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
+        this.EntityPM.IsUnitedInvoices ? this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
 
@@ -252,35 +252,28 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
                 if (!response.HasError) {
                     var result = response.Result;
                     this.EntityPM = result;
-
-                    this.GENERAL.InitilizeListsFromCertificateOfOrigin(this.EntityPM);                           
+                    this.GENERAL.InitilizeListsFromCertificateOfOrigin(this.EntityPM);
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
                     this.CurrentSession.StopBusyIndicator();
-                    //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.IsNewOrEdit = StatusCertificateOfOrigin.IsEdit;
-
-                    if(customSendOptionsArgs){
+                    if (customSendOptionsArgs) {
                         this.SendButtonClicked(customSendOptionsArgs);
                     }
                 }
-                
+
             });
         }
-        
-        else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit){
+
+        else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit) {
             this.isEntityChange = true;
             this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
                 if (!response.HasError) {
                     var result = response.Result;
                     this.EntityPM = result;
-
-                    this.GENERAL.InitilizeListsFromCertificateOfOrigin(this.EntityPM);                        
+                    this.GENERAL.InitilizeListsFromCertificateOfOrigin(this.EntityPM);
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
                     this.CurrentSession.StopBusyIndicator();
-                    //this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
-                    
-
-                    if(customSendOptionsArgs){
+                    if (customSendOptionsArgs) {
                         this.SendButtonClicked(customSendOptionsArgs);
                     }
                 }
@@ -288,23 +281,36 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         }
     }
 
-    
-    async SendButtonClicked(customSendOptionsArgs:any){
 
-        if(!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
+
+
+    async SendButtonClicked(customSendOptionsArgs: any) {
+        this.GENERAL.CheckMandatoryCustomsFields(this.ValidationErrors);
+        this.MOREDATA.CheckMandatoryCustomsFields(this.ValidationErrors);
+        
+        if (this.ValidationErrors.length > 0) {
+            this.CheckMandatoryCustomsFields(customSendOptionsArgs);
+        }
+        else {
+            this.SendCertificateOfOrigin(customSendOptionsArgs);
+        }
+    }
+
+    async SendCertificateOfOrigin(customSendOptionsArgs: any) {
+        if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
             this.GENERAL.CheckMandatoryFields();
             return;
         }
-        if(this.EntityPM.RequestReasonCode == '10' && !AppTool.IsNullOrEmpty(this.EntityPM.COONumber))
-        {
+
+        if (this.EntityPM.RequestReasonCode == '10' && !AppTool.IsNullOrEmpty(this.EntityPM.COONumber)) {
             var message = new MessageWindow();
             message.RTL = true;
-            
+
             message.Show(TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.NotSendwithNum"));
             return;
         }
 
-        var requestParams= new CertificateOfOriginRequestRequestParams();
+        var requestParams = new CertificateOfOriginRequestRequestParams();
         requestParams.LoggingEnabled = true;
         requestParams.LoggingUserId = SessionLocator.LoggedUserId;
         requestParams.LoggingObjectTableId = window.ObjectTables.filter(d => d.Name === 'Customs.CertificateOfOrigin')[0].Id;
@@ -315,32 +321,75 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
         requestParams.DeclarationId = this.DecalarationData.Id;
         requestParams.CustomFileNo = this.DecalarationData.CustomFileNo;
         requestParams.RequestReasonCode = Number(this.EntityPM.RequestReasonCode);
-        
+
         CustomMessageProgressComponent
-            .ShowProgressBar(this.CurrentSession,requestParams.PBId,
-            "שליחת בקשה לתעודת מקור", true)
+            .ShowProgressBar(this.CurrentSession, requestParams.PBId,
+                "שליחת בקשה לתעודת מקור", true)
             .then((res) => {
-                
+
                 this.ResponseData = res;
                 this.OnMassageDisplayMethod();
             }
             ).catch((err) => {
-                
+
                 this.ValidationErrorsList.push(err);
             });
 
 
         this.certificateOfOriginWebService.PostCertificateOfOriginRequest(requestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
-                if(myServiceResponse?.Result && !myServiceResponse?.Result.HasException){
+                if (myServiceResponse?.Result && !myServiceResponse?.Result.HasException) {
                     var message = new MessageWindow();
                     message.ShowSuccessIcon = true;
                     message.RTL = true;
                     message.Show(myServiceResponse?.Result.UserMessage);
                 }
-                 
+
             });
     }
+
+    ValidationErrors = []
+    CheckMandatoryCustomsFields(customSendOptionsArgs: any) {
+        var windowArgs: any = {};
+        windowArgs.Errors = this.ValidationErrors;
+        windowArgs.NoButtonVisibility = false;
+        windowArgs.CancelButtonVisibility = true;
+        windowArgs.SaveButtonText = "אשר";
+        windowArgs.CancelButtonText = "בטל";
+        windowArgs.ComponentHeight = '328px';
+        // TODO: replace to TTextCodeTranslator.Translate()
+        var windowTitle = "שגיאה במילוי שדות חובה";
+
+
+        var logWindow = new LogitudeWindow(this.CurrentSession);
+        logWindow.Width = 600;
+        logWindow.Height = 400;
+        logWindow.Title = windowTitle;
+        logWindow.ShowCloseButton = false;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.WindowClosed.subscribe(($event: any) => {
+            if (this.TaxationWindowClosed($event))
+                return this.SendCertificateOfOrigin(customSendOptionsArgs);
+            else
+                return false;
+        });
+
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
+        this.CurrentSession.StopBusyIndicator(); // delete if not  nedded
+    }
+
+    TaxationWindowClosed(event) {
+        this.ValidationErrors = [];
+        switch (event) {
+            case "ok": {
+                return true;
+            }
+            case "cancel": {
+                return false;
+            }
+        }
+    }
+
     OnMassageDisplayMethod() {
         if (this.RequestParams == null) {
             this.RequestParams = new CertificateOfOriginRequestRequestParams();
@@ -357,17 +406,17 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging  {
             if (!myResult.HasError && myResult.Result) {
                 this.EntityPM = myResult.Result;
                 this.GENERAL.updateEntity(myResult.Result);
-                this.CertificateChanges.next(true);     
+                this.CertificateChanges.next(true);
 
-                if(this.EntityPM?.ErrXml && !AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)){
-                    this.selectedTabCode="ANSWERTOCERTIFICATE"
+                if (this.EntityPM?.ErrXml && !AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)) {
+                    this.selectedTabCode = "ANSWERTOCERTIFICATE"
                     this.SelectionChanged();
                 }
             }
         });
-      
+
     }
-    
+
     CancelButtonClicked() {
         // this.EntityPM.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
