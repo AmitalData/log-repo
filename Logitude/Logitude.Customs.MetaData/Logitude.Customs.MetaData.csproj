@@ -107,6 +107,7 @@
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePriority.dxml" />
     <None Include="DBOthers\Procedures\usp_UpdateQueueMessagePrio2.dxml" />
     <None Include="DBOthers\Procedures\ReconnectObjectMetaDataProcedure.dxml" />
+    <None Include="DBOthers\Views\CustomsBookMainView.dxml" />
     <None Include="DBOthers\Views\RequestSheetInQueueMesView.dxml" />
     <None Include="DBOthers\Views\DecTaxesByTaxTypeCodeViews.dxml" />
     <None Include="DBOthers\Views\DecCourierStatusesViews.dxml" />
