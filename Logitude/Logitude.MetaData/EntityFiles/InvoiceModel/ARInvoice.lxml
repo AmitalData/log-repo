@@ -20367,6 +20367,21 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;ConfirmationNumber&quot;"
+        FieldName="&quot;ConfirmationNumber&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;nText&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>

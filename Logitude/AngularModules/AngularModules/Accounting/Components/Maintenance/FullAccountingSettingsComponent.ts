@@ -524,6 +524,12 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
+    get AmountForConfirmationNumber() { return this.EntityPM.AmountForConfirmationNumber; }
+    set AmountForConfirmationNumber(value: number) {
+        if (this.EntityPM.AmountForConfirmationNumber != value) {
+            this.EntityPM.AmountForConfirmationNumber = value;
+        }
+    }
     //automaticExternalRconcilMthods: AutomaticExternalRconcilMthodsPM;
     //get AutomaticExternalRconcilMthods() { return this.taxWithholdingGLAccount; }
     //set AutomaticExternalRconcilMthods(value: GLAccountPM) {

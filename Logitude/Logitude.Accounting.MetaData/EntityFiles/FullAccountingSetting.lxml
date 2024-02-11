@@ -4445,7 +4445,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-
   <field
     Id="&quot;2fee2c59-3e27-49ac-9db6-58836203de62&quot;"
     FieldName="&quot;AmountForConfirmationNumber&quot;"

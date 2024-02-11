@@ -39,6 +39,7 @@ export class TaxReportLineList {
 	VatAmountRound: number;
 	LedgerTransactionId: string;
 	SubTotalInLocalCurrency: number;
+	ConfirmationNumber: string;
 	
 }
  
