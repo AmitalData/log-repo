@@ -856,13 +856,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="ConfirmationNumber"
-    Type="varchar"
-    Size="3">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="CreditedByARInvoiceId"
     ReferencedTable="ARInvoices"
