@@ -47,12 +47,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
             }
         }
 
-		public HttpResponseMessage GetCertificateOfOriginByID(string declarationId ,int tenant)
+		public HttpResponseMessage GetCertificateOfOriginByID(string declarationId,string amendmentOriginalDeclartation, int tenant)
 		{
 			try
 			{
 				CertificateOfOriginQueryService certificateOfOriginQueryService =  new CertificateOfOriginQueryService(tenant);
-                 var certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(declarationId, tenant,true);
+                 var certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(declarationId,  amendmentOriginalDeclartation, tenant,true);
 
 				return Request.CreateResponse(HttpStatusCode.OK, certificateOfOrigins);
 			}
@@ -66,10 +66,10 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
         {
             try
             {
-                CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(tenant);
-                var certificateOfOrigin = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationIdIncludeChildrens(certificateId,declarationId, tenant);
-
-                return Request.CreateResponse(HttpStatusCode.OK, certificateOfOrigin);
+                ICustomContext MyContext = CustomContext.GetContext(tenant);
+				CertificateOfOriginQueryService certificateOfOriginQuery = new CertificateOfOriginQueryService(MyContext);
+				CertificateOfOriginPM certificateOfOriginPM = certificateOfOriginQuery.GetSingle(certificateId, true, false);
+				return Request.CreateResponse(HttpStatusCode.OK, certificateOfOriginPM);
             }
             catch (Exception ex)
             {

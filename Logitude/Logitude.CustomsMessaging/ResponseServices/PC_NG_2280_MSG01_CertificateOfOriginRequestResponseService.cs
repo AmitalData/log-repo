@@ -117,19 +117,27 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			if(requestParams.RequestReasonCode == 1)
 			  certificateOfOriginPM.IsSubmitted = true;
 
+			DeclarationQueryService declarationQueryService = new DeclarationQueryService(certificateOfOriginPM.Tenant);
+			var declarationPM = declarationQueryService.GetSingle(requestParams.DeclarationId, false, false);
+
 			if (customResponse.Attachment != null)
 			{
-				DeclarationQueryService declarationQueryService = new DeclarationQueryService(certificateOfOriginPM.Tenant);
-				var declarationPM = declarationQueryService.GetSingle(requestParams.DeclarationId, false, false);
+
+				var declarationPmOrg = declarationPM;
+				if (!string.IsNullOrEmpty(declarationPM.AmendmentOriginalDeclartation))
+				{
+					declarationPmOrg = declarationQueryService.GetSingle(declarationPM.AmendmentOriginalDeclartation, false, false);
+
+				}
 				foreach (var attachment in customResponse.Attachment)
 				{
-					AnalyzeCertificateOfOriginDocument(attachment, requestParams, declarationPM, certificateOfOriginPM);
+					AnalyzeCertificateOfOriginDocument(attachment, requestParams, declarationPmOrg, certificateOfOriginPM);
 				}
 
 				RaiseEvent(certificateOfOriginPM, declarationPM, requestParams.LoggingUserId, "COO", _TransmitionDateTime);
 			}
 
-			var certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(requestParams.DeclarationId, requestParams.Tenant);
+			var certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(declarationPM.Id, declarationPM.AmendmentOriginalDeclartation, requestParams.Tenant);
 			if (certificateOfOrigins != null && certificateOfOrigins.Count() == 1) 
 			{ 
 

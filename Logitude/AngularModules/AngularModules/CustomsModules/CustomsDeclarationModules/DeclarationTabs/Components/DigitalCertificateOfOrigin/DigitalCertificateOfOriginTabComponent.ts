@@ -151,7 +151,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     AddNewCertificateOfOrigin(isNewOrEditCertificateOfOrigin: StatusCertificateOfOrigin) {
         // initilize new certificatgetCertificateOfOriginse:
         const newCertificateOfOriginPM = new CertificateOfOriginPM();
-        newCertificateOfOriginPM.DeclarationId = this.EntityPM.Id;
+        newCertificateOfOriginPM.DeclarationId = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation)? this.EntityPM.Id:this.EntityPM.AmendmentOriginalDeclartation;
         newCertificateOfOriginPM.Tenant = this.EntityPM.Tenant;
 
         // on click item get one CertificateOfOrigin
@@ -238,7 +238,9 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     }
 
     getCertificateOfOrigins() {
-        this.certificateOfOriginWebService.GetCertificateOfOriginByID(this.EntityPM.Id, this.EntityPM.Tenant).subscribe(myResult => {
+        
+        var amendmentOriginalDeclartation = AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? "" : this.EntityPM.AmendmentOriginalDeclartation
+        this.certificateOfOriginWebService.GetCertificateOfOriginByID(this.EntityPM.Id,amendmentOriginalDeclartation ,this.EntityPM.Tenant).subscribe(myResult => {
 
             if (myResult == null) {
                 this.CertificateOfOrigins = [];
@@ -289,7 +291,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
                 // Side Title
                 let CertificateOfOriginStatus = TextCodeTranslator.Translate("Customs.CertificateOfOrigin.O.CooStatusCode");
                 logWindow.SubTitle = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit && !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.CooStatusCodeName) ? CertificateOfOriginStatus += `: ${this.selectedCertificateOfOrigin.CooStatusCodeName}` : null;
-        
+                args.isAllowChange = this.IsAllowChange;
                 logWindow.WindowArgs = args;
                 logWindow.ShowCloseButton = true;
                 logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent');
@@ -482,6 +484,10 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
     }
     public get IsUpdateDeclarationB(): boolean {
         return this.IsOnlyOneCertificate && this.CertificateOfOrigins[0].UpdateDeclaration =='B'
+    }
+    public get IsAllowChange(): boolean {
+        return (AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) && !this.EntityPM.AmendmentDontDisplayInList )||
+        (!AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) && (!this.EntityPM.AmendmentDontDisplayInList ||AppTool.IsNullOrEmpty(this.EntityPM.AmendmentStatus)))
     }
 }
 
