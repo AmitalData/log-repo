@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class InterestReportUpdateClass
    {  		
-		public const string HashString = "8c5b85dc61818161d39e5149de1e0d17";
+		public const string HashString = "d739e265201c9a9d78c89f9a1d1c14ea";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -3845,6 +3845,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsId",
 					  						DefaultText =  "Chart Of Accounts",
+					  						FullLocalDefaultText =  "קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsIdListLable",
 					  						ListLableDefaultText =  "Chart Of Accounts ",
 					  						ListLocalDefaultText =  "קבוצת מאזן",
@@ -3909,6 +3910,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsName",
 					  						DefaultText =  "Chart of Accounts",
+					  						FullLocalDefaultText =  "קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsNameListLable",
 					  						ListLableDefaultText =  "Chart of Accounts",
 					  						ListLocalDefaultText =  "קבוצת מאזן",
@@ -3973,6 +3975,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ChartOfAccountsCode",
 					  						DefaultText =  "Chart of Accounts Code",
+					  						FullLocalDefaultText =  "קוד קבוצת מאזן",
 					  						ListFieldLable =  "ChartOfAccountsCodeListLable",
 					  						ListLableDefaultText =  "Chart of Accounts Code",
 					  						ListLocalDefaultText =  "קוד קבוצת מאזן",
