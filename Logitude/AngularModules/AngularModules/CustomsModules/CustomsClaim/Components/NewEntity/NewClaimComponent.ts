@@ -12,6 +12,7 @@ import { ClaimPM } from '../../../../Customs/EntityPMs/ClaimPM';
 import { ClaimPMService } from '../../../../Customs/Services/StandardPMs/ClaimPMService';
 import { ClaimWebService } from '../../../../Customs/Services/WebServices/ClaimWebService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
+import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
 
 @Component({
     selector: 'NewClaimComponent',
@@ -28,6 +29,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
 
     private _ClaimPMService: ClaimPMService = new ClaimPMService();    
     private _ClaimWebService: ClaimWebService = new ClaimWebService();
+    private _declarationExtendedListService: DeclarationExtendedListService = new DeclarationExtendedListService();
 
     private CurrentSession = SessionLocator.SelectedSession;
     constructor(private EntityResourceService: EntityResourceService) {
@@ -75,19 +77,32 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
     OkButtonClicked() {
         this.ValidationErrorsList = [];
 
-        if (AppTool.IsNullOrEmpty(this.CustomFileNo)) {
+        // if inserted custom file number, assert it is found
+        if (!AppTool.IsNullOrEmpty(this.CustomFileNo)) {
+            return this._declarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo).subscribe((response: ServiceResponse) => {
+                if (AppTool.IsNullOrEmpty(response.Result?.Id)) {
+                    this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Claim.O.NotFoundCustomFileNo"));
+                }
+                else {
+                    this.CreateNewClaim();
+                }
+            });
+        }
+        else {
             if (AppTool.IsNullOrEmpty(this.CustomerId)) {
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.ClientIsMandatory"));
             }
             if (AppTool.IsNullOrEmpty(this.ClaimOfficeCode)) {
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Declaration.O.DeclarationOfficeCodeMandatory"));
             }
+            if (this.ValidationErrorsList.length > 0) {
+                return;
+            }
+            this.CreateNewClaim();
         }
+    }
 
-        if (this.ValidationErrorsList.length > 0) {
-            return;
-        }
-
+    CreateNewClaim() {
         this._ClaimWebService.CheckIfCorporationNameExists(this.EntityPM.Tenant)
             .subscribe((myResponse: ServiceResponse) => {
                 this.SubmitChanges(myResponse, true);
