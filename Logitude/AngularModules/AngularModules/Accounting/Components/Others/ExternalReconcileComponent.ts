@@ -1292,11 +1292,12 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
             if (!AppTool.IsNullOrEmpty($event)) {
                 if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
                     return;
-                var row = $event.line;
-                var rowId = $event.line.Id;
-                var RowIndex = $event.RowIndex;
-                var isChecked = $event.isChecked;
-                var oneTime = $event.oneTime;
+                var params = $event.Params;
+                var row = params.line;
+                var rowId = params.line.Id;
+                var RowIndex = params.RowIndex;
+                var isChecked = params.isChecked;
+                var oneTime = params.oneTime;
                 console.log("---->> ExtPage Row Selected: ", rowId, row, isChecked);
 
                 if (isChecked) {
