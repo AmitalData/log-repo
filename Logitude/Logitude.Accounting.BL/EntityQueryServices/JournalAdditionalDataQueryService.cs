@@ -46,6 +46,15 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 			return GetEntityPM(query);
 
 		}
+        public bool CheckIfJournalAdditionalDataExist(string journalId, int journalLineNumber, int tenant)
+        {
+            var exists = context.JournalAdditionalDatas
+                        .Any(a => a.JournalId == journalId &&
+                                  a.JournalLineNumber == journalLineNumber &&
+                                  a.Tenant == tenant);
 
-	}
+            return exists;
+        }
+
+    }
 }
