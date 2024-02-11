@@ -193,8 +193,9 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.TableConditio
             }
             else
             {
+
                 int tenant = 0;
-                if(cargoTrackingDataBaseArgs.CargoTrackingArguments!=null && cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.HasValue)
+                if(cargoTrackingDataBaseArgs.CargoTrackingArguments != null && cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.HasValue)
                 {
                     tenant = cargoTrackingDataBaseArgs.CargoTrackingArguments.Tenant.Value;
                 }

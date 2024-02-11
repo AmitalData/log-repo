@@ -44,7 +44,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                        Id = a.Id,
                                                        MainColor = a.MainColor,
                                                        SecondaryColor = a.SecondaryColor,
-                                                       TertiaryColor  =a.TertiaryColor,
+                                                       TertiaryColor=a.TertiaryColor,
                                                        BackgroundId = a.BackgroundId,
                                                        MobileBackgroundId = a.MobileBackgroundId,
                                                        ShipmentHeaderImageId = a.ShipmentHeaderImageId,
