@@ -209,7 +209,16 @@ export class ReconciliationExtendedPMService {
             catchError(ServiceHelper.HandleServiceError));
 
     }
-
+    CancelSelectedReco(selectedIds: string[]) {
+        return this.httpClient.post(this._apiUrl + '/CancelSelectedReco', { selectedIds }, ServiceHelper.GetHttpHeaders()).pipe(
+            map(res => {
+                debugger;
+                var serviceResponse: ServiceResponse = new ServiceResponse();
+                return serviceResponse;
+            }),
+            catchError(ServiceHelper.HandleServiceError)
+        );
+    }
     MapJsonToEntityPM(jsonPM: any, mapParent: boolean = true, entityPM: ReconciliationPM = null) {
 
 
