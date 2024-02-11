@@ -19,7 +19,7 @@
   LookUp2="&quot;LocalName&quot;"
   KeyPropertyPath="&quot;Code&quot;"
   AutoCompleteSearchWindow="false"
-  IsClosed="true"
+  IsClosed="false"
   CacheOnClient="false"
   EditableFromAutoCompleteWindow="false"
   HasCounter="false"
@@ -1041,13 +1041,40 @@
     <QueryFilters />
   </Query>
   <Screen
-    Name="&quot;Customs.CertificateOfOriginMandatoryFieldsHeaderScreen&quot;"
+    Name="&quot;CertificateOfOriginMandatoryFieldsGeneralTabScreen&quot;"
     ObjectTableName="&quot;Customs.CertificateOfOriginMandatoryFields&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    NumberOfColumns="2"
-    NumberOfRows="1">
-    <ScreenFields />
+    Code="&quot;MandatoryFields.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="5">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;Code&quot;"
+        ScreenName="CertificateOfOriginMandatoryFieldsGeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ScreenName="CertificateOfOriginMandatoryFieldsGeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="2"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ScreenName="CertificateOfOriginMandatoryFieldsGeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="3"
+        ObjectFieldName="&quot;MappedCertificateFields&quot;"
+        ScreenName="CertificateOfOriginMandatoryFieldsGeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="4"
+        ObjectFieldName="&quot;MappedCertificateFieldsName&quot;"
+        ScreenName="CertificateOfOriginMandatoryFieldsGeneralTabScreen" />
+    </ScreenFields>
   </Screen>
   <EventTypes>
     <EventType

@@ -151,6 +151,7 @@ export class CustomsClosedTablesListTemplate {
                     case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
                     case "Customs.InternalBorderSiteType":
+                    case "Customs.CertificateOfOriginMandatoryFields":
 
                     //case "Customs.InternationalSite":
                         listArgs.SuppressOnRowSelected = false;
