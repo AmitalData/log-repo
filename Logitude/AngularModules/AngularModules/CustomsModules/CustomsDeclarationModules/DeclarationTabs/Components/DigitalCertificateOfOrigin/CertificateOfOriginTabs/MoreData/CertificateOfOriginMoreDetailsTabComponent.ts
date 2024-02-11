@@ -7,6 +7,7 @@ import { DeclarationPM } from 'Customs/EntityPMs/DeclarationPM';
 import { CertificateOfOriginInvoicePM } from 'Customs/EntityPMs/CertificateOfOriginInvoicePM';
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { StatusCertificateOfOrigin } from '../../DigitalCertificateOfOriginTabComponent';
+import { CertificateOfOriginWebService } from 'Customs/Services/WebServices/CertificateOfOriginWebService';
 
 
 
@@ -28,17 +29,18 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
         super();
     }
 
-    InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin,IsDisplayOnly:boolean) {
+    InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
         this.entityPM = EntityPM;
         this.currentDeclaration = currentDeclaration;
         this.IsDisplayOnly = IsDisplayOnly;
         this.IsNewOrEdit = IsNewOrEdit;
-        this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true:false;
+        this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
         this.SetPropertiesEnabled();
+        this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
     }
 
     SetPropertiesEnabled() {
-     
+
         var enabled = !this.IsDisplayOnly;
         // Fields in the First table
         this.UIProperties.SetEnabled("IsCumulation", this.ObjectTableName, enabled);
@@ -76,9 +78,39 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
 
     }
 
-
-
-
+    mandatoryFielsList = [];
+    certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
+    SetWarningByCooTypeCode(CooTypeCode) {
+        this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
+            if (!myResponse.HasError) {
+                const certificateOfOriginMandatoryFieldsList = myResponse?.Result;
+                if (certificateOfOriginMandatoryFieldsList.length <= 0) return;
+                certificateOfOriginMandatoryFieldsList.forEach(item => {
+                    if (item.IsMandatory){
+                        this.mandatoryFielsList.push(item.MandatoryFieldName);
+                        this.UIProperties.SetWarning(item.MandatoryFieldName, this.ObjectTableName, true);
+                    }
+                });
+            }
+        });
+    }
+    
+    CheckMandatoryCustomsFields(ValidationErrors = []){
+        debugger
+        // check:
+        let someName="CityOfDeclaration"
+        let field = this.entityPM[someName];
+        if(!field){
+            ValidationErrors.push(someName);
+        }
+        this.mandatoryFielsList.forEach(item => {
+            if(item){
+                let field = this.entityPM[item];
+                if (!field)
+                    ValidationErrors.push(item);
+            }
+        }); 
+    }
     //#region properties
 
     public get IsCumulation(): boolean {
@@ -110,7 +142,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     public get IsDeclaredByExporter(): boolean {
-        if(!this.entityPM.IsDeclaredByExporter){
+        if (!this.entityPM.IsDeclaredByExporter) {
             this.entityPM.IsDeclaredByExporter = true;
         }
         return this.entityPM.IsDeclaredByExporter;
@@ -120,7 +152,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     public get IsDeclaredByManufacture(): boolean {
-        if(!this.entityPM.IsDeclaredByManufacture){
+        if (!this.entityPM.IsDeclaredByManufacture) {
             this.entityPM.IsDeclaredByManufacture = false;
         }
         return this.entityPM.IsDeclaredByManufacture;
@@ -130,7 +162,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     public get IsExportDecForPrint(): boolean {
-        if(!this.entityPM.IsExportDecForPrint){
+        if (!this.entityPM.IsExportDecForPrint) {
             this.entityPM.IsExportDecForPrint = false;
         }
         return this.entityPM.IsExportDecForPrint;
@@ -147,7 +179,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     public get IsConsigneeForPrint(): boolean {
-        if(!this.entityPM.IsConsigneeForPrint){
+        if (!this.entityPM.IsConsigneeForPrint) {
             this.entityPM.IsConsigneeForPrint = true;
         }
         return this.entityPM.IsConsigneeForPrint;

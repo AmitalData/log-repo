@@ -417,17 +417,14 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
         }
     }
   
-    public OpenNewAmendmentWithSend(id, declarationNumber, copy: boolean =false) {
-
-        if (id == null) id = this.EntityPM.Id;//  !AppTool.IsNullOrEmpty(this.EntityPM.AmendmentOriginalDeclartation) ? this.EntityPM.AmendmentOriginalDeclartation :  this.EntityPM.Id;
-        if (declarationNumber == null) declarationNumber = this.EntityPM.DeclarationNumber;
-
+    public OpenNewAmendmentWithSend() {
+        var id = this.EntityPM.Id;
         var searchParams: GenericRequestParams = new GenericRequestParams();
         searchParams.Tenant = SessionLocator.Tenant;
         searchParams.AppicationId = id;
         searchParams.LoggingEnabled = true;
         searchParams.LoggingEntityId = id;
-        searchParams.LoggingEntityReference = declarationNumber;
+        searchParams.LoggingEntityReference = this.EntityPM.DeclarationNumber;
         searchParams.LoggingObjectTableId =  this.ObjectTableName;
         searchParams.LoggingUserId = SessionLocator.LoggedUserId;
         if (this.EntityPM.Direction == "E")
@@ -448,12 +445,10 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
                     if (!response.HasError) {
                         var entity = response.Result;
                         if (entity != null) {
-                             //this.LoadDeclarationAmendmentsList();
                             setTimeout(() => {
                                 this.MenuHeaderchangeevent.emit({ Filters: this.filterAgrs, IgnoreFilter: false });
                             }, 10);
                             this.CurrentSession.StopBusyIndicator();
-                            
                             this.openNewDeclaration(entity.Id);
                         }
                     }

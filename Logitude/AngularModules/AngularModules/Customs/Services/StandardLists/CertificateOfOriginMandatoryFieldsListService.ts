@@ -33,19 +33,19 @@ export class CertificateOfOriginMandatoryFieldsListService {
     }
 
 	getSingle(code: string) {
-
+	   
 		var callTime = new Date();
 
 		return defer(() => {
 			return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
-				.pipe(
+				.pipe(			
 					map((response: HttpResponse<any>) => {
 
-						var list = response.body;                    
+						var list = response.body;                   
 						var entity: CertificateOfOriginMandatoryFieldsList;
 						if (list) {
 							entity = this.MapJsonToEntityList(list);
-						}
+						}   
 
 						var serviceResponse: ServiceResponse = new ServiceResponse(); 
 						serviceResponse.Result = entity;  
@@ -56,7 +56,7 @@ export class CertificateOfOriginMandatoryFieldsListService {
 
 						return serviceResponse;
 					}),
-					
+			
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
@@ -73,43 +73,43 @@ export class CertificateOfOriginMandatoryFieldsListService {
 						var allLists = response.body;
 						var _mappedListsArray: Array<CertificateOfOriginMandatoryFieldsList> = [];
 						if (allLists) {
-							for (var key in allLists) {			
+							for (var key in allLists) {				
 								var entity: CertificateOfOriginMandatoryFieldsList = this.MapJsonToEntityList(allLists[key]);
 								_mappedListsArray.push(entity);
 							}
 						}
 
 						var serviceResponse: ServiceResponse = new ServiceResponse(); 
-						serviceResponse.Result = _mappedListsArray;  
+						serviceResponse.Result = _mappedListsArray;
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CertificateOfOriginMandatoryFields", "GetAll", ""); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CertificateOfOriginMandatoryFields", "GetAllLists", ""); 
 
 						return serviceResponse;
 					}),
-
+			
 					catchError(ServiceHelper.HandleServiceError));
 		});
 	}
 	
 	getByFilters(filters: ApiQueryFilters) {
 
-		var callTime = new Date();       
+		var callTime = new Date();		                        
 		var urlparameters = '/getbyfilters?';
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
+		var mykeys = Object.keys(filters);
+		var addtionalFiltersValues = null;
 
-        for (var i in mykeys) {
+		for (var i in mykeys) {
 			var propName = mykeys[i];
 			var propValue = filters[propName];
 			var ignoreFilter = ((propName.indexOf("Operator") > 0 && propValue == "Equals") || propName == "AdditionalFilters");
 
             if (urlparameters != "?") {
-                urlparameters = urlparameters.concat('&');
+				urlparameters = urlparameters.concat('&');
             }
 
-			if (!ignoreFilter) {
+            if (!ignoreFilter) {
 				propValue = encodeURIComponent(propValue);
 				urlparameters = urlparameters.concat(propName.concat('=').concat(propValue));
 			}
@@ -119,9 +119,9 @@ export class CertificateOfOriginMandatoryFieldsListService {
 			}
         }
 
-        if (addtionalFiltersValues) {
-            urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
-        }
+		if (addtionalFiltersValues) {
+			urlparameters = urlparameters.concat("&AdditionalFilters=").concat(addtionalFiltersValues);
+		}
 
 		var callUrl = this._apiUrl.concat(urlparameters);
         		
@@ -140,138 +140,19 @@ export class CertificateOfOriginMandatoryFieldsListService {
 							}
 						}   
 
-						serviceResponse.Result = _mappedListsArray;      
+						serviceResponse.Result = _mappedListsArray;       
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CertificateOfOriginMandatoryFields", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 								            
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CertificateOfOriginMandatoryFields", "GetByFilters", "PageIndex:" +filters.PageIndex +", PageSize:"+filters.PageSize + ", GetAll:" + filters.GetAll);
+				           
 						return serviceResponse;
 					}),
-
+			
 					catchError(ServiceHelper.HandleServiceError));
-		});
+		});        
 	}
 
-	getSingleFromCache(code: string) {
-
-		var callTime = new Date(); 	    
-
-		if (!SessionLocator.UseCachedData) {
-            return this.getSingle(code);
-        }
-
-        var serviceResponse: ServiceResponse = new ServiceResponse();
-
-		if (CertificateOfOriginMandatoryFieldsListService.CachedData.length > 0) {
-			return defer(() => {
-				var filteredData = CertificateOfOriginMandatoryFieldsListService.CachedData.filter(a => a.Code === code)[0];
-				serviceResponse.CallTime = callTime;
-				serviceResponse.Result = filteredData; 
-                return of(serviceResponse);
-            });
-        }
-
-        else {
-            return CachedDataManager.GetClosedTableData("Customs.CertificateOfOriginMandatoryFields").pipe(
-				map((cachedJson:any) => {
-
-					var _mappedListsArray: Array<CertificateOfOriginMandatoryFieldsList> = [];
-
-					if (cachedJson) {
-						for (var key in cachedJson) {
-							var entity: CertificateOfOriginMandatoryFieldsList = this.MapJsonToEntityList(cachedJson[key]);
-							_mappedListsArray.push(entity);
-						}
-					}
-
-					CertificateOfOriginMandatoryFieldsListService.CachedData = _mappedListsArray;
-
-					var filteredData = CertificateOfOriginMandatoryFieldsListService.CachedData.filter(a => a.Code === code)[0];
-					serviceResponse.Result = filteredData; 
-					serviceResponse.CallTime = callTime;
-			     
-					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CertificateOfOriginMandatoryFields", "GetSingleListFromCache", 'code=' + code); 
-
-					return serviceResponse;
-				}),
-
-				catchError(ServiceHelper.HandleServiceError));
-        }
-    }
-
-    getAllFromCache(filters: ApiQueryFilters= new ApiQueryFilters(true)) {
-
-		var callTime = new Date();
-
-		if (!SessionLocator.UseCachedData) {
-			return this.getByFilters(filters);
-        }
-
-        var mykeys = Object.keys(filters);
-        var addtionalFiltersValues = null;
-
-        for (var i in mykeys) {
-            var propName = mykeys[i];
-            var propValue = filters[propName];
-
-            if (propName == "AdditionalFilters" && propValue.length > 0) {
-                addtionalFiltersValues = JSON.stringify(propValue);
-			}
-        }
-
-        var serviceResponse: ServiceResponse = new ServiceResponse();
-
-        if (CertificateOfOriginMandatoryFieldsListService.CachedData.length > 0) {
-            return defer(() => {
-                if (filters.GetAll) {
-					serviceResponse.Result = CertificateOfOriginMandatoryFieldsListService.CachedData; 
-				}
-
-				else {
-					var filteredData = InfraGenericFilter.GetFilteredArray(CertificateOfOriginMandatoryFieldsListService.CachedData, filters);
-					serviceResponse.Result = filteredData; 
-					serviceResponse.CallTime = callTime;
-				}
-
-                return of(serviceResponse);
-            });
-        }
-
-        else {
-            return CachedDataManager.GetClosedTableData("Customs.CertificateOfOriginMandatoryFields").pipe(
-				map((cachedJson:any) => {
-
-					var _mappedListsArray: Array<CertificateOfOriginMandatoryFieldsList> = [];
-					if (cachedJson) {
-						for (var key in cachedJson) {
-							var entity: CertificateOfOriginMandatoryFieldsList = this.MapJsonToEntityList(cachedJson[key]);
-							_mappedListsArray.push(entity);
-						}
-					}
-
-					CertificateOfOriginMandatoryFieldsListService.CachedData = _mappedListsArray;
-
-					if (filters.GetAll) {
-						serviceResponse.Result = _mappedListsArray; 
-					}
-
-					else {
-
-						_mappedListsArray = InfraGenericFilter.GetFilteredArray(_mappedListsArray, filters);
-
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CertificateOfOriginMandatoryFields", "GetAllFromCache", "PageIndex:" + filters.PageIndex + ", PageSize:" + filters.PageSize + ", GetAll:" + filters.GetAll); 
-                 	
-						serviceResponse.Result = _mappedListsArray; 
-						serviceResponse.CallTime = callTime;
-					}
-
-					return serviceResponse;
-				}),
-			
-				catchError(ServiceHelper.HandleServiceError));
-        }		 
-    }
 	
 	    MapJsonToEntityList(jsonList: any) {
        

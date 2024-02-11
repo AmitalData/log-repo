@@ -95,8 +95,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         this.SetPropertiesEnabled();
         this.SetWarning();
-        debugger
-        // this.SetWarningByCooTypeCode(EntityPM.CooTypeCode);
+        this.SetWarningByCooTypeCode(EntityPM.CooTypeCode);
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
     }
 
@@ -175,7 +174,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     InitilizeListsFromCertificateOfOrigin(EntityPM: CertificateOfOriginPM) {
         this.CertificateOriginInvoiceItems.Clear();
         this.CertificateOriginItemItems.Clear();
-        
+
         // update CertificateOriginInvoice list:
         EntityPM.CertificateOriginInvoiceItems.forEach((item) => {
             this.CertificateOriginInvoiceItems.Insert(new CertificateOfOriginInvoiceLine(item, this));
@@ -190,7 +189,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         });
     }
 
-    updateEntity(EntityPM: CertificateOfOriginPM){
+    updateEntity(EntityPM: CertificateOfOriginPM) {
         this.entityPM = EntityPM;
         this.InitilizeListsFromCertificateOfOrigin(EntityPM);
     }
@@ -225,13 +224,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             if (!myResponse.HasError) {
                 var result: OriginCriterionList = myResponse.Result;
                 if (result != null) {
-                    if(isInitField && item)
+                    if (isInitField && item)
                         item.OriginCriterionCodeName = result.OriginCriterionCode;
                 }
             }
             // filter data:
             this.CriterionTypesFilterItems = new ApiQueryFilters();
-            this.CriterionTypesFilterItems.addAdditionalFilter("CertificateOfOriginTypeCodeID",this.entityPM.CooTypeCode, null, null, "Equals", false, false, false, "number");
+            this.CriterionTypesFilterItems.addAdditionalFilter("CertificateOfOriginTypeCodeID", this.entityPM.CooTypeCode, null, null, "Equals", false, false, false, "number");
         });
     }
     SetPropertiesEnabled() {
@@ -263,15 +262,20 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.UIProperties.SetWarning("RequestReasonCode", this.ObjectTableName, true);
     }
 
+    mandatoryFielsList = [];
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     SetWarningByCooTypeCode(CooTypeCode) {
-
         this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
             if (!myResponse.HasError) {
-                const certificateOfOriginMandatoryFieldsList = myResponse.Result;
-                certificateOfOriginMandatoryFieldsList.foreach(item =>{
-
-                    this.UIProperties.SetWarning(item.MappedCertificateFieldsName, this.ObjectTableName, true);
+                // this.UIProperties.SetWarning("OriginCountry", this.ObjectTableName, true);
+                debugger
+                const certificateOfOriginMandatoryFieldsList = myResponse?.Result;
+                if (certificateOfOriginMandatoryFieldsList.length <= 0) return;
+                certificateOfOriginMandatoryFieldsList.forEach(item => {
+                    if (item.IsMandatory) {
+                        this.mandatoryFielsList.push(item.MandatoryFieldName)
+                        this.UIProperties.SetWarning(item.MandatoryFieldName, this.ObjectTableName, true);// CHANGE TO MandatoryFieldName
+                    }
 
                 });
             }
@@ -388,7 +392,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     SetLocalName(entity, fieldName, item) {
         if (!AppTool.IsNullOrEmpty(entity)) {
-            if(fieldName == "OriginCriterionCodeName"){
+            if (fieldName == "OriginCriterionCodeName") {
                 this.CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.OriginCriterionCode;
                 return;
             }
@@ -416,6 +420,24 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             this.ErrorsList = [];
         }
     }
+
+    CheckMandatoryCustomsFields(ValidationErrors = []) {
+        debugger
+        // check:
+        let someName = "OriginCountry"
+        let field = this.entityPM[someName];
+        if (!field) {
+            ValidationErrors.push(someName);
+        }
+        this.mandatoryFielsList.forEach(item => {
+            if(item){
+                let field = this.entityPM[item];
+                if (!field)
+                    ValidationErrors.push(item);
+            }
+        });
+    }
+
 
     //#region  CertificateOfOrigin properties
     public get Id(): string {
@@ -450,17 +472,16 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         return this.entityPM.CooTypeCode;
     }
     public set CooTypeCode(newValue: string) {
-        
+
         this.entityPM.CooTypeCode = newValue;
         if (this.ErrorsList?.length > 0 || this.IsNewOrEdit === StatusCertificateOfOrigin.IsEdit) {
             this.CheckMandatoryFields();
         }
-        if(this.entityPM.CooTypeCode){
-            this.entityPM.CertificateOriginItemItems.forEach(item=>{
+        if (this.entityPM.CooTypeCode) {
+            this.entityPM.CertificateOriginItemItems.forEach(item => {
                 this.getOriginCriterionCodeNameFromCache(item.OriginCriterionCode, false, item);
             });
-            debugger
-            // this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
+            this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
         }
     }
 
