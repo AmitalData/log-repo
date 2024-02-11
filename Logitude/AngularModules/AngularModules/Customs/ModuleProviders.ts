@@ -282,6 +282,7 @@ import { CustomsDocumentsTicketPMService } from './Services/StandardPMs/CustomsD
 import { CustomsExchangeRatePMService } from './Services/StandardPMs/CustomsExchangeRatePMService';
 import { CustomsHouseTypeAdditionalPMService } from './Services/StandardPMs/CustomsHouseTypeAdditionalPMService';
 import { InternalBorderSiteTypePMService } from './Services/StandardPMs/InternalBorderSiteTypePMService';
+import { CertificateOfOriginMandatoryFieldsPMService } from './Services/StandardPMs/CertificateOfOriginMandatoryFieldsPMService';
 import { CustomsHouseTypePMService } from './Services/StandardPMs/CustomsHouseTypePMService';
 import { CustomsItemPMService } from './Services/StandardPMs/CustomsItemPMService';
 import { CustomsPartnersItemPMService } from './Services/StandardPMs/CustomsPartnersItemPMService';
@@ -833,6 +834,7 @@ export class ModuleProviders {
             case "CustomsHouseTypeAdditionalPMService": { myResult = new CustomsHouseTypeAdditionalPMService(); break; }
             case "CustomsHouseTypePMService": { myResult = new CustomsHouseTypePMService(); break; }
             case "InternalBorderSiteTypePMService": { myResult = new InternalBorderSiteTypePMService(); break; }
+            case "CertificateOfOriginMandatoryFieldsPMService": { myResult = new CertificateOfOriginMandatoryFieldsPMService(); break; }
             case "CustomsItemPMService": { myResult = new CustomsItemPMService(); break; }
             case "CustomsPartnersItemPMService": { myResult = new CustomsPartnersItemPMService(); break; }
             case "CustomsRequestsSheetPMService": { myResult = new CustomsRequestsSheetPMService(); break; }
