@@ -7,6 +7,7 @@ import { GLAccountPM } from '../../../EntityPMs/GLAccountPM';
 import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
 import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
+import { ReconcileEventManager } from '../../../Utilities/ReconcileEventManager';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { MessageWindow } from '../../../../Controls/Windows/MessageWindow';
 import { LogitudeGridExportToExcelComponent } from 'Common/Components/LogitudeGridExportToExcel/LogitudeGridExportToExcelComponent';
@@ -57,6 +58,8 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
 
         this.LoadGridData();
 
+        ReconcileEventManager.SetGLAccountReconcileMethodCode(this.glaccountPM.ReconcileMethodCode);
+
         this.UIProperties.SetEnabled("CurrencyId", "GLAccount", this.glaccountPM.IsMultiCurrency);
 
         this.ListenEvents();
@@ -89,7 +92,7 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
             var _CurrentEditComponentId = this.CurrentSession.CurrentEditComponent.ComponentId;
             this.CurrentSession.CurrentEditComponent.SubscriptionAdd(
                 this.CurrentSession.CurrentEditComponent.TabSelected.subscribe((tabCode: string) =>
-                {
+                { 
                     if (_CurrentEditComponentId == this.CurrentSession.CurrentEditComponent.ComponentId) {
                         if (tabCode == InterestTransactionCode) {
                             this.LoadGridData();
@@ -103,15 +106,15 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
     GetInterestReports(){
 
         var filters = new ApiQueryFilters();
-		filters.PageIndex = 0;
-		filters.PageSize = maxInterestReportsFilterCount;
-		filters.SortBy = "CreateDateTime";
-		filters.SortDirection = "Descending";
+        filters.PageIndex = 0;
+        filters.PageSize = maxInterestReportsFilterCount;
+        filters.SortBy = "CreateDateTime";
+        filters.SortDirection = "Descending";
 
         const statusFilter = [InterestReportStatus.Invoiced , InterestReportStatus.ClosedwithoutInvoice].join(',');
 
-		filters.addAdditionalFilter("InterestReportStatusCode", statusFilter, null, null, "InList", false, false, false, "string");
-		filters.addAdditionalFilter("GLAccountId", this.glaccountPM.Id, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("InterestReportStatusCode", statusFilter, null, null, "InList", false, false, false, "string");
+        filters.addAdditionalFilter("GLAccountId", this.glaccountPM.Id, null, null, "Equals", false, false, false, "string");
 
 
         this.interestReportService.getByFilters(filters)
@@ -237,14 +240,14 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
         this.QueryColumns.push(this.excelService.GetQueryColumn("LocalAmount", 'Number', TextCodeTranslator.Translate("InterestTransaction.F.LocalAmount")));
 
         this.columns.push({
-           FieldName: 'CurrencyCode',
-           DataTypeCode: 'String',
-           Display: TextCodeTranslator.Translate("InterestTransaction.F.CurrencyCode"),
-           Styles: { width: '100px' },
-           HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
-           HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
-           IsCustomTemplate: true,
-           ServerSideSortable: true
+            FieldName: 'CurrencyCode',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("InterestTransaction.F.CurrencyCode"),
+            Styles: { width: '100px' },
+            HtmlListComponentName: 'GlAccountInterestTransactionsListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/GlAccountInterestTransactionsListTemplate',
+            IsCustomTemplate: true,
+            ServerSideSortable: true
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("CurrencyCode", 'Text', TextCodeTranslator.Translate("InterestTransaction.F.CurrencyCode")));
 
@@ -324,7 +327,7 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
         });
         this.QueryColumns.push(this.excelService.GetQueryColumn("Notes", 'string', TextCodeTranslator.Translate("InterestTransaction.F.Notes")));
 
-        
+
 
 
     }
@@ -376,7 +379,7 @@ export class GLAccountInterestTransactionsComponent extends BaseComponent implem
 
         if(this.SelectedInterestReport && this.SelectedInterestReport.ReportNumber == 'None')
             this.filterAgrs.addAdditionalFilter("InterestReportId", "Please Don't Erase Me", null, null, "IsNull", true, false, false, "string");
-            else if(this.SelectedInterestReport && this.SelectedInterestReport.ReportNumber != 'None')
+        else if(this.SelectedInterestReport && this.SelectedInterestReport.ReportNumber != 'None')
             this.filterAgrs.addAdditionalFilter("InterestReportId", this.SelectedInterestReport.Id, null, null, "Equals", false, false, false, "string");
 
         this.filterAgrs.addAdditionalFilter("GLAccountId", this.glaccountPM.Id, null, null, "Equals", false, false, false, "string");

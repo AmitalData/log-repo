@@ -389,15 +389,15 @@ class TransactionLineModel extends BaseComponent {
         //
         // [i] copied from list template
         //
-
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.ReconcileMethodCode)) {
+        let gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
+        if (!AppTool.IsNullOrEmpty(gLAccountReconcileMethodCode)) {
             // this code was copied to reconcile window, if it need change, please chenge it in reconcile window too
-            if (this.EntityPM.ReconcileMethodCode == "0") { // 0-local currency
+            if (gLAccountReconcileMethodCode == "0") { // 0-local currency
 
                 // local
                 return SessionLocator.TenantPM.CurrencySign;
 
-            } else if (this.EntityPM.ReconcileMethodCode == "1") { // 1-foreign currency
+            } else if (gLAccountReconcileMethodCode == "1") { // 1-foreign currency
 
                 // foreign
                 return this.ledgerTransaction.CurrencySign;

@@ -1,13 +1,21 @@
-﻿import {OnInit, Output, EventEmitter} from '@angular/core';
-import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
+import {OnInit, Output, EventEmitter} from '@angular/core';
+import { SessionLocator } from 'Infrastructure/Utilities/SessionLocator';
 export class ReconcileEventManager {
-     CheckBoxChecked: EventEmitter<any> = new EventEmitter(); // for ledger transactions
-     ExtPageCheckBoxChecked: EventEmitter<any> = new EventEmitter(); // for bank account page lines
-     RowUnselected: EventEmitter<any> = new EventEmitter();
-     GLAccountReconcileMethodCode: string;
-     ManageReconciliationCheckBoxChecked: EventEmitter<any> = new EventEmitter(); // for Manage Reconciliation
-     SupperssOnRowSelectedAction: boolean = false; // for Manage Reconciliation
-     _SelectedItems: ObservableCollection = new ObservableCollection([]); // for Manage Reconciliation
-     IsAllSelected:boolean=false; // for Manage Reconciliation
-     UnAllSelected:boolean=false; // for Manage Reconciliation
+    static CheckBoxChecked: EventEmitter<EventParams> = new EventEmitter(); // for ledger transactions
+    static ExtPageCheckBoxChecked: EventEmitter<EventParams> = new EventEmitter(); // for bank account page lines
+    static RowUnselected: EventEmitter<EventParams> = new EventEmitter();
+    
+    private static GLAccountReconcileMethodCode: Map<number,string>=new Map<number,string>();
+    static SetGLAccountReconcileMethodCode(val){
+        this.GLAccountReconcileMethodCode.set(SessionLocator.SelectedSession.SessionIndex, val);
+    }
+    static GetGLAccountReconcileMethodCode(){
+        var val=this.GLAccountReconcileMethodCode.get(SessionLocator.SelectedSession.SessionIndex);
+        return val;
+    }
+}
+
+export class EventParams {
+    SendSessionIndex:number = SessionLocator.SelectedSession.SessionIndex;
+    Params:any;
 }

@@ -1,6 +1,6 @@
 import { AccountingEntityHelper } from './../../Utilities/AccountingEntityHelper';
 import { SessionLocator } from './../../../Infrastructure/Utilities/SessionLocator';
-import { Component, ChangeDetectorRef, AfterViewInit,OnInit } from '@angular/core';
+import { Component, ChangeDetectorRef, AfterViewInit, OnInit } from '@angular/core';
 import { AppTool } from '../../../Infrastructure/Tools';
 import { InterestReportEventManager } from '../../Utilities/InterestReportEventManager';
 
@@ -13,60 +13,61 @@ import { TextCodeTranslator } from '../../../Infrastructure/Utilities/TextCodeTr
 })
 
 
-export class InterestReportListTemplate     {
+export class InterestReportListTemplate {
 
-    public rowData: any;
-    public fieldName: any;
-    public AdditionalData: any;
+  public rowData: any;
+  public fieldName: any;
+  public AdditionalData: any;
 
 
-   public isRTL: boolean = false;
-    public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
-    private CurrentSession = SessionLocator.SelectedSession;
-    constructor(private CD: ChangeDetectorRef) {
-      if (ObjectsLocator.GlobalSetting)
-        this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
-         this.Listen();
+  public isRTL: boolean = false;
+  public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
+  private CurrentSession = SessionLocator.SelectedSession;
+  constructor(private CD: ChangeDetectorRef) {
+    if (ObjectsLocator.GlobalSetting)
+      this.isRTL = ObjectsLocator.GlobalSetting.LayoutDirection == "rtl";
+    this.Listen();
   }
 
   Listen() {
 
     InterestReportEventManager.SelectAllEvent.subscribe(($event) => {
-     // this.IsChecked = $event;
+      if (!AppTool.IsNullOrEmpty($event)) {
+        if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
+          return;
+      }
     });
+  }
 
-   // this.IsChecked = InterestReportEventManager.AllSelected;
-  }
-   
-    setVariables(rowData: any, fieldName: string, AdditionalData:any) {
-        this.rowData = rowData;
-        this.fieldName = fieldName;
-      this.AdditionalData = AdditionalData; 
-      var isDestroyed: boolean = this.CD["destroyed"];
-        if (!isDestroyed) {
-            this.CD.detectChanges();
-        }
-  }
-  
-    CheckBoxClicked(checked: boolean) {
-       
-          this.CurrentSession.InterestReportCheckBoxCheckedEvent.emit({
-             line: this.rowData,
-              isChecked: checked,
-            RowIndex: this.AdditionalData.rowIndex
-        
-        });
+  setVariables(rowData: any, fieldName: string, AdditionalData: any) {
+    this.rowData = rowData;
+    this.fieldName = fieldName;
+    this.AdditionalData = AdditionalData;
+    var isDestroyed: boolean = this.CD["destroyed"];
+    if (!isDestroyed) {
+      this.CD.detectChanges();
     }
+  }
+
+  CheckBoxClicked(checked: boolean) {
+
+    this.CurrentSession.InterestReportCheckBoxCheckedEvent.emit({
+      line: this.rowData,
+      isChecked: checked,
+      RowIndex: this.AdditionalData.rowIndex
+
+    });
+  }
 
   OpenInterestReport(id) {
-        if (!AppTool.IsNullOrEmpty(id)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef => {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'InterestReport' });
-                    cmpRef.instance.BackCompleted.subscribe(bk => {
-                    });
-                });
-        }
+    if (!AppTool.IsNullOrEmpty(id)) {
+      SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
+        .then(cmpRef => {
+          cmpRef.instance.ComponentRef = cmpRef;
+          cmpRef.instance.Run({ EntityId: id, ObjectTableName: 'InterestReport' });
+          cmpRef.instance.BackCompleted.subscribe(bk => {
+          });
+        });
     }
+  }
 }

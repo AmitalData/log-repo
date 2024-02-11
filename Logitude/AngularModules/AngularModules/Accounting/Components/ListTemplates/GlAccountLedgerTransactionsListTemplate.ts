@@ -8,7 +8,7 @@ import { JournalExtendedListService } from '../../Services/ExtendedLists/Journal
 import { ARPaymentExtendedListService } from '../../../Invoice/Services/ExtendedLists/ARPaymentExtendedListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
+import { ReconcileEventManager, EventParams } from '../../Utilities/ReconcileEventManager';
 
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 import { ListComponentArgs } from 'Infrastructure/Args';
@@ -48,7 +48,6 @@ export class GlAccountLedgerTransactionsListTemplate {
     public showLocal: boolean = !SessionLocator.LoggedUserPM.DontShowLocal;
     private CurrentSession = SessionLocator.SelectedSession;
     IsMultiWithReconcileMethodCodeEqualOne: boolean = false;
-    reconcileEventManager:ReconcileEventManager;
     constructor(private CD: ChangeDetectorRef,) {
         this.TenantCurrencySign = SessionLocator.TenantPM.CurrencySign;
         this.Listen();
@@ -81,7 +80,6 @@ export class GlAccountLedgerTransactionsListTemplate {
         }
         this.fieldName = fieldName;
         this.AdditionalData = MyAdditionalData;
-        this.reconcileEventManager = this.AdditionalData?.GridAdditionalData?.ReconcileEventManager;
         this.ChartOfAccountsTypeCode = MyAdditionalData;
         //#region Set Icons
 
@@ -188,11 +186,13 @@ export class GlAccountLedgerTransactionsListTemplate {
         //this.rowData['IsChecked'] = checked;
 
         if (this.IsCheckBoxEnabled) {
-            this.reconcileEventManager.CheckBoxChecked.emit({
+            var reconcileEventParams=new EventParams();
+            reconcileEventParams.Params={
                 line: this.rowData,
                 isChecked: checked,
                 RowIndex: this.AdditionalData.rowIndex
-            });
+            };
+            ReconcileEventManager.CheckBoxChecked.emit(reconcileEventParams);
         }
         //ReconcileEventManager.RowUnselected.subscribe(($event) => {
         //    this.rowData = ro
@@ -200,6 +200,7 @@ export class GlAccountLedgerTransactionsListTemplate {
     }
 
     CalculateOriginalAmount() {
+        let gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
         if (
             !AppTool.IsNullOrEmpty(
                 this.rowData["ReconcileMethodCode"]
@@ -225,11 +226,9 @@ export class GlAccountLedgerTransactionsListTemplate {
                 }
             }
         } else if (
-            !AppTool.IsNullOrEmpty(
-                this.reconcileEventManager.GLAccountReconcileMethodCode
-            )
-        ) {
-            if (this.reconcileEventManager.GLAccountReconcileMethodCode == "0") {
+            
+            !AppTool.IsNullOrEmpty(gLAccountReconcileMethodCode)) {
+            if (gLAccountReconcileMethodCode == "0") {
                 // 0-local currency
 
                 if (this.rowData["LocalAmountCredit"] == 0) {
@@ -237,9 +236,7 @@ export class GlAccountLedgerTransactionsListTemplate {
                 } else {
                     return this.rowData["LocalAmountCredit"]; // -1 *
                 }
-            } else if (
-                this.reconcileEventManager.GLAccountReconcileMethodCode == "1"
-            ) {
+            } else if (gLAccountReconcileMethodCode == "1") {
                 // 1-foreign currency
 
                 if (this.rowData["ForeignAmountCredit"] == 0) {
@@ -252,20 +249,18 @@ export class GlAccountLedgerTransactionsListTemplate {
     }
 
     CalculatOriginalCurruncy() {
+        let gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
+
         if (
-            !AppTool.IsNullOrEmpty(
-                this.reconcileEventManager.GLAccountReconcileMethodCode
-            )
+            !AppTool.IsNullOrEmpty(gLAccountReconcileMethodCode)
         ) {
             // this code was copied to reconcile window, if it need change, please chenge it in reconcile window too
-            if (this.reconcileEventManager.GLAccountReconcileMethodCode == "0") {
+            if (gLAccountReconcileMethodCode == "0") {
                 // 0-local currency
 
                 // local
                 return SessionLocator.TenantPM.CurrencySign;
-            } else if (
-                this.reconcileEventManager.GLAccountReconcileMethodCode == "1"
-            ) {
+            } else if (gLAccountReconcileMethodCode == "1") {
                 // 1-foreign currency
 
                 // foreign

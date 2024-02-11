@@ -1,7 +1,5 @@
-import {  EventEmitter } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { EventParams } from './ReconcileEventManager';
 export class AccountingEventManager {
-
-
-  static CustomerChangedEvent: EventEmitter<any> = new EventEmitter();
-    
+  static CustomerChangedEvent: EventEmitter<EventParams> = new EventEmitter();
 }

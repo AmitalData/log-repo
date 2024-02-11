@@ -21,6 +21,7 @@ import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { GLAccountExtendedListService } from '../../../Services/ExtendedLists/GLAccountExtendedListService';
 import { LedgerTransactionExtendedListService } from '../../../Services/ExtendedLists/LedgerTransactionExtendedListService';
+import { ReconcileEventManager } from '../../../Utilities/ReconcileEventManager';
 import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { AgingReportParameters } from '../../../DataContracts/AgingReportParameters';
@@ -55,7 +56,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
     public CreditLimitAmount: number = 0;
     public InsuredCreditLimit: number = 0;
     public gLAccountFollowUpDataPM: GLAccountFollowUpDataPM;
-    
+
     //Services
     _GLAccountExtendedPMService: GLAccountExtendedPMService = new GLAccountExtendedPMService();
     _EntityResourceService: EntityResourceService = new EntityResourceService();
@@ -662,9 +663,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     CalculateOriginalAmount(transaction) {
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.ReconcileMethodCode)) {
+        var gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
+        if (!AppTool.IsNullOrEmpty(gLAccountReconcileMethodCode)) {
 
-            if (this.EntityPM.ReconcileMethodCode == "0") { // 0-local currency
+            if (gLAccountReconcileMethodCode == "0") { // 0-local currency
 
                 if (transaction['LocalAmountCredit'] == 0) {
                     return transaction['LocalAmountDebit'];
@@ -672,7 +674,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
                     return -1 * transaction['LocalAmountCredit'];
                 }
 
-            } else if (this.EntityPM.ReconcileMethodCode == "1") { // 1-foreign currency
+            } else if (gLAccountReconcileMethodCode == "1") { // 1-foreign currency
 
                 if (transaction['ForeignAmountCredit'] == 0) {
                     return transaction['ForeignAmountDebit'];
