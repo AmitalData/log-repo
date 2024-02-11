@@ -5520,6 +5520,24 @@
       LocalDefaultText="&quot;חובה לבחור ישות תביעה&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Claim.O.MissingClaimExplanation&quot;"
+      DefaultText="&quot;Missing Claim Explanation&quot;"
+      LocalDefaultText="&quot;מהות התביעה חסרה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Claim.O.MissingClaimEntityNumber&quot;"
+      DefaultText="&quot;Missing Claim Entity Number&quot;"
+      LocalDefaultText="&quot;מספר ישות חסר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.Claim.O.NotFoundCustomFileNo&quot;"
+      DefaultText="&quot;Not Found Custom File No&quot;"
+      LocalDefaultText="&quot;תיק עמילות לא קיים&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures />
 </entity>

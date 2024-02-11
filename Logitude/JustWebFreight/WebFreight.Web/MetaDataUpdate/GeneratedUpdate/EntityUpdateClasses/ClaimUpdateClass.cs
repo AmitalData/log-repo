@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimUpdateClass
    {  		
-		public const string HashString = "47148b358bb026d27f4292b686ac83a0";
-
+		public const string HashString = "0a1810968aea266742ba528498411e5d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4431,6 +4430,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
  		   TextCode ClaimTextCode_CustomsClaimOClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.Claim", DefaultText = "Claim",LocalDefaultText = @"תביעה", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode ClaimTextCode_CustomsClaimOMustChooseClaim = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.MustChooseClaim", DefaultText = "Must choose claim",LocalDefaultText = @"חובה לבחור ישות תביעה", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClaimTextCode_CustomsClaimOMissingClaimExplanation = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.MissingClaimExplanation", DefaultText = "Missing Claim Explanation",LocalDefaultText = @"מהות התביעה חסרה", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClaimTextCode_CustomsClaimOMissingClaimEntityNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.MissingClaimEntityNumber", DefaultText = "Missing Claim Entity Number",LocalDefaultText = @"מספר ישות חסר", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ClaimTextCode_CustomsClaimONotFoundCustomFileNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.NotFoundCustomFileNo", DefaultText = "Not Found Custom File No",LocalDefaultText = @"תיק עמילות לא קיים", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    

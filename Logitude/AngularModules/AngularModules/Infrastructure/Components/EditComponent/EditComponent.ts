@@ -1494,6 +1494,9 @@ export class EditComponent implements OnDestroy, AfterViewInit {
     SaveChanges(busyIndicatorText: string = null) {
 
         if (this.EntityPM.IsDirty) {
+            if (this.ObjectTableName == "Customs.Claim") {
+                this.ValidateClaim();
+            }
             if (this.IsEditValid) {
                 this.SaveEntityChanges(false, busyIndicatorText);
             }
@@ -2177,6 +2180,21 @@ export class EditComponent implements OnDestroy, AfterViewInit {
         }
     }
 
+    ValidateClaim() {
+        this.IsEditValid = true;
+        this.ValidationErrorsList = [];
+
+        this.EntityPM.ClaimsRelatedEntities.forEach(entity => {
+            if (AppTool.IsNullOrEmpty(entity.ClaimExplanation)) {
+                this.IsEditValid = false;
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Claim.O.MissingClaimExplanation"));
+            }
+            if (AppTool.IsNullOrEmpty(entity.ClaimEntityNumber)) {
+                this.IsEditValid = false;
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("Customs.Claim.O.MissingClaimEntityNumber"));
+            }
+        });
+    }
 }
 
 class HeaderScreenColumn {
