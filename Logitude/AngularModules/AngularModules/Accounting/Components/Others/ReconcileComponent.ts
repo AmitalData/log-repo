@@ -319,13 +319,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
             this.windowArgs = args;
 
             this.GLAccountPM = args.GLAccountPM;
-            ReconcileEventManager.GLAccountReconcileMethodCode = this.GLAccountPM.ReconcileMethodCode;
+            ReconcileEventManager.SetGLAccountReconcileMethodCode(this.GLAccountPM.ReconcileMethodCode);
+
             if (!AppTool.IsNullOrEmpty(args.IsMultiWithReconcileMethodCodeEqualOne)) {
                 this.IsMultiWithReconcileMethodCodeEqualOne = args.IsMultiWithReconcileMethodCodeEqualOne;
                 this.ValidationErrorsList.push(TextCodeTranslator.Translate("Reconciliation.O.WarningMultiRecoOne"));
                 this.IsCheckBoxEnabled = false;
                 this.GetTransactionsCurrencies();
-                GLAccountSecurityLevelService.IsCheckBoxEnabledParameter=false;
+                GLAccountSecurityLevelService.IsCheckBoxEnabledParameter = false;
             }
             if (!AppTool.IsNullOrEmpty(this.GLAccountPM.CurrencyId)) {
                 this.CurrencyId = this.GLAccountPM.CurrencyId;
@@ -1104,7 +1105,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
     }
 
-    onRowSelected($event) { 
+    onRowSelected($event) {
         if ($event && GLAccountSecurityLevelService.IsMultiWithReconcileMethodCodeEqualOneParameter && GLAccountSecurityLevelService.IsCheckBoxEnabledParameter) {
             const row = $event.rowData;
             const rowId = row.Id;
@@ -1363,11 +1364,14 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
 
         ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
-                var row = $event.line;
-                var rowId = $event.line.Id;
-                var RowIndex = $event.RowIndex;
-                var isChecked = $event.isChecked;
-                var oneTime = $event.oneTime;
+                if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
+                    return;
+                var params = $event.Params;
+                var row = params.line;
+                var rowId = params.line.Id;
+                var RowIndex = params.RowIndex;
+                var isChecked = params.isChecked;
+                var oneTime = params.oneTime;
                 console.log("---->> Row Selected: ", rowId, row, isChecked);
 
                 if (isChecked) {
