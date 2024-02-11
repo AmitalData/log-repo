@@ -17170,7 +17170,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;ARInvoice&quot;"
-    FieldsDataType="&quot;Boolean&quot;"
+    FieldsDataType="&quot;Text&quot;"
     MinLength="1"
     MaxLength="3"
     IsRequired="false"
@@ -17214,7 +17214,7 @@
     ListLableDefaultText="&quot;Is Signed&quot;"
     ListLocalDefaultText="&quot;קוד סטטוס חתימה&quot;"
     IsNullable="true"
-    IsForeignKey="false"
+    IsForeignKey="true"
     ForeignEntity="&quot;ARInvoicesSignedStatus&quot;"
     DontBuildRelationOnDB="false"
     NavigationPropertyName="&quot;ARInvoicesSignedStatus&quot;"
@@ -17536,10 +17536,6 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
-  <Query
-    Code="&quot;Draft General Invoices&quot;"
-    TextCode="&quot;Draft Invoices&quot;"
-    LocalTextCode="&quot;חשבוניות בסטטוס טיוטה&quot;"
   <field
     Id="&quot;c3cb27ce-c416-4e1e-9288-0a40981ee4fd&quot;"
     FieldName="&quot;ConfirmationNumber&quot;"
@@ -17568,6 +17564,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ConfirmationNumber&quot;"
     ListPropertyPath="&quot;ConfirmationNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -17615,9 +17612,9 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
-    Code="&quot;All Invoices&quot;"
-    TextCode="&quot;All Invoices&quot;"
-    LocalTextCode="&quot;כל החשבוניות&quot;"
+    Code="&quot;Draft General Invoices&quot;"
+    TextCode="&quot;Draft Invoices&quot;"
+    LocalTextCode="&quot;חשבוניות בסטטוס טיוטה&quot;"
     QueryGroupCode="&quot;INVC&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;ARInvoice&quot;"
