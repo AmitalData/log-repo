@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginMandatoryFieldsUpdateClass
    {  		
-		public const string HashString = "3db7731e457bf4b3afaa44336ce2beed";
+		public const string HashString = "82c8a04d480db07177f7bc8b54e42bc3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -967,10 +967,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen CertificateOfOriginMandatoryFieldsCustomsCertificateOfOriginMandatoryFieldsHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CertificateOfOriginMandatoryFields.HeaderScreen", Name = "Customs.CertificateOfOriginMandatoryFieldsHeaderScreen", ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
-		    CertificateOfOriginMandatoryFieldsObjectTable.HeaderScreenId = CertificateOfOriginMandatoryFieldsCustomsCertificateOfOriginMandatoryFieldsHeaderScreenScreen0.Id;
-		    CertificateOfOriginMandatoryFieldsObjectTable.HeaderScreenCode = CertificateOfOriginMandatoryFieldsCustomsCertificateOfOriginMandatoryFieldsHeaderScreenScreen0.Code;
+	         Screen CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MandatoryFields.GeneralTabScreen", Name = "CertificateOfOriginMandatoryFieldsGeneralTabScreen", ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsMandatoryFieldsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsMandatoryFieldsGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsMandatoryFieldsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsMandatoryFieldsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificateFields", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsMandatoryFieldsGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificateFieldsName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
+		    CertificateOfOriginMandatoryFieldsObjectTable.HeaderScreenId = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id;
+		    CertificateOfOriginMandatoryFieldsObjectTable.HeaderScreenCode = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code;
 
 	   		  
 
