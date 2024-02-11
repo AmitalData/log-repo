@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ReconcileExternalPageUpdateClass
    {  		
-		public const string HashString = "dde2688d1253a0deffeb75fa1bac08e1";
+		public const string HashString = "95703e7d880fec5f3a67f1f9546e3cd9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "אירועי דף בנק",
 			      				    DefaultText =  "Reconcile External Page",
-			      				    Code = "d74e",
+			      				    Code =  "7cc2",
 			      				    Name =  "ReconcileExternalPage Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",

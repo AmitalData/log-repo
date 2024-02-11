@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class JournalLineUpdateClass
    {  		
-		public const string HashString = "046da633f4c6c71beb3144366d2cb3dc";
-
+		public const string HashString = "08cd8a79a411d4b85fc474ffdd28f285";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,8 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שורת פקודה",
 			      				    DefaultText =  "Journal Line",
-			      				    Code =  "ef37",
-
+			      				    Code =  "b5e4",
 			      				    Name =  "JournalLine Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -729,10 +727,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DocumentDate",
 					  						DefaultText =  "Ref. Date",
-					  						FullLocalDefaultText =  "תםריך םסמכתם",
+					  						FullLocalDefaultText =  "תאריך אסמכתא",
 					  						ListFieldLable =  "DocumentDateListLable",
 					  						ListLableDefaultText =  "Ref. Date",
-					  						ListLocalDefaultText =  "תםריך םסמכתם",
+					  						ListLocalDefaultText =  "תאריך אסמכתא",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -794,10 +792,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "AccountingDate",
 					  						DefaultText =  "Accounting Date",
-					  						FullLocalDefaultText =  "תםריך חשבונםי",
+					  						FullLocalDefaultText =  "תאריך חשבונאי",
 					  						ListFieldLable =  "AccountingDateListLable",
 					  						ListLableDefaultText =  "Accounting Date",
-					  						ListLocalDefaultText =  "תםריך חשבונםי",
+					  						ListLocalDefaultText =  "תאריך חשבונאי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -859,10 +857,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "DueDate",
 					  						DefaultText =  "Due Date",
-					  						FullLocalDefaultText =  "תםריך פרעון",
+					  						FullLocalDefaultText =  "תאריך פרעון",
 					  						ListFieldLable =  "DueDateListLable",
 					  						ListLableDefaultText =  "Due Date",
-					  						ListLocalDefaultText =  "תםריך פרעון",
+					  						ListLocalDefaultText =  "תאריך פרעון",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1189,10 +1187,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference1",
 					  						DefaultText =  "Reference1",
-					  						FullLocalDefaultText =  "םסמכתם 1",
+					  						FullLocalDefaultText =  "אסמכתא 1",
 					  						ListFieldLable =  "Reference1ListLable",
 					  						ListLableDefaultText =  "Reference1",
-					  						ListLocalDefaultText =  "םסמכתם 1",
+					  						ListLocalDefaultText =  "אסמכתא 1",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1253,10 +1251,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference2",
 					  						DefaultText =  "Reference2",
-					  						FullLocalDefaultText =  "םסמכתם 2",
+					  						FullLocalDefaultText =  "אסמכתא 2",
 					  						ListFieldLable =  "Reference2ListLable",
 					  						ListLableDefaultText =  "Reference2",
-					  						ListLocalDefaultText =  "םסמכתם 2",
+					  						ListLocalDefaultText =  "אסמכתא 2",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -1317,10 +1315,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Reference3",
 					  						DefaultText =  "Reference3",
-					  						FullLocalDefaultText =  "םסמכתם 3",
+					  						FullLocalDefaultText =  "אסמכתא 3",
 					  						ListFieldLable =  "Reference3ListLable",
 					  						ListLableDefaultText =  "Reference3",
-					  						ListLocalDefaultText =  "םסמכתם 3",
+					  						ListLocalDefaultText =  "אסמכתא 3",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2415,10 +2413,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ExternalReconcileNumber",
 					  						DefaultText =  "External Reconcile Number",
-					  						FullLocalDefaultText =  "מספר התםמה חיצונית",
+					  						FullLocalDefaultText =  "מספר התאמה חיצונית",
 					  						ListFieldLable =  "ExternalReconcileNumberListLable",
 					  						ListLableDefaultText =  "External Reconcile Number",
-					  						ListLocalDefaultText =  "מספר התםמה חיצונית",
+					  						ListLocalDefaultText =  "מספר התאמה חיצונית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2479,10 +2477,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsExternalReconcile",
 					  						DefaultText =  "Is External Reconcile",
-					  						FullLocalDefaultText =  "מותםם חיצונית",
+					  						FullLocalDefaultText =  "מותאם חיצונית",
 					  						ListFieldLable =  "IsExternalReconcileListLable",
 					  						ListLableDefaultText =  "Is External Reconcile",
-					  						ListLocalDefaultText =  "מותםם חיצונית",
+					  						ListLocalDefaultText =  "מותאם חיצונית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2845,10 +2843,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ConfirmationNumber",
 					  						DefaultText =  "Confirmation Number",
-					  						FullLocalDefaultText =  "מספר םישור",
+					  						FullLocalDefaultText =  "מספר אישור",
 					  						ListFieldLable =  "ConfirmationNumberListLable",
 					  						ListLableDefaultText =  "Confirmation Number",
-					  						ListLocalDefaultText =  "מספר םישור",
+					  						ListLocalDefaultText =  "מספר אישור",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2951,9 +2949,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode JournalLineTextCode_JournalLineOAccountCurrency = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalLine.O.AccountCurrency", DefaultText = "Journal Code Too Short",LocalDefaultText = @"פרט מכס קצר מידי", ObjectTableId = JournalLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode JournalLineTextCode_JournalLineOCodeLong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalLine.O.CodeLong", DefaultText = "Journal Code Too Long",LocalDefaultText = @"פרט המכס םרוך מדי", ObjectTableId = JournalLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode JournalLineTextCode_JournalLineOCodeLong = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalLine.O.CodeLong", DefaultText = "Journal Code Too Long",LocalDefaultText = @"פרט המכס ארוך מדי", ObjectTableId = JournalLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode JournalLineTextCode_JournalLineOCorrectDigit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalLine.O.CorrectDigit", DefaultText = "Check digit is incorrect ,the correct digit is ",LocalDefaultText = @" ספרת הביקורת שגויה , הספרה הנכונה הים ", ObjectTableId = JournalLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode JournalLineTextCode_JournalLineOCorrectDigit = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalLine.O.CorrectDigit", DefaultText = "Check digit is incorrect ,the correct digit is ",LocalDefaultText = @" ספרת הביקורת שגויה , הספרה הנכונה היא ", ObjectTableId = JournalLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode JournalLineTextCode_JournalLineOAddLine = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "JournalLine.O.AddLine", DefaultText = "Add Line",LocalDefaultText = @"הוספת שורה", ObjectTableId = JournalLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
