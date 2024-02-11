@@ -63,19 +63,8 @@ export class ARInvoiceMenuButtonsHandler {
                                 button.IsHidden = true;
                             }
                             else {
-
-
-                                myButtonIsDisabled = !InvoiceTool.IsEditingARInvoiceEnabled(this.EntityPM);
-
-                                if (this.EntityPM.IsConstituentInvoice) {
-                                    if (AppTool.IsNullOrEmpty(this.EntityPM.Id)) {
-                                        if (this.EntityPM.IsAutoCredit) {
-                                            myButtonIsDisabled = false;
-                                        }
-                                    }
-                                }
-
-                                button.LabelTextCodeCode = (this.EntityPM.IsConstituentInvoice) ? "General.B.Save" : "ARInvoice.B.SaveAsDraft";
+                                // display always the save button but change its label
+                                button.LabelTextCodeCode = (this.EntityPM.IsConstituentInvoice || this.EntityPM.IsSigned) ? "General.B.Save" : "ARInvoice.B.SaveAsDraft";
                             }
                             break;
                         }

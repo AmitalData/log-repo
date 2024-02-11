@@ -4,6 +4,7 @@ using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.InfrastructureModel.EntityPOCOs;
 using Simplog.Data.InvoiceModel.EntityPOCOs;
+using System.Collections.Generic;
 
 namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
 {
@@ -39,15 +40,8 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
 
             else
             {
-                EventTracer.CreateTraceEvent(new EventTracerArgs()
-                {
-                    Tenant = entityPM.Tenant,
-                    EventTypeCode = "UPIN",
-                    UserId = loggedContactId,
-                    EntityId = entityPM.Id,
-                    ObjectTableName = "ARInvoice",
-                    Notes = entityPM.EventNote
-                });
+                // trace the change in the AP invoice
+                CreateEventForUpdate(entityPM, entityPOCO, loggedContactId);
 
                 if (entityPM.SalesmanUserId != entityPOCO.SalesmanUserId)
                 {
@@ -168,6 +162,32 @@ namespace Logitude.BL.InvoiceModel.Tools.TraceEvents
                     Notes = entityPM.EventNote
                 });
             }
+        }
+
+        private static void CreateEventForUpdate(ARInvoicePM entityPM, ARInvoice invoice, string loggedContactId)
+        {
+            List<string> notesList = new List<string>();
+            if (!string.IsNullOrEmpty(entityPM.EventNote))
+            {
+                notesList.Add(entityPM.EventNote);
+            }
+
+            // if confirmation number has been changed
+            if (entityPM.ConfirmationNumber != invoice.ConfirmationNumber)
+            {
+                string note = TranslateTextsClass.Translate("ARInvoice.F.ConfirmationNumber", entityPM.Tenant) + ":\n" + TranslateTextsClass.Translate("Accounting.General.O.OldValue", entityPM.Tenant) + " " + invoice.ConfirmationNumber?.ToString() + TranslateTextsClass.Translate("Accounting.General.O.NewValue", entityPM.Tenant) + entityPM.ConfirmationNumber?.ToString();
+                notesList.Add(note);
+            }
+
+            EventTracer.CreateTraceEvent(new EventTracerArgs()
+            {
+                Tenant = entityPM.Tenant,
+                EventTypeCode = "UPIN",
+                UserId = loggedContactId,
+                EntityId = entityPM.Id,
+                ObjectTableName = "ARInvoice",
+                Notes = (notesList.Count > 0) ? string.Join("\n", notesList) : null
+            });
         }
     }
 }

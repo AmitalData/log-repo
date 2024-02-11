@@ -101,5 +101,6 @@ export class APInvoiceList {
 		GlobalTaxCalculation: string;
 		IsEquipment: boolean;
 		ConnectedPaymentsNumbers: string;
+		ConfirmationNumber: string;
 	
-}
+}

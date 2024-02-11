@@ -233,6 +233,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsEquipment = a.IsEquipment,
                              ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                              TotalEquation = a.TotalEquation,
+                             ConfirmationNumber = a.ConfirmationNumber,
                          });          
 
             return query;
