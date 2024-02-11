@@ -4368,7 +4368,7 @@
     SystemMaxLength="15"
     DisplayInList="false"
     IsCustomFilter="false"
-    IsListFilter="false"
+    IsListFilter="true"
     Operator="&quot;Equals&quot;"
     MultiLine="false"
     IsTimeFrameFilter="false"
