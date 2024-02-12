@@ -33,7 +33,7 @@
   InActive="false"
   IsSaveButtonVisible="false"
   IsComposition="false"
-  EnableSecurity="false"
+  EnableSecurity="true"
   AllowCustomFields="false"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
@@ -1083,7 +1083,7 @@
     Code="&quot;COMF&quot;"
     ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
     TextCode="&quot;Customs.CertificateOfOriginMandatoryFields.TH.General&quot;"
-    IsPackagable="false"
+    IsPackagable="true"
     IndexOrder="0"
     IsSpellChecked="false"
     HasGeneralFeature="false" />
