@@ -35,8 +35,11 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int? Location { get; set; }
         [Column("LastUpdatedDate")]
 	    public DateTime? LastUpdatedDate { get; set; }
+        [ForeignKey("ObjectField")]
         [Column("MappedCertificateFields")]
 	    public string MappedCertificateFields { get; set; }
+	      
+        public virtual ObjectField ObjectField { get; set; }
         [Column("CertificateOfOriginTypeCodeID")]
 	    public int? CertificateOfOriginTypeCodeID { get; set; }
         [Column("CertificateOfOriginTypeName")]
