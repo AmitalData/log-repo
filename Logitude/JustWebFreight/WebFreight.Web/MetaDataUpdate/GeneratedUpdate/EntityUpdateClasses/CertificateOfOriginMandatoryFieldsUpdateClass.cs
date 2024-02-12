@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginMandatoryFieldsUpdateClass
    {  		
-		public const string HashString = "5bec5ee65d42beb69cfd11b53a324ce7";
+		public const string HashString = "ce9a1ff3c9ff3cd938306c2c1db8f43f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -121,7 +121,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    InActive =  false,
 			      				    IsSaveButtonVisible =  false,
 			      				    IsComposition =  false,
-			      				    EnableSecurity =  false,
+			      				    EnableSecurity =  true,
 			      				    AllowCustomFields =  false,
 			      				    HasDynamicHeader =  false,
 			      				    ObjectTableTypeCode =  "MD",
@@ -992,7 +992,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   ObjectTable CertificateOfOriginMandatoryFieldsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CertificateOfOriginMandatoryFields" && d.Tenant == 0).FirstOrDefault();  
                  
 			   TextCode CertificateOfOriginMandatoryFieldsGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOriginMandatoryFields.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
-			   Feature CertificateOfOriginMandatoryFieldsGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CertificateOfOriginMandatoryFields.Tab.General", ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, Tenant = 0, NameTextCodeCode = "CertificateOfOriginMandatoryFieldsFeatures.COMF", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CertificateOfOriginMandatoryFieldsObjectTable);
+			   Feature CertificateOfOriginMandatoryFieldsGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CertificateOfOriginMandatoryFields.Tab.General", ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, Tenant = 0, NameTextCodeCode = "CertificateOfOriginMandatoryFieldsFeatures.COMF", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CertificateOfOriginMandatoryFieldsObjectTable);
 			 TextCodeRepository.SubmitChanges();
 			 FeaturesRepository.SubmitChanges();
 			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
