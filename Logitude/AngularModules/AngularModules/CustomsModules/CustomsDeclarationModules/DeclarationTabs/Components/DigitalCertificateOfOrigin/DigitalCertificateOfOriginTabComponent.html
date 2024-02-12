@@ -74,7 +74,7 @@
                     <tr>
                         <td style="height: 21px;padding: 0px;padding-bottom: 0px;width: 100px;">
                             <div>
-                                <button [disabled]="false" class="Button" id="buttonNewCertificateOfOrigin" (click)="AddNewCertificateOfOrigin(isNew)">         
+                                <button [disabled]="!IsAllowChange" class="Button" id="buttonNewCertificateOfOrigin" (click)="AddNewCertificateOfOrigin(isNew)">         
                                     {{'Customs.Declaration.TH.NewCertificateOfOrigin'| TextCodeTranslationPipe}}           
                                 </button>
                             </div>
@@ -187,7 +187,7 @@
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="width: 114px;float: right; height:20px; padding-top: 2px; display:block">
-                                                    <button [disabled]="false" class="Button"  (click)="SendMsgCooStatusCode(item)" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
+                                                    <button [disabled]="!IsAllowChange" class="Button"  (click)="SendMsgCooStatusCode(item)" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
                                                         {{'Customs.CertificateOfOrigin.O.CooStatusCode'| TextCodeTranslationPipe}}           
                                                     </button>                                                   
                                                 </div>
@@ -200,7 +200,7 @@
                                         <ng-template let-item>
                                             <log-cell-template [IgnoreMods]="true" #logcelltemplate>
                                                 <div style="width: 114px;float: right; height:20px; padding-top: 2px; display:block">
-                                                    <button [disabled]="false" class="Button"  (click)="CopyOfCertificate(item)" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
+                                                    <button [disabled]="!IsAllowChange" class="Button"  (click)="CopyOfCertificate(item)" style="height: 21px;width: 120px; display: inline-block;"  style="float:left;">         
                                                         {{'Customs.CertificateOfOrigin.O.CopyOfCertificate'| TextCodeTranslationPipe}}           
                                                     </button>
                                                 </div>

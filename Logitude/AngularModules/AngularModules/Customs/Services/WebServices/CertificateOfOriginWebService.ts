@@ -49,7 +49,7 @@ export class CertificateOfOriginWebService {
         );
     }
 
-    GetCertificateOfOriginByID(declarationId: string,tenant: number) {
+    GetCertificateOfOriginByID(declarationId: string,amendmentOriginalDeclartation:string,tenant: number) {
         return defer(() => {
 
             var authHeader = new Headers();
@@ -59,7 +59,7 @@ export class CertificateOfOriginWebService {
             var serviceResponse: ServiceResponse;
             serviceResponse = new ServiceResponse();
 
-            return this._http.get(this._apiUrl + "/GetCertificateOfOriginByID/?declarationId=" + declarationId + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+            return this._http.get(this._apiUrl + "/GetCertificateOfOriginByID/?declarationId=" + declarationId + "&amendmentOriginalDeclartation=" + amendmentOriginalDeclartation + "&tenant=" + tenant, ServiceHelper.GetHttpHeaders()).pipe(map(response => {
 
                 var serviceResponse: ServiceResponse = new ServiceResponse();
                 serviceResponse.Result = response;

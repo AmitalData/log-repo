@@ -39,12 +39,15 @@ namespace Logitude.Customs.BL.EntityQueryServices
 			}
 			return certificateOfOriginPM;
 		}
-		public List<CertificateOfOriginPM> GetCertificateOfOriginsByDeclarationId(string declarationId ,int tenant,bool IsFromUI = false)
+		public List<CertificateOfOriginPM> GetCertificateOfOriginsByDeclarationId(string declarationId, string amendmentOriginalDeclartation, int tenant,bool IsFromUI = false)
 		{
 			ICustomContext context = MainContext as CustomContext;
 
 			DocumentsFilingQuery documentsFilingQueryService = new DocumentsFilingQuery();
-			var certificateOfOriginList = repository.GetCertificateOfOriginsByDeclarationId(declarationId, tenant);
+			var decId = string.IsNullOrEmpty(amendmentOriginalDeclartation) ? declarationId : amendmentOriginalDeclartation;
+
+
+			var certificateOfOriginList = repository.GetCertificateOfOriginsByDeclarationId(decId, tenant);
 			List<CertificateOfOriginPM> certificateOfOriginPMList = new List<CertificateOfOriginPM>();
 
 			if (certificateOfOriginList != null)
@@ -54,7 +57,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
 					var certificateOfOriginPM = this.GetEntityPM(item, false, new CertificateOfOriginKeys { Id = item.Id });
 					if (IsFromUI) 
 					{ 
-					  certificateOfOriginPM.CertificateOriginDocuments = documentsFilingQueryService.GetCOOEDocument(declarationId, item.Id, tenant);
+					  certificateOfOriginPM.CertificateOriginDocuments = documentsFilingQueryService.GetCOOEDocument(decId, item.Id, tenant);
 					}
 					certificateOfOriginPMList.Add(certificateOfOriginPM);
 
