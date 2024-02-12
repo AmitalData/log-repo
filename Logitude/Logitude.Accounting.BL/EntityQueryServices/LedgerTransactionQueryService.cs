@@ -61,6 +61,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
         public DateTime GetFirstDateByDateType(string dateTypeValue, string gLAccointId, int tenant)
         {
+
             DateTime firstDate = DateTime.Today;
             if (!String.IsNullOrEmpty(gLAccointId)) gLAccointId = gLAccointId.Trim();
 
