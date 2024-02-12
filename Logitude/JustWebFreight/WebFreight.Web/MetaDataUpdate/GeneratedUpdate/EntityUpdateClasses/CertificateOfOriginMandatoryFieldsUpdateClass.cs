@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginMandatoryFieldsUpdateClass
    {  		
-		public const string HashString = "82c8a04d480db07177f7bc8b54e42bc3";
+		public const string HashString = "5bec5ee65d42beb69cfd11b53a324ce7";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -967,27 +967,39 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "MandatoryFields.GeneralTabScreen", Name = "CertificateOfOriginMandatoryFieldsGeneralTabScreen", ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CertificateOfOriginMandatoryFields.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = true }, screensRepository, tenantScreens);
       
-             ScreenField CustomsCertificateOfOriginMandatoryFieldsMandatoryFieldsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomsCertificateOfOriginMandatoryFieldsMandatoryFieldsGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.EnglishName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomsCertificateOfOriginMandatoryFieldsMandatoryFieldsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomsCertificateOfOriginMandatoryFieldsMandatoryFieldsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificateFields", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificateFields", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomsCertificateOfOriginMandatoryFieldsMandatoryFieldsGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificateFieldsName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificateFieldsName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
-		    CertificateOfOriginMandatoryFieldsObjectTable.HeaderScreenId = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id;
-		    CertificateOfOriginMandatoryFieldsObjectTable.HeaderScreenCode = CertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code;
+		    CertificateOfOriginMandatoryFieldsObjectTable.HeaderScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id;
+		    CertificateOfOriginMandatoryFieldsObjectTable.HeaderScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code;
 
 	   		  
 
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable CertificateOfOriginMandatoryFieldsObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CertificateOfOriginMandatoryFields" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode CertificateOfOriginMandatoryFieldsGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.CertificateOfOriginMandatoryFields.TH.General", DefaultText = "General",LocalDefaultText = "כללי", ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature CertificateOfOriginMandatoryFieldsGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CertificateOfOriginMandatoryFields.Tab.General", ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, Tenant = 0, NameTextCodeCode = "CertificateOfOriginMandatoryFieldsFeatures.COMF", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = false }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,CertificateOfOriginMandatoryFieldsObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "COMF",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = CertificateOfOriginMandatoryFieldsGeneralFeature_TH0.Id,FeatureUniqeCode = CertificateOfOriginMandatoryFieldsGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, TabNameTextCodeId = CertificateOfOriginMandatoryFieldsGeneralTextCode_TH0.Id, TabNameTextCodeCode = CertificateOfOriginMandatoryFieldsGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

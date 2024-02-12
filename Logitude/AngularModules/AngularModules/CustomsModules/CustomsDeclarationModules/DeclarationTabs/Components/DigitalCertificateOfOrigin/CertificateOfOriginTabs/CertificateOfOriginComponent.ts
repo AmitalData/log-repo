@@ -56,6 +56,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     public DecalarationData: DeclarationPM;
     public IsNewOrEdit: StatusCertificateOfOrigin;
     isDispalyOnlyStatusList: number[] = [4, 8];
+    public isAllowChange: boolean = false;
 
 
     constructor(
@@ -86,6 +87,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.EntityPM = args.CertificateOfOrigin;
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
+        this.isAllowChange = args.isAllowChange;
+
         this.isListenToChangeInCertificate(args.logWindow);
 
         this.BuildTabs();
@@ -111,7 +114,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.addTapagEnabled = newValue;
     }
     public get IsDisplayOnly() {
-        return this.isDispalyOnlyStatusList.includes(Number(this.EntityPM?.CooStatusCode))
+        return this.isDispalyOnlyStatusList.includes(Number(this.EntityPM?.CooStatusCode)) || !this.isAllowChange
     }
     BuildTabs() {
         this.TabsItemsSource = [];

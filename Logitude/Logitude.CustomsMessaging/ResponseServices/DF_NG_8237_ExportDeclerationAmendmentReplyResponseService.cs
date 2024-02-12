@@ -203,7 +203,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 					CertificateOfOriginUpdateService certificateOfOriginUpdateService = new CertificateOfOriginUpdateService(context, new Dictionary<string, IContext>(), requestParams.Tenant);
 					CertificateOfOriginQueryService certificateOfOriginQueryService = new CertificateOfOriginQueryService(_MyDeclarationPM.Tenant);
-					var certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(_MyDeclarationPM.Id, _MyDeclarationPM.Tenant);
+					var certificateOfOrigins = certificateOfOriginQueryService.GetCertificateOfOriginsByDeclarationId(_MyDeclarationPM.Id, _MyDeclarationPM.AmendmentOriginalDeclartation, _MyDeclarationPM.Tenant);
 					if (certificateOfOrigins != null && certificateOfOrigins.Count() == 1)
                     {
 						var certificateOfOrigin = certificateOfOriginQueryService.GetSingle(certificateOfOrigins[0].Id, true, false);
