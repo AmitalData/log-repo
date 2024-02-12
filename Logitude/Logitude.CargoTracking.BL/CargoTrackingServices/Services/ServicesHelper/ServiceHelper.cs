@@ -351,25 +351,7 @@ namespace Logitude.CargoTracking.BL.CargoTrackingServices.Services.ServicesHelpe
             }
         }
 
-        public static void CopyFromOldTable(CargoTrackingArgs buildCargoArgs, int tenant)
-        {
-            string copyCommand = "";
-            if (buildCargoArgs.MainTableStructureHelper.TableCoulmnsNameWithoutIDentity.Contains("Tenant"))
-            {
-                copyCommand = "INSERT INTO " + buildCargoArgs.Table.Pre_TableName + " (" + buildCargoArgs.Table.CargoTracking_FieldsDBName + ") SELECT " + buildCargoArgs.Table.CargoTracking_FieldsDBName
-                    + " FROM " + buildCargoArgs.Table.Main_CargoTracking_TableName + " where Tenant!= " + tenant;
-                ExecuteSql(copyCommand, buildCargoArgs.DestinationConnectionString);
-            }
-            if (!string.IsNullOrEmpty(buildCargoArgs.Table.Pre_InnerTableName))
-            {
-                if (buildCargoArgs.InnerTableStructureHelper.TableCoulmnsNameWithoutIDentity.Contains("Tenant"))
-                {
-                    copyCommand = "INSERT INTO " + buildCargoArgs.Table.Pre_InnerTableName + " (" + buildCargoArgs.Table.InnerCargoTracking_FieldsDBName + ") SELECT " + buildCargoArgs.Table.InnerCargoTracking_FieldsDBName+" FROM " + buildCargoArgs.Table.Main_CargoTracking_InnerTableName + " where Tenant!= " + tenant;
-                    ExecuteSql(copyCommand, buildCargoArgs.DestinationConnectionString);
-                }
-            }
-        }
-
+ 
         public static void DropTable(CargoTrackingArgs buildCargoArgs)
         {
             string minTableName = buildCargoArgs.Table.Pre_TableName;
