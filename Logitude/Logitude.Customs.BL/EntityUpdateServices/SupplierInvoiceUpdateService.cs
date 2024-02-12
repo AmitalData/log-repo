@@ -1270,7 +1270,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 }
 
                 //<--- Yuval Chalup 04.12.2016 TASK-24655
-                if (entityPM.GTBITEMsToUpdate != null && entityPM.GTBITEMsToUpdate.Count() > 0)
+                if (entityPM.GTBITEMsToUpdate != null && entityPM.GTBITEMsToUpdate.Count() > 0 && defaultDeclarationPM?.Direction!="E")
                 {
                     OpenUnifreighTask(entityPM);
                 }

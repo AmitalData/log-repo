@@ -52,7 +52,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         {
             //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
             var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
-          
+              
                 var declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
                 declarationQueryService.LoadSupplierInvoicesWithItems = false;
                 var declaration = declarationQueryService.GetSingle(entityPM.DeclarationId, true, true);

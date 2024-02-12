@@ -433,7 +433,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                     if (toUpdateUnifreight)
                     {
-                        if (dec.IsConnectedToUnifreight && !(dec.PaymentDate.HasValue && string.IsNullOrEmpty(dec.DeclarationNumber)))
+                        if (dec.Direction!="E" && !(dec.PaymentDate.HasValue && string.IsNullOrEmpty(dec.DeclarationNumber)))
                         {
                             DeclarationUpdateService declarationUpdateService = new DeclarationUpdateService(context);
                             declarationUpdateService.UpdateUnifreight(dec);
