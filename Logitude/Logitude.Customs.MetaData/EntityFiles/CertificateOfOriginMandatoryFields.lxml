@@ -25,7 +25,7 @@
   HasCounter="false"
   EnableAddFromLOV="false"
   IsRestrictable="false"
-  IsMain="false"
+  IsMain="true"
   IsAutoComplete="false"
   EnableEditFromLOV="false"
   SortingByObjectField="&quot;Code&quot;"
