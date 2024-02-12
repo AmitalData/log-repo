@@ -7,7 +7,7 @@ import { SessionLocator } from '../../../Infrastructure/Utilities/SessionLocator
 //import {JournalExtendedListService} from '../../Services/ExtendedLists/JournalExtendedListService';
 import { ServiceResponse } from '../../../Infrastructure/DataContracts/ServiceResponse';
 import { AppTool } from '../../../Infrastructure/Tools';
-import { ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
+import { EventParams, ReconcileEventManager } from '../../Utilities/ReconcileEventManager';
 import { ObjectsLocator } from '../../../Infrastructure/Locators/ObjectsLocator';
 
 @Component({
@@ -24,7 +24,7 @@ export class ManageReconciliationListTemplate {
 
     public isRTL: boolean = false;
 
-    reconcileEventManager:ReconcileEventManager;
+
     constructor(private CD: ChangeDetectorRef) {
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
     }
@@ -34,7 +34,7 @@ export class ManageReconciliationListTemplate {
         this.fieldName = fieldName;
         this.AdditionalData = MyAdditionalData;
 
-        this.reconcileEventManager = this.AdditionalData?.GridAdditionalData?.ReconcileEventManager;
+
         if (fieldName == "SelectCheckBox") {
             this.BuildCheckBox();
 
@@ -47,28 +47,33 @@ export class ManageReconciliationListTemplate {
     }
 
     BuildCheckBox() {
-        if (this.reconcileEventManager._SelectedItems.Collection.includes(this.rowData)) {
+        var selectedItems = ReconcileEventManager.GetSelectedItems();
+        if (!AppTool.IsNullOrUndefined(selectedItems) && selectedItems.includes(this.rowData)) {
             this.CheckBoxClicked(true);
         }
         else {
-            if (this.reconcileEventManager.IsAllSelected == true) {
+            if (ReconcileEventManager.GetIsAllSelected() == true) {
                 this.CheckBoxClicked(true);
             }
-            if(this.reconcileEventManager.UnAllSelected == true){
+            if (ReconcileEventManager.GetUnAllSelected() == true) {
                 this.CheckBoxClicked(false);
             }
         }
     }
     CheckBoxClicked(checked: boolean) {
         this.rowData['IsChecked'] = checked;
+        var reconcileEventParams = new EventParams();
+        reconcileEventParams.Params = {
+            line: this.rowData,
+            isChecked: checked,
+            RowIndex: this.AdditionalData?.rowIndex
+        };
 
-        if (!this.reconcileEventManager.ManageReconciliationCheckBoxChecked)
-        this.reconcileEventManager.ManageReconciliationCheckBoxChecked = new EventEmitter();
-        this.reconcileEventManager.ManageReconciliationCheckBoxChecked.emit({ line: this.rowData, isChecked: checked, RowIndex: this.AdditionalData?.rowIndex });
+        ReconcileEventManager.ManageReconciliationCheckBoxChecked.emit(reconcileEventParams);
 
     }
     handleDivClick() {
-        this.reconcileEventManager.SupperssOnRowSelectedAction = true;
+        ReconcileEventManager.SetSupperssOnRowSelectedAction(true);
     }
 
 }

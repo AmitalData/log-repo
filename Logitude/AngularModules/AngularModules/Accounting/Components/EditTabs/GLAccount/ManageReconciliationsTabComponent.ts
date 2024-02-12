@@ -45,7 +45,6 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     public isRTL: boolean = false;
     public JournalNumber: string = ""
     private CurrentSession = SessionLocator.SelectedSession;
-    reconcileEventManager: ReconcileEventManager = new ReconcileEventManager();
     constructor(private entityArgs: EntityArgs) {
 
         super();
@@ -66,7 +65,6 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
             this.JournalNumber = entityArgs.EditComponent?.JournalNumber;
         }
         this.CancelSelectedRecoFeature = FeatureLocator.HasFeaturePermession("GLAccount", "CancelSelectedReco");
-
         //#endregion
 
     }
@@ -80,9 +78,12 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
 
     }
 
-    ngOnDestroy(){
-        this.reconcileEventManager._SelectedItems.Collection = [];
-        this.reconcileEventManager.IsAllSelected=false;
+    ngOnDestroy() {
+        var selectedItems=ReconcileEventManager.GetSelectedItems();
+        if(!AppTool.IsNullOrUndefined(selectedItems)){
+            selectedItems= [];
+        }
+        ReconcileEventManager.SetIsAllSelected(false);
     }
 
     //#region Filters Properties
@@ -210,7 +211,7 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
     }
 
-    CancelRecoDisabled=true;
+    CancelRecoDisabled = true;
     BuildColumns() {
         this.columns = [];
         this.columns.push({
@@ -263,29 +264,34 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
             HtmlListComponentName: 'ManageReconciliationListTemplate',
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/ManageReconciliationListTemplate',
         });
+
         if (this.CancelSelectedRecoFeature) {
-            this.reconcileEventManager.ManageReconciliationCheckBoxChecked.subscribe(($event) => {
+            ReconcileEventManager.ManageReconciliationCheckBoxChecked.subscribe(($event) => {
                 if (!AppTool.IsNullOrEmpty($event)) {
-                    if ($event.isChecked) {
-                        if (!this.reconcileEventManager._SelectedItems.Collection.includes($event.line)) {
-                            this.reconcileEventManager._SelectedItems.Insert($event.line);
-                        }
+                    if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
+                        return;
+                    var params = $event.Params;
+                    if (params.isChecked) {
+                        ReconcileEventManager.InsertIntoSelectedItems(params.line);
                     } else {
-                        if (this.reconcileEventManager._SelectedItems.Collection.includes($event.line)) {
-                            this.reconcileEventManager._SelectedItems.Remove($event.line);
-                        }
-                        if(this.reconcileEventManager.UnAllSelected){
-                            this.reconcileEventManager._SelectedItems.Collection = [];
+                            ReconcileEventManager.RemoveFromSelectedItems(params.line);
+                        if (ReconcileEventManager.GetUnAllSelected()) {
+                            var selectedItems=ReconcileEventManager.GetSelectedItems();
+                            if(!AppTool.IsNullOrUndefined(selectedItems)){
+                                selectedItems = [];
+                            }
                         }
                     }
                 }
-                if(this.reconcileEventManager.IsAllSelected ==false){
-                    this.CancelRecoDisabled=false;
+
+                if (ReconcileEventManager.GetIsAllSelected() == false) {
+                    this.CancelRecoDisabled = false;
                 }
-                if(this.reconcileEventManager._SelectedItems?.Collection == null || this.reconcileEventManager._SelectedItems.Collection.length === 0){
-                    this.CancelRecoDisabled=true;
-                }else{
-                    this.CancelRecoDisabled=false;
+                var selectedItems=ReconcileEventManager.GetSelectedItems();
+                if(AppTool.IsNullOrUndefined(selectedItems)|| selectedItems.length === 0){
+                    this.CancelRecoDisabled = true;
+                } else {
+                    this.CancelRecoDisabled = false;
                 }
             });
         }
@@ -349,8 +355,8 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
 
     // returned value{ colDef, colIndex, rowData, rowIndex }
     onRowSelected(item) {
-        if (this.reconcileEventManager.SupperssOnRowSelectedAction) {
-            this.reconcileEventManager.SupperssOnRowSelectedAction = false;
+        if (ReconcileEventManager.GetSupperssOnRowSelectedAction()) {
+            ReconcileEventManager.SetSupperssOnRowSelectedAction(false);
             return;
         }
         if (!AppTool.IsNullOrEmpty(item)) {
@@ -361,13 +367,15 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     }
 
     CancelSelectedRecoButtonClicked() {
-        if (this.reconcileEventManager._SelectedItems?.Collection == null || this.reconcileEventManager._SelectedItems.Collection.length === 0) {
+        var selectedItems=ReconcileEventManager.GetSelectedItems();
+        if (AppTool.IsNullOrUndefined(selectedItems)|| selectedItems.length === 0) {
             const confirmWindow = new ConfirmWindow();
             const msg = TextCodeTranslator.Translate("GLAccount.O.NoSelectedItems");
             confirmWindow.Show(msg);
             return;
         }
-        const selectedIds: string[] = this.reconcileEventManager._SelectedItems?.Collection?.reduce(
+        var selectedItems=ReconcileEventManager.GetSelectedItems();
+        const selectedIds: string[] = selectedItems?.reduce(
             (acc, item) => acc.concat(item.Id),
             [] as string[]
         ) || [];
@@ -402,14 +410,14 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
     set IsAllSelected(value: boolean) {
         if (value) {
             this.isAllSelected = value;
-            this.reconcileEventManager.IsAllSelected = value;
-            this.reconcileEventManager.UnAllSelected = !value;
+            ReconcileEventManager.SetIsAllSelected(value);
+            ReconcileEventManager.SetUnAllSelected(!value);
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
 
-        }else{
+        } else {
             this.isAllSelected = value;
-            this.reconcileEventManager.UnAllSelected = !value;
-            this.reconcileEventManager.IsAllSelected = value;
+            ReconcileEventManager.SetUnAllSelected(!value);
+            ReconcileEventManager.SetIsAllSelected(value);
             this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() }); // refresh grid
         }
     }
