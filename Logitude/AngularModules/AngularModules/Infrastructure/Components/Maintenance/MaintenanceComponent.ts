@@ -25,6 +25,7 @@ import { CustomsCloudComponentArgs } from 'InfrastructureModules/InfrastructureO
 import { HomeScreenEvent, HomeScreenEventTypes, HostScreenComponent } from 'Common/Components/HostScreen/HostScreenComponent';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
+import { TaxesWebService } from 'Customs/Services/WebServices/TaxesWebService';
 
 @Component({
     
@@ -961,12 +962,12 @@ export class MaintenanceComponent {
         if (item) {
             switch (item.Code) {
                 case "SHAAM_LOGS": {
-                    HostScreenService.open(TextCodeTranslator.Translate('General.MC.Logs'),'ConfirmationNumberTokenLog');
+                    this.navigateToExportCustoms('ConfirmationNumberTokenLog');
                     break;
                 }
                 
                 case "SHAAM_TOKEN": {        
-                    this.openTokenManagment();                
+                    this.navigateToExportCustoms('CreateNewShaamToken');
                     break;
                 }
 
@@ -1852,27 +1853,25 @@ export class MaintenanceComponent {
         }
     }
 
-    private async openTokenManagment() {
-        const logitudeWindow: LogitudeWindow = HostScreenService.open(TextCodeTranslator.Translate('General.MC.TokenManagement'),'CreateNewShaamToken');
-        const hostScreenComponent: HostScreenComponent = await this.withWindowComponentLoaded(logitudeWindow);
-        const subscription: Subscription  =  hostScreenComponent.$event
-            .pipe(filter((event: HomeScreenEvent) => event.event === HomeScreenEventTypes.openNewBrowser))
-            .subscribe((event: HomeScreenEvent) => {
-                subscription.unsubscribe();
-                logitudeWindow.Close('');
-                this.openTokenManagment();
-        })
-    }
-    
-    private async withWindowComponentLoaded(logitudeWindow: LogitudeWindow) {
-        return new Promise<any>(resolve => {
-            const subscription: Subscription =  logitudeWindow.ComponentLoaded.subscribe(component => {
-                subscription.unsubscribe();
-                resolve(component);
-            })            
-        });
+    async navigateToExportCustoms(logitudeCommandId: string) {
+        try {
+            let link: string = await new TaxesWebService().getlinkLogin();
+            link + "&logitudeCommandId=" + logitudeCommandId;
+            open(link);
+        } catch (error) {
+            console.log('******* error throw when try get login link to export', error);
+            await this.showErrorMessage();            
+        }
     }
 
+    showErrorMessage(): Promise<void> {
+        const msgWin: MessageWindow = new MessageWindow();
+        msgWin.ShowErrorIcon = true;
+        msgWin.Show(TextCodeTranslator.Translate('CommunicationLog.O.Error'));
+
+        return new Promise<void>(res => msgWin.WindowClosed.subscribe(() => res()));
+    }
+    
     private ShowCustomObject(item: any) {
         let objectTable = window.ObjectTables.filter(d => d.Id == item.ObjectTableId)[0];
         let listArgs = new ListComponentArgs();
