@@ -48,6 +48,8 @@ using Logitude.Server.Tools.StorageService;
 using Logitude.Server.Tools.QueueService;
 using Newtonsoft.Json;
 using Simplog.Data.CommonDataModel;
+using Logitude.Accounting.Data.EntityMapping;
+using Intuit.Ipp.Data;
 using System.Collections;
 
 namespace WebFreight.Web.Controllers.AccountingModel //AccountingPeriodViewsController.cs
@@ -896,6 +898,38 @@ tenant);
 
         }
 
+        public HttpResponseMessage CancelSelectedReco([FromBody] CancelRecoRequest request)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+
+                int tenant = authToken.Tenant;
+                IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
+
+                ReconciliationQueryService reconciliationQuery = new ReconciliationQueryService(MyContext);
+                var recoUpdateservice = new ReconciliationUpdateService(MyContext, new Dictionary<string, IContext>(), tenant);
+                foreach (var id in request?.SelectedIds)
+                {
+                    ReconciliationPM reconciliationPM = reconciliationQuery.GetSingle(id, false, false);
+                    if (!reconciliationPM.IsCancelled)
+                    {
+                        reconciliationPM.IsCancelled = true;
+                        reconciliationPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
+                        recoUpdateservice.Update(reconciliationPM, true);
+                    }
+                }
+                return Request.CreateResponse(HttpStatusCode.OK, "");
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+
         public HttpResponseMessage PostReconcileExcelData(ReconcileExcelDataArgs args)
         {
             SecurityUtility.AuthenticationOnTenant(args.Tenant);
@@ -987,5 +1021,9 @@ tenant);
         public List<ReconcileExternalPageLinePM> Data { get; set; }
         public List<QueryColumnPM> QueryColumns { get; set; }
         public int Tenant { get; set; }
+    }
+    public class CancelRecoRequest
+    {
+        public List<string> SelectedIds { get; set; }
     }
 }
