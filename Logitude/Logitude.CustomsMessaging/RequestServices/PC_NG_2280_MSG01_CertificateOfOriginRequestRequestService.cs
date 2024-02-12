@@ -93,7 +93,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				ExporterName = certificateOfOrigin.ExporterName,
 				ExporterAddress = certificateOfOrigin.ExporterAddress,
 				ExporterCountry = certificateOfOrigin.ExporterCountry,
-				TradeAgreementCountry1 = CooTypeCodeList.Contains(certificateOfOrigin.TradeAgreementCountry1) ? "IL" : certificateOfOrigin.TradeAgreementCountry1,
+				TradeAgreementCountry1 = CooTypeCodeList.Contains(certificateOfOrigin.CooTypeCode) ? "IL" : certificateOfOrigin.TradeAgreementCountry1,
 				TradeAgreementCountry2 = certificateOfOrigin.TradeAgreementCountry2,
 				TradeAgreementGroupOfCountries = Convert.ToInt32(certificateOfOrigin.TradeAgreementGroupOfCountries),
 				TradeAgreementGroupOfCountriesSpecified = true,
