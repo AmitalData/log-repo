@@ -111,9 +111,7 @@ export class DecCargoSplitConComponent extends BaseComponent {
         if (this.DeclarationDirection == "E") {
             this.PreceduralFilterItems.addAdditionalFilter("Code", "1000000,8000000,4000000", null, null, "InListExact", false, false, false, "string", false, true);
         }
-        else {
-            this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean", false, false);
-        }
+
         this.SetDisplayFields();
         this.setParentCargoConsinmentItemList(false);
         
@@ -134,9 +132,6 @@ export class DecCargoSplitConComponent extends BaseComponent {
         this.PreceduralFilterItems = new ApiQueryFilters();
         if (!AppTool.IsNullOrEmpty(this.EntityPM) && this.EntityPM.EntityParentPM.direction == "E") {
             this.PreceduralFilterItems.addAdditionalFilter("Code", "1000000,8000000,4000000", null, null, "InListExact", false, false, false, "string", false, true);
-        }
-        else {
-            this.PreceduralFilterItems.addAdditionalFilter("IsImport", true, null, null, "Equals", false, false, false, "boolean", false, false);
         }
 
         this.firstTime = true;
