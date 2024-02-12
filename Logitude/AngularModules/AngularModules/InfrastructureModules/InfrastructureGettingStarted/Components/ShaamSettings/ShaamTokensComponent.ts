@@ -127,7 +127,7 @@ export class ShaamTokensComponent extends BaseComponent {
                 '"' + this.linkToCodeForToken + '"',
                 false);
         else
-            location.href = this.linkToCodeForToken;
+            open(this.linkToCodeForToken);
     }
 
     async initLinkToCodeForToken() {
