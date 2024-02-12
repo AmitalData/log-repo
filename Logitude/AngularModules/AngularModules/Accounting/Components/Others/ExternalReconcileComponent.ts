@@ -889,7 +889,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         });
         this.TransactionsQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNote", 'String', TextCodeTranslator.Translate("LedgerTransaction.F.InternalNote")));
 
-        this.reconcileEventManager.CheckBoxChecked.subscribe(($event) => {
+        ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
                 if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
                     return;
@@ -1278,7 +1278,7 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         });
         this.ExtPageQueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("Notes", 'String', TextCodeTranslator.Translate("ReconcileExternalPageLine.F.Notes")));
 
-        this.reconcileEventManager.ExtPageCheckBoxChecked.subscribe(($event) => {
+        ReconcileEventManager.ExtPageCheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
                 if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
                     return;
@@ -2349,7 +2349,6 @@ class TransactionLineModel extends BaseComponent {
     public RowIndex: number;
     public DataContext = this;
     public isRTL: boolean = false;
-    reconcileEventManager:ReconcileEventManager;
     constructor(
         private ledgerTransaction: LedgerTransactionPM,
         private parent: ExternalReconcileComponent,
@@ -2371,7 +2370,6 @@ class TransactionLineModel extends BaseComponent {
 
 
         this.IconCode = AccountingEntityHelper.getEntityIcon(this.LedgerTransactionPM.SourceTypeCode);
-        this.reconcileEventManager=this.parent.reconcileEventManager;
         //#endregion
     }
 

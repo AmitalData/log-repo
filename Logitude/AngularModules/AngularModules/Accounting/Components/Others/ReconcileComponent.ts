@@ -288,7 +288,6 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     _GLAccountExtendedListService: GLAccountExtendedListService = new GLAccountExtendedListService();
     isFullAccounting: boolean = SessionLocator.TenantPM.AccountingActivated;
     CurrencyFilters: ApiQueryFilters = new ApiQueryFilters();
-    reconcileEventManager:ReconcileEventManager=new ReconcileEventManager();
     constructor(public CD: ChangeDetectorRef) {
         super();
 
@@ -296,8 +295,8 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
     }
 
     ngOnDestroy() {
-        AppTool.KillEventEmitter(this.reconcileEventManager.CheckBoxChecked);
-        this.reconcileEventManager.CheckBoxChecked = new EventEmitter();
+        AppTool.KillEventEmitter(ReconcileEventManager.CheckBoxChecked);
+        ReconcileEventManager.CheckBoxChecked = new EventEmitter();
         this.IsComponentDestroyed = true;
     }
 
@@ -1378,7 +1377,7 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         });
         this.QueryColumns.push(this.LogitudeGridExportToExcelComponent.GetQueryColumn("InternalNotes", 'Text', TextCodeTranslator.Translate("ARInvoice.F.InternalNotes")));
 
-        this.reconcileEventManager.CheckBoxChecked.subscribe(($event) => {
+        ReconcileEventManager.CheckBoxChecked.subscribe(($event) => {
             if (!AppTool.IsNullOrEmpty($event)) {
                 if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
                     return;
