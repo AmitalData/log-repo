@@ -355,6 +355,13 @@ export class AccountingMainTesterComponent extends BaseComponent {
         this.StrandartOp(opr, obj, () => { });
 
     }
+
+    _ButtonReverseAllMonthsFIX_Click() {
+        let opr = "_ButtonReverseAllMonthsFIX_Click";
+        let obj = { MyTenant: SessionLocator.Tenant, MyGLAccId: "" };
+        this.StrandartOp(opr, obj, () => { });
+    }
+
     BatchYearlyFIX_Click() {
         let opr = "BatchYearlyFIX_Click";
         let obj = {

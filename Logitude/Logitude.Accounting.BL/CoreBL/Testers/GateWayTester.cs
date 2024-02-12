@@ -53,6 +53,11 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
                         return _ButtonReverseTotalFIX_Click(tenant, _TextBoxParam);
                     }
                     break;
+                case "_ButtonReverseAllMonthsFIX_Click":
+                    {
+                        return _ButtonReverseAllMonthsFIX_Click(tenant, _TextBoxParam);
+                    }
+                    break;
                 case "_ButtonReverseGLBalanceFIX_Click":
                     {
                         return _ButtonReverseGLBalanceFIX_Click(tenant, _TextBoxParam);
@@ -877,8 +882,41 @@ namespace Logitude.Accounting.BL.CoreBL.Testers
             }
             return gateWayTesterResult;
         }
-        
-            private GateWayTesterResult Change2MultiCurrency_Click(int tenant, string textBoxParam)
+        private GateWayTesterResult _ButtonReverseAllMonthsFIX_Click(int tenant, string textBoxParam)
+        {
+
+            var gateWayTesterResult = new GateWayTesterResult();
+
+
+            try
+            {
+
+
+                var param = LogitudeXmlSerializer.JsonConvertDeserializeTObject<ParamBasic>(textBoxParam);
+                var s = new ReverseEngineerTotalByMonthService(DateTime.Today, param.MyTenant, param.MyGLAccId);
+                List<Data.Repositories.GLAccountTotalByMonthsDTO> changedList = new List<GLAccountTotalByMonthsDTO>();
+                s.FixDbIntegrityFromLedgeToAllMonths(ref changedList);
+
+                gateWayTesterResult.JsonOut = LogitudeXmlSerializer.SerializeObjectToJosnStringMax<List<GLAccountTotalByMonthsDTO>>(changedList);
+
+
+            }
+            catch (Exception eee)
+            {
+                //param = null;
+                //throw;
+                gateWayTesterResult.ExceptionMess = eee.ToString();
+            }
+            finally
+            {
+
+
+                gateWayTesterResult.Log = LogMessagingUtil.Instance.ToString();
+            }
+            return gateWayTesterResult;
+        }
+
+        private GateWayTesterResult Change2MultiCurrency_Click(int tenant, string textBoxParam)
         {
 
             var gateWayTesterResult = new GateWayTesterResult();
