@@ -296,6 +296,10 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
                 logWindow.ShowCloseButton = true;
                 logWindow.Show('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/CertificateOfOriginComponent');
                 args.logWindow = logWindow;
+                // unselect row for new certificate
+                if(isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsNew)
+                    this.SelectedRow = null
+
                 logWindow.WindowClosed.subscribe(($event: any) => {
                     this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
                     this.ReloadMyScreen();
