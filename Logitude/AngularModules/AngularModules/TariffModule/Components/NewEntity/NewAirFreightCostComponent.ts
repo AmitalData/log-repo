@@ -301,7 +301,7 @@ export class NewAirFreightCostComponent extends BaseComponent implements OnInit 
         if (this.EntityPM.TypeCode != "IFT") {
             this.ChargeTypesQueryFilters.addAdditionalFilter("ChargesGroupCode", "FRT", null, null, "NotEqual", false, false, false, "string");
         }
-
+    
         this.Validate(true);
         this.SetContainerTypeUIProperties(true);
     }
