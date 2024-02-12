@@ -31,7 +31,7 @@
   SortingByObjectField="&quot;Code&quot;"
   SortingByDirection="&quot;Ascending&quot;"
   InActive="false"
-  IsSaveButtonVisible="false"
+  IsSaveButtonVisible="true"
   IsComposition="false"
   EnableSecurity="true"
   AllowCustomFields="false"
