@@ -1041,11 +1041,11 @@
     <QueryFilters />
   </Query>
   <Screen
-    Name="&quot;CertificateOfOriginMandatoryFieldsGeneralTabScreen&quot;"
+    Name="&quot;GeneralTabScreen&quot;"
     ObjectTableName="&quot;Customs.CertificateOfOriginMandatoryFields&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;MandatoryFields.GeneralTabScreen&quot;"
+    Code="&quot;CertificateOfOriginMandatoryFields.GeneralTabScreen&quot;"
     NumberOfColumns="1"
     NumberOfRows="5">
     <ScreenFields>
@@ -1053,29 +1053,40 @@
         Column="0"
         Row="0"
         ObjectFieldName="&quot;Code&quot;"
-        ScreenName="CertificateOfOriginMandatoryFieldsGeneralTabScreen" />
+        ScreenName="GeneralTabScreen" />
       <ScreenField
         Column="0"
         Row="1"
         ObjectFieldName="&quot;EnglishName&quot;"
-        ScreenName="CertificateOfOriginMandatoryFieldsGeneralTabScreen" />
+        ScreenName="GeneralTabScreen" />
       <ScreenField
         Column="0"
         Row="2"
         ObjectFieldName="&quot;LocalName&quot;"
-        ScreenName="CertificateOfOriginMandatoryFieldsGeneralTabScreen" />
+        ScreenName="GeneralTabScreen" />
       <ScreenField
         Column="0"
         Row="3"
         ObjectFieldName="&quot;MappedCertificateFields&quot;"
-        ScreenName="CertificateOfOriginMandatoryFieldsGeneralTabScreen" />
+        ScreenName="GeneralTabScreen" />
       <ScreenField
         Column="0"
         Row="4"
         ObjectFieldName="&quot;MappedCertificateFieldsName&quot;"
-        ScreenName="CertificateOfOriginMandatoryFieldsGeneralTabScreen" />
+        ScreenName="GeneralTabScreen" />
     </ScreenFields>
   </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    TabLocalName="&quot;כללי&quot;"
+    ObjectTableName="&quot;Customs.CertificateOfOriginMandatoryFields&quot;"
+    Code="&quot;COMF&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
+    TextCode="&quot;Customs.CertificateOfOriginMandatoryFields.TH.General&quot;"
+    IsPackagable="false"
+    IndexOrder="0"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
