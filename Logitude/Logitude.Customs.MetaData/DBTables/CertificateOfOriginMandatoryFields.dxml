@@ -77,4 +77,9 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Relation
+    ForeignKeyColumn="MappedCertificateFields"
+    ReferencedTable="ObjectFields"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
 </Table>

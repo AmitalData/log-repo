@@ -25,15 +25,15 @@
   HasCounter="false"
   EnableAddFromLOV="false"
   IsRestrictable="false"
-  IsMain="false"
+  IsMain="true"
   IsAutoComplete="false"
   EnableEditFromLOV="false"
   SortingByObjectField="&quot;Code&quot;"
   SortingByDirection="&quot;Ascending&quot;"
   InActive="false"
-  IsSaveButtonVisible="false"
+  IsSaveButtonVisible="true"
   IsComposition="false"
-  EnableSecurity="false"
+  EnableSecurity="true"
   AllowCustomFields="false"
   HasDynamicHeader="false"
   ObjectTableTypeCode="&quot;MD&quot;"
@@ -758,7 +758,7 @@
     IsDeleted="false"
     ObjectTableName="&quot;Customs.CertificateOfOriginMandatoryFields&quot;"
     FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;objectfields&quot;"
+    LookUpTableName="&quot;ObjectField&quot;"
     MinLength="0"
     MaxLength="5"
     IsRequired="false"
@@ -802,8 +802,10 @@
     ListLableDefaultText="&quot;Customs.CertificateOfOriginMandatoryFields&quot;"
     ListLocalDefaultText="&quot;מיפוי&quot;"
     IsNullable="true"
-    IsForeignKey="false"
+    IsForeignKey="true"
+    ForeignEntity="ObjectField"
     DontBuildRelationOnDB="false"
+    NavigationPropertyName="ObjectField"
     IsPrimaryKey="false"
     HasDataBaseField="true"
     HasPMField="true"
@@ -1047,7 +1049,7 @@
     IsHeaderScreen="true"
     Code="&quot;CertificateOfOriginMandatoryFields.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="5">
+    NumberOfRows="4">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -1069,11 +1071,6 @@
         Row="3"
         ObjectFieldName="&quot;MappedCertificateFields&quot;"
         ScreenName="GeneralTabScreen" />
-      <ScreenField
-        Column="0"
-        Row="4"
-        ObjectFieldName="&quot;MappedCertificateFieldsName&quot;"
-        ScreenName="GeneralTabScreen" />
     </ScreenFields>
   </Screen>
   <Tab
@@ -1083,7 +1080,7 @@
     Code="&quot;COMF&quot;"
     ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
     TextCode="&quot;Customs.CertificateOfOriginMandatoryFields.TH.General&quot;"
-    IsPackagable="false"
+    IsPackagable="true"
     IndexOrder="0"
     IsSpellChecked="false"
     HasGeneralFeature="false" />

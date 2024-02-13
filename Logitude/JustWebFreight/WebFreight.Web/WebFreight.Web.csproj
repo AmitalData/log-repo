@@ -1227,6 +1227,7 @@
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginInvoiceController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginItemController.Generated.cs" />
+    <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CertificateOfOriginMandatoryFieldsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ClientIndicationController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\ClientItemController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\PMControllers\CountryCurrencyController.Generated.cs" />
