@@ -1032,7 +1032,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 }
              }
 
-          
+            if (_MyDeclarationPM.Direction != "E")
+            {
                 //<--- Yuval Chalup 09.11.2015 TASK-16498 - Update PaymentOrderNumber in Payment
                 if (customResponse.DeclarationPaymentDetails != null)
                 {
@@ -1042,7 +1043,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         unifreightDeclarationPaymentUpdateService.Update();
                     }
                 }
-           
+            }
             //Yuval Chalup 09.11.2015 TASK-16498 --->
 
             if (customResponse.CollateralRequestDetails != null) // Create Collateral
