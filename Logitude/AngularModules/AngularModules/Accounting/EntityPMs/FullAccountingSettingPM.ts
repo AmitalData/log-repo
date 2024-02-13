@@ -357,4 +357,4 @@ export class FullAccountingSettingPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
