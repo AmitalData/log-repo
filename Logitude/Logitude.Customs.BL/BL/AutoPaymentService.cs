@@ -900,7 +900,7 @@ namespace Logitude.Customs.BL.BL
 				string objCIM_PAYCASH_FIL = defaultValueQueryService.GetDefault("ISRAEL", "CIM_PAYCASH_FIL", "NON", _MyDeclarationPM.CustomerCode, _MyDeclarationPM.Tenant);//תשלום הצהרה בקופה
 				if (!string.IsNullOrEmpty(objCIM_PAYCASH_FIL))
 				{
-					if (this.PaymentMethodsList != null && this.PaymentMethodsList.Count() > 0)
+					if ((this.PaymentMethodsList != null && this.PaymentMethodsList.Count() > 0) || this.paymentMethodModelMax != null)
 					{
 						this.AutoFillPaymentCash(objCIM_PAYCASH_FIL);
 					}
@@ -1001,6 +1001,8 @@ namespace Logitude.Customs.BL.BL
 					this.paymentMethodModelMax.Amount = _MyDeclarationPM.TotalTax;
 					this.paymentMethodModelMax.SetMethodTypeCode("2");
 					this.paymentMethodModelMax.PayerActivityTypeCode = defaultValue;
+					this.PaymentMethodsList.Add(paymentMethodModelMax);
+
 
 				}
 			}
