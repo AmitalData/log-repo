@@ -298,6 +298,8 @@ export class AmitalGatewayUtil {
     }
     public IsAmitalBackButtonDisable: boolean = false;
     AmitalBackButtonClicked() {
+        close(); // its close only if its open by window.open() method
+
         this.sendPostMessage("amitalBackButtonClicked");
 
         let RequestWrapper = new RequestWrapperM()

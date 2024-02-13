@@ -606,7 +606,7 @@ export class HomeComponent implements OnDestroy{
     }
 
     afterLogin() {
-        // this.runLogitudeCommand();
+        this.runLogitudeCommand();
     }
 
     runLogitudeCommand(){
