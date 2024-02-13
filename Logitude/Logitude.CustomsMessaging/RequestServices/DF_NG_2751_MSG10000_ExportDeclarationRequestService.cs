@@ -233,7 +233,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
             }
 
-            if (_DeclarationPM.IsConnectedToUnifreight)
+            if (_DeclarationPM.Direction!="E")
             {
                 OpenUnifreighTask(_DeclarationPM, "L2U", "INR", true, "");
                 return;

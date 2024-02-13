@@ -211,7 +211,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             FileAdditionalData = _FileAdditionalData
                         };
                         _MyDeclarationPM.CurrentContextTag = _cargoContext;
-                        if(_MyDeclarationPM.IsConnectedToUnifreight)
+                        if(_MyDeclarationPM.Direction!="E")
                             OpenUnifreighTask();
                         bool  IsAvailabilityDate2 = false;
                         myDeclarationUpdateService.SuppressNewConcurrencyGUID = true;

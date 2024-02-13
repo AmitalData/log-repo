@@ -232,8 +232,7 @@ namespace Logitude.CustomsMessaging.RequestServices
                 declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
             }
 
-            if (_DeclarationPM.IsConnectedToUnifreight)
-            {
+           
                 if(_DeclarationPM.IsCourierDeclaration)
                 {
                     FeatureQuery featureQuery = new FeatureQuery();
@@ -248,7 +247,7 @@ namespace Logitude.CustomsMessaging.RequestServices
 
                 }
                 return;
-            }
+           
             ///moran please updat event "INR"
             //string loggingUserId = AuthenticationUtil.ResolveUserId(requestParams.Tenant);
             string loggingUserId = null;
@@ -271,8 +270,8 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
             try
             {
-                
-                  
+                   if (dirtyDeclarationPM.Direction == "E")
+                     return;
                    //we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                     var requestData = "";
                     var addStatus = ""; // moran 17.9.15 - Task 15458

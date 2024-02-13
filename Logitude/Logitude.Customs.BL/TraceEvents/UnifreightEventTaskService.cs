@@ -52,7 +52,8 @@ namespace Logitude.Customs.BL.TraceEvents
             string unifreightUserId = GetUnifreightUserId(tenant, UserId);
             try
             {
-             
+                if (myUnifreightEventParam.Entname == "CFIFILEM")
+                {
                     _AmitalContext = AmitalContext.GetContext(tenant);
 
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
@@ -64,18 +65,18 @@ namespace Logitude.Customs.BL.TraceEvents
 
                     EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightEventParam);
 
-                if (mySetting.IsConnectedToUniFreight)
-                {
-                    InsertGGGQ4Entity(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, myGGGQUpdateService);
-                 }
+                    if (mySetting.IsConnectedToUniFreight)
+                    {
+                        InsertGGGQ4Entity(myUnifreightEventParam.Entname, myUnifreightEventParam.PrimaryNum, myGGGQUpdateService);
+                    }
 
-                string requestData = GetEventRequestDATA(myUnifreightEventParam, unifreightUserId, true);
-                InsertEventTask4Entity(myUnifreightEventParam, unifreightUserId, tenant, requestData);
-
-
+                    string requestData = GetEventRequestDATA(myUnifreightEventParam, unifreightUserId, true);
+                    InsertEventTask4Entity(myUnifreightEventParam, unifreightUserId, tenant, requestData);
 
 
 
+
+                }
             }
             finally
             {

@@ -105,22 +105,24 @@ namespace Logitude.Customs.BL.TraceEvents
             _UnifreightUserId = GetUnifreightUserId(tenant, logitudeUserId);
             try
             {
-                string requestData = GetMyFUStatusXML(tenant, myUnifreightFUStatusParam, myUnifreightFUStatusParam.EventDateTime ?? DateTime.Now);
+                if (myUnifreightFUStatusParam.Entname == "CFIFILEM")
+                {
+                    string requestData = GetMyFUStatusXML(tenant, myUnifreightFUStatusParam, myUnifreightFUStatusParam.EventDateTime ?? DateTime.Now);
 
-             
-                     _AmitalContext = AmitalContext.GetContext(tenant);
+
+                    _AmitalContext = AmitalContext.GetContext(tenant);
                     var myCCUQUELOCKQueryService = new CCUQUELOCKQueryService(_AmitalContext);
                     var myCCUQUELOCKUpdateService = new CCUQUELOCKUpdateService(_AmitalContext);
                     var myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
 
                     EnsureLockExist4Entity(myCCUQUELOCKQueryService, myCCUQUELOCKUpdateService, myUnifreightFUStatusParam);
-                if (isConnectedToUniFreight)
-                {
-                    //string requestData = GetEventRequestDATA(myUnifreightFUStatusParam, unifreightUserId, true);
-                    InsertGGGQ4Entity(myUnifreightFUStatusParam.Entname, myUnifreightFUStatusParam.PrimaryNum, myGGGQUpdateService);
+                    if (isConnectedToUniFreight)
+                    {
+                        //string requestData = GetEventRequestDATA(myUnifreightFUStatusParam, unifreightUserId, true);
+                        InsertGGGQ4Entity(myUnifreightFUStatusParam.Entname, myUnifreightFUStatusParam.PrimaryNum, myGGGQUpdateService);
+                    }
+                    InsertEventTask4Entity(myUnifreightFUStatusParam, _UnifreightUserId, tenant, requestData);
                 }
-                InsertEventTask4Entity(myUnifreightFUStatusParam, _UnifreightUserId, tenant, requestData);
-
 
             }
             finally
