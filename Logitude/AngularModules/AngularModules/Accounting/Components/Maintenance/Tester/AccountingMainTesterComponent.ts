@@ -70,7 +70,7 @@ export class AccountingMainTesterComponent extends BaseComponent {
     UploadExpenses_Click() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = 750;
-        logitudeWindow.Title = "Upload Expenses";
+        logitudeWindow.Title = "Upload Deduction Details";
         logitudeWindow.Show('./Accounting/Components/Maintenance/UploadExpensesComponent');
     }
     JournalId2Void_click() {
