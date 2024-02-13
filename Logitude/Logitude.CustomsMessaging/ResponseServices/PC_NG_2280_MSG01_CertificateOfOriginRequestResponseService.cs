@@ -216,7 +216,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			documentsFilingPM.Tenant = requestParams.Tenant;
 			var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("COOE", requestParams.Tenant);
 			documentsFilingPM.DocumentTypeId = documentType.Id;
-			documentsFilingPM.Name = "תעודת מקור: " + "1-" + certificateOfOriginPM.COONumber;
+			documentsFilingPM.Name = "תעודת מקור: " + certificateOfOriginPM.COONumber+ "-1" ;
 			documentsFilingPM.EntityId = declarationPM.Id;
 			documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
 			documentsFilingPM.ChildEntityId = certificateOfOriginPM.Id;
@@ -227,7 +227,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
 			documentsFilingPM.DirectionCode = "I";
 			// I/O  - only  !!  -   documentsFilingPM.DirectionCode = this._MyDeclarationPM.Direction;
-			documentsFilingPM.Description = "תעודת מקור: " + "1-" + certificateOfOriginPM.COONumber;
+			documentsFilingPM.Description = "תעודת מקור: "  + certificateOfOriginPM.COONumber + "-1";
 			documentsFilingPM.ExternalEntityName = declarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM";
 			documentsFilingPM.ExternalEntityReference = declarationPM.CustomFileNo;
 			documentsFilingPM.FileExtension = "PDF";
@@ -244,8 +244,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
 			var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "2280", IsCourier = false }, newVersion.ToString());
 
-			documentsFilingPM.Description = "תעודת מקור: " + newVersion + "-" + certificateOfOriginPM.COONumber;
-			documentsFilingPM.Name = "תעודת מקור: " + newVersion + "-" + certificateOfOriginPM.COONumber;
+			documentsFilingPM.Description = "תעודת מקור: " + certificateOfOriginPM.COONumber+ "-" + newVersion;
+			documentsFilingPM.Name = "תעודת מקור: " + certificateOfOriginPM.COONumber + "-" + newVersion;
 			documentsFilingPM.UpdatedByUserId = requestParams.LoggingUserId;
 			documentsFilingPM.LastVersion = newVersion;
 
