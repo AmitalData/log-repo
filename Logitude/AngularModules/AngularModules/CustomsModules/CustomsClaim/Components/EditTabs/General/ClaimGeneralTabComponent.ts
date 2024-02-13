@@ -35,7 +35,6 @@ import { ClaimsRelatedEntitiesAmountPM } from 'Customs/EntityPMs/ClaimsRelatedEn
 export class ClaimGeneralTabComponent extends BaseComponent {
   public IsDisplayOnly: boolean = false;
   public FooterMethods: any;
-  public shownDeclarationDataWithoutSaving: boolean = false;
 
     public DataContext: ClaimGeneralTabComponent = this;
     public EntityPM: ClaimPM = new ClaimPM();
@@ -166,12 +165,9 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             claimsAmountList.push(claimsRelatedEntitiesAmountPM);
         });
         claimsRelatedEntityPM.ClaimsRelatedEntitiesAmounts = claimsAmountList;
-
-        let newClaimsRelatedEntityLineComponent = new ClaimsRelatedEntityLineComponent(claimsRelatedEntityPM, this.EntityPM, false);
-        this.ClaimsRelatedEntitiesObslist.Insert(newClaimsRelatedEntityLineComponent);
         this.EntityPM.AddClaimsRelatedEntity(claimsRelatedEntityPM);
 
-        this.shownDeclarationDataWithoutSaving = true;
+        this.EntityPM["notSavedEntity"] = true;
         this.FinalizeEntityBuilds();
     }
 
@@ -183,6 +179,10 @@ export class ClaimGeneralTabComponent extends BaseComponent {
                 SessionLocator.SelectedSession.CurrentEditComponent.SaveCompleted.subscribe((isSaveSuccess: boolean) => {
                     if (isSaveSuccess) {
                         this.EntityPM = SessionLocator.SelectedSession.CurrentEditComponent.EntityPM;
+
+                        if (this.EntityPM["notSavedEntity"]) {
+                            delete(this.EntityPM["notSavedEntity"]);
+                        }
                     }
                 })
             );
@@ -525,7 +525,8 @@ export class ClaimGeneralTabComponent extends BaseComponent {
 
     //#region Related Entities
     EditButtonClicked(item: ClaimsRelatedEntityLineComponent) {
-        if (this.shownDeclarationDataWithoutSaving) {
+        // if the entity has not been saved, do not save it now, just show the window to edit it
+        if (this.EntityPM["notSavedEntity"]) {
             this.EditClaimsRelatedEntityLine(item, false);
         }
         else {
@@ -566,7 +567,7 @@ export class ClaimGeneralTabComponent extends BaseComponent {
             }
             windowArgs.WindowTitle = TextCodeTranslator.Translate("Customs.Claim.O.EditClaimsRelatedEntity") + " " + tapagNumberAndNumeral;
         }
-            
+
         //windowArgs.IsDisplayOnly = this.IsDisplayOnly;
         logWindow.ShowCloseButton = false;
         logWindow.WindowArgs = windowArgs;

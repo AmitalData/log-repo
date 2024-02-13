@@ -78,6 +78,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
         this.ValidationErrorsList = [];
 
         // if inserted custom file number, assert it is found
+        this.CustomFileNo = this.CustomFileNo.trim();
         if (!AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             return this._declarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo).subscribe((response: ServiceResponse) => {
                 if (AppTool.IsNullOrEmpty(response.Result?.Id)) {
