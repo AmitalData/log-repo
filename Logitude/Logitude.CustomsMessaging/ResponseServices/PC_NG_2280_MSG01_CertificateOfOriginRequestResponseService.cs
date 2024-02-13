@@ -209,14 +209,14 @@ namespace Logitude.CustomsMessaging.ResponseServices
 		private DocumentsFilingPM CreateCertificateOfOriginDocument(Attachment attachment, DeclarationPM declarationPM, CertificateOfOriginRequestRequestParams requestParams, CertificateOfOriginPM certificateOfOriginPM)
 		{
 			ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-			var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "2280", IsCourier = false });
+			var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "2280", IsCourier = false },"1");
 			var documentTypeQuery = new DocumentTypeQuery(requestParams.Tenant);
 
 			var documentsFilingPM = new DocumentsFilingPM();
 			documentsFilingPM.Tenant = requestParams.Tenant;
 			var documentType = documentTypeQuery.GetSinglePMByCodeAndTenant("COOE", requestParams.Tenant);
 			documentsFilingPM.DocumentTypeId = documentType.Id;
-			documentsFilingPM.Name = "תעודת מקור: " + certificateOfOriginPM.COONumber;
+			documentsFilingPM.Name = certificateOfOriginPM.COONumber + "-1" + "תעודת מקור: ";
 			documentsFilingPM.EntityId = declarationPM.Id;
 			documentsFilingPM.ObjectTableId = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
 			documentsFilingPM.ChildEntityId = certificateOfOriginPM.Id;
@@ -227,11 +227,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			documentsFilingPM.ReceivedByUserId = requestParams.LoggingUserId;
 			documentsFilingPM.DirectionCode = "I";
 			// I/O  - only  !!  -   documentsFilingPM.DirectionCode = this._MyDeclarationPM.Direction;
-			documentsFilingPM.Description = "תעודת מקור: " + certificateOfOriginPM.COONumber;
+			documentsFilingPM.Description = certificateOfOriginPM.COONumber + "-1" + "תעודת מקור: ";
 			documentsFilingPM.ExternalEntityName = declarationPM.Direction == "E" ? "BFIFILE" : "CFIFILEM";
 			documentsFilingPM.ExternalEntityReference = declarationPM.CustomFileNo;
 			documentsFilingPM.FileExtension = "PDF";
-
+			documentsFilingPM.LastVersion = 1;
 			documentsFilingService.Create(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
 			LogMessagingUtil.Instance.AppendLine("Filed document " + documentsFilingPM.Code + "Created For certificateOfOrigin " + certificateOfOriginPM.COONumber + " documentsFilingPM.ID= " + documentsFilingPM.Id);
 			return documentsFilingPM;
@@ -239,14 +239,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
 		}
 		private void UpdateCertificateOfOriginDocument(DocumentsFilingPM documentsFilingPM, Attachment attachment, DeclarationPM declarationPM, CertificateOfOriginRequestRequestParams requestParams, CertificateOfOriginPM certificateOfOriginPM)
 		{
+			var newVersion = ++documentsFilingPM.LastVersion;
+
 			ICommonDataContext dataContext = CommonDataContext.GetContext(requestParams.Tenant);
-			var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "2280", IsCourier = false });
+			var documentsFilingService = new UnifreightDocumentsFilingService(dataContext, requestParams.Tenant, new CustomDocumentsFilingParams() { MainInterfaceCode = "2280", IsCourier = false }, newVersion.ToString());
 
-			documentsFilingPM.Description = "תעודת מקור: " + certificateOfOriginPM.COONumber;
-			documentsFilingPM.Name = "תעודת מקור: " + certificateOfOriginPM.COONumber;
+			documentsFilingPM.Description = certificateOfOriginPM.COONumber + "-" + newVersion + "תעודת מקור: ";
+			documentsFilingPM.Name = certificateOfOriginPM.COONumber + "-" + newVersion + "תעודת מקור: ";
 			documentsFilingPM.UpdatedByUserId = requestParams.LoggingUserId;
-
-			documentsFilingService.OnlyIfChangeUpdateAndAddVersion = true;
+			documentsFilingPM.LastVersion = newVersion;
 
 			documentsFilingService.Update(documentsFilingPM, attachment.content, requestParams.LoggingUserId);
 			LogMessagingUtil.Instance.AppendLine("File document " + documentsFilingPM.Code + " Updated For certificateOfOrigin " + certificateOfOriginPM.COONumber + " documentsFilingPM.ID= " + documentsFilingPM.Id);
