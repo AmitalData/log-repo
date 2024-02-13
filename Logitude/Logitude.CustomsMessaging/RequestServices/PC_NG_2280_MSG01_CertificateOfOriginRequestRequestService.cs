@@ -95,8 +95,8 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				ExporterCountry = certificateOfOrigin.ExporterCountry,
 				TradeAgreementCountry1 = CooTypeCodeList.Contains(certificateOfOrigin.CooTypeCode) ? "IL" : certificateOfOrigin.TradeAgreementCountry1,
 				TradeAgreementCountry2 = certificateOfOrigin.TradeAgreementCountry2,
-				TradeAgreementGroupOfCountries = Convert.ToInt32(certificateOfOrigin.TradeAgreementGroupOfCountries),
-				TradeAgreementGroupOfCountriesSpecified = true,
+				TradeAgreementGroupOfCountries = string.IsNullOrEmpty(certificateOfOrigin.TradeAgreementGroupOfCountries) ? null : (int?)Convert.ToInt32(certificateOfOrigin.TradeAgreementGroupOfCountries),
+                TradeAgreementGroupOfCountriesSpecified = true,
 
 				ConsigneeName = certificateOfOrigin.ConsigneeName,
 				ConsigneeAddress = certificateOfOrigin.ConsigneeAddress,

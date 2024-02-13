@@ -1,33 +1,5 @@
 <style>
-    .FieldRow {
-        height: 25px;
-        line-height: 40px;
-    }
 
-    :host ::ng-deep .InputDiv {
-        height: 55px !important;
-    }
-
-    /* .TextTrimming {
-        vertical-align: top!important;
-    } */
-    .DisbleBox {
-        display: inline-block;
-        border: 1px solid #ffd800;
-        border-radius: 5px;
-        background: #faf5c0;
-        /*fbebbc*/
-        padding: 4px 10px;
-        color: gray;
-        font-family: sans-serif;
-        max-width: 660px;
-        white-space: normal;
-    }
-    #connectedInvoices {
-        display: flex;
-        justify-content: space-between;
-        width: 100%;
-    }
 </style>
 <table *ngIf="isReady">
     <tr style="height: 28px;">
@@ -115,7 +87,7 @@
                             <LogLabel [ObjectFieldName]="'ExporterAddress'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px;" rowspan="2">
+                        <td style="width:180px;" rowspan="2" class="AddressBox">
                             <LogTextBox style="width:240px;max-height: 50px;" [IsMultiline]="true"
                                 [ObjectFieldName]="'ExporterAddress'" [HideColumns]="true"
                                 [ObjectTableName]="ObjectTableName" [InputType]="'nText'" [DataContext]="DataContext">
@@ -125,7 +97,7 @@
                             <LogLabel [ObjectFieldName]="'ConsigneeAddress'" [ObjectTableName]="ObjectTableName"
                                 [DataContext]="DataContext"></LogLabel>
                         </td>
-                        <td style="width:180px" rowspan="2">
+                        <td style="width:180px" rowspan="2"  class="AddressBox">
                             <LogTextBox style="width:240px;" [IsMultiline]="true" [ObjectFieldName]="'ConsigneeAddress'"
                                 [HideColumns]="true" [ObjectTableName]="ObjectTableName" [InputType]="'nText'"
                                 [DataContext]="DataContext"></LogTextBox>
@@ -341,12 +313,11 @@
                                         <log-cell-template #logcelltemplate
                                             (CellClicked)="onCellSelected($event,logcelltemplate,item)"
                                             [RIndex]="item.InvoicesIdUry" [IsEnabled]="!IsDisplayOnly">
-                                            <div class="TextTrimming" style="text-align:right"
-                                                *ngIf="logcelltemplate.IsDisplayMode">
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.DescriptionOfInvoice}}</span>
                                             </div>
-                                            <div *ngIf="logcelltemplate.IsEditMode" style="height: 90%; width: 100%; max-height: 25px;">
-                                                <LogTextBox #DescriptionOfInvoiceTextBox
+                                            <div *ngIf="logcelltemplate.IsEditMode" style="width: 100%;" class="DescriptionBox">
+                                                <LogTextBox #DescriptionOfInvoiceTextBox 
                                                     [ObjectFieldName]="'DescriptionOfInvoice'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
                                                     [Text]="item.DescriptionOfInvoice"
@@ -439,7 +410,7 @@
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <span>{{item.ItemDescription}}</span>
                                             </div>
-                                            <div class="Tbl1Col1" *ngIf="logcelltemplate.IsEditMode" style="height: 90%; width: 100%; max-height: 25px;">
+                                            <div class="Tbl1Col1 DescriptionBox" *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox #ItemDescriptionTextBox
                                                     [ObjectFieldName]="'ItemDescription'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
@@ -490,12 +461,12 @@
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogLov [ObjectFieldName]="'PackageType'"
-                                                [ObjectTableName]="'Customs.CertificateOfOriginItem'"
-                                                [DataContext]="item" [LookUpTableName]="'Customs.PackingType'"
-                                                [HideColumns]="true"
-                                                (SelectedItemChanged)="SetLocalName($event, 'PackingTypeName',item)"
-                                                [FocusOnMe]="'true'" [CustomizedWidth]="180">
-                                            </LogLov>
+                                                    [ObjectTableName]="'Customs.CertificateOfOriginItem'"
+                                                    [DataContext]="item" [LookUpTableName]="'Customs.PackingType'"
+                                                    [HideColumns]="true"
+                                                    (SelectedItemChanged)="item.SetLocalName($event, 'PackingTypeName',item ,CertificateOriginItemItems)"
+                                                    [FocusOnMe]="'true'" [CustomizedWidth]="180">
+                                                </LogLov>
                                             </div>
                                         </log-cell-template>
                                     </ng-template>
@@ -537,7 +508,7 @@
                                                 <LogLov #MeasureTypeTextBox [ObjectFieldName]="'MeasureType'"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'" [DataContext]="item"
                                                     [LookUpTableName]="'Customs.MeasurmentUnit'"
-                                                    (SelectedItemChanged)="SetLocalName($event, 'MeasureTypeName',item)"
+                                                    (SelectedItemChanged)="item.SetLocalName($event, 'MeasureTypeName',item,CertificateOriginItemItems)"
                                                    [HideColumns]="true" [FocusOnMe]="true"
                                                    [CustomizedWidth]="180">
                                                 </LogLov>
@@ -610,7 +581,7 @@
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'" [DataContext]="item"
                                                     [LookUpTableName]="'Customs.OriginCriterion'"
                                                     [DisplayMemberPath]="'OriginCriterionCode'"
-                                                    (SelectedItemChanged)="SetLocalName($event, 'OriginCriterionCodeName',item)"
+                                                    (SelectedItemChanged)="item.SetLocalName($event, 'OriginCriterionCodeName', item ,CertificateOriginItemItems)"
                                                     [CustomizedWidth]="180" [QueryFilterItems]="CriterionTypesFilterItems"
                                                     [HideColumns]="true" [FocusOnMe]="true">
                                                 </LogLov>

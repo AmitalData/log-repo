@@ -35,7 +35,7 @@ import { CertificateOfOriginMandatoryFieldsList } from 'Customs/EntityLists/Cert
 
 
 @Component({
-
+    styleUrls: ['./CertificateOfOriginGeneralTabComponent.scss'],
     templateUrl: './CertificateOfOriginGeneralTabComponent.html',
 })
 
@@ -268,7 +268,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
             if (!myResponse.HasError) {
                 // this.UIProperties.SetWarning("OriginCountry", this.ObjectTableName, true);
-                debugger
+                // debugger
                 const certificateOfOriginMandatoryFieldsList = myResponse?.Result;
                 if (certificateOfOriginMandatoryFieldsList.length <= 0) return;
                 certificateOfOriginMandatoryFieldsList.forEach(item => {
@@ -390,18 +390,18 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         logcelltemplate.IsEditMode = true;
     }
 
-    SetLocalName(entity, fieldName, item) {
-        if (!AppTool.IsNullOrEmpty(entity)) {
-            if (fieldName == "OriginCriterionCodeName") {
-                this.CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.OriginCriterionCode;
-                return;
-            }
-            this.CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.LocalName;
-        } else {
-            this[fieldName] = null;
-        }
+    // SetLocalName(entity, fieldName, item) {
+    //     if (!AppTool.IsNullOrEmpty(entity)) {
+    //         if (fieldName == "OriginCriterionCodeName") {
+    //             this.CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.OriginCriterionCode;
+    //             return;
+    //         }
+    //         this.CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.LocalName;
+    //     } else {
+    //         this[fieldName] = null;
+    //     }
 
-    }
+    // }
 
     CheckMandatoryFields() {
         if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {
@@ -422,13 +422,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     CheckMandatoryCustomsFields(ValidationErrors = []) {
-        debugger
-        // check:
-        let someName = "OriginCountry"
-        let field = this.entityPM[someName];
-        if (!field) {
-            ValidationErrors.push(someName);
-        }
+        // debugger
+        // // check:
+        // let someName = "OriginCountry"
+        // let field = this.entityPM[someName];
+        // if (!field) {
+        //     ValidationErrors.push(someName);
+        // }
         this.mandatoryFielsList.forEach(item => {
             if(item){
                 let field = this.entityPM[item];
@@ -1057,6 +1057,18 @@ export class CertificateOfOriginItemLine extends BaseComponent {
         this.Parent = parent;
     }
 
+    SetLocalName(entity, fieldName, item , CertificateOriginItemItems) {
+        if (!AppTool.IsNullOrEmpty(entity)) {
+            if (fieldName == "OriginCriterionCodeName") {
+                CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.OriginCriterionCode;
+                return;
+            }
+            CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.LocalName;
+        } 
+        else {
+            this[fieldName] = null;
+        }
+    }
     public get InvoiceConnect(): string {
         return this.entityPM.InvoiceConnect;
     }

@@ -1,0 +1,38 @@
+
+.FieldRow {
+    height: 25px;
+    line-height: 40px;
+}
+
+// :host ::ng-deep .InputDiv {
+    
+//     max-height: 50px !important;
+//     height: 50px !important;
+// }
+
+::ng-deep .AddressBox .InputDiv {
+    height: 55px !important;
+}
+
+::ng-deep .DescriptionBox .InputDiv {
+    height: 24.8px !important;
+}
+
+.DisbleBox {
+    display: inline-block;
+    border: 1px solid #ffd800;
+    border-radius: 5px;
+    background: #faf5c0;
+    /*fbebbc*/
+    padding: 4px 10px;
+    color: gray;
+    font-family: sans-serif;
+    max-width: 660px;
+    white-space: normal;
+}
+
+#connectedInvoices {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
