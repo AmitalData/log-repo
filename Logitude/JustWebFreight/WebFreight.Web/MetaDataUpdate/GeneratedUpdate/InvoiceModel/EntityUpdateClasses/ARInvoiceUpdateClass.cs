@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-
-		public const string HashString = "226f141b0d406e34218a2ebf560da67b";
+		public const string HashString = "eea872a07ff600f1bbf77321da63df08";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14162,7 +14161,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "IsSigned",
 					  						ObjectTableName =  "ARInvoice",
-					  						FieldsDataType =  "Boolean",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "ARInvoicesSignedStatus",
 					  						MinLength =  1,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
@@ -14204,7 +14204,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ListFieldLable =  "IsSignedListLable",
 					  						ListLableDefaultText =  "Is Signed",
 					  						ListLocalDefaultText =  "קוד סטטוס חתימה",
-					  						IsForeignKey =  false,
+					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ARInvoicesSignedStatus",
 					  						NavigationPropertyName =  "ARInvoicesSignedStatus",
 					  						IsMaxLength =  false,
@@ -14500,6 +14500,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ConfirmationNumber",
 					  						ListPropertyPath =  "ConfirmationNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
