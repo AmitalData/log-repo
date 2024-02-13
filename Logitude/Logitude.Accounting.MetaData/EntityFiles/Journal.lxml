@@ -3939,6 +3939,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ConfirmationNumber&quot;"
     ListPropertyPath="&quot;ConfirmationNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
