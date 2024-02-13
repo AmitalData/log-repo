@@ -29,6 +29,14 @@ export class AddEditAPInvoiceLineComponent {
             this.EnableMultiRateAPInvoices = SessionLocator.AccountingSettingPM.EnableMultiRateAPInvoices;
         }
     }
+    
+    public ChargeTypesQueryFilters: ApiQueryFilters;
+    private BuildQueryFilters() {
+        this.ChargeTypesQueryFilters = new ApiQueryFilters();
+        this.ChargeTypesQueryFilters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "boolean");
+        this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
+    }
 
     public ChargeTypesQueryFilters: ApiQueryFilters;
     private BuildQueryFilters() {

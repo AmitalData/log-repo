@@ -85,7 +85,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ChargesTypeUpdateClass
    {  		
-		public const string HashString = "4e0b9f1b1eda0393f2716fad61e27c0e";
+ 		public const string HashString = "4e0b9f1b1eda0393f2716fad61e27c0e";
+ 
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -535,8 +536,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PayableDebitAccount",
 					  						DefaultText =  "Payable Debit Account",
+					  						FullLocalDefaultText =  "חשבון נגדי לקליטת הוצאות",
 					  						ListFieldLable =  "PayableDebitAccountListLable",
 					  						ListLableDefaultText =  "Payable Debit Account",
+					  						ListLocalDefaultText =  "חשבון נגדי לקליטת הוצאות",
+					  						ShortFieldLable =  "PayableDebitAccount",
+					  						ShortFieldLableDefaultText =  "Payable Debit Account",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -602,8 +607,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ReceivableCreditAccount",
 					  						DefaultText =  "Receivable Credit Account",
+					  						FullLocalDefaultText =  "חשבון נגדי לרישום הכנסות",
 					  						ListFieldLable =  "ReceivableCreditAccountListLable",
 					  						ListLableDefaultText =  "Receivable Credit Account",
+					  						ListLocalDefaultText =  "חשבון נגדי לרישום הכנסות",
+					  						ShortFieldLable =  "ReceivableCreditAccount",
+					  						ShortFieldLableDefaultText =  "Receivable Credit Account",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2232,10 +2241,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsReceivable",
 					  						DefaultText =  "Is Receivable",
-					  						FullLocalDefaultText =  "לשימוש כחשבוניות לקוח",
-					  						ListFieldLable =  "IsReceivableListLable",
-					  						ListLableDefaultText =  "Receivable",
-					  						ListLocalDefaultText =  "לשימוש כחשבוניות לקוח",
+					  						FullLocalDefaultText =  "הצגה בחשבונית לקוח",
 					  						ShortFieldLable =  "IsReceivable",
 					  						ShortFieldLableDefaultText =  "Receivable",
 					  						IsForeignKey =  false,
@@ -2303,10 +2309,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "IsPayable",
 					  						DefaultText =  "Is Payable",
-					  						FullLocalDefaultText =  "לשימוש בחשבוניות ספק",
-					  						ListFieldLable =  "IsPayableListLable",
-					  						ListLableDefaultText =  "Payable",
-					  						ListLocalDefaultText =  "לשימוש בחשבוניות ספק",
+
+					  						FullLocalDefaultText =  "הצגה בחשבונית ספק",
 					  						ShortFieldLable =  "IsPayable",
 					  						ShortFieldLableDefaultText =  "Payable",
 					  						IsForeignKey =  false,
