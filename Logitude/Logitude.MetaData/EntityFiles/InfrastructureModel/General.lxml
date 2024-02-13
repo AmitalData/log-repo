@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;fa27&quot;"
+  Code="&quot;616f&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -379,7 +379,7 @@
     <TextCode
       Code="&quot;General.M.ThisEntityhasunsavedchanges&quot;"
       DefaultText="&quot;This %Entity has unsaved changes do you want to save it?&quot;"
-      LocalDefaultText="&quot;%Entity זו בוצעו שינויים שלא נשמרו האם לשמור?&quot;"
+      LocalDefaultText="&quot;%Entityזו בוצעו שינויים שלא נשמרו האם לשמור ב?&quot;"
       TextCodeTypeCode="&quot;M&quot;"
       IsSpellChecked="false" />
     <TextCode
