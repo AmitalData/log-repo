@@ -1500,6 +1500,9 @@ export class EditComponent implements OnDestroy, AfterViewInit {
             if (this.IsEditValid) {
                 this.SaveEntityChanges(false, busyIndicatorText);
             }
+            else {
+                this.FireSaveCompleted(false);
+            }
         }
 
         else {

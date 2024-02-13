@@ -210,6 +210,10 @@ export class ClaimRelatedEntityTabComponent extends BaseComponent {
 
     CancelButtonClicked() {
         this.ClaimPM.RejectChanges();
+        // if the current entity has not been saved, do not reload the data from the backend that will cause to remove changes in the ui
+        if (!this.CurrentSession.CurrentEditComponent.EntityPM.notSavedEntity) {
+            this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        }
         this.CurrentSession.CloseCurrentWindowEmit('cancel');
     }
 
