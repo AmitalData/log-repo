@@ -103,7 +103,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         //CreateDCAInUCB1170_MsgMessagingService(customResponse, requestParams);
         var CreateDCAInUCB1170_MsgMessagingService = new CRSUtil();
        CreateDCAInUCB1170_MsgMessagingService
-       .CreateCRS_DCAIn<DCAInUCB8250WithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
+       .CreateCRS_DCAIn<DCAInUCB8250WithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase), out string list);
 
    });
             }
@@ -214,7 +214,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
        //CreateDCAInUCB1170_MsgMessagingService(customResponse, requestParams);
        var CreateDCAInUCB1170_MsgMessagingService = new CRSUtil();
        CreateDCAInUCB1170_MsgMessagingService
-       .CreateCRS_DCAIn<DCAInUCB8250WithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
+       .CreateCRS_DCAIn<DCAInUCB8250WithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase), out string list);
 
    });
             }

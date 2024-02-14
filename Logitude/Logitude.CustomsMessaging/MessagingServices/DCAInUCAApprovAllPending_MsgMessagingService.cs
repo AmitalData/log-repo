@@ -73,7 +73,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             return genericRequestParams;
         }
 
-        public string CreateCRS(int tenant, string LoggingUserId, PendingRequestParams myPendingRequestParams)
+        public string CreateCRS(int tenant, string LoggingUserId, PendingRequestParams myPendingRequestParams, out string RequestInProgressListOut)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
@@ -81,6 +81,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, myPendingRequestParams.CourierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
+                RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
                 return "קיים מסר זהה בתהליך";
             }
             LogMessagingUtil.Instance.AppendLine("Build !!!Requestsheet  with Interface Type  = DCAInUCBApproveAllPending  !!!");
@@ -139,6 +140,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     }, xmlESBResponseXmlClass);
 
                     trans.Complete();
+                    RequestInProgressListOut = "";
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -151,6 +153,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("DCAInUCBApproveAllPending SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                    RequestInProgressListOut = myCustomsRequestsSheetServiceException?.CustomsRequestsSheetId;
                     return "קיים מסר זהה בתהליך";
                 }
             }

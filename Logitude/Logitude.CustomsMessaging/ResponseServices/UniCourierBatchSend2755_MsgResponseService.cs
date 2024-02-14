@@ -125,7 +125,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
         //CreateDCAInUCB1170_MsgMessagingService(customResponse, requestParams);
         var CreateDCAInUCB2755_MsgMessagingService = new CRSUtil();
         CreateDCAInUCB2755_MsgMessagingService
-        .CreateCRS_DCAIn<DCAInUCB2755WithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase));
+        .CreateCRS_DCAIn<DCAInUCB2755WithResponseContentHeader>(customResponse, (requestParams as RequestParamsBase), out string list);
 
     });
                 }

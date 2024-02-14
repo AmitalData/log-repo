@@ -134,6 +134,7 @@ export class CustomsRequestsSheetsComponent
     }
 
     SetWindowArgs(args) {
+        this.entityArgs = args;
         if (args != null) {
             this.isReAnAnalysis = args.isReAnAnalysis;
             if (this.isReAnAnalysis)
@@ -148,7 +149,7 @@ export class CustomsRequestsSheetsComponent
         this.entityArgs = entityArgs;
     }
     ngOnInit() {
-        this.MyRequestOnly = true;
+       this.MyRequestOnly = true;
         if (this.entityArgs.ObjectTableName) {
             if (this.entityArgs.ObjectTableName == "Customs.Declaration") {
 
@@ -161,10 +162,12 @@ export class CustomsRequestsSheetsComponent
             } else if (this.entityArgs.ObjectTableName == "Customs.Notification") {
                 this.CloseButtonVisibility = true;;//Visibility.Visible; ///??????
             }
+            
             else {
                 this.FiltersSectionVisibility = false;//Visibility.Collapsed;
                 this.RefreshButtonVisibility = true;//Visibility.Visible;
             }
+        
         } else {
             this.FromRequestCreateDate = DateTool.AddDays(DateTool.GetCurrentDateAsUtc(), 0);
             this.RefreshButtonVisibility = true;//Visibility.Visible;
@@ -209,10 +212,10 @@ export class CustomsRequestsSheetsComponent
 
                         }).forEach((item) => {
                             if (this.isReAnAnalysis && ["25", "21", "15"].includes(item.Code)) {
-                                this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", true));
+                                this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", true,this.entityArgs.ObjectTableName == "Customs.CourierMaster"));
                             }
                             else if (!this.isReAnAnalysis) {
-                                this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", false));
+                                this._AllCustomsRequestsSheetStatusListVM.push(new CustomsRequestsSheetStatusListVM(item, this.entityArgs.ObjectTableName == "Customs.Declaration", false,this.entityArgs.ObjectTableName == "Customs.CourierMaster"));
 
                             }
                         });
@@ -395,12 +398,20 @@ export class CustomsRequestsSheetsComponent
                 objectTableId1 = objectTablePM.Id;
             }
         }
+        if (objectTableName == "Customs.CourierMaster") {
+
+            if (!AppTool.IsNullOrEmpty(this.entityArgs.OriginEntity)) {
+                filters.addAdditionalFilter("Id", this.entityArgs.OriginEntity, null, null, "InList", false, false, false, "string");
+            }
+            this.GetRequestStatusString(filters);
+
+        }
         //if (!AppTool.IsNullOrEmpty(objectTableName)) {
-        if (objectTableName === "Customs.Notification") {
+        else if (objectTableName === "Customs.Notification") {
             //////never tested !!!!!!!- copy from silverlight
             filters.addAdditionalFilter("Id", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         }
-       else if (objectTableName === "Customs.ExportStorage") {
+        else if (objectTableName === "Customs.ExportStorage") {
           
             filters.addAdditionalFilter("ObjectTableId2", objectTableId1, null, null, "Equals", false, false, false, "string");
             let EntityId2 = this.entityArgs.EntityPM.Id;
@@ -637,8 +648,6 @@ export class CustomsRequestsSheetsComponent
     };
     filterAgrs: ApiQueryFilters;
     getRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
-
-
         // if (filters == null) {
         filters = new ApiQueryFilters();
         // }
@@ -668,8 +677,15 @@ export class CustomsRequestsSheetsComponent
                 objectTableId1 = objectTablePM.Id;
             }
         }
-        //if (!AppTool.IsNullOrEmpty(objectTableName)) {
-        if (objectTableName === "Customs.Notification") {
+        if (objectTableName == "Customs.CourierMaster") {
+
+            if (!AppTool.IsNullOrEmpty(this.entityArgs.OriginEntity)) {
+                filters.addAdditionalFilter("Id", this.entityArgs.OriginEntity, null, null, "InList", false, false, false, "string");
+            }
+            this.GetRequestStatusString(filters);
+        }
+        
+        else if (objectTableName === "Customs.Notification") {
             //////never tested !!!!!!!- copy from silverlight
             filters.addAdditionalFilter("Id", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
         }
@@ -680,7 +696,7 @@ export class CustomsRequestsSheetsComponent
             filters.addAdditionalFilter("EntityId2", EntityId2, null, null, "Equals", false, false, false, "string");
         }
         else {
-            if (!AppTool.IsNullOrEmpty(objectTableName) && objectTableName != "Customs.Declaration") {
+            if (!AppTool.IsNullOrEmpty(objectTableName) && objectTableName != "Customs.Declaration" ) {
                 //////never tested !!!!!!!- copy from silverlight
                 //filters.addAdditionalFilter("ObjectTableId1", objectTableId, null, null, "Equals", false, false, false, "string");
                 filters.addAdditionalFilter("ObjectTableId1", objectTableId1, null, null, "Equals", false, false, false, "string");
@@ -688,12 +704,11 @@ export class CustomsRequestsSheetsComponent
                 if (AppTool.IsNullOrEmpty(EntityId1)) {
                     EntityId1 = "new Entity do not get any rows !!!!";
                 }
-                //filters.addAdditionalFilter("EntityId1", this.entityArgs.EntityPM.Id, null, null, "Equals", false, false, false, "string");
                 filters.addAdditionalFilter("EntityId1", EntityId1, null, null, "Equals", false, false, false, "string");
 
             }
 
-            else {
+           else {
 
                 if (this.FromDateTime != null || this.ToDateTime != null) {// for Region
                     filters.addAdditionalFilter("RequestCreateDate", this.FromDateTime, this.ToDateTime, null, "Between", false, false, false, "DateTime");
@@ -720,15 +735,14 @@ export class CustomsRequestsSheetsComponent
 
                 }
 
-
                 if (!AppTool.IsNullOrEmpty(this.EntityReference)) {
 
                     filters.addAdditionalFilter("EntityReference", this.EntityReference, null, null, "Equals", false, false, false, "string");
                 }
-                if (AppTool.IsNullOrEmpty(objectTableName) || objectTableName == "Customs.Declaration") {
+                
+                if (AppTool.IsNullOrEmpty(objectTableName) || objectTableName == "Customs.Declaration"  ) {
                     this.GetRequestStatusString(filters);
                 }
-
 
                 if (this.IsRestored) {
                     filters.addAdditionalFilter("IsRestored", this.IsRestored, null, null, "Equals", false, false, false, "boolean");
@@ -739,6 +753,8 @@ export class CustomsRequestsSheetsComponent
 
                 }
             }
+           
+
         }
         var myout = this._entityListService
             .getExtendedByFilters("Customs.CustomsRequestsSheet", filters);
@@ -850,9 +866,18 @@ export class CustomsRequestsSheetsComponent
 
 ////////////////////////////////////////
 export class CustomsRequestsSheetStatusListVM {
-    constructor(public MyItem: CustomsRequestsSheetStatusList, isdeclaration?: boolean, isReAnAnalysis?: boolean) {
-        var Code = MyItem.Code;
-        if (!isReAnAnalysis) {
+    constructor(public MyItem: CustomsRequestsSheetStatusList, isdeclaration?: boolean, isReAnAnalysis?: boolean,isCourierMaster?:boolean) {
+      var Code = MyItem.Code;
+      if(isCourierMaster){
+        if(Code == "0" || Code == "1" || Code == "2" || Code == "5" || Code == "20" || Code == "21" || Code == "23"){
+            this.IsChecked = true;
+        }
+        else{
+            this.IsChecked = false;
+        }
+      }
+      else if (!isReAnAnalysis) {
+            
             if (Code == "1" || Code == "2" || Code == "3" || Code == "4" || Code == "5" || Code == "21" || Code == "99") {
                 this.IsChecked = true;
             }

@@ -86,7 +86,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
         public string CreateCRS(int tenant, string LoggingUserId,
             //string CourierMasterId, string master,string courierDeclarationStatusCode, List<string> DeclarationsList = null)
-            SendALLCorrectRequestParams mySendALLCorrectRequestParams)
+            SendALLCorrectRequestParams mySendALLCorrectRequestParams, out string RequestInProgressListOut)
         {
 
             var objectTableId = ObjectTableRepository.GetObjectTableByName("Customs.CourierMaster");
@@ -94,6 +94,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
             var RequestInProgressList = customsRequestsSheetQS.GetRequestInProgress(tenant, this.MainInterfaceCode, objectTableId, mySendALLCorrectRequestParams.CourierMasterId, null, null, null, true);
             if (RequestInProgressList != null && RequestInProgressList.Count > 0)
             {
+                RequestInProgressListOut = string.Join(",", RequestInProgressList.Select(request => request.Id.ToString())); ;
 
                 ///throw new System.Exception("Requestsheet  with Interface Type  = UCBCTML  already in progress  !!!");
                 return "קיים מסר זהה בתהליך";
@@ -163,6 +164,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
 
                     trans.Complete();
+                    RequestInProgressListOut = "";
                     return "המסר נבנה בהצלחה וישלח בתהליך רקע";
                 }
                 catch (CustomsRequestsSheetDomainModelServiceException myCustomsRequestsSheetServiceException)
@@ -177,6 +179,7 @@ namespace Logitude.CustomsMessaging.MessagingServices
                     {
                         Logitude.Server.Tools.Helpers.LogMessagingUtil.Instance.AppendLine("UCBCTML SameRequestInProgress!!  " + myCustomsRequestsSheetServiceException.Message);
                     }
+                    RequestInProgressListOut = myCustomsRequestsSheetServiceException.CustomsRequestsSheetId;
                     return "קיים מסר זהה בתהליך";
                     //throw;
                 }

@@ -6,6 +6,9 @@ import { BaseComponent } from '../../../Infrastructure/Components/LogitudeCompon
 import { CourierMasterService } from '../../../Customs/Services/Others/CourierMasterService';
 import { MessageWindow } from '../../../Controls/Windows/MessageWindow';
 import { AppTool } from '../../../Infrastructure/Tools';
+import { EntityArgs } from 'Infrastructure/DataContracts/EntityArgs';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
  
 @Component({
     templateUrl: './CourierSendStatusComponent.html',
@@ -74,9 +77,37 @@ export class CourierSendStatusComponent extends BaseComponent {
             .subscribe((res:any) => {
                 SessionLocator.SelectedSession.StopBusyIndicator();
                 var myMessageWindow = new MessageWindow();
-                myMessageWindow.Show(res.Result);
+                if(!AppTool.IsNullOrEmpty(res.RequestInProgressList)){
+                    myMessageWindow.ShowEventButton=true;
+                    TextCodeTranslator.Translate("Customs.Declaration.TH.RequestSheet");
+                }  
+                myMessageWindow.Show(res.Message);
+                myMessageWindow.SendEvent.subscribe(s=>{
+                    if(s){
+                        this.LoadCustomsRequestSheetsScreen(res.RequestInProgressList)
+                    }
+                });
                 this.CancelButtonClicked();
             });
 
+    }
+    LoadCustomsRequestSheetsScreen(RequestInProgressList:string){
+       
+        var entityArgs=new EntityArgs();
+        entityArgs.EntityPM = this.EntityPM;
+        entityArgs.ObjectTableName="Customs.CourierMaster";
+        entityArgs.OriginEntity=RequestInProgressList;
+        let windowTitle = TextCodeTranslator.Translate("TextCodeTranslator");
+        let logWindow = new LogitudeWindow();
+        logWindow.Width = 1300;
+        logWindow.Height = 700;
+        logWindow.Title = windowTitle;
+        logWindow.IsShowCloseButton = true;
+        logWindow.WindowArgs = entityArgs;
+        
+        logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsRequestsSheetsComponent');
+
+
+ 
     }
 }

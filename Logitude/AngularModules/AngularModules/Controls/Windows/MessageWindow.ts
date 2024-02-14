@@ -11,10 +11,14 @@ export class MessageWindow {
     public IsOverAll: boolean = false;
     LayoutDirection: string = 'ltr';
     OkButtonText: string = "Ok";
+    EventButtonText: string = "";
+
     public ZIndex: number = 0;
     @Output() WindowClosed = new EventEmitter();
+    @Output() SendEvent = new EventEmitter();
     public RTL: boolean = false;
     public ShowSuccessIcon: boolean = false;
+    public ShowEventButton: boolean = false;
     public ShowErrorIcon: boolean = false;
     public ShowWarningIcon: boolean = false;
     private CurrentSession = SessionLocator.SelectedSession;
@@ -87,6 +91,17 @@ export class MessageWindow {
 
         this.InstanceComponent = null;
     }
+    public EventClicked() {
+
+        if (this.ComponentRef != null) {
+            this.ComponentRef.destroy();
+            this.ComponentRef = null;
+
+            this.SendEvent.emit("event");
+        }
+
+        this.InstanceComponent = null;
+    }
 }
 
 @Component({
@@ -107,12 +122,15 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
     public OkButtonId: string = null;
     public IsOverAll: boolean = false;
     OkButtonText: string = "Ok";
+    EventButtonText: string = "";
     public ZIndex: number = 0;
     LayoutDirection: string = 'ltr';
     public ShowSuccessIcon: boolean = false;
     public ShowErrorIcon: boolean = false;
     public ShowWarningIcon: boolean = false;
     public RTL: boolean = false;
+    public ShowEventButton: boolean = false;
+
     private CurrentSession = SessionLocator.SelectedSession;
     public IsMessageMultiLine: boolean = false;
     constructor() {
@@ -137,7 +155,8 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
         this.Message = myWindow.Message;
         this.IsOverAll = myWindow.IsOverAll;
         this.ZIndex = myWindow.ZIndex;
-        this.RTL = myWindow.RTL;
+        this.EventButtonText=myWindow.EventButtonText;
+        this.ShowEventButton = myWindow.ShowEventButton;
         this.ShowSuccessIcon = myWindow.ShowSuccessIcon;
         this.ShowErrorIcon = myWindow.ShowErrorIcon;
         this.ShowWarningIcon = myWindow.ShowWarningIcon;
@@ -235,6 +254,9 @@ export class MessageWindowTemplateComponent implements AfterViewInit {
 
     OkButtonClicked() {
         this.MessageWindow.Close();
+    }
+    EventButtonClicked() {
+        this.MessageWindow.EventClicked();
     }
     OnCTRL_S_HotKeyPressed(){
         this.OkButtonClicked();

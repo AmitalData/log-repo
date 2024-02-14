@@ -46,6 +46,7 @@ using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
 using WebFreight.Web.CustomWebServices.BL.XLSImport;
 using Logitude.Customs.Data.EntityKeys;
+using static WebFreight.Web.Controllers.CustomsModel.Extended.CourierMasterController;
 
 namespace WebFreight.Web.Controllers.CustomsModel.Extended
 {
@@ -863,9 +864,12 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
                 var messagingService = new DCAInUCBMultiUpdate_MsgMessagingService();
-                var sts = messagingService.CreateCRS(tenant, null, requestParamsData);
-
-                return Request.CreateResponse(HttpStatusCode.OK, sts);
+                string RequestInProgressList;
+                var sts = messagingService.CreateCRS(tenant, null, requestParamsData, out RequestInProgressList);
+                DataResult result = new DataResult();
+                result.RequestInProgressList = RequestInProgressList;
+                result.Message = sts;
+                return Request.CreateResponse(HttpStatusCode.OK, result);
             }
 
             catch (Exception ex)
@@ -885,7 +889,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                     byte[] data = Convert.FromBase64String(fileUploadParamerter.Base64String);
                     string decodedString = Encoding.UTF8.GetString(data);
                     var messagingService = new DCAInUCBCreateExportSupplierInvoicesFromFile_MsgMessagingService();
+                    
                     var sts = messagingService.CreateCRS(tenant, declarationId, decodedString);
+                   
                     return Request.CreateResponse(HttpStatusCode.OK, sts);
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, "");
@@ -923,8 +929,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
 
                     var messagingService = new DCAInUCBCreateSupplierInvoiceFromFile_MsgMessagingService();
                     //partnerId = "METRO";
+                  
                     var sts = messagingService.CreateCRS(tenant, clientId, partnerId, declarationId, decodedString);
-
+                   
                     return Request.CreateResponse(HttpStatusCode.OK, sts);
                 }
                 return Request.CreateResponse(HttpStatusCode.OK, "");
