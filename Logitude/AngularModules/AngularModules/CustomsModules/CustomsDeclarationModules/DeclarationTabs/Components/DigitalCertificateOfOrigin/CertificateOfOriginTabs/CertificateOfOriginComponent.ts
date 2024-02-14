@@ -52,7 +52,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
     responseData: INF_MSG_GenericResponseData;
     private CurrentSession = SessionLocator.SelectedSession;
-    public isEntityChange: boolean = false;
     public DecalarationData: DeclarationPM;
     public IsNewOrEdit: StatusCertificateOfOrigin;
     isDispalyOnlyStatusList: number[] = [4, 8];
@@ -268,7 +267,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         }
 
         else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit) {
-            this.isEntityChange = true;
             this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
                 if (!response.HasError) {
                     var result = response.Result;
