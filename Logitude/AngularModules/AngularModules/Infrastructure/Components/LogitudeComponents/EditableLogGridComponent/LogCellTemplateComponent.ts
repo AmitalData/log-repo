@@ -216,6 +216,10 @@ export class LogCellTemplateComponent implements OnDestroy {
         this.isEditable = this.ColumnComponent.Editable;
         this.isrequired = this.ColumnComponent.required;
 
+        if (this.IsEditMode) {
+            this.IsDisplayMode = false;
+        }
+
         //this.Editindex = this.ColumnComponent.Editindex;
         ////this.CurrentSession.ResetRowIndex();
         if (this.RIndex >= 0) {

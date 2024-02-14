@@ -110,7 +110,7 @@
                                     [binding]="'Approval'" [width]="'40'" [Editable]="true" [Alignment]="'right'"
                                     [visibility]="HasRequiresApprovalFeature?'collapsed':'hidden'">
                                     <ng-template let-item>
-                                        <log-cell-template #logcelltemplate>
+                                        <log-cell-template #logcelltemplate [IsEditMode]="true">
                                             <div class="TextTrimming" style="text-align:right; height:20px;padding-top:3px"
                                                 *ngIf="logcelltemplate.IsDisplayMode">
                                                 <CheckBox *ngIf="item.CourierPendingRequireApr"
