@@ -44,9 +44,6 @@ export class AddEditAPInvoiceLineComponent {
         this.ChargeTypesQueryFilters.addAdditionalFilter("IsPayable", true, null, null, "Equals", false, false, false, "boolean");
         this.ChargeTypesQueryFilters.addAdditionalFilter("PayableDebitGLAcountId", true, null, null, "IsNotNull", false, false, false, "Text");
     }
-
- 
-    
     public TotalVATOnly: boolean = false;
     SetDataContext(dataContext: APInvoiceLineItem) {
         this.EntityPM = dataContext.EntityPM;
