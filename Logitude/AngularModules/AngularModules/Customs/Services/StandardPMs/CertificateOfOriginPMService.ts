@@ -126,7 +126,7 @@ export class CertificateOfOriginPMService {
                  
 							var pm = response.body;
 							if (pm) {
-								var mappedResult: CertificateOfOriginPM = this.MapJsonToEntityPM(pm, false, entityPM);
+								var mappedResult: CertificateOfOriginPM = this.MapJsonToEntityPM(pm, false);
 								serviceResponse.Result = mappedResult;
 							}
 							 

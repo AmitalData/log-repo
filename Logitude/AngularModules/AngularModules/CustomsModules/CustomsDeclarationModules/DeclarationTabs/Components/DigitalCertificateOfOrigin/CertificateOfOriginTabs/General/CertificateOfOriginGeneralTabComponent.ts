@@ -108,6 +108,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
     InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM: CertificateOfOriginPM) {
         // SupplierInvoices for CertificateOriginInvoiceItems:
+        this.CertificateOriginInvoiceItems.Clear();
         this.entityPM.CertificateOriginInvoiceItems = [];
         this.currentDeclaration.SupplierInvoices.forEach((supplierInvoice) => {
             const mappedInvoice = new CertificateOfOriginInvoicePM(EntityPM);
@@ -127,6 +128,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         });
 
         // Consignments for CertificateOriginItemItems:
+        this.CertificateOriginItemItems.Clear();
         this.entityPM.CertificateOriginItemItems = [];
         this.currentDeclaration.Consignments.forEach((consignment) => {
             const mappedConsignments = new CertificateOfOriginItemPM(EntityPM);
@@ -267,8 +269,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     SetWarningByCooTypeCode(CooTypeCode) {
         this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
             if (!myResponse.HasError) {
-                // this.UIProperties.SetWarning("OriginCountry", this.ObjectTableName, true);
-                // debugger
                 const certificateOfOriginMandatoryFieldsList = myResponse?.Result;
                 if (certificateOfOriginMandatoryFieldsList.length <= 0) return;
                 certificateOfOriginMandatoryFieldsList.forEach(item => {

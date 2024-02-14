@@ -284,13 +284,27 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
 
 
+    ValidationErrors = [];
+    GeneralValidationErrors = [];
+    MoreDataValidationErrors = [];
 
     async SendButtonClicked(customSendOptionsArgs: any) {
-        this.GENERAL.CheckMandatoryCustomsFields(this.ValidationErrors);
-        this.MOREDATA.CheckMandatoryCustomsFields(this.ValidationErrors);
+        this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
+        this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
         
-        if (this.ValidationErrors.length > 0) {
-            this.CheckMandatoryCustomsFields(customSendOptionsArgs);
+        this.ValidationErrors = this.GeneralValidationErrors.concat(this.MoreDataValidationErrors);
+        
+        var generalScreen = "כללי";
+        var moreDataScreen = "נוספים";
+        var bothDataScreen = "כללי ונוספים";
+        if (this.GeneralValidationErrors.length > 0 && this.MoreDataValidationErrors.length > 0) {
+            this.CheckMandatoryCustomsFields(customSendOptionsArgs,this.ValidationErrors ,bothDataScreen);
+        }
+        else if (this.GeneralValidationErrors.length > 0) {
+            this.CheckMandatoryCustomsFields(customSendOptionsArgs,this.GeneralValidationErrors ,generalScreen);
+        }
+        else if (this.MoreDataValidationErrors.length > 0) {
+            this.CheckMandatoryCustomsFields(customSendOptionsArgs,this.MoreDataValidationErrors,moreDataScreen);
         }
         else {
             this.SendCertificateOfOrigin(customSendOptionsArgs);
@@ -349,19 +363,16 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             });
     }
 
-    ValidationErrors = []
-    CheckMandatoryCustomsFields(customSendOptionsArgs: any) {
+    CheckMandatoryCustomsFields(customSendOptionsArgs: any, ValidationErrors: any[], screenName: string) {
         var windowArgs: any = {};
-        windowArgs.Errors = this.ValidationErrors;
+        windowArgs.Errors = ValidationErrors;
         windowArgs.NoButtonVisibility = false;
         windowArgs.CancelButtonVisibility = true;
         windowArgs.SaveButtonText = "אשר";
         windowArgs.CancelButtonText = "בטל";
         windowArgs.ComponentHeight = '328px';
         // TODO: replace to TTextCodeTranslator.Translate()
-        var windowTitle = "שגיאה במילוי שדות חובה";
-
-
+        var windowTitle = "שגיאה במילוי שדות חובה במסך " + screenName;
         var logWindow = new LogitudeWindow(this.CurrentSession);
         logWindow.Width = 600;
         logWindow.Height = 400;
@@ -376,11 +387,14 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         });
 
         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
-        this.CurrentSession.StopBusyIndicator(); // delete if not  nedded
+        this.CurrentSession.StopBusyIndicator(); 
     }
 
     TaxationWindowClosed(event) {
         this.ValidationErrors = [];
+        this.GeneralValidationErrors = [];
+        this.MoreDataValidationErrors = [];
+
         switch (event) {
             case "ok": {
                 return true;
@@ -406,7 +420,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             var myResponse: ServiceResponse = myResult;
             if (!myResult.HasError && myResult.Result) {
                 this.EntityPM = myResult.Result;
-                this.GENERAL.updateEntity(myResult.Result);
+                // this.GENERAL.updateEntity(myResult.Result);
                 this.CertificateChanges.next(true);
 
                 if (this.EntityPM?.ErrXml && !AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)) {
