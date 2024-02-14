@@ -31,6 +31,12 @@ namespace WebFreight.Web
                 XmlNodeList occNodeList;
                 XmlNode occ_root = doc.DocumentElement;
                 occNodeList = occ_root.SelectNodes("descendant::DAT");
+                bool IS_INSERT = false;
+                try
+                {
+                    IS_INSERT = occ_root.SelectNodes("descendant::DAT[@name='IS_INSERT']").Item(0).InnerText.ToBoolAmitalFormart();
+                }
+                catch { }
                 logi_list.Add(new CFILOGIAPI { 
                     CODE= occ_root.SelectNodes("descendant::DAT[@name='CODE']").Item(0).InnerText,
                     EXAMPLE_RESULT= occ_root.SelectNodes("descendant::DAT[@name='EXAMPLE_RESULT']").Item(0).InnerText,
@@ -40,7 +46,8 @@ namespace WebFreight.Web
                     PARAMETERS= occ_root.SelectNodes("descendant::DAT[@name='PARAMETERS']").Item(0).InnerText,
                     REFERENCE= occ_root.SelectNodes("descendant::DAT[@name='REFERENCE']").Item(0).InnerText,
                     LINQ = occ_root.SelectNodes("descendant::DAT[@name='LINQ']").Item(0).InnerText.ToBoolAmitalFormart(),
-                    HAS_TENANT = occ_root.SelectNodes("descendant::DAT[@name='HAS_TENANT']").Item(0).InnerText.ToBoolAmitalFormart()
+                    HAS_TENANT = occ_root.SelectNodes("descendant::DAT[@name='HAS_TENANT']").Item(0).InnerText.ToBoolAmitalFormart(),
+                    IS_INSERT = IS_INSERT
                 });
             }
             return (logi_list);
@@ -59,6 +66,7 @@ namespace WebFreight.Web
         public string EXAMPLE_RESULT;
         public bool LINQ = false;
         public bool HAS_TENANT = true;
+        public bool IS_INSERT = false;
     }
     public class CfiLogi
     {
@@ -728,9 +736,9 @@ IN6566	I10	USD	1
 <DAT name=""REFERENCE"">GUHHBUILD.Lp_OnPremiseLogIn</DAT>
 <DAT name=""PARAMETERS"" xml:space='preserve'>TOKEN=True&uSEP;EMAIL=True&uSEP;PASSWORD=True&uSEP;TENANT=True</DAT>
 <DAT name=""EXAMPLE_SQL"" xml:space='preserve'>INSERT INTO AUTHENTICATIONTOKENS  (TOKEN, TENANT, EMAIL, PASSWORD , CREATEDATE)    VALUES  ('aaaaaa','1','MOTI','moti@amital.co.il', SYSDATE)</DAT>
-<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>INSERT INTO AUTHENTICATIONTOKENS  (TOKEN, TENANT, EMAIL, PASSWORD , CREATEDATE)    VALUES  ('aaaaaa','1','MOTI','moti@amital.co.il', SYSDATE)</DAT>
+<DAT name=""TEMPLATE_SQL"" xml:space='preserve'>INSERT INTO AUTHENTICATIONTOKENS  (TOKEN, TENANT, EMAIL, PASSWORD , CREATEDATE)    VALUES  (@TOKEN,@Tenant,@EMAIL,@PASSWORD, GETDATE())</DAT>
 <DAT name=""EXAMPLE_RESULT""></DAT>
-<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">true</DAT></OCC>
+<DAT name=""LINQ"">true</DAT><DAT name=""HAS_TENANT"">false</DAT><DAT name=""IS_INSERT"">true</DAT></OCC>
 <OCC>
 <DAT name=""CODE"">A63</DAT>
 <DAT name=""NAME_ENG"" xml:space='preserve'>SELECT vendorid</DAT>
