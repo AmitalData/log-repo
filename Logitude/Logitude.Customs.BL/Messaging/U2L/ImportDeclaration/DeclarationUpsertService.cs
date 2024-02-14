@@ -715,7 +715,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
                                 this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Add(consignmentPackagePM);
                             }
                         }
-					else if(this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Count != 0 && !this._MyDeclarationPM.IsCourierDeclaration)
+					else if(this._MyDeclarationPM.Consignments[0].ConsignmentPackages.Count > 0 && !this._MyDeclarationPM.IsCourierDeclaration)
 					{
                         this._MyDeclarationPM.Consignments[0].ConsignmentPackages[0].ChangeSetOp = ChangeSetOperation.Update;
                         if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.PackageTypeCode))
