@@ -96,13 +96,12 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     
     CheckMandatoryCustomsFields(ValidationErrors = []){
-        debugger
         // check:
-        let someName="CityOfDeclaration"
-        let field = this.entityPM[someName];
-        if(!field){
-            ValidationErrors.push(someName);
-        }
+        // let someName="CityOfDeclaration"
+        // let field = this.entityPM[someName];
+        // if(!field){
+        //     ValidationErrors.push(someName);
+        // }
         this.mandatoryFielsList.forEach(item => {
             if(item){
                 let field = this.entityPM[item];
