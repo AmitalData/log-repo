@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "946ce65ef5d32aff257053bbedb420a1";
+		public const string HashString = "5c19ab40acc04941e064efaf6b4f4b37";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -1432,8 +1432,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "PartnerTypeName",
 					  						DefaultText =  "Partner Type",
+					  						FullLocalDefaultText =  "סוג",
 					  						ListFieldLable =  "PartnerTypeNameListLable",
 					  						ListLableDefaultText =  "Type",
+					  						ListLocalDefaultText =  "סוג",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2829,8 +2831,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "Code",
 					  						DefaultText =  "Code",
+					  						FullLocalDefaultText =  "קוד",
 					  						ListFieldLable =  "CodeListLable",
 					  						ListLableDefaultText =  "Code",
+					  						ListLocalDefaultText =  "קוד",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2895,8 +2899,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "EnglishName",
 					  						DefaultText =  "English Name",
+					  						FullLocalDefaultText =  "שם באנגלית",
 					  						ListFieldLable =  "EnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
+					  						ListLocalDefaultText =  "שם באנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3024,6 +3030,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LocalName",
 					  						DefaultText =  "Local Name",
+					  						FullLocalDefaultText =  "שם מקומי",
 					  						ListFieldLable =  "LocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
 					  						ListLocalDefaultText =  "שם מקומי",
@@ -7109,8 +7116,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedLocalName",
 					  						DefaultText =  "Local Name",
+					  						FullLocalDefaultText =  "שם מקומי",
 					  						ListFieldLable =  "CalculatedLocalNameListLable",
 					  						ListLableDefaultText =  "Local Name",
+					  						ListLocalDefaultText =  "שם מקומי",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -7170,8 +7179,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "CalculatedEnglishName",
 					  						DefaultText =  "English Name",
+					  						FullLocalDefaultText =  "שם באנגלית",
 					  						ListFieldLable =  "CalculatedEnglishNameListLable",
 					  						ListLableDefaultText =  "English Name",
+					  						ListLocalDefaultText =  "שם באנגלית",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
