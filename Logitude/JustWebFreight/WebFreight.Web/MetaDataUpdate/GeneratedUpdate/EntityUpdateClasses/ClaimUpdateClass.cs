@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ClaimUpdateClass
    {  		
-		public const string HashString = "0a1810968aea266742ba528498411e5d";
+		public const string HashString = "f99efcb6f018fe2868785fa40d8725bb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -4046,6 +4046,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   Feature ClaimFeatureRead = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "READ", FeatureTypeCode = "READ", IsBusinessUnitEnabled = false, ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Claim.Features.Read", NameTextCodeDefaultText = "Read" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClaimObjectTable);
 		   Feature ClaimFeatureUpdate = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "UPDATE", FeatureTypeCode = "UPDT", IsBusinessUnitEnabled = false, ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Claim.Features.Edit", NameTextCodeDefaultText = "Edit" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClaimObjectTable);
 		   Feature ClaimFeatureModule = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "Module", FeatureTypeCode = "MODL", IsBusinessUnitEnabled = false, ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Claim.Features.PackageFeature", NameTextCodeDefaultText = "Claim Package Feature", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClaimObjectTable);    
+	    
+		   		   //--------------> Additional Features <--------------\\
+
+		   Feature ClaimFeature_CreateNewClaimWithCustomFileNo = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "CreateNewClaimWithCustomFileNo", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = ClaimObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.Claim.Features.CreateNewClaimWithCustomFileNo", NameTextCodeDefaultText = @"יצירת תביעה חדשה עם תיק עמילות" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,ClaimObjectTable);
+
+   
 	    
 		}
 

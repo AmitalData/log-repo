@@ -5539,5 +5539,15 @@
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
-  <AdditionalFeatures />
+  <AdditionalFeatures>
+    <Feature
+      Code="&quot;CreateNewClaimWithCustomFileNo&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.Claim.Features.CreateNewClaimWithCustomFileNo&quot;"
+      FeatureDefaultText="&quot;יצירת תביעה חדשה עם תיק עמילות&quot;"
+      IsPackagable="true"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+  </AdditionalFeatures>
 </entity>
