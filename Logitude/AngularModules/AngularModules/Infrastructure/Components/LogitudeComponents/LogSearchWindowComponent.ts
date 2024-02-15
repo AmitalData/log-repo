@@ -280,7 +280,6 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
 
 
     BuildColumns() {
-
         var objectTableId = this.ObjectTableId;
         var lookupFields: any[];
         if (this.DisplayFieldsFromList != null && this.DisplayFieldsFromList != undefined) {

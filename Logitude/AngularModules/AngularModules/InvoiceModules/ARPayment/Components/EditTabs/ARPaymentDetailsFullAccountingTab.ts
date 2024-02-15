@@ -289,8 +289,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     private InitializeBillToLov() {
         this.InitLOVBillToFilters();
-        this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
-        this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+        this.DisplayFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
+        this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
         this.BillToLovSizeForFullAccounting = 550;
 
     }
