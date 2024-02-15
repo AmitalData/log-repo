@@ -1479,11 +1479,10 @@ export class APInvoiceLineItem extends BaseComponent {
     }
     private SetUIProperties_VAT() {
         this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, this.IsScreenEnabled);
-        this.UIProperties.SetEnabled("VatPercentage", this.ObjectTableName, this.IsScreenEnabled);
-
-        if (this.VatIsMultiPercentage) {
+          
+        //if (this.VatIsMultiPercentage) {
             this.UIProperties.SetEnabled("VatPercentage", this.ObjectTableName, false);
-        }
+       // }
 
         var isVatPercentageRequired = false;
 
