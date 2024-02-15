@@ -147,6 +147,12 @@ export class NewReportsTemplateComponent implements OnInit {
             this.ValidationErrorsList.push("Please load template");
         }
 
+        const regex = new RegExp('^[^<+>#%&\\/\'"*?!:@=|]+$');
+        var valid: boolean = regex.test(this.ReportsTemplatePM.Description);
+        if (this.ReportsTemplatePM.Description && this.ReportsTemplatePM.Description.trim() && !valid) {
+            this.ValidationErrorsList.push(`Forbidden character in the Description: ${this.ReportsTemplatePM.Description}`);
+        }
+
         if (this.ValidationErrorsList.length == 0) {
             this.ReportsTemplatePM.TemplateData = this.TemplateData;
             this.ReportsTemplatePM.CreatedByUserId = SessionLocator.LoggedUserId;
