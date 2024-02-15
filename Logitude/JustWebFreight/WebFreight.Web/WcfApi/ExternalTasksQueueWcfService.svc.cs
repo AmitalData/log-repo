@@ -33,6 +33,7 @@ using WebFreight.Web.Security;
 using WebFreight.Web.WebServices;
 using System.Data.Entity.Infrastructure;
 using Logitude.Customs.Data.EntityPOCOs;
+using System.Windows.Media.Effects;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -360,6 +361,9 @@ namespace WebFreight.Web.WcfApi
 
                 //tenant = 6;
                 //string id = "1-110456";
+                Dictionary<string, string> results = new Dictionary<string, string>();
+                List<List<string>> all_lines = new List<List<string>>();
+                int rows_effected = 0;
                 var shipmentsContext = new Simplog.Data.ShipmentsModel.ShipmentsContext();
                 using (SqlConnection connection = new SqlConnection())
                 {
@@ -374,29 +378,39 @@ namespace WebFreight.Web.WcfApi
                             cmd.Parameters.Add(new SqlParameter($"@{field.Key}", field.Value));
                         }
                         if (sql_logi.HAS_TENANT) cmd.Parameters.Add(new SqlParameter("@Tenant", tenant));
-                        using (SqlDataReader reader = cmd.ExecuteReader())
+                        if (sql_logi.IS_INSERT)
                         {
-                            List<List<string>> all_lines = new List<List<string>>();
-                            Dictionary<string, string> results = new Dictionary<string, string>();
-                            if (reader.HasRows)
-                            {
-                                while (reader.Read())
-                                {
-                                    Console.WriteLine(reader.ToString());
-                                    List<string> one_line = new List<string>();
-
-                                    for (int pos = 0; reader.FieldCount > pos; pos++)
-                                    {
-                                        one_line.Add(reader[pos].ToString());
-                                    }
-                                    all_lines.Add(one_line);
-                                }
-                            }
-                            response.HasError = false;
-                            results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
-                            results.Add("sql_query", sqlQuery);
-                            response.Result = JsonConvert.SerializeObject(results);
+                            rows_effected = cmd.ExecuteNonQuery();
                         }
+                        else
+                        {
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                
+
+                                if (reader.HasRows)
+                                {
+                                    while (reader.Read())
+                                    {
+                                        Console.WriteLine(reader.ToString());
+                                        List<string> one_line = new List<string>();
+
+                                        for (int pos = 0; reader.FieldCount > pos; pos++)
+                                        {
+                                            one_line.Add(reader[pos].ToString());
+                                        }
+                                        all_lines.Add(one_line);
+                                    }
+                                }
+
+                            }
+                        }
+                        connection.Close();
+                        response.HasError = false;
+                        results.Add("sql_result", JsonConvert.SerializeObject(all_lines));
+                        results.Add("sql_query", sqlQuery);
+                        results.Add("rows_effected", rows_effected.ToString());
+                        response.Result = JsonConvert.SerializeObject(results);
                     }
                 }
                 return (response);
