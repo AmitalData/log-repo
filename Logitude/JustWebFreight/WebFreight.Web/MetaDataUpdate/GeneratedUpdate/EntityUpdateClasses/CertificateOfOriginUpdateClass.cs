@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginUpdateClass
    {  		
-		public const string HashString = "6e79fabe49f1488288454450887192ff";
+		public const string HashString = "a491809dc2a0ca05ed569a41529c555e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    NewWizardControlName =  "",
 			      				    LocalDefaultText =  "תעודות מקור",
 			      				    DefaultText =  "Certificate Of Origin",
-			      				    Code =  "1f7d",
+			      				    Code =  "607c",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -2990,10 +2990,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "NonExportDate",
 					  						DefaultText =  "Non Export Date",
-					  						FullLocalDefaultText =  "תאריך טיסה/הפלגה ממדינת המקור",
+					  						FullLocalDefaultText =  "תאריך טיסה ממדינת המקור",
 					  						ListFieldLable =  "NonExportDateListLable",
 					  						ListLableDefaultText =  "Non Export Date",
-					  						ListLocalDefaultText =  "תאריך טיסה/הפלגה ממדינת המקור",
+					  						ListLocalDefaultText =  "תאריך טיסה ממדינת המקור",
 					  						IsMaxLength =  false,
 					  						IsFixedLength =  false,
 					  						EnableAutoFill =  false,
