@@ -267,7 +267,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         }
 
         else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit) {
-            this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
+            // this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
+            this.certificateOfOriginWebService.update(this.EntityPM).subscribe((response: any) => {
                 if (!response.HasError) {
                     var result = response.Result;
                     this.EntityPM = result;
@@ -420,7 +421,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             var myResponse: ServiceResponse = myResult;
             if (!myResult.HasError && myResult.Result) {
                 this.EntityPM = myResult.Result;
-                // this.GENERAL.updateEntity(myResult.Result);
+                this.GENERAL.updateEntity(myResult.Result);
                 this.CertificateChanges.next(true);
 
                 if (this.EntityPM?.ErrXml && !AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)) {
