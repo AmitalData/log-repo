@@ -1388,7 +1388,7 @@ namespace WebFreight.Web.Helpers
 
                         foreach(QueryColumnPM column in queryColumns)
                         {
-                            dynamic value = null;
+                            object value = null;
 
 
                             cell = row.CreateCell(i);
@@ -1405,37 +1405,40 @@ namespace WebFreight.Web.Helpers
 
                             if (column.ObjectFieldDataTypeCode == "DateTime" && value != null)
                             {
-                                value = value.ToString("dd/MM/yyyy");
+                                
+                                value = ((DateTime)value).ToString("dd/MM/yyyy");
 
                             }
 
                             cell.SetCellType(GetCellType(column.ObjectFieldDataTypeCode));
 
-                            value = value != null ? value : "";
+                            //value = value != null ? value : "";
+                            //if (value != null)
+                            //    value = value.ToString();
                             if (value != null)
-                                value = value.ToString();
-
-                            if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Numeric)
                             {
-                                if (value is double || value is int || value is float)
+                                if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Numeric)
                                 {
-                                    cell.SetCellValue(Convert.ToDouble(value));
-                                }
-                                else if (value is decimal)
-                                {
-                                    // Handle Decimal type
-                                    cell.SetCellValue(Convert.ToDouble((decimal)value));
+
+                                    if (value is double || value is int || value is float || value is decimal || value is long ||
+                                        value is double? || value is int? || value is float? || value is decimal? || value is long?)
+                                    {
+                                        cell.SetCellValue(Convert.ToDouble(value));
+                                    }
+
+                                    else
+                                    {
+                                        cell.SetCellValue(value.ToString()); // Set a default value or handle accordingly
+                                    }
+
                                 }
                                 else
-                                {
-                                    cell.SetCellValue(0); // Set a default value or handle accordingly
-                                }
+                                    cell.SetCellValue(value.ToString());
                             }
-                            else if (GetCellType(column.ObjectFieldDataTypeCode) == CellType.Boolean)
-                                cell.SetCellValue(bool.Parse(value));
                             else
-                                
-                                cell.SetCellValue(value.ToString());
+                            {
+
+                            }
                             i++;
                         }
                         
