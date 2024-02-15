@@ -217,7 +217,6 @@ export class MaintenanceComponent {
         this.BuildTransmissionsMenus();
         this.BuildCustomizationMenus();
         this.BuildCustomObjectsMenus();
-        this.BuildShaamTokenManagementMenu();
         this.PageChanged(this.PagesMenu[0]);
     }
     CheckDeploymentPackageFeatures() {
@@ -919,26 +918,12 @@ export class MaintenanceComponent {
         this.AllMaintenanceMenu.push(maintenanceMenuItem);
     }
      
-    private BuildShaamTokenManagementMenu() {
-        if (FeatureLocator.HasFeaturePermession("General", this.invoiceConfirmationNumber)) {
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "SHA";
-            item.Icon = "List"
-            item.Code = "SHAAM_LOGS";
-            item.ObjectTableName = TextCodeTranslator.Translate('General.MC.Logs'),
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        
-            var item = new MenusTablePM();
-            item.CategoryTypeCode = "SHA";
-            item.Icon = "Settings"
-            item.Code = "SHAAM_TOKEN";
-            item.ObjectTableName = TextCodeTranslator.Translate('General.MC.TokenManagement');
-            this.AllMaintenanceMenu.push(new MaintenanceMenuItem(item));
-        }
-    }
 
     // Commands
     PageChanged(item: Menu) {
+        if(item.Code === 'SHA') 
+            return this.navigateToExportCustoms('showShaamTokenManagment');
+
         this.SelectedMenu = item;
 
         var itemsSource: MaintenanceMenuItem[] = [];
@@ -961,16 +946,6 @@ export class MaintenanceComponent {
     ItemClicked(item: MaintenanceMenuItem) {
         if (item) {
             switch (item.Code) {
-                case "SHAAM_LOGS": {
-                    this.navigateToExportCustoms('ConfirmationNumberTokenLog');
-                    break;
-                }
-                
-                case "SHAAM_TOKEN": {        
-                    this.navigateToExportCustoms('CreateNewShaamToken');
-                    break;
-                }
-
                 case "CUSC": {
                     const logWindow: LogitudeWindow = new LogitudeWindow();
                     logWindow.Width = 500;
@@ -1854,24 +1829,29 @@ export class MaintenanceComponent {
     }
 
     async navigateToExportCustoms(logitudeCommandId: string) {
+        SessionLocator.SelectedSession.StartBusyIndicator('Redirect...');
+
         try {
             let link: string = await new TaxesWebService().getlinkLogin();
-            link + "&logitudeCommandId=" + logitudeCommandId;
+            link += "&logitudeCommandId=" + logitudeCommandId;
             open(link);
         } catch (error) {
-            console.log('******* error throw when try get login link to export', error);
+            console.log('******* error throw when try get login link to export', error);            
+            SessionLocator.SelectedSession.StopBusyIndicator();
             await this.showErrorMessage();            
         }
+
+        SessionLocator.SelectedSession.StopBusyIndicator();
     }
 
     showErrorMessage(): Promise<void> {
         const msgWin: MessageWindow = new MessageWindow();
         msgWin.ShowErrorIcon = true;
-        msgWin.Show(TextCodeTranslator.Translate('CommunicationLog.O.Error'));
+        msgWin.Show(TextCodeTranslator.Translate('General.B.Erroroccured'));
 
         return new Promise<void>(res => msgWin.WindowClosed.subscribe(() => res()));
     }
-    
+
     private ShowCustomObject(item: any) {
         let objectTable = window.ObjectTables.filter(d => d.Id == item.ObjectTableId)[0];
         let listArgs = new ListComponentArgs();
