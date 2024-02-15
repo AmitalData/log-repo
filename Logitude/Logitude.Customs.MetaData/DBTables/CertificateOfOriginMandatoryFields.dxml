@@ -60,7 +60,7 @@
   <Column
     Name="MappedCertificateFields"
     Type="varchar"
-    Size="5">
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
