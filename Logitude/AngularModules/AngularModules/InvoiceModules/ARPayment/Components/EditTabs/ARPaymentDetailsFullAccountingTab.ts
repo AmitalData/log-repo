@@ -278,8 +278,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
     private InitializeBillToLov() {
         this.InitLOVBillToFilters();
-        this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
-        this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CityName,CountryCode,PartnerTypeName";
+        this.DisplayFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
+        this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
         this.BillToLovSizeForFullAccounting = 550;
 
     }
@@ -408,20 +408,22 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
                 this.PaymenyAmount = this.EntityPM.AmountInPaymentCurrency;
             }
     }
+    glaccount: any;
     ReloadGLAccount()
     {
         //1- get glaccount
         this.fetchBillToCard().then(res =>
         {
             var card = res;
+            this.glaccount=null;
             this.fetchGLAccount().then(response =>
             {
-                var glaccount: any = response;
+                 this.glaccount= response;
 
-                if (glaccount) {
-                    this.EntityPM.GLAccountId = glaccount.Id;
-                    this.EntityPM.GLAccountRecoMethodCode = glaccount.ReconcileMethodCode;
-                    this.EntityPM.GLAccountCurrencyCode = glaccount.CurrencyCode;
+                if (this.glaccount) {
+                    this.EntityPM.GLAccountId = this.glaccount.Id;
+                    this.EntityPM.GLAccountRecoMethodCode = this.glaccount.ReconcileMethodCode;
+                    this.EntityPM.GLAccountCurrencyCode = this.glaccount.CurrencyCode;
                     this.SetAmountCurrencyCode();
                     this.ComputeLocalAmount();
                     this.SetPaymentAmount();
@@ -480,7 +482,8 @@ export class ARPaymentDetailsFullAccountingTab extends BaseComponent implements 
 
                         //     // return (a.ReconciledAmount === b.ReconciledAmount) ? 0 : (a.ReconciledAmount > b.ReconciledAmount) ? -1 : 1;
                         // });
-
+                        if(this.glaccount?.IsMultiCurrency && this.glaccount?.ReconcileMethodCode==1)
+                                sortedTransactions=sortedTransactions.filter(a=>a.CurrencyId==this.PaymentCurrencyId)
                         this.TransactionsList.InsertCollection(sortedTransactions);
                     }
                 }
