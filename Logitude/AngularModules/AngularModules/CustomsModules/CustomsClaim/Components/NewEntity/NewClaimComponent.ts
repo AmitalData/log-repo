@@ -13,6 +13,7 @@ import { ClaimPMService } from '../../../../Customs/Services/StandardPMs/ClaimPM
 import { ClaimWebService } from '../../../../Customs/Services/WebServices/ClaimWebService';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import { DeclarationExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationExtendedListService';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 
 @Component({
     selector: 'NewClaimComponent',
@@ -26,6 +27,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
     public ObjectTableName: string = "Customs.Claim";
     public ValidationErrorsList: string[] = [];
     QueryNameText: string = "";
+    ShowCustomFileNo: boolean = false;
 
     private _ClaimPMService: ClaimPMService = new ClaimPMService();    
     private _ClaimWebService: ClaimWebService = new ClaimWebService();
@@ -38,6 +40,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
         this.EntityPM = new ClaimPM();
         this.EntityPM.Tenant = SessionLocator.Tenant;
         this.EntityResourceService.getEntityResourceByTableName("Customs.Claim").subscribe((response:any) => { });
+        this.ShowCustomFileNo = FeatureLocator.HasFeaturePermession("Customs.Claim", "CreateNewClaimWithCustomFileNo");
     }
 
     SetWindowArgs(args: any) {
@@ -78,7 +81,7 @@ export class NewClaimComponent extends BaseComponent implements OnInit {
         this.ValidationErrorsList = [];
 
         // if inserted custom file number, assert it is found
-        this.CustomFileNo = this.CustomFileNo.trim();
+        this.CustomFileNo = this.CustomFileNo?.trim();
         if (!AppTool.IsNullOrEmpty(this.CustomFileNo)) {
             return this._declarationExtendedListService.GetSingleDeclarationByCustomFileNo(this.CustomFileNo).subscribe((response: ServiceResponse) => {
                 if (AppTool.IsNullOrEmpty(response.Result?.Id)) {
