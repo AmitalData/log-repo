@@ -100,7 +100,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     }
 
     InitNewCertificate(EntityPM: CertificateOfOriginPM) {
-        this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
+        // this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.EnglishName) ? this.currentCard.EnglishName : this.currentCard.LocalName;
+        this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.EnglishName) ? this.currentCard.EnglishName : "";
         this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
         this.InitializeRelatedDeclarationData();
         this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
@@ -287,7 +288,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         cardListService.getSingleFromCache(id).subscribe((myResponse: any) => {
             if (!myResponse.HasError) {
                 this.currentCard = myResponse.Result;
-                this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.LocalName) ? this.currentCard.LocalName : this.currentCard.EnglishName;
+                this.entityPM.ExporterName = !AppTool.IsNullOrEmpty(this.currentCard.EnglishName) ? this.currentCard.EnglishName : "";
                 this.entityPM.ExporterAddress = `${this.currentCard.Address1 ? this.currentCard.Address1 + " ," : ""}${this.currentCard.Address2 ? this.currentCard.Address2 : ""}`;
             }
         });
