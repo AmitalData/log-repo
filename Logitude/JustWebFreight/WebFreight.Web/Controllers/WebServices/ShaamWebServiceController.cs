@@ -20,11 +20,11 @@ namespace WebFreight.Web.Controllers.WebServices
 
         [HttpGet]
         [Route("linkToCodeForToken")]
-        public HttpResponseMessage LinkToCodeForToken(string user)
+        public HttpResponseMessage LinkToCodeForToken(string user, bool testEnvironment = true)
         {
             return TryCatchWrapper((tenant) =>
             {
-                HttpClienResponse apiToShaamRes = shaamService.LinkToCodeForToken(tenant.Value, user);
+                HttpClienResponse apiToShaamRes = shaamService.LinkToCodeForToken(tenant.Value, user, testEnvironment);
                 if (apiToShaamRes.Res.StatusCode == HttpStatusCode.OK)
                     apiToShaamRes.Content = $"{TaxesRediractUrl}&user={user}&tenant={tenant}&redirectToShaam={apiToShaamRes.Content}";
 
@@ -49,19 +49,19 @@ namespace WebFreight.Web.Controllers.WebServices
         {
             return TryCatchWrapper((tenant) =>
             {
-                HttpClienResponse apiToShaamRes = shaamService.NewRefreshToken(body.tenant, body.user, body.code);
+                HttpClienResponse apiToShaamRes = shaamService.NewRefreshToken(body.tenant, body.user, body.code, body.testEnvironment);
                 return apiToShaamRes;
             }, ReturnContent.JSON, false);
         }
 
         [HttpPost]
         [Route("createConfirmationNumber")]
-        public HttpResponseMessage CreateConfirmationNumber([FromBody] dynamic body)
+        public HttpResponseMessage CreateConfirmationNumber([FromBody] dynamic body, bool testEnvironment)
         {
             return TryCatchWrapper((tenant) =>
             {
                 string invoiceJson = Convert.ToString(body);
-                HttpClienResponse apiToShaamRes = allocateInvoiceService.CreateConfirmationNumber(invoiceJson, tenant.Value);
+                HttpClienResponse apiToShaamRes = allocateInvoiceService.CreateConfirmationNumber(invoiceJson, tenant.Value, testEnvironment);
                 return apiToShaamRes;
             });
         }
@@ -134,6 +134,7 @@ namespace WebFreight.Web.Controllers.WebServices
             public string user { get; set; }
             public string code { get; set; }
             public int tenant { get; set; }
+            public bool testEnvironment { get; set; } = true;
         }
 
         public class UpdateSettingsData
