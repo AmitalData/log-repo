@@ -127,11 +127,11 @@ export class ShaamTokensComponent extends BaseComponent {
                 '"' + this.linkToCodeForToken + '"',
                 false);
         else
-            location.href = this.linkToCodeForToken;
+            open(this.linkToCodeForToken);
     }
 
     async initLinkToCodeForToken() {
-        this.linkToCodeForToken = await new ShaamWebService().getLinkToCodeForToken(SessionLocator.LoggedUserPM.EnglishName).toPromise();
+        this.linkToCodeForToken = await new ShaamWebService().getLinkToCodeForToken(SessionLocator.LoggedUserPM.Code).toPromise();
     }
 
     refreshTable() {
