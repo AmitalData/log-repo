@@ -8,7 +8,7 @@ export  class ServiceHelper{
 
     public static HttpClient: HttpClient;
    public static favIcon: HTMLLinkElement = document.querySelector('#appIcon');
-    private static testDomain: string = "tracking.orian.com/CargoTracking";
+    private static testDomain: string ;
     
     constructor(){
 
