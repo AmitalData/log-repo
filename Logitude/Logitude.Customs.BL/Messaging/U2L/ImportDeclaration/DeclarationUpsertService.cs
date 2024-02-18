@@ -62,6 +62,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 		private AmitalContext amitalContext;
 		private DeclarationReferantDataPM _DeclarationReferantDataPM;
 		public const string UpsertActionConst = "Logitude.Customs.BL.Messaging.U2L.ImportDeclaration.DeclarationUpsertService.Upsert()";
+		public string originDeclarationId = null;
 
 		public DeclarationUpsertService()
 			: base(
@@ -179,6 +180,9 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					string existId = myQueryService.GetIdByCustomFileNo(_AmitalCustomsFile.CustomFileNo, ResolvedTenant());
 					_AmitalCustomsFile.Id = existId;
 				}
+
+				originDeclarationId = _AmitalCustomsFile.Id;
+
 				if (!String.IsNullOrWhiteSpace(_AmitalCustomsFile.Id) && _AmitalCustomsFile.Direction == "E")
 				{
 					DeclarationRepository declarationRepository = new DeclarationRepository(_context);
@@ -2221,6 +2225,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				Upsert(suppressNewTrans, MoreParams);
 				MyGenericResponseObj.Stage = "Done";
 
+				_AmitalCustomsFile.Id = originDeclarationId;
 
 
 			}

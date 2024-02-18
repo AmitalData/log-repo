@@ -11,7 +11,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
     {
         ShaamService shaamService = new ShaamService();
 
-        public HttpClienResponse CreateConfirmationNumber(string invoiceJson, int tenant)
+        public HttpClienResponse CreateConfirmationNumber(string invoiceJson, int tenant, bool testEnvironment)
         {
             ConfirmationNumberTokenLogRepository confirmationNumberTokenLogRepository = new ConfirmationNumberTokenLogRepository(tenant);
             InvoiceRequest invoice = JsonConvert.DeserializeObject<InvoiceRequest>(invoiceJson);
@@ -33,7 +33,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
             });
             confirmationNumberTokenLogRepository.SubmitChanges();
 
-            HttpClienResponse apiToShaamRes = shaamService.CreateConfirmationNumber(invoiceJson, tenant, confirmationTokenLogId, communicationLogId);
+            HttpClienResponse apiToShaamRes = shaamService.CreateConfirmationNumber(invoiceJson, tenant, confirmationTokenLogId, communicationLogId, testEnvironment);
 
             return apiToShaamRes;
         }

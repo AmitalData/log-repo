@@ -131,7 +131,7 @@ export class ShaamTokensComponent extends BaseComponent {
     }
 
     async initLinkToCodeForToken() {
-        this.linkToCodeForToken = await new ShaamWebService().getLinkToCodeForToken(SessionLocator.LoggedUserPM.EnglishName).toPromise();
+        this.linkToCodeForToken = await new ShaamWebService().getLinkToCodeForToken(SessionLocator.LoggedUserPM.Code).toPromise();
     }
 
     refreshTable() {

@@ -14,9 +14,9 @@ namespace WebFreight.Web.Controllers.WebServices.Services
         string TaxesRediractUrl = new SettingQuery().GetSinglePMFromCahche().TaxesRediractUrl;
         TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
 
-        public HttpClienResponse LinkToCodeForToken(int tenant, string user)
+        public HttpClienResponse LinkToCodeForToken(int tenant, string user, bool testEnvironment)
         {
-            string url = $"taxes/linkToCodeForNewToken?user={user.Trim()}&rediractUrl={TaxesRediractUrl}";
+            string url = $"taxes/linkToCodeForNewToken?user={user.Trim()}&rediractUrl={TaxesRediractUrl}&testEnvironment={testEnvironment}";
             HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Get);
             return res;
         }
@@ -28,16 +28,16 @@ namespace WebFreight.Web.Controllers.WebServices.Services
             return res;
         }
 
-        public HttpClienResponse NewRefreshToken(int tenant, string user, string code)
+        public HttpClienResponse NewRefreshToken(int tenant, string user, string code, bool testEnvironment)
         {
-            string url = $"taxes/createNewRefreshToken?user={user}&code={code}&rediractUrl={TaxesRediractUrl}";
+            string url = $"taxes/createNewRefreshToken?user={user}&code={code}&rediractUrl={TaxesRediractUrl}&testEnvironment={testEnvironment}";
             HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Post);
             return res;
         }
 
-        public HttpClienResponse CreateConfirmationNumber(string invoiceJson, int tenant, string confirmationTokenLogId, string communicationLogId)
+        public HttpClienResponse CreateConfirmationNumber(string invoiceJson, int tenant, string confirmationTokenLogId, string communicationLogId, bool testEnvironment)
         {
-            string url = $"taxes/createConfirmationNumber?confirmationTokenLogId={confirmationTokenLogId}&communicationLogId={communicationLogId}";
+            string url = $"taxes/createConfirmationNumber?confirmationTokenLogId={confirmationTokenLogId}&communicationLogId={communicationLogId}&testEnvironment={testEnvironment}";
             HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Post, invoiceJson);
             return res;
         }

@@ -7,6 +7,6 @@ namespace WebFreight.Web.WcfApi
     public interface IShaamWcfService
     {
         [OperationContract]
-        ApiToShaamRes CreateConfirmationNumber(string invoiceJson, int tenant);
+        ApiToShaamRes CreateConfirmationNumber(string invoiceJson, int tenant, bool testEnvironment = true);
     }
 }
