@@ -722,7 +722,7 @@ namespace Logitude.Customs.Def.ClosedTable
                 Description = "הודעת חיוב",
                 DcaPrefixName = "SendDE_MSG280_DebtNotificationMessage_Out.",
                 DefaultSendOptionsCode = null,
-                DefaultPriority = CONST_DefaultPriority,
+                DefaultPriority = 87,
                 AllowRestore = true,
                 //   NotificationId = "",
                 Active = true,
