@@ -33,6 +33,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         protected override void OnUpdating(DeclarationPaymentPM entityPM, DeclarationPayment entityPOCO)
         {
+            if(entityPM != null && entityPM.ChangeSetOp == ChangeSetOperation.Delete) 
+            {
+                DateTime stopLogAt = DateTime.MaxValue;
+                LogitudeSettings.HandleLogMe("Delete DeclarationPaymentPM : " + entityPM.DeclarationId +" - CALL STACK: " + Environment.StackTrace, false, "DeleteDeclarationPayment", stopLogAt);
+            }
+
             if(entityPM.AutomaticPayment!= entityPOCO.AutomaticPayment)
             {
                 if (entityPM.AutomaticPayment == 1)
@@ -51,6 +57,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         protected override void OnUpdating(DeclarationPaymentPM entityPM)
         {
             //CustomsSettingQueryService settingsQuery = new CustomsSettingQueryService(entityPM.Tenant);
+
+            if (entityPM != null && entityPM.ChangeSetOp == ChangeSetOperation.Delete)
+            {
+                DateTime stopLogAt = DateTime.MaxValue;
+                LogitudeSettings.HandleLogMe("DELETE DeclarationPaymentPM : " + entityPM.DeclarationId + " - CALL STACK: " + Environment.StackTrace, false, "DeleteDeclarationPayment", stopLogAt);
+            }
+
             var setting = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant);
             if (setting.IsConnectedToUniFreight)
             {
