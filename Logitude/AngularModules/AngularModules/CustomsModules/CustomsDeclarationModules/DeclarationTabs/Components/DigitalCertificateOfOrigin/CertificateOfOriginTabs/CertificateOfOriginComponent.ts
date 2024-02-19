@@ -262,7 +262,9 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                         this.SendButtonClicked(customSendOptionsArgs);
                     }
                 }
-
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                }
             });
         }
 
@@ -278,6 +280,10 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                     if (customSendOptionsArgs) {
                         this.SendButtonClicked(customSendOptionsArgs);
                     }
+                }
+                else {
+                    this.CurrentSession.StopBusyIndicator();
+                    
                 }
             });
         }
