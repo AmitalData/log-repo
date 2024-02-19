@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginMandatoryFieldsUpdateClass
    {  		
-		public const string HashString = "f684c5bd3c7443042a8d5f64eacb93b9";
+		public const string HashString = "5a02ab9df8f3ab7a75ef5134dbdfba12";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -934,7 +934,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query CertificateOfOriginMandatoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CertificateOfOriginMandatoryFieldsTextCode_0.Id, NameTextCodeCode = CertificateOfOriginMandatoryFieldsTextCode_0.Code, ObjectTableName = "Customs.CertificateOfOriginMandatoryFields", Code = "CertificateOfOriginMandatory",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, QuerySection = "Customs.CertificateOfOriginMandatoryFields", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CertificateOfOriginMandatoryFieldsFeature_0.Id,FeatureUniqeCode= CertificateOfOriginMandatoryFieldsFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
+			  Query CertificateOfOriginMandatoryQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = CertificateOfOriginMandatoryFieldsTextCode_0.Id, NameTextCodeCode = CertificateOfOriginMandatoryFieldsTextCode_0.Code, ObjectTableName = "Customs.CertificateOfOriginMandatoryFields", Code = "CertificateOfOriginMandatory",  QueryGroupCode = "c8e3", IndexOrder = 0, Tenant = 0, ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, QuerySection = "Customs.CertificateOfOriginMandatory", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = CertificateOfOriginMandatoryFieldsFeature_0.Id,FeatureUniqeCode= CertificateOfOriginMandatoryFieldsFeature_0.FeatureUniqeCode, DefaultSortName = "Code", DefaultSortDirection = "Ascending", Perspective = null }, addedQueries);
 	
 			 QueryColumn CertificateOfOriginMandatoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
