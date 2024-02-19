@@ -4752,13 +4752,11 @@
     <Compile Include="Controllers\FromAppCode\Generated\Accounting\ChartOfAccountsTypeController.Generated.cs" />
     <Compile Include="Controllers\FromAppCode\Generated\Accounting\GLAccountTotalByMonthController.Generated.cs" />
     <Compile Include="Controllers\FromAppCode\Generated\Accounting\GLAccountTypeController.Generated.cs" />
-    <Compile Include="Controllers\FromAppCode\Generated\Accounting\JournalActionTypeController.Generated.cs" />
     <Compile Include="Controllers\FromAppCode\Generated\Accounting\JournalStatusTypeController.Generated.cs" />
     <Compile Include="Controllers\FromAppCode\Generated\Accounting\JournalTypeController.Generated.cs" />
     <Compile Include="Controllers\FromAppCode\Generated\Accounting\PeriodTypeController.Generated.cs" />
     <Compile Include="Controllers\FromAppCode\Generated\Accounting\ReconcileMethodController.Generated.cs" />
     <Compile Include="Controllers\FromAppCode\Generated\Accounting\RevenueExpenseTypeController.Generated.cs" />
-    <Compile Include="Controllers\FromAppCode\Generated\Accounting\TestEntityController.Generated.cs" />
     <Compile Include="Controllers\FromAppCode\ReconciliationOpController.cs" />
     <Compile Include="BookingModel\DomainServices\BookingsDomainService.Booking.cs" />
     <Compile Include="BookingModel\DomainServices\BookingsDomainService.BookingLevel.cs" />
