@@ -56,7 +56,7 @@ namespace WebFreight.Web.Controllers.WebServices
 
         [HttpPost]
         [Route("createConfirmationNumber")]
-        public HttpResponseMessage CreateConfirmationNumber([FromBody] dynamic body, bool testEnvironment)
+        public HttpResponseMessage CreateConfirmationNumber([FromBody] dynamic body, bool testEnvironment = true)
         {
             return TryCatchWrapper((tenant) =>
             {
