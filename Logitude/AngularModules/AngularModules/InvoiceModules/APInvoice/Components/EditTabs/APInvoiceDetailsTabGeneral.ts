@@ -108,7 +108,7 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
 
     private InitializeVendorLov() {
         if (this.accountingActivated) {
-            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
+            this.DisplayFieldsFromList = "Code,CalculatedEnglishName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
             this.DisplayLocalFieldsFromList = "Code,CalculatedLocalName,GLAccountDisplayNumber,CountryCode,PartnerTypeName";
             this.VendorLovSizeForFullAccounting = 550;
             this.forceShowLocalAndEnglishColumns = true;
