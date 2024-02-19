@@ -3428,7 +3428,7 @@
     FullLocalDefaultText="&quot;שם מקומי&quot;"
     ListFieldLable="&quot;LocalNameListLable&quot;"
     ListLableDefaultText="&quot;Local Name&quot;"
-    ListLocalDefaultText="&quot;שם מקומי&quot;"
+    ListLocalDefaultText="&quot;שם הלקוח&quot;"
     ShortFieldLable="&quot;LocalName&quot;"
     ShortFieldLableDefaultText="&quot;Local Name&quot;"
     ShortLocalDefaultText="&quot;שם הלקוח&quot;"
