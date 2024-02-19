@@ -390,7 +390,14 @@ namespace Logitude.Server.Tools.Utils
             foreach (var parameter in objectQuery.Parameters)
             {
                 var name = "@" + parameter.Name;
-                var value = parameter.Value is null ? "" : "'" + parameter.Value.ToString() + "'";
+                var value = parameter.Value is null ? "NULL" : "'" + parameter.Value.ToString() + "'";
+
+                DateTime dt = new DateTime();
+                if (value != null && value.ToString().Length > 10 && DateTime.TryParse(value.Substring(1,11), out dt))
+                {
+                    value = string.Format("cast('{0}' as date)", dt.ToString("yyyy-MM-dd"));
+                }
+
                 result = result.Replace(name, value);
             }
 
