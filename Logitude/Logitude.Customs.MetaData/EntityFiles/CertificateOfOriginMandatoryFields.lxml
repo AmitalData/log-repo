@@ -986,7 +986,7 @@
     QueryGroupCode="&quot;c8e3&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Customs.CertificateOfOriginMandatoryFields&quot;"
-    QuerySection="&quot;Customs.CertificateOfOriginMandatoryFields&quot;"
+    QuerySection="&quot;Customs.CertificateOfOriginMandatory&quot;"
     SystemLevel="true"
     IsAddNewEntity="false"
     IsPackagable="true"
