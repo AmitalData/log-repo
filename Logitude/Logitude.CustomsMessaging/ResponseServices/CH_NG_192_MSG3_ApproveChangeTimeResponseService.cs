@@ -22,6 +22,7 @@ using UnifreightIIG.Common.MessageLib.Unifreight.Transmission;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using UnifreightIIG.Common.TheGateway;
+using Logitude.Customs.Data.EntityMapping;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -170,10 +171,40 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     physicalCheckUpdateService.Update(phsicalCheckPM, true);
                     break;
             }
+
+            PhysicalCheckPM physicalCheckPM = physicalCheckQueryService.GetSingle(requestParams.PhysicalCheckId, false, false);
+            int checkId;
+            int.TryParse(physicalCheckPM.CheckId, out checkId);
+            this.MyRequestSheetParam = new RequestSheetParam();
+            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.PhysicalCheck");
+            this.MyRequestSheetParam.EntityId1 = requestParams.PhysicalCheckId;
+            if (requestType == 1 || requestType == 2)
+            {
+                this.MyRequestSheetParam.RequestDescription = "שינוי מועד בדיקה " + checkId;
+            }
+            else if(requestType == 4)
+            {
+                this.MyRequestSheetParam.RequestDescription = "הקדמת תור" + checkId;
+            }
+            else
+            {
+                this.MyRequestSheetParam.RequestDescription = "חיפוש תורים לבדיקה " + checkId;
+            }
+            if (physicalCheckPM.DeclarationId != null)
+            {
+                var declarationQueryService = new DeclarationQueryService(dbContext);
+                string customfileNumber = declarationQueryService.GetCustomFileNoByDeclarationId(physicalCheckPM.DeclarationId, physicalCheckPM.Tenant);
+                this.MyRequestSheetParam.CustomFileNo = customfileNumber;
+                this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                this.MyRequestSheetParam.EntityId2 = physicalCheckPM.DeclarationId;
+            }
+
+
+
         }
 
-       
-      
+
+
     }
 
 }
