@@ -22,6 +22,7 @@ using UnifreightIIG.Common.MessageLib.Unifreight.Transmission;
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Server.Tools.Helpers;
 using UnifreightIIG.Common.TheGateway;
+using Logitude.Customs.Data.EntityMapping;
 
 namespace Logitude.CustomsMessaging.ResponseServices
 {
@@ -170,10 +171,39 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     physicalCheckUpdateService.Update(phsicalCheckPM, true);
                     break;
             }
+
+            if(phsicalCheckPM != null && requestType != 0)
+            {
+                this.MyRequestSheetParam = new RequestSheetParam();
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.PhysicalCheck");
+                this.MyRequestSheetParam.EntityId1 = requestParams.PhysicalCheckId;
+
+                if (requestType == 1 || requestType == 2)
+                {
+                    this.MyRequestSheetParam.RequestDescription = "שינוי מועד בדיקה " + phsicalCheckPM.CheckId;
+                }
+                else if(requestType == 4 || requestType == 5)
+                {
+                    this.MyRequestSheetParam.RequestDescription = "הקדמת תור" + phsicalCheckPM.CheckId;
+                }
+                else
+                {
+                    this.MyRequestSheetParam.RequestDescription = "חיפוש תורים לבדיקה " + phsicalCheckPM.CheckId;
+                }
+                if (phsicalCheckPM.DeclarationId != null)
+                {
+                    var declarationQueryService = new DeclarationQueryService(dbContext);
+                    string customfileNumber = declarationQueryService.GetCustomFileNoByDeclarationId(phsicalCheckPM.DeclarationId, phsicalCheckPM.Tenant);
+                    this.MyRequestSheetParam.CustomFileNo = customfileNumber;
+                    this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                    this.MyRequestSheetParam.EntityId2 = phsicalCheckPM.DeclarationId;
+                }
+
+            }
         }
 
-       
-      
+
+
     }
 
 }
