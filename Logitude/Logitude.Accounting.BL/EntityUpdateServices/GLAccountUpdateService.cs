@@ -2391,7 +2391,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             CheckMultiToSingleCurrencyChanged(entityPM, entityPOCO);
             CheckSingleToSingleCurrencyChanged(entityPM, entityPOCO);
-
             if (entityPM.ChangeSetOp != ChangeSetOperation.Insert)
             {
                 CheckIfGlaccountIsConnectedToBankAccountOrCashBook(entityPM, entityPOCO);
@@ -2399,7 +2398,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             CheckReconcileMethodChange(entityPM, entityPOCO);
         }
 
-        private void CheckIfGlaccountIsConnectedToBankAccountOrCashBook(GLAccountPM entityPM, GLAccount entityPOCO)
+      private void CheckIfGlaccountIsConnectedToBankAccountOrCashBook(GLAccountPM entityPM, GLAccount entityPOCO)
         {
             if (entityPOCO.IsMultiCurrency != entityPM.IsMultiCurrency && entityPM.IsMultiCurrency == true)
             {

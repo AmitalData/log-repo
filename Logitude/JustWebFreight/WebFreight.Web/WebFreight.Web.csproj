@@ -4095,7 +4095,6 @@
     <Content Include="css\kendo.mobile.all.min.css.map" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamIslam\LoginVars.csv" />
     <Content Include="ApplicationInsights.config" />
-    <Content Include="NLog.config" />
     <None Include="Properties\PublishProfiles\AmitalTestNewProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
     <None Include="Properties\PublishProfiles\AmitalProfile.pubxml" />
