@@ -997,7 +997,7 @@ namespace Logitude.BL.InvoiceModel.CoreBL
                 Line = ++counter,
                 ActionCode = actionCode,
                 ActionTypeCodeEnum = actionCode == "2" ? JournalActionTypeEnum.Debit : JournalActionTypeEnum.Credit,
-                DocumentDate = paymentPM.RegisterDate.Value,
+                DocumentDate = paymentPM.ValueDate.Value,
                 AccountingDate = paymentPM.RegisterDate.Value,
                 DueDate = bankTransfer.ValueDate,
                 LocalAmount = bankTransfer.ForeignAmount * (decimal)paymentPM.PaymentCurrencyExchangeRate,
