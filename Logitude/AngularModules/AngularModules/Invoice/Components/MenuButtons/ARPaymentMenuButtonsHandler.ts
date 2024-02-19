@@ -18,6 +18,7 @@ import {EntityArgs} from '../../../Infrastructure/DataContracts/EntityArgs';
 import {ServiceLocator} from '../../../Infrastructure/Locators/ServiceLocator';
 import {LogitudeWindow} from '../../../Controls/Windows/LogitudeWindow';
 import {ObjectsLocator} from "../../../Infrastructure/Locators/ObjectsLocator";
+import { EventParams } from 'Accounting/Utilities/ReconcileEventManager';
 
 export class ARPaymentMenuButtonsHandler {
     public EntityPM: ARPaymentPM;
@@ -557,7 +558,7 @@ export class ARPaymentMenuButtonsHandler {
                 //CommonContext.SubmitChanges();
             }
             this.entityArgs.EditComponent.SaveChanges();
-            ARPaymentEventManager.ARPaymentApproved.emit();
+            ARPaymentEventManager.ARPaymentApproved.emit(new EventParams());
         }
         else {
             errors.forEach(item => {

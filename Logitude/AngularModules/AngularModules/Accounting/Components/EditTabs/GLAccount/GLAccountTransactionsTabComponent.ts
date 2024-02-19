@@ -103,7 +103,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
         //this.GetNonReconciledTransactionsCount();
 
         // Set GLAccountReconcileMethodCode to use it in reconcile window
-        ReconcileEventManager.GLAccountReconcileMethodCode = this.EntityPM.ReconcileMethodCode;
+        ReconcileEventManager.SetGLAccountReconcileMethodCode(this.EntityPM.ReconcileMethodCode);
 
         //Set Currency LOV editability
         if (this.EntityPM.IsMultiCurrency) {
@@ -1041,6 +1041,7 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
     //#region Buttons + CheckBox Handlers
     ReconcileButtonClicked() {
+        var gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
         this.CurrentSession.StartBusyIndicatorLoading();
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
@@ -1052,8 +1053,8 @@ export class GLAccountTransactionsTabComponent extends BaseComponent implements 
 
                 // original amount currency
                 var originalAmountCurrency;
-                if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
-                else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
+                if (gLAccountReconcileMethodCode == "0") originalAmountCurrency = SessionLocator.TenantPM.CurrencySign;
+                else if (gLAccountReconcileMethodCode == "1") originalAmountCurrency = transaction.CurrencySign;
 
 
                 var windowArgs: any = {};
