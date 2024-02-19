@@ -564,7 +564,9 @@ export class APPaymentPM {
     public get InvoiceCurrencyId() { return this.invoiceCurrencyId; }
     public set InvoiceCurrencyId(newValue: string) { if (this.invoiceCurrencyId != newValue) { this.invoiceCurrencyId = newValue; this.MarkAsDirty("InvoiceCurrencyId"); } }
        
-	 
+    private dontDisplayAPInvoices: boolean;
+    public get DontDisplayAPInvoices() { return this.dontDisplayAPInvoices; }
+    public set DontDisplayAPInvoices(newValue: boolean) { if (this.dontDisplayAPInvoices != newValue) { this.dontDisplayAPInvoices = newValue; this.MarkAsDirty("dontDisplayAPInvoices"); } }
 
     public OldEntityPM: APPaymentPM;
 		
@@ -592,4 +594,4 @@ export class APPaymentPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
