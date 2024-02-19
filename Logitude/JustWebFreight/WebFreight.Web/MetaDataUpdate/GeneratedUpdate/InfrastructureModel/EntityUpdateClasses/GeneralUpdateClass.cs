@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 {
    public class GeneralUpdateClass
    {  		
-		public const string HashString = "fb40d63f3c0ba74e324815f61dfe61a5";
+		public const string HashString = "d7841ae0219652dc296a4ff485740b79";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "General",
-			      				    Code =  "616f",
+			      				    Code =  "0f00",
 			      				    Name =  "General",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Generals",
@@ -879,7 +879,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InfrastructureModel.Enti
 
  		   TextCode GeneralTextCode_GeneralBPrevious = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.B.Previous", DefaultText = "Previous",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "B", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode GeneralTextCode_GeneralMThisEntityhasunsavedchanges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ThisEntityhasunsavedchanges", DefaultText = "This %Entity has unsaved changes do you want to save it?",LocalDefaultText = @"%Entityזו בוצעו שינויים שלא נשמרו האם לשמור ב?", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode GeneralTextCode_GeneralMThisEntityhasunsavedchanges = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ThisEntityhasunsavedchanges", DefaultText = "This %Entity has unsaved changes do you want to save it?",LocalDefaultText = @"ב%Entity זו בוצעו שינויים שלא נשמרו האם לשמור?", ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode GeneralTextCode_GeneralMContainerNumberFormatisInvalid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "General.M.ContainerNumberFormatisInvalid", DefaultText = "Container Number Format is Invalid <Must be 4 Letters and 7 Digits>",LocalDefaultText = null, ObjectTableId = GeneralObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
