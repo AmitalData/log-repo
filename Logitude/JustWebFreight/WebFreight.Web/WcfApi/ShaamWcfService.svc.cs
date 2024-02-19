@@ -12,13 +12,17 @@ namespace WebFreight.Web.WcfApi
     {
         AllocateInvoiceService allocateInvoiceService = new AllocateInvoiceService();
 
-        public ApiToShaamRes CreateConfirmationNumber(string invoiceJson, int tenant, bool testEnvironment = true)
+        public ApiToShaamRes CreateConfirmationNumber(string invoiceJson, int tenant, bool? testEnvironment)
         {
             ApiToShaamRes res;
+
+            if(testEnvironment == null)
+                testEnvironment = true;
+
             try
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
-                HttpClienResponse apiToShaamRes = allocateInvoiceService.CreateConfirmationNumber(invoiceJson, tenant, testEnvironment);
+                HttpClienResponse apiToShaamRes = allocateInvoiceService.CreateConfirmationNumber(invoiceJson, tenant, testEnvironment.Value);
 
                 if (apiToShaamRes.Res.StatusCode != HttpStatusCode.OK)
                 {
