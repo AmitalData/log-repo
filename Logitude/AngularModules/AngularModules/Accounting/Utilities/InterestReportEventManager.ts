@@ -1,8 +1,5 @@
-import {  EventEmitter } from '@angular/core';
+import { EventEmitter } from '@angular/core';
+import { EventParams } from './ReconcileEventManager';
 export class InterestReportEventManager {
-
-
-  static SelectAllEvent: EventEmitter<any> = new EventEmitter();
-    static AllSelected: boolean;
-    
+  static SelectAllEvent: EventEmitter<EventParams> = new EventEmitter();
 }

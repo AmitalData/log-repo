@@ -663,9 +663,10 @@ export class GLAccountOverviewComponent extends BaseComponent {
     }
 
     CalculateOriginalAmount(transaction) {
-        if (!AppTool.IsNullOrEmpty(ReconcileEventManager.GLAccountReconcileMethodCode)) {
+        var gLAccountReconcileMethodCode = ReconcileEventManager.GetGLAccountReconcileMethodCode();
+        if (!AppTool.IsNullOrEmpty(gLAccountReconcileMethodCode)) {
 
-            if (ReconcileEventManager.GLAccountReconcileMethodCode == "0") { // 0-local currency
+            if (gLAccountReconcileMethodCode == "0") { // 0-local currency
 
                 if (transaction['LocalAmountCredit'] == 0) {
                     return transaction['LocalAmountDebit'];
@@ -673,7 +674,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
                     return -1 * transaction['LocalAmountCredit'];
                 }
 
-            } else if (ReconcileEventManager.GLAccountReconcileMethodCode == "1") { // 1-foreign currency
+            } else if (gLAccountReconcileMethodCode == "1") { // 1-foreign currency
 
                 if (transaction['ForeignAmountCredit'] == 0) {
                     return transaction['ForeignAmountDebit'];

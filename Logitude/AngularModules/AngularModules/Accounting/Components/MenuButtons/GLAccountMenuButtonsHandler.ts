@@ -147,7 +147,6 @@ export class GLAccountMenuButtonsHandler {
                                 break;
                             }
                     }
-
                 }
             }
         }
@@ -232,7 +231,7 @@ export class GLAccountMenuButtonsHandler {
     private StopBusyIndicator() {
         this.CurrentSession.StopBusyIndicator();
     }
-    
+
     ReconcileButtonClicked() {
         var screenWidth = this.getScreenWidth();
         var screenHeight = this.getScreenHeight();
