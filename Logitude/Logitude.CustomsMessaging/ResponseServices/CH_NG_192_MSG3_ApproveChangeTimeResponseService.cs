@@ -172,35 +172,34 @@ namespace Logitude.CustomsMessaging.ResponseServices
                     break;
             }
 
-            PhysicalCheckPM physicalCheckPM = physicalCheckQueryService.GetSingle(requestParams.PhysicalCheckId, false, false);
-            int checkId;
-            int.TryParse(physicalCheckPM.CheckId, out checkId);
-            this.MyRequestSheetParam = new RequestSheetParam();
-            this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.PhysicalCheck");
-            this.MyRequestSheetParam.EntityId1 = requestParams.PhysicalCheckId;
-            if (requestType == 1 || requestType == 2)
+            if(phsicalCheckPM != null && requestType != 0)
             {
-                this.MyRequestSheetParam.RequestDescription = "שינוי מועד בדיקה " + checkId;
-            }
-            else if(requestType == 4)
-            {
-                this.MyRequestSheetParam.RequestDescription = "הקדמת תור" + checkId;
-            }
-            else
-            {
-                this.MyRequestSheetParam.RequestDescription = "חיפוש תורים לבדיקה " + checkId;
-            }
-            if (physicalCheckPM.DeclarationId != null)
-            {
-                var declarationQueryService = new DeclarationQueryService(dbContext);
-                string customfileNumber = declarationQueryService.GetCustomFileNoByDeclarationId(physicalCheckPM.DeclarationId, physicalCheckPM.Tenant);
-                this.MyRequestSheetParam.CustomFileNo = customfileNumber;
-                this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
-                this.MyRequestSheetParam.EntityId2 = physicalCheckPM.DeclarationId;
-            }
+                this.MyRequestSheetParam = new RequestSheetParam();
+                this.MyRequestSheetParam.ObjectTableId1 = ObjectTableRepository.GetObjectTableByName("Customs.PhysicalCheck");
+                this.MyRequestSheetParam.EntityId1 = requestParams.PhysicalCheckId;
 
+                if (requestType == 1 || requestType == 2)
+                {
+                    this.MyRequestSheetParam.RequestDescription = "שינוי מועד בדיקה " + phsicalCheckPM.CheckId;
+                }
+                else if(requestType == 4 || requestType == 5)
+                {
+                    this.MyRequestSheetParam.RequestDescription = "הקדמת תור" + phsicalCheckPM.CheckId;
+                }
+                else
+                {
+                    this.MyRequestSheetParam.RequestDescription = "חיפוש תורים לבדיקה " + phsicalCheckPM.CheckId;
+                }
+                if (phsicalCheckPM.DeclarationId != null)
+                {
+                    var declarationQueryService = new DeclarationQueryService(dbContext);
+                    string customfileNumber = declarationQueryService.GetCustomFileNoByDeclarationId(phsicalCheckPM.DeclarationId, phsicalCheckPM.Tenant);
+                    this.MyRequestSheetParam.CustomFileNo = customfileNumber;
+                    this.MyRequestSheetParam.ObjectTableId2 = ObjectTableRepository.GetObjectTableByName("Customs.Declaration");
+                    this.MyRequestSheetParam.EntityId2 = phsicalCheckPM.DeclarationId;
+                }
 
-
+            }
         }
 
 
