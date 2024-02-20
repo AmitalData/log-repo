@@ -858,13 +858,6 @@
   </Column>
   <Column
     Name="ConfirmationNumber"
-    Type="varchar"
-    Size="30">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="ConfirmationNumber"
     Type="nvarchar"
     Size="30">
     <Constraints
@@ -1014,6 +1007,11 @@
     ForeignKeyColumn="DocumentTemplateId"
     ReferencedTable="DocumentTypeTemplates"
     ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="IsSigned"
+    ReferencedTable="ARInvoicesSignedStatuses"
+    ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
     Columns="Tenant,InvoiceDate" />
