@@ -20,11 +20,11 @@ namespace WebFreight.Web.Controllers.WebServices
 
         [HttpGet]
         [Route("linkToCodeForToken")]
-        public HttpResponseMessage LinkToCodeForToken(string user, bool testEnvironment = true)
+        public HttpResponseMessage LinkToCodeForToken(string user)
         {
             return TryCatchWrapper((tenant) =>
             {
-                HttpClienResponse apiToShaamRes = shaamService.LinkToCodeForToken(tenant.Value, user, testEnvironment);
+                HttpClienResponse apiToShaamRes = shaamService.LinkToCodeForToken(tenant.Value, user);
                 if (apiToShaamRes.Res.StatusCode == HttpStatusCode.OK)
                     apiToShaamRes.Content = $"{TaxesRediractUrl}&user={user}&tenant={tenant}&redirectToShaam={apiToShaamRes.Content}";
 
@@ -49,19 +49,19 @@ namespace WebFreight.Web.Controllers.WebServices
         {
             return TryCatchWrapper((tenant) =>
             {
-                HttpClienResponse apiToShaamRes = shaamService.NewRefreshToken(body.tenant, body.user, body.code, body.testEnvironment);
+                HttpClienResponse apiToShaamRes = shaamService.NewRefreshToken(body.tenant, body.user, body.code);
                 return apiToShaamRes;
             }, ReturnContent.JSON, false);
         }
 
         [HttpPost]
         [Route("createConfirmationNumber")]
-        public HttpResponseMessage CreateConfirmationNumber([FromBody] dynamic body, bool testEnvironment = true)
+        public HttpResponseMessage CreateConfirmationNumber([FromBody] dynamic body)
         {
             return TryCatchWrapper((tenant) =>
             {
                 string invoiceJson = Convert.ToString(body);
-                HttpClienResponse apiToShaamRes = allocateInvoiceService.CreateConfirmationNumber(invoiceJson, tenant.Value, testEnvironment);
+                HttpClienResponse apiToShaamRes = allocateInvoiceService.CreateConfirmationNumber(invoiceJson, tenant.Value);
                 return apiToShaamRes;
             });
         }
@@ -134,7 +134,6 @@ namespace WebFreight.Web.Controllers.WebServices
             public string user { get; set; }
             public string code { get; set; }
             public int tenant { get; set; }
-            public bool testEnvironment { get; set; } = true;
         }
 
         public class UpdateSettingsData
@@ -142,6 +141,7 @@ namespace WebFreight.Web.Controllers.WebServices
             public string clientId { get; set; }
             public string secret { get; set; }
             public string companyName { get; set; }
+            public bool isTestEnvironment { get; set; }
         }
 
         enum ReturnContent { NONE, VALUE, JSON }
