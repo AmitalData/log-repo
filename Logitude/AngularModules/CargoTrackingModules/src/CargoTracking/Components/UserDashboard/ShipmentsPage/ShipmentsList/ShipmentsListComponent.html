@@ -9,7 +9,7 @@
     #MySearch{
 
        background:url(./assets/search.png) 6px 2px  no-repeat scroll;
-       background-color:white;
+       background-color:bisque;
        background-position: right center ; 
        background-position-x: right;
        padding-right: 10px;
@@ -37,7 +37,7 @@
 
                 <div class="search-text" [class.hide-mobile]="!ShipmentSearchInput.SearchText">
 
-                    <input #input type="text"  id="MySearch" class="gray " [(ngModel)]="ShipmentSearchInput.SearchText" placeholder="Free search ..."
+                    <input #input type="text"  id="MySearch" class="gray " [(ngModel)]="ShipmentSearchInput.SearchText" placeholder="Free search ......."
                         formControlName="SearchText" name="SearchText "  (input)="onSearchChange()" />
                         
                 </div>

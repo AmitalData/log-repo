@@ -29,9 +29,11 @@
                         <input #input id="CargoTracking_Search" type="text " class="gray " [(ngModel)]="SearchText " placeholder="Search by Shipment References / Cargo Identifiers / Container No." formControlName="SearchText" name="SearchText " (input)="onSearchChange()"/>
                         <!-- [(ngModel)]="SearchText " -->
 
-                        <div class="icon ">
+                        <div class="icon " Id="test">
                             <!-- <img src="./assets/search.png " alt=" " /> -->
                             <img *ngIf="!SearchText" src="./assets/images/icons/search.svg " alt=" " />
+                            <img *ngIf="!SearchText" src="./assets/images/icons/search.svg " alt=" " />
+
                             <img *ngIf="SearchText" (click)="Clear()" class="delete" src="./assets/images/icons/delete.svg " alt=" " />
                         </div>
 
@@ -49,7 +51,7 @@
             <div class="info-text " *ngIf="Shipments.length==0  && !noResult && !hasError">
 
                 <p *ngIf="1">
-                    Keep track of the location and all details of your cargo and shipments using our Cargo Tracking site. You can search using the shipment number or reference, cargo identifiers or container number.
+                    Keep track of the location and all details of your cargo and shipments using our Cargo Tracking site. You can search using the shipment number or reference, cargo identifiers or container number check.
                 </p>
 
 
