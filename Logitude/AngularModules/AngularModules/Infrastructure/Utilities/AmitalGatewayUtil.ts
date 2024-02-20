@@ -301,7 +301,10 @@ export class AmitalGatewayUtil {
     }
     public IsAmitalBackButtonDisable: boolean = false;
     AmitalBackButtonClicked() {
-        close(); // its close only if its open by window.open() method
+        try {
+            close(); // its close only if its open by window.open() method
+            window.parent.close();
+        } catch{}
 
         this.sendPostMessage("amitalBackButtonClicked");
 
