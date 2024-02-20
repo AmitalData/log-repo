@@ -28,9 +28,7 @@ import { OriginCriterionList } from 'Customs/EntityLists/OriginCriterionList';
 import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 import { EventEmitter } from '@angular/core';
 import { ApiQueryFilters } from 'Infrastructure/DataContracts/ApiQueryFilters';
-import { CertificateOfOriginMandatoryFieldsListService } from 'Customs/Services/StandardLists/CertificateOfOriginMandatoryFieldsListService';
 import { CertificateOfOriginWebService } from 'Customs/Services/WebServices/CertificateOfOriginWebService';
-import { CertificateOfOriginMandatoryFieldsList } from 'Customs/EntityLists/CertificateOfOriginMandatoryFieldsList';
 
 
 
@@ -57,6 +55,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     controlEnabled: boolean;
     IsDisplayOnly: boolean = false;
     public ErrorsList: string[];
+    public StatusCode:number = 4;
+
     constructor() {
         super();
     }
