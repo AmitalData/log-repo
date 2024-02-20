@@ -158,8 +158,8 @@
                                         </div>
                                         <div class="number-input-wrapper">
                                             <NumberInput style="width: 50px" [(ngModel)]="SecurityLevel" name="no" [min]="1"
-                                                [max]="maxSecurityLevel" [allowNull]="true"
-                                                [isDisabled]="!IsSecurityLevelOK || journalDisabled || !IsSecurityLevelVisible">
+                                                         [max]="maxSecurityLevel" [allowNull]="true"
+                                                         [isDisabled]="!IsSecurityLevelOK || (journalDisabled && !PermissionChangeable) || !IsSecurityLevelVisible">
                                             </NumberInput>
                                         </div>
                                     </div>
