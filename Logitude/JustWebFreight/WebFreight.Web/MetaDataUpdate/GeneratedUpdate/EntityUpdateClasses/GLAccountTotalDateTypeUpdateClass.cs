@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class GLAccountTotalDateTypeUpdateClass
    {  		
-		public const string HashString = "9a54a119b63e009025dd6e4b7b664cb6";
+		public const string HashString = "f25e2d6ab3e79ee729e7825031f17e81";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -100,6 +100,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    HasCustomFilter =  false,
 			      				    HasCustomFields =  false,
 			      				    AvailableInCustomization =  true,
+			      				    SupportSubEntity =  false,
+			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -129,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוג תאריך למצטברים חודשיים",
 			      				    DefaultText =  "Account monthly totals  Date Types",
-			      				    Code =  "f477",
+			      				    Code =  "b315",
 			      				    Name =  "GLAccountTotalDateType Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "Name",
