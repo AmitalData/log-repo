@@ -57,6 +57,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
     difference: number = 0;
     differenceColor = '#9e4300';
     journalDisabled: boolean = false;
+    PermissionChangeable: boolean = false;
     forceFocus: boolean = false;
     PointerEvents: string = 'auto';
     Opacity: string = "1";
@@ -278,6 +279,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         else if (this.EntityPM.StatusCode == "3" || this.EntityPM.StatusCode == this.CancelledStatusCode) { // 3-Voided and 2-Approved
             //disable controls
             this.journalDisabled = true;
+            if (this.EntityPM.StatusCode == "3") this.PermissionChangeable = true;
             this.PointerEvents = 'none';
             this.Opacity = "1";
             this.Voided = true;
@@ -285,6 +287,7 @@ export class JournalDetailsTabComponent extends BaseComponent implements OnInit 
         else if (this.EntityPM.StatusCode == "2" || this.EntityPM.StatusCode == "6") { // 3-Voided and 2-Approved
             //disable controls
             this.journalDisabled = true;
+            if (this.EntityPM.StatusCode == "2") this.PermissionChangeable = true;
             this.PointerEvents = 'none';
             this.Opacity = "1";
             this.referencesDivHeight = 0;
