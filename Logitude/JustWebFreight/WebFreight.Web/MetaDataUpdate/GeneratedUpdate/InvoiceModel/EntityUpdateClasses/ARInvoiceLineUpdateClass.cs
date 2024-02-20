@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceLineUpdateClass
    {  		
-		public const string HashString = "ef98cd6b96bbd03096269f65eace4417";
+		public const string HashString = "dc3540d0edf0a206c78de66cf1c408d8";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -102,6 +102,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    AvailableInCustomization =  false,
 			      				    SupportSubEntity =  false,
 			      				    ApplyGenericCustomFields =  false,
+			      				    AvailableInDocumentTypes =  false,
 			      				    HasHelper =  false,
 			      				    HasShortTitle =  false,
 			      				    HasFiltersMenu =  false,
@@ -127,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "BR",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "A/R Invoice Line",
-			      				    Code =  "6ec7",
+			      				    Code =  "0ba6",
 			      				    Name =  "ARInvoiceLine",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -2640,7 +2641,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						ConverterName =  "Simplog.Infrastructure.Utilities.Converters.DateTimeToDateConverter",
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -2669,8 +2670,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						InActive =  false,
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "ValueDate",
-					  						DefaultText =  "Value date",
+					  						DefaultText =  "Value Date",
 					  						FullLocalDefaultText =  "תאריך ערך",
+					  						ListFieldLable =  "ValueDateListLable",
+					  						ListLableDefaultText =  "ValueDate",
+					  						ListLocalDefaultText =  "תאריך ערך",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -3536,6 +3540,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "InvoiceCurrencyId",
 					  						ListPropertyPath =  "InvoiceCurrencyId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
