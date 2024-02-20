@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APPaymentUpdateClass
    {  		
-		public const string HashString = "475b5033b15b4c1164a44a8bba0d4909";
+		public const string HashString = "0adc40d75b66324d4cc4f500ef33a32a";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2364,7 +2364,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "Equals",
@@ -3052,11 +3052,11 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  0,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						Operator =  "StartsWith",
@@ -3090,7 +3090,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						FullLocalDefaultText =  "חשבון",
 					  						ListFieldLable =  "AccountListLable",
 					  						ListLableDefaultText =  "Account",
-					  						ListLocalDefaultText =  "חשבון",
+					  						ListLocalDefaultText =  "חשבון בנק",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
