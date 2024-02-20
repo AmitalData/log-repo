@@ -355,6 +355,9 @@
     .toggle-button:hover {
         opacity: 0.92;
     }
+    .TableHolder{
+        padding: 3px !important;
+    }
 </style>
 
 <!-- Alert -->
@@ -384,7 +387,313 @@
                                                 <td>
                                                     <table style="table-layout: fixed;">
                                                         <td style="width:10px"></td>
-                                                        <td style="width:300px;padding-top:12px;"
+                                                      
+
+                                                        <td style="width:45px" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            <LogLabel [ObjectFieldName]="'CurrencyId'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [NoObjectField]="true" [DataContext]="DataContext">
+                                                            </LogLabel>
+                                                        </td>
+
+                                                        <td style="width:120px">
+                                                            <LogLov [ObjectFieldName]="'CurrencyId'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [DataContext]="DataContext"
+                                                                [QueryFilterItems]="CurrencyFilters"
+                                                                [SelectedValue]="CurrencyId"
+                                                                [LookUpTableName]="'Currency'" [HideColumns]="true">
+                                                            </LogLov>
+                                                        </td>
+                                                        <td style="width:125px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width: 50px;"
+                                                            [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            {{'Accounting.General.O.FilterBy' |
+                                                            TextCodeTranslationPipe}}
+                                                        </td>
+
+                                                        <td [style.width.px]="DateFilterWidth">
+                                                          
+                                                            <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL"
+                                                                float-start>
+                                                                <li float-start id="filter_accounting"
+                                                                    (click)="FilterItemClicked('filter_accounting')"
+                                                                    style="height: 22px;"
+                                                                    [class.SelectedFilter]="filterSelectedValue === 'filter_accounting'">
+                                                                    {{'GLAccounts.O.filter_accounting' |
+                                                                    TextCodeTranslationPipe}}
+                                                                </li>
+                                                                <li float-start id="filter_reference"
+                                                                    (click)="FilterItemClicked('filter_reference')"
+                                                                    style="height: 22px;"
+                                                                    [class.SelectedFilter]="filterSelectedValue === 'filter_reference'">
+                                                                    {{'GLAccounts.O.filter_reference' |
+                                                                    TextCodeTranslationPipe}}
+                                                                </li>
+                                                                <li float-start id="filter_due"
+                                                                    (click)="FilterItemClicked('filter_due')"
+                                                                    style="height: 22px;"
+                                                                    [class.SelectedFilter]="filterSelectedValue === 'filter_due'">
+                                                                    {{'GLAccounts.O.filter_due' |
+                                                                    TextCodeTranslationPipe}}
+                                                                </li>
+                                                                <li *ngIf="isVatInputOrOutput"
+                                                                    (click)="FilterItemClicked('filter_Tax')"
+                                                                    style="height: 22px;"
+                                                                    [class.SelectedFilter]="filterSelectedValue === 'filter_Tax'">
+                                                                    {{'TaxReport' | TextCodeTranslationPipe}}
+                                                                </li>
+                                                            </ul>
+                                                        </td>
+                                                        <td style="width:15px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 50px;"
+                                                        [style.text-align]="isRTL ? 'right' : 'left'"
+                                                        *ngIf="isVatInputOrOutput&& filterSelectedValue === 'filter_Tax'">
+                                                        <div></div>
+                                                        </td>
+                                                        <td style="width:90px"
+                                                            *ngIf="isVatInputOrOutput&& filterSelectedValue === 'filter_Tax'">
+                                                            <div style="width:100px">
+                                                                <ComboBox [ItemsSource]="TaxReportLists"
+                                                                    [IsDisabled]="NotIncludedInAnyTaxReport"
+                                                                    [Binding]="'Name'"
+                                                                    [SelectedItem]="SelectedTaxReport"
+                                                                    (SelectedItemChanged)="SelectedTaxReport = $event">
+                                                                </ComboBox>
+                                                            </div>
+                                                        </td>
+                                                       
+                                                        <td style="width: 50px;"
+                                                            [style.text-align]="isRTL ? 'right' : 'left'"
+                                                            *ngIf="filterSelectedValue != 'filter_Tax'">
+                                                            {{
+                                                            'Accounting.General.O.Datefrom'
+                                                            | TextCodeTranslationPipe
+                                                            }}
+                                                        </td>
+                                                        <td style="width: 90px;"
+                                                            *ngIf="filterSelectedValue != 'filter_Tax'">
+                                                            <LogDatePicker [ObjectFieldName]="'FromDate'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [NoObjectField]="true" [ForceSubscribe]="true"
+                                                                [DataContext]="DataContext" [HideColumns]="true"
+                                                                [SelectedDateValue]="FromDate"></LogDatePicker>
+                                                        </td>
+                                                        <td *ngIf="filterSelectedValue == 'filter_Tax'" style="width:40px;">
+                                                            <div></div>
+                                                        </td>
+
+                                                        <td style="width:15px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td *ngIf="filterSelectedValue == 'filter_Tax'"
+                                                        style="vertical-align :top;padding-top:5px;width:85px">
+                                                        <div [style.float]="isRTL ? 'right' : 'left'">
+                                                            <div float-start
+                                                                style="width: 20px; padding-top: 2px;">
+                                                                <CheckBox
+                                                                    (Checked)="NotIncludedInAnyTaxReport = $event"
+                                                                    [IsChecked]="NotIncludedInAnyTaxReport">
+                                                                </CheckBox>
+                                                            </div>
+                                                            <div [style.float]="isRTL ? 'left' : 'right'"
+                                                                [style.text-align]="isRTL ? 'right' : 'left'"
+                                                                style="width: 260px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                                                {{
+                                                                'GLAccount.O.NotIncludedInTax' |
+                                                                TextCodeTranslationPipe
+                                                                }}
+                                                            </div>
+                                                        </div>
+
+                                                        </td>
+
+                                                        <td style="width: 30px;"
+                                                            [style.text-align]="isRTL ? 'right' : 'left'"
+                                                            *ngIf="filterSelectedValue != 'filter_Tax'">
+                                                            {{
+                                                            'Accounting.General.O.To'
+                                                            | TextCodeTranslationPipe
+                                                            }}
+                                                        </td>
+
+                                                        <td style="width: 90px;"
+                                                            *ngIf="filterSelectedValue != 'filter_Tax'">
+                                                            <LogDatePicker [ObjectFieldName]="'ToDate'"
+                                                                [ObjectTableName]="ObjectTableName"
+                                                                [NoObjectField]="true" [ForceSubscribe]="true"
+                                                                [DataContext]="DataContext" [HideColumns]="true"
+                                                                [SelectedDateValue]="ToDate"></LogDatePicker>
+                                                        </td>
+                                                        <td style="width:15px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 50px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'LedgerTransaction.O.LocalAmount' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width:5px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 90px;">
+                                           
+                                                                <ComboBox [ItemsSource]="operatorsList" [Binding]="'LocalName'"
+                                                                          [SelectedItem]="selectedAmountLocalOperator"
+                                                                          (SelectedItemChanged)="AmountLocalOperatorChanged($event)"></ComboBox>
+                                                            
+                                                                
+                                                        </td>
+                                                        <td style="width: 15px;"><div></div></td>
+                                                       
+        
+                                                        <td *ngIf="selectedAmountLocalOperator?.Code != 'Between'" style="width: 90px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            <LogTextBox [InputType]="'decimal'" [NoObjectField]="true"
+                                                            [ObjectFieldName]="'AmountLocal'" [Text]="AmountLocal" [HideColumns]="true"
+                                                            (ValueChanged)="AmountLocalTextChanged($event)" [DebounceTime]="400"
+                                                            [ObjectTableName]="'Reconciliation'" [DataContext]="this"></LogTextBox>
+                                                        </td>
+        
+                                                        <td
+                                                            *ngIf="selectedAmountLocalOperator?.Code == 'Between'"
+                                                            style="width: 90px"
+                                                            [style.text-align]="isRTL ? 'right' : 'left'"
+                                                        >
+                                                        <LogTextBox
+                                                            [NoObjectField]="true"
+                                                            [HideColumns]="true"
+                                                            [InputType]="'decimal'"
+                                                            [DataContext]="DataContext"
+                                                            [DebounceTime]="400"
+                                                            [ObjectFieldName]="'From'"
+                                                            (ValueChanged)="AmountLocalTextFromChanged($event)"
+                                                        ></LogTextBox>
+                                                        </td>
+                                                        <td style="width: 15px"><div></div></td>
+                                                        <td *ngIf="selectedAmountLocalOperator?.Code != 'Between'" style="width: 90px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                           
+                                                        </td>
+                                                        <td
+                                                        *ngIf="selectedAmountLocalOperator?.Code == 'Between'"
+                                                        style="width: 90px"
+                                                        [style.text-align]="isRTL ? 'right' : 'left'"
+                                                        >
+                                                        <LogTextBox
+                                                            [NoObjectField]="true"
+                                                            [HideColumns]="true"
+                                                            [InputType]="'decimal'"
+                                                            [DataContext]="DataContext"
+                                                            [DebounceTime]="400"
+                                                            [ObjectFieldName]="'To'"
+                                                            (ValueChanged)="AmountLocalTextToChanged($event)"
+                                                        ></LogTextBox>
+                                                        </td>
+                                                        <td style="width:15px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:180px" rowspan="2">
+                                                            <table>
+
+                                                                <tr>
+                                                                    <td 
+                                                                    *ngIf="filterSelectedValue === 'filter_Tax'">
+                                                                     </td>
+                                                                    <td style="padding: 0 10px;vertical-align :top;padding-top:5px"
+                                                                        *ngIf="filterSelectedValue != 'filter_Tax'">
+                                                                        <!-- With Splitted by currency checkbox -->
+                                                                        <div *ngIf="EntityPM.AccountTypeCode == '2' || EntityPM.AccountTypeCode == '3'"
+                                                                            [style.float]="isRTL ? 'right' : 'left'">
+                                                                            <div float-start
+                                                                                style="width: 20px; padding-top: 2px;">
+                                                                                <CheckBox
+                                                                                    (Checked)="SplittedByCurrencyCheckBox = $event"
+                                                                                    [IsChecked]="SplittedByCurrencyCheckBox">
+                                                                                </CheckBox>
+                                                                            </div>
+                                                                            <div [style.float]="isRTL ? 'left' : 'right'"
+                                                                                [style.text-align]="isRTL ? 'right' : 'left'"
+                                                                                style="width: 120px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                                                                {{
+                                                                                'Accounting.General.O.WithSplittedbycurrency'
+                                                                                | TextCodeTranslationPipe
+                                                                                }}
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- with children checkbox-->
+                                                                        <div [style.float]="isRTL ? 'right' : 'left'">
+                                                                            <div float-start
+                                                                                style="width: 20px; padding-top: 2px;">
+                                                                                <CheckBox
+                                                                                    (Checked)="AttachedGLAccountCheckBox = $event"
+                                                                                    [IsChecked]="AttachedGLAccountCheckBox">
+                                                                                </CheckBox>
+                                                                            </div>
+                                                                            <div [style.float]="isRTL ? 'left' : 'right'"
+                                                                                [style.text-align]="isRTL ? 'right' : 'left'"
+                                                                                style="width: 90px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
+                                                                                {{
+                                                                                'Accounting.General.O.WithAttachedAccounts'
+                                                                                |
+                                                                                TextCodeTranslationPipe
+                                                                                }}
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
+                                                                   
+
+                                                                </tr>
+                                                                <tr>
+                                                                </tr>
+                                                                <tr></tr>
+                                                            </table>
+
+
+
+                                                        </td>
+                                                        <td style="width:15px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width:250px">
+                                                            <div [style.float]="isRTL ? 'left' : 'right'"
+                                                                style="width: 190px;padding: 0 5px;">
+                                                                <SearchTextBox [ObjectTableName]="'LedgerTransaction'"
+                                                                    [PlaceHolder]="'Accounting.General.O.JournalNoRef' | TextCodeTranslationPipe"
+                                                                    (SearchTextChangeEvent)="TextChanged($event)">
+                                                                </SearchTextBox>
+                                                            </div>
+
+
+                                                            <div [style.float]="isRTL ? 'left' : 'right'">
+                                                                <IconButton [Name]="'Refresh'"
+                                                                    (click)="RefreshButtonClicked()"></IconButton>
+                                                            </div>
+
+
+                                                            <div [style.float]="isRTL ? 'left' : 'right'">
+                                                                <IconButton style="margin: 0 5px;"
+                                                                    [style.float]="isRTL ? 'right' : 'left'"
+                                                                    [Name]="'excel'" [Left]="isRTL ? 3:-3"
+                                                                    (click)="ExportToExcelClick()"></IconButton>
+                                                            </div>
+
+                                                        </td>
+                                                    </table>
+                                                </td>
+
+                                            </tr>
+                                                                               
+                                        </table>
+                                </tr>
+                                <tr class="FormFieldRow">
+                                    <td>
+                                        <table>
+                                            <!-- Date -->
+                                            <tr class="FormFieldRow">
+                                                <td>
+                                                    <table style="table-layout: fixed;">
+                                                        <td style="width:10px"></td>
+                                                        <td style="width:275px;"
                                                             [style.text-align]="isRTL ? 'right' : 'left'">
 
                                                             <span float-start
@@ -437,254 +746,13 @@
 
 
                                                         </td>
+                                                      
                                                         <td style="width:15px;">
                                                             <div></div>
                                                         </td>
 
-                                                        <td style="width:45px">
-                                                            <LogLabel [ObjectFieldName]="'CurrencyId'"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [NoObjectField]="true" [DataContext]="DataContext">
-                                                            </LogLabel>
-                                                        </td>
-
-                                                        <td style="width:120px">
-                                                            <LogLov [ObjectFieldName]="'CurrencyId'"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [DataContext]="DataContext"
-                                                                [QueryFilterItems]="CurrencyFilters"
-                                                                [SelectedValue]="CurrencyId"
-                                                                [LookUpTableName]="'Currency'" [HideColumns]="true">
-                                                            </LogLov>
-                                                        </td>
-                                                        <td style="width:15px;">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width: 50px;"
-                                                            [style.text-align]="isRTL ? 'right' : 'left'">
-                                                            {{'Accounting.General.O.FilterBy' |
-                                                            TextCodeTranslationPipe}}
-                                                        </td>
-
-                                                        <td [style.width.px]="DateFilterWidth">
-                                                            <button class="toggle-button"
-                                                                [disabled]="this.filterSelectedValue == 'filter_Tax'"
-                                                                style="width: 44px;margin: 0 3px"
-                                                                (click)="ShowSecondDateFilter=!ShowSecondDateFilter"
-                                                                float-start>
-                                                                <img
-                                                                    [attr.src]="FromDate2 && ToDate2 ? './Images/FilterGrayTransUsed.png' : './Images/FilterGrayTrans.png'">
-                                                                <img [class.FlipImgVert]="ShowSecondDateFilter"
-                                                                    src="./Images/FiltersOpen.png"
-                                                                    style="margin-top: 2px;margin-left: 4px;">
-                                                            </button>
-                                                            <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL"
-                                                                float-start>
-                                                                <li float-start id="filter_accounting"
-                                                                    (click)="FilterItemClicked('filter_accounting')"
-                                                                    style="height: 22px;"
-                                                                    [class.SelectedFilter]="filterSelectedValue === 'filter_accounting'">
-                                                                    {{'GLAccounts.O.filter_accounting' |
-                                                                    TextCodeTranslationPipe}}
-                                                                </li>
-                                                                <li float-start id="filter_reference"
-                                                                    (click)="FilterItemClicked('filter_reference')"
-                                                                    style="height: 22px;"
-                                                                    [class.SelectedFilter]="filterSelectedValue === 'filter_reference'">
-                                                                    {{'GLAccounts.O.filter_reference' |
-                                                                    TextCodeTranslationPipe}}
-                                                                </li>
-                                                                <li float-start id="filter_due"
-                                                                    (click)="FilterItemClicked('filter_due')"
-                                                                    style="height: 22px;"
-                                                                    [class.SelectedFilter]="filterSelectedValue === 'filter_due'">
-                                                                    {{'GLAccounts.O.filter_due' |
-                                                                    TextCodeTranslationPipe}}
-                                                                </li>
-                                                                <li *ngIf="isVatInputOrOutput"
-                                                                    (click)="FilterItemClicked('filter_Tax')"
-                                                                    style="height: 22px;"
-                                                                    [class.SelectedFilter]="filterSelectedValue === 'filter_Tax'">
-                                                                    {{'TaxReport' | TextCodeTranslationPipe}}
-                                                                </li>
-                                                            </ul>
-                                                        </td>
-                                                        <td style="width:15px;">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:100px"
-                                                            *ngIf="isVatInputOrOutput&& filterSelectedValue === 'filter_Tax'">
-                                                            <div style="width:100px">
-                                                                <ComboBox [ItemsSource]="TaxReportLists"
-                                                                    [IsDisabled]="NotIncludedInAnyTaxReport"
-                                                                    [Binding]="'Name'"
-                                                                    [SelectedItem]="SelectedTaxReport"
-                                                                    (SelectedItemChanged)="SelectedTaxReport = $event">
-                                                                </ComboBox>
-                                                            </div>
-                                                        </td>
-                                                        <td style="width: 50px;"
-                                                            [style.text-align]="isRTL ? 'right' : 'left'"
-                                                            *ngIf="filterSelectedValue != 'filter_Tax'">
-                                                            {{
-                                                            'Accounting.General.O.Datefrom'
-                                                            | TextCodeTranslationPipe
-                                                            }}
-                                                        </td>
-                                                        <td style="width: 90px;"
-                                                            *ngIf="filterSelectedValue != 'filter_Tax'">
-                                                            <LogDatePicker [ObjectFieldName]="'FromDate'"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [NoObjectField]="true" [ForceSubscribe]="true"
-                                                                [DataContext]="DataContext" [HideColumns]="true"
-                                                                [SelectedDateValue]="FromDate"></LogDatePicker>
-                                                        </td>
-
-
-                                                        <td style="width:15px;">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td style="width: 30px;"
-                                                            [style.text-align]="isRTL ? 'right' : 'left'"
-                                                            *ngIf="filterSelectedValue != 'filter_Tax'">
-                                                            {{
-                                                            'Accounting.General.O.To'
-                                                            | TextCodeTranslationPipe
-                                                            }}
-                                                        </td>
-
-                                                        <td style="width: 90px;"
-                                                            *ngIf="filterSelectedValue != 'filter_Tax'">
-                                                            <LogDatePicker [ObjectFieldName]="'ToDate'"
-                                                                [ObjectTableName]="ObjectTableName"
-                                                                [NoObjectField]="true" [ForceSubscribe]="true"
-                                                                [DataContext]="DataContext" [HideColumns]="true"
-                                                                [SelectedDateValue]="ToDate"></LogDatePicker>
-                                                        </td>
-                                                        <td style="width:180px" rowspan="2">
-                                                            <table>
-
-                                                                <tr>
-                                                                    <td style="padding: 0 10px;vertical-align :top;padding-top:5px"
-                                                                        *ngIf="filterSelectedValue != 'filter_Tax'">
-                                                                        <!-- With Splitted by currency checkbox -->
-                                                                        <div *ngIf="EntityPM.AccountTypeCode == '2' || EntityPM.AccountTypeCode == '3'"
-                                                                            [style.float]="isRTL ? 'right' : 'left'">
-                                                                            <div float-start
-                                                                                style="width: 20px; padding-top: 2px;">
-                                                                                <CheckBox
-                                                                                    (Checked)="SplittedByCurrencyCheckBox = $event"
-                                                                                    [IsChecked]="SplittedByCurrencyCheckBox">
-                                                                                </CheckBox>
-                                                                            </div>
-                                                                            <div [style.float]="isRTL ? 'left' : 'right'"
-                                                                                [style.text-align]="isRTL ? 'right' : 'left'"
-                                                                                style="width: 120px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
-                                                                                {{
-                                                                                'Accounting.General.O.WithSplittedbycurrency'
-                                                                                | TextCodeTranslationPipe
-                                                                                }}
-                                                                            </div>
-                                                                        </div>
-                                                                        <!-- with children checkbox-->
-                                                                        <div [style.float]="isRTL ? 'right' : 'left'">
-                                                                            <div float-start
-                                                                                style="width: 20px; padding-top: 2px;">
-                                                                                <CheckBox
-                                                                                    (Checked)="AttachedGLAccountCheckBox = $event"
-                                                                                    [IsChecked]="AttachedGLAccountCheckBox">
-                                                                                </CheckBox>
-                                                                            </div>
-                                                                            <div [style.float]="isRTL ? 'left' : 'right'"
-                                                                                [style.text-align]="isRTL ? 'right' : 'left'"
-                                                                                style="width: 90px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
-                                                                                {{
-                                                                                'Accounting.General.O.WithAttachedAccounts'
-                                                                                |
-                                                                                TextCodeTranslationPipe
-                                                                                }}
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td *ngIf="filterSelectedValue == 'filter_Tax'"
-                                                                        style="vertical-align :top;padding-top:5px;width:300px">
-                                                                        <div [style.float]="isRTL ? 'right' : 'left'">
-                                                                            <div float-start
-                                                                                style="width: 20px; padding-top: 2px;">
-                                                                                <CheckBox
-                                                                                    (Checked)="NotIncludedInAnyTaxReport = $event"
-                                                                                    [IsChecked]="NotIncludedInAnyTaxReport">
-                                                                                </CheckBox>
-                                                                            </div>
-                                                                            <div [style.float]="isRTL ? 'left' : 'right'"
-                                                                                [style.text-align]="isRTL ? 'right' : 'left'"
-                                                                                style="width: 260px;  padding-left: 4px;padding-right: 4px; font-size: 12px;padding-top: 2px;color: #4e4e4e;">
-                                                                                {{
-                                                                                'GLAccount.O.NotIncludedInTax' |
-                                                                                TextCodeTranslationPipe
-                                                                                }}
-                                                                            </div>
-                                                                        </div>
-
-                                                                    </td>
-
-                                                                </tr>
-                                                                <tr>
-                                                                </tr>
-                                                                <tr></tr>
-                                                            </table>
-
-
-
-                                                        </td>
-                                                        <td style="width:15px;">
-                                                            <div></div>
-                                                        </td>
-                                                        <td style="width:250px">
-                                                            <div [style.float]="isRTL ? 'left' : 'right'"
-                                                                style="width: 200px;padding: 0 5px;">
-                                                                <SearchTextBox [ObjectTableName]="'LedgerTransaction'"
-                                                                    [PlaceHolder]="'Accounting.General.O.JournalNoRef' | TextCodeTranslationPipe"
-                                                                    (SearchTextChangeEvent)="TextChanged($event)">
-                                                                </SearchTextBox>
-                                                            </div>
-
-
-                                                            <div [style.float]="isRTL ? 'left' : 'right'">
-                                                                <IconButton [Name]="'Refresh'"
-                                                                    (click)="RefreshButtonClicked()"></IconButton>
-                                                            </div>
-
-
-                                                            <div [style.float]="isRTL ? 'left' : 'right'">
-                                                                <IconButton style="margin: 0 5px;"
-                                                                    [style.float]="isRTL ? 'right' : 'left'"
-                                                                    [Name]="'excel'" [Left]="isRTL ? 3:-3"
-                                                                    (click)="ExportToExcelClick()"></IconButton>
-                                                            </div>
-
-                                                        </td>
-                                                    </table>
-                                                </td>
-
-                                            </tr>
-
-
-                                            <!-- Date 2 -->
-                                            <tr *ngIf="ShowSecondDateFilter" class="FormFieldRow">
-                                                <td>
-                                                    <table style="table-layout: fixed;">
-                                                        <td style="width:528px;padding-top:12px;"
-                                                            [style.text-align]="isRTL ? 'right' : 'left'">
-
-                                                        </td>
-                                                        <td style="width:30px;">
-                                                            <div></div>
-                                                        </td>
-
-                                                        <td [style.width.px]="DateFilterWidth">
+           
+                                                        <td [style.width.px]="DateFilterWidth2">
                                                             <div style=" width: 50px; height: 5px;" float-start></div>
                                                             <ul class="FiltersMenu" [class.aboodRTLFilterMenu]="isRTL"
                                                                 float-start>
@@ -711,6 +779,10 @@
                                                                 </li>
                                                             </ul>
                                                         </td>
+                                                        <td *ngIf="isVatInputOrOutput" style="width: 50px;"
+                                                        [style.text-align]="isRTL ? 'right' : 'left'">
+                                                        <div></div>
+                                                    </td>
                                                         <td style="width:16px;">
                                                             <div></div>
                                                         </td>
@@ -727,7 +799,7 @@
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [NoObjectField]="true" [ForceSubscribe]="true"
                                                                 [DataContext]="DataContext" [HideColumns]="true"
-                                                                [SelectedDateValue]="FromDate"></LogDatePicker>
+                                                                [SelectedDateValue]="FromDate2"></LogDatePicker>
                                                         </td>
 
                                                         <td style="width:15px;">
@@ -744,40 +816,85 @@
                                                                 [ObjectTableName]="ObjectTableName"
                                                                 [NoObjectField]="true" [ForceSubscribe]="true"
                                                                 [DataContext]="DataContext" [HideColumns]="true"
-                                                                [SelectedDateValue]="ToDate"></LogDatePicker>
+                                                                [SelectedDateValue]="ToDate2"></LogDatePicker>
                                                         </td>
-                                                        <td style="width:300px" rowspan="2">
+                                                      
+                                                        <td style="width:15px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 50px;" [style.text-align]="isRTL ? 'right' : 'left'">{{'LedgerTransaction.O.ForeignAmount' | TextCodeTranslationPipe}}</td>
+                                                        <td style="width:5px;">
+                                                            <div></div>
+                                                        </td>
+                                                        <td style="width: 90px;">
+                                           
+                                                                <ComboBox [ItemsSource]="operatorsList" [Binding]="'LocalName'"
+                                                                          [SelectedItem]="selectedAmountForeignOperator"
+                                                                          (SelectedItemChanged)="AmountForeignOperatorChanged($event)"></ComboBox>
+                                                            
+                                                                
+                                                        </td>
+                                                        <td style="width: 15px;"><div></div></td>
+                                                       
+        
+                                                        <td *ngIf="selectedAmountForeignOperator?.Code != 'Between'" style="width: 90px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                            <LogTextBox [InputType]="'decimal'" [NoObjectField]="true"
+                                                            [ObjectFieldName]="'Amount'" [Text]="AmountForeign" [HideColumns]="true"
+                                                            (ValueChanged)="AmountForeignTextChanged($event)" [DebounceTime]="400"
+                                                            [ObjectTableName]="'Reconciliation'" [DataContext]="this"></LogTextBox>
+                                                        </td>
+        
+                                                        <td
+                                                            *ngIf="selectedAmountForeignOperator?.Code == 'Between'"
+                                                            style="width: 90px"
+                                                            [style.text-align]="isRTL ? 'right' : 'left'"
+                                                        >
+                                                        <LogTextBox
+                                                            [NoObjectField]="true"
+                                                            [HideColumns]="true"
+                                                            [InputType]="'decimal'"
+                                                            [DataContext]="DataContext"
+                                                            [DebounceTime]="400"
+                                                            [ObjectFieldName]="'From'"
+                                                            (ValueChanged)="AmountForeignTextFromChanged($event)"
+                                                        ></LogTextBox>
+                                                        </td>
+                                                        <td style="width: 15px"><div></div></td>
+                                                        <td *ngIf="selectedAmountForeignOperator?.Code != 'Between'" style="width: 90px;" [style.text-align]="isRTL ? 'right' : 'left'">
+                                                           
+                                                        </td>
+                                                        <td
+                                                        *ngIf="selectedAmountForeignOperator?.Code == 'Between'"
+                                                        style="width: 90px"
+                                                        [style.text-align]="isRTL ? 'right' : 'left'"
+                                                        >
+                                                        <LogTextBox
+                                                            [NoObjectField]="true"
+                                                            [HideColumns]="true"
+                                                            [InputType]="'decimal'"
+                                                            [DataContext]="DataContext"
+                                                            [DebounceTime]="400"
+                                                            [ObjectFieldName]="'To'"
+                                                            (ValueChanged)="AmountForeignTextToChanged($event)"
+                                                        ></LogTextBox>
+                                                        </td>
+                                                        <td style="width:55px" [style.text-align]="isRTL ? 'right' : 'left'">
                                                             <div style="margin: 0 10px;" *ngIf="FromDate2&&ToDate2">
                                                                 <IconButton [Name]="'Delete'"
                                                                     (click)="ResetAdditionalDateFilter()"></IconButton>
                                                             </div>
                                                         </td>
-
-                                                        <td style="width:150px">
-                                                            <div [style.float]="isRTL ? 'left' : 'right'"
-                                                                style="width: 200px;padding: 0 5px;">
-
-                                                            </div>
-
-
-                                                            <div [style.float]="isRTL ? 'left' : 'right'">
-
-                                                            </div>
-
-
-                                                            <div [style.float]="isRTL ? 'left' : 'right'">
-
-                                                            </div>
-
+                                                        <td style="width: 405px;">
+                                                            <div></div>
                                                         </td>
+                                                      
                                                     </table>
                                                 </td>
 
-                                            </tr>
+                                            </tr>                                                                               
 
                                         </table>
                                 </tr>
-
 
                             </table>
                         </td>
@@ -858,7 +975,7 @@
     </div>
 
     <!-- Footer -->
-    <div>
+    <div *ngIf="amountForeignFieldFilter == null && amountLocalFieldFilter == null">
         <div class="tab-footer">
             <span style="padding-left: 84px">
                 <span>
