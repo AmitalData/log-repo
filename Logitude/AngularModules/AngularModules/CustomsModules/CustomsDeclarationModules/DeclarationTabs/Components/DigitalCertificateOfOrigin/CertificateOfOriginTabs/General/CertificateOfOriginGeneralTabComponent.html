@@ -394,7 +394,7 @@
                                                 *ngIf="entityPM.CooStatusCode === StatusCode">
                                                 <span>{{item.MarksAndNumbers}}</span>
                                             </div>
-                                            <div  *ngIf="entityPM.CooStatusCode !== StatusCode">
+                                            <div class="Tbl1Col1 DescriptionBox" *ngIf="entityPM.CooStatusCode !== StatusCode">
                                                 <LogTextBox #MarksAndNumbersTextBox
                                                     [ObjectFieldName]="'MarksAndNumbers'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
