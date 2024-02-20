@@ -55,7 +55,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     controlEnabled: boolean;
     IsDisplayOnly: boolean = false;
     public ErrorsList: string[];
-    public StatusCode:number = 4;
+    public StatusCode:string = "4";
 
     constructor() {
         super();
