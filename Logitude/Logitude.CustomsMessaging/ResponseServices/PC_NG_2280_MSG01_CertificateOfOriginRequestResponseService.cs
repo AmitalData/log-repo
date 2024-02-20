@@ -41,7 +41,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 {
     public class PC_NG_2280_MSG01_CertificateOfOriginRequestResponseService : ResponseServiceBase<INF_MSG_GenericResponseData, PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback, CertificateOfOriginRequestRequestParams>
     {
-		private DateTime _TransmitionDateTime;
+		private DateTime _TransmitionDateTime = DateTime.Now;
 		private ICustomContext dbContext;
 		public override Action<PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback> GetActionShrinkCustomResponse()
 		{
@@ -63,7 +63,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         public override void Update(PC_NG_2281_MSG02_CertificateOfOriginRequestFeedback customResponse, CertificateOfOriginRequestRequestParams requestParams)
         {
-			_TransmitionDateTime = customResponse.ResponseContentHeader.TransmitionDateTime;
+
 			this.MyResponseData = new INF_MSG_GenericResponseData();
 
             dbContext = CustomContext.GetContext(requestParams.Tenant);
@@ -93,7 +93,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			this.MyRequestSheetParam.CustomFileNo = requestParams.CustomFileNo;
 			this.MyRequestSheetParam.RequestDescription = (requestParams.RequestReasonCode == 13 ? "משוב לסטטוס תעודת מקור: " : "משוב תעודת מקור: ") + certificateOfOriginPM.Counter;
 
-			if (customResponse.ResponseContentHeader.Exception != null)
+			if (customResponse.ResponseContentHeader?.Exception != null)
 			{
 				certificateOfOriginPM.ErrXml = XmlGenericUtil<UnifreightIIG.Common.CertificateOfOriginRequestServiceReference.Exception[]>.SerializeObject(customResponse.ResponseContentHeader.Exception);
 				certificateOfOriginPM.ChangeSetOp = ChangeSetOperation.Update;

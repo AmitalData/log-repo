@@ -317,10 +317,10 @@
                                                 <span>{{item.DescriptionOfInvoice}}</span>
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode" style="width: 100%;" class="DescriptionBox"> -->
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="entityPM.CooStatusCode === StatusCode ">
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="IsDisplayOnly">
                                                 <span>{{item.DescriptionOfInvoice}}</span>
                                             </div>
-                                            <div style="width: 164.5px;" class="DescriptionBox" *ngIf="entityPM.CooStatusCode !== StatusCode ">
+                                            <div style="width: 164.5px;" class="DescriptionBox" *ngIf="!IsDisplayOnly">
                                                 <LogTextBox #DescriptionOfInvoiceTextBox 
                                                     [ObjectFieldName]="'DescriptionOfInvoice'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
@@ -391,10 +391,10 @@
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode"> -->
                                             <div class="TextTrimming" style="text-align:right"
-                                                *ngIf="entityPM.CooStatusCode === StatusCode">
+                                                *ngIf="IsDisplayOnly">
                                                 <span>{{item.MarksAndNumbers}}</span>
                                             </div>
-                                            <div class="Tbl1Col1 DescriptionBox" *ngIf="entityPM.CooStatusCode !== StatusCode">
+                                            <div class="Tbl1Col1 DescriptionBox" *ngIf="!IsDisplayOnly">
                                                 <LogTextBox #MarksAndNumbersTextBox
                                                     [ObjectFieldName]="'MarksAndNumbers'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
@@ -420,10 +420,10 @@
                                                 <span>{{item.ItemDescription}}</span>
                                             </div>
                                             <div class="Tbl1Col1 DescriptionBox" *ngIf="logcelltemplate.IsEditMode"> -->
-                                            <div class="TextTrimming" style="text-align:right" *ngIf="entityPM.CooStatusCode === StatusCode">
+                                            <div class="TextTrimming" style="text-align:right" *ngIf="IsDisplayOnly">
                                                 <span>{{item.ItemDescription}}</span>
                                             </div>
-                                            <div class="Tbl1Col1 DescriptionBox" style="width: 125;" *ngIf="entityPM.CooStatusCode !== StatusCode">
+                                            <div class="Tbl1Col1 DescriptionBox" style="width: 125;" *ngIf="!IsDisplayOnly">
                                                 <LogTextBox #ItemDescriptionTextBox
                                                     [ObjectFieldName]="'ItemDescription'" [DataContext]="item"
                                                     [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
