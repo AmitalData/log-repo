@@ -762,7 +762,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         }
 
         public List<CargoTrackingShipmentList> GetFilteredSortedShipments(CargoTrackingShipmentSearchInput shipmentSearchInput)
-        {
+       {
             DateTime start = DateTime.Now;
 
             IQueryable<CargoTrackingShipmentList> shipments = GetIqueryableListWithouJoin(shipmentSearchInput.Tenant);
@@ -986,16 +986,10 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             {
                 Logger.LogDebug("Filter FromDate-ToDate ");
 
-                shipments = shipments.Join(context.CargoTrackingShipmentSearches,
-                    shipment => shipment.EntityId,
-                    search => search.ShipmentId,
-                    (shipment, search) =>
-                        new { shipment = shipment, shipmentDate = search.ShipmentDate, tenant = search.Tenant, })
-                    .Where(x => x.tenant == shipmentSearchInput.Tenant &&
-                       (shipmentSearchInput.FromDate.HasValue && x.shipmentDate >= shipmentSearchInput.FromDate) ||
-                       (shipmentSearchInput.ToDate.HasValue && x.shipmentDate <= shipmentSearchInput.ToDate)
-                       )
-                    .Select(x => x.shipment);
+                shipments = shipments.Where(x =>
+                      (shipmentSearchInput.FromDate.HasValue && x.CreateDate >= shipmentSearchInput.FromDate) ||
+                      (shipmentSearchInput.ToDate.HasValue && x.CreateDate <= shipmentSearchInput.ToDate)
+                      );
             }
 
             return shipments.Distinct();
