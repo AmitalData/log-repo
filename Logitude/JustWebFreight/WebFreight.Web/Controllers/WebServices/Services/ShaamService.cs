@@ -41,7 +41,6 @@ namespace WebFreight.Web.Controllers.WebServices.Services
             HttpClienResponse res = SendShaamApiHttpRequest(tenant, url, HttpMethod.Post, invoiceJson);
             return res;
         }
-
         public HttpClienResponse UpdateSettings(UpdateSettingsData body, int tenant)
         {
             string url = $"taxes/company";
@@ -69,7 +68,7 @@ namespace WebFreight.Web.Controllers.WebServices.Services
             ServicePointManager.SecurityProtocol = SecurityProtocolType.Ssl3 | SecurityProtocolType.Tls | SecurityProtocolType.Tls11 | SecurityProtocolType.Tls12;
             url = AmitalTaxesUrl + url;
             StringContent stringContent = body != null ? new StringContent(JsonConvert.SerializeObject(body), Encoding.UTF8, "application/json") : null;
-            
+
             if (httpMethod == HttpMethod.Post)
                 res = client.PostAsync(url, stringContent).Result;
             else if (httpMethod == HttpMethod.Put)

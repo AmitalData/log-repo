@@ -43,7 +43,10 @@ export class AmitalGatewayUtil {
     public UnifaceRequestArrived: EventEmitter<any> = new EventEmitter();
 
     private _AmitalBrowserInUse: boolean = false;
-    public get isUnifreightHost(): boolean { return !!window.parent._JavascriptGateway; }
+    public get isUnifreightHost(): boolean {  
+        try { return !!window?.parent?._JavascriptGateway; } 
+        catch  { return false; }
+    }
     public get AmitalBrowserInUse(): boolean { return (this._AmitalBrowserInUse === true); }
     public set AmitalBrowserInUse(newValue: boolean) { this._AmitalBrowserInUse = newValue; }
     public IsDeclarationInUse(CustomFileNo: string, IsConvertedDeclaration: boolean, IsConnectedToUnifreight: boolean): boolean {
@@ -298,7 +301,10 @@ export class AmitalGatewayUtil {
     }
     public IsAmitalBackButtonDisable: boolean = false;
     AmitalBackButtonClicked() {
-        close(); // its close only if its open by window.open() method
+        try {
+            close(); // its close only if its open by window.open() method
+            window.parent.close();
+        } catch{}
 
         this.sendPostMessage("amitalBackButtonClicked");
 

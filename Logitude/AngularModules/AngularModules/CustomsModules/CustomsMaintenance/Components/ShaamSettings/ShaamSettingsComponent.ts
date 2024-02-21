@@ -15,7 +15,7 @@ export type ShaamSettingsArgs = {
     template: `           
     <table style='width:450px; height: 200px'>
         <tr style='height: 50px'>
-            <td style='width:80px'>
+            <td style='width:120px'>
                 <LogLabel [Text]="'Api Key'" [DataContext]="DataContext"></LogLabel>
             </td>
             <td>
@@ -23,11 +23,19 @@ export type ShaamSettingsArgs = {
             </td>
         </tr>
         <tr style='height: 50px'>
-            <td style='width:80px'>
+            <td style='width:120px'>
                 <LogLabel [Text]="'Api Sercet'" [DataContext]="DataContext"></LogLabel>
             </td>
             <td>
                 <LogTextBox [DataContext]="DataContext" [Text]="secret" [ObjectFieldName]='"secret"'></LogTextBox>
+            </td>
+        </tr>
+        <tr style='height: 50px'>
+            <td style='width:120px'>
+                <LogLabel [Text]="'Is Test Environment'" [DataContext]="DataContext"></LogLabel>
+            </td>
+            <td>
+                <LogCheckBox [DataContext]="DataContext" [Checked]="isTestEnvironment" [ObjectFieldName]='"isTestEnvironment"'></LogCheckBox>
             </td>
         </tr>
         <tr>
@@ -44,46 +52,48 @@ export class ShaamSettingsComponent extends BaseComponent {
     DataContext: ShaamSettingsComponent = this;
     key: string = '';
     secret: string = '';
+    isTestEnvironment: boolean = false;
     windowInstance: LogitudeWindow = null;
     shaamWebService = new ShaamWebService();
 
     ngOnInit() {
-        this.initShaamSettings();    
+        this.initShaamSettings();
     }
 
     SetWindowArgs(args: ShaamSettingsArgs) {
         this.windowInstance = args.windowInstance;
     }
-    
+
     async initShaamSettings() {
         SessionLocator.SelectedSession.StartBusyIndicator('');
         let shaamSettings: ShaamSettings;
 
-        try {            
+        try {
             shaamSettings = await this.shaamWebService.getShaamSettings();
             SessionLocator.SelectedSession.StopBusyIndicator();
         } catch (error) {
-            SessionLocator.SelectedSession.StopBusyIndicator();  
-            this.showErrorMessage();          
+            SessionLocator.SelectedSession.StopBusyIndicator();
+            this.showErrorMessage();
         }
 
-        this.key = shaamSettings.clientId; 
-        this.secret = shaamSettings.secret;        
+        this.key = shaamSettings.clientId;
+        this.secret = shaamSettings.secret;
+        this.isTestEnvironment = shaamSettings.isTestEnvironment;
     }
 
     async OkButtonClicked() {
         await this.updateShaamSettings();
         this.closeWindow();
     }
-    
+
     CancelButtonClicked() {
         this.closeWindow()
     }
-    
+
     async updateShaamSettings() {
         SessionLocator.SelectedSession.StartBusyIndicator(TextCodeTranslator.Translate('General.B.Save'));
         try {
-            await this.shaamWebService.postShaamSettings(this.key, this.secret);
+            await this.shaamWebService.postShaamSettings(this.key, this.secret, this.isTestEnvironment);
             SessionLocator.SelectedSession.StopBusyIndicator();
         } catch (error) {
             SessionLocator.SelectedSession.StopBusyIndicator();

@@ -141,6 +141,7 @@ namespace WebFreight.Web.Controllers.WebServices
             public string clientId { get; set; }
             public string secret { get; set; }
             public string companyName { get; set; }
+            public bool isTestEnvironment { get; set; }
         }
 
         enum ReturnContent { NONE, VALUE, JSON }

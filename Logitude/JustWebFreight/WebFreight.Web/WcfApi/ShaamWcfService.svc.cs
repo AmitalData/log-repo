@@ -15,6 +15,7 @@ namespace WebFreight.Web.WcfApi
         public ApiToShaamRes CreateConfirmationNumber(string invoiceJson, int tenant)
         {
             ApiToShaamRes res;
+
             try
             {
                 SecurityUtility.AuthenticationOnTenant(tenant);
