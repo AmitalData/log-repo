@@ -22,10 +22,10 @@ namespace Logitude.Customs.Data.Repsitories
             
 			throw new NotImplementedException();
         }
-		public CertificateOfOrigin GetCertificateOfOriginByCounter(string Counter)
+		public CertificateOfOrigin GetCertificateOfOriginByCounter(string Counter, int tenant)
 		{
 			return (from a in context.CertificateOfOrigins
-					where a.Counter == Counter
+					where a.Counter == Counter && (a.Tenant== tenant || tenant==0)
 					select a).FirstOrDefault();
 
 		}

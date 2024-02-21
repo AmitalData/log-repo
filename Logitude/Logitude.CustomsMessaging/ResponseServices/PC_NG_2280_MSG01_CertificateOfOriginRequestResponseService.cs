@@ -74,11 +74,16 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 			if (certificateOfOriginPM == null)
 			{
-				LogMessagingUtil.Instance.AppendLine("Can not find certificateOfOrigin" + requestParams.CertificateOfOriginId);
-				this.MyResponseData.ApplicationID = requestParams.CertificateOfOriginId;
-				this.MyResponseData.Succeeded = true;
-				this.MyResponseData.UserMessage = "Can not find certificateOfOrigin" + requestParams.CertificateOfOriginId;
-				return;
+				  certificateOfOriginPM = certificateOfOriginQueryService.GetCertificateOfOriginByCounter(customResponse?.CertificateOfOriginRequestFeedback?.internalApplication, requestParams.Tenant);
+
+				if (certificateOfOriginPM == null)
+				{
+					LogMessagingUtil.Instance.AppendLine("Can not find certificateOfOrigin" + requestParams.CertificateOfOriginId);
+					this.MyResponseData.ApplicationID = requestParams.CertificateOfOriginId;
+					this.MyResponseData.Succeeded = true;
+					this.MyResponseData.UserMessage = "Can not find certificateOfOrigin" + requestParams.CertificateOfOriginId;
+					return;
+				}
 			}
 
 			if (this.MyRequestSheetParam == null)
@@ -118,7 +123,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 			  certificateOfOriginPM.IsSubmitted = true;
 
 			DeclarationQueryService declarationQueryService = new DeclarationQueryService(certificateOfOriginPM.Tenant);
-			var declarationPM = declarationQueryService.GetSingle(requestParams.DeclarationId, false, false);
+			var declarationPM = declarationQueryService.GetSingle(certificateOfOriginPM.DeclarationId, false, false);
 
 			if (customResponse.Attachment != null)
 			{
