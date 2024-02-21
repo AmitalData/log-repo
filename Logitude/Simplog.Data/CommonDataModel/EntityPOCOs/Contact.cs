@@ -88,5 +88,6 @@ namespace Simplog.Data.CommonDataModel.EntityPOCOs
 
         public DateTime? CreateDate { get; set; }
         public DateTime? UpdateDate { get; set; }
+        public bool? ContactForAccounting { get; set; }
     }
 }

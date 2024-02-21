@@ -208,6 +208,18 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public decimal? PostponedChequesCommission { get; set; }
         [Column("DateFormat")]
         public string DateFormat { get; set; }
+
+        [ForeignKey("User")]
+        [Column("Salesman")]
+        public string SalesmanUserId { get; set; }
+
+        [ForeignKey("User")]
+        [Column("CollectorId")]
+        public string CollectorId { get; set; }
+
+        [ForeignKey("Contact")]
+        [Column("Contact")]
+        public string ContactId { get; set; }
     }
 }
 	 

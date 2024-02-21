@@ -241,6 +241,20 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="CollectorId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="SalesmanUserId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="DeductionFileTypeId"
     Type="varchar"
     Size="15">
@@ -426,6 +440,13 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="ContactId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="AccountTypeCode"
     ReferencedTable="GLAccountTypes"
@@ -497,6 +518,16 @@
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Relation
+    ForeignKeyColumn="CollectorId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="SalesmanUserId"
+    ReferencedTable="Users"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
     ForeignKeyColumn="DeductionFileTypeId"
     ReferencedTable="WithholdingTaxDeductionTypes"
     ReferencedColumn="Id"
@@ -529,6 +560,11 @@
   <Relation
     ForeignKeyColumn="PaymentTerms"
     ReferencedTable="PaymentTerms"
+    ReferencedColumn="Id"
+    ReferencedTableSchema="dbo" />
+  <Relation
+    ForeignKeyColumn="ContactId"
+    ReferencedTable="Contacts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
   <Index
