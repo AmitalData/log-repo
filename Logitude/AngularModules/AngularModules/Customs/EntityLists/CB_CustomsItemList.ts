@@ -17,6 +17,15 @@ export class CB_CustomsItemList {
 	CustomsBookTypeID: string;
 	CustomsItemCategoryID: string;
 	CustomsItemHierarchicLocationID: string;
+	GoodsDescription: string;
+	Rules: string;
+	Remarks: string;
+	Agreements: string;
+	CustomsRate: string;
+	PurchaseTax: string;
+	OptionalTaxAddition: number;
+	MeasurementUnit: string;
+	SearchFields: string;
 	
 }
  

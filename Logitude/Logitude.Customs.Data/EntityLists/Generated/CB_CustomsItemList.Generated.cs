@@ -32,6 +32,24 @@ namespace Logitude.Customs.Data.EntityLists
        public string CustomsItemCategoryID  { get; set; }
        [DataMember]
        public string CustomsItemHierarchicLocationID  { get; set; }
+       [DataMember]
+       public string GoodsDescription  { get; set; }
+       [DataMember]
+       public string Rules  { get; set; }
+       [DataMember]
+       public string Remarks  { get; set; }
+       [DataMember]
+       public string Agreements  { get; set; }
+       [DataMember]
+       public string CustomsRate  { get; set; }
+       [DataMember]
+       public string PurchaseTax  { get; set; }
+       [DataMember]
+       public decimal OptionalTaxAddition  { get; set; }
+       [DataMember]
+       public string MeasurementUnit  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
    }
 
 }
