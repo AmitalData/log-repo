@@ -45,7 +45,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string PurchaseTax  { get; set; }
        [DataMember]
-       public decimal OptionalTaxAddition  { get; set; }
+       public decimal? OptionalTaxAddition  { get; set; }
        [DataMember]
        public string MeasurementUnit  { get; set; }
        [DataMember]
