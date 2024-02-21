@@ -1467,7 +1467,7 @@
     <TextCode
       Code="&quot;CashbookLine.O.LocalName&quot;"
       DefaultText="&quot;Local Name&quot;"
-      LocalDefaultText="&quot;שם מקומי&quot;"
+      LocalDefaultText="&quot;שם הלקוח&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>

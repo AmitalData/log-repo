@@ -1388,7 +1388,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode CashBookLineTextCode_CashbookLineONoDataFound = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashbookLine.O.NoDataFound", DefaultText = "No Data Found",LocalDefaultText = @"לא נמצא מידע לתצוגה", ObjectTableId = CashBookLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode CashBookLineTextCode_CashbookLineOLocalName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashbookLine.O.LocalName", DefaultText = "Local Name",LocalDefaultText = @"שם מקומי", ObjectTableId = CashBookLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode CashBookLineTextCode_CashbookLineOLocalName = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "CashbookLine.O.LocalName", DefaultText = "Local Name",LocalDefaultText = @"שם הלקוח", ObjectTableId = CashBookLineObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
