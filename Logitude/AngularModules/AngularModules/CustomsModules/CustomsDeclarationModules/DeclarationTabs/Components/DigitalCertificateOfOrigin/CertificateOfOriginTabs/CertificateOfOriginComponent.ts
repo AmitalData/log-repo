@@ -248,6 +248,10 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.EntityPM.IsUnitedInvoices ? this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
+        
+        // Init data from MOREDATA page:
+        this.EntityPM.IsConsigneeForPrint = true;
+        this.EntityPM.IsDeclaredByManufacture = true;
 
         if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsNew) {
             this.certificateOfOriginPMService.insert(this.EntityPM).subscribe((response: any) => {
