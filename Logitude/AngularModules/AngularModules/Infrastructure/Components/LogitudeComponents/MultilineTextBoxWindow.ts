@@ -52,7 +52,7 @@ export class MultilineTextBoxWindow implements OnInit {
         var ENTER = 13;
         var key = event.keyCode;
         var keyChar = event.key;
-        debugger
+
         if (key == ENTER && this.PreventNewLine && !this.EnableKeyDown) {
             event.preventDefault();
             return;
