@@ -909,6 +909,10 @@ export class GLAccountPM {
     public get DateFormat() { return this.dateFormat; }
     public set DateFormat(newValue: string) { if (this.dateFormat != newValue) { this.dateFormat = newValue; this.MarkAsDirty("DateFormat"); } }
     
+    private contactId: string;
+    public get ContactId() { return this.contactId; }
+    public set ContactId(newValue: string) { if (this.contactId != newValue) { this.contactId = newValue; this.MarkAsDirty("ContactId"); } }
+
     public OldEntityPM: GLAccountPM;
 		
     public IsDirty: boolean;
