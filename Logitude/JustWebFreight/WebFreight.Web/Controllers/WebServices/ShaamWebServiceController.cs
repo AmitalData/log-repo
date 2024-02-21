@@ -63,7 +63,7 @@ namespace WebFreight.Web.Controllers.WebServices
                 string invoiceJson = Convert.ToString(body);
                 HttpClienResponse apiToShaamRes = allocateInvoiceService.CreateConfirmationNumber(invoiceJson, tenant.Value);
                 return apiToShaamRes;
-            });
+            }, ReturnContent.JSON);
         }
 
         [HttpPut]
@@ -71,7 +71,7 @@ namespace WebFreight.Web.Controllers.WebServices
         public HttpResponseMessage UpdateSettings([FromBody] UpdateSettingsData body)
         {
             return TryCatchWrapper((tenant) =>
-            {                
+            {
                 HttpClienResponse apiToShaamRes = shaamService.UpdateSettings(body, tenant.Value);
                 return apiToShaamRes;
             });
@@ -82,7 +82,7 @@ namespace WebFreight.Web.Controllers.WebServices
         public HttpResponseMessage Settings()
         {
             return TryCatchWrapper((tenant) =>
-            {                
+            {
                 HttpClienResponse apiToShaamRes = shaamService.GetSettings(tenant.Value);
                 return apiToShaamRes;
             }, ReturnContent.JSON);
@@ -106,7 +106,7 @@ namespace WebFreight.Web.Controllers.WebServices
                     responseData = apiToShaamRes.Content;
                 else if (returnContent == ReturnContent.JSON)
                     responseData = JsonConvert.DeserializeObject<object>(apiToShaamRes.Content);
-                
+
                 return Request.CreateResponse(HttpStatusCode.OK, responseData);
             }
             catch (Exception ex)
