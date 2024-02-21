@@ -1415,6 +1415,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                                 IsEquipment = a.IsEquipment,
                                                 InvoiceNumber = a.InvoiceNumber,
                                                 ConfirmationNumber = a.ConfirmationNumber,
+                                                VATNumber = a.VATNumber,
                                             }).ToList();
 
             return invoicePMs;

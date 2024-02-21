@@ -239,7 +239,17 @@ namespace Logitude.Accounting.BL.CoreBL
                     GLAccountPM account = GetAccountByLedgerTransaction(transaction);
                     card = GetGLAccountCard(account);
 
-                    if (account != null)
+				if (transaction.AccountingEntity == AccountingEntityValues.APInvoice)
+				{
+					aPInvoice = allAPInvoices.Where(d => d.Id == transaction.AccountingEntityId).FirstOrDefault();
+
+					if (aPInvoice != null)
+					{
+						VatNumber = aPInvoice.VATNumber;
+					}
+					
+				}
+				else if (account != null)
                     {
                         if (account.AccountTypeCode == "3" || account.AccountTypeCode == "2" || account.AccountTypeCode == "1")
                         {
