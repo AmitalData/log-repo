@@ -167,7 +167,6 @@ export class GLAccountList {
 	InsuredCreditPercentage: number;
 	DateFormat: string;
 	ContactId:string;
-	ContactId: string;
 	ContactName: string;
 	
 }
