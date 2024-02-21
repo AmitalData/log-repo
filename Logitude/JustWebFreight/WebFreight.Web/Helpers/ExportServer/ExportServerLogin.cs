@@ -11,25 +11,28 @@ namespace WebFreight.Web.Helpers.ExportServer
     {
         private static Dictionary<string, string> tokens = new Dictionary<string, string>();
         private static TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
-        private static string exportUrl = new SettingQuery().GetSinglePMFromCahche().ExportUrl;
+        public readonly static string exportUrl = new SettingQuery().GetSinglePMFromCahche().ExportUrl;
 
         public static string GetLinkToLogin(int tenant, string email)
-        {
-            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
-            int? exportTenant = tenantManagementPM.ExportTenant;
-            if (exportTenant == null || string.IsNullOrEmpty(tenantManagementPM.ExportLoginCredintial))
-                throw new Exception("not config in table tenant managment field Export Login Credintial or field export tenant for tenant " + tenant);
+        {            
+            int? exportTenant = tenantManagementQuery.GetSinglePM(tenant).ExportTenant;
+            if (exportTenant == null)
+                throw new Exception("not config in table tenant managment field field export tenant for tenant " + tenant);
 
-            string token = GetToken(exportTenant.Value, email, tenantManagementPM.ExportLoginCredintial);
+            string token = GetToken(exportTenant.Value, email);
             string link = $"{exportUrl}/AmitalSSOAngular.html?token={token}&tenant={exportTenant.Value}&AmitalSSOAngular=1";
             return link;
         }
 
-        private static string GetToken(int tenant, string email, string exportLoginCredintial)
+        public static string GetToken(int tenant, string email)
         {
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);            
+            if (string.IsNullOrEmpty(tenantManagementPM.ExportLoginCredintial))
+                throw new Exception("not config in table tenant managment field Export Login Credintial for tenant " + tenant);
+
             string tokenKey = GetTokenKey(tenant, email);
             if (!tokens.ContainsKey(tokenKey))
-                initToken(tenant, email, exportLoginCredintial);
+                initToken(tenant, email, tenantManagementPM.ExportLoginCredintial);
 
             return tokens[tokenKey];
         }

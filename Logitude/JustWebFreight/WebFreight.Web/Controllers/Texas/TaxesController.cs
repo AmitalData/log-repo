@@ -1,5 +1,6 @@
 ﻿using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
+using System;
 using System.Net;
 using System.Net.Http;
 using System.Web;
@@ -12,8 +13,7 @@ namespace WebFreight.Web.Controllers
     {
         public HttpResponseMessage GetLinkLogin()
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            AuthenticationToken authToken = GetTenantFromToken();
             if (authToken == null) return Request.CreateResponse(HttpStatusCode.Unauthorized);
 
             int tenant = authToken.Tenant;
@@ -26,8 +26,7 @@ namespace WebFreight.Web.Controllers
         [HttpGet]
         public HttpResponseMessage CloudSettings()
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            AuthenticationToken authToken = GetTenantFromToken();
             if (authToken == null) return Request.CreateResponse(HttpStatusCode.Unauthorized);
 
             ExportServerSettings exportServerSettings = ExportServerService.GetSettings(authToken.Tenant);
@@ -38,13 +37,29 @@ namespace WebFreight.Web.Controllers
         [HttpPut]
         public HttpResponseMessage UpdateSettings([FromBody] ExportServerSettings newSettings)
         {
-            string token = HttpContext.Current.Request.Headers["Token"];
-            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            AuthenticationToken authToken = GetTenantFromToken();
             if (authToken == null) return Request.CreateResponse(HttpStatusCode.Unauthorized);
 
             ExportServerService.UpdateSettings(authToken.Tenant, newSettings);
 
             return Request.CreateResponse(HttpStatusCode.OK);
+        }
+
+        [HttpPost]        
+        public HttpResponseMessage CreateConfirmationNumber([FromBody] dynamic body)
+        {
+            AuthenticationToken authToken = GetTenantFromToken();
+            if (authToken == null) return Request.CreateResponse(HttpStatusCode.Unauthorized);
+
+            return ExportServerService.CreateConfirmationNumber(authToken.Tenant, authToken.Email, Convert.ToString(body));
+        }
+
+        private static AuthenticationToken GetTenantFromToken()
+        {
+            string token = HttpContext.Current.Request.Headers["Token"];
+            AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+            
+            return authToken;
         }
     }
 }
