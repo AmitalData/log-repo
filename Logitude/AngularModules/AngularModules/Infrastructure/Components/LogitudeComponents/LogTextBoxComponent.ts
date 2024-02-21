@@ -42,7 +42,7 @@ export function BeforeOnDestroy(target: NgxInstance, key: Key, descriptor: Descr
     inputs: ['ObjectFieldName', 'ObjectTableName', 'DataContext',
         "IsMultiline", "InputType", "HideColumns", "HideLastColumn",
         "DigitsAfterPoint", "FocusOnMe", "IsFreeText", "IsAccumulative",
-        "AllowPercentage", "UseArialFont", "DontAllowAutoSelect", 'IsRatioBox'],
+        "AllowPercentage", "UseArialFont", "DontAllowAutoSelect", 'IsRatioBox', 'EnableKeyDown'],
 })
 
 export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewInit, OnDestroy {
@@ -61,6 +61,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
     public HideLastColumn: boolean = false;
     public DigitsAfterPoint: number;
     public IsRatioBox: boolean = false;
+    public EnableKeyDown: boolean = false;
     CopyValueSubs: any;
     public textboxHeight: string = '100%';
     public DontAllowAutoSelect: boolean = false;
@@ -1891,7 +1892,7 @@ export class LogTextBoxComponent implements BeforeOnDestroy, OnInit, AfterViewIn
         windowArgs.TextValue = this.TextValue;
         windowArgs.RowsCount = this.RowsCount;
         windowArgs.IsTextBoxRTL = this.isRTL;
-
+        windowArgs.EnableKeyDown = this.EnableKeyDown;
         var wind = new LogitudeWindow();
         // wind.IsFullScreen = true;
         wind.Width = 960;
