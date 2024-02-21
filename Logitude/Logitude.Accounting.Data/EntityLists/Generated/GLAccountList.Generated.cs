@@ -334,11 +334,9 @@ namespace Logitude.Accounting.Data.EntityLists
         [DataMember]
         public double? CreditUsed { get; set; }
         [DataMember]
-        public double? InsuredCreditPercentage { get; set; }
+       public string ContactId  { get; set; }
         [DataMember]
-        public string DateFormat { get; set; }
-        public string ContactId { get; set; }
-
+       public string ContactName  { get; set; }
     }
 
 }

@@ -3680,7 +3680,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 
             }
         }
-        private string contactId;
+	  private string contactId ;
 
 
         [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
@@ -3694,11 +3694,34 @@ namespace Logitude.Accounting.Def.EntityPMs
             }
             set
             {
-                if (contactId != value)
+		   if(contactId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactId",OldValue=contactId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   contactId=value;
+		   }
+			
+		 }
+	   }
+	  private string contactName ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ContactName  
+	   {
+	    
+	     get
+		{
+		   return contactName;
+		 }
+		 set
+		 {
+		   if(contactName != value)
                 {
-                    NotifyPropertyChangeValues values = new NotifyPropertyChangeValues() { PropertyName = "ContactId", OldValue = contactId, NewValue = value, PropertyType = "string" };
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ContactName",OldValue=contactName,NewValue=value,PropertyType="string"};
                     NotifyPropertyChanged(values);
-                    contactId = value;
+		   contactName=value;
                 }
 
             }
