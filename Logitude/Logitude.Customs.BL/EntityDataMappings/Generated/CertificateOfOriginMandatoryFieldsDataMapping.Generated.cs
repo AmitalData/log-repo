@@ -30,6 +30,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         IsMandatory, 
 	         Location, 
 	         LastUpdatedDate, 
+	         MappedCertificateFieldsName, 
 	         MappedCertificateFields, 
 	         CertificateOfOriginTypeCodeID, 
 	         CertificateOfOriginTypeName,
@@ -94,6 +95,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 				entityPOCO.LastUpdatedDate = entityPM.LastUpdatedDate;
 			}
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MappedCertificateFieldsName))
+            {
+				entityPOCO.MappedCertificateFieldsName = entityPM.MappedCertificateFieldsName;
+			}
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MappedCertificateFields))
             {
 				entityPOCO.MappedCertificateFields = entityPM.MappedCertificateFields;
@@ -155,6 +161,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.LastUpdatedDate = entityPOCO.LastUpdatedDate;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MappedCertificateFieldsName))
+            {
+					entityPM.MappedCertificateFieldsName = entityPOCO.MappedCertificateFieldsName;
+            }
+
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.MappedCertificateFields))
             {
 					entityPM.MappedCertificateFields = entityPOCO.MappedCertificateFields;
@@ -211,6 +222,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 oldEntityPM.LastUpdatedDate = entityPM.LastUpdatedDate;
             }
 			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MappedCertificateFieldsName))
+            {
+                oldEntityPM.MappedCertificateFieldsName = entityPM.MappedCertificateFieldsName;
+            }
+			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.MappedCertificateFields))
             {
                 oldEntityPM.MappedCertificateFields = entityPM.MappedCertificateFields;
@@ -242,6 +258,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
             if (!String.IsNullOrWhiteSpace(entityPM.SearchFields)) //T4 find type == nText 
             {
                 entityPM.SearchFields = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.SearchFields));
+            }
+            if (!String.IsNullOrWhiteSpace(entityPM.MappedCertificateFieldsName)) //T4 find type == nText 
+            {
+                entityPM.MappedCertificateFieldsName = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.MappedCertificateFieldsName));
             }
             if (!String.IsNullOrWhiteSpace(entityPM.CertificateOfOriginTypeName)) //T4 find type == nText 
             {

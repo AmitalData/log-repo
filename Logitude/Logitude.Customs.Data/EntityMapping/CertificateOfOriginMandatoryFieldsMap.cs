@@ -49,6 +49,8 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.LastUpdatedDate).HasColumnName("LastUpdatedDate");
 
+            this.Property(t => t.MappedCertificateFieldsName).HasColumnName("MappedCertificateFieldsName").HasMaxLength(40).IsUnicode(true);
+
             this.Property(t => t.MappedCertificateFields).HasColumnName("MappedCertificateFields").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CertificateOfOriginTypeCodeID).HasColumnName("CertificateOfOriginTypeCodeID");

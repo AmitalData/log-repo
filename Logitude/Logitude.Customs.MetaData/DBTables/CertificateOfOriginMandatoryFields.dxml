@@ -58,6 +58,13 @@
       Nullable="true" />
   </Column>
   <Column
+    Name="MappedCertificateFieldsName"
+    Type="nvarchar"
+    Size="40">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
     Name="MappedCertificateFields"
     Type="varchar"
     Size="15">

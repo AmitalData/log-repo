@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginMandatoryFieldsUpdateClass
    {  		
-		public const string HashString = "5a02ab9df8f3ab7a75ef5134dbdfba12";
+		public const string HashString = "98e3eb94d45dbf812338aac4fcc566d9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -938,7 +938,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn CertificateOfOriginMandatoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn CertificateOfOriginMandatoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificatOriginId" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificateFieldsName" , ColumnWidth = 100 }, addedQueryColumns);
 
 			 QueryColumn CertificateOfOriginMandatoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.IsMandatory" , ColumnWidth = 100 }, addedQueryColumns);
 
@@ -975,7 +975,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	          
              ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificateFields", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.CertificateOfOriginTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
 		    CertificateOfOriginMandatoryFieldsObjectTable.HeaderScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id;
 		    CertificateOfOriginMandatoryFieldsObjectTable.HeaderScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code;
