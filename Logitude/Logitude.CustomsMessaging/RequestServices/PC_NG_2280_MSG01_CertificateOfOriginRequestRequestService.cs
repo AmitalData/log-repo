@@ -88,15 +88,25 @@ namespace Logitude.CustomsMessaging.ResponseServices
         {
 			var CooTypeCodeList = new List<string> { "1", "2" };
 
-			PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin() {
-			    ExporterId = declarationPM?.ImporterCode,
+
+            if (declarationPM?.TransportModeId == "A")
+            {
+                certificateOfOrigin.Transport = "Air";
+            }
+            else if (declarationPM?.TransportModeId == "O")
+            {
+                certificateOfOrigin.Transport = "Ocean";
+            }
+
+            PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin = new PC_NG_2280_MSG01_CertificateOfOriginRequestCertificateOfOrigin() {
+				ExporterId = declarationPM?.ImporterCode,
 				ExporterName = certificateOfOrigin.ExporterName,
 				ExporterAddress = certificateOfOrigin.ExporterAddress,
 				ExporterCountry = certificateOfOrigin.ExporterCountry,
 				TradeAgreementCountry1 = CooTypeCodeList.Contains(certificateOfOrigin.CooTypeCode) ? "IL" : certificateOfOrigin.TradeAgreementCountry1,
 				TradeAgreementCountry2 = certificateOfOrigin.TradeAgreementCountry2,
 				TradeAgreementGroupOfCountries = string.IsNullOrEmpty(certificateOfOrigin.TradeAgreementGroupOfCountries) ? null : (int?)Convert.ToInt32(certificateOfOrigin.TradeAgreementGroupOfCountries),
-                TradeAgreementGroupOfCountriesSpecified = true,
+				TradeAgreementGroupOfCountriesSpecified = true,
 
 				ConsigneeName = certificateOfOrigin.ConsigneeName,
 				ConsigneeAddress = certificateOfOrigin.ConsigneeAddress,
@@ -111,7 +121,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 				DestinationGroupOfCountries = string.IsNullOrEmpty(certificateOfOrigin.DestinationGroupOfCountries) ? null : (int?)Convert.ToInt32(certificateOfOrigin.DestinationGroupOfCountries),
 				DestinationGroupOfCountriesSpecified = true,
 				Transport = certificateOfOrigin.Transport,
-				PortOfShipment = certificateOfOrigin.PortOfShipment,
+                PortOfShipment = certificateOfOrigin.PortOfShipment,
 				IsCumulation = certificateOfOrigin.IsCumulation,
 				IsCumulationSpecified = true,
 				CumulationCountry = certificateOfOrigin.CumulationCountry,
