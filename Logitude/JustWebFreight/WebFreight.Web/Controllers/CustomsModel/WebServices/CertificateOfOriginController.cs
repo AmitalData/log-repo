@@ -1,4 +1,5 @@
-﻿using Logitude.BL.Security;
+﻿using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using Logitude.BL.Security;
 using Logitude.Customs.BL.EntityQueryServices;
 using Logitude.Customs.BL.EntityUpdateServices;
 using Logitude.Customs.Data;
@@ -84,6 +85,20 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
                 var mandatoryFields = certificateOfOriginMandatoryFieldsQueryService.GetMandatoryFieldsByCooTypeCode(cooTypeCode);
 
                 return Request.CreateResponse(HttpStatusCode.OK, mandatoryFields);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetCityOfDeclarationByImporterID(string importerID, int tenant)
+        {
+            try
+            {
+                ClientAddressQueryService clientAddressQueryService = new ClientAddressQueryService(tenant);
+                ClientAddressPM clientAddress = clientAddressQueryService.GetCityOfDeclarationByImporterID(importerID, "1", tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, clientAddress.LocalCityCode);
             }
             catch (Exception ex)
             {

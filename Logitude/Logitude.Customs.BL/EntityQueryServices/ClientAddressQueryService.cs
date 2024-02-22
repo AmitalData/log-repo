@@ -30,6 +30,13 @@ namespace Logitude.Customs.BL.EntityQueryServices
            base.GetComposition(entityKeys, entityPM);
        }
 
+        public ClientAddressPM GetCityOfDeclarationByImporterID(string importerID, string addressTypeCode, int tenant)
+        {
+            var clientAddressPOCO = repository.GetCityOfDeclarationByImporterID(importerID, addressTypeCode, tenant);
+            ClientAddressPM clientAddressPM = this.GetEntityPM(clientAddressPOCO);
+            return clientAddressPM;
+        }
+
 
     }
 }

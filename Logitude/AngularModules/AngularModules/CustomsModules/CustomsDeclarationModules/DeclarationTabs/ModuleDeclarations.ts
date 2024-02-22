@@ -131,6 +131,7 @@ export class ModuleDeclarations {
             case "CertificateOfOriginComponent": { myResult = CertificateOfOriginComponent; break; }
             case "CertificateOfOriginGeneralTabComponent": { myResult = CertificateOfOriginGeneralTabComponent; break; }
             case "CertificateOfOriginMoreDetailsTabComponent": { myResult = CertificateOfOriginMoreDetailsTabComponent; break; }
+            case "CreateEditTicketComponent": { myResult = CreateEditTicketComponent; break; }
             case "CertificateAnswersComponent": { myResult = CertificateAnswersComponent; break; }
 
         }
