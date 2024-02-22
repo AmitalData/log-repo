@@ -170,6 +170,14 @@
                                                             <div></div>
                                                         </td>
                                                         <td>{{item.Name}}</td>
+                                                        <td style="width:30%">
+                                                            <div>
+                                                                <LogCheckBox [ObjectFieldName]="'ContactForAccounting'"
+                                                                [Checked]="item.ContactForAccounting"
+                                                                [ObjectTableName]="item.ObjectTableName"
+                                                                [DataContext]="item" Text="{{'Contact.F.ContactForAccounting' |TextCodeTranslationPipe}}"></LogCheckBox>
+                                                            </div>
+                                                        </td>
                                                     </tr>
                                                     <tr class="BoxItemRow">
                                                         <td style="width: 1px;">Email:</td>
