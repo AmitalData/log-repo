@@ -289,8 +289,50 @@ namespace Logitude.Accounting.BL.Utils
 			int halftime = timeoutinmin / 2;
 			var sw = Stopwatch.StartNew();
 			var accountRepository = new GLAccountRepository(context);
-			var card = accountRepository.GetSingleCardsWithoutGLAccountMatchDisplayNumber(tenant, cardId);
-			if (card != null )
+
+            var card = accountRepository.GetSingleCardWithoutGLAccountById(tenant, cardId);
+			if (card == null)
+				return ;
+
+			var PartnerTypeIdReceivables = new string[] { "CS", "PO" };
+			var PartnerTypeIdPayables = new string[] { "VD", "DR", "LL", "WA", "AG" };
+			var myDiffReceivables = card.ReceivablesAccountingCard != card.AccountNumber;
+			var myDiffPayables = card.PayablesAccountingCard != card.AccountNumber;
+			CardDTO cardDTO = null;
+
+			if (PartnerTypeIdReceivables.Contains(card.PartnerTypeId))
+			{
+				if (myDiffReceivables)
+				{
+					throw new Exception($"GetSingleCardsReceivablesMatchDisplayNumber retrieve {card.ReceivablesAccountingCard}");
+				}
+				cardDTO = accountRepository.GetSingleCardsReceivablesMatchDisplayNumber(tenant, cardId);				 
+			}
+			else if (PartnerTypeIdPayables.Contains(card.PartnerTypeId))
+			{
+				if (myDiffPayables)
+				{
+					throw new Exception($"GetSingleCardsPayablesMatchDisplayNumber retrieve {card.PayablesAccountingCard}");
+				}
+				cardDTO = accountRepository.GetSingleCardsPayablesMatchDisplayNumber(tenant, cardId);
+			}
+			else if (!string.IsNullOrEmpty(card.PayablesAccountingCard))
+			{
+				if (myDiffPayables)
+				{
+					throw new Exception($"GetSingleCardsPayablesAllMatchDisplayNumber retrieve {card.PayablesAccountingCard}");
+				}
+				cardDTO = accountRepository.GetSingleCardsPayablesAllMatchDisplayNumber(tenant, cardId);
+			}
+			else
+			{
+				if (myDiffReceivables)
+				{
+					throw new Exception($"GetSingleCardsReceivablesAllMatchDisplayNumber retrieve {card.ReceivablesAccountingCard}");
+				}				
+				cardDTO = accountRepository.GetSingleCardsReceivablesAllMatchDisplayNumber(tenant, cardId);				
+			}		
+			if (cardDTO != null )
 			{
                
 				try
