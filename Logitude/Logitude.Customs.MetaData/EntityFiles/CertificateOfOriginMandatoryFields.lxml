@@ -728,7 +728,7 @@
     IsForeignKey="false"
     DontBuildRelationOnDB="false"
     IsPrimaryKey="false"
-    HasDataBaseField="false"
+    HasDataBaseField="true"
     HasPMField="true"
     IsComposition="false"
     IsMaxLength="false"
@@ -1007,7 +1007,7 @@
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginMandatory&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;MappedCertificatOriginId&quot;"
+        ObjectFieldName="&quot;MappedCertificateFieldsName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginMandatory&quot;"
@@ -1069,7 +1069,7 @@
       <ScreenField
         Column="0"
         Row="3"
-        ObjectFieldName="&quot;MappedCertificateFields&quot;"
+        ObjectFieldName="&quot;CertificateOfOriginTypeName&quot;"
         ScreenName="GeneralTabScreen" />
     </ScreenFields>
   </Screen>
