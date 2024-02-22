@@ -107,6 +107,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 Line = d.Line,
                 VatNumber = d.VatNumber,
                 Reference = d.Reference,
+                StatusCode = d.StatusCode,
             }).ToList();
             return listQuery;
         }
