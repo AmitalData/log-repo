@@ -13,6 +13,8 @@ using System.Diagnostics;
 using Simplog.Data.CommonDataModel;
 using Logitude.Server.Tools;
 using Logitude.Accounting.Data.DataContract;
+using System.Data.Entity.Infrastructure;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -1183,7 +1185,89 @@ namespace Logitude.Accounting.Data.Repositories
 
             return cards.ToList();
         }
-        public List<GLAccount> GetByDisplayNumberAndAccType(String displayNumber, String accTypeCode, int tenant)
+		public Card GetSingleCardWithoutGLAccountById(int tenant, string cardId)
+        {
+			return (from crm in context.Cards
+						where crm.Tenant == tenant && crm.Id == cardId &&
+					   string.IsNullOrEmpty(crm.GLAccountId) &&
+					   (!string.IsNullOrEmpty(crm.ReceivablesAccountingCard) ||
+					   !string.IsNullOrEmpty(crm.PayablesAccountingCard))
+						select crm).FirstOrDefault();
+		}
+
+		public CardDTO GetSingleCardsReceivablesMatchDisplayNumber(int tenant, string cardId)
+		{
+			var cardDTO = from crm in context.Cards
+					  where crm.Tenant == tenant && crm.Id == cardId
+
+					  join a in context.GLAccounts
+					  .Where(r => (r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
+					  on crm.ReceivablesAccountingCard equals a.DisplayNumber
+
+					  select new CardDTO()
+					  {
+						  Id = crm.Id,
+						  ReceivablesAccountingCard = crm.ReceivablesAccountingCard,
+						  GLAccountId = a.Id,
+						  AccountNumber = a.DisplayNumber
+					  };
+            return cardDTO.FirstOrDefault();
+		}
+		public CardDTO GetSingleCardsPayablesMatchDisplayNumber(int tenant, string cardId)
+		{
+			var cardDTO = from crm in context.Cards
+					  where
+					  crm.Tenant == tenant && crm.Id == cardId
+
+					  join a in context.GLAccounts
+					  .Where(r => (r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
+					  on crm.PayablesAccountingCard equals a.DisplayNumber
+
+					  select new CardDTO()
+					  {
+						  Id = crm.Id,
+						  PayablesAccountingCard = crm.PayablesAccountingCard,
+						  GLAccountId = a.Id,
+						  AccountNumber = a.DisplayNumber
+					  };
+			return cardDTO.FirstOrDefault();
+		}
+		public CardDTO GetSingleCardsPayablesAllMatchDisplayNumber(int tenant, string cardId)
+		{
+			var cardDTO = from crm in context.Cards
+						  where crm.Tenant == tenant && crm.Id == cardId
+						  join a in context.GLAccounts
+						 .Where(r => (r.AccountTypeCode == "1" || r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
+						 on crm.PayablesAccountingCard equals a.DisplayNumber
+
+						  select new CardDTO()
+						  {
+							  Id = crm.Id,
+							  PayablesAccountingCard = crm.PayablesAccountingCard,
+							  GLAccountId = a.Id,
+							  AccountNumber = a.DisplayNumber
+						  };
+			return cardDTO.FirstOrDefault();
+		}
+		public CardDTO GetSingleCardsReceivablesAllMatchDisplayNumber(int tenant, string cardId)
+		{
+			var cardDTO = from crm in context.Cards
+						  where crm.Tenant == tenant && crm.Id == cardId
+						  join a in context.GLAccounts
+							 .Where(r => (r.AccountTypeCode == "1" || r.AccountTypeCode == "2" || r.AccountTypeCode == "3") && r.Tenant == tenant)
+							 on crm.ReceivablesAccountingCard equals a.DisplayNumber
+
+						  select new CardDTO()
+						  {
+							  Id = crm.Id,
+							  ReceivablesAccountingCard = crm.ReceivablesAccountingCard,
+							  GLAccountId = a.Id,
+							  AccountNumber = a.DisplayNumber
+						  };
+			return cardDTO.FirstOrDefault();
+		}
+		
+		public List<GLAccount> GetByDisplayNumberAndAccType(String displayNumber, String accTypeCode, int tenant)
         {
             if (String.IsNullOrEmpty(displayNumber) || String.IsNullOrEmpty(accTypeCode))
             {
