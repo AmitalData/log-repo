@@ -126,7 +126,7 @@ export class ModuleDeclarations {
             case "ExportDeclarationClosureComponent": { myResult = ExportDeclarationClosureComponent; break; }
             case "DeclarationPendingsGeneralComponent": { myResult = DeclarationPendingsGeneralComponent; break; }
             case "ComprehensiveUpdateConsignment": { myResult = ComprehensiveUpdateConsignment; break; }
-            
+            case "CreateEditTicketComponent": { myResult = CreateEditTicketComponent; break; }
             case "DigitalCertificateOfOriginTabComponent": { myResult = DigitalCertificateOfOriginTabComponent; break; }
             case "CertificateOfOriginComponent": { myResult = CertificateOfOriginComponent; break; }
             case "CertificateOfOriginGeneralTabComponent": { myResult = CertificateOfOriginGeneralTabComponent; break; }
