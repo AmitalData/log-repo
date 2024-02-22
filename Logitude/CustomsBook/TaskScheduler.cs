@@ -96,12 +96,12 @@ namespace CustomsBook
             finally
             {
 
-                //string[] folders = { "C:\\CustomsBook\\Download", "C:\\CustomsBook\\ExtractedFiles" }; 
+                string[] folders = { "C:\\CustomsBook\\Download", "C:\\CustomsBook\\ExtractedFiles" };
 
-                //foreach (string folder in folders)
-                //{
-                //    Directory.GetFiles(folder).ToList().ForEach(File.Delete);
-                //}
+                foreach (string folder in folders)
+                {
+                    Directory.GetFiles(folder).ToList().ForEach(File.Delete);
+                }
             }
         }
 
@@ -216,11 +216,7 @@ namespace CustomsBook
                                 continue;
                             }
 
-                            // Delete existing data in SQL table
-                            //using (SqlCommand deleteCommand = new SqlCommand($"DELETE FROM {sqlTableName}", sqlConnection))
-                            //{
-                            //    deleteCommand.ExecuteNonQuery();
-                            //}
+                           
                             using (OleDbCommand accessCommand = new OleDbCommand($"SELECT * FROM [{accessTableName}]", accessConnection))
                             {
                                 using (OleDbDataReader accessReader = accessCommand.ExecuteReader())
@@ -374,89 +370,11 @@ namespace CustomsBook
 
 
 
-        static List<string> SqlTablesList()
-        {
-            List<string> tablesname = new List<string>
-            {
-                "Customs.CB_TradeAgreementHistories",
-                "Customs.CB_TariffDetailsHistorys",
-                "Customs.CB_Tariffs",
-                "Customs.CB_RegularityRequiredCertificates",
-                "Customs.CB_QuotaRenewals",
-                "Customs.CB_PropertiesDetailsHistorys",
-                "Customs.CB_LevyExclusions",
-                "Customs.CB_LevyConditions",
-                "Customs.CB_AdditionRulesDetailsHistorys",
-                "Customs.CB_CustomsItemExclusion",
-                "Customs.CB_CustomsBookAdditionsDetailsHistorys",
-                "Customs.CB_CustomsItemLinkages",
-                "Customs.CB_CountriesExclusions",
-                "Customs.CB_RuleDetailsHistorys",
-                "Customs.CB_CustomsBookAdditions",
-                "Customs.CB_Vendors",
-                "Customs.CB_RegularityInceptions",
-                "Customs.CB_CustomsItemDetailsHistorys",
-                "Customs.CB_CustomsItems",
-                "Customs.CB_RegularityRequirements",
-                "Customs.CB_QuotaDetailsHistorys",
-                "Customs.CB_Quotas",
-                "Customs.CB_Rules",
-                "Customs.CB_TradeAgreements",
-                "Customs.CB_TradeLevys",
-                "Customs.CB_ComputationMethodDatas"
-
-            };
-
-            return tablesname;
-        }
-
-
-
         static void Main(string[] args)
         {
             NLog.LogManager.Configuration = new NLog.Config.XmlLoggingConfiguration(Path.Combine("C:\\LWC_NEW\\Logitude\\CustomsBook\\NLog.config"));
             logger.Debug("Start TaskScheduler");
-            MapAccessTables("AccessDBTamplate20240201.accdb");
-            //// Set the desired time for downloading files
-            //int desiredHour = 2; // Set the desired hour here
-            //int desiredMinute = 0; // Set the desired minute here
-            //int desiredSecond = 0; // Set the desired second here
-
-            //// Get the current time
-            //DateTime now = DateTime.Now;
-
-            //// Calculate the time until the desired time for the first execution
-            //DateTime desiredTime = new DateTime(now.Year, now.Month, now.Day, desiredHour, desiredMinute, desiredSecond);
-            //TimeSpan timeUntilDesiredTime = desiredTime - now;
-            //if (timeUntilDesiredTime.TotalMilliseconds < 0)
-            //{
-            //    // If the desired time has already passed for the day, add 24 hours to the desired time
-            //    desiredTime = desiredTime.AddDays(1);
-            //    timeUntilDesiredTime = desiredTime - now;
-            //}
-
-            //// Create a timer with the interval set to the time until the desired time
-            ////צריך Timer timer = new Timer(timeUntilDesiredTime.TotalMilliseconds);
-            //Timer timer = new Timer(0.5 * 60 * 1000);
-            //bool hasDownloaded = false;
-
-            //// Hook up the Elapsed event to the DownloadFiles method
-            //timer.Elapsed += (sender, e) =>
-            //{
-            //    if (!hasDownloaded)
-            //    {
-            //        DownloadFile();
-            //        hasDownloaded = true;
-            //    }
-            //};
-
-
-            //// Set the timer's interval to 24 hours
-            ////צריך timer.Interval = 24 * 60 * 60 * 1000; // 24 hours * 60 minutes * 60 seconds * 1000 milliseconds
-
-            //// Start the timer
-            //timer.Start();
-
+            DownloadFile();
             Console.ReadLine();
         }
     }
