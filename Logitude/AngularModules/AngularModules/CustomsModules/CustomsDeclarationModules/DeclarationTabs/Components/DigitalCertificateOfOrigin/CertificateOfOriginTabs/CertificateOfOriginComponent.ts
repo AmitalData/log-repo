@@ -89,7 +89,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.isAllowChange = args.isAllowChange;
 
         this.isListenToChangeInCertificate(args.logWindow);
-
+       
+        this.InitMoreDataScreenValues();
         this.BuildTabs();
         this.RunComponent();
         this.entityArgs.EntityPM = this.EntityPM;
@@ -240,6 +241,18 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         }
     }
 
+
+    InitMoreDataScreenValues() {
+        if(AppTool.IsNullOrEmpty(this.EntityPM.CityOfDeclaration)){
+            this.certificateOfOriginWebService.GetCityOfDeclarationByImporterID(this.DecalarationData.ImporterId, this.EntityPM.Tenant).subscribe(myResult => {
+                var myResponse: ServiceResponse = myResult;
+                if (!myResult.HasError && myResult.Result) {               
+                    this.EntityPM.CityOfDeclaration = myResponse.Result;
+                }
+            });
+        }
+    }
+
     SaveAndSendClick(customSendOptionsArgs: any = null) {
         if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
             this.GENERAL.CheckMandatoryFields();
@@ -248,7 +261,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.EntityPM.IsUnitedInvoices ? this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-        
+
         // Init data from MOREDATA page:
         this.EntityPM.IsConsigneeForPrint = true;
         this.EntityPM.IsDeclaredByManufacture = true;
@@ -287,7 +300,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 }
                 else {
                     this.CurrentSession.StopBusyIndicator();
-                    
+
                 }
             });
         }
@@ -302,20 +315,20 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     async SendButtonClicked(customSendOptionsArgs: any) {
         this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
         // this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
-        
+
         this.ValidationErrors = this.GeneralValidationErrors.concat(this.MoreDataValidationErrors);
-        
+
         var generalScreen = "כללי";
         var moreDataScreen = "נוספים";
         var bothDataScreen = "כללי ונוספים";
         if (this.GeneralValidationErrors.length > 0 && this.MoreDataValidationErrors.length > 0) {
-            this.CheckMandatoryCustomsFields(customSendOptionsArgs,this.ValidationErrors ,bothDataScreen);
+            this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.ValidationErrors, bothDataScreen);
         }
         else if (this.GeneralValidationErrors.length > 0) {
-            this.CheckMandatoryCustomsFields(customSendOptionsArgs,this.GeneralValidationErrors ,generalScreen);
+            this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.GeneralValidationErrors, generalScreen);
         }
         else if (this.MoreDataValidationErrors.length > 0) {
-            this.CheckMandatoryCustomsFields(customSendOptionsArgs,this.MoreDataValidationErrors,moreDataScreen);
+            this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.MoreDataValidationErrors, moreDataScreen);
         }
         else {
             this.SendCertificateOfOrigin(customSendOptionsArgs);
@@ -398,7 +411,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         });
 
         logWindow.Show('./CustomsModules/CustomsControls/Components/CustomsErrorsComponent');
-        this.CurrentSession.StopBusyIndicator(); 
+        this.CurrentSession.StopBusyIndicator();
     }
 
     TaxationWindowClosed(event) {
