@@ -11,17 +11,19 @@ import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocato
 import {CustomerPM} from '../../../../Common/EntityPMs/CustomerPM';
 import {EntityResourceService} from '../../../../Infrastructure/Services/EntityResourceService';
 import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse'; 
+import { BaseComponent } from 'Infrastructure/Components/LogitudeComponents/BaseComponent';
 
 @Component({
     
     templateUrl: './ContactsTabComponent.html',
 })
 
-export class ContactsTabComponent implements OnDestroy {
+export class ContactsTabComponent extends BaseComponent implements OnDestroy {
     public ItemsSource: ContactItemClass[];
     public EntityPM: any = null;
     public EntityId: string = null;
     public ObjectTableName: string;
+    public DataContext = this;
     public Customer: CustomerPM = null;
     public PartnerTypeId: string = null;
     public DomainService: PartnersDomainService;
@@ -32,6 +34,7 @@ export class ContactsTabComponent implements OnDestroy {
     private CurrentSession = SessionLocator.SelectedSession;
     public HasExternalId: boolean = false;
     constructor(public entityArgs: EntityArgs) {
+        super();
         this._entityResourceService.getEntityResourceByTableName("Contact", 0).subscribe(response=> {
             this.IsVisibile = true;
             this.ItemsSource = [];
@@ -111,6 +114,7 @@ export class ContactsTabComponent implements OnDestroy {
 
 
     }
+
 
     private IsAllContactsHaveExternalId(contacts: any): boolean{
 
@@ -219,11 +223,12 @@ export class ContactsTabComponent implements OnDestroy {
         }
     }
 }
-export class ContactItemClass {
+export class   ContactItemClass extends BaseComponent{
     public ObjectTableName = "Contact";
     public EntityPM: ContactPM;
     public IsNewEntity: boolean = false; 
     constructor(item: ContactPM, public fatherComponent: ContactsTabComponent, isNewEntity: boolean) {
+        super();
         this.EntityPM = item;
         this.IsNewEntity = isNewEntity; 
         this.CheckPrimary();
@@ -258,8 +263,12 @@ export class ContactItemClass {
     get AnniversaryReminder() { return this.EntityPM.AnniversaryReminder; }
     get DontShowLocalLabels() { return this.EntityPM.DontShowLocalLabels; }
     public get ExternalId() { return this.EntityPM.ExternalId; }
-    
-    
+    public get ContactForAccounting() { return this.EntityPM.ContactForAccounting; }
+    public set ContactForAccounting(value: boolean) {
+        if (this.EntityPM.ContactForAccounting != value) {
+            this.EntityPM.ContactForAccounting = value;
+        }
+    }    
     public IsPrimary: boolean = false;
     public EmailForSending : boolean = false;
     public SendingInterestReport : boolean = false;
