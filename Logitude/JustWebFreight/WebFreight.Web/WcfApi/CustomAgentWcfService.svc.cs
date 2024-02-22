@@ -15,6 +15,7 @@ using WebFreight.Web.Security;
 using Logitude.Server.Tools;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.Tools.EntityService;
+using Logitude.Accounting.BL.Utils;
 
 namespace WebFreight.Web.WcfApi
 {
@@ -79,8 +80,9 @@ namespace WebFreight.Web.WcfApi
                         service.SetChangeSet(entityPM.CardExternalCodeByCurrencies);
                         service.Update(entityPM);
                     }
-
-                    response.Result = entityPM.Id;
+					CardGLAccountConnectBatch CardGLAccountConnectBatch = new CardGLAccountConnectBatch();
+					CardGLAccountConnectBatch.ConnectSingleCardToGLAccountInBatch(entityPM.Tenant, entityPM.Id);
+					response.Result = entityPM.Id;
                     scope.Complete();
                     return response;
                 }
