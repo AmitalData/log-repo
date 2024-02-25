@@ -413,7 +413,16 @@ namespace Logitude.Customs.BL.BL
                         }
                         else
                         {
-                            myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
+                            if (declarationPM.IsChanged == false && myDeclarationCourierStatusPM.CourierDeclarationStatusCode == "V")
+                            {
+
+                            }
+                            else
+                            {
+                                LogMessagingUtil.Instance.AppendLine("DeclarationStatusTypeCode is " + declarationPM.DeclarationStatusTypeCode +
+                           ",CourierDeclarationStatusCode set to " + myDeclarationCourierStatusPM.CourierDeclarationStatusCode);
+                                myDeclarationCourierStatusPM.CourierDeclarationStatusCode = "R";
+                            }
                         }
                     }
                 }

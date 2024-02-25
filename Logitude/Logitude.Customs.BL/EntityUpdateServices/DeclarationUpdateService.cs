@@ -497,7 +497,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 var nFromDoubleQuote = nSubStrined.IndexOf("\"");
                                 NewValue = nSubStrined.Substring(0, nFromDoubleQuote);
                             }
-                            if (OldValue != NewValue && !change.Contains("CreatedByUserId") && !change.Contains("IsChanged"))
+                            if (OldValue != NewValue && !change.Contains("CreatedByUserId") && !change.Contains("IsChanged") &&  (!AreEqualIgnoringSpaces(OldValue, NewValue)))
                             {
                                 LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating: " + " CustomFileno : " + this.EntityPM.CustomFileNo + " = EntityChangeFieldXml " + this.EntityChangeFieldXml, false, "CreateUD2LTService", stopLogAt);
                                 LogitudeSettings.HandleLogMe(" DeclarationUpdateService.OnUpdating: " + " Old : " + OldValue + " = New " + NewValue, false, "CreateUD2LTService", stopLogAt);
@@ -3704,7 +3704,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public bool CheckIfRequiredFieldForCourierHasChanged(DeclarationPM entityPM, Declaration entityPOCO)
         {
             //Check Declaration fields
-            if (entityPOCO.AgentId != entityPM.AgentId || entityPOCO.ImporterName != entityPM.ImporterName || entityPOCO.ImporterAddress != entityPM.ImporterAddress)
+            if (!AreEqualIgnoringSpaces(entityPOCO.AgentId, entityPM.AgentId)  || !AreEqualIgnoringSpaces(entityPOCO.ImporterName, entityPM.ImporterName) || !AreEqualIgnoringSpaces(entityPOCO.ImporterAddress, entityPM.ImporterAddress))
             {
                 return true;
             }
@@ -3719,15 +3719,15 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         if (supplierInvoiceItem.SequenceNumeric == dbOccsupplierInvoiceItem.SequenceNumeric)
                         {
-                            if (supplierInvoiceItem.VendorId != dbOccsupplierInvoiceItem.VendorId
-                                || supplierInvoiceItem.IncotermCode != dbOccsupplierInvoiceItem.IncotermCode)
+                            if (!AreEqualIgnoringSpaces(supplierInvoiceItem.VendorId, dbOccsupplierInvoiceItem.VendorId)
+                                || !AreEqualIgnoringSpaces(supplierInvoiceItem.IncotermCode, dbOccsupplierInvoiceItem.IncotermCode))
                             {
                                 return true;
                             }
                             else
                             {
-                                if (entityPOCO.CasualSupplierName != entityPM.CasualSupplierName ||
-                                    entityPOCO.CasualSupplierAddress != entityPM.CasualSupplierAddress)
+                                if (!AreEqualIgnoringSpaces(entityPOCO.CasualSupplierName, entityPM.CasualSupplierName)   ||
+                                    !AreEqualIgnoringSpaces(entityPOCO.CasualSupplierAddress,entityPM.CasualSupplierAddress))
                                 {
                                     return true;
                                 }
@@ -3748,10 +3748,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         if (consignmentItem.SequenceNumeric == dbOccconsignmentItem.SequenceNumeric)
                         {
-                            if (consignmentItem.StorageSiteCode != dbOccconsignmentItem.StorageSiteCode
-                                || consignmentItem.ManifestNumber != dbOccconsignmentItem.ManifestNumber
-                                || consignmentItem.ThirdCargoID != dbOccconsignmentItem.ThirdCargoID
-                                || consignmentItem.CargoDescription != dbOccconsignmentItem.CargoDescription)
+                            if (!AreEqualIgnoringSpaces(consignmentItem.StorageSiteCode, dbOccconsignmentItem.StorageSiteCode) 
+                                || !AreEqualIgnoringSpaces(consignmentItem.ManifestNumber, dbOccconsignmentItem.ManifestNumber)  
+                                || !AreEqualIgnoringSpaces(consignmentItem.ThirdCargoID, dbOccconsignmentItem.ThirdCargoID)
+                                || !AreEqualIgnoringSpaces(consignmentItem.CargoDescription, dbOccconsignmentItem.CargoDescription))  
                             {
                                 return true;
                             }
@@ -3762,9 +3762,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 {
                                     if (consignmentPackageItem.LineNumber == dbOccconsignmentPackageItem.LineNumber)
                                     {
-                                        if (consignmentPackageItem.PackageQuantity != dbOccconsignmentPackageItem.PackageQuantity
+                                        if ( consignmentPackageItem.PackageQuantity != dbOccconsignmentPackageItem.PackageQuantity
                                             || consignmentPackageItem.GrossMassMeasure != dbOccconsignmentPackageItem.GrossMassMeasure
-                                            || consignmentPackageItem.PackageTypeCode != dbOccconsignmentPackageItem.PackageTypeCode)
+                                            || !AreEqualIgnoringSpaces(consignmentPackageItem.PackageTypeCode, dbOccconsignmentPackageItem.PackageTypeCode) )
                                         {
                                             return true;
                                         }
@@ -3836,6 +3836,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 return null;
             }
             return clientId;
+        }
+        private bool AreEqualIgnoringSpaces(string str1, string str2)
+        {
+            string cleanStr1 = str1.Replace(" ", "");
+            string cleanStr2 = str2.Replace(" ", "");
+
+            return cleanStr1.Equals(cleanStr2);
         }
         public static string UpdateSupplierInvoiceItemsWhoHasError12195(string declarationId, int tenant)
         {
