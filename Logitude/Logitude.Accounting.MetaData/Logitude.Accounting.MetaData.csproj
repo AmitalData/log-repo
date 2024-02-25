@@ -253,6 +253,7 @@
     <None Include="EntityFiles\CalculatedChartsOfAccount.lxml" />
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
     <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
+    <None Include="EntityFiles\ChequeCounterSerial.lxml" />
     <None Include="EntityFiles\CopyFromTenant0.lxml" />
     <None Include="EntityFiles\GLAccountAgingData.lxml" />
     <None Include="EntityFiles\GLAccountCardsData.lxml" />
