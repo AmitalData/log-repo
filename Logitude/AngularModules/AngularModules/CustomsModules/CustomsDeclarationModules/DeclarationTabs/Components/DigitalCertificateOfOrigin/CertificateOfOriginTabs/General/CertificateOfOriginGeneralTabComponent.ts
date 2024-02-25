@@ -70,7 +70,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
         this.currentDeclaration = currentDeclaration;
-
+        
         if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
             this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {
                 var result = response.Result;
@@ -390,18 +390,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         logcelltemplate.IsEditMode = true;
     }
 
-    // SetLocalName(entity, fieldName, item) {
-    //     if (!AppTool.IsNullOrEmpty(entity)) {
-    //         if (fieldName == "OriginCriterionCodeName") {
-    //             this.CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.OriginCriterionCode;
-    //             return;
-    //         }
-    //         this.CertificateOriginItemItems.Collection.filter(x => x.ItemSerial == item.ItemSerial)[0][fieldName] = entity.LocalName;
-    //     } else {
-    //         this[fieldName] = null;
-    //     }
 
-    // }
 
     CheckMandatoryFields() {
         if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {

@@ -93,7 +93,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         CoodPdf1, 
 	         OpenByUser, 
 	         IsSubmitted, 
-	         UpdateDeclaration,
+	         UpdateDeclaration, 
+	         IsChange,
 	      }
 
 
@@ -176,7 +177,8 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	         RequestReasonCodeName, 
 	         CooStatusCodeName, 
 	         ListCounter, 
-	         UpdateDeclaration,
+	         UpdateDeclaration, 
+	         IsChange,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -538,6 +540,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDeclaration))
             {
 				entityPOCO.UpdateDeclaration = entityPM.UpdateDeclaration;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsChange))
+            {
+				entityPOCO.IsChange = entityPM.IsChange;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -906,6 +913,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 					entityPM.UpdateDeclaration = entityPOCO.UpdateDeclaration;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsChange))
+            {
+					entityPM.IsChange = entityPOCO.IsChange;
+            }
+
 		}
 
 		public void PMToOldPM(CertificateOfOriginPM entityPM, CertificateOfOriginPM oldEntityPM)
@@ -1265,6 +1277,11 @@ namespace Logitude.Customs.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.UpdateDeclaration))
             {
                 oldEntityPM.UpdateDeclaration = entityPM.UpdateDeclaration;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsChange))
+            {
+                oldEntityPM.IsChange = entityPM.IsChange;
             }
 			
 		}

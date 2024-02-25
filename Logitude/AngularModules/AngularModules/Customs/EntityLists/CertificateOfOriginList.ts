@@ -85,6 +85,7 @@ export class CertificateOfOriginList {
 	CooStatusCodeName: string;
 	ListCounter: number;
 	UpdateDeclaration: string;
+	IsChange: boolean;
 	
 }
  

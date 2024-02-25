@@ -260,9 +260,16 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     SaveAndSendClick(customSendOptionsArgs: any = null) {
         if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
             this.GENERAL.CheckMandatoryFields();
+            //if( this.selectedTabCode == "GENERAL"){
+            //}
+            // else if( this.selectedTabCode = "MOREDATA"){
+            //     this.MOREDATA.CheckMandatoryFields();
+            // }
             return;
         }
+        
         this.EntityPM.IsUnitedInvoices ? this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
+        this.EntityPM.IsChange = true; //#103474
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
        
@@ -450,6 +457,9 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 if (this.EntityPM?.ErrXml && !AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)) {
                     this.selectedTabCode = "ANSWERTOCERTIFICATE"
                     this.SelectionChanged();
+                }
+                else{
+                    this.EntityPM.IsChange = false; //#103474- if בם
                 }
             }
         });

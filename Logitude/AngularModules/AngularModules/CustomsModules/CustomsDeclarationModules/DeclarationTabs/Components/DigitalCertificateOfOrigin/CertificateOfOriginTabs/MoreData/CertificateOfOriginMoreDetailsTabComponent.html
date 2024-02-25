@@ -26,6 +26,9 @@
                     {{'Customs.CertificateOfOrigin.O.DisplayOnly'| TextCodeTranslationPipe}}
                 </div>
             </div> 
+            <div *ngIf="ErrorsList?.length > 0">
+                <ValidationSummary class="StyleMess" [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
+            </div>
         </td>
 
     </tr>

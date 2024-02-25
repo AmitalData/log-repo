@@ -493,6 +493,11 @@ export class CertificateOfOriginPM {
     public set UpdateDeclaration(newValue: string) { if (this.updateDeclaration != newValue) { this.updateDeclaration = newValue; this.MarkAsDirty("UpdateDeclaration"); } }
        
 	 
+    private isChange: boolean;
+    public get IsChange() { return this.isChange; }
+    public set IsChange(newValue: boolean) { if (this.isChange != newValue) { this.isChange = newValue; this.MarkAsDirty("IsChange"); } }
+       
+	 
 
     public OldEntityPM: CertificateOfOriginPM;
 		
