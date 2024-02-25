@@ -1007,36 +1007,46 @@
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginMandatory&quot;"
         IndexOrder="1"
-        ObjectFieldName="&quot;MappedCertificateFieldsName&quot;"
+        ObjectFieldName="&quot;CertificateOfOriginTypeCodeID&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginMandatory&quot;"
         IndexOrder="2"
-        ObjectFieldName="&quot;IsMandatory&quot;"
+        ObjectFieldName="&quot;CertificateOfOriginTypeName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginMandatory&quot;"
         IndexOrder="3"
-        ObjectFieldName="&quot;Location&quot;"
+        ObjectFieldName="&quot;MappedCertificateFieldsName&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginMandatory&quot;"
         IndexOrder="4"
-        ObjectFieldName="&quot;LastUpdatedDate&quot;"
+        ObjectFieldName="&quot;IsMandatory&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginMandatory&quot;"
         IndexOrder="5"
-        ObjectFieldName="&quot;LocalName&quot;"
+        ObjectFieldName="&quot;Location&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginMandatory&quot;"
         IndexOrder="6"
-        ObjectFieldName="&quot;EnglishName&quot;"
+        ObjectFieldName="&quot;LastUpdatedDate&quot;"
         ColumnWidth="100" />
       <QueryColumn
         QueryCode="&quot;CertificateOfOriginMandatory&quot;"
         IndexOrder="7"
+        ObjectFieldName="&quot;LocalName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CertificateOfOriginMandatory&quot;"
+        IndexOrder="8"
+        ObjectFieldName="&quot;EnglishName&quot;"
+        ColumnWidth="100" />
+      <QueryColumn
+        QueryCode="&quot;CertificateOfOriginMandatory&quot;"
+        IndexOrder="9"
         ObjectFieldName="&quot;Inactive&quot;"
         ColumnWidth="50" />
     </QueryColumns>
@@ -1049,7 +1059,7 @@
     IsHeaderScreen="true"
     Code="&quot;CertificateOfOriginMandatoryFields.GeneralTabScreen&quot;"
     NumberOfColumns="1"
-    NumberOfRows="4">
+    NumberOfRows="5">
     <ScreenFields>
       <ScreenField
         Column="0"
@@ -1069,7 +1079,12 @@
       <ScreenField
         Column="0"
         Row="3"
-        ObjectFieldName="&quot;CertificateOfOriginTypeName&quot;"
+        ObjectFieldName="&quot;CertificateOfOriginTypeCodeID&quot;"
+        ScreenName="GeneralTabScreen" />
+      <ScreenField
+        Column="0"
+        Row="4"
+        ObjectFieldName="&quot;MappedCertificateFieldsName&quot;"
         ScreenName="GeneralTabScreen" />
     </ScreenFields>
   </Screen>
