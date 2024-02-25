@@ -8,6 +8,7 @@ import { CertificateOfOriginInvoicePM } from 'Customs/EntityPMs/CertificateOfOri
 import { ObservableCollection } from 'Infrastructure/Utilities/ObservableCollection';
 import { StatusCertificateOfOrigin } from '../../DigitalCertificateOfOriginTabComponent';
 import { CertificateOfOriginWebService } from 'Customs/Services/WebServices/CertificateOfOriginWebService';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 
 
@@ -23,6 +24,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     public currentDeclaration: DeclarationPM;
     IsNewOrEdit: StatusCertificateOfOrigin;
     IsDisplayOnly: boolean = false;
+    public ErrorsList: string[];
 
     controlEnabled: boolean;
     constructor() {
@@ -30,7 +32,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
-        this.entityPM = EntityPM;
+        this.entityPM = EntityPM;        
         this.currentDeclaration = currentDeclaration;
         this.IsDisplayOnly = IsDisplayOnly;
         this.IsNewOrEdit = IsNewOrEdit;
@@ -77,7 +79,21 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
 
 
     }
-
+    
+    CheckMandatoryFields() {
+        if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {
+            this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.MandatoryFields')];
+        }
+        else if (!this.entityPM.CooTypeCode) {
+            this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.TypeCodeMandatory')];
+        }
+        else if (!this.entityPM.RequestReasonCode) {
+            this.ErrorsList = [TextCodeTranslator.Translate('Customs.CertificateOfOrigin.O.RequestReasonMandatory')];
+        }
+        else {
+            this.ErrorsList = [];
+        }
+    }
     mandatoryFielsList = [];
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     SetWarningByCooTypeCode(CooTypeCode) {
