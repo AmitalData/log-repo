@@ -484,6 +484,10 @@ namespace WebFreight.Web.DataProviders
         public string CustomsClearancePointName { get; set; }
         public double? ValueOfGoods { get; set; }
         public string ValueOfGoodsCurrency { get; set; }
+
+        public string ConfirmationNumber { get; set; }
+        public string ConfirmationNumber_RightPart { get; set; }
+        public string ConfirmationNumber_LeftPart { get; set; }
         public class InvoicesReport
         {
             public double? AmountDueInLocalCurrency { get; set; }
@@ -627,6 +631,11 @@ namespace WebFreight.Web.DataProviders
             public string CustomerField10 { get; set; }
             public string BranchCode { get; set; }
             public DateTime? ShipmentMainCarriageETA  { get; set; }
+
+            public string ConfirmationNumber { get; set; }
+            public string ConfirmationNumber_RightPart { get; set; }
+            public string ConfirmationNumber_LeftPart { get; set; }
+
         }
 
         public class InvoiceTotals
