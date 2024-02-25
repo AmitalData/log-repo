@@ -3704,7 +3704,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         public bool CheckIfRequiredFieldForCourierHasChanged(DeclarationPM entityPM, Declaration entityPOCO)
         {
             //Check Declaration fields
-            if (entityPOCO.AgentId != entityPM.AgentId || entityPOCO.ImporterName != entityPM.ImporterName || !AreEqualIgnoringSpaces(entityPOCO.ImporterAddress, entityPM.ImporterAddress))
+            if (!AreEqualIgnoringSpaces(entityPOCO.AgentId, entityPM.AgentId)  || !AreEqualIgnoringSpaces(entityPOCO.ImporterName, entityPM.ImporterName) || !AreEqualIgnoringSpaces(entityPOCO.ImporterAddress, entityPM.ImporterAddress))
             {
                 return true;
             }
@@ -3719,14 +3719,14 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         if (supplierInvoiceItem.SequenceNumeric == dbOccsupplierInvoiceItem.SequenceNumeric)
                         {
-                            if (supplierInvoiceItem.VendorId != dbOccsupplierInvoiceItem.VendorId
-                                || supplierInvoiceItem.IncotermCode != dbOccsupplierInvoiceItem.IncotermCode)
+                            if (!AreEqualIgnoringSpaces(supplierInvoiceItem.VendorId, dbOccsupplierInvoiceItem.VendorId)
+                                || !AreEqualIgnoringSpaces(supplierInvoiceItem.IncotermCode, dbOccsupplierInvoiceItem.IncotermCode))
                             {
                                 return true;
                             }
                             else
                             {
-                                if (entityPOCO.CasualSupplierName != entityPM.CasualSupplierName ||
+                                if (!AreEqualIgnoringSpaces(entityPOCO.CasualSupplierName, entityPM.CasualSupplierName)   ||
                                     !AreEqualIgnoringSpaces(entityPOCO.CasualSupplierAddress,entityPM.CasualSupplierAddress))
                                 {
                                     return true;
@@ -3748,10 +3748,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         if (consignmentItem.SequenceNumeric == dbOccconsignmentItem.SequenceNumeric)
                         {
-                            if (consignmentItem.StorageSiteCode != dbOccconsignmentItem.StorageSiteCode
-                                || consignmentItem.ManifestNumber != dbOccconsignmentItem.ManifestNumber
-                                || consignmentItem.ThirdCargoID != dbOccconsignmentItem.ThirdCargoID
-                                || consignmentItem.CargoDescription != dbOccconsignmentItem.CargoDescription)
+                            if (!AreEqualIgnoringSpaces(consignmentItem.StorageSiteCode, dbOccconsignmentItem.StorageSiteCode) 
+                                || !AreEqualIgnoringSpaces(consignmentItem.ManifestNumber, dbOccconsignmentItem.ManifestNumber)  
+                                || !AreEqualIgnoringSpaces(consignmentItem.ThirdCargoID, dbOccconsignmentItem.ThirdCargoID)
+                                || !AreEqualIgnoringSpaces(consignmentItem.CargoDescription, dbOccconsignmentItem.CargoDescription))  
                             {
                                 return true;
                             }
@@ -3762,9 +3762,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                 {
                                     if (consignmentPackageItem.LineNumber == dbOccconsignmentPackageItem.LineNumber)
                                     {
-                                        if (consignmentPackageItem.PackageQuantity != dbOccconsignmentPackageItem.PackageQuantity
+                                        if ( consignmentPackageItem.PackageQuantity != dbOccconsignmentPackageItem.PackageQuantity
                                             || consignmentPackageItem.GrossMassMeasure != dbOccconsignmentPackageItem.GrossMassMeasure
-                                            || consignmentPackageItem.PackageTypeCode != dbOccconsignmentPackageItem.PackageTypeCode)
+                                            || !AreEqualIgnoringSpaces(consignmentPackageItem.PackageTypeCode, dbOccconsignmentPackageItem.PackageTypeCode) )
                                         {
                                             return true;
                                         }
