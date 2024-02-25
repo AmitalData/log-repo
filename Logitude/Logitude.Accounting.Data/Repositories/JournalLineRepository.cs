@@ -11,6 +11,7 @@ using Logitude.Accounting.Data.EntityKeys;
 using Simplog.Server.Infrastructure;
 using System.Diagnostics;
 using Logitude.Server.Tools;
+using System.Runtime.InteropServices;
 namespace Logitude.Accounting.Data.Repositories
 {
    public partial class JournalLineRepository:IRepository<JournalLine>
@@ -36,7 +37,7 @@ namespace Logitude.Accounting.Data.Repositories
                     where a.JournalId == journalId && a.Line == line && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
-        public List<JournalLine> GetJournalLineByLedgerTransactionIdList(List<String> idList, int tenant)
+        public IQueryable<JournalLine> GetJournalLineByLedgerTransactionIdList(List<String> idList, int tenant)
         {
             var qLedgerTransactions =
                (from a in context.LedgerTransactions
@@ -46,8 +47,7 @@ namespace Logitude.Accounting.Data.Repositories
                      join l in qLedgerTransactions
                      on new { j.JournalId, j.Line } equals new { l.JournalId, Line = l.JournalLineNumber }
                      select j);
-            var pocos = q.ToList();
-            return pocos;
+            return q;
         }
 
 

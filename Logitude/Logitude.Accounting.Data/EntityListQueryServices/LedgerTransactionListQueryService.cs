@@ -45,63 +45,60 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                            select new LedgerTransactionList()
                                                            {
                                                                Id = a.Id,
-                                                               // Account = a.Account,
-                                                               AccountId = a.AccountId,
+                                                               LocalAmountDebit = a.LocalAmountDebit,
+                                                               LocalAmountCredit = a.LocalAmountCredit,
+                                                               ForeignAmountDebit = a.ForeignAmountDebit,
+                                                               Tenant = a.Tenant,
                                                                AccountingDate = a.AccountingDate,
-                                                               // ControlAccount = a.ControlAccount,
-                                                               ControlAccountId = a.ControlAccountId,
-                                                               // Currency = a.Currency,
-                                                               CurrencyId = a.CurrencyId,
                                                                DocumentDate = a.DocumentDate,
                                                                DueDate = a.DueDate,
-                                                               ExchangeRate = a.ExchangeRate,
-                                                               ForeignAmountCredit = a.ForeignAmountCredit,
-                                                               ForeignAmountDebit = a.ForeignAmountDebit,
-                                                               ForeignAmount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
-                                                               ReconcileMethodCode = a.Account.ReconcileMethodCode,
-                                                               JournalId = a.JournalId,
-                                                               JournalNumber = a.JournalLine.Journal.JournalNumber,
-                                                               Source = a.JournalLine.Journal.AccountingEntityReference,
-                                                               SourceType = a.JournalLine.Journal.AccountingEntity.EnglishName,
-                                                               CurrencyCode = a.Currency.Code,
-                                                               // JournalLine = a.JournalLine,
-                                                               JournalLineNumber = a.JournalLineNumber,
-                                                               LocalAmountCredit = a.LocalAmountCredit,
-                                                               LocalAmountDebit = a.LocalAmountDebit,
-                                                               OpenAmount = a.OpenAmount,
                                                                Reference1 = a.Reference1,
                                                                Reference2 = a.Reference2,
                                                                Reference3 = a.Reference3,
+                                                               AccountId = a.AccountId,
+                                                               OppositeAccountId = a.OppositeAccountId,
+                                                               JournalId = a.JournalId,
+                                                               Notes = a.Notes,
+                                                               JournalLineNumber = a.JournalLineNumber,
+                                                               SourceNumber = a.JournalLine.Journal.AccountingEntityReference, // display number
+                                                               SourceTypeCode = a.JournalLine.Journal.AccountingEntity.Code, // source type code from AccountingEntities
+                                                               SelectCheckBox = false,
+                                                               JournalNumber = a.JournalLine.Journal.JournalNumber,
+                                                               OpenAmount = a.OpenAmount,
+                                                               ReconcileMethodCode = a.Account.ReconcileMethodCode,
+                                                               OppositeAccountEnglishName = a.OppositeAccount != null ? a.OppositeAccount.EnglishName : null,
+                                                               OppositeAccountLocalName = a.OppositeAccount != null ? a.OppositeAccount.LocalName : null,
+                                                               OppositeAccountDisplayNumber = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
+                                                               OriginalAmount = 0,
+                                                               CalculatedForeignAmount = a.ForeignAmountCredit != 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
+                                                               CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit,
+                                                               ForeignAmountCredit = a.ForeignAmountCredit,
+                                                               ForeignAmount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
+                                                               CurrencyId = a.CurrencyId,
+                                                               SearchFields = a.SearchFields,
+
+                                                               ControlAccountId = a.ControlAccountId,
+                                                               ExchangeRate = a.ExchangeRate,
+                                                               Source = a.JournalLine.Journal.AccountingEntityReference,
+                                                               SourceType = a.JournalLine.Journal.AccountingEntity.EnglishName,
+                                                               CurrencyCode = a.Currency.Code,
                                                                CreateDate = a.CreateDate,
-                                                               Tenant = a.Tenant,
                                                                AmountToReconcile = a.AmountToReconcile,
                                                                Mark = a.Mark,
-                                                               Notes = a.Notes,
                                                                InternalNote = a.InternalNote,
                                                                UpdatedByUserName = a.UpdatedByUserName,
                                                                UpdateDateTime = a.UpdateDateTime,
                                                                OpenAmountCurrencyId = a.OpenAmountCurrencyId,
-                                                               OppositeAccountId = a.OppositeAccountId,
-                                                               SearchFields = a.SearchFields,
                                                                OpenAmountCurrencyCode = a.OpenAmountCurrency.Code,
                                                                IsReconciled = a.IsReconciled,
                                                                InReconcileProgress = a.InReconcileProgress,
                                                                InProgressExternalReconcile = a.InProgressExternalReconcile,
                                                                SourceId = a.JournalLine.Journal.AccountingEntityId, // hidden id to use in link
-                                                               SourceNumber = a.JournalLine.Journal.AccountingEntityReference, // display number
-                                                               SourceTypeCode = a.JournalLine.Journal.AccountingEntity.Code, // source type code from AccountingEntities
-                                                               SelectCheckBox = false,
                                                                CurrencySign = a.Currency.Sign,
                                                                OpenAmountCurrencySign = a.OpenAmountCurrency.Sign,
                                                                IsExternalReconcile = a.IsExternalReconcile,
-                                                               OppositeAccountEnglishName = a.OppositeAccount != null ? a.OppositeAccount.EnglishName : null,
-                                                               OppositeAccountLocalName = a.OppositeAccount != null ? a.OppositeAccount.LocalName : null,
-                                                               OppositeAccountDisplayNumber = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
                                                                AccountDisplayNumber = a.Account != null ? a.Account.DisplayNumber : null,
                                                                AccountLocalName = a.Account != null ? a.Account.LocalName : null,
-                                                               OriginalAmount = 0,
-                                                               CalculatedForeignAmount = a.ForeignAmountCredit != 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
-                                                               CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit,
                                                                JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
                                                                TaxReportId = jad != null ? jad.TaxReportId : "",
                                                                TaxReportNumber = jad != null && jad.TaxReport != null ? jad.TaxReport.TaxReportNumber : "",
@@ -191,7 +188,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
         }
         private IQueryable<LedgerTransactionList> GetTaxJournalLines(IQueryable<LedgerTransactionList> transactions, int tenant)
         {
-            List<JournalLine> journalLines = GetJournalLinesForTransactions(transactions, tenant);
+            IQueryable<JournalLine> journalLines = GetJournalLinesForTransactions(transactions, tenant);
             return GetCreditLinesFromSelectedTransactionsGroupedByJournalId(transactions, journalLines);
         }
         public IQueryable<LedgerTransactionList> GetLedgerTransactionsOutputNotIncludedInTaxReports(string accountId, IQueryable<LedgerTransactionList> query)
@@ -212,13 +209,13 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             outputLines = ExcludeDuplicatedLinesForTheSameJournal(creditLines, outputLines);
             return outputLines.Concat(creditLines);
         }
-        private List<JournalLine> GetJournalLinesForTransactions(IQueryable<LedgerTransactionList> transactions, int tenant)
+        private IQueryable<JournalLine> GetJournalLinesForTransactions(IQueryable<LedgerTransactionList> transactions, int tenant)
         {
             List<string> transactionIds = transactions.Select(d => d.Id).ToList();
             JournalLineRepository journalLineRepository = new JournalLineRepository(context);
             return journalLineRepository.GetJournalLineByLedgerTransactionIdList(transactionIds, tenant);
         }
-        private IQueryable<LedgerTransactionList> GetCreditLinesFromSelectedTransactionsGroupedByJournalId(IQueryable<LedgerTransactionList> outputLines, List<JournalLine> JournalLines)
+        private IQueryable<LedgerTransactionList> GetCreditLinesFromSelectedTransactionsGroupedByJournalId(IQueryable<LedgerTransactionList> outputLines, IQueryable<JournalLine> JournalLines)
 
         {
             return (from ledger in outputLines
@@ -259,7 +256,34 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                         ForeignAmountCredit = gp.Sum(d => d.ForeignAmountCredit),
                         ForeignAmount = gp.FirstOrDefault().ForeignAmount,
                         CurrencyId = gp.FirstOrDefault().CurrencyId,
-                        SearchFields = gp.FirstOrDefault().SearchFields
+                        SearchFields = gp.FirstOrDefault().SearchFields,
+
+                        ControlAccountId =null,
+                        ExchangeRate = 0,
+                        Source = null,
+                        SourceType = null,
+                        CurrencyCode =null,
+                        CreateDate = DateTime.MinValue,
+                        AmountToReconcile = 0,
+                        Mark = false,
+                        InternalNote = null,
+                        UpdatedByUserName = null,
+                        UpdateDateTime = DateTime.MinValue,
+                        OpenAmountCurrencyId = null,
+                        OpenAmountCurrencyCode = null,
+                        IsReconciled = false,
+                        InReconcileProgress = false,
+                        InProgressExternalReconcile = false,
+                        SourceId = null, 
+                        CurrencySign = null,
+                        OpenAmountCurrencySign = null,
+                        IsExternalReconcile = false,
+                        AccountDisplayNumber = null,
+                        AccountLocalName = null,
+                        JournalCreatedByUser = null,
+                        TaxReportId = "",
+                        TaxReportNumber = "",
+                        SecurityLevelFiltering = 1
                     }).AsQueryable();
         }
 
@@ -382,48 +406,64 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                        select new LedgerTransactionList()
                                                        {
                                                            Id = a.Id,
-
-                                                           AccountId = a.AccountId,
+                                                           LocalAmountDebit = a.LocalAmountDebit,
+                                                           LocalAmountCredit = a.LocalAmountCredit,
+                                                           ForeignAmountDebit = a.ForeignAmountDebit,
+                                                           Tenant = a.Tenant,
                                                            AccountingDate = a.AccountingDate,
-
-                                                           ControlAccountId = a.ControlAccountId,
-
-                                                           CurrencyId = a.CurrencyId,
                                                            DocumentDate = a.DocumentDate,
                                                            DueDate = a.DueDate,
-                                                           ExchangeRate = a.ExchangeRate,
-                                                           ForeignAmountCredit = a.ForeignAmountCredit,
-                                                           ForeignAmountDebit = a.ForeignAmountDebit,
-                                                           JournalId = a.JournalId,
-
-
-                                                           //JournalNumber = a.JournalLine.Journal.JournalNumber,
-                                                           //Source = a.JournalLine.Journal.AccountingEntityReference,
-                                                           //SourceType = a.JournalLine.Journal.AccountingEntity.EnglishName,
-                                                           //CurrencyCode = a.Currency.Code,
-
-                                                           //OpenAmountCurrencyCode = a.OpenAmountCurrency.Code,
-
-                                                           JournalLineNumber = a.JournalLineNumber,
-                                                           LocalAmountCredit = a.LocalAmountCredit,
-                                                           LocalAmountDebit = a.LocalAmountDebit,
-                                                           OpenAmount = a.OpenAmount,
                                                            Reference1 = a.Reference1,
                                                            Reference2 = a.Reference2,
                                                            Reference3 = a.Reference3,
+                                                           AccountId = a.AccountId,
+                                                           OppositeAccountId = a.OppositeAccountId,
+                                                           JournalId = a.JournalId,
+                                                           Notes = a.Notes,
+                                                           JournalLineNumber = a.JournalLineNumber,
+                                                           SourceNumber= a.JournalLine.Journal.AccountingEntityReference,
+                                                           SourceTypeCode= a.JournalLine.Journal.AccountingEntity.Code,
+                                                           SelectCheckBox=false,
+                                                           JournalNumber= a.JournalLine.Journal.JournalNumber,
+                                                           OpenAmount = a.OpenAmount,
+                                                           ReconcileMethodCode = a.Account.ReconcileMethodCode,
+                                                           OppositeAccountEnglishName = a.OppositeAccount != null ? a.OppositeAccount.EnglishName : null,
+                                                           OppositeAccountLocalName = a.OppositeAccount != null ? a.OppositeAccount.LocalName : null,
+                                                           OppositeAccountDisplayNumber = a.OppositeAccount != null ? a.OppositeAccount.DisplayNumber : null,
+                                                           OriginalAmount = 0,
+                                                           CalculatedForeignAmount = a.ForeignAmountCredit != 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
+                                                           CalculatedLocalAmount = a.LocalAmountCredit != 0 ? a.LocalAmountCredit : a.LocalAmountDebit,
+                                                           ForeignAmountCredit = a.ForeignAmountCredit,
+                                                           ForeignAmount = a.ForeignAmountDebit == 0 ? a.ForeignAmountCredit : a.ForeignAmountDebit,
+                                                           CurrencyId = a.CurrencyId,
+                                                           SearchFields = a.SearchFields,
+
+                                                           ControlAccountId = a.ControlAccountId,
+                                                           ExchangeRate = a.ExchangeRate,
+                                                           Source = a.JournalLine.Journal.AccountingEntityReference,
+                                                           SourceType = a.JournalLine.Journal.AccountingEntity.EnglishName,
+                                                           CurrencyCode = a.Currency.Code,
                                                            CreateDate = a.CreateDate,
-                                                           Tenant = a.Tenant,
                                                            AmountToReconcile = a.AmountToReconcile,
                                                            Mark = a.Mark,
-                                                           Notes = a.Notes,
                                                            InternalNote = a.InternalNote,
                                                            UpdatedByUserName = a.UpdatedByUserName,
                                                            UpdateDateTime = a.UpdateDateTime,
                                                            OpenAmountCurrencyId = a.OpenAmountCurrencyId,
-                                                           OppositeAccountId = a.OppositeAccountId,
-                                                           SearchFields = a.SearchFields,
-
+                                                           OpenAmountCurrencyCode = a.OpenAmountCurrency.Code,
                                                            IsReconciled = a.IsReconciled,
+                                                           InReconcileProgress = a.InReconcileProgress,
+                                                           InProgressExternalReconcile = a.InProgressExternalReconcile,
+                                                           SourceId = a.JournalLine.Journal.AccountingEntityId, // hidden id to use in link
+                                                           CurrencySign = a.Currency.Sign,
+                                                           OpenAmountCurrencySign = a.OpenAmountCurrency.Sign,
+                                                           IsExternalReconcile = a.IsExternalReconcile,
+                                                           AccountDisplayNumber = a.Account != null ? a.Account.DisplayNumber : null,
+                                                           AccountLocalName = a.Account != null ? a.Account.LocalName : null,
+                                                           JournalCreatedByUser = a.JournalLine.Journal.CreatedByUser.Contact.DontShowLocalLabels ? a.JournalLine.Journal.CreatedByUser.Contact.EnglishName : a.JournalLine.Journal.CreatedByUser.Contact.LocalName,
+                                                           TaxReportId = "",
+                                                           TaxReportNumber =  "",
+                                                           SecurityLevelFiltering = 1
                                                        });
             return query;
         }

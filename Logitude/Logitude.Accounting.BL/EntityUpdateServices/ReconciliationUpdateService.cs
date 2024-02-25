@@ -454,7 +454,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         //var transactionIdList = entityPM.ReconciliationLines.Select(rec => rec.TransactionId).ToList();
                         var repo = new JournalLineRepository(entityPM.Tenant);
-                        var jlList = repo.GetJournalLineByLedgerTransactionIdList(transactionIdList, entityPM.Tenant);
+                        var jlList = repo.GetJournalLineByLedgerTransactionIdList(transactionIdList, entityPM.Tenant).ToList();
                         List<string> errorsList = new List<string>();
                         ReconciliationValidator.Validate_CreatedByReconciliationAfterConversion(errorsList, jlList);
                         if (errorsList.Count > 0)
