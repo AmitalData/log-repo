@@ -244,6 +244,8 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsSubmitted { get; set; }
         [Column("UpdateDeclaration")]
 	    public string UpdateDeclaration { get; set; }
+        [Column("IsChange")]
+	    public bool IsChange { get; set; }
     }
 }
 	 

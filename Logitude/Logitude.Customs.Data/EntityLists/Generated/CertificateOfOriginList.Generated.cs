@@ -168,6 +168,8 @@ namespace Logitude.Customs.Data.EntityLists
        public int ListCounter  { get; set; }
        [DataMember]
        public string UpdateDeclaration  { get; set; }
+       [DataMember]
+       public bool IsChange  { get; set; }
    }
 
 }
