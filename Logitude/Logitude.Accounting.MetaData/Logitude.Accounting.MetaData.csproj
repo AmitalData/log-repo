@@ -180,6 +180,7 @@
     <None Include="DBTables\Category5.dxml" />
     <None Include="DBTables\ChartOfAccount.dxml" />
     <None Include="DBTables\ChartOfAccountsType.dxml" />
+    <None Include="DBTables\ChequeCounterSerial.dxml" />
     <None Include="DBTables\CopyFromTenant0.dxml" />
     <None Include="DBTables\ExternalPageAdditionalData.dxml" />
     <None Include="DBTables\ExternalReconciliation.dxml" />
