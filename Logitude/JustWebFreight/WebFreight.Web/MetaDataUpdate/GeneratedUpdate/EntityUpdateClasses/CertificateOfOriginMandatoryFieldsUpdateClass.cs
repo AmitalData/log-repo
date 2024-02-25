@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CertificateOfOriginMandatoryFieldsUpdateClass
    {  		
-		public const string HashString = "98e3eb94d45dbf812338aac4fcc566d9";
+		public const string HashString = "8596091576fcc0618752a82e131a75c6";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -938,19 +938,23 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	
 			 QueryColumn CertificateOfOriginMandatoryQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Code" , ColumnWidth = 50 }, addedQueryColumns);
 
-			 QueryColumn CertificateOfOriginMandatoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificateFieldsName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.CertificateOfOriginTypeCodeID" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CertificateOfOriginMandatoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.IsMandatory" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_2 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 2, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.CertificateOfOriginTypeName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CertificateOfOriginMandatoryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Location" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_3 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 3, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificateFieldsName" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CertificateOfOriginMandatoryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.LastUpdatedDate" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_4 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 4, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.IsMandatory" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CertificateOfOriginMandatoryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_5 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 5, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Location" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CertificateOfOriginMandatoryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_6 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 6, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.LastUpdatedDate" , ColumnWidth = 100 }, addedQueryColumns);
 
-			 QueryColumn CertificateOfOriginMandatoryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_7 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 7, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.LocalName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_8 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 8, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.EnglishName" , ColumnWidth = 100 }, addedQueryColumns);
+
+			 QueryColumn CertificateOfOriginMandatoryQueryColumn_9 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = CertificateOfOriginMandatoryQuery.Id,QueryCode = CertificateOfOriginMandatoryQuery.UniqueCode, IndexOrder = 9, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Inactive" , ColumnWidth = 50 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);
@@ -967,7 +971,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		       
 	      
 
-	         Screen CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CertificateOfOriginMandatoryFields.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 4, IsReadOnly = true }, screensRepository, tenantScreens);
+	         Screen CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CertificateOfOriginMandatoryFields.GeneralTabScreen", Name = "GeneralTabScreen", ObjectTableId = CertificateOfOriginMandatoryFieldsObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 5, IsReadOnly = true }, screensRepository, tenantScreens);
       
              ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.Code", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
@@ -975,7 +979,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	          
              ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField2 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 2, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.LocalName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          
-             ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.CertificateOfOriginTypeName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField3 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 3, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.CertificateOfOriginTypeCodeID", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField CustomsCertificateOfOriginMandatoryFieldsCertificateOfOriginMandatoryFieldsGeneralTabScreenScreenField4 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 4, ScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id,ScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code, ObjectFieldCode = "Customs.CertificateOfOriginMandatoryFields.MappedCertificateFieldsName", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
 	          	
 		    CertificateOfOriginMandatoryFieldsObjectTable.HeaderScreenId = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Id;
 		    CertificateOfOriginMandatoryFieldsObjectTable.HeaderScreenCode = CertificateOfOriginMandatoryFieldsGeneralTabScreenScreen0.Code;

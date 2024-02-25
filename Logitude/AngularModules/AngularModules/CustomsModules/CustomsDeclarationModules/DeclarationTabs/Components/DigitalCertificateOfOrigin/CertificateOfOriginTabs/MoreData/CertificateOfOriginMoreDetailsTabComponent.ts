@@ -24,7 +24,6 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     public currentDeclaration: DeclarationPM;
     IsNewOrEdit: StatusCertificateOfOrigin;
     IsDisplayOnly: boolean = false;
-    IsChange: boolean = false;
     public ErrorsList: string[];
 
     controlEnabled: boolean;
@@ -32,11 +31,10 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
         super();
     }
 
-    InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean, IsChange: boolean) {
+    InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
         this.entityPM = EntityPM;        
         this.currentDeclaration = currentDeclaration;
         this.IsDisplayOnly = IsDisplayOnly;
-        this.IsChange = IsChange;
         this.IsNewOrEdit = IsNewOrEdit;
         this.controlEnabled = StatusCertificateOfOrigin.IsNew ? true : false;
         this.SetPropertiesEnabled();

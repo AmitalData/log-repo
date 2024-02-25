@@ -116,10 +116,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     public get IsDisplayOnly() {
         return this.isDispalyOnlyStatusList.includes(Number(this.EntityPM?.CooStatusCode)) || !this.isAllowChange
     }
-    public get IsChange() {
-        return this.EntityPM.IsChange;
-    }
-    
+
     BuildTabs() {
         this.TabsItemsSource = [];
         this.TabsItemsSource.push(new TabItem("GENERAL", "Customs.Declaration.TH.General"));
@@ -185,7 +182,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/General/CertificateOfOriginGeneralTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.GENERAL = cmpRef.instance;
-                                    this.GENERAL.InitTab(this.EntityPM, this.DecalarationData, this.IsNewOrEdit, this.IsDisplayOnly,this.IsChange);
+                                    this.GENERAL.InitTab(this.EntityPM, this.DecalarationData, this.IsNewOrEdit, this.IsDisplayOnly);
                                 });
                         }
                         break;
@@ -196,7 +193,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                             SessionLocator.DynamicLoader.Load('./CustomsModules/CustomsDeclarationModules/DeclarationTabs/Components/DigitalCertificateOfOrigin/CertificateOfOriginTabs/MoreData/CertificateOfOriginMoreDetailsTabComponent', myLocation.viewContainerRef)
                                 .then(cmpRef => {
                                     this.MOREDATA = cmpRef.instance;
-                                    this.MOREDATA.InitTab(this.EntityPM, this.DecalarationData, this.IsNewOrEdit, this.IsDisplayOnly, this.IsChange);
+                                    this.MOREDATA.InitTab(this.EntityPM, this.DecalarationData, this.IsNewOrEdit, this.IsDisplayOnly);
                                 });
                         }
                         else {
