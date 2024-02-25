@@ -10,6 +10,14 @@
                 </div>
             </div>
         </td>
+        <td *ngIf="IsChange">
+            <div style="width:90%;text-align:center">
+                <div class="DisbleBox">
+                    <!-- {{'Customs.CertificateOfOrigin.O.IsChange'| TextCodeTranslationPipe}} -->
+                    בוצעו שינויים בתעודה - יש לשדר למכס
+                </div>
+            </div>
+        </td> 
         <td *ngIf="ErrorsList?.length > 0">
             <ValidationSummary class="StyleMess" [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
         </td>

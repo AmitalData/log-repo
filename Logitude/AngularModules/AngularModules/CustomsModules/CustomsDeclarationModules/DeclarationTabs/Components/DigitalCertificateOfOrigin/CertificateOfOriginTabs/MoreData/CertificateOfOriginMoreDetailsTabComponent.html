@@ -26,6 +26,12 @@
                     {{'Customs.CertificateOfOrigin.O.DisplayOnly'| TextCodeTranslationPipe}}
                 </div>
             </div> 
+            <div style="width:90%;text-align:center" *ngIf="IsChange">
+                <div class="DisbleBox">
+                    <!-- {{'Customs.CertificateOfOrigin.O.IsChange'| TextCodeTranslationPipe}} -->
+                    בוצעו שינויים בתעודה - יש לשדר למכס
+                </div>
+            </div> 
             <div *ngIf="ErrorsList?.length > 0">
                 <ValidationSummary class="StyleMess" [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
             </div>

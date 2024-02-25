@@ -41,7 +41,7 @@
   NewWizardControlName="&quot;&quot;"
   LocalDefaultText="&quot;תעודות מקור&quot;"
   DefaultText="&quot;Certificate Of Origin&quot;"
-  Code="&quot;c0d4&quot;"
+  Code="&quot;0e1a&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -6259,6 +6259,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;IsChange&quot;"
     ListPropertyPath="&quot;IsChange&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -6506,6 +6507,12 @@
       Code="&quot;Customs.CertificateOfOrigin.O.UpdatedItemInvoice&quot;"
       DefaultText="&quot;The certificate tax has been updated in the accounts in the statement, but has not yet been approved&quot;"
       LocalDefaultText="&quot;מס התעודה עודכן בחשבונות בהצהרה , אך טרם אושר&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;Customs.CertificateOfOrigin.O.IsChange&quot;"
+      DefaultText="&quot;Is Change&quot;"
+      LocalDefaultText="&quot;בוצעו שינויים בתעודה - יש לשדר למכס&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
