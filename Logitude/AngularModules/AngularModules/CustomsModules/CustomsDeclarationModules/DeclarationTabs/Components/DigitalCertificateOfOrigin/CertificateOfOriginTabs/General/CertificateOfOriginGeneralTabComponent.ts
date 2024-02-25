@@ -54,7 +54,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     public isReady: boolean;
     controlEnabled: boolean;
     IsDisplayOnly: boolean = false;
-    public IsChange: boolean = true;
+    IsChange: boolean = false;
     public ErrorsList: string[];
     public StatusCode:string = "4";
 
