@@ -68,7 +68,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.entityPM = EntityPM;
         this.IsNewOrEdit = IsNewOrEdit;
         this.IsDisplayOnly = IsDisplayOnly;
-        debugger
         this.IsChange = IsChange;
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
