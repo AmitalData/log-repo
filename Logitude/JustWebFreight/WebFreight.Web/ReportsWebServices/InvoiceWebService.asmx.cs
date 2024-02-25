@@ -59,6 +59,7 @@ namespace WebFreight.Web.ReportsWebServices
         private ARInvoiceStockQuery aRInvoiceStockQuery;
         private ARInvoiceStockLineRepository aRInvoiceStockLineRepository;
         private VatTypePercentageRepository vatTypePercentageRepository;
+        private const int ConfNoRightPartLen = 9;
         [WebMethod]
         public byte[] GetInvoiceData(string invoiceId, string documentTypeCopyId, int tenant)
         {
@@ -1791,7 +1792,22 @@ namespace WebFreight.Web.ReportsWebServices
 
                 invoicedataprovider.AmountDueInInvoiceCurrency = currentInvoice.AmountDue;
                 invoicedataprovider.AmountDueInLocalCurrency = currentInvoice.AmountDueInLocalCurrency;
+                invoicedataprovider.ConfirmationNumber = currentInvoice.ConfirmationNumber;
 
+                if (!String.IsNullOrEmpty(invoicedataprovider.ConfirmationNumber))
+                {
+                    int len = invoicedataprovider.ConfirmationNumber.Length;
+                    if (len > ConfNoRightPartLen)
+                    {
+                        invoicedataprovider.ConfirmationNumber_LeftPart = invoicedataprovider.ConfirmationNumber.Substring(0, len - 1 - ConfNoRightPartLen);
+                        invoicedataprovider.ConfirmationNumber_RightPart = invoicedataprovider.ConfirmationNumber.Substring(len - ConfNoRightPartLen);
+                    }
+                    else
+                    {
+                        invoicedataprovider.ConfirmationNumber_LeftPart = "";
+                        invoicedataprovider.ConfirmationNumber_RightPart = invoicedataprovider.ConfirmationNumber;
+                    }
+                }
                 invoicedataprovider.ShipmentSubTypeName = shipment == null ? null : shipment.ShipmentSubTypeName;
                 #endregion
 
@@ -3077,6 +3093,25 @@ namespace WebFreight.Web.ReportsWebServices
 
                 invoiceDataProvider.AmountDueInInvoiceCurrency = entityPOCO.AmountDue;
                 invoiceDataProvider.AmountDueInLocalCurrency = entityPOCO.AmountDueInLocalCurrency;
+
+                invoiceDataProvider.ConfirmationNumber = entityPOCO.ConfirmationNumber;
+
+                if (!String.IsNullOrEmpty(invoiceDataProvider.ConfirmationNumber))
+                {
+                    int len = invoiceDataProvider.ConfirmationNumber.Length;
+                    if (len > ConfNoRightPartLen)
+                    {
+                        invoiceDataProvider.ConfirmationNumber_LeftPart = invoiceDataProvider.ConfirmationNumber.Substring(0, len - 1 - ConfNoRightPartLen);
+                        invoiceDataProvider.ConfirmationNumber_RightPart = invoiceDataProvider.ConfirmationNumber.Substring(len - ConfNoRightPartLen);
+                    }
+                    else
+                    {
+                        invoiceDataProvider.ConfirmationNumber_LeftPart = "";
+                        invoiceDataProvider.ConfirmationNumber_RightPart = invoiceDataProvider.ConfirmationNumber;
+                    }
+                }
+
+
 
                 if (entityPOCO.ApprovedByUser != null)
                 {
