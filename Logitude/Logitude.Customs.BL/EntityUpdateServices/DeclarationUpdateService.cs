@@ -3839,7 +3839,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
         private bool AreEqualIgnoringSpaces(string str1, string str2)
         {
-            string cleanStr1 = str1.Replace(" ", "");
+            if (str1 == null && str2 == null)
+                return true;
+            if (str1 == null || str2 == null)
+                return false;
+            string cleanStr1 =  str1.Replace(" ", "");
             string cleanStr2 = str2.Replace(" ", "");
 
             return cleanStr1.Equals(cleanStr2);
