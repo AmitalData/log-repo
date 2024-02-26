@@ -36,7 +36,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Customs Document&quot;"
-  Code="&quot;8e27&quot;"
+  Code="&quot;d497&quot;"
   Name="&quot;Customs.CustomsDocument Query Group&quot;"
   GenerateDomainService="false"
   NoViewController="false"
@@ -2802,6 +2802,15 @@
       FeatureTextCodeCode="&quot;Customs.CustomsDocument.Features.General&quot;"
       FeatureDefaultText="&quot;General&quot;"
       IsPackagable="false"
+      IsOld="false"
+      IsCoreFeature="false"
+      IsBusinessUnitEnabled="false" />
+    <Feature
+      Code="&quot;ViewDocumentAsPdf&quot;"
+      FeatureTypeCode="&quot;ACT&quot;"
+      FeatureTextCodeCode="&quot;Customs.CustomsDocument.Features.ViewDocumentAsPdf&quot;"
+      FeatureDefaultText="&quot;להציג את המסמך כ-PDF&quot;"
+      IsPackagable="true"
       IsOld="false"
       IsCoreFeature="false"
       IsBusinessUnitEnabled="false" />

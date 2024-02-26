@@ -109,7 +109,7 @@ namespace Logitude.CustomsMessaging.RequestServices
             string requestDescription = "שליחת צרופה " + _CustomsDocumentPM.ExternalAttachmentId;
 
             //Get document details
-            req.Attachment = GetAttachment();
+            req.Attachment = customsDocumentQueryService.GetAttachment(_CustomsDocumentPM.DocumentId, _CustomsDocumentPM.Tenant, _CustomsDocumentPM);
 
             // If the document is required by customs- get connected entity details (By getting document pointer details)
             // If the document is required it will be linked to only one pointer
@@ -286,80 +286,6 @@ namespace Logitude.CustomsMessaging.RequestServices
             }
 
             return relatedEntity;
-        }
-
-        private Attachment GetAttachment()
-        {
-            byte[] byteArray = null;
-            var documentrepository = new DocumentRepository(_CustomsDocumentPM.Tenant);
-            var document = documentrepository.GetSingleDocument(_CustomsDocumentPM.Tenant,
-                //_CustomsDocumentPM.DocumentsFilingId
-                _CustomsDocumentPM.DocumentId
-                );
-            if (document == null)
-            {
-                throw new BusinessErrorException(" CustomsDocument.DocumentId is missing ");
-            }
-            if (!CustomsRequestsSheetDomainModelService<D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>.GetBlob(document.Tenant, document, out byteArray))
-            {
-               
-                throw new BusinessErrorException("Unable to get Bolb Of" + _CustomsDocumentPM.DocumentsFilingId);
-            }
-
-            if (!String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId))
-            {
-
-                var attachmentOnly = new Attachment();
-                attachmentOnly.externalAttachmentID = _CustomsDocumentPM.ExternalAttachmentId;
-                attachmentOnly.IsAttachment = "false";
-                return attachmentOnly;
-            }
-
-            var attachment = new Attachment();
-            attachment.AdditionalData = GetAttachmentAdditionalData(_CustomsDocumentPM.CustomsDocumentMetaDataValues);
-            attachment.attachmentID = "false";
-            attachment.content = byteArray;
-            attachment.externalAttachmentID = _CustomsDocumentPM.ExternalAttachmentId;
-            attachment.Remark = _CustomsDocumentPM.DocumentRemarks;
-            attachment.documentType = _CustomsDocumentPM.DocumentTypeCode;
-            var bolbName = document.GetBlobUrl("");
-            if (!String.IsNullOrWhiteSpace(bolbName))
-            {
-                bolbName = System.IO.Path.GetFileName(bolbName);
-            }
-            attachment.fileName = bolbName;
-            attachment.IsAttachment = "true";
-            return attachment;
-        }
-
-        private AttachmentAdditionalData[] GetAttachmentAdditionalData(List<CustomsDocumentMetaDataValuePM> customsDocumentMetaDataList)
-        {
-            var AdditionalDataList = new List<AttachmentAdditionalData>();
-            foreach (var customsDocumentMetaData in customsDocumentMetaDataList)
-            {
-                var AdditionalData = new AttachmentAdditionalData();
-                int fieldId;
-                if (int.TryParse(customsDocumentMetaData.MetaDataTypeCode, out fieldId))
-                {
-                    if (!String.IsNullOrWhiteSpace(customsDocumentMetaData.MetaDataValue))
-                    {
-                        AdditionalData.fieldID = fieldId;
-                        //if (customsDocumentMetaData.MetaDataTypeCode == "55")
-                        //{
-                        //    AdditionalData.fieldData = DateExt.GetToDay();
-                        //}
-                        //else
-                        //{
-                        //    AdditionalData.fieldData = customsDocumentMetaData.MetaDataValue;
-                        //}
-                        AdditionalData.fieldData = customsDocumentMetaData.MetaDataValue;
-                        AdditionalDataList.Add(AdditionalData);
-                    }
-                }
-
-            }
-
-            return AdditionalDataList.ToArray();
         }
 
         public static byte[] stringToBase64ByteArray(String input)

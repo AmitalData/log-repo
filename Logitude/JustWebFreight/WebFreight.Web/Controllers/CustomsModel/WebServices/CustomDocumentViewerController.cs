@@ -31,6 +31,29 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
     public class CustomDocumentViewerController : ApiController
     {
 
+        [HttpGet]
+        public HttpResponseMessage GetDocumentPageAsPdf(string documentId)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                int tenant = authToken.Tenant;
+                string loggedUserEmail = authToken.Email;
+                // todo: currently not implemented
+                // SecurityUtility.AuthenticationOnTenant(tenant);
+
+                ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
+                var customsDocumentQueryService = new CustomsDocumentQueryService(customContext);
+                var attachment = customsDocumentQueryService.GetAttachment(documentId, tenant);
+                return Request.CreateResponse(HttpStatusCode.OK, attachment);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
         public HttpResponseMessage GetDocumentPage(string documentId, int currPage, bool isConnectedToUni, int? angle=0)
         {
             string TiffPageLines;

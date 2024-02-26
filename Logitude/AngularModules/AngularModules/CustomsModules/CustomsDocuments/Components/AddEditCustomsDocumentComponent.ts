@@ -27,6 +27,8 @@ import { ConnectedToItem } from './ConnectedToItem';
 import { ICustomsDocumentsController } from './ICustomsDocumentsController';
 import { CustomDocumentNewVersionService } from '../services/CustomDocumentNewVersion.service';
 import { CustomsDocumentsTicketsExtendedService } from 'Customs/Services/ExtendedPMs/CustomsDocumentsTicketsExtendedService';
+import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
+import { CustomsSettingExtendedListService } from 'Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 
 @Component({
 
@@ -124,6 +126,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     LayoutDirection: string = 'rtl';
     SecondChildVisibility: boolean = true;
     private CurrentSession = SessionLocator.SelectedSession;
+    showPdfDocument: boolean = false;
 
     get Remarks() {
         if (this.CustomsDocumentsTicket) {
@@ -173,6 +176,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     MetaDataViewModels: MetaDataViewModel[];
     private _CustomDocumentViewerService: CustomDocumentViewerService = new CustomDocumentViewerService();
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
+    private customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     IsActionButtonsEnabled: boolean;
     ClosingData: any;
     WindowArgs: any;
@@ -181,6 +185,14 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     //***********************************************************************//
     constructor() {
         super();
+        if (FeatureLocator.HasFeaturePermession("Customs.CustomsDocument", "ViewDocumentAsPdf")) {
+            this.customsSettingExtendedListService.GetSettingByTenant().subscribe((response: ServiceResponse) => {
+                this.showPdfDocument = response?.Result?.CompanyType == "B";
+            });
+        }
+        else {
+            this.showPdfDocument = false;
+        }
     }
 
     public isRequireDocumentTicket: string = null;
@@ -286,33 +298,61 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
             this.LoadDocumentPage();
         });
     }
-    //#region Tiff Document Loading
-    base64Image: string;
+    //#region Document Loading
+    base64Document: string;
     IsConnectedToUniFreight: boolean = false;
 
     LoadDocumentPage() {
         if (this.CustomsDocument) {
+            if (this.showPdfDocument) {
+                this.LoadPdfDocument();
+            }
+            else {
+                this.LoadTiffDocument();
+            }
+        }
+    }
 
-            this.CurrentSession.StartBusyIndicatorLoading();
-            this._CustomDocumentViewerService.GetDocumentPage(this.CustomsDocument.DocumentId, 0, this.IsConnectedToUniFreight).subscribe((myResponse: ServiceResponse) => {
-                var result = myResponse.Result;
-                if (result) {
+    LoadTiffDocument() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this._CustomDocumentViewerService.GetDocumentPage(this.CustomsDocument.DocumentId, 0, this.IsConnectedToUniFreight).subscribe((myResponse: ServiceResponse) => {
+            var result = myResponse.Result;
+            if (result) {
 
-                    console.log("[Response] GetDocumentPage", result);
+                console.log("[Response] GetDocumentPage", result);
 
-                    if (!AppTool.IsNullOrEmpty(result.Page)) {
-                        this.base64Image = "data:image/png;base64," + result.Page;
-                    } else {
-                        this.base64Image = null;
-                    }
-
+                if (!AppTool.IsNullOrEmpty(result.Page)) {
+                    this.base64Document = "data:image/png;base64," + result.Page;
                 } else {
-                    this.base64Image = null;
+                    this.base64Document = null;
                 }
 
-                this.CurrentSession.StopBusyIndicator();
-            });
-        }
+            } else {
+                this.base64Document = null;
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
+    }
+
+    LoadPdfDocument() {
+        this.CurrentSession.StartBusyIndicatorLoading();
+        this._CustomDocumentViewerService.GetDocumentPageAsPdf(this.CustomsDocument.DocumentId).subscribe((myResponse: ServiceResponse) => {
+            var result = myResponse.Result;
+            if (result) {
+
+                if (!AppTool.IsNullOrEmpty(result.contentField)) {
+                    this.base64Document = "data:application/pdf;base64," + result.contentField;
+                } else {
+                    this.base64Document = null;
+                }
+
+            } else {
+                this.base64Document = null;
+            }
+
+            this.CurrentSession.StopBusyIndicator();
+        });
     }
     //#endregion
 

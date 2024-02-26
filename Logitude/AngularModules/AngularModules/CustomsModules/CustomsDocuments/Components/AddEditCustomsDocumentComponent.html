@@ -498,10 +498,14 @@
                                 {{ 'Customs.Declaration.O.DocumentPreview' |TextCodeTranslationPipe }}
                             </div>
 
-                            <!-- [ngStyle]="{'background-image': 'url(' + base64Image + ')'}" -->
+                            <!-- [ngStyle]="{'background-image': 'url(' + base64Document + ')'}" -->
                             <div class="BodyBorder" style="text-align: center;">
-                                <img style="max-width: 100%;max-height: 100%;"
-                                     [attr.src]="base64Image"
+                                <!-- pdf document -->
+                                <pdf-viewer *ngIf="showPdfDocument" [src]="base64Document" [page]="0" [show-all]="false" [original-size]="false" style="height: 100%;"></pdf-viewer>
+
+                                <!-- tiff document -->
+                                <img *ngIf="!showPdfDocument" style="max-width: 100%;max-height: 100%;"
+                                     [attr.src]="base64Document"
                                      draggable="false" />
                             </div>
 
