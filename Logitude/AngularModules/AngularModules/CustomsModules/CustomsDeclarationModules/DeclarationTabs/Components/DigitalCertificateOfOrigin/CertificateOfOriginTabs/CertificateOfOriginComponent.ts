@@ -89,7 +89,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.isAllowChange = args.isAllowChange;
 
         this.isListenToChangeInCertificate(args.logWindow);
-       
+
         this.InitMoreDataScreenValues();
         this.BuildTabs();
         this.RunComponent();
@@ -245,13 +245,13 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
     // Init data from MOREDATA page:
     InitMoreDataScreenValues() {
-         this.EntityPM.IsConsigneeForPrint = true;
-         this.EntityPM.IsDeclaredByManufacture = true;
- 
-        if(AppTool.IsNullOrEmpty(this.EntityPM.CityOfDeclaration)){
+        this.EntityPM.IsConsigneeForPrint = true;
+        this.EntityPM.IsDeclaredByManufacture = true;
+
+        if (AppTool.IsNullOrEmpty(this.EntityPM.CityOfDeclaration)) {
             this.certificateOfOriginWebService.GetCityOfDeclarationByImporterID(this.DecalarationData.ImporterId, this.EntityPM.Tenant).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
-                if (!myResult.HasError && myResult.Result) {               
+                if (!myResult.HasError && myResult.Result) {
                     this.EntityPM.CityOfDeclaration = myResponse.Result;
                 }
             });
@@ -268,12 +268,11 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             // }
             return;
         }
-        
+
         this.EntityPM.IsUnitedInvoices ? this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
-        this.EntityPM.IsChange = true; //#103474
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
-       
+
         if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsNew) {
             this.certificateOfOriginPMService.insert(this.EntityPM).subscribe((response: any) => {
                 if (!response.HasError) {
@@ -382,6 +381,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 this.ValidationErrorsList.push(err);
             });
 
+        this.UpdateIsChange(true);//#103474
 
         this.certificateOfOriginWebService.PostCertificateOfOriginRequest(requestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
@@ -458,15 +458,31 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 if (this.EntityPM?.ErrXml && !AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)) {
                     this.selectedTabCode = "ANSWERTOCERTIFICATE"
                     this.SelectionChanged();
+                    if (!this.EntityPM.IsChange)
+                        this.UpdateIsChange(true);//#103474
                 }
-                else{
-                    this.EntityPM.IsChange = false; //#103474- if בם
-                }
+                else
+                    this.UpdateIsChange(false);//#103474
             }
         });
 
     }
 
+    UpdateIsChange(isChange: boolean) {//#103474
+        this.EntityPM.IsChange = isChange;
+
+        this.certificateOfOriginWebService.update(this.EntityPM).subscribe((response: any) => {
+            if (!response.HasError) {
+                var result = response.Result;
+                this.EntityPM = result;
+                this.GENERAL.InitilizeListsFromCertificateOfOrigin(this.EntityPM);
+                this.CurrentSession.CurrentEditComponent.SaveChanges();
+                this.CurrentSession.StopBusyIndicator()
+            }
+            else
+                this.CurrentSession.StopBusyIndicator();
+        });
+    }
     CancelButtonClicked() {
         // this.EntityPM.RejectChanges();
         this.CurrentSession.CloseCurrentWindow();
