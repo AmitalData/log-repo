@@ -527,7 +527,7 @@
     QueryGroupCode="&quot;c8e3&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Customs.CertificateOfOriginStatusCodeEnum&quot;"
-    QuerySection="&quot;Customs.CertificateOfOriginStatusEnum&quot;"
+    QuerySection="&quot;Customs.CertificateOfOriginStatusCodeEnum&quot;"
     SystemLevel="true"
     IsAddNewEntity="false"
     IsPackagable="true"
