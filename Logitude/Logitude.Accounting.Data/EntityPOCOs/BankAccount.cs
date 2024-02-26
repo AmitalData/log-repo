@@ -96,11 +96,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string TotalOpenExternalTransactions { get; set; }
         [Column("TotalOpenPagesLines")]
 	    public string TotalOpenPagesLines { get; set; }
-        [ForeignKey("ChequeCounterSerial")]
         [Column("ChequeCounterSeriesID")]
-	    public string ChequeCounterSeriesID { get; set; }
-	      
-        public virtual ChequeCounterSerial ChequeCounterSerial { get; set; }
+	    public int? ChequeCounterSeriesID { get; set; }
     }
 }
 	 

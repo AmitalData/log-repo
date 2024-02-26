@@ -198,8 +198,7 @@
   </Column>
   <Column
     Name="ChequeCounterSeriesID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
@@ -236,11 +235,6 @@
   <Relation
     ForeignKeyColumn="CurrencyId"
     ReferencedTable="Currencies"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ChequeCounterSeriesID"
-    ReferencedTable="ChequeCounterSerials"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

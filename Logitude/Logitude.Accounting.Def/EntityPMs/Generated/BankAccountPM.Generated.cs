@@ -1009,12 +1009,12 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string chequeCounterSeriesID ;
+	  private int? chequeCounterSeriesID ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ChequeCounterSeriesID  
+       public int? ChequeCounterSeriesID  
 	   {
 	    
 	     get
@@ -1025,7 +1025,7 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 {
 		   if(chequeCounterSeriesID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChequeCounterSeriesID",OldValue=chequeCounterSeriesID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChequeCounterSeriesID",OldValue=chequeCounterSeriesID,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   chequeCounterSeriesID=value;
 		   }

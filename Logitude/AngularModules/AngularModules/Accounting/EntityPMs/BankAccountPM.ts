@@ -240,9 +240,9 @@ export class BankAccountPM {
     public set TotalOpenPagesLines(newValue: string) { if (this.totalOpenPagesLines != newValue) { this.totalOpenPagesLines = newValue; this.MarkAsDirty("TotalOpenPagesLines"); } }
        
 	 
-    private chequeCounterSeriesID: string;
+    private chequeCounterSeriesID: number;
     public get ChequeCounterSeriesID() { return this.chequeCounterSeriesID; }
-    public set ChequeCounterSeriesID(newValue: string) { if (this.chequeCounterSeriesID != newValue) { this.chequeCounterSeriesID = newValue; this.MarkAsDirty("ChequeCounterSeriesID"); } }
+    public set ChequeCounterSeriesID(newValue: number) { if (this.chequeCounterSeriesID != newValue) { this.chequeCounterSeriesID = newValue; this.MarkAsDirty("ChequeCounterSeriesID"); } }
        
 	 
      
