@@ -37,9 +37,9 @@ export class ChequeCounterSerialPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private bankId: string;
-    public get BankId() { return this.bankId; }
-    public set BankId(newValue: string) { if (this.bankId != newValue) { this.bankId = newValue; this.MarkAsDirty("BankId"); } }
+    private bankAccountId: string;
+    public get BankAccountId() { return this.bankAccountId; }
+    public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
        
 	 
     private seriesId: number;

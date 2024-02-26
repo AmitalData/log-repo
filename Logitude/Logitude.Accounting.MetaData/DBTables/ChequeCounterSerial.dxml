@@ -19,7 +19,8 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="BankId"
+    Name="BankAccountId"
+    OldNames="BankId"
     Type="varchar"
     Size="15">
     <Constraints
@@ -44,8 +45,8 @@
       Nullable="false" />
   </Column>
   <Relation
-    ForeignKeyColumn="BankId"
-    ReferencedTable="BankCodes"
+    ForeignKeyColumn="BankAccountId"
+    ReferencedTable="BankAccounts"
     ReferencedColumn="Id"
     ReferencedTableSchema="dbo" />
 </Table>

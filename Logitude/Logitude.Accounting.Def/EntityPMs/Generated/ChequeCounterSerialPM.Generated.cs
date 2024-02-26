@@ -66,25 +66,25 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string bankId ;
+	  private string bankAccountId ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string BankId  
+       public string BankAccountId  
 	   {
 	    
 	     get
 		{
-		   return bankId;
+		   return bankAccountId;
 		 }
 		 set
 		 {
-		   if(bankId != value)
+		   if(bankAccountId != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankId",OldValue=bankId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankAccountId",OldValue=bankAccountId,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
-		   bankId=value;
+		   bankAccountId=value;
 		   }
 			
 		 }

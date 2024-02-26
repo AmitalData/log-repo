@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ChequeCounterSerialUpdateClass
    {  		
-		public const string HashString = "ee86a5f8adea77f1110adbe593b97761";
+		public const string HashString = "8509828c14d582158e60131bd08dd4fb";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -131,7 +131,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סדרת שיקים",
 			      				    DefaultText =  "Cheque Series",
-			      				    Code =  "c53c",
+			      				    Code =  "1b5d",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -175,6 +175,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Id",
 					  						ListPropertyPath =  "Id",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -236,6 +237,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Tenant",
 					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -276,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
 			   {
 					 
-					 						FieldName =  "BankId",
+					 						FieldName =  "BankAccountId",
 					  						ObjectTableName =  "ChequeCounterSerial",
 					  						FieldsDataType =  "Text",
 					  						MinLength =  0,
@@ -285,18 +287,20 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
 					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
+					  						CanFilter =  true,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "BankId",
-					  						ListPropertyPath =  "BankId",
+					  						PMPropertyPath =  "BankAccountId",
+					  						ListPropertyPath =  "BankAccountId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -313,15 +317,15 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInDocumentReferences =  false,
 					  						InActive =  false,
 					  						DisplayLongName =  false,
-					  						FullFieldLable =  "BankId",
-					  						DefaultText =  "Bank Id",
-					  						FullLocalDefaultText =  "בנק",
-					  						ListFieldLable =  "BankIdListLable",
-					  						ListLableDefaultText =  "Bank Id",
-					  						ListLocalDefaultText =  "בנק",
+					  						FullFieldLable =  "BankAccountId",
+					  						DefaultText =  "Bank Account Id",
+					  						FullLocalDefaultText =  "חשבון בנק",
+					  						ListFieldLable =  "BankAccountIdListLable",
+					  						ListLableDefaultText =  "Bank Account Id",
+					  						ListLocalDefaultText =  "חשבון בנק",
 					  						IsForeignKey =  true,
-					  						ForeignEntity =  "BankCode",
-					  						NavigationPropertyName =  "BankCode",
+					  						ForeignEntity =  "BankAccount",
+					  						NavigationPropertyName =  "BankAccount",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -357,11 +361,13 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
+					  						Operator =  "Equals",
 					  						MultiLine =  false,
 					  						IsTimeFrameFilter =  false,
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "SeriesId",
 					  						ListPropertyPath =  "SeriesId",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -425,6 +431,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ChequeCounterBegin",
 					  						ListPropertyPath =  "ChequeCounterBegin",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -488,6 +495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ChequeCounterEnd",
 					  						ListPropertyPath =  "ChequeCounterEnd",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -533,7 +541,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable ChequeCounterSerialObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChequeCounterSerial" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> ChequeCounterSerialObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "ChequeCounterSerial").ToList();
+		       
+	      
+
+	         Screen ChequeCounterSerialChequeCounterSerialHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ChequeCounterSerial.HeaderScreen", Name = "ChequeCounterSerialHeaderScreen", ObjectTableId = ChequeCounterSerialObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    ChequeCounterSerialObjectTable.HeaderScreenId = ChequeCounterSerialChequeCounterSerialHeaderScreenScreen0.Id;
+		    ChequeCounterSerialObjectTable.HeaderScreenCode = ChequeCounterSerialChequeCounterSerialHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 
