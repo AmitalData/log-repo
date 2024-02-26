@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class ChargesTypeUpdateClass
    {  		
-		public const string HashString = "c9c52789d6c00629c8fbcf56b9d302b6";
+		public const string HashString = "6b0a58cbfb19356ed93329badf23c370";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2245,7 +2245,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ListLableDefaultText =  "Receivable",
 					  						ListLocalDefaultText =  "לשימוש בחשבוניות לקוח",
 					  						ShortFieldLable =  "IsReceivable",
-					  						ShortFieldLableDefaultText =  "Receivable",
+					  						ShortFieldLableDefaultText =  "לשימוש בחשבוניות לקוח",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
@@ -2316,7 +2316,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						ListLableDefaultText =  "Payable",
 					  						ListLocalDefaultText =  "לשימוש בחשבוניות ספק",
 					  						ShortFieldLable =  "IsPayable",
-					  						ShortFieldLableDefaultText =  "Payable",
+					  						ShortFieldLableDefaultText =  "לשימוש בחשבוניות ספק",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
