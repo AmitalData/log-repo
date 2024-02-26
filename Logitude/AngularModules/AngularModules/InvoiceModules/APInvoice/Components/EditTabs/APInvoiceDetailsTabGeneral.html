@@ -258,12 +258,10 @@
                         <td>
                             <table>
                                 <tr>
-                                    <td  float-start style="width: 57px; float: right;" >
-                                        <IconButton
-                                        id="{{'AddInvoiceLine' | IdGeneratorAsyncPipe | async}}"
-                                        [disabled]="!IsScreenEnabled" 
-                                        [Name]="'Add'" (click)="AddButtonClicked()"></IconButton>
+                                    <td style="width: 1px;">
+                                        <button id="{{'AddInvoiceLine' | IdGeneratorAsyncPipe | async}}" [disabled]="!IsScreenEnabled" class="Button" (click)="AddButtonClicked()">{{'APInvoice.B.AddLine' | TextCodeTranslationPipe}}</button>
                                     </td>
+
 
                                                 <td>
                                                     <div></div>
