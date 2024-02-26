@@ -149,7 +149,12 @@
                             <tr>
                                 <td class="blue">{{'Accounting.General.O.Details' | TextCodeTranslationPipe}}</td>
                                 <td></td>
-                                <td></td>
+                                <td>
+                                    <div class="MediaFill">
+                                        <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0" [ItemsSource]="EntityWarningsList" [HideHeader]="true"></WarningSummary>
+                                    </div>
+
+                                </td>
                                 <td></td>
                                 <td class="permission-td">
                                     <div>
@@ -167,16 +172,10 @@
                                 <td></td>
                                 <td></td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="MediaFill">
-                                        <WarningSummary *ngIf="EntityWarningsList != null && EntityWarningsList.length > 0" [ItemsSource]="EntityWarningsList" [HideHeader]="true"></WarningSummary>
-                                    </div>
 
-                                </td>
-                            </tr>
                         </table>
                     </td>
+
                 </tr>
 
           <!-- header -->
