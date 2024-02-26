@@ -439,9 +439,10 @@
                                             </tr>
                                             <tr style="height:24px;">
                                                 <td>
-                                                    <div [class.Disable]="DimApproveButton == true || DimDenyButton == true"
+                                                    <div [class.Disable]="DimApproveButton == true || DimDenyButton == true" 
                                                         style="float:right;margin-right: 5px;direction: rtl;">
-                                                        <LogCheckBox [IsDisabled]="ShowFinalMessage"
+                                                        <LogCheckBox [class.Disable]="ShowFinalMessage" 
+                                                            [IsDisabled]="ShowFinalMessage"
                                                             [Checked]="IsAgreed"
                                                             (ValueChanged)="IsAggreeChicked($event)"
                                                             [ObjectFieldName]="'IsAggree'" [DataContext]="DataContext"
