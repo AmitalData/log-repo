@@ -66,29 +66,6 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
-	  private string bankAccountId ;
-	  	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string BankAccountId  
-	   {
-	    
-	     get
-		{
-		   return bankAccountId;
-		 }
-		 set
-		 {
-		   if(bankAccountId != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankAccountId",OldValue=bankAccountId,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   bankAccountId=value;
-		   }
-			
-		 }
-	   }
 	  private int seriesId ;
 	  	  
        
@@ -154,6 +131,29 @@ namespace Logitude.Accounting.Def.EntityPMs
 		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChequeCounterEnd",OldValue=chequeCounterEnd,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   chequeCounterEnd=value;
+		   }
+			
+		 }
+	   }
+	  private string bankAccountId ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string BankAccountId  
+	   {
+	    
+	     get
+		{
+		   return bankAccountId;
+		 }
+		 set
+		 {
+		   if(bankAccountId != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="BankAccountId",OldValue=bankAccountId,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   bankAccountId=value;
 		   }
 			
 		 }

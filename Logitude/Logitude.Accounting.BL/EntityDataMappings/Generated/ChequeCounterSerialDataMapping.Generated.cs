@@ -24,10 +24,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         BankAccountId, 
 	         SeriesId, 
 	         ChequeCounterBegin, 
-	         ChequeCounterEnd,
+	         ChequeCounterEnd, 
+	         BankAccountId,
 	      }
 
 
@@ -36,10 +36,10 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 		     None,  
 	         Id, 
 	         Tenant, 
-	         BankAccountId, 
 	         SeriesId, 
 	         ChequeCounterBegin, 
-	         ChequeCounterEnd,
+	         ChequeCounterEnd, 
+	         BankAccountId,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -51,11 +51,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
 				entityPOCO.Tenant = entityPM.Tenant;
-			}
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BankAccountId))
-            {
-				entityPOCO.BankAccountId = entityPM.BankAccountId;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SeriesId))
@@ -72,6 +67,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
             {
 				entityPOCO.ChequeCounterEnd = entityPM.ChequeCounterEnd;
 			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BankAccountId))
+            {
+				entityPOCO.BankAccountId = entityPM.BankAccountId;
+			}
 			}
 
 		public void POCOToPM(ChequeCounterSerialPM entityPM, ChequeCounterSerial entityPOCO)
@@ -85,11 +85,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
             {
 					entityPM.Tenant = entityPOCO.Tenant;
-            }
-
-			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BankAccountId))
-            {
-					entityPM.BankAccountId = entityPOCO.BankAccountId;
             }
 
 			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SeriesId))
@@ -107,6 +102,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 					entityPM.ChequeCounterEnd = entityPOCO.ChequeCounterEnd;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.BankAccountId))
+            {
+					entityPM.BankAccountId = entityPOCO.BankAccountId;
+            }
+
 		}
 
 		public void PMToOldPM(ChequeCounterSerialPM entityPM, ChequeCounterSerialPM oldEntityPM)
@@ -116,11 +116,6 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
-            }
-			
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BankAccountId))
-            {
-                oldEntityPM.BankAccountId = entityPM.BankAccountId;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SeriesId))
@@ -136,6 +131,11 @@ namespace Logitude.Accounting.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.ChequeCounterEnd))
             {
                 oldEntityPM.ChequeCounterEnd = entityPM.ChequeCounterEnd;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.BankAccountId))
+            {
+                oldEntityPM.BankAccountId = entityPM.BankAccountId;
             }
 			
 		}

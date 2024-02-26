@@ -29,7 +29,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					
 					                          Tenant = a.Tenant,
 					
-					                          BankId = a.BankId,
+					                          BankAccountId = a.BankAccountId,
 					
 					                          SeriesId = a.SeriesId,
 					

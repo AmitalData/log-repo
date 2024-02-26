@@ -37,11 +37,6 @@ export class ChequeCounterSerialPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
-    private bankAccountId: string;
-    public get BankAccountId() { return this.bankAccountId; }
-    public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
-       
-	 
     private seriesId: number;
     public get SeriesId() { return this.seriesId; }
     public set SeriesId(newValue: number) { if (this.seriesId != newValue) { this.seriesId = newValue; this.MarkAsDirty("SeriesId"); } }
@@ -55,6 +50,11 @@ export class ChequeCounterSerialPM {
     private chequeCounterEnd: number;
     public get ChequeCounterEnd() { return this.chequeCounterEnd; }
     public set ChequeCounterEnd(newValue: number) { if (this.chequeCounterEnd != newValue) { this.chequeCounterEnd = newValue; this.MarkAsDirty("ChequeCounterEnd"); } }
+       
+	 
+    private bankAccountId: string;
+    public get BankAccountId() { return this.bankAccountId; }
+    public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
        
 	 
 
