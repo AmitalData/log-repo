@@ -651,9 +651,9 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         if(hsmToken.toString().length != 36 )
         
         {
-            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, TextCodeTranslator.Translate("FullAccountingSetting.O.HSMTokenLong"));
         } else if(!this.ValidateFormatHSMToken(hsmToken)) {
-            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token should be format like 8X-4X-4X-4X-12X");
+            this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false,TextCodeTranslator.Translate("FullAccountingSetting.O.HSMTokenFormat"));
 
         } else {
             this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, true, "");
@@ -683,7 +683,7 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         
         if(hsmAddress != null) {
         if(hsmAddress.toString().length >= 50) {
-            this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSM Address must be 50 characters long");
+            this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, TextCodeTranslator.Translate("FullAccountingSetting.O.HSMAddressLong"));
         } else {
             this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, true, "");
         }
@@ -729,14 +729,14 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         if(this.HSMtoken != null ){
 
             if(this.HSMtoken.toString().length != 36 ){
-                this.ValidationErrorsList.push("HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
-                this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X");
+                this.ValidationErrorsList.push( TextCodeTranslator.Translate("FullAccountingSetting.O.HSMTokenLong"));
+                this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, TextCodeTranslator.Translate("FullAccountingSetting.O.HSMTokenLong"));
     
             }
     
             if(!this.ValidateFormatHSMToken(this.HSMtoken)) {
-                this.ValidationErrorsList.push("HSM Token should be format like 8X-4X-4X-4X-12X");
-                this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, "HSM Token should be format like 8X-4X-4X-4X-12X");
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("FullAccountingSetting.O.HSMTokenFormat"));
+                this.UIProperties.SetValidity("HSMtoken", this.ObjectTableName, false, TextCodeTranslator.Translate("FullAccountingSetting.O.HSMTokenFormat"));
     
             }
 
@@ -746,8 +746,8 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
 
         if(this.HSMaddress != null) {
             if(this.HSMaddress.toString().length >= 50) {
-                this.ValidationErrorsList.push("HSM Address must be 50 characters long");
-                this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, "HSM Address must be 50 characters long");
+                this.ValidationErrorsList.push(TextCodeTranslator.Translate("FullAccountingSetting.O.HSMAddressLong"));
+                this.UIProperties.SetValidity("HSMaddress", this.ObjectTableName, false, TextCodeTranslator.Translate("FullAccountingSetting.O.HSMAddressLong"));
             }
         }
 

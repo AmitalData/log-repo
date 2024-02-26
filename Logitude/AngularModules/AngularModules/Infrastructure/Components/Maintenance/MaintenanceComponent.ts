@@ -1220,7 +1220,7 @@ export class MaintenanceComponent {
                     this._entityResourceService.getEntityResourceByTableName("FullAccountingSetting", 0).subscribe((response:any) => {
                         var logitudeWindow = new LogitudeWindow();
                         logitudeWindow.Width = 900;
-                        logitudeWindow.Height = 550;
+                        logitudeWindow.Height = 600;
                         logitudeWindow.Title = TextCodeTranslator.Translate("Accounting.O.FullAccountingSettings"); // "Full Accounting Settings";
                         logitudeWindow.Show('./Accounting/Components/Maintenance/FullAccountingSettingsComponent');
                     });
