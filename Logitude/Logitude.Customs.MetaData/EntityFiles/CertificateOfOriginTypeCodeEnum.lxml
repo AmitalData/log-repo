@@ -603,7 +603,7 @@
     QueryGroupCode="&quot;c8e3&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;Customs.CertificateOfOriginTypeCodeEnum&quot;"
-    QuerySection="&quot;Customs.CertificateOfOriginTypeEnum&quot;"
+    QuerySection="&quot;Customs.CertificateOfOriginTypeCodeEnum&quot;"
     SystemLevel="true"
     IsAddNewEntity="false"
     IsPackagable="true"
