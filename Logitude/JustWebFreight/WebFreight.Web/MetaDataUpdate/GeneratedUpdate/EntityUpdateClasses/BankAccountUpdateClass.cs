@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class BankAccountUpdateClass
    {  		
-		public const string HashString = "ed8d93e1a9c6b11dfd1bcfa14966fa95";
+		public const string HashString = "860c76a77ce85686609c517b2a823715";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2928,8 +2928,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "ChequeCounterSeriesID",
 					  						ObjectTableName =  "BankAccount",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "ChequeCounterSerial",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -2940,7 +2939,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
 					  						SystemMaxLength =  15,
-					  						DisplayInList =  false,
+					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
 					  						MultiLine =  false,
@@ -2971,9 +2970,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						ListFieldLable =  "ChequeCounterSeriesIDListLable",
 					  						ListLableDefaultText =  "Cheque Counter Series Id",
 					  						ListLocalDefaultText =  "מספר סדרת המחאות",
-					  						IsForeignKey =  true,
-					  						ForeignEntity =  "ChequeCounterSerial",
-					  						NavigationPropertyName =  "ChequeCounterSerial",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -3014,6 +3011,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ChequeCounterSerials",
 					  						ListPropertyPath =  "ChequeCounterSerials",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

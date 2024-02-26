@@ -93,7 +93,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public string TotalOpenPagesLines  { get; set; }
        [DataMember]
-       public string ChequeCounterSeriesID  { get; set; }
+       public int? ChequeCounterSeriesID  { get; set; }
    }
 
 }
