@@ -24,9 +24,6 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 		IQueryable<ChequeCounterSerialList> query = (from a in iQueryable
                                             select new ChequeCounterSerialList()
 											{
-                     
-					                          Id = a.Id,
-					
 					                          Tenant = a.Tenant,
 					
 					                          BankAccountId = a.BankAccountId,
