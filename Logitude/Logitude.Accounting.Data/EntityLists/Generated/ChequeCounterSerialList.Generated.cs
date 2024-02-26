@@ -19,7 +19,7 @@ namespace Logitude.Accounting.Data.EntityLists
        [DataMember]
        public int Tenant  { get; set; }
        [DataMember]
-       public string BankId  { get; set; }
+       public string BankAccountId  { get; set; }
        [DataMember]
        public int SeriesId  { get; set; }
        [DataMember]

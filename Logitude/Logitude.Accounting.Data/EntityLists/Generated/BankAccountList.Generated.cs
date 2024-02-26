@@ -92,6 +92,8 @@ namespace Logitude.Accounting.Data.EntityLists
        public string TotalOpenExternalTransactions  { get; set; }
        [DataMember]
        public string TotalOpenPagesLines  { get; set; }
+       [DataMember]
+       public string ChequeCounterSeriesID  { get; set; }
    }
 
 }

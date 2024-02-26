@@ -47,6 +47,7 @@ export class BankAccountList {
 	PrintingAccountNumber: string;
 	TotalOpenExternalTransactions: string;
 	TotalOpenPagesLines: string;
+	ChequeCounterSeriesID: string;
 	
 }
  

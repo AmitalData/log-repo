@@ -1009,7 +1009,65 @@ namespace Logitude.Accounting.Def.EntityPMs
 			
 		 }
 	   }
+	  private string chequeCounterSeriesID ;
+	  	  
+       
+	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string ChequeCounterSeriesID  
+	   {
+	    
+	     get
+		{
+		   return chequeCounterSeriesID;
+		 }
+		 set
+		 {
+		   if(chequeCounterSeriesID != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ChequeCounterSeriesID",OldValue=chequeCounterSeriesID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   chequeCounterSeriesID=value;
+		   }
+			
+		 }
+	   }
+
+	   private List<ChequeCounterSerialPM> chequeCounterSerials;
+	    
+       [Composition]
+ 
+		     
+	   [Include]
+	   [Association("ChequeCounterSerials", "Id","BankAccountId")]
+	   [DataMember]
+	   public virtual List<ChequeCounterSerialPM> ChequeCounterSerials  
+	   {
+	        get
+             {
+                 if (chequeCounterSerials == null)
+                 {
+                     chequeCounterSerials = new List<ChequeCounterSerialPM>();
+                 }
+                 return chequeCounterSerials;
+              }
+             set { chequeCounterSerials = value; }
 	    }
+		   
+	   private List<ChequeCounterSerialPM>  deletedChequeCounterSerials;
+	   public virtual List<ChequeCounterSerialPM> DeletedChequeCounterSerials  
+	   {
+	        get
+             {
+                 if ( deletedChequeCounterSerials == null)
+                 {
+                      deletedChequeCounterSerials = new List<ChequeCounterSerialPM>();
+                 }
+                 return  deletedChequeCounterSerials;
+              }
+             set {  deletedChequeCounterSerials = value; }
+	    }
+	  	    }
    
 }
 	 

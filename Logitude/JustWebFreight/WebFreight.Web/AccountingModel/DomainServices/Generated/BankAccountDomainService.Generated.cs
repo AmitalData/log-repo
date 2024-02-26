@@ -118,7 +118,14 @@ if ( MyContext == null)
             }; 
             BankAccountUpdateService service = new BankAccountUpdateService(MyContext,new Dictionary<string,IContext>(), entityPM.Tenant);
             entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
-					    service.Update(entityPM,true); 
+			
+            List<ChequeCounterSerialPM> ChequeCounterSerialsChangeSet = ChangeSet.GetAssociatedChanges(entityPM, d => d.ChequeCounterSerials).Cast<ChequeCounterSerialPM>().ToList();
+            foreach (ChequeCounterSerialPM ChequeCounterSerial in ChequeCounterSerialsChangeSet)
+            {  
+                entityPM.ChequeCounterSerials.Where(d => d.Id == ChequeCounterSerial.Id).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+            }
+        
+				    service.Update(entityPM,true); 
 
 			ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
             ObjectTable objectTable = objectTabelRepository.GetObjectTableByName("BankAccount", 0, true);
@@ -141,7 +148,8 @@ if ( MyContext == null)
             }; 
             BankAccountUpdateService service = new BankAccountUpdateService(MyContext,new Dictionary<string,IContext>(), entityPM.Tenant);
             entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Update;
-						 
+			
+			SetChequeCounterSerialChangeSet(entityPM); 			 
 		    service.Update(entityPM,true);
 
 			ObjectTableRepository objectTabelRepository = new ObjectTableRepository(entityPM.Tenant);
@@ -156,7 +164,52 @@ if ( MyContext == null)
         } 
 
 		
-			 		
+			 
+		private void SetChequeCounterSerialChangeSet(BankAccountPM entityPM)
+        {
+            List<ChequeCounterSerialPM> ChequeCounterSerialsChangeSet = ChangeSet.GetAssociatedChanges(entityPM, d => d.ChequeCounterSerials).Cast<ChequeCounterSerialPM>().ToList();
+
+            foreach (ChequeCounterSerialPM itemPM in ChequeCounterSerialsChangeSet)
+            {
+                switch (ChangeSet.GetChangeOperation(itemPM))
+                {
+                    case ChangeOperation.Insert:
+                        { 
+                            ChequeCounterSerialPM currentItemPM = entityPM.ChequeCounterSerials.Where(d => d.Id == itemPM.Id).FirstOrDefault();
+                            currentItemPM.ChangeSetOp = ChangeSetOperation.Insert;                            
+                            break;
+                        }
+
+                    case ChangeOperation.Update:
+                        {
+                           ChequeCounterSerialPM currentItemPM = entityPM.ChequeCounterSerials.Where(d => d.Id == itemPM.Id).FirstOrDefault();
+						    currentItemPM.ChangeSetOp = ChangeSetOperation.Update; 
+                            break;
+                        }
+
+                    case ChangeOperation.Delete:
+                        {
+                            ChequeCounterSerialPM currentItemPM = new ChequeCounterSerialPM()
+                            {
+                                ChangeSetOp = ChangeSetOperation.Delete, 
+		                	    Id = itemPM.Id,  
+
+                            };
+
+                            entityPM.DeletedChequeCounterSerials.Add(currentItemPM);
+                            break;
+                        }
+
+                    default:
+                        {
+                           ChequeCounterSerialPM currentItemPM = entityPM.ChequeCounterSerials.Where(d => d.Id == itemPM.Id).FirstOrDefault();
+						   currentItemPM.ChangeSetOp = ChangeSetOperation.None;
+                           break;
+                        }
+                }
+            }
+        } 
+				
       
     }
 }

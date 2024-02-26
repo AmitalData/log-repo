@@ -23,11 +23,11 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string Id { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
-        [ForeignKey("BankCode")]
-        [Column("BankId")]
-	    public string BankId { get; set; }
+        [ForeignKey("BankAccount")]
+        [Column("BankAccountId" ,Order = 1)]
+	    public string BankAccountId { get; set; }
 	      
-        public virtual BankCode BankCode { get; set; }
+        public virtual BankAccount BankAccount { get; set; }
         [Column("SeriesId")]
 	    public int SeriesId { get; set; }
         [Column("ChequeCounterBegin")]
