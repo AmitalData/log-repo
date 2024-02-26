@@ -48,9 +48,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
             mapping = new ChequeCounterSerialDataMapping();
         }
 		 
-		public  ChequeCounterSerialPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  ChequeCounterSerialPM GetSingle(int seriesid, string bankaccountid,bool getComposition, bool getFromCache)
         {
-             EntityKeys = new ChequeCounterSerialKeys(){ Id = id };
+             EntityKeys = new ChequeCounterSerialKeys(){ SeriesId = seriesid, BankAccountId = bankaccountid };
 
 			 return base.GetSingle(EntityKeys, getComposition, getFromCache);
         }
@@ -58,7 +58,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
        
 	    protected override EntityKeyFields GetKeys(ChequeCounterSerial entityPOCO)
         {
-            ChequeCounterSerialKeys entityKeys = new ChequeCounterSerialKeys() { Id = entityPOCO.Id,  };
+            ChequeCounterSerialKeys entityKeys = new ChequeCounterSerialKeys() { SeriesId = entityPOCO.SeriesId, BankAccountId = entityPOCO.BankAccountId,  };
             return entityKeys;
         }
      

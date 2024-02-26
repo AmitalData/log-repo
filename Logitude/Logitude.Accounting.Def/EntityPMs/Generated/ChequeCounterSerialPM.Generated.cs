@@ -18,32 +18,7 @@ namespace Logitude.Accounting.Def.EntityPMs
    [DataContract]
    public partial class ChequeCounterSerialPM : EntityPM
    {
-   	  private string id ;
-	  
-       [Key]
-	  
-       
-	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
-	   [DataMember]
-       public string Id  
-	   {
-	    
-	     get
-		{
-		   return id;
-		 }
-		 set
-		 {
-		   if(id != value)
-		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Id",OldValue=id,NewValue=value,PropertyType="string"};
-		    NotifyPropertyChanged(values);
-		   id=value;
-		   }
-			
-		 }
-	   }
-	  private int tenant ;
+   	  private int tenant ;
 	  	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
@@ -67,7 +42,9 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 }
 	   }
 	  private int seriesId ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]
@@ -136,7 +113,9 @@ namespace Logitude.Accounting.Def.EntityPMs
 		 }
 	   }
 	  private string bankAccountId ;
-	  	  
+	  
+       [Key]
+	  
        
 	   [CustomValidation(typeof(AccountingValidationClass), "ValidateClass")]
 	   [DataMember]

@@ -136,10 +136,10 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public ChequeCounterSerialList GetSingle(string id)
+        public ChequeCounterSerialList GetSingle(int seriesid, string bankaccountid)
         {
             IQueryable<ChequeCounterSerial> ChequeCounterSerialQuery = (from a in context.ChequeCounterSerials
-                                                       where a.Id == id
+                                                       where a.SeriesId == seriesid && a.BankAccountId == bankaccountid
                                                        select a);
 
              

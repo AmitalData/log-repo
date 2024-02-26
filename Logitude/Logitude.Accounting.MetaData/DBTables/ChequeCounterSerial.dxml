@@ -5,14 +5,6 @@
   DBType="Main"
   Module="Accounting">
   <Column
-    Name="Id"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      PrimaryKey="true"
-      Nullable="false" />
-  </Column>
-  <Column
     Name="Tenant"
     Type="int">
     <Constraints
@@ -22,6 +14,7 @@
     Name="SeriesId"
     Type="int">
     <Constraints
+      PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
@@ -41,7 +34,8 @@
     Type="varchar"
     Size="15">
     <Constraints
-      Nullable="true" />
+      PrimaryKey="true"
+      Nullable="false" />
   </Column>
   <Relation
     ForeignKeyColumn="BankAccountId"
