@@ -50,7 +50,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 		
 		protected override EntityKeyFields GetKeys(ChequeCounterSerialPM entityPM)
         {
-            ChequeCounterSerialKeys entityKeys = new ChequeCounterSerialKeys() { Id = entityPM.Id };
+            ChequeCounterSerialKeys entityKeys = new ChequeCounterSerialKeys() { SeriesId = entityPM.SeriesId, BankAccountId = entityPM.BankAccountId };
             return entityKeys;
         }
 
@@ -59,8 +59,6 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {     
   
 		
-		    entityPM.Id = IdCounter.GetNumber("ChequeCounterSerial", entityPM.Tenant); 
-					
 	    }
         
 		protected override void FillDefaultValuesOnUpdate(ChequeCounterSerialPM entityPM)

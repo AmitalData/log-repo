@@ -28,10 +28,10 @@ namespace Logitude.Accounting.Data.Repositories
 
 		 
 		
-		public  ChequeCounterSerial GetSingle(string id, int tenant)
+		public  ChequeCounterSerial GetSingle(int seriesid, string bankaccountid, int tenant)
         {
             return (from a in context.ChequeCounterSerials
-                    where a.Id == id && a.Tenant == tenant
+                    where a.SeriesId == seriesid && a.BankAccountId == bankaccountid && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
@@ -46,7 +46,7 @@ namespace Logitude.Accounting.Data.Repositories
         {
             ChequeCounterSerialKeys keys = entityKeys as ChequeCounterSerialKeys;
             return (from a in context.ChequeCounterSerials
-                    where a.Id == keys.Id
+                    where a.SeriesId == keys.SeriesId && a.BankAccountId == keys.BankAccountId
                     select a).FirstOrDefault();
         }
 		 		                 

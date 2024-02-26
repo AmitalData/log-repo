@@ -12,7 +12,11 @@ namespace Logitude.Accounting.Data.EntityKeys
 {
    public partial class ChequeCounterSerialKeys : EntityKeyFields
    {
-   	  public string Id  { get; set; }
+   	  public int SeriesId  { get; set; }
+	  
+				 
+	    			   
+	  public string BankAccountId  { get; set; }
 	  
 				 
 	    			   
@@ -20,7 +24,7 @@ namespace Logitude.Accounting.Data.EntityKeys
 	 
 	  public override string GetFullKey()
       {
-                 return Id ;
+                 return SeriesId+'_'+BankAccountId ;
                  
       }
 

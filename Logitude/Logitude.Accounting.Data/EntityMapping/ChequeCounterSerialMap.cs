@@ -21,13 +21,11 @@ namespace Logitude.Accounting.Data.EntityMapping
         { 
 				this.ToTable("ChequeCounterSerials");
 		
-		    this.HasKey(t => new { t.Id });
+		    this.HasKey(t => new { t.SeriesId, t.BankAccountId });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
-
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.SeriesId).HasColumnName("SeriesId").IsRequired();
+            this.Property(t => t.SeriesId).HasColumnName("SeriesId").IsRequired().HasDatabaseGeneratedOption(null);
 
             this.Property(t => t.ChequeCounterBegin).HasColumnName("ChequeCounterBegin").IsRequired();
 

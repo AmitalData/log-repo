@@ -122,7 +122,7 @@ if ( MyContext == null)
             List<ChequeCounterSerialPM> ChequeCounterSerialsChangeSet = ChangeSet.GetAssociatedChanges(entityPM, d => d.ChequeCounterSerials).Cast<ChequeCounterSerialPM>().ToList();
             foreach (ChequeCounterSerialPM ChequeCounterSerial in ChequeCounterSerialsChangeSet)
             {  
-                entityPM.ChequeCounterSerials.Where(d => d.Id == ChequeCounterSerial.Id).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
+                entityPM.ChequeCounterSerials.Where(d => d.SeriesId == ChequeCounterSerial.SeriesId && d.BankAccountId == ChequeCounterSerial.BankAccountId).FirstOrDefault().ChangeSetOp = ChangeSetOperation.Insert;  
             }
         
 				    service.Update(entityPM,true); 
@@ -175,14 +175,14 @@ if ( MyContext == null)
                 {
                     case ChangeOperation.Insert:
                         { 
-                            ChequeCounterSerialPM currentItemPM = entityPM.ChequeCounterSerials.Where(d => d.Id == itemPM.Id).FirstOrDefault();
+                            ChequeCounterSerialPM currentItemPM = entityPM.ChequeCounterSerials.Where(d => d.SeriesId == itemPM.SeriesId && d.BankAccountId == itemPM.BankAccountId).FirstOrDefault();
                             currentItemPM.ChangeSetOp = ChangeSetOperation.Insert;                            
                             break;
                         }
 
                     case ChangeOperation.Update:
                         {
-                           ChequeCounterSerialPM currentItemPM = entityPM.ChequeCounterSerials.Where(d => d.Id == itemPM.Id).FirstOrDefault();
+                           ChequeCounterSerialPM currentItemPM = entityPM.ChequeCounterSerials.Where(d => d.SeriesId == itemPM.SeriesId && d.BankAccountId == itemPM.BankAccountId).FirstOrDefault();
 						    currentItemPM.ChangeSetOp = ChangeSetOperation.Update; 
                             break;
                         }
@@ -192,7 +192,8 @@ if ( MyContext == null)
                             ChequeCounterSerialPM currentItemPM = new ChequeCounterSerialPM()
                             {
                                 ChangeSetOp = ChangeSetOperation.Delete, 
-		                	    Id = itemPM.Id,  
+		                	    SeriesId = itemPM.SeriesId, 
+		                	    BankAccountId = itemPM.BankAccountId,  
 
                             };
 
@@ -202,7 +203,7 @@ if ( MyContext == null)
 
                     default:
                         {
-                           ChequeCounterSerialPM currentItemPM = entityPM.ChequeCounterSerials.Where(d => d.Id == itemPM.Id).FirstOrDefault();
+                           ChequeCounterSerialPM currentItemPM = entityPM.ChequeCounterSerials.Where(d => d.SeriesId == itemPM.SeriesId && d.BankAccountId == itemPM.BankAccountId).FirstOrDefault();
 						   currentItemPM.ChangeSetOp = ChangeSetOperation.None;
                            break;
                         }

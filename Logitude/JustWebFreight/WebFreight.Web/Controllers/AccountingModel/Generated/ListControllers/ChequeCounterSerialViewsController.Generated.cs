@@ -51,7 +51,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
     {
 	  
        
-        public HttpResponseMessage GetSingle(string id)
+        public HttpResponseMessage GetSingle(int seriesid, string bankaccountid)
         {
 		  try
             {
@@ -61,7 +61,7 @@ namespace WebFreight.Web.App_Code.AngularJS_App_Code.Generated
                 SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
                 IAccountingContext MyContext = AccountingContext.GetContext(authToken.Tenant);
                 ChequeCounterSerialListQueryService chequeCounterSerialQuery = new ChequeCounterSerialListQueryService(MyContext);
-                ChequeCounterSerialList chequeCounterSerialList = chequeCounterSerialQuery.GetSingle(id);
+                ChequeCounterSerialList chequeCounterSerialList = chequeCounterSerialQuery.GetSingle(seriesid, bankaccountid);
  				PerformanceLogger.AddServerExecutionTimeHeader(logKey);
 				           
                 return Request.CreateResponse(HttpStatusCode.OK,  chequeCounterSerialList);

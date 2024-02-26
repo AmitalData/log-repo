@@ -18,17 +18,16 @@ namespace Logitude.Accounting.Data.EntityPOCOs
     {
 	 string dbms;
 
-        [Key]
-        [Column("Id")]
-	    public string Id { get; set; }
-        [Column("Tenant")]
+           [Column("Tenant")]
 	    public int Tenant { get; set; }
+     [Key]
         [Column("SeriesId")]
 	    public int SeriesId { get; set; }
         [Column("ChequeCounterBegin")]
 	    public int ChequeCounterBegin { get; set; }
         [Column("ChequeCounterEnd")]
 	    public int ChequeCounterEnd { get; set; }
+     [Key]
         [ForeignKey("BankAccount")]
         [Column("BankAccountId")]
 	    public string BankAccountId { get; set; }
