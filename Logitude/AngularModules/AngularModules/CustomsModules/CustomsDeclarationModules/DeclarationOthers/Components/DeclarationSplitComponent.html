@@ -328,6 +328,14 @@
     }
 
     /* end spinner*/
+
+    .pdfContainer {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+    }
 </style>
 
 <div style="height: 100%;">
@@ -374,7 +382,7 @@
                         </li>
                         <li class="seperator"></li>
 
-                        <li *ngIf="!IsNoDocumentSelected &&  this.base64Image!=null"
+                        <li *ngIf="!IsNoDocumentSelected &&  this.base64Document!=null"
                             (click)="OpenInWindowButtonClicked()" title="פתח בחלון חדש"><img style="width:28px"
                                 src="./Images/Icons/Window.png" alt="" /></li>
                         <!--<li (click)="Rotate()"><img src="./Images/Split/doc-viewer-rotate-right.png" alt="" /></li>-->
@@ -398,23 +406,38 @@
 
             <div *ngIf="IsNoDocumentSelected" class="NoDocumentSelected">בחר מסמך מרשימת המסמכים</div>
 
-            <!--In case the document has no TIF file display a message - “Document wasn't converted to TIF” (המסמך הנ”ל לא הומר ל TIF - יש לשנות את הגדרות הספריה בניהול המסמכים)  "ImgScaleValue + ' ' + ImgRotationValue"-->
-            <div *ngIf="!IsNoDocumentSelected &&  this.base64Image==null "
-                style="display: inline-block;color:#ff8025;white-space: pre-line;" class="NoDocumentSelected">
-                מסמך זה לא הומר ל TIF
-                אנא בדוק הגדרות הספריה בתיוק
+            <!-- tiff document -->
+            <ng-container *ngIf="!showPdfDocument">
+
+                <!--In case the document has no TIF file display a message - “Document wasn't converted to TIF” (המסמך הנ”ל לא הומר ל TIF - יש לשנות את הגדרות הספריה בניהול המסמכים)  "ImgScaleValue + ' ' + ImgRotationValue"-->
+                <div *ngIf="!IsNoDocumentSelected &&  this.base64Document==null "
+                    style="display: inline-block;color:#ff8025;white-space: pre-line;" class="NoDocumentSelected">
+                    מסמך זה לא הומר ל TIF
+                    אנא בדוק הגדרות הספריה בתיוק
+                </div>
+
+                <div [style.transform]="ImgScaleValue" [style.transform-origin]="'top right'" [style.height]="ImgHeight"
+                    class="div-grabbable">
+
+                    <img #myImg [style.display]="!IsNoDocumentSelected &&  this.base64Document!=null ? 'block' : 'none' "
+                        style="width: 100%;" class="grabbable" (mousemove)="OnMouseMove($event)"
+                        (mousedown)="OnMouseDown($event)" (mouseup)="OnMouseUp($event)" [attr.src]="base64Document" alt=""
+                        draggable="false" />
+                </div>
+
+            </ng-container>
+
+            <!-- pdf document -->
+            <div *ngIf="showPdfDocument" class="pdfContainer">
+                <pdf-viewer  (after-load-complete)="AfterPdfDocumentLoadComplete($event)" 
+                    [src]="base64Document" 
+                    [page]="CurrentPageIndex" 
+                    [show-all]="false" 
+                    [original-size]="false" 
+                    [rotation]="RotationAngle" 
+                    [zoom]="TrackBarValue"
+                    style="height: 100%;"></pdf-viewer>
             </div>
-
-            <div [style.transform]="ImgScaleValue" [style.transform-origin]="'top right'" [style.height]="ImgHeight"
-                class="div-grabbable">
-
-                <img #myImg [style.display]="!IsNoDocumentSelected &&  this.base64Image!=null ? 'block' : 'none' "
-                    style="width: 100%;" class="grabbable" (mousemove)="OnMouseMove($event)"
-                    (mousedown)="OnMouseDown($event)" (mouseup)="OnMouseUp($event)" [attr.src]="base64Image" alt=""
-                    draggable="false" />
-            </div>
-
-
 
             <!-- <div id="cont"
                  style="width: 100%; transform-origin: right top;"
@@ -475,7 +498,7 @@
                         <!-- Ticket Item -->
                         <li *ngFor="let relatedDoc of RelatedDocuments"
                             style="width: 100%; padding: 10px;padding-bottom: 0px;"
-                            (click)="TicketItemClicked(relatedDoc)">
+                            (click)="TicketItemClicked(relatedDoc, false, true)">
                             <div class="RelatedDocItem" [class.SelectedTicket]="SelectedTicket == relatedDoc">
                                 <table>
 

@@ -50,7 +50,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     IsDocsPanelVisible: boolean = false;
     public MetadataValues: CustomsDocumentMetaDataValuePM[];
     public RelatedDocuments: RelatedDocumentViewModel[];
-    base64Image: string;
+    base64Document: string;
     pagesCount: number = 0;
     IsConnectedToUniFreight: boolean = false;
     timerToken: any;
@@ -61,6 +61,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     startY = 0;
     endX = 0;
     endY = 0;
+    showPdfDocument: boolean = false;
 
     public customs: string = "עמילות";
     public forwarding: string = "שילוח";
@@ -77,16 +78,17 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         super();
         var counter = ControlsIdCounter.GetNextControlIdCounter("DocumentViewerImage");
         this.DocumentViewerImageId = "DocumentViewerImage-" + counter;
-
+        this.showPdfDocument = FeatureLocator.HasFeaturePermession("Customs.CustomsDocument", "ViewDocumentAsPdf") && this.DeclarationPM.IsCourierDeclaration;
     }
     @ViewChild('myImg', { static: true }) myImgVariable: ElementRef;
 
     ngAfterViewInit() {
-        /*this.myImgVariable.nativeElement.onload = () => {
-            this.recognizeText();
-        }*/
-        this.startRenderingImage();
-
+        if (!this.showPdfDocument) { 
+            /*this.myImgVariable.nativeElement.onload = () => {
+                this.recognizeText();
+            }*/
+            this.startRenderingImage();
+        }
     }
     ngOnDestroy() {
         AppTool.KillEventEmitter(this.DeclarationSplitDocumentSelectionEVENT);
@@ -194,7 +196,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     }
 
     IsMouseOverDownload: boolean = false;
-    TicketItemClicked(document: RelatedDocumentViewModel, selectItem: boolean = false) {
+    TicketItemClicked(document: RelatedDocumentViewModel, selectItem: boolean = false, forceRefresh: boolean = false) {
 
         if (this.IsMouseOverDownload) return;
         if (this.DeclarationPM.Direction != "E")
@@ -210,12 +212,17 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         this.ImgScaleValue = "scale(1)";
         this.TrackBarValue = 1;
 
-        this.LoadDocumentPage(null, selectItem);
+        if (forceRefresh) {
+            this.base64Document = null;
+        }
+        this.LoadDocumentPage(selectItem);
         //this.LoadDocumentPage(); // need to check it again, it cannot draw image at first call
 
     }
     RefreshButtonClicked() {
-        this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
+        if (!this.showPdfDocument) {
+            this.resample_single(this.canvas, this.canvas.width, this.canvas.height, true);
+        }
 
         // if (!AppTool.IsNullOrEmpty(this.CurrentPageIndex))
         //     this.LoadDocumentPage();
@@ -253,112 +260,156 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         }
     }
 
-
-
-
-    LoadDocumentPage(pageIndex: number = null, selectItem: boolean = false) {
-        debugger;
+    LoadDocumentPage(selectItem: boolean = false) {
         if (this.SelectedTicket) {
 
-            this.StartBusyIndicator("Loading page...");
-
-            var index = pageIndex ? pageIndex : this.CurrentPageIndex;
+            var index = this.CurrentPageIndex;
 
             if (index == 0) index = 1;
-
+    
             if (this.invoiceItem != null && !AppTool.IsNullOrEmpty(this.invoiceItem.OcrPageNumber) && this.invoiceItem.OcrPageNumber != 0 && selectItem) {
                 index = this.invoiceItem.OcrPageNumber;
             }
-
+    
             console.log("Load Page: ", index);
 
-            //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
+            if (this.showPdfDocument) {
 
-            //if (this.IsConnectedToUniFreight)
-            //    var index = this.CurrentPageIndex;
-            //else
-            //    var index = this.CurrentPageIndex - 1;
+                // if there is no base64 of the pdf file, get it from the backend
+                if (!this.base64Document) {
+                    this.LoadPdfDocument(selectItem);
+                }
+                else {
+                    // the entire pdf file has already been loaded from the backend, just do a fixe about the selected page
+                    this.FixCurrentPageIndex(index, selectItem);
+                }
+            }
+            else {
+                // get from the backend the tiff document for the current page
+                this.LoadTiffDocumentPage(index, selectItem);
+            }
+        }
+    }
 
-            //let path = this.composedPath(event.target);
+    LoadTiffDocumentPage(index: number, selectItem: boolean = false) {
+        this.StartBusyIndicator("Loading page...");
 
-            this._CustomDocumentViewerService.GetDocumentPage(this.SelectedTicket.documentsFilingPM.DocumentId, index - 1, this.IsConnectedToUniFreight, this.RotationAngle).subscribe((myResponse: ServiceResponse) => {
-                var result = myResponse.Result;
-                console.log("[Response] GetDocumentPage", result);
-                this.StopBusyIndicator();
-                if (result) {
+        //SessionLocator.SelectedSession.StartBusyIndicatorLoading();
 
-                    //reset rotation
-                    //this.ImgTransformOriginValue = "right top";
-                    //this.ImgRotationValue = "rotate(0deg)";
-                    //this.RotationAngle = 0;
+        //if (this.IsConnectedToUniFreight)
+        //    var index = this.CurrentPageIndex;
+        //else
+        //    var index = this.CurrentPageIndex - 1;
 
-                    this.pagesCount = result.Count;
+        //let path = this.composedPath(event.target);
 
-                    if (!AppTool.IsNullOrEmpty(result.Page)) {
-                        //SessionLocator.SelectedSession.StopBusyIndicator();
+        this._CustomDocumentViewerService.GetDocumentPage(this.SelectedTicket.documentsFilingPM.DocumentId, index - 1, this.IsConnectedToUniFreight, this.RotationAngle).subscribe((myResponse: ServiceResponse) => {
+            var result = myResponse.Result;
+            console.log("[Response] GetDocumentPage", result);
+            this.StopBusyIndicator();
+            if (result) {
 
-                        this.base64Image = "data:image/png;base64," + result.Page;
+                //reset rotation
+                //this.ImgTransformOriginValue = "right top";
+                //this.ImgRotationValue = "rotate(0deg)";
+                //this.RotationAngle = 0;
 
-                        //document.getElementsByClassName("div-grabbable")[0].removeChild(document.getElementsByClassName("rectangle")[0]);
-                        var elements = document.getElementsByClassName("rectangle");
-                        while (elements.length > 0) {
-                            elements[0].parentNode.removeChild(elements[0]);
-                        }
+                this.pagesCount = result.Count;
 
-                        if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrTop != undefined && this.invoiceItem.OcrHeight != 0 && this.invoiceItem.OcrHeight != undefined && selectItem) {
-                            var elem = document.getElementsByClassName("grabbable")[0] as HTMLImageElement;;
+                if (!AppTool.IsNullOrEmpty(result.Page)) {
+                    //SessionLocator.SelectedSession.StopBusyIndicator();
 
-                            let rect = document.createElement('div');
-                            rect.className = 'rectangle';
-                            rect.id = 'rectangle-' + "rectangle-1";
-                            rect.style.position = 'absolute';
-                            rect.style.border = '1px solid #ed1c31';
-                            rect.style.borderRadius = '3px';
-                            rect.style.left = 0 + 'px';
-                            var percent = (elem.height / elem.naturalHeight);
-                            rect.style.top = (this.invoiceItem.OcrTop * percent) - 1 + 'px';
-                            rect.style.width = '100%';
-                            rect.style.height = (this.invoiceItem.OcrHeight * percent) + 2 + 'px';
-                            document.getElementsByClassName("div-grabbable")[0].appendChild(rect);
+                    this.base64Document = "data:image/png;base64," + result.Page;
 
-                            console.log(this.base64Image);
-                            this.CurrentPageIndex = this.invoiceItem.OcrPageNumber;
-                        }
-                        else {
-                            this.CurrentPageIndex = index;
-
-                        }
-
-
-
-                        // this.img.src = this.base64Image;
-                        // this.renderImage();
-                        // var t = setTimeout(() => { this.renderImage(); }, 20);
-
-                    } else {
-                        this.CurrentPageIndex = 0;
-                        this.base64Image = null;
-                        // this.img.src = this.base64Image;
-                        // this.renderImage();
-                        // var t = setTimeout(() => { this.renderImage(); },20);
-                        return;
+                    //document.getElementsByClassName("div-grabbable")[0].removeChild(document.getElementsByClassName("rectangle")[0]);
+                    var elements = document.getElementsByClassName("rectangle");
+                    while (elements.length > 0) {
+                        elements[0].parentNode.removeChild(elements[0]);
                     }
+
+                    if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrTop != undefined && this.invoiceItem.OcrHeight != 0 && this.invoiceItem.OcrHeight != undefined && selectItem) {
+                        var elem = document.getElementsByClassName("grabbable")[0] as HTMLImageElement;;
+
+                        let rect = document.createElement('div');
+                        rect.className = 'rectangle';
+                        rect.id = 'rectangle-' + "rectangle-1";
+                        rect.style.position = 'absolute';
+                        rect.style.border = '1px solid #ed1c31';
+                        rect.style.borderRadius = '3px';
+                        rect.style.left = 0 + 'px';
+                        var percent = (elem.height / elem.naturalHeight);
+                        rect.style.top = (this.invoiceItem.OcrTop * percent) - 1 + 'px';
+                        rect.style.width = '100%';
+                        rect.style.height = (this.invoiceItem.OcrHeight * percent) + 2 + 'px';
+                        document.getElementsByClassName("div-grabbable")[0].appendChild(rect);
+
+                        console.log(this.base64Document);
+                    }
+
+                    this.FixCurrentPageIndex(index, selectItem);
+
+
+                    // this.img.src = this.base64Document;
+                    // this.renderImage();
+                    // var t = setTimeout(() => { this.renderImage(); }, 20);
 
                 } else {
                     this.CurrentPageIndex = 0;
-                    //SessionLocator.SelectedSession.StopBusyIndicator();
-                    this.base64Image = null;
-                    // this.img.src = this.base64Image;
+                    this.base64Document = null;
+                    // this.img.src = this.base64Document;
                     // this.renderImage();
                     // var t = setTimeout(() => { this.renderImage(); },20);
                     return;
                 }
+
+            } else {
+                this.CurrentPageIndex = 0;
                 //SessionLocator.SelectedSession.StopBusyIndicator();
+                this.base64Document = null;
+                // this.img.src = this.base64Document;
+                // this.renderImage();
+                // var t = setTimeout(() => { this.renderImage(); },20);
+                return;
+            }
+            //SessionLocator.SelectedSession.StopBusyIndicator();
 
 
 
-            });
+        });
+    }
+
+    LoadPdfDocument(selectItem: boolean = false) {
+
+        this.StartBusyIndicator("Loading page...");
+
+        this._CustomDocumentViewerService.GetDocumentPageAsPdf(this.SelectedTicket.documentsFilingPM.DocumentId).subscribe((myResponse: ServiceResponse) => {
+
+            var result = myResponse.Result;
+            if (result && !AppTool.IsNullOrEmpty(result.contentField)) {
+                this.base64Document = "data:application/pdf;base64," + result.contentField;
+
+                this.FixCurrentPageIndex(this.CurrentPageIndex, selectItem);
+
+            } else {
+                this.CurrentPageIndex = 0;
+                this.base64Document = null;
+            }
+            
+            this.StopBusyIndicator();
+        });
+    }
+
+    FixCurrentPageIndex(index: number, selectItem: boolean) {
+        if (this.invoiceItem != null && this.invoiceItem.OcrTop != 0 && this.invoiceItem.OcrTop != undefined && this.invoiceItem.OcrHeight != 0 && this.invoiceItem.OcrHeight != undefined && selectItem) {
+            this.CurrentPageIndex = this.invoiceItem.OcrPageNumber;
         }
+        else {
+            this.CurrentPageIndex = index;
+        }
+    }
+
+    AfterPdfDocumentLoadComplete(pdfData: any) {
+        this.pagesCount = pdfData.numPages;
     }
 
     //#region split indicator
@@ -456,7 +507,8 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         this.timerToken = setTimeout(() => {
 
             if (value > 0 && value <= this.pagesCount) {
-                this.LoadDocumentPage(value);
+                this.currentPageIndex = value;
+                this.LoadDocumentPage();
             }
 
         }, 1000);
@@ -550,7 +602,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         // origin position
         this.ToggleTransformOrigin();
 
-        this.LoadDocumentPage(this.CurrentPageIndex);
+        this.LoadDocumentPage();
 
         // this.rotateCW();
 
@@ -568,7 +620,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         //origin position
         this.ToggleTransformOrigin();
 
-        this.LoadDocumentPage(this.CurrentPageIndex);
+        this.LoadDocumentPage();
         // this.rotateCCW();
 
     }
@@ -583,7 +635,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     startRenderingImage() {
 
         //this.img.src = './Images/Split/testimage.png'; // http://i.imgur.com/sAyE5ZE.png
-        //this.img.src = this.base64Image;
+        //this.img.src = this.base64Document;
         this.canvas = document.getElementById('canvas');
         this.ctx = this.canvas.getContext('2d');
 
@@ -593,7 +645,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
 
     }
     renderImage() {
-        if (this.base64Image) {
+        if (this.base64Document) {
             this.StartBusyIndicator("Rendering...");
 
             /// use index to set canvas size
@@ -625,7 +677,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
             // /// draw image and reset transform
             // this.ctx.drawImage(this.img, 0, 0);
             // this.ctx.setTransform(1, 0, 0, 1, 0, 0);
-            // this.img.src = this.base64Image;
+            // this.img.src = this.base64Document;
 
 
 

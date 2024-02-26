@@ -17,6 +17,10 @@ using Simplog.Server.Infrastructure;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Logitude.Customs.BL.EntityDataMappings;
 using System.Data.Entity.Infrastructure;
+using Logitude.Customs.BL.Messaging.Customs;
+using Logitude.CustomsMessaging.Common.RequestParams;
+using Logitude.Server.Tools.Models;
+using UnifreightIIG.Common.GlobalScannedAttachmentToEntityServiceReference;
 
 namespace Logitude.Customs.BL.EntityQueryServices
 {
@@ -440,7 +444,84 @@ namespace Logitude.Customs.BL.EntityQueryServices
 
 		}
 
-		public class ResultByDocumentType
+        public Attachment GetAttachment(string DocumentId, int Tenant, CustomsDocumentPM _CustomsDocumentPM = null)
+        {
+            byte[] byteArray = null;
+            var documentrepository = new DocumentRepository(Tenant);
+            var document = documentrepository.GetSingleDocument(Tenant,
+                //_CustomsDocumentPM.DocumentsFilingId
+                DocumentId
+                );
+            if (document == null)
+            {
+                throw new BusinessErrorException(" CustomsDocument.DocumentId is missing ");
+            }
+            if (!CustomsRequestsSheetDomainModelService<D_NG_2715_MSG22002_AddAGlobalScannedAttachmentToEntityRequestParam>.GetBlob(document.Tenant, document, out byteArray))
+            {
+
+                throw new BusinessErrorException("Unable to get Blob Of" + DocumentId);
+            }
+
+            if (_CustomsDocumentPM != null && !String.IsNullOrWhiteSpace(_CustomsDocumentPM.CustomsDocId))
+            {
+
+                var attachmentOnly = new Attachment();
+                attachmentOnly.externalAttachmentID = _CustomsDocumentPM.ExternalAttachmentId;
+                attachmentOnly.IsAttachment = "false";
+                return attachmentOnly;
+            }
+
+            var attachment = new Attachment();
+            attachment.attachmentID = "false";
+            attachment.content = byteArray;
+            if (_CustomsDocumentPM != null)
+            {
+                attachment.AdditionalData = GetAttachmentAdditionalData(_CustomsDocumentPM.CustomsDocumentMetaDataValues);
+                attachment.externalAttachmentID = _CustomsDocumentPM.ExternalAttachmentId;
+                attachment.Remark = _CustomsDocumentPM.DocumentRemarks;
+                attachment.documentType = _CustomsDocumentPM.DocumentTypeCode;
+            }
+            var bolbName = document.GetBlobUrl("");
+            if (!String.IsNullOrWhiteSpace(bolbName))
+            {
+                bolbName = System.IO.Path.GetFileName(bolbName);
+            }
+            attachment.fileName = bolbName;
+            attachment.IsAttachment = "true";
+            return attachment;
+        }
+
+        private AttachmentAdditionalData[] GetAttachmentAdditionalData(List<CustomsDocumentMetaDataValuePM> customsDocumentMetaDataList)
+        {
+            var AdditionalDataList = new List<AttachmentAdditionalData>();
+            foreach (var customsDocumentMetaData in customsDocumentMetaDataList)
+            {
+                var AdditionalData = new AttachmentAdditionalData();
+                int fieldId;
+                if (int.TryParse(customsDocumentMetaData.MetaDataTypeCode, out fieldId))
+                {
+                    if (!String.IsNullOrWhiteSpace(customsDocumentMetaData.MetaDataValue))
+                    {
+                        AdditionalData.fieldID = fieldId;
+                        //if (customsDocumentMetaData.MetaDataTypeCode == "55")
+                        //{
+                        //    AdditionalData.fieldData = DateExt.GetToDay();
+                        //}
+                        //else
+                        //{
+                        //    AdditionalData.fieldData = customsDocumentMetaData.MetaDataValue;
+                        //}
+                        AdditionalData.fieldData = customsDocumentMetaData.MetaDataValue;
+                        AdditionalDataList.Add(AdditionalData);
+                    }
+                }
+
+            }
+
+            return AdditionalDataList.ToArray();
+        }
+
+        public class ResultByDocumentType
         {
             public string DocumentsFilingId { get; set; }
             public string DocumentId { get; set; }

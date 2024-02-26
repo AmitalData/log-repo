@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsDocumentUpdateClass
    {  		
-		public const string HashString = "9ae3fe2f6ba91d7012f7ca49cc10d29f";
+		public const string HashString = "27c95f1013787c89b1d008f61a609495";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Document",
-			      				    Code =  "7c0b",
+			      				    Code =  "d497",
 			      				    Name =  "Customs.CustomsDocument Query Group",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -2274,65 +2274,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  		
 			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
  
-
-			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
-			   {
-					 
-					 						FieldName =  "OcrId",
-					  						ObjectTableName =  "Customs.CustomsDocument",
-					  						FieldsDataType =  "Text",
-					  						MinLength =  0,
-					  						MaxLength =  40,
-					  						IsRequired =  false,
-					  						CopyToDW =  false,
-					  						DisplayOnLookUp =  false,
-					  						DisplayOnLookUpLocal =  false,
-					  						CanFilter =  false,
-					  						DisplayOnly =  false,
-					  						SystemRequired =  false,
-					  						SystemMaxLength =  40,
-					  						DisplayInList =  false,
-					  						IsCustomFilter =  false,
-					  						MultiLine =  false,
-					  						IsTimeFrameFilter =  false,
-					  						DisplayInSearchWindowList =  false,
-					  						PMPropertyPath =  "OcrId",
-					  						ListPropertyPath =  "OcrId",
-					  						AutomaticField =  false,
-					  						UniqueField =  false,
-					  						DisplayInSearchWindowListIndex =  0,
-					  						IsMulti =  false,
-					  						DependencyFilter1IsList =  false,
-					  						DependencyFilter2IsList =  false,
-					  						DependencyFilter3IsList =  false,
-					  						ValidForQuerySection1 =  "Customs.CustomsDocument",
-					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
-					  						AllowedInCustomerFieldsSettings =  false,
-					  						DisplayInSearchWindowFilters =  false,
-					  						DisplayInSearchWindowFiltersIndex =  0,
-					  						DisplayInDocumentReferences =  false,
-					  						InActive =  false,
-					  						DisplayLongName =  false,
-					  						FullFieldLable =  "OcrId",
-					  						DefaultText =  "Ocr Id",
-					  						ListFieldLable =  "OcrIdListLable",
-					  						ListLableDefaultText =  "Ocr Id",
-					  						IsMaxLength =  false,
-					  						IsFixedLength =  false,
-					  						EnableAutoFill =  false,
-					  						IncludeInSearchField =  false,
-					  						AllowedinAutomationConditions =  false,
-					  						AutomationEmailRecipient =  false,
-					  						CanAutomateSetValue =  false,
-					  						DisplayInAutomationAsEnitity =  false,
-					  						DisplayInRequiredFields =  false,
-					  						HasTemplate =  false,
-					  						IsCustom =  false,
-					  						EnableFullscreenTextBox =  false,
-					  		
-			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
- 
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
@@ -2372,6 +2313,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   		   //--------------> Additional Features <--------------\\
 
 		   Feature CustomsDocumentFeature_GENERAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsDocument.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsDocumentObjectTable);
+
+		   Feature CustomsDocumentFeature_ViewDocumentAsPdf = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViewDocumentAsPdf", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsDocument.Features.ViewDocumentAsPdf", NameTextCodeDefaultText = @"להציג את המסמך כ-PDF" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsDocumentObjectTable);
 
    
 	    

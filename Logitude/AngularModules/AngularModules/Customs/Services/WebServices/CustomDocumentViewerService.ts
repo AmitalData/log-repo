@@ -49,6 +49,21 @@ export class CustomDocumentViewerService {
         );
     }
 
+    GetDocumentPageAsPdf(documentId: string) {
+        return defer(() => {
+            var authHeader = new Headers();
+            authHeader.append('Token', SessionInfo.Token);
+            authHeader.append('Content-Type', 'application/json');
+
+            return this._http.get(this._apiUrl + "/GetDocumentPageAsPdf/?documentId=" + encodeURIComponent(documentId)
+                , ServiceHelper.GetHttpHeaders()).pipe(map(response => {
+
+                    var serviceResponse: ServiceResponse = new ServiceResponse();
+                    serviceResponse.Result = response;
+                    return serviceResponse;
+                }),catchError(ServiceHelper.HandleServiceError));
+        });
+    }
 
     MapJsonToCustomDocumentPageObject(jsonPM: any) {
 
