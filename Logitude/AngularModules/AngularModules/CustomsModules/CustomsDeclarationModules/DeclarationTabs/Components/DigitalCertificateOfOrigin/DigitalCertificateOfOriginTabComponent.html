@@ -59,13 +59,16 @@
                         <td>
                             <div *ngIf="EntityPM.IsSubmitDeclaration && (IsUpdateDeclarationA || IsUpdateDeclarationB)" style="width: 90%;text-align:center">
                                 <div class="DisbleBox" *ngIf="IsUpdateDeclarationA">
-                                    {{MessA}}
+                                    <!-- {{MessA}} -->
+                                    {{'Customs.CertificateOfOrigin.O.NumNotUpdate'| TextCodeTranslationPipe}}
                                     <span style="padding: 0px 16px;">-</span>
-                                    <span class="hyperlink" (click)="OpenNewAmendmentWithSend()" style="font-size:12px;">{{MessLinkA}}</span>
+                                    <!-- <span class="hyperlink" (click)="OpenNewAmendmentWithSend()" style="font-size:12px;">{{MessLinkA}}</span> -->
+                                    <span class="hyperlink" (click)="OpenNewAmendmentWithSend()" style="font-size:12px;">{{'Customs.CertificateOfOrigin.O.AutoAmendment'| TextCodeTranslationPipe}}</span>
                 
                                 </div>
                                 <div class="DisbleBox" *ngIf="IsUpdateDeclarationB">
-                                    {{MessB}}
+                                    <!-- {{MessB}} -->
+                                    {{'Customs.CertificateOfOrigin.O.UpdatedItemInvoice'| TextCodeTranslationPipe}}
                                 </div>
                             </div>
                            
