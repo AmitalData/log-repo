@@ -537,6 +537,7 @@ export class ARInvoiceMenuButtonsHandler {
 
                 if (isSaveSuccess) {
                     this.EntityPM = this.entityArgs.EditComponent.EntityPM;
+                    this.CurrentSession.CurrentEditComponent.BuildHeaderScreen();
 
                     if (this.isPrintRequested || this.addDocumentFilling) {
                         var isShowPrintWindow:Boolean = this.menuButtonClicked.EventCode == "PrintInvoice";
