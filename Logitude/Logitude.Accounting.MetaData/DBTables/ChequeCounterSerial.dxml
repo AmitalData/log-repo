@@ -19,14 +19,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="BankAccountId"
-    OldNames="BankId"
-    Type="varchar"
-    Size="15">
-    <Constraints
-      Nullable="false" />
-  </Column>
-  <Column
     Name="SeriesId"
     Type="int">
     <Constraints
@@ -43,6 +35,13 @@
     Type="int">
     <Constraints
       Nullable="false" />
+  </Column>
+  <Column
+    Name="BankAccountId"
+    Type="varchar"
+    Size="15">
+    <Constraints
+      Nullable="true" />
   </Column>
   <Relation
     ForeignKeyColumn="BankAccountId"

@@ -27,13 +27,13 @@ namespace Logitude.Accounting.Data.EntityMapping
 
             this.Property(t => t.Tenant).HasColumnName("Tenant").IsRequired();
 
-            this.Property(t => t.BankAccountId).HasColumnName("BankAccountId").IsRequired().HasMaxLength(15).IsUnicode(false);
-
             this.Property(t => t.SeriesId).HasColumnName("SeriesId").IsRequired();
 
             this.Property(t => t.ChequeCounterBegin).HasColumnName("ChequeCounterBegin").IsRequired();
 
             this.Property(t => t.ChequeCounterEnd).HasColumnName("ChequeCounterEnd").IsRequired();
+
+            this.Property(t => t.BankAccountId).HasColumnName("BankAccountId").HasMaxLength(15).IsUnicode(false);
         }
     }
 }
