@@ -110,7 +110,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                             }
                         default:
                             {
-                                query2 = query2.OrderBy(d => d.BankId);
+                                query2 = query2.OrderBy(d => d.BankAccountId);
                                 break;
                             }
                     }
@@ -119,7 +119,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
             }
 		    else
             {
-                query2 = query2.OrderBy(d => d.BankId);
+                query2 = query2.OrderBy(d => d.BankAccountId);
             }
 			if(!queryOperations.GetAll)
 			{
