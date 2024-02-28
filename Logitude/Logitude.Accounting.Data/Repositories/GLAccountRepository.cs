@@ -15,6 +15,9 @@ using Logitude.Server.Tools;
 using Logitude.Accounting.Data.DataContract;
 using System.Data.Entity.Infrastructure;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using System.Runtime.Remoting.Contexts;
+using System.Data.Entity;
 
 namespace Logitude.Accounting.Data.Repositories
 {
@@ -304,12 +307,12 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<string> GetQAccIdByAcountIdTypeCategories(int tenant, string AccountId,
              string Category1, string Category2, string Category3, string Category4, string Category5, string gLAccountType, string chartOfAccountsId,
-             string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, int? securityLevel)
+             string ChartOfAccountsTypeCode, string salesmanId, string collectorId, bool includeControlAccount, int? securityLevel)
         {
             return
             this
                 .GetByAcountIdTypeCategories(tenant, AccountId, gLAccountType, chartOfAccountsId,
-            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, includeControlAccount, securityLevel)
+            Category1, Category2, Category3, Category4, Category5, ChartOfAccountsTypeCode, salesmanId, collectorId, includeControlAccount, securityLevel)
             .Select(a => a.Id);
 
         }
@@ -379,6 +382,39 @@ namespace Logitude.Accounting.Data.Repositories
             return q;
        }
 
+
+        public Card GetByGlAccountIdJoinCurrencies(int tenant , string glaccountId)
+        {
+            Card myCard = (from gc in (this.context as AccountingContext).GLAccounts
+
+                        join c in (this.context as AccountingContext).GLAccountCurrencies on gc.Id equals c.GLAccountId into gj
+
+                 from subc in gj.DefaultIfEmpty()
+
+                 join gg in (this.context as AccountingContext).Cards on subc.MainGLAccountId equals gg.GLAccountId into cardJoin
+
+                 from card in cardJoin.DefaultIfEmpty()
+
+                 where gc.Id == glaccountId && gc.Tenant==tenant
+                           select card
+                          ).Concat(
+                           from gc in (this.context as AccountingContext).GLAccounts
+
+                           join c in (this.context as AccountingContext).GLAccountCurrencies on gc.Id equals c.GLAccountId into gj
+
+                           from subc in gj.DefaultIfEmpty()
+
+                           join gg in (this.context as AccountingContext).Cards on gc.Id equals gg.GLAccountId into cardJoin
+
+                           from card in cardJoin.DefaultIfEmpty()
+
+                          where gc.Id == glaccountId && gc.Tenant==tenant
+                           select card
+                    ).FirstOrDefault();
+
+            return myCard;
+
+        }
         public IQueryable<GLAccount> GetByAcountIdCategories(int tenant, string AccountId,
             string Category1, string Category2, string Category3, string Category4, string Category5)
         {
@@ -422,7 +458,7 @@ namespace Logitude.Accounting.Data.Repositories
 
         public IQueryable<GLAccount> GetByAcountIdTypeCategories(int tenant, string AccountId, string gLAccountType, string chartOfAccountsId,
             string Category1, string Category2, string Category3, string Category4, string Category5,
-            string ChartOfAccountsTypeCode, string salesmanId, bool includeControlAccount, int? securityLevel)
+            string ChartOfAccountsTypeCode, string salesmanId, string collectorId, bool includeControlAccount, int? securityLevel)
         {
             IQueryable<GLAccount> q;
             if (!string.IsNullOrWhiteSpace(AccountId))
@@ -477,17 +513,71 @@ namespace Logitude.Accounting.Data.Repositories
             if (!string.IsNullOrWhiteSpace(salesmanId))
             {
                 q = (
-                    from glacc in q
 
-                    join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
-                    on glacc.Id equals card.GLAccountId
+                  from glacc in q
 
-                    join cust in (this.context as AccountingContext).Customers
-                       .Where(r => r.SalesmanUserId == salesmanId && r.Tenant == tenant)
-                    on card.Id equals cust.Id
+                  join card in (this.context as AccountingContext).Cards.Where(r => r.Tenant == tenant)
+                  on glacc.Id equals card.GLAccountId
 
-                    select glacc
-                     );
+                  join cust in (this.context as AccountingContext).Customers
+                     .Where(r => r.SalesmanUserId == salesmanId && r.Tenant == tenant)
+                  on card.Id equals cust.Id
+
+                  select glacc
+                   );
+
+            }
+            if (!string.IsNullOrWhiteSpace(collectorId))
+            {
+                q = (from gc in q
+
+                     join c in (this.context as AccountingContext).GLAccountCurrencies on gc.Id equals c.GLAccountId into gj
+
+                     from subc in gj.DefaultIfEmpty()
+
+                     join gg in (this.context as AccountingContext).Cards on subc.MainGLAccountId equals gg.GLAccountId into cardJoin
+
+                     from card in cardJoin.DefaultIfEmpty()
+
+                     where card.CollectorId == collectorId
+                     select gc
+                           ).Concat(
+                            from gc in q
+
+                            join c in (this.context as AccountingContext).GLAccountCurrencies on gc.Id equals c.GLAccountId into gj
+
+                            from subc in gj.DefaultIfEmpty()
+
+                            join gg in (this.context as AccountingContext).Cards on gc.Id equals gg.GLAccountId into cardJoin
+
+                            from card in cardJoin.DefaultIfEmpty()
+
+                            where card.CollectorId == collectorId
+                            select gc
+                     ).Distinct();
+
+
+
+
+
+                //q = (
+                //from gc in q
+                //join c in (this.context as AccountingContext).GLAccountCurrencies
+                //on gc.Id equals c.GLAccountId into gac
+                //from subC in gac.DefaultIfEmpty()
+                //join t3_1 in (this.context as AccountingContext).Cards
+                //on subC.MainGLAccountId equals t3_1.GLAccountId
+                //into gac2_1
+                //from subC2_1 in gac2_1.DefaultIfEmpty()
+
+                //    // Second join on subC.GLAccount.Id
+                //join t3_2 in (this.context as AccountingContext).Cards
+                //on subC.GLAccount.Id.ToString() equals t3_2.GLAccountId.ToString()
+                //into gac2_2
+                //from subC2_2 in gac2_2.DefaultIfEmpty()
+                //where (subC2_1 != null || subC2_2 != null) && subC2_1.CollectorId == collectorId
+                //select gc
+                // );
 
             }
 

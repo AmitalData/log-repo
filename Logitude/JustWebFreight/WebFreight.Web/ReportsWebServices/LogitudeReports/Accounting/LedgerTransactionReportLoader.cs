@@ -172,6 +172,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
 
                 GLAccountMoreDataRepository gLAccountMoreDataRepository = new GLAccountMoreDataRepository(tenant);
                 var gLAccountMoreData = gLAccountMoreDataRepository.GetSingle(LTBFilterCallBack.GLAccountId, tenant);
+               
 
                 transactionsDataProvider.LocalClosedBalanceList.Add(new GLAccountBalanceList()
                 {
@@ -182,7 +183,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                     ForeignCurrencySign = currency.Sign,
                     LocalBalanceInDue = gLAccountMoreData.LocalBalanceInDue,
                     BalanceInForeignCurrency = gLAccountMoreData.BalanceInForeignCurrency,
-                    ForeignBalanceInDue = gLAccountMoreData.ForeignBalanceInDue
+                    ForeignBalanceInDue = gLAccountMoreData.ForeignBalanceInDue,
+                   
 
 
 
@@ -277,6 +279,14 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 reportTransaction.AccountNumber = account.DisplayNumber;
                 reportTransaction.AccountEnglishName = account.EnglishName;
                 reportTransaction.AccountLocalName = account.LocalName;
+                reportTransaction.Collector = account.Collector;
+                reportTransaction.PaymentTerms = account.PaymentTerms;
+                reportTransaction.Category1Id=account.Category1LocalName;
+                reportTransaction.Category2Id = account.Category2LocalName;
+            reportTransaction.Category3Id = account.Category3LocalName;
+            reportTransaction.Category4Id = account.Category4LocalName;
+            reportTransaction.Category5Id = account.Category5LocalName;
+
         }
 
         private ReportLedgerTransaction GetReportNewLedgerTransaction(LedgerTransactionList transaction)
@@ -422,7 +432,6 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 transactionsDataProvider.AccountCurrencySign = glaccountPM.CurrencySign;
                 transactionsDataProvider.AccountCurrencyCode = glaccountPM.CurrencyCode;
                 transactionsDataProvider.AccountReconcileMethod = glaccountPM.ReconcileMethodCode;
-
                 SetGLAccountStartTotalOpenAmountField(cardIndexReportService);
             }
         }
@@ -477,6 +486,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 PageStartAtRecordIndex = PAGE_RECORD_START_INDEX,
                 PageSize = PAGE_SIZE,
                 SalesmanId = GetFilterValue<string>("SalesmanUserId"),
+                CollectorId = GetFilterValue<string>("CollectorId"),
                 Category1Id = "",
                 Category2Id = "",
                 Category3Id = "",
