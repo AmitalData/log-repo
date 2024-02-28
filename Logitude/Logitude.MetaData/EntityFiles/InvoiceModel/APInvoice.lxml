@@ -12758,6 +12758,12 @@
       DefaultText="&quot;Notes&quot;"
       TextCodeTypeCode="&quot;F&quot;"
       IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;APInvoice.M.InvoiceDetailAmountVatNotMatched&quot;"
+      DefaultText="&quot;Do not include in the same invoice lines of credit and debit according to the regulations, they must be separated into two separate thoughts&quot;"
+      LocalDefaultText="&quot;לא ניתן לקלוט באותה חשבונית שורות של זיכוי וחיוב ע&quot;פ התקנות יש להפרידם לשתי חשבוניות נפרדות&quot;"
+      TextCodeTypeCode="&quot;M&quot;"
+      IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
     <Feature

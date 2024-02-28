@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "ca2b656c1156825c2ef74f4a9f6b8b6a";
+		public const string HashString = "c3ef35f1377609dbbf83359ee8cf48d2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -9407,6 +9407,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
  		   TextCode APInvoiceTextCode_ApinvoiceOTotalVATwithQBO = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Apinvoice.O.TotalVATwithQBO", DefaultText = "Total VAT option is not compatible with QBO , if they you want to transfer this invoice to Quickbooks, please disable the total vat and make sure each invoice line has a VAT",LocalDefaultText = @"Total VAT option is not compatible with QBO , if they you want to transfer this invoice to Quickbooks, please disable the total vat and make sure each invoice line has a VAT", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
  		   TextCode APInvoiceTextCode_APInvoiceFNotes = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.F.Notes", DefaultText = "Notes",LocalDefaultText = null, ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "F", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode APInvoiceTextCode_APInvoiceMInvoiceDetailAmountVatNotMatched = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "APInvoice.M.InvoiceDetailAmountVatNotMatched", DefaultText = "Do not include in the same invoice lines of credit and debit according to the regulations, they must be separated into two separate thoughts",LocalDefaultText = "לא ניתן לקלוט באותה חשבונית שורות של זיכוי וחיוב ע''פ התקנות יש להפרידם לשתי חשבוניות נפרדות", ObjectTableId = APInvoiceObjectTable.Id, Tenant = 0, TextCodeTypeCode = "M", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
