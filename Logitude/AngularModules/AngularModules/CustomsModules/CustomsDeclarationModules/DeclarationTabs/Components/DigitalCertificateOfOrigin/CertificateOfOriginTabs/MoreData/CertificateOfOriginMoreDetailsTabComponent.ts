@@ -99,36 +99,52 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
         }
     }
     mandatoryFielsList = [];
+    certificateOfOriginMandatoryFieldsList = [];
+    tempCertificateOfOriginMandatoryFieldsList = [];
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     SetWarningByCooTypeCode(CooTypeCode) {
+        if(!CooTypeCode) return;
         this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
             if (!myResponse.HasError) {
-                const certificateOfOriginMandatoryFieldsList = myResponse?.Result;
-                if (certificateOfOriginMandatoryFieldsList.length <= 0) return;
-                certificateOfOriginMandatoryFieldsList.forEach(item => {
-                    if (item.IsMandatory){
-                        this.mandatoryFielsList.push(item.MandatoryFieldName);
-                        this.UIProperties.SetWarning(item.MandatoryFieldName, this.ObjectTableName, true);
-                    }
-                });
+                if(this.tempCertificateOfOriginMandatoryFieldsList.length > 0) {
+                    this.tempCertificateOfOriginMandatoryFieldsList.forEach(i=>{
+                        this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
+                    });
+                }
+
+
+                this.certificateOfOriginMandatoryFieldsList = myResponse?.Result;
+                
+                if (this.certificateOfOriginMandatoryFieldsList.length > 0) {
+                    this.certificateOfOriginMandatoryFieldsList.forEach(item => {
+                        if (item.IsMandatory) {
+                            this.UIProperties.SetWarning(item.MappedCertificateFieldsName, this.ObjectTableName, true);
+                        }
+                    });
+
+                    this.tempCertificateOfOriginMandatoryFieldsList = this.certificateOfOriginMandatoryFieldsList;
+                }
+                else{        
+                                
+                    this.tempCertificateOfOriginMandatoryFieldsList.forEach(i=>{
+                        this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
+                    });
+                    this.tempCertificateOfOriginMandatoryFieldsList = [];
+                }
+
             }
         });
     }
+
     
-    CheckMandatoryCustomsFields(ValidationErrors = []){
-        // check:
-        // let someName="CityOfDeclaration"
-        // let field = this.entityPM[someName];
-        // if(!field){
-        //     ValidationErrors.push(someName);
-        // }
-        this.mandatoryFielsList.forEach(item => {
+    CheckMandatoryCustomsFields(ValidationErrors = []) {
+        this.tempCertificateOfOriginMandatoryFieldsList.forEach(item => {
             if(item){
-                let field = this.entityPM[item];
+                let field = this.entityPM[item.MappedCertificateFieldsName];
                 if (!field)
-                    ValidationErrors.push(item);
+                    ValidationErrors.push(item.MappedCertificateFieldsName);
             }
-        }); 
+        });
     }
     //#region properties
 

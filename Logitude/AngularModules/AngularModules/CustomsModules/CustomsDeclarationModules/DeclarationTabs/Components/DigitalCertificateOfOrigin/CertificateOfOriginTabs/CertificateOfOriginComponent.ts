@@ -324,7 +324,9 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
     async SendButtonClicked(customSendOptionsArgs: any) {
         this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
-        // this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
+        if(this.SelectedTabCode == "MOREDATA"){
+            this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
+        }
 
         this.ValidationErrors = this.GeneralValidationErrors.concat(this.MoreDataValidationErrors);
 
