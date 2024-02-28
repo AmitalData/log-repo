@@ -87,7 +87,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
         this.isAllowChange = args.isAllowChange;
-
+        
         this.isListenToChangeInCertificate(args.logWindow);
 
         this.InitMoreDataScreenValues();
@@ -125,7 +125,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.TabsItemsSource.push(new TabItem("ANSWERTOCERTIFICATE", "Customs.CertificateOfOrigin.O.AnswerToCertificate"));
 
         // this.BuildClientsTapagList();
-        this.selectedTabCode = "GENERAL";
+        this.selectedTabCode = "GENERAL"; 
     }
 
     RunComponent() {
@@ -246,9 +246,13 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
     // Init data from MOREDATA page:
     InitMoreDataScreenValues() {
-        this.EntityPM.IsConsigneeForPrint = true;
-        this.EntityPM.IsDeclaredByManufacture = true;
-
+        if (AppTool.IsNullOrEmpty(this.EntityPM.IsConsigneeForPrint)) {
+            this.EntityPM.IsConsigneeForPrint = true;
+        }
+        if (AppTool.IsNullOrEmpty(this.EntityPM.IsDeclaredByManufacture)) {
+            this.EntityPM.IsDeclaredByManufacture = true;
+        }
+        
         if (AppTool.IsNullOrEmpty(this.EntityPM.CityOfDeclaration)) {
             this.certificateOfOriginWebService.GetCityOfDeclarationByImporterID(this.DecalarationData.ImporterId, this.EntityPM.Tenant).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;

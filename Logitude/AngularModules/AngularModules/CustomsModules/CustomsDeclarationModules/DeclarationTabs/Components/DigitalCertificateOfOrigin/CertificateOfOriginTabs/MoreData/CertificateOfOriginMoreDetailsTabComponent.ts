@@ -177,7 +177,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     public get IsDeclaredByExporter(): boolean {
-        if (!this.entityPM.IsDeclaredByExporter) {
+        if (AppTool.IsNullOrEmpty(this.entityPM.IsDeclaredByExporter)) {
             this.entityPM.IsDeclaredByExporter = true;
         }
         return this.entityPM.IsDeclaredByExporter;
@@ -214,7 +214,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
 
     public get IsConsigneeForPrint(): boolean {
-        if (!this.entityPM.IsConsigneeForPrint) {
+        if (AppTool.IsNullOrEmpty(this.entityPM.IsConsigneeForPrint)) {
             this.entityPM.IsConsigneeForPrint = true;
         }
         return this.entityPM.IsConsigneeForPrint;
