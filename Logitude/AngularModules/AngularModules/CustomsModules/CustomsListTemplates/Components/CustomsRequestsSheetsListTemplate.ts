@@ -207,10 +207,12 @@ export class CustomsRequestsSheetsListTemplate {
     }
     
     Copy2Clipboard() {    
-        const el = document.createElement('textarea');    
-        el.value = this._CustomsRequestsSheet.CorrelationId;    
-        document.body.appendChild(el);    
-        el.select();    
-        document.execCommand('copy'); 
+        var valueToCopy = this._CustomsRequestsSheet.CorrelationId;
+        var tempTextArea = document.createElement("textarea");
+        tempTextArea.value = valueToCopy;
+        document.body.appendChild(tempTextArea);
+        tempTextArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempTextArea); 
     }
 }
