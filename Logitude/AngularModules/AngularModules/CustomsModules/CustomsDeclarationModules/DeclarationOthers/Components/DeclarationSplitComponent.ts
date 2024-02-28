@@ -38,6 +38,7 @@ import { DownloadManager } from '../../../../Infrastructure/Utilities/DownloadMa
 import { SupplierInvoiceItemPM } from '../../../../Customs/EntityPMs/SupplierInvoiceItemPM';
 import { CustomsDocumentsDataProvider } from 'CustomsModules/CustomsDocuments/Components/CustomsDocumentsDataProvider';
 import { NullTemplateVisitor } from '@angular/compiler';
+import { CustomsSettingExtendedListService } from 'Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
 @Component({
 
     templateUrl: './DeclarationSplitComponent.html',
@@ -71,6 +72,7 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
     private _CustomDocumentViewerService: CustomDocumentViewerService = new CustomDocumentViewerService();
     private custDocsMetadataWebService: CustDocMetaDataValuesWebService = new CustDocMetaDataValuesWebService();
     private customsSettingListService: CustomsSettingListService = new CustomsSettingListService;
+    private customsSettingExtendedListService: CustomsSettingExtendedListService = new CustomsSettingExtendedListService();
     DeclarationSplitDocumentSelectionEVENT;
     DeclarationSplitDocumentItemSelectionEVENT;
     invoiceItem: any;
@@ -78,7 +80,19 @@ export class DeclarationSplitComponent extends BaseComponent implements AfterVie
         super();
         var counter = ControlsIdCounter.GetNextControlIdCounter("DocumentViewerImage");
         this.DocumentViewerImageId = "DocumentViewerImage-" + counter;
-        this.showPdfDocument = FeatureLocator.HasFeaturePermession("Customs.CustomsDocument", "ViewDocumentAsPdf") && this.DeclarationPM.IsCourierDeclaration;
+
+        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+            if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "ViewDocumentAsPdf")) {
+                // this.DeclarationPM.IsCourierDeclaration is not defined in BLD
+                this.customsSettingExtendedListService.GetSettingByTenant().subscribe((response: ServiceResponse) => {
+                    this.showPdfDocument = response?.Result?.CompanyType == "B";
+                });
+            }
+            else {
+                this.showPdfDocument = false;
+            }
+        });
+
     }
     @ViewChild('myImg', { static: true }) myImgVariable: ElementRef;
 

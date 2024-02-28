@@ -29,6 +29,7 @@ import { CustomDocumentNewVersionService } from '../services/CustomDocumentNewVe
 import { CustomsDocumentsTicketsExtendedService } from 'Customs/Services/ExtendedPMs/CustomsDocumentsTicketsExtendedService';
 import { FeatureLocator } from 'Infrastructure/Utilities/FeatureLocator';
 import { CustomsSettingExtendedListService } from 'Customs/Services/ExtendedLists/CustomsSettingExtendedListService';
+import { EntityResourceService } from 'Infrastructure/Services/EntityResourceService';
 
 @Component({
 
@@ -181,18 +182,25 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
     ClosingData: any;
     WindowArgs: any;
     private readonly customDocumentNewVersionService: CustomDocumentNewVersionService = new CustomDocumentNewVersionService();
+    private _entityResourceService: EntityResourceService = new EntityResourceService();
 
     //***********************************************************************//
     constructor() {
         super();
-        if (FeatureLocator.HasFeaturePermession("Customs.CustomsDocument", "ViewDocumentAsPdf")) {
-            this.customsSettingExtendedListService.GetSettingByTenant().subscribe((response: ServiceResponse) => {
-                this.showPdfDocument = response?.Result?.CompanyType == "B";
-            });
-        }
-        else {
-            this.showPdfDocument = false;
-        }
+
+        this._entityResourceService.getEntityResourceByTableName("Customs.Declaration").subscribe((response: any) => {
+            if (FeatureLocator.HasFeaturePermession("Customs.Declaration", "ViewDocumentAsPdf")) {
+                this.customsSettingExtendedListService.GetSettingByTenant().subscribe((response: ServiceResponse) => {
+                    this.showPdfDocument = response?.Result?.CompanyType == "B";
+                    if (this.showPdfDocument) {
+                        this.LoadDocumentPage();
+                    }
+                });
+            }
+            else {
+                this.showPdfDocument = false;
+            }
+        });
     }
 
     public isRequireDocumentTicket: string = null;
