@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CustomsDocumentUpdateClass
    {  		
-		public const string HashString = "27c95f1013787c89b1d008f61a609495";
+		public const string HashString = "58c7b9df015bae3ed6c8ca1a3be4288b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -125,7 +125,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Customs Document",
-			      				    Code =  "d497",
+			      				    Code =  "dcbd",
 			      				    Name =  "Customs.CustomsDocument Query Group",
 			      				    GenerateDomainService =  false,
 			      				    NoTS =  false,
@@ -2313,8 +2313,6 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 		   		   //--------------> Additional Features <--------------\\
 
 		   Feature CustomsDocumentFeature_GENERAL = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "GENERAL", FeatureTypeCode = "AREA", Packagable = false, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsDocument.Features.General", NameTextCodeDefaultText = @"General" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsDocumentObjectTable);
-
-		   Feature CustomsDocumentFeature_ViewDocumentAsPdf = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ViewDocumentAsPdf", FeatureTypeCode = "ACT", Packagable = true, IsBusinessUnitEnabled = false, IsOld = false, IsCoreFeature = false, ObjectTableId = CustomsDocumentObjectTable.Id, Tenant = 0, NameTextCodeCode = "Customs.CustomsDocument.Features.ViewDocumentAsPdf", NameTextCodeDefaultText = @"להציג את המסמך כ-PDF" }, FeaturesRepository, TextCodeRepository, TenantFeatures, TextCodes,CustomsDocumentObjectTable);
 
    
 	    
