@@ -79,6 +79,10 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
 
 
     }
+
+    updateEntity(EntityPM: CertificateOfOriginPM) {
+        this.entityPM = EntityPM;
+    }
     
     CheckMandatoryFields() {
         if (!this.entityPM.CooTypeCode && !this.entityPM.RequestReasonCode) {
