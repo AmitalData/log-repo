@@ -266,11 +266,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     SaveAndSendClick(customSendOptionsArgs: any = null) {
         if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
             this.GENERAL.CheckMandatoryFields();
-            //if( this.selectedTabCode == "GENERAL"){
-            //}
-            // else if( this.selectedTabCode = "MOREDATA"){
-            //     this.MOREDATA.CheckMandatoryFields();
-            // }
             return;
         }
 
