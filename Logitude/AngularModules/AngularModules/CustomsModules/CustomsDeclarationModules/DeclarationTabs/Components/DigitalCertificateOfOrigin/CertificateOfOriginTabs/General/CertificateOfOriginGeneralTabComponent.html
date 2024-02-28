@@ -10,7 +10,7 @@
                 </div>
             </div>
         </td>
-        <td *ngIf="entityPM.IsChange">
+        <td *ngIf="entityPM.IsChange && entityPM.COONumber != null">
             <div style="width:90%;text-align:center">
                 <div class="DisbleBox">
                     {{'Customs.CertificateOfOrigin.O.IsChange'| TextCodeTranslationPipe}}
