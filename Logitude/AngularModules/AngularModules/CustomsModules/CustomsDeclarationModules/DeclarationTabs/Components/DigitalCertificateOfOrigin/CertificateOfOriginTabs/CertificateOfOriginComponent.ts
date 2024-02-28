@@ -400,7 +400,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
     CheckMandatoryCustomsFields(customSendOptionsArgs: any, ValidationErrors: any[], screenName: string) {
         var windowArgs: any = {};
-        windowArgs.Errors = ValidationErrors;
+        // windowArgs.Errors = ValidationErrors;
+        windowArgs.Warning = ValidationErrors;
         windowArgs.NoButtonVisibility = false;
         windowArgs.CancelButtonVisibility = true;
         windowArgs.SaveButtonText = "אשר";
