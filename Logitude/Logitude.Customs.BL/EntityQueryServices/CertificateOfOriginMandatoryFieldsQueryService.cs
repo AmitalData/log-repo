@@ -30,9 +30,11 @@ namespace Logitude.Customs.BL.EntityQueryServices
             {
                 foreach (var item in mandatoryFieldslist)
                 {
-                    var mandatoryFieldPM = this.GetEntityPM(item, false, new CertificateOfOriginMandatoryFieldsKeys { Code = item.Code.ToString() });
-
-                    mandatoryFieldslistPM.Add(mandatoryFieldPM);
+                    if (item.IsMandatory)
+                    {
+                        var mandatoryFieldPM = this.GetEntityPM(item, false, new CertificateOfOriginMandatoryFieldsKeys { Code = item.Code.ToString() });
+                        mandatoryFieldslistPM.Add(mandatoryFieldPM);
+                    }
 
                 }
             }
