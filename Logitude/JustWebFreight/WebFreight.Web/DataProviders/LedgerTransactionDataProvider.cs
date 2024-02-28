@@ -32,6 +32,7 @@ namespace WebFreight.Web.DataProviders
         public decimal ForeignClosedBalance { get; set; }
         public decimal LastCumulativeOpenAmount { get; set; }
 
+
         // List
         public List<ReportLedgerTransaction> Transactions { get; set; }
 
@@ -96,6 +97,15 @@ namespace WebFreight.Web.DataProviders
         public string JournalNumber { get; set; }
         public decimal CumulativeOpenAmount { get; set; }
         public decimal CalculatedForeignAmount { get; set; }
+
+        public string Category1Id { get; set; }
+        public string Category2Id { get; set; }
+        public string Category3Id { get; set; }
+        public string Category4Id { get; set; }
+        public string Category5Id { get; set; }
+        public string Collector { get; set; }
+
+        public string PaymentTerms { get; set; }
 
 
 
@@ -211,5 +221,7 @@ namespace WebFreight.Web.DataProviders
         {
             get { return string.Format("{0:N2} {1}", ForeignBalanceInDue, ForeignCurrencySign); }
         }
+
+      
     }
 }

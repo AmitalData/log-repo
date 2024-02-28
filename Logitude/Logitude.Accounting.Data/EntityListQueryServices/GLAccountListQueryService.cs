@@ -237,6 +237,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                                                    Salesman = CardsDatas != null ? CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
                                                    Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
                                                    CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
+                                                   Category1Id=a.Category1Id,
+                                                   Category2Id = a.Category2Id,
+                                                   Category3Id = a.Category3Id,
+                                                   Category4Id = a.Category4Id,
+                                                   Category5Id = a.Category5Id,
 
                                                    // GLAccount Follow Up Datas
                                                    FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,

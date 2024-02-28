@@ -70,6 +70,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
     private entityListService: EntityListService = new EntityListService();
     public IsSalesmanRestricted: boolean = false;
     public SalesmanFilterItems: ApiQueryFilters;
+    public CollectorFilterItems: ApiQueryFilters;
     public ChartOfAccountTypeFilterItems: ApiQueryFilters;
     public GLAccountFilterItems: ApiQueryFilters;
     private chartOfAccountPMService: ChartOfAccountPMService = new ChartOfAccountPMService();
@@ -116,7 +117,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
 
         this.SalesmanFilterItems = new ApiQueryFilters();
         this.SalesmanFilterItems.addAdditionalFilter("IsSalesman", true, null, null, "Equals", false, false, false, "boolean", false, false);
-
+        this.CollectorFilterItems = new ApiQueryFilters();
         // GLAccount lov field filtera
         this.GLAccountFilterItems = new ApiQueryFilters();
         this.GLAccountFilterItems.addAdditionalFilter("AccountTypeCode", "4,5", null, null, "Exclude", false, false, false, "string", false, true);
@@ -305,7 +306,7 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
             this.salesman = value;
         }
     }
-
+   
     //row 3
 
     private category1: string;
@@ -467,6 +468,13 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
         queryFilterItems.push(queryFilterItem);
 
         queryFilterItem = new QueryFilterItem();
+        queryFilterItem.FieldName = "CollectorId";
+        queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.collector);
+        queryFilterItem.Operator = "Equals";
+        queryFilterItem.DisplayInList = true; // server code will take this value from DB.ObjectField.DisplayInList
+        queryFilterItems.push(queryFilterItem);
+
+        queryFilterItem = new QueryFilterItem();
         queryFilterItem.FieldName = "ChartOfAccountId";
         queryFilterItem.FieldValue = this.GetLookUpFieldValue(this.ChartOfAccountId);
         queryFilterItem.Operator = "Equals";
@@ -605,6 +613,9 @@ export class LedgerTransactionsFilterControl extends BaseComponent implements On
                     break;
                 case "SalesmanUserId":
                     this.Salesman = queryFilterItem.FieldValue;
+                    break;
+                case "CollectorId":
+                    this.Collector = queryFilterItem.FieldValue;
                     break;
                 case "CategoryIndex":
                     this.SelectedItemChanged(this.GetLookUpFieldValue(queryFilterItem.FieldValue));
