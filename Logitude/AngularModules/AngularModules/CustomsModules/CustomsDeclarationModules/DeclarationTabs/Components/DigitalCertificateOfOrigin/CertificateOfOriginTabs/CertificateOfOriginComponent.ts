@@ -266,11 +266,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     SaveAndSendClick(customSendOptionsArgs: any = null) {
         if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
             this.GENERAL.CheckMandatoryFields();
-            //if( this.selectedTabCode == "GENERAL"){
-            //}
-            // else if( this.selectedTabCode = "MOREDATA"){
-            //     this.MOREDATA.CheckMandatoryFields();
-            // }
             return;
         }
 
@@ -405,7 +400,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
     CheckMandatoryCustomsFields(customSendOptionsArgs: any, ValidationErrors: any[], screenName: string) {
         var windowArgs: any = {};
-        windowArgs.Errors = ValidationErrors;
+        // windowArgs.Errors = ValidationErrors;
+        windowArgs.Warning = ValidationErrors;
         windowArgs.NoButtonVisibility = false;
         windowArgs.CancelButtonVisibility = true;
         windowArgs.SaveButtonText = "אשר";

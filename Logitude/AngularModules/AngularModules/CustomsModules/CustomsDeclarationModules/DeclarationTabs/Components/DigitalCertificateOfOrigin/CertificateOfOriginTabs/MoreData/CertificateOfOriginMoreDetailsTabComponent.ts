@@ -141,8 +141,10 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
         this.tempCertificateOfOriginMandatoryFieldsList.forEach(item => {
             if(item){
                 let field = this.entityPM[item.MappedCertificateFieldsName];
-                if (!field)
-                    ValidationErrors.push(item.MappedCertificateFieldsName);
+                if (!field){
+                    var fieldName = TextCodeTranslator.Translate('Customs.CertificateOfOrigin.F.' + item.MappedCertificateFieldsName);  
+                    ValidationErrors.push(fieldName);
+                }
             }
         });
     }
