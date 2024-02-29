@@ -1705,7 +1705,12 @@ export class ARInvoiceLineItem extends BaseComponent {
             this.EntityPM.Description = newValue;
         }
     }
-
+    get ValueDate() { return this.EntityPM.ValueDate; }
+    set ValueDate(newValue: Date) {
+        if (this.EntityPM.ValueDate != newValue) {
+            this.EntityPM.ValueDate = newValue;
+        }
+    }
     get LineActionCode() { return this.EntityPM.LineActionCode; }
     set LineActionCode(newValue: string) {
         if (this.EntityPM.LineActionCode != newValue) {
