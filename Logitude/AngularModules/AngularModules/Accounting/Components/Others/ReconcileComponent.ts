@@ -769,12 +769,13 @@ export class ReconcileComponent extends BaseComponent implements OnInit, OnDestr
         }
     }
     OpenAmountTextChanged(searchtext, OperatorChanged: boolean = false) {
+        debugger
         if (!AppTool.IsNullOrEmpty(searchtext) && !AppTool.IsNullOrEmpty(this.OpenAmountSelectedOperator)) {
-
+           console.log(searchtext+"!!!!!!!!!!!!!!!!!!!!")
             this.timerToken = setTimeout(() => {
                 var OpenAmountFilterOperator = this.OpenAmountSelectedOperator.EnglishName.replace(/ /g, ''); // remove white spaces
                 if (OpenAmountFilterOperator == "Equals") {
-                    this.openAmountFilter = new FilterItem("OpenAmount", searchtext, -1 * searchtext, null, OpenAmountFilterOperator, false, false, false, "number", false);
+                    this.openAmountFilter = new FilterItem("OpenAmount", searchtext, null, null, OpenAmountFilterOperator, false, false, false, "number", false);
                 }
                 else if (OpenAmountFilterOperator == "LessThan") {
                     this.openAmountFilter = new FilterItem("OpenAmount", searchtext, null, null, "LessThan", false, false, false, "number", false);
