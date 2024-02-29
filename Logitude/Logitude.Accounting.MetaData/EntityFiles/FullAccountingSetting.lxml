@@ -42,7 +42,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;הגדרות הנהלת חשבונות&quot;"
   DefaultText="&quot;Full Accounting Settings&quot;"
-  Code="&quot;07c0&quot;"
+  Code="&quot;9ef3&quot;"
   Name="&quot;FullAccountingSetting Query Group&quot;"
   GenerateDomainService="true"
   ClientModuleName="&quot;Accounting&quot;"
@@ -4728,6 +4728,24 @@
       Code="&quot;FullAccountingSetting.O.CopyFromTenant0&quot;"
       DefaultText="&quot;Copying Data From Tenant0&quot;"
       LocalDefaultText="&quot;העתקת נתונים מדייר 0&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;FullAccountingSetting.O.HSMTokenLong&quot;"
+      DefaultText="&quot;HSM Token must be 36 characters long and should be format like 8X-4X-4X-4X-12X&quot;"
+      LocalDefaultText="&quot;טוקן HSM חייב להכיל 36 תוים בפורמט 8X-4X-4X-4X-12X&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;FullAccountingSetting.O.HSMTokenFormat&quot;"
+      DefaultText="&quot;HSM Token should be format like 8X-4X-4X-4X-12X&quot;"
+      LocalDefaultText="&quot;טוקן HSM חייב להיות בפורמט 8X-4X-4X-4X-12X&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;FullAccountingSetting.O.HSMAddressLong&quot;"
+      DefaultText="&quot;HSM Address must be 50 characters long&quot;"
+      LocalDefaultText="&quot;כתובת HSM חייבת להיות באורך 50 תוים&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
