@@ -1032,5 +1032,7 @@ namespace Logitude.BL.CommonDataModel.EntityPMs
         [DataMember]
         public DateTime? LastLoginDateViaMobile { get; set; }
         public bool IsPotential { get; set; }
+        [DataMember]
+        public string ContactForAccounting { get; set; }
     }
 }

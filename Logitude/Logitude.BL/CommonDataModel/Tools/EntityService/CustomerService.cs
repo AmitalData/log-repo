@@ -389,6 +389,7 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             this.UpdateCustomerMediatorByProductCollection();
             this.UpdateCardExternalCodeByCurrencyCollection();
             this.UpdateProductItemsCollection();
+            this.UpdateContactForAccounting();
 
            
             //var tenantQuery = new TenantQuery(entityPM.Tenant);
@@ -1224,7 +1225,40 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
                 }
             }
         }
+        private void UpdateContactForAccounting()
+        {
+            ContactQuery entityQuery = new ContactQuery(entityPM.Tenant);
+            ContactRepository repository = new ContactRepository(objectContext);
+            var myResult = entityQuery.GetContactsbyCardId(entityPM.Id, entityPM.Tenant).ToList();
+            foreach(var item in myResult)
+            {
+                if(item.ContactForAccounting == true && item.Id != entityPM.ContactForAccounting)
+                {
+                    var entity = repository.GetSingleContact(item.Id, entityPM.Tenant);
 
+                    if (entity != null)
+                    {
+                        entity.ContactForAccounting = false;
+                        repository.Update(entity);
+
+
+                    }
+                }
+                if(item.ContactForAccounting != true && item.Id == entityPM.ContactForAccounting)
+                {
+                    var entity = repository.GetSingleContact(item.Id, entityPM.Tenant);
+
+                    if (entity != null)
+                    {
+                        entity.ContactForAccounting = true;
+                        repository.Update(entity);
+
+                    }
+                }
+            }
+            repository.SubmitChanges();
+
+        }
         private void CreateCustomerProduct(CustomerProductPM itemPM)
         {
             itemPM.CustomerId = this.entityPM.Id;
