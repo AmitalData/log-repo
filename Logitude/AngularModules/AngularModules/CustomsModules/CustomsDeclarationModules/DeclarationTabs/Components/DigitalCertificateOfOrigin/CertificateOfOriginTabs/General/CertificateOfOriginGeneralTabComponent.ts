@@ -317,9 +317,17 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.getCardById(this.currentDeclaration.CustomerId);
 
         if (this.currentDeclaration.DeclarationExportRecipients.length > 0) {
-            var fieldVal = this.currentDeclaration.DeclarationExportRecipients[0]?.RecipientName; // first from list
-            if (fieldVal) {
-                this.entityPM.ConsigneeName = fieldVal;
+            var consigneeName = this.currentDeclaration.DeclarationExportRecipients[0]?.RecipientName; // first from list
+            if (consigneeName) {
+                this.entityPM.ConsigneeName = consigneeName;
+            }
+            var consigneeAddress = this.currentDeclaration.DeclarationExportRecipients[0]?.RecipientAddress; // first from list
+            if (consigneeAddress) {
+                this.entityPM.ConsigneeAddress = consigneeAddress;
+            }
+            var consigneeCountry = this.currentDeclaration.DeclarationExportRecipients[0]?.RecipientIssueCountryCode; // first from list
+            if (consigneeCountry) {
+                this.entityPM.ConsigneeCountry = consigneeCountry;
             }
         }
 
@@ -327,8 +335,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         if (this.currentDeclaration.SupplierInvoices.length > 0) {
             let supplierInvoices = this.currentDeclaration.SupplierInvoices[0];
-            this.entityPM.ConsigneeAddress = !AppTool.IsNullOrEmpty(supplierInvoices.BuyerAddress) ? supplierInvoices.BuyerAddress : "";
-            this.entityPM.ConsigneeCountry = !AppTool.IsNullOrEmpty(supplierInvoices.BuyerCountryCode) ? supplierInvoices.BuyerCountryCode : "";
+            // this.entityPM.ConsigneeAddress = !AppTool.IsNullOrEmpty(supplierInvoices.BuyerAddress) ? supplierInvoices.BuyerAddress : "";
+            // this.entityPM.ConsigneeCountry = !AppTool.IsNullOrEmpty(supplierInvoices.BuyerCountryCode) ? supplierInvoices.BuyerCountryCode : "";
 
             if (supplierInvoices.SupplierInvoiceItems.length > 0) {
                 var fieldVal = supplierInvoices?.SupplierInvoiceItems[0]?.OriginCountryCode; // the first invoice from list
