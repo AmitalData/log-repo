@@ -41,8 +41,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 
 																			LastUpdatedDate = a.LastUpdatedDate,
 
-																			MappedCertificateFields = a.MappedCertificateFields,
-                                                                            ///MappedCertificateFieldsName = a.MappedCertificateFieldsName,
+                                                                            MappedCertificateFieldsName = a.MappedCertificateFieldsName,
                                                                             CertificateOfOriginTypeCodeID = a.CertificateOfOriginTypeCodeID,
 
                                                                             CertificateOfOriginTypeName = a.CertificateOfOriginTypeName,
