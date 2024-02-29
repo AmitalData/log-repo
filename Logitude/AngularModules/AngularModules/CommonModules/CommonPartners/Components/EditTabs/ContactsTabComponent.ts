@@ -105,6 +105,7 @@ export class ContactsTabComponent extends BaseComponent implements OnDestroy {
         this.CurrentSession.StartBusyIndicatorLoading();
 
         this.DomainService.GetAllContactsPMsbyCardId(this.EntityPM.Id).subscribe((myResult:any) => {
+            this.SetContactForAccounting(myResult);
             this.BuildItemsSource(myResult);
             this.CurrentSession.StopBusyIndicator();
             this.HasExternalId = this.IsAllContactsHaveExternalId(myResult);
@@ -145,6 +146,17 @@ export class ContactsTabComponent extends BaseComponent implements OnDestroy {
         }
 
         this.IsNoDataVisible = isNoDataVisible;
+    }
+
+    SetContactForAccounting(items: ContactPM[]){
+        debugger;
+        items.forEach(item => {
+            if(item.ContactForAccounting == true){
+                this.EntityPM.ContactForAccounting=item.Id;
+                this.EntityPM.IsDirty=false;
+                return;
+            }
+        });
     }
 
     NewEntityClicked() {
@@ -232,6 +244,7 @@ export class   ContactItemClass extends BaseComponent{
         this.EntityPM = item;
         this.IsNewEntity = isNewEntity; 
         this.CheckPrimary();
+        this.CheckContactForAccounting();
         if(fatherComponent != null) {
             this.CheckEmailForSending(this.fatherComponent.EntityPM['EmailForSendingSingArinvoice'])
         }
@@ -283,6 +296,28 @@ export class   ContactItemClass extends BaseComponent{
      
         this.IsPrimary = isPrimary;
     }
+    CheckContactForAccounting(){
+        var ContactForAccounting = false;
+        var myCardContactForAccounting=null;
+        debugger;
+        if (this.fatherComponent && this.fatherComponent.EntityPM) {
+            myCardContactForAccounting = this.fatherComponent.EntityPM['ContactForAccounting'];
+            if (!AppTool.IsNullOrEmpty(myCardContactForAccounting)) {
+                if (myCardContactForAccounting == this.Id) {
+                    ContactForAccounting = true;
+                }
+            }
+        }
+        this.ContactForAccounting = ContactForAccounting;
+    }
+
+    setContactForAccounting(){
+        debugger;
+        this.fatherComponent.EntityPM['ContactForAccounting']=this.Id;
+        this.fatherComponent.ItemsSource.forEach(item => {
+            item.CheckContactForAccounting();
+        });
+    }
     SetPrimary() {
         this.fatherComponent.EntityPM['PrimaryContactId'] = this.Id;
         this.fatherComponent.EntityPM['PrimaryContactName'] = this.EnglishName;
@@ -292,6 +327,8 @@ export class   ContactItemClass extends BaseComponent{
             item.CheckPrimary();
         });
     }
+
+    
 
 
     SetEmailForSendingSingArinvoices() {
