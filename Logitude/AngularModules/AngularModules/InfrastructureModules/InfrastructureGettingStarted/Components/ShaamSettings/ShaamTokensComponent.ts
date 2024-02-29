@@ -128,13 +128,11 @@ export class ShaamTokensComponent extends BaseComponent {
                 false);
         else
             open(this.linkToCodeForToken);
+   		
     }
-
     async initLinkToCodeForToken() {
-        const user: string = SessionLocator.LoggedUserPM.Code || SessionLocator.LoggedUserPM.EnglishName;
-        this.linkToCodeForToken = await new ShaamWebService().getLinkToCodeForToken(user).toPromise();
+        this.linkToCodeForToken = await new ShaamWebService().getLinkToCodeForToken(SessionLocator.LoggedUserPM.Code).toPromise();
     }
-
     refreshTable() {
         this.finishBuildColumns = false;
         this.cd.detectChanges()

@@ -4441,7 +4441,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 
  		   TextCode ClaimTextCode_CustomsClaimOMissingClaimEntityNumber = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.MissingClaimEntityNumber", DefaultText = "Missing Claim Entity Number",LocalDefaultText = @"מספר ישות חסר", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
- 		   TextCode ClaimTextCode_CustomsClaimONotFoundCustomFileNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.NotFoundCustomFileNo", DefaultText = "Not Found Custom File No",LocalDefaultText = @"תיק עמילות לא קיים", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+ 		   TextCode ClaimTextCode_CustomsClaimONotFoundCustomFileNo = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "Customs.Claim.O.NotFoundCustomFileNo", DefaultText = "Not Found Custom File No",LocalDefaultText = @"תיק עמילות לם קיים", ObjectTableId = ClaimObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
 
    
 	    
