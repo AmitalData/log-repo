@@ -191,7 +191,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              Salesman = CardsDatas != null ? CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
                              Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
                              CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
-
+                             Category1Id = a.Category1Id,
+                             Category2Id = a.Category2Id,
+                             Category3Id = a.Category3Id,
+                             Category4Id = a.Category4Id,
+                             Category5Id = a.Category5Id,
                              // GLAccount Follow Up Datas
                              FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,
                              FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks : null,
@@ -423,7 +427,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              Salesman = CardsDatas != null ? CardsDatas.SalesmanUser.Contact.LocalName == null ? CardsDatas.SalesmanUser.Contact.EnglishName : CardsDatas.SalesmanUser.Contact.LocalName : null,
                              Collector = CardsDatas != null ? CardsDatas.CollectorUser.Contact.LocalName == null ? CardsDatas.CollectorUser.Contact.EnglishName : CardsDatas.CollectorUser.Contact.LocalName : null,
                              CardCollectorId = CardsDatas != null ? CardsDatas.CollectorUser.Id : null,
-
+                             Category1Id = a.Category1Id,
+                             Category2Id = a.Category2Id,
+                             Category3Id = a.Category3Id,
+                             Category4Id = a.Category4Id,
+                             Category5Id = a.Category5Id,
                              // GLAccount Follow Up Datas
                              FollowupDate = FollowUpDatas != null ? FollowUpDatas.FollowUpDate : null,
                              FollowupNotes = FollowUpDatas != null ? FollowUpDatas.FollowUpRemarks : null,
@@ -759,6 +767,11 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                            Salesman = glaccount.Salesman,
                            Collector = glaccount.Collector,
                            CardCollectorId = glaccount.CardCollectorId,
+                           Category1Id = glaccount.Category1Id,
+                           Category2Id = glaccount.Category2Id,
+                           Category3Id = glaccount.Category3Id,
+                           Category4Id = glaccount.Category4Id,
+                           Category5Id = glaccount.Category5Id,
                            // GLAccount Follow Up Datas
                            FollowupDate = glaccount.FollowupDate,
                            FollowupNotes = glaccount.FollowupNotes,
