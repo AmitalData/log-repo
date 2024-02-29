@@ -44,7 +44,7 @@ export class AmitalGatewayUtil {
 
     private _AmitalBrowserInUse: boolean = false;
     public get isUnifreightHost(): boolean {  
-        try { return  !!window?.JSBridge || !!window?.parent?.JSBridge; } 
+        try { return !!window?.parent?._JavascriptGateway; } 
         catch  { return false; }
     }
     public get AmitalBrowserInUse(): boolean { return (this._AmitalBrowserInUse === true); }
@@ -1597,5 +1597,3 @@ export class ShowInvoiceFromUrouterReturnCreateInvoiceCommand {
         */
     }  
 }
-
-
