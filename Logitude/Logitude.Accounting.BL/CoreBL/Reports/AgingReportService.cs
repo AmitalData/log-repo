@@ -821,17 +821,17 @@ _Param.AgingForDate.Date, false, true, true,false, false);
             //              )
             //          select rec)
             //          .ToList();
-            if (totals.Count == 0) {
-                foreach (var item in listOfAccountId) {
-                    totals.Add(new CurrencySum() {
-                        AccountId = item,
-                        LocalAmountCredit = 0,
-                        LocalAmountDebit = 0,
-                        ForeignAmountCredit = 0,
-                        ForeignAmountDebit = 0
-                    });
-                }
-            }
+            //if (totals.Count == 0) {
+            //    foreach (var item in listOfAccountId) {
+            //        totals.Add(new CurrencySum() {
+            //            AccountId = item,
+            //            LocalAmountCredit = 0,
+            //            LocalAmountDebit = 0,
+            //            ForeignAmountCredit = 0,
+            //            ForeignAmountDebit = 0
+            //        });
+            //    }
+            //}
 
             return totals;
         }
