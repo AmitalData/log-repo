@@ -192,6 +192,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         private void MarkDuplicateLines(TaxReportPM taxReportPM)
         {
+            // For a similar code see TaxReportService.MarkCreatedDuplicateLines() 
+
             IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
             TaxReportQueryService taxReportQuery = new TaxReportQueryService(accountingContext);
             TaxReportLineQueryService taxReportLineQuery = new TaxReportLineQueryService(accountingContext);
@@ -221,7 +223,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     {
                         VatNumber = g.Key.VatNumber,
                         Reference = g.Key.Reference,
-                        LineNumbers = g.OrderBy(x => x.Line).Select(x => x.Line)
+                        LineNumbers = g.OrderBy(x => x.Line).Select(x => x.Line),
+                        JournalIds = g.OrderBy(x => x.Line).Select(x => x.JournalId).ToList(),
                     })
                     .Where(r => r.LineNumbers.Count() >= 1).ToList();
                 }
@@ -238,11 +241,51 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                         all_dup_line_nos.AddRange(item.LineNumbers);
                     }
 
+                    List<string> all_dup_line_jIds = new List<string>();
+                    foreach (var item in duplicates)
+                    {
+                        all_dup_line_jIds.AddRange(item.JournalIds);
+                    }
+                    List<int> voidedLineNumbers = new List<int>();
+                    JournalQueryService journalQueryService = new JournalQueryService(taxReportPM.Tenant);
+                    List<JournalPM> jPMs = journalQueryService.GetJournalPMs(all_dup_line_jIds, taxReportPM.Tenant);
+                    if (jPMs != null && jPMs.Count > 0)
+                    {
+                        foreach (var item in duplicates)
+                        {
+                            List<JournalPM> oneDupItemJournalPMs = jPMs.Where(j => item.JournalIds.Contains(j.Id)).OrderByDescending(j => j.StatusCode).ToList();
+                            if (oneDupItemJournalPMs != null && oneDupItemJournalPMs.Count == 2)
+                            {
+                                if ((oneDupItemJournalPMs[0].StatusCode == JournalStatuses.Voided || (oneDupItemJournalPMs[0].IsVoided.HasValue && oneDupItemJournalPMs[0].IsVoided.Value)) &&
+                                    oneDupItemJournalPMs[1].OriginalJournalId == oneDupItemJournalPMs[0].Id &&
+                                    oneDupItemJournalPMs[0].VoidedByJournalId == oneDupItemJournalPMs[1].Id)
+                                {
+                                    voidedLineNumbers.AddRange(item.LineNumbers);
+                                }
+                            }
+                        }
+                    }
+
+
+                    List<TaxReportLinePM> voidedLines = new List<TaxReportLinePM>();
                     List<TaxReportLinePM> duplicateLines = new List<TaxReportLinePM>();
 
                     foreach (var oneLine in taxReportLines)
                     {
-                        if (all_dup_line_nos.Contains(oneLine.Line))
+                        if (voidedLineNumbers.Contains(oneLine.Line))
+                        {
+                            oneLine.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
+                            oneLine.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
+                            var entity = taxReportLineQuery.GetSingle(oneLine.TaxReportId, oneLine.Line, false, false);
+                            if (entity != null)
+                            {
+                                entity.ChangeSetOp = ChangeSetOperation.Update;
+                                entity.StatusCode = TaxReportLineStatusValues.DuplicateThereisanothertransactionwiththesameVATNoandReference;
+                                if (entity.IsManuallyChanged == false) entity.IsManuallyChanged = null;
+                                voidedLines.Add(entity);
+                            }
+                        }
+                        else if (all_dup_line_nos.Contains(oneLine.Line))
                         {
                             var entity = taxReportLineQuery.GetSingle(oneLine.TaxReportId, oneLine.Line, false, false);
                             if (entity != null)
@@ -264,17 +307,19 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                                 removeDupLines.Add(entity);
                             }
                         }
+
                     }
 
-                    if (duplicateLines.Count > 0 || removeDupLines.Count > 0)
+                    if (voidedLines.Count > 0 || duplicateLines.Count > 0 || removeDupLines.Count > 0)
                     {
                         accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
                         taxReportLineUpdateService = new TaxReportLineUpdateService(accountingContext, new Dictionary<string, IContext>(), taxReportPM.Tenant);
+                        if (voidedLines.Count > 0) taxReportLineUpdateService.UpdateMulti(voidedLines, new List<TaxReportLinePM>(), taxReportPM, true);
                         if (duplicateLines.Count > 0) taxReportLineUpdateService.UpdateMulti(duplicateLines, new List<TaxReportLinePM>(), taxReportPM, true);
                         if (removeDupLines.Count > 0) taxReportLineUpdateService.UpdateMulti(removeDupLines, new List<TaxReportLinePM>(), taxReportPM, true);
                     }
                 }
-                else
+                else // no duplicates
                 {
                     foreach (var linePM in taxReportLines)
                     {
@@ -307,6 +352,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             public string VatNumber { get; set; }
             public string Reference { get; set; }
             public IEnumerable<int> LineNumbers { get; set; }
+            public List<string> JournalIds { get; set; }
 
         }
         private void UpdateReportStatus(TaxReportPM taxReportPM)
