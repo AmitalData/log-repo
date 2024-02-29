@@ -727,8 +727,7 @@ export class GLAccountOverviewComponent extends BaseComponent {
             else
                 percentage = 0;
 
-            this.creditStatusAmount = (this.CreditLimitAmount ? this.CreditLimitAmount : 0) - this.accountTotal;
-
+            this.creditStatusAmount = -1 * ((this.CreditLimitAmount ? this.CreditLimitAmount : 0) - this.accountTotal);
         }
 
         if (!percentage) percentage = 0;
