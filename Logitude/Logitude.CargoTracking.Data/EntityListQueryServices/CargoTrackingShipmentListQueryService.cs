@@ -20,6 +20,7 @@ using System.Runtime.Remoting.Contexts;
 using Logitude.CargoTracking.Data.Model;
 using System.Globalization;
 using Logitude.Server.Tools.Utils;
+using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools;
 using System.Linq;
 using Newtonsoft.Json;
@@ -772,7 +773,8 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             shipments = SortShipments(shipmentSearchInput, shipments);
             shipments = GetPageOfShipments(shipmentSearchInput.PageIndex, shipmentSearchInput.PageSize, shipments);
             shipments = AddCards(shipments);
-            List<CargoTrackingShipmentList> shipmentsLists = shipments.ToList();
+
+            List<CargoTrackingShipmentList> shipmentsLists = shipments.LogAndGetList(MethodBase.GetCurrentMethod().Name) as List<CargoTrackingShipmentList>; //shipments.ToList();
 
             List<CargoTrackingPortList> ports = GetPortFromCache();
             List<CargoTrackingTransportMode> transportModes = new CargoTrackingTransportModeListQueryService(context).GetAllFromCache();
@@ -792,11 +794,13 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
                 shipment.TransportModeName = transportMode?.Name;
             });
 
-            
+           
 
-            Logger.LogDebug( "GetFilteredSortedShipments Query: \r\n {0}" , shipments.ToTraceQuery());
 
-            Logger.LogDebug("GetFilteredSortedShipments SUM duration {0} seconds " , (DateTime.Now - start).TotalSeconds);
+
+           // Logger.LogDebug( "GetFilteredSortedShipments Query: \r\n {0}" , shipments.ToTraceQuery());
+
+           // Logger.LogDebug("GetFilteredSortedShipments SUM duration {0} seconds " , (DateTime.Now - start).TotalSeconds);
 
             return shipmentsLists;
         }
