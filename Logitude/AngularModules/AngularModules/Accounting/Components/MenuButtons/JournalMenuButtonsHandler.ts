@@ -344,7 +344,7 @@ export class JournalMenuButtonsHandler {
         windowArgs.JournalPM = this.EntityPM;
         var logWindow = new LogitudeWindow();
         logWindow.Width = 700;
-        logWindow.Height = 250;
+        logWindow.Height = 320;
         logWindow.Title = windowTitle;
         logWindow.WindowArgs = windowArgs;
         logWindow.WindowClosed.subscribe(($event: any) => {
