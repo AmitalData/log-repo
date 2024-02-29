@@ -39,7 +39,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;General&quot;"
-  Code="&quot;8af0&quot;"
+  Code="&quot;c589&quot;"
   Name="&quot;General&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Generals&quot;"
@@ -5895,6 +5895,12 @@
       DefaultText="&quot;SHAAM Token Management&quot;"
       LocalDefaultText="&quot;&quot;"
       TextCodeTypeCode="&quot;MC&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;General.O.Mine&quot;"
+      DefaultText="&quot;Mine&quot;"
+      LocalDefaultText="&quot;שלי&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
   <AdditionalFeatures>
