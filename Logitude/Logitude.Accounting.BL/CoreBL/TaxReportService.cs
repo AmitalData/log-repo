@@ -408,6 +408,8 @@ namespace Logitude.Accounting.BL.CoreBL
         }
         private static void MarkCreatedDuplicateLines(TaxReportPM taxReportPM, List<TaxReportLinePM> taxReportLines)
         {
+            // For a similar code see TaxReportUpdateService.MarkDuplicateLines() 
+
             //List<TaxReportLinePM> taxReportLines = GetTaxReportLines(taxReportPM.Id, taxReportPM.Tenant);
             if (taxReportLines != null && taxReportLines.Count > 0)
             {
@@ -440,7 +442,8 @@ namespace Logitude.Accounting.BL.CoreBL
                     {
                         VatNumber = g.Key.VatNumber,
                         Reference = g.Key.Reference,
-                        LineNumbers = g.OrderBy(x => x.Line).Select(x => x.Line)
+                        LineNumbers = g.OrderBy(x => x.Line).Select(x => x.Line),
+                        JournalIds = g.OrderBy(x => x.Line).Select(x => x.JournalId).ToList(),
                     })
                     .Where(r => r.LineNumbers.Count() >= 1).ToList();
                 }
@@ -456,6 +459,31 @@ namespace Logitude.Accounting.BL.CoreBL
                     foreach (var item in duplicates)
                     {
                         all_dup_line_nos.AddRange(item.LineNumbers);
+                    }
+
+                    List<string> all_dup_line_jIds = new List<string>();
+                    foreach (var item in duplicates)
+                    {
+                        all_dup_line_jIds.AddRange(item.JournalIds);
+                    }
+                    List<int> voidedLineNumbers = new List<int>();
+                    JournalQueryService journalQueryService = new JournalQueryService(taxReportPM.Tenant);
+                    List<JournalPM> jPMs = journalQueryService.GetJournalPMs(all_dup_line_jIds, taxReportPM.Tenant);
+                    if (jPMs != null && jPMs.Count > 0)
+                    {
+                        foreach (var item in duplicates)
+                        {
+                            List<JournalPM> oneDupItemJournalPMs = jPMs.Where(j => item.JournalIds.Contains(j.Id)).OrderByDescending(j => j.StatusCode).ToList();
+                            if (oneDupItemJournalPMs != null && oneDupItemJournalPMs.Count == 2)
+                            {
+                                if ((oneDupItemJournalPMs[0].StatusCode == JournalStatuses.Voided  || (oneDupItemJournalPMs[0].IsVoided.HasValue && oneDupItemJournalPMs[0].IsVoided.Value)) &&
+                                    oneDupItemJournalPMs[1].OriginalJournalId == oneDupItemJournalPMs[0].Id &&
+                                    oneDupItemJournalPMs[0].VoidedByJournalId == oneDupItemJournalPMs[1].Id)
+                                {
+                                    voidedLineNumbers.AddRange(item.LineNumbers);
+                                }
+                            }
+                        }
                     }
 
                     //       List<TaxReportLinePM> duplicateLines = new List<TaxReportLinePM>();
@@ -474,6 +502,11 @@ namespace Logitude.Accounting.BL.CoreBL
                             oneLine.StatusCode = "6";
                             //    removeDupLines.Add(oneLine);
                         }
+                        if (voidedLineNumbers.Contains(oneLine.Line))
+                        {
+                            oneLine.TransmitStatusCode = TaxReportLineTransmitStatusValues.Notfortransmitatall;
+                            oneLine.StatusCode = TaxReportLineStatusValues.Readyfortransmit;
+                        }
 
                     }
 
@@ -485,7 +518,7 @@ namespace Logitude.Accounting.BL.CoreBL
                     //  if (removeDupLines.Count > 0) taxReportLineUpdateService.UpdateMulti(removeDupLines, new List<TaxReportLinePM>(), taxReportPM, true);
                     //   }
                 }
-                else
+                else // no duplicates 
                 {
                     foreach (var linePM in taxReportLines)
                     {
@@ -518,6 +551,7 @@ namespace Logitude.Accounting.BL.CoreBL
             public string VatNumber { get; set; }
             public string Reference { get; set; }
             public IEnumerable<int> LineNumbers { get; set; }
+            public List<string> JournalIds { get; set; } 
 
         }
         private static string SetTransmitStaus(DateTime invoiceDate, DateTime taxReportMonth, FullAccountingSetting setting)
