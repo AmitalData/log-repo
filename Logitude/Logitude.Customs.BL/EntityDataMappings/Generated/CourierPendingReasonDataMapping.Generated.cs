@@ -65,9 +65,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
 	    public void PMToPOCO(CourierPendingReasonPM entityPM, CourierPendingReason entityPOCO)
         {
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Id))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
             {
-				entityPOCO.Id = entityPM.Id;
+				entityPOCO.Code = entityPM.Code;
 			}
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))
@@ -212,9 +212,9 @@ namespace Logitude.Customs.BL.EntityDataMappings
         {
 		     oldEntityPM.ChangedProperties.Clear();
 			 
-			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Id))
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Code))
             {
-                oldEntityPM.Id = entityPM.Id;
+                oldEntityPM.Code = entityPM.Code;
             }
 			
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LocalName))

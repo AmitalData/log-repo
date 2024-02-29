@@ -60,7 +60,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     if (!string.IsNullOrWhiteSpace(courierPendingReason) && !prevCourierPendingReasonList.Contains(courierPendingReason))
                     {
-                        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReason, false, false);
+                        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReason, myDeclarationPM.Tenant);
 
                         if (courierPendingReasonPM != null && !string.IsNullOrEmpty(courierPendingReasonPM.UnifreightStatusCode))
                         {
@@ -81,7 +81,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                 {
                     if (courierPendingReason != null)
                     {
-                        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReason, false, false);
+                        CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReason, myDeclarationPM.Tenant);
 
                         if (courierPendingReasonPM != null && !string.IsNullOrEmpty(courierPendingReasonPM.UnifreightStatusCode))
                         {

@@ -83,7 +83,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(customContext);
-                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingle(courierPendingReasonCode, false, false);
+                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReasonCode, tenant);
 
                 //CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReasonCode, tenant);
                 courierPendingReasonPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -99,6 +99,48 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
+        }
+
+
+        public HttpResponseMessage GetSingleCourierPendingReasonByCode(string code)
+        {
+            try
+            {
+                string logKey = PerformanceLogger.LogCurrentTime();
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+                
+                CourierPendingReasonQueryService courierPendingReasonQuery = new CourierPendingReasonQueryService(MyContext);
+                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQuery.GetSingleCourierPendingReasonByCode(code, authToken.Tenant);
+
+
+                return Request.CreateResponse(HttpStatusCode.OK, courierPendingReasonPM);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+        public HttpResponseMessage GetSingleByCode(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+
+                CourierPendingReasonListQueryService courierPendingReasonQuery = new CourierPendingReasonListQueryService(MyContext);
+                CourierPendingReasonList courierPendingReasonList = courierPendingReasonQuery.GetSingleByCode(code, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, courierPendingReasonList);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
         }
     }
 }

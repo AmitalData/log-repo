@@ -158,7 +158,7 @@ export class CourierPendingReasonLineComponent extends BaseComponent {
     public set PendingCode(newValue: string) {
         if (newValue) {
             this.currentSession.StartBusyIndicatorLoading();
-            this.parent._CourierPendingReasonPMService.get(newValue).subscribe((response: any) => {
+            this.parent._CourierPendingReasonExtendedListService.GetSingleCourierPendingReasonPMByCode(newValue).subscribe((response: any) => {
                 this.currentSession.StopBusyIndicator();
                 if (!response.HasError && response.Result != null) {
                     if (!AppTool.IsNullOrEmpty(response.Result.UnifreightStatusCode) && response.Result.UnifreightStatusCode != this.parent.UnifreightStatusCode) {

@@ -32,12 +32,12 @@ export class CourierPendingReasonListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/courierpendingreasonviews';  
     }
 
-	getSingle(code: string) {
+	getSingle(id: string) {
 	   
 		var callTime = new Date();
 
 		return defer(() => {
-			return this._http.get(this._apiUrl + '/getsingle/?' + 'code=' + code, ServiceHelper.GetHttpFullHeaders())
+			return this._http.get(this._apiUrl + '/getsingle/?' + 'id=' + id, ServiceHelper.GetHttpFullHeaders())
 				.pipe(			
 					map((response: HttpResponse<any>) => {
 
@@ -52,7 +52,7 @@ export class CourierPendingReasonListService {
 						serviceResponse.CallTime = callTime;
 
 						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CourierPendingReason", "GetSingleList", 'code=' + code); 
+						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CourierPendingReason", "GetSingleList", 'id=' + id); 
 
 						return serviceResponse;
 					}),
@@ -153,15 +153,15 @@ export class CourierPendingReasonListService {
 		});        
 	}
 
-	getSingleFromCache(code: string) {
+	getSingleFromCache(id: string) {
 
 		var callTime = new Date();
 
 		if (!SessionLocator.UseCachedData) {
-            return this.getSingle(code);
+            return this.getSingle(id);
         }
 	    
-		var exists = CourierPendingReasonListService.CachedData.filter(a => a.Code === code).length;
+		var exists = CourierPendingReasonListService.CachedData.filter(a => a.Id === id).length;
 
         var serviceResponse: ServiceResponse = new ServiceResponse(); 
 
@@ -181,17 +181,17 @@ export class CourierPendingReasonListService {
                     CourierPendingReasonListService.CachedData = _mappedListsArray;
                     serviceResponse = new ServiceResponse();
                     
-                    var filteredData = CourierPendingReasonListService.CachedData.filter(a => a.Code === code)[0];
+                    var filteredData = CourierPendingReasonListService.CachedData.filter(a => a.Id === id)[0];
                     serviceResponse.Result = filteredData;
 					serviceResponse.CallTime = callTime;
  
-                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CourierPendingReason", "GetSingleListFromCache", 'code=' + code); 
+                    PerformanceLogger.InsertPerformanceLog(callTime, new Date(), 0, "CourierPendingReason", "GetSingleListFromCache", 'id=' + id); 
 
                     return of(serviceResponse);                    
                 }
 
 				else {
-					return this._http.get(this._apiUrl+'/getsingle/?'+'code=' + code, ServiceHelper.GetHttpFullHeaders())
+					return this._http.get(this._apiUrl+'/getsingle/?'+'id=' + id, ServiceHelper.GetHttpFullHeaders())
 					.pipe(
 						map((response: HttpResponse<any>) => {
 							var list = response.body;
@@ -206,7 +206,7 @@ export class CourierPendingReasonListService {
 							serviceResponse.CallTime = callTime;
 
 							var servertime = response.headers.get('ServerExecutionTime');
-							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CourierPendingReason", "GetSingleList", 'code=' + code); 
+							PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "CourierPendingReason", "GetSingleList", 'id=' + id); 
                                       
 							return serviceResponse;
 						}), 
@@ -217,7 +217,7 @@ export class CourierPendingReasonListService {
 		}
 
 		else {
-		   var filteredData = CourierPendingReasonListService.CachedData.filter(a => a.Code === code)[0];
+		   var filteredData = CourierPendingReasonListService.CachedData.filter(a => a.Id === id)[0];
 		    serviceResponse.Result = filteredData;
 			serviceResponse.CallTime = callTime;
 		   return of(serviceResponse);
