@@ -263,10 +263,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 
                              Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
 
-                             CreditUsed = ((((decimal)((long)((CardsDatas.CreditLimit ?? 0) * 10000))) / 10000))
-                                               - (MoreDatas.BalanceInLocalCurrency)
-                                                - (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)
-                                              - (CardsDatas.TotalOpenShipments ?? 0),
+                             CreditUsed = -1 * ((((decimal)(long)((CardsDatas.CreditLimit == null ? 0 : CardsDatas.CreditLimit) * 10000)) / 10000) + (-1 * MoreDatas.BalanceInLocalCurrency) + (-1 * (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)) + (-1 * (CardsDatas.TotalOpenShipments ?? 0))),
 
                              InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
                              ((CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100),
@@ -477,10 +474,7 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
                              Obligo = (MoreDatas.BalanceInLocalCurrency == null ? 0 : MoreDatas.BalanceInLocalCurrency) + (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0) + (CardsDatas.TotalOpenShipments ?? 0),
 
 
-                             CreditUsed = ((((decimal)((long)((CardsDatas.CreditLimit ?? 0) * 10000))) / 10000))
-                                               - (MoreDatas.BalanceInLocalCurrency)
-                                                - (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)
-                                              - (CardsDatas.TotalOpenShipments ?? 0),
+                             CreditUsed = -1*((((decimal)(long)((CardsDatas.CreditLimit == null ? 0 : CardsDatas.CreditLimit) * 10000)) / 10000) + (-1 * MoreDatas.BalanceInLocalCurrency) + (-1 * (MoreDatas.TotFutureOpenChequesInLocalCur ?? 0)) + (-1 * (CardsDatas.TotalOpenShipments ?? 0))),
 
                              InsuredCreditPercentage = (CardsDatas.CreditLimit == null || CardsDatas.CreditLimit == 0) ? 0 :
                              ((CardsDatas.InsuredcreditLimit ?? 0) / CardsDatas.CreditLimit * 100),
