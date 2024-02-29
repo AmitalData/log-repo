@@ -223,10 +223,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                                             if (availabiltyItem.DeclarationPackgeQuantitySpecified == true)
                                             {
                                                 declarationQuantity += availabiltyItem.DeclarationPackgeQuantity;
-                                            }
+                                                              }
                                         }
                                     }
-                                    if (cargoQuantity != 0 && declarationQuantity == cargoQuantity && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog != null)
+                                    if (declarationQuantity == cargoQuantity && declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog != null)
                                     {
                                         availableStatus = "SMG";
                                     }
