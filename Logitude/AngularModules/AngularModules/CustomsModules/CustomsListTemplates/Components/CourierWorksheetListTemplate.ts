@@ -47,6 +47,7 @@ import { CacheCourierPendingReasonService } from "../../../Customs/Services/Othe
 
 import { AmitalGatewayUtil } from "../../../Infrastructure/Utilities/AmitalGatewayUtil";
 import { Observable, of } from 'rxjs';
+import { CourierPendingReasonExtendedListService } from 'Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
 
 
 @Component({
@@ -487,8 +488,8 @@ export class CourierWorksheetListTemplate {
                 toolTip = this._CourierWorksheet.CourierPendingReasonName;
             }
             else {
-                var myCourierPendingReasonListService = new CourierPendingReasonListService();
-                myCourierPendingReasonListService.getSingleFromCache(toolTip)
+                var _CourierPendingReasonExtendedListService = new CourierPendingReasonExtendedListService();
+                _CourierPendingReasonExtendedListService.GetSingleFromCacheByCode(toolTip)
                     .subscribe(serviceResponse => {
                         var CourierPendingReason = serviceResponse.Result as CourierPendingReasonList;
                         toolTip = CourierPendingReason.LocalName;

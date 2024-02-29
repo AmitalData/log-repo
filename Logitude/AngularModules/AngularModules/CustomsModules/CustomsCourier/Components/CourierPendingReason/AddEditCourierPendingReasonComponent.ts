@@ -132,7 +132,7 @@ export class AddEditCourierPendingReasonComponent
             }
             if (newValue) {
                 this.currentSession.StartBusyIndicatorLoading();
-                this._CourierPendingReasonPMService.get(newValue).subscribe((response:any) => {
+                this._CourierPendingReasonExtendedListService.GetSingleCourierPendingReasonPMByCode(newValue).subscribe((response:any) => {
                     if (!response.HasError && response.Result != null) {
                         SessionLocator.SelectedSession.StopBusyIndicator();
                         if (!AppTool.IsNullOrEmpty(response.Result.UnifreightStatusCode) && response.Result.UnifreightStatusCode != this.UnifreightStatusCode) {

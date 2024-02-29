@@ -716,7 +716,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
 
                         if (this.IsAutonomy)
                         {
-                            UpdateDeclarationPending("901");
+                            UpdateDeclarationPending("901", _tenant);
                         }
 
 
@@ -727,7 +727,7 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
                             foreach (var pending in _LogitudeCommDecFile.Pendings.Pending)
                             {
 
-                                UpdateDeclarationPending(pending.PendingCode);
+                                UpdateDeclarationPending(pending.PendingCode, _tenant);
                             }
                           
                         }
@@ -1115,12 +1115,12 @@ namespace Logitude.CustomsMessaging.U2L.CommDec
             }
         }
 
-        private void UpdateDeclarationPending(string declarationPendingCode)
+        private void UpdateDeclarationPending(string declarationPendingCode, int tenant)
         {
             if (currentDeclarationCourierStatusPM != null)
             {
                 CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(_context);
-                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(declarationPendingCode, false, false);
+                CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(declarationPendingCode, tenant);
                 if (courierPendingReasonPM == null || courierPendingReasonPM.Inactive == true)
                 {
                     LogMessagingUtil.Instance.AppendLine("לא קיים קוד Pending = " + declarationPendingCode + " בטבלת סיבות Pending");

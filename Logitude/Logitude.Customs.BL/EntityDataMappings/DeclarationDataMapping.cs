@@ -785,7 +785,7 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 else
                 {
                     CourierPendingReasonQueryService myCourierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
-                    CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingle(courierPendingReasonList, false, true);
+                    CourierPendingReasonPM courierPendingReasonPM = myCourierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReasonList, entityPM.Tenant);
                     courierPendingReasonList = courierPendingReasonPM.LocalName;
                 }
             }
