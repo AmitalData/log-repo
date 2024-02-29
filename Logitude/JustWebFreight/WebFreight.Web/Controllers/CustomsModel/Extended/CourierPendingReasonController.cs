@@ -122,5 +122,25 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
             }
         }
+
+        public HttpResponseMessage GetSingleByCode(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                ICustomContext MyContext = CustomContext.GetContext(authToken.Tenant);
+
+                CourierPendingReasonListQueryService courierPendingReasonQuery = new CourierPendingReasonListQueryService(MyContext);
+                CourierPendingReasonList courierPendingReasonList = courierPendingReasonQuery.GetSingleByCode(code, authToken.Tenant);
+
+                return Request.CreateResponse(HttpStatusCode.OK, courierPendingReasonList);
+            }
+            catch (Exception ex)
+            {
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+
+        }
     }
 }
