@@ -1336,6 +1336,7 @@ namespace WebFreight.Web.Helpers
             }
             return dataProvider;
         }
+        public object dataprovider;
 
         public string BuildDataProviderJson(string code)
         {
@@ -1344,7 +1345,7 @@ namespace WebFreight.Web.Helpers
             MemoryStream memstream = new MemoryStream();
 
             string dataProvider = null;
-            object dataprovider;
+             dataprovider=null;
             switch (code)
             {
                 #region
