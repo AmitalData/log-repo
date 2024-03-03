@@ -823,7 +823,7 @@
                 <div *ngIf="FieldName == 'ShowLog'" style="width: 50px; display: flex" class="MediaFillAbsolute">
                     <button class="CenterCenter Button" (click)="OnShowLogclick($event)">{{'ConfirmationNumberTokenLog.O.Log' | TextCodeTranslationPipe}}</button>
                 </div>
-                <div *ngIf="FieldName == 'CreateDate'" style="position:relative;width:100%; height: 100%;">
+                <div *ngIf="FieldName == 'CreateDate'" style="position:relative;width:100%; height: 100%; text-align: center;">
                     {{Entity[FieldName] | DateTimePipe:'DT'}}
                 </div>
             </div>
