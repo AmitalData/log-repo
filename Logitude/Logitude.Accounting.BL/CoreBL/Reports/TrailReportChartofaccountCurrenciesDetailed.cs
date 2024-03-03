@@ -311,6 +311,9 @@ qTransStart_JoinAccountsWhereIscontrolAccount_GroupByCOATypeId);
 
                     ChartOfAccountId = chartf.ChartOfAccountId,
                     GLAccountName = chartf.GLAccountName,
+                    GLAccountEnglish = chartf.GLAccountEnglish,
+                    ChartOfAccountsTypeEnglish = chartf.ChartOfAccountsTypeEnglish,
+                    ChartOfAccountsEnglish = chartf.ChartOfAccountsEnglish,
 
                     GLAccountId = chartf.GLAccountId,
 

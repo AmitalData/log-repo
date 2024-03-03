@@ -10607,6 +10607,7 @@ namespace WebFreight.Web.ReportsWebServices
                         AccountName = item.GLAccountName,
                         ParentId = item.ChartOfAccountId,
                         Balance = item.LocalCloseBalancePeriod1,
+                        GLAccountEnglish = item.GLAccountNumber + "-" + item.GLAccountEnglish
                     };
 
                     GLAccountParents.Add(record.ParentId);
@@ -10655,6 +10656,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Number = null,
                         ParentId = item.ChartOfAcount4,
                         Balance = item.LocalCloseBalancePeriod1,
+                        GLAccountEnglish = item.ChartOfAcountCode5 + "-" + item.ChartOfAcountName5English
                     };
 
 
@@ -10684,6 +10686,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Number = null,
                         ParentId = item.ChartOfAcount3,
                         Balance = item.LocalCloseBalancePeriod1,
+                        GLAccountEnglish = item.ChartOfAcountCode4 + "-" + item.ChartOfAcountName4English,
                     };
 
                     if (record.Balance == null)
@@ -10724,6 +10727,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Number = null,
                         ParentId = item.ChartOfAcount2,
                         Balance = item.LocalCloseBalancePeriod1,
+                        GLAccountEnglish = item.ChartOfAcountCode3 + "-" + item.ChartOfAcountName3English,
                     };
                     if (record.Balance == null)
                     {
@@ -10764,6 +10768,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Number = null,
                         ParentId = item.ChartOfAcount1,
                         Balance = item.LocalCloseBalancePeriod1,
+                        GLAccountEnglish = item.ChartOfAcountCode2 + "-" + item.ChartOfAcountName2English,
                     };
 
                     if (record.Balance == null)
@@ -10804,6 +10809,7 @@ namespace WebFreight.Web.ReportsWebServices
                         Number = null,
                         ParentId = item.ChartOfAcountType,
                         Balance = item.LocalCloseBalancePeriod1,
+                        GLAccountEnglish = item.ChartOfAcountCode1 + "-" + item.ChartOfAcountName1English,
                     };
                     if (record.Balance == null)
                     {
@@ -11180,12 +11186,17 @@ namespace WebFreight.Web.ReportsWebServices
                 {
                     ChartOfAccountsTypePM chartType = null;
                     string typeName = null;
+                    string typeEnglish = null;
                     if (item != null)
                     {
                         if (!string.IsNullOrEmpty(item.ChartOfAcountType))
                         {
                             chartType = chartOfAccountTypes.FirstOrDefault(x => x.Code == item.ChartOfAcountType);
-                            if (chartType != null) { typeName = chartType.LocalName; }
+                            if (chartType != null)
+                            { 
+                                typeName = chartType.LocalName;
+                                typeEnglish = chartType.EnglishName;
+                            }
                         }
                         ResultList record = new ResultList()
                         {
@@ -11205,6 +11216,9 @@ namespace WebFreight.Web.ReportsWebServices
                             ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                             ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
                             ChartOfAccountTypeOrder = chartOfAccountTypes.FirstOrDefault(x => x.Code == item.ChartOfAcountType)?.Order,
+
+                            ChartOfAccountsEnglish = item.ChartOfAccountsEnglish,
+                            GLAccountEnglish = typeEnglish 
                         };
 
                         var duplicated = totalData.ResultList.Where(d => d.Id == record.Id).FirstOrDefault();
@@ -11276,6 +11290,10 @@ namespace WebFreight.Web.ReportsWebServices
                             ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                             ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
 
+                            ChartOfAccountsEnglish = item.ChartOfAcountName5English,
+                            GLAccountEnglish = item.ChartOfAcountName5English,
+
+
                             Type = "ChartOfAccount"
                         };
 
@@ -11306,6 +11324,10 @@ namespace WebFreight.Web.ReportsWebServices
                                     ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
                                     ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                                     ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
+
+                                    ChartOfAccountsEnglish = chartOfAccount.EnglishName,
+                                    GLAccountEnglish = chartOfAccount.EnglishName,
 
                                     Type = "ChartOfAccount",
                                     Error = true,
@@ -11351,6 +11373,10 @@ namespace WebFreight.Web.ReportsWebServices
                             ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                             ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
 
+
+                            ChartOfAccountsEnglish = item.ChartOfAcountName4English,
+                            GLAccountEnglish = item.ChartOfAcountName4English,
+
                             Type = "ChartOfAccount"
 
                         };
@@ -11382,6 +11408,9 @@ namespace WebFreight.Web.ReportsWebServices
                                     ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
                                     ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                                     ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
+                                    ChartOfAccountsEnglish = chartOfAccount.EnglishName,
+                                    GLAccountEnglish = chartOfAccount.EnglishName,
 
                                     Type = "ChartOfAccount",
                                     Error = true,
@@ -11437,6 +11466,10 @@ namespace WebFreight.Web.ReportsWebServices
                             ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                             ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
 
+                            ChartOfAccountsEnglish = item.ChartOfAcountName3English,
+                            GLAccountEnglish = item.ChartOfAcountName3English,
+
+
                             Type = "ChartOfAccount"
                         };
 
@@ -11467,6 +11500,9 @@ namespace WebFreight.Web.ReportsWebServices
                                     ForeignCredit = item.ForeignCredit != null ? item.ForeignCredit : 0,
                                     ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                                     ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
+
+                                    ChartOfAccountsEnglish = chartOfAccount.EnglishName,
+                                    GLAccountEnglish = chartOfAccount.EnglishName,
 
                                     Error = true,
                                     Type = "ChartOfAccount"
@@ -11524,6 +11560,10 @@ namespace WebFreight.Web.ReportsWebServices
                             ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                             ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
 
+
+                            ChartOfAccountsEnglish = item.ChartOfAcountName2English,
+                            GLAccountEnglish = item.ChartOfAcountName2English,
+
                             Type = "ChartOfAccount"
                         };
                         ResultList parent = totalData.ResultList.Where(d => d.Id == record.ParentId).FirstOrDefault();
@@ -11555,6 +11595,9 @@ namespace WebFreight.Web.ReportsWebServices
                                     ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
                                     ChartOfAccountTypeOrder = chartOfAccountTypes.FirstOrDefault(x => x.Code == item.ChartOfAcountType)?.Order,
                                     Error = true,
+
+                                    ChartOfAccountsEnglish = chartOfAccount.EnglishName,
+                                    GLAccountEnglish = chartOfAccount.EnglishName,
 
                                     Type = "ChartOfAccount"
                                 };
@@ -11609,6 +11652,10 @@ namespace WebFreight.Web.ReportsWebServices
                             ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                             ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
                             ChartOfAccountTypeOrder = chartOfAccountTypes.FirstOrDefault(x => x.Code == item.ChartOfAcountType)?.Order,
+
+                            ChartOfAccountsEnglish = item.ChartOfAcountName1English,
+                            GLAccountEnglish = item.ChartOfAcountName1English,
+
                             Type = "ChartOfAccount"
                         };
 
@@ -11644,6 +11691,12 @@ namespace WebFreight.Web.ReportsWebServices
                                     ForeignDebit = item.ForeignDebit != null ? item.ForeignDebit : 0,
                                     ForeignOpenBalance = item.ForeignOpenBalance != null ? item.ForeignOpenBalance : 0,
                                     ChartOfAccountTypeOrder = chartOfAccountType.Order,
+
+                                    ChartOfAccountsTypeEnglish = chartOfAccountType.EnglishName,
+                                    GLAccountEnglish = chartOfAccountType.EnglishName,
+
+
+
                                     Error = true,
 
 
@@ -11731,6 +11784,7 @@ namespace WebFreight.Web.ReportsWebServices
                             Id = item.GLAccountId,
                             Name = item.GLAccountName,
                             Number = item.GLAccountNumber,
+                            GLAccountEnglish = item.GLAccountEnglish,
 
                             ParentId = item.ChartOfAccountId,
                             LocalCloseBalance = item.LocalCloseBalance != null ? item.LocalCloseBalance : 0,
@@ -11749,8 +11803,8 @@ namespace WebFreight.Web.ReportsWebServices
                             ChartOfAccountTypeOrder = chartOfAccountTypes.FirstOrDefault(x => x.Code == item.ChartOfAcountType)?.Order,
                             ChartofAccountTypeLocalName = item.ChartOfAcountType != null ? chartOfAccountTypes.Where(d => d.Code == item.ChartOfAcountType).FirstOrDefault().LocalName : null,
                             CurrencyCode = item.CurrencyId != null ? currencies.Where(d => d.Id == item.CurrencyId).FirstOrDefault().Code : "Multi",
-
-
+                            ChartOfAccountsEnglish = item.ChartOfAccountsEnglish,
+                            ChartOfAccountsTypeEnglish = item.ChartOfAcountType != null ? chartOfAccountTypes.Where(d => d.Code == item.ChartOfAcountType).FirstOrDefault().EnglishName : null,
 
                         };
 

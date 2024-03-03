@@ -474,22 +474,28 @@ into groupBy_currency
                  Level1Id = chart.Level1Id,
                  Level1Name = chart.Level1Name,
                  Level1Code =  chart.Level1Code,
+                 Level1English = chart.Level1English,
+
 
                  Level2Id = chart.Level2Id,
                  Level2Name = chart.Level2Name,
                  Level2Code = chart.Level2Code,
+                 Level2English = chart.Level2English,
 
                  Level3Id = chart.Level3Id,
                  Level3Name = chart.Level3Name,
                  Level3Code = chart .Level3Code,
+                 Level3English = chart.Level3English,
 
                  Level4Id = chart.Level4Id,
                  Level4Name = chart.Level4Name,
                  Level4Code = chart.Level4Code,
+                 Level4English = chart.Level4English,
 
                  Level5Id = chart.Level5Id,
                  Level5Name = chart.Level5Name,
                  Level5Code  = chart.Level5Code,
+                 Level5English = chart.Level5English,
 
 
                  GLAccountId = aGL.Id,
@@ -499,7 +505,11 @@ into groupBy_currency
                  ChartOfAccountId=aGL.ChartOfAccountsId,
                  ChartOfAccountTypeCode = //aGL.AccountTypeCode,
                  aGL.ChartOfAccountsTypeCode,
-               
+
+                 ChartOfAccountsTypeEnglish = chart.ChartOfAccountsTypeEnglish,
+                 ChartOfAccountsEnglish = chart.ChartOfAccountsEnglish,
+                 GLAccountEnglish = chart.GLAccountEnglish,
+
                  LeafId = chart.LeafId,
                 
 
