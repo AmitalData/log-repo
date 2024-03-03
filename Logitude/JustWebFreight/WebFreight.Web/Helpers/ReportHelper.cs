@@ -1356,7 +1356,7 @@ namespace WebFreight.Web.Helpers
 
                 case "SHEL":
                     {
-                        dataprovider = new ShipmentsEventsListDataProvider;
+                        dataprovider = new ShipmentsEventsListDataProvider();
                         break;
                     }
 
