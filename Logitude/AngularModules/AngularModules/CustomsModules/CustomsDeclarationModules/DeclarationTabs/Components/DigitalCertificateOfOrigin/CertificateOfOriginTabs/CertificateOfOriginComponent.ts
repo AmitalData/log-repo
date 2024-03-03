@@ -336,11 +336,9 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         // var generalScreen = "כללי";
         // var moreDataScreen = "נוספים";
         // var bothDataScreen = "כללי ונוספים";
-        debugger
         this.GeneralValidationErrors.forEach(i => {
             const isUniqueElement = !this.MoreDataValidationErrors.includes(i);
-            if (isUniqueElement && i != "") {
-                
+            if (isUniqueElement && i != "" ) {
                 this.ValidationErrors.push(i);
             }
         });
@@ -348,13 +346,16 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.MoreDataValidationErrors.forEach(j => {
             const isUniqueElement = !this.GeneralValidationErrors.includes(j);
             if (isUniqueElement && j != "") {
-                
                 this.ValidationErrors.push(j);
             }
         });
 
-
-        if (this.ValidationErrors.length > 0 ) {
+        // check duplicates items: 
+        if(this.ValidationErrors.length > 0){
+            this.ValidationErrors = Array.from(new Set(this.ValidationErrors));
+        }
+        // check mandatory fields
+        if (this.ValidationErrors.length > 0 ) {  
             this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.ValidationErrors, "");
         }
         else {

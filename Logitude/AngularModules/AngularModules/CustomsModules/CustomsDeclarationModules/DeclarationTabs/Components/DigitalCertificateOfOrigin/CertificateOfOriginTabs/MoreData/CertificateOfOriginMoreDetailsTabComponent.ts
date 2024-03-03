@@ -202,6 +202,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set IsDeclaredByManufacture(newValue: boolean) {
         this.entityPM.IsDeclaredByManufacture = newValue;
+        this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
     }
 
     public get IsExportDecForPrint(): boolean {
