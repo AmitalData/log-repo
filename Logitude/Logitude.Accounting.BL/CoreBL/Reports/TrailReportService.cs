@@ -158,6 +158,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  ChartOfAcountName4 = chartf.Level4Name,
                  ChartOfAcountName5 = chartf.Level5Name,
 
+                 ChartOfAcountName1English = chartf.Level1English,
+                 ChartOfAcountName2English = chartf.Level2English,
+                 ChartOfAcountName3English = chartf.Level3English,
+                 ChartOfAcountName4English = chartf.Level4English,
+                 ChartOfAcountName5English = chartf.Level5English,
+
                  ChartOfAcountCode1 = chartf.Level1Code,
                  ChartOfAcountCode2 = chartf.Level2Code,
                  ChartOfAcountCode3 = chartf.Level3Code,
@@ -170,6 +176,10 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  GLAccountName = chartf.GLAccountName,
                  GLAccountNumber = chartf.GLAccountNumber,
                  GLAccountId = chartf.GLAccountId,
+
+                 GLAccountEnglish = chartf.GLAccountEnglish,
+                 ChartOfAccountsTypeEnglish = chartf.ChartOfAccountsTypeEnglish,
+                 ChartOfAccountsEnglish = chartf.ChartOfAccountsEnglish,
 
                  CurrencyId = groupJoinData.CurrencyId,
 
@@ -225,11 +235,17 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                      ChartOfAcount4 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount4,
                                                      ChartOfAcount5 = "",//groupTrailOnlyCOAType.Key.ChartOfAcount5,
 
-                                                     ChartOfAcountName1="",
+                                                     ChartOfAcountName1 = "",
                                                      ChartOfAcountName2 = "",
-                                                     ChartOfAcountName3= "",
+                                                     ChartOfAcountName3 = "",
                                                      ChartOfAcountName4 = "",
                                                      ChartOfAcountName5 = "",
+
+                                                     ChartOfAcountName1English = "",
+                                                     ChartOfAcountName2English = "",
+                                                     ChartOfAcountName3English = "",
+                                                     ChartOfAcountName4English = "",
+                                                     ChartOfAcountName5English = "",
 
                                                      ChartOfAcountCode1 = "",
                                                      ChartOfAcountCode2 = "",
@@ -278,6 +294,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                  row.ChartOfAcountName3,
                                                  row.ChartOfAcountName4,
                                                  row.ChartOfAcountName5,
+
+                                                 row.ChartOfAcountName1English,
+                                                 row.ChartOfAcountName2English,
+                                                 row.ChartOfAcountName3English,
+                                                 row.ChartOfAcountName4English,
+                                                 row.ChartOfAcountName5English,
+
                                                  row.ChartOfAcountCode1,
                                                  row.ChartOfAcountCode2,
                                                  row.ChartOfAcountCode3,
@@ -305,6 +328,12 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                                                      ChartOfAcountName3 = groupTrailOnlyCOAType.Key.ChartOfAcountName3,
                                                      ChartOfAcountName4 = groupTrailOnlyCOAType.Key.ChartOfAcountName4,
                                                      ChartOfAcountName5 = groupTrailOnlyCOAType.Key.ChartOfAcountName5,
+
+                                                     ChartOfAcountName1English = groupTrailOnlyCOAType.Key.ChartOfAcountName1English,
+                                                     ChartOfAcountName2English = groupTrailOnlyCOAType.Key.ChartOfAcountName2English,
+                                                     ChartOfAcountName3English = groupTrailOnlyCOAType.Key.ChartOfAcountName3English,
+                                                     ChartOfAcountName4English = groupTrailOnlyCOAType.Key.ChartOfAcountName4English,
+                                                     ChartOfAcountName5English = groupTrailOnlyCOAType.Key.ChartOfAcountName5English,
 
                                                      ChartOfAcountCode1 = groupTrailOnlyCOAType.Key.ChartOfAcountCode1,
                                                      ChartOfAcountCode2 = groupTrailOnlyCOAType.Key.ChartOfAcountCode2,
@@ -359,6 +388,13 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                          row.ChartOfAcountName3,
                          row.ChartOfAcountName4,
                          row.ChartOfAcountName5,
+
+                         row.ChartOfAcountName1English,
+                         row.ChartOfAcountName2English,
+                         row.ChartOfAcountName3English,
+                         row.ChartOfAcountName4English,
+                         row.ChartOfAcountName5English,
+
                          row.ChartOfAcountCode1,
                          row.ChartOfAcountCode2,
                          row.ChartOfAcountCode3,
@@ -367,7 +403,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                          row.GLAccountName,
                          row.GLAccountNumber,
-                         row.GLAccountId
+                         row.GLAccountId,
+
+                         row.GLAccountEnglish,
+                         row.ChartOfAccountsTypeEnglish,
+                         row.ChartOfAccountsEnglish
 
 
                      }
@@ -380,12 +420,20 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                   ChartOfAcount3 = groupTrailOnlyCurrency.Key.ChartOfAcount3,
                   ChartOfAcount4 = groupTrailOnlyCurrency.Key.ChartOfAcount4,
                   ChartOfAcount5 = groupTrailOnlyCurrency.Key.ChartOfAcount5,
+
                   ChartOfAcountName1 = groupTrailOnlyCurrency.Key.ChartOfAcountName1,
                   ChartOfAcountName2 = groupTrailOnlyCurrency.Key.ChartOfAcountName2,
                   ChartOfAcountName3 = groupTrailOnlyCurrency.Key.ChartOfAcountName3,
                   ChartOfAcountName4 = groupTrailOnlyCurrency.Key.ChartOfAcountName4,
                  ChartOfAcountName5 = groupTrailOnlyCurrency.Key.ChartOfAcountName5,
-                 ChartOfAcountCode1 = groupTrailOnlyCurrency.Key.ChartOfAcountCode1,
+
+                  ChartOfAcountName1English = groupTrailOnlyCurrency.Key.ChartOfAcountName1English,
+                  ChartOfAcountName2English = groupTrailOnlyCurrency.Key.ChartOfAcountName2English,
+                  ChartOfAcountName3English = groupTrailOnlyCurrency.Key.ChartOfAcountName3English,
+                  ChartOfAcountName4English = groupTrailOnlyCurrency.Key.ChartOfAcountName4English,
+                  ChartOfAcountName5English = groupTrailOnlyCurrency.Key.ChartOfAcountName5English,
+
+                  ChartOfAcountCode1 = groupTrailOnlyCurrency.Key.ChartOfAcountCode1,
                  ChartOfAcountCode2 = groupTrailOnlyCurrency.Key.ChartOfAcountCode2,
                 ChartOfAcountCode3 = groupTrailOnlyCurrency.Key.ChartOfAcountCode3,
                  ChartOfAcountCode4 = groupTrailOnlyCurrency.Key.ChartOfAcountCode4,
@@ -394,6 +442,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                     GLAccountName = groupTrailOnlyCurrency.Key.GLAccountName,
                     GLAccountNumber=groupTrailOnlyCurrency.Key.GLAccountNumber,
                   GLAccountId = groupTrailOnlyCurrency.Key.GLAccountId,
+
+                  GLAccountEnglish = groupTrailOnlyCurrency.Key.GLAccountEnglish,
+                  ChartOfAccountsTypeEnglish = groupTrailOnlyCurrency.Key.ChartOfAccountsTypeEnglish,
+                  ChartOfAccountsEnglish = groupTrailOnlyCurrency.Key.ChartOfAccountsEnglish,
+
 
                   CurrencyId = "",
 
@@ -442,22 +495,23 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
 
                  Level1Id = chart.Level1Id,
                  Level1Name = chart.Level1Name,
-
+                 Level1English = chart.Level1English,
 
                  Level2Id = chart.Level2Id,
                  Level2Name = chart.Level2Name,
-
+                 Level2English = chart.Level2English,
 
                  Level3Id = chart.Level3Name,
                  Level3Name = chart.Level3Name,
-
+                 Level3English = chart.Level3English,
 
                  Level4Id = chart.Level4Name,
                  Level4Name = chart.Level4Name,
+                 Level4English = chart.Level4English,
 
                  Level5Id = chart.Level5Name,
                  Level5Name = chart.Level5Name,
-
+                 Level5English = chart.Level5English,
 
 
                  GLAccountId = aGL.Id,
@@ -465,7 +519,11 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
                  GLAccountNumber = aGL.DisplayNumber,
                  ChartOfAccountId=aGL.ChartOfAccountsId,
                  ChartOfAccountTypeCode = aGL.AccountTypeCode,
-              
+
+                 ChartOfAccountsTypeEnglish = chart.ChartOfAccountsTypeEnglish,
+                 ChartOfAccountsEnglish = chart.ChartOfAccountsEnglish,
+                 GLAccountEnglish = chart.GLAccountEnglish,
+
                  LeafId = chart.LeafId,
 
 
@@ -881,13 +939,21 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
         public string ChartOfAcountName3 { get; set; }
         public string ChartOfAcountName4 { get; set; }
         public string ChartOfAcountName5 { get; set; }
+        public string ChartOfAcountName1English { get; set; }
+        public string ChartOfAcountName2English { get; set; }
+        public string ChartOfAcountName3English { get; set; }
+        public string ChartOfAcountName4English { get; set; }
+        public string ChartOfAcountName5English { get; set; }
         public string ChartOfAcountCode1 { get; set; }
         public string ChartOfAcountCode2 { get; set; }
         public string ChartOfAcountCode3 { get; set; }
         public string ChartOfAcountCode4 { get; set; }
         public string ChartOfAcountCode5 { get; set; }
+        public string ChartOfAccountsTypeEnglish { get; set; }
+        public string ChartOfAccountsEnglish { get; set; }
 
         public string GLAccountName { get; set; }
+        public string GLAccountEnglish { get; set; }
         public string GLAccountNumber { get; set; }
 
         public string GLAccountId { get; set; }

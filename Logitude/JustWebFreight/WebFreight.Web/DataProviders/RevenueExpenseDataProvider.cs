@@ -39,6 +39,10 @@ namespace WebFreight.Web.DataProviders
         public bool DontShowCardsWith0Balance { get; set; }
         public DateTime? FromDate { get; set; }
         public DateTime? ToDate { get; set; }
+        public string ChartOfAccountsTypeEnglish { get; set; }
+        public string ChartOfAccountsEnglish { get; set; }
+        public string GLAccountEnglish { get; set; }
+
     }
 
 
@@ -74,6 +78,9 @@ namespace WebFreight.Web.DataProviders
         public string ChartofAccountTypeLocalName { get; set; }
         public int? ChartOfAccountTypeOrder { get; set; }
         public string CurrencyCode { get; set; }
+        public string ChartOfAccountsTypeEnglish { get; set; }
+        public string ChartOfAccountsEnglish { get; set; }
+        public string GLAccountEnglish { get; set; }
 
 
     }
