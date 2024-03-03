@@ -9,29 +9,29 @@ namespace WebFreight.Web.Helpers.ExportServer
 {
     public class ExportServerLogin
     {
-        private static Dictionary<string, string> tokens = new Dictionary<string, string>();
+        private static Dictionary<string, string> tokensCache = new Dictionary<string, string>();
         private static TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
-        private static string exportUrl = new SettingQuery().GetSinglePMFromCahche().ExportUrl;
+        public readonly static string exportUrl = new SettingQuery().GetSinglePMFromCahche().ExportUrl;
 
         public static string GetLinkToLogin(int tenant, string email)
-        {
-            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);
-            int? exportTenant = tenantManagementPM.ExportTenant;
-            if (exportTenant == null || string.IsNullOrEmpty(tenantManagementPM.ExportLoginCredintial))
-                throw new Exception("not config in table tenant managment field Export Login Credintial or field export tenant for tenant " + tenant);
-
-            string token = GetToken(exportTenant.Value, email, tenantManagementPM.ExportLoginCredintial);
+        {   
+            string token = GetToken(tenant, email);
+            int? exportTenant = tenantManagementQuery.GetSinglePM(tenant).ExportTenant;
             string link = $"{exportUrl}/AmitalSSOAngular.html?token={token}&tenant={exportTenant.Value}&AmitalSSOAngular=1";
             return link;
         }
 
-        private static string GetToken(int tenant, string email, string exportLoginCredintial)
+        public static string GetToken(int tenant, string email)
         {
-            string tokenKey = GetTokenKey(tenant, email);
-            if (!tokens.ContainsKey(tokenKey))
-                initToken(tenant, email, exportLoginCredintial);
+            TenantManagementPM tenantManagementPM = tenantManagementQuery.GetSinglePM(tenant);            
+            if (string.IsNullOrEmpty(tenantManagementPM.ExportLoginCredintial) || tenantManagementPM.ExportTenant == null)
+                throw new Exception("not config in table tenant managment field export tenant or Export Login Credintial for tenant " + tenant);
 
-            return tokens[tokenKey];
+            string tokenKey = GetTokenKey(tenantManagementPM.ExportTenant.Value, email);
+            if (!tokensCache.ContainsKey(tokenKey))
+                initToken(tenantManagementPM.ExportTenant.Value, email, tenantManagementPM.ExportLoginCredintial);
+
+            return tokensCache[tokenKey];
         }
 
         private static void initToken(int tenant, string email, string exportLoginCredintial)
@@ -49,7 +49,7 @@ namespace WebFreight.Web.Helpers.ExportServer
             if (string.IsNullOrEmpty(result.Result))
                 throw new Exception("enerror accord when try get token from export server, the token result return empty");
 
-            tokens[GetTokenKey(tenant, email)] = result.Result;
+            tokensCache[GetTokenKey(tenant, email)] = result.Result;
         }
         
         private static string GetTokenKey(int tenant, string email) => tenant + ";" + email;
