@@ -12,12 +12,14 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
+using NPOI.SS.Formula.Functions;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Server.Infrastructure;
 using Simplog.Server.Infrastructure.DataContracts;
+using Stimulsoft.Base.Json;
 using Stimulsoft.Report;
 using Stimulsoft.Report.Dictionary;
 using Stimulsoft.Report.Export;
@@ -34,6 +36,7 @@ using System.Threading;
 using System.Web;
 using System.Xml;
 using System.Xml.Serialization;
+using WebFreight.Web.AccountingModel.Reports.BankDeposit;
 using WebFreight.Web.CommonDataModel.DomainServices;
 using WebFreight.Web.DataProviders;
 using WebFreight.Web.Helpers.DataProviderHelpers;
@@ -1331,6 +1334,474 @@ namespace WebFreight.Web.Helpers
                     }
                     #endregion
             }
+            return dataProvider;
+        }
+
+        public string BuildDataProviderJson(string code)
+        {
+            LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
+            XmlSerializer serializer = new XmlSerializer(typeof(string));
+            MemoryStream memstream = new MemoryStream();
+
+            string dataProvider = null;
+            object dataprovider;
+            switch (code)
+            {
+                #region
+                case "ATRE":
+                    {
+                         dataprovider = new AutomationTestReportDataProvider();
+                        break;
+                    }
+
+                case "SHEL":
+                    {
+                        dataprovider = new ShipmentsEventsListDataProvider;
+                        break;
+                    }
+
+                    case "SHST":
+                        {
+                         dataprovider = new ShipmentsStocksDataProvider();
+                        break;
+                     }
+                    case "SHRR":
+                        {
+                         dataprovider = new ShipperReturnsDataProvider();
+                        break;
+                      }
+                    case "ERLR":
+                        {
+                         dataprovider = new ExternalReconciliationLinesReportDataProvider();
+                        break;
+                        }
+                    case "URDR":
+                        {
+                         dataprovider = new UserDefinedReportDataProvider();
+                        break;
+                        }
+                    case "UPTR":
+                        {
+                         dataprovider = new UsersByTenantDataProvider();
+                        
+                        break;
+                        }
+
+                    case "INVN":
+                        {
+                        dataprovider = new InventoryDataProvider();
+                        break;
+                        }
+
+                    case "RACL":
+                        {
+                        dataprovider = new AccountingLedgerDataProvider();
+                        break;
+                        }
+
+                    case "ASDB":
+                        {
+                        dataprovider = new DashBoardDataClass();
+                        break;
+                         }
+
+                case "RAAR":
+                    {
+                        dataprovider = new AgedAccountsReceivableDataProvider();
+                        break;
+                      }
+
+                case "EBRP":
+                    {
+                        dataprovider = new BookingsDataProvider();
+                        break;
+                   }
+
+                case "RALS":
+                    {
+                        dataprovider = new AirlineStatisticsDataProvider(); 
+                        break;
+                     }
+
+                case "RSLS":
+                    {
+                        dataprovider = new ShippingLineStatisticsDataProvider();
+                        break;
+                     }
+
+                case "CODT":
+                    {
+                        dataprovider = new ContainerDetailsVoyageDataProvider(); 
+                        break;
+            }
+
+                case "COTR":
+                    {
+
+                        dataprovider = new ContainerTruckingDataProvider();
+                        break;
+            }
+
+                case "CUAD":
+                    {
+                        dataprovider = new CustomerAdditionalServicesDataProvider();
+                        break;
+            }
+
+                case "CUPA":
+                    {
+                        dataprovider = new CustomerPotentialActualDataProvider();
+                        break;
+            }
+
+                case "EWRP":
+                    {
+                        dataprovider = new EAWBsDataProvider();
+                        break;
+            }
+
+                case "EXIN":
+                    {
+                        dataprovider = new ExpectedIncomeDataProvider();
+                        break;
+            }
+
+                case "FBRP":
+                    {
+                        dataprovider = new FlightBookingDataProvider();
+                        break;
+            }
+
+                case "RITS":
+                    {
+                        dataprovider = new IATAStatisticsDataProvider();
+                        break;
+            }
+
+                case "RIBP":
+                    {
+                        dataprovider = new InvoicesByPartnerDataProvider();
+                        break;
+            }
+
+                case "RINV":
+                    {
+                        dataprovider = new InvoiceDataProvider();
+
+                        break;
+            }
+
+                case "RAPI":
+                    {
+                        dataprovider = new IATAStatisticsDataProvider();
+
+                        break;
+            }
+
+                case "MCOR":
+                    {
+                        dataprovider = new OpportunityMonthlyConversionDataProvider();
+                        break;
+            }
+
+                case "OCRP":
+                    {
+                        dataprovider = new RegisterShipmentPackageDataProvider();
+
+                        break;
+            }
+
+                case "PUAC":
+                    {
+                        dataprovider = new ParticipantsUsersActivitiesDataProvider();
+                        break;
+            }
+
+                case "RPRS":
+                    {
+                        dataprovider = new ProfitByShipmentDataProvider();
+                        break;
+            }
+
+                case "RQUO":
+                    {
+                        dataprovider = new QuotesDataProvider();
+                        break;
+            }
+
+                case "SCHT":
+                case "SCHA":
+                    {
+                        dataprovider = new ShipmentChargesAnalysisDataProvider();
+
+                        break;
+            }
+
+                case "OPSC":
+                    {
+                        dataprovider = new OpportunityStageChangingDataProvider();
+
+                        break;
+            }
+
+                case "RSID":
+                    {
+                        dataprovider = new StatementByInvoiceDateDataProvider();
+                        break;
+            }
+
+                case "RSTA":
+                    {
+                        dataprovider = new StatementDataProvider();
+
+                        break;
+            }
+
+                case "RSAS":
+                    {
+                        dataprovider = new StatementDataProvider();
+
+                        break;
+            }
+
+                case "SBAG":
+                    {
+                        dataprovider = new StatisticsByAgentDataProvider();
+
+                        break;
+            }
+
+                case "RCLS":
+                    {
+                        dataprovider = new StatisticsByClientDataProvider();
+
+                        break;
+            }
+
+                case "ARID":
+                    {
+                        dataprovider = new ARInvoiceDepositDataProvider();
+
+                        break;
+            }
+
+                case "CASS":
+                    {
+                        dataprovider = new CASSDataProvider();
+
+                        break;
+            }
+
+            case "SPQS":
+                {
+                        dataprovider = new ShipmentProfitVSQuoteEstimateDataProvider();
+
+                        break;
+            }
+
+            case "AREX":
+                {
+                        dataprovider = new ArchivoExportadoDataProvider();
+
+                        break;
+            }
+
+            case "DSCA":
+                {
+                        dataprovider = new ArchivoExportadoDataProvider();
+
+                        break;
+            }
+
+            case "INVR":
+                {
+                        dataprovider = new ARInvoiceIncludeVATRoutingsDataProvider();
+
+                        break;
+            }
+
+            case "EMTS":
+                {
+                        //dataProvider = logitudeReportsWebService.LoadEmployeeTimeSheetData(filters, reportFliter.tenant);
+
+                        dataprovider = new EmployeeTimeSheetDataProvider();
+
+
+                        break;
+            }
+
+            case "WDTS":
+                {
+                        dataprovider = new WorkDaysPerProjectDataProvider();
+
+
+                        var isUsingNewCode = false;
+                if (isUsingNewCode)
+                {
+                            dataprovider = new WorkDaysPerProjectDataProvider();
+
+                        }
+
+                        else
+                {
+                            dataprovider = new WorkDaysPerProjectDataProvider();
+
+                        }
+
+                        break;
+            }
+            case "WGTS":
+                {
+                        dataprovider = new WorkDaysPerCategoryDataProvider();
+
+                        break;
+            }
+            case "TPTS":
+                {
+                        dataprovider = new TasksWithoutProjectsDataProvider();
+
+                        break;
+            }
+
+            case "AGER":
+                {
+                        dataprovider = new AccountingAgingDataProvider();
+                        break;
+            }
+
+            case "OSBC":
+                {
+                        dataprovider = new OpenShipmentsByCustomerDataProvider();
+
+                        break;
+            }
+
+            case "PTVC":
+                {
+                        dataprovider = new ParentVsChildTenantsDataProvider();
+
+                        break;
+            }
+
+            case "REXR":
+                {
+                        dataprovider = new RevenueExpenseDataProvider();
+
+                        break;
+            }
+
+            case "TRBR":
+                {
+                        dataprovider = new RevenueExpenseDataProvider();
+                        break;
+            }
+
+            case "LICM":
+                {
+                        dataprovider = new LicenseManagementDataProvider();
+                        break;
+            }
+
+            case "SHID":
+                {
+                        dataprovider = new ShipmentDetailsDataProvider();
+
+                        break;
+            }
+
+            case "VDK":
+                {
+                        dataprovider = new VDKDataProvider();
+
+                        break;
+            }
+            case "VEHI":
+                {
+
+                        dataprovider = new VehiclesDataProvider();
+                       
+                        break;
+            }
+            case "VDCA":
+                {
+                        dataprovider = new VendorChargesAnalysisDataProvider();
+
+                        break;
+            }
+
+            case "LTRP":
+                {
+                        dataprovider = new LedgerTransactionsDataProvider();
+
+                        break;
+            }
+
+            case "UNER":
+                {
+                        dataprovider = new UnicargoExportDataProvider();
+
+                        break;
+            }
+
+            case "FLBM":
+                {
+                        dataprovider = new FlightBookingsManifestDataProvider();
+
+                        break;
+            }
+
+            case "RCRF":
+                {
+                        dataprovider = new RacingQuoteDataProvider();
+
+                        break;
+            }
+
+            case "BSPR":
+                {
+                        dataprovider = new BluesnapPaymentsDataProvider();
+
+                        break;
+            }
+            case "CSSR":
+                {
+                        dataprovider = new CustomerStatusDataProvider();
+                        break;
+            }
+            case "LOCR":
+                {
+                        dataprovider = new LogitudeCRMReportDataProvider();
+
+                        break;
+            }
+            case "PRVR":
+                {
+                        dataprovider = new TaxDeductionReportData();
+
+                        break;
+            }
+            case "ARIS":
+                {
+                        dataprovider = new ARinvoiceSequencesReportData();
+
+                        break;
+            }
+            case "SRQR":
+                {
+                        dataprovider = new SpotRateQuoteReportDataProvider();
+
+                        break;
+            }
+            case "RCIL":
+                {
+                        dataprovider = new ControlForInvoiceLinesDataProvider();
+
+                        break;
+            }
+            #endregion
+        }
+            dataProvider = JsonConvert.SerializeObject(dataprovider);
+
             return dataProvider;
         }
 

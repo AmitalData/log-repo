@@ -97,6 +97,7 @@ import { UserDefinedReportFilterControl } from './Components/FilterReportCompone
 import { LogitudeCRMReportFilterComponent } from './Components/FiltersComponent/CRM/LogitudeCRMReportFilterComponent';
 import { ExcelReportTemplateComponent } from './Components/ExcelReportTemplateComponent';
 import { SpotRateQuoteReportFilterComponent } from './Components/FiltersComponent/Quote/SpotRate/SpotRateQuoteReportFilterComponent';
+import { ReportVariablesComponent } from './Components/ReportVariablesComponent';
 
 export const Components =
     [
@@ -110,6 +111,7 @@ export const Components =
         BIReportComponent,
         BIFolderReportComponent,
         ReportTemplateComponent,
+        ReportVariablesComponent,
         ReportsPreviewComponent,
         ReportsTemplateRestoreComponent,
         NewReportsTemplateComponent,
@@ -201,6 +203,7 @@ export class ModuleDeclarations {
             case "BIFolderReportComponent": { myResult = BIFolderReportComponent; break; }
             case "ReportsPreviewComponent": { myResult = ReportsPreviewComponent; break; }
             case "ReportTemplateComponent": { myResult = ReportTemplateComponent; break; }
+            case "ReportVariablesComponent": { myResult = ReportVariablesComponent; break; }
             case "ReportsTemplateRestoreComponent": { myResult = ReportsTemplateRestoreComponent; break; }
             case "NewReportsTemplateComponent": { myResult = NewReportsTemplateComponent; break; }
             case "IATAStatisticsFilterComponent": { myResult = IATAStatisticsFilterComponent; break; }
