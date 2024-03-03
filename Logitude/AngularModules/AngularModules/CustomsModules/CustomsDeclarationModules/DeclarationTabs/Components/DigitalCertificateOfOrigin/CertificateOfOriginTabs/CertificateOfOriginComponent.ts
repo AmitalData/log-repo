@@ -322,24 +322,40 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     MoreDataValidationErrors = [];
 
     async SendButtonClicked(customSendOptionsArgs: any) {
-        this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
-        if(this.SelectedTabCode == "MOREDATA"){
+        // init lists:
+        this.ValidationErrors = [];
+        this.GeneralValidationErrors = [];
+        this.MoreDataValidationErrors = [];
+        
+        if (this.SelectedTabCode == "GENERAL"){
+            this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
+        }
+        else if(this.SelectedTabCode == "MOREDATA"){
             this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
         }
+        // var generalScreen = "כללי";
+        // var moreDataScreen = "נוספים";
+        // var bothDataScreen = "כללי ונוספים";
+        debugger
+        this.GeneralValidationErrors.forEach(i => {
+            const isUniqueElement = !this.MoreDataValidationErrors.includes(i);
+            if (isUniqueElement && i != "") {
+                
+                this.ValidationErrors.push(i);
+            }
+        });
 
-        this.ValidationErrors = this.GeneralValidationErrors.concat(this.MoreDataValidationErrors);
+        this.MoreDataValidationErrors.forEach(j => {
+            const isUniqueElement = !this.GeneralValidationErrors.includes(j);
+            if (isUniqueElement && j != "") {
+                
+                this.ValidationErrors.push(j);
+            }
+        });
 
-        var generalScreen = "כללי";
-        var moreDataScreen = "נוספים";
-        var bothDataScreen = "כללי ונוספים";
-        if (this.GeneralValidationErrors.length > 0 && this.MoreDataValidationErrors.length > 0) {
-            this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.ValidationErrors, bothDataScreen);
-        }
-        else if (this.GeneralValidationErrors.length > 0) {
-            this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.GeneralValidationErrors, generalScreen);
-        }
-        else if (this.MoreDataValidationErrors.length > 0) {
-            this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.MoreDataValidationErrors, moreDataScreen);
+
+        if (this.ValidationErrors.length > 0 ) {
+            this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.ValidationErrors, "");
         }
         else {
             this.SendCertificateOfOrigin(customSendOptionsArgs);

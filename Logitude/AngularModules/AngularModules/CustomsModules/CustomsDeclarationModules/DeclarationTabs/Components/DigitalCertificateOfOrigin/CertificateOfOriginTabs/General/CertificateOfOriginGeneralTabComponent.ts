@@ -269,7 +269,13 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
     tempCertificateOfOriginMandatoryFieldsList = [];
     certificateOfOriginWebService: CertificateOfOriginWebService = new CertificateOfOriginWebService();
     SetWarningByCooTypeCode(CooTypeCode) {
-        if(!CooTypeCode) return;
+        if(!CooTypeCode) {
+            this.tempCertificateOfOriginMandatoryFieldsList.forEach(i=>{
+                this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
+            });
+            this.tempCertificateOfOriginMandatoryFieldsList = [];
+            return;
+        }
         this.certificateOfOriginWebService.GetMandatoryFieldsByCooTypeCode(CooTypeCode, this.entityPM.Tenant).subscribe((myResponse: any) => {
             if (!myResponse.HasError) {
                 if(this.tempCertificateOfOriginMandatoryFieldsList.length > 0) {
@@ -277,7 +283,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                         this.UIProperties.SetWarning(i.MappedCertificateFieldsName, this.ObjectTableName, false);
                     });
                 }
-
 
                 this.certificateOfOriginMandatoryFieldsList = myResponse?.Result;
                 
@@ -287,7 +292,6 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
                             this.UIProperties.SetWarning(item.MappedCertificateFieldsName, this.ObjectTableName, true);
                         }
                     });
-
                     this.tempCertificateOfOriginMandatoryFieldsList = this.certificateOfOriginMandatoryFieldsList;
                 }
                 else{        

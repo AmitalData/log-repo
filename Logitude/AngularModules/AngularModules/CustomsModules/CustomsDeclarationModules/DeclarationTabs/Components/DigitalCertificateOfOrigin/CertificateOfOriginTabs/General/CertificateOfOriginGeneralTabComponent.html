@@ -10,16 +10,16 @@
                 </div>
             </div>
         </td>
-        <td *ngIf="entityPM.IsChange && entityPM.COONumber != null">
-            <div style="width:90%;text-align:center">
+        <td *ngIf="entityPM.IsChange && entityPM.COONumber != null || ErrorsList?.length > 0">
+            <div *ngIf="ErrorsList?.length > 0">
+                <ValidationSummary  class="StyleMess" [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
+            </div>
+            <div *ngIf="entityPM.IsChange && entityPM.COONumber != null"  style="width:90%;text-align:center">
                 <div class="DisbleBox">
                     {{'Customs.CertificateOfOrigin.O.IsChange'| TextCodeTranslationPipe}}
                 </div>
             </div>
         </td> 
-        <td *ngIf="ErrorsList?.length > 0">
-            <ValidationSummary class="StyleMess" [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
-        </td>
     </tr>
     <tr style="height:300px">
         <td style="vertical-align:top">
