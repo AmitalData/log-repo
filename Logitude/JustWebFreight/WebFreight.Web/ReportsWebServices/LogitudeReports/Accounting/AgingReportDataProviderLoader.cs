@@ -620,8 +620,8 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
                 groupedPeriodsByAccount = totalData.AgingPeriods.GroupBy(d => d.AccountName).Distinct().Select(d => new AgingPeriod()
                 {
                     PeriodName = showLocals ? "שער מחושב" : "Calculated Rate",
-                    Total = d.Where(x => x.PeriodName == BalanceInLocalCurrencyString || x.PeriodName == BalanceInLocalCurrencyHebrewString).First().Total == 0 || d.Where(c => c.PeriodName == "Foreign" || c.PeriodName == SummaryPeriodsHebrewString).First().Total == 0 ? 0
-                    : d.Where(x => x.PeriodName == BalanceInLocalCurrencyString || x.PeriodName == BalanceInLocalCurrencyHebrewString).First().Total / d.Where(c => c.PeriodName == "Foreign" || c.PeriodName == SummaryPeriodsHebrewString).First().Total,
+                    Total = d.Where(x => x.PeriodName == BalanceInLocalCurrencyString || x.PeriodName == BalanceInLocalCurrencyHebrewString).FirstOrDefault()?.Total == 0 || d.Where(c => c.PeriodName == "Foreign" || c.PeriodName == SummaryPeriodsHebrewString).FirstOrDefault()?.Total == 0 ? 0
+                    : d.Where(x => x.PeriodName == BalanceInLocalCurrencyString || x.PeriodName == BalanceInLocalCurrencyHebrewString).FirstOrDefault()?.Total / d.Where(c => c.PeriodName == "Foreign" || c.PeriodName == SummaryPeriodsHebrewString).FirstOrDefault()?.Total,
                     AccountName = (d.First().AccountLocalName != null ? d.First().AccountLocalName : d.First().AccountEnglishName),
                     AccountLocalName = d.First().AccountLocalName,
                     AccountEnglishName = d.First().AccountEnglishName,
