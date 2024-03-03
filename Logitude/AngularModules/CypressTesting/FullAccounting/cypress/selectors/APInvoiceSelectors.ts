@@ -22,7 +22,7 @@ export class APInvoiceSelectors {
     public static readonly VatTypeApplyToAll = '#VATApplyToAll';
     public static readonly APInvoiceBranch = '#APInvoice_BranchId';
 
-    public static readonly AddInvoiceLine = '#AddInvoiceLine';
+    public static readonly AddInvoiceLine = '#Add';
     public static readonly APInvoiceLineChargesType = "#APInvoiceLine_ChargesTypeId"
     public static readonly APInvoiceLineLocalDescription = "#APInvoiceLine_LocalDescription"
     public static readonly APInvoiceLineVatType = "#APInvoiceLine_VatTypeId"
