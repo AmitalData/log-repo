@@ -610,67 +610,38 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
         confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                this.customsDocumentPointerService.GetCheckForPointers(item.DeclarationId, item.InvoiceCounterKey).subscribe((myResponse: ServiceResponse) => {
-                    var exist = myResponse;
-                    if (myResponse.Result) {
-                        var confirmWindow = new ConfirmWindow();
+                if(this.EntityPM.Direction == 'E' && this.IsOcr)
+                {
+                    this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(item.DeclarationId, item.InvoiceCounterKey, true).subscribe((response) =>{
+                    var docId = response?.Result?.Result;
+                    var count = response?.Result?.Count ?? 0;
+                    if(docId && count <= 1)
+                    {
+                        var ocrDocumentExtendedListService: OcrDocumentExtendedListService = new OcrDocumentExtendedListService();                
 
-                        //     confirmWindow.DisplayWariningIconImage();
-                        confirmWindow.Width = 400;
-
-                        confirmWindow.Title = TextCodeTranslator.Translate("Customs.General.O.Warning");
-                        confirmWindow.Height = 190;
-                        confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.General.B.OK");
-                        confirmWindow.NoButtonText = TextCodeTranslator.Translate("General.B.Cancel");
-                        confirmWindow.ShowWarningImage = true;
-                        confirmWindow.ShowNoButton
-                        confirmWindow.Show(TextCodeTranslator.Translate("Customs.General.O.InvoiceRelatedPoiner"));
-                        confirmWindow.WindowClosed.subscribe((event: any) => {
-                            if (confirmWindow.Yes) {
-                                
-                                if(this.EntityPM.Direction == 'E' && this.IsOcr)
-                                {
-                                    this.supplierInvoiceExtendedPMService.GetDocumentFilingIdForForInvoice(item.DeclarationId, item.InvoiceCounterKey, true).subscribe((response) =>{
-                                    var docId = response?.Result?.Result;
-                                    var count = response?.Result?.Count ?? 0;
-                                    if(docId && count <= 1)
-                                    {
-                                        var ocrDocumentExtendedListService: OcrDocumentExtendedListService = new OcrDocumentExtendedListService();                
-
-                                        ocrDocumentExtendedListService.GetOcrDocumentByDocumentFilingId(SessionLocator.Tenant, docId).subscribe((response)=>{
-                                            if(response?.Result?.NotConnect){
-                                                var ocrDocumentPM : OcrDocumentPM = response.Result;
-                                                ocrDocumentPM.NotConnect = false; 
-                                                var ocrDocumentPMService: OcrDocumentPMService = new OcrDocumentPMService();   
-                                                ocrDocumentPMService.update(ocrDocumentPM).subscribe(()=>{
-                                                    this.DeleteSelected(item);
-                                                });             
-                                            }
-                                            else{
-                                                this.DeleteSelected(item);
-                                            }
-                                        });
-                                    }
-                                    else{
-                                        this.DeleteSelected(item);
-                                    }
-                                   
-                                    });
-                                }
-                                else{
+                        ocrDocumentExtendedListService.GetOcrDocumentByDocumentFilingId(SessionLocator.Tenant, docId).subscribe((response)=>{
+                            if(response?.Result?.NotConnect){
+                                var ocrDocumentPM : OcrDocumentPM = response.Result;
+                                ocrDocumentPM.NotConnect = false; 
+                                var ocrDocumentPMService: OcrDocumentPMService = new OcrDocumentPMService();   
+                                ocrDocumentPMService.update(ocrDocumentPM).subscribe(()=>{
                                     this.DeleteSelected(item);
-                                }
-                            } else if (confirmWindow.No) {
-
+                                });             
+                            }
+                            else{
+                                this.DeleteSelected(item);
                             }
                         });
                     }
-
-                    else {
+                    else{
                         this.DeleteSelected(item);
                     }
-
-                });
+                    
+                    });
+                }
+                else{
+                    this.DeleteSelected(item);
+                }
 
             } else if (confirmWindow.No) {
              

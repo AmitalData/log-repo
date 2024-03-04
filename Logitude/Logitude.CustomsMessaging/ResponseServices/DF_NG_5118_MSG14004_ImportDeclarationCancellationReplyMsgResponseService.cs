@@ -226,6 +226,33 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                 }
             }
+            else
+            {
+                // pass cancel status to unifreight on export
+                var amitalEventTracerModel = new Logitude.Customs.BL.TraceEvents.AmitalEventTracerModel()
+                {
+                    Tenant = _MyDeclarationPM.Tenant,
+                    objectTableName = "Customs.Declaration",
+                    EventCode = "CAN",
+                    notes = "הערות המכס לביטול: " + _MyDeclarationPM.CustomCancelRequestRemarks,
+                    CommunicationLoggingEntityReference = _MyDeclarationPM.DeclarationNumber,
+                    EntityId = _MyDeclarationPM.Id,
+                    UserId = bFromMehes ? loggingUserId : requestParams.LoggingUserId,
+
+                    CommunicationSubject = "FU Status CAN from logitude ",
+                    MyFUStatus = new AmitalEventTracerModel.FUStatus()
+                    {
+                        entname = "BFIFILE",
+                        primary_number = _MyDeclarationPM.CustomFileNo,
+                        status = "new",
+                        xml_status = "new",
+                        status_id = "CAN",
+                        status_DateTime = DateTime.Now,
+                        comments = ""
+                    }
+                };
+                AmitalEventTracer.CreateTraceEvent(amitalEventTracerModel);
+            }
 
                 if (customResponse.ProceduralFaultMsg != null)
                 {
@@ -308,9 +335,9 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
 
 
-         }
-       
- 
+        }
+
+
         public UnifreightIIG.Common.ImportDeclarationServiceReference.ResponseStatus CastStatus(UnifreightIIG.Common.MessageLib.ID.ResponseStatus declaration)
         {
 

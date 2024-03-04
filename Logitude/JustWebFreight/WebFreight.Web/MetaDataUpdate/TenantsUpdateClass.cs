@@ -94,7 +94,7 @@ namespace WebFreight.Web.MetaDataUpdate
                 
                 Stopwatch stopWatch = new Stopwatch();
                 stopWatch.Start();
-             
+
                 switch (message.ToLower())
                 {
                       
@@ -653,9 +653,41 @@ namespace WebFreight.Web.MetaDataUpdate
             }
         }
 
+        static string RunGitCommand(string arguments)
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.FileName = "git";
+            startInfo.Arguments = arguments;
+            startInfo.RedirectStandardOutput = true;
+            startInfo.UseShellExecute = false;
+            startInfo.CreateNoWindow = true;
+
+            using (Process process = Process.Start(startInfo))
+            {
+                using (var reader = process.StandardOutput)
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+        }
+        static string GetCurrentGitBranch()
+        {
+            string output = RunGitCommand("rev-parse --abbrev-ref HEAD");
+            return output.Trim();
+        }
+        static string GetCurrentGitUser()
+        {
+            string output = RunGitCommand("config user.name");
+            return output.Trim();
+        }
+
         private static void UpdateCustomsRelatedModels(IWebFreightContext context)
         {
-            WriteLogMessage("Starting Customs Related Modules Update ...");
+            string user = GetCurrentGitUser();
+            string branch = GetCurrentGitBranch();
+            string message = $"Starting Customs Related Modules Update from machine: {Environment.MachineName} by {user} into branch: {branch}";
+            WriteLogMessage(message);
+            AzureLog.SaveLogsInStorage(message, "L", DateTime.Now, "", "", 0, null, null, null);
 
             WriteLogMessage("Initializing Infrastructure Module ...");
             InfrastructureModelUpdateClass inframodelUpdateClass = new InfrastructureModelUpdateClass();

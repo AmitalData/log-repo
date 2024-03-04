@@ -307,6 +307,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         });
     }
     //#region Document Loading
+    base64Image: string;
     base64Document: string;
     IsConnectedToUniFreight: boolean = false;
 
@@ -330,13 +331,13 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
                 console.log("[Response] GetDocumentPage", result);
 
                 if (!AppTool.IsNullOrEmpty(result.Page)) {
-                    this.base64Document = "data:image/png;base64," + result.Page;
+                    this.base64Image = "data:image/png;base64," + result.Page;
                 } else {
-                    this.base64Document = null;
+                    this.base64Image = null;
                 }
 
             } else {
-                this.base64Document = null;
+                this.base64Image = null;
             }
 
             this.CurrentSession.StopBusyIndicator();
@@ -348,6 +349,7 @@ export class AddEditCustomsDocumentComponent extends BaseComponent {
         this._CustomDocumentViewerService.GetDocumentPageAsPdf(this.CustomsDocument.DocumentId).subscribe((myResponse: ServiceResponse) => {
             var result = myResponse.Result;
             if (result) {
+                console.log("[Response] PDF GetDocumentPage");
 
                 if (!AppTool.IsNullOrEmpty(result.contentField)) {
                     this.base64Document = "data:application/pdf;base64," + result.contentField;
