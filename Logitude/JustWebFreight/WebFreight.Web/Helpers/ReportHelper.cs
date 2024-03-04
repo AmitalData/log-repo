@@ -12,6 +12,7 @@ using Logitude.Server.Tools.QueueService;
 using Logitude.Server.Tools.StorageService;
 using Logitude.SystemLogs;
 using Microsoft.Practices.Unity;
+using NPOI.OpenXmlFormats.Dml;
 using NPOI.SS.Formula.Functions;
 using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
@@ -58,10 +59,10 @@ namespace WebFreight.Web.Helpers
 {
     public class ReportHelper
     {
+
         public void CopyReports(int? tenantNumber = null)
         {
-
-            ReportRepository reportRepository = new ReportRepository(0);
+        ReportRepository reportRepository = new ReportRepository(0);
             ReportsTemplateRepository reportsTemplateRepository = new ReportsTemplateRepository(0);
             ReportsTemplatesVersionRepository reportsTemplatesVersionRepository = new ReportsTemplatesVersionRepository(0);
             DocumentRepository documentRepository = new DocumentRepository(0);
@@ -1337,13 +1338,15 @@ namespace WebFreight.Web.Helpers
             return dataProvider;
         }
         public object dataprovider;
+        public Dictionary<string, dynamic> myProperties;
+        public List<ISlvLeaf> mylist ;
 
-        public string BuildDataProviderJson(string code)
+        public List<ISlvLeaf> BuildDataProviderJson(string code)
         {
             LogitudeReportsWebService logitudeReportsWebService = new LogitudeReportsWebService();
             XmlSerializer serializer = new XmlSerializer(typeof(string));
             MemoryStream memstream = new MemoryStream();
-
+            string dataProviderName = "";
             string dataProvider = null;
              dataprovider=null;
             switch (code)
@@ -1351,461 +1354,548 @@ namespace WebFreight.Web.Helpers
                 #region
                 case "ATRE":
                     {
-                         dataprovider = new AutomationTestReportDataProvider();
+                        dataProviderName = "WebFreight.Web.Helpers.DataProviderHelpers.AutomationTestReportDataProvider";
                         break;
                     }
 
                 case "SHEL":
                     {
-                        dataprovider = new ShipmentsEventsListDataProvider();
+                        dataProviderName = "WebFreight.Web.Helpers.DataProviderHelpers.ShipmentsEventsListDataProvider";
                         break;
                     }
 
-                    case "SHST":
-                        {
-                         dataprovider = new ShipmentsStocksDataProvider();
-                        break;
-                     }
-                    case "SHRR":
-                        {
-                         dataprovider = new ShipperReturnsDataProvider();
-                        break;
-                      }
-                    case "ERLR":
-                        {
-                         dataprovider = new ExternalReconciliationLinesReportDataProvider();
-                        break;
-                        }
-                    case "URDR":
-                        {
-                         dataprovider = new UserDefinedReportDataProvider();
-                        break;
-                        }
-                    case "UPTR":
-                        {
-                         dataprovider = new UsersByTenantDataProvider();
-                        
-                        break;
-                        }
+                case "SHST":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.ShipmentsStocksDataProvider";
 
-                    case "INVN":
-                        {
-                        dataprovider = new InventoryDataProvider();
                         break;
-                        }
+                    }
+                case "SHRR":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.ShipperReturnsDataProvider";
 
-                    case "RACL":
-                        {
-                        dataprovider = new AccountingLedgerDataProvider();
                         break;
-                        }
+                    }
+                case "ERLR":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.ExternalReconciliationLinesReportDataProvider";
+                        break;
+                    }
+                case "URDR":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.UserDefinedReportDataProvider";
 
-                    case "ASDB":
-                        {
-                        dataprovider = new DashBoardDataClass();
                         break;
-                         }
+                    }
+                case "UPTR":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.UsersByTenantDataProvider";
+
+
+                        break;
+                    }
+
+                case "INVN":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.InventoryDataProvider";
+
+                        break;
+                    }
+
+                case "RACL":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.AccountingLedgerDataProvider";
+
+                        break;
+                    }
+
+                case "ASDB":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.DashBoardDataClass";
+
+                        break;
+                    }
 
                 case "RAAR":
                     {
-                        dataprovider = new AgedAccountsReceivableDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.AgedAccountsReceivableDataProvider";
+
                         break;
-                      }
+                    }
 
                 case "EBRP":
                     {
-                        dataprovider = new BookingsDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.BookingsDataProvider";
+
                         break;
-                   }
+                    }
 
                 case "RALS":
                     {
-                        dataprovider = new AirlineStatisticsDataProvider(); 
+                        dataProviderName = "WebFreight.Web.DataProviders.AirlineStatisticsDataProvider";
+
                         break;
-                     }
+                    }
 
                 case "RSLS":
                     {
-                        dataprovider = new ShippingLineStatisticsDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.ShippingLineStatisticsDataProvider";
+
                         break;
-                     }
+                    }
 
                 case "CODT":
                     {
-                        dataprovider = new ContainerDetailsVoyageDataProvider(); 
+                        dataProviderName = "WebFreight.Web.DataProviders.ContainerDetailsVoyageDataProvider";
+
                         break;
-            }
+                    }
 
                 case "COTR":
                     {
+                        dataProviderName = "WebFreight.Web.DataProviders.ContainerTruckingDataProvider";
 
-                        dataprovider = new ContainerTruckingDataProvider();
                         break;
-            }
+                    }
 
                 case "CUAD":
                     {
-                        dataprovider = new CustomerAdditionalServicesDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.CustomerAdditionalServicesDataProvider";
+
                         break;
-            }
+                    }
 
                 case "CUPA":
                     {
-                        dataprovider = new CustomerPotentialActualDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.CustomerPotentialActualDataProvider";
+
                         break;
-            }
+                    }
 
                 case "EWRP":
                     {
-                        dataprovider = new EAWBsDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.EAWBsDataProvider";
+
                         break;
-            }
+                    }
 
                 case "EXIN":
                     {
-                        dataprovider = new ExpectedIncomeDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.ExpectedIncomeDataProvider";
+
                         break;
-            }
+                    }
 
                 case "FBRP":
                     {
-                        dataprovider = new FlightBookingDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.FlightBookingDataProvider";
+
                         break;
-            }
+                    }
 
                 case "RITS":
                     {
-                        dataprovider = new IATAStatisticsDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.IATAStatisticsDataProvider";
+
                         break;
-            }
+                    }
 
                 case "RIBP":
                     {
-                        dataprovider = new InvoicesByPartnerDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.InvoicesByPartnerDataProvider";
+
                         break;
-            }
+                    }
 
                 case "RINV":
                     {
-                        dataprovider = new InvoiceDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.InvoiceDataProvider";
+
 
                         break;
-            }
+                    }
 
                 case "RAPI":
                     {
-                        dataprovider = new IATAStatisticsDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.IATAStatisticsDataProvider";
+
 
                         break;
-            }
+                    }
 
                 case "MCOR":
                     {
-                        dataprovider = new OpportunityMonthlyConversionDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.OpportunityMonthlyConversionDataProvider";
+
                         break;
-            }
+                    }
 
                 case "OCRP":
                     {
-                        dataprovider = new RegisterShipmentPackageDataProvider();
+                        dataProviderName = "WebFreight.Web.ShipmentPackageModel.RegisterShipmentPackageDataProvider";
 
                         break;
-            }
+                    }
 
                 case "PUAC":
                     {
-                        dataprovider = new ParticipantsUsersActivitiesDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.ParticipantsUsersActivitiesDataProvider";
+
                         break;
-            }
+                    }
 
                 case "RPRS":
                     {
-                        dataprovider = new ProfitByShipmentDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.ProfitByShipmentDataProvider";
+
                         break;
-            }
+                    }
 
                 case "RQUO":
                     {
-                        dataprovider = new QuotesDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.QuotesDataProvider";
+
                         break;
-            }
+                    }
 
                 case "SCHT":
                 case "SCHA":
                     {
-                        dataprovider = new ShipmentChargesAnalysisDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.ShipmentChargesAnalysisDataProvider";
 
                         break;
-            }
+                    }
 
                 case "OPSC":
                     {
-                        dataprovider = new OpportunityStageChangingDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.OpportunityStageChangingDataProvider";
+
 
                         break;
-            }
+                    }
 
                 case "RSID":
                     {
-                        dataprovider = new StatementByInvoiceDateDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.StatementByInvoiceDateDataProvider";
+
                         break;
-            }
+                    }
 
                 case "RSTA":
                     {
-                        dataprovider = new StatementDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.StatementDataProvider";
 
                         break;
-            }
+                    }
 
                 case "RSAS":
                     {
-                        dataprovider = new StatementDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.StatementDataProvider";
 
                         break;
-            }
+                    }
 
                 case "SBAG":
                     {
-                        dataprovider = new StatisticsByAgentDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.StatisticsByAgentDataProvider";
 
                         break;
-            }
+                    }
 
                 case "RCLS":
                     {
-                        dataprovider = new StatisticsByClientDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.StatisticsByClientDataProvider";
 
                         break;
-            }
+                    }
 
                 case "ARID":
                     {
-                        dataprovider = new ARInvoiceDepositDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.ARInvoiceDepositDataProvider";
 
                         break;
-            }
+                    }
 
                 case "CASS":
                     {
-                        dataprovider = new CASSDataProvider();
+                        dataProviderName = "WebFreight.Web.DataProviders.CASSDataProvider";
 
                         break;
-            }
+                    }
 
-            case "SPQS":
-                {
-                        dataprovider = new ShipmentProfitVSQuoteEstimateDataProvider();
-
-                        break;
-            }
-
-            case "AREX":
-                {
-                        dataprovider = new ArchivoExportadoDataProvider();
+                case "SPQS":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.ShipmentProfitVSQuoteEstimateDataProvider";
 
                         break;
-            }
+                    }
 
-            case "DSCA":
-                {
-                        dataprovider = new ArchivoExportadoDataProvider();
-
-                        break;
-            }
-
-            case "INVR":
-                {
-                        dataprovider = new ARInvoiceIncludeVATRoutingsDataProvider();
+                case "AREX":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.ArchivoExportadoDataProvider";
 
                         break;
-            }
+                    }
 
-            case "EMTS":
-                {
+                case "DSCA":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.ArchivoExportadoDataProvider";
+
+                        break;
+                    }
+
+                case "INVR":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.ARInvoiceIncludeVATRoutingsDataProvider";
+
+                        break;
+                    }
+
+                case "EMTS":
+                    {
                         //dataProvider = logitudeReportsWebService.LoadEmployeeTimeSheetData(filters, reportFliter.tenant);
-
-                        dataprovider = new EmployeeTimeSheetDataProvider();
-
+                        dataProviderName = "WebFreight.Web.DataProviders.EmployeeTimeSheetDataProvider";
 
                         break;
-            }
+                    }
 
-            case "WDTS":
-                {
-                        dataprovider = new WorkDaysPerProjectDataProvider();
+                case "WDTS":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.WorkDaysPerProjectDataProvider";
+
 
 
                         var isUsingNewCode = false;
-                if (isUsingNewCode)
-                {
-                            dataprovider = new WorkDaysPerProjectDataProvider();
+                        if (isUsingNewCode)
+                        {
+                            dataProviderName = "WebFreight.Web.DataProviders.WorkDaysPerProjectDataProvider";
 
                         }
 
                         else
-                {
-                            dataprovider = new WorkDaysPerProjectDataProvider();
+                        {
+                            dataProviderName = "WebFreight.Web.DataProviders.WorkDaysPerProjectDataProvider";
 
                         }
 
                         break;
-            }
-            case "WGTS":
-                {
-                        dataprovider = new WorkDaysPerCategoryDataProvider();
+                    }
+                case "WGTS":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.WorkDaysPerCategoryDataProvider";
+
 
                         break;
-            }
-            case "TPTS":
-                {
-                        dataprovider = new TasksWithoutProjectsDataProvider();
+                    }
+                case "TPTS":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.TasksWithoutProjectsDataProvider";
 
                         break;
-            }
+                    }
 
-            case "AGER":
-                {
-                        dataprovider = new AccountingAgingDataProvider();
-                        break;
-            }
-
-            case "OSBC":
-                {
-                        dataprovider = new OpenShipmentsByCustomerDataProvider();
+                case "AGER":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.AccountingAgingDataProvider";
 
                         break;
-            }
+                    }
 
-            case "PTVC":
-                {
-                        dataprovider = new ParentVsChildTenantsDataProvider();
-
-                        break;
-            }
-
-            case "REXR":
-                {
-                        dataprovider = new RevenueExpenseDataProvider();
+                case "OSBC":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.OpenShipmentsByCustomerDataProvider";
 
                         break;
-            }
+                    }
 
-            case "TRBR":
-                {
-                        dataprovider = new RevenueExpenseDataProvider();
+                case "PTVC":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.ParentVsChildTenantsDataProvider";
                         break;
-            }
+                    }
 
-            case "LICM":
-                {
-                        dataprovider = new LicenseManagementDataProvider();
-                        break;
-            }
-
-            case "SHID":
-                {
-                        dataprovider = new ShipmentDetailsDataProvider();
+                case "REXR":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.RevenueExpenseDataProvider";
 
                         break;
-            }
+                    }
 
-            case "VDK":
-                {
-                        dataprovider = new VDKDataProvider();
-
-                        break;
-            }
-            case "VEHI":
-                {
-
-                        dataprovider = new VehiclesDataProvider();
-                       
-                        break;
-            }
-            case "VDCA":
-                {
-                        dataprovider = new VendorChargesAnalysisDataProvider();
+                case "TRBR":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.RevenueExpenseDataProvider";
 
                         break;
-            }
+                    }
 
-            case "LTRP":
-                {
-                        dataprovider = new LedgerTransactionsDataProvider();
-
-                        break;
-            }
-
-            case "UNER":
-                {
-                        dataprovider = new UnicargoExportDataProvider();
+                case "LICM":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.LicenseManagementDataProvider";
 
                         break;
-            }
+                    }
 
-            case "FLBM":
-                {
-                        dataprovider = new FlightBookingsManifestDataProvider();
-
-                        break;
-            }
-
-            case "RCRF":
-                {
-                        dataprovider = new RacingQuoteDataProvider();
+                case "SHID":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.ShipmentDetailsDataProvider";
 
                         break;
-            }
+                    }
 
-            case "BSPR":
-                {
-                        dataprovider = new BluesnapPaymentsDataProvider();
+                case "VDK":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.VDKDataProvider";
 
-                        break;
-            }
-            case "CSSR":
-                {
-                        dataprovider = new CustomerStatusDataProvider();
-                        break;
-            }
-            case "LOCR":
-                {
-                        dataprovider = new LogitudeCRMReportDataProvider();
 
                         break;
-            }
-            case "PRVR":
-                {
-                        dataprovider = new TaxDeductionReportData();
+                    }
+                case "VEHI":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.VehiclesDataProvider";
+
 
                         break;
-            }
-            case "ARIS":
-                {
-                        dataprovider = new ARinvoiceSequencesReportData();
+                    }
+                case "VDCA":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.VendorChargesAnalysisDataProvider";
 
                         break;
-            }
-            case "SRQR":
-                {
-                        dataprovider = new SpotRateQuoteReportDataProvider();
+                    }
+
+                case "LTRP":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.LedgerTransactionsDataProvider";
 
                         break;
-            }
-            case "RCIL":
-                {
-                        dataprovider = new ControlForInvoiceLinesDataProvider();
+                    }
+
+                case "UNER":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.UnicargoExportDataProvider";
 
                         break;
+                    }
+
+                case "FLBM":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.FlightBookingsManifestDataProvider";
+
+                        break;
+                    }
+
+                case "RCRF":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.RacingQuoteDataProvider";
+
+                        break;
+                    }
+
+                case "BSPR":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.BluesnapPaymentsDataProvider";
+
+                        break;
+                    }
+                case "CSSR":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.CustomerStatusDataProvider";
+
+                        break;
+                    }
+                case "LOCR":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.LogitudeCRMReportDataProvider";
+
+                        break;
+                    }
+                case "PRVR":
+                    {
+                        dataProviderName = "Logitude.Accounting.BL.DataContract.TaxDeductionReportData";
+
+                        break;
+                    }
+                case "ARIS":
+                    {
+                        dataProviderName = "Logitude.Accounting.BL.DataContract.ARinvoiceSequencesReportData";
+
+                        break;
+                    }
+                case "SRQR":
+                    {
+                        dataProviderName = "WebFreight.Web.DataProviders.SpotRateQuoteReportDataProvider";
+
+
+                        break;
+                    }
+                case "RCIL":
+                    {
+                        dataProviderName = "Logitude.Accounting.BL.DataContract.ControlForInvoiceLinesDataProvider";
+
+
+                        break;
+                    }
+                    #endregion
             }
-            #endregion
+
+            mylist = new List<ISlvLeaf>();
+            mylist = GetPropertyNames(dataProviderName, mylist);
+
+            return mylist;
         }
-            dataProvider = JsonConvert.SerializeObject(dataprovider);
 
-            return dataProvider;
+
+        public class ISlvLeaf
+        {
+            public  string content { get; set; } // Example: "<span>Child</span>"
+            public bool expanded { get; set; }
+            public  List<ISlvLeaf> children { get; set; }
         }
+        public List<ISlvLeaf> GetPropertyNames(string dataProviderName, List<ISlvLeaf> mylist)
+        {
+            
+            //var D = Assembly.GetAssembly(typeof(LogitudeCRMReportDataProvider)).GetTypes().Where(T => T.IsSubclassOf(typeof(LogitudeCRMReportDataProvider)));
+            Type t = Type.GetType(dataProviderName);
+            var properties1 = t.GetProperties();
 
+            foreach (var property in properties1)
+            {
+                try{
+                    if (property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
+                    {
+                        List<ISlvLeaf> childList = new List<ISlvLeaf>();
+                        ISlvLeaf iSlvLeaf = new ISlvLeaf()
+                        {
+                            content = property.Name,
+                            expanded = true,
+                            children = GetPropertyNames(property.PropertyType.GetGenericArguments()[0].FullName, childList)
+                        };
+                        mylist.Add(iSlvLeaf);
+                        
+                        //myProperties.Add(property.Name, dataProviderName);
+
+
+                    }
+                   else
+                   {
+                        ISlvLeaf iSlvLeaf = new ISlvLeaf()
+                        {
+                            content = property.Name,
+                            expanded = false,
+                            children = new List<ISlvLeaf>()
+                        };
+                        mylist.Add(iSlvLeaf);
+                        
+                    }
+                }
+                catch (Exception e)
+                {
+                    return null;
+                }  
+            }
+            return mylist;
+
+        }
         public ReportStimulDataProviderDetails GetReportStimulDataProviderDetails(Stream memorystream, ReportFliter reportFliter)
         {
             ReportStimulDataProviderDetails stimulReportDataProviderDetails = new ReportStimulDataProviderDetails();

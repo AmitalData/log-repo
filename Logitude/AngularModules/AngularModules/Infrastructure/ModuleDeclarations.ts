@@ -212,6 +212,7 @@ import { GridScreenSectionComponent } from './Components/LogitudeComponents/Cust
 import { AddEditChildEntityComponent } from './Components/LogitudeComponents/Customization/Screen/Section/AddEditChildEntityComponent';
 import { NewCustomObjectComponent } from './Components/NewEntity/NewCustomObjectComponent';
 import { DataProviderFieldsNestedList } from '../Report/Components/DataProviderFieldsNestedList';
+import { TreeComponent } from './Components/LogitudeComponents/tree';
 
 //import { ScrollingModule } from '@angular/cdk/scrolling';
 export const Directives =
@@ -261,6 +262,7 @@ export const ControlsComponents =
         LogToolTipComponent,
         LogTextBoxComponent,
         MultilineTextBoxWindow,
+        TreeComponent,
         LogTextBoxV2Component,
         LogLovComponent,
         LogLovV2Component,
@@ -363,7 +365,7 @@ export const Components =
         GeneralTabComponent,
         GeneratedComponent,
         MultilineTextBoxWindow,
-
+         TreeComponent,
         MainMenuAutomationComponent,
         AutomationsSettingsComponent,
         AddEditAutomationsComponent,
@@ -538,6 +540,7 @@ export class ModuleDeclarations {
             case 'BTEParameterTabComponent': { myResult = BTEParameterTabComponent; break; }
             case 'LastSuccessfulLoginComponent': { myResult = LastSuccessfulLoginComponent; break; }
             case 'MultilineTextBoxWindow': { myResult = MultilineTextBoxWindow; break; }
+            case  "TreeComponent":{ myResult = TreeComponent; break; }
             case 'ImageLibraryComponent': { myResult = ImageLibraryComponent; break; }
             case 'FTBSchedulerTemplateComponent': { myResult = FTBSchedulerTemplateComponent; break; }
             case 'SendInterfaceResultComponent': { myResult = SendInterfaceResultComponent; break; }
