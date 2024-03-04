@@ -126,6 +126,7 @@
     <None Include="DBTables\LastRunDetail.dxml" />
     <None Include="DBTables\LBPTeamMember.dxml" />
     <None Include="DBTables\PriceStep.dxml" />
+    <None Include="DBTables\SatisfactionSurvey.dxml" />
     <None Include="DBTables\SharedLogisticsSetting.dxml" />
     <None Include="DBTables\Team.dxml" />
     <None Include="DBTables\TeamMemberBusinessRole.dxml" />
