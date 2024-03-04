@@ -112,6 +112,52 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string rating ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Rating  
+	   {
+	    
+	     get
+		{
+		   return rating;
+		 }
+		 set
+		 {
+		   if(rating != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Rating",OldValue=rating,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   rating=value;
+		   }
+			
+		 }
+	   }
+	  private string comments ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Comments  
+	   {
+	    
+	     get
+		{
+		   return comments;
+		 }
+		 set
+		 {
+		   if(comments != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Comments",OldValue=comments,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   comments=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

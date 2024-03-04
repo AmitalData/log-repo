@@ -44,6 +44,16 @@ export class SatisfactionSurveyPM {
     public set SearchFields(newValue: string) { if (this.searchFields != newValue) { this.searchFields = newValue; this.MarkAsDirty("SearchFields"); } }
        
 	 
+    private rating: string;
+    public get Rating() { return this.rating; }
+    public set Rating(newValue: string) { if (this.rating != newValue) { this.rating = newValue; this.MarkAsDirty("Rating"); } }
+       
+	 
+    private comments: string;
+    public get Comments() { return this.comments; }
+    public set Comments(newValue: string) { if (this.comments != newValue) { this.comments = newValue; this.MarkAsDirty("Comments"); } }
+       
+	 
 
     public OldEntityPM: SatisfactionSurveyPM;
 		

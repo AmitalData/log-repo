@@ -27,6 +27,10 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public DateTime UpdateDate { get; set; }
         [Column("SearchFields")]
 	    public string SearchFields { get; set; }
+        [Column("Rating")]
+	    public string Rating { get; set; }
+        [Column("Comments")]
+	    public string Comments { get; set; }
     }
 }
 	 

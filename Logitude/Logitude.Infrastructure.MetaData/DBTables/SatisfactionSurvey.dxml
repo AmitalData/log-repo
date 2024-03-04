@@ -31,4 +31,18 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="Rating"
+    Type="nvarchar"
+    Size="60">
+    <Constraints
+      Nullable="true" />
+  </Column>
+  <Column
+    Name="Comments"
+    Type="nvarchar"
+    Size="250">
+    <Constraints
+      Nullable="true" />
+  </Column>
 </Table>

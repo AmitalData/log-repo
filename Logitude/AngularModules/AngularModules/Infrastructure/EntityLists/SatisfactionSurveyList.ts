@@ -12,6 +12,8 @@ export class SatisfactionSurveyList {
 	CreateDate: Date;
 	UpdateDate: Date;
 	SearchFields: string;
+	Rating: string;
+	Comments: string;
 	
 }
  
