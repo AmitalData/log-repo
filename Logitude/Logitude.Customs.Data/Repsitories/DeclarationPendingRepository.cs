@@ -21,10 +21,16 @@ namespace Logitude.Customs.Data.Repsitories
         {
             DeclarationCourierStatusKeys keys = entityKeys as DeclarationCourierStatusKeys;
             List<DeclarationPending> pendings;
-            pendings = (from a in context.DeclarationPendings.Include("CourierPendingReason")
-                           where a.DeclarationID == keys.DeclarationId
-                           select a).ToList();
 
+            DeclarationRepository DeclarationRepository = new DeclarationRepository(context);
+            int tenant = DeclarationRepository.GetTenantByDeclarationId(keys.DeclarationId);
+
+            pendings = (from a in context.DeclarationPendings
+                            join cpr in context.CourierPendingReasons
+                            on new { Code = a.CourierPendingReasonCode, Tenant = tenant } equals new { Code = cpr.Code, Tenant = cpr.Tenant } into joined
+                            from cpr in joined.DefaultIfEmpty()
+                            where a.DeclarationID == keys.DeclarationId
+                            select a).ToList();
 
             return pendings;
         }
@@ -33,9 +39,12 @@ namespace Logitude.Customs.Data.Repsitories
         {
 
             List<DeclarationPending> pendings;
-            pendings = (from a in context.DeclarationPendings.Include("CourierPendingReason")
-                           where a.DeclarationID == declarationId
-                           select a).ToList();
+            pendings = (from a in context.DeclarationPendings
+                        join cpr in context.CourierPendingReasons
+                        on new { Code = a.CourierPendingReasonCode, Tenant = tenant } equals new { Code = cpr.Code, Tenant = cpr.Tenant } into joined
+                        from cpr in joined.DefaultIfEmpty()
+                        where a.DeclarationID == declarationId
+                        select a).ToList();
 
 
             return pendings;
