@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SatisfactionSurveyUpdateClass
    {  		
-		public const string HashString = "58e04cd57c1b1aa99fd511842bdea125";
+		public const string HashString = "40e10bd5eee302b138244380a7727b8c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Satisfaction Survey",
-			      				    Code =  "42f6",
+			      				    Code =  "5048",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "SatisfactionSurvey",
@@ -423,6 +423,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Rating",
 					  						ListPropertyPath =  "Rating",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -487,6 +488,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Comments",
 					  						ListPropertyPath =  "Comments",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -609,7 +611,31 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable SatisfactionSurveyObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "SatisfactionSurvey" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode SatisfactionSurveyTextCode_SatisfactionSurveyONotAtAllSatisfied = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SatisfactionSurvey.O.NotAtAllSatisfied", DefaultText = "Not at all satisfied",LocalDefaultText = @"כלל לא מרוצה", ObjectTableId = SatisfactionSurveyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SatisfactionSurveyTextCode_SatisfactionSurveyOSlightly = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SatisfactionSurvey.O.Slightly", DefaultText = "Slightly",LocalDefaultText = @"במידה מועטה", ObjectTableId = SatisfactionSurveyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SatisfactionSurveyTextCode_SatisfactionSurveyOModerately = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SatisfactionSurvey.O.Moderately", DefaultText = "Moderately",LocalDefaultText = @"  במידה בינונית", ObjectTableId = SatisfactionSurveyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SatisfactionSurveyTextCode_SatisfactionSurveyOVeryMuch = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SatisfactionSurvey.O.VeryMuch", DefaultText = "very much",LocalDefaultText = @"במידה רבה", ObjectTableId = SatisfactionSurveyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SatisfactionSurveyTextCode_SatisfactionSurveyOExtent = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SatisfactionSurvey.O.Extent", DefaultText = "Extent",LocalDefaultText = @"במידה רבה מאוד", ObjectTableId = SatisfactionSurveyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SatisfactionSurveyTextCode_SatisfactionSurveyOMoreDetails = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SatisfactionSurvey.O.MoreDetails", DefaultText = "You can add more details about the service experience",LocalDefaultText = @"ניתן להוסיף עוד פרטי על חוויית השירות", ObjectTableId = SatisfactionSurveyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SatisfactionSurveyTextCode_SatisfactionSurveyOHowSatisfiedAreYou = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SatisfactionSurvey.O.HowSatisfiedAreYou", DefaultText = "How satisfied are you with the service you received?",LocalDefaultText = @"באיזה מידה את/ה שבע/ת רצון מהשירות שקיבלת?", ObjectTableId = SatisfactionSurveyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SatisfactionSurveyTextCode_SatisfactionSurveyOThanks = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SatisfactionSurvey.O.Thanks", DefaultText = "Thank you very much for the feedback!",LocalDefaultText = @"תודה רבה על המשוב!", ObjectTableId = SatisfactionSurveyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode SatisfactionSurveyTextCode_SatisfactionSurveyOSentSuccessfully = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "SatisfactionSurvey.O.SentSuccessfully", DefaultText = "The feedback details have been sent successfully.",LocalDefaultText = @"פרטי המשוב נשלחו בהצלחה.", ObjectTableId = SatisfactionSurveyObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

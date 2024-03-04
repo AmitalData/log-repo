@@ -98,7 +98,7 @@
         (ngSubmit)="onSubmit()"
         *ngIf="!formSubmitted"
     >
-        <h5 class="title">באיזה מידה את/ה שבע/ת רצון מהשירות שקיבלת?</h5>
+        <h5 class="title">{{'SatisfactionSurvey.O.HowSatisfiedAreYou'| TextCodeTranslationPipe}}</h5>
         <ul class="tabs">
             <li
                 *ngFor="let tab of tabs"
@@ -112,7 +112,7 @@
             <div class="content">
                 <textarea
                     formControlName="feedback"
-                    placeholder="ניתן להוסיף עוד פרטי על חוויית השירות"
+                    [placeholder]="moreDetailsTitle"
                 ></textarea>
             </div>
         </div>
@@ -121,8 +121,8 @@
         </div>
     </form>
     <div class="thank-you-message" *ngIf="formSubmitted">
-        <h2>תודה רבה על המשוב!</h2>
+        <h2>{{'SatisfactionSurvey.O.Thanks'| TextCodeTranslationPipe}}</h2>
         <br/>
-        <p>פרטי המשוב נשלחו בהצלחה.</p>
+        <p>{{'SatisfactionSurvey.O.SentSuccessfully'| TextCodeTranslationPipe}}</p>
     </div>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
 
 @Component({
     selector: 'SatisfactionSurveyComponent',
@@ -8,14 +9,15 @@ import { Location } from '@angular/common';
 })
 export class SatisfactionSurveyComponent implements OnInit {
     tabs = [
-        { id: 'tab1', content: 'כלל לא מרוצה' },
-        { id: 'tab2', content: 'במידה מועטה' },
-        { id: 'tab3', content: 'במידה בינונית' },
-        { id: 'tab4', content: 'במידה רבה' },
-        { id: 'tab5', content: 'במידה רבה מאוד' },
+        { id: 'tab1', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.NotAtAllSatisfied") },
+        { id: 'tab2', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.Slightly") },
+        { id: 'tab3', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.Moderately")  },
+        { id: 'tab4', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.VeryMuch")  },
+        { id: 'tab5', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.Extent")  },
     ];
 
     activeTab: string = this.tabs[4].content;
+    moreDetailsTitle: string = TextCodeTranslator.Translate("SatisfactionSurvey.O.MoreDetails");
     surveyForm: FormGroup;
     formSubmitted: boolean = false;
 
