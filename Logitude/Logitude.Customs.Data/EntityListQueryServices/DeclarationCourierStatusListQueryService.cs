@@ -16,6 +16,9 @@ using Logitude.Customs.Data.EntityLists;
 using Simplog.Server.Infrastructure;
 using Logitude.Customs.Data.Repsitories;
 using Devart.Data.Linq;
+using System.Runtime.Remoting.Contexts;
+using System.Security.Cryptography;
+using System.Runtime.ConstrainedExecution;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -52,12 +55,16 @@ namespace Logitude.Customs.Data.EntityListQueryServices
             }
             var qDeclarationPaymentPendingHold =
             (from p in context.DeclarationPendings
+             join cpr in context.CourierPendingReasons
+             on new { Code = p.CourierPendingReasonCode, Tenant = p.Tenant } equals new { Code = cpr.Code, Tenant = cpr.Tenant } into joined
+             from cpr in joined.DefaultIfEmpty()
              where p.Status == "A"
-             group p by p.DeclarationID into g
+             group new { p, cpr } by p.DeclarationID into g
              select new MyJoin
              {
                  DeclarationId = g.Key,
-                 ErrorPlace = g.Any(r => r.CourierPendingReason.ErrorPlace == "1"),
+                 ErrorPlace = g.Any(r => r.cpr != null && r.cpr.ErrorPlace == "1"),
+
 
                  //CourierPendingReason1stName = g.DefaultIfEmpty(
                  //new DeclarationPending()
@@ -66,7 +73,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
                  //})
                  //.FirstOrDefault().CourierPendingReason.LocalName
 
-                 CourierPendingReason1stName = g.Any() ? g.FirstOrDefault().CourierPendingReason.LocalName : null,
+                 CourierPendingReason1stName = g.Any() && g.FirstOrDefault().cpr != null ? g.FirstOrDefault().cpr.LocalName : null ,
                  //CourierPendingReasonNameList = g.Any() ? string.Join(",", g.Select(x=>x.CourierPendingReason.LocalName).ToList()) : null
                  //CourierPendingReasonNameList = g.Any() ?  g.Select(x=>x.CourierPendingReason.LocalName).Aggregate((a,b) => a + "," + b) : null
 
