@@ -131,7 +131,7 @@ export class ShaamTokensComponent extends BaseComponent {
     }
 
     async initLinkToCodeForToken() {
-        const user: string = SessionLocator.LoggedUserPM.Code || SessionLocator.LoggedUserPM.EnglishName;
+        const user: string =  new URLSearchParams(window.location.search).get('userCode') || SessionLocator.LoggedUserPM.Code || SessionLocator.LoggedUserPM.EnglishName;
         this.linkToCodeForToken = await new ShaamWebService().getLinkToCodeForToken(user).toPromise();
     }
 
