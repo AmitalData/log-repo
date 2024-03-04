@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
+using Simplog.Data.CommonDataModel.EntityPOCOs;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 {
@@ -21,15 +22,18 @@ namespace Logitude.Customs.Data.EntityListQueryServices
     {
         private IQueryable<PendingByKeywordList> GetIqueryableList(IQueryable<PendingByKeyword> iQueryable)
         {
-            IQueryable<PendingByKeywordList> query = (from a in iQueryable.Include("CourierPendingReason")
+            IQueryable<PendingByKeywordList> query = (from a in iQueryable
+                                                      join cpr in context.CourierPendingReasons
+                                                      on new { Code = a.CourierPendingReasonCode, Tenant = a.Tenant } equals new { Code = cpr.Code, Tenant = cpr.Tenant } into joined
+                                                      from cpr in joined.DefaultIfEmpty()
                                                       select new PendingByKeywordList()
                                                       {
 
                                                           Id = a.Id,
 
                                                           Tenant = a.Tenant,
-                                                          CourierPendingReasonCode = a.CourierPendingReason != null ? a.CourierPendingReason.Code  : null,
-                                                          CourierPendingReasonName = a.CourierPendingReason != null ? a.CourierPendingReason.LocalName : null,
+                                                          CourierPendingReasonCode = cpr != null ? cpr.Code  : null,
+                                                          CourierPendingReasonName = cpr != null ? cpr.LocalName : null,
                                                           KeywordsList = a.KeywordsList, 
                                                            SearchByFieldCode = a.SearchByFieldCode,
                                                             SearchByFieldName = a.SearchByFieldCode!=null ? (a.SearchByFieldCode=="1" ?

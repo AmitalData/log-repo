@@ -17,6 +17,8 @@ import { PendingByKeywordListService } from '../../../../Customs/Services/Standa
 
 import { LogitudeWindow } from '../../../../Controls/Windows/LogitudeWindow';
 import { KeyValuePair } from '../CourierWorkSheet/CourierWorksheetComponent';
+import { CourierPendingReasonExtendedListService } from 'Customs/Services/ExtendedLists/CourierPendingReasonExtendedListService';
+import { CourierPendingReasonList } from 'Customs/EntityLists/CourierPendingReasonList';
 
 
 @Component({
@@ -120,7 +122,21 @@ export class AddEditPendingByKeywordComponent
         this._WarningMessage = newValue;
     }
 
-    public get CourierPendingReasonCode() { return this.EntityPM.CourierPendingReasonCode; }
+    public get CourierPendingReasonCode() 
+    {
+        var _CourierPendingReasonExtendedListService = new CourierPendingReasonExtendedListService();
+        var CourierPendingReason: CourierPendingReasonList;
+
+        _CourierPendingReasonExtendedListService.GetSingleFromCacheByCode(this.EntityPM.CourierPendingReasonCode)
+            .subscribe(serviceResponse => {
+                CourierPendingReason = serviceResponse.Result;
+            });
+           if(CourierPendingReason == null){
+                return null;
+           }
+           return CourierPendingReason.Id
+
+    }
     public set CourierPendingReasonCode(newValue: string) {
         this.EntityPM.CourierPendingReasonCode = newValue;
     }
