@@ -15,8 +15,9 @@ export class SatisfactionSurveyComponent implements OnInit {
         { id: 'tab5', content: 'במידה רבה מאוד' },
     ];
 
-    activeTab: string = this.tabs[0].content;
+    activeTab: string = this.tabs[4].content;
     surveyForm: FormGroup;
+    formSubmitted: boolean = false;
 
     constructor(private location: Location) {
         this.surveyForm = new FormGroup({
@@ -40,5 +41,7 @@ export class SatisfactionSurveyComponent implements OnInit {
     onSubmit() {
         console.log('Form submitted!');
         console.log(this.surveyForm.value);
+
+        this.formSubmitted = true;
     }
 }

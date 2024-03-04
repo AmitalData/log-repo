@@ -153,6 +153,7 @@
     <None Include="EntityFiles\LastRunDetail.lxml" />
     <None Include="EntityFiles\LBPTeamMember.lxml" />
     <None Include="EntityFiles\PriceStep.lxml" />
+    <None Include="EntityFiles\SatisfactionSurvey.lxml" />
     <None Include="EntityFiles\SharedLogisticsSetting.lxml">
       <SubType>Designer</SubType>
     </None>

@@ -333,6 +333,7 @@ export const ControlsComponents = [
     OnUpdateDocumentResultComponent,
     MonthpickerComponent,
     DataProviderFieldsNestedList,
+    SatisfactionSurveyComponent
 ];
 export const Components = [
     RootComponent,
@@ -856,6 +857,10 @@ export class ModuleDeclarations {
             }
             case 'NewCustomObjectComponent': {
                 myResult = NewCustomObjectComponent;
+                break;
+            }
+            case 'SatisfactionSurveyComponent': {
+                myResult = SatisfactionSurveyComponent;
                 break;
             }
         }

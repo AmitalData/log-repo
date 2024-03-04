@@ -1,7 +1,22 @@
 <style>
+    .background {
+        width: 100%;
+        background: url("./Images/LoginScreen/map.png") center center no-repeat;
+        background-size: cover;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+    .title {
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+        padding-bottom: 15px;
+    }
     form {
         direction: rtl;
-        width: 60%;
+        width: 30%;
         margin: auto;
         background-color: #fff;
         padding: 20px;
@@ -49,7 +64,7 @@
         padding: 10px 20px;
         border-top: 5px solid #b1b1b1;
         background-color: #eee;
-        border-radius: 4px;
+        border-radius: 0px;
         cursor: pointer;
     }
     .tabs li.active {
@@ -66,27 +81,48 @@
         border: 1px solid #ccc;
         resize: vertical;
     }
+
+    .thank-you-message {
+        direction: rtl;
+        text-align: center;
+    }
+    .thank-you-message h2 {
+        font-size: 24px;
+        font-weight: bold;
+    }
 </style>
 
-<form [formGroup]="surveyForm" (ngSubmit)="onSubmit()">
-    <ul class="tabs">
-        <li
-            *ngFor="let tab of tabs"
-            [class.active]="activeTab === tab.content"
-            (click)="setActiveTab(tab.content)"
-        >
-            {{ tab.content }}
-        </li>
-    </ul>
-    <div class="form-group">
-        <div class="content">
-            <textarea
-                formControlName="feedback"
-                placeholder="נא להקליד כאן את פרטי פנייתך"
-            ></textarea>
+<div class="background">
+    <form
+        [formGroup]="surveyForm"
+        (ngSubmit)="onSubmit()"
+        *ngIf="!formSubmitted"
+    >
+        <h5 class="title">באיזה מידה את/ה שבע/ת רצון מהשירות שקיבלת?</h5>
+        <ul class="tabs">
+            <li
+                *ngFor="let tab of tabs"
+                [class.active]="activeTab === tab.content"
+                (click)="setActiveTab(tab.content)"
+            >
+                {{ tab.content }}
+            </li>
+        </ul>
+        <div class="form-group">
+            <div class="content">
+                <textarea
+                    formControlName="feedback"
+                    placeholder="ניתן להוסיף עוד פרטי על חוויית השירות"
+                ></textarea>
+            </div>
         </div>
+        <div class="button-container">
+            <input type="submit" value="שלח" />
+        </div>
+    </form>
+    <div class="thank-you-message" *ngIf="formSubmitted">
+        <h2>תודה רבה על המשוב!</h2>
+        <br/>
+        <p>פרטי המשוב נשלחו בהצלחה.</p>
     </div>
-    <div class="button-container">
-        <input type="submit" value="SUBMIT" />
-    </div>
-</form>
+</div>
