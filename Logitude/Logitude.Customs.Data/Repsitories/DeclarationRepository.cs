@@ -1559,6 +1559,14 @@ namespace Logitude.Customs.Data.Repsitories
 
 			return declarations;
 		}
+
+        public int GetTenantByDeclarationId(string declarationId)
+        {
+            int tenant = (from a in context.Declarations
+                                     where a.Id == declarationId
+                                     select a.Tenant).FirstOrDefault();
+            return tenant;
+        }
 	}
 
 
