@@ -951,12 +951,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
         private static IQueryable<CargoTrackingShipmentList> FilterByCustomers(CargoTrackingShipmentSearchInput shipmentSearchInput, IQueryable<CargoTrackingShipmentList> shipments)
         {
             if (shipmentSearchInput.CustomersIds.Count > 0)
+            {
 
                 Logger.LogDebug("FilterByCustomers count:{0}", shipmentSearchInput.CustomersIds.Count);
 
                 shipments = shipments.Where(d =>
                             shipmentSearchInput.CustomersIds.Contains(d.CustomerId)
                         );
+            }
             return shipments;
         }
 
