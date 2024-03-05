@@ -37,6 +37,7 @@ import { CourierMasterService } from 'Customs/Services/Others/CourierMasterServi
 
 import { SendALLDelayFormParams } from '../../../../Customs/DataContract/RequestParams/SendALLDelayFormParams';
 import { InterfaceTenantDefinitionsWebService } from 'Customs/Services/WebServices/InterfaceTenantDefinitionsWebService';
+import { DeclarationCourierStatusExtendedListService } from 'Customs/Services/ExtendedLists/DeclarationCourierStatusExtendedListService';
 
 
 @Component({
@@ -75,6 +76,7 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
     _CourierMasterService: CourierMasterService = new CourierMasterService();
     _DeclarationCourierStatusListService: DeclarationCourierStatusListService = new DeclarationCourierStatusListService();
     _EntityListService: EntityListService = new EntityListService();
+    _declarationCourierStatusExtendedListService: DeclarationCourierStatusExtendedListService = new DeclarationCourierStatusExtendedListService();
 
     @ViewChild(DropdownMenuFilterComponent)
     public MyDropdownMenuFilterComponent: DropdownMenuFilterComponent = new DropdownMenuFilterComponent(null, null);
@@ -426,25 +428,23 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
         }
 
         // get the storage sites count for the courier ID / selected declaration IDs
-        this._EntityListService.getGroupByStorageSite("Customs.DeclarationCourierStatus", this.entityPM.Id, this._CourierWorksheetSharedDataService._SelectedItems?.Collection, null).then((observable: Observable<any>) => {
-            observable.subscribe((response: ServiceResponse) => {
-                // if all declarations are not regarding the only one and same storage site, display a confirmation window
-                if (response.Count > 1) {
-                    var confirmWindow = new ConfirmWindow();
-                    confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
-                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
-                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
-                    confirmWindow.Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.MultipleStorageSitesConfirmation"));
-                    confirmWindow.WindowClosed.subscribe((event: any) => {
-                        if (confirmWindow.Yes) {
-                            this.SendReadyForPayment();
-                        }
-                    });
-                }
-                else {
-                    this.SendReadyForPayment();
-                }
-            });
+        this._declarationCourierStatusExtendedListService.getGroupByStorageSite(this.entityPM.Id, this._CourierWorksheetSharedDataService._SelectedItems?.Collection).subscribe((response: ServiceResponse) => {
+            // if all declarations are not regarding the only one and same storage site, display a confirmation window
+            if (response.Count > 1) {
+                var confirmWindow = new ConfirmWindow();
+                confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+                confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                confirmWindow.Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.MultipleStorageSitesConfirmation"));
+                confirmWindow.WindowClosed.subscribe((event: any) => {
+                    if (confirmWindow.Yes) {
+                        this.SendReadyForPayment();
+                    }
+                });
+            }
+            else {
+                this.SendReadyForPayment();
+            }
         });
     }
 
