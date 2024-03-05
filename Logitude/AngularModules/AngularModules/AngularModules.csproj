@@ -2189,6 +2189,7 @@
     <TypeScriptCompile Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\StimulsoftComponent\Services\SchedulerReportMessageTemplateService.ts" />
     <TypeScriptCompile Include="Infrastructure\Components\Templates\MyTemplate.ts" />
+    <TypeScriptCompile Include="Infrastructure\Components\SatisfactionSurvey\SatisfactionSurveyComponent.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomatedBackup.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationArgs.ts" />
     <TypeScriptCompile Include="Infrastructure\DataContracts\AutomationCondition.ts" />
@@ -2423,6 +2424,7 @@
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchAddFieldsComponent.html" />
     <Content Include="Infrastructure\Components\QueryColumnsComponents\DWLogSearchWindowFieldsComponent.html" />
     <Content Include="Infrastructure\Components\Templates\MyTemplate.html" />
+    <Content Include="Infrastructure\Components\SatisfactionSurvey\SatisfactionSurveyComponent.html" />
     <Content Include="InvoiceModules\APInvoice\Components\EditTabs\APInvoiceAuditTabComponent.html" />
     <Content Include="InvoiceModules\APInvoice\Components\Others\APInvoiceTotalVATOnlyComponent.html" />
     <Content Include="InvoiceModules\APPayment\Components\EditTabs\APEditMultiCurrency.html" />
