@@ -37,11 +37,11 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             return query;
 		}
 
-		private IQueryable<SatisfactionSurvey> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<SatisfactionSurvey> iQueryable)
+		private IQueryable<SatisfactionSurvey> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<SatisfactionSurvey> iQueryable, int tenant)
         {
 			throw new NotImplementedException();
 		}
-				private IQueryable<SatisfactionSurvey> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<SatisfactionSurvey> iQueryable)
+				private IQueryable<SatisfactionSurvey> ApplyBusinessUnitFilters(QueryOperations queryOperations,IQueryable<SatisfactionSurvey> iQueryable, int tenant)
         {
 			return iQueryable;
 		}

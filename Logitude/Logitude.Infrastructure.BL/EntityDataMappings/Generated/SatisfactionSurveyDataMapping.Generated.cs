@@ -27,7 +27,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         UpdateDate, 
 	         SearchFields, 
 	         Rating, 
-	         Comments,
+	         Comments, 
+	         Tenant,
 	      }
 
 
@@ -39,7 +40,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         UpdateDate, 
 	         SearchFields, 
 	         Rating, 
-	         Comments,
+	         Comments, 
+	         Tenant,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -71,6 +73,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Comments))
             {
 				entityPOCO.Comments = entityPM.Comments;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+				entityPOCO.Tenant = entityPM.Tenant;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -109,6 +116,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.Comments = entityPOCO.Comments;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.Tenant))
+            {
+					entityPM.Tenant = entityPOCO.Tenant;
+            }
+
 		}
 
 		public void PMToOldPM(SatisfactionSurveyPM entityPM, SatisfactionSurveyPM oldEntityPM)
@@ -138,6 +150,11 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Comments))
             {
                 oldEntityPM.Comments = entityPM.Comments;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
+            {
+                oldEntityPM.Tenant = entityPM.Tenant;
             }
 			
 		}

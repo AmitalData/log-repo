@@ -54,6 +54,11 @@ export class SatisfactionSurveyPM {
     public set Comments(newValue: string) { if (this.comments != newValue) { this.comments = newValue; this.MarkAsDirty("Comments"); } }
        
 	 
+    private tenant: number;
+    public get Tenant() { return this.tenant; }
+    public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
+       
+	 
 
     public OldEntityPM: SatisfactionSurveyPM;
 		

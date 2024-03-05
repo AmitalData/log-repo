@@ -28,16 +28,17 @@ namespace Logitude.Infrastructure.Data.Repsitories
 
 		 
 		
-		public  SatisfactionSurvey GetSingle(string id)
+		public  SatisfactionSurvey GetSingle(string id, int tenant)
         {
             return (from a in context.SatisfactionSurveys
-                    where a.Id == id 
+                    where a.Id == id && a.Tenant == tenant
                     select a).FirstOrDefault();
         }
 
-        public IQueryable<SatisfactionSurvey> GetAll()
+        public IQueryable<SatisfactionSurvey> GetAll(int tenant)
         {
             return from a in context.SatisfactionSurveys  
+                   where a.Tenant == tenant
                    select a;
         }
 				 

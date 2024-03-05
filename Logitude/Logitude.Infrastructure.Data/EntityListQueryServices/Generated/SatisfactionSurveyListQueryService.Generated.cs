@@ -35,9 +35,10 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
             GenericSort sortClass = new GenericSort();
 
             IQueryable<SatisfactionSurvey> iQueryable = (from a in context.SatisfactionSurveys
-                                               select a);
-            			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable);
-						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+                                              
+                   where a.Tenant == tenant select a);
+            			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
+						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
@@ -150,20 +151,21 @@ namespace Logitude.Infrastructure.Data.EntityListQueryServices
 
 
 		
-        public int GetListCount(QueryOperations queryOperations ){
-		 		  return GetListCount(queryOperations, new TreeFilterQueryArgs());
+        public int GetListCount(QueryOperations queryOperations, int tenant ){
+		 		  return GetListCount(queryOperations,tenant, new TreeFilterQueryArgs());
 
 		 }
 
-        public int GetListCount(QueryOperations queryOperations  ,TreeFilterQueryArgs treeFilterQueryArgs )
+        public int GetListCount(QueryOperations queryOperations, int tenant  ,TreeFilterQueryArgs treeFilterQueryArgs )
         {
             GenericFilter filter = new GenericFilter();
             GenericSort sortClass = new GenericSort();
 
-            IQueryable<SatisfactionSurvey> iQueryable = (from a in context.SatisfactionSurveys  select a);
+            IQueryable<SatisfactionSurvey> iQueryable = (from a in context.SatisfactionSurveys 
+                   where a.Tenant == tenant select a);
 
-			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable);
-						iQueryable = ApplyCustomFilters(queryOperations, iQueryable);
+			  			iQueryable = ApplyBusinessUnitFilters(queryOperations, iQueryable,tenant);
+						iQueryable = ApplyCustomFilters(queryOperations, iQueryable,tenant);
 
             QueryOperations nonListQueryOperation = new QueryOperations();
             nonListQueryOperation.QueryFilterItems = queryOperations.QueryFilterItems.Where(d => d.DisplayInList == false && !d.IsListFilter).ToList();
