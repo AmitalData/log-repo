@@ -282,10 +282,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
                     this.CurrentSession.StopBusyIndicator();
                     this.IsNewOrEdit = StatusCertificateOfOrigin.IsEdit;
-                    this.UpdateIsChange(true);//#103474
-                    if (customSendOptionsArgs) {
-                        this.SendButtonClicked(customSendOptionsArgs);
-                    }
+                    
+                    this.Send(customSendOptionsArgs);
                 }
                 else {
                     this.CurrentSession.StopBusyIndicator();
@@ -294,6 +292,12 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         }
 
         else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit) {
+
+            if(!this.EntityPM.IsDirty){
+                this.CurrentSession.StopBusyIndicator();
+                this.Send(customSendOptionsArgs);
+                return;
+            }
             // this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
             this.certificateOfOriginWebService.update(this.EntityPM).subscribe((response: any) => {
                 if (!response.HasError) {
@@ -303,18 +307,20 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
                     this.CurrentSession.StopBusyIndicator();
                     this.UpdateIsChange(true);//#103474
-                    if (customSendOptionsArgs) {
-                        this.SendButtonClicked(customSendOptionsArgs);
-                    }
+                    this.Send(customSendOptionsArgs);
                 }
                 else {
                     this.CurrentSession.StopBusyIndicator();
-
                 }
             });
         }
     }
-
+    
+    Send(customSendOptionsArgs = null){
+        if (customSendOptionsArgs) {
+            this.SendButtonClicked(customSendOptionsArgs);
+        }
+    }
 
 
     ValidationErrors = [];

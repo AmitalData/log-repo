@@ -161,6 +161,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set IsCumulation(newValue: boolean) {
         this.entityPM.IsCumulation = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get CumulationCountry(): string {
@@ -168,6 +169,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set CumulationCountry(newValue: string) {
         this.entityPM.CumulationCountry = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get CumulationGroupOfCountries(): string {
@@ -175,6 +177,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set CumulationGroupOfCountries(newValue: string) {
         this.entityPM.CumulationGroupOfCountries = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get CityOfDeclaration(): string {
@@ -182,6 +185,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set CityOfDeclaration(newValue: string) {
         this.entityPM.CityOfDeclaration = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get IsDeclaredByExporter(): boolean {
@@ -192,6 +196,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set IsDeclaredByExporter(newValue: boolean) {
         this.entityPM.IsDeclaredByExporter = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get IsDeclaredByManufacture(): boolean {
@@ -203,6 +208,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     public set IsDeclaredByManufacture(newValue: boolean) {
         this.entityPM.IsDeclaredByManufacture = newValue;
         this.SetWarningByCooTypeCode(this.entityPM.CooTypeCode);
+        this.entityPM.IsDirty = true;
     }
 
     public get IsExportDecForPrint(): boolean {
@@ -213,6 +219,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set IsExportDecForPrint(newValue: boolean) {
         this.entityPM.IsExportDecForPrint = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get InsufficentWorkingInd(): boolean {
@@ -220,6 +227,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set InsufficentWorkingInd(newValue: boolean) {
         this.entityPM.InsufficentWorkingInd = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get IsConsigneeForPrint(): boolean {
@@ -230,6 +238,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set IsConsigneeForPrint(newValue: boolean) {
         this.entityPM.IsConsigneeForPrint = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get IsAttachedList(): boolean {
@@ -237,6 +246,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set IsAttachedList(newValue: boolean) {
         this.entityPM.IsAttachedList = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get InsufficentWorkingText(): string {
@@ -244,6 +254,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set InsufficentWorkingText(newValue: string) {
         this.entityPM.InsufficentWorkingText = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get COONumberToCancel(): string {
@@ -251,6 +262,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set COONumberToCancel(newValue: string) {
         this.entityPM.COONumberToCancel = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get Observations(): string {
@@ -258,6 +270,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set Observations(newValue: string) {
         this.entityPM.Observations = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get ConsigneeRemarks(): string {
@@ -265,6 +278,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set ConsigneeRemarks(newValue: string) {
         this.entityPM.ConsigneeRemarks = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get ReplacementReason(): string {
@@ -272,6 +286,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set ReplacementReason(newValue: string) {
         this.entityPM.ReplacementReason = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonExportPort(): string {
@@ -279,6 +294,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonExportPort(newValue: string) {
         this.entityPM.NonExportPort = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonExportCountry(): string {
@@ -286,6 +302,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonExportCountry(newValue: string) {
         this.entityPM.NonExportCountry = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonExportDate(): Date {
@@ -293,6 +310,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonExportDate(newValue: Date) {
         this.entityPM.NonExportDate = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonPortOfEntrance(): string {
@@ -300,6 +318,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonPortOfEntrance(newValue: string) {
         this.entityPM.NonPortOfEntrance = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonImportBillOfLadingNum(): string {
@@ -307,6 +326,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonImportBillOfLadingNum(newValue: string) {
         this.entityPM.NonImportBillOfLadingNum = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonImportDate(): Date {
@@ -314,6 +334,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonImportDate(newValue: Date) {
         this.entityPM.NonImportDate = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonExitPort(): string {
@@ -321,6 +342,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonExitPort(newValue: string) {
         this.entityPM.NonExitPort = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonExportBillOfLadingNum(): string {
@@ -328,6 +350,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonExportBillOfLadingNum(newValue: string) {
         this.entityPM.NonExportBillOfLadingNum = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonExpectedExitDate(): Date {
@@ -335,6 +358,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonExpectedExitDate(newValue: Date) {
         this.entityPM.NonExpectedExitDate = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonDeclaringCompany(): string {
@@ -342,6 +366,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonDeclaringCompany(newValue: string) {
         this.entityPM.NonDeclaringCompany = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonDeclaringPerson(): string {
@@ -349,6 +374,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonDeclaringPerson(newValue: string) {
         this.entityPM.NonDeclaringPerson = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonDeclaringPosition(): string {
@@ -356,6 +382,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonDeclaringPosition(newValue: string) {
         this.entityPM.NonDeclaringPosition = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonGoodsDescription(): string {
@@ -363,6 +390,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonGoodsDescription(newValue: string) {
         this.entityPM.NonGoodsDescription = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     public get NonManifestNum(): string {
@@ -370,6 +398,7 @@ export class CertificateOfOriginMoreDetailsTabComponent extends BaseComponent {
     }
     public set NonManifestNum(newValue: string) {
         this.entityPM.NonManifestNum = newValue;
+        this.entityPM.IsDirty = true;
     }
 
     //#endregion properties
