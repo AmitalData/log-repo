@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class CardUpdateClass
    {  		
-		public const string HashString = "33084d2f972ff6b23f1235351c5be51f";
+		public const string HashString = "5c19ab40acc04941e064efaf6b4f4b38";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -137,7 +137,8 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  50,
 			      				    DefaultText =  "Card",
-			      				    Code =  "1561",
+                                    LocalDefaultText = "כרטיסים",
+									Code =  "1561",
 			      				    Name =  "Card",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Common",
@@ -2766,7 +2767,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search names/ vat.#/ City/ Country",
-					  						HelpTextCode =  "SearchFields",
+                                            FullLocalDefaultText = "חפש שמות/ח.פ./מדינה",
+
+                                              HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1: code\n2: english and local names\n3: prefix\n4: accounting card\n5: vat number",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,

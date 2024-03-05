@@ -105,6 +105,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     UsingLogGridV2: boolean = false;
     SearchFieldName: string = null;
     LanguageFilterValue: string;
+    public isRTL: boolean = false;
     @Input() ForceShowLanguageFilter: boolean = false;
     @Input() ForceShowLocalAndEnglishColumns: boolean = false;
     ObjectFieldCode: string;
@@ -120,6 +121,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this._entityListService = new EntityListService;
         this.entityPMService = new EntityPMService;
         this.TenantPM = InfraSettings.TenantPM;
+        if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         //this.CurrentSession.SubscriptionAdd(
         var UsingV2FeatureToggle = SessionLocator.FeatureToggles.filter(d => d.ToggleCode == "LV2")[0];
         if (UsingV2FeatureToggle || SessionLocator.LoggedUserPM.Email == "ahmada@logitudeworld.com") { this.UsingLogGridV2 = true; }
@@ -143,10 +145,12 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
     }
 
     SetWindowArgs(args: CustomEntityArgs) {
+        debugger
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectField = args.ObjectField;
         this.ObjectTableId = args.ObjectTableId;
-        this.ObjectTableNamePluralName = TextCodeTranslator.TranslateTablePlural(this.ObjectTableName);
+        this.ObjectTableNamePluralName = this.isRTL?TextCodeTranslator.Translate("General.O.Mine")+" "+TextCodeTranslator.TranslateTable(this.ObjectTableName):"My "+TextCodeTranslator.TranslateTablePlural(this.ObjectTableName);
+
         this.ShowInActive = args.ShowInActive;
         this.PartnerTypes = args.PartnerTypes;
         this.Args = args;

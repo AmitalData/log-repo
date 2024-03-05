@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 {
    public class UserUpdateClass
    {  		
-		public const string HashString = "35e492ec81fed41550bdb272fe30c950";
+		public const string HashString = "35e492ec81fed41550bdb272fe3085874";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -2538,7 +2538,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.CommonDataModel.EntityUp
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "SearchFields",
 					  						DefaultText =  "Search names/ positions",
-					  						HelpTextCode =  "SearchFields",
+                                            FullLocalDefaultText = "חיפוש שמות/תפקידים",
+
+
+                                              HelpTextCode =  "SearchFields",
 					  						HelpTextDefaultText =  "Searching by :\n1: Emails\n2: names",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,

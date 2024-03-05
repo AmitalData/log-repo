@@ -2399,6 +2399,7 @@
     DisplayLongName="false"
     FullFieldLable="&quot;SearchFields&quot;"
     DefaultText="&quot;Search emails/ subject&quot;"
+    FullLocalDefaultText="&quot;חיפוש דוא&quot;ל / נושא&quot;"
     HelpTextCode="&quot;SearchFields&quot;"
     HelpTextDefaultText="&quot;Searching by :&#xA;1: emails&#xA;2: subject&quot;"
     IsNullable="false"
