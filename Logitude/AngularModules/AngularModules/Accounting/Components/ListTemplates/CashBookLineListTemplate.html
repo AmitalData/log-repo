@@ -28,7 +28,10 @@
 <div class="TextTrimming" *ngIf="fieldName == 'ARPaymentNumber'" text-start>
     <a href="javascript:;" (click)="OpenARPayment(rowData.ARPaymentId)">{{rowData.ARPaymentNumber}}</a>
 </div>
-
+<!-- CardLocalName -->
+<div class="TextTrimming" *ngIf="fieldName == 'CardLocalName'" text-start>
+    <a href="javascript:;" (click)="OpenCardScreen(rowData.CardId,rowData.PartnerTypeId)">{{rowData.CardLocalName}}</a>
+</div>
 <!-- textTrimming Fields -->
 <div class="TextTrimming" *ngIf="fieldName == 'ChequeNumber' || fieldName == 'AccountNumber' || fieldName == 'Bank' || fieldName == 'Branch'"
     text-start>

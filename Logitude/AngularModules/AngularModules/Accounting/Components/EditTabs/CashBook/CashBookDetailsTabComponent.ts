@@ -1,19 +1,19 @@
 import { CashBookExtendedPMService } from './../../../Services/ExtendedPMs/CashBookExtendedPMService';
 import { Output,OnInit } from '@angular/core';
 import { EventEmitter } from '@angular/core';
-import {Component}  from '@angular/core';
-import {BaseComponent} from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
-import {CashBookPM} from '../../../EntityPMs/CashBookPM';
-import {GLAccountList} from '../../../EntityLists/GLAccountList';
-import {CashBookLinePM} from '../../../EntityPMs/CashBookLinePM';
-import {ServiceResponse} from '../../../../Infrastructure/DataContracts/ServiceResponse';
-import {EntityArgs} from '../../../../Infrastructure/DataContracts/EntityArgs';
-import {ApiQueryFilters, FilterItem} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
-import {AppTool} from '../../../../Infrastructure/Tools';
-import {SessionLocator} from '../../../../Infrastructure/Utilities/SessionLocator';
-import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
-import {GLAccountListService} from '../../../Services/StandardLists/GLAccountListService';
-import {ObservableCollection} from '../../../../Infrastructure/Utilities/ObservableCollection';
+import {Component} from '@angular/core';
+import { BaseComponent } from '../../../../Infrastructure/Components/LogitudeComponents/BaseComponent';
+import { CashBookPM } from '../../../EntityPMs/CashBookPM';
+import { GLAccountList } from '../../../EntityLists/GLAccountList';
+import { CashBookLinePM } from '../../../EntityPMs/CashBookLinePM';
+import { ServiceResponse } from '../../../../Infrastructure/DataContracts/ServiceResponse';
+import { EntityArgs } from '../../../../Infrastructure/DataContracts/EntityArgs';
+import { ApiQueryFilters, FilterItem } from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
+import { AppTool } from '../../../../Infrastructure/Tools';
+import { SessionLocator } from '../../../../Infrastructure/Utilities/SessionLocator';
+import { ObjectsLocator } from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { GLAccountListService } from '../../../Services/StandardLists/GLAccountListService';
+import { ObservableCollection } from '../../../../Infrastructure/Utilities/ObservableCollection';
 import { EntityListService } from '../../../../Infrastructure/Services/EntityListService';
 import { TextCodeTranslator } from '../../../../Infrastructure/Utilities/TextCodeTranslator';
 import { CashbookChequesCounter } from '../../../DataContracts/CashbookChequesCounter';
@@ -59,39 +59,39 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
         this.SetUIProperties();
     }
 
-    get ShowAdjustTotalButton(){
+    get ShowAdjustTotalButton() {
         return SessionLocator?.LoggedUserPM?.IsCustomerCare;
     }
 
     ngOnInit() {
-        this.BuildColumns();
-        this.ReloadData();
+            this.BuildColumns();
+            this.ReloadData();
     }
 
-     //#region Data
-     searchFieldFilter: FilterItem;
-     public columns: any[] = null;
+    //#region Data
+    searchFieldFilter: FilterItem;
+    public columns: any[] = null;
 
-     ReloadData() {
-         this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
+    ReloadData() {
+        this.onQueryChangeEvent.emit({ Filters: new ApiQueryFilters() });
 
-         this.LoadScreen();
-     }
+        this.LoadScreen();
+    }
 
-     BuildColumns() {
-         this.columns = [];
+    BuildColumns() {
+        this.columns = [];
 
-         this.columns.push({
-             FieldName: 'ChequeNumber',
-             DataTypeCode: 'String',
-             Display: TextCodeTranslator.Translate("CashBookLine.F.ChequeNumber"),
-             Styles: { width: '90px' },
-             HtmlListComponentName: 'CashBookLineListTemplate',
-             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
-             IsCustomTemplate: true
-         });
+        this.columns.push({
+            FieldName: 'ChequeNumber',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("CashBookLine.F.ChequeNumber"),
+            Styles: { width: '90px' },
+            HtmlListComponentName: 'CashBookLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+            IsCustomTemplate: true
+        });
 
-         this.columns.push({
+        this.columns.push({
             FieldName: 'ARPChequeStatusName',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("CashBookLine.F.ARPChequeStatusName"),
@@ -109,52 +109,52 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
             IsCustomTemplate: true
         });
-         this.columns.push({
-             FieldName: 'LocalAmount',
-             DataTypeCode: 'Decimal',
-             Display: TextCodeTranslator.Translate("CashBookLine.F.LocalAmount"),
-             Styles: { width: '110px' },
-             HtmlListComponentName: 'CashBookLineListTemplate',
-             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
-             IsCustomTemplate: true
-         });
-         this.columns.push({
-             FieldName: 'Currency',
-             DataTypeCode: 'String',
-             Display: TextCodeTranslator.Translate("CashBookLine.F.Currency"),
-             Styles: { width: '90px' },
+        this.columns.push({
+            FieldName: 'LocalAmount',
+            DataTypeCode: 'Decimal',
+            Display: TextCodeTranslator.Translate("CashBookLine.F.LocalAmount"),
+            Styles: { width: '110px' },
+            HtmlListComponentName: 'CashBookLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+            IsCustomTemplate: true
+        });
+        this.columns.push({
+            FieldName: 'Currency',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("CashBookLine.F.Currency"),
+            Styles: { width: '90px' },
             //  HtmlListComponentName: 'CashBookLineListTemplate',
             //  HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
-             IsCustomTemplate: true
-         });
-         this.columns.push({
-             FieldName: 'ForeignAmount',
-             DataTypeCode: 'Decimal',
-             Display: TextCodeTranslator.Translate("CashBookLine.F.ForeignAmount"),
-             Styles: { width: '110px' },
-             HtmlListComponentName: 'CashBookLineListTemplate',
-             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
-             IsCustomTemplate: true
-         });
-         this.columns.push({
-             FieldName: 'AccountNumber',
-             DataTypeCode: 'String',
-             Display: TextCodeTranslator.Translate("CashBookLine.F.AccountNumber"),
-             Styles: { width: '110px' },
-             HtmlListComponentName: 'CashBookLineListTemplate',
-             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
-             IsCustomTemplate: true
-         });
-         this.columns.push({
-             FieldName: 'Bank',
-             DataTypeCode: 'String',
-             Display: TextCodeTranslator.Translate("CashBookLine.F.Bank"),
-             Styles: { width: '75px' },
-             HtmlListComponentName: 'CashBookLineListTemplate',
-             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
-             IsCustomTemplate: true
-         });
-         this.columns.push({
+            IsCustomTemplate: true
+        });
+        this.columns.push({
+            FieldName: 'ForeignAmount',
+            DataTypeCode: 'Decimal',
+            Display: TextCodeTranslator.Translate("CashBookLine.F.ForeignAmount"),
+            Styles: { width: '110px' },
+            HtmlListComponentName: 'CashBookLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+            IsCustomTemplate: true
+        });
+        this.columns.push({
+            FieldName: 'AccountNumber',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("CashBookLine.F.AccountNumber"),
+            Styles: { width: '110px' },
+            HtmlListComponentName: 'CashBookLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+            IsCustomTemplate: true
+        });
+        this.columns.push({
+            FieldName: 'Bank',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("CashBookLine.F.Bank"),
+            Styles: { width: '75px' },
+            HtmlListComponentName: 'CashBookLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+            IsCustomTemplate: true
+        });
+        this.columns.push({
             FieldName: 'Branch',
             DataTypeCode: 'String',
             Display: TextCodeTranslator.Translate("CashBookLine.F.Branch"),
@@ -163,66 +163,75 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
             IsCustomTemplate: true
         });
-         this.columns.push({
-             FieldName: 'ARPaymentNumber',
-             DataTypeCode: 'String',
-             Display: TextCodeTranslator.Translate("CashBookLine.F.ARPaymentNumber"),
-             Styles: { width: '110px' },
-             HtmlListComponentName: 'CashBookLineListTemplate',
-             HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
-             IsCustomTemplate: true
-         });
-         //this.CustomColumnsReady.emit(this.columns);
-     }
+        this.columns.push({
+            FieldName: 'ARPaymentNumber',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("CashBookLine.F.ARPaymentNumber"),
+            Styles: { width: '110px' },
+            HtmlListComponentName: 'CashBookLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+            IsCustomTemplate: true
+        });
+        this.columns.push({
+            FieldName: 'CardLocalName',
+            DataTypeCode: 'String',
+            Display:  TextCodeTranslator.Translate("CashbookLine.O.LocalName"),
+            Styles: { width: '110px' },
+            HtmlListComponentName: 'CashBookLineListTemplate',
+            HtmlListComponentUrl: './Accounting/Components/ListTemplates/CashBookLineListTemplate',
+            IsCustomTemplate: true
+        });
+        //this.CustomColumnsReady.emit(this.columns);
+    }
 
-     DataSource = {
-         pageSize: 30,
-         rowCount: null,
-         sortingDir: "Ascending",
-         getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
-             var tempo = this.GetRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
-             return tempo;
-         },
-     };
+    DataSource = {
+        pageSize: 30,
+        rowCount: null,
+        sortingDir: "Ascending",
+        getRows: (skip: number, take: number, sortingCol: string, sortingDir: string, getCount: boolean, searchFields?: string, filters: ApiQueryFilters = null) => {
+            var tempo = this.GetRows(skip, take, sortingCol, sortingDir, getCount, searchFields, filters);
+            return tempo;
+        },
+    };
 
-     GetRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
+    GetRows(skip, take, sortingCol, sortingDir, getCount: boolean, searchfields?: string, filters: ApiQueryFilters = null) {
 
-         //#region Filters
-         var filters = new ApiQueryFilters;
-         // if (this.dateFilter) {
-         //     filters.AdditionalFilters.push(this.dateFilter);
-         // } else {
-         //     return;
-         // }
-         if (this.searchFieldFilter) {
-             filters.AdditionalFilters.push(this.searchFieldFilter);
-         }
+        //#region Filters
+        var filters = new ApiQueryFilters;
+        // if (this.dateFilter) {
+        //     filters.AdditionalFilters.push(this.dateFilter);
+        // } else {
+        //     return;
+        // }
+        if (this.searchFieldFilter) {
+            filters.AdditionalFilters.push(this.searchFieldFilter);
+        }
 
-         filters.PageSize = 50;
-         filters.PageIndex = 0;
-         filters.GetCount = true;
+        filters.PageSize = 50;
+        filters.PageIndex = 0;
+        filters.GetCount = true;
 
         //  filters.SortBy = "Line";
         //  filters.SortDirection = "Ascending";
-         var today = new Date();
+        var today = new Date();
 
         if (this.FilterSelectedValue == 'cash')
             filters.addAdditionalFilter("DueDate", today, null, null, "LessThanOrEqual", false, false, false, "DateTime");
         else if (this.FilterSelectedValue == 'postdated')
             filters.addAdditionalFilter("DueDate", today, null, null, "LargerThan", false, false, false, "DateTime");
 
-         filters.addAdditionalFilter("ARPChequeStatusCode", "1,4", null, null, "InListExact", false, false, false, "string");
+        filters.addAdditionalFilter("ARPChequeStatusCode", "1,4", null, null, "InListExact", false, false, false, "string");
         //  filters.addAdditionalFilter("ARPChequeStatusCode", "5", null, null, "NotEqual", false, false, false, "string");
-         filters.addAdditionalFilter("IsDeposited", false, null, null, "Equals", false, false, false, "Boolean");
-         filters.addAdditionalFilter("CashBookId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
+        filters.addAdditionalFilter("IsDeposited", false, null, null, "Equals", false, false, false, "Boolean");
+        filters.addAdditionalFilter("CashBookId", this.EntityPM.Id, null, null, "Equals", false, false, false, "string");
 
-         //#endregion
+        //#endregion
 
-         return this._entityListService.getByFilters("CashBookLine", filters);
+        return this._entityListService.getByFilters("CashBookLine", filters);
 
-     }
+    }
 
-     //#endregion
+    //#endregion
 
 
     LoadScreen() {
@@ -232,11 +241,9 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
     }
 
 
-    private ToggleGLAccountEditablity()
-    {
+    private ToggleGLAccountEditablity() {
         if (this.EntityPM.AccountId)
-            this._GLAccountListService.getSingle(this.EntityPM.AccountId).subscribe((myResponse: ServiceResponse) =>
-            {
+            this._GLAccountListService.getSingle(this.EntityPM.AccountId).subscribe((myResponse: ServiceResponse) => {
                 if (myResponse != null) {
                     if (!myResponse.HasError) {
                         var glaccount: GLAccountList = myResponse.Result;
@@ -402,17 +409,17 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
 
 
         this._CashBookExtendedPMService.GetCashbookTotalAmount(this.EntityPM.Id, chequeFilterType)
-        .subscribe((response: ServiceResponse) =>
-        {
-            console.log("[GetCashbookTotalAmount]", response);
+            .subscribe((response: ServiceResponse) =>
+            {
+                console.log("[GetCashbookTotalAmount]", response);
 
-            if (!response.HasError) {
-                this.TotalSum = response.Result;
-            }
-            else {
-                console.error(response.ErrorsArray);
-            }
-        });
+                if (!response.HasError) {
+                    this.TotalSum = response.Result;
+                }
+                else {
+                    console.error(response.ErrorsArray);
+                }
+            });
 
     }
 
@@ -429,11 +436,10 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
 
 
     public ChequesCounter: CashbookChequesCounter = new CashbookChequesCounter();
-    GetChequesCounter(){
+    GetChequesCounter() {
         this.ChequesCounter = new CashbookChequesCounter();
         this._CashBookExtendedPMService.GetCashbookChequesCounter(this.EntityPM.Id)
-            .subscribe((response: ServiceResponse) =>
-            {
+            .subscribe((response: ServiceResponse) => {
                 console.log("[GetCashbookChequesCounter]", response);
 
                 if (!response.HasError) {
@@ -446,20 +452,19 @@ export class CashBookDetailsTabComponent extends BaseComponent implements OnInit
 
     }
 
-    RecalculateCashbookTotals(){
-        if(this.EntityPM.CashBookTypeCode == CashCashbookTypeCode)
+    RecalculateCashbookTotals() {
+        if (this.EntityPM.CashBookTypeCode == CashCashbookTypeCode)
             this.ShowCashbookTotalUpdateWindow();
     }
 
-    private ShowCashbookTotalUpdateWindow()
-    {
+    private ShowCashbookTotalUpdateWindow() {
         var logitudeWindow = new LogitudeWindow();
         logitudeWindow.Width = CashbookUpdateTotalWindowWidth;
         logitudeWindow.Height = CashbookUpdateTotalWindowHeight;
         logitudeWindow.Title = CashbookTotalUpdateWindow;
         logitudeWindow.WindowArgs = { CashbookPM: this.EntityPM };
         logitudeWindow.Show('./Accounting/Components/EditTabs/CashBook/CashbookTotalAdjustWindow');
-        logitudeWindow.WindowClosed.subscribe(() => this.ReloadData() );
+        logitudeWindow.WindowClosed.subscribe(() => this.ReloadData());
     }
 
 }

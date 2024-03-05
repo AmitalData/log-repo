@@ -13,6 +13,7 @@ import {ObjectsLocator} from '../../../Infrastructure/Locators/ObjectsLocator';
 import { GLAccountPMService } from '../../Services/StandardPMs/GLAccountPMService';
 import { CardList } from '../../../Common/EntityLists/CardList';
 import { PartnerTypeList } from '../../../Common/EntityLists/PartnerTypeList';
+import { AccountingEntityHelper } from 'Accounting/Utilities/AccountingEntityHelper';
 @Component({
 
     templateUrl: "./GLAccountShortTitleComponent.html",
@@ -69,6 +70,7 @@ export class GLAccountShortTitleComponent {
     _PartnerTypeListService: PartnerTypeListService = new PartnerTypeListService();
     OpenCardScreen(cardId:string)
     {
+        //todo:liron open card screen
         var selectedCard;
         if(this.ConnectedCards.length==1){
              selectedCard = this.ConnectedCards[0];
@@ -85,24 +87,9 @@ export class GLAccountShortTitleComponent {
 
       //  });
 
-      var partnerTypeObjectTableName = this.GetPartnerTypeObjectTableName(selectedCard.PartnerTypeId);
-      this.OpenCard(selectedCard.Id, partnerTypeObjectTableName);
+      var partnerTypeObjectTableName = AccountingEntityHelper.GetPartnerTypeObjectTableName(selectedCard.PartnerTypeId);
+      AccountingEntityHelper.OpenCard(selectedCard.Id, partnerTypeObjectTableName,this.SelectedTabCode);
 
-    }
-
-    private OpenCard(connectedCardId: string, partnerTypeName: string)
-    {
-        if (!AppTool.IsNullOrEmpty(connectedCardId)) {
-            SessionLocator.DynamicLoader.Load('./Infrastructure/Components/EditComponent/EditComponent', this.CurrentSession.SessionLocation.viewContainerRef)
-                .then(cmpRef =>
-                {
-                    cmpRef.instance.ComponentRef = cmpRef;
-                    cmpRef.instance.Run({ EntityId: connectedCardId, ObjectTableName: partnerTypeName == "Others" || partnerTypeName == "Coloader" ? "Vendor" : partnerTypeName, SelectedTabCode: this.SelectedTabCode });
-                    cmpRef.instance.BackCompleted.subscribe(bk =>
-                    {
-                    });
-                });
-        }
     }
 
     private SetObjectTableNameAndTabCode() {
@@ -136,7 +123,7 @@ export class GLAccountShortTitleComponent {
         }
 
     }
-
+//todo:liron GetConnectedCards
     GetConnectedCards(accountId: string)
     {
 
@@ -182,30 +169,5 @@ export class GLAccountShortTitleComponent {
             }
             });
 
-    }
-
-    GetPartnerTypeObjectTableName(partnerTypeId: string){
-        var objectTableName;
-        switch (partnerTypeId) {
-            case 'AG': { objectTableName = 'Agent'; break; }
-            case 'AL': { objectTableName = 'Airline'; break; }
-            case 'CG': { objectTableName = 'CustomAgent'; break; }
-            case 'CH': { objectTableName = 'CustomsShipper'; break; }
-            case 'CS': { objectTableName = 'Customer'; break; }
-            case 'PO': { objectTableName = 'Customer'; break; }
-            case 'PT': { objectTableName = 'Participant'; break; }
-            case 'SG': { objectTableName = 'ShippingAgent'; break; }
-            case 'SL': { objectTableName = 'ShippingLine'; break; }
-            case 'TR': { objectTableName = 'Trucker'; break; }
-            case 'VD': { objectTableName = 'Vendor'; break; }
-            case 'WH': { objectTableName = 'Warehouse'; break; }
-            case 'AC': { objectTableName = 'AccountingPartner'; break; }
-
-            case 'CC': { objectTableName = 'Custom Clearance'; break; } // not found
-            case 'CO': { objectTableName = 'Coloader'; break; } // not found
-            case 'FL': { objectTableName = 'Freelancer'; break; } // not found
-            case 'OT': { objectTableName = 'Others'; break; } // not found
-        }
-        return objectTableName;
     }
 }

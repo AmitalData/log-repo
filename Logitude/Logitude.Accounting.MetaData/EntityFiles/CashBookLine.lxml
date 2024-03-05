@@ -11,6 +11,9 @@
   HasCustomFilter="false"
   HasCustomFields="false"
   AvailableInCustomization="true"
+  SupportSubEntity="false"
+  ApplyGenericCustomFields="false"
+  AvailableInDocumentTypes="false"
   HasHelper="false"
   HasShortTitle="false"
   HasFiltersMenu="false"
@@ -40,7 +43,7 @@
   MaxNumberOfCustomFields="0"
   ParentTableName="CashBook"
   DefaultText="&quot;Cash Book Line&quot;"
-  Code="&quot;db48&quot;"
+  Code="&quot;8712&quot;"
   Name="&quot;CashBookLine Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Accounting&quot;"
@@ -55,6 +58,7 @@
   HasApiHelper="false"
   AllowedForComputingPartners="false"
   IsBusinessUnitEnabled="false"
+  TenantZeroData="false"
   Code1="&quot;cb5e&quot;"
   Name1="&quot; Query Group&quot;"
   CustomFieldsCount="0"
@@ -1458,6 +1462,12 @@
       Code="&quot;CashbookLine.O.NoDataFound&quot;"
       DefaultText="&quot;No Data Found&quot;"
       LocalDefaultText="&quot;לא נמצא מידע לתצוגה&quot;"
+      TextCodeTypeCode="&quot;O&quot;"
+      IsSpellChecked="false" />
+    <TextCode
+      Code="&quot;CashbookLine.O.LocalName&quot;"
+      DefaultText="&quot;Local Name&quot;"
+      LocalDefaultText="&quot;שם הלקוח&quot;"
       TextCodeTypeCode="&quot;O&quot;"
       IsSpellChecked="false" />
   </AdditionalTextCodes>
