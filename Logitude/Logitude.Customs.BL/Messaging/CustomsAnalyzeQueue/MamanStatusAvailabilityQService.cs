@@ -115,6 +115,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 {
                     case "0001":
                         {
+                            if (_DeclarationPM.AvailabilityDate.HasValue)
+                            {
                             Update0001(theDecId, mySTBMessage.EventQty);
                             unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
                             {
@@ -125,6 +127,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 EventDateTime = mySTBMessage.EventTime,
                                 OwnerUnifreightUserCode = myOwnerUnifreightUserCode
                             });
+                            }
                         }
                         break;
                     case "0006":
@@ -184,6 +187,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         void Update0001(string theDecId, int EventQty)
         {
+            if(!_DeclarationPM.AvailabilityDate.HasValue)
+            {
             string AcceptanceStatusCode = "";
             var totPackageQuantity = _DeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages).Sum(p => p.PackageQuantity);
             if (EventQty == totPackageQuantity)
@@ -217,7 +222,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                 LogMessagingUtil.Instance.AppendLine("Update Declaration Courier Status CourierPaymentStatusCode=" + currentDeclarationCourierStatusPM.CourierPaymentStatusCode);
             }
-
+            }
         }
 
 
