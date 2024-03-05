@@ -103,7 +103,13 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
                 if (entityPM.CourierPendingReasonList != entityPOCO.CourierPendingReasonList && entityPM.CourierCustomStatusCode == null)
                 {
-                    this.SendToMassof(entityPM, entityPOCO);
+                    DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
+                    var consignmentList = declarationQueryService.GetConsignmentListPMByDeclarationId(entityPM.DeclarationId, entityPM.Tenant);
+
+                    if (consignmentList.Count > 0)
+                    {
+                        this.SendToMassof(entityPM, entityPOCO, consignmentList[0].StorageSiteCode);
+                    }
                 }
             }
             if (entityPM.IsClosedForFollowUp != entityPOCO.IsClosedForFollowUp)
@@ -569,7 +575,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         }
 
        
-        private void SendToMassof(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO)
+        private void SendToMassof(DeclarationCourierStatusPM entityPM, DeclarationCourierStatus entityPOCO, string StorageSiteCode)
         {
             CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(entityPM.Tenant);
             DeclarationQueryService declarationQueryService = new DeclarationQueryService(entityPM.Tenant);
@@ -587,7 +593,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
             {
                 CourierPendingReasonPM courierPendingReason = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(item, entityPM.Tenant);
 
-                if (courierPendingReason?.SwissportSuspendedCode != null)
+                if (StorageSiteCode == "ILSWS" && courierPendingReason?.SwissportSuspendedCode != null)
                 {
                     var courierECSWSTHRMessageRequestService = new CourierECSWSTHRMessageRequestService();
                     string drityMessage = courierECSWSTHRMessageRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM, true);
@@ -599,7 +605,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     break;
                 }
                 //string.IsNullOrEmpty(entityPM.MAWB) = not from u2l
-                if (string.IsNullOrEmpty(entityPM.MAWB) && courierPendingReason?.MamanSuspendedCode != null)
+                if (StorageSiteCode == "ILMMN" && string.IsNullOrEmpty(entityPM.MAWB) && courierPendingReason?.MamanSuspendedCode != null)
                 {
                     var courierGWMessageECTHRDataMamanService = new CourierGWMessageECTHRDataMamanRequestService();
                     string drityMessage = courierGWMessageECTHRDataMamanService.GetMessage2Maman(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM,true);
@@ -609,7 +615,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     }
                     break;
                 }
-                if (courierPendingReason?.OverseasSuspendedCode != null)
+                if (StorageSiteCode == "ILOVL" && courierPendingReason?.OverseasSuspendedCode != null)
                 {
                     var courierMessageDataOverseasRequestService = new CourierOVSECTHMessageRequestService();
                     string drityMessage = courierMessageDataOverseasRequestService.GetMessageUpdateHawbStatus(entityPM.DeclarationId, entityPM.Tenant, null, null, entityPM);
