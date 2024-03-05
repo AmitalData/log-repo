@@ -12,7 +12,7 @@ Feature: Add Export Attachment
     Scenario: Add new attachment
         Given Add new attachment
 
-            | CustomsDocId | 919012394 |
+            | CustomsDocId | 938272211 |
             | IssueDate    | TODAY |
             
 
