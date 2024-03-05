@@ -46,6 +46,7 @@ using Logitude.Server.Tools.EntityChanges;
 using Logitude.BL.CommonDataModel.Helpers;
 using Logitude.Server.Tools.CToolWorkflows;
 using Simplog.Server.Infrastructure.DataContracts.Models;
+using System.Text;
 
 namespace Logitude.BL.CommonDataModel.Tools.EntityService
 {
@@ -161,7 +162,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             //Added by Maheera
             //this.entityPM.SecurityId = entityPM.Id + System.Web.Security.Membership.GeneratePassword(10, 0);
             Random rnd = new Random();
-            this.entityPM.SecurityId = entityPM.Id + RandomString(10);
+            //this.entityPM.SecurityId = entityPM.Id + RandomString(10);
+            string com_id = entityPM.Id;        // Length = 30
+            string com_md5 = CreateMD5(com_id); // Length = 32 
+            string com_short = entityPM.Id.Substring(0,8);
+            this.entityPM.SecurityId = com_short + com_md5; // Length = 40
 
             entityPM.CreateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
             entityPM.UpdateDate = TenantServerConfigration.GetCurrentDateTime(tenant);
@@ -373,6 +378,42 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
 
         }
 
+
+        private static string CreateMD5(string input)
+
+        {
+
+            // Use input string to calculate MD5 hash
+
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+
+            {
+
+                byte[] inputBytes = System.Text.Encoding.Unicode.GetBytes(input);
+
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+
+                //return Convert.ToHexString(hashBytes); // .NET 5 +
+
+                //Convert the byte array to hexadecimal string prior to.NET 5
+
+                StringBuilder sb = new System.Text.StringBuilder();
+
+                for (int i = 0; i < hashBytes.Length; i++)
+
+                {
+
+                    sb.Append(hashBytes[i].ToString("X2"));
+
+                }
+
+                return sb.ToString();
+
+            }
+
+        }
+
+
         private void SendShipmentToForwarder(bool shouldBeSent)
         {
             try
@@ -580,7 +621,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (string.IsNullOrEmpty(Poco.SecurityId))
             {
                 Random rnd = new Random();
-                Poco.SecurityId = entityPM.Id + RandomString(10);
+             // Poco.SecurityId = entityPM.Id + RandomString(10);
+                string com_id = entityPM.Id;        // Length = 30
+                string com_md5 = CreateMD5(com_id); // Length = 32 
+                string com_short = entityPM.Id.Substring(0, 8);
+                Poco.SecurityId = com_short + com_md5; // Length = 40
             }
             if (tenantPM.IsDocumentsArchive == true)
             {
@@ -676,7 +721,12 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (string.IsNullOrEmpty(Poco.SecurityId))
             {
                 Random rnd = new Random();
-                Poco.SecurityId = entityPM.Id + RandomString(10);
+             // Poco.SecurityId = entityPM.Id + RandomString(10);
+                string com_id = entityPM.Id;        // Length = 30
+                string com_md5 = CreateMD5(com_id); // Length = 32 
+                string com_short = entityPM.Id.Substring(0, 8);
+                Poco.SecurityId = com_short + com_md5; // Length = 40
+
             }
 
             entityRepository.Update(Poco);
@@ -865,7 +915,11 @@ namespace Logitude.BL.CommonDataModel.Tools.EntityService
             if (string.IsNullOrEmpty(Poco.SecurityId))
             {
                 Random rnd = new Random();
-                Poco.SecurityId = entityPM.Id + RandomString(10);
+             // Poco.SecurityId = entityPM.Id + RandomString(10);
+                string com_id = entityPM.Id;        // Length = 30
+                string com_md5 = CreateMD5(com_id); // Length = 32 
+                string com_short = entityPM.Id.Substring(0, 8);
+                Poco.SecurityId = com_short + com_md5; // Length = 40
             }
 
             entityRepository.Update(Poco);
