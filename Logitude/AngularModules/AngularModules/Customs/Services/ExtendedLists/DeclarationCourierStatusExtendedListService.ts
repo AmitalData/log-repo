@@ -84,7 +84,7 @@ export class DeclarationCourierStatusExtendedListService {
     }
 
     
-    getGroupByStorageSite(courierMasterId: string, declarationCourierList: []) {
+    getGroupByStorageSite(courierMasterId: string, declarationCourierList: any[]) {
 
 		var urlparameters = '/getgroupbystoragesite?';
 
