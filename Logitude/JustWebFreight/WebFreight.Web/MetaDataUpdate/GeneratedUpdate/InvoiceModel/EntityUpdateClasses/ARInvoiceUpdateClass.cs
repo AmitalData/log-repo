@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "eea872a07ff600f1bbf77321da63df08";
+		public const string HashString = "980b5e13115dc522f63e2dad6f26b06f";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14161,9 +14161,9 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "IsSigned",
 					  						ObjectTableName =  "ARInvoice",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "ARInvoicesSignedStatus",
-					  						MinLength =  1,
+					  						FieldsDataType = "LookUp",
+                                            LookUpTableName = "ARInvoicesSignedStatus",
+				                            MinLength =  1,
 					  						MaxLength =  3,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,

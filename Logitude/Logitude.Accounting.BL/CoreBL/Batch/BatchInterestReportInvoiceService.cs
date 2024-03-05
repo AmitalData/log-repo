@@ -8,11 +8,14 @@ using Logitude.Accounting.BL.InterestService;
 using Logitude.Accounting.BL.InterestService.HelperClasses;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Def.EntityPMs;
+using Logitude.Accounting.Def.EntityQueryServicesExt;
+using Logitude.Accounting.Def.EntityUpdateServicesExt;
 using Logitude.BL.CommonDataModel.EntityPMs;
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.DataContracts;
 using Logitude.BL.Helpers;
 using Logitude.BL.InfrastructureModel.EntityQueries;
+using Logitude.BL.InvoiceModel.APIDataContract.ApiV1;
 using Logitude.BL.InvoiceModel.EntityPMs;
 using Logitude.BL.InvoiceModel.Tools.EntityService;
 using Logitude.BL.Resolvers;
@@ -25,11 +28,15 @@ using Logitude.Server.Tools.Counters;
 using Logitude.Server.Tools.Helpers;
 using Logitude.Server.Tools.QueueService;
 using Logitude.SystemLogs;
+using Microsoft.Practices.Unity;
+using Simplog.Data.CommonDataModel;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.Helpers;
 using Simplog.Data.InfrastructureModel.Repositories;
 using Simplog.Data.InvoiceModel;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Simplog.Data.InvoiceModel.Repositories;
 using Simplog.Server.Infrastructure;
 using System;
 using System.Collections.Generic;
@@ -95,7 +102,7 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
 
                     report.InterestReportLinesByDates = LinesByDatesForSelectedReports.Where(s=>s.InterestReportId == report.Id).ToList();
                     CreateInvoiceForReportPM(args, interestReportArguments, report);
-
+                    
                 }
             }
             else
@@ -167,9 +174,30 @@ namespace Logitude.Accounting.BL.CoreBL.Batch
                 invoiceService.Create(aRInvoicePM);
                 BuildDocumentsForNewInvoice(aRInvoicePM, interestReport);
                 UpdateInterestReportsStatues(interestReport, interestReportArgs.Tenant, "2", aRInvoicePM);
+                SignInvoice(aRInvoicePM, interestReportArgs.Tenant);
             }
-        }  
-        private void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM , InterestReportPM interestReport)
+           
+        }
+        private void SignInvoice(ARInvoicePM aRInvoicePM, int tenant)
+        {
+            IFullAccountingSettingQueryServiceExt query = ContainerAccessor.Container.Resolve(typeof(IFullAccountingSettingQueryServiceExt), "FullAccountingSettingQueryServiceExt", new ParameterOverride("", 1)) as IFullAccountingSettingQueryServiceExt;
+            DocumentHelper DocumentHelper = new DocumentHelper();
+            DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery((int)tenant);
+            ARInvoiceQueryService ARInvoiceService = new ARInvoiceQueryService(tenant);
+
+            FullAccountingSettingPM accountingSettings = query.GetFullAccountingSettingByTenant(tenant);
+            string aRInvoicePMId = ARInvoiceService.GetARInvoiceByInvoiceNumber(aRInvoicePM.InvoiceNumber, tenant)?.Id;
+            string documentTypeId = documentTypeQuery.GetDocumentTypeListIdByCodeAndTenant("999G", (int)Tenant);
+            DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(aRInvoicePMId, null, documentTypeId, tenant);
+
+            if (accountingSettings.AccountingActivated && !string.IsNullOrEmpty(accountingSettings.HSM) && !string.IsNullOrEmpty(accountingSettings.HSMaddress) && !string.IsNullOrEmpty(accountingSettings.HSMtoken))
+                 DocumentHelper.Sign(documentOutPM.Id, tenant, accountingSettings);
+
+        }
+   
+
+    private void BuildDocumentsForNewInvoice(ARInvoicePM aRInvoicePM , InterestReportPM interestReport)
         {
             string ARInvoiceChildEntityReference = !string.IsNullOrEmpty(aRInvoicePM.InvoiceNumber) ? aRInvoicePM.InvoiceNumber : "Draft: " + aRInvoicePM.DraftNumber;
             BuildDocument(aRInvoicePM.Id, "999G", ARInvoiceObjectTableId, ARInvoiceChildEntityReference);

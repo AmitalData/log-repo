@@ -42,6 +42,13 @@ using User = Simplog.Data.CommonDataModel.EntityPOCOs.User;
 using WebFreight.Web;
 using Logitude.XSD.CW_API.ABM;
 using Logitude.BL.InvoiceModel.Tools;
+using Logitude.Accounting.Data.EntityPOCOs;
+using Logitude.Accounting.Data.Repositories;
+using Logitude.BL.CommonDataModel.APIDataContract.ApiV1;
+using DocumentsFiling = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentsFiling;
+using Customer = Simplog.Data.CommonDataModel.EntityPOCOs.Customer;
+using DocumentType = Simplog.Data.CommonDataModel.EntityPOCOs.DocumentType;
+using Contact = Simplog.Data.CommonDataModel.EntityPOCOs.Contact;
 
 namespace Logitude.BL.Helpers
 {
@@ -50,6 +57,7 @@ namespace Logitude.BL.Helpers
 
         private readonly bool IsAutomation;
         private int Tenant;
+        public bool isInterestReport = false;
 
         public DocumentHelper(bool isAutomation = false )
         {
@@ -299,6 +307,7 @@ namespace Logitude.BL.Helpers
 
             try
             {
+                 
                 IHSMSignFileService HSMSignFileService = ContainerAccessor.Container.Resolve(typeof(IHSMSignFileService), "HSMSignFileService", new ParameterOverride("", 1)) as IHSMSignFileService;
                 ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
 
@@ -438,7 +447,20 @@ namespace Logitude.BL.Helpers
 
         private void SendToEmailContact(string email, ARInvoice arinvocie,Document document,string DocumentFilingId, ARInvoiceRepository repository,int tenant)
         {
-            string loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+            string loggedUserEmail = null;
+            try
+            {
+                 loggedUserEmail = AuthenticationUtil.GetAuthenticatedUser();
+            }
+            catch (Exception ex)
+            {
+                if (loggedUserEmail == null)
+                {
+                    ContactRepository contactRepository = new ContactRepository(tenant);
+                    Contact contact = contactRepository.GetContactByUserTypeAndTenant("S", tenant);
+                    loggedUserEmail = contact.Email;
+                }
+            }
             UserRepository userRepository = new UserRepository(Tenant);
             User loggedUser = userRepository.GetSingleUserByCodeOrEmail(null, loggedUserEmail, tenant, true);
             System.Text.UTF8Encoding enc = new System.Text.UTF8Encoding();
@@ -457,7 +479,14 @@ namespace Logitude.BL.Helpers
                 userId = loggedUser.Id;
             }
             try {
-                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, "חשבונית חתומה", null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id, null, null, null);
+                Document documentInterestReport = new Document();
+                string documentInterestReportId = "";
+                if (this.isInterestReport && arinvocie.ARInvoiceTypeCode=="IT")
+                {
+                    documentInterestReportId = this.GetDocumentInterestReportId(arinvocie.Id, tenant);
+                  
+                }
+                string documentId=this.SendHtmlDocument(bytedata, DocumentFilingId, null, tenant, email, "חשבונית חתומה", null, null, userId, arinvocie.Id, LoggingObjectTableId, document.Id+","+ documentInterestReportId, null, null, null);
                 if (!string.IsNullOrEmpty(documentId))
                 {
                     arinvocie.IsSigned = "3";
@@ -724,8 +753,114 @@ namespace Logitude.BL.Helpers
             return document.Id;
         }
 
+        public string GetDocumentInterestReportId(string ARInvocieId,int tenant)
+        {
+            ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+            DocumentRepository documentRepository = new DocumentRepository(commoncontext);
+            DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
+            DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+            InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
+            InterestReport interestReport = interestReportRepository.GetSingleByARInvoiceId(ARInvocieId, tenant);
+            DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(interestReport.Id, tenant).FirstOrDefault();
+            return   documentRepository.GetSingleDocument(tenant, myDocumentFilings?.DocumentId)?.Id;
 
 
+        }
+        public void Sign(string documentOutId, int tenant, FullAccountingSettingPM accountingSettings)
+        {
+
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+            ARInvoiceRepository repository = new ARInvoiceRepository(tenant);
+
+
+            var documentsFiling = objectContext.DocumentsFilings.Where(doc => doc.Id == documentOutId).FirstOrDefault();
+            ARInvoice invocie = repository.GetARInvoiceById(tenant, documentsFiling.EntityId).FirstOrDefault();
+
+            if (invocie != null)
+            {
+                string contactEmail = this.IsSignatureHtmlPresentByBillToId(invocie.BillToId, tenant);
+                if (!string.IsNullOrEmpty(contactEmail))
+                {
+                    this.CreatePdfDoc(documentsFiling, invocie.Id, invocie.Tenant, "ARInvoice");
+                    if (this.isInterestReport && invocie.ARInvoiceTypeCode == "IT")
+                    {
+                        this.CreateDocumentInterestReport(invocie.Tenant, invocie.Id);
+                    }
+                    this.StartSignPDFInvoice(invocie, invocie.Tenant, repository, contactEmail, accountingSettings);
+                }
+
+            }
+
+        }
+
+        private string IsSignatureHtmlPresentByBillToId(string Billto, int tenant)
+        {
+            ICommonDataContext objectContext = CommonDataContext.GetContext(tenant);
+
+            if (string.IsNullOrEmpty(Billto)) return "";
+            Customer myCustomer = (from customer in objectContext.Customers
+                                   where customer.Id == Billto
+                                   // join cardContact in objectContext.CardContacts on card.Id equals cardContact.CardId
+                                   select customer).FirstOrDefault();
+            string email = "";
+            if (myCustomer != null && !string.IsNullOrEmpty(myCustomer.EmailForSendingSingArinvoice))
+            {
+                email = objectContext.Contacts.Where(contact => contact.Id == myCustomer.EmailForSendingSingArinvoice).FirstOrDefault().Email;
+                if (!string.IsNullOrEmpty(email))
+                {
+                    this.isInterestReport = myCustomer.SendingInterestReport != null ? true : false;
+                    return email;
+                }
+
+            }
+            return email;
+        }
+
+        private void CreatePdfDoc(DocumentsFiling documentsFiling, string Id, int tenant, string objectTableName)
+        {
+
+            IExportDocumentHelper exportDocumentHelper = ContainerAccessor.Container.Resolve(typeof(IExportDocumentHelper), "ExportDocumentHelper", new ParameterOverride("", 1)) as IExportDocumentHelper;
+            ObjectTableRepository objectTableRepository = new ObjectTableRepository(tenant);
+            DocumentTypeQuery documentTypeQuery = new DocumentTypeQuery(tenant);
+            DocumentTypePM documentTypePM = documentTypeQuery.GetSinglePM(documentsFiling.DocumentTypeId, documentsFiling.Id, tenant);
+
+            string resolveLoggingUserId = AuthenticationUtil.ResolveUserIdentityName(tenant);
+            var objectTable = objectTableRepository.GetObjectTableByName(objectTableName, tenant, true);
+
+            documentTypePM.DocumentTypeCopies.ForEach(doc =>
+            {
+                exportDocumentHelper.ExportDocument2Pdf(documentsFiling.DocumentTypeId, Id, objectTable.Id, null, null, documentsFiling.Id, tenant, doc.Id, resolveLoggingUserId);
+            });
+
+        }
+
+        public void CreateDocumentInterestReport(int tenant, string arinvocieId)
+        {
+            ICommonDataContext commoncontext = CommonDataContext.GetContext(tenant);
+            DocumentOutQuery documentOutQuery = new DocumentOutQuery(tenant);
+            DocumentRepository documentRepository = new DocumentRepository(commoncontext);
+            DocumentsFilingRepository myDocumentsFilingRepository = new DocumentsFilingRepository(commoncontext);
+            DocumentsFilingQuery myDocumentsFilingQuery = new DocumentsFilingQuery(myDocumentsFilingRepository);
+            DocumentTypeQueryService DocumentTypeService = new DocumentTypeQueryService(tenant);
+            InterestReportRepository interestReportRepository = new InterestReportRepository(tenant);
+            InterestReport interestReport = new InterestReport();
+
+            string documentTypeId = DocumentTypeService.GetDocumentTypeByCode("ITDT", tenant).Id;
+            interestReport = interestReportRepository.GetSingleByARInvoiceId(arinvocieId, tenant);
+            DocumentOutPM documentOutPM = documentOutQuery.GetDocumentOutByDocumentTypeEntityAndChild(interestReport.Id, null, documentTypeId, tenant);
+            if (documentOutPM == null)
+            {
+                var LoggingObjectTableId = ObjectTableRepository.GetObjectTableByName("InterestReport");
+                DocumentHelper documentHelper = new DocumentHelper();
+                documentOutPM = documentHelper.CreateDocumentOut(documentTypeId, interestReport.Id, null, interestReport.ReportNumber, LoggingObjectTableId, tenant, null, null);
+            }
+            var documentsFiling = commoncontext.DocumentsFilings.Where(doc => doc.Id == documentOutPM.Id).FirstOrDefault();
+            DocumentsFilingPM myDocumentFilings = myDocumentsFilingQuery.GetDocumentsFilingPMsByEntityId(interestReport.Id, tenant).FirstOrDefault();
+            if (string.IsNullOrEmpty(documentsFiling.DocumentId))
+            {
+                this.CreatePdfDoc(documentsFiling, interestReport.Id, tenant, "InterestReport");
+            }
+        }
     }
       
    

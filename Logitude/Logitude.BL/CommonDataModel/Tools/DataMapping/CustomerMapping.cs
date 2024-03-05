@@ -81,6 +81,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
             entityPOCO.PrimaryContactEmail = entityPM.PrimaryContactEmail;
             entityPOCO.PrimaryContactPhone = entityPM.PrimaryContactPhone;
             entityPOCO.EmailForSendingSingArinvoice = entityPM.EmailForSendingSingArinvoice;
+            entityPOCO.SendingInterestReport = entityPM.SendingInterestReport;
             entityPOCO.ActivatedByUserId = entityPM.ActivatedByUserId;
             entityPOCO.ActivationRequestedByUserId = entityPM.ActivationRequestedByUserId;
             entityPOCO.SetAsInactiveByUserId = entityPM.SetAsInactiveByUserId;
@@ -359,6 +360,7 @@ namespace Logitude.BL.CommonDataModel.Tools.DataMapping
                 PrimaryContactName = a.PrimaryContactName,
                 PrimaryContactEmail = a.PrimaryContactEmail,
                 EmailForSendingSingArinvoice = a.EmailForSendingSingArinvoice,
+                SendingInterestReport = a.SendingInterestReport,
                 PrimaryContactPhone = a.PrimaryContactPhone,
                 CustomerStatusName = a.CustomerStatus != null ? a.CustomerStatus.Name : null,
                 PrimaryContactId = a.Card.PrimaryContactId,
