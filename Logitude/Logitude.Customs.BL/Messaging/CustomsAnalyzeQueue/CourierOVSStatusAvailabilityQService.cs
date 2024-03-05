@@ -116,6 +116,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 {
                     case "AVA":
                         {
+                            if (!_DeclarationPM.AvailabilityDate.HasValue)
+                            {
                             UpdateAVA(theDecId, mySTBMessage.PackageQuantity);
                             unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
                             {
@@ -126,6 +128,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 EventDateTime = mySTBMessage.StatusDate,
                                 OwnerUnifreightUserCode = myOwnerUnifreightUserCode//FUOwnerUnifreightUserCode.OVERSEAS
                             });
+                            }
                         }
                         break;
                     case "REL":
@@ -180,6 +183,9 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
 
         void UpdateAVA(string theDecId, int EventQty)
         {
+            if (!_DeclarationPM.AvailabilityDate.HasValue)
+            {
+            
             string AcceptanceStatusCode = "";
             var totPackageQuantity = _DeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages).Sum(p => p.PackageQuantity);
             if (EventQty == totPackageQuantity)
@@ -214,6 +220,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                 LogMessagingUtil.Instance.AppendLine("Update Declaration Courier Status CourierPaymentStatusCode=" + currentDeclarationCourierStatusPM.CourierPaymentStatusCode);
             }
+            }
+
 
         }
 
