@@ -70,7 +70,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
             }
         }
         [HttpDelete]
-        public HttpResponseMessage DeleteCourierPendingReasonUnifreightStatus(string courierPendingReasonCode)
+        public HttpResponseMessage DeleteCourierPendingReasonUnifreightStatus(string id)
         {
             try
             {
@@ -83,7 +83,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 ICustomContext customContext = CustomContext.GetContext(authToken.Tenant);
 
                 CourierPendingReasonQueryService courierPendingReasonQueryService = new CourierPendingReasonQueryService(customContext);
-                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReasonCode, tenant);
+                CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingle(id, false, false);
 
                 //CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQueryService.GetSingleCourierPendingReasonByCode(courierPendingReasonCode, tenant);
                 courierPendingReasonPM.ChangeSetOp = ChangeSetOperation.Update;
@@ -114,8 +114,9 @@ namespace WebFreight.Web.Controllers.CustomsModel.Extended
                 CourierPendingReasonQueryService courierPendingReasonQuery = new CourierPendingReasonQueryService(MyContext);
                 CourierPendingReasonPM courierPendingReasonPM = courierPendingReasonQuery.GetSingleCourierPendingReasonByCode(code, authToken.Tenant);
 
-
-                return Request.CreateResponse(HttpStatusCode.OK, courierPendingReasonPM);
+                ServiceResponse response = new ServiceResponse();
+                response.Result = courierPendingReasonPM;
+                return Request.CreateResponse(HttpStatusCode.OK, response);
             }
             catch (Exception ex)
             {

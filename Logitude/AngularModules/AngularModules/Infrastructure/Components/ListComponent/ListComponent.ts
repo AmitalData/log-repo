@@ -1782,7 +1782,6 @@ export class ListComponent implements OnInit, AfterViewInit {
                     case "Customs.InternalBorderSiteType":
                     case "Customs.CustomDocumentType":
                     case "Customs.UIMessage":
-                    case "Customs.CourierPendingReason":
                     case "Customs.CurrencyType":
                     case "Customs.CustomsCountry":
                     case "Customs.ExceptionReason":
