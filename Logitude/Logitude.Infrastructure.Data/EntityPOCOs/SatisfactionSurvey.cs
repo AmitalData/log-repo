@@ -31,6 +31,8 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string Rating { get; set; }
         [Column("Comments")]
 	    public string Comments { get; set; }
+        [Column("Tenant")]
+	    public int Tenant { get; set; }
     }
 }
 	 

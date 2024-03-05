@@ -221,6 +221,7 @@ export class SatisfactionSurveyPMService {
 	  public GetNewEntityPM() {		 
 		    var entityPM: SatisfactionSurveyPM;
 			entityPM = new SatisfactionSurveyPM();
+			entityPM.Tenant = InfraSettings.TenantPM.Id;
 			return entityPM;
     }
 		 

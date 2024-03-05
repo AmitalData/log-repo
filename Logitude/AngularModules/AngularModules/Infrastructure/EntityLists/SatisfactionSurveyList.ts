@@ -14,6 +14,7 @@ export class SatisfactionSurveyList {
 	SearchFields: string;
 	Rating: string;
 	Comments: string;
+	Tenant: number;
 	
 }
  

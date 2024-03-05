@@ -26,6 +26,8 @@ namespace Logitude.Infrastructure.Data.EntityLists
        public string Rating  { get; set; }
        [DataMember]
        public string Comments  { get; set; }
+       [DataMember]
+       public int Tenant  { get; set; }
    }
 
 }
