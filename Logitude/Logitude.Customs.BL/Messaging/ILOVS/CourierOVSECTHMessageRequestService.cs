@@ -96,7 +96,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             return "המסר לאוברסיז נבנה בהצלחה וישלח בתהליך רקע ";
         }
 
-        public string GetMessageUpdateHawbStatus(string declarationId, int tenant,  DeclarationPM declarationPM , CourierMasterPM courierMasterPM)
+        public string GetMessageUpdateHawbStatus(string declarationId, int tenant,  DeclarationPM declarationPM , CourierMasterPM courierMasterPM, DeclarationCourierStatusPM declarationCourierStatusPM = null)
         {
             var context = CustomContext.GetContext(tenant);
             var myDeclarationQueryService = new DeclarationQueryService(context);
@@ -121,13 +121,13 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
                 throw new Exception($"CourierMaster Is null  .GetByDeclarationId({declarationId}, tenant)");
             }
 
-            CourierOVSHAWBRequest myGWMessageECTHRData = CreateCourierOVSHawbMessage(myDeclarationPM, myCourierMasterPM);
+            CourierOVSHAWBRequest myGWMessageECTHRData = CreateCourierOVSHawbMessage(myDeclarationPM, myCourierMasterPM, declarationCourierStatusPM);
             string messageToMaman = "";
             messageToMaman = ProxyUtil.JsonConvertSerialize(myGWMessageECTHRData);
             return messageToMaman;
         }
 
-        private CourierOVSHAWBRequest CreateCourierOVSHawbMessage(DeclarationPM myDeclarationPM, CourierMasterPM myCourierMasterPM)
+        private CourierOVSHAWBRequest CreateCourierOVSHawbMessage(DeclarationPM myDeclarationPM, CourierMasterPM myCourierMasterPM, DeclarationCourierStatusPM declarationCourierStatusPM = null)
         {
             var ConsignmentPackageQualifierCode2 = myDeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages)
                 .Where(r1 => r1.PackageMeasureQualifierCode == "2")
@@ -185,8 +185,38 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
             //    importerVat = myDeclarationPM.ImporterCode;
             //}
             string importerVat = TranslateIntegratorIndex(myCourierMasterPM.IntegratorCode, myCourierMasterPM.Tenant);
- 
 
+            if (declarationCourierStatusPM == null)
+            {
+                DeclarationCourierStatusQueryService declarationCourierQueryService = new DeclarationCourierStatusQueryService(myDeclarationPM.Tenant);
+                declarationCourierStatusPM = declarationCourierQueryService.GetSingle(myDeclarationPM.Id, false, false);
+            }
+
+            // if the declaration has a custom ikuv status, use its suspension code
+            string CustomsSuspention = "";
+            if (!string.IsNullOrEmpty(myDeclarationPM.CourierCustomStatusCode))
+            {
+                CustomsSuspention = myDeclarationPM.CourierSuspentionCode;
+            }
+            // if the declaration has pending reasons
+            else if (!string.IsNullOrEmpty(declarationCourierStatusPM.CourierPendingReasonList))
+            {
+                // get active pending with OverseasSuspendedCode only that relate to the declaration
+                var courierPendingReasonRepository = new CourierPendingReasonRepository(myDeclarationPM.Tenant);
+                var courierPendingListWithOverseasSuspendedCode = courierPendingReasonRepository.GetPendingReasonsWithOverseasSuspendedCode(myDeclarationPM.Tenant);
+
+                var arrPendings = declarationCourierStatusPM.CourierPendingReasonList.Split(',');
+                var pendingList = courierPendingListWithOverseasSuspendedCode.Where(x => arrPendings.Contains(x.Code));
+
+                if (pendingList.Count() == 1)
+                {
+                    CustomsSuspention = pendingList.FirstOrDefault().OverseasSuspendedCode;
+                }
+                else if (pendingList.Count() > 1)
+                {
+                    CustomsSuspention = "9999";
+                }
+            }
 
             var courierHawbMamanModel = new CourierOVSHAWBRequest()
             {
@@ -217,7 +247,7 @@ namespace Logitude.Customs.BL.Messaging.ILOVS
 
 
                 DeclarationNumber = myDeclarationPM.DeclarationNumber??"",
-                CustomsSuspention = myDeclarationPM.CourierSuspentionCode??"",
+                CustomsSuspention = CustomsSuspention,
                 Preclearence = myDeclarationPM.CourierCustomStatusCode== "1"  /*released*/,
 
                 ImporterVat = importerVat,
