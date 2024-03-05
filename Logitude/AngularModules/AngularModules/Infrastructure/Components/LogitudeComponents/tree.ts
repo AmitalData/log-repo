@@ -23,8 +23,8 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
         <span (click)="onClick(item)" [innerHtml]="item?.content" [ngStyle]="item?.children.length>0 ? {'background-color': '#c1c1c1'} : {'background-color': 'whitesmoke'}">
        
         </span>
-        <img (click)="onClick(item)" *ngIf="item?.children?.length>0 && item.expanded" src="../../../Images/Icons/plus.png" style="margin-left:70px;padding:8px" />
-        <img (click)="onClick(item)" *ngIf="item?.children?.length>0 && !item.expanded" src="../../../Images/Buttons/minus.png" style="margin-left:70px;padding:8px" />
+        <img (click)="onClick(item)" *ngIf="item?.children?.length>0 && item.expanded" src="./Images/Icons/plus.png" style="margin-left:70px;padding:8px" />
+        <img (click)="onClick(item)" *ngIf="item?.children?.length>0 && !item.expanded" src="./Images/Buttons/minus.png" style="margin-left:70px;padding:8px" />
 
         <ul *ngIf="item?.children" [class.hidden]="item.expanded"  >
         
