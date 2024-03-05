@@ -338,4 +338,28 @@ export class EntityListService {
             });
         });
     }
+
+    getGroupByStorageSite(objectTableName: string, courierMasterId: string, declarationCourierList: any[], MethodName: string = null) {
+        var table = window.ObjectTables.filter(d => d.Name === objectTableName)[0];
+        if (objectTableName.indexOf('Customs.') > -1) {
+            objectTableName = objectTableName.split('.')[1];
+        }
+        var moduleName = table.ClientModuleName;
+        var servicename = objectTableName + "ExtendedListService";
+        var servicelink = './' + moduleName + '/Services/ExtendedLists/' + servicename;
+        if (MethodName != null) {
+            if (MethodName.indexOf('Customs.') > -1) {
+                MethodName = MethodName.split('.')[1];
+            }
+            servicename = MethodName + "ListService";
+            servicelink = './' + moduleName + '/Services/ExtendedLists/' + servicename;
+        }
+
+        return new Promise((resolve, reject) => {
+            SessionLocator.DynamicLoader.GetInstance(servicelink).then((service: any) => {
+                resolve(service.getGroupByStorageSite(courierMasterId, declarationCourierList));
+            });
+        });
+
+    }
 }

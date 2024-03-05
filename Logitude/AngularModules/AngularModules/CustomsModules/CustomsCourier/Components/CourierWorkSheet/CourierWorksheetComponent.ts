@@ -436,6 +436,31 @@ export class CourierWorksheetComponent extends BaseComponent implements OnDestro
             return;
         }
 
+        // get the storage sites count for the courier ID / selected declaration IDs
+        this._EntityListService.getGroupByStorageSite("Customs.DeclarationCourierStatus", this.entityPM.Id, this._CourierWorksheetSharedDataService._SelectedItems?.Collection, null).then((observable: Observable<any>) => {
+            observable.subscribe((response: ServiceResponse) => {
+                // if all declarations are not regarding the only one and same storage site, display a confirmation window
+                if (response.Count > 1) {
+                    var confirmWindow = new ConfirmWindow();
+                    confirmWindow.Title = TextCodeTranslator.Translate("General.O.Confirm");
+                    confirmWindow.YesButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.Yes");
+                    confirmWindow.NoButtonText = TextCodeTranslator.Translate("Customs.Declaration.O.No");
+                    confirmWindow.Show(TextCodeTranslator.Translate("Customs.DeclarationCourierStatus.O.MultipleStorageSitesConfirmation"));
+                    confirmWindow.WindowClosed.subscribe((event: any) => {
+                        if (confirmWindow.Yes) {
+                            this.SendReadyForPayment();
+                        }
+                    });
+                }
+                else {
+                    this.SendReadyForPayment();
+                }
+            });
+        });
+    }
+
+    SendReadyForPayment() {
+
         this.currentSession.StartBusyIndicatorLoading();
         this.currentSession.entityResourceService.getEntityResourceByTableName("Customs.DeclarationPaymentMethod", 0).subscribe((response: any) => {
             var logitudeWindow = new LogitudeWindow();
