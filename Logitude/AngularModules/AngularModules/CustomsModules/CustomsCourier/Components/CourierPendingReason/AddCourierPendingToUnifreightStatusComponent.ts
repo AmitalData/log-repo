@@ -154,7 +154,7 @@ export class CourierPendingReasonLineComponent extends BaseComponent {
     }
 
     //private _PendingCode: string;
-    public get PendingCode() { return this.entityPM.Code; }
+    public get PendingCode() { return this.entityPM.Id; }
     public set PendingCode(newValue: string) {
         if (newValue) {
             this.currentSession.StartBusyIndicatorLoading();

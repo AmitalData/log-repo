@@ -158,7 +158,7 @@ export class AddEditCourierPendingReasonComponent
                     }
                 });
             }
-        }
+       }
     }
 
     public get EnglishName() { return this.EntityPM.EnglishName; }
