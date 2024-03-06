@@ -480,6 +480,12 @@
     <Constraints
       Nullable="true" />
   </Column>
+  <Column
+    Name="SendingInterestReport_test"
+    Type="bit">
+    <Constraints
+      Nullable="true" />
+  </Column>
   <Relation
     ForeignKeyColumn="Id"
     ReferencedTable="Cards"
