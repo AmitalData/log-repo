@@ -34,7 +34,7 @@ namespace WebFreight.Web.Helpers.ExportServer
 
         public static HttpResponseMessage CreateConfirmationNumber(int tenant, string email, string body)
         {
-            string exportToken = ExportServerLogin.GetToken(tenant, email);
+            string exportToken = GetTokenForConfirmationNumber(tenant, email);
             string urlCreateConfirmationNumber = ExportServerLogin.exportUrl + "/api/ShaamWebService/createConfirmationNumber";
 
             var client = new HttpClient();
@@ -47,6 +47,15 @@ namespace WebFreight.Web.Helpers.ExportServer
             client.Dispose();
 
             return res;
+        }
+
+        public static string GetTokenForConfirmationNumber(int tenant, string email)
+        {
+            string exportToken = ExportServerLogin.GetToken(tenant, email);
+            if(exportToken == null)
+                exportToken = ExportServerLogin.GetToken(tenant, "ConfirmationNumber@amital.co.il");
+            
+            return exportToken;
         }
     }
 

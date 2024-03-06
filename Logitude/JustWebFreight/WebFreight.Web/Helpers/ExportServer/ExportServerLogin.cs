@@ -21,13 +21,15 @@ namespace WebFreight.Web.Helpers.ExportServer
         private static TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
         public readonly static string exportUrl = new SettingQuery().GetSinglePMFromCahche().ExportUrl;
 
-        public static string GetLinkToLogin(int tenant, string email)
+        public static string GetLinkToLogin(int tenant, string email, string exportToken)
         {
-            string token = GetToken(tenant, email);
-            int exportTenant = tenantManagementQuery.GetSinglePM(tenant).ExportTenant.Value;            
+            int exportTenant = tenantManagementQuery.GetSinglePM(tenant).ExportTenant.Value;
             UserPM userPM = new UserQuery(tenant).GetSingleUserPMByEmail(email, tenant, true);
+            if(userPM == null)
+                userPM = new UserQuery(tenant).GetSingleUserPMByEmail(email, 0, true);
+
             string userCode = userPM.Code ?? userPM.EnglishName;
-            string link = $"{exportUrl}/AmitalSSOAngular.html?token={token}&tenant={exportTenant}&AmitalSSOAngular=1&userCode={userCode}";
+            string link = $"{exportUrl}/AmitalSSOAngular.html?token={exportToken}&tenant={exportTenant}&AmitalSSOAngular=1&userCode={userCode}";
             return link;
         }
 
@@ -45,7 +47,7 @@ namespace WebFreight.Web.Helpers.ExportServer
                 string token = RequestTokenFromCustoms(exportTenant, email, tenantManagementPM.ExportLoginCredintial);
 
                 if (!CheckIfUserActive(token, exportTenant))
-                    token = RequestTokenFromCustoms(exportTenant, "", tenantManagementPM.ExportLoginCredintial);
+                    return null;
 
                 tokensCache[tokenKey] = token;
             }
