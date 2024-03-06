@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { SatisfactionSurveyPMService } from 'Infrastructure/Services/StandardPMs/SatisfactionSurveyPMService';
 
 @Component({
     selector: 'SatisfactionSurveyComponent',
@@ -11,9 +12,9 @@ export class SatisfactionSurveyComponent implements OnInit {
     tabs = [
         { id: 'tab1', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.NotAtAllSatisfied") },
         { id: 'tab2', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.Slightly") },
-        { id: 'tab3', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.Moderately")  },
-        { id: 'tab4', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.VeryMuch")  },
-        { id: 'tab5', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.Extent")  },
+        { id: 'tab3', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.Moderately") },
+        { id: 'tab4', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.VeryMuch") },
+        { id: 'tab5', content: TextCodeTranslator.Translate("SatisfactionSurvey.O.Extent") },
     ];
 
     activeTab: string = this.tabs[4].content;
@@ -33,17 +34,22 @@ export class SatisfactionSurveyComponent implements OnInit {
         return this.location.path(); // Return the current URL path
     }
 
-    ngOnInit() {}
+    ngOnInit() { }
 
     setActiveTab(tabContent: string) {
         this.activeTab = tabContent;
         this.surveyForm.get('activeTab').setValue(this.activeTab);
     }
 
+    satisfactionSurveyPMService: SatisfactionSurveyPMService = new SatisfactionSurveyPMService;
     onSubmit() {
         console.log('Form submitted!');
         console.log(this.surveyForm.value);
+        this.satisfactionSurveyPMService.insert(this.surveyForm.value).subscribe(res => {
+            if (!res.HasError) {
 
-        this.formSubmitted = true;
+                this.formSubmitted = true;
+            }
+        });
     }
 }
