@@ -504,6 +504,9 @@ export class ExternalReconcileComponent extends BaseComponent implements OnInit,
         if (this.dateFilter) {
             filters.AdditionalFilters.push(this.dateFilter);
         }
+        else {
+            filters.addAdditionalFilter("DueDate", "#today", null, null, "LessThan", false, false, false, "Date");
+        }
         if (this.searchFieldFilter) {
             filters.AdditionalFilters.push(this.searchFieldFilter);
         }
