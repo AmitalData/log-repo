@@ -62,8 +62,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         this.InitializeServices();        
         this.InitializeAllowAgentInCustomersLOVFilters();
     }
-    private DisplayFieldsFromList : string;
-    private DisplayLocalFieldsFromList: string;
+    public DisplayFieldsFromList : string;
+    public DisplayLocalFieldsFromList: string;
 
     private myPortListService: PortListService;
     private myQuotePMService: QuotePMService;
