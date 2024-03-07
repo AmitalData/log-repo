@@ -87,7 +87,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.DecalarationData = args.Decalaration;
         this.IsNewOrEdit = args.IsNewOrEdit;
         this.isAllowChange = args.isAllowChange;
-
+        
         this.isListenToChangeInCertificate(args.logWindow);
 
         this.InitMoreDataScreenValues();
@@ -125,7 +125,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         this.TabsItemsSource.push(new TabItem("ANSWERTOCERTIFICATE", "Customs.CertificateOfOrigin.O.AnswerToCertificate"));
 
         // this.BuildClientsTapagList();
-        this.selectedTabCode = "GENERAL";
+        this.selectedTabCode = "GENERAL"; 
     }
 
     RunComponent() {
@@ -198,6 +198,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                         }
                         else {
                             this.MOREDATA.SetWarningByCooTypeCode(this.EntityPM.CooTypeCode);
+                            this.MOREDATA.updateEntity(this.EntityPM);
                         }
                         break;
                     }
@@ -245,9 +246,13 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
     // Init data from MOREDATA page:
     InitMoreDataScreenValues() {
-        this.EntityPM.IsConsigneeForPrint = true;
-        this.EntityPM.IsDeclaredByManufacture = true;
-
+        if (AppTool.IsNullOrEmpty(this.EntityPM.IsConsigneeForPrint)) {
+            this.EntityPM.IsConsigneeForPrint = true;
+        }
+        if (AppTool.IsNullOrEmpty(this.EntityPM.IsDeclaredByManufacture)) {
+            this.EntityPM.IsDeclaredByManufacture = true;
+        }
+        
         if (AppTool.IsNullOrEmpty(this.EntityPM.CityOfDeclaration)) {
             this.certificateOfOriginWebService.GetCityOfDeclarationByImporterID(this.DecalarationData.ImporterId, this.EntityPM.Tenant).subscribe(myResult => {
                 var myResponse: ServiceResponse = myResult;
@@ -261,11 +266,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     SaveAndSendClick(customSendOptionsArgs: any = null) {
         if (!this.EntityPM.CooTypeCode || !this.EntityPM.RequestReasonCode) {// manddatory fields
             this.GENERAL.CheckMandatoryFields();
-            //if( this.selectedTabCode == "GENERAL"){
-            //}
-            // else if( this.selectedTabCode = "MOREDATA"){
-            //     this.MOREDATA.CheckMandatoryFields();
-            // }
             return;
         }
 
@@ -282,9 +282,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
                     this.CurrentSession.StopBusyIndicator();
                     this.IsNewOrEdit = StatusCertificateOfOrigin.IsEdit;
-                    if (customSendOptionsArgs) {
-                        this.SendButtonClicked(customSendOptionsArgs);
-                    }
+                    
+                    this.Send(customSendOptionsArgs);
                 }
                 else {
                     this.CurrentSession.StopBusyIndicator();
@@ -293,6 +292,12 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         }
 
         else if (this.IsNewOrEdit == StatusCertificateOfOrigin.IsEdit) {
+
+            if(!this.EntityPM.IsDirty){
+                this.CurrentSession.StopBusyIndicator();
+                this.Send(customSendOptionsArgs);
+                return;
+            }
             // this.certificateOfOriginPMService.update(this.EntityPM).subscribe((response: any) => {
             this.certificateOfOriginWebService.update(this.EntityPM).subscribe((response: any) => {
                 if (!response.HasError) {
@@ -301,18 +306,21 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                     this.GENERAL.InitilizeListsFromCertificateOfOrigin(this.EntityPM);
                     this.CurrentSession.CurrentEditComponent.SaveChanges();
                     this.CurrentSession.StopBusyIndicator();
-                    if (customSendOptionsArgs) {
-                        this.SendButtonClicked(customSendOptionsArgs);
-                    }
+                    this.UpdateIsChange(true);//#103474
+                    this.Send(customSendOptionsArgs);
                 }
                 else {
                     this.CurrentSession.StopBusyIndicator();
-
                 }
             });
         }
     }
-
+    
+    Send(customSendOptionsArgs = null){
+        if (customSendOptionsArgs) {
+            this.SendButtonClicked(customSendOptionsArgs);
+        }
+    }
 
 
     ValidationErrors = [];
@@ -320,22 +328,41 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
     MoreDataValidationErrors = [];
 
     async SendButtonClicked(customSendOptionsArgs: any) {
-        this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
-        // this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
-
-        this.ValidationErrors = this.GeneralValidationErrors.concat(this.MoreDataValidationErrors);
-
-        var generalScreen = "כללי";
-        var moreDataScreen = "נוספים";
-        var bothDataScreen = "כללי ונוספים";
-        if (this.GeneralValidationErrors.length > 0 && this.MoreDataValidationErrors.length > 0) {
-            this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.ValidationErrors, bothDataScreen);
+        // init lists:
+        this.ValidationErrors = [];
+        this.GeneralValidationErrors = [];
+        this.MoreDataValidationErrors = [];
+        
+        if (this.SelectedTabCode == "GENERAL"){
+            this.GENERAL.CheckMandatoryCustomsFields(this.GeneralValidationErrors);
         }
-        else if (this.GeneralValidationErrors.length > 0) {
-            this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.GeneralValidationErrors, generalScreen);
+        else if(this.SelectedTabCode == "MOREDATA"){
+            this.MOREDATA.CheckMandatoryCustomsFields(this.MoreDataValidationErrors);
         }
-        else if (this.MoreDataValidationErrors.length > 0) {
-            this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.MoreDataValidationErrors, moreDataScreen);
+        // var generalScreen = "כללי";
+        // var moreDataScreen = "נוספים";
+        // var bothDataScreen = "כללי ונוספים";
+        this.GeneralValidationErrors.forEach(i => {
+            const isUniqueElement = !this.MoreDataValidationErrors.includes(i);
+            if (isUniqueElement && i != "" ) {
+                this.ValidationErrors.push(i);
+            }
+        });
+
+        this.MoreDataValidationErrors.forEach(j => {
+            const isUniqueElement = !this.GeneralValidationErrors.includes(j);
+            if (isUniqueElement && j != "") {
+                this.ValidationErrors.push(j);
+            }
+        });
+
+        // check duplicates items: 
+        if(this.ValidationErrors.length > 0){
+            this.ValidationErrors = Array.from(new Set(this.ValidationErrors));
+        }
+        // check mandatory fields
+        if (this.ValidationErrors.length > 0 ) {  
+            this.CheckMandatoryCustomsFields(customSendOptionsArgs, this.ValidationErrors, "");
         }
         else {
             this.SendCertificateOfOrigin(customSendOptionsArgs);
@@ -381,7 +408,6 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
                 this.ValidationErrorsList.push(err);
             });
 
-        this.UpdateIsChange(true);//#103474
 
         this.certificateOfOriginWebService.PostCertificateOfOriginRequest(requestParams)
             .subscribe((myServiceResponse: ServiceResponse) => {
@@ -397,7 +423,8 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
 
     CheckMandatoryCustomsFields(customSendOptionsArgs: any, ValidationErrors: any[], screenName: string) {
         var windowArgs: any = {};
-        windowArgs.Errors = ValidationErrors;
+        // windowArgs.Errors = ValidationErrors;
+        windowArgs.Warning = ValidationErrors;
         windowArgs.NoButtonVisibility = false;
         windowArgs.CancelButtonVisibility = true;
         windowArgs.SaveButtonText = "אשר";
@@ -453,7 +480,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             if (!myResult.HasError && myResult.Result) {
                 this.EntityPM = myResult.Result;
                 this.GENERAL.updateEntity(myResult.Result);
-                this.CertificateChanges.next(true);
+                this.CertificateChanges.next(true);               
 
                 if (this.EntityPM?.ErrXml && !AppTool.IsNullOrEmpty(this.EntityPM.ErrXml)) {
                     this.selectedTabCode = "ANSWERTOCERTIFICATE"

@@ -283,7 +283,7 @@ export class DigitalCertificateOfOriginTabComponent extends BaseRequestsSheetMas
         this.isOpen = true;
         var logWindow = new LogitudeWindow();
                 logWindow.Width = 1030;
-                logWindow.Height = 725;
+                logWindow.Height = 735;
                 // Main Title
                 let title = TextCodeTranslator.Translate("Customs.Declaration.TH.CertificateOfOrigin");
                 logWindow.Title = isNewOrEditCertificateOfOrigin == StatusCertificateOfOrigin.IsEdit && !AppTool.IsNullOrEmpty(this.selectedCertificateOfOrigin.COONumber) ? title += `: ${this.selectedCertificateOfOrigin.COONumber}` : title;

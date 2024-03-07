@@ -26,14 +26,16 @@
                     {{'Customs.CertificateOfOrigin.O.DisplayOnly'| TextCodeTranslationPipe}}
                 </div>
             </div> 
-            <div style="width:90%;text-align:center" *ngIf="entityPM.IsChange">
-                <div class="DisbleBox">
-                    {{'Customs.CertificateOfOrigin.O.IsChange'| TextCodeTranslationPipe}}
+            <div *ngIf="entityPM.IsChange && entityPM.COONumber != null || ErrorsList?.length > 0">
+                <div *ngIf="ErrorsList?.length > 0">
+                    <ValidationSummary  class="StyleMess" [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
+                </div>
+                <div *ngIf="entityPM.IsChange && entityPM.COONumber != null"  style="width:90%;text-align:center">
+                    <div class="DisbleBox">
+                        {{'Customs.CertificateOfOrigin.O.IsChange'| TextCodeTranslationPipe}}
+                    </div>
                 </div>
             </div> 
-            <div *ngIf="ErrorsList?.length > 0">
-                <ValidationSummary class="StyleMess" [ItemsSource]="ErrorsList" [SingleLine]="true"></ValidationSummary>
-            </div>
         </td>
 
     </tr>
