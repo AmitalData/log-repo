@@ -17,6 +17,7 @@ using Logitude.Accounting.Data;
 using Logitude.Accounting.BL.DataContract;
 using Logitude.Accounting.BL.CloseTables;
 using Simplog.Server.Infrastructure.Helpers;
+using System.Data.Entity;
 
 namespace Logitude.Accounting.BL.EntityQueryServices
 {
@@ -93,7 +94,6 @@ namespace Logitude.Accounting.BL.EntityQueryServices
 
             return res;
         }
-
         public List<TaxReportLinePM> GetSpecificReportLines(string taxReportId, int tenant)
         {
             IQueryable<TaxReportLine> query = (from a in context.TaxReportLines
@@ -317,4 +317,21 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public int Line { get; set; }
         public string JournalNumber { get; set; }
     }
+    public class DuplicateRows
+    {
+        public string Reference { get; set; }
+        public string VatNumber { get; set; }
+        public bool? IsVoided { get; set; }
+        public DateTime? ReferenceDate { get; set; }
+        public string AccountingEntityId { get; set; }
+        public string AccountingEntityCode { get; set; }
+        public int Line { get; set; }
+    }
+
+    public class TaxReportLineForErrors
+    {
+        public int Line { get; set; }
+        public string JournalNumber { get; set; }
+    }
+
 }
