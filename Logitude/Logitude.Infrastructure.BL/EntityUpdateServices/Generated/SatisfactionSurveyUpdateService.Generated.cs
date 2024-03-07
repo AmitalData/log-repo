@@ -59,8 +59,6 @@ namespace Logitude.Infrastructure.BL.EntityUpdateServices
         {     
   
 		
-		    entityPM.Id = IdCounter.GetNumber("SatisfactionSurvey", entityPM.Tenant); 
-					
 			DateTime myDate = TenantServerConfigration.GetCurrentDateTime(entityPM.Tenant);
 							
 		    entityPM.CreateDate =  myDate;

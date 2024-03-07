@@ -1,28 +1,29 @@
 {
   "compileOnSave": false,
-    "compilerOptions": {
-        "types": [ "cypress", "cypress-localstorage-commands" ],
-        "baseUrl": "./",
-        "outDir": "./dist/out-tsc",
-        "sourceMap": true,
-        "declaration": false,
-        "downlevelIteration": true,
-        "experimentalDecorators": true,
-        "module": "esnext",
-        "moduleResolution": "node",
-        "importHelpers": true,
-        "target": "ES5",
-        "emitDecoratorMetadata": false,
-        "skipLibCheck": true,
-        "lib": [
-            "es2018",
-            "dom"
-        ],
-        
-        "jsx": "react",
-        
-        
-    },
+  "compilerOptions": {
+    "types": [
+      "cypress",
+      "cypress-localstorage-commands"
+    ],
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "ES5",
+    "emitDecoratorMetadata": false,
+    "skipLibCheck": true,
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "jsx": "react",
+    "resolveJsonModule": true
+  },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,
     "strictInjectionParameters": true,

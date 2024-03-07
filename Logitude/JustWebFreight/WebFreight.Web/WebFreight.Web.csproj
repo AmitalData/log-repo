@@ -929,6 +929,7 @@
     <Compile Include="Controllers\ShipmentsModel\Generated\ListControllers\AWBAdditionalHandlingInfoViewsController.Generated.cs" />
     <Compile Include="Controllers\ShipmentsModel\Generated\PMControllers\AWBAdditionalHandlingInfoController.Generated.cs" />
     <Compile Include="Controllers\Texas\TaxesController.cs" />
+    <Compile Include="Controllers\WebServices\SatisfactionSurveyController.cs" />
     <Compile Include="Controllers\WebServices\WindWardWebServiceController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowCardController.cs" />
     <Compile Include="Controllers\WorkflowModel\Extended\FlowEntities\FlowContactController.cs" />

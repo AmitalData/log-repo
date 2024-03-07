@@ -8,27 +8,32 @@
         align-items: center;
         min-height: 100vh;
     }
+
     .title {
         display: flex;
         justify-content: center;
         font-weight: bold;
         padding-bottom: 15px;
     }
+
     form {
         direction: rtl;
-        width: 30%;
+        max-width: 600px;
         margin: auto;
         background-color: #fff;
         padding: 20px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
+
     .form-group {
         margin-bottom: 10px;
     }
+
     label {
         display: block;
         margin-bottom: 5px;
     }
+
     input[type="text"],
     textarea {
         width: 100%;
@@ -37,10 +42,12 @@
         border: 1px solid #ccc;
         border-radius: 4px;
     }
+
     .button-container {
         text-align: right;
         height: 20px;
     }
+
     input[type="submit"] {
         background-color: #4caf50;
         color: white;
@@ -49,9 +56,11 @@
         cursor: pointer;
         min-height: -webkit-fill-available;
     }
+
     input[type="submit"]:hover {
         background-color: #45a049;
     }
+
     .tabs {
         list-style: none;
         padding: 0;
@@ -60,6 +69,7 @@
         display: flex;
         justify-content: space-between;
     }
+
     .tabs li {
         padding: 10px 20px;
         border-top: 5px solid #b1b1b1;
@@ -67,6 +77,7 @@
         border-radius: 0px;
         cursor: pointer;
     }
+
     .tabs li.active {
         border-top: 5px solid #d35400;
         background-color: #f7c8c6;
@@ -86,6 +97,7 @@
         direction: rtl;
         text-align: center;
     }
+
     .thank-you-message h2 {
         font-size: 24px;
         font-weight: bold;
@@ -93,27 +105,16 @@
 </style>
 
 <div class="background">
-    <form
-        [formGroup]="surveyForm"
-        (ngSubmit)="onSubmit()"
-        *ngIf="!formSubmitted"
-    >
-        <h5 class="title">{{'SatisfactionSurvey.O.HowSatisfiedAreYou'| TextCodeTranslationPipe}}</h5>
+    <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()" *ngIf="!formSubmitted">
+        <h5 class="title">{{ howSatisfiedAreYou }}</h5>
         <ul class="tabs">
-            <li
-                *ngFor="let tab of tabs"
-                [class.active]="activeTab === tab.content"
-                (click)="setActiveTab(tab.content)"
-            >
+            <li *ngFor="let tab of tabs" [class.active]="activeTab === tab.content" (click)="setActiveTab(tab.content)">
                 {{ tab.content }}
             </li>
         </ul>
         <div class="form-group">
             <div class="content">
-                <textarea
-                    formControlName="feedback"
-                    [placeholder]="moreDetailsTitle"
-                ></textarea>
+                <textarea formControlName="Comments" placeholder="{{ moreDetailsTitle }}"></textarea>
             </div>
         </div>
         <div class="button-container">
@@ -121,8 +122,8 @@
         </div>
     </form>
     <div class="thank-you-message" *ngIf="formSubmitted">
-        <h2>{{'SatisfactionSurvey.O.Thanks'| TextCodeTranslationPipe}}</h2>
-        <br/>
-        <p>{{'SatisfactionSurvey.O.SentSuccessfully'| TextCodeTranslationPipe}}</p>
+        <h2>{{ thanks }}</h2>
+        <br />
+        <p>{{ sentSuccessfully }}</p>
     </div>
 </div>
