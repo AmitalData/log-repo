@@ -2,6 +2,7 @@
 using Logitude.Accounting.BL.EntityQueryServices;
 using Logitude.Accounting.Data;
 using Logitude.Accounting.Data.EntityListQueryServices;
+using Logitude.Accounting.Data.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -75,6 +76,18 @@ namespace Logitude.Accounting.BL.CoreBL.Reports
             }
             else
             {
+                if (_Param.GLAccountId != null && _Param.CollectorId != null)
+                {
+                    IAccountingContext context = AccountingContext.GetContext(_Param.Tenant);
+                    GLAccountRepository repository = new GLAccountRepository(context);
+
+                    var myCollector = repository.GetCollectorByGLAccountId(_Param.Tenant, _Param.GLAccountId);
+                    if (myCollector != _Param.CollectorId)
+                    {
+                        _allIdAccounts = new List<string>();
+                        return;
+                    }
+                }
                 _allIdAccounts = new List<string>() { this._Param.GLAccountId };
             }
             if (_Param.IncludeRelatedCurrenciesAccount)

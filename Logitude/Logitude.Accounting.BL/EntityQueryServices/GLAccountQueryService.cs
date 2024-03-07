@@ -334,7 +334,18 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 || !String.IsNullOrWhiteSpace(salesmanId) || !String.IsNullOrWhiteSpace(collectorId)
                 )
             {
-               
+
+                if (GLAccountId != null && collectorId != null)
+                {
+                    IAccountingContext context = AccountingContext.GetContext(tenant);
+                    GLAccountRepository repository = new GLAccountRepository(context);
+
+                    var myCollector = repository.GetCollectorByGLAccountId(tenant, GLAccountId);
+                    if (myCollector != collectorId)
+                    {                       
+                        return allIdAccounts;
+                    }
+                }
                 allIdAccounts = repository.GetQAccIdByAcountIdTypeCategories(tenant, GLAccountId, cat1, cat2, cat3, cat4, cat5, gLAccountType, chartOfAccountsId, ChartOfAccountsTypeCode, salesmanId, collectorId,includeControlAccount, securityLevel);
 
                 //   .ToList();

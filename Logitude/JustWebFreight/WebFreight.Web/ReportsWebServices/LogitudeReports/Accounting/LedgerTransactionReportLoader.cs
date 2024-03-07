@@ -78,7 +78,7 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             FillTenantFields();
             FillPrintingInformation();
             FillLedgerTransactions(cardIndexReportService);
-            if (GetFilterValue<string>("GLAccountId") != null)
+            if (GetFilterValue<string>("GLAccountId") != null && cardIndexReportService.CardIndexs.Count()>0)
                 FillGLAccountBalance(cardIndexReportService.CardIndexs);
 
             return transactionsDataProvider;
@@ -455,18 +455,18 @@ namespace WebFreight.Web.ReportsWebServices.LogitudeReports.Accounting
             LedgerTransactionBalanceFilterCallBack LTBFilterCallBack = new LedgerTransactionBalanceFilterCallBack()
             {
                 //EndBalanceForeign = cardIndexs.First().EndBalanceForeign,
-                EndBalanceForeignList = cardIndexs.First().EndBalanceForeignList,
-                EndBalanceLocal = cardIndexs.First().EndBalanceLocal,
-                Have1CurrencyIdInPeriod = cardIndexs.First().Have1CurrencyIdInPeriod,
-                MaxCreateAt = cardIndexs.First().MaxCreateAt,
+                EndBalanceForeignList = cardIndexs.FirstOrDefault().EndBalanceForeignList,
+                EndBalanceLocal = cardIndexs.FirstOrDefault().EndBalanceLocal,
+                Have1CurrencyIdInPeriod = cardIndexs.FirstOrDefault().Have1CurrencyIdInPeriod,
+                MaxCreateAt = cardIndexs.FirstOrDefault().MaxCreateAt,
 
                 //StartBalanceForeign = ledgerTransactionBalanceService.Response.StartBalanceForeign,
-                StartBalanceForeignList = cardIndexs.First().StartBalanceForeignList,
-                StartBalanceLocal = cardIndexs.First().StartBalanceLocal,
-                TotalRowCount = cardIndexs.First().TotalRowCount,
-                YearTransferLedgerTransactionIds = cardIndexs.First().YearTransferLedgerTransactionIds,
-                SuppressCumulativeDueMultiCurrencyInPeriod = cardIndexs.First().SuppressCumulativeDueMultiCurrencyInPeriod,
-                GLAccountId = cardIndexs.First().GLAccountId
+                StartBalanceForeignList = cardIndexs.FirstOrDefault().StartBalanceForeignList,
+                StartBalanceLocal = cardIndexs.FirstOrDefault().StartBalanceLocal,
+                TotalRowCount = cardIndexs.FirstOrDefault().TotalRowCount,
+                YearTransferLedgerTransactionIds = cardIndexs.FirstOrDefault().YearTransferLedgerTransactionIds,
+                SuppressCumulativeDueMultiCurrencyInPeriod = cardIndexs.FirstOrDefault().SuppressCumulativeDueMultiCurrencyInPeriod,
+                GLAccountId = cardIndexs.FirstOrDefault().GLAccountId
         };
             return LTBFilterCallBack;
         }

@@ -383,36 +383,15 @@ namespace Logitude.Accounting.Data.Repositories
        }
 
 
-        public Card GetByGlAccountIdJoinCurrencies(int tenant , string glaccountId)
+        public string GetCollectorByGLAccountId(int tenant , string glaccountId)
         {
-            Card myCard = (from gc in (this.context as AccountingContext).GLAccounts
+          
+            return (from a in context.GLAccounts
+                    join c in (this.context as AccountingContext).GLAccountCardsDatas on a.CardsDataId equals c.Id
+                    where a.Id == glaccountId   
+                    select c.CollectorUserId).FirstOrDefault();
 
-                        join c in (this.context as AccountingContext).GLAccountCurrencies on gc.Id equals c.GLAccountId into gj
-
-                 from subc in gj.DefaultIfEmpty()
-
-                 join gg in (this.context as AccountingContext).Cards on subc.MainGLAccountId equals gg.GLAccountId into cardJoin
-
-                 from card in cardJoin.DefaultIfEmpty()
-
-                 where gc.Id == glaccountId && gc.Tenant==tenant
-                           select card
-                          ).Concat(
-                           from gc in (this.context as AccountingContext).GLAccounts
-
-                           join c in (this.context as AccountingContext).GLAccountCurrencies on gc.Id equals c.GLAccountId into gj
-
-                           from subc in gj.DefaultIfEmpty()
-
-                           join gg in (this.context as AccountingContext).Cards on gc.Id equals gg.GLAccountId into cardJoin
-
-                           from card in cardJoin.DefaultIfEmpty()
-
-                          where gc.Id == glaccountId && gc.Tenant==tenant
-                           select card
-                    ).FirstOrDefault();
-
-            return myCard;
+         
 
         }
         public IQueryable<GLAccount> GetByAcountIdCategories(int tenant, string AccountId,
