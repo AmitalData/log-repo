@@ -256,6 +256,9 @@ namespace Logitude.Accounting.BL.EntityQueryServices
                 where a.TaxReportNumber == reportNunber
                 select a).FirstOrDefault();        
     }
+    
+    //
+
 
     public class DuplicateRows
     {
@@ -267,6 +270,7 @@ namespace Logitude.Accounting.BL.EntityQueryServices
         public string AccountingEntityCode { get; set; }
         public int Line { get; set; }
     }
+
 
     public class TaxReportLineForErrors
     {
