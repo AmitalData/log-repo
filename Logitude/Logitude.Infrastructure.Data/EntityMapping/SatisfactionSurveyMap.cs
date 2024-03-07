@@ -23,7 +23,7 @@ namespace Logitude.Infrastructure.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.Id });
 	 
-            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Id).HasColumnName("Id").IsRequired().HasMaxLength(40).IsUnicode(false);
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate").IsRequired();
 
