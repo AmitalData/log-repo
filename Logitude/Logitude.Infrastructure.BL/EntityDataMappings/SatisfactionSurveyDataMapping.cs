@@ -19,7 +19,10 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 
         public void CustomPMToPOCO(SatisfactionSurveyPM entityPM, SatisfactionSurvey entityPOCO)
         {
-            //throw new NotImplementedException();
+            if (!CustomMappedPMProperties.Contains(PMPropertyNames.Id))
+            {
+                entityPOCO.Id = entityPM.Id;
+            }
         }
 
         public void CustomPOCOToPM(SatisfactionSurveyPM entityPM, SatisfactionSurvey entityPOCO)

@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SatisfactionSurveyUpdateClass
    {  		
-		public const string HashString = "d3876b6c9bb8315402fea0e4b906594f";
+		public const string HashString = "f8a314bfcd5035b9d00a441e40fe999b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Satisfaction Survey",
-			      				    Code =  "2013",
+			      				    Code =  "cd4b",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "SatisfactionSurvey",
@@ -199,7 +199,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  true,
 					  						IsFixedLength =  false,
-					  						EnableAutoFill =  true,
+					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
@@ -552,6 +552,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Tenant",
 					  						ListPropertyPath =  "Tenant",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
