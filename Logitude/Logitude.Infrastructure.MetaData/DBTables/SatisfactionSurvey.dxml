@@ -7,7 +7,7 @@
   <Column
     Name="Id"
     Type="varchar"
-    Size="15">
+    Size="40">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
