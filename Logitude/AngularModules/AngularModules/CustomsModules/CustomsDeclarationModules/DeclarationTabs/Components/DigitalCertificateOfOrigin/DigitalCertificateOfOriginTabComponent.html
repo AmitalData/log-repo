@@ -41,7 +41,8 @@
                         <td class="TabTitleRow" id="DigitalCertificateOfOriginHeader" style="width:150px;">
                             {{'Customs.Declaration.TH.DigitalCertificateOfOrigin'| TextCodeTranslationPipe}}
                         </td>
-                        <td>
+                        <td style="position: absolute;
+                        padding-right: 30%;">
                             <div style="width:100%;text-align:center" *ngIf="IsDisplayOnly">
                                 <div class="DisbleBox">
                                     {{DisplayOnlyMessage}}
@@ -55,9 +56,7 @@
                                     {{DisplayOnlyMessage}}
                                 </div>
                             </div>
-                        </td> 
-                        <td>
-                            <div *ngIf="EntityPM.IsSubmitDeclaration && (IsUpdateDeclarationA || IsUpdateDeclarationB)" style="width: 90%;text-align:center">
+                            <div *ngIf="EntityPM.IsSubmitDeclaration && (IsUpdateDeclarationA || IsUpdateDeclarationB)" style="width: 100%;text-align:center">
                                 <div class="DisbleBox" *ngIf="IsUpdateDeclarationA">
                                     <!-- {{MessA}} -->
                                     {{'Customs.CertificateOfOrigin.O.NumNotUpdate'| TextCodeTranslationPipe}}
@@ -72,7 +71,8 @@
                                 </div>
                             </div>
                            
-                        </td>
+                        </td> 
+                     
                     </tr>
                     <tr>
                         <td style="height: 21px;padding: 0px;padding-bottom: 0px;width: 100px;">

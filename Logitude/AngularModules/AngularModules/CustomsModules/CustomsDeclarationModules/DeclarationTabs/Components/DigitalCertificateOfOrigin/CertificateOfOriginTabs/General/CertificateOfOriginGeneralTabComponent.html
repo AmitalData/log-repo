@@ -404,7 +404,7 @@
                                             <div class="Tbl1Col1 DescriptionBox" *ngIf="!IsDisplayOnly">
                                                 <LogTextBox #MarksAndNumbersTextBox
                                                     [ObjectFieldName]="'MarksAndNumbers'" [DataContext]="item"
-                                                    [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
+                                                     [InputType]="'nText'" [IsAccumulative]="true"
                                                     [Text]="item.MarksAndNumbers"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'">
@@ -433,7 +433,7 @@
                                             <div class="Tbl1Col1 DescriptionBox" style="width: 125;" *ngIf="!IsDisplayOnly">
                                                 <LogTextBox #ItemDescriptionTextBox
                                                     [ObjectFieldName]="'ItemDescription'" [DataContext]="item"
-                                                    [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
+                                                      [InputType]="'nText'" [IsAccumulative]="true"
                                                     [Text]="item.ItemDescription"
                                                     [ObjectTableName]="'Customs.CertificateOriginInvoice'"
                                                     [HideColumns]="true" [IsMultiline]="true" [EnableKeyDown]="true" [Direction]="'LTR'">
@@ -458,7 +458,7 @@
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox #PackageQuantityTextBox
                                                     [ObjectFieldName]="'PackageQuantity'" [DataContext]="item"
-                                                    [FocusOnMe]="true" [InputType]="'number'" [IsAccumulative]="true"
+                                                    [InputType]="'number'" [IsAccumulative]="true"
                                                     [Text]="item.PackageQuantity"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true">
@@ -485,7 +485,7 @@
                                                     [DataContext]="item" [LookUpTableName]="'Customs.PackingType'"
                                                     [HideColumns]="true"
                                                     (SelectedItemChanged)="item.SetLocalName($event, 'PackingTypeName',item ,CertificateOriginItemItems)"
-                                                    [FocusOnMe]="'true'" [CustomizedWidth]="180">
+                                                    [CustomizedWidth]="180">
                                                 </LogLov>
                                             </div>
                                         </log-cell-template>
@@ -504,7 +504,7 @@
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox #WeightTextBox [ObjectFieldName]="'Weight'"
-                                                    [DataContext]="item" [FocusOnMe]="true" [InputType]="'number'"
+                                                    [DataContext]="item"   [InputType]="'number'"
                                                     [IsAccumulative]="true" [Text]="item.Weight"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true"></LogTextBox>
@@ -529,7 +529,7 @@
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'" [DataContext]="item"
                                                     [LookUpTableName]="'Customs.MeasurmentUnit'"
                                                     (SelectedItemChanged)="item.SetLocalName($event, 'MeasureTypeName',item,CertificateOriginItemItems)"
-                                                   [HideColumns]="true" [FocusOnMe]="true"
+                                                   [HideColumns]="true"  
                                                    [CustomizedWidth]="180">
                                                 </LogLov>
                                             </div>
@@ -552,7 +552,7 @@
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox #ContainerIsoCodeTextBox
                                                     [ObjectFieldName]="'ContainerIsoCode'" [DataContext]="item"
-                                                    [FocusOnMe]="true" [InputType]="'nText'" [IsAccumulative]="true"
+                                                   [InputType]="'nText'" [IsAccumulative]="true"
                                                     [Text]="item.ContainerIsoCode"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true">
@@ -575,7 +575,7 @@
                                             </div>
                                             <div *ngIf="logcelltemplate.IsEditMode">
                                                 <LogTextBox #ItemIdTextBox [ObjectFieldName]="'ItemId'"
-                                                    [DataContext]="item" [FocusOnMe]="true" [InputType]="'nText'"
+                                                    [DataContext]="item"   [InputType]="'nText'"
                                                     [IsAccumulative]="true" [Text]="item.ItemId"
                                                     [ObjectTableName]="'Customs.CertificateOfOriginItem'"
                                                     [HideColumns]="true">
@@ -603,7 +603,7 @@
                                                     [DisplayMemberPath]="'OriginCriterionCode'"
                                                     (SelectedItemChanged)="item.SetLocalName($event, 'OriginCriterionCodeName', item ,CertificateOriginItemItems)"
                                                     [CustomizedWidth]="180" [QueryFilterItems]="CriterionTypesFilterItems"
-                                                    [HideColumns]="true" [FocusOnMe]="true">
+                                                    [HideColumns]="true"  >
                                                 </LogLov>
                                             </div>
                                         </log-cell-template>
