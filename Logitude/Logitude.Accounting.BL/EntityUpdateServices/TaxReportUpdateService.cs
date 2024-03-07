@@ -192,6 +192,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
 
         public void MarkDuplicateLines(TaxReportPM taxReportPM)
         {
+            // See also TaxReportService.MarkCreatedDuplicateLines 
+
             IAccountingContext accountingContext = AccountingContext.GetContext(taxReportPM.Tenant);
             TaxReportQueryService taxReportQuery = new TaxReportQueryService(accountingContext);
             TaxReportLineQueryService taxReportLineQuery = new TaxReportLineQueryService(accountingContext);
