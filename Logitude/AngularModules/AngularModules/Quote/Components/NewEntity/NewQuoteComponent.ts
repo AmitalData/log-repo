@@ -62,6 +62,8 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         this.InitializeServices();        
         this.InitializeAllowAgentInCustomersLOVFilters();
     }
+    private DisplayFieldsFromList : string;
+    private DisplayLocalFieldsFromList: string;
 
     private myPortListService: PortListService;
     private myQuotePMService: QuotePMService;
@@ -84,6 +86,10 @@ export class NewQuoteComponent extends BaseComponent implements OnInit, AfterVie
         if (SessionLocator.TenantPM.AllowAgentInCustomersLOV) {
             this.IsAddAgentVisible = true;
         }
+
+        this.DisplayFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,Address1,CityName,CountryCode,PartnerTypeName";
+        this.DisplayLocalFieldsFromList = "Code,CalculatedEnglishName,CalculatedLocalName,Address1,CityName,CountryCode,PartnerTypeName";
+
 
         this.SetCardDependency();
     }
