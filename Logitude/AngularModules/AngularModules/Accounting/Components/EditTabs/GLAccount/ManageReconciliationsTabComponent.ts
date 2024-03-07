@@ -267,7 +267,9 @@ export class ManageReconciliationsTabComponent extends BaseComponent implements 
 
         if (this.CancelSelectedRecoFeature) {
             ReconcileEventManager.ManageReconciliationCheckBoxChecked.subscribe(($event) => {
+                debugger;
                 if (!AppTool.IsNullOrEmpty($event)) {
+                    
                     if ($event.SendSessionIndex != this.CurrentSession.SessionIndex)
                         return;
                     var params = $event.Params;

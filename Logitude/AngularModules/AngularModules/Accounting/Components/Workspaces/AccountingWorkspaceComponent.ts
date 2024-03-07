@@ -46,6 +46,7 @@ export class AccountingWorkspaceComponent {
         this._entityResourceService.getEntityResourceByTableName("AccountingPeriod").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("InterestBasesType").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("InterestBasesPeriod").subscribe((response: any) => { });
+        this._entityResourceService.getEntityResourceByTableName("ChequeCounterSerial").subscribe((response: any) => { });
         this._entityResourceService.getEntityResourceByTableName("InterestReport").subscribe((response: any) => { });
 
     }
