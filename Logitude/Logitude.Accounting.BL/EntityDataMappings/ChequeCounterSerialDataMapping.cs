@@ -13,21 +13,31 @@ using Logitude.Accounting.Data;
 
 namespace Logitude.Accounting.BL.EntityDataMappings
 {
-   
-   public partial class ChequeCounterSerialDataMapping: IMapping<ChequeCounterSerialPM, ChequeCounterSerial>
-   {
 
+    public partial class ChequeCounterSerialDataMapping : IMapping<ChequeCounterSerialPM, ChequeCounterSerial>
+    {
         public void CustomPMToPOCO(ChequeCounterSerialPM entityPM, ChequeCounterSerial entityPOCO)
         {
-            //throw new NotImplementedException();
+            AddPOCOPropertyName(POCOPropertyNames.BankAccountId);
+            AddPOCOPropertyName(POCOPropertyNames.ChequeCounterEnd);
+            AddPOCOPropertyName(POCOPropertyNames.ChequeCounterBegin);
+            AddPOCOPropertyName(POCOPropertyNames.Tenant);
+            AddPOCOPropertyName(POCOPropertyNames.SeriesId);
+            if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
+            {
+                entityPOCO.BankAccountId = entityPM.BankAccountId;
+                entityPOCO.ChequeCounterEnd = entityPM.ChequeCounterEnd;
+                entityPOCO.ChequeCounterBegin = entityPM.ChequeCounterBegin;
+                entityPOCO.Tenant = entityPM.Tenant;
+                entityPOCO.SeriesId = entityPM.SeriesId;
+            }
         }
 
         public void CustomPOCOToPM(ChequeCounterSerialPM entityPM, ChequeCounterSerial entityPOCO)
         {
             //throw new NotImplementedException();
         }
-   }
 
-
+    }
 }
    

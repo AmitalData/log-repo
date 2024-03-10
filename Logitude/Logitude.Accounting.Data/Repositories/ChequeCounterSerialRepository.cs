@@ -17,8 +17,12 @@ namespace Logitude.Accounting.Data.Repositories
         
 		public List<ChequeCounterSerial> GetMulti(EntityKeyFields entityKeys)
         {
-            
-			throw new NotImplementedException();
+
+            BankAccountKeys bankAccountKeys = entityKeys as BankAccountKeys;
+
+            return (from a in context.ChequeCounterSerials
+                    where a.BankAccountId == bankAccountKeys.Id
+                    select a).ToList();
         }
 
    }

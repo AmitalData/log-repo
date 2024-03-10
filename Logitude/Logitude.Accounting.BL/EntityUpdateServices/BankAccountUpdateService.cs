@@ -56,7 +56,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             traceEventService.InsertTraceEvents();
             base.Trace(entityPM, entityPOCO, changesXml);
         }
-
+        protected override void UpdateComposition(BankAccountPM entityPM)
+        {
+            ChequeCounterSerialUpdateService chequeCounterSerialUpdateService = new ChequeCounterSerialUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+            chequeCounterSerialUpdateService.UpdateMulti(entityPM.ChequeCounterSerials, entityPM.DeletedChequeCounterSerials, entityPM, false);
+            base.UpdateComposition(entityPM);
+        }
         protected override void Validate(BankAccountPM entityPM)
         {
             BankAccountValidateService validateService = new BankAccountValidateService(MainContext as IAccountingContext);

@@ -7,6 +7,8 @@ import {GLAccountPM} from '../../../EntityPMs/GLAccountPM';
 import {ApiQueryFilters} from '../../../../Infrastructure/DataContracts/ApiQueryFilters';
 import {AppTool} from '../../../../Infrastructure/Tools';
 import {ObjectsLocator} from '../../../../Infrastructure/Locators/ObjectsLocator';
+import { TextCodeTranslator } from 'Infrastructure/Utilities/TextCodeTranslator';
+import { LogitudeWindow } from 'Controls/Windows/LogitudeWindow';
 
 @Component({
     
@@ -68,6 +70,19 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
         this.GLAccountsFilterItems.addAdditionalFilter("IsMultiCurrency", false, null, null, "Equals", false, false, false, "string");
     }
 
+    defineSerials(){
+        var windowArgs: any = {};
+        var windowTitle = "הגדרת סדרות";
+        var logWindow = new LogitudeWindow();
+        windowArgs.EntityPM = this.EntityPM;
+        logWindow.Width = 680;
+        logWindow.Height = 400;
+        logWindow.WindowArgs = windowArgs;
+        logWindow.Title = windowTitle;
+        //logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.Show('./Accounting/Components/EditTabs/BankAccount/DetailsTab/ChequeCounterSerialComponent');
+    }
+    
     //#region Properties
     get AccountNumber() { return this.EntityPM.AccountNumber; }
     set AccountNumber(value: string) {

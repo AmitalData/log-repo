@@ -65,6 +65,7 @@
     <Content Include="Accounting\Components\EditTabs\CashBook\CashBookDetailsTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\CashBook\CashBookManageDepoTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\BankAccount\BankAccountGeneralTabComponent.html" />
+    <Content Include="Accounting\Components\EditTabs\BankAccount\DetailsTab\ChequeCounterSerialComponent.html" />
     <Content Include="Accounting\Components\EditTabs\ChartOfAccount\ChartOfAccountGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountGeneralTabComponent.html" />
     <Content Include="Accounting\Components\EditTabs\GLAccount\GLAccountTransactionsTabComponent.html" />
@@ -1115,6 +1116,7 @@
     <Content Include="InfrastructureModules\InfrastructureUser\Components\EditTabs\UserDistributorComponent.html" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\AccountingIntegrityCheck\IntegrityCheckTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\BankPageEventsComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankCode\BankCodeGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\GLAccount\ConnectWithGLAccountComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\CashBook\CashBookGeneralTabComponent.ts" />
@@ -4661,6 +4663,7 @@
     <TypeScriptCompile Include="Accounting\Components\EditTabs\CashBook\CashBookDetailsTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\CashBook\CashBookManageDepoTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\BankAccountGeneralTabComponent.ts" />
+    <TypeScriptCompile Include="Accounting\Components\EditTabs\BankAccount\DetailsTab\ChequeCounterSerialComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\ChartOfAccount\ChartOfAccountGeneralTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\GLAccount\ManageReconciliationsTabComponent.ts" />
     <TypeScriptCompile Include="Accounting\Components\EditTabs\GLAccount\GLAccountTransactionsTabComponent.ts" />
