@@ -765,8 +765,7 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         public List<CargoTrackingShipmentList> GetFilteredSortedShipments(CargoTrackingShipmentSearchInput shipmentSearchInput)
        {
-            DateTime start = DateTime.Now;
-
+           
             IQueryable<CargoTrackingShipmentList> shipments = GetIqueryableListWithouJoin(shipmentSearchInput.Tenant);
             shipments = FilterShipments(shipmentSearchInput, shipments);
             shipments = AddShipmentSearch(shipmentSearchInput, shipments);
@@ -795,13 +794,6 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
             });
 
            
-
-
-
-           // Logger.LogDebug( "GetFilteredSortedShipments Query: \r\n {0}" , shipments.ToTraceQuery());
-
-           // Logger.LogDebug("GetFilteredSortedShipments SUM duration {0} seconds " , (DateTime.Now - start).TotalSeconds);
-
             return shipmentsLists;
         }
 
