@@ -93,7 +93,11 @@ namespace WebFreight.Web.WebPages
                     {
                         myDoc = up.GetFileExtensionBySecurityId(securityId, tenant);
                     }
-
+                    DateTime dateTime = new DateTime(2022, 01, 01);
+                    if(myDoc?.CreateDate != null && myDoc?.CreateDate.Value.Date < dateTime.Date)
+					{
+						throw new Exception("The document is not allowed.");
+					}
                     documentExtension = myDoc.Extension;
                     filename = myDoc.FileName;
                     var documentType = string.Empty;
@@ -226,7 +230,7 @@ namespace WebFreight.Web.WebPages
             catch (Exception errorInfo)
             {
                 string ErrorMessage = errorInfo.Message;
-                if (!ErrorMessage.Contains("Sorry you’re not authenticated to view this document") && !ErrorMessage.Contains("Sorry, your download link has expired."))
+                if (!ErrorMessage.Contains("Sorry you’re not authenticated to view this document") && !ErrorMessage.Contains("Sorry, your download link has expired.") && !ErrorMessage.Contains("The document is not allowed."))
                 {
                     if (errorInfo.InnerException != null)
                     {
@@ -249,7 +253,11 @@ namespace WebFreight.Web.WebPages
                 {
                     HttpContext.Current.Response.Write("Sorry, your download link has expired.");
                 }
-                else
+				else if (ErrorMessage.Contains("The document is not allowed."))
+				{
+					HttpContext.Current.Response.Write("The document is not allowed.");
+				}
+				else
                 {
                     HttpContext.Current.Response.Write("Invalid Document Security Id!");
                 }
@@ -333,13 +341,15 @@ namespace WebFreight.Web.WebPages
                     {
                         documents = documents.Where(d => d.IsCustomerView).ToList();
                     }
+					DateTime dateTime = new DateTime(2022, 01, 01);
+					documents = documents.Where(d => d.CreateDate.Date >= dateTime.Date).ToList();
 
-                    var CompressedArray = new Dictionary<string, byte[]>();
+					var CompressedArray = new Dictionary<string, byte[]>();
                     bool DocumentsExistance = false;
                     var ItemNum = 0;
                     var documentsListWithoutDuplications = new List<DocumentsFilingPM>();
-
-                    foreach (DocumentsFilingPM document in documents)
+				
+					foreach (DocumentsFilingPM document in documents)
                     {
                         if (domainName == "cargo" 
                             && documentsListWithoutDuplications.Any(x => x.DocumentTypeCode == document.DocumentTypeCode 
