@@ -18610,6 +18610,7 @@ namespace WebFreight.Web.MetaDataUpdate.UpdateClasses
             AddClosedTables.AddToggle(new ToggleDetails() { Code = "DRU", Name = "Declaration Restore Update", Description = "Declaration Restore Update" }, toggleRepository);
             AddClosedTables.AddToggle(new ToggleDetails() { Code = "DQN", Name = "DbQueueNewReceive", Description = "DbQueueNewReceive" }, toggleRepository);
 			AddClosedTables.AddToggle(new ToggleDetails() { Code = "SDT", Name = "Send Document In Task", Description = "Is Send Document In Task" }, toggleRepository);
+			AddClosedTables.AddToggle(new ToggleDetails() { Code = "NXL", Name = "New Excel", Description = "New Excel" }, toggleRepository);
 
 
 			toggleRepository.SubmitChanges();
