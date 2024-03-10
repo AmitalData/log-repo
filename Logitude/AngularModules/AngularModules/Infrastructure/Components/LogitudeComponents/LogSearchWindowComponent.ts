@@ -149,7 +149,7 @@ export class LogSearchWindowComponent extends BaseComponent implements OnInit, O
         this.ObjectTableName = args.ObjectTableName; // lookup table
         this.ObjectField = args.ObjectField;
         this.ObjectTableId = args.ObjectTableId;
-        this.ObjectTableNamePluralName = this.isRTL?TextCodeTranslator.Translate("General.O.Mine")+" "+TextCodeTranslator.TranslateTable(this.ObjectTableName):"My "+TextCodeTranslator.TranslateTablePlural(this.ObjectTableName);
+        this.ObjectTableNamePluralName = this.isRTL?TextCodeTranslator.TranslateTable(this.ObjectTableName)+" "+TextCodeTranslator.Translate("General.O.Mine"):"My "+TextCodeTranslator.TranslateTablePlural(this.ObjectTableName);
 
         this.ShowInActive = args.ShowInActive;
         this.PartnerTypes = args.PartnerTypes;
