@@ -53,6 +53,9 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.GSTRING2 = entityPM.GSTRING2;
             entityPOCO.GSTRING3 = entityPM.GSTRING3;
             entityPOCO.QUEUEMANAGEMENT = entityPM.QUEUEMANAGEMENT;
+            entityPOCO.tenant = entityPM.Tenant;
+            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
+            entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
         public void POCOToPM(GGGQPM entityPM, GGGQ entityPOCO)
@@ -83,6 +86,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.GSTRING2 = entityPOCO.GSTRING2;
             entityPM.GSTRING3 = entityPOCO.GSTRING3;
             entityPM.QUEUEMANAGEMENT = entityPOCO.QUEUEMANAGEMENT;
+            entityPM.Tenant = (int)entityPOCO.tenant;
+            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCH;
+            entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT;
+
         }
 
         public void CustomPMToPOCO(GGGQPM entityPM, GGGQ entityPOCO)
