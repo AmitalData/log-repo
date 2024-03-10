@@ -12,7 +12,13 @@ namespace Unifreight.BL.EntityPMs
         public int FILENO { get; set; }
 
         public int LINENO { get; set; }
-        
+
+        public int Tenant { get; set; }
+
+        public bool IS_SYNCH { get; set; }
+
+        public DateTime? LAST_UPDATE_DT { get; set; }
+
         public int? ABSAMOUNT { get; set; }
         
         public int? ACAMOUNT { get; set; }

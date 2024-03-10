@@ -26,14 +26,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.GGGQ in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
-    public partial class GGGQ : INotifyPropertyChanged    {
+    public partial class GGGQ : UNIFBASICPOCO, INotifyPropertyChanged    {
 
         public GGGQ()
         {
         }
 
         #region Properties
-    
+
         /// <summary>
         /// There are no comments for QUEID in the schema.
         /// </summary>

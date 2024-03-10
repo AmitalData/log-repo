@@ -21,14 +21,15 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUQUELOCK in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
-    public partial class CCUQUELOCK : INotifyPropertyChanged    {
+    public partial class CCUQUELOCK : UNIFBASICPOCO, INotifyPropertyChanged    {
 
         public CCUQUELOCK()
         {
         }
 
         #region Properties
-    
+
+
         /// <summary>
         /// There are no comments for ENTNAME in the schema.
         /// </summary>

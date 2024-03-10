@@ -21,7 +21,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUCARSC in the schema.
     /// </summary>
     [System.Runtime.Serialization.DataContractAttribute(IsReference = true)]
-    public partial class CCUCARSC : INotifyPropertyChanged
+    public partial class CCUCARSC : UNIFBASICPOCO, INotifyPropertyChanged
     {
 
         public CCUCARSC()
@@ -29,7 +29,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         }
 
         #region Properties
-
+ 
         /// <summary>
         /// There are no comments for FILENO in the schema.
         /// </summary>

@@ -21,14 +21,14 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
     /// There are no comments for Unifreight.Data.AmitalModel.CCUPAYHAND in the schema.
     /// </summary>f
     [System.Runtime.Serialization.DataContractAttribute(IsReference=true)]
-    public partial class CCUPAYHAND : INotifyPropertyChanged    {
+    public partial class CCUPAYHAND : UNIFBASICPOCO, INotifyPropertyChanged    {
 
         public CCUPAYHAND()
         {
         }
 
         #region Properties
-    
+
         /// <summary>
         /// There are no comments for FILENO in the schema.
         /// </summary>
