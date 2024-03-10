@@ -1492,6 +1492,12 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             ENTNAME = "CFIFILEM",
                             FILENO = myDeclarationPM.CustomFileNo,
                         };
+
+                        if (!isConnectedToUnifreight)
+                        {
+                            myCCUQUELOCK.Tenant = EntityPM.Tenant;
+                        }
+
                         myCCUQUELOCKUpdateService.DontAddTransaction = true;//we cant add a transaction with isolation level snap shot inside a read committed one so you have to assign this prop to true mohammad.
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }

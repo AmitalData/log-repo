@@ -19,6 +19,9 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.TSRUFAID = entityPM.TSRUFAID;
             entityPOCO.QUANTITY = entityPM.QUANTITY;
             entityPOCO.TSRUFANO = entityPM.TSRUFANO;
+            entityPOCO.tenant = entityPM.Tenant;
+            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
+            entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
         public void POCOToPM(CCUTSRUFOTPM entityPM, CCUTSRUFOT entityPOCO)
@@ -28,6 +31,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.TSRUFAID = entityPOCO.TSRUFAID;
             entityPM.QUANTITY = entityPOCO.QUANTITY;
             entityPM.TSRUFANO = entityPOCO.TSRUFANO;
+            entityPM.Tenant = (int)entityPOCO.tenant;
+            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCH;
+            entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT;
+
         }
 
         public void CustomPMToPOCO(CCUTSRUFOTPM entityPM, CCUTSRUFOT entityPOCO)

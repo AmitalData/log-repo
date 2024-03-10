@@ -768,6 +768,11 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             ENTNAME = "CFIFILEM",
                             FILENO = dirtyDeclarationPM.CustomFileNo,
                         };
+
+                        if (!isConnectedToUniFreight)
+                        {
+                            myCCUQUELOCKPM.Tenant = EntityPM.Tenant;
+                        }
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
                

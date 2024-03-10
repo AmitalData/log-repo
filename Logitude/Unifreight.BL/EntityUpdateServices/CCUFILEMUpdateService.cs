@@ -21,6 +21,7 @@ using Devart.Data.Oracle;
 using System.Web;
 using Simplog.Data.CommonDataModel.Repositories;
 using Simplog.Data.CommonDataModel.EntityPOCOs;
+using Logitude.Customs.Data.EntityMapping;
 
 namespace Unifreight.BL.EntityUpdateServices
 {
@@ -49,6 +50,19 @@ namespace Unifreight.BL.EntityUpdateServices
             entityPM.FILENO = GetCounter(entityPM.DeclarationId,entityPM.Tenant);
             entityPM.OPENDATE = DateTime.Now;
             entityPM.FILECLOSE = 0;
+        }
+
+
+        protected override void OnUpdating(CCUFILEMPM entityPM)
+        {
+            CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(entityPM.Tenant);
+            bool isConnectedToUnifreight = custSettingsRepo.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
+            if (!isConnectedToUnifreight)
+            {
+                entityPM.IS_SYNCH = false;
+                entityPM.LAST_UPDATE_DT = DateTime.Now;
+            }
+
         }
 
         private int GetCounter(string dirtyDeclarationPMId, int tenant)

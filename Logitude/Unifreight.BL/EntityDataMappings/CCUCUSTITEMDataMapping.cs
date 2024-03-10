@@ -62,6 +62,9 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.PRATMEHESN = entityPM.PRATMEHESN;
             entityPOCO.ORIGINCOUNTRYN = entityPM.ORIGINCOUNTRYN;
             entityPOCO.PURCHCOUNTRYN = entityPM.PURCHCOUNTRYN;
+            entityPOCO.tenant = entityPM.Tenant;
+            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
+            entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
         public void POCOToPM(SupplierInvoiceItem105PM entityPM, CCUCUSTITEM entityPOCO)
@@ -114,6 +117,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.PRATMEHESN = entityPOCO.PRATMEHESN;
             entityPM.ORIGINCOUNTRYN = entityPOCO.ORIGINCOUNTRYN;
             entityPM.PURCHCOUNTRYN = entityPOCO.PURCHCOUNTRYN;
+            entityPM.Tenant = (int)entityPOCO.tenant;
+            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCH;
+            entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT;
+
         }
 
         public void CustomPMToPOCO(SupplierInvoiceItem105PM entityPM, CCUCUSTITEM entityPOCO)

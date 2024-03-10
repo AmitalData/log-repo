@@ -169,7 +169,6 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     myCCUQUELOCKUpdateService.DontAddTransaction = true;
 
 
-
                     CCUQUELOCKPM myCCUQUELOCK = myCCUQUELOCKQueryService.GetSingle("CFIFILEM", dirtyDeclarationPM.CustomFileNo, false);
                     if (myCCUQUELOCK == null)
                     {
@@ -179,6 +178,10 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                             ENTNAME = "CFIFILEM",
                             FILENO = dirtyDeclarationPM.CustomFileNo,
                         };
+                        if (!isConnectedToUniFreight)
+                        {
+                            myCCUQUELOCKPM.Tenant = EntityPM.Tenant;
+                        }
                         myCCUQUELOCKUpdateService.Update(myCCUQUELOCKPM, true);
                     }
 

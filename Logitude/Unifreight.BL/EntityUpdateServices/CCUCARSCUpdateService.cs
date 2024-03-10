@@ -12,6 +12,7 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Logitude.Server.Tools.Utils;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Unifreight.BL.EntityUpdateServices
 {
@@ -39,6 +40,13 @@ namespace Unifreight.BL.EntityUpdateServices
 
         protected override void OnUpdating(CCUCARSCPM entityPM)
         {
+            CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(entityPM.Tenant);
+            bool isConnectedToUnifreight = custSettingsRepo.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
+            if (!isConnectedToUnifreight)
+            {
+                entityPM.IS_SYNCH = false;
+                entityPM.LAST_UPDATE_DT = DateTime.Now;
+            }
 
         }
         protected override void OnUpdating(CCUCARSCPM entityPM, CCUCARSC entityPOCO)

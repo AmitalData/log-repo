@@ -12,6 +12,7 @@ using Unifreight.Data.AmitalModel;
 using Unifreight.Data.AmitalModel.Repsitories;
 using Unifreight.Data.AmitalModel.EntityPOCOs;
 using Unifreight.BL.EntityQueryServices;
+using Logitude.Customs.Data.Repsitories;
 
 namespace Unifreight.BL.EntityUpdateServices
 {
@@ -40,6 +41,18 @@ namespace Unifreight.BL.EntityUpdateServices
                 entityPM.TASKID = CommCounterUtil.GetUnique30(entityPM.LOGTIME);
             }
             ///entityPM.COMPUTERID = Environment.MachineName;
+
+        }
+
+        protected override void OnUpdating(YCULTASKPM entityPM)
+        {
+            CustomsSettingRepository custSettingsRepo = new CustomsSettingRepository(entityPM.Tenant);
+            bool isConnectedToUnifreight = custSettingsRepo.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
+            if (!isConnectedToUnifreight)
+            {
+                entityPM.IS_SYNCH = false;
+                entityPM.LAST_UPDATE_DT = DateTime.Now;
+            }
 
         }
     }

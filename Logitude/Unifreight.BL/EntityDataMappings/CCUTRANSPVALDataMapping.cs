@@ -24,6 +24,9 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.CURRID = entityPM.CURRID;
             entityPOCO.TRANSPVAL = entityPM.TRANSPVAL;
             entityPOCO.CURRIDN = entityPM.CURRIDN;
+            entityPOCO.tenant = entityPM.Tenant;
+            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
+            entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
         public void POCOToPM(CCUTRANSPVALPM entityPM, CCUTRANSPVAL entityPOCO)
@@ -34,6 +37,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.CURRID = entityPOCO.CURRID;
             entityPM.TRANSPVAL = entityPOCO.TRANSPVAL;
             entityPM.CURRIDN = entityPOCO.CURRIDN;
+            entityPM.Tenant = (int)entityPOCO.tenant;
+            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCH;
+            entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT;
+
         }
 
         public void CustomPMToPOCO(CCUTRANSPVALPM entityPM, CCUTRANSPVAL entityPOCO)

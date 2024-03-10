@@ -22,6 +22,9 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.LINENOMSHGR = entityPM.LINENOMSHGR;
             entityPOCO.LINENOSIGN = entityPM.LINENOSIGN;
             entityPOCO.SIGNNUM = entityPM.SIGNNUM;
+            entityPOCO.tenant = entityPM.Tenant;
+            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
+            entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
         }
 
         public void POCOToPM(CCUSIGNUMPM entityPM, CCUSIGNUM entityPOCO)
@@ -30,6 +33,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.LINENOMSHGR = entityPOCO.LINENOMSHGR;
             entityPM.LINENOSIGN = entityPOCO.LINENOSIGN;
             entityPM.SIGNNUM = entityPOCO.SIGNNUM;
+            entityPM.Tenant = (int)entityPOCO.tenant;
+            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCH;
+            entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT;
+
         }
 
         public void CustomPMToPOCO(CCUSIGNUMPM entityPM, CCUSIGNUM entityPOCO)

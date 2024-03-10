@@ -23,7 +23,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPOCO.BAKARADEDUCT = entityPM.BAKARADEDUCT;
             entityPOCO.MEMIRDEDUCT = entityPM.MEMIRDEDUCT;
             entityPOCO.MADADDEDUCT = entityPM.MADADDEDUCT;
-            
+            entityPOCO.tenant = entityPM.Tenant;
+            entityPOCO.IS_SYNCH = entityPM.IS_SYNCH;
+            entityPOCO.LAST_UPDATE_DT = entityPM.LAST_UPDATE_DT;
+
         }
 
         public void POCOToPM(CCUCARPM entityPM, CCUCAR entityPOCO)
@@ -36,7 +39,10 @@ namespace Unifreight.BL.EntityDataMappings
             entityPM.BAKARADEDUCT = entityPOCO.BAKARADEDUCT;
             entityPM.MEMIRDEDUCT = entityPOCO.MEMIRDEDUCT;
             entityPM.MADADDEDUCT = entityPOCO.MADADDEDUCT;
-            
+            entityPM.Tenant = (int)entityPOCO.tenant;
+            entityPM.IS_SYNCH = (bool)entityPOCO.IS_SYNCH;
+            entityPM.LAST_UPDATE_DT = entityPOCO.LAST_UPDATE_DT;
+
         }
 
         public void CustomPMToPOCO(CCUCARPM entityPM, CCUCAR entityPOCO)
