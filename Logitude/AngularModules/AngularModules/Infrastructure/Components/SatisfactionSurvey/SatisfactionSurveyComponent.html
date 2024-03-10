@@ -48,7 +48,7 @@
         height: 20px;
     }
 
-    input[type="submit"] {
+    button[type="submit"] {
         background-color: #4caf50;
         color: white;
         border: none;
@@ -57,8 +57,13 @@
         min-height: -webkit-fill-available;
     }
 
-    input[type="submit"]:hover {
+    button[type="submit"]:hover {
         background-color: #45a049;
+    }
+
+    button.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
     }
 
     .tabs {
@@ -118,7 +123,11 @@
             </div>
         </div>
         <div class="button-container">
-            <input type="submit" value="שלח" />
+            <button type="submit" [disabled]="surveyForm.invalid || formSubmitting"
+                [ngClass]="{'disabled': surveyForm.invalid || formSubmitting}">
+                <span *ngIf="!formSubmitting">שלח</span>
+                <span *ngIf="formSubmitting"><i class="fa fa-spinner fa-spin"></i></span>
+            </button>
         </div>
     </form>
     <div class="thank-you-message" *ngIf="formSubmitted">

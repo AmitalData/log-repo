@@ -1,5 +1,3 @@
-declare const window: any;
-
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
@@ -19,24 +17,52 @@ export class SatisfactionSurveyComponent implements OnInit {
         { id: 'tab5', content: Translate.Extent },
     ];
 
-    activeTab: string = this.tabs[4].content;
+    activeTab: string;
     moreDetailsTitle: string = Translate.MoreDetails;
     howSatisfiedAreYou: string = Translate.HowSatisfiedAreYou;
     thanks: string = Translate.Thanks;
     sentSuccessfully: string = Translate.SentSuccessfully;
     surveyForm: FormGroup;
     formSubmitted: boolean = false;
+    guid: string;
+    hash: string;
+
+    formSubmitting: boolean = false;
 
     constructor(private location: Location) {
+        const ratingIndex = this.getRatingFromUrl();
+        const tabContentIndex = ratingIndex >= 0 && ratingIndex < this.tabs.length ? ratingIndex : 0;
+        this.activeTab = this.tabs[tabContentIndex].content;
+
+        const urlParams = new URLSearchParams(window.location.search);
+        this.guid = (urlParams.get('Guid') || urlParams.get('GUID') || '').toLowerCase();
+        this.hash = (urlParams.get('Hash') || urlParams.get('HASH') || '').toLowerCase();
+
+
         this.surveyForm = new FormGroup({
             Comments: new FormControl(''),
             Rating: new FormControl(this.activeTab),
-            Id: new FormControl(this.getCurrentUrl().split('=')[1]),
+            Id: new FormControl(this.guid),
+            Guid: new FormControl(this.guid),
+            Hash: new FormControl(this.hash),
         });
     }
 
     private getCurrentUrl(): string {
         return this.location.path();
+    }
+
+    private getRatingFromUrl(): number {
+        const url = this.getCurrentUrl();
+        const ratingIndex = url.indexOf('Rating=');
+        if (ratingIndex !== -1) {
+            const ratingString = url.substr(ratingIndex + 7);
+            const rating = parseInt(ratingString, 10);
+            if (!isNaN(rating)) {
+                return rating;
+            }
+        }
+        return 0;
     }
 
     ngOnInit() { }
@@ -48,13 +74,14 @@ export class SatisfactionSurveyComponent implements OnInit {
 
     satisfactionSurveyService: SatisfactionSurveyService = new SatisfactionSurveyService;
     onSubmit() {
+        this.formSubmitting = true;
         console.log('Form submitted!');
         console.log(this.surveyForm.value);
         this.satisfactionSurveyService.insert(this.surveyForm.value).subscribe(res => {
             if (!res.HasError) {
-
                 this.formSubmitted = true;
             }
+            this.formSubmitting = false;
         });
     }
 }

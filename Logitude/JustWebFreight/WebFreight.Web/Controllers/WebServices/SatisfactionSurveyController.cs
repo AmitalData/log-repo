@@ -22,9 +22,9 @@ namespace WebFreight.Web.Controllers.WebServices
 
 
     public partial class SatisfactionSurveysWebServiceController : ApiController
-    {	
-		
-	   public HttpResponseMessage Post(SatisfactionSurveyPM entityPM)
+    {
+
+        public HttpResponseMessage Post(SatisfactionSurveyPM entityPM)
         {
             if (ModelState.IsValid)
             {
@@ -32,7 +32,12 @@ namespace WebFreight.Web.Controllers.WebServices
                 {
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
-                        string logKey = PerformanceLogger.LogCurrentTime();	                    
+                        string logKey = PerformanceLogger.LogCurrentTime();
+                        if (("secretkey" + entityPM.Id).GetHashCode().ToString("x") != "hash")
+                        {
+                            logKey = PerformanceLogger.LogCurrentTime();
+                            throw new Exception("Hash verification failed.");
+                        }
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         SatisfactionSurveyUpdateService service = new SatisfactionSurveyUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;
@@ -50,11 +55,10 @@ namespace WebFreight.Web.Controllers.WebServices
                 }
             }
             else
-            { 
+            {
                 return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildModelException(ModelState));
             }
-        }	    
-      
+        }
+
     }
 }
-	 
