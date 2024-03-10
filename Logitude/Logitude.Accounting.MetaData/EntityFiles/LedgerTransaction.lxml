@@ -5324,6 +5324,7 @@
     DependencyFilter1IsList="false"
     DependencyFilter2IsList="false"
     DependencyFilter3IsList="false"
+    ValidForQuerySection1="&quot;LedgerTransaction&quot;"
     IsRestrictable="false"
     DisplayInEntityVariables="false"
     AllowedInCustomerFieldsSettings="false"
