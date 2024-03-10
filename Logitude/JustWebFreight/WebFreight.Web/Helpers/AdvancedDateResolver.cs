@@ -58,7 +58,7 @@ namespace WebFreight.Web.Helpers
                     break;
                 case "ELM":
                     dateValue = new DateTime(DateTime.Today.Year, DateTime.Today.Month, 1);
-                    dateValue = dateValue.AddMonths(-1).AddDays(-1);
+                    dateValue = dateValue.AddDays(-1);
                     break;
                 case "ETQ":
                     DateTime firstDayOfQuarter = new DateTime(DateTime.Now.Year, (quarterNumber - 1) * 3 + 1, 1);
