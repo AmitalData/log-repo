@@ -106,6 +106,8 @@ namespace Logitude.Customs.BL.EntityUpdateServices
         internal void Update(Boolean doTask  )//eitan h 12/3/15 task 11788
         //internal void Update()
         {
+            if (_DirtyDeclarationPM.Direction == "E")
+                return;
             DateTime stopLogAt = DateTime.MinValue;
             string UntilDateyyyyMMdd = ConfigurationManager.AppSettings["20210427HD368109.LogUntilDateyyyyMMdd"];
             var setting = CustomsSettingQueryService.GetSettingByTenant(_DirtyDeclarationPM.Tenant);
