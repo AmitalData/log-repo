@@ -649,6 +649,7 @@
     <Compile Include="ResponseServices\VE_MSG052_VendorSearchResultsForCustomsAgentResponseService.cs" />
     <Compile Include="ResponseServices\VP_NG_2691_MSG101_VehicleInResponseService.cs" />
     <Compile Include="Tasks\POAExpireReminder.cs" />
+    <Compile Include="Tasks\EnqueueSucceedRequestsheets.cs" />
     <Compile Include="Tasks\SendReportExel.cs" />
     <Compile Include="Tasks\ExchangeRatesQuery.cs" />
     <Compile Include="Tasks\DeleteCustomRequestSheet.cs" />
