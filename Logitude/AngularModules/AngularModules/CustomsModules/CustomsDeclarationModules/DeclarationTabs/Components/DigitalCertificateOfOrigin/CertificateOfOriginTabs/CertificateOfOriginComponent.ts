@@ -268,7 +268,7 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
             this.GENERAL.CheckMandatoryFields();
             return;
         }
-
+        this.CheckItenDecriptionData();
         this.EntityPM.IsUnitedInvoices ? this.EntityPM.IsUnitedInvoices : this.EntityPM.IsUnitedInvoices = false;
 
         this.CurrentSession.StartBusyIndicator(TextCodeTranslator.Translate("General.M.Saving"));
@@ -322,6 +322,13 @@ export class CertificateOfOriginComponent extends BaseRequestsSheetMassaging {
         }
     }
 
+    CheckItenDecriptionData(){
+        this.EntityPM.CertificateOriginInvoiceItems.forEach(invoice =>{
+            if(AppTool.IsNullOrEmpty(invoice.DescriptionOfInvoice)){
+                invoice.DescriptionOfInvoice = !AppTool.IsNullOrEmpty(this.DecalarationData.Consignments[0].CargoDescription) ? this.DecalarationData.Consignments[0].CargoDescription : ""; 
+            }
+        })
+    }
 
     ValidationErrors = [];
     GeneralValidationErrors = [];
