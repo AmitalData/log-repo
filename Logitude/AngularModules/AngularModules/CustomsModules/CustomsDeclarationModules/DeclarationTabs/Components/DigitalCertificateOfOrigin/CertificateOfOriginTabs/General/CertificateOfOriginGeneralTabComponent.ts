@@ -61,7 +61,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         super();
     }
 
-
+    cargoDescription:string = "";
     supplierInvoiceExtendedPMService: SupplierInvoiceExtendedPMService = new SupplierInvoiceExtendedPMService();
     InitTab(EntityPM: CertificateOfOriginPM, currentDeclaration: DeclarationPM, IsNewOrEdit: StatusCertificateOfOrigin, IsDisplayOnly: boolean) {
         this.entityPM = EntityPM;
@@ -70,7 +70,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.CertificateOriginInvoiceItems = new ObservableCollection([]);
         this.CertificateOriginItemItems = new ObservableCollection([]);
         this.currentDeclaration = currentDeclaration;
-        
+        this.cargoDescription = this.currentDeclaration.Consignments[0]?.CargoDescription;
+
         if (IsNewOrEdit === StatusCertificateOfOrigin.IsNew) {
             this.supplierInvoiceExtendedPMService.GetSupplierInvoicesPMsForDeclaration(currentDeclaration.Id).subscribe((response: any) => {
                 var result = response.Result;
@@ -105,7 +106,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
         this.InitializeRelatedDeclarationData();
         this.InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM);
     }
-
+ 
     InitilizeNewCertificateWithSupplierInvoicesAndConsignments(EntityPM: CertificateOfOriginPM) {
         // SupplierInvoices for CertificateOriginInvoiceItems:
         this.CertificateOriginInvoiceItems.Clear();
@@ -118,7 +119,8 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
             mappedInvoice.InvoiceDate = supplierInvoice.IssueDate;
             mappedInvoice.InvoiceSum = supplierInvoice.InvoiceAmount?.toString();
             mappedInvoice.CurrencyTypeCode = supplierInvoice.InvoiceCurrencyTypeCode;
-            mappedInvoice.DescriptionOfInvoice = "";
+
+            mappedInvoice.DescriptionOfInvoice = !AppTool.IsNullOrEmpty(this.cargoDescription ) ? this.cargoDescription  : "";
             mappedInvoice.IsInvoicesForPrint = true;
 
             // add to collection
@@ -127,6 +129,7 @@ export class CertificateOfOriginGeneralTabComponent extends BaseComponent {
 
         });
 
+        
         // Consignments for CertificateOriginItemItems:
         this.CertificateOriginItemItems.Clear();
         this.entityPM.CertificateOriginItemItems = [];
