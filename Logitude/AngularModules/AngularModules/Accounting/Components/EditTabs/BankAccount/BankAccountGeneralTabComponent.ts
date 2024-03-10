@@ -74,7 +74,6 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
         var windowArgs: any = {};
         var windowTitle = "הגדרת סדרות";
         var logWindow = new LogitudeWindow();
-        debugger;
         windowArgs.EntityPM = this.EntityPM;
         logWindow.Width = 680;
         logWindow.Height = 400;

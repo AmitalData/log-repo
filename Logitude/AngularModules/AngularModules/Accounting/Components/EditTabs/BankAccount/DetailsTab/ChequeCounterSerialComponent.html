@@ -21,7 +21,8 @@
                     <tr>
                         <td>
                             <div>
-                                <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Add'" [IsSmall]="true" [Left]="3" (click)="AddLine()"></IconButton>
+                                <IconButton [style.float]="isRTL ? 'right' : 'left'" [Name]="'Add'" [IsSmall]="true"
+                                    [Left]="3" (click)="AddLine()"></IconButton>
                             </div>
                         </td>
                     </tr>
@@ -31,13 +32,14 @@
         <tr>
             <td>
                 <logitude-edit-grid GridWidth="100%" GridHeight="100%" [ItemSource]="ChequeCounterSerials"
-                    [HeaderHeight]="25" [UseVirtuallization]="true" [IsReadOnly]="false" (RowEnded)="OnRowEnded($event)">
+                    [HeaderHeight]="25" [UseVirtuallization]="true" [IsReadOnly]="false"
+                    (RowEnded)="OnRowEnded($event)">
 
                     <!--SeriesId-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="SeriesIdHeader"
                         [binding]="'SeriesId'">
                         <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate [IsEnabled]="item.SeriesId>=currentSeriesId">
                                 <div [style.text-align]="isRTL ? 'right' : 'left'">
                                     <span>{{item.SeriesId}}</span>
                                 </div>
@@ -49,34 +51,34 @@
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'"
                         [header]="ChequeCounterBeginHeader" [binding]="'ChequeCounterBegin'">
                         <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
+                            <log-cell-template #logcelltemplate [IsEnabled]="item.SeriesId>=currentSeriesId">
                                 <div *ngIf="logcelltemplate.IsDisplayMode"
                                     [style.text-align]="isRTL ? 'right' : 'left'">
                                     <span>{{item.ChequeCounterBegin}}</span>
                                 </div>
                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox [ObjectFieldName]="'ChequeCounterBegin'"
-                                    [InputType]="'integer'" [DataContext]="item"
-                                    [ObjectTableName]="'ChequeCounterSerial'" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'ChequeCounterBegin'" [InputType]="'integer'"
+                                        [DataContext]="item" [ObjectTableName]="'ChequeCounterSerial'"
+                                        [HideColumns]="true"></LogTextBox>
                                 </div>
                             </log-cell-template>
                         </ng-template>
                     </log-column>
 
                     <!--ChequeCounterEnd-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'"
-                        [header]="ChequeCounterEndHeader" [binding]="'ChequeCounterEnd'">
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="ChequeCounterEndHeader"
+                        [binding]="'ChequeCounterEnd'">
                         <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
+                            <log-cell-template #logcelltemplate [IsEnabled]="item.SeriesId>=currentSeriesId">
                                 <div *ngIf="logcelltemplate.IsDisplayMode"
                                     [style.text-align]="isRTL ? 'right' : 'left'">
                                     <span> {{item.ChequeCounterEnd}} </span>
                                 </div>
 
                                 <div *ngIf="logcelltemplate.IsEditMode">
-                                    <LogTextBox [ObjectFieldName]="'ChequeCounterEnd'"
-                                    [InputType]="'integer'" [DataContext]="item"
-                                    [ObjectTableName]="'ChequeCounterSerial'" [HideColumns]="true"></LogTextBox>
+                                    <LogTextBox [ObjectFieldName]="'ChequeCounterEnd'" [InputType]="'integer'"
+                                        [DataContext]="item" [ObjectTableName]="'ChequeCounterSerial'"
+                                        [HideColumns]="true"></LogTextBox>
                                 </div>
 
                             </log-cell-template>
@@ -85,10 +87,10 @@
                     <!--NULL-->
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'" [header]="' '" class="CellTools">
                         <ng-template let-item>
-                            <log-cell-template #logcelltemplate>
+                            <log-cell-template [IgnoreMods]="true" [IsEnabled]="item.SeriesId>=currentSeriesId" #logcelltemplate>
                                 <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
                                     <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3"
-                                        (click)="RemoveLine(item)"></IconButton>
+                                        (click)="RemoveLine(item)" [disabled]="item.SeriesId<currentSeriesId"></IconButton>
                                 </div>
                             </log-cell-template>
                         </ng-template>
@@ -106,7 +108,8 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' | TextCodeTranslationPipe}}</button>
+                            <button class="Button" (click)="CancelButtonClicked()">{{'Accounting.General.B.Cancel' |
+                                TextCodeTranslationPipe}}</button>
                         </td>
 
                         <td style="width: 5px;">
@@ -114,7 +117,9 @@
                         </td>
 
                         <td style="width: 57px;">
-                            <button id="{{'CREATEINTERESTBASES' | IdGeneratorAsyncPipe | async}}" class="RedButton" (click)="OkButtonClicked()">{{'Accounting.General.B.OK' | TextCodeTranslationPipe}}</button>
+                            <button id="{{'CREATEINTERESTBASES' | IdGeneratorAsyncPipe | async}}" class="RedButton"
+                                (click)="OkButtonClicked()">{{'Accounting.General.B.OK' |
+                                TextCodeTranslationPipe}}</button>
                         </td>
                     </tr>
                 </table>

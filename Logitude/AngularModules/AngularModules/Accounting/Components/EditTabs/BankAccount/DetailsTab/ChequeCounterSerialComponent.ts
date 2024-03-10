@@ -52,7 +52,6 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
 
     SetWindowArgs(args: any) {
         this.EntityPM = args.EntityPM;
-        debugger;
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ChequeCounterSeriesID)) {
             this.currentSeriesId = this.EntityPM.ChequeCounterSeriesID;
         }
@@ -117,7 +116,6 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
         confirmWindow.Show(TextCodeTranslator.Translate("Accounting.General.O.Areyousuredeleteline") + " ?");
         confirmWindow.WindowClosed.subscribe((event: any) => {
             if (confirmWindow.Yes) {
-                debugger;
                 this.ChequeCounterSerials.Remove(line);
                 this.EntityPM.RemoveChequeCounterSerial(line.EntityPM);
             }
@@ -153,7 +151,6 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
     }
 
     SubmitChanges() {
-        debugger;
         var ChequeCounterSerials: ChequeCounterSerialPM[] = [];
         ChequeCounterSerials = this.EntityPM.ChequeCounterSerials;
         this.EntityPM.ChequeCounterSerials = null;
