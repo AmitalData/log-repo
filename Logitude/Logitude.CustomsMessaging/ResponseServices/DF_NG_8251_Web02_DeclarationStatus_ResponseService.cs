@@ -1095,7 +1095,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         status = "new",
                         xml_status = "new",
                         status_id = statusId,
-                        status_DateTime = DateTime.Now,
+                        status_DateTime = dirtyDeclarationPM.AvailabilityDate ?? DateTime.Now,
                         //status_place = "FRA",
                         //status_save = "no_fail",
                         comments = "",
