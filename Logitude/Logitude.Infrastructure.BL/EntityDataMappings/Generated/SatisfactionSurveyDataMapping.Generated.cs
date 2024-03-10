@@ -28,7 +28,10 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         SearchFields, 
 	         Rating, 
 	         Comments, 
-	         Tenant,
+	         Tenant, 
+	         IsSync, 
+	         LockedBy, 
+	         SyncDate,
 	      }
 
 
@@ -42,7 +45,10 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         Rating, 
 	         Comments, 
 	         Tenant, 
-	         Hash,
+	         Hash, 
+	         IsSync, 
+	         LockedBy, 
+	         SyncDate,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
@@ -79,6 +85,21 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
 				entityPOCO.Tenant = entityPM.Tenant;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSync))
+            {
+				entityPOCO.IsSync = entityPM.IsSync;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LockedBy))
+            {
+				entityPOCO.LockedBy = entityPM.LockedBy;
+			}
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SyncDate))
+            {
+				entityPOCO.SyncDate = entityPM.SyncDate;
 			}
 			
 				BuildSearchFieldsGenerated(entityPM, entityPOCO, entityPM.ChangeSetOp == ChangeSetOperation.Insert);
@@ -122,6 +143,21 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 					entityPM.Tenant = entityPOCO.Tenant;
             }
 
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.IsSync))
+            {
+					entityPM.IsSync = entityPOCO.IsSync;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.LockedBy))
+            {
+					entityPM.LockedBy = entityPOCO.LockedBy;
+            }
+
+			if (!CustomMappedPMProperties.Contains(PMPropertyNames.SyncDate))
+            {
+					entityPM.SyncDate = entityPOCO.SyncDate;
+            }
+
 		}
 
 		public void PMToOldPM(SatisfactionSurveyPM entityPM, SatisfactionSurveyPM oldEntityPM)
@@ -156,6 +192,21 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.Tenant))
             {
                 oldEntityPM.Tenant = entityPM.Tenant;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.IsSync))
+            {
+                oldEntityPM.IsSync = entityPM.IsSync;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.LockedBy))
+            {
+                oldEntityPM.LockedBy = entityPM.LockedBy;
+            }
+			
+			if (!CustomMappedPOCOProperties.Contains(POCOPropertyNames.SyncDate))
+            {
+                oldEntityPM.SyncDate = entityPM.SyncDate;
             }
 			
 		}

@@ -64,6 +64,21 @@ export class SatisfactionSurveyPM {
     public set Hash(newValue: string) { if (this.hash != newValue) { this.hash = newValue; this.MarkAsDirty("Hash"); } }
        
 	 
+    private isSync: boolean;
+    public get IsSync() { return this.isSync; }
+    public set IsSync(newValue: boolean) { if (this.isSync != newValue) { this.isSync = newValue; this.MarkAsDirty("IsSync"); } }
+       
+	 
+    private lockedBy: string;
+    public get LockedBy() { return this.lockedBy; }
+    public set LockedBy(newValue: string) { if (this.lockedBy != newValue) { this.lockedBy = newValue; this.MarkAsDirty("LockedBy"); } }
+       
+	 
+    private syncDate: Date;
+    public get SyncDate() { return this.syncDate; }
+    public set SyncDate(newValue: Date) { if (this.syncDate != newValue) { this.syncDate = newValue; this.MarkAsDirty("SyncDate"); } }
+       
+	 
 
     public OldEntityPM: SatisfactionSurveyPM;
 		

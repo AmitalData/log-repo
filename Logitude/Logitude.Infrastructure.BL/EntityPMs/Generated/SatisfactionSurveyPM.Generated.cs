@@ -204,6 +204,75 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private bool isSync ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool IsSync  
+	   {
+	    
+	     get
+		{
+		   return isSync;
+		 }
+		 set
+		 {
+		   if(isSync != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="IsSync",OldValue=isSync,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   isSync=value;
+		   }
+			
+		 }
+	   }
+	  private string lockedBy ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string LockedBy  
+	   {
+	    
+	     get
+		{
+		   return lockedBy;
+		 }
+		 set
+		 {
+		   if(lockedBy != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="LockedBy",OldValue=lockedBy,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   lockedBy=value;
+		   }
+			
+		 }
+	   }
+	  private DateTime syncDate ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public DateTime SyncDate  
+	   {
+	    
+	     get
+		{
+		   return syncDate;
+		 }
+		 set
+		 {
+		   if(syncDate != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SyncDate",OldValue=syncDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChanged(values);
+		   syncDate=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }
