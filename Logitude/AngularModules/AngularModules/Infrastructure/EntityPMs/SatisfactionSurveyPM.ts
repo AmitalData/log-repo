@@ -59,6 +59,11 @@ export class SatisfactionSurveyPM {
     public set Tenant(newValue: number) { if (this.tenant != newValue) { this.tenant = newValue; this.MarkAsDirty("Tenant"); } }
        
 	 
+    private hash: string;
+    public get Hash() { return this.hash; }
+    public set Hash(newValue: string) { if (this.hash != newValue) { this.hash = newValue; this.MarkAsDirty("Hash"); } }
+       
+	 
 
     public OldEntityPM: SatisfactionSurveyPM;
 		

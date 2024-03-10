@@ -181,6 +181,29 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
+	  private string hash ;
+	  	  
+       
+	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
+	   [DataMember]
+       public string Hash  
+	   {
+	    
+	     get
+		{
+		   return hash;
+		 }
+		 set
+		 {
+		   if(hash != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Hash",OldValue=hash,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChanged(values);
+		   hash=value;
+		   }
+			
+		 }
+	   }
 	    }
    
 }

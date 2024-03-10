@@ -41,7 +41,8 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
 	         SearchFields, 
 	         Rating, 
 	         Comments, 
-	         Tenant,
+	         Tenant, 
+	         Hash,
 	      }
 
 		List<POCOPropertyNames> CustomMappedPOCOProperties=new List<POCOPropertyNames>();
