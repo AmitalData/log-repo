@@ -59,7 +59,7 @@
   </Column>
   <Column
     Name="LockedBy"
-    Type="varchar"
+    Type="nvarchar"
     Size="36">
     <Constraints
       Nullable="true" />
@@ -70,9 +70,4 @@
     <Constraints
       Nullable="false" />
   </Column>
-  <Relation
-    ForeignKeyColumn="LockedBy"
-    ReferencedTable="Users"
-    ReferencedColumn="Id"
-    ReferencedTableSchema="dbo" />
 </Table>
