@@ -316,6 +316,7 @@
     <Compile Include="CloseTablesClasses\FillCloseTable.cs" />
     <Compile Include="CloseTablesClasses\ICloseTable.cs" />
     <Compile Include="Communications.cs" />
+    <Compile Include="Contracts\ICustomsEnqueueSucceedRequestsheets.cs" />
     <Compile Include="Contracts\IPOAExpireReminder.cs" />
     <Compile Include="Contracts\ICustomsSendReportExel.cs" />
     <Compile Include="Contracts\ICustomsExchangeRatesQuery.cs" />

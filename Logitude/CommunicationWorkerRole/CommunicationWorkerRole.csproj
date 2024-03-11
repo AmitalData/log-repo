@@ -396,6 +396,7 @@
     <Compile Include="Services\QuoteSchedulerTaskService.cs" />
     <Compile Include="ShipmentCreateWR.cs" />
     <Compile Include="ShipmentUpdateWR.cs" />
+    <Compile Include="Tasks\CustomsEnqueueSucceedRequestsheetsTask.cs" />
     <Compile Include="Tasks\RetrievingPOAThatIsAboutToExpire.cs" />
     <Compile Include="Tasks\CustomsSendReportExel.cs" />
     <Compile Include="Tasks\CustomsExchangeRatesQuery.cs" />

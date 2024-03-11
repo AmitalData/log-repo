@@ -1,0 +1,83 @@
+<Procedure DBType="Main" Name="QueueEnqueue_succeedRequestsheets" Schema="dbo" Module="Customs">
+  <SqlScript>
+	  <![CDATA[
+
+create or alter PROCEDURE QueueEnqueue_succeedRequestsheets
+AS BEGIN
+    DECLARE @v_DelaySeconds INT = 5;
+    DECLARE @v_nextRunDateTime DATETIME = (getdate() + @v_DelaySeconds/86400);
+
+    INSERT INTO  QueueMessages (
+		Id,
+        CreateDateTime, 
+        QueueDefinitionCode, 
+        MessageBody, 
+        NextRunDateTime, 
+        Tenant,
+        Status,
+        RetryNumber,
+		EntityID
+     )
+    SELECT 
+		NEXT VALUE FOR QUEUEMESSAGES_SEQ,
+		crsh.REQUESTCREATEDATE,
+		'CustomsCommandAnalyzeResponseWR',
+		CONCAT('{"InterfaceTypeCode":"', crsh.InterfaceTypeCode, '","Tenant":"', crsh.Tenant, '","CorrelationId":"', crsh.id, '"}'),
+		@v_nextRunDateTime, 
+		crsh.TENANT,
+		0, 
+		0,
+		crsh.id
+    FROM customs.customsrequestssheets crsh
+    WHERE  crsh.requeststatuscode = '21' -- tshuva tkina
+		AND not exists (SELECT 1
+                        FROM   queuemessages
+                        WHERE  queuemessages.entityid = crsh.id);
+END;
+
+    ]]>
+  </SqlScript>
+  
+  <OracleScript>
+	<![CDATA[
+
+create or replace PROCEDURE QueueEnqueue_succeedRequestsheets
+AS
+    v_DelaySeconds NUMBER;
+    v_nextRunDateTime DATE;
+BEGIN
+    v_DelaySeconds  := 5;
+    v_nextRunDateTime := (SYSDATE + v_DelaySeconds/86400) ;
+
+    INSERT INTO  QueueMessages (
+        CreateDateTime, 
+        QueueDefinitionCode, 
+        MessageBody, 
+        NextRunDateTime, 
+        Tenant,
+        Status,
+        RetryNumber,
+        EntityID
+     )
+    SELECT 
+       crsh.REQUESTCREATEDATE,
+        'CustomsCommandAnalyzeResponseWR',
+         '{"InterfaceTypeCode":"' || crsh.InterfaceTypeCode || '","Tenant":"' || crsh.Tenant || '","CorrelationId":"' || crsh.id || '"}',
+       v_nextRunDateTime, 
+       crsh.TENANT,
+       0, 
+       0,
+       crsh.id
+    FROM customsrequestssheets crsh
+    WHERE  crsh.requeststatuscode = '21' -- tshuva tkina
+       AND NOT EXISTS (SELECT 1
+                       FROM   queuemessages
+                       WHERE  queuemessages.entityid = crsh.id);
+   -- and ROWNUM  = 1;
+
+END;
+
+	]]>
+
+</OracleScript>
+</Procedure>
