@@ -256,7 +256,7 @@ MainInterfaceCode ="5002"
 
                          new SincroTestCaseDetail()
                 {
-                    Code = "2450",
+                    Code = "2450NotFound",
                     Name = "המכלה לא קיימת במכס",
                     Entity="Containerization",
                      Param1= @"{}",
@@ -265,7 +265,7 @@ MainInterfaceCode ="5002"
 
                          new SincroTestCaseDetail()
                 {
-                    Code = "2450",
+                    Code = "2450Found",
                     Name = "המכלה קיימת במכס",
                     Entity="Containerization",
                      Param1= @"{}",

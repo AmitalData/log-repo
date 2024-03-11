@@ -58,7 +58,33 @@ namespace Logitude.CustomsMessaging.MessagingServices
 
             customRequest.RequestContentHeader = new  RequestContentHeader() { SenderID = 1, RecieverID = new int[] { 1 } };
 
+            if (requestParams.TestCase != null)
+            {
+                BuildRequestContentHeaderB4Sign(customRequest);
+                switch (requestParams.TestCase.Code)
+                {
+                    case "2450NotFound":
+                        var Fake2754ValidMsg = new Fake_2450_Containerization_RequestMessagingService(requestParams);
+                        _ResponseHeader = Fake2754ValidMsg.CallWS(requestParams, out response);
+                        break;
+                    case "2754Constraint":
+                    /*    var Fake2754WithConstraintMsg = new Fake_2754_MSG10004_ImportDeclarationResponseWithConstraint(requestParams);
+                        _ResponseHeader = Fake2754WithConstraintMsg.CallWS(requestParams, out response);*/
+                        break;
 
+                        /* case "2754Payment":
+                             var Fake2754SumbitPayment = new Fake_2754_MSG10004_SumbitPayment(requestParams);
+                             _ResponseHeader = Fake2754SumbitPayment.CallWS(out response, requestParams);
+                             break;*/
+
+                        //case "2754Payment":
+                        //    var Fake2754SumbitPayment = new Fake_2754_MSG10004_SumbitPayment(requestParams);
+                        //    _ResponseHeader = Fake2754SumbitPayment.CallWS(out response);
+
+                }
+                exceptionMessage = null;
+                return response;
+            }
 
             using (var uifreightSdkGateway = new UnifreightSdkGateway(base.CustomsSetting.IIGServiceAddress))
             {

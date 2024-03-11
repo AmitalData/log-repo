@@ -1,50 +1,34 @@
-﻿using Logitude.Customs.BL.EntityQueryServices;
-using Logitude.Customs.Def.EntityPMs;
+﻿using Logitude.Customs.BL.Messaging.LogitudeClient.DeclarationErrorPointer;
 using Logitude.CustomsMessaging.Common.RequestParams;
-using Logitude.CustomsMessaging.ResponseServices;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnifreightIIG.Common.DeclarationStatusQueryRequestServiceReference;
-
+using UnifreightIIG.Common.ContainerizationMessageServiceReference;
+using Exception = UnifreightIIG.Common.ContainerizationMessageServiceReference.Exception;
 namespace Logitude.CustomsMessaging.FakeMessagingServices
 {
     class Fake_2450_Containerization_RequestMessagingService
     {
-        private ResponseContentHeader _responseContentHeader;
-        private DF_NG_2450_Web02_ContainerizationStatus_ResponseContainerizationStatusAnswer[] _ContainerizationStatusAnswer;
-        
-        internal SaveCC_MSG2450_ContainerizationMessageResponseService GetFakeCustomsResponse(GenericRequestParams requestParamsData)
+        public ResponseHeader _ResponseHeader;
+        private GenericRequestParams _requestParams;
+        public INF_MSG_Generic fakeRespond;
+
+        //private DF_NG_2450_Web02_ContainerizationStatus_ResponseContainerizationStatusAnswer[] _ContainerizationStatusAnswer;
+        public Fake_2450_Containerization_RequestMessagingService(GenericRequestParams requestParams)
         {
-            SetResponseContentHeader();
-            return new SaveCC_MSG2450_ContainerizationMessageResponseService()
-            {
-                ResponseContentHeader = _responseContentHeader
-                
-            };
+            _requestParams = requestParams;
+            fakeRespond = new INF_MSG_Generic();
+            _ResponseHeader = new ResponseHeader();
         }
-
-            
-        private void SetResponseContentHeader()
+        public ResponseHeader CallWS(GenericRequestParams requestParams, out INF_MSG_Generic response)
         {
-            _responseContentHeader = new ResponseContentHeader()
-            {
-                TransmitionDateTime=DateTime.Now,
-                ApplicationID = 1234,
-                Remark=""
-            };
-
-
-            if (param1 == true)
-            {
-                _responseContentHeader.Exception = new Exception[0];
-                _responseContentHeader.Exception[0].ExceptionLevel="5",
-
-
-
-            }
+            fakeRespond.ResponseContentHeader = new ResponseContentHeader();
+            fakeRespond.ResponseContentHeader.TransmitionDateTime = DateTime.Now;
+            fakeRespond.ResponseContentHeader.ApplicationID = 0;
+            fakeRespond.ResponseContentHeader.Exception = new Exception[1];
+            fakeRespond.ResponseContentHeader.Exception[0] = new Exception();
+            fakeRespond.ResponseContentHeader.Exception[0].ExceptionLevel = 3;
+            fakeRespond.ResponseContentHeader.Exception[0].ExeptionType = 656;
+            response = fakeRespond; 
+            return _ResponseHeader;
         }
     }
 }
