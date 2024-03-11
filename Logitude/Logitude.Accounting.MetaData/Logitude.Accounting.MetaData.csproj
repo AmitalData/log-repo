@@ -255,6 +255,7 @@
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
     <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
     <None Include="EntityFiles\ConfirmationNumberDefault.lxml" />
+    <None Include="EntityFiles\ConfirmationNumberStatus.lxml" />
     <None Include="EntityFiles\CopyFromTenant0.lxml" />
     <None Include="EntityFiles\GLAccountAgingData.lxml" />
     <None Include="EntityFiles\GLAccountCardsData.lxml" />

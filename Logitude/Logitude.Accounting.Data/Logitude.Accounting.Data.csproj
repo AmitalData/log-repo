@@ -92,6 +92,7 @@
     <Compile Include="EntityKeys\CalculatedChartsLineTypeKeys.cs" />
     <Compile Include="EntityKeys\CalculatedChartsOfAccountKeys.cs" />
     <Compile Include="EntityKeys\CalculatedChartsOfAccountsLineKeys.cs" />
+    <Compile Include="EntityKeys\ConfirmationNumberStatusKeys.cs" />
     <Compile Include="EntityKeys\CopyFromTenant0Keys.cs" />
     <Compile Include="EntityKeys\ExternalPageAdditionalDataKeys.cs" />
     <Compile Include="EntityKeys\GLAccountAgingDataKeys.cs" />
@@ -137,6 +138,7 @@
     <Compile Include="EntityListQueryServices\CalculatedChartsLineTypeListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CalculatedChartsOfAccountListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CalculatedChartsOfAccountsLineListQueryService.cs" />
+    <Compile Include="EntityListQueryServices\ConfirmationNumberStatusListQueryService.cs" />
     <Compile Include="EntityListQueryServices\CopyFromTenant0ListQueryService.cs" />
     <Compile Include="EntityListQueryServices\ExternalPageAdditionalDataListQueryService.cs" />
     <Compile Include="EntityListQueryServices\Generated\AccountingEntityJournalListQueryService.Generated.cs" />
@@ -148,6 +150,7 @@
     <Compile Include="EntityListQueryServices\Generated\CalculatedChartsLineTypeListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CalculatedChartsOfAccountListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CalculatedChartsOfAccountsLineListQueryService.Generated.cs" />
+    <Compile Include="EntityListQueryServices\Generated\ConfirmationNumberStatusListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\CopyFromTenant0ListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\ExternalPageAdditionalDataListQueryService.Generated.cs" />
     <Compile Include="EntityListQueryServices\Generated\GLAccountAgingDataListQueryService.Generated.cs" />
@@ -226,6 +229,7 @@
     <Compile Include="EntityLists\Generated\CalculatedChartsLineTypeList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CalculatedChartsOfAccountList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CalculatedChartsOfAccountsLineList.Generated.cs" />
+    <Compile Include="EntityLists\Generated\ConfirmationNumberStatusList.Generated.cs" />
     <Compile Include="EntityLists\Generated\CopyFromTenant0List.Generated.cs" />
     <Compile Include="EntityLists\Generated\ExternalPageAdditionalDataList.Generated.cs" />
     <Compile Include="EntityLists\Generated\GLAccountAgingDataList.Generated.cs" />
@@ -271,6 +275,7 @@
     <Compile Include="EntityMapping\CalculatedChartsOfAccountMap.cs" />
     <Compile Include="EntityMapping\CalculatedChartsOfAccountsLineMap.cs" />
     <Compile Include="EntityMapping\ConfirmationNumberDefaultMap.cs" />
+    <Compile Include="EntityMapping\ConfirmationNumberStatusMap.cs" />
     <Compile Include="EntityMapping\CopyFromTenant0Map.cs" />
     <Compile Include="EntityMapping\ExternalPageAdditionalDataMap.cs" />
     <Compile Include="EntityMapping\GLAccountAgingDataMap.cs" />
@@ -317,6 +322,7 @@
     <Compile Include="EntityPOCOs\CalculatedChartsOfAccount.cs" />
     <Compile Include="EntityPOCOs\CalculatedChartsOfAccountsLine.cs" />
     <Compile Include="EntityPOCOs\ConfirmationNumberDefault.cs" />
+    <Compile Include="EntityPOCOs\ConfirmationNumberStatus.cs" />
     <Compile Include="EntityPOCOs\CopyFromTenant0.cs" />
     <Compile Include="EntityPOCOs\ExternalPageAdditionalData.cs" />
     <Compile Include="EntityPOCOs\GLAccountAgingData.cs" />
@@ -364,12 +370,14 @@
     <Compile Include="Repositories\CalculatedChartsLineTypeRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsOfAccountRepository.cs" />
     <Compile Include="Repositories\CalculatedChartsOfAccountsLineRepository.cs" />
+    <Compile Include="Repositories\ConfirmationNumberStatusRepository.cs" />
     <Compile Include="Repositories\CopyFromTenant0Repository.cs" />
     <Compile Include="Repositories\Generated\AccountingEntityJournalRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\ARPaymentsJournalRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsLineTypeRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsOfAccountRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CalculatedChartsOfAccountsLineRepository.Generated.cs" />
+    <Compile Include="Repositories\Generated\ConfirmationNumberStatusRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\CopyFromTenant0Repository.Generated.cs" />
     <Compile Include="Repositories\Generated\GLAccountFollowUpDataRepository.Generated.cs" />
     <Compile Include="Repositories\Generated\GLAccountRecocileDataRepository.Generated.cs" />
