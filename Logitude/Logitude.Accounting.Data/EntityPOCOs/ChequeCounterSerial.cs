@@ -33,6 +33,8 @@ namespace Logitude.Accounting.Data.EntityPOCOs
 	    public string BankAccountId { get; set; }
 	      
         public virtual BankAccount BankAccount { get; set; }
+        [Column("Inactive")]
+	    public bool Inactive { get; set; }
     }
 }
 	 

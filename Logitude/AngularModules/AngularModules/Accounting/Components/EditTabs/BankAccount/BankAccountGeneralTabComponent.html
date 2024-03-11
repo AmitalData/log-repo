@@ -286,9 +286,26 @@
                                                 </td>
 
                                                 <td width="240px;">
-                                                    <LogTextBox [ObjectFieldName]="'ChequeCounter'"
-                                                        [InputType]="'integer'" [DataContext]="DataContext"
-                                                        [ObjectTableName]="ObjectTableName" [HideColumns]="true">
+                                                    <LogTextBox [ObjectFieldName]="'ChequeCounter'" [DataContext]="DataContext"
+                                                        [ObjectTableName]="ObjectTableName" [Text]="ChequeCounter" [HideColumns]="true">
+                                                    </LogTextBox>
+                                                </td>
+                                                <td>
+                                                    <div></div>
+                                                </td>
+                                            </tr>
+
+                                            <!-- ChequeCounterSeriesID -->
+                                            <tr class="FormFieldRow">
+                                                <td width="150px;">
+                                                    <LogLabel [ObjectFieldName]="'ChequeCounterSeriesID'"
+                                                        [ObjectTableName]="ObjectTableName" [DataContext]="DataContext">
+                                                    </LogLabel>
+                                                </td>
+
+                                                <td width="240px;">
+                                                    <LogTextBox [ObjectFieldName]="'ChequeCounterSeriesID'" [DataContext]="DataContext"
+                                                        [ObjectTableName]="ObjectTableName" [Text]="ChequeCounterSeriesID" [HideColumns]="true">
                                                     </LogTextBox>
                                                 </td>
                                                 <td>

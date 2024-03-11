@@ -31,7 +31,9 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
     public TenantPM: TenantPM;
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
-    currentSeriesId = 1;
+    SeriesId = 1;
+    chequeCounter: number;
+
     myService: BankAccountPMService;
     constructor(public entityArgs: EntityArgs) {
         super();
@@ -53,7 +55,9 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
     SetWindowArgs(args: any) {
         this.EntityPM = args.EntityPM;
         if (!AppTool.IsNullOrEmpty(this.EntityPM.ChequeCounterSeriesID)) {
-            this.currentSeriesId = this.EntityPM.ChequeCounterSeriesID;
+            this.SeriesId = this.EntityPM.ChequeCounterSeriesID;
+            this.chequeCounter = this.EntityPM.ChequeCounter;
+
         }
         this.SetUIProperties();
         this.BuildData();
@@ -74,6 +78,14 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
                 res = true;
             }
         });
+        return res;
+    }
+
+    ValidateCurrentSerialEdit(serial) {
+        var res = true;
+        (this.chequeCounter < serial.ChequeCounterBegin || this.chequeCounter > serial.ChequeCounterEnd){
+            res = false;
+        }
         return res;
     }
 
@@ -138,6 +150,12 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
         this.ChequeCounterSerials.Collection.forEach(item => {
             Validator.TryValidateObject(item.EntityPM, this.ObjectTableName, errors);
             item.Validate(errors);
+            if (item.SeriesId == this.SeriesId) {
+                var isCurrentSerialEditValid = this.ValidateCurrentSerialEdit(item);
+                if(!isCurrentSerialEditValid){
+                    errors.push('עריכת סדרה נוכחית מספר '+this.SeriesId+' לא תקינה וגורמת למספר ההמחאה הבא להיות מחוץ לטווח');
+                }
+            }
         });
         var hasOverlaps = this.ValidateSerialsOverlap();
         if (hasOverlaps) {

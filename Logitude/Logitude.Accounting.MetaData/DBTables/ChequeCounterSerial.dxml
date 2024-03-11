@@ -37,6 +37,12 @@
       PrimaryKey="true"
       Nullable="false" />
   </Column>
+  <Column
+    Name="Inactive"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="BankAccountId"
     ReferencedTable="BankAccounts"

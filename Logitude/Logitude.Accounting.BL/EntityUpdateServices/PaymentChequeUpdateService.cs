@@ -28,7 +28,7 @@ using System.Web;
 
 namespace Logitude.Accounting.BL.EntityUpdateServices
 {
-   public partial class PaymentChequeUpdateService
+    public partial class PaymentChequeUpdateService
     {
         private const string Cancelled = "4";
         protected override void OnCreating(PaymentChequePM entityPM, EntityPM entityParentPM)
@@ -44,7 +44,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             //entityPM.InternalNumber = CodeCounter.GetNumber("PaymentCheque.InternalNumber", entityPM.Tenant).ToString();
             //entityPM.PaymentChequeStatusCode = "1";
             //entityPM.UniqueField = entityPM.Id;
-             ValidateEntity(entityPM);
+            ValidateEntity(entityPM);
             //TenantQuery tenantQuery = new TenantQuery(entityPM.Tenant);
             //TenantPM currentTenant = tenantQuery.GetSinglePM(entityPM.Tenant);
             //BankAccountQueryService bankQuery = new BankAccountQueryService(entityPM.Tenant);
@@ -85,7 +85,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     if (paymentPM == null)
                     {
 
-                        bool exist  = CheckIfPaymentChequeHasAjournal(paymentChequePM);
+                        bool exist = CheckIfPaymentChequeHasAjournal(paymentChequePM);
                         if (!exist)
                         {
                             JournalPM journal = GetNewJournal(paymentChequePM, paymentPM);
@@ -223,19 +223,74 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         {
             BankAccountQueryService bankAccountService = new BankAccountQueryService(entityPM.Tenant);
             BankAccountPM bankAccount = bankAccountService.GetSingle(entityPM.BankAccountId, false, false);
-            if (bankAccount.ChequeCounter == null)
+            var serials = bankAccount.ChequeCounterSerials;
+            if (serials.Count() == 0)
             {
-                throw new ApplicationException("The cheque counter did not defined for the choosen bank");
+                throw new ApplicationException("לא מוגדרות סדרות המחאות במערכת , חובה להגדיר ביישות הבנק סדרה כלשהי לפני הפקת המחאה חדשה.");
             }
             else
             {
+                int chequeCounterSeriesID = bankAccount.ChequeCounterSeriesID.HasValue ? bankAccount.ChequeCounterSeriesID.Value : serials.First().SeriesId;
+                var currentSerial = serials.First(s => s.SeriesId == chequeCounterSeriesID);
+
+              
+                int chequeCounter, serial, nextChequeCounter, nextSerial;
+                chequeCounter = serial = nextChequeCounter = nextSerial = 0;
+
+                if (bankAccount.ChequeCounter.HasValue)
+                {
+                    if (bankAccount.ChequeCounter.Value > currentSerial.ChequeCounterEnd)
+                    {
+                        var nextSerialItem = serials.FirstOrDefault(s => s.SeriesId > chequeCounterSeriesID);
+                        if (nextSerialItem == null)
+                        {
+                            throw new ApplicationException("מונה ההמחאות הסתיים , חובה להגדיר ביישות הבנק סדרת המחאות חדשה.");
+                        }
+                        else
+                        {
+                            chequeCounter = nextSerialItem.ChequeCounterBegin;
+                            serial = nextSerialItem.SeriesId;
+                            nextChequeCounter = chequeCounter + 1;
+                            nextSerial = serial;
+                        }
+                    }
+                    else
+                    {
+                        chequeCounter = bankAccount.ChequeCounter.Value;
+                        if (chequeCounter == currentSerial.ChequeCounterEnd)
+                        {
+                            var nextSerialItem = serials.FirstOrDefault(s => s.SeriesId > chequeCounterSeriesID);
+                            if (nextSerialItem == null)
+                            {
+                                throw new ApplicationException(" מונה ההמחאות יסתיים לאחר הפקת המחאה זו , חובה להגדיר ביישות הבנק סדרת המחאות חדשה טרם הפקת ההמחאה.");
+                            }
+                            else
+                            {
+                                chequeCounter = nextSerialItem.ChequeCounterBegin;
+                                serial = nextSerialItem.SeriesId;
+                                nextChequeCounter = chequeCounter + 1;
+                                nextSerial = serial;
+                            }
+                            
+                        }
+                    }
+                }
+                else
+                {
+                    chequeCounter = currentSerial.ChequeCounterBegin;
+                    serial = chequeCounterSeriesID;
+                    nextChequeCounter = chequeCounter + 1;
+                    nextSerial = serial;
+                }
+
                 if (string.IsNullOrEmpty(entityPM.ChequeNumber))
                 {
-                    entityPM.ChequeNumber = bankAccount.ChequeCounter.ToString();
+                    entityPM.ChequeNumber = chequeCounter.ToString();
                     entityPM.UniqueField = entityPM.ChequeNumber;
 
                     BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                    bankAccount.ChequeCounter += 1;
+                    bankAccount.ChequeCounter = nextChequeCounter;
+                    bankAccount.ChequeCounterSeriesID = nextSerial;
                     bankAccount.ChangeSetOp = ChangeSetOperation.Update;
                     bankAccountUpdateService.Update(bankAccount, true);
                 }
@@ -248,7 +303,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             return bankAccount;
         }
 
-        public  APPaymentPM GetAPPayment(PaymentChequePM paymentCheque)
+        public APPaymentPM GetAPPayment(PaymentChequePM paymentCheque)
         {
             if (paymentCheque.APPaymentId != null)
             {
@@ -278,7 +333,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                     Notes = changesXml
                 });
 
-                if(!entityPOCO.IsCancelled && entityPM.IsCancelled)
+                if (!entityPOCO.IsCancelled && entityPM.IsCancelled)
                 {
 
                     if (entityPM.IsCancelled)
@@ -291,12 +346,12 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                             EntityId = entityPM.Id,
                             ObjectTableName = "PaymentCheque",
                             Notes = entityPM.CancellationRemarks,
-                            
+
                         });
                     }
 
-                    }
                 }
+            }
             if (entityPM.ChangeSetOp == Simplog.Server.Infrastructure.ChangeSetOperation.Insert)
             {
                 EventTracer.CreateTraceEvent(new EventTracerArgs()
@@ -320,8 +375,8 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 });
             }
 
-           
-            
+
+
 
         }
         protected override void UpdateComposition(PaymentChequePM entityPM)
@@ -337,11 +392,11 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             IAccountingContext context = MainContext as AccountingContext;
             PaymentChequeQueryService service = new PaymentChequeQueryService(context);
             bool exist = service.CheckIfPaymentChequeExists(entityPM.Id, entityPM.BankAccountId, entityPM.UniqueField, entityPM.Tenant);
-            showLocals= SetShowLocalLabels(entityPM);
+            showLocals = SetShowLocalLabels(entityPM);
             if (exist)
             {
-                
-               
+
+
                 throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.PaymentChequeExist", entityPM.Tenant, showLocals));
 
 
@@ -349,20 +404,20 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
             if (entityPM.APPaymentId == null)
             {
                 ValidateGLAccountAccountType(entityPM);
-             
+
             }
-             if( entityPM.IsCancelled || entityPM.PaymentChequeStatusCode == "4")
+            if (entityPM.IsCancelled || entityPM.PaymentChequeStatusCode == "4")
             {
                 ValidateCancellingPaymentCheque(entityPM, EntityPOCO);
             }
-          
-          
+
+
         }
-        private void  ValidateCancellingPaymentCheque(PaymentChequePM paymentChequePM , PaymentCheque paymentChequePoco)
+        private void ValidateCancellingPaymentCheque(PaymentChequePM paymentChequePM, PaymentCheque paymentChequePoco)
         {
-            if((paymentChequePM.IsCancelled || paymentChequePM.PaymentChequeStatusCode == Cancelled) && !paymentChequePoco.IsCancelled)
+            if ((paymentChequePM.IsCancelled || paymentChequePM.PaymentChequeStatusCode == Cancelled) && !paymentChequePoco.IsCancelled)
             {
-                if (paymentChequePM.APPaymentId != null  && !paymentChequePM.CancelledByAPPayment)
+                if (paymentChequePM.APPaymentId != null && !paymentChequePM.CancelledByAPPayment)
                 {
                     PreventCancellingPaymentCheque(paymentChequePM);
                 }
@@ -378,13 +433,13 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         public bool SetShowLocalLabels(PaymentChequePM entityPM)
         {
             ContactPM contact = GetLoggedContact(entityPM.Tenant) ?? new ContactPM();
-             showLocals = !contact.DontShowLocal;
+            showLocals = !contact.DontShowLocal;
             return showLocals;
         }
 
         public void ValidateGLAccountAccountType(PaymentChequePM entityPM)
         {
-            GLAccountPM account=  GetGLAccountById(entityPM);
+            GLAccountPM account = GetGLAccountById(entityPM);
 
             if (account != null)
             {
