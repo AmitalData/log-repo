@@ -79,6 +79,7 @@
     <Content Include="DBScripts\202207041224_ARInvoiceOppositeJournalCreditLines.axml" />
     <None Include="DBOthers\Views\AllARPaymentChequesViews.dxml" />
     <None Include="DBOthers\Views\TotalOpenTransInBankViews.dxml" />
+    <None Include="DBScripts\202403111553_ChequeCounterSerialAddLine.sxml" />
     <None Include="DBScripts\202308211244_UpdateInterestReportSearchFields.sxml" />
     <None Include="DBScripts\202308141215_UpdateInterestReportSearchFields.sxml" />
     <None Include="DBScripts\20221213_UpdateChartOfAccountTypesOrders.sxml" />

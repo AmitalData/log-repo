@@ -1,0 +1,24 @@
+﻿<Script DBType="Main" Pre="false" Module="Accounting">
+  <Sql Version="1">
+    <![CDATA[
+INSERT INTO chequecounterserials (Tenant, SeriesId, ChequeCounterBegin,ChequeCounterEnd, BankAccountId)
+SELECT
+	ba.Tenant,
+	1,
+  ba.ChequeCounter,
+	ba.ChequeCounter + 1000,
+  ba.Id
+FROM
+  BankAccounts ba
+LEFT JOIN
+  chequecounterserials cs ON ba.Id = cs.BankAccountId
+WHERE
+    ba.ChequeCounter IS NOT NULL
+    AND cs.BankAccountId IS NULL; 
+        
+UPDATE BankAccounts
+SET ChequeCounterSeriesID = 1
+WHERE ChequeCounterSeriesID IS NULL AND ID IN (SELECT BankAccountId FROM ChequeCounterSerials);
+    ]]>       
+  </Sql>
+</Script>
