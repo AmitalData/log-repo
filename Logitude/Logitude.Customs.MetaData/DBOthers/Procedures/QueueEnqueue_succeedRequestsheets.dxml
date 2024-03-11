@@ -75,7 +75,7 @@ BEGIN
                        WHERE  queuemessages.entityid = crsh.id);
    -- and ROWNUM  = 1;
 
-END QueueEnqueue_succeedRequestsheets;
+END;
 
 	]]>
 
