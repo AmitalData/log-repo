@@ -252,7 +252,52 @@ MainInterfaceCode ="5002"
                     Param2= @"{}",
                     MainInterfaceCode="5101O_I",
 
-                }
+                },
+
+                         new SincroTestCaseDetail()
+                {
+                    Code = "2450",
+                    Name = "המכלה לא קיימת במכס",
+                    Entity="Containerization",
+                     Param1= @"{}",
+
+                },
+
+                         new SincroTestCaseDetail()
+                {
+                    Code = "2450",
+                    Name = "המכלה קיימת במכס",
+                    Entity="Containerization",
+                     Param1= @"{}",
+
+                },
+
+                         new SincroTestCaseDetail()
+                {
+                    Code = "2450",
+                    Name = "עדכון מכולה עם שגיאה",
+                    Entity="Containerization",
+                     Param1= @"{}",
+
+                },
+
+                         new SincroTestCaseDetail()
+                {
+                    Code = "2450",
+                    Name = "עדכון מכולה",
+                    Entity="Containerization",
+                     Param1= @"{}",
+
+                },
+
+                         new SincroTestCaseDetail()
+                {
+                    Code = "2450",
+                    Name = "ביטול המכלה",
+                    Entity="Containerization",
+                     Param1= @"{}",
+
+                },
 
 
 

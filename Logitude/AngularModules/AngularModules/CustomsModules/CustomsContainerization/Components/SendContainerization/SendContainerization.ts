@@ -1,7 +1,7 @@
 import { Component, OnDestroy } from "@angular/core";
 import { LogitudeWindow } from "../../../../Controls/Windows/LogitudeWindow";
 import { GenericRequestParams } from "../../../../Customs/DataContract/RequestParams/GenericRequestParams";
-import { CustomSendOptionsArgs, SendRequestVIA } from "../../../../Customs/DataContract/RequestParams/RequestParamsBase";
+import { CustomSendOptionsArgs, SendRequestVIA, TestCase } from "../../../../Customs/DataContract/RequestParams/RequestParamsBase";
 import { ContainerizationResponseData } from "../../../../Customs/DataContract/ResponseData/ContainerizationResponseData";
 import { ContainerizationPM } from "../../../../Customs/EntityPMs/ContainerizationPM";
 import { ContainerizationPMService } from "../../../../Customs/Services/StandardPMs/ContainerizationPMService";
@@ -95,6 +95,34 @@ export class SendContainerization implements OnDestroy {
     reloadEvent: any;
     ButtonText: string;
     OnCustomSendOptionsButtonClick(event: CustomSendOptionsArgs) {
+        this.SendContainerizationService._TestCase = null;
+        if (event.TestCase) {
+
+            let windowArgs = { "SincroScreen": "SincroSendContainerization" ,"ObjectTableName":"Customs.Containerization"};
+            var logWindow = new LogitudeWindow(this.CurrentSession);
+            logWindow.Width = 600;
+            logWindow.Height = 600;
+            logWindow.Title = "תרחשי המכלה"
+            logWindow.ShowCloseButton = false;
+            logWindow.WindowArgs = windowArgs;
+
+            logWindow.ComponentLoaded.subscribe(comp => {
+                logWindow.WindowClosed.subscribe(res => {
+                    if (!AppTool.IsNullOrEmpty(res) && res == "Ok") {
+                        this.SendContainerizationService._TestCase = new TestCase();
+                        this.SendContainerizationService._TestCase.Code = comp._ScenarioCode;
+                        this.SendContainerizationService._TestCase.Param1 = comp.Param1;
+                        this.SendContainerizationService._TestCase.Param2 = comp.Param2;
+                        this.SendContainerizationService.OnCustomSendOptionsButtonClick(event)
+                    }
+                });
+            });
+
+            logWindow.Show('./CustomsModules/CustomsControls/Components/TestCase/SendDeclarationTastCaseComponent');
+            ///this.StopMyBusyIndicator();///this.CurrentSession.CurrentEditComponent.StopBusyIndicator();
+
+            return;
+        }
         this.SendContainerizationService.OnCustomSendOptionsButtonClick(event);
         return;
     }
@@ -132,6 +160,7 @@ export class SendContainerizationService implements OnDestroy {
     ResponseData: ContainerizationResponseData;
     containerizationPMService: ContainerizationPMService = new ContainerizationPMService();
     IsDisabled: boolean = false;
+    _TestCase: TestCase;
 
     constructor() {
 
