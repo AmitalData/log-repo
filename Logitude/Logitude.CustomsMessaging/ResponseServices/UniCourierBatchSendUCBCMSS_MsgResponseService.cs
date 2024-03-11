@@ -260,6 +260,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             if (isLoadPort)
                             {
                                 declarationPM.Consignments.FirstOrDefault().LoadingPortCode = SiteCode;
+                                if (SiteCode.Length >= 2)
+                                {
+                                    declarationPM.Consignments.FirstOrDefault().OriginCountryCode = SiteCode.Substring(0, 2);
+                                }
                             }
                             if (!isUnLoadPort && !isLoadPort)
                             {
