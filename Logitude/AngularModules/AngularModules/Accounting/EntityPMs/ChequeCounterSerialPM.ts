@@ -52,6 +52,11 @@ export class ChequeCounterSerialPM {
     public set BankAccountId(newValue: string) { if (this.bankAccountId != newValue) { this.bankAccountId = newValue; this.MarkAsDirty("BankAccountId"); } }
        
 	 
+    private inactive: boolean;
+    public get Inactive() { return this.inactive; }
+    public set Inactive(newValue: boolean) { if (this.inactive != newValue) { this.inactive = newValue; this.MarkAsDirty("Inactive"); } }
+       
+	 
 
     public OldEntityPM: ChequeCounterSerialPM;
 	
