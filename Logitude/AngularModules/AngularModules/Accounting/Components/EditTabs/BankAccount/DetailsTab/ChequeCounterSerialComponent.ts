@@ -83,7 +83,7 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
 
     ValidateCurrentSerialEdit(serial) {
         var res = true;
-        (this.chequeCounter < serial.ChequeCounterBegin || this.chequeCounter > serial.ChequeCounterEnd){
+        if (this.chequeCounter < serial.ChequeCounterBegin || this.chequeCounter > serial.ChequeCounterEnd) {
             res = false;
         }
         return res;
@@ -152,8 +152,8 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
             item.Validate(errors);
             if (item.SeriesId == this.SeriesId) {
                 var isCurrentSerialEditValid = this.ValidateCurrentSerialEdit(item);
-                if(!isCurrentSerialEditValid){
-                    errors.push('עריכת סדרה נוכחית מספר '+this.SeriesId+' לא תקינה וגורמת למספר ההמחאה הבא להיות מחוץ לטווח');
+                if (!isCurrentSerialEditValid) {
+                    errors.push('עריכת סדרה נוכחית מספר ' + this.SeriesId + ' לא תקינה וגורמת למספר ההמחאה הבא להיות מחוץ לטווח');
                 }
             }
         });
