@@ -60,7 +60,7 @@
   <Column
     Name="LockedBy"
     Type="varchar"
-    Size="15">
+    Size="36">
     <Constraints
       Nullable="true" />
   </Column>
