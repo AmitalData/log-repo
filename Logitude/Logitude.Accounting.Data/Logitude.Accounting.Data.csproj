@@ -270,6 +270,7 @@
     <Compile Include="EntityMapping\CalculatedChartsLineTypeMap.cs" />
     <Compile Include="EntityMapping\CalculatedChartsOfAccountMap.cs" />
     <Compile Include="EntityMapping\CalculatedChartsOfAccountsLineMap.cs" />
+    <Compile Include="EntityMapping\ConfirmationNumberDefaultMap.cs" />
     <Compile Include="EntityMapping\CopyFromTenant0Map.cs" />
     <Compile Include="EntityMapping\ExternalPageAdditionalDataMap.cs" />
     <Compile Include="EntityMapping\GLAccountAgingDataMap.cs" />
@@ -315,6 +316,7 @@
     <Compile Include="EntityPOCOs\CalculatedChartsLineType.cs" />
     <Compile Include="EntityPOCOs\CalculatedChartsOfAccount.cs" />
     <Compile Include="EntityPOCOs\CalculatedChartsOfAccountsLine.cs" />
+    <Compile Include="EntityPOCOs\ConfirmationNumberDefault.cs" />
     <Compile Include="EntityPOCOs\CopyFromTenant0.cs" />
     <Compile Include="EntityPOCOs\ExternalPageAdditionalData.cs" />
     <Compile Include="EntityPOCOs\GLAccountAgingData.cs" />

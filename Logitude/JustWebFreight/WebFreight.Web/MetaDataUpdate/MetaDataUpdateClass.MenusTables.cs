@@ -120,6 +120,8 @@ namespace WebFreight.Web.MetaDataUpdate
             Feature FilingInboxFeature = tenantFeatures.Where(d => d.Code == "FilingInbox" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature crossDocksFeature = tenantFeatures.Where(d => d.Code == "CROSSDOCKS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature AccountingPaymentMethodFeature = tenantFeatures.Where(d => d.Code == "ACCOUNTINGPAYMENTMETHODS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+            Feature ConfirmationNumberDefaultFeature = tenantFeatures.Where(d => d.Code == "CONFIRMATIONNUMBERDEFAULTS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
+
             Feature APPaymentMethodFeature = tenantFeatures.Where(d => d.Code == "APPAYMENTMETHODS" && d.FeatureTypeCode == "MENU").FirstOrDefault();
             Feature BankAccountLiteMenuFeature = tenantFeatures.Where(d => d.Code == "BANKACCOUNTLITE" && d.FeatureTypeCode == "MENU").FirstOrDefault();            
             Feature btexFeature = tenantFeatures.Where(d => d.Code == "BatchTaskExecutionMNU" && d.FeatureTypeCode == "MENU").FirstOrDefault();            
@@ -233,6 +235,8 @@ namespace WebFreight.Web.MetaDataUpdate
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MTBL", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 14, CategoryTypeCode = "Bil", TextCode = "General.MC.Billings.BankAccountLites", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "BankAccountLite").FirstOrDefault().Id, FeatureId = BankAccountLiteMenuFeature.Id, FeatureUniqeCode = BankAccountLiteMenuFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
             //AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "BLCG", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 8, CategoryTypeCode = "Bil", TextCode = "General.MC.Billings.ChargesGroups", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ChargesGroup").FirstOrDefault().Id, FeatureId = chargesGroupFeature.Id }, MenusTablesRepository, tenantMenusTables);
             AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "BLRP", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 9, CategoryTypeCode = "Bil", TextCode = "General.MC.Billings.AccountingPaymentMethods", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "AccountingPaymentMethod").FirstOrDefault().Id, FeatureId = AccountingPaymentMethodFeature.Id, FeatureUniqeCode = AccountingPaymentMethodFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+            AddMenusTables.AddMenusTable(new MenusTableDetails() { Code = "MCND", Tenant = 0, MenuTypeCode = "MTC", IndexOfOrder = 10, CategoryTypeCode = "Bil", TextCode = "General.MC.Billings.ConfirmationNumberDefaults", Icon = "Money_64.png", ObjectTableId = tenantObjectTables.Where(o => o.Name == "ConfirmationNumberDefault").FirstOrDefault().Id, FeatureId = ConfirmationNumberDefaultFeature.Id, FeatureUniqeCode = ConfirmationNumberDefaultFeature.FeatureUniqeCode }, MenusTablesRepository, tenantMenusTables);
+
             #endregion
 
             #region Locations
