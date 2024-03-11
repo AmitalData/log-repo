@@ -80,6 +80,7 @@
     <None Include="DBOthers\Views\AllARPaymentChequesViews.dxml" />
     <None Include="DBOthers\Views\TotalOpenTransInBankViews.dxml" />
     <None Include="DBScripts\202403031201_ChartOfAccountsEnglishName.sxml" />
+    <None Include="DBScripts\202403111553_ChequeCounterSerialAddLine.sxml" />
     <None Include="DBScripts\202308211244_UpdateInterestReportSearchFields.sxml" />
     <None Include="DBScripts\202308141215_UpdateInterestReportSearchFields.sxml" />
     <None Include="DBScripts\20221213_UpdateChartOfAccountTypesOrders.sxml" />
