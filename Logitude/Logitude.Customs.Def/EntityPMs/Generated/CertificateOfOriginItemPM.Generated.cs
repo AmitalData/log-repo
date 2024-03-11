@@ -273,12 +273,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int? weight ;
+	  private decimal? weight ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? Weight  
+       public decimal? Weight  
 	   {
 	    
 	     get
@@ -289,7 +289,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(weight != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Weight",OldValue=weight,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Weight",OldValue=weight,NewValue=value,PropertyType="decimal?"};
 		    NotifyPropertyChanged(values);
 		   weight=value;
 		   }

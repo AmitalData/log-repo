@@ -51,7 +51,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         [Column("ItemDescription")]
 	    public string ItemDescription { get; set; }
         [Column("Weight")]
-	    public int? Weight { get; set; }
+	    public decimal? Weight { get; set; }
         [ForeignKey("MeasurmentUnit")]
         [Column("MeasureType")]
 	    public string MeasureType { get; set; }

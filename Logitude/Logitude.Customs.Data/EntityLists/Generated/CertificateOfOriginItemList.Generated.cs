@@ -37,7 +37,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string ItemDescription  { get; set; }
        [DataMember]
-       public int? Weight  { get; set; }
+       public decimal? Weight  { get; set; }
        [DataMember]
        public string MeasureType  { get; set; }
        [DataMember]
