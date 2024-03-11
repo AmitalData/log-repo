@@ -129,6 +129,7 @@ namespace Logitude.Accounting.Data
             modelBuilder.Configurations.Add(new ChartOfAccountsTypeMap());
 	
             modelBuilder.Configurations.Add(new ChequeCounterSerialMap());
+            modelBuilder.Configurations.Add(new ConfirmationNumberDefaultMap());
 	
             modelBuilder.Configurations.Add(new CopyFromTenant0Map());
 	
@@ -915,6 +916,12 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
+	 public IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults 
+	 {
+	      get; set;
+	 
+	 }
+	
 	 public IDbSet<CopyFromTenant0> CopyFromTenant0 
 	 {
 	      get; set;
@@ -1326,4 +1333,4 @@ namespace Logitude.Accounting.Data
  }
 
 
-}
+}
