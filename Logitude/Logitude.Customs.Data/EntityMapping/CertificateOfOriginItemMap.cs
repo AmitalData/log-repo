@@ -56,7 +56,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ItemDescription).HasColumnName("ItemDescription").IsUnicode(true);
 
-            this.Property(t => t.Weight).HasColumnName("Weight");
+            this.Property(t => t.Weight).HasColumnName("Weight").HasPrecision(18, 2);
 
             this.Property(t => t.MeasureType).HasColumnName("MeasureType").HasMaxLength(3).IsUnicode(false);
 
