@@ -83,7 +83,9 @@
   </Column>
   <Column
     Name="Weight"
-    Type="int">
+    Type="decimal"
+    Precision="18"
+    Scale="2">
     <Constraints
       Nullable="true" />
   </Column>
