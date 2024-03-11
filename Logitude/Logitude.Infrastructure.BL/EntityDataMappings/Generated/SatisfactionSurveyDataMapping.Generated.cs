@@ -230,6 +230,10 @@ namespace Logitude.Infrastructure.BL.EntityDataMappings
             {
                 entityPM.Comments = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Comments));
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.LockedBy)) //T4 find type == nText 
+            {
+                entityPM.LockedBy = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.LockedBy));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 

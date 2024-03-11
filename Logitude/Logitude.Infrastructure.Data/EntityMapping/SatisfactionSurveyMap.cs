@@ -39,7 +39,7 @@ namespace Logitude.Infrastructure.Data.EntityMapping
 
             this.Property(t => t.IsSync).HasColumnName("IsSync");
 
-            this.Property(t => t.LockedBy).HasColumnName("LockedBy").HasMaxLength(36).IsUnicode(false);
+            this.Property(t => t.LockedBy).HasColumnName("LockedBy").HasMaxLength(36).IsUnicode(true);
 
             this.Property(t => t.SyncDate).HasColumnName("SyncDate");
         }

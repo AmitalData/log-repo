@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class SatisfactionSurveyUpdateClass
    {  		
-		public const string HashString = "a999b3f1d8050c26b92be185aef30736";
+		public const string HashString = "ea769873133d8481201184fa4339dcd9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -129,7 +129,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Satisfaction Survey",
-			      				    Code =  "263b",
+			      				    Code =  "d6d8",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "SatisfactionSurvey",
@@ -715,8 +715,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "LockedBy",
 					  						ObjectTableName =  "SatisfactionSurvey",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "User",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  36,
 					  						IsRequired =  false,
@@ -753,9 +752,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "LockedBy",
 					  						DefaultText =  "LockedBy",
-					  						IsForeignKey =  true,
-					  						ForeignEntity =  "User",
-					  						NavigationPropertyName =  "LockedByUser",
+					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
