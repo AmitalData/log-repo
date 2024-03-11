@@ -2133,7 +2133,7 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 				Upsert(suppressNewTrans, MoreParams);
 				MyGenericResponseObj.Stage = "Done";
 
-				_AmitalCustomsFile.Id = originDeclarationId;
+                MyGenericResponseObj.ApplicationId = originDeclarationId;
 
 
 			}
