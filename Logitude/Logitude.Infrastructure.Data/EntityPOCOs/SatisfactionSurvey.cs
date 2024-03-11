@@ -33,6 +33,15 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
 	    public string Comments { get; set; }
         [Column("Tenant")]
 	    public int Tenant { get; set; }
+        [Column("IsSync")]
+	    public bool IsSync { get; set; }
+        [ForeignKey("LockedByUser")]
+        [Column("LockedBy")]
+	    public string LockedBy { get; set; }
+	      
+        public virtual User LockedByUser { get; set; }
+        [Column("SyncDate")]
+	    public DateTime SyncDate { get; set; }
     }
 }
 	 

@@ -123,11 +123,13 @@
             </div>
         </div>
         <div class="button-container">
-            <button type="submit" [disabled]="surveyForm.invalid || formSubmitting"
-                [ngClass]="{'disabled': surveyForm.invalid || formSubmitting}">
+            <button type="submit"
+                [disabled]="!surveyForm.valid || formSubmitting || !surveyForm.value.Guid || !surveyForm.value.Hash"
+                [ngClass]="{'disabled': !surveyForm.valid || formSubmitting || !surveyForm.value.Guid || !surveyForm.value.Hash}">
                 <span *ngIf="!formSubmitting">שלח</span>
                 <span *ngIf="formSubmitting"><i class="fa fa-spinner fa-spin"></i></span>
             </button>
+
         </div>
     </form>
     <div class="thank-you-message" *ngIf="formSubmitted">

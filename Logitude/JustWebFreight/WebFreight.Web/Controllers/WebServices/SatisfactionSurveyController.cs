@@ -16,6 +16,7 @@ using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
 using Logitude.Infrastructure.BL.EntityQueryServices;
+using System.Text;
 
 namespace WebFreight.Web.Controllers.WebServices
 {
@@ -33,7 +34,9 @@ namespace WebFreight.Web.Controllers.WebServices
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string logKey = PerformanceLogger.LogCurrentTime();
-                        if (("secretkey" + entityPM.Id).GetHashCode().ToString("x") != "hash")
+                        var secretKey = "secretkey";
+                        var concatenatedString = secretKey + entityPM.Id;
+                        if (!CreateMD5(concatenatedString).Equals(entityPM.Hash, StringComparison.InvariantCultureIgnoreCase))
                         {
                             logKey = PerformanceLogger.LogCurrentTime();
                             throw new Exception("Hash verification failed.");
@@ -60,5 +63,20 @@ namespace WebFreight.Web.Controllers.WebServices
             }
         }
 
+
+        public static string CreateMD5(string input)
+        {
+            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            {
+                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
+                byte[] hashBytes = md5.ComputeHash(inputBytes);
+                StringBuilder sb = new System.Text.StringBuilder();
+                for (int i = 0; i < hashBytes.Length; i++)
+                {
+                    sb.Append(hashBytes[i].ToString("X2"));
+                }
+                return sb.ToString();
+            }
+        }
     }
 }

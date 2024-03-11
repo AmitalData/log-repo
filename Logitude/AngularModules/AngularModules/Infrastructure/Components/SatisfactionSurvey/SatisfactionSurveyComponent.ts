@@ -83,5 +83,6 @@ export class SatisfactionSurveyComponent implements OnInit {
             }
             this.formSubmitting = false;
         });
+
     }
 }
