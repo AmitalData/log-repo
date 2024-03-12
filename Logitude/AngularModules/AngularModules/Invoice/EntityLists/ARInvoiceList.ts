@@ -163,9 +163,10 @@ export class ARInvoiceList {
 		DocumentTemplateId: string;
 		ConcurrencyGUID: string;
 		TotalAmountNotForTaxReport: number;
-		
+	
 		IsSigned: string;
 		IsSignedName: string;
 		ConfirmationNumber: string;
+		ConfirmationNumberStatus: string;
 	
-}
+}

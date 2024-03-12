@@ -17587,7 +17587,7 @@
     FullLocalDefaultText="&quot;מספר הקצאה&quot;"
     ListFieldLable="&quot;ConfirmationNumberListLable&quot;"
     ListLableDefaultText="&quot;Confirmation Number&quot;"
-    ListLocalDefaultText="&quot;מספר הקצאה&quot;"
+    ListLocalDefaultText="&quot;מספר הקצאה &quot;"
     IsNullable="false"
     IsForeignKey="false"
     DontBuildRelationOnDB="false"

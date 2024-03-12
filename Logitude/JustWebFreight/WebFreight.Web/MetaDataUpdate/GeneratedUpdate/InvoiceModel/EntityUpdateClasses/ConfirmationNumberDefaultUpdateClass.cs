@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ConfirmationNumberDefaultUpdateClass
    {  		
-		public const string HashString = "ea58f7fc9a23dcf2ef7e176aea69a9c5";
+		public const string HashString = "874698dcc7a19fc4009e14deddbb0744";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -130,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    ObjectTableTypeCode =  "MD",
 			      				    MaxNumberOfCustomFields =  0,
 			      				    DefaultText =  "Confirmation Number Default",
-			      				    Code =  "65c2",
+			      				    Code =  "0001",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Invoice",
@@ -468,7 +468,46 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableQueries(Dictionary<string, Query> tenantQueries,Dictionary<string, QueryColumn> tenantQueryColumns, Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes, QueryGroupRepository queryGroupRepository, QueryRepository queriesRepository, QueryColumnRepository queryColumnsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository, Dictionary<string, Feature> TenantFeatures,AdvancedQueryFilterRepository advancedQueryFiltersRepository,Dictionary<string, AdvancedQueryFilter> tenantAdvancedFilters,Dictionary<string, QueryGroup> tenantQueryGroups )
-	    {    
+	    {  
+	        //FeatureRepository featureRepository = new FeatureRepository(0); 
+            //List<Feature> tenantFeatures = featureRepository.GetFeaturesByTenant(0).ToList();
+	        QueryGroup ConfirmationNumberDefaultQueryGroup = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "0001", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+						QueryGroup ConfirmationNumberDefaultQueryGroup1 = AddQueryGroups.AddQueryGroup(new QueryGroupDetails() { Code = "1eeb", Name = " Query Group" }, queryGroupRepository,tenantQueryGroups);
+				        queryGroupRepository.SubmitChanges();
+	        ObjectTable ConfirmationNumberDefaultObjectTable = objectTables.ContainsKey("ConfirmationNumberDefault") ? objectTables["ConfirmationNumberDefault"] : null;
+            if (ConfirmationNumberDefaultObjectTable == null)
+            {
+                IWebFreightContext objectContext = WebFreightContext.GetContext(0);  
+
+                ConfirmationNumberDefaultObjectTable = objectContext.ObjectTables.Where(d => d.Name == "ConfirmationNumberDefault" && d.Tenant == 0).FirstOrDefault();
+            }
+
+	         
+			List<Feature> addedFeatures = new List<Feature>();
+			List<TextCode> addedTextCodes = new List<TextCode>();
+			List<Query> addedQueries = new List<Query>();
+			List<QueryColumn> addedQueryColumns = new List<QueryColumn>();
+			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
+   
+
+			   TextCode ConfirmationNumberDefaultTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConfirmationNumberDefault.Q.AllConfirmationNumberDefaults", DefaultText = @"All Confirmation Number Defaults",LocalDefaultText = null, ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ConfirmationNumberDefaultFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConfirmationNumberDefault.Q.AllConfirmationNumberDefaults", ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, Tenant = 0, NameTextCodeCode = "ConfirmationNumberDefaultFeatures.AllConfirmationNumberDefaults", NameTextCodeDefaultText = "All Confirmation Number Defaults", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ConfirmationNumberDefaultObjectTable, addedFeatures, addedTextCodes);
+
+	        //TextCodeRepository.SubmitChanges();
+	        //FeaturesRepository.SubmitChanges();    
+	      
+
+			  Query AllConfirmationNumberDefaultsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConfirmationNumberDefaultTextCode_0.Id, NameTextCodeCode = ConfirmationNumberDefaultTextCode_0.Code, ObjectTableName = "ConfirmationNumberDefault", Code = "All Confirmation Number Defaults",  QueryGroupCode = "0001", IndexOrder = 0, Tenant = 0, ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, QuerySection = "ConfirmationNumberDefault", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ConfirmationNumberDefaultFeature_0.Id,FeatureUniqeCode= ConfirmationNumberDefaultFeature_0.FeatureUniqeCode, DefaultSortName = "FromDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+	
+			 QueryColumn AllConfirmationNumberDefaultsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationNumberDefaultsQuery.Id,QueryCode = AllConfirmationNumberDefaultsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ConfirmationNumberDefault.FromDate" , ColumnWidth = 150 }, addedQueryColumns);
+
+			 QueryColumn AllConfirmationNumberDefaultsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationNumberDefaultsQuery.Id,QueryCode = AllConfirmationNumberDefaultsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConfirmationNumberDefault.AmountForConfirmationNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
+			SqlBulkInsert.BulkInsert("Features", addedFeatures);
+			SqlBulkInsert.BulkInsert("Queries", addedQueries);
+			SqlBulkInsert.BulkInsert("QueryColumns", addedQueryColumns);
+			SqlBulkInsert.BulkInsert("AdvancedQueryFilters", addedQueryFilters);	 
+  
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
@@ -489,7 +528,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 	    }
 
 	    public void AddTableTabs(Dictionary<string, ObjectTableTab> TenantObjectTableTabs, Dictionary<string, TextCode> textCodes,ObjectTableTabRepository objectTableTabsRepository,TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures ,IWebFreightContext ObjectContext)
-	    {      
+	    {                
+			   ObjectTable GeneralObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "General" && d.Tenant == 0).FirstOrDefault();   
+			   ObjectTable ConfirmationNumberDefaultObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ConfirmationNumberDefault" && d.Tenant == 0).FirstOrDefault();  
+                 
+			   TextCode ConfirmationNumberDefaultGeneralTextCode_TH0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConfirmationNumberDefault.TH.General", DefaultText = "General",LocalDefaultText = null, ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, Tenant = 0, TextCodeTypeCode = "TH", }, TextCodeRepository, textCodes);
+			   Feature ConfirmationNumberDefaultGeneralFeature_TH0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConfirmationNumberDefault.Tab.General", ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, Tenant = 0, NameTextCodeCode = "ConfirmationNumberDefaultFeatures.CNDG", NameTextCodeDefaultText = "General", FeatureTypeCode = "AREA", Packagable = true }, FeaturesRepository, TextCodeRepository, TenantFeatures, textCodes,ConfirmationNumberDefaultObjectTable);
+			 TextCodeRepository.SubmitChanges();
+			 FeaturesRepository.SubmitChanges();
+			 //List<Feature> tenantFeatures = FeaturesRepository.GetFeaturesByTenant(0).ToList(); 
+			 //List<TextCode> tenantTextCodes = TextCodeRepository.GetTextCodesByTenant(0).ToList();
+			    
+            AddObjectTableTabs.AddObjectTableTab(new ObjectTableTabDetails() { Code = "CNDG",HtmlComponentName = "",HtmlComponentUrl = "", FeatureId = ConfirmationNumberDefaultGeneralFeature_TH0.Id,FeatureUniqeCode = ConfirmationNumberDefaultGeneralFeature_TH0.FeatureUniqeCode, ControlPath = "Simplog.Infrastructure.GeneralControls.GeneralTabControl", ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, TabNameTextCodeId = ConfirmationNumberDefaultGeneralTextCode_TH0.Id, TabNameTextCodeCode = ConfirmationNumberDefaultGeneralTextCode_TH0.Code, Tenant = 0, IndexOrder = 0 }, objectTableTabsRepository, TenantObjectTableTabs);
+   
 	    } 
 	
 	    public void AddTableFeatures(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)

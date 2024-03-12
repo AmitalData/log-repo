@@ -60,7 +60,10 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             return context.ConfirmationNumberStatuses.ToList();
         }
-
+        public ConfirmationNumberStatus GetByCode(string code)
+        {
+            return context.ConfirmationNumberStatuses.Where(a => a.Code == code).FirstOrDefault();
+        }
         public IInvoiceContext context
         {
             get { return invoiceContext; }
