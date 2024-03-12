@@ -817,12 +817,13 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationQueryService = new DeclarationQueryService(dbContext);
             var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
-            _declarationPM.AvailabilityDate = declarationPM.AvailabilityDate ?? DateTime.Now;
+            _declarationPM.AvailabilityDate = _declarationPM.AvailabilityDate ?? DateTime.Now;
             _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
             myDeclarationUpdateService.Update(_declarationPM, true);
 
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_declarationPM.Id, true, false);
 
+            
 
             if (declarationPaymentPM != null)
             {
