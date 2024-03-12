@@ -121,6 +121,7 @@ import { AutonomyRegionTypeListService } from '../../Customs/Services/StandardLi
  import { CancellationRequestStatusListService } from '../../Customs/Services/StandardLists/CancellationRequestStatusListService';
 import { CancellationReasonRequestTypeListService } from '../../Customs/Services/StandardLists/CancellationReasonRequestTypeListService';
 import { ReferantTeamListService } from '../../Customs/Services/StandardLists/ReferantTeamListService';
+import { ConfirmationNumberDefaultListService } from 'Invoice/Services/StandardLists/ConfirmationNumberDefaultListService';
 
 
 export class CachedDataManagerServices {
@@ -159,6 +160,8 @@ export class CachedDataManagerServices {
             case "ValidByTypeListService": { myResult = new ValidByTypeListService(); break; }
             case "AWBSpecialHandlingCodeListService": { myResult = new AWBSpecialHandlingCodeListService(); break; }            
             case "AccountingPaymentMethodListService": { myResult = new AccountingPaymentMethodListService(); break; }
+            case "ConfirmationNumberDefaultListService": { myResult = new ConfirmationNumberDefaultListService(); break; }
+
             case "CreditCardTypeListService": { myResult = new CreditCardTypeListService(); break; }
             case "EmployeeGroupListService": { myResult = new EmployeeGroupListService(); break; }
             case "OpportunityClosingReasonListService": { myResult = new OpportunityClosingReasonListService(); break; }

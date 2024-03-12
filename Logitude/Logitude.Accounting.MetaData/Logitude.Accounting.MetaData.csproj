@@ -183,7 +183,6 @@
     <None Include="DBTables\ChartOfAccount.dxml" />
     <None Include="DBTables\ChartOfAccountsType.dxml" />
     <None Include="DBTables\ChequeCounterSerial.dxml" />
-    <None Include="DBTables\ConfirmationNumberDefault.dxml" />
     <None Include="DBTables\CopyFromTenant0.dxml" />
     <None Include="DBTables\ExternalPageAdditionalData.dxml" />
     <None Include="DBTables\ExternalReconciliation.dxml" />
@@ -258,8 +257,6 @@
     <None Include="EntityFiles\CalculatedChartsOfAccountsLine.lxml" />
     <None Include="EntityFiles\CalculatedChartsLineType.lxml" />
     <None Include="EntityFiles\ChequeCounterSerial.lxml" />
-    <None Include="EntityFiles\ConfirmationNumberDefault.lxml" />
-    <None Include="EntityFiles\ConfirmationNumberStatus.lxml" />
     <None Include="EntityFiles\CopyFromTenant0.lxml" />
     <None Include="EntityFiles\GLAccountAgingData.lxml" />
     <None Include="EntityFiles\GLAccountCardsData.lxml" />

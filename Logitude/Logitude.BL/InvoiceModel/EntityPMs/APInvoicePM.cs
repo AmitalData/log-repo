@@ -360,5 +360,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public bool IsEquipment { get; set; }
         public string ConnectedPaymentsNumbers { get; set; }
         public string TotalEquation { get; set; }
-     }
+
+        public string ConfirmationNumberStatus { get; set; }
+    }
 }

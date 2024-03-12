@@ -2132,6 +2132,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     TransferError_Original = entityPOCO.TransferError,
                     IsSigned=entityPOCO.IsSigned,
                     ConfirmationNumber=entityPOCO.ConfirmationNumber,
+                   
                 };
 
                 entityPM.ConcurrencyGUID = entityPOCO.ConcurrencyGUID;

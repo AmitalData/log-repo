@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "8962fa142899d766e256a7dc751d7467";
+		public const string HashString = "3985594912d75e55220c786412cf7fce";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14545,9 +14545,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					 
 					 						FieldName =  "ConfirmationNumberStatus",
 					  						ObjectTableName =  "ARInvoice",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "ConfirmationNumberStatus",
 					  						MinLength =  0,
-					  						MaxLength =  15,
+					  						MaxLength =  2,
 					  						IsRequired =  false,
 					  						CopyToDW =  false,
 					  						DisplayOnLookUp =  false,
@@ -14555,7 +14556,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						CanFilter =  false,
 					  						DisplayOnly =  false,
 					  						SystemRequired =  false,
-					  						SystemMaxLength =  15,
+					  						SystemMaxLength =  2,
 					  						DisplayInList =  true,
 					  						IsCustomFilter =  false,
 					  						IsListFilter =  false,
@@ -14564,6 +14565,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ConfirmationNumberStatus",
 					  						ListPropertyPath =  "ConfirmationNumberStatus",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -14588,7 +14590,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ListLocalDefaultText =  "סטטוס הקצאת חשבונית",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ConfirmationNumberStatus",
-					  						NavigationPropertyName =  "ConfirmationNumberStatus",
+					  						NavigationPropertyName =  "ConfirmationNumberStatuses",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,

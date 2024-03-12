@@ -48,8 +48,6 @@ namespace Logitude.Accounting.Data
 		 IDbSet<ChartOfAccount> ChartOfAccounts { get; }
 		 IDbSet<ChartOfAccountsType> ChartOfAccountsTypes { get; }
 		 IDbSet<ChequeCounterSerial> ChequeCounterSerials { get; }
-		 IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults { get; }
-		 IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; }
 		 IDbSet<CopyFromTenant0> CopyFromTenant0 { get; }
 		 IDbSet<ExternalPageAdditionalData> ExternalPageAdditionalDatas { get; }
 		 IDbSet<ExternalReconciliation> ExternalReconciliations { get; }
