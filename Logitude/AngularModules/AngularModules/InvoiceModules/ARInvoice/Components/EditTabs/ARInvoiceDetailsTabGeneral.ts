@@ -317,6 +317,8 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         this.UIProperties.SetEnabled("InvoiceCurrencyId", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("VatNumber", this.ObjectTableName, isEditingEnabled);
         this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("ConfirmationNumberStatus", this.ObjectTableName, false);
+
         this.UIProperties.SetEnabled("InvoiceDate", this.ObjectTableName, this.IsDatesFieldEnabledWhileCrediting || isEditingEnabled);
         this.UIProperties.SetEnabled("VatTypeId", this.ObjectTableName, isEditingEnabled);
         this.PartnerTypeComboBoxIsDisabled = !isEditingEnabled;
@@ -330,6 +332,8 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.UIProperties.SetEnabled("MasterNumber", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("CustomerRef", this.ObjectTableName, isEditingEnabled);
             this.EntityPM.UIProperties.SetEnabled("SATPaymentMethodCode", this.ObjectTableName, isEditingEnabled);
+            this.EntityPM.UIProperties.SetEnabled("ConfirmationNumberStatus", this.ObjectTableName, false);
+
         }
 
         this.IsEditingEnabled = isEditingEnabled;

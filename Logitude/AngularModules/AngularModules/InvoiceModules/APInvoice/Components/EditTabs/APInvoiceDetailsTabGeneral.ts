@@ -245,6 +245,8 @@ export class APInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
         }
 
         this.UIProperties.SetEnabled("ConfirmationNumber", this.ObjectTableName, true);
+        this.UIProperties.SetEnabled("ConfirmationNumberStatus", this.ObjectTableName, false);
+
         this.SetUIProperties_DueDate();
         this.SetUIProperties_VATNumber();
         this.SetUIProperties_ExchangeRate();

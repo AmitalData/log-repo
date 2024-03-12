@@ -439,26 +439,26 @@
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
   <Query
-    Code="&quot;All Confirmation Number Defaults&quot;"
-    TextCode="&quot;All Confirmation Number Defaults&quot;"
+    Code="&quot;All Confirmation Defaults&quot;"
+    TextCode="&quot;Confirmation Number Defaults&quot;"
     QueryGroupCode="&quot;0001&quot;"
     IndexOrder="0"
     ObjectTableName="&quot;ConfirmationNumberDefault&quot;"
     QuerySection="&quot;ConfirmationNumberDefault&quot;"
     SystemLevel="true"
-    IsAddNewEntity="false"
-    IsPackagable="true"
+    IsAddNewEntity="true"
+    IsPackagable="false"
     DefaultSortName="&quot;FromDate&quot;"
     DefaultSortDirection="&quot;Desending&quot;"
     IsSpellChecked="false">
     <QueryColumns>
       <QueryColumn
-        QueryCode="&quot;All Confirmation Number Defaults&quot;"
+        QueryCode="&quot;All Confirmation Defaults&quot;"
         IndexOrder="0"
         ObjectFieldName="&quot;FromDate&quot;"
         ColumnWidth="150" />
       <QueryColumn
-        QueryCode="&quot;All Confirmation Number Defaults&quot;"
+        QueryCode="&quot;All Confirmation Defaults&quot;"
         IndexOrder="1"
         ObjectFieldName="&quot;AmountForConfirmationNumber&quot;"
         ColumnWidth="130" />
