@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ConfirmationNumberDefaultUpdateClass
    {  		
-		public const string HashString = "874698dcc7a19fc4009e14deddbb0744";
+		public const string HashString = "176a873526f5e7206a1f890cf31fbb6e";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -490,18 +490,18 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			List<AdvancedQueryFilter> addedQueryFilters = new List<AdvancedQueryFilter>();
    
 
-			   TextCode ConfirmationNumberDefaultTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConfirmationNumberDefault.Q.AllConfirmationNumberDefaults", DefaultText = @"All Confirmation Number Defaults",LocalDefaultText = null, ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
-			   Feature ConfirmationNumberDefaultFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConfirmationNumberDefault.Q.AllConfirmationNumberDefaults", ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, Tenant = 0, NameTextCodeCode = "ConfirmationNumberDefaultFeatures.AllConfirmationNumberDefaults", NameTextCodeDefaultText = "All Confirmation Number Defaults", FeatureTypeCode = "QUER", Packagable = true }, TenantFeatures, textCodes,ConfirmationNumberDefaultObjectTable, addedFeatures, addedTextCodes);
+			   TextCode ConfirmationNumberDefaultTextCode_0 = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ConfirmationNumberDefault.Q.AllConfirmationDefaults", DefaultText = @"Confirmation Number Defaults",LocalDefaultText = null, ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, Tenant = 0, TextCodeTypeCode = "Q", }, textCodes, addedTextCodes);
+			   Feature ConfirmationNumberDefaultFeature_0 = AddRolesAndFeaturesClass.AddFeature(new FeatureDetails() { Code = "ConfirmationNumberDefault.Q.AllConfirmationDefaults", ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, Tenant = 0, NameTextCodeCode = "ConfirmationNumberDefaultFeatures.AllConfirmationDefaults", NameTextCodeDefaultText = "All Confirmation Defaults", FeatureTypeCode = "QUER", Packagable = false }, TenantFeatures, textCodes,ConfirmationNumberDefaultObjectTable, addedFeatures, addedTextCodes);
 
 	        //TextCodeRepository.SubmitChanges();
 	        //FeaturesRepository.SubmitChanges();    
 	      
 
-			  Query AllConfirmationNumberDefaultsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConfirmationNumberDefaultTextCode_0.Id, NameTextCodeCode = ConfirmationNumberDefaultTextCode_0.Code, ObjectTableName = "ConfirmationNumberDefault", Code = "All Confirmation Number Defaults",  QueryGroupCode = "0001", IndexOrder = 0, Tenant = 0, ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, QuerySection = "ConfirmationNumberDefault", SystemLevel = true, IsAddNewEntityEnabled = false, FeatureId = ConfirmationNumberDefaultFeature_0.Id,FeatureUniqeCode= ConfirmationNumberDefaultFeature_0.FeatureUniqeCode, DefaultSortName = "FromDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
+			  Query AllConfirmationDefaultsQuery = AddQueries.AddQuery(new QueryDetails() { NameTextCodeId = ConfirmationNumberDefaultTextCode_0.Id, NameTextCodeCode = ConfirmationNumberDefaultTextCode_0.Code, ObjectTableName = "ConfirmationNumberDefault", Code = "All Confirmation Defaults",  QueryGroupCode = "0001", IndexOrder = 0, Tenant = 0, ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, QuerySection = "ConfirmationNumberDefault", SystemLevel = true, IsAddNewEntityEnabled = true, FeatureId = ConfirmationNumberDefaultFeature_0.Id,FeatureUniqeCode= ConfirmationNumberDefaultFeature_0.FeatureUniqeCode, DefaultSortName = "FromDate", DefaultSortDirection = "Desending", Perspective = null }, addedQueries);
 	
-			 QueryColumn AllConfirmationNumberDefaultsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationNumberDefaultsQuery.Id,QueryCode = AllConfirmationNumberDefaultsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ConfirmationNumberDefault.FromDate" , ColumnWidth = 150 }, addedQueryColumns);
+			 QueryColumn AllConfirmationDefaultsQueryColumn_0 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 0, ObjectFieldCode = "ConfirmationNumberDefault.FromDate" , ColumnWidth = 150 }, addedQueryColumns);
 
-			 QueryColumn AllConfirmationNumberDefaultsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationNumberDefaultsQuery.Id,QueryCode = AllConfirmationNumberDefaultsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConfirmationNumberDefault.AmountForConfirmationNumber" , ColumnWidth = 130 }, addedQueryColumns);
+			 QueryColumn AllConfirmationDefaultsQueryColumn_1 = AddQueries.AddQueryColumn(new QueryColumnDetails { Tenant = 0, QueryId = AllConfirmationDefaultsQuery.Id,QueryCode = AllConfirmationDefaultsQuery.UniqueCode, IndexOrder = 1, ObjectFieldCode = "ConfirmationNumberDefault.AmountForConfirmationNumber" , ColumnWidth = 130 }, addedQueryColumns);
 			SqlBulkInsert.BulkInsert("TextCodes", addedTextCodes);
 			SqlBulkInsert.BulkInsert("Features", addedFeatures);
 			SqlBulkInsert.BulkInsert("Queries", addedQueries);

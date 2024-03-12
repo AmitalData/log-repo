@@ -389,7 +389,7 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
                 string[] validStatuses = { "C", "H", "K", "P", "R", "T" };
 
                 var _FullAccountingSetting = FullAccountingSettingQueryService.Get(entityPM.Tenant);
-                if (validStatuses.Contains(entityPM.LineTypeCode) && entityPM.TotalInvoiceAmount > _FullAccountingSetting.AmountForConfirmationNumber && string.IsNullOrEmpty(entityPM.ConfirmationNumber))
+                if (validStatuses.Contains(entityPM.LineTypeCode) &&  string.IsNullOrEmpty(entityPM.ConfirmationNumber))
                 {
                     entityPM.StatusCode = "11";
                 }

@@ -524,10 +524,10 @@ export class FullAccountingSettingsComponent extends BaseComponent implements On
         }
     }
 
-    get AmountForConfirmationNumber() { return this.EntityPM.AmountForConfirmationNumber; }
-    set AmountForConfirmationNumber(value: number) {
-        if (this.EntityPM.AmountForConfirmationNumber != value) {
-            this.EntityPM.AmountForConfirmationNumber = value;
+    get TenantForConfirmationNumberApi() { return this.EntityPM.TenantForConfirmationNumberApi; }
+    set TenantForConfirmationNumberApi(value: string) {
+        if (this.EntityPM.TenantForConfirmationNumberApi != value) {
+            this.EntityPM.TenantForConfirmationNumberApi = value;
         }
     }
     //automaticExternalRconcilMthods: AutomaticExternalRconcilMthodsPM;

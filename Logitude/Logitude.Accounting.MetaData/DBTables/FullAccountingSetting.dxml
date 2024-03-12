@@ -289,12 +289,6 @@
       Nullable="false" />
   </Column>
   <Column
-    Name="AmountForConfirmationNumber"
-    Type="int">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
     Name="NumberingByChartOfAccount"
     Type="bit">
     <Constraints
@@ -303,6 +297,13 @@
   <Column
     Name="OppositeAccountNumber"
     Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="TenantForConfirmationNumberApi"
+    Type="varchar"
+    Size="2">
     <Constraints
       Nullable="false" />
   </Column>
