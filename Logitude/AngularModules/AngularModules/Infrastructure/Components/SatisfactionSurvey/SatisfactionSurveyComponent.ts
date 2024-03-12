@@ -81,8 +81,6 @@ export class SatisfactionSurveyComponent implements OnInit {
 
     onSubmit() {
         this.formSubmitting = true;
-        console.log('Form submitted!');
-        console.log(this.surveyForm.value);
         this.satisfactionSurveyService.insert(this.surveyForm.value).pipe(
             catchError(error => {
                 return of({ HasError: true, ErrorMessage: error.error.ErrorType });
@@ -91,7 +89,6 @@ export class SatisfactionSurveyComponent implements OnInit {
             if (!res.HasError) {
                 this.formSubmitted = true;
             } else {
-                console.log('Submission error:', res?.ErrorMessage || 'Unknown error');
                 this.formError = true;
                 if (res?.ErrorMessage === 'DbUpdateException') {
                     this.formAlreadySubmitted = true;
