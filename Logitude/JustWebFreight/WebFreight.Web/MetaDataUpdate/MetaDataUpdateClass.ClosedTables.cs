@@ -843,6 +843,49 @@ namespace WebFreight.Web.MetaDataUpdate
 
             apInvoiceStatusRepository.SubmitChanges();
 
+            //---------ConfirmationNumberStatus---------
+            ConfirmationNumberStatusRepository confirmationNumberStatusRepository = new ConfirmationNumberStatusRepository(invoiceContext);
+            AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails() {
+                Code = "1",
+                Name = "Confirmation number needed",
+                LocalName = "נדרש הקצאה",
+                InActive = false
+
+            }, confirmationNumberStatusRepository);
+            AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
+            {
+                Code = "2",
+                Name = "Confirmation number received",
+                LocalName = "הקצאה התקבלה",
+                InActive = false
+
+            }, confirmationNumberStatusRepository);
+            AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
+            {
+                Code = "3",
+                Name = "Confirmation number not received",
+                LocalName = "לא התקבלה הקצאה",
+                InActive = false
+
+            }, confirmationNumberStatusRepository);
+            AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
+            {
+                Code = "4",
+                Name = "Confirmation number not needed",
+                LocalName = "לא נדרש הקצאה",
+                InActive = false
+
+            }, confirmationNumberStatusRepository);
+            AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
+            {
+                Code = "5",
+                Name = "Confirmation number failed",
+                LocalName = "כשלון בקבלת הקצאה",
+                InActive=false
+            }, confirmationNumberStatusRepository);
+
+            confirmationNumberStatusRepository.SubmitChanges();
+
             //---------AP Invoice Type---------
             APInvoiceTypeRepository apInvoiceTypeRepository = new APInvoiceTypeRepository(invoiceContext);
             AddClosedTables.AddAPInvoiceTypes(new APInvoiceTypeDetails() { Code = "IN", Name = "Invoice" }, apInvoiceTypeRepository);

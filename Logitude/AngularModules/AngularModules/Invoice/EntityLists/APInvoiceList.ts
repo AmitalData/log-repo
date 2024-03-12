@@ -102,5 +102,6 @@ export class APInvoiceList {
 		IsEquipment: boolean;
 		ConnectedPaymentsNumbers: string;
 		ConfirmationNumber: string;
+		ConfirmationNumberStatus: string;
 	
-}
+}

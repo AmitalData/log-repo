@@ -42,7 +42,7 @@
   ObjectTableTypeCode="&quot;MD&quot;"
   MaxNumberOfCustomFields="0"
   DefaultText="&quot;Confirmation Number Default&quot;"
-  Code="&quot;65c2&quot;"
+  Code="&quot;0001&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
@@ -438,6 +438,33 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Query
+    Code="&quot;All Confirmation Number Defaults&quot;"
+    TextCode="&quot;All Confirmation Number Defaults&quot;"
+    QueryGroupCode="&quot;0001&quot;"
+    IndexOrder="0"
+    ObjectTableName="&quot;ConfirmationNumberDefault&quot;"
+    QuerySection="&quot;ConfirmationNumberDefault&quot;"
+    SystemLevel="true"
+    IsAddNewEntity="false"
+    IsPackagable="true"
+    DefaultSortName="&quot;FromDate&quot;"
+    DefaultSortDirection="&quot;Desending&quot;"
+    IsSpellChecked="false">
+    <QueryColumns>
+      <QueryColumn
+        QueryCode="&quot;All Confirmation Number Defaults&quot;"
+        IndexOrder="0"
+        ObjectFieldName="&quot;FromDate&quot;"
+        ColumnWidth="150" />
+      <QueryColumn
+        QueryCode="&quot;All Confirmation Number Defaults&quot;"
+        IndexOrder="1"
+        ObjectFieldName="&quot;AmountForConfirmationNumber&quot;"
+        ColumnWidth="130" />
+    </QueryColumns>
+    <QueryFilters />
+  </Query>
   <Screen
     Name="&quot;ConfirmationNumberDefaultHeaderScreen&quot;"
     ObjectTableName="&quot;ConfirmationNumberDefault&quot;"
@@ -448,6 +475,16 @@
     NumberOfRows="1">
     <ScreenFields />
   </Screen>
+  <Tab
+    TabName="&quot;General&quot;"
+    ObjectTableName="&quot;ConfirmationNumberDefault&quot;"
+    Code="&quot;CNDG&quot;"
+    ControlPath="&quot;Simplog.Infrastructure.GeneralControls.GeneralTabControl&quot;"
+    TextCode="&quot;ConfirmationNumberDefault.TH.General&quot;"
+    IsPackagable="true"
+    IndexOrder="0"
+    IsSpellChecked="false"
+    HasGeneralFeature="false" />
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -477,7 +514,28 @@
       IsFollowUp="false" />
   </EventTypes>
   <Records />
-  <DataContracts />
+  <DataContracts>
+    <DataContract
+      Name="&quot;ConfirmationNumberDefault&quot;"
+      Version="&quot;ApiV1&quot;"
+      IncludeTenant0Data="false">
+      <DCField
+        DCFieldName="&quot;Id&quot;"
+        FieldName="&quot;Id&quot;"
+        IsKey="true"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;Text&quot;"
+        IsNullable="false"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
+    </DataContract>
+  </DataContracts>
   <AdditionalTextCodes />
   <AdditionalFeatures />
 </entity>

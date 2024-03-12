@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "dea199a7171eac6e097fa90a8669cccc";
+		public const string HashString = "99abe6378a5090110fb175d3af0feecc";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -8387,7 +8387,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						FullLocalDefaultText =  "מספר הקצםה",
 					  						ListFieldLable =  "ConfirmationNumberListLable",
 					  						ListLableDefaultText =  "Confirmation Number",
-					  						ListLocalDefaultText =  "מספר הקצםה",
+					  						ListLocalDefaultText =  "מספר הקצםה ",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
