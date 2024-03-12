@@ -809,6 +809,7 @@
     <Compile Include="InvoiceModel\EntityLists\ARInvoicesSignedStatusList.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARPaymentBankTranferList.cs" />
     <Compile Include="InvoiceModel\EntityLists\QBOGlobalTaxCalculationList.cs" />
+    <Compile Include="InvoiceModel\EntityPMs\ConfirmationNumberDefaultPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARInvoicesSignedStatusPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentBankTranferPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeReplicaPM.cs" />
