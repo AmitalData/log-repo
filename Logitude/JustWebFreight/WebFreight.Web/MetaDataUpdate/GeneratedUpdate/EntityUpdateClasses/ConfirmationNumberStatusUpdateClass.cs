@@ -81,6 +81,7 @@ using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
 using Logitude.BL.InvoiceModel;
+using ConfirmationNumberStatusDetails = Logitude.BL.InvoiceModel.ConfirmationNumberStatusDetails;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
