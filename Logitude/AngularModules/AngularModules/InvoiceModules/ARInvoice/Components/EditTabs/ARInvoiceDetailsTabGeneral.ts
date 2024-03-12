@@ -667,6 +667,12 @@ export class ARInvoiceDetailsTabGeneral extends BaseComponent implements OnDestr
             this.EntityPM.ConfirmationNumber = newValue;
         }
     }
+    get ConfirmationNumberStatus() { return this.EntityPM.ConfirmationNumberStatus; }
+    set ConfirmationNumberStatus(newValue: string) {
+        if (this.EntityPM.ConfirmationNumberStatus != newValue) {
+            this.EntityPM.ConfirmationNumberStatus = newValue;
+        }
+    }
 
     get PaymentTermId() { return this.EntityPM.PaymentTermId; }
     set PaymentTermId(newValue: string) {
