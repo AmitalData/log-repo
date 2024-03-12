@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpEventType, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { catchError, map } from 'rxjs/operators';
-import { defer, of } from 'rxjs';
+import { Observable, defer, of } from 'rxjs';
 import { ServiceResponse } from '../../DataContracts/ServiceResponse';
 import { ClassLevelValidator } from '../../Validators/ClassLevelValidator';
 import { InfraSettings } from '../../Utilities/InfraSettings';
@@ -33,29 +33,48 @@ export class SatisfactionSurveyService {
 		return httpOptions;
 	}
 
+	// insert(entityPM: SatisfactionSurveyPM) {
+	// 	var callTime = new Date();
+	// 	return defer(() => {
+	// 		var serviceResponse: ServiceResponse = new ServiceResponse();
+	// 		var validator: ClassLevelValidator = new ClassLevelValidator();
+	// 		var mappedEntity: SatisfactionSurveyPM = this.MapJsonToEntityPM(entityPM, false);
+	// 		return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), this.GetHttpFullHeaders())
+	// 			.pipe(
+	// 				map((response: HttpResponse<any>) => {
+	// 					var pm = response.body;
+	// 					if (pm) {
+	// 						var mappedResult: SatisfactionSurveyPM = this.MapJsonToEntityPM(pm, true, entityPM);
+	// 						serviceResponse.Result = mappedResult;
+	// 					}
+
+	// 					var servertime = response.headers.get('ServerExecutionTime');
+	// 					PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "SatisfactionSurvey", "SaveChanges", "");
+
+	// 					return serviceResponse;
+	// 				}),
+
+	// 				catchError(ServiceHelper.HandleServiceError));
+	// 	});
+	// }
+
+
+
 	insert(entityPM: SatisfactionSurveyPM) {
 		var callTime = new Date();
 		return defer(() => {
 			var serviceResponse: ServiceResponse = new ServiceResponse();
 			var validator: ClassLevelValidator = new ClassLevelValidator();
 			var mappedEntity: SatisfactionSurveyPM = this.MapJsonToEntityPM(entityPM, false);
-			return this._http.post(this._apiUrl, JSON.stringify(mappedEntity), this.GetHttpFullHeaders())
+			return this._http.post<ServiceResponse>(this._apiUrl, JSON.stringify(mappedEntity), this.GetHttpFullHeaders())
 				.pipe(
-					map((response: HttpResponse<any>) => {
-
-						var pm = response.body;
-						if (pm) {
-							var mappedResult: SatisfactionSurveyPM = this.MapJsonToEntityPM(pm, true, entityPM);
-							serviceResponse.Result = mappedResult;
+					map(event => {
+						if (event.type === HttpEventType.Response) {
+							return event.body; 
 						}
-
-						var servertime = response.headers.get('ServerExecutionTime');
-						PerformanceLogger.InsertPerformanceLog(callTime, new Date(), Number(servertime), "SatisfactionSurvey", "SaveChanges", "");
-
-						return serviceResponse;
-					}),
-
-					catchError(ServiceHelper.HandleServiceError));
+						throw new Error('Unexpected event type');
+					})
+				);
 		});
 	}
 

@@ -38,7 +38,7 @@ namespace Logitude.Infrastructure.Data.EntityPOCOs
         [Column("LockedBy")]
 	    public string LockedBy { get; set; }
         [Column("SyncDate")]
-	    public DateTime SyncDate { get; set; }
+	    public DateTime? SyncDate { get; set; }
     }
 }
 	 
