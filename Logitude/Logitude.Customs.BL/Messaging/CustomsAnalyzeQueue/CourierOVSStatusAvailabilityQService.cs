@@ -103,7 +103,6 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 res.EntityReference = _DeclarationPM.CustomFileNo;
                 var ownerUnifreightUserService = new OwnerUnifreightUserService();
                 string myOwnerUnifreightUserCode = ownerUnifreightUserService.GetOwnerUnifreightUserCode(declaration: _DeclarationPM);
-
                 bool hasAvailabilityDate = _DeclarationPM.AvailabilityDate.HasValue; 
 
                 ContactRepository contactRepository = new ContactRepository(_CommunicationLog.Tenant);

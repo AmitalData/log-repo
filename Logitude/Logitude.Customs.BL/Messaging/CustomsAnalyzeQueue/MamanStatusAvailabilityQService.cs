@@ -102,6 +102,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 res.EntityReference = _DeclarationPM.CustomFileNo;
                 var ownerUnifreightUserService = new OwnerUnifreightUserService();
                 string myOwnerUnifreightUserCode = ownerUnifreightUserService.GetOwnerUnifreightUserCode(declaration: _DeclarationPM);
+                bool hasAvailabilityDate = _DeclarationPM.AvailabilityDate.HasValue;
 
                 ContactRepository contactRepository = new ContactRepository(_CommunicationLog.Tenant);
                 var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(_CommunicationLog.Tenant), _CommunicationLog.Tenant);
@@ -115,7 +116,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 {
                     case "0001":
                         {
-                            if (_DeclarationPM.AvailabilityDate.HasValue)
+                            if (!hasAvailabilityDate) // if true, wont rais SMG event
                             {
                             Update0001(theDecId, mySTBMessage.EventQty);
                             unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
