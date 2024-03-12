@@ -77,7 +77,7 @@ export class CopyJournalComponent extends BaseComponent implements OnInit {
     ValidateJournalRef1() {
         this.ValidationErrorsList = [];
         if (!this.Ref1CB && this.Ref1UserEmpty) {
-            this.NotesErrorMessage();
+            this.Ref1ErrorMessage();
             return false
         }
         else return true;
@@ -86,7 +86,7 @@ export class CopyJournalComponent extends BaseComponent implements OnInit {
     ValidateJournalRef2() {
         this.ValidationErrorsList = [];
         if (!this.Ref2CB && this.Ref2UserEmpty) {
-            this.NotesErrorMessage();
+            this.Ref2ErrorMessage();
             return false
         }
         else return true;
