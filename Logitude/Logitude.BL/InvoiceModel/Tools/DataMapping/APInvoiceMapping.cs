@@ -211,6 +211,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.ConcurrencyGUID = entityPM.NewConcurrencyGUID;
             entityPM.ConcurrencyGUID = entity.ConcurrencyGUID;
             entity.ConfirmationNumber = entityPM.ConfirmationNumber;
+            entity.ConfirmationNumberStatus = entityPM.ConfirmationNumberStatus;
+
         }
 
         public static void MapInvoiceLine(APInvoiceLinePM entityPM, APInvoiceLine entity, bool isNewState)

@@ -177,7 +177,6 @@
     <Compile Include="CloseTables\DetailsClassesGenerated\BankPageEntryTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\CalculatedChartsLineTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\ChartOfAccountsTypeDetails.Generated.cs" />
-    <Compile Include="CloseTables\DetailsClassesGenerated\ConfirmationNumberStatusDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\GLAccountTotalDateTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\GLAccountTypeDetails.Generated.cs" />
     <Compile Include="CloseTables\DetailsClassesGenerated\IntegrityCheckStatusDetails.Generated.cs" />

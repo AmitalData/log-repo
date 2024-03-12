@@ -333,6 +333,8 @@
     <None Include="EntityFiles\InfrastructureModel\ReferenceCustomObject.lxml" />
     <None Include="EntityFiles\InfrastructureModel\ScreenSection.lxml" />
     <None Include="EntityFiles\InvoiceModel\ARInvoicesSignedStatus.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ConfirmationNumberDefault.lxml" />
+    <None Include="EntityFiles\InvoiceModel\ConfirmationNumberStatus.lxml" />
     <None Include="EntityFiles\QuoteModel\QuoteSalesAmountWithVATDetails.lxml" />
     <None Include="EntityFiles\QuoteModel\ValidByType.lxml" />
     <None Include="EntityFiles\ShipmentsModel\ContainerDiscrepancy.lxml" />

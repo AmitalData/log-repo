@@ -80,13 +80,12 @@ using Logitude.Workflow.BL.CLoseTable;
 using Logitude.DashboardModule.Data.Repositories;
 using Logitude.DashboardModule.Data.EntityPOCOs;
 using Logitude.DashboardModule.BL;
-using Logitude.BL.InvoiceModel;
 
-namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
+namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses
 {
    public class ConfirmationNumberStatusUpdateClass
    {  		
-		public const string HashString = "66e0263a993a536b4371d98797402ba6";
+		public const string HashString = "3f79ea3f04ecd51cb4cdb1324ff789a2";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -133,12 +132,12 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סטטוס הקצאה",
 			      				    DefaultText =  "Confirmation Number Status",
-			      				    Code =  "059b",
+			      				    Code =  "5f5b",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
 			      				    GenerateDomainService =  false,
-			      				    ClientModuleName =  "Accounting",
+			      				    ClientModuleName =  "Invoice",
 			      				    NoTS =  false,
 			      				    HasMenuButtons =  false,
 			      				    AllowedForComputingPartners =  false,
@@ -564,7 +563,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
             var dic =repo.GetAll().ToDictionary(rec => rec.Code, rec => rec);
             new FillCloseTables().FillCloseTable<
                                 ConfirmationNumberStatus,
-                                ConfirmationNumberStatusDetails,
+                                Logitude.BL.InvoiceModel.ConfirmationNumberStatusDetails,
                                 ConfirmationNumberStatusRepository>(repo, dic);
         }
 

@@ -128,10 +128,6 @@ namespace Logitude.Accounting.Data
 	
             modelBuilder.Configurations.Add(new ChartOfAccountsTypeMap());
 	
-            modelBuilder.Configurations.Add(new ConfirmationNumberDefaultMap());
-	
-            modelBuilder.Configurations.Add(new ConfirmationNumberStatusMap());
-	
             modelBuilder.Configurations.Add(new CopyFromTenant0Map());
 	
             modelBuilder.Configurations.Add(new ExternalPageAdditionalDataMap());
@@ -911,18 +907,6 @@ namespace Logitude.Accounting.Data
 	 
 	 }
 	
-	 public IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults 
-	 {
-	      get; set;
-	 
-	 }
-	
-	 public IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses 
-	 {
-	      get; set;
-	 
-	 }
-	
 	 public IDbSet<CopyFromTenant0> CopyFromTenant0 
 	 {
 	      get; set;
@@ -1334,4 +1318,4 @@ namespace Logitude.Accounting.Data
  }
 
 
-}
+}

@@ -531,7 +531,7 @@
   <Column
     Name="ConfirmationNumberStatus"
     Type="varchar"
-    Size="15">
+    Size="2">
     <Constraints
       Nullable="true" />
   </Column>

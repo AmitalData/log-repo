@@ -1,5 +1,5 @@
 
-   
+
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -10,11 +10,11 @@ using System.ComponentModel.DataAnnotations;
 using Logitude.Server.Tools;  
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.CloseTablesClasses;
-using Logitude.Accounting.Data.EntityPOCOs;
-using Logitude.Accounting.Def.EntityPMs; 
-using Logitude.Accounting.Data;
+using Simplog.Data.InvoiceModel.EntityPOCOs;
+using Logitude.BL.InvoiceModel.EntityPMs; 
+using Simplog.Data.InvoiceModel;
 
-namespace Logitude.Accounting.BL
+namespace Logitude.BL.InvoiceModel
 {
    public class ConfirmationNumberStatusDetails : ConfirmationNumberStatus, ICloseTable<ConfirmationNumberStatus, ConfirmationNumberStatusDetails>
    {

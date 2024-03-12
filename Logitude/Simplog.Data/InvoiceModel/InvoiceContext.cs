@@ -475,6 +475,7 @@ namespace Simplog.Data.InvoiceModel
         public IDbSet<APInvoiceAnalytic> APInvoiceAnalytics { get; set; }
         public IDbSet<DigitalInvoicesCounterDataView> DigitalInvoicesCounterDataView { get; set; }
         public IDbSet<ControlForInvoiceLinesDataView> ControlForInvoiceLinesDataView { get; set; }
+        public IDbSet<ConfirmationNumberStatus> ConfirmationNumberStatuses { get; set; }
 
         public void DetectChanges()
         {

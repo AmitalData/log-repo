@@ -148,6 +148,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.ConnectedPaymentsNumbers).HasColumnName("ConnectedPaymentsNumbers");
             this.Property(t => t.TotalEquation).HasColumnName("TotalEquation");
             this.Property(t => t.ConfirmationNumber).HasColumnName("ConfirmationNumber");
+            this.Property(t => t.ConfirmationNumberStatus).HasColumnName("ConfirmationNumberStatus");
 
 
             // Relationships
@@ -160,6 +161,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasRequired(t => t.ProfitCurrency).WithMany().HasForeignKey(d => d.ProfitCurrencyId);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);
             this.HasRequired(t => t.VendorCard).WithMany().HasForeignKey(d => d.VendorId);
+            this.HasRequired(t => t.ConfirmationNumberStatuses).WithMany().HasForeignKey(d => d.ConfirmationNumberStatus);
             this.HasRequired(t => t.TransferStatus).WithMany().HasForeignKey(d => d.TransferStatusCode);
             this.HasOptional(t => t.ApprovedByUser).WithMany().HasForeignKey(d => d.ApprovedByUserId);
             this.HasOptional(t => t.QBOGlobalTaxCalculation).WithMany().HasForeignKey(d => d.GlobalTaxCalculation);

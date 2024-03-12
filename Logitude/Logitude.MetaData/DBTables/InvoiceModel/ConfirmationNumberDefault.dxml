@@ -1,21 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Table
-  Name="ConfirmationNumberStatuses"
+  Name="ConfirmationNumberDefaults"
   Schema="dbo"
   DBType="Main"
-  Module="Accounting">
+  Module="Invoice">
   <Column
-    Name="Code"
+    Name="Id"
     Type="varchar"
-    Size="2">
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
-    Name="Name"
-    Type="varchar"
-    Size="30">
+    Name="Tenant"
+    Type="int">
+    <Constraints
+      Nullable="false" />
+  </Column>
+  <Column
+    Name="FromDate"
+    Type="datetime">
     <Constraints
       Nullable="false" />
   </Column>
@@ -27,15 +32,8 @@
       Nullable="true" />
   </Column>
   <Column
-    Name="LocalName"
-    Type="nvarchar"
-    Size="30">
-    <Constraints
-      Nullable="true" />
-  </Column>
-  <Column
-    Name="InActive"
-    Type="bit">
+    Name="AmountForConfirmationNumber"
+    Type="int">
     <Constraints
       Nullable="false" />
   </Column>

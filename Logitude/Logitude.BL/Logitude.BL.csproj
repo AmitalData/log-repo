@@ -799,6 +799,7 @@
     <Compile Include="InvoiceModel\APIDataContract\XSD\APInvoiceXSD.cs" />
     <Compile Include="InvoiceModel\CloseTables\AccountingEntityValues.cs" />
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\ARInvoicesSignedStatusDetails.Generated.cs" />
+    <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\ConfirmationNumberStatusDetails.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\DetailsClassesGenerated\QBOGlobalTaxCalculationDetails.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\EnumGenerated\ARInvoicesSignedStatusStruct.Generated.cs" />
     <Compile Include="InvoiceModel\CloseTables\EnumGenerated\QBOGlobalTaxCalculationStruct.Generated.cs" />
