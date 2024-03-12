@@ -104,6 +104,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 var ownerUnifreightUserService = new OwnerUnifreightUserService();
                 string myOwnerUnifreightUserCode = ownerUnifreightUserService.GetOwnerUnifreightUserCode(declaration: _DeclarationPM);
 
+                bool hasAvailabilityDate = _DeclarationPM.AvailabilityDate.HasValue; 
+
                 ContactRepository contactRepository = new ContactRepository(_CommunicationLog.Tenant);
                 var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(_CommunicationLog.Tenant), _CommunicationLog.Tenant);
                 string loggedContactId = "";
@@ -116,9 +118,10 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 {
                     case "AVA":
                         {
-                            if (!_DeclarationPM.AvailabilityDate.HasValue)
+                            if (!hasAvailabilityDate) // if true, wont rais SMG event
                             {
                             UpdateAVA(theDecId, mySTBMessage.PackageQuantity);
+
                             unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
                             {
                                 Entname = "CFIFILEM",
@@ -129,6 +132,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 OwnerUnifreightUserCode = myOwnerUnifreightUserCode//FUOwnerUnifreightUserCode.OVERSEAS
                             });
                             }
+                            this._DeclarationPM.AvailabilityDate = mySTBMessage.StatusDate;
                         }
                         break;
                     case "REL":
@@ -202,6 +206,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 throw new BusinessErrorException("EventQty > totPackageQuantity  ???");
             }
             _DeclarationPM.AcceptanceStatusCode = AcceptanceStatusCode;
+            
 
             var customContext = CustomContext.GetContext(_CommunicationLog.Tenant);
             var declarationUpdateService = new DeclarationUpdateService(customContext, new Dictionary<string, IContext>(), _CommunicationLog.Tenant);
