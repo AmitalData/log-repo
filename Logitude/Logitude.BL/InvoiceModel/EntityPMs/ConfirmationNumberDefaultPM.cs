@@ -6,7 +6,7 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
     public class ConfirmationNumberDefaultPM
     {
         [Key]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         public int Tenant { get; set; }
         public DateTime FromDate { get; set; }

@@ -37,6 +37,7 @@ using System.Transactions;
 using Simplog.Server.Infrastructure.Helpers;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdateClasses;
 using WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses;
+using ConfirmationNumberStatusUpdateClass = WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses.ConfirmationNumberStatusUpdateClass;
 
 namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel
 {

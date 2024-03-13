@@ -64,6 +64,15 @@ namespace Simplog.Data.InvoiceModel.Repositories
         {
             return context.ConfirmationNumberStatuses.Where(a => a.Code == code).FirstOrDefault();
         }
+
+        public ConfirmationNumberStatus GetSingleConfirmationNumberStatus(string code)
+        {
+            return context.ConfirmationNumberStatuses.Where(a => a.Code == code).FirstOrDefault();
+        }
+        public IQueryable<ConfirmationNumberStatus> GetConfirmationNumberStatuses()
+        {
+            return context.ConfirmationNumberStatuses;
+        }
         public IInvoiceContext context
         {
             get { return invoiceContext; }

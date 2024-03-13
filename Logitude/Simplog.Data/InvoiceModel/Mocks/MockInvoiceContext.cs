@@ -797,6 +797,14 @@ namespace Simplog.Data.InvoiceModel.Mocks
                 throw new NotImplementedException();
             }
         }
+
+        public IDbSet<ConfirmationNumberDefault> ConfirmationNumberDefaults
+        {
+            get
+            {
+                throw new NotImplementedException();
+            }
+        }
         public IDbSet<ARPaymentChequeReplica> ARPaymentChequeReplicas
         {
             get

@@ -807,6 +807,8 @@
     <Compile Include="InvoiceModel\CustomFilters\ARInvoiceTypeCustomFilter.cs" />
     <Compile Include="InvoiceModel\CustomFilters\DigitalPortalCustomFilter.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARInvoicesSignedStatusList.cs" />
+    <Compile Include="InvoiceModel\EntityLists\ConfirmationNumberStatusList.cs" />
+    <Compile Include="InvoiceModel\EntityLists\ConfirmationNumberDefaultList.cs" />
     <Compile Include="InvoiceModel\EntityLists\ARPaymentBankTranferList.cs" />
     <Compile Include="InvoiceModel\EntityLists\QBOGlobalTaxCalculationList.cs" />
     <Compile Include="InvoiceModel\EntityPMs\ConfirmationNumberDefaultPM.cs" />
@@ -816,6 +818,8 @@
     <Compile Include="InvoiceModel\EntityPMs\ARPaymentChequeStatusReplicaPM.cs" />
     <Compile Include="InvoiceModel\EntityPMs\QBOGlobalTaxCalculationPM.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARInvoicesSignedStatusQuery.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ConfirmationNumberStatusQuery.cs" />
+    <Compile Include="InvoiceModel\EntityQueries\ConfirmationNumberDefaultQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentBankTranferQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeReplicaQuery.cs" />
     <Compile Include="InvoiceModel\EntityQueries\ARPaymentChequeStatusReplicaQuery.cs" />
@@ -833,6 +837,8 @@
     <Compile Include="InvoiceModel\Tools\Behaviours\InvoicePaymentNumbersBehaviour.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARInvoiceMapping.Concurrency.cs" />
     <Compile Include="InvoiceModel\Tools\DataMapping\ARPaymentMapping.Concurrency.cs" />
+    <Compile Include="InvoiceModel\Tools\DataMapping\ConfirmationNumberDefaultMapping.cs" />
+    <Compile Include="InvoiceModel\Tools\EntityService\ConfirmationNumberDefaultService.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.DoctoRelacionados.CreditNotes.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\Payment\Complemento.PagosPago.DoctoRelacionados.PagosPagoDoctoRelacionado.cs" />
     <Compile Include="InvoiceModel\Tools\ExternalService\SATProfact40\SATInvoiceDifferenceVATCalculationService.cs" />
