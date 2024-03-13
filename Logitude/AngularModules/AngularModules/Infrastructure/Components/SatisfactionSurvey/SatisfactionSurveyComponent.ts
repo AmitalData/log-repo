@@ -79,10 +79,12 @@ export class SatisfactionSurveyComponent implements OnInit {
 
     satisfactionSurveyService: SatisfactionSurveyService = new SatisfactionSurveyService;
 
+    ErrorMessage: string = "";
     onSubmit() {
         this.formSubmitting = true;
         this.satisfactionSurveyService.insert(this.surveyForm.value).pipe(
             catchError(error => {
+                this.ErrorMessage = error.error.ErrorType;
                 return of({ HasError: true, ErrorMessage: error.error.ErrorType });
             })
         ).subscribe(res => {
@@ -90,7 +92,7 @@ export class SatisfactionSurveyComponent implements OnInit {
                 this.formSubmitted = true;
             } else {
                 this.formError = true;
-                if (res?.ErrorMessage === 'DbUpdateException') {
+                if (this.ErrorMessage === 'DbUpdateException') {
                     this.formAlreadySubmitted = true;
                 }
             }
