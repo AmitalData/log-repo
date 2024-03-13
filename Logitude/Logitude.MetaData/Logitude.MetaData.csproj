@@ -309,6 +309,7 @@
     <None Include="DBTables\InfrastructureModel\EventRemark.dxml" />
     <None Include="DBTables\InfrastructureModel\ReferenceCustomObject.dxml" />
     <None Include="DBTables\InvoiceModel\ARInvoicesSignedStatus.dxml" />
+    <None Include="DBTables\InvoiceModel\ConfirmationNumberDefault.dxml" />
     <None Include="DBTables\QuoteModel\ValidByType.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerDiscrepancy.dxml" />
     <None Include="DBTables\ShipmentsModel\ContainerTrackingProvider.dxml" />

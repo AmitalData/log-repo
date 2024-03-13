@@ -713,6 +713,7 @@
     <Compile Include="InfrastructureModel\Repositories\RuleUpdateHistoryRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SchedulerProcedureRepository.cs" />
     <Compile Include="InfrastructureModel\Repositories\SharedUserQueryRepository.cs" />
+    <Compile Include="InvoiceModel\EntityPOCOs\ConfirmationNumberDefault.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\ConfirmationNumberStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APInvoiceAnalytic.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\APPayment.cs" />
@@ -733,6 +734,8 @@
     <Compile Include="InvoiceModel\EntityPOCOs\SATInvoiceStatus.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\QBOGlobalTaxCalculation.cs" />
     <Compile Include="InvoiceModel\EntityPOCOs\SATTransferStatus.cs" />
+    <Compile Include="InvoiceModel\Mapping\ConfirmationNumberStatusMap.cs" />
+    <Compile Include="InvoiceModel\Mapping\ConfirmationNumberDefaultMap.cs" />
     <Compile Include="InvoiceModel\Mapping\APPaymentTransferStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoicesSignedStatusMap.cs" />
     <Compile Include="InvoiceModel\Mapping\ARInvoiceStockLineMap.cs" />
@@ -758,6 +761,7 @@
     <Compile Include="InvoiceModel\Repositories\ARPaymentChequeReplicaRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ARPaymentChequeStatusReplicaRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\BankAccountLiteRepository.cs" />
+    <Compile Include="InvoiceModel\Repositories\ConfirmationNumberDefaultRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\ConfirmationNumberStatusRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATPaymentMethodRepository.cs" />
     <Compile Include="InvoiceModel\Repositories\SATInvoiceStatusRepository.cs" />
