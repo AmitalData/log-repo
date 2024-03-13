@@ -363,7 +363,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     var isConnectedToUniFreight = CustomsSettingQueryService.GetSettingByTenant(entityPM.Tenant).IsConnectedToUniFreight;
                     if (!isConnectedToUniFreight)
                     {
-                        // myGGGQPM.Tenant = EntityPM.Tenant;
+                        myGGGQPM.Tenant = EntityPM.Tenant;
                         myGGGQPM.IS_SYNCH = false;
                         myGGGQPM.LAST_UPDATE_DT = DateTime.Now; 
                     }
