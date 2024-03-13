@@ -3,6 +3,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { Location } from '@angular/common';
 import * as Translate from './he.json';
 import { SatisfactionSurveyService } from 'Infrastructure/Services/WebServices/SatisfactionSurveyService';
+import { catchError } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Component({
     selector: 'SatisfactionSurveyComponent',
@@ -22,8 +24,11 @@ export class SatisfactionSurveyComponent implements OnInit {
     howSatisfiedAreYou: string = Translate.HowSatisfiedAreYou;
     thanks: string = Translate.Thanks;
     sentSuccessfully: string = Translate.SentSuccessfully;
+    alreadySubmitted: string = Translate.AlreadySubmitted;
     surveyForm: FormGroup;
     formSubmitted: boolean = false;
+    formAlreadySubmitted: boolean = false;
+    formError: boolean = false;
     guid: string;
     hash: string;
 
@@ -73,16 +78,23 @@ export class SatisfactionSurveyComponent implements OnInit {
     }
 
     satisfactionSurveyService: SatisfactionSurveyService = new SatisfactionSurveyService;
+
     onSubmit() {
         this.formSubmitting = true;
-        console.log('Form submitted!');
-        console.log(this.surveyForm.value);
-        this.satisfactionSurveyService.insert(this.surveyForm.value).subscribe(res => {
+        this.satisfactionSurveyService.insert(this.surveyForm.value).pipe(
+            catchError(error => {
+                return of({ HasError: true, ErrorMessage: error.error.ErrorType });
+            })
+        ).subscribe(res => {
             if (!res.HasError) {
                 this.formSubmitted = true;
+            } else {
+                this.formError = true;
+                if (res?.ErrorMessage === 'DbUpdateException') {
+                    this.formAlreadySubmitted = true;
+                }
             }
             this.formSubmitting = false;
         });
-
     }
 }

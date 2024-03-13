@@ -250,12 +250,12 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 			
 		 }
 	   }
-	  private DateTime syncDate ;
+	  private DateTime? syncDate ;
 	  	  
        
 	   [CustomValidation(typeof(InfrastructureValidationClass), "ValidateClass")]
 	   [DataMember]
-       public DateTime SyncDate  
+       public DateTime? SyncDate  
 	   {
 	    
 	     get
@@ -266,7 +266,7 @@ namespace Logitude.Infrastructure.BL.EntityPMs
 		 {
 		   if(syncDate != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SyncDate",OldValue=syncDate,NewValue=value,PropertyType="DateTime"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="SyncDate",OldValue=syncDate,NewValue=value,PropertyType="DateTime?"};
 		    NotifyPropertyChanged(values);
 		   syncDate=value;
 		   }
