@@ -12,11 +12,11 @@ import { of } from 'rxjs';
 })
 export class SatisfactionSurveyComponent implements OnInit {
     tabs = [
-        { id: 'tab1', content: Translate.NotAtAllSatisfied },
-        { id: 'tab2', content: Translate.Slightly },
-        { id: 'tab3', content: Translate.Moderately },
-        { id: 'tab4', content: Translate.VeryMuch },
-        { id: 'tab5', content: Translate.Extent },
+        { id: 'tab1', content: Translate.NotAtAllSatisfied, score: 1 },
+        { id: 'tab2', content: Translate.Slightly, score: 2 },
+        { id: 'tab3', content: Translate.Moderately, score: 3 },
+        { id: 'tab4', content: Translate.VeryMuch, score: 4 },
+        { id: 'tab5', content: Translate.Extent, score: 5 },
     ];
 
     activeTab: string;
@@ -35,7 +35,7 @@ export class SatisfactionSurveyComponent implements OnInit {
     formSubmitting: boolean = false;
 
     constructor(private location: Location) {
-        const ratingIndex = this.getRatingFromUrl();
+        const ratingIndex = this.getRatingFromUrl() - 1;
         const tabContentIndex = ratingIndex >= 0 && ratingIndex < this.tabs.length ? ratingIndex : 0;
         this.activeTab = this.tabs[tabContentIndex].content;
 
@@ -46,7 +46,7 @@ export class SatisfactionSurveyComponent implements OnInit {
 
         this.surveyForm = new FormGroup({
             Comments: new FormControl(''),
-            Rating: new FormControl(this.activeTab),
+            Rating: new FormControl(this.tabs[tabContentIndex].score),
             Id: new FormControl(this.guid),
             Guid: new FormControl(this.guid),
             Hash: new FormControl(this.hash),
@@ -74,7 +74,10 @@ export class SatisfactionSurveyComponent implements OnInit {
 
     setActiveTab(tabContent: string) {
         this.activeTab = tabContent;
-        this.surveyForm?.get('activeTab')?.setValue(this.activeTab);
+        const selectedTab = this.tabs.find(tab => tab.content === tabContent);
+        if (selectedTab) {
+            this.surveyForm?.get('Rating')?.setValue(selectedTab.score);
+        }
     }
 
     satisfactionSurveyService: SatisfactionSurveyService = new SatisfactionSurveyService;
