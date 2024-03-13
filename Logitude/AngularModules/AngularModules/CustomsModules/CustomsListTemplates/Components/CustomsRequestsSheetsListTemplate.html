@@ -1,67 +1,116 @@
 <style>
     img {
-   position: absolute;
-   top: 50%;
-   left: 50%;
-   width: 12px;
-   height: 10px;
-   margin-top: -6px; 
-   margin-left: -5px; 
-}
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 12px;
+        height: 10px;
+        margin-top: -6px;
+        margin-left: -5px;
+    }
 </style>
 <div>
-    <div class="TextTrimming" *ngIf="fieldName == 'RequestCreateDate'" >
-       
-        <span style="float: right;">{{_CustomsRequestsSheet.RequestCreateDate  | DateTimeToDatePipe  }}</span> 
-        <span style="float: right;">{{_CustomsRequestsSheet.RequestCreateDate  | DateTimeToTimePipe :'L12' }}</span>
-        
+    <div class="TextTrimming" *ngIf="fieldName == 'RequestCreateDate'">
+        <span style="float: right"
+            >{{_CustomsRequestsSheet.RequestCreateDate | DateTimeToDatePipe
+            }}</span
+        >
+        <span style="float: right"
+            >{{_CustomsRequestsSheet.RequestCreateDate | DateTimeToTimePipe
+            :'L12' }}</span
+        >
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'IsDCA'">
-        <img *ngIf="_CustomsRequestsSheet['IsDCA']" title="DCA"  src="./Images/CheckBoxIcon.png" />
+        <img
+            *ngIf="_CustomsRequestsSheet['IsDCA']"
+            title="DCA"
+            src="./Images/CheckBoxIcon.png"
+        />
     </div>
 
     <div class="TextTrimming" *ngIf="fieldName == 'IsRestored'">
-        <img *ngIf="_CustomsRequestsSheet['IsRestored']" title="IsRestored" src="./Images/CheckBoxIcon.png" />
+        <img
+            *ngIf="_CustomsRequestsSheet['IsRestored']"
+            title="IsRestored"
+            src="./Images/CheckBoxIcon.png"
+        />
     </div>
-    <div title="Cancel" 
-         class="TextTrimming RightCenter" *ngIf="fieldName == 'CancleRequest'"  >
+    <div
+        title="Cancel"
+        class="TextTrimming RightCenter"
+        *ngIf="fieldName == 'CancleRequest'"
+    >
         <!--<div *ngIf="CancleButtonVisibility(_CustomsRequestsSheet['RequestStatusCode'],_CustomsRequestsSheet['IsDCA'])">-->
-            <div >
-                <!--[disabled]="!IsCancleButtonEnabled(_CustomsRequestsSheet['RequestStatusCode'],_CustomsRequestsSheet['IsDCA'])"--> 
-                <button *ngIf="!IsCancelled" 
-                        style="padding-right:10px;"
-                        class="Button"         
-                        [style.opacity]="CancleButtonOpacity" 
-                        (click)="CancleRequestMethod(_CustomsRequestsSheet['Id'])">{{'Customs.RequestSheet.O.Cancel' | TextCodeTranslationPipe}}</button>
-                <!--<img  style="vertical-align: middle;margin:0px auto;display:block"   *ngIf="IsCancelled"  title="Cancelled" src="./Images/CheckBoxIcon.png" />-->
-                <img  *ngIf="IsCancelled" title="Cancelled" src="./Images/CheckBoxIcon.png" />
-                
-            </div>
+        <div>
+            <!--[disabled]="!IsCancleButtonEnabled(_CustomsRequestsSheet['RequestStatusCode'],_CustomsRequestsSheet['IsDCA'])"-->
+            <button
+                *ngIf="!IsCancelled"
+                style="padding-right: 10px"
+                class="Button"
+                [style.opacity]="CancleButtonOpacity"
+                (click)="CancleRequestMethod(_CustomsRequestsSheet['Id'])"
+            >
+                {{'Customs.RequestSheet.O.Cancel' | TextCodeTranslationPipe}}
+            </button>
+            <!--<img  style="vertical-align: middle;margin:0px auto;display:block"   *ngIf="IsCancelled"  title="Cancelled" src="./Images/CheckBoxIcon.png" />-->
+            <img
+                *ngIf="IsCancelled"
+                title="Cancelled"
+                src="./Images/CheckBoxIcon.png"
+            />
+        </div>
     </div>
-    <div class="TextTrimming RightCenter" *ngIf="fieldName == 'ShowFormatedResponse'">
-
+    <div
+        class="TextTrimming RightCenter"
+        *ngIf="fieldName == 'ShowFormatedResponse'"
+    >
         <input type="hidden" value="{{_CustomsRequestsSheet['Id']}}" />
-        <button class="Button" 
-                style="padding-right:10px;"
-                [disabled]="!CanShowFormatedResponseCommand()"
-                (click)="ShowFormatedResponse(_CustomsRequestsSheet['RequestComminicationId'],_CustomsRequestsSheet['InterfaceTypeCode'])"
-                >{{'CommunicationLogSteps.O.ShowResponse' | TextCodeTranslationPipe}}
+        <button
+            class="Button"
+            style="padding-right: 10px"
+            [disabled]="!CanShowFormatedResponseCommand()"
+            (click)="ShowFormatedResponse(_CustomsRequestsSheet['RequestComminicationId'],_CustomsRequestsSheet['InterfaceTypeCode'])"
+        >
+            {{'CommunicationLogSteps.O.ShowResponse' | TextCodeTranslationPipe}}
         </button>
     </div>
 
     <div class="TextTrimming RightCenter" *ngIf="fieldName == 'ShowLog'">
-        <button 
-                style="padding-right:10px;"
-                class="Button" 
-                (click)="OnShowLogclick()">{{'CommunicationLogSteps.O.Log' | TextCodeTranslationPipe}}</button>
+        <button
+            style="padding-right: 10px"
+            class="Button"
+            (click)="OnShowLogclick()"
+        >
+            {{'CommunicationLogSteps.O.Log' | TextCodeTranslationPipe}}
+        </button>
     </div>
 
-    <div class="TextTrimming RightCenter" *ngIf="fieldName == 'ReAnalyze' &&  ReAnalyzeButtonVisibility==true">
-        <button 
-                style="padding-right:10px;"
-                [disabled]="!ReAnalyzeButtonIsEnabled" 
-                class="Button" (click)="ReAnalyzeButtonCommandAction()">{{'Customs.RequestSheet.O.ReAnalyze' | TextCodeTranslationPipe}}</button>
+    <div
+        class="TextTrimming RightCenter"
+        *ngIf="fieldName == 'ReAnalyze' &&  ReAnalyzeButtonVisibility==true"
+    >
+        <button
+            style="padding-right: 10px"
+            [disabled]="!ReAnalyzeButtonIsEnabled"
+            class="Button"
+            (click)="ReAnalyzeButtonCommandAction()"
+        >
+            {{'Customs.RequestSheet.O.ReAnalyze' | TextCodeTranslationPipe}}
+        </button>
     </div>
 
+    <div
+        class="TextTrimming RightCenter"
+        *ngIf="fieldName == 'CopyCorrelationId' && this._CustomsRequestsSheet.CorrelationId!=null"
+    >
+        <button
+            class="Button"
+            title="Copy to clipboard"
+            (click)="Copy2Clipboard()"
+            style="width: 50px; float: left; margin-left: 100px"
+        >
+            העתק
+        </button>
+    </div>
 </div>

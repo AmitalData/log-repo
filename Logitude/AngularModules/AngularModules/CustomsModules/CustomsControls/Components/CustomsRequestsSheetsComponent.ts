@@ -615,6 +615,30 @@ export class CustomsRequestsSheetsComponent
             AdditionalDataCustom: this.isReAnAnalysis
 
         });
+
+        this.columns.push({
+            FieldName: 'CorrelationId',
+            DataTypeCode: 'String',
+            Display: TextCodeTranslator.Translate("Customs.CustomsRequestsSheet.F.CorrelationId"),
+            Styles: { width: '250px' },
+            IsCustomTemplate: true,
+
+            ServerSideSortable: true,
+            SortByName: 'CorrelationId'
+        });
+
+        
+        this.columns.push({
+            FieldName: 'CopyCorrelationId',
+            DataTypeCode: 'String',
+            Display: '',
+            Styles: { width: '80px' },
+            IsCustomTemplate: true,
+            HtmlListComponentName: 'CustomsRequestsSheetsListTemplate',
+            HtmlListComponentUrl: './CustomsModules/CustomsListTemplates/Components/CustomsRequestsSheetsListTemplate',
+        });
+
+
     }
     OnFirstRowSelected($event) {
         // alert("OnFirstRowSelected()" + $event);

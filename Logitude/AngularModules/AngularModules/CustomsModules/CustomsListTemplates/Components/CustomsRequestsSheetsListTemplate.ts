@@ -205,4 +205,14 @@ export class CustomsRequestsSheetsListTemplate {
 
             });
     }
+    
+    Copy2Clipboard() {    
+        var valueToCopy = this._CustomsRequestsSheet.CorrelationId;
+        var tempTextArea = document.createElement("textarea");
+        tempTextArea.value = valueToCopy;
+        document.body.appendChild(tempTextArea);
+        tempTextArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(tempTextArea); 
+    }
 }
