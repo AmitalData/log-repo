@@ -821,6 +821,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             _declarationPM.AvailabilityDate = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false).AvailabilityDate ?? DateTime.Now;
             _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
+
             myDeclarationUpdateService.Update(_declarationPM, true);
 
             if (declarationPaymentPM != null)
