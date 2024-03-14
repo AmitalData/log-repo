@@ -282,7 +282,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
         /// There are no comments for EXPTASKTIME in the schema.
         /// </summary>
         [System.Runtime.Serialization.DataMember]
-        public virtual global::System.Nullable<double> EXPTASKTIME
+        public virtual global::System.Nullable<long> EXPTASKTIME
         {
             get
             {
@@ -297,7 +297,7 @@ namespace Unifreight.Data.AmitalModel.EntityPOCOs
                 }
             }
         }
-        private global::System.Nullable<double> _EXPTASKTIME;
+        private global::System.Nullable<long> _EXPTASKTIME;
 
     
         /// <summary>

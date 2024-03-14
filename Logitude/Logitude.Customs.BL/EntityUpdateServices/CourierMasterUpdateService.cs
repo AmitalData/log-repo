@@ -308,7 +308,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
 
             if (!DbContextBaseUtil.UnifreightDataIncludedInMain_FeatureOn)
             {
-                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();
+                scope = TransactionFactory.GetNewOracleReadCommittedTransaction();               
             }
             try
             {
@@ -365,7 +365,9 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                     {
                         myGGGQPM.Tenant = EntityPM.Tenant;
                         myGGGQPM.IS_SYNCH = false;
-                        myGGGQPM.LAST_UPDATE_DT = DateTime.Now; 
+                        myGGGQPM.LAST_UPDATE_DT = DateTime.Now;
+                        _AmitalContext = AmitalContext.GetContext(entityPM.Tenant);
+                        myGGGQUpdateService = new GGGQUpdateService(_AmitalContext);
                     }
 
                     myGGGQUpdateService.Update(myGGGQPM, true);

@@ -97,7 +97,7 @@ namespace Unifreight.BL.EntityPMs
 
         public string STATUS { get; set; }
 
-        public double? EXPTASKTIME { get; set; }
+        public long? EXPTASKTIME { get; set; }
 
         public int? TRY { get; set; }
 
