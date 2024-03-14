@@ -4,7 +4,6 @@
   Schema="dbo"
   DBType="Main"
   Module="Invoice">
-  
   <Column
     Name="Code"
     Type="varchar"
@@ -16,7 +15,7 @@
   <Column
     Name="Name"
     Type="varchar"
-    Size="30">
+    Size="60">
     <Constraints
       Nullable="false" />
   </Column>
@@ -30,7 +29,7 @@
   <Column
     Name="LocalName"
     Type="nvarchar"
-    Size="30">
+    Size="60">
     <Constraints
       Nullable="true" />
   </Column>
