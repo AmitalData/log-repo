@@ -548,11 +548,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             } // moran 31.12.15 - Task 19428 - change handle <--
                         }
                     }
-                    var myDeclarationQueryService = new DeclarationQueryService(dbContext);
-                    var declarationAvaliabilityDate = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false).AvailabilityDate ?? DateTime.Now;
+                
 
                     if (isAutoPayment)
-                        SendPayment(declarationPM, dbContext, requestParams, declarationAvaliabilityDate);
+                        SendPayment(declarationPM, dbContext, requestParams);
 
                     try
                     {
@@ -810,8 +809,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, DeclarationStatusRequestParams requestParams ,  DateTime? declarationAvaliabilityDate)
+        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, DeclarationStatusRequestParams requestParams )
+
+
         {
+
             if (declarationPM.AvailabilityDate != null) return;
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
             var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
@@ -819,7 +821,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationQueryService = new DeclarationQueryService(dbContext);
             var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
-            _declarationPM.AvailabilityDate = declarationAvaliabilityDate ?? DateTime.Now;
+            _declarationPM.AvailabilityDate = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false).AvailabilityDate ?? DateTime.Now;
             _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
             myDeclarationUpdateService.Update(_declarationPM, true);
 
