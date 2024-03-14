@@ -128,8 +128,8 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                                 EventDateTime = mySTBMessage.EventTime,
                                 OwnerUnifreightUserCode = myOwnerUnifreightUserCode
                             });
-                            }
                             this._DeclarationPM.AvailabilityDate = mySTBMessage.EventTime;
+                            }
                         }
                         break;
                     case "0006":
