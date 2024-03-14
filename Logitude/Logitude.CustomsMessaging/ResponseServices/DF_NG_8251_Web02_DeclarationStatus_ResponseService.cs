@@ -810,7 +810,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, DeclarationStatusRequestParams requestParams ,  DateTime declarationAvaliabilityDate)
+        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, DeclarationStatusRequestParams requestParams ,  DateTime? declarationAvaliabilityDate)
         {
             if (declarationPM.AvailabilityDate != null) return;
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
@@ -819,7 +819,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationQueryService = new DeclarationQueryService(dbContext);
             var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
-            _declarationPM.AvailabilityDate = declarationAvaliabilityDate;
+            _declarationPM.AvailabilityDate = declarationAvaliabilityDate ?? DateTime.Now;
             _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
             myDeclarationUpdateService.Update(_declarationPM, true);
 
