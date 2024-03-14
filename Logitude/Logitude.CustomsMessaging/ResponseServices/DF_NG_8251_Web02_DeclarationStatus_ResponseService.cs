@@ -549,7 +549,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
-                    var declarationAvaliabilityDate = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog.AvailabiltyLogRunDetails.TimeStamp;
+                    var declarationAvaliabilityDate = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog?.AvailabiltyLogRunDetails?.TimeStamp;
                
                     if (isAutoPayment)
                         SendPayment(declarationPM, dbContext, requestParams, declarationAvaliabilityDate);
