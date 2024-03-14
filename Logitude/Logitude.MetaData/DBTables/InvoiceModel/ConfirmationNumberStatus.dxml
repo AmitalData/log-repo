@@ -4,6 +4,7 @@
   Schema="dbo"
   DBType="Main"
   Module="Invoice">
+  
   <Column
     Name="Code"
     Type="varchar"

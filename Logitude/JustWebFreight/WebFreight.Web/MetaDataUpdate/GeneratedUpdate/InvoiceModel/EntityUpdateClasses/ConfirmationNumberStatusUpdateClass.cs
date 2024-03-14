@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ConfirmationNumberStatusUpdateClass
    {  		
-		public const string HashString = "3f79ea3f04ecd51cb4cdb1324ff789a2";
+		public const string HashString = "e0cb2c2c9ecb10da3ec91ab8595f5766";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -132,7 +132,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סטטוס הקצאה",
 			      				    DefaultText =  "Confirmation Number Status",
-			      				    Code =  "5f5b",
+			      				    Code =  "c2d1",
 			      				    Name =  " Query Group",
 			      				    CloseTableCode =  "Code",
 			      				    CloseTableName =  "LocalName",
