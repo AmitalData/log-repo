@@ -1,13 +1,9 @@
 using Simplog.Server.Infrastructure.Helpers;
 using System;
 using System.Collections.Generic;
-using WebFreight.Web.Security;
 using WebFreight.Web.Helpers;
 using Simplog.Server.Infrastructure;
 using Logitude.Server.Tools.Helpers;
-using System.Web;
-using Simplog.Data.CommonDataModel.Repositories;
-using Simplog.Data.CommonDataModel.EntityPOCOs;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
@@ -15,8 +11,8 @@ using System.Transactions;
 using Logitude.Infrastructure.BL.EntityPMs;
 using Logitude.Infrastructure.Data;
 using Logitude.Infrastructure.BL.EntityUpdateServices;
-using Logitude.Infrastructure.BL.EntityQueryServices;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace WebFreight.Web.Controllers.WebServices
 {
@@ -35,8 +31,12 @@ namespace WebFreight.Web.Controllers.WebServices
                     {
                         string logKey = PerformanceLogger.LogCurrentTime();
                         var secretKey = "secretkey";
-                        var concatenatedString = secretKey + entityPM.Id;
-                        if (!CreateMD5(concatenatedString).Equals(entityPM.Hash, StringComparison.InvariantCultureIgnoreCase))
+                        string originalData = secretKey + entityPM.Id;
+                        string encryptedData, status, errMessage;
+                        EncryptMD5(originalData, out encryptedData, out status, out errMessage);
+                        if (!string.IsNullOrEmpty(errMessage))
+                            throw new Exception("Error Message: " + errMessage);
+                        if (!encryptedData.Equals(entityPM.Hash, StringComparison.InvariantCultureIgnoreCase))
                         {
                             logKey = PerformanceLogger.LogCurrentTime();
                             throw new Exception("Hash verification failed.");
@@ -63,20 +63,33 @@ namespace WebFreight.Web.Controllers.WebServices
             }
         }
 
-
-        public static string CreateMD5(string input)
+        public void EncryptMD5(string originalData, out string encryptedData, out string status, out string errMessage)
         {
-            using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
+            encryptedData = "";
+            status = "";
+            errMessage = "";
+            Byte[] originalBytes;
+            Byte[] encodedBytes;
+            MD5 md5;
+            try
             {
-                byte[] inputBytes = System.Text.Encoding.ASCII.GetBytes(input);
-                byte[] hashBytes = md5.ComputeHash(inputBytes);
-                StringBuilder sb = new System.Text.StringBuilder();
-                for (int i = 0; i < hashBytes.Length; i++)
-                {
-                    sb.Append(hashBytes[i].ToString("X2"));
-                }
-                return sb.ToString();
+                md5 = new MD5CryptoServiceProvider();
+                originalBytes = ASCIIEncoding.Default.GetBytes(originalData);
+                encodedBytes = md5.ComputeHash(originalBytes);
+                encodedBytes = md5.ComputeHash(encodedBytes);
+                encodedBytes = md5.ComputeHash(encodedBytes);
+                encryptedData = BitConverter.ToString(encodedBytes);
+                encryptedData = encryptedData.Replace("-", "");
             }
+            catch (Exception ex)
+            {
+                status = "-1";
+                errMessage = "Encrypted to MD5 failed: " + ex.Message;
+            }
+            return;
         }
+
+
+
     }
 }
