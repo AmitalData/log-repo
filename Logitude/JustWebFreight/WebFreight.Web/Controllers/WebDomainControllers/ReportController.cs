@@ -93,10 +93,11 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 else
                 {
 
+					var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
 					bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true"; 
                     string urlImage = string.Empty;
 
-					if (isAppService && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
+					if ((isAppServiceENV || isAppService) && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
                     {
                         string URI = LogitudeSettings.LogitudeIISURL.TrimEnd('/') + "/api/Report/" + "GetSpecificPageFromStimulReportAsBase64";
 
@@ -171,10 +172,10 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
                 if (result != null)
                 {
 
-
+					var isAppServiceENV = Environment.GetEnvironmentVariable("IsAppService") == "true";
 					bool isAppService = ConfigurationManager.AppSettings["IsAppService"] == "true";
 
-					if (isAppService && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
+					if ((isAppServiceENV || isAppService) && !string.IsNullOrEmpty(LogitudeSettings.LogitudeIISURL))
 					{
 						string URI = LogitudeSettings.LogitudeIISURL.TrimEnd('/') + "/api/Report/" + "GetMemoryStreamForExcelOrPdf";
 
