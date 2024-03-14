@@ -548,9 +548,11 @@ namespace Logitude.CustomsMessaging.ResponseServices
                             } // moran 31.12.15 - Task 19428 - change handle <--
                         }
                     }
+                    var myDeclarationQueryService = new DeclarationQueryService(dbContext);
+                    var declarationAvaliabilityDate = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false).AvailabilityDate ?? DateTime.Now;
 
                     if (isAutoPayment)
-                        SendPayment(declarationPM, dbContext, requestParams);
+                        SendPayment(declarationPM, dbContext, requestParams, declarationAvaliabilityDate);
 
                     try
                     {
@@ -808,7 +810,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, DeclarationStatusRequestParams requestParams)
+        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, DeclarationStatusRequestParams requestParams ,  DateTime declarationAvaliabilityDate)
         {
             if (declarationPM.AvailabilityDate != null) return;
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
@@ -817,7 +819,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationQueryService = new DeclarationQueryService(dbContext);
             var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
-            _declarationPM.AvailabilityDate = _declarationPM.AvailabilityDate ?? DateTime.Now;
+            _declarationPM.AvailabilityDate = declarationAvaliabilityDate;
             _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
             myDeclarationUpdateService.Update(_declarationPM, true);
 
