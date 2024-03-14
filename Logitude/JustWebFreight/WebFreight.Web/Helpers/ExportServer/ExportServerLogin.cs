@@ -36,7 +36,8 @@ namespace WebFreight.Web.Helpers.ExportServer
 
         private static void initToken(int tenant, string email, string exportLoginCredintial)
         {            
-            APICredentialsParameters aPICredentialsParameters = new APICredentialsParameters() { PrimaryKey = exportLoginCredintial, Tenant = tenant };                        
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
+            APICredentialsParameters aPICredentialsParameters = new APICredentialsParameters() { PrimaryKey = exportLoginCredintial, Tenant = tenant };
             ChannelFactory<ILoginWcfService> factory = new ChannelFactory<ILoginWcfService>(
                 exportUrl.StartsWith("https") ? (Binding)new BasicHttpsBinding() : (Binding)new BasicHttpBinding(), 
                 new EndpointAddress(exportUrl + "/WcfApi/LoginWcfService.svc"));
