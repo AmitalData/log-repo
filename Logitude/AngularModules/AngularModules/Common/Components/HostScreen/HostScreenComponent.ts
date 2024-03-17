@@ -53,7 +53,7 @@ export class HostScreenComponent {
 
     async initUrlLoignToExport() {
         try {
-            const link: string = await new TaxesWebService().getTokens();
+            const link: string = await new TaxesWebService().getlinkLogin();
             this.urlLoignToExport = this.domSanitizer.bypassSecurityTrustResourceUrl(link);
         } catch (error) {
             console.log('******* error throw when try get login link to export', error);
