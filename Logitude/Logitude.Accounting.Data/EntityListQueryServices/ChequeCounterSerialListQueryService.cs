@@ -33,7 +33,8 @@ namespace Logitude.Accounting.Data.EntityListQueryServices
 					                          ChequeCounterBegin = a.ChequeCounterBegin,
 					
 					                          ChequeCounterEnd = a.ChequeCounterEnd,
-					
+											  
+											  Inactive = a.Inactive
 		                    	            });
             return query;
 		}

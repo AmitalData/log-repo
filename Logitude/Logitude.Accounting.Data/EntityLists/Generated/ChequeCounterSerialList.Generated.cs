@@ -26,6 +26,8 @@ namespace Logitude.Accounting.Data.EntityLists
        [Key]
        [DataMember]
        public string BankAccountId  { get; set; }
+       [DataMember]
+       public bool Inactive  { get; set; }
    }
 
 }

@@ -222,85 +222,77 @@ namespace Logitude.Accounting.BL.EntityUpdateServices
         private BankAccountPM UpdateBankAccount(PaymentChequePM entityPM)
         {
             BankAccountQueryService bankAccountService = new BankAccountQueryService(entityPM.Tenant);
-            BankAccountPM bankAccount = bankAccountService.GetSingle(entityPM.BankAccountId, false, false);
+            BankAccountPM bankAccount = bankAccountService.GetSingle(entityPM.BankAccountId, true, false);
             var serials = bankAccount.ChequeCounterSerials;
-            if (serials.Count() == 0)
+            int bankChequeCounter = bankAccount.ChequeCounter.Value;
+
+            showLocals = SetShowLocalLabels(entityPM);
+            if (!bankAccount.ChequeCounter.HasValue)
             {
-                throw new ApplicationException("לא מוגדרות סדרות המחאות במערכת , חובה להגדיר ביישות הבנק סדרה כלשהי לפני הפקת המחאה חדשה.");
+                throw new ApplicationException(TranslateTextsClass.Translate("Accounting.General.O.NoChequeCounter", entityPM.Tenant, showLocals));
             }
             else
             {
-                int chequeCounterSeriesID = bankAccount.ChequeCounterSeriesID.HasValue ? bankAccount.ChequeCounterSeriesID.Value : serials.First().SeriesId;
-                var currentSerial = serials.First(s => s.SeriesId == chequeCounterSeriesID);
-
-              
-                int chequeCounter, serial, nextChequeCounter, nextSerial;
-                chequeCounter = serial = nextChequeCounter = nextSerial = 0;
-
-                if (bankAccount.ChequeCounter.HasValue)
+                int bankChequeCounterSeriesID = bankAccount.ChequeCounterSeriesID.Value;
+                var currentSerial = serials.First(s => s.SeriesId == bankChequeCounterSeriesID);
+                if (currentSerial.Inactive)
                 {
-                    if (bankAccount.ChequeCounter.Value > currentSerial.ChequeCounterEnd)
+                    throw new ApplicationException(TranslateTextsClass.Translate("ChequeCounterSerial.O.CurrentSeriesInactive", entityPM.Tenant, showLocals));
+                }
+                else
+                {
+                    if (bankChequeCounter > currentSerial.ChequeCounterEnd)
                     {
-                        var nextSerialItem = serials.FirstOrDefault(s => s.SeriesId > chequeCounterSeriesID);
-                        if (nextSerialItem == null)
-                        {
-                            throw new ApplicationException("מונה ההמחאות הסתיים , חובה להגדיר ביישות הבנק סדרת המחאות חדשה.");
-                        }
-                        else
-                        {
-                            chequeCounter = nextSerialItem.ChequeCounterBegin;
-                            serial = nextSerialItem.SeriesId;
-                            nextChequeCounter = chequeCounter + 1;
-                            nextSerial = serial;
-                        }
+                        throw new ApplicationException(TranslateTextsClass.Translate("ChequeCounterSerial.O.NoSeriesDefined", entityPM.Tenant, showLocals));
                     }
                     else
                     {
-                        chequeCounter = bankAccount.ChequeCounter.Value;
-                        if (chequeCounter == currentSerial.ChequeCounterEnd)
+                        int chequeCounter, serial;
+                        int? nextChequeCounter, nextSerial;
+
+                        chequeCounter = bankChequeCounter;
+                        serial = bankChequeCounterSeriesID;
+
+                        if (bankChequeCounter + 1 > currentSerial.ChequeCounterEnd)
                         {
-                            var nextSerialItem = serials.FirstOrDefault(s => s.SeriesId > chequeCounterSeriesID);
+                            var nextSerialItem = serials.FirstOrDefault(s => s.SeriesId > bankChequeCounterSeriesID && !s.Inactive);
                             if (nextSerialItem == null)
                             {
-                                throw new ApplicationException(" מונה ההמחאות יסתיים לאחר הפקת המחאה זו , חובה להגדיר ביישות הבנק סדרת המחאות חדשה טרם הפקת ההמחאה.");
+                                nextChequeCounter = bankChequeCounter + 1;
+                                nextSerial = serial;
                             }
                             else
                             {
-                                chequeCounter = nextSerialItem.ChequeCounterBegin;
-                                serial = nextSerialItem.SeriesId;
-                                nextChequeCounter = chequeCounter + 1;
-                                nextSerial = serial;
+                                nextChequeCounter = nextSerialItem.ChequeCounterBegin;
+                                nextSerial = nextSerialItem.SeriesId;
                             }
-                            
+                        }
+                        else
+                        {
+                            nextChequeCounter = chequeCounter + 1;
+                            nextSerial = serial;
+                        }
+
+                        if (string.IsNullOrEmpty(entityPM.ChequeNumber))
+                        {
+                            entityPM.ChequeNumber = chequeCounter.ToString();
+                            entityPM.UniqueField = entityPM.ChequeNumber;
+
+                            BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
+                            bankAccount.ChequeCounter = nextChequeCounter;
+                            bankAccount.ChequeCounterSeriesID = nextSerial;
+                            bankAccount.ChangeSetOp = ChangeSetOperation.Update;
+                            bankAccountUpdateService.Update(bankAccount, true);
+                        }
+                        else
+                        {
+                            entityPM.UniqueField = entityPM.ChequeNumber;
                         }
                     }
-                }
-                else
-                {
-                    chequeCounter = currentSerial.ChequeCounterBegin;
-                    serial = chequeCounterSeriesID;
-                    nextChequeCounter = chequeCounter + 1;
-                    nextSerial = serial;
-                }
 
-                if (string.IsNullOrEmpty(entityPM.ChequeNumber))
-                {
-                    entityPM.ChequeNumber = chequeCounter.ToString();
-                    entityPM.UniqueField = entityPM.ChequeNumber;
-
-                    BankAccountUpdateService bankAccountUpdateService = new BankAccountUpdateService(MainContext, new Dictionary<string, IContext>(), Tenant);
-                    bankAccount.ChequeCounter = nextChequeCounter;
-                    bankAccount.ChequeCounterSeriesID = nextSerial;
-                    bankAccount.ChangeSetOp = ChangeSetOperation.Update;
-                    bankAccountUpdateService.Update(bankAccount, true);
-                }
-                else
-                {
-                    entityPM.UniqueField = entityPM.ChequeNumber;
+                    return bankAccount;
                 }
             }
-
-            return bankAccount;
         }
 
         public APPaymentPM GetAPPayment(PaymentChequePM paymentCheque)

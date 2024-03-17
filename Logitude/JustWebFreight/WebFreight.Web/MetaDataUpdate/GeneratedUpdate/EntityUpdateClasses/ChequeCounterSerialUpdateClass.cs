@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class ChequeCounterSerialUpdateClass
    {  		
-		public const string HashString = "85d2cfb8d0c7cb6e2e99d14ea963f889";
+		public const string HashString = "8ff1a6369e0978223890791422e73bc3";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -130,7 +130,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סדרת שיקים",
 			      				    DefaultText =  "Cheque Series",
-			      				    Code =  "1ea0",
+			      				    Code =  "10e7",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Accounting",
@@ -495,6 +495,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Inactive",
 					  						ListPropertyPath =  "Inactive",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -611,7 +612,27 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableTextCodes(TextCodeRepository TextCodeRepository,FeatureRepository FeaturesRepository,Dictionary<string, Feature> TenantFeatures,Dictionary<string, TextCode> TextCodes,IWebFreightContext ObjectContext)
-	    {     
+	    {  
+
+		   		   //--------------> Additional TextCodes <--------------\\
+
+ 		   ObjectTable ChequeCounterSerialObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "ChequeCounterSerial" && d.Tenant == 0).FirstOrDefault(); 
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOChequeCounterBeginBigger = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.ChequeCounterBeginBigger", DefaultText = "The cheque counter begin field must be smaller than the cheque counter end field",LocalDefaultText = @"שדה תחילת מונה המחאות חייב להיות קטן מהשדה סיום מונה המחאות", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOChequeCounterBeginInvalid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.ChequeCounterBeginInvalid", DefaultText = "The cheque counter begin field must be greater than 1",LocalDefaultText = @"שדה תחילת מונה המחאות חייב להיות גדול מ-1", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOChequeCounterEndInvalid = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.ChequeCounterEndInvalid", DefaultText = "The cheque counter end field must be greater than 1",LocalDefaultText = @"שדה סיום מונה המחאות חייב להיות גדול מ-1", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOSeriesOverlaps = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.SeriesOverlaps", DefaultText = "There are overlaps between the series",LocalDefaultText = @"ישנן חפיפות בין הסדרות", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOCurrentSeriesInactive = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.CurrentSeriesInactive", DefaultText = "The current cheques series is inactive. It must be returned to active status or a new active series must be defined in the bank entity before issuing a cheque",LocalDefaultText = @"סדרת ההמחאות הנוכחית לא פעילה. יש להחזיר לסטטוס פעיל או להגדיר ביישות הבנק סדרה פעילה חדשה לפני הפקת המחאה", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialONoSeriesDefined = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.NoSeriesDefined", DefaultText = "The cheque series are not defined in the system, it is mandatory to define some series for the bank entity before issuing a new cheque",LocalDefaultText = @"לא מוגדרות סדרות המחאות במערכת , חובה להגדיר ביישות הבנק סדרה כלשהי לפני הפקת המחאה חדשה", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+ 		   TextCode ChequeCounterSerialTextCode_ChequeCounterSerialOChequeCounterEndSmaller = AddTextCodes.AddTextCode(new TextCodeDetails() { Code = "ChequeCounterSerial.O.ChequeCounterEndSmaller", DefaultText = "The cheque counter end field must be bigger than the cheque counter begin field",LocalDefaultText = @"שדה סיום מונה המחאות חייב להיות גדול מהשדה תחילת מונה המחאות", ObjectTableId = ChequeCounterSerialObjectTable.Id, Tenant = 0, TextCodeTypeCode = "O", IsSpellChecked = false }, TextCodeRepository, TextCodes);
+
+   
 	    
 }
 

@@ -39,7 +39,8 @@
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'100'" [header]="SeriesIdHeader"
                         [binding]="'SeriesId'">
                         <ng-template let-item>
-                            <log-cell-template [IgnoreMods]="true" #logcelltemplate [IsEnabled]="item.SeriesId>=SeriesId">
+                            <log-cell-template [IgnoreMods]="true" #logcelltemplate
+                                [IsEnabled]="SeriesId==null || item.SeriesId>SeriesId">
                                 <div [style.text-align]="isRTL ? 'right' : 'left'">
                                     <span>{{item.SeriesId}}</span>
                                 </div>
@@ -51,7 +52,7 @@
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'"
                         [header]="ChequeCounterBeginHeader" [binding]="'ChequeCounterBegin'">
                         <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="item.SeriesId>=SeriesId">
+                            <log-cell-template #logcelltemplate [IsEnabled]="SeriesId==null || item.SeriesId>SeriesId">
                                 <div *ngIf="logcelltemplate.IsDisplayMode"
                                     [style.text-align]="isRTL ? 'right' : 'left'">
                                     <span>{{item.ChequeCounterBegin}}</span>
@@ -69,7 +70,7 @@
                     <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="ChequeCounterEndHeader"
                         [binding]="'ChequeCounterEnd'">
                         <ng-template let-item>
-                            <log-cell-template #logcelltemplate [IsEnabled]="item.SeriesId>=SeriesId">
+                            <log-cell-template #logcelltemplate [IsEnabled]="SeriesId==null || item.SeriesId>SeriesId">
                                 <div *ngIf="logcelltemplate.IsDisplayMode"
                                     [style.text-align]="isRTL ? 'right' : 'left'">
                                     <span> {{item.ChequeCounterEnd}} </span>
@@ -84,13 +85,16 @@
                             </log-cell-template>
                         </ng-template>
                     </log-column>
-                    <!--NULL-->
-                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'30'" [header]="' '" class="CellTools">
+                    <!--Inactive-->
+                    <log-column [Alignment]="isRTL ? 'right' : 'left'" [width]="'95'" [header]="InActiveHeader"
+                        class="CellTools" [binding]="'Inactive'">
                         <ng-template let-item>
-                            <log-cell-template [IgnoreMods]="true" [IsEnabled]="item.SeriesId>=SeriesId" #logcelltemplate>
+                            <log-cell-template [IgnoreMods]="true"
+                                [IsEnabled]="SeriesId==null || item.SeriesId>SeriesId || (item.SeriesId==SeriesId && item.ChequeCounter<=currentSerial.ChequeCounterEnd)"
+                                #logcelltemplate>
                                 <div [style.text-align]="isRTL ? 'right' : 'left'" style="margin-top:4px;">
-                                    <IconButton [Name]="'Delete'" [IsSmall]="true" [Left]="3"
-                                        (click)="RemoveLine(item)" [disabled]="item.SeriesId<SeriesId"></IconButton>
+                                    <LogCheckBox [ObjectFieldName]="'Inactive'"
+                                        [ObjectTableName]="'ChequeCounterSerial'" [DataContext]="item"></LogCheckBox>
                                 </div>
                             </log-cell-template>
                         </ng-template>

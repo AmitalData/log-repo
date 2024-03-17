@@ -28,18 +28,20 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
     SeriesIdHeader: string = '';
     ChequeCounterBeginHeader: string = '';
     ChequeCounterEndHeader: string = '';
+    InActiveHeader: string = '';
     public TenantPM: TenantPM;
     public isRTL: boolean = false;
     public ValidationErrorsList: string[] = [];
-    SeriesId = 1;
+    SeriesId: number = null;
     chequeCounter: number;
-
+    currentSerial: ChequeCounterSerialPM;
     myService: BankAccountPMService;
     constructor(public entityArgs: EntityArgs) {
         super();
         this.SeriesIdHeader = TextCodeTranslator.Translate("ChequeCounterSerial.CH.SeriesIdListLable");
         this.ChequeCounterBeginHeader = TextCodeTranslator.Translate("ChequeCounterSerial.CH.ChequeCounterBeginListLable");
         this.ChequeCounterEndHeader = TextCodeTranslator.Translate("ChequeCounterSerial.CH.ChequeCounterEndListLable");
+        this.InActiveHeader = TextCodeTranslator.Translate("ChequeCounterSerial.CH.InActiveListLable");
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.TenantPM = SessionLocator.TenantPM;
         this.myService = new BankAccountPMService();
@@ -50,15 +52,14 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
     }
 
     SetUIProperties() {
+
     }
 
     SetWindowArgs(args: any) {
         this.EntityPM = args.EntityPM;
-        if (!AppTool.IsNullOrEmpty(this.EntityPM.ChequeCounterSeriesID)) {
-            this.SeriesId = this.EntityPM.ChequeCounterSeriesID;
-            this.chequeCounter = this.EntityPM.ChequeCounter;
+        this.SeriesId = this.EntityPM.ChequeCounterSeriesID;
+        this.chequeCounter = this.EntityPM.ChequeCounter;
 
-        }
         this.SetUIProperties();
         this.BuildData();
         this.Listen();
@@ -81,26 +82,18 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
         return res;
     }
 
-    ValidateCurrentSerialEdit(serial) {
-        var res = true;
-        if (this.chequeCounter < serial.ChequeCounterBegin || this.chequeCounter > serial.ChequeCounterEnd) {
-            res = false;
-        }
-        return res;
-    }
-
     AddLine() {
         var errors = [];
         if (this.ChequeCounterSerials.Collection.length > 0) {
             var lastRow = this.ChequeCounterSerials.Collection[this.ChequeCounterSerials.Collection.length - 1];
             Validator.TryValidateObject(lastRow, this.ObjectTableName, errors);
-            var uiProp = lastRow.UIProperties.GetUIProperty("ChequeCounterBegin", 'ChequeCounterSerial', lastRow, true);
             lastRow.Validate(errors);
             this.ValidationErrorsList = errors;
             if (errors.length > 0) {
                 return;
             }
         }
+
         // Adding New Line
         var chequeCounterSerial: ChequeCounterSerialPM = new ChequeCounterSerialPM(this.EntityPM);
         chequeCounterSerial.Tenant = this.EntityPM.Tenant;
@@ -121,6 +114,9 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
             list.push(new ChequeCounterSerialItem(item, this));
         });
         this.ChequeCounterSerials.InsertCollection(list);
+        if (!AppTool.IsNullOrEmpty(this.SeriesId)) {
+            this.currentSerial = this.ChequeCounterSerials.Collection.find(c => c.SeriesId == this.SeriesId);
+        }
     }
 
     RemoveLine(line: ChequeCounterSerialItem) {
@@ -132,7 +128,6 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
                 this.EntityPM.RemoveChequeCounterSerial(line.EntityPM);
             }
         });
-
     }
 
     CancelButtonClicked() {
@@ -150,16 +145,10 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
         this.ChequeCounterSerials.Collection.forEach(item => {
             Validator.TryValidateObject(item.EntityPM, this.ObjectTableName, errors);
             item.Validate(errors);
-            if (item.SeriesId == this.SeriesId) {
-                var isCurrentSerialEditValid = this.ValidateCurrentSerialEdit(item);
-                if (!isCurrentSerialEditValid) {
-                    errors.push('עריכת סדרה נוכחית מספר ' + this.SeriesId + ' לא תקינה וגורמת למספר ההמחאה הבא להיות מחוץ לטווח');
-                }
-            }
         });
         var hasOverlaps = this.ValidateSerialsOverlap();
         if (hasOverlaps) {
-            errors.push('ישנן חפיפות בין הסדרות');
+            errors.push(TextCodeTranslator.Translate("ChequeCounterSerial.O.SeriesOverlaps"));
         }
         if (errors.length == 0) {
             this.SubmitChanges();
@@ -195,17 +184,24 @@ export class ChequeCounterSerialItem extends BaseComponent {
     public EntityPM: ChequeCounterSerialPM;
     public BankAccountPM: BankAccountPM;
     public ObjectTableName: string = "ChequeCounterSerial";
-    errorChequeCounterBeginBigger = 'מספר תחילת מונה המחאות חייב להיות קטן מהשדה סיום מונה המחאות';
-    errorChequeCounterEndSmaller = 'מספר תחילת מונה המחאות חייב להיות קטן מהשדה סיום מונה המחאות';
-    errorChequeCounterBeginInvalid = 'מספר תחילת מונה המחאות חייב להיות גדול מ-1';
-    errorChequeCounterEndInvalid = 'מספר סיום מונה המחאות חייב להיות גדול מ-1';
+    errorChequeCounterBeginBigger = TextCodeTranslator.Translate("ChequeCounterSerial.O.ChequeCounterBeginBigger");
+    errorChequeCounterBeginInvalid = TextCodeTranslator.Translate("ChequeCounterSerial.O.ChequeCounterBeginInvalid");
+    errorChequeCounterEndInvalid = TextCodeTranslator.Translate("ChequeCounterSerial.O.ChequeCounterEndInvalid");
+    errorChequeCounterEndSmaller = TextCodeTranslator.Translate("ChequeCounterSerial.O.ChequeCounterEndSmaller");
 
     constructor(entityPM: ChequeCounterSerialPM, public fatherComponent) {
         super();
         this.EntityPM = entityPM;
         this.BankAccountPM = fatherComponent.EntityPM;
+        this.SetUIProperties();
     }
 
+    SetUIProperties() {
+        if (!AppTool.IsNullOrEmpty(this.BankAccountPM.ChequeCounterSeriesID) &&
+            ((this.SeriesId < this.BankAccountPM.ChequeCounterSeriesID) ||
+                (this.SeriesId == this.BankAccountPM.ChequeCounterSeriesID && this.BankAccountPM.ChequeCounter > this.ChequeCounterEnd)))
+            this.UIProperties.SetEnabled("Inactive", this.ObjectTableName, false);
+    }
     Validate(errors: string[]) {
         if (!this.CheckChequeCounterBeginSmaller(this.ChequeCounterBegin)) {
             errors.push(this.errorChequeCounterBeginBigger);
@@ -256,7 +252,7 @@ export class ChequeCounterSerialItem extends BaseComponent {
     }
     CheckChequeCounterEndBigger(ChequeCounterEnd: number): boolean {
         if (ChequeCounterEnd != null && this.EntityPM.ChequeCounterBegin != null) {
-            if (ChequeCounterEnd < this.EntityPM.ChequeCounterBegin) {
+            if (ChequeCounterEnd <= this.EntityPM.ChequeCounterBegin) {
                 return false;
             }
             return true;
@@ -298,6 +294,13 @@ export class ChequeCounterSerialItem extends BaseComponent {
             } else {
                 this.UIProperties.SetValidity("ChequeCounterEnd", "ChequeCounterSerial", true, '');
             }
+        }
+    }
+
+    get Inactive() { return this.EntityPM.Inactive; }
+    set Inactive(newValue: boolean) {
+        if (this.EntityPM.Inactive != newValue) {
+            this.EntityPM.Inactive = newValue;
         }
     }
 }
