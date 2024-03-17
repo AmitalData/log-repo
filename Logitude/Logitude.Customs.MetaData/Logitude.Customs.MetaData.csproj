@@ -159,6 +159,7 @@
     <None Include="DBScripts\Post\20220905_UpdateDeclarationPhysicalCheckAfter.sxml" />
     <None Include="DBScripts\Post\202212281351_UpdateBothINTERFACEMANAGEMENTS.sxml" />
     <None Include="DBScripts\Post\202301291730_SetDeclarationToDisplayDeclarationReferantData.sxml" />
+    <None Include="DBScripts\Post\202403171200_CreateIndexOnCourierAndDeclaration.sxml" />
     <None Include="DBScripts\Pre\202309071150_DropColumnJsonData_OcrDocument.sxml" />
     <None Include="DBScripts\Pre\202211290910_DropExportStorageShipCode.sxml" />
     <None Include="DBScripts\Pre\20230310_DropDeclarationStatusTable.sxml" />
