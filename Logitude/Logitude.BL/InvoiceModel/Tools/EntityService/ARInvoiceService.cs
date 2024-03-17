@@ -4002,7 +4002,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                         journalLine.ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate;
                         journalLine.Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber;
                         journalLine.Reference2 = theEntityPm.MainEntityReference;
-                        journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber;
+                        journalLine.Reference3 = !string.IsNullOrEmpty(theEntityPm.MasterNumber) ? theEntityPm.MasterNumber : (!string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber);
                         journalLine.Notes = theEntityPm.PrintNotes;
                         journalLine.DebitAccountId = glAccount == null ? "" : glAccount.Id;
                         journalLine.DebitControlAccountId = glAccount == null ? "" : glAccount.ControlAccountId;
@@ -4031,7 +4031,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                                                             ExchangeRate = (decimal)d.ForiegnExchangeRate,
                                                             Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber,
                                                             Reference2 = theEntityPm.MainEntityReference,
-                                                            Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
+                                                            Reference3 = !string.IsNullOrEmpty(theEntityPm.MasterNumber) ? theEntityPm.MasterNumber : (!string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber),
                                                             Notes =d.Notes ,
                                                         }).ToList();
 
@@ -4066,7 +4066,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
                             ExchangeRate = (decimal)theEntityPm.InvoiceCurrencyExchangeRate,
                             Reference1 = theEntityPm.CustomerRef != null ? theEntityPm.CustomerRef : theEntityPm.InvoiceNumber,
                             Reference2 = theEntityPm.MainEntityReference,
-                            Reference3 = !string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber,
+                            Reference3 = !string.IsNullOrEmpty(theEntityPm.MasterNumber) ? theEntityPm.MasterNumber : (!string.IsNullOrEmpty(theEntityPm.HouseNumber) ? theEntityPm.HouseNumber : theEntityPm.MasterNumber),
 
                         };
                         GLAccountPM debitGLAccount = getDebitGLAccount(entityPM.BillToId, entityPM.Tenant, entityPM.IsExternalEntity, entityPM.BillToGLAccountId);
