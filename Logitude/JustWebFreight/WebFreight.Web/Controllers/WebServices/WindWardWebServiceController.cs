@@ -28,34 +28,41 @@ namespace WebFreight.Web.Controllers.WebServices
 		{
 			try
 			{
-				WriteLogMe("shipmentUpdate ENTER POST: ", webhook, "shipmentUpdate");
+				string WindWardSettings = LogitudeSettings.WindWardSettings;
+				var WindWardSettingsArray = WindWardSettings?.Split(',');
+				var WWtenant = WindWardSettingsArray != null && WindWardSettingsArray?.Count() > 2 ? WindWardSettingsArray[2] : "";
+				string xmlStr = string.Empty;
+				if (!string.IsNullOrEmpty(WWtenant)) {
+					WriteLogMe("shipmentUpdate ENTER POST: ", webhook, "shipmentUpdate");
 				
-				var webhookService = new TrackedShipmentsAPI.Services.WebhookService();
-				dynamic webhookObject = null;
-				using (JsonReader reader = new JsonTextReader(new StringReader(webhook.ToString())))
-				{
-					reader.DateParseHandling = DateParseHandling.None;
-					 webhookObject = JObject.Load(reader);
-				}
-
-				dynamic webhookObjectData = webhookObject?.data != null ? webhookObject?.data : webhookObject;
-				
-				string sentAt = webhookObjectData?.metadata?.sentAt;
-
-				var enrichedData = webhookService.AddDataToJSON(webhookObjectData, sentAt);
-				var result = webhookService.JsonToXML(enrichedData);
-
-				var xmlString = result.OuterXml;
-				WriteData(webhook, xmlString);
-				var ContainerPushPage = new ContainerPush();
-				WriteLogMe("shipmentUpdate AnalyzeContainerStatus: " , null, "shipmentUpdate");
-
-				ContainerPushPage.AnalyzeContainerStatus(xmlString);
-
-				string xmlStr = xmlString.ToString();
-				WriteLogMe("shipmentUpdate After POST: "+ xmlStr, null, "shipmentUpdate");
-
+				    var webhookService = new TrackedShipmentsAPI.Services.WebhookService();
+				    dynamic webhookObject = null;
+				    using (JsonReader reader = new JsonTextReader(new StringReader(webhook.ToString())))
+				    {
+				    	reader.DateParseHandling = DateParseHandling.None;
+				    	 webhookObject = JObject.Load(reader);
+				    }
+				    
+				    dynamic webhookObjectData = webhookObject?.data != null ? webhookObject?.data : webhookObject;
+				    
+				    string sentAt = webhookObjectData?.metadata?.sentAt;
+				    
+				    var enrichedData = webhookService.AddDataToJSON(webhookObjectData, sentAt);
+				    var result = webhookService.JsonToXML(enrichedData);
+				    
+				    var xmlString = result.OuterXml;
+				    WriteData(webhook, xmlString);
+				    var ContainerPushPage = new ContainerPush();
+				    WriteLogMe("shipmentUpdate AnalyzeContainerStatus: " , null, "shipmentUpdate");
+				    
+				    ContainerPushPage.AnalyzeContainerStatus(xmlString);
+				    
+				    xmlStr = xmlString.ToString();
+				    WriteLogMe("shipmentUpdate After POST: "+ xmlStr, null, "shipmentUpdate");
+				}   
 				return Request.CreateResponse(HttpStatusCode.OK, xmlStr);
+				
+
 			}
 			catch (Exception ex)
 			{
