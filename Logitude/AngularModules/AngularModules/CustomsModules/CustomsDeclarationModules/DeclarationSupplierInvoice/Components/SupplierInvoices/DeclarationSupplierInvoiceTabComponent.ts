@@ -67,6 +67,24 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     public IsVisible = false;
     public MultiUpdate = false;
     public IsOcr = false;
+    public IsChecked = false;    
+
+    OnAllBtnClicked() {
+        debugger
+        this.IsChecked = true;
+        this.ItemsSource.Collection.forEach(element => {
+            this.IsComprehensiveUpdateChecked(true, element);
+        });        
+       
+    }
+    
+    OnNoneBtnClicked() {
+        this.IsChecked = false;
+        this.ItemsSource.Collection.forEach(element => {
+            this.IsComprehensiveUpdateChecked(false, element);
+        });
+    }
+
 
     private _entityListService: EntityListService;
     public IsDisplayOnly: boolean = false;
@@ -440,7 +458,7 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
 
     public  SupplierInvoiceComprehensiveUpdate:SupplierInvoicePM[]=[];
     IsComprehensiveUpdateChecked(checked: boolean, item: SupplierInvoicePM){
-        
+        debugger
         if(checked){
             this.SupplierInvoiceComprehensiveUpdate.push(item);
         }
