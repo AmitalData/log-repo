@@ -193,7 +193,7 @@ namespace Logitude.Customs.BL.EntityUpdateServices
                                     entityPM.StatisticQuantityType = quantityType;
                                     entityPM.StatisticQuantity = entityPM?.InvoiceQuantity;
                                     entityPM.ItemAdditionalStatus = true;
-                                    //if (string.IsNullOrEmpty(entityPM.InvoiceQuantityType))
+                                    if (string.IsNullOrEmpty(entityPM.InvoiceQuantityType))
                                         entityPM.InvoiceQuantityType = quantityType;
 
                                 }

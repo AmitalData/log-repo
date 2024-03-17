@@ -470,15 +470,15 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         else
                             supplierInvoiceItemPM.OriginCountryCode = CustomsCountry.Code;
                     }
-                    //if (supplierInvoiceItem.TryGetValue("Item_unit", out string ItemUnit))
-                    //{
-                    //    MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
-                    //    MeasurmentUnitPM MeasurmentUnit = measurmentUnitQueryService.GetSingle(ItemUnit, false, true);
-                    //    if (MeasurmentUnit == null)
-                    //        invalidValuesRemarks += $" FieldJson: Item_unit, FieldName: InvoiceQuantityType, InvalidValueReceived: {ItemUnit};";
-                    //    else
-                    //        supplierInvoiceItemPM.InvoiceQuantityType = MeasurmentUnit.Code;
-                    //}
+                    if (supplierInvoiceItem.TryGetValue("Item_unit", out string ItemUnit))
+                    {
+                        MeasurmentUnitQueryService measurmentUnitQueryService = new MeasurmentUnitQueryService(tenant);
+                        MeasurmentUnitPM MeasurmentUnit = measurmentUnitQueryService.GetSingle(ItemUnit, false, true);
+                        if (MeasurmentUnit == null)
+                            invalidValuesRemarks += $" FieldJson: Item_unit, FieldName: InvoiceQuantityType, InvalidValueReceived: {ItemUnit};";
+                        else
+                            supplierInvoiceItemPM.InvoiceQuantityType = MeasurmentUnit.Code;
+                    }
                     
                     if (string.IsNullOrEmpty(supplierInvoiceItemPM.OriginCountryCode) && !string.IsNullOrEmpty(originCountryField))
                     {
