@@ -18,8 +18,8 @@ namespace WebFreight.Web.Controllers
 
             int tenant = authToken.Tenant;
             string email = authToken.Email;
-
-            string link = ExportServerLogin.GetLinkToLogin(tenant, email);
+            string exportToken = ExportServerService.GetTokenForConfirmationNumber(tenant, email);
+            string link = ExportServerLogin.GetLinkToLogin(tenant, email, exportToken);
             return Request.CreateResponse(HttpStatusCode.OK, link);
         }
 

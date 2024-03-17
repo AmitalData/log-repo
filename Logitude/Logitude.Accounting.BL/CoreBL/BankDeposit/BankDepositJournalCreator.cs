@@ -173,7 +173,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 Tenant = journal.Tenant,
                 Line = ++LineNumber,
                 ActionCode = "2", //Debit
-                DocumentDate = DepositPM.CreateDate,
+                DocumentDate = DepositPM.AccountingDate,
                 AccountingDate = DepositPM.AccountingDate,
 
                 DebitAccountId = BankAccount.GLAccountId,
@@ -182,7 +182,7 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 // opposite account
                 CreditAccountId = CashbookPM.AccountId,
 
-                DueDate = DepositPM.CreateDate,
+                DueDate = DepositPM.AccountingDate,
                 LocalAmount = DepositPM.LocalDepositAmount,
                 ForeignAmount = DepositPM.ForeignAmount,
                 CurrencyId = DepositPM.DepositCurrencyId,
@@ -317,14 +317,14 @@ namespace Logitude.Accounting.BL.CoreBL.BankDeposit
                 Tenant = journal.Tenant,
                 Line = 1,
                 ActionCode = "1", //Credit
-                DueDate = DepositPM.CreateDate,
+                DueDate = DepositPM.AccountingDate,
                 LocalAmount = DepositPM.LocalDepositAmount,
                 ForeignAmount = DepositPM.ForeignAmount,
                 CurrencyId = DepositPM.DepositCurrencyId,
-                DocumentDate = DepositPM.CreateDate,
+                DocumentDate = DepositPM.AccountingDate,
                 AccountingDate = DepositPM.AccountingDate,
                 ExchangeRate = DepositPM.LocalDepositAmount / DepositPM.ForeignAmount,
-
+               
                 CreditAccountId = CashbookPM.AccountId
             };
 

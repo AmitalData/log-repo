@@ -26,6 +26,7 @@ using Simplog.Server.Infrastructure;
 using System.Text;
 using Newtonsoft.Json;
 using System.Configuration;
+using static WebFreight.Web.Helpers.ReportHelper;
 
 namespace WebFreight.Web.Controllers.WebDomainControllers
 {
@@ -479,7 +480,30 @@ namespace WebFreight.Web.Controllers.WebDomainControllers
 			}
 		}
 
-	}
+        public HttpResponseMessage GetDataProviderProperties(string code)
+        {
+            try
+            {
+                string token = HttpContext.Current.Request.Headers["Token"];
+                AuthenticationToken authToken = AuthenticationTokenRepository.GetSingleTokenFromCache(token);
+                SecurityUtility.AuthenticationOnTenant(authToken.Tenant);
+                ReportHelper reportHelper = new ReportHelper();
+                List<ISlvLeaf> dataProviderJson = reportHelper.BuildDataProviderJson(code);
+
+                return Request.CreateResponse(HttpStatusCode.OK, dataProviderJson);
+
+
+
+            }
+
+            catch (Exception ex)
+            {
+
+                return Request.CreateResponse(HttpStatusCode.BadRequest, ApiExceptionBuilder.BuildException(ex));
+            }
+        }
+
+    }
 
 	public class ReportBuildResult
     {

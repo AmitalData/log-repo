@@ -1053,7 +1053,10 @@ namespace Logitude.Accounting.BL.CoreBL
                         if (status  !=  1)
                             continue;
                     }
-                    JournalApproveService.EnqueueDB(journal);
+                    if (FeatureToggleHelper.HasFeatureToggle("JAM", journal.Tenant))
+                        JournalApproveService.EnqueueMultiThreadedDB(journal);
+                    else
+                        JournalApproveService.EnqueueDB(journal);
                 }
                 catch (Exception eee)
                 {
