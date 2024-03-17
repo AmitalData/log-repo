@@ -79,8 +79,17 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
         logWindow.Height = 400;
         logWindow.WindowArgs = windowArgs;
         logWindow.Title = windowTitle;
-        //logWindow.WindowClosed.subscribe(($event: any) => this.LoadAllScreenData());
+        logWindow.WindowClosed.subscribe((event: any) => {
+            if (event == "ok") {
+                this.LoadAllScreenData()
+            }
+        });
         logWindow.Show('./Accounting/Components/EditTabs/BankAccount/DetailsTab/ChequeCounterSerialComponent');
+    }
+
+    LoadAllScreenData() {
+        this.CurrentSession.CurrentEditComponent.ReloadEntityPM();
+        this.EntityPM = this.CurrentSession.CurrentEditComponent.EntityPM;
     }
 
     //#region Properties
@@ -162,11 +171,7 @@ export class BankAccountGeneralTabComponent extends BaseComponent {
     }
 
     get ChequeCounterSeriesID() {
-        if (AppTool.IsNullOrEmpty(this.EntityPM.ChequeCounterSeriesID)) {
-            return 1;
-        } else {
-            return this.EntityPM.ChequeCounterSeriesID;
-        }
+        return this.EntityPM.ChequeCounterSeriesID;
     }
     set ChequeCounterSeriesID(value: number) {
         if (this.EntityPM.ChequeCounterSeriesID != value) {

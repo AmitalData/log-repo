@@ -30,6 +30,7 @@ namespace Logitude.Accounting.BL.EntityDataMappings
                 entityPOCO.ChequeCounterBegin = entityPM.ChequeCounterBegin;
                 entityPOCO.Tenant = entityPM.Tenant;
                 entityPOCO.SeriesId = entityPM.SeriesId;
+                entityPOCO.Inactive = entityPM.Inactive;
             }
         }
 
