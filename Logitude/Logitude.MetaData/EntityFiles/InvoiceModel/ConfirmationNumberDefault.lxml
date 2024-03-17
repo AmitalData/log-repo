@@ -46,6 +46,7 @@
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Invoice&quot;"
+  NewWizardComponentPath="&quot;./Invoice/Components/NewEntity/NewConfirmationNumberDefaultComponent&quot;"
   NoViewController="false"
   NoPMController="false"
   NoTS="false"
