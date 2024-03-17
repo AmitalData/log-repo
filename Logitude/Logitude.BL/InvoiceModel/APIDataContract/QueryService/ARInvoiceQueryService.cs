@@ -435,7 +435,7 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
                 temp.ExternalAccountingEntityId = MyEntity.ExternalAccountingEntityId;
                 if(MyEntity.BillToGLAccountId != null)
                 temp.BillToGLAccount = GetGLAccountNumberById(MyEntity.BillToGLAccountId, MyEntity.Tenant);
-
+                temp.MasterNumber = MyEntity.MasterNumber;
 
                 return temp;
             }

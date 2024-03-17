@@ -20383,6 +20383,21 @@
         IsCloseField="false"
         IsCompositKey="false"
         IsUpdateAllowed="false" />
+      <DCField
+        DCFieldName="&quot;MasterNumber&quot;"
+        FieldName="&quot;MasterNumber&quot;"
+        IsKey="false"
+        IsManualMapping="false"
+        IsMulti="false"
+        FieldsDataType="&quot;nText&quot;"
+        IsNullable="true"
+        IsSpecialField="false"
+        IsCustomType="false"
+        IsAttribute="false"
+        IgnoreCustomTypeCheck="false"
+        IsCloseField="false"
+        IsCompositKey="false"
+        IsUpdateAllowed="false" />
     </DataContract>
   </DataContracts>
   <AdditionalTextCodes>
