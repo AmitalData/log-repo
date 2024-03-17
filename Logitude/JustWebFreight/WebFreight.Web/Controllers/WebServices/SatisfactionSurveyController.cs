@@ -20,7 +20,7 @@ namespace WebFreight.Web.Controllers.WebServices
 
     public partial class SatisfactionSurveysWebServiceController : ApiController
     {
-
+        private const string secretKey = "93824B61-EAB5-446F-B96B-7C8092DD3768";
         public HttpResponseMessage Post(SatisfactionSurveyPM entityPM)
         {
             if (ModelState.IsValid)
@@ -30,7 +30,7 @@ namespace WebFreight.Web.Controllers.WebServices
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string logKey = PerformanceLogger.LogCurrentTime();
-                        var secretKey = "secretkey";
+                       
                         string originalData = secretKey + entityPM.Id;
                         string encryptedData, status, errMessage;
                         EncryptMD5(originalData, out encryptedData, out status, out errMessage);
