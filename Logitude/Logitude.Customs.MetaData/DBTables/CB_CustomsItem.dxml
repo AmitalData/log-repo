@@ -6,7 +6,8 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -33,7 +34,8 @@
   </Column>
   <Column
     Name="Parent_CustomsItemID"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

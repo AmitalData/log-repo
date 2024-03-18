@@ -1103,6 +1103,12 @@
     <Constraints
       Nullable="false" />
   </Column>
+  <Column
+    Name="AutoSending"
+    Type="bit">
+    <Constraints
+      Nullable="false" />
+  </Column>
   <Relation
     ForeignKeyColumn="CustomerId"
     ReferencedTable="Cards"

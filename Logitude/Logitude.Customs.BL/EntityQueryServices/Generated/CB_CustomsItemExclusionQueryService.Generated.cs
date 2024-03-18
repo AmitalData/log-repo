@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_CustomsItemExclusionDataMapping();
         }
 		 
-		public  CB_CustomsItemExclusionPM GetSingle(int id,bool getComposition, bool getFromCache)
+		public  CB_CustomsItemExclusionPM GetSingle(string id,bool getComposition, bool getFromCache)
         {
              EntityKeys = new CB_CustomsItemExclusionKeys(){ ID = id };
 

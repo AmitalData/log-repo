@@ -20,7 +20,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [Column("ID")]
-	    public int ID { get; set; }
+	    public string ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public bool IsAllCountries { get; set; }
         [ForeignKey("CustomsItem")]
         [Column("CustomsItemID")]
-	    public int? CustomsItemID { get; set; }
+	    public string CustomsItemID { get; set; }
 	      
         public virtual CB_CustomsItem CustomsItem { get; set; }
         [Column("IsAllCustomsItems")]

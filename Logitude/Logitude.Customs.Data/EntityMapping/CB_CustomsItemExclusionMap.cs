@@ -23,11 +23,11 @@ namespace Logitude.Customs.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(null);
+            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.RegularityRequirementID).HasColumnName("RegularityRequirementID");
+            this.Property(t => t.RegularityRequirementID).HasColumnName("RegularityRequirementID").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID");
+            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID").HasMaxLength(15).IsUnicode(false);
         }
     }
 }

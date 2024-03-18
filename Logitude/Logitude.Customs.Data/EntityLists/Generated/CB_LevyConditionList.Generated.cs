@@ -15,15 +15,15 @@ namespace Logitude.Customs.Data.EntityLists
    
        [Key]
        [DataMember]
-       public int ID  { get; set; }
+       public string ID  { get; set; }
        [DataMember]
        public int? LevyConditionNumber  { get; set; }
        [DataMember]
        public string LevyGoodsDescription  { get; set; }
        [DataMember]
-       public int CustomsItemID  { get; set; }
+       public string CustomsItemID  { get; set; }
        [DataMember]
-       public int? VendorID  { get; set; }
+       public string VendorID  { get; set; }
        [DataMember]
        public string CountryGroupID  { get; set; }
        [DataMember]
@@ -31,7 +31,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string CountryID  { get; set; }
        [DataMember]
-       public int TradeLevyID  { get; set; }
+       public string TradeLevyID  { get; set; }
        [DataMember]
        public DateTime StartDate  { get; set; }
        [DataMember]

@@ -6,7 +6,8 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -25,13 +26,15 @@
   </Column>
   <Column
     Name="TariffID"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="QuotaID"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
@@ -56,13 +59,15 @@
   </Column>
   <Column
     Name="WithinQuota_ComputMethDataID"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="WithoutQuota_ComputMethDataID"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
       Nullable="true" />
   </Column>

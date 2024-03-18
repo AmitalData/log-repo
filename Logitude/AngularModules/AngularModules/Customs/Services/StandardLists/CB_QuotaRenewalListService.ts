@@ -32,7 +32,7 @@ export class CB_QuotaRenewalListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_quotarenewalviews';  
     }
 
-	getSingle(id: number) {
+	getSingle(id: string) {
 	   
 		var callTime = new Date();
 

@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_CustomsItemExclusion GetSingle(int id)
+		public  CB_CustomsItemExclusion GetSingle(string id)
         {
             return (from a in context.CB_CustomsItemExclusion
                     where a.ID == id 

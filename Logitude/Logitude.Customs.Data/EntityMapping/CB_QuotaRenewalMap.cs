@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(null);
+            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
@@ -37,7 +37,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.EntityStatusID).HasColumnName("EntityStatusID").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.QuotaDetailsHistoryID).HasColumnName("QuotaDetailsHistoryID");
+            this.Property(t => t.QuotaDetailsHistoryID).HasColumnName("QuotaDetailsHistoryID").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Step).HasColumnName("Step");
         }

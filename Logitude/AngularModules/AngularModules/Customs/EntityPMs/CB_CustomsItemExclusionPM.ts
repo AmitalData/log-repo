@@ -24,19 +24,19 @@ export class CB_CustomsItemExclusionPM {
       }
  	 
     
-    private iD: number;
+    private iD: string;
     public get ID() { return this.iD; }
-    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
-    private regularityRequirementID: number;
+    private regularityRequirementID: string;
     public get RegularityRequirementID() { return this.regularityRequirementID; }
-    public set RegularityRequirementID(newValue: number) { if (this.regularityRequirementID != newValue) { this.regularityRequirementID = newValue; this.MarkAsDirty("RegularityRequirementID"); } }
+    public set RegularityRequirementID(newValue: string) { if (this.regularityRequirementID != newValue) { this.regularityRequirementID = newValue; this.MarkAsDirty("RegularityRequirementID"); } }
        
 	 
-    private customsItemID: number;
+    private customsItemID: string;
     public get CustomsItemID() { return this.customsItemID; }
-    public set CustomsItemID(newValue: number) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
+    public set CustomsItemID(newValue: string) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
        
 	 
 

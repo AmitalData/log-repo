@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_TradeAgreementHistory GetSingle(int id)
+		public  CB_TradeAgreementHistory GetSingle(string id)
         {
             return (from a in context.CB_TradeAgreementHistories
                     where a.ID == id 

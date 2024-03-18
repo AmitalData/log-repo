@@ -8,7 +8,7 @@
 
 export class CB_QuotaList {
    
-	ID: number;
+	ID: string;
 	CreateDate: Date;
 	UpdateDate: Date;
 	Title: string;

@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_LevyConditionDataMapping();
         }
 		 
-		public  CB_LevyConditionPM GetSingle(int id,bool getComposition, bool getFromCache)
+		public  CB_LevyConditionPM GetSingle(string id,bool getComposition, bool getFromCache)
         {
              EntityKeys = new CB_LevyConditionKeys(){ ID = id };
 

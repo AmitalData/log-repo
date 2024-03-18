@@ -8,14 +8,14 @@
 
 export class CB_TradeAgreementHistoryList {
    
-	ID: number;
+	ID: string;
 	CreateDate: Date;
 	UpdateDate: Date;
 	StartDate: Date;
 	EndDate: Date;
 	EntityStatusID: string;
 	Version: number;
-	TradeAgreementID: number;
+	TradeAgreementID: string;
 	ChangeRequestTypePriority: number;
 	
 }

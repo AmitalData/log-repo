@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_LevyConditionUpdateClass
    {  		
-		public const string HashString = "870ea530e1ce7ae1d89a8ff5a3413713";
+		public const string HashString = "d32284167b2f33238b781b9124df9e0b";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "תנאי בהיטל",
 			      				    DefaultText =  "Levy Condition",
-			      				    Code =  "3fa4",
+			      				    Code =  "ad71",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -278,7 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomsItemID",
 					  						ObjectTableName =  "Customs.CB_LevyCondition",
-					  						FieldsDataType =  "Integer",
+					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -341,7 +341,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "VendorID",
 					  						ObjectTableName =  "Customs.CB_LevyCondition",
-					  						FieldsDataType =  "Integer",
+					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -594,7 +594,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "TradeLevyID",
 					  						ObjectTableName =  "Customs.CB_LevyCondition",
-					  						FieldsDataType =  "Integer",
+					  						FieldsDataType =  "LookUp",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

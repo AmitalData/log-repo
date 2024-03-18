@@ -6,7 +6,8 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -65,9 +66,10 @@
   </Column>
   <Column
     Name="CustomsBookAdditionID"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="ChangeRequestTypePriority"

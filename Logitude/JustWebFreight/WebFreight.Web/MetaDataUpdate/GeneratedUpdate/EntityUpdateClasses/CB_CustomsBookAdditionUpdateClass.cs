@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_CustomsBookAdditionUpdateClass
    {  		
-		public const string HashString = "34d77ded9de5defa51b0b06412f6d8c0";
+		public const string HashString = "5c8778fd2b261a5054b38c9b4355db77";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "תוספות לספר המכס",
 			      				    DefaultText =  "Customs Book Addition",
-			      				    Code =  "08d7",
+			      				    Code =  "314e",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

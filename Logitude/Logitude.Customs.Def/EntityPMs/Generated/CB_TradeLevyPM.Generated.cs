@@ -18,14 +18,14 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_TradeLevyPM : EntityPM
    {
-   	  private int iD ;
+   	  private string iD ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int ID  
+       public string ID  
 	   {
 	    
 	     get
@@ -36,7 +36,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
@@ -250,12 +250,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int? computationMethodDataID ;
+	  private string computationMethodDataID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? ComputationMethodDataID  
+       public string ComputationMethodDataID  
 	   {
 	    
 	     get
@@ -266,7 +266,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(computationMethodDataID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputationMethodDataID",OldValue=computationMethodDataID,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ComputationMethodDataID",OldValue=computationMethodDataID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   computationMethodDataID=value;
 		   }

@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_RegularityRequiredCertificate GetSingle(int id)
+		public  CB_RegularityRequiredCertificate GetSingle(string id)
         {
             return (from a in context.CB_RegularityRequiredCertificates
                     where a.ID == id 

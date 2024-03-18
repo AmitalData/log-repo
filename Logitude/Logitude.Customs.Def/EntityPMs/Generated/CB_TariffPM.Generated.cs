@@ -18,14 +18,14 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_TariffPM : EntityPM
    {
-   	  private int iD ;
+   	  private string iD ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int ID  
+       public string ID  
 	   {
 	    
 	     get
@@ -36,7 +36,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
@@ -89,12 +89,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int? tradeAgreementID ;
+	  private string tradeAgreementID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? TradeAgreementID  
+       public string TradeAgreementID  
 	   {
 	    
 	     get
@@ -105,19 +105,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(tradeAgreementID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TradeAgreementID",OldValue=tradeAgreementID,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TradeAgreementID",OldValue=tradeAgreementID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   tradeAgreementID=value;
 		   }
 			
 		 }
 	   }
-	  private int customsItemID ;
+	  private string customsItemID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int CustomsItemID  
+       public string CustomsItemID  
 	   {
 	    
 	     get
@@ -128,7 +128,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(customsItemID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemID",OldValue=customsItemID,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemID",OldValue=customsItemID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   customsItemID=value;
 		   }

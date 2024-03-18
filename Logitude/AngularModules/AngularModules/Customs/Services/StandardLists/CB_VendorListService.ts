@@ -32,7 +32,7 @@ export class CB_VendorListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_vendorviews';  
     }
 
-	getSingle(id: number) {
+	getSingle(id: string) {
 	   
 		var callTime = new Date();
 

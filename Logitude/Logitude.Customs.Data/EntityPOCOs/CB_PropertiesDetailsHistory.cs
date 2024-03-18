@@ -20,14 +20,14 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [Column("ID")]
-	    public int ID { get; set; }
+	    public string ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
 	    public DateTime? UpdateDate { get; set; }
         [ForeignKey("CustomsItem")]
         [Column("CustomsItemID")]
-	    public int CustomsItemID { get; set; }
+	    public string CustomsItemID { get; set; }
 	      
         public virtual CB_CustomsItem CustomsItem { get; set; }
         [Column("StartDate")]

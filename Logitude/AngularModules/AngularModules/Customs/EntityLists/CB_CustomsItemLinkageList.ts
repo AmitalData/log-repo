@@ -8,10 +8,10 @@
 
 export class CB_CustomsItemLinkageList {
    
-	ID: number;
+	ID: string;
 	ChangeTypeID: string;
-	CustomsItemDetailsHistoryID: number;
-	Connect_CustItemDetailsHistID: number;
+	CustomsItemDetailsHistoryID: string;
+	Connect_CustItemDetailsHistID: string;
 	CreateDate: Date;
 	
 }

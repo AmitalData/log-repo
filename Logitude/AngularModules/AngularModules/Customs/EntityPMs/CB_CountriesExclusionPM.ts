@@ -24,14 +24,14 @@ export class CB_CountriesExclusionPM {
       }
  	 
     
-    private iD: number;
+    private iD: string;
     public get ID() { return this.iD; }
-    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
-    private regularityRequirementID: number;
+    private regularityRequirementID: string;
     public get RegularityRequirementID() { return this.regularityRequirementID; }
-    public set RegularityRequirementID(newValue: number) { if (this.regularityRequirementID != newValue) { this.regularityRequirementID = newValue; this.MarkAsDirty("RegularityRequirementID"); } }
+    public set RegularityRequirementID(newValue: string) { if (this.regularityRequirementID != newValue) { this.regularityRequirementID = newValue; this.MarkAsDirty("RegularityRequirementID"); } }
        
 	 
     private countryID: string;

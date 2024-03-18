@@ -18,14 +18,14 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_TariffDetailsHistoryPM : EntityPM
    {
-   	  private int iD ;
+   	  private string iD ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int ID  
+       public string ID  
 	   {
 	    
 	     get
@@ -36,7 +36,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
@@ -89,12 +89,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int tariffID ;
+	  private string tariffID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int TariffID  
+       public string TariffID  
 	   {
 	    
 	     get
@@ -105,19 +105,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(tariffID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffID",OldValue=tariffID,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TariffID",OldValue=tariffID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   tariffID=value;
 		   }
 			
 		 }
 	   }
-	  private int? quotaID ;
+	  private string quotaID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? QuotaID  
+       public string QuotaID  
 	   {
 	    
 	     get
@@ -128,7 +128,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(quotaID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuotaID",OldValue=quotaID,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="QuotaID",OldValue=quotaID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   quotaID=value;
 		   }
@@ -204,12 +204,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int? withinQuota_ComputMethDataID ;
+	  private string withinQuota_ComputMethDataID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? WithinQuota_ComputMethDataID  
+       public string WithinQuota_ComputMethDataID  
 	   {
 	    
 	     get
@@ -220,19 +220,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(withinQuota_ComputMethDataID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WithinQuota_ComputMethDataID",OldValue=withinQuota_ComputMethDataID,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WithinQuota_ComputMethDataID",OldValue=withinQuota_ComputMethDataID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   withinQuota_ComputMethDataID=value;
 		   }
 			
 		 }
 	   }
-	  private int? withoutQuota_ComputMethDataID ;
+	  private string withoutQuota_ComputMethDataID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? WithoutQuota_ComputMethDataID  
+       public string WithoutQuota_ComputMethDataID  
 	   {
 	    
 	     get
@@ -243,7 +243,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(withoutQuota_ComputMethDataID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WithoutQuota_ComputMethDataID",OldValue=withoutQuota_ComputMethDataID,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="WithoutQuota_ComputMethDataID",OldValue=withoutQuota_ComputMethDataID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   withoutQuota_ComputMethDataID=value;
 		   }

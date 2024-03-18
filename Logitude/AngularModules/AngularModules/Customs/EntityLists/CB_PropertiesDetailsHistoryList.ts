@@ -8,10 +8,10 @@
 
 export class CB_PropertiesDetailsHistoryList {
    
-	ID: number;
+	ID: string;
 	CreateDate: Date;
 	UpdateDate: Date;
-	CustomsItemID: number;
+	CustomsItemID: string;
 	StartDate: Date;
 	EndDate: Date;
 	EntityStatusID: string;

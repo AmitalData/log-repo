@@ -8,8 +8,8 @@
 
 export class CB_RegularityRequiredCertificateList {
    
-	ID: number;
-	RegularityInceptionID: number;
+	ID: string;
+	RegularityInceptionID: string;
 	ConfirmationTypeID: string;
 	Number: number;
 	TextualCondition: string;

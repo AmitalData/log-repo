@@ -15,15 +15,15 @@ namespace Logitude.Customs.Data.EntityLists
    
        [Key]
        [DataMember]
-       public int ID  { get; set; }
+       public string ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
        public DateTime? UpdateDate  { get; set; }
        [DataMember]
-       public int TariffID  { get; set; }
+       public string TariffID  { get; set; }
        [DataMember]
-       public int? QuotaID  { get; set; }
+       public string QuotaID  { get; set; }
        [DataMember]
        public DateTime? StartDate  { get; set; }
        [DataMember]
@@ -31,9 +31,9 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string EntityStatusID  { get; set; }
        [DataMember]
-       public int? WithinQuota_ComputMethDataID  { get; set; }
+       public string WithinQuota_ComputMethDataID  { get; set; }
        [DataMember]
-       public int? WithoutQuota_ComputMethDataID  { get; set; }
+       public string WithoutQuota_ComputMethDataID  { get; set; }
        [DataMember]
        public int ChangeRequestTypePriority  { get; set; }
    }
