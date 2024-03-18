@@ -20,7 +20,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [Column("ID")]
-	    public string ID { get; set; }
+	    public int ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
@@ -62,7 +62,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public DateTime? RenewalUntilDate { get; set; }
         [ForeignKey("Quota")]
         [Column("QuotaID")]
-	    public string QuotaID { get; set; }
+	    public int QuotaID { get; set; }
 	      
         public virtual CB_Quota Quota { get; set; }
         [Column("ChangeRequestTypePriority")]

@@ -38,7 +38,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;החרגות של פרטי מכס&quot;"
   DefaultText="&quot;Customs Item Exclusion&quot;"
-  Code="&quot;f5d5&quot;"
+  Code="&quot;4f34&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -71,7 +71,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.CB_CustomsItemExclusion&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="15"
     IsRequired="true"
@@ -90,6 +90,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ID&quot;"
     ListPropertyPath="&quot;ID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -145,8 +146,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.CB_CustomsItemExclusion&quot;"
-    FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;CB_RegularityRequirement&quot;"
+    FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
@@ -166,6 +166,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;RegularityRequirementID&quot;"
     ListPropertyPath="&quot;RegularityRequirementID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -223,8 +224,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.CB_CustomsItemExclusion&quot;"
-    FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;CB_CustomsItem&quot;"
+    FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
@@ -244,6 +244,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;CustomsItemID&quot;"
     ListPropertyPath="&quot;CustomsItemID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -293,6 +294,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.CB_CustomsItemExclusionHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CB_CustomsItemExclusion&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -321,6 +331,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

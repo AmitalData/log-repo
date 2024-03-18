@@ -38,7 +38,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;סוגי רישיונות/אישורים נדרשים בתחולה של דרישות חוקיות&quot;"
   DefaultText="&quot;Regularity Required Certificate&quot;"
-  Code="&quot;149c&quot;"
+  Code="&quot;c197&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -71,7 +71,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.CB_RegularityRequiredCertificate&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="15"
     IsRequired="true"
@@ -90,6 +90,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ID&quot;"
     ListPropertyPath="&quot;ID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -145,8 +146,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.CB_RegularityRequiredCertificate&quot;"
-    FieldsDataType="&quot;LookUp&quot;"
-    LookUpTableName="&quot;CB_RegularityInception&quot;"
+    FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="15"
     IsRequired="false"
@@ -166,6 +166,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;RegularityInceptionID&quot;"
     ListPropertyPath="&quot;RegularityInceptionID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -244,6 +245,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ConfirmationTypeID&quot;"
     ListPropertyPath="&quot;ConfirmationTypeID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -321,6 +323,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Number&quot;"
     ListPropertyPath="&quot;Number&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -396,6 +399,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;TextualCondition&quot;"
     ListPropertyPath="&quot;TextualCondition&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -471,6 +475,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;TrNumber&quot;"
     ListPropertyPath="&quot;TrNumber&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -546,6 +551,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;AuthorityID&quot;"
     ListPropertyPath="&quot;AuthorityID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -595,6 +601,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.CB_RegularityRequiredCertificateHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CB_RegularityRequiredCertificate&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -623,6 +638,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

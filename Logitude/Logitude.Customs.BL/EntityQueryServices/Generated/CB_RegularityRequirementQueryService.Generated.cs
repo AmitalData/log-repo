@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_RegularityRequirementDataMapping();
         }
 		 
-		public  CB_RegularityRequirementPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CB_RegularityRequirementPM GetSingle(int id,bool getComposition, bool getFromCache)
         {
              EntityKeys = new CB_RegularityRequirementKeys(){ ID = id };
 

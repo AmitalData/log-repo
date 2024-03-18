@@ -15,7 +15,7 @@ namespace Logitude.Customs.Data.EntityLists
    
        [Key]
        [DataMember]
-       public string ID  { get; set; }
+       public int ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string EntityStatusID  { get; set; }
        [DataMember]
-       public string RuleID  { get; set; }
+       public int RuleID  { get; set; }
        [DataMember]
        public string Rules  { get; set; }
        [DataMember]
@@ -37,7 +37,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public int OrderinalPostion  { get; set; }
        [DataMember]
-       public string Parent_RuleDetailsHistoryID  { get; set; }
+       public int? Parent_RuleDetailsHistoryID  { get; set; }
        [DataMember]
        public int ChangeRequestTypePriority  { get; set; }
        [DataMember]

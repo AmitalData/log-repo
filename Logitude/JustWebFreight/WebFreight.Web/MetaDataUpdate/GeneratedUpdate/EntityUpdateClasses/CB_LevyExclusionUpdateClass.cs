@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_LevyExclusionUpdateClass
    {  		
-		public const string HashString = "53fe972f47cd34f165c7c7d3142a79e3";
+		public const string HashString = "c50dc1d96629ac426d51044fc482c788";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "החרגות בהיטל",
 			      				    DefaultText =  "Levy Exclusion",
-			      				    Code =  "cd96",
+			      				    Code =  "0a02",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -215,8 +215,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "TradeLevyID",
 					  						ObjectTableName =  "Customs.CB_LevyExclusion",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_TradeLevy",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -279,8 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "VendorID",
 					  						ObjectTableName =  "Customs.CB_LevyExclusion",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_Vendor",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

@@ -15,9 +15,9 @@ namespace Logitude.Customs.Data.EntityLists
    
        [Key]
        [DataMember]
-       public string ID  { get; set; }
+       public int ID  { get; set; }
        [DataMember]
-       public string RegularityInceptionID  { get; set; }
+       public int RegularityInceptionID  { get; set; }
        [DataMember]
        public string ConfirmationTypeID  { get; set; }
        [DataMember]

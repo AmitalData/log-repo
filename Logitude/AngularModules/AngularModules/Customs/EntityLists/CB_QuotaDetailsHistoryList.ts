@@ -8,7 +8,7 @@
 
 export class CB_QuotaDetailsHistoryList {
    
-	ID: string;
+	ID: number;
 	CreateDate: Date;
 	UpdateDate: Date;
 	StartDate: Date;
@@ -21,7 +21,7 @@ export class CB_QuotaDetailsHistoryList {
 	QuotaIncrementID: string;
 	RenewalMethodID: string;
 	RenewalUntilDate: Date;
-	QuotaID: string;
+	QuotaID: number;
 	ChangeRequestTypePriority: number;
 	QuotaValueIncrement: number;
 	PerYearFrequency: string;

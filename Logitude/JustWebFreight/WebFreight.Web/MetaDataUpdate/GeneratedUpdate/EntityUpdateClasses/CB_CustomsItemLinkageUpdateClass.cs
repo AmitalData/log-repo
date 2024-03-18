@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_CustomsItemLinkageUpdateClass
    {  		
-		public const string HashString = "baab7ba1b5730254723b9dd35027b251";
+		public const string HashString = "f3774c758d25dafb265f3a426473bf78";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "היסטוריית סיווגים",
 			      				    DefaultText =  "Customs Item Linkage",
-			      				    Code =  "f774",
+			      				    Code =  "05f1",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -216,8 +216,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomsItemDetailsHistoryID",
 					  						ObjectTableName =  "Customs.CB_CustomsItemLinkage",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_CustomsItemDetailsHistory",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -280,8 +279,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Connect_CustItemDetailsHistID",
 					  						ObjectTableName =  "Customs.CB_CustomsItemLinkage",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_CustomsItemDetailsHistory",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

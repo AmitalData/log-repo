@@ -27,9 +27,9 @@ export class CB_TariffDetailsHistoryPM {
 
 	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -42,14 +42,14 @@ export class CB_TariffDetailsHistoryPM {
     public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
        
 	 
-    private tariffID: string;
+    private tariffID: number;
     public get TariffID() { return this.tariffID; }
-    public set TariffID(newValue: string) { if (this.tariffID != newValue) { this.tariffID = newValue; this.MarkAsDirty("TariffID"); } }
+    public set TariffID(newValue: number) { if (this.tariffID != newValue) { this.tariffID = newValue; this.MarkAsDirty("TariffID"); } }
        
 	 
-    private quotaID: string;
+    private quotaID: number;
     public get QuotaID() { return this.quotaID; }
-    public set QuotaID(newValue: string) { if (this.quotaID != newValue) { this.quotaID = newValue; this.MarkAsDirty("QuotaID"); } }
+    public set QuotaID(newValue: number) { if (this.quotaID != newValue) { this.quotaID = newValue; this.MarkAsDirty("QuotaID"); } }
        
 	 
     private startDate: Date;
@@ -67,14 +67,14 @@ export class CB_TariffDetailsHistoryPM {
     public set EntityStatusID(newValue: string) { if (this.entityStatusID != newValue) { this.entityStatusID = newValue; this.MarkAsDirty("EntityStatusID"); } }
        
 	 
-    private withinQuota_ComputMethDataID: string;
+    private withinQuota_ComputMethDataID: number;
     public get WithinQuota_ComputMethDataID() { return this.withinQuota_ComputMethDataID; }
-    public set WithinQuota_ComputMethDataID(newValue: string) { if (this.withinQuota_ComputMethDataID != newValue) { this.withinQuota_ComputMethDataID = newValue; this.MarkAsDirty("WithinQuota_ComputMethDataID"); } }
+    public set WithinQuota_ComputMethDataID(newValue: number) { if (this.withinQuota_ComputMethDataID != newValue) { this.withinQuota_ComputMethDataID = newValue; this.MarkAsDirty("WithinQuota_ComputMethDataID"); } }
        
 	 
-    private withoutQuota_ComputMethDataID: string;
+    private withoutQuota_ComputMethDataID: number;
     public get WithoutQuota_ComputMethDataID() { return this.withoutQuota_ComputMethDataID; }
-    public set WithoutQuota_ComputMethDataID(newValue: string) { if (this.withoutQuota_ComputMethDataID != newValue) { this.withoutQuota_ComputMethDataID = newValue; this.MarkAsDirty("WithoutQuota_ComputMethDataID"); } }
+    public set WithoutQuota_ComputMethDataID(newValue: number) { if (this.withoutQuota_ComputMethDataID != newValue) { this.withoutQuota_ComputMethDataID = newValue; this.MarkAsDirty("WithoutQuota_ComputMethDataID"); } }
        
 	 
     private changeRequestTypePriority: number;

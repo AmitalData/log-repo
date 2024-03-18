@@ -32,7 +32,7 @@ export class CB_CustomsItemExclusionPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_customsitemexclusion';      
     }
 
-	get(id: string) {       
+	get(id: number) {       
 
 		var callTime = new Date();		
 

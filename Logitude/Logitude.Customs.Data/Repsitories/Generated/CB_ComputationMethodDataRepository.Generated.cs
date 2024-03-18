@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_ComputationMethodData GetSingle(string id)
+		public  CB_ComputationMethodData GetSingle(int id)
         {
             return (from a in context.CB_ComputationMethodDatas
                     where a.ID == id 

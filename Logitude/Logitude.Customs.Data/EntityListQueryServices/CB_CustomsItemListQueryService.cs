@@ -13,6 +13,7 @@ using System.Xml.Serialization;
 
 using Logitude.Customs.Data.EntityPOCOs;
 using Logitude.Customs.Data.EntityLists;
+using System.Runtime.Remoting.Contexts;
 
 namespace Logitude.Customs.Data.EntityListQueryServices
 { 
@@ -22,23 +23,47 @@ namespace Logitude.Customs.Data.EntityListQueryServices
 	    private IQueryable<CB_CustomsItemList> GetIqueryableList(IQueryable<CB_CustomsItem> iQueryable)
         {
 		IQueryable<CB_CustomsItemList> query = (from a in iQueryable
-                                            select new CB_CustomsItemList()
-											{
+												join cb in context.CustomsBookMainViews
+												on a.ID equals cb.CustomItemId
+												select new CB_CustomsItemList()
+												{
                      
-					                          ID = a.ID,
+												  ID = a.ID,
 					
-					                          CreateDate = a.CreateDate,
+												  Parent_CustomsItemID = cb.Parent_CustomsItemId,
+												  
+												  CustomsBookTypeID = cb.CustomsBookTypeID,
+
+												  FullClassification = cb.FullClassification,
+
+												  CustomsItemHierarchicLocationID = cb.CustomsItemHierarchicLocationID,
+
+												  GoodsDescription = cb.GoodsDescription,
+
+												  Rules = cb.Rules,
+
+												  Remarks = cb.Remarks,
+
+												  Agreements = cb.Agreements,
+
+												  CustomsRate = cb.CustomsRate,
+
+												  PurchaseTax = cb.PurchaseTax,
+
+                                                  OptionalTaxAddition = cb.OptionalTaxAddition,
+
+												  MeasurementUnit = cb.MeasurementUnitName,
+
+												  SearchFields = cb.SearchFields
 					
-					                          UpdateDate = a.UpdateDate,
-					
-		                    	            });
+		                    					});
             return query;
 		}
 
 		private IQueryable<CB_CustomsItem> ApplyCustomFilters(QueryOperations queryOperations,IQueryable<CB_CustomsItem> iQueryable)
         {
-			throw new NotImplementedException();
-		}
+            return iQueryable;
+        }
 			}
 
 

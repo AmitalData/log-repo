@@ -24,9 +24,9 @@ export class CB_TariffPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -39,14 +39,14 @@ export class CB_TariffPM {
     public set UpdateDate(newValue: Date) { if (this.updateDate != newValue) { this.updateDate = newValue; this.MarkAsDirty("UpdateDate"); } }
        
 	 
-    private tradeAgreementID: string;
+    private tradeAgreementID: number;
     public get TradeAgreementID() { return this.tradeAgreementID; }
-    public set TradeAgreementID(newValue: string) { if (this.tradeAgreementID != newValue) { this.tradeAgreementID = newValue; this.MarkAsDirty("TradeAgreementID"); } }
+    public set TradeAgreementID(newValue: number) { if (this.tradeAgreementID != newValue) { this.tradeAgreementID = newValue; this.MarkAsDirty("TradeAgreementID"); } }
        
 	 
-    private customsItemID: string;
+    private customsItemID: number;
     public get CustomsItemID() { return this.customsItemID; }
-    public set CustomsItemID(newValue: string) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
+    public set CustomsItemID(newValue: number) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
        
 	 
     private title: string;

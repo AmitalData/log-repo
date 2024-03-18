@@ -27,9 +27,9 @@ export class CB_CustomsItemDetailsHistoryPM {
 
 	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -82,9 +82,9 @@ export class CB_CustomsItemDetailsHistoryPM {
     public set EnglishGoodsDescriptionRTF(newValue: string) { if (this.englishGoodsDescriptionRTF != newValue) { this.englishGoodsDescriptionRTF = newValue; this.MarkAsDirty("EnglishGoodsDescriptionRTF"); } }
        
 	 
-    private customsItemID: string;
+    private customsItemID: number;
     public get CustomsItemID() { return this.customsItemID; }
-    public set CustomsItemID(newValue: string) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
+    public set CustomsItemID(newValue: number) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
        
 	 
     private changeRequestTypePriority: number;

@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_VendorDataMapping();
         }
 		 
-		public  CB_VendorPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CB_VendorPM GetSingle(int id,bool getComposition, bool getFromCache)
         {
              EntityKeys = new CB_VendorKeys(){ ID = id };
 

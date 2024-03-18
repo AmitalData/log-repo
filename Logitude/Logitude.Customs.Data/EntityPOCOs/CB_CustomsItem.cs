@@ -20,7 +20,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [Column("ID")]
-	    public string ID { get; set; }
+	    public int ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string FullClassification { get; set; }
         [ForeignKey("ParentCustomsItemID")]
         [Column("Parent_CustomsItemID")]
-	    public string Parent_CustomsItemID { get; set; }
+	    public int? Parent_CustomsItemID { get; set; }
 	      
         public virtual CB_CustomsItem ParentCustomsItemID { get; set; }
         [Column("ComputedCheckDigit")]

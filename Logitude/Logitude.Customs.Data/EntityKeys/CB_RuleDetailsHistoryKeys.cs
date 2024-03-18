@@ -12,7 +12,7 @@ namespace Logitude.Customs.Data.EntityKeys
 {
    public partial class CB_RuleDetailsHistoryKeys : EntityKeyFields
    {
-   	  public string ID  { get; set; }
+   	  public int ID  { get; set; }
 	  
 				 
 	    			   

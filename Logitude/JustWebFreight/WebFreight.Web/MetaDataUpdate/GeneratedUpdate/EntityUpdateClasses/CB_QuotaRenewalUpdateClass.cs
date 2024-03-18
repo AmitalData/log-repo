@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_QuotaRenewalUpdateClass
    {  		
-		public const string HashString = "4482f9010b8bc8c16d02e4530544456c";
+		public const string HashString = "797405528f12e9002757c4d4fd043458";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "חידושים של מכסות",
 			      				    DefaultText =  "Quota Renewal",
-			      				    Code =  "edab",
+			      				    Code =  "f502",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -531,8 +531,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "QuotaDetailsHistoryID",
 					  						ObjectTableName =  "Customs.CB_QuotaRenewal",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_QuotaDetailsHistory",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

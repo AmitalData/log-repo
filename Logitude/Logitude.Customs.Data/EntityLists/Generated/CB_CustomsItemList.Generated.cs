@@ -15,7 +15,7 @@ namespace Logitude.Customs.Data.EntityLists
    
        [Key]
        [DataMember]
-       public string ID  { get; set; }
+       public int ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string FullClassification  { get; set; }
        [DataMember]
-       public string Parent_CustomsItemID  { get; set; }
+       public int? Parent_CustomsItemID  { get; set; }
        [DataMember]
        public string ComputedCheckDigit  { get; set; }
        [DataMember]
@@ -32,6 +32,24 @@ namespace Logitude.Customs.Data.EntityLists
        public string CustomsItemCategoryID  { get; set; }
        [DataMember]
        public string CustomsItemHierarchicLocationID  { get; set; }
+       [DataMember]
+       public string GoodsDescription  { get; set; }
+       [DataMember]
+       public string Rules  { get; set; }
+       [DataMember]
+       public string Remarks  { get; set; }
+       [DataMember]
+       public string Agreements  { get; set; }
+       [DataMember]
+       public string CustomsRate  { get; set; }
+       [DataMember]
+       public string PurchaseTax  { get; set; }
+       [DataMember]
+       public decimal? OptionalTaxAddition  { get; set; }
+       [DataMember]
+       public string MeasurementUnit  { get; set; }
+       [DataMember]
+       public string SearchFields  { get; set; }
    }
 
 }

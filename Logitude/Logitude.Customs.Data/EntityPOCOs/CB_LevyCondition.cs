@@ -20,19 +20,19 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [Column("ID")]
-	    public string ID { get; set; }
+	    public int ID { get; set; }
         [Column("LevyConditionNumber")]
 	    public int? LevyConditionNumber { get; set; }
         [Column("LevyGoodsDescription")]
 	    public string LevyGoodsDescription { get; set; }
         [ForeignKey("CustomsItem")]
         [Column("CustomsItemID")]
-	    public string CustomsItemID { get; set; }
+	    public int CustomsItemID { get; set; }
 	      
         public virtual CB_CustomsItem CustomsItem { get; set; }
         [ForeignKey("Vendor")]
         [Column("VendorID")]
-	    public string VendorID { get; set; }
+	    public int? VendorID { get; set; }
 	      
         public virtual CB_Vendor Vendor { get; set; }
         [ForeignKey("CountryGroupCode")]
@@ -46,7 +46,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string CountryID { get; set; }
         [ForeignKey("TradeLevy")]
         [Column("TradeLevyID")]
-	    public string TradeLevyID { get; set; }
+	    public int TradeLevyID { get; set; }
 	      
         public virtual CB_TradeLevy TradeLevy { get; set; }
         [Column("StartDate")]

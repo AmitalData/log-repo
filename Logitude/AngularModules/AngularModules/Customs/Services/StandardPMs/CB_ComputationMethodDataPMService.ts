@@ -32,7 +32,7 @@ export class CB_ComputationMethodDataPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_computationmethoddatas';      
     }
 
-	get(id: string) {       
+	get(id: number) {       
 
 		var callTime = new Date();		
 

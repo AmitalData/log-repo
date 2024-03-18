@@ -24,9 +24,9 @@ export class CB_LevyConditionPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private levyConditionNumber: number;
@@ -39,14 +39,14 @@ export class CB_LevyConditionPM {
     public set LevyGoodsDescription(newValue: string) { if (this.levyGoodsDescription != newValue) { this.levyGoodsDescription = newValue; this.MarkAsDirty("LevyGoodsDescription"); } }
        
 	 
-    private customsItemID: string;
+    private customsItemID: number;
     public get CustomsItemID() { return this.customsItemID; }
-    public set CustomsItemID(newValue: string) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
+    public set CustomsItemID(newValue: number) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
        
 	 
-    private vendorID: string;
+    private vendorID: number;
     public get VendorID() { return this.vendorID; }
-    public set VendorID(newValue: string) { if (this.vendorID != newValue) { this.vendorID = newValue; this.MarkAsDirty("VendorID"); } }
+    public set VendorID(newValue: number) { if (this.vendorID != newValue) { this.vendorID = newValue; this.MarkAsDirty("VendorID"); } }
        
 	 
     private countryGroupID: string;
@@ -64,9 +64,9 @@ export class CB_LevyConditionPM {
     public set CountryID(newValue: string) { if (this.countryID != newValue) { this.countryID = newValue; this.MarkAsDirty("CountryID"); } }
        
 	 
-    private tradeLevyID: string;
+    private tradeLevyID: number;
     public get TradeLevyID() { return this.tradeLevyID; }
-    public set TradeLevyID(newValue: string) { if (this.tradeLevyID != newValue) { this.tradeLevyID = newValue; this.MarkAsDirty("TradeLevyID"); } }
+    public set TradeLevyID(newValue: number) { if (this.tradeLevyID != newValue) { this.tradeLevyID = newValue; this.MarkAsDirty("TradeLevyID"); } }
        
 	 
     private startDate: Date;
