@@ -101,7 +101,7 @@ namespace Logitude.BL.InvoiceModel.EntityLists
         public bool IsEquipment { get; set; }
         public string ConnectedPaymentsNumbers { get; set; }
         public string ConfirmationNumber { get; set; }
-        public string ConfirmationNumberStatus { get; set; }
+       
 
     }
 

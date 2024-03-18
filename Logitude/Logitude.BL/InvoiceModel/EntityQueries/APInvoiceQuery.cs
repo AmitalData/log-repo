@@ -240,7 +240,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ConnectedPaymentsNumbers = a.ConnectedPaymentsNumbers,
                              TotalEquation = a.TotalEquation,
                              ConfirmationNumber = a.ConfirmationNumber,
-                             ConfirmationNumberStatus = a.ConfirmationNumberStatus,
+                          
 
                          });          
 

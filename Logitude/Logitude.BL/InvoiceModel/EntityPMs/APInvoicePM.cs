@@ -360,6 +360,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string TotalEquation { get; set; }
         public string ConfirmationNumber { get; set; }
 
-        public string ConfirmationNumberStatus { get; set; }
+       
     }
 }
