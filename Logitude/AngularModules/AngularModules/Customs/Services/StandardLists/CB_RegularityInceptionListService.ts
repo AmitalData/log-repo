@@ -32,7 +32,7 @@ export class CB_RegularityInceptionListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_regularityinceptionviews';  
     }
 
-	getSingle(id: string) {
+	getSingle(id: number) {
 	   
 		var callTime = new Date();
 

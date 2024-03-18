@@ -20,10 +20,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [Column("ID")]
-	    public string ID { get; set; }
+	    public int ID { get; set; }
         [ForeignKey("RegularityRequirement")]
         [Column("RegularityRequirementID")]
-	    public string RegularityRequirementID { get; set; }
+	    public int RegularityRequirementID { get; set; }
 	      
         public virtual CB_RegularityRequirement RegularityRequirement { get; set; }
         [Column("CountryID")]

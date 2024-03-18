@@ -32,7 +32,7 @@ export class CB_CustomsBookAdditionsDetailsHistoryListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_customsbookadditionsdetailshistoryviews';  
     }
 
-	getSingle(id: string) {
+	getSingle(id: number) {
 	   
 		var callTime = new Date();
 

@@ -6,8 +6,7 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -51,10 +50,9 @@
   </Column>
   <Column
     Name="QuotaDetailsHistoryID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Step"

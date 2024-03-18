@@ -8,16 +8,16 @@
 
 export class CB_TariffDetailsHistoryList {
    
-	ID: string;
+	ID: number;
 	CreateDate: Date;
 	UpdateDate: Date;
-	TariffID: string;
-	QuotaID: string;
+	TariffID: number;
+	QuotaID: number;
 	StartDate: Date;
 	EndDate: Date;
 	EntityStatusID: string;
-	WithinQuota_ComputMethDataID: string;
-	WithoutQuota_ComputMethDataID: string;
+	WithinQuota_ComputMethDataID: number;
+	WithoutQuota_ComputMethDataID: number;
 	ChangeRequestTypePriority: number;
 	
 }

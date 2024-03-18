@@ -15,13 +15,13 @@ namespace Logitude.Customs.Data.EntityLists
    
        [Key]
        [DataMember]
-       public string ID  { get; set; }
+       public int ID  { get; set; }
        [DataMember]
        public int? LevyExclusionNumber  { get; set; }
        [DataMember]
-       public string TradeLevyID  { get; set; }
+       public int TradeLevyID  { get; set; }
        [DataMember]
-       public string VendorID  { get; set; }
+       public int? VendorID  { get; set; }
        [DataMember]
        public string CountryGroupID  { get; set; }
    }

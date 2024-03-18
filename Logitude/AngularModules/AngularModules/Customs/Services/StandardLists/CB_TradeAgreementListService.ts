@@ -32,7 +32,7 @@ export class CB_TradeAgreementListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_tradeagreementviews';  
     }
 
-	getSingle(id: string) {
+	getSingle(id: number) {
 	   
 		var callTime = new Date();
 

@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_TradeLevy GetSingle(string id)
+		public  CB_TradeLevy GetSingle(int id)
         {
             return (from a in context.CB_TradeLevys
                     where a.ID == id 

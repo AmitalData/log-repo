@@ -32,7 +32,7 @@ export class CB_LevyExclusionListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_levyexclusionviews';  
     }
 
-	getSingle(id: string) {
+	getSingle(id: number) {
 	   
 		var callTime = new Date();
 

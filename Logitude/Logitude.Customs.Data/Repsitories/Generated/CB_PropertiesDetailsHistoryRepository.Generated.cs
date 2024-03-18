@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_PropertiesDetailsHistory GetSingle(string id)
+		public  CB_PropertiesDetailsHistory GetSingle(int id)
         {
             return (from a in context.CB_PropertiesDetailsHistorys
                     where a.ID == id 

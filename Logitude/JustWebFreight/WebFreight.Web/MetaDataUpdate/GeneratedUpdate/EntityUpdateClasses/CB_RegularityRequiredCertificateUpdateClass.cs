@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_RegularityRequiredCertificateUpdateClass
    {  		
-		public const string HashString = "802079fc2f5cf65a00d78a1d5f45f722";
+		public const string HashString = "110b5c38e81abd596993245ef1df4eb0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "סוגי רישיונות/אישורים נדרשים בתחולה של דרישות חוקיות",
 			      				    DefaultText =  "Regularity Required Certificate",
-			      				    Code =  "149c",
+			      				    Code =  "c197",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -152,8 +152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "RegularityInceptionID",
 					  						ObjectTableName =  "Customs.CB_RegularityRequiredCertificate",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_RegularityInception",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -172,6 +171,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RegularityInceptionID",
 					  						ListPropertyPath =  "RegularityInceptionID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -235,6 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ConfirmationTypeID",
 					  						ListPropertyPath =  "ConfirmationTypeID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -297,6 +298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Number",
 					  						ListPropertyPath =  "Number",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -359,6 +361,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TextualCondition",
 					  						ListPropertyPath =  "TextualCondition",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -421,6 +424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "TrNumber",
 					  						ListPropertyPath =  "TrNumber",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -483,6 +487,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "AuthorityID",
 					  						ListPropertyPath =  "AuthorityID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -527,7 +532,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CB_RegularityRequiredCertificateObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CB_RegularityRequiredCertificate" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CB_RegularityRequiredCertificateObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CB_RegularityRequiredCertificate").ToList();
+		       
+	      
+
+	         Screen CB_RegularityRequiredCertificateCustomsCB_RegularityRequiredCertificateHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CB_RegularityRequiredCertificate.HeaderScreen", Name = "Customs.CB_RegularityRequiredCertificateHeaderScreen", ObjectTableId = CB_RegularityRequiredCertificateObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CB_RegularityRequiredCertificateObjectTable.HeaderScreenId = CB_RegularityRequiredCertificateCustomsCB_RegularityRequiredCertificateHeaderScreenScreen0.Id;
+		    CB_RegularityRequiredCertificateObjectTable.HeaderScreenCode = CB_RegularityRequiredCertificateCustomsCB_RegularityRequiredCertificateHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

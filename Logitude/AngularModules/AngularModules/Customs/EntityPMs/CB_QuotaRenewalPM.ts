@@ -24,9 +24,9 @@ export class CB_QuotaRenewalPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -59,9 +59,9 @@ export class CB_QuotaRenewalPM {
     public set EntityStatusID(newValue: string) { if (this.entityStatusID != newValue) { this.entityStatusID = newValue; this.MarkAsDirty("EntityStatusID"); } }
        
 	 
-    private quotaDetailsHistoryID: string;
+    private quotaDetailsHistoryID: number;
     public get QuotaDetailsHistoryID() { return this.quotaDetailsHistoryID; }
-    public set QuotaDetailsHistoryID(newValue: string) { if (this.quotaDetailsHistoryID != newValue) { this.quotaDetailsHistoryID = newValue; this.MarkAsDirty("QuotaDetailsHistoryID"); } }
+    public set QuotaDetailsHistoryID(newValue: number) { if (this.quotaDetailsHistoryID != newValue) { this.quotaDetailsHistoryID = newValue; this.MarkAsDirty("QuotaDetailsHistoryID"); } }
        
 	 
     private step: number;

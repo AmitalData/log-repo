@@ -20,7 +20,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [Column("ID")]
-	    public string ID { get; set; }
+	    public int ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
@@ -42,7 +42,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public string EnglishTitle { get; set; }
         [ForeignKey("CustomsBookAddition")]
         [Column("CustomsBookAdditionID")]
-	    public string CustomsBookAdditionID { get; set; }
+	    public int CustomsBookAdditionID { get; set; }
 	      
         public virtual CB_CustomsBookAddition CustomsBookAddition { get; set; }
         [Column("ChangeRequestTypePriority")]

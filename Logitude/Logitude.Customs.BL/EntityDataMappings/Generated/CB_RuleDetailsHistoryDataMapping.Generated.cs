@@ -300,6 +300,10 @@ namespace Logitude.Customs.BL.EntityDataMappings
                 return;
 
             }
+            if (!String.IsNullOrWhiteSpace(entityPM.Rules)) //T4 find type == nText 
+            {
+                entityPM.Rules = Encoding.GetEncoding(entityPM.EncodeBase64NVARCHARFieldsBy).GetString(Convert.FromBase64String(entityPM.Rules));
+            }
             entityPM.EncodeBase64NVARCHARFieldsBy=null;
 		}
 

@@ -129,7 +129,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public CB_QuotaRenewalList GetSingle(string id)
+        public CB_QuotaRenewalList GetSingle(int id)
         {
             IQueryable<CB_QuotaRenewal> CB_QuotaRenewalQuery = (from a in context.CB_QuotaRenewals
                                                        where a.ID == id

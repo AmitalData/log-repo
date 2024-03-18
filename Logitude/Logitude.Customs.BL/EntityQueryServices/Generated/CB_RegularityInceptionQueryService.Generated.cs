@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_RegularityInceptionDataMapping();
         }
 		 
-		public  CB_RegularityInceptionPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CB_RegularityInceptionPM GetSingle(int id,bool getComposition, bool getFromCache)
         {
              EntityKeys = new CB_RegularityInceptionKeys(){ ID = id };
 

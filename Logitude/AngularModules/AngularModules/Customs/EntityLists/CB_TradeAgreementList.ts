@@ -8,7 +8,7 @@
 
 export class CB_TradeAgreementList {
    
-	ID: string;
+	ID: number;
 	CreateDate: Date;
 	UpdateDate: Date;
 	Title: string;

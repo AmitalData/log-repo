@@ -7,8 +7,7 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -53,14 +52,13 @@
   </Column>
   <Column
     Name="RuleID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Rules"
-    Type="varchar"
+    Type="nvarchar"
     Size="-1">
     <Constraints
       Nullable="true" />
@@ -80,8 +78,7 @@
   </Column>
   <Column
     Name="Parent_RuleDetailsHistoryID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>

@@ -44,7 +44,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
 		  //service = ContainerAccessor.Container.Resolve(typeof(IDomainServiceUpdateClass<CB_CustomsItemPM>), "CustomDomainServiceUpdateClass", new ParameterOverride("", 1)) as IDomainServiceUpdateClass<CB_CustomsItemPM>;
 		}
        
-        public CB_CustomsItemPM GetSingleCB_CustomsItemPM(string id,int tenant)
+        public CB_CustomsItemPM GetSingleCB_CustomsItemPM(int id,int tenant)
         {
             if (MyContext == null)
             {
@@ -58,7 +58,7 @@ namespace WebFreight.Web.CustomModel.DomainServices
         }
 
          
-		public CB_CustomsItemList GetSingleCB_CustomsItemList(string id,int tenant)
+		public CB_CustomsItemList GetSingleCB_CustomsItemList(int id,int tenant)
         {
             SecurityUtility.AuthenticationOnTenant(tenant);
 			             SecurityUtility.CheckContactFeature("Customs.CB_CustomsItem", "READ", tenant); if ( MyContext == null)

@@ -32,7 +32,7 @@ export class CB_LevyConditionPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_levyconditions';      
     }
 
-	get(id: string) {       
+	get(id: number) {       
 
 		var callTime = new Date();		
 
