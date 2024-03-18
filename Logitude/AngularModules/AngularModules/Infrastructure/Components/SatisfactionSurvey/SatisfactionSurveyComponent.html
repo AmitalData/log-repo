@@ -87,7 +87,6 @@
     .tabs li.active {
         border-top: 5px solid #d35400;
         background-color: #f7c8c6;
-        /* color: white; */
     }
 
     .content textarea {
@@ -124,58 +123,64 @@
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 10;
-        /* Ensure it's above the blurred form */
-        background: rgba(255, 255, 255, 0.9);
-        /* Semi-transparent background */
+        background: rgba(255, 255, 255, 0.1);
         padding: 20px;
         border-radius: 5px;
         text-align: center;
         width: 80%;
-        /* Adjust based on your preference */
         max-width: 500px;
-        /* Adjust based on your preference */
     }
 
     .submission-message p {
         margin: 0;
         font-size: 1.2em;
         color: #333;
-        /* Adjust based on your preference */
+    }
+
+    .logo-spacing {
+        margin-top: -20vh;
+    }
+
+    .container {
+        text-align: center;
     }
 </style>
 
 <div class="background">
-    <div class="form-container" [class.blur]="formError">
-        <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()" *ngIf="!formSubmitted">
-            <h5 class="title">{{ howSatisfiedAreYou }}</h5>
-            <ul class="tabs">
-                <li *ngFor="let tab of tabs" [class.active]="activeTab === tab.content"
-                    (click)="setActiveTab(tab.content)">
-                    {{ tab.content }}
-                </li>
-            </ul>
-            <div class="form-group">
-                <div class="content">
-                    <textarea formControlName="Comments" placeholder="{{ moreDetailsTitle }}"></textarea>
+    <div class="container">
+        <img class="logo logo-spacing" alt="logo" src="../../../Images/ApplicationLogo/UnifreightLogo.jpg" />
+        <div class="form-container" [class.blur]="formError">
+            <form [formGroup]="surveyForm" (ngSubmit)="onSubmit()" *ngIf="!formSubmitted">
+                <h5 class="title">{{ howSatisfiedAreYou }}</h5>
+                <ul class="tabs">
+                    <li *ngFor="let tab of tabs" [class.active]="activeTab === tab.content"
+                        (click)="setActiveTab(tab.content)">
+                        {{ tab.content }}
+                    </li>
+                </ul>
+                <div class="form-group">
+                    <div class="content">
+                        <textarea formControlName="Comments" placeholder="{{ moreDetailsTitle }}"></textarea>
+                    </div>
                 </div>
-            </div>
-            <div class="button-container">
-                <button type="submit"
-                    [disabled]="!surveyForm.valid || formSubmitting || !surveyForm.value.Guid || !surveyForm.value.Hash"
-                    [ngClass]="{'disabled': !surveyForm.valid || formSubmitting || !surveyForm.value.Guid || !surveyForm.value.Hash}">
-                    <span *ngIf="!formSubmitting">שלח</span>
-                    <span *ngIf="formSubmitting"><i class="fa fa-spinner fa-spin"></i></span>
-                </button>
+                <div class="button-container">
+                    <button type="submit"
+                        [disabled]="!surveyForm.valid || formSubmitting || !surveyForm.value.Guid || !surveyForm.value.Hash"
+                        [ngClass]="{'disabled': !surveyForm.valid || formSubmitting || !surveyForm.value.Guid || !surveyForm.value.Hash}">
+                        <span *ngIf="!formSubmitting">שלח</span>
+                        <span *ngIf="formSubmitting"><i class="fa fa-spinner fa-spin"></i></span>
+                    </button>
 
-            </div>
-        </form>
-    </div>
-    <div class="submission-message" *ngIf="formAlreadySubmitted">
-        <p>{{ alreadySubmitted }}</p>
-    </div>
-    <div class="thank-you-message" *ngIf="formSubmitted">
-        <h2>{{ thanks }}</h2>
-        <br />
-        <p>{{ sentSuccessfully }}</p>
+                </div>
+            </form>
+        </div>
+        <div class="submission-message" *ngIf="formAlreadySubmitted">
+            <p>{{ alreadySubmitted }}</p>
+        </div>
+        <div class="thank-you-message" *ngIf="formSubmitted">
+            <h2>{{ thanks }}</h2>
+            <br />
+            <p>{{ sentSuccessfully }}</p>
+        </div>
     </div>
 </div>
