@@ -1072,8 +1072,11 @@ export class TenantManagementPM {
     public get ExportTenant() { return this.exportTenant; }
     public set ExportTenant(newValue: number) { if (this.exportTenant != newValue) { this.exportTenant = newValue; this.MarkAsDirty("ExportTenant"); } }
        
+    private searchAbsoluteValuePublic: boolean;
+    public get SearchAbsoluteValuePublic() { return this.searchAbsoluteValuePublic; }
+    public set SearchAbsoluteValuePublic(newValue: boolean) { if (this.searchAbsoluteValuePublic != newValue) { this.searchAbsoluteValuePublic = newValue; this.MarkAsDirty("SearchAbsoluteValuePublic"); } }
        
-	 
+
     public OldEntityPM: TenantManagementPM;
 		
     public IsDirty: boolean;

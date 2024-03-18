@@ -320,7 +320,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                      ServiceAgreementURL = a.ServiceAgreementURL,
                                                      ExportTenant = a.ExportTenant,
                                                      ExportLoginCredintial = a.ExportLoginCredintial,
-                                                 }).FirstOrDefault();
+													 SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
+
+												 }).FirstOrDefault();
                     if (tenant != null)
                     {
                         TenantAddOnQuery tenantAddOnQuery = new TenantAddOnQuery(tenant.Id);
@@ -545,8 +547,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                                   CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                                                   LogoURL = a.LogoURL,
                                                   ServiceAgreementURL = a.ServiceAgreementURL,
+												  SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
 
-                                              }).FirstOrDefault();
+											  }).FirstOrDefault();
 
                 if (tenant1 != null)
                 {
@@ -761,7 +764,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                         CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                         LogoURL = a.LogoURL,
                         ServiceAgreementURL = a.ServiceAgreementURL,
-                    });
+						SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
+
+					});
         }
         public TenantManagementList MapSingleList(TenantManagement entity)
         {
@@ -922,7 +927,7 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                     CargoTrackingPrivateShowEvents = entity.CargoTrackingPrivateShowEvents,
                     LogoURL = entity.LogoURL,
                     ServiceAgreementURL = entity.ServiceAgreementURL,
-                };
+				};
             }
 
             return myResult;
@@ -1082,7 +1087,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                        CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                        LogoURL = a.LogoURL,
                        ServiceAgreementURL = a.ServiceAgreementURL,
-                   };
+					   SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
+
+				   };
         }
 
         public int ComputeDaysLeft(DateTime? date)
@@ -1382,8 +1389,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
                                              CargoTrackingPrivateShowEvents = a.CargoTrackingPrivateShowEvents,
                                              LogoURL = a.LogoURL,
                                              ServiceAgreementURL = a.ServiceAgreementURL,
+											 SearchAbsoluteValuePublic = a.SearchAbsoluteValuePublic,
 
-                                         }).FirstOrDefault();
+										 }).FirstOrDefault();
 
             return tenant;
         }
@@ -1562,9 +1570,9 @@ namespace Logitude.BL.GlobalModel.EntityQueries
             return (from a in repository.context.GlobalTenants
                     where a.Id == tenant
                     select a.PrivateLabelId).FirstOrDefault();
-        }
+        }	
 
-        public List<TenantManagementPM> GetByTenantNumbers(List<int> tenantNumbers)
+		public List<TenantManagementPM> GetByTenantNumbers(List<int> tenantNumbers)
         {
             IQueryable<TenantManagementLicensePM> tenantManagementLicenses = GetTenantManagementLicensesByTenantNumbers(tenantNumbers);
 
@@ -1626,5 +1634,36 @@ namespace Logitude.BL.GlobalModel.EntityQueries
 
             return q.ToList();
         }
-    }
+
+        public bool GetSearchAbsoluteValuePublicByTenant(int tenant)
+        {
+            string entityName = "GetSearchAbsoluteValuePublicByTenant" + tenant;
+
+			bool isSearchAbsoluteValuePublic = false;
+
+            if (HttpContext.Current != null)
+            {
+                if (CacheManager.CacheWrapper.Get(entityName) == null) { 
+
+					isSearchAbsoluteValuePublic = (from a in repository.context.TenantManagements
+                            where a.Id == tenant
+                            select a.SearchAbsoluteValuePublic).FirstOrDefault();
+
+					CacheManager.CacheWrapper.Insert(entityName, isSearchAbsoluteValuePublic);
+
+				}
+				else
+			    {
+				   isSearchAbsoluteValuePublic = (bool)CacheManager.CacheWrapper.Get(entityName);
+			    }
+		    }
+            else
+            {
+				isSearchAbsoluteValuePublic = (from a in repository.context.TenantManagements
+											   where a.Id == tenant
+											   select a.SearchAbsoluteValuePublic).FirstOrDefault();
+			}
+            return isSearchAbsoluteValuePublic;
+        }	
+	}
 }

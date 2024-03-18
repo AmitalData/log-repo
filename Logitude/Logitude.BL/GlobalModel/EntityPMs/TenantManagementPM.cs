@@ -416,5 +416,7 @@ namespace Logitude.BL.GlobalModel.EntityPMs
         public bool EcommerceTenant { get; set; }
         public string ExportLoginCredintial { get; set; }
         public int? ExportTenant { get; set; }
-    }
+		public bool SearchAbsoluteValuePublic { get; set; }
+
+	}
 }
