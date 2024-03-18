@@ -361,6 +361,6 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string ConnectedPaymentsNumbers { get; set; }
         public string TotalEquation { get; set; }
 
-        public string ConfirmationNumberStatus { get; set; }
+       
     }
 }
