@@ -1569,7 +1569,12 @@ export class DeclarationPM {
         }
     }
     //public DeclarationPayments: Array<DeclarationPaymentPM>= [];
- 
+       
+	 
+    private autoSending: boolean;
+    public get AutoSending() { return this.autoSending; }
+    public set AutoSending(newValue: boolean) { if (this.autoSending != newValue) { this.autoSending = newValue; this.MarkAsDirty("AutoSending"); } }
+       
     public OldEntityPM: DeclarationPM;
 		
     public IsDirty: boolean;
@@ -1597,4 +1602,4 @@ export class DeclarationPM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}
