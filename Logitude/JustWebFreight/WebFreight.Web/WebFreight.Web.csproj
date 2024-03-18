@@ -3173,9 +3173,6 @@
     <Compile Include="Helpers\ExcelReport\ExcelReportMrtBuilder.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportService.cs" />
     <Compile Include="Helpers\ExcelReport\ExcelReportUpdateService.cs" />
-    <Compile Include="Helpers\ExportServer\ExportServerLogin.cs" />
-    <Compile Include="Helpers\ExportServer\ExportServerService.cs" />
-    <Compile Include="Helpers\ExportServer\LoginImportWcfStruct.cs" />
     <Compile Include="Helpers\ExternalAPITemplatesBuilder.cs" />
     <Compile Include="Helpers\ExternalAPIResponseParameters.cs" />
     <Compile Include="Helpers\APIHelpers\ApiExceptionFilter.cs" />

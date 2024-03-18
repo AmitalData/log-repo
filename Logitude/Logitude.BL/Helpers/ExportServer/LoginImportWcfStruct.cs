@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using System.ServiceModel;
 
-namespace WebFreight.Web.Helpers.ExportServer
+namespace Logitude.BL.Helpers.ExportServer
 {
 
     [ServiceContract]

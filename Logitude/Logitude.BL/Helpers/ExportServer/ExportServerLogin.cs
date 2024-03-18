@@ -2,7 +2,11 @@
 using Logitude.BL.CommonDataModel.EntityQueries;
 using Logitude.BL.GlobalModel.EntityPMs;
 using Logitude.BL.GlobalModel.EntityQueries;
+using Logitude.BL.Helpers.ExportServer;
+using Logitude.BL.Helpers.Login;
 using Newtonsoft.Json;
+using Simplog.Global.Data.GlobalModel;
+using Simplog.Global.Data.GlobalModel.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -11,12 +15,13 @@ using System.Net.Http.Headers;
 using System.ServiceModel;
 using System.ServiceModel.Channels;
 using System.Text;
-using WebFreight.Web.DataContracts;
 
-namespace WebFreight.Web.Helpers.ExportServer
+
+namespace Logitude.BL.Helpers.ExportServer
 {
     public class ExportServerLogin
     {
+        
         private static Dictionary<string, string> tokensCache = new Dictionary<string, string>();
         private static TenantManagementQuery tenantManagementQuery = new TenantManagementQuery();
         public readonly static string exportUrl = new SettingQuery().GetSinglePMFromCahche().ExportUrl;

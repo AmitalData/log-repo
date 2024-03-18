@@ -528,13 +528,6 @@
     <Constraints
       Nullable="true" />
   </Column>
-  <Column
-    Name="ConfirmationNumberStatus"
-    Type="varchar"
-    Size="2">
-    <Constraints
-      Nullable="true" />
-  </Column>
   <Relation
     ForeignKeyColumn="VendorId"
     ReferencedTable="Cards"
@@ -593,11 +586,6 @@
   <Relation
     ForeignKeyColumn="GlobalTaxCalculation"
     ReferencedTable="QBOGlobalTaxCalculations"
-    ReferencedColumn="Code"
-    ReferencedTableSchema="dbo" />
-  <Relation
-    ForeignKeyColumn="ConfirmationNumberStatus"
-    ReferencedTable="ConfirmationNumberStatuses"
     ReferencedColumn="Code"
     ReferencedTableSchema="dbo" />
   <Index
