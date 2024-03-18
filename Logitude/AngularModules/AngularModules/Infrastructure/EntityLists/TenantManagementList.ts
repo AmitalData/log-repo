@@ -180,5 +180,6 @@ export class TenantManagementList {
 		ServiceAgreementURL: string;
 		EcommerceSupportEmail: string;
 		EcommerceTenant: boolean;
+		SearchAbsoluteValuePublic:boolean;
 	
 }
