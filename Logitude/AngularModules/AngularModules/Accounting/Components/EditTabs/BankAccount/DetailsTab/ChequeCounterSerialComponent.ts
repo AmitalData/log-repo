@@ -41,7 +41,7 @@ export class ChequeCounterSerialComponent extends BaseComponent implements OnIni
         this.SeriesIdHeader = TextCodeTranslator.Translate("ChequeCounterSerial.CH.SeriesIdListLable");
         this.ChequeCounterBeginHeader = TextCodeTranslator.Translate("ChequeCounterSerial.CH.ChequeCounterBeginListLable");
         this.ChequeCounterEndHeader = TextCodeTranslator.Translate("ChequeCounterSerial.CH.ChequeCounterEndListLable");
-        this.InActiveHeader = TextCodeTranslator.Translate("ChequeCounterSerial.CH.InActiveListLable");
+        this.InActiveHeader = TextCodeTranslator.Translate("ChequeCounterSerial.CH.InactiveListLable");
         if (ObjectsLocator.GlobalSetting) this.isRTL = (ObjectsLocator.GlobalSetting.LayoutDirection == "rtl");
         this.TenantPM = SessionLocator.TenantPM;
         this.myService = new BankAccountPMService();
