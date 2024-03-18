@@ -17,6 +17,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.VatNumber).HasMaxLength(30).IsUnicode(false);
             this.Property(t => t.PrintByUserId).HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.IssuedByUserId).IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ConfirmationNumberStatus).HasMaxLength(2).IsUnicode(false);
+
             this.Property(t => t.InvoiceCurrencyId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.LocalCurrencyId).IsRequired().HasMaxLength(15).IsUnicode(false);
             this.Property(t => t.StatusCode).IsRequired().HasMaxLength(2).IsUnicode(false);
@@ -111,6 +113,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.InvoiceDate).HasColumnName("InvoiceDate").IsRequired();
             this.Property(t => t.PrintByUserId).HasColumnName("PrintByUserId");
             this.Property(t => t.IssuedByUserId).HasColumnName("IssuedByUserId");
+            this.Property(t => t.ConfirmationNumberStatus).HasColumnName("ConfirmationNumberStatus");
+
             this.Property(t => t.InvoiceCurrencyId).HasColumnName("InvoiceCurrencyId");
             this.Property(t => t.LocalCurrencyId).HasColumnName("LocalCurrencyId");
             this.Property(t => t.InvoiceCurrencyExchangeRate).HasColumnName("InvoiceCurrencyExchangeRate").IsRequired();
@@ -232,6 +236,8 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasRequired(t => t.Status).WithMany().HasForeignKey(d => d.StatusCode);
             this.HasRequired(t => t.ARInvoiceType).WithMany().HasForeignKey(d => d.ARInvoiceTypeCode);
             this.HasRequired(t => t.IssuedByUser).WithMany().HasForeignKey(d => d.IssuedByUserId);
+            this.HasRequired(t => t.ConfirmationNumberStatuses).WithMany().HasForeignKey(d => d.ConfirmationNumberStatus);
+
             this.HasRequired(t => t.LocalCurrency).WithMany().HasForeignKey(d => d.LocalCurrencyId);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);
             this.HasRequired(t => t.TransferStatus).WithMany().HasForeignKey(d => d.TransferStatusCode);

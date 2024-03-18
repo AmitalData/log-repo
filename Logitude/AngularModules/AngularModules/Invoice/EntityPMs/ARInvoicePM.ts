@@ -1203,6 +1203,9 @@ export class ARInvoicePM {
     private confirmationNumberStatus: string;
     public get ConfirmationNumberStatus() { return this.confirmationNumberStatus; }
     public set ConfirmationNumberStatus(newValue: string) { if (this.confirmationNumberStatus != newValue) { this.confirmationNumberStatus = newValue; this.MarkAsDirty("ConfirmationNumberStatus"); } }
+    private confirmationNumberStatusName: string;
+    public get ConfirmationNumberStatusName() { return this.confirmationNumberStatusName; }
+    public set ConfirmationNumberStatusName(newValue: string) { if (this.confirmationNumberStatusName != newValue) { this.confirmationNumberStatusName = newValue; this.MarkAsDirty("ConfirmationNumberStatusName"); } }
        
 	 
 
@@ -1233,4 +1236,4 @@ export class ARInvoicePM {
         ServiceHelper.RejectEntityPMChanges(this);
     }
 
-}
+}

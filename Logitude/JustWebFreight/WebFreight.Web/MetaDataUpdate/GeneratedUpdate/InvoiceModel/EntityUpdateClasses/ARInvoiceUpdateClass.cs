@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "726427c1f90a1624b5edb8e7aa51870c";
+		public const string HashString = "25618e894b3a78e0320e66f6408ec795";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14576,7 +14576,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DependencyFilter3IsList =  false,
 					  						ValidForQuerySection1 =  "ARInvoice",
 					  						IsRestrictable =  false,
-					  						DisplayInEntityVariables =  false,
+					  						DisplayInEntityVariables =  true,
 					  						AllowedInCustomerFieldsSettings =  false,
 					  						DisplayInSearchWindowFilters =  false,
 					  						DisplayInSearchWindowFiltersIndex =  0,
@@ -14598,6 +14598,69 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						EnableAutoFill =  false,
 					  						IncludeInSearchField =  false,
 					  						AllowedinAutomationConditions =  true,
+					  						AutomationEmailRecipient =  false,
+					  						CanAutomateSetValue =  false,
+					  						DisplayInAutomationAsEnitity =  false,
+					  						HasTemplate =  false,
+					  						IsCustom =  false,
+					  						EnableFullscreenTextBox =  false,
+					  		
+			   },TextCodeRepository,ObjectFieldsRepository,objectFields,textCodes,objectTables,addedFields,addedTextCodes);
+ 
+
+			   AddObjectsAndObjectFields.AddObjectField(new ObjectFieldsDetails() 
+			   {
+					 
+					 						FieldName =  "ConfirmationNumberStatusName",
+					  						ObjectTableName =  "ARInvoice",
+					  						FieldsDataType =  "nText",
+					  						MinLength =  0,
+					  						MaxLength =  60,
+					  						IsRequired =  false,
+					  						CopyToDW =  false,
+					  						DisplayOnLookUp =  false,
+					  						DisplayOnLookUpLocal =  false,
+					  						CanFilter =  false,
+					  						DisplayOnly =  false,
+					  						SystemRequired =  false,
+					  						SystemMaxLength =  60,
+					  						DisplayInList =  true,
+					  						IsCustomFilter =  false,
+					  						IsListFilter =  false,
+					  						MultiLine =  false,
+					  						IsTimeFrameFilter =  false,
+					  						DisplayInSearchWindowList =  false,
+					  						PMPropertyPath =  "ConfirmationNumberStatusName",
+					  						ListPropertyPath =  "ConfirmationNumberStatusName",
+					  						AutomaticField =  false,
+					  						UniqueField =  false,
+					  						DisplayInSearchWindowListIndex =  0,
+					  						IsMulti =  false,
+					  						DependencyFilter1IsList =  false,
+					  						DependencyFilter2IsList =  false,
+					  						DependencyFilter3IsList =  false,
+					  						ValidForQuerySection1 =  "ARInvoice",
+					  						IsRestrictable =  false,
+					  						DisplayInEntityVariables =  true,
+					  						AllowedInCustomerFieldsSettings =  false,
+					  						DisplayInSearchWindowFilters =  false,
+					  						DisplayInSearchWindowFiltersIndex =  0,
+					  						DisplayInDocumentReferences =  false,
+					  						InActive =  false,
+					  						DisplayLongName =  false,
+					  						FullFieldLable =  "ConfirmationNumberStatusName",
+					  						DefaultText =  "Confirmation Number Status",
+					  						FullLocalDefaultText =  "סטטוס הקצאת חשבונית",
+					  						ListFieldLable =  "ConfirmationNumberStatusNameListLable",
+					  						ListLableDefaultText =  "Confirmation Number Status",
+					  						ListLocalDefaultText =  "סטטוס הקצאת חשבונית",
+					  						IsForeignKey =  false,
+					  						IsMaxLength =  false,
+					  						NoMetaDataField =  false,
+					  						IsFixedLength =  false,
+					  						EnableAutoFill =  false,
+					  						IncludeInSearchField =  false,
+					  						AllowedinAutomationConditions =  false,
 					  						AutomationEmailRecipient =  false,
 					  						CanAutomateSetValue =  false,
 					  						DisplayInAutomationAsEnitity =  false,
