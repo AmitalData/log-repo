@@ -70,7 +70,6 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
     public IsChecked = false;    
 
     OnAllBtnClicked() {
-        debugger
         this.IsChecked = true;
         this.ItemsSource.Collection.forEach(element => {
             this.IsComprehensiveUpdateChecked(true, element);
@@ -458,7 +457,6 @@ export class DeclarationSupplierInvoiceTabComponent extends BaseComponent implem
 
     public  SupplierInvoiceComprehensiveUpdate:SupplierInvoicePM[]=[];
     IsComprehensiveUpdateChecked(checked: boolean, item: SupplierInvoicePM){
-        debugger
         if(checked){
             this.SupplierInvoiceComprehensiveUpdate.push(item);
         }
