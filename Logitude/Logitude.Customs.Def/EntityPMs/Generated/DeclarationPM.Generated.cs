@@ -6137,6 +6137,29 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
+	  private bool autoSending ;
+	  	  
+       
+	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
+	   [DataMember]
+       public bool AutoSending  
+	   {
+	    
+	     get
+		{
+		   return autoSending;
+		 }
+		 set
+		 {
+		   if(autoSending != value)
+		  {
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="AutoSending",OldValue=autoSending,NewValue=value,PropertyType="bool"};
+		    NotifyPropertyChanged(values);
+		   autoSending=value;
+		   }
+			
+		 }
+	   }
    }
    
 }

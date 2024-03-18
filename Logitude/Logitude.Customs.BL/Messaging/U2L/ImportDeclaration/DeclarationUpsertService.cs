@@ -831,9 +831,18 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					_MyDeclarationPM.IsDiamondDeclaration = true;
 				}
 
+                if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.AutoSending) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.AutoSending) && _AmitalCustomsFile.AutoSending.ToLower() != "true"))
+                {
+                    _MyDeclarationPM.AutoSending = false;
 
-				//  UpdateTrucker();
-				AppendLogLine("ExportDeclarationInsert");
+                }
+                else
+                {
+                    _MyDeclarationPM.AutoSending = true;
+                }
+
+                //  UpdateTrucker();
+                AppendLogLine("ExportDeclarationInsert");
 				ExportDeclarationInsert();
 				if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.IsCourierDeclaration) && _AmitalCustomsFile.IsCourierDeclaration.ToLower() != "true"))
 				{

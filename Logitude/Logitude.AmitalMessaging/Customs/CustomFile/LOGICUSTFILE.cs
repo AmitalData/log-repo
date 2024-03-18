@@ -165,6 +165,8 @@ public partial class LogitudeCustomsFile
 
     private string isDiamondsDeclarationField;
 
+    private string AutoSendingField;
+
     private string estimatedTimeOfArrivalField;
 
     private string orderNumberField;
@@ -938,6 +940,19 @@ public partial class LogitudeCustomsFile
         set
         {
             this.isDiamondsDeclarationField = value;
+        }
+    }
+
+    /// <remarks/>
+    public string AutoSending
+    {
+        get
+        {
+            return this.AutoSendingField;
+        }
+        set
+        {
+            this.AutoSendingField = value;
         }
     }
 

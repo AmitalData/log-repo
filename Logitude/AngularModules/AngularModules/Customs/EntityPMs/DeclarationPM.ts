@@ -1569,6 +1569,11 @@ export class DeclarationPM {
     public set EffectiveFlight(newValue: boolean) { if (this.effectiveFlight != newValue) { this.effectiveFlight = newValue; this.MarkAsDirty("EffectiveFlight"); } }
        
 	 
+    private autoSending: boolean;
+    public get AutoSending() { return this.autoSending; }
+    public set AutoSending(newValue: boolean) { if (this.autoSending != newValue) { this.autoSending = newValue; this.MarkAsDirty("AutoSending"); } }
+       
+	 
 
     public OldEntityPM: DeclarationPM;
 		
