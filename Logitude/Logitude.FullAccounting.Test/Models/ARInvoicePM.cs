@@ -58,8 +58,8 @@ namespace Logitude.FullAccounting.Test.Models
         public string PrintByUserId { get; set; }
         public string PrintByUserName { get; set; }
         public string IssuedByUserId { get; set; }
+        public string ConfirmationNumberStatus { get; set; }
 
-        
         public string InvoiceCurrencyId { get; set; }
         public string InvoiceCurrencyCode { get; set; }
         public string LocalCurrencyId { get; set; }

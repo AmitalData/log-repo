@@ -57,8 +57,11 @@ namespace Logitude.BL.InvoiceModel.APIDataContract.ApiV1
     public string PrintNotes { get; set; }
     
     public User IssuedByUser { get; set; }
-    
-    public double? InvoiceCurrencyExchangeRate { get; set; }
+
+        public ConfirmationNumberStatus ConfirmationNumberStatuses { get; set; }
+
+
+        public double? InvoiceCurrencyExchangeRate { get; set; }
     
     public List<ARInvoiceLine> ARInvoiceLines { get; set; }
     
