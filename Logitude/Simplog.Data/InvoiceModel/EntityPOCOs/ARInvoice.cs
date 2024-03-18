@@ -243,7 +243,7 @@ namespace Simplog.Data.InvoiceModel.EntityPOCOs
       
 
         [ForeignKey("ConfirmationNumberStatus")]
-        public virtual ConfirmationNumberStatus ConfirmationNumberStatuses { get; set; }
+        public virtual ConfirmationNumberStatus Confirmation { get; set; }
         public string ConfirmationNumberStatus { get; set; }
 
     }

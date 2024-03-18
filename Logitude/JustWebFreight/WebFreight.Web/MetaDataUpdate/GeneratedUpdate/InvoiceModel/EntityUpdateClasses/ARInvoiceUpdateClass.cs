@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ARInvoiceUpdateClass
    {  		
-		public const string HashString = "25618e894b3a78e0320e66f6408ec795";
+		public const string HashString = "5a37009359f66bf16fae96f20192bca1";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -14591,7 +14591,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						ListLocalDefaultText =  "סטטוס הקצאת חשבונית",
 					  						IsForeignKey =  true,
 					  						ForeignEntity =  "ConfirmationNumberStatus",
-					  						NavigationPropertyName =  "ConfirmationNumberStatuses",
+					  						NavigationPropertyName =  "Confirmation",
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
 					  						IsFixedLength =  false,
@@ -14632,6 +14632,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "ConfirmationNumberStatusName",
 					  						ListPropertyPath =  "ConfirmationNumberStatusName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
