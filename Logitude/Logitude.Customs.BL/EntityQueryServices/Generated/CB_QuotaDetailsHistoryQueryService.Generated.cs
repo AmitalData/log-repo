@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_QuotaDetailsHistoryDataMapping();
         }
 		 
-		public  CB_QuotaDetailsHistoryPM GetSingle(string id,bool getComposition, bool getFromCache)
+		public  CB_QuotaDetailsHistoryPM GetSingle(int id,bool getComposition, bool getFromCache)
         {
              EntityKeys = new CB_QuotaDetailsHistoryKeys(){ ID = id };
 

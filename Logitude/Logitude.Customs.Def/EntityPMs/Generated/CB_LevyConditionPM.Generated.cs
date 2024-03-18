@@ -18,14 +18,14 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_LevyConditionPM : EntityPM
    {
-   	  private string iD ;
+   	  private int iD ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ID  
+       public int ID  
 	   {
 	    
 	     get
@@ -36,7 +36,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
@@ -89,12 +89,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string customsItemID ;
+	  private int customsItemID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string CustomsItemID  
+       public int CustomsItemID  
 	   {
 	    
 	     get
@@ -105,19 +105,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(customsItemID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemID",OldValue=customsItemID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemID",OldValue=customsItemID,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   customsItemID=value;
 		   }
 			
 		 }
 	   }
-	  private string vendorID ;
+	  private int? vendorID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string VendorID  
+       public int? VendorID  
 	   {
 	    
 	     get
@@ -128,7 +128,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(vendorID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorID",OldValue=vendorID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorID",OldValue=vendorID,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   vendorID=value;
 		   }
@@ -204,12 +204,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string tradeLevyID ;
+	  private int tradeLevyID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string TradeLevyID  
+       public int TradeLevyID  
 	   {
 	    
 	     get
@@ -220,7 +220,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(tradeLevyID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TradeLevyID",OldValue=tradeLevyID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TradeLevyID",OldValue=tradeLevyID,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   tradeLevyID=value;
 		   }

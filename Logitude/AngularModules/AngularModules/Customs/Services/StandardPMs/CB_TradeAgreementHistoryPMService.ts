@@ -32,7 +32,7 @@ export class CB_TradeAgreementHistoryPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_tradeagreementhistories';      
     }
 
-	get(id: string) {       
+	get(id: number) {       
 
 		var callTime = new Date();		
 

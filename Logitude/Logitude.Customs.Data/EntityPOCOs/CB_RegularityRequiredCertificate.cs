@@ -20,10 +20,10 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [Column("ID")]
-	    public string ID { get; set; }
+	    public int ID { get; set; }
         [ForeignKey("RegularityInception")]
         [Column("RegularityInceptionID")]
-	    public string RegularityInceptionID { get; set; }
+	    public int RegularityInceptionID { get; set; }
 	      
         public virtual CB_RegularityInception RegularityInception { get; set; }
         [ForeignKey("ConfirmationTypeCode")]

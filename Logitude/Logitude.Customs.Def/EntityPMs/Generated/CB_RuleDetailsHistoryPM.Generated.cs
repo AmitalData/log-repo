@@ -18,14 +18,14 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_RuleDetailsHistoryPM : EntityPM
    {
-   	  private string iD ;
+   	  private int iD ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ID  
+       public int ID  
 	   {
 	    
 	     get
@@ -36,7 +36,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
@@ -181,12 +181,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string ruleID ;
+	  private int ruleID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string RuleID  
+       public int RuleID  
 	   {
 	    
 	     get
@@ -197,7 +197,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(ruleID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RuleID",OldValue=ruleID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RuleID",OldValue=ruleID,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   ruleID=value;
 		   }
@@ -273,12 +273,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string parent_RuleDetailsHistoryID ;
+	  private int? parent_RuleDetailsHistoryID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string Parent_RuleDetailsHistoryID  
+       public int? Parent_RuleDetailsHistoryID  
 	   {
 	    
 	     get
@@ -289,7 +289,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(parent_RuleDetailsHistoryID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Parent_RuleDetailsHistoryID",OldValue=parent_RuleDetailsHistoryID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Parent_RuleDetailsHistoryID",OldValue=parent_RuleDetailsHistoryID,NewValue=value,PropertyType="int?"};
 		    NotifyPropertyChanged(values);
 		   parent_RuleDetailsHistoryID=value;
 		   }

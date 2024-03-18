@@ -549,8 +549,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         }
                     }
 
+                    var declarationAvaliabilityDate = declarationStatus_ResponseDeclarationStatusAnswer.DeclarationStatusDetails.DeclarationAvailabilityLog?.AvailabiltyLogRunDetails?.TimeStamp;
+               
                     if (isAutoPayment)
-                        SendPayment(declarationPM, dbContext, requestParams);
+                        SendPayment(declarationPM, dbContext, requestParams, declarationAvaliabilityDate);
 
                     try
                     {
@@ -808,21 +810,22 @@ namespace Logitude.CustomsMessaging.ResponseServices
             }
         }
 
-        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, DeclarationStatusRequestParams requestParams)
+        private void SendPayment(DeclarationPM declarationPM, ICustomContext dbContext, DeclarationStatusRequestParams requestParams, DateTime? declarationAvaliabilityDate)
         {
             if (declarationPM.AvailabilityDate != null) return;
             var myDeclarationPaymentQueryService = new DeclarationPaymentQueryService(dbContext);
             var myDeclarationPaymentUpdateService = new DeclarationPaymentUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant); ;
-
             var myDeclarationQueryService = new DeclarationQueryService(dbContext);
             var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
-            _declarationPM.AvailabilityDate = DateTime.Now;
+
+            _declarationPM.AvailabilityDate = declarationAvaliabilityDate ?? DateTime.Now;
             _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
             myDeclarationUpdateService.Update(_declarationPM, true);
 
             var declarationPaymentPM = myDeclarationPaymentQueryService.GetSingle(_declarationPM.Id, true, false);
 
+            
 
             if (declarationPaymentPM != null)
             {
@@ -1096,7 +1099,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         status = "new",
                         xml_status = "new",
                         status_id = statusId,
-                        status_DateTime = DateTime.Now,
+                        status_DateTime = dirtyDeclarationPM.AvailabilityDate ?? DateTime.Now,
                         //status_place = "FRA",
                         //status_save = "no_fail",
                         comments = "",

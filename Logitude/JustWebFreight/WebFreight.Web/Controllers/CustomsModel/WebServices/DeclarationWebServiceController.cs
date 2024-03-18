@@ -2562,7 +2562,7 @@ namespace WebFreight.Web.Controllers.CustomsModel.WebServices
 				string error = "";
 				DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService = new DF_NG_2757_MSG10004_ExportAmendmentDeclarationResponseService();
 
-				DeclarationPM declarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true, requestParams.AppicationId, out error, user: requestParams.LoggingUserId, isCopy: false);
+				DeclarationPM declarationPM = dF_NG_2757_MSG10004_ExportFixedDeclarationResponseService.MapResponseToDeclaration(request.Declaration, requestParams.Tenant, true, requestParams.AppicationId, out error, user: requestParams.LoggingUserId, isCopy: false, from2280:true);
 
 
 				if (declarationPM != null) { 

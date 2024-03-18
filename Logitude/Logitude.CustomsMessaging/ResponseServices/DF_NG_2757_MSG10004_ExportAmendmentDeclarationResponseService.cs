@@ -78,7 +78,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
         #endregion
 
-        public DeclarationPM MapResponseToDeclaration(Declaration declaration, int tenant, bool FromImporter, string idOrg, out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept = false, bool isCopy = false, bool isClose = false, bool? isAmendApprove = null, bool? isDCA = false)
+        public DeclarationPM MapResponseToDeclaration(Declaration declaration, int tenant, bool FromImporter, string idOrg,
+            out string error, bool isUpdate = false, string user = null, bool isUpdateAfterAccept = false, bool isCopy = false,
+            bool isClose = false, bool? isAmendApprove = null, bool? isDCA = false, bool? from2280=false)
+
         {
             error = "";
             try
@@ -137,6 +140,10 @@ namespace Logitude.CustomsMessaging.ResponseServices
                         DeclarationTypeCode = GetValueCodeType(declaration.TypeCode),
                         Consignments = GetConsignments(declaration, tenant, null, context, declarationOrg?.Consignments, isAmendApprove),
                     };
+                    if(from2280==true)
+                    {
+                        declarationPM.AmendmentRemarks = "עדכון מסמך העדפה";
+                    }
                    // declarationPM.IsSubmitDeclaration = declarationOrg.IsSubmitDeclaration;
                     declarationPM.IsExportClosed = declarationOrg.IsExportClosed;
                     declarationPM.ExportDeclarationOfficeCode = GetValueIDType(declaration.ExportDeclarationOfficeID);

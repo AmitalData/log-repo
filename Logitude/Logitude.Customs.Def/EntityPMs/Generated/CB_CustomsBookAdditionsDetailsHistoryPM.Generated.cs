@@ -18,14 +18,14 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_CustomsBookAdditionsDetailsHistoryPM : EntityPM
    {
-   	  private string iD ;
+   	  private int iD ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ID  
+       public int ID  
 	   {
 	    
 	     get
@@ -36,7 +36,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
@@ -227,12 +227,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private string customsBookAdditionID ;
+	  private int customsBookAdditionID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string CustomsBookAdditionID  
+       public int CustomsBookAdditionID  
 	   {
 	    
 	     get
@@ -243,7 +243,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(customsBookAdditionID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsBookAdditionID",OldValue=customsBookAdditionID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsBookAdditionID",OldValue=customsBookAdditionID,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   customsBookAdditionID=value;
 		   }

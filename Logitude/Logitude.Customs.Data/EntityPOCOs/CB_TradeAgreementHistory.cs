@@ -20,7 +20,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [Column("ID")]
-	    public string ID { get; set; }
+	    public int ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
@@ -38,7 +38,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 	    public int? Version { get; set; }
         [ForeignKey("CB_TradeAgreementId")]
         [Column("TradeAgreementID")]
-	    public string TradeAgreementID { get; set; }
+	    public int TradeAgreementID { get; set; }
 	      
         public virtual CB_TradeAgreement CB_TradeAgreementId { get; set; }
         [Column("ChangeRequestTypePriority")]

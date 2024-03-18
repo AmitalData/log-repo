@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_CustomsItemDetailsHistoryUpdateClass
    {  		
-		public const string HashString = "6dfc9540675ef52c045ae14ca840ffe1";
+		public const string HashString = "407c739cb304bc73365ebdbba73ca797";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "היסטוריית תיאור טובין של פרט מכס",
 			      				    DefaultText =  "Customs Item Details History",
-			      				    Code =  "c4a8",
+			      				    Code =  "1975",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -594,7 +594,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "GoodsDescription",
 					  						ObjectTableName =  "Customs.CB_CustomsItemDetailsHistory",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -783,8 +783,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomsItemID",
 					  						ObjectTableName =  "Customs.CB_CustomsItemDetailsHistory",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_CustomsItem",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

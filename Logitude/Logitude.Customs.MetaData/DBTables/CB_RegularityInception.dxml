@@ -6,18 +6,16 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
   </Column>
   <Column
     Name="RegularityRequirementID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="InterConditionsRelationshipID"

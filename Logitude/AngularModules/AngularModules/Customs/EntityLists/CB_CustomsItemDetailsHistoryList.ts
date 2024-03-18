@@ -8,7 +8,7 @@
 
 export class CB_CustomsItemDetailsHistoryList {
    
-	ID: string;
+	ID: number;
 	CreateDate: Date;
 	UpdateDate: Date;
 	Title: string;
@@ -19,7 +19,7 @@ export class CB_CustomsItemDetailsHistoryList {
 	GoodsDescription: string;
 	GoodsDescriptionRTF: string;
 	EnglishGoodsDescriptionRTF: string;
-	CustomsItemID: string;
+	CustomsItemID: number;
 	ChangeRequestTypePriority: number;
 	
 }

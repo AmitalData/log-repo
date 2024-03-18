@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_TariffUpdateClass
    {  		
-		public const string HashString = "4d65017c47f543473b1c8d213f4fcedb";
+		public const string HashString = "4380c93ef123a571161b31b69942683d";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "תעריף פרט מכס",
 			      				    DefaultText =  "Tariff",
-			      				    Code =  "30f9",
+			      				    Code =  "7070",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -279,8 +279,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "TradeAgreementID",
 					  						ObjectTableName =  "Customs.CB_Tariff",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_TradeAgreement",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -343,8 +342,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomsItemID",
 					  						ObjectTableName =  "Customs.CB_Tariff",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_CustomsItem",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -426,6 +424,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Title",
 					  						ListPropertyPath =  "Title",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,

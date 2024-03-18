@@ -1274,7 +1274,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
                 RaiseStatus(_MyDeclarationPM, "", "VPE", xml_status);
             }
 
-            if (declarationPaymentsPM != null && declarationPaymentsPM.AutomaticPayment == 1)
+            if (declarationPaymentsPM != null && (declarationPaymentsPM.AutomaticPayment == 1 || requestParams.RequestName == "Auto Payment Request"))
             {
                 if (customResponse.DeclarationPaymentDetails == null)
                 {
@@ -1312,7 +1312,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
 
             if (declarationPaymentPM != null)
             {
-                if (declarationPaymentPM.AutomaticPayment == 1)
+                if (declarationPaymentPM.AutomaticPayment == 1 || requestParams.RequestName == "Auto Payment Request")
                 {
                     if (CheckFileCredit(declarationPM, declarationPaymentPM, requestParams.LoggingUserId))
                     {

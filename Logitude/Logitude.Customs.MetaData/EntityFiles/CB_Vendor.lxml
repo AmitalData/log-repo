@@ -39,7 +39,7 @@
   MaxNumberOfCustomFields="0"
   LocalDefaultText="&quot;ספק&quot;"
   DefaultText="&quot;Vendor&quot;"
-  Code="&quot;e6a1&quot;"
+  Code="&quot;0a9f&quot;"
   Name="&quot; Query Group&quot;"
   GenerateDomainService="false"
   ClientModuleName="&quot;Customs&quot;"
@@ -72,7 +72,7 @@
     IsChecked="true"
     IsDeleted="false"
     ObjectTableName="&quot;Customs.CB_Vendor&quot;"
-    FieldsDataType="&quot;Text&quot;"
+    FieldsDataType="&quot;Integer&quot;"
     MinLength="0"
     MaxLength="15"
     IsRequired="true"
@@ -91,6 +91,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;ID&quot;"
     ListPropertyPath="&quot;ID&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -166,6 +167,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;Title&quot;"
     ListPropertyPath="&quot;Title&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -241,6 +243,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;State&quot;"
     ListPropertyPath="&quot;State&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -316,6 +319,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;EnglishCountryName&quot;"
     ListPropertyPath="&quot;EnglishCountryName&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -391,6 +395,7 @@
     DisplayInSearchWindowList="false"
     PMPropertyPath="&quot;VendorSingleStringAddress&quot;"
     ListPropertyPath="&quot;VendorSingleStringAddress&quot;"
+    DisplayInLookUpIndex="0"
     AutomaticField="false"
     UniqueField="false"
     DisplayInSearchWindowListIndex="0"
@@ -438,6 +443,15 @@
     IsSpellCheckedShortLocalDefaultText="false"
     IsSpellCheckedListLocalDefaultText="false"
     EnableFullscreenTextBox="false" />
+  <Screen
+    Name="&quot;Customs.CB_VendorHeaderScreen&quot;"
+    ObjectTableName="&quot;Customs.CB_Vendor&quot;"
+    IsReadOnly="true"
+    IsHeaderScreen="true"
+    NumberOfColumns="2"
+    NumberOfRows="1">
+    <ScreenFields />
+  </Screen>
   <EventTypes>
     <EventType
       Code="&quot;CREV&quot;"
@@ -466,6 +480,7 @@
       ManualActivatedFollowUp="false"
       IsFollowUp="false" />
   </EventTypes>
+  <Records />
   <DataContracts />
   <AdditionalTextCodes />
   <AdditionalFeatures />

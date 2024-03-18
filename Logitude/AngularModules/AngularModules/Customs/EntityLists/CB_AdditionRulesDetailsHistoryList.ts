@@ -8,7 +8,7 @@
 
 export class CB_AdditionRulesDetailsHistoryList {
    
-	ID: string;
+	ID: number;
 	CreateDate: Date;
 	UpdateDate: Date;
 	Title: string;
@@ -19,7 +19,7 @@ export class CB_AdditionRulesDetailsHistoryList {
 	EnglishRules: string;
 	RulesRTF: string;
 	ChangeRequestTypePriority: number;
-	CustomsBookAdditionID: string;
+	CustomsBookAdditionID: number;
 	EnglishRulesRTF: string;
 	
 }

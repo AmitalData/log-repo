@@ -24,9 +24,9 @@ export class CB_ComputationMethodDataPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private alternateDefinedPerUnitMeasure: number;

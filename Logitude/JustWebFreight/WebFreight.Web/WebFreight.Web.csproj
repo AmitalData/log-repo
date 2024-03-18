@@ -1196,7 +1196,7 @@
     <Compile Include="Controllers\CustomsModel\Extended\DecCargoSplitConExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\PendingByKeywordsExtendedController.cs" />
     <Compile Include="Controllers\CustomsModel\Extended\ClientItemExtendedController.cs" />
-    <Compile Include="Controllers\CustomsModel\Generated\DeclarationCourierStatusViewsController.cs" />
+    <Compile Include="Controllers\CustomsModel\Extended\DeclarationCourierStatusViewsController.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CarWeightViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_AdditionRulesDetailsHistoryViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CB_ComputationMethodDataViewsController.Generated.cs" />
@@ -1237,7 +1237,6 @@
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ComputationMethodViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ConditionalExemptionTypeViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\ConfirmationNumberTokenLogViewsController.Generated.cs" />
-
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CountryCurrencyViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CourierHawbFromExcelViewsController.Generated.cs" />
     <Compile Include="Controllers\CustomsModel\Generated\ListControllers\CustomDocumentTypeTenantViewsController.Generated.cs" />
@@ -3499,7 +3498,6 @@
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ComputationMethodUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConditionalExemptionTypeUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConfirmationNumberTokenLogUpdateClass.cs" />
-
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ConsignmentPackDangerUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationHataraStatusUpdateClass.cs" />
     <Compile Include="MetaDataUpdate\GeneratedUpdate\EntityUpdateClasses\ContainerizationStatusCodeUpdateClass.cs" />
@@ -4066,6 +4064,7 @@
     <Content Include="css\kendo.mobile.all.min.css.map" />
     <Content Include="Integration Test\LoginVars\Production\Cloud\TeamIslam\LoginVars.csv" />
     <None Include="Properties\PublishProfiles\Customs.pubxml" />
+    <None Include="Properties\PublishProfiles\CustomsNewProfile.pubxml" />
     <None Include="Properties\PublishProfiles\FeatureBranchPub.pubxml" />
     <None Include="Properties\PublishProfiles\HybridWS - Web Deploy.pubxml" />
     <None Include="Properties\PublishProfiles\MasterDev.pubxml" />

@@ -129,7 +129,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public CB_RegularityRequirementList GetSingle(string id)
+        public CB_RegularityRequirementList GetSingle(int id)
         {
             IQueryable<CB_RegularityRequirement> CB_RegularityRequirementQuery = (from a in context.CB_RegularityRequirements
                                                        where a.ID == id

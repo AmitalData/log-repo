@@ -23,13 +23,13 @@ namespace Logitude.Customs.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(null);
 
             this.Property(t => t.ChangeTypeID).HasColumnName("ChangeTypeID").HasMaxLength(4).IsUnicode(false);
 
-            this.Property(t => t.CustomsItemDetailsHistoryID).HasColumnName("CustomsItemDetailsHistoryID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.CustomsItemDetailsHistoryID).HasColumnName("CustomsItemDetailsHistoryID");
 
-            this.Property(t => t.Connect_CustItemDetailsHistID).HasColumnName("Connect_CustItemDetailsHistID").HasMaxLength(15).IsUnicode(false);
+            this.Property(t => t.Connect_CustItemDetailsHistID).HasColumnName("Connect_CustItemDetailsHistID");
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
         }

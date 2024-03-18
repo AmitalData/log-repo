@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_VendorUpdateClass
    {  		
-		public const string HashString = "c6109475255aa9f028d4113d510495a2";
+		public const string HashString = "cb896e7c0ed3664cad8fb0bd42e15b77";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "ספק",
 			      				    DefaultText =  "Vendor",
-			      				    Code =  "e6a1",
+			      				    Code =  "0a9f",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -172,6 +172,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "Title",
 					  						ListPropertyPath =  "Title",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -234,6 +235,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "State",
 					  						ListPropertyPath =  "State",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -296,6 +298,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "EnglishCountryName",
 					  						ListPropertyPath =  "EnglishCountryName",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -358,6 +361,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "VendorSingleStringAddress",
 					  						ListPropertyPath =  "VendorSingleStringAddress",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -402,7 +406,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CB_VendorObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CB_Vendor" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CB_VendorObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CB_Vendor").ToList();
+		       
+	      
+
+	         Screen CB_VendorCustomsCB_VendorHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CB_Vendor.HeaderScreen", Name = "Customs.CB_VendorHeaderScreen", ObjectTableId = CB_VendorObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CB_VendorObjectTable.HeaderScreenId = CB_VendorCustomsCB_VendorHeaderScreenScreen0.Id;
+		    CB_VendorObjectTable.HeaderScreenCode = CB_VendorCustomsCB_VendorHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

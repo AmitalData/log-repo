@@ -27,9 +27,9 @@ export class CB_RuleDetailsHistoryPM {
 
 	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -62,9 +62,9 @@ export class CB_RuleDetailsHistoryPM {
     public set EntityStatusID(newValue: string) { if (this.entityStatusID != newValue) { this.entityStatusID = newValue; this.MarkAsDirty("EntityStatusID"); } }
        
 	 
-    private ruleID: string;
+    private ruleID: number;
     public get RuleID() { return this.ruleID; }
-    public set RuleID(newValue: string) { if (this.ruleID != newValue) { this.ruleID = newValue; this.MarkAsDirty("RuleID"); } }
+    public set RuleID(newValue: number) { if (this.ruleID != newValue) { this.ruleID = newValue; this.MarkAsDirty("RuleID"); } }
        
 	 
     private rules: string;
@@ -82,9 +82,9 @@ export class CB_RuleDetailsHistoryPM {
     public set OrderinalPostion(newValue: number) { if (this.orderinalPostion != newValue) { this.orderinalPostion = newValue; this.MarkAsDirty("OrderinalPostion"); } }
        
 	 
-    private parent_RuleDetailsHistoryID: string;
+    private parent_RuleDetailsHistoryID: number;
     public get Parent_RuleDetailsHistoryID() { return this.parent_RuleDetailsHistoryID; }
-    public set Parent_RuleDetailsHistoryID(newValue: string) { if (this.parent_RuleDetailsHistoryID != newValue) { this.parent_RuleDetailsHistoryID = newValue; this.MarkAsDirty("Parent_RuleDetailsHistoryID"); } }
+    public set Parent_RuleDetailsHistoryID(newValue: number) { if (this.parent_RuleDetailsHistoryID != newValue) { this.parent_RuleDetailsHistoryID = newValue; this.MarkAsDirty("Parent_RuleDetailsHistoryID"); } }
        
 	 
     private changeRequestTypePriority: number;

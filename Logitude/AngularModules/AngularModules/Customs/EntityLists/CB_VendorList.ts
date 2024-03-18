@@ -8,7 +8,7 @@
 
 export class CB_VendorList {
    
-	ID: string;
+	ID: number;
 	Title: string;
 	State: number;
 	EnglishCountryName: string;

@@ -30,6 +30,14 @@ namespace Logitude.Customs.Def.ClosedTable
             });
             all.Add(new CustomsSchedulerProcedureDetails()
             {
+                Code = "CustomsEnqueueSucceedRequestsheetsTask",
+                Name = "CustomsEnqueueSucceedRequestsheetsTask",
+                SearchFields = "CustomsEnqueueSucceedRequestsheetsTask,CustomsEnqueueSucceedRequestsheetsTask",
+                Description = "Enqueue Succeed Requestsheets",
+
+            });
+            all.Add(new CustomsSchedulerProcedureDetails()
+            {
                 Code= "CustomsSendDeclarationStatus",
                 Name= "CustomsSendDeclarationStatus",
                 SearchFields= "CustomsSendDeclarationStatus,CustomsSendDeclarationStatus",

@@ -8,10 +8,10 @@
 
 export class CB_LevyExclusionList {
    
-	ID: string;
+	ID: number;
 	LevyExclusionNumber: number;
-	TradeLevyID: string;
-	VendorID: string;
+	TradeLevyID: number;
+	VendorID: number;
 	CountryGroupID: string;
 	
 }

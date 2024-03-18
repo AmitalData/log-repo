@@ -8,14 +8,14 @@
 
 export class CB_QuotaRenewalList {
    
-	ID: string;
+	ID: number;
 	CreateDate: Date;
 	UpdateDate: Date;
 	AllocationQuantity: number;
 	StartDate: Date;
 	EndDate: Date;
 	EntityStatusID: string;
-	QuotaDetailsHistoryID: string;
+	QuotaDetailsHistoryID: number;
 	Step: number;
 	
 }

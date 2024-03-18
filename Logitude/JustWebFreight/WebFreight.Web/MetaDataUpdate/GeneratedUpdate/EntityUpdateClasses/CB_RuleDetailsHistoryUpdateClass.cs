@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_RuleDetailsHistoryUpdateClass
    {  		
-		public const string HashString = "51eaac1b5d485f042971efdd022bcdd2";
+		public const string HashString = "60d5c4595d1067996ff3eec3bb2f91d0";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  " היסטוריה של כללים",
 			      				    DefaultText =  "Rule Details History",
-			      				    Code =  "f51a",
+			      				    Code =  "2e33",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -531,8 +531,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "RuleID",
 					  						ObjectTableName =  "Customs.CB_RuleDetailsHistory",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_Rule",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -595,7 +594,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Rules",
 					  						ObjectTableName =  "Customs.CB_RuleDetailsHistory",
-					  						FieldsDataType =  "Text",
+					  						FieldsDataType =  "nText",
 					  						MinLength =  0,
 					  						MaxLength =  1000,
 					  						IsRequired =  false,
@@ -784,8 +783,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "Parent_RuleDetailsHistoryID",
 					  						ObjectTableName =  "Customs.CB_RuleDetailsHistory",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_RuleDetailsHistory",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,

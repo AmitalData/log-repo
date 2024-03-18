@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_Rule GetSingle(string id)
+		public  CB_Rule GetSingle(int id)
         {
             return (from a in context.CB_Rules
                     where a.ID == id 

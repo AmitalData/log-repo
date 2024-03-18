@@ -24,9 +24,9 @@ export class CB_TradeAgreementHistoryPM {
       }
  	 
     
-    private iD: string;
+    private iD: number;
     public get ID() { return this.iD; }
-    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -59,9 +59,9 @@ export class CB_TradeAgreementHistoryPM {
     public set Version(newValue: number) { if (this.version != newValue) { this.version = newValue; this.MarkAsDirty("Version"); } }
        
 	 
-    private tradeAgreementID: string;
+    private tradeAgreementID: number;
     public get TradeAgreementID() { return this.tradeAgreementID; }
-    public set TradeAgreementID(newValue: string) { if (this.tradeAgreementID != newValue) { this.tradeAgreementID = newValue; this.MarkAsDirty("TradeAgreementID"); } }
+    public set TradeAgreementID(newValue: number) { if (this.tradeAgreementID != newValue) { this.tradeAgreementID = newValue; this.MarkAsDirty("TradeAgreementID"); } }
        
 	 
     private changeRequestTypePriority: number;

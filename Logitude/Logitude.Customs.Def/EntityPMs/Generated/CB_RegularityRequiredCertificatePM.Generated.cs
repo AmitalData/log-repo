@@ -18,14 +18,14 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_RegularityRequiredCertificatePM : EntityPM
    {
-   	  private string iD ;
+   	  private int iD ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string ID  
+       public int ID  
 	   {
 	    
 	     get
@@ -36,19 +36,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
 			
 		 }
 	   }
-	  private string regularityInceptionID ;
+	  private int regularityInceptionID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public string RegularityInceptionID  
+       public int RegularityInceptionID  
 	   {
 	    
 	     get
@@ -59,7 +59,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(regularityInceptionID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RegularityInceptionID",OldValue=regularityInceptionID,NewValue=value,PropertyType="string"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="RegularityInceptionID",OldValue=regularityInceptionID,NewValue=value,PropertyType="int"};
 		    NotifyPropertyChanged(values);
 		   regularityInceptionID=value;
 		   }

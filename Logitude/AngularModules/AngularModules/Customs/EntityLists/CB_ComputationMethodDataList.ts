@@ -8,7 +8,7 @@
 
 export class CB_ComputationMethodDataList {
    
-	ID: string;
+	ID: number;
 	AlternateDefinedPerUnitMeasure: number;
 	AlternateRate: number;
 	CalculationReference: string;

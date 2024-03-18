@@ -6,8 +6,7 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -26,17 +25,15 @@
   </Column>
   <Column
     Name="TradeAgreementID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
       Nullable="true" />
   </Column>
   <Column
     Name="CustomsItemID"
-    Type="varchar"
-    Size="15">
+    Type="int">
     <Constraints
-      Nullable="true" />
+      Nullable="false" />
   </Column>
   <Column
     Name="Title"

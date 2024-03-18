@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_CustomsItemExclusionUpdateClass
    {  		
-		public const string HashString = "f61b40f71fe5c7c89bf787e9aef7df58";
+		public const string HashString = "28ec8172cc9bb434b0e359bf44a391cd";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "החרגות של פרטי מכס",
 			      				    DefaultText =  "Customs Item Exclusion",
-			      				    Code =  "f5d5",
+			      				    Code =  "4f34",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -152,8 +152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "RegularityRequirementID",
 					  						ObjectTableName =  "Customs.CB_CustomsItemExclusion",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_RegularityRequirement",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -172,6 +171,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "RegularityRequirementID",
 					  						ListPropertyPath =  "RegularityRequirementID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -215,8 +215,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "CustomsItemID",
 					  						ObjectTableName =  "Customs.CB_CustomsItemExclusion",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_CustomsItem",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -235,6 +234,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					  						DisplayInSearchWindowList =  false,
 					  						PMPropertyPath =  "CustomsItemID",
 					  						ListPropertyPath =  "CustomsItemID",
+					  						DisplayInLookUpIndex =  0,
 					  						AutomaticField =  false,
 					  						UniqueField =  false,
 					  						DisplayInSearchWindowListIndex =  0,
@@ -279,7 +279,19 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 	    }
 
 	    public void AddTableScreens(Dictionary<string, Screen> tenantScreens,Dictionary<string, ScreenField> tenantScreenFields, ScreensRepository screensRepository, ScreenFieldsRepository screenFieldsRepository,IWebFreightContext ObjectContext)
-	    {    
+	    {   
+
+		   ObjectTable CB_CustomsItemExclusionObjectTable = ObjectContext.ObjectTables.Where(d => d.Name == "Customs.CB_CustomsItemExclusion" && d.Tenant == 0).FirstOrDefault();
+		   //List<ObjectField> CB_CustomsItemExclusionObjectFields = ObjectContext.ObjectFields.Where(d => d.ObjectTable.Name == "Customs.CB_CustomsItemExclusion").ToList();
+		       
+	      
+
+	         Screen CB_CustomsItemExclusionCustomsCB_CustomsItemExclusionHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "CB_CustomsItemExclusion.HeaderScreen", Name = "Customs.CB_CustomsItemExclusionHeaderScreen", ObjectTableId = CB_CustomsItemExclusionObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      	
+		    CB_CustomsItemExclusionObjectTable.HeaderScreenId = CB_CustomsItemExclusionCustomsCB_CustomsItemExclusionHeaderScreenScreen0.Id;
+		    CB_CustomsItemExclusionObjectTable.HeaderScreenCode = CB_CustomsItemExclusionCustomsCB_CustomsItemExclusionHeaderScreenScreen0.Code;
+
+	   		  
 
 	    }
 

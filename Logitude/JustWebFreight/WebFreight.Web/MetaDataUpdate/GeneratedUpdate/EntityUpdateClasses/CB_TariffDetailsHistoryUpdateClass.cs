@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_TariffDetailsHistoryUpdateClass
    {  		
-		public const string HashString = "00aad5bfabfc9361d7d01395c9dcf97c";
+		public const string HashString = "c497b980ac6920b7fbdbe175f35b7247";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "היסטוריית תעריף של פרט מכס",
 			      				    DefaultText =  "Tariff Details History",
-			      				    Code =  "eb94",
+			      				    Code =  "57b2",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -278,8 +278,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "TariffID",
 					  						ObjectTableName =  "Customs.CB_TariffDetailsHistory",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_Tariff",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -342,8 +341,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "QuotaID",
 					  						ObjectTableName =  "Customs.CB_TariffDetailsHistory",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_Quota",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -596,8 +594,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "WithinQuota_ComputMethDataID",
 					  						ObjectTableName =  "Customs.CB_TariffDetailsHistory",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_ComputationMethodData",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -660,8 +657,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 
 					 						FieldName =  "WithoutQuota_ComputMethDataID",
 					  						ObjectTableName =  "Customs.CB_TariffDetailsHistory",
-					  						FieldsDataType =  "LookUp",
-					  						LookUpTableName =  "CB_ComputationMethodData",
+					  						FieldsDataType =  "Integer",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
