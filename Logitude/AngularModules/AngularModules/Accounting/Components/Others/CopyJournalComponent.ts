@@ -47,7 +47,7 @@ export class CopyJournalComponent extends BaseComponent implements OnInit {
     OkButtonClicked() {
 
         var valid: boolean = true;
-        valid = this.ValidateJournalDates() && this.ValidateJournalNotes() && this.ValidateJournalRef1() && this.ValidateJournalRef2();
+        valid = this.ValidateJournalDates();// && this.ValidateJournalNotes() && this.ValidateJournalRef1() && this.ValidateJournalRef2();
         if (valid) {
             var entityPM: JournalPM = new JournalPM();
             this.NewJournalMapping(entityPM);
