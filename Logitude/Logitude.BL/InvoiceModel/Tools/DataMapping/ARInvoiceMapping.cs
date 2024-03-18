@@ -203,6 +203,8 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
             entity.PeriodCode = entityPM.PeriodCode;
             entity.RelatedInvoice = entityPM.RelatedInvoice;
             entity.DocumentFilingId = entityPM.DocumentFilingId;
+            entity.ConfirmationNumberStatus = entityPM.ConfirmationNumberStatus;
+
             entityPM.SetVoided = false;
             entityPM.SetAsSent = false;
             entityPM.SetApproved = false;

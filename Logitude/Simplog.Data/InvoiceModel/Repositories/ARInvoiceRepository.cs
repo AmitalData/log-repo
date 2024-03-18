@@ -187,6 +187,7 @@ namespace Simplog.Data.InvoiceModel.Repositories
                           .Include("SATTransferStatus")
                           .Include("Branch")
                            .Include("ARInvoicesSignedStatus")
+                            .Include("ConfirmationNumberStatuses")
                           .FirstOrDefault(a => a.Id == id 
                                                && a.Tenant == tenant);
         }

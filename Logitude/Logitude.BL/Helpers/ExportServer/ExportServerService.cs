@@ -6,8 +6,10 @@ using System.Net.Http.Headers;
 using System.Net.Http;
 using System.Net;
 using System.Text;
+using Simplog.Server.Infrastructure.Helpers;
+using System.Transactions;
 
-namespace WebFreight.Web.Helpers.ExportServer
+namespace Logitude.BL.Helpers.ExportServer
 {
     public class ExportServerService
     {
@@ -51,11 +53,15 @@ namespace WebFreight.Web.Helpers.ExportServer
 
         public static string GetTokenForConfirmationNumber(int tenant, string email)
         {
-            string exportToken = ExportServerLogin.GetToken(tenant, email);
-            if(exportToken == null)
-                exportToken = ExportServerLogin.GetToken(tenant, "ConfirmationNumber@amital.co.il");
-            
-            return exportToken;
+            using (TransactionScope scope = TransactionFactory.GetTransaction())
+            {
+                string exportToken = ExportServerLogin.GetToken(tenant, email);
+
+                if (exportToken == null)
+                    exportToken = ExportServerLogin.GetToken(tenant, "ConfirmationNumber@amital.co.il");
+                scope.Complete();
+                return exportToken;
+            }
         }
     }
 

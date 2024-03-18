@@ -50,6 +50,7 @@ using Logitude.BL.InvoiceModel.Tools.Behaviours.ARInvoiceBehaviours;
 using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.BL.AnalyticTableServices;
 using System.Data.Entity.Core;
+using Logitude.BL.Helpers.ExportServer;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -313,7 +314,7 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             helper.ARInvoiceQuickbooksValidating(invoice, entityPM, this.isApprovingInvoice, isNewEntity, this.objectContext, this.myCommonContext, isVoidingInvoice);
 
             SetSatStatus();
-
+            SetConfirmationNumberStatus();
             EntityAutomationService entityAutomationService = new EntityAutomationService(new EntityAutomationArgs() { Poco = invoice, EntityPM = entityPM, OldEntityPM = new ARInvoicePM(), AutomationType = "OnCreate", ObjectTableName = "ARInvoice", Tenant = entityPM.Tenant, EntityId = entityPM.Id, EntityReference = entityPM.InvoiceNumber });
 
             if (!entityPM.IsConsolidationInvoice)
@@ -423,6 +424,28 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             if (string.IsNullOrEmpty(entityPM.SATInvoiceStatusCode)) entityPM.SATInvoiceStatusCode = "NO";
 
 
+        }
+        private void SetConfirmationNumberStatus()
+        {
+            var confirmationNumberDefault = (from a in objectContext.ConfirmationNumberDefaults
+                                             where a.Tenant == entityPM.Tenant && a.FromDate <= entityPM.InvoiceDate
+                                             orderby a.FromDate descending
+                                             select a
+                                           ).FirstOrDefault();
+            if (confirmationNumberDefault == null || entityPM.TotalVAT < confirmationNumberDefault?.AmountForConfirmationNumber)
+            {
+                entityPM.ConfirmationNumberStatus = "4";
+            }
+            else
+            {
+                entityPM.ConfirmationNumberStatus = "1";
+                GetConfirmationNumberAPI();
+
+            }
+        }
+        private void GetConfirmationNumberAPI()
+        {
+           var res= ExportServerService.CreateConfirmationNumber(entityPM.Tenant,"libby@amital.co.il", Convert.ToString("{\r\n    \"InvoiceId\": \"123\",\r\n    \"InvoiceType\": \"305\",\r\n    \"VatNumber\":\"777777715\",\r\n    \"UnionVatNumber\" : \"125847553\",\r\n    \"InvoiceReferenceNumber\" : \"975626515\",\r\n    \"CustomerVatNumber\" : \"18\",\r\n    \"CustomerName\":\"Customer_Name\",\r\n    \"InvoiceDate\":\"2023-04-08\",\r\n    \"InvoiceIssuanceDate\" : \"2023-04-08\",\r\n    \"BranchId\" : \"533\",\r\n    \"AccountingSoftwareNumber\" : \"36955574\",\r\n    \"ClientSoftwareKey\" : \"76857\",\r\n            \"Amount_Before_Discount\" : 552.75,\r\n            \"Discount\" : 52.75,\r\n            \"PaymentAmount\" : 500,\r\n            \"VatAmount\" : 85,\r\n            \"PaymentAmountIncludingVat\" : 585,\r\n            \"InvoiceNote\" : \"הערות\",\r\n            \"Action\" : \"0\",\r\n            \"VehicleLicenseNumber\" : \"584752145\",\r\n            \"PhoneOfDriver\" : \"0505674235\",\r\n            \"ArrivalDate\" : \"2023-02-26\",\r\n            \"EstimatedArrivalTime\" : \"13:25:00.000000\",\r\n            \"TransitionLocation\" : \"12\",\r\n            \"DeliveryAddress\" : \"כתובת אספקה\",\r\n            \"AdditionalInformation\" : \"0\"\r\n}"));
         }
 
         private void UpdateInterestReportFields(ARInvoicePM theEntityPM)

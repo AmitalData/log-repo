@@ -611,6 +611,10 @@
     <Compile Include="Helpers\CopyPortHelper.cs" />
     <Compile Include="Helpers\DigitalFieldSecuritesHelper.cs" />
     <Compile Include="Helpers\DWObjectFieldsGroupedService.cs" />
+    <Compile Include="Helpers\ExportServer\ExportServerLogin.cs" />
+    <Compile Include="Helpers\ExportServer\ExportServerService.cs" />
+    <Compile Include="Helpers\ExportServer\LoginImportWcfStruct.cs" />
+    <Compile Include="Helpers\ExportServer\UserData.cs" />
     <Compile Include="Helpers\ObjectFieldPropertyGetter.cs" />
     <Compile Include="Helpers\PayablesLinesVatAmounts.cs" />
     <Compile Include="InfrastructureModel\APIDataContract\EntityStatus.Generated.cs" />
