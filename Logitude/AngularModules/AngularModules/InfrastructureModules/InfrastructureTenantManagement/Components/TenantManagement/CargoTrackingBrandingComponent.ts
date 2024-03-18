@@ -466,7 +466,15 @@ export class CargoTrackingBrandingComponent extends BaseComponent implements Aft
             this.EntityPM.EnableExportToExcel = value;
         }
     }
+    get SearchAbsoluteValuePublic() {
+        return this.EntityPM.SearchAbsoluteValuePublic;
+    }
+    set SearchAbsoluteValuePublic(value: boolean) {
+        if (this.EntityPM.SearchAbsoluteValuePublic != value) {
+            this.EntityPM.SearchAbsoluteValuePublic = value;
 
+        }
+    }
     ValidateHexCode(value: string, fieldName: string) {
 
         const regex = new RegExp('^#([a-fA-F0-9]{6})$');

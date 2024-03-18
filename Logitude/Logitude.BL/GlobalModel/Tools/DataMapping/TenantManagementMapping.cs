@@ -187,8 +187,9 @@ namespace Logitude.BL.GlobalModel.Tools.DataMapping
             entityPOCO.ServiceAgreementURL = entityPM.ServiceAgreementURL;
             entityPOCO.ExportTenant = entityPM.ExportTenant;
             entityPOCO.ExportLoginCredintial = entityPM.ExportLoginCredintial;
+			entityPOCO.SearchAbsoluteValuePublic = entityPM.SearchAbsoluteValuePublic;
 
-            string packageName = null;
+			string packageName = null;
             using (TransactionScope scope = TransactionFactory.GetNewTransaction())
             {
                 TenantRepository tenantRepository = new TenantRepository(entityPM.Id);

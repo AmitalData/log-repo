@@ -7,6 +7,7 @@ using Logitude.CargoTracking.Data.EntityLists;
 using Logitude.CargoTracking.Data.Model;
 using Logitude.CargoTracking.Data.Repositories;
 using Logitude.CargoTracking.Def.DataContracts;
+using Logitude.BL.GlobalModel.EntityQueries;
 
 namespace Logitude.CargoTracking.Data.EntityListQueryServices
 {
@@ -79,11 +80,14 @@ namespace Logitude.CargoTracking.Data.EntityListQueryServices
 
         private static IQueryable<CargoTrackingShipmentSearch> GetShipmentsSearchEntities(string searchText, int tenant)
         {
-            Boolean isContainsSlashORDash = searchText.Contains('-') || searchText.Contains('/');
+			TenantManagementQuery tenantManagementQuery = new TenantManagementQuery(tenant);
+			bool isSearchbyAbsoluteValue = tenantManagementQuery.GetSearchAbsoluteValuePublicByTenant(tenant);
+
+			Boolean isContainsSlashORDash = searchText.Contains('-') || searchText.Contains('/');
             CargoTrackingShipmentSearchRepository repo = new CargoTrackingShipmentSearchRepository(tenant);
             IQueryable<CargoTrackingShipmentSearch> shipmentsSearchEntitiesThatMatchWhole = repo.GetShipmentSearchEntities(searchText, tenant);
 
-            if (!isContainsSlashORDash) { return shipmentsSearchEntitiesThatMatchWhole; }
+            if (isSearchbyAbsoluteValue || !isContainsSlashORDash) { return shipmentsSearchEntitiesThatMatchWhole; }
             else
             {
                 var partOfSearchText = searchText.Contains('-') ? searchText.Substring(searchText.IndexOf('-') + 1) : searchText.Substring(searchText.IndexOf('/') + 1);
