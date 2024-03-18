@@ -67,7 +67,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                              .Include("SATTransferStatus")
                                              .Include("Branch")
                                              .Include("ARInvoicesSignedStatus")
-                                               .Include("ConfirmationNumberStatuses")
+                                               .Include("Confirmation")
                                              .FirstOrDefault(a => a.Id == id && a.Tenant == tenant);
 
             if (entityPOCO != null)
@@ -1540,7 +1540,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             invoiceStatusCodes.Add("DR");
             invoiceStatusCodes.Add("LL");
 
-            var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch").Include("ARInvoicesSignedStatus").Include("ConfirmationNumberStatuses")
+            var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch").Include("ARInvoicesSignedStatus").Include("Confirmation")
                          select new ARInvoiceList()
                          {
                              IsClosed = entity.IsClosed,
@@ -1584,7 +1584,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ARInvoiceTypeName = entity.ARInvoiceType.Name,
                              CreatedByUserId = entity.CreatedByUserId,
                              IssuedByUserName = entity.IssuedByUser != null ? entity.IssuedByUser.Contact.EnglishName : null,
-                             ConfirmationNumberStatusName = entity.ConfirmationNumberStatuses != null ? entity.ConfirmationNumberStatuses.Name : null,
+                             ConfirmationNumberStatusName = entity.Confirmation != null ? entity.Confirmation.Name : null,
                              LocalCurrencyCode = entity.LocalCurrency.Code,
                              SearchFields = entity.SearchFields,
                              PrintByUserName = entity.PrintByUser != null ? entity.PrintByUser.Contact.EnglishName : null,
@@ -1721,7 +1721,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                     .Include("SATInvoiceStatus")
                                     .Include("SATTransferStatus")
                                     .Include("Branch")
-                                    .Include("ConfirmationNumberStatuses")
+                                    .Include("Confirmation")
                                     .Select(entity =>   new ARInvoiceList()
                                     {
                                          IsClosed = entity.IsClosed,
@@ -1765,7 +1765,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                                          ARInvoiceTypeName = entity.ARInvoiceType.Name,
                                          CreatedByUserId = entity.CreatedByUserId,
                                          IssuedByUserName = entity.IssuedByUser != null ? entity.IssuedByUser.Contact.EnglishName : null,
-                                        ConfirmationNumberStatusName = entity.ConfirmationNumberStatuses != null ? entity.ConfirmationNumberStatuses.Name : null,
+                                        ConfirmationNumberStatusName = entity.Confirmation != null ? entity.Confirmation.Name : null,
 
                                         LocalCurrencyCode = entity.LocalCurrency.Code,
                                          SearchFields = entity.SearchFields,
@@ -2413,7 +2413,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
         {
             DateTime todayDate = TenantServerConfigration.GetCurrentDateTime(tenant).Date;
 
-            var result = from entity in repository.context.ARInvoices.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch").Include("ConfirmationNumberStatuses")
+            var result = from entity in repository.context.ARInvoices.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("Branch").Include("Confirmation")
                          where entity.Tenant == tenant && entity.StatusCode != "LL"
                          select new ARInvoiceList()
                          {
@@ -2459,7 +2459,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              ARInvoiceTypeName = entity.ARInvoiceType.Name,
                              CreatedByUserId = entity.CreatedByUserId,
                              IssuedByUserName = entity.IssuedByUser != null ? entity.IssuedByUser.Contact.EnglishName : null,
-                             ConfirmationNumberStatusName = entity.ConfirmationNumberStatuses != null ? entity.ConfirmationNumberStatuses.Name : null,
+                             ConfirmationNumberStatusName = entity.Confirmation != null ? entity.Confirmation.Name : null,
 
                              LocalCurrencyCode = entity.LocalCurrency.Code,
                              SearchFields = entity.SearchFields,
