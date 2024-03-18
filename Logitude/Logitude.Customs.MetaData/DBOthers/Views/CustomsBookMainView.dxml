@@ -1,4 +1,4 @@
-<View DBType="Main" Name="DecCourierStatusesViews" Schema="dbo" Module="Customs">
+<View DBType="Main" Name="CustomsBookMainView" Schema="dbo" Module="Customs">
   <SqlScript>
     <![CDATA[
    CREATE OR ALTER   VIEW [dbo].[CustomsBookMainView]
