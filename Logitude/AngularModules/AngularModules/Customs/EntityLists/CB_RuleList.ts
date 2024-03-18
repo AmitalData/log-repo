@@ -8,11 +8,11 @@
 
 export class CB_RuleList {
    
-	ID: number;
+	ID: string;
 	CreateDate: Date;
 	UpdateDate: Date;
 	Title: string;
-	CustomsItemID: number;
+	CustomsItemID: string;
 	
 }
  

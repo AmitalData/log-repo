@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_CustomsBookAdditionDataMapping();
         }
 		 
-		public  CB_CustomsBookAdditionPM GetSingle(int id,bool getComposition, bool getFromCache)
+		public  CB_CustomsBookAdditionPM GetSingle(string id,bool getComposition, bool getFromCache)
         {
              EntityKeys = new CB_CustomsBookAdditionKeys(){ ID = id };
 

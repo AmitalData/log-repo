@@ -24,9 +24,9 @@ export class CB_RegularityRequirementPM {
       }
  	 
     
-    private iD: number;
+    private iD: string;
     public get ID() { return this.iD; }
-    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -49,9 +49,9 @@ export class CB_RegularityRequirementPM {
     public set IsAllCountries(newValue: boolean) { if (this.isAllCountries != newValue) { this.isAllCountries = newValue; this.MarkAsDirty("IsAllCountries"); } }
        
 	 
-    private customsItemID: number;
+    private customsItemID: string;
     public get CustomsItemID() { return this.customsItemID; }
-    public set CustomsItemID(newValue: number) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
+    public set CustomsItemID(newValue: string) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
        
 	 
     private isAllCustomsItems: boolean;

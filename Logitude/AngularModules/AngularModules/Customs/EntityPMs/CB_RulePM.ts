@@ -27,9 +27,9 @@ export class CB_RulePM {
 
 	 
     
-    private iD: number;
+    private iD: string;
     public get ID() { return this.iD; }
-    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -47,9 +47,9 @@ export class CB_RulePM {
     public set Title(newValue: string) { if (this.title != newValue) { this.title = newValue; this.MarkAsDirty("Title"); } }
        
 	 
-    private customsItemID: number;
+    private customsItemID: string;
     public get CustomsItemID() { return this.customsItemID; }
-    public set CustomsItemID(newValue: number) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
+    public set CustomsItemID(newValue: string) { if (this.customsItemID != newValue) { this.customsItemID = newValue; this.MarkAsDirty("CustomsItemID"); } }
        
 	 
 

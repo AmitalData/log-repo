@@ -6,7 +6,8 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />

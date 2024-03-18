@@ -24,14 +24,14 @@ export class CB_RegularityRequiredCertificatePM {
       }
  	 
     
-    private iD: number;
+    private iD: string;
     public get ID() { return this.iD; }
-    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
-    private regularityInceptionID: number;
+    private regularityInceptionID: string;
     public get RegularityInceptionID() { return this.regularityInceptionID; }
-    public set RegularityInceptionID(newValue: number) { if (this.regularityInceptionID != newValue) { this.regularityInceptionID = newValue; this.MarkAsDirty("RegularityInceptionID"); } }
+    public set RegularityInceptionID(newValue: string) { if (this.regularityInceptionID != newValue) { this.regularityInceptionID = newValue; this.MarkAsDirty("RegularityInceptionID"); } }
        
 	 
     private confirmationTypeID: string;

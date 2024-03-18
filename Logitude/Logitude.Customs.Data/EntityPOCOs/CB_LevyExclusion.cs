@@ -20,17 +20,17 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [Column("ID")]
-	    public int ID { get; set; }
+	    public string ID { get; set; }
         [Column("LevyExclusionNumber")]
 	    public int? LevyExclusionNumber { get; set; }
         [ForeignKey("TradeLevy")]
         [Column("TradeLevyID")]
-	    public int TradeLevyID { get; set; }
+	    public string TradeLevyID { get; set; }
 	      
         public virtual CB_TradeLevy TradeLevy { get; set; }
         [ForeignKey("Vendor")]
         [Column("VendorID")]
-	    public int? VendorID { get; set; }
+	    public string VendorID { get; set; }
 	      
         public virtual CB_Vendor Vendor { get; set; }
         [ForeignKey("CountryGroupCode")]

@@ -15,7 +15,7 @@ namespace Logitude.Customs.Data.EntityLists
    
        [Key]
        [DataMember]
-       public int ID  { get; set; }
+       public string ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
@@ -35,7 +35,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public string TradeLevyStatusID  { get; set; }
        [DataMember]
-       public int? ComputationMethodDataID  { get; set; }
+       public string ComputationMethodDataID  { get; set; }
        [DataMember]
        public string LevyTrustID  { get; set; }
        [DataMember]

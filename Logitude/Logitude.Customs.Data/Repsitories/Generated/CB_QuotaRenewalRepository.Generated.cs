@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_QuotaRenewal GetSingle(int id)
+		public  CB_QuotaRenewal GetSingle(string id)
         {
             return (from a in context.CB_QuotaRenewals
                     where a.ID == id 

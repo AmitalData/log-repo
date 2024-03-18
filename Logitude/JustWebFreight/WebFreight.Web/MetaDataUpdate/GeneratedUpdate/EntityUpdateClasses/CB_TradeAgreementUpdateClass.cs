@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_TradeAgreementUpdateClass
    {  		
-		public const string HashString = "df1d98ac206f7c07a751e5de2a2d1bbf";
+		public const string HashString = "cd22fa24ee6d7181d356b499c24fefd9";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -128,7 +128,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "רשימת הסכמי סחר",
 			      				    DefaultText =  "Trade Agreements",
-			      				    Code =  "2264",
+			      				    Code =  "3d92",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

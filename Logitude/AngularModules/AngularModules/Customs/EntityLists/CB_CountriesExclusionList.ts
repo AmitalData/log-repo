@@ -8,8 +8,8 @@
 
 export class CB_CountriesExclusionList {
    
-	ID: number;
-	RegularityRequirementID: number;
+	ID: string;
+	RegularityRequirementID: string;
 	CountryID: string;
 	
 }

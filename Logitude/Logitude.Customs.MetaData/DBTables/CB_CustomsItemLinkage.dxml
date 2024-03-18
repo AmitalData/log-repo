@@ -6,7 +6,8 @@
   Module="Customs">
   <Column
     Name="ID"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
       PrimaryKey="true"
       Nullable="false" />
@@ -21,15 +22,17 @@
   <Column
     Name="CustomsItemDetailsHistoryID"
     OldNames="ChangeDate"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="Connect_CustItemDetailsHistID"
-    Type="int">
+    Type="varchar"
+    Size="15">
     <Constraints
-      Nullable="false" />
+      Nullable="true" />
   </Column>
   <Column
     Name="CreateDate"

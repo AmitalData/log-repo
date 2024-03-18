@@ -24,9 +24,9 @@ export class CB_TradeLevyPM {
       }
  	 
     
-    private iD: number;
+    private iD: string;
     public get ID() { return this.iD; }
-    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -74,9 +74,9 @@ export class CB_TradeLevyPM {
     public set TradeLevyStatusID(newValue: string) { if (this.tradeLevyStatusID != newValue) { this.tradeLevyStatusID = newValue; this.MarkAsDirty("TradeLevyStatusID"); } }
        
 	 
-    private computationMethodDataID: number;
+    private computationMethodDataID: string;
     public get ComputationMethodDataID() { return this.computationMethodDataID; }
-    public set ComputationMethodDataID(newValue: number) { if (this.computationMethodDataID != newValue) { this.computationMethodDataID = newValue; this.MarkAsDirty("ComputationMethodDataID"); } }
+    public set ComputationMethodDataID(newValue: string) { if (this.computationMethodDataID != newValue) { this.computationMethodDataID = newValue; this.MarkAsDirty("ComputationMethodDataID"); } }
        
 	 
     private levyTrustID: string;

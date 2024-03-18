@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_ComputationMethodDataUpdateClass
    {  		
-		public const string HashString = "c9779fd833373241e6de894ea9f2e90f";
+		public const string HashString = "6de4dd359924b0d6d6b289c23b4d1ca5";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -127,7 +127,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "שיטת חישוב מיסים",
 			      				    DefaultText =  "Computation Method Data",
-			      				    Code =  "700e",
+			      				    Code =  "78f9",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",

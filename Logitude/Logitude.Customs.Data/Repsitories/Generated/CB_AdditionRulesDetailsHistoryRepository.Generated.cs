@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_AdditionRulesDetailsHistory GetSingle(int id)
+		public  CB_AdditionRulesDetailsHistory GetSingle(string id)
         {
             return (from a in context.CB_AdditionRulesDetailsHistorys
                     where a.ID == id 

@@ -15,7 +15,7 @@ namespace Logitude.Customs.Data.EntityLists
    
        [Key]
        [DataMember]
-       public int ID  { get; set; }
+       public string ID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
        [DataMember]
@@ -29,7 +29,7 @@ namespace Logitude.Customs.Data.EntityLists
        [DataMember]
        public int? Version  { get; set; }
        [DataMember]
-       public int TradeAgreementID  { get; set; }
+       public string TradeAgreementID  { get; set; }
        [DataMember]
        public int ChangeRequestTypePriority  { get; set; }
    }

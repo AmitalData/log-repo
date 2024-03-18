@@ -24,9 +24,9 @@ export class CB_CustomsBookAdditionsDetailsHistoryPM {
       }
  	 
     
-    private iD: number;
+    private iD: string;
     public get ID() { return this.iD; }
-    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private createDate: Date;
@@ -69,9 +69,9 @@ export class CB_CustomsBookAdditionsDetailsHistoryPM {
     public set EnglishTitle(newValue: string) { if (this.englishTitle != newValue) { this.englishTitle = newValue; this.MarkAsDirty("EnglishTitle"); } }
        
 	 
-    private customsBookAdditionID: number;
+    private customsBookAdditionID: string;
     public get CustomsBookAdditionID() { return this.customsBookAdditionID; }
-    public set CustomsBookAdditionID(newValue: number) { if (this.customsBookAdditionID != newValue) { this.customsBookAdditionID = newValue; this.MarkAsDirty("CustomsBookAdditionID"); } }
+    public set CustomsBookAdditionID(newValue: string) { if (this.customsBookAdditionID != newValue) { this.customsBookAdditionID = newValue; this.MarkAsDirty("CustomsBookAdditionID"); } }
        
 	 
     private changeRequestTypePriority: number;

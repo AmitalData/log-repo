@@ -8,8 +8,8 @@
 
 export class CB_RegularityInceptionList {
    
-	ID: number;
-	RegularityRequirementID: number;
+	ID: string;
+	RegularityRequirementID: string;
 	InterConditionsRelationshipID: string;
 	IsPersonalImportIncluded: boolean;
 	RequirementGoodsDescription: string;

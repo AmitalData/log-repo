@@ -18,14 +18,14 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_LevyExclusionPM : EntityPM
    {
-   	  private int iD ;
+   	  private string iD ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int ID  
+       public string ID  
 	   {
 	    
 	     get
@@ -36,7 +36,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
@@ -66,12 +66,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int tradeLevyID ;
+	  private string tradeLevyID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int TradeLevyID  
+       public string TradeLevyID  
 	   {
 	    
 	     get
@@ -82,19 +82,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(tradeLevyID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TradeLevyID",OldValue=tradeLevyID,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="TradeLevyID",OldValue=tradeLevyID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   tradeLevyID=value;
 		   }
 			
 		 }
 	   }
-	  private int? vendorID ;
+	  private string vendorID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int? VendorID  
+       public string VendorID  
 	   {
 	    
 	     get
@@ -105,7 +105,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(vendorID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorID",OldValue=vendorID,NewValue=value,PropertyType="int?"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="VendorID",OldValue=vendorID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   vendorID=value;
 		   }

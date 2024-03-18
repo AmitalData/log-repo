@@ -32,7 +32,7 @@ export class CB_QuotaRenewalPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_quotarenewals';      
     }
 
-	get(id: number) {       
+	get(id: string) {       
 
 		var callTime = new Date();		
 

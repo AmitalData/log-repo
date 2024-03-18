@@ -8,7 +8,7 @@
 
 export class CB_TradeLevyList {
    
-	ID: number;
+	ID: string;
 	CreateDate: Date;
 	UpdateDate: Date;
 	CustomsBookTypeID: string;
@@ -18,7 +18,7 @@ export class CB_TradeLevyList {
 	InceptionCodeID: string;
 	StartDate: Date;
 	TradeLevyStatusID: string;
-	ComputationMethodDataID: number;
+	ComputationMethodDataID: string;
 	LevyTrustID: string;
 	ParagraphTypeID: string;
 	

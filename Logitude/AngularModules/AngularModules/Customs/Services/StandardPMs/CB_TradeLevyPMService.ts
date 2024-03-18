@@ -32,7 +32,7 @@ export class CB_TradeLevyPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_tradelevys';      
     }
 
-	get(id: number) {       
+	get(id: string) {       
 
 		var callTime = new Date();		
 

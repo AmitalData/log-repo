@@ -48,7 +48,7 @@ namespace Logitude.Customs.BL.EntityQueryServices
             mapping = new CB_CustomsItemLinkageDataMapping();
         }
 		 
-		public  CB_CustomsItemLinkagePM GetSingle(int id,bool getComposition, bool getFromCache)
+		public  CB_CustomsItemLinkagePM GetSingle(string id,bool getComposition, bool getFromCache)
         {
              EntityKeys = new CB_CustomsItemLinkageKeys(){ ID = id };
 
