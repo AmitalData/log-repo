@@ -8,7 +8,7 @@
 
 export class CB_CustomsBookAdditionList {
    
-	ID: number;
+	ID: string;
 	CreateDate: Date;
 	UpdateDate: Date;
 	TypeID: string;

@@ -8,12 +8,12 @@
 
 export class CB_RegularityRequirementList {
    
-	ID: number;
+	ID: string;
 	CreateDate: Date;
 	UpdateDate: Date;
 	CountryID: string;
 	IsAllCountries: boolean;
-	CustomsItemID: number;
+	CustomsItemID: string;
 	IsAllCustomsItems: boolean;
 	IsLimitedCountryRegularRequire: boolean;
 	StartDate: Date;

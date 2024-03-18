@@ -129,7 +129,7 @@ namespace Logitude.Customs.Data.EntityListQueryServices
              return GetList(new QueryOperations() { QueryFilterItems=new List<QueryFilterItem>(),PageIndex = 0,GetAll = true},tenant);
          }
 
-        public CB_TariffDetailsHistoryList GetSingle(int id)
+        public CB_TariffDetailsHistoryList GetSingle(string id)
         {
             IQueryable<CB_TariffDetailsHistory> CB_TariffDetailsHistoryQuery = (from a in context.CB_TariffDetailsHistorys
                                                        where a.ID == id

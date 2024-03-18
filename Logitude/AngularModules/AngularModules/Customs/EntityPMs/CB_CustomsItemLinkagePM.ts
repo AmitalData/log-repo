@@ -24,9 +24,9 @@ export class CB_CustomsItemLinkagePM {
       }
  	 
     
-    private iD: number;
+    private iD: string;
     public get ID() { return this.iD; }
-    public set ID(newValue: number) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
+    public set ID(newValue: string) { if (this.iD != newValue) { this.iD = newValue; this.MarkAsDirty("ID"); } }
        
 	 
     private changeTypeID: string;
@@ -34,14 +34,14 @@ export class CB_CustomsItemLinkagePM {
     public set ChangeTypeID(newValue: string) { if (this.changeTypeID != newValue) { this.changeTypeID = newValue; this.MarkAsDirty("ChangeTypeID"); } }
        
 	 
-    private customsItemDetailsHistoryID: number;
+    private customsItemDetailsHistoryID: string;
     public get CustomsItemDetailsHistoryID() { return this.customsItemDetailsHistoryID; }
-    public set CustomsItemDetailsHistoryID(newValue: number) { if (this.customsItemDetailsHistoryID != newValue) { this.customsItemDetailsHistoryID = newValue; this.MarkAsDirty("CustomsItemDetailsHistoryID"); } }
+    public set CustomsItemDetailsHistoryID(newValue: string) { if (this.customsItemDetailsHistoryID != newValue) { this.customsItemDetailsHistoryID = newValue; this.MarkAsDirty("CustomsItemDetailsHistoryID"); } }
        
 	 
-    private connect_CustItemDetailsHistID: number;
+    private connect_CustItemDetailsHistID: string;
     public get Connect_CustItemDetailsHistID() { return this.connect_CustItemDetailsHistID; }
-    public set Connect_CustItemDetailsHistID(newValue: number) { if (this.connect_CustItemDetailsHistID != newValue) { this.connect_CustItemDetailsHistID = newValue; this.MarkAsDirty("Connect_CustItemDetailsHistID"); } }
+    public set Connect_CustItemDetailsHistID(newValue: string) { if (this.connect_CustItemDetailsHistID != newValue) { this.connect_CustItemDetailsHistID = newValue; this.MarkAsDirty("Connect_CustItemDetailsHistID"); } }
        
 	 
     private createDate: Date;

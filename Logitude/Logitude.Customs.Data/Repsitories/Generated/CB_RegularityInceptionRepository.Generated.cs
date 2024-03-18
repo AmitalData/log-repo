@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_RegularityInception GetSingle(int id)
+		public  CB_RegularityInception GetSingle(string id)
         {
             return (from a in context.CB_RegularityInceptions
                     where a.ID == id 

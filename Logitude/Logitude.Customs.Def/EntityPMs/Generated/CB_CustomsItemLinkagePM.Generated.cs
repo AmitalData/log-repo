@@ -18,14 +18,14 @@ namespace Logitude.Customs.Def.EntityPMs
    [DataContract]
    public partial class CB_CustomsItemLinkagePM : EntityPM
    {
-   	  private int iD ;
+   	  private string iD ;
 	  
        [Key]
 	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int ID  
+       public string ID  
 	   {
 	    
 	     get
@@ -36,7 +36,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(iD != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="ID",OldValue=iD,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   iD=value;
 		   }
@@ -66,12 +66,12 @@ namespace Logitude.Customs.Def.EntityPMs
 			
 		 }
 	   }
-	  private int customsItemDetailsHistoryID ;
+	  private string customsItemDetailsHistoryID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int CustomsItemDetailsHistoryID  
+       public string CustomsItemDetailsHistoryID  
 	   {
 	    
 	     get
@@ -82,19 +82,19 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(customsItemDetailsHistoryID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemDetailsHistoryID",OldValue=customsItemDetailsHistoryID,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="CustomsItemDetailsHistoryID",OldValue=customsItemDetailsHistoryID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   customsItemDetailsHistoryID=value;
 		   }
 			
 		 }
 	   }
-	  private int connect_CustItemDetailsHistID ;
+	  private string connect_CustItemDetailsHistID ;
 	  	  
        
 	   [CustomValidation(typeof(CustomsValidationClass), "ValidateClass")]
 	   [DataMember]
-       public int Connect_CustItemDetailsHistID  
+       public string Connect_CustItemDetailsHistID  
 	   {
 	    
 	     get
@@ -105,7 +105,7 @@ namespace Logitude.Customs.Def.EntityPMs
 		 {
 		   if(connect_CustItemDetailsHistID != value)
 		  {
-		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Connect_CustItemDetailsHistID",OldValue=connect_CustItemDetailsHistID,NewValue=value,PropertyType="int"};
+		    NotifyPropertyChangeValues values=new NotifyPropertyChangeValues(){PropertyName="Connect_CustItemDetailsHistID",OldValue=connect_CustItemDetailsHistID,NewValue=value,PropertyType="string"};
 		    NotifyPropertyChanged(values);
 		   connect_CustItemDetailsHistID=value;
 		   }

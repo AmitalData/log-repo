@@ -23,15 +23,15 @@ namespace Logitude.Customs.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(null);
+            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.LevyConditionNumber).HasColumnName("LevyConditionNumber");
 
             this.Property(t => t.LevyGoodsDescription).HasColumnName("LevyGoodsDescription").HasMaxLength(512).IsUnicode(false);
 
-            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID");
+            this.Property(t => t.CustomsItemID).HasColumnName("CustomsItemID").HasMaxLength(15).IsUnicode(false);
 
-            this.Property(t => t.VendorID).HasColumnName("VendorID");
+            this.Property(t => t.VendorID).HasColumnName("VendorID").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CountryGroupID).HasColumnName("CountryGroupID").HasMaxLength(2).IsUnicode(false);
 
@@ -39,7 +39,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.CountryID).HasColumnName("CountryID").HasMaxLength(6).IsUnicode(false);
 
-            this.Property(t => t.TradeLevyID).HasColumnName("TradeLevyID");
+            this.Property(t => t.TradeLevyID).HasColumnName("TradeLevyID").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.StartDate).HasColumnName("StartDate");
 

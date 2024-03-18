@@ -32,7 +32,7 @@ export class CB_QuotaPMService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_quotas';      
     }
 
-	get(id: number) {       
+	get(id: string) {       
 
 		var callTime = new Date();		
 

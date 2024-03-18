@@ -8,11 +8,11 @@
 
 export class CB_CustomsItemList {
    
-	ID: number;
+	ID: string;
 	CreateDate: Date;
 	UpdateDate: Date;
 	FullClassification: string;
-	Parent_CustomsItemID: number;
+	Parent_CustomsItemID: string;
 	ComputedCheckDigit: string;
 	CustomsBookTypeID: string;
 	CustomsItemCategoryID: string;

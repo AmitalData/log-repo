@@ -23,7 +23,7 @@ namespace Logitude.Customs.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(null);
+            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
@@ -37,7 +37,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.EntityStatusID).HasColumnName("EntityStatusID").HasMaxLength(2).IsUnicode(false);
 
-            this.Property(t => t.RuleID).HasColumnName("RuleID");
+            this.Property(t => t.RuleID).HasColumnName("RuleID").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.Rules).HasColumnName("Rules").IsMaxLength().IsUnicode(true);
 
@@ -45,7 +45,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.OrderinalPostion).HasColumnName("OrderinalPostion");
 
-            this.Property(t => t.Parent_RuleDetailsHistoryID).HasColumnName("Parent_RuleDetailsHistoryID");
+            this.Property(t => t.Parent_RuleDetailsHistoryID).HasColumnName("Parent_RuleDetailsHistoryID").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.ChangeRequestTypePriority).HasColumnName("ChangeRequestTypePriority");
 

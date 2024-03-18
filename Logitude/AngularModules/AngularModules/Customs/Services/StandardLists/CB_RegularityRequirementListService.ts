@@ -32,7 +32,7 @@ export class CB_RegularityRequirementListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_regularityrequirementviews';  
     }
 
-	getSingle(id: number) {
+	getSingle(id: string) {
 	   
 		var callTime = new Date();
 

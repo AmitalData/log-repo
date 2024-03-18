@@ -28,7 +28,7 @@ namespace Logitude.Customs.Data.Repsitories
 
 		 
 		
-		public  CB_Vendor GetSingle(int id)
+		public  CB_Vendor GetSingle(string id)
         {
             return (from a in context.CB_Vendors
                     where a.ID == id 

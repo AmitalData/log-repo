@@ -33,7 +33,7 @@ namespace Logitude.Customs.Data.EntityMapping
 		
 		    this.HasKey(t => new { t.ID });
 	 
-            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasDatabaseGeneratedOption(null);
+            this.Property(t => t.ID).HasColumnName("ID").IsRequired().HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.CreateDate).HasColumnName("CreateDate");
 
@@ -55,7 +55,7 @@ namespace Logitude.Customs.Data.EntityMapping
 
             this.Property(t => t.ChangeRequestTypePriority).HasColumnName("ChangeRequestTypePriority");
 
-            this.Property(t => t.CustomsBookAdditionID).HasColumnName("CustomsBookAdditionID");
+            this.Property(t => t.CustomsBookAdditionID).HasColumnName("CustomsBookAdditionID").HasMaxLength(15).IsUnicode(false);
 
             this.Property(t => t.EnglishRulesRTF).HasColumnName("EnglishRulesRTF").IsMaxLength().IsUnicode(false);
         }

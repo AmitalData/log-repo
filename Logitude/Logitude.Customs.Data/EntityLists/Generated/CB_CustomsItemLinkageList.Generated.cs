@@ -15,13 +15,13 @@ namespace Logitude.Customs.Data.EntityLists
    
        [Key]
        [DataMember]
-       public int ID  { get; set; }
+       public string ID  { get; set; }
        [DataMember]
        public string ChangeTypeID  { get; set; }
        [DataMember]
-       public int CustomsItemDetailsHistoryID  { get; set; }
+       public string CustomsItemDetailsHistoryID  { get; set; }
        [DataMember]
-       public int Connect_CustItemDetailsHistID  { get; set; }
+       public string Connect_CustItemDetailsHistID  { get; set; }
        [DataMember]
        public DateTime CreateDate  { get; set; }
    }

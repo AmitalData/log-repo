@@ -32,7 +32,7 @@ export class CB_RuleListService {
         this._apiUrl = ServiceHelper.GetLogitudeURL() + 'api/cb_ruleviews';  
     }
 
-	getSingle(id: number) {
+	getSingle(id: string) {
 	   
 		var callTime = new Date();
 

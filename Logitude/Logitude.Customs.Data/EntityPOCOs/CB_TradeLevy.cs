@@ -20,7 +20,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
 
         [Key]
         [Column("ID")]
-	    public int ID { get; set; }
+	    public string ID { get; set; }
         [Column("CreateDate")]
 	    public DateTime CreateDate { get; set; }
         [Column("UpdateDate")]
@@ -50,7 +50,7 @@ namespace Logitude.Customs.Data.EntityPOCOs
         public virtual TradeLevyStatus TradeLevyStatusCode { get; set; }
         [ForeignKey("ComputationMethodData")]
         [Column("ComputationMethodDataID")]
-	    public int? ComputationMethodDataID { get; set; }
+	    public string ComputationMethodDataID { get; set; }
 	      
         public virtual CB_ComputationMethodData ComputationMethodData { get; set; }
         [ForeignKey("LevyTrustCode")]
