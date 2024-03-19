@@ -144,6 +144,11 @@
     .container {
         text-align: center;
     }
+
+    .textlength {
+        margin-top: -2vh;
+        text-align: end;
+    }
 </style>
 
 <div class="background">
@@ -160,7 +165,9 @@
                 </ul>
                 <div class="form-group">
                     <div class="content">
-                        <textarea formControlName="Comments" placeholder="{{ moreDetailsTitle }}"></textarea>
+                        <textarea formControlName="Comments" placeholder="{{ moreDetailsTitle }}"
+                            maxlength="250"></textarea>
+                        <div class="textlength">{{surveyForm.value.Comments?.length}}/250</div>
                     </div>
                 </div>
                 <div class="button-container">
