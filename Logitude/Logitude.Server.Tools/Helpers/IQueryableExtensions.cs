@@ -30,7 +30,7 @@ namespace Logitude.Server.Tools.Helpers
                 ObjectQuery<T> objectQuery = GetQueryFromQueryable(query);
 
                 var result = objectQuery.ToTraceString();
-                foreach (var parameter in objectQuery.Parameters)
+                foreach (var parameter in objectQuery.Parameters.Reverse().ToArray())
                 {
                     var name = "@" + parameter.Name;
                     var value = parameter.Value is null ? "NULL" : "'" + parameter.Value.ToString() + "'";
