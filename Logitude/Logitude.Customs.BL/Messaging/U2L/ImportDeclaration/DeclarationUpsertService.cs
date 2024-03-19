@@ -831,14 +831,13 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 					_MyDeclarationPM.IsDiamondDeclaration = true;
 				}
 
-                if (string.IsNullOrWhiteSpace(_AmitalCustomsFile.AutoSending) || (!string.IsNullOrWhiteSpace(_AmitalCustomsFile.AutoSending) && _AmitalCustomsFile.AutoSending.ToLower() != "true"))
+                if (_AmitalCustomsFile.Direction == "E" && !string.IsNullOrWhiteSpace(_AmitalCustomsFile.AutoSending) && _AmitalCustomsFile.AutoSending.ToLower() == "true")
                 {
-                    _MyDeclarationPM.AutoSending = false;
-
+                    _MyDeclarationPM.AutoSending = true;
                 }
                 else
                 {
-                    _MyDeclarationPM.AutoSending = true;
+                    _MyDeclarationPM.AutoSending = false;
                 }
 
                 //  UpdateTrucker();
