@@ -818,7 +818,7 @@ namespace Logitude.CustomsMessaging.ResponseServices
             var myDeclarationQueryService = new DeclarationQueryService(dbContext);
             var myDeclarationUpdateService = new DeclarationUpdateService(dbContext, new Dictionary<string, IContext>(), requestParams.Tenant);
             var _declarationPM = myDeclarationQueryService.GetSingle(declarationPM.Id, true, false);
-
+            _declarationPM.MarkAsChanged = false;
             _declarationPM.AvailabilityDate = declarationAvaliabilityDate ?? DateTime.Now;
             _declarationPM.ChangeSetOp = ChangeSetOperation.Update;
             myDeclarationUpdateService.Update(_declarationPM, true);
