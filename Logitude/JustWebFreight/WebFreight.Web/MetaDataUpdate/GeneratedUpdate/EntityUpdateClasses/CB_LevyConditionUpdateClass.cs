@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 {
    public class CB_LevyConditionUpdateClass
    {  		
-		public const string HashString = "d32284167b2f33238b781b9124df9e0b";
+		public const string HashString = "56707384db1fcedcffed46ed7f13c8e4";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -126,7 +126,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 			      				    MaxNumberOfCustomFields =  0,
 			      				    LocalDefaultText =  "תנאי בהיטל",
 			      				    DefaultText =  "Levy Condition",
-			      				    Code =  "ad71",
+			      				    Code =  "3950",
 			      				    Name =  " Query Group",
 			      				    GenerateDomainService =  false,
 			      				    ClientModuleName =  "Customs",
@@ -279,6 +279,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "CustomsItemID",
 					  						ObjectTableName =  "Customs.CB_LevyCondition",
 					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CB_CustomsItem",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -342,6 +343,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "VendorID",
 					  						ObjectTableName =  "Customs.CB_LevyCondition",
 					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CB_Vendor",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
@@ -595,6 +597,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.EntityUpdateClasses
 					 						FieldName =  "TradeLevyID",
 					  						ObjectTableName =  "Customs.CB_LevyCondition",
 					  						FieldsDataType =  "LookUp",
+					  						LookUpTableName =  "CB_TradeLevy",
 					  						MinLength =  0,
 					  						MaxLength =  15,
 					  						IsRequired =  false,
