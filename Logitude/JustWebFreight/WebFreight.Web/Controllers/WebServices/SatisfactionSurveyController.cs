@@ -30,7 +30,7 @@ namespace WebFreight.Web.Controllers.WebServices
                     using (TransactionScope scope = TransactionFactory.GetTransaction())
                     {
                         string logKey = PerformanceLogger.LogCurrentTime();
-                       
+
                         string originalData = secretKey + entityPM.Id;
                         string encryptedData, status, errMessage;
                         EncryptMD5(originalData, out encryptedData, out status, out errMessage);
@@ -41,6 +41,9 @@ namespace WebFreight.Web.Controllers.WebServices
                             logKey = PerformanceLogger.LogCurrentTime();
                             throw new Exception("Hash verification failed.");
                         }
+                        var rating = Int32.Parse(entityPM.Rating);
+                        if (rating > 5 || rating < 1)
+                            throw new Exception("Bad Request.");
                         IInfrastructureContext MyContext = InfrastructureContext.GetContext(entityPM.Tenant);
                         SatisfactionSurveyUpdateService service = new SatisfactionSurveyUpdateService(MyContext, new Dictionary<string, IContext>(), entityPM.Tenant);
                         entityPM.ChangeSetOp = Simplog.Server.Infrastructure.ChangeSetOperation.Insert;

@@ -34,7 +34,7 @@
   <Column
     Name="Rating"
     Type="nvarchar"
-    Size="60">
+    Size="1">
     <Constraints
       Nullable="true" />
   </Column>
