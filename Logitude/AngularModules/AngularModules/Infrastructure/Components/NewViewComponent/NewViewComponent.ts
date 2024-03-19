@@ -176,17 +176,8 @@ export class NewViewComponent {
 
     private myUsersList: UserList[] = [];
     private LoadUsers() {
-        var filters: ApiQueryFilters = new ApiQueryFilters();
-        filters.SortBy = "EnglishName";
-        filters.SortDirection = "Ascending";
-        filters.PageIndex = 0;
-        filters.PageSize = 1000;
-        filters.Tenant = SessionLocator.Tenant;
-
-        //filters.addAdditionalFilter("InActive", false, null, null, "Equals", false, false, false, "boolean");
-
         var userService: UserListService = new UserListService();
-        userService.getByFilters(filters).subscribe((res:any) => {
+        userService.getAll().subscribe((res:any) => {
             var pmResponse: ServiceResponse = res;
             if (!pmResponse.HasError) {
                 this.myUsersList = pmResponse.Result;
