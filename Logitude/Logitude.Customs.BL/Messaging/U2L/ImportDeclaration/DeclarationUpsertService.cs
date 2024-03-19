@@ -2241,12 +2241,22 @@ namespace Logitude.Customs.BL.Messaging.U2L.ImportDeclaration
 			myAmitalCustom.AgentId = "550221105";
 
 			myAmitalCustom.CreatedByUserId = "ITZIK";
-			myAmitalCustom.CustomerId = "10010650";
-			myAmitalCustom.TransportModeId = "O";
+            myAmitalCustom.CustomerId = "10010650";
+            myAmitalCustom.TransportModeId = "O";
 			myAmitalCustom.Tenant = "1";
-			myAmitalCustom.ImporterId = "00000000";
+            myAmitalCustom.ImporterId = "00000000";
 
-			amitalObjExample.LogitudeCustomsFile = new LogitudeCustomsFile[] { myAmitalCustom };
+
+            // jeremy - test new declaration in export
+			/*
+            myAmitalCustom.CustomerId = null;
+            myAmitalCustom.Direction = "E";
+            myAmitalCustom.AutoSending = "true";
+            myAmitalCustom.CustomFileNo = "89237489723";
+			myAmitalCustom.Mode = "NEW";
+			*/
+
+            amitalObjExample.LogitudeCustomsFile = new LogitudeCustomsFile[] { myAmitalCustom };
 
 			var xml = XmlGenericUtil<LOGICUSTFILE>.SerializeObject(amitalObjExample);
 
