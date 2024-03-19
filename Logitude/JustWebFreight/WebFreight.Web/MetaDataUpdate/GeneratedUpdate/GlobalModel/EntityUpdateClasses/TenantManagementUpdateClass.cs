@@ -85,8 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 {
    public class TenantManagementUpdateClass
    {  		
-
-		public const string HashString = "8343c9fcff824a3422b7397fe52dfe5a";
+		public const string HashString = "aaa2ddbcec471cfe6e283bb5724a1766";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -13153,7 +13152,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.GlobalModel.EntityUpdate
 					  						DefaultText =  "Tranzila Payment With Bit",
 					  						ListFieldLable =  "TranzilaPaymentWithBitListLable",
 					  						ListLableDefaultText =  "Tranzila Payment With Bit",
-					  						ListLocalDefaultText =  "תשלום טרנזילה בםמצעות BIT",
+					  						ListLocalDefaultText =  "תשלום טרנזילה באמצעות BIT",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
