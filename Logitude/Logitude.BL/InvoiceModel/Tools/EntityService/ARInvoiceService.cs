@@ -51,6 +51,7 @@ using Logitude.BL.InvoiceModel.Tools.Behaviours;
 using Logitude.BL.AnalyticTableServices;
 using System.Data.Entity.Core;
 using Logitude.BL.Helpers.ExportServer;
+using Newtonsoft.Json;
 
 namespace Logitude.BL.InvoiceModel.Tools.EntityService
 {
@@ -445,9 +446,49 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
         }
         private void GetConfirmationNumberAPI()
         {
-           var res= ExportServerService.CreateConfirmationNumber(entityPM.Tenant,"libby@amital.co.il", Convert.ToString("{\r\n    \"InvoiceId\": \"123\",\r\n    \"InvoiceType\": \"305\",\r\n    \"VatNumber\":\"777777715\",\r\n    \"UnionVatNumber\" : \"125847553\",\r\n    \"InvoiceReferenceNumber\" : \"975626515\",\r\n    \"CustomerVatNumber\" : \"18\",\r\n    \"CustomerName\":\"Customer_Name\",\r\n    \"InvoiceDate\":\"2023-04-08\",\r\n    \"InvoiceIssuanceDate\" : \"2023-04-08\",\r\n    \"BranchId\" : \"533\",\r\n    \"AccountingSoftwareNumber\" : \"36955574\",\r\n    \"ClientSoftwareKey\" : \"76857\",\r\n            \"Amount_Before_Discount\" : 552.75,\r\n            \"Discount\" : 52.75,\r\n            \"PaymentAmount\" : 500,\r\n            \"VatAmount\" : 85,\r\n            \"PaymentAmountIncludingVat\" : 585,\r\n            \"InvoiceNote\" : \"הערות\",\r\n            \"Action\" : \"0\",\r\n            \"VehicleLicenseNumber\" : \"584752145\",\r\n            \"PhoneOfDriver\" : \"0505674235\",\r\n            \"ArrivalDate\" : \"2023-02-26\",\r\n            \"EstimatedArrivalTime\" : \"13:25:00.000000\",\r\n            \"TransitionLocation\" : \"12\",\r\n            \"DeliveryAddress\" : \"כתובת אספקה\",\r\n            \"AdditionalInformation\" : \"0\"\r\n}"));
-        }
+           try {
 
+                   var res = ExportServerService.CreateConfirmationNumber(entityPM.Tenant, "libby@amital.co.il", CreateBodyFromARInvoice());
+
+                    if(res != null && res.StatusCode == System.Net.HttpStatusCode.OK) {
+                        entityPM.ConfirmationNumberStatus = "2"; 
+                        //entityPM.ConfirmationNumber=
+                   }
+
+                  else
+                  {
+                    entityPM.ConfirmationNumberStatus = "5";
+                  }
+            }
+            catch(Exception ex)
+            {
+                entityPM.ConfirmationNumberStatus = "5";
+            }
+        }
+        private string CreateBodyFromARInvoice()
+        {
+            FullAccountingSettingRepository fullAccountingSettingRepository = new FullAccountingSettingRepository(entityPM.Tenant);
+            ConfirmationNumberAPI confirmationNumberAPI = new ConfirmationNumberAPI()
+            {
+                InvoiceId = entityPM.InvoiceNumber,
+                InvoiceType = "305",
+                VatNumber=entityPM.VatNumber,
+                UnionVatNumber= fullAccountingSettingRepository.GetSingleFullAccountingSetting(entityPM.Tenant).ConsolidationVAT,
+                CustomerVatNumber=entityPM.VatNumber,
+                CustomerName=entityPM.BillToLocalName,
+                InvoiceDate= (DateTime)entityPM.InvoiceDate,
+                InvoiceIssuanceDate=(DateTime)entityPM.CreateDate,
+                AccountingSoftwareNumber="99999999",
+                ClientSoftwareKey="99999",
+                AmountBeforeDiscount=(decimal)entityPM.TotaVatableAmountForTaxReport,
+                Discount=0,
+                PaymentAmount= (decimal)entityPM.TotaVatableAmountForTaxReport,
+                VatAmount=entityPM.TotalVAT,
+                PaymentAmountIncludingVat=entityPM.AmountInLocalCurrency,
+
+            };
+            return JsonConvert.SerializeObject(confirmationNumberAPI);
+        }
         private void UpdateInterestReportFields(ARInvoicePM theEntityPM)
         {
             IInterestReportUpdateServiceExt InterestReportUpdate = ContainerAccessor.Container.Resolve(typeof(IInterestReportUpdateServiceExt), "InterestReportUpdateServiceExt", new ParameterOverride("", 1)) as IInterestReportUpdateServiceExt;
@@ -5030,6 +5071,42 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             const string sATTransferedStatusCode = "TD";
             aRInvoice.SATTransferStatusCode = sATTransferedStatusCode;
             arInvoiceRepository.Update(aRInvoice);
+        }
+
+
+        public class ConfirmationNumberAPI
+        {
+            public string InvoiceId { get; set; }
+            public string InvoiceType { get; set; }
+            public string VatNumber { get; set; }
+            public string UnionVatNumber { get; set; }
+            public string InvoiceReferenceNumber { get; set; }
+            public string CustomerVatNumber { get; set; }
+            public string CustomerName { get; set; }
+            public DateTime InvoiceDate { get; set; }
+            public DateTime InvoiceIssuanceDate { get; set; }
+            public string BranchId { get; set; }
+            public string AccountingSoftwareNumber { get; set; }
+            public string ClientSoftwareKey { get; set; }
+
+            public decimal AmountBeforeDiscount { get; set; }
+            public decimal Discount { get; set; }
+            public decimal PaymentAmount { get; set; }
+            public decimal VatAmount { get; set; }
+            public double? PaymentAmountIncludingVat { get; set; }
+
+            public string InvoiceNote { get; set; }
+            public string Action { get; set; }
+            public string VehicleLicenseNumber { get; set; }
+            public string PhoneOfDriver { get; set; }
+            public DateTime ArrivalDate { get; set; }
+
+            // Assuming EstimatedArrivalTime is a TimeSpan
+            public TimeSpan EstimatedArrivalTime { get; set; }
+
+            public string TransitionLocation { get; set; }
+            public string DeliveryAddress { get; set; }
+            public string AdditionalInformation { get; set; }
         }
     }
 }

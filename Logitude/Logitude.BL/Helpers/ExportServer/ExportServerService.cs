@@ -53,15 +53,14 @@ namespace Logitude.BL.Helpers.ExportServer
 
         public static string GetTokenForConfirmationNumber(int tenant, string email)
         {
-            using (TransactionScope scope = TransactionFactory.GetTransaction())
-            {
+           
                 string exportToken = ExportServerLogin.GetToken(tenant, email);
 
                 if (exportToken == null)
                     exportToken = ExportServerLogin.GetToken(tenant, "ConfirmationNumber@amital.co.il");
-                scope.Complete();
+               
                 return exportToken;
-            }
+           
         }
     }
 
