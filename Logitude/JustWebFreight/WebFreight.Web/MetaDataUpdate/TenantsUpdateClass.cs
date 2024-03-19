@@ -655,7 +655,7 @@ namespace WebFreight.Web.MetaDataUpdate
                     ChargesGroupRepository chargesGroupRepository = new ChargesGroupRepository(context);
 
                     TenantZeroMeasurements = measurementsRepository.GetMeasurementsByTenant(0).ToDictionary(d => d.Code, a => a);
-                    TenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code, a => a);
+                    TenantZeroEntityStatus = entityStatusRepository.GetEntityStatusByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
                     TenantZeroEventTypes = eventTypeRepository.GetEventTypesByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
                     TenantZeroRanks = rankRepository.GetRanks(0).ToDictionary(d => d.Code, a => a);
                     TenantZeroDocumentTypes = documentTypeQuery.GetDocumentTypePMsByTenant(0).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
@@ -858,7 +858,7 @@ namespace WebFreight.Web.MetaDataUpdate
             Dictionary<string, Measurement> tenantZeroMeasurements = TenantZeroMeasurements;
             Dictionary<string, Measurement> currentTenantMeasurements = measurementsRepository.GetMeasurementsByTenant(tenant).ToDictionary(d => d.Code, a => a);
             Dictionary<string, EntityStatus> tenantZeroEntityStatus = TenantZeroEntityStatus;
-            Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToDictionary(d => d.Code, a => a);
+            Dictionary<string, EntityStatus> currentTenantEntityStatus = entityStatusRepository.GetEntityStatusByTenant(tenant).ToDictionary(d => d.Code + d.ObjectTableId, a => a);
 
             Dictionary<string, EventType> tenantZeroEventTypes;
 
@@ -2562,7 +2562,7 @@ namespace WebFreight.Web.MetaDataUpdate
                         continue;
                 }
 
-                if (currentTenantEntityStatus.Keys.Contains(entityStatus.Code))
+                if (currentTenantEntityStatus.Keys.Contains(entityStatus.Code + entityStatus.ObjectTableId))
                 {
                     //EntityStatus updatedEntityStatus = currentTenantEntityStatus[entityStatus.Code];
                     //updatedEntityStatus.Name = entityStatus.Name;
@@ -2589,7 +2589,7 @@ namespace WebFreight.Web.MetaDataUpdate
                         Id = IdCounter.GetNumber("EntityStatus", tenant).ToString(),
                     };
                     entityStatusRepository.Add(newEntityStatus);
-                    currentTenantEntityStatus.Add(newEntityStatus.Code, newEntityStatus);
+                    currentTenantEntityStatus.Add(newEntityStatus.Code + newEntityStatus.ObjectTableId, newEntityStatus);
                 }
 
             }
@@ -2613,7 +2613,8 @@ namespace WebFreight.Web.MetaDataUpdate
 
                 if (tenantZeroEntityStatu != null)
                 {
-                    currentTenantEntityStatu = currentTenantEntityStatus[tenantZeroEntityStatu.Code];
+					if (currentTenantEntityStatus.Keys.Contains(tenantZeroEntityStatu.Code + tenantZeroEntityStatu.ObjectTableId))
+						currentTenantEntityStatu = currentTenantEntityStatus[tenantZeroEntityStatu.Code+ tenantZeroEntityStatu.ObjectTableId];
                 }
 
                
