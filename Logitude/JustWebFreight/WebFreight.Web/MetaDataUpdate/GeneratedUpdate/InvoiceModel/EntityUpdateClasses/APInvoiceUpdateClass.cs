@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class APInvoiceUpdateClass
    {  		
-		public const string HashString = "ca2b656c1156825c2ef74f4a9f6b8b6a";
+		public const string HashString = "b21505303456558c7fb7de07adceae1c";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -933,10 +933,10 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 					  						DisplayLongName =  false,
 					  						FullFieldLable =  "InvoiceDate",
 					  						DefaultText =  "Invoice Date",
-					  						FullLocalDefaultText =  ",תאריך אסמכתא",
+					  						FullLocalDefaultText =  "תאריך אסמכתא",
 					  						ListFieldLable =  "InvoiceDateListLable",
 					  						ListLableDefaultText =  "Invoice Date",
-					  						ListLocalDefaultText =  ",תאריך אסמכתא",
+					  						ListLocalDefaultText =  "תאריך אסמכתא",
 					  						IsForeignKey =  false,
 					  						IsMaxLength =  false,
 					  						NoMetaDataField =  false,
