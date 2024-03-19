@@ -20,11 +20,11 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.Property(t => t.Name)
                 .IsRequired()
                 .HasMaxLength(60)
-                .IsUnicode(false);
+                .IsUnicode(true);
 
             this.Property(t => t.LocalName)
               .HasMaxLength(60)
-              .IsUnicode(false);
+              .IsUnicode(true);
 
             this.Property(t => t.SearchFields)
                 .HasMaxLength(1000)

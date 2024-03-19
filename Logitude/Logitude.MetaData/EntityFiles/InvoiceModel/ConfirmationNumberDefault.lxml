@@ -468,14 +468,41 @@
     <QueryFilters />
   </Query>
   <Screen
-    Name="&quot;ConfirmationNumberDefaultHeaderScreen&quot;"
+    Name="&quot;Header Screen&quot;"
     ObjectTableName="&quot;ConfirmationNumberDefault&quot;"
     IsReadOnly="true"
     IsHeaderScreen="true"
-    Code="&quot;ConfirmationNumberDefault.ConfirmationNumberDefaultHeaderScreen&quot;"
-    NumberOfColumns="2"
+    Code="&quot;ConfirmationNumberDefault.HeaderScreen&quot;"
+    NumberOfColumns="1"
     NumberOfRows="1">
-    <ScreenFields />
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;FromDate&quot;"
+        ScreenName="Header Screen" />
+    </ScreenFields>
+  </Screen>
+  <Screen
+    Name="&quot;General Tab Screen&quot;"
+    ObjectTableName="&quot;ConfirmationNumberDefault&quot;"
+    IsReadOnly="false"
+    IsHeaderScreen="false"
+    Code="&quot;ConfirmationNumberDefault.GeneralTabScreen&quot;"
+    NumberOfColumns="1"
+    NumberOfRows="2">
+    <ScreenFields>
+      <ScreenField
+        Column="0"
+        Row="0"
+        ObjectFieldName="&quot;FromDate&quot;"
+        ScreenName="General Tab Screen" />
+      <ScreenField
+        Column="0"
+        Row="1"
+        ObjectFieldName="&quot;AmountForConfirmationNumber&quot;"
+        ScreenName="General Tab Screen" />
+    </ScreenFields>
   </Screen>
   <Tab
     TabName="&quot;General&quot;"

@@ -65,6 +65,8 @@ namespace Logitude.BL.InvoiceModel.EntityPMs
         public string PrintByUserName { get; set; }
         public string IssuedByUserId { get; set; }
         public string ConfirmationNumberStatus { get; set; }
+        public string ConfirmationNumberStatusName { get; set; }
+
         public string IsSigned { get; set; }
         public string ConfirmationNumber { get; set; }
 

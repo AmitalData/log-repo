@@ -236,7 +236,7 @@ namespace Simplog.Data.InvoiceModel.Mapping
             this.HasRequired(t => t.Status).WithMany().HasForeignKey(d => d.StatusCode);
             this.HasRequired(t => t.ARInvoiceType).WithMany().HasForeignKey(d => d.ARInvoiceTypeCode);
             this.HasRequired(t => t.IssuedByUser).WithMany().HasForeignKey(d => d.IssuedByUserId);
-            this.HasRequired(t => t.Confirmation).WithMany().HasForeignKey(d => d.ConfirmationNumberStatus);
+            this.HasOptional(t => t.Confirmation).WithMany().HasForeignKey(d => d.ConfirmationNumberStatus);
 
             this.HasRequired(t => t.LocalCurrency).WithMany().HasForeignKey(d => d.LocalCurrencyId);
             this.HasRequired(t => t.UpdatedByUser).WithMany().HasForeignKey(d => d.UpdatedByUserId);

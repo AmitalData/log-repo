@@ -1540,7 +1540,9 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
             invoiceStatusCodes.Add("DR");
             invoiceStatusCodes.Add("LL");
 
-            var result = from entity in iQueryable.Include("Confirmation").Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch").Include("ARInvoicesSignedStatus")
+            var result = from entity in iQueryable.Include("BillTo").Include("BillTo.PartnerType").Include("CreatedByUser.Contact").Include("InvoiceCurrency").Include("Status").Include("ARInvoiceType").Include("IssuedByUser.Contact").Include("PrintByUser.Contact").Include("PaymentTerm").Include("Confirmation").Include("ProfitCurrency").Include("LocalCurrency").Include("TransferStatus").Include("ApprovedByUser").Include("ApprovedByUser.Contact").Include("SalesmanUser").Include("SalesmanUser.Contact").Include("CreditedByARInvoice").Include("SATInvoiceStatus").Include("SATTransferStatus").Include("Branch").Include("ARInvoicesSignedStatus")
+                         //join confirmationNumber in repository.context.ConfirmationNumberStatuses on entity.ConfirmationNumberStatus equals confirmationNumber.Code into joinedData
+                         //from right in joinedData.DefaultIfEmpty()
                          select new ARInvoiceList()
                          {
                              IsClosed = entity.IsClosed,
@@ -1590,6 +1592,8 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              Sent = entity.Sent,
                              PaymentTermId = entity.PaymentTermId,
                              PaymentTermName = entity.PaymentTerm != null ? entity.PaymentTerm.EnglishName : null,
+                             ConfirmationNumberStatusName = entity.Confirmation != null ? entity.Confirmation.LocalName : null,
+
                              IsInvoiceNumberManuallySet = entity.IsInvoiceNumberManuallySet,
                              AmountDue = entity.AmountDue,
                              ExpectedPaymentDate = entity.ExpectedPaymentDate,
@@ -1682,6 +1686,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              PaymentReferences = entity.PaymentReferences,
                              SATCancelReasonCode = entity.SATCancelReasonCode,
                              TotalExamptFortaxReport = entity.TotalExamptFortaxReport,
+                          
                              ConcurrencyGUID = entity.ConcurrencyGUID,
                              DocumentTemplateId = entity.DocumentTemplateId,
                              TotalAmountNotForTaxReport =
@@ -1690,7 +1695,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                              IsSigned= entity.IsSigned,
                              IsSignedName= entity.ARInvoicesSignedStatus == null ? null: entity.ARInvoicesSignedStatus.LocalName,
                              ConfirmationNumberStatus = entity.ConfirmationNumberStatus,
-                             ConfirmationNumberStatusName = entity.Confirmation != null ? entity.Confirmation.Name : null,
+                        
 
                          };
 
@@ -2143,6 +2148,7 @@ namespace Logitude.BL.InvoiceModel.EntityQueries
                     TransferError_Original = entityPOCO.TransferError,
                     IsSigned=entityPOCO.IsSigned,
                     ConfirmationNumber=entityPOCO.ConfirmationNumber,
+                    ConfirmationNumberStatusName = entityPOCO.Confirmation != null ? entityPOCO.Confirmation.LocalName : null,
 
                 };
 

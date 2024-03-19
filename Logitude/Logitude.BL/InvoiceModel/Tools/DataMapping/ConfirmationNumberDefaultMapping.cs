@@ -18,7 +18,7 @@ namespace Logitude.BL.InvoiceModel.Tools.DataMapping
                 entity.Tenant = entityPM.Tenant;
 
             }
-
+            entity.Id = entityPM.Id;
             entity.FromDate = entityPM.FromDate;
             entity.AmountForConfirmationNumber = entityPM.AmountForConfirmationNumber;
             entity.SearchFields = entityPM.SearchFields;
