@@ -103,6 +103,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 res.EntityReference = _DeclarationPM.CustomFileNo;
                 var ownerUnifreightUserService = new OwnerUnifreightUserService();
                 string myOwnerUnifreightUserCode = ownerUnifreightUserService.GetOwnerUnifreightUserCode(declaration: _DeclarationPM);
+                bool hasAvailabilityDate = _DeclarationPM.AvailabilityDate.HasValue;
 
                 ContactRepository contactRepository = new ContactRepository(_CommunicationLog.Tenant);
                 var loggedContact = contactRepository.GetSingleContactByEmail(AuthenticationUtil.ResolveLoggingUserId(_CommunicationLog.Tenant), _CommunicationLog.Tenant);
@@ -117,16 +118,20 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 {
                     case "AVA":
                         {
-                            UpdateAVA(theDecId, mySTBMessage.PackageQuantity);
-                            unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
+                            if (!hasAvailabilityDate) // if true, wont rais SMG event
                             {
-                                Entname = "CFIFILEM",
-                                PrimaryNum = _DeclarationPM.CustomFileNo,
-                                Mode = UnifreightEventMode.@new,
-                                StatusCode = "SMG",
-                                EventDateTime = mySTBMessage.StatusDate,
-                                OwnerUnifreightUserCode = myOwnerUnifreightUserCode//FUOwnerUnifreightUserCode.SWISS
-                            });
+                                UpdateAVA(theDecId, mySTBMessage.PackageQuantity);
+                                unifreightFUStatusTaskService.UpsertFUStatusLE2U(_CommunicationLog.Tenant, loggedContactId, new UnifreightFUStatusParam()
+                                {
+                                    Entname = "CFIFILEM",
+                                    PrimaryNum = _DeclarationPM.CustomFileNo,
+                                    Mode = UnifreightEventMode.@new,
+                                    StatusCode = "SMG",
+                                    EventDateTime = mySTBMessage.StatusDate,
+                                    OwnerUnifreightUserCode = myOwnerUnifreightUserCode//FUOwnerUnifreightUserCode.SWISS
+                                });
+                                this._DeclarationPM.AvailabilityDate = mySTBMessage.StatusDate;
+                            }
                         }
                         break;
                     case "REL":
@@ -170,6 +175,10 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
         }
         void UpdateAVA(string theDecId, int EventQty)
         {
+
+            if (!_DeclarationPM.AvailabilityDate.HasValue)
+            {
+     
             string AcceptanceStatusCode = "";
             var totPackageQuantity = _DeclarationPM.Consignments.SelectMany(r => r.ConsignmentPackages).Sum(p => p.PackageQuantity);
             if (EventQty == totPackageQuantity)
@@ -204,7 +213,7 @@ namespace Logitude.Customs.BL.Messaging.CustomsAnalyzeQueue
                 declarationCourierStatusUpdateService.Update(currentDeclarationCourierStatusPM, true);
                 LogMessagingUtil.Instance.AppendLine("Update Declaration Courier Status CourierPaymentStatusCode=" + currentDeclarationCourierStatusPM.CourierPaymentStatusCode);
             }
-
+            }
         }
 
         private void UpadteTerminalReleaseDate(CourierHawbStatus mySTBMessage, string theDecId)
