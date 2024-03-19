@@ -2559,7 +2559,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
             {
                 Code = "1",
-                Name = "Confirmation number needed",
+                Name = " Confirmation number needed",
                 LocalName = "נדרש הקצאה",
                 InActive = false
 
@@ -2567,7 +2567,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
             {
                 Code = "2",
-                Name = "Confirmation number received",
+                Name = "Confirmation number received ",
                 LocalName = "הקצאה התקבלה",
                 InActive = false
 
@@ -2575,7 +2575,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
             {
                 Code = "3",
-                Name = "Confirmation number not received",
+                Name = "Confirmation number not received ",
                 LocalName = "לא התקבלה הקצאה",
                 InActive = false
 
@@ -2583,7 +2583,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
             {
                 Code = "4",
-                Name = "Confirmation number not needed",
+                Name = "Confirmation number not needed ",
                 LocalName = "לא נדרש הקצאה",
                 InActive = false
 
@@ -2591,7 +2591,7 @@ namespace WebFreight.Web.MetaDataUpdate
             AddClosedTables.AddConfirmationNumberStatus(new ConfirmationNumberStatusDetails()
             {
                 Code = "5",
-                Name = "Confirmation number failed",
+                Name = "Confirmation number failed ",
                 LocalName = "כשלון בקבלת הקצאה",
                 InActive = false
             }, confirmationNumberStatusRepository);

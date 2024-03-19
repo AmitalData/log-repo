@@ -85,7 +85,7 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 {
    public class ConfirmationNumberDefaultUpdateClass
    {  		
-		public const string HashString = "8195e499adbdb83229b671796632591f";
+		public const string HashString = "86f6ab2c7a7f766e7f0333569bb42302";
 	    public void AddObjectTable(Dictionary<string, ObjectTable> objectTables, Dictionary<string, TextCode> textCodes,ObjectTableRepository ObjectTableRepository,TextCodeRepository TextCodeRepository)
         {                     
             
@@ -520,12 +520,22 @@ namespace WebFreight.Web.MetaDataUpdate.GeneratedUpdate.InvoiceModel.EntityUpdat
 		       
 	      
 
-	         Screen ConfirmationNumberDefaultConfirmationNumberDefaultHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ConfirmationNumberDefault.ConfirmationNumberDefaultHeaderScreen", Name = "ConfirmationNumberDefaultHeaderScreen", ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, NumberOfColumns = 2, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
-      	
-		    ConfirmationNumberDefaultObjectTable.HeaderScreenId = ConfirmationNumberDefaultConfirmationNumberDefaultHeaderScreenScreen0.Id;
-		    ConfirmationNumberDefaultObjectTable.HeaderScreenCode = ConfirmationNumberDefaultConfirmationNumberDefaultHeaderScreenScreen0.Code;
+	         Screen ConfirmationNumberDefaultHeaderScreenScreen0 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ConfirmationNumberDefault.HeaderScreen", Name = "Header Screen", ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 1, IsReadOnly = true }, screensRepository, tenantScreens);
+      
+             ScreenField ConfirmationNumberDefaultConfirmationNumberDefaultHeaderScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ConfirmationNumberDefaultHeaderScreenScreen0.Id,ScreenCode = ConfirmationNumberDefaultHeaderScreenScreen0.Code, ObjectFieldCode = "ConfirmationNumberDefault.FromDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          	
+		    ConfirmationNumberDefaultObjectTable.HeaderScreenId = ConfirmationNumberDefaultHeaderScreenScreen0.Id;
+		    ConfirmationNumberDefaultObjectTable.HeaderScreenCode = ConfirmationNumberDefaultHeaderScreenScreen0.Code;
 
 	   		  
+	      
+
+	         Screen ConfirmationNumberDefaultGeneralTabScreenScreen1 = AddScreensAndScreenFields.AddScreen(new ScreenDetails() { Code = "ConfirmationNumberDefault.GeneralTabScreen", Name = "General Tab Screen", ObjectTableId = ConfirmationNumberDefaultObjectTable.Id, NumberOfColumns = 1, NumberOfRows = 2, IsReadOnly = false }, screensRepository, tenantScreens);
+      
+             ScreenField ConfirmationNumberDefaultConfirmationNumberDefaultGeneralTabScreenScreenField0 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 0, ScreenId = ConfirmationNumberDefaultGeneralTabScreenScreen1.Id,ScreenCode = ConfirmationNumberDefaultGeneralTabScreenScreen1.Code, ObjectFieldCode = "ConfirmationNumberDefault.FromDate", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	          
+             ScreenField ConfirmationNumberDefaultConfirmationNumberDefaultGeneralTabScreenScreenField1 = AddScreensAndScreenFields.AddScreenField(new ScreenFieldDetails() { Column = 0, Row = 1, ScreenId = ConfirmationNumberDefaultGeneralTabScreenScreen1.Id,ScreenCode = ConfirmationNumberDefaultGeneralTabScreenScreen1.Code, ObjectFieldCode = "ConfirmationNumberDefault.AmountForConfirmationNumber", Tenant = 0, }, screenFieldsRepository, tenantScreenFields);
+	            
 
 	    }
 

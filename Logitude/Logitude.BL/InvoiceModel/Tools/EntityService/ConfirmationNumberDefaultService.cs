@@ -41,8 +41,8 @@ namespace Logitude.BL.InvoiceModel.Tools.EntityService
             this.entityPM = theEntityPm;
             //this.entityPM.Id = IdCounter.GetNumber("SATInterfaceSetting", tenant).ToString();
             this.Poco = new ConfirmationNumberDefault();
-            //this.Poco.Id = this.entityPM.Id;
-
+            this.entityPM.Tenant = tenant;
+            this.entityPM.Id = IdCounter.GetNumber("ConfirmationNumberDefault", tenant).ToString();
             ConfirmationNumberDefaultMapping.MapEntity(entityPM, Poco, isNewEntity);
             entityRepository.Add(Poco);
             entityRepository.SubmitChanges();
