@@ -177,12 +177,28 @@ namespace Logitude.Accounting.BL.DataContract
                    select a).ToList();
             List<string> journalIds = transactions.Select(d => d.JournalId).ToList();
             journalLines = GetJournalLinesByJournalds(journalIds);
-            List<string> accountsIds = transactions.Where(d=> d.OppositeAccountId != null).Select(d => d.OppositeAccountId ).ToList(); 
+            List<string> accountsIds_1 = transactions.Where(d=> d.OppositeAccountId != null).Select(d => d.OppositeAccountId ).ToList();
+            List<string> accountsIds = FilterOffClients(accountsIds_1);
             transactionsVendors = GetVendorsByAccountsIds(accountsIds);          
             oppositeAccountTransactions = GetOppositeTransactions(transactions);
 
             return transactions;
         }
+
+        private List<string> FilterOffClients(List<string> accountsIds_1)
+        {
+            List<string> rv = accountsIds_1;
+            if (accountsIds_1 != null && accountsIds_1.Count > 0)
+            {
+                rv = (from a in accountingContext.GLAccounts
+                      where accountsIds_1.Contains(a.Id)
+                      && a.Tenant == Tenant
+                      && a.AccountTypeCode != "2"
+                      select a.Id).ToList();
+            }
+            return rv;
+        }
+
         private List<JournalLine> GetJournalLinesByJournalds(List<string> journalIds )
         {
             List<JournalLine> journalLines = (from a in accountingContext.JournalLines                                       
@@ -473,7 +489,7 @@ namespace Logitude.Accounting.BL.DataContract
             vendors = vendors.Concat(GetVendorsByIds(payments)).ToList();
             payments = (from a in payments
                                  join v in vendors on a.VendorId equals v.Id
-                                 join g in gLAccounts on v.GLAccountId equals g.Id  into g 
+                                 join g in gLAccounts.Where(acc => acc.AccountTypeCode != "2") on v.GLAccountId equals g.Id into g
                                  select a).ToList();
             
             return payments;

@@ -67,7 +67,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     IsChequeLinkVisibile: boolean = false;
     DisplayFieldsFromList:string;
     DisplayLocalFieldsFromList:string;
-    VendorLovSizeForFullAccounting:number;
+    VendorLovSizeForFullAccounting: number;
+    public TabWarnings: string[] = [];
+    
     _JournalExtendedPMService: JournalExtendedPMService = new JournalExtendedPMService();
     public FilterInvoiceByAPPayment:boolean= false
     constructor(private entityArgs: EntityArgs, private _entityResourceService: EntityResourceService, private cd: ChangeDetectorRef) {
@@ -246,7 +248,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     vendor: CardList;
     VendorChanged(vednor:CardList){
         this.vendor = vednor;
-        this.LoadTaxPercentage();
 
     }
 
@@ -254,31 +255,35 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     private LoadTaxPercentage() {
         if (this.IsFullAccounting)
         {
-                this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult:any) => {
+            if (this.vendorGLAccount.ChartOfAccountsTypeCode == "3") {
+                this.TaxDeductionPercentage = 0;
+            } else {
+
+                this.GLAccountWithholdingService.GetDeductionPercentage(this.VendorId, this.EntityPM.RegisterDate).subscribe((myResult: any) => {
                     var myResponse: ServiceResponse = myResult;
                     if (!myResponse.HasError) {
                         if (AppTool.IsNullOrEmpty(this.EntityPM.Id) || this.IsTaxUpdated) {
                             this.IsNoVendorTax = myResponse.Result.IsDefault;
                             const nonIsraeliVendor = this.vendor ? this.vendor.CountryCode != "IL" : false;
 
-                            if(!myResponse.Result.IsDefault || !nonIsraeliVendor){
-                               this.TaxDeductionPercentage = myResponse.Result.Percentage;
+                            if (!myResponse.Result.IsDefault || !nonIsraeliVendor) {
+                                this.TaxDeductionPercentage = myResponse.Result.Percentage;
                             }
-                            else{
-                                 this.TaxDeductionPercentage = 0;
-                                }
+                            else {
+                                this.TaxDeductionPercentage = 0;
+                            }
                         }
                         else {
-                             this.IsNoVendorTax = myResponse.Result.IsDefault;
+                            this.IsNoVendorTax = myResponse.Result.IsDefault;
 
-                           
+
                         }
                     }
                     else {
                         this.CurrentSession.CurrentEditComponent.ValidationErrorsList = myResponse.ErrorsArray;
                     }
                 });
-            
+            }
 
         }
     }
@@ -520,7 +525,7 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
         }
 
         var myService: CurrencyRatesService = new CurrencyRatesService();
-        await new Promise(res =>
+        await new Promise<void>(res =>
             myService.GetCurrenciesExchangeRateByValueDate(SessionLocator.TenantPM.CurrencyId, loadingDate).subscribe((myResponse: ServiceResponse) => {
                 if (!myResponse.HasError) {
                     this.LastRatesList = myResponse.Result;
@@ -874,7 +879,6 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     }
                     this.GetCardProperties();
 
-                    this.LoadTaxPercentage();
                     this.IsTaxUpdated = true;
 
                 }
@@ -978,6 +982,9 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
     vendorGLAccount: GLAccountList;
     deductionFileNumber: string;
     GetConnectedGLAccount() {
+        let etext: string;
+        etext = TextCodeTranslator.Translate("Accounting.General.O.VendorWithCustomerGLAccount");
+
         if (this.GLAccountId)
         {
             this.CurrentSession.StartBusyIndicatorLoading();
@@ -992,6 +999,17 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                     this.deductionFileNumber = gla ? gla.DeductionFileNumber : null;
                     this.EntityPM.ExcludeFromDeductionReport = gla.ExcludeFromDeductionReport;
                     this.EntityPM.VendorGLAccountId = gla.Id;
+
+
+                    if (gla.AccountTypeCode == "2") {
+                        this.TabWarnings.push(etext);
+                    } else {
+                        const index = this.TabWarnings.indexOf(etext);
+                        if (index >= 0) this.TabWarnings.splice(index, 1);
+                    }
+                    this.LoadTaxPercentage();
+                    this.ValidateW();
+
                     if (!gla.IsMultiCurrency) {
                       
                         this.FilterInvoiceByAPPayment=true;
@@ -1003,14 +1021,38 @@ export class APPaymentDetailsTabComponent extends BaseComponent implements OnIni
                 }
             });
         }else{
-            this.FilterInvoiceByAPPayment=true;
+            this.FilterInvoiceByAPPayment = true;
+            this.LoadTaxPercentage();
+            const index = this.TabWarnings.indexOf(etext); 
+            if (index >= 0) this.TabWarnings.splice(index, 1);
+            this.ValidateW();
             this.LoadData();
             this.vendorGLAccount = null;
             this.deductionFileNumber = null;
             this.EntityPM.ExcludeFromDeductionReport = false;
               this.EntityPM.VendorGLAccountId = null;
         }
+
+
+
     }
+
+
+    public ValidationWarningsList: string[];
+
+    ValidateW(): boolean {
+
+        this.ValidationWarningsList = [];
+
+        if (this.ValidationWarningsList.indexOf(this.TabWarnings[0]) < 0)
+            this.ValidationWarningsList = this.ValidationWarningsList.concat(this.TabWarnings);
+
+        return this.ValidationWarningsList.length == 0 ? true : false;
+    }
+
+
+
+
     invoicesLedgerTransactions: any[] = [];
     paymentLedgerTransactions: string[] = [];
     GetTransactionsForAPPayment()
@@ -2387,6 +2429,9 @@ export class APPaymentInvoiceArgs extends BaseComponent {
             }
         }
     }
+
+
+
 
     private Connect() {
         this.isConnected = true;
